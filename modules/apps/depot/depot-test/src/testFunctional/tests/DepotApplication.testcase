@@ -183,25 +183,6 @@ definition {
 			applicationList = "Collections",
 			status = "Disabled");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Collections",
-			depotName = "Test Depot Name",
-			noApplication = "true");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Web Content,Documents and Media",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
-
 		Depot.configureApplication(
 			applicationList = "Collections",
 			status = "Enabled");

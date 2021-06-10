@@ -206,9 +206,15 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Image");
 
+		FormFields.viewFieldLabel(
+			fieldName = "label",
+			fieldValue = "Image");
+
 		Form.gotoAdvancedTab();
 
-		FormViewBuilder.clickShowLabel();
+		FormFields.disableSwitcher(fieldName = "Show Label");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Image");
 
 		Form.save();
 
@@ -216,7 +222,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Image");
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Image");
 	}
 
 	@description = "Verify that a Predefined Value can be set"

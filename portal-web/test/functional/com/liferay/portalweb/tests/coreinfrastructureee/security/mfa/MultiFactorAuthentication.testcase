@@ -1098,6 +1098,10 @@ definition {
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
 
+		MultiFactorAuthentication.configureOTPEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
 		MultiFactorAuthentication.configureOTP(enableOTP = "true");
 
 		PortalSettings.gotoConfiguration(
@@ -1187,6 +1191,10 @@ definition {
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTPEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
 
 		MultiFactorAuthentication.configureOTP(enableOTP = "true");
 

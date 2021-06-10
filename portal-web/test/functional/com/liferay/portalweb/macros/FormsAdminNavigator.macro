@@ -75,7 +75,7 @@ definition {
 	}
 
 	macro gotoEditField {
-		Form.openSidebar();
+		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 
 		Form.gotoFieldsTab();
 

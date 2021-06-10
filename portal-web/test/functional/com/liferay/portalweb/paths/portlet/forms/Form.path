@@ -358,11 +358,6 @@
 </tr>
 <!--SIDEBAR -->
 <tr>
-	<td>ACTIVE_BUILDER_SIDEBAR_PANEL</td>
-	<td>//div[contains(@class,'sidebar')]//*[@*='Builder'][contains(@aria-pressed,'true')]</td>
-    <td></td>
-</tr>
-<tr>
 	<td>BUILDER_SIDEBAR_PANEL</td>
 	<td>//div[contains(@class,'sidebar')]//*[@*='Builder']</td>
     <td></td>
@@ -411,6 +406,11 @@
 	<td>SIDEBAR_CHANGE_FIELD_TYPE_MODAL_BUTTON</td>
 	<td>//div[contains(@id,'ddm-change-field-type-with-rule-modal')]//button[contains(@class,'btn btn-danger')][contains(text(),'Change Field Type')]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_CONTENT_OPEN</td>
+	<td>//div[contains(@class,'multi-panel-sidebar-content-open')]</td>
+    <td></td>
 </tr>
 <tr>
     <td>SIDEBAR_ELEMENTS_TAB</td>

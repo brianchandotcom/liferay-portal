@@ -222,7 +222,7 @@ definition {
 	}
 
 	macro editElementSetFieldLabel {
-		Form.openSidebar();
+		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 
 		while (IsTextNotEqual(key_fieldName = "label", locator1 = "FormFields#TEXT_FIELD", value1 = "") && (maxIterations = "10")) {
 			FormFields.editTextWithBackspace(fieldName = "label");
@@ -378,7 +378,7 @@ definition {
 	}
 
 	macro gotoAddElementSet {
-		Form.openSidebar();
+		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 
 		Form.gotoElementSetsTab();
 
@@ -406,7 +406,7 @@ definition {
 
 	@description = "Add the ${key_fieldType} field inside page ${formPageNumber} in position ${fieldPositionNumber}."
 	macro gotoAddField {
-		Form.openSidebar();
+		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 
 		Form.gotoFieldsTab();
 
@@ -519,16 +519,6 @@ definition {
 				value1 = "Properties");
 		}
 		Pause(locator1 = "1000");
-	}
-
-	macro openSidebar {
-		if (IsElementNotPresent(locator1 = "Form#ACTIVE_BUILDER_SIDEBAR_PANEL")) {
-			MouseOver.mouseOverNotVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
-
-			ScrollBy(value1 = "0, 230");
-
-			Click(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
-		}
 	}
 
 	macro pageReset {

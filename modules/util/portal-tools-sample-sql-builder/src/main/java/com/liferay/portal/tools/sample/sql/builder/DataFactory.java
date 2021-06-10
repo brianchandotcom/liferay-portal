@@ -387,7 +387,7 @@ public class DataFactory {
 		_counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
-		_layoutCounter = new SimpleCounter();
+		_layoutPlidCounter = new SimpleCounter();
 		_layoutSetCounter = new SimpleCounter();
 		_portletPreferenceValueCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
@@ -2210,7 +2210,7 @@ public class DataFactory {
 	public LayoutModel newContentLayoutModel(
 		long groupId, String name, String fragmentEntries) {
 
-		SimpleCounter simpleCounter = _layoutCounters.computeIfAbsent(
+		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, false),
 			counterName -> new SimpleCounter());
 
@@ -2222,7 +2222,7 @@ public class DataFactory {
 
 		// PK fields
 
-		layoutModel.setPlid(_layoutCounter.get());
+		layoutModel.setPlid(_layoutPlidCounter.get());
 
 		// Group instance
 
@@ -2299,7 +2299,7 @@ public class DataFactory {
 				SocialActivity.class.getName(), _socialActivityCounter.get()));
 
 		for (Map.Entry<String, SimpleCounter> entry :
-				_layoutCounters.entrySet()) {
+				_layoutIdCounters.entrySet()) {
 
 			SimpleCounter simpleCounter = entry.getValue();
 
@@ -2308,7 +2308,7 @@ public class DataFactory {
 		}
 
 		counterModels.add(
-			_newCounterModel(Layout.class.getName(), _layoutCounter.get()));
+			_newCounterModel(Layout.class.getName(), _layoutPlidCounter.get()));
 
 		counterModels.add(
 			_newCounterModel(
@@ -6285,7 +6285,7 @@ public class DataFactory {
 		long groupId, long parentLayoutId, String name, boolean privateLayout,
 		boolean hidden, String layoutTemplateId, String... columns) {
 
-		SimpleCounter simpleCounter = _layoutCounters.computeIfAbsent(
+		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout),
 			counterName -> new SimpleCounter());
 
@@ -6297,7 +6297,7 @@ public class DataFactory {
 
 		// PK fields
 
-		layoutModel.setPlid(_layoutCounter.get());
+		layoutModel.setPlid(_layoutPlidCounter.get());
 
 		// Group instance
 
@@ -7077,9 +7077,10 @@ public class DataFactory {
 	private final String _journalDDMStructureContent;
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
-	private final SimpleCounter _layoutCounter;
-	private final Map<String, SimpleCounter> _layoutCounters = new HashMap<>();
+	private final Map<String, SimpleCounter> _layoutIdCounters =
+		new HashMap<>();
 	private final String _layoutPageTemplateStructureRelData;
+	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetCounter;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueCounter;

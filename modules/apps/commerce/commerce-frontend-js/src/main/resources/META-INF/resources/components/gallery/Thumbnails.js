@@ -29,9 +29,9 @@ export default function Thumbnails({
 				<Thumbnail
 					active={selected === i}
 					background={background}
-					key={image.thumbnailUrl}
+					key={image.thumbnailURL}
 					onClick={onChange ? () => onChange(i) : null}
-					src={image.thumbnailUrl}
+					src={image.thumbnailURL}
 					title={image.title}
 				/>
 			))}
@@ -43,7 +43,7 @@ Thumbnails.propTypes = {
 	background: PropTypes.string,
 	images: PropTypes.arrayOf(
 		PropTypes.shape({
-			thumbnailUrl: PropTypes.string.isRequired,
+			thumbnailURL: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
 		})
 	),

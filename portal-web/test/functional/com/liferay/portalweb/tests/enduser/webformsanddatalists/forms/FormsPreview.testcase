@@ -69,14 +69,26 @@ definition {
 	}
 
 	@description = "Verify that it is not possible to submit a preview of a Form"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotBeSubmitted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133720 CannotBeSubmitted pending implemantation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		AssertElementNotPresent(locator1 = "FormPortlet#SUBMIT_BUTTON");
 	}
 
 	@description = "Verify that a user cannot navigate to a new page without completing a required field"

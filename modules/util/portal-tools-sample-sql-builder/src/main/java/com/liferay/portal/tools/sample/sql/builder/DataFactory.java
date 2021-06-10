@@ -388,7 +388,7 @@ public class DataFactory {
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_layoutPlidCounter = new SimpleCounter();
-		_layoutSetCounter = new SimpleCounter();
+		_layoutSetIdCounter = new SimpleCounter();
 		_portletPreferenceValueCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
@@ -2312,7 +2312,7 @@ public class DataFactory {
 
 		counterModels.add(
 			_newCounterModel(
-				LayoutSet.class.getName(), _layoutSetCounter.get()));
+				LayoutSet.class.getName(), _layoutSetIdCounter.get()));
 
 		return counterModels;
 	}
@@ -6372,7 +6372,7 @@ public class DataFactory {
 
 		// PK fields
 
-		layoutSetModel.setLayoutSetId(_layoutSetCounter.get());
+		layoutSetModel.setLayoutSetId(_layoutSetIdCounter.get());
 
 		// Group instance
 
@@ -7081,7 +7081,7 @@ public class DataFactory {
 		new HashMap<>();
 	private final String _layoutPageTemplateStructureRelData;
 	private final SimpleCounter _layoutPlidCounter;
-	private final SimpleCounter _layoutSetCounter;
+	private final SimpleCounter _layoutSetIdCounter;
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueCounter;
 	private RoleModel _powerUserRoleModel;

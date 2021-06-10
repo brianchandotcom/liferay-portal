@@ -14,6 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.portlet.action;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
@@ -140,6 +141,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 							layoutReportsIssue ->
 								layoutReportsIssue.toJSONObject(
 									_getConfigureLayoutSeoURL(themeDisplay),
+									_getConfigurePagesSeoURL(themeDisplay),
 									resourceBundle)
 						).toArray(
 							size -> new JSONObject[size]
@@ -209,6 +211,34 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
+		}
+
+		return null;
+	}
+
+	private String _getConfigurePagesSeoURL(ThemeDisplay themeDisplay) {
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
+			String configurationPid =
+				"com.liferay.layout.seo.internal.configuration." +
+					"LayoutSEOCompanyConfiguration";
+
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					themeDisplay.getRequest(),
+					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/configuration_admin/edit_configuration"
+			).setRedirect(
+				_getCompleteURL(themeDisplay)
+			).setParameter(
+				"factoryPid", configurationPid
+			).setParameter(
+				"pid", configurationPid
+			).buildString();
 		}
 
 		return null;

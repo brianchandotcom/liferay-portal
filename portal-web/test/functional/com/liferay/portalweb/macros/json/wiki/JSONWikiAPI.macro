@@ -245,6 +245,22 @@ definition {
 		return "${resourcePrimKey}";
 	}
 
+	@summary = "Helper function to move the wiki page to trash via JSON."
+	macro _movePageToTrash {
+		Variables.assertDefined(parameterList = "${title},${nodeId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/wiki.wikipage/move-page-to-trash \
+				-u test@liferay.com:test \
+				-d nodeId=${nodeId} \
+				-d title=${title}
+		''';
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Helper function to update the existing wiki page via JSON."
 	macro _updateWikiPage {
 		Variables.assertDefined(parameterList = "${content},${headline},${nodeId},${serviceContext}");

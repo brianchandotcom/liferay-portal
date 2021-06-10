@@ -58,6 +58,17 @@ definition {
 			viewableBy = "${viewableBy}");
 	}
 
+	@summary = "Directly calls the JSON WS API to move page to trash"
+	macro movePageToTrash {
+		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
+
+		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}");
+
+		JSONWikiAPI._movePageToTrash(
+			nodeId = "${nodeId}",
+			title = "${wikiPageName}");
+	}
+
 	@summary = "Directly calls the JSON WS API to update a wiki page"
 	macro updateWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageContent},${wikiPageName}");

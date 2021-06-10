@@ -2296,7 +2296,8 @@ public class DataFactory {
 				_resourcePermissionIdCounter.get()));
 		counterModels.add(
 			_newCounterModel(
-				SocialActivity.class.getName(), _socialActivityIdCounter.get()));
+				SocialActivity.class.getName(),
+				_socialActivityIdCounter.get()));
 
 		for (Map.Entry<String, SimpleCounter> entry :
 				_layoutIdCounters.entrySet()) {

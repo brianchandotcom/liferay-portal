@@ -45,8 +45,8 @@ public interface LayoutReportsGooglePageSpeedCompanyConfiguration {
 	public String apiKey();
 
 	@Meta.AD(
-		description = "strategy-description", name = "strategy",
-		optionLabels = {"mobile", "desktop"},
+		deflt = "MOBILE", description = "strategy-description",
+		name = "strategy", optionLabels = {"mobile", "desktop"},
 		optionValues = {"MOBILE", "DESKTOP"}, required = false
 	)
 	public String strategy();

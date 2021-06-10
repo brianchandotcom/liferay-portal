@@ -101,7 +101,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedCompanyConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"apiKey", RandomTestUtil.randomString()
 					).put(
@@ -173,7 +173,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedCompanyConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"apiKey", StringPool.BLANK
 					).put(
@@ -224,7 +224,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedCompanyConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"apiKey", RandomTestUtil.randomString()
 					).put(
@@ -312,7 +312,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedConfiguration",
+						"LayoutReportsGooglePageSpeedCompanyConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"apiKey", StringPool.BLANK
 					).put(

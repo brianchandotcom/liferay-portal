@@ -61,14 +61,7 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 					company.getCompanyId());
 
-		String strategy =
-			layoutReportsGooglePageSpeedCompanyConfiguration.strategy();
-
-		if (Validator.isNotNull(strategy)) {
-			return strategy;
-		}
-
-		return _layoutReportsGooglePageSpeedConfiguration.strategy();
+		return layoutReportsGooglePageSpeedCompanyConfiguration.strategy();
 	}
 
 	public boolean isEnabled(Company company) throws ConfigurationException {
@@ -98,14 +91,7 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 					companyId);
 
-		String apiKey =
-			layoutReportsGooglePageSpeedCompanyConfiguration.apiKey();
-
-		if (Validator.isNotNull(apiKey)) {
-			return apiKey;
-		}
-
-		return _layoutReportsGooglePageSpeedConfiguration.apiKey();
+		return layoutReportsGooglePageSpeedCompanyConfiguration.apiKey();
 	}
 
 	private boolean _isEnabled(long companyId) throws ConfigurationException {

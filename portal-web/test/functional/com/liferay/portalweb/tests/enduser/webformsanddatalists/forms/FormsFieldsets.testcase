@@ -113,7 +113,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "5");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Color Field can be added to a Form via Fieldset"

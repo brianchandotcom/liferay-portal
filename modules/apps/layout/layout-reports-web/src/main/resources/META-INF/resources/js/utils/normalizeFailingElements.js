@@ -29,12 +29,6 @@ const ISSUE_TYPES = {
 };
 
 export default function normalizeFailingElements(failingElements, issueType) {
-	if (issueType === ISSUE_TYPES.fontSize) {
-		return failingElements
-			.filter((element) => typeof element.selector === 'object')
-			.map((element) => normalizeFailingElement(element, issueType));
-	}
-
 	return failingElements.map((element) =>
 		normalizeFailingElement(element, issueType)
 	);

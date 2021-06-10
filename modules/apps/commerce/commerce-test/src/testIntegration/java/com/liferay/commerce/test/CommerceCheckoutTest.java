@@ -20,34 +20,46 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalServiceUtil;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -59,6 +71,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -73,6 +86,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -81,6 +95,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.math.BigDecimal;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.frutilla.FrutillaRule;
 
@@ -91,6 +107,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Luca Pellizzon
@@ -341,6 +359,309 @@ public class CommerceCheckoutTest {
 	}
 
 	@Test
+	public void testIsActiveBillingAddressCommerceCheckoutStepNoAddress()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Check if BillingAddressCommerceCheckoutStep is active "
+		).given(
+			"An Order"
+		).when(
+			"Order does not have any addresses (no shipping address, no " +
+				"billing address)"
+		).then(
+			"BillingAddressCommerceCheckoutStep is active"
+		);
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceAccount, null);
+
+		httpServletRequest.setAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		User user = _company.getDefaultUser();
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.addCommerceOrder(
+				user.getUserId(), _commerceChannel.getGroupId(),
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+
+		boolean activeBillingAddressCommerceCheckoutStep =
+			_commerceCheckoutStepHttpHelper.
+				isActiveBillingAddressCommerceCheckoutStep(
+					httpServletRequest, commerceOrder);
+
+		Assert.assertTrue(activeBillingAddressCommerceCheckoutStep);
+	}
+
+	@Test
+	public void testIsActiveBillingAddressCommerceCheckoutStepSameShippingAndBillingAddress()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Check if BillingAddressCommerceCheckoutStep is active "
+		).given(
+			"An Order"
+		).when(
+			"Order has one address as shipping address and the same address " +
+				"as billing address"
+		).then(
+			"BillingAddressCommerceCheckoutStep is false"
+		);
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceAccount, null);
+
+		httpServletRequest.setAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		User user = _company.getDefaultUser();
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.addCommerceOrder(
+				user.getUserId(), _commerceChannel.getGroupId(),
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceAddress commerceAddress = addCommerceAddress(
+			commerceOrder,
+			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING);
+
+		commerceOrder.setBillingAddressId(
+			commerceAddress.getCommerceAddressId());
+		commerceOrder.setShippingAddressId(
+			commerceAddress.getCommerceAddressId());
+
+		commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+			commerceOrder);
+
+		boolean activeBillingAddressCommerceCheckoutStep =
+			_commerceCheckoutStepHttpHelper.
+				isActiveBillingAddressCommerceCheckoutStep(
+					httpServletRequest, commerceOrder);
+
+		Assert.assertFalse(activeBillingAddressCommerceCheckoutStep);
+	}
+
+	@Test
+	public void testIsActiveBillingAddressCommerceCheckoutStepShippingAddressOnly()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Check if BillingAddressCommerceCheckoutStep is active "
+		).given(
+			"An Order"
+		).when(
+			"Order has one address as shipping address and no address as " +
+				"billing address"
+		).then(
+			"BillingAddressCommerceCheckoutStep is true"
+		);
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceAccount, null);
+
+		httpServletRequest.setAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		User user = _company.getDefaultUser();
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.addCommerceOrder(
+				user.getUserId(), _commerceChannel.getGroupId(),
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceAddress commerceAddress = addCommerceAddress(
+			commerceOrder, CommerceAddressConstants.ADDRESS_TYPE_SHIPPING);
+
+		commerceOrder.setShippingAddressId(
+			commerceAddress.getCommerceAddressId());
+
+		commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+			commerceOrder);
+
+		boolean activeBillingAddressCommerceCheckoutStep =
+			_commerceCheckoutStepHttpHelper.
+				isActiveBillingAddressCommerceCheckoutStep(
+					httpServletRequest, commerceOrder);
+
+		Assert.assertTrue(activeBillingAddressCommerceCheckoutStep);
+	}
+
+	@Test
+	public void testIsActivePaymentMethodCommerceCheckoutStepNoPaymentMethodGroupRels()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Check if PaymentMethodCommerceCheckoutStep is active "
+		).given(
+			"An Order"
+		).when(
+			"Order has no PaymentMethodGroupRel  "
+		).then(
+			"PaymentMethodCommerceCheckoutStep is false"
+		);
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceAccount, null);
+
+		httpServletRequest.setAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		User user = _company.getDefaultUser();
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.addCommerceOrder(
+				user.getUserId(), _commerceChannel.getGroupId(),
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+
+		boolean activePaymentMethod =
+			_commerceCheckoutStepHttpHelper.
+				isActivePaymentMethodCommerceCheckoutStep(
+					httpServletRequest, commerceOrder);
+
+		Assert.assertFalse(activePaymentMethod);
+	}
+
+	@Test
+	public void testIsActivePaymentMethodCommerceCheckoutStepNoPaymentMethods()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Check if PaymentMethodCommerceCheckoutStep is active "
+		).given(
+			"An Order"
+		).when(
+			"Order has no PaymentMethod "
+		).then(
+			"PaymentMethodCommerceCheckoutStep is false"
+		);
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceAccount, null);
+
+		httpServletRequest.setAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		User user = _company.getDefaultUser();
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.addCommerceOrder(
+				user.getUserId(), _commerceChannel.getGroupId(),
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCommercePaymentMethodGroupRel(
+			user.getUserId(), commerceOrder.getGroupId());
+
+		CommerceCatalog catalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		BigDecimal price = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			catalog.getGroupId(), price);
+
+		CommerceTestUtil.addCommerceOrderItem(
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
+			commerceContext);
+
+		boolean activePaymentMethod =
+			_commerceCheckoutStepHttpHelper.
+				isActivePaymentMethodCommerceCheckoutStep(
+					httpServletRequest, commerceOrder);
+
+		Assert.assertFalse(activePaymentMethod);
+	}
+
+	@Test
+	public void testIsActivePaymentMethodCommerceCheckoutStepZeroPrice()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Check if PaymentMethodCommerceCheckoutStep is active "
+		).given(
+			"An Order"
+		).when(
+			"Order price is zero "
+		).then(
+			"PaymentMethodCommerceCheckoutStep is false"
+		);
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, _commerceChannel, _user, _group,
+			_commerceAccount, null);
+
+		httpServletRequest.setAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		User user = _company.getDefaultUser();
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.addCommerceOrder(
+				user.getUserId(), _commerceChannel.getGroupId(),
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCommercePaymentMethodGroupRel(
+			user.getUserId(), commerceOrder.getGroupId());
+
+		boolean activePaymentMethod =
+			_commerceCheckoutStepHttpHelper.
+				isActivePaymentMethodCommerceCheckoutStep(
+					httpServletRequest, commerceOrder);
+
+		Assert.assertFalse(activePaymentMethod);
+	}
+
+	@Test
 	public void testLowStockActivityOnCheckout() throws Exception {
 		frutillaRule.scenario(
 			"Use the Order Engine to place an Order containing a Product " +
@@ -486,6 +807,38 @@ public class CommerceCheckoutTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
+	protected CommerceAddress addCommerceAddress(
+			CommerceOrder commerceOrder, int addressType)
+		throws Exception {
+
+		String a2 = RandomTestUtil.randomString(2);
+		String a3 = RandomTestUtil.randomString(3);
+
+		Country country = CountryLocalServiceUtil.fetchCountryByA2(
+			commerceOrder.getCompanyId(), a2);
+
+		if (country == null) {
+			country = CountryLocalServiceUtil.fetchCountryByA3(
+				commerceOrder.getCompanyId(), a3);
+		}
+
+		if (country == null) {
+			country = CountryLocalServiceUtil.addCountry(
+				a2, a3, true, true, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				0D, true, true, false, _serviceContext);
+		}
+
+		return CommerceAddressLocalServiceUtil.addCommerceAddress(
+			CommerceAccount.class.getName(),
+			commerceOrder.getCommerceAccountId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+			country.getCountryId(), RandomTestUtil.randomString(), addressType,
+			_serviceContext);
+	}
+
 	private static Company _company;
 	private static User _user;
 
@@ -494,8 +847,14 @@ public class CommerceCheckoutTest {
 	@Inject
 	private CommerceAccountLocalService _commerceAccountLocalService;
 
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
+
+	@Inject
+	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
@@ -508,6 +867,10 @@ public class CommerceCheckoutTest {
 
 	@Inject
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Inject
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 	@Inject
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;

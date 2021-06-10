@@ -15,6 +15,7 @@
 package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -54,10 +55,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = CommerceCheckoutStepHelper.class
+	service = CommerceCheckoutStepHttpHelper.class
 )
-public class CommerceCheckoutStepHelper {
+public class DefaultCommerceCheckoutStepHttpHelper
+	implements CommerceCheckoutStepHttpHelper {
 
+	@Override
 	public String getOrderDetailURL(
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
@@ -73,13 +76,10 @@ public class CommerceCheckoutStepHelper {
 		return portletURL.toString();
 	}
 
+	@Override
 	public boolean isActiveBillingAddressCommerceCheckoutStep(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
-
-		CommerceOrder commerceOrder =
-			(CommerceOrder)httpServletRequest.getAttribute(
-				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
@@ -98,13 +98,10 @@ public class CommerceCheckoutStepHelper {
 		return true;
 	}
 
+	@Override
 	public boolean isActivePaymentMethodCommerceCheckoutStep(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
-
-		CommerceOrder commerceOrder =
-			(CommerceOrder)httpServletRequest.getAttribute(
-				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		long commercePaymentMethodGroupRelsCount =
 			_commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(
@@ -153,6 +150,7 @@ public class CommerceCheckoutStepHelper {
 		return true;
 	}
 
+	@Override
 	public boolean isActiveShippingMethodCommerceCheckoutStep(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {

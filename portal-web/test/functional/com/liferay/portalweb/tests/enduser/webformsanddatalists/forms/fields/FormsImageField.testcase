@@ -198,13 +198,15 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Test Image");
 
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Image");
+
 		Form.save();
 
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewRadioLabel(
+		FormFields.viewLabel(
 			fieldLabel = "Test Image",
 			fieldName = "Test Image");
 	}

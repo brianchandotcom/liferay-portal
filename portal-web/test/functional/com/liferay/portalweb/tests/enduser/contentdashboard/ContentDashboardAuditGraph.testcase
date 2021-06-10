@@ -585,10 +585,9 @@ definition {
 			value1 = "There are no categories selected");
 	}
 
-	@description = "When the user selects the option Available, the modal lists all the existing Global Vocabularies"
+	@description = "LPS-133797 When the user selects the option Available, the modal lists all the existing Global Vocabularies"
 	@priority = "5"
 	test CheckAvailableVocabulariesDisplayed {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(
@@ -610,22 +609,19 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
 			columnName = "Available",
-			vocabularyName = "Vocabulary Name 1"
-		);
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+			vocabularyName = "Vocabulary Name 1");
 
 		AssertElementPresent(
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
 			columnName = "Available",
-			vocabularyName = "Vocabulary Name 2"
-		);
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+			vocabularyName = "Vocabulary Name 2");
 	}
 
-	@description = "When clicks on the left or right arrows within Configuration and selects one or more vocabularies, the vocabularies go from Available to In use and vice versa"
+	@description = "LPS-133797 When clicks on the left or right arrows within Configuration and selects one or more vocabularies, the vocabularies go from Available to In use and vice versa"
 	@priority = "3"
 	test MoveVocabulariesAcrossConfiguration {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
@@ -636,8 +632,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
 			columnName = "In Use",
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
 			vocabularyName = "Audience");
 
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON");
@@ -645,10 +641,10 @@ definition {
 		AssertClick(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
-		
+
 		Click(
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
 			columnName = "Available",
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
 			vocabularyName = "Topic");
 
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
@@ -659,4 +655,5 @@ definition {
 
 		Pause(locator1 = "3000");
 	}
+
 }

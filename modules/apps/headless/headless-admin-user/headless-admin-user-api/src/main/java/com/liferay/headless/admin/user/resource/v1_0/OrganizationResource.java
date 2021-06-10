@@ -80,6 +80,14 @@ public interface OrganizationResource {
 	public Response putOrganizationBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteUserAccountsByEmailAddress(
+			String organizationId, String[] strings)
+		throws Exception;
+
+	public void postUserAccountsByEmailAddress(
+			String organizationId, String[] strings)
+		throws Exception;
+
 	public void deleteUserAccountByEmailAddress(
 			String organizationId, String emailAddress)
 		throws Exception;

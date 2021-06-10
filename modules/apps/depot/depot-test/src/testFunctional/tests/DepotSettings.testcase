@@ -55,65 +55,6 @@ definition {
 		DepotNavigator.gotoDepot(depotName = "Test Depot For Edited Name");
 	}
 
-	@description = "This ensures that a user can set the depot site connection via settings."
-	@priority = "4"
-	@refactorneeded
-	@uitest
-	test SearchForDocument {
-		property test.name.skip.portal.instance = "DepotSettings#SearchForDocument";
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Bar");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Search Results");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		AssertElementNotPresent(locator1 = "Button#BACK");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Search.searchCP(searchTerm = "DM Document Title");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document");
-
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title");
-
-		SearchPortlets.viewResultDetails(searchAssetTitle = "DM Document Title");
-	}
-
 	@description = "This ensures that the depot language can be set via settings."
 	@priority = "4"
 	@refactorneeded

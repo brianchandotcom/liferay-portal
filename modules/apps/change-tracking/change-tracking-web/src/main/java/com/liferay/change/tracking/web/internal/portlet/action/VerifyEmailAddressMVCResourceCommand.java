@@ -121,25 +121,6 @@ public class VerifyEmailAddressMVCResourceCommand
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		if (!_portletPermission.contains(
-				permissionChecker, CTPortletKeys.PUBLICATIONS,
-				ActionKeys.ACCESS_IN_CONTROL_PANEL) ||
-			!_portletPermission.contains(
-				permissionChecker, CTPortletKeys.PUBLICATIONS,
-				ActionKeys.VIEW)) {
-
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"errorMessage",
-					_language.get(
-						httpServletRequest,
-						"user-does-not-have-permissions-to-access-" +
-							"publications")));
-
-			return;
-		}
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(

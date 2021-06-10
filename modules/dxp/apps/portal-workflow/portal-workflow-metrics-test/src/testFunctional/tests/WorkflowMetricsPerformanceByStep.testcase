@@ -154,7 +154,7 @@ definition {
 
 	}
 
-	@description = "LPS-98233 - Verify that the fields From and To are required"
+	@description = "LPS-100674 - Verify that the fields From and To are required"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test FromAndToAreRequiredFields {

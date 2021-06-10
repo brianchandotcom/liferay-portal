@@ -115,25 +115,25 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 			ActionKeys.CONFIGURATION);
 
 		if (enable) {
-			List<Group> groups = _groupLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					GroupTable.INSTANCE
-				).from(
-					GroupTable.INSTANCE
-				).where(
-					GroupTable.INSTANCE.companyId.eq(
-						companyId
-					).and(
-						GroupTable.INSTANCE.liveGroupId.neq(
-							GroupConstants.DEFAULT_LIVE_GROUP_ID
-						).or(
-							GroupTable.INSTANCE.typeSettings.like(
-								"%staged=true%")
-						).withParentheses()
-					)
-				));
+			for (Group group :
+					_groupLocalService.<List<Group>>dslQuery(
+						DSLQueryFactoryUtil.select(
+							GroupTable.INSTANCE
+						).from(
+							GroupTable.INSTANCE
+						).where(
+							GroupTable.INSTANCE.companyId.eq(
+								companyId
+							).and(
+								GroupTable.INSTANCE.liveGroupId.neq(
+									GroupConstants.DEFAULT_LIVE_GROUP_ID
+								).or(
+									GroupTable.INSTANCE.typeSettings.like(
+										"%staged=true%")
+								).withParentheses()
+							)
+						))) {
 
-			for (Group group : groups) {
 				if (group.isStaged() || group.isStagingGroup()) {
 					throw new StagingEnabledConflictException();
 				}
@@ -168,18 +168,17 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 			return _ctPreferencesLocalService.getCTPreferences(companyId, 0);
 		}
 
-		List<CTPreferences> ctPreferencesList =
-			_ctPreferencesLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					CTPreferencesTable.INSTANCE
-				).from(
-					CTPreferencesTable.INSTANCE
-				).where(
-					CTPreferencesTable.INSTANCE.companyId.eq(companyId)
-				));
+		for (CTPreferences ctPreferences :
+				ctPreferencesPersistence.<List<CTPreferences>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						CTPreferencesTable.INSTANCE
+					).from(
+						CTPreferencesTable.INSTANCE
+					).where(
+						CTPreferencesTable.INSTANCE.companyId.eq(companyId)
+					))) {
 
-		for (CTPreferences ctPreferences : ctPreferencesList) {
-			_ctPreferencesLocalService.deleteCTPreferences(ctPreferences);
+			ctPreferencesPersistence.remove(ctPreferences);
 		}
 
 		return null;

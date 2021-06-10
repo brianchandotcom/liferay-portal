@@ -15,6 +15,8 @@
 package com.liferay.calendar.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
@@ -167,11 +169,17 @@ public class CalendarBookingIndexerIndexedFieldsTest
 		throws Exception {
 
 		map.put(
+			Field.ASSET_ENTRY_ID,
+			String.valueOf(_getAssetEntryId(calendarBooking)));
+		map.put(
 			Field.CLASS_PK, String.valueOf(calendarBooking.getCalendarId()));
 		map.put(Field.ENTRY_CLASS_NAME, calendarBooking.getModelClassName());
 		map.put(
 			Field.ENTRY_CLASS_PK,
 			String.valueOf(calendarBooking.getCalendarBookingId()));
+		map.put(
+			"assetEntryId_sortable",
+			String.valueOf(_getAssetEntryId(calendarBooking)));
 		map.put(
 			"calendarBookingId",
 			String.valueOf(calendarBooking.getCalendarBookingId()));
@@ -244,5 +252,20 @@ public class CalendarBookingIndexerIndexedFieldsTest
 
 	@Inject
 	protected Portal portal;
+
+	private long _getAssetEntryId(CalendarBooking calendarBooking) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId());
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getEntryId();
+	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

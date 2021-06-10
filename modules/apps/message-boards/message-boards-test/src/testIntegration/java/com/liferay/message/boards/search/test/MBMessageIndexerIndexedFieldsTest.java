@@ -15,6 +15,8 @@
 package com.liferay.message.boards.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -151,6 +153,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 		throws Exception {
 
 		Map<String, String> map = HashMapBuilder.put(
+			Field.ASSET_ENTRY_ID, String.valueOf(_getAssetEntryId(mbMessage))
+		).put(
 			Field.CATEGORY_ID, String.valueOf(mbMessage.getCategoryId())
 		).put(
 			Field.CLASS_NAME_ID, String.valueOf(mbMessage.getClassNameId())
@@ -182,6 +186,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"answer_String_sortable", "false"
 		).put(
+			"assetEntryId_sortable", String.valueOf(_getAssetEntryId(mbMessage))
+		).put(
 			"discussion", "false"
 		).put(
 			"parentMessageId", String.valueOf(mbMessage.getParentMessageId())
@@ -209,6 +215,17 @@ public class MBMessageIndexerIndexedFieldsTest {
 		_populateTreePath(mbMessage, map);
 
 		return map;
+	}
+
+	private long _getAssetEntryId(MBMessage mbMessage) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			MBMessage.class.getName(), mbMessage.getMessageId());
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getEntryId();
 	}
 
 	private void _populateDates(MBMessage mbMessage, Map<String, String> map) {
@@ -278,6 +295,9 @@ public class MBMessageIndexerIndexedFieldsTest {
 
 		return HtmlUtil.extractText(content);
 	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	private Group _group;
 

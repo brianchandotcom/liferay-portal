@@ -15,6 +15,8 @@
 package com.liferay.blogs.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -150,6 +152,8 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		throws Exception {
 
 		Map<String, String> map = HashMapBuilder.put(
+			Field.ASSET_ENTRY_ID, String.valueOf(_getAssetEntryId(blogsEntry))
+		).put(
 			Field.COMPANY_ID, String.valueOf(blogsEntry.getCompanyId())
 		).put(
 			Field.CONTENT, blogsEntry.getContent()
@@ -176,6 +180,9 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		).put(
 			Field.USER_NAME, StringUtil.lowerCase(blogsEntry.getUserName())
 		).put(
+			"assetEntryId_sortable",
+			String.valueOf(_getAssetEntryId(blogsEntry))
+		).put(
 			"localized_title", StringUtil.lowerCase(blogsEntry.getTitle())
 		).put(
 			"title_sortable", StringUtil.lowerCase(blogsEntry.getTitle())
@@ -199,6 +206,17 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		_populateTitle(blogsEntry, map);
 
 		return map;
+	}
+
+	private long _getAssetEntryId(BlogsEntry blogsEntry) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getEntryId();
 	}
 
 	private void _populateContent(
@@ -252,6 +270,9 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 			map.put("localized_" + key + "_sortable", title);
 		}
 	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@DeleteAfterTestRun
 	private List<BlogsEntry> _blogsEntries;

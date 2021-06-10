@@ -179,6 +179,42 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Removes users from an organization by their email addresses"
+	)
+	public boolean deleteUserAccountsByEmailAddress(
+			@GraphQLName("organizationId") String organizationId,
+			@GraphQLName("strings") String[] strings)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource ->
+				organizationResource.deleteUserAccountsByEmailAddress(
+					organizationId, strings));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Assigns users to an organization by their email addresses"
+	)
+	public boolean createUserAccountsByEmailAddress(
+			@GraphQLName("organizationId") String organizationId,
+			@GraphQLName("strings") String[] strings)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource ->
+				organizationResource.postUserAccountsByEmailAddress(
+					organizationId, strings));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Removes a user from an organization by their email address"
 	)
 	public boolean deleteUserAccountByEmailAddress(

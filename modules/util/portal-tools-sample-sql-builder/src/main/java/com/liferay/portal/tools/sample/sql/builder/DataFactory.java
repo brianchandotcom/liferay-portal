@@ -305,6 +305,7 @@ import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsP
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
+import com.liferay.portal.service.impl.LayoutLocalServiceImpl;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
@@ -2210,7 +2211,7 @@ public class DataFactory {
 		long groupId, String name, String fragmentEntries) {
 
 		SimpleCounter simpleCounter = _layoutCounters.computeIfAbsent(
-			_getCounterName(groupId, false),
+			LayoutLocalServiceImpl.getCounterName(groupId, false),
 			counterName -> new SimpleCounter());
 
 		LayoutModel layoutModel = new LayoutModelImpl();
@@ -6285,7 +6286,7 @@ public class DataFactory {
 		boolean hidden, String layoutTemplateId, String... columns) {
 
 		SimpleCounter simpleCounter = _layoutCounters.computeIfAbsent(
-			_getCounterName(groupId, privateLayout),
+			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout),
 			counterName -> new SimpleCounter());
 
 		LayoutModel layoutModel = new LayoutModelImpl();
@@ -6971,18 +6972,6 @@ public class DataFactory {
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			ReflectionUtil.throwException(reflectiveOperationException);
 		}
-	}
-
-	private String _getCounterName(long groupId, boolean privateLayout) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(Layout.class.getName());
-		sb.append(StringPool.POUND);
-		sb.append(groupId);
-		sb.append(StringPool.POUND);
-		sb.append(privateLayout);
-
-		return sb.toString();
 	}
 
 	private String _getMBDiscussionCombinedClassName(Class<?> clazz) {

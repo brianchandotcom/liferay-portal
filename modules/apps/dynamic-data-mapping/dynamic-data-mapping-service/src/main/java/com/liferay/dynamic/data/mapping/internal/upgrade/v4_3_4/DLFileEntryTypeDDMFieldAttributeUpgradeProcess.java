@@ -17,11 +17,15 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_4;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.text.NumberFormat;
+
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -32,6 +36,12 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_updateCheckboxFieldType();
+
+		_updateNumericFieldType();
+	}
+
+	private void _updateCheckboxFieldType() throws Exception {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("select DDMField.storageId, DDMField.fieldName from ");
@@ -82,6 +92,78 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 								preparedStatement3.setString(
 									1, Arrays.toString(new String[0]));
 							}
+
+							preparedStatement3.setLong(
+								2, resultSet2.getLong(1));
+
+							preparedStatement3.addBatch();
+						}
+					}
+				}
+
+				preparedStatement3.executeBatch();
+			}
+		}
+	}
+
+	private void _updateNumericFieldType() throws Exception {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("select DDMField.storageId, DDMField.fieldId from ");
+		sb.append("DLFileEntryType inner join DDMStructureVersion on ");
+		sb.append("DDMStructureVersion.structureId = ");
+		sb.append("DLFileEntryType.dataDefinitionId inner join DDMField on ");
+		sb.append("DDMStructureVersion.structureVersionId = ");
+		sb.append("DDMField.structureVersionId and DDMField.fieldType like ? ");
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				sb.toString())) {
+
+			sb = new StringBundler(4);
+
+			sb.append("select fieldAttributeId, languageId, ");
+			sb.append("smallAttributeValue from DDMFieldAttribute where ");
+			sb.append("storageId = ? and fieldId = ? and (attributeName is ");
+			sb.append("null or attributeName = '') ");
+
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				sb.toString());
+
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update DDMFieldAttribute set smallAttributeValue = " +
+							"? where fieldAttributeId = ? "));
+
+			preparedStatement1.setString(1, "numeric");
+
+			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+				while (resultSet1.next()) {
+					preparedStatement2.setLong(1, resultSet1.getLong(1));
+					preparedStatement2.setLong(2, resultSet1.getLong(2));
+
+					try (ResultSet resultSet2 =
+							preparedStatement2.executeQuery()) {
+
+						while (resultSet2.next()) {
+							String languageId = resultSet2.getString(2);
+
+							Locale locale = LocaleUtil.fromLanguageId(
+								languageId);
+
+							NumberFormat numberFormat =
+								NumberFormat.getNumberInstance(locale);
+
+							numberFormat.setGroupingUsed(true);
+
+							String valueString = resultSet2.getString(3);
+
+							Number number = numberFormat.parse(valueString);
+
+							numberFormat.setGroupingUsed(false);
+
+							preparedStatement3.setString(
+								1, numberFormat.format(number));
 
 							preparedStatement3.setLong(
 								2, resultSet2.getLong(1));

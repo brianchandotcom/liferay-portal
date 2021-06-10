@@ -30,12 +30,10 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the language can be set in a depot."
-	@priority = "5"
+	@description = "This ensures that the depot language can be set in a depot."
+	@priority = "4"
 	@refactorneeded
-	test Smoke {
-		property portal.acceptance = "true";
-
+	test CanSetCustomLanguage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -44,9 +42,7 @@ definition {
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
-		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
-
-		Depot.viewDefaultLanguagesConfiguration();
+		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
 
 		Click.clickNoMouseOverNoWaitForVisible(
 			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",
@@ -55,6 +51,28 @@ definition {
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
 
 		Depot.viewCurrentLanguages(currentLanguages = "English (United States),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden),Arabic (Saudi Arabia)");
+
+		Depot.configureDefaultLanguage(
+			defaultDepotLanguage = "Spanish (Spain)",
+			locale = "es_ES");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		AssertElementNotPresent(locator1 = "Button#BACK");
+
+		Depot.viewGeneralLanguageOptions(currentLanguageList = "es_ES");
+
+		AssertElementPresent(
+			key_unnamedTitle = "Repositorio sin nombre",
+			locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
+
+		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
+
+		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
 	}
 
 	@description = "This ensures that the custom type language can be set in a depot."

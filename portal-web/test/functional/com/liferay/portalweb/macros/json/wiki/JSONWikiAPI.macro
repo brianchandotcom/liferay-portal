@@ -31,7 +31,7 @@ definition {
 
 	@summary = "Helper function to add a wiki child page via JSON"
 	macro _addWikiChildPage {
-		Variables.assertDefined(parameterList = "${pageId},${headline}");
+		Variables.assertDefined(parameterList = "${parentResourcePrimKey},${headline}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -64,7 +64,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${pageId}/wiki-pages \
+			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
 			-H 'Content-Type: application/json' \
 			-u 'test@liferay.com:test' \
 			-d '{
@@ -217,6 +217,32 @@ definition {
 		echo("## * PageId: ${pageId}");
 
 		return "${pageId}";
+	}
+
+	@summary = "Get the resourcePrimKey by pagename"
+	macro _getPageResourcePrimKey {
+		Variables.assertDefined(parameterList = "${nodeId},${title}");
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/wiki.wikipage/get-page \
+				-u test@liferay.com:test \
+				-d nodeId=${nodeId} \
+				-d title=${title}
+		''';
+
+		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['resourcePrimKey']");
+
+		if ("${resourcePrimKey}" == "[]") {
+			fail("FAIL. Cannot find wiki page resourcePrimKey.");
+		}
+
+		echo("## * resourcePrimKey: ${resourcePrimKey}");
+
+		return "${resourcePrimKey}";
 	}
 
 	@summary = "Helper function to update the existing wiki page via JSON."

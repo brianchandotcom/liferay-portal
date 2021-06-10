@@ -42,6 +42,22 @@ definition {
 		return "${pageId}";
 	}
 
+	macro setResourcePrimKey {
+		Variables.assertDefined(parameterList = "${title},${groupName},${name}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var nodeId = JSONWikiAPI._getNodeIdByName(groupId = "${groupId}", name = "${name}");
+
+		var resourcePrimKey = JSONWikiAPI._getPageResourcePrimKey(nodeId = "${nodeId}", title = "${title}");
+
+		return "${resourcePrimKey}";
+	}
+
 	macro setServiceContext {
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",

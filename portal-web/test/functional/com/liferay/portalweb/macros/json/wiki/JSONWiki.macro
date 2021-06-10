@@ -17,14 +17,14 @@ definition {
 	macro addWikiChildPage {
 		Variables.assertDefined(parameterList = "${wikiParentPageName},${wikiChildPageName},${wikiNodeName}");
 
-		var pageId = JSONWikiSetter.setPageId(groupName = "${groupName}", title = "${wikiParentPageName}", name = "${wikiNodeName}");
+		var parentResourcePrimKey = JSONWikiSetter.setResourcePrimKey(groupName = "${groupName}", title = "${wikiParentPageName}", name = "${wikiNodeName}");
 
 		JSONWikiAPI._addWikiChildPage(
 			assetCategoryIds = "${assetCategoryIds}",
 			content = "${wikiChildPageContent}",
 			encodingFormat = "${encodingFormat}",
 			headline = "${wikiChildPageName}",
-			pageId = "${pageId}",
+			parentResourcePrimKey = "${parentResourcePrimKey}",
 			tagName = "${tagName}",
 			viewableBy = "${viewableBy}");
 	}

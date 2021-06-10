@@ -218,8 +218,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		if (Validator.isNotNull(transportTcpPort)) {
 			put("transport.port", transportTcpPort);
 		}
-
-		put("transport.type", "netty4");
 	}
 
 	protected void configurePaths() {
@@ -298,6 +296,8 @@ public class ElasticsearchInstanceSettingsBuilder {
 		configurePaths();
 
 		configureTestMode();
+
+		put("xpack.ml.enabled", false);
 	}
 
 	protected void loadSettingsContributors() {

@@ -99,7 +99,6 @@ function TopperContent({
 	className,
 	isActive,
 	isHovered,
-	isMapped,
 	item,
 	itemElement,
 	style,
@@ -174,7 +173,6 @@ function TopperContent({
 				dragged: isDraggingSource,
 				hovered: isHovered,
 				'not-droppable': !!notDroppableMessage,
-				'page-editor__topper--mapped': isMapped,
 			})}
 			onClick={(event) => {
 				event.stopPropagation();

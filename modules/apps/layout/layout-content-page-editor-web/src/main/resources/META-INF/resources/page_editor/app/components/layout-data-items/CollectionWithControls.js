@@ -32,11 +32,11 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 	const hoveredItemId = useHoveredItemId();
 	const [setRef, itemElement] = useSetRef(ref);
 
-	const isMapped =
-		item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-		'collection' in item.config;
-
 	useEffect(() => {
+		const isMapped =
+			item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+			'collection' in item.config;
+
 		if (isMapped) {
 			setHovered(
 				isHovered({
@@ -46,14 +46,13 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 				})
 			);
 		}
-	}, [isMapped, item, hoveredItemId, hoveredItemType]);
+	}, [item, hoveredItemId, hoveredItemType]);
 
 	return (
 		<Topper
 			className={classNames({
 				'page-editor__topper--hovered': hovered,
 			})}
-			isMapped={isMapped}
 			item={item}
 			itemElement={itemElement}
 		>

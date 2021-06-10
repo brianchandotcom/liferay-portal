@@ -822,7 +822,7 @@ definition {
 
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
-	test FieldReferenceCanBeEdited {
+	test ReferenceCanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
@@ -850,16 +850,9 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
-		Click(
-			key_name = "Paragraph",
-			locator1 = "FormFields#FIELD_TARGET_LABEL");
-
-		Form.gotoAdvancedTab();
-
-		AssertElementPresent(
-			key_fieldName = "",
-			key_fieldValue = "Paragraph1234",
-			locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		FormFields.viewFieldReference(
+			fieldName = "Paragraph",
+			key_fieldReferenceValue = "Paragraph1234");
 	}
 
 	@description = "Verify that text in the Body Text can be Bolded, Italicized and Underlined"

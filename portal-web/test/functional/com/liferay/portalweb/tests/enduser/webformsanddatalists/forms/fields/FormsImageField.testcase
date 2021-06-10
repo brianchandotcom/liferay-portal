@@ -349,9 +349,9 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
-		Form.viewFieldReference(
+		FormFields.viewFieldReference(
 			fieldName = "Image",
-			key_fieldReference = "Image1234");
+			key_fieldReferenceValue = "Image1234");
 	}
 
 	@description = "Verify that an image added to the Image Field can be removed by clicking the Clear button"

@@ -840,9 +840,9 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
-		Form.viewFieldReference(
+		FormFields.viewFieldReference(
 			fieldName = "Select from List",
-			key_fieldReference = "SelectFromList1234");
+			key_fieldReferenceValue = "SelectFromList1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

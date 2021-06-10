@@ -886,7 +886,7 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
-		Form.editName(formName = "Form1");
+		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
@@ -894,26 +894,17 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		Form.editFieldReferenceMetal(fieldValue = "Single1234");
+		Form.editFieldReferenceMetal(fieldValue = "SingleSelection1234");
 
 		Form.save();
 
 		FormsAdminNavigator.gotoBack();
 
-		Click(
-			key_formName = "Form1",
-			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
-		Click(
-			key_name = "Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL");
-
-		Form.gotoAdvancedTab();
-
-		AssertElementPresent(
-			key_fieldName = "",
-			key_fieldValue = "Single1234",
-			locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		FormFields.viewFieldReference(
+			fieldName = "Single Selection",
+			key_fieldReferenceValue = "SingleSelection1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

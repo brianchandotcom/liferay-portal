@@ -720,7 +720,7 @@ definition {
 
 		FormFields.viewFieldReference(
 			fieldName = "Text",
-			fieldReferenceValue = "Text1234");
+			key_fieldReferenceValue = "Text1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

@@ -418,9 +418,9 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
-		Form.viewFieldReference(
+		FormFields.viewFieldReference(
 			fieldName = "Rich Text",
-			fieldValue = "RichText1234");
+			key_fieldReferenceValue = "RichText1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

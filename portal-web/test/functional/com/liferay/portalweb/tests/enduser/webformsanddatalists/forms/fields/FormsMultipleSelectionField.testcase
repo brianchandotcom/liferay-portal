@@ -723,7 +723,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
 
-		FormFields.editFieldReference(key_fieldReference = "Multiple1234");
+		FormFields.editFieldReference(key_fieldReference = "MultipleSelection1234");
 
 		Form.save();
 
@@ -733,7 +733,7 @@ definition {
 
 		FormFields.viewFieldReference(
 			fieldName = "Multiple Selection",
-			fieldReferenceValue = "Multiple1234");
+			key_fieldReferenceValue = "MultipleSelection1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

@@ -129,6 +129,9 @@ const CollaboratorRow = ({
 	if (user.isOwner) {
 		label = Liferay.Language.get('owner');
 	}
+	else if (user.new) {
+		label = Liferay.Language.get('add') + ' (' + label + ')';
+	}
 	else if (
 		changed &&
 		Object.prototype.hasOwnProperty.call(user, 'roleValue')

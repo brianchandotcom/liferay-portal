@@ -1,0 +1,201 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.object.web.internal.info.item.provider;
+
+import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.object.exception.NoSuchDefinitionException;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Locale;
+import java.util.Set;
+
+import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jorge Ferrer
+ */
+@Component(
+	immediate = true, property = Constants.SERVICE_RANKING + ":Integer=10",
+	service = InfoItemFormProvider.class
+)
+public class ObjectEntryInfoItemFormProvider
+	implements InfoItemFormProvider<ObjectEntry> {
+
+	@Override
+	public InfoForm getInfoForm() {
+		try {
+			return _getInfoForm(0);
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			throw new RuntimeException(noSuchFormVariationException);
+		}
+	}
+
+	@Override
+	public InfoForm getInfoForm(ObjectEntry objectEntry) {
+		long objectDefinitionId = objectEntry.getObjectDefinitionId();
+
+		try {
+			return _getInfoForm(objectDefinitionId);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(
+				StringBundler.concat(
+					"Unable to get object definition ", objectDefinitionId,
+					"for object entry ", objectEntry.getObjectEntryId()),
+				portalException);
+		}
+	}
+
+	@Override
+	public InfoForm getInfoForm(String formVariationKey)
+		throws NoSuchFormVariationException {
+
+		return _getInfoForm(GetterUtil.getLong(formVariationKey));
+	}
+
+	@Override
+	public InfoForm getInfoForm(String formVariationKey, long groupId)
+		throws NoSuchFormVariationException {
+
+		return _getInfoForm(GetterUtil.getLong(formVariationKey));
+	}
+
+	private InfoFieldSet _getBasicInformationInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.publishDateInfoField
+		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.authorNameInfoField
+		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.authorProfileImageInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "basic-information")
+		).name(
+			"basic-information"
+		).build();
+	}
+
+	private InfoFieldSet _getDefinitionFieldSet(long objectDefinitionId)
+		throws NoSuchDefinitionException {
+
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
+
+			InfoLocalizedValue<String> fieldSetNameInfoLocalizedValue =
+				InfoLocalizedValue.singleValue(objectDefinition.getName());
+
+			return InfoFieldSet.builder(
+			).infoFieldSetEntry(
+				consumer -> {
+					for (ObjectField objectField :
+							_objectFieldLocalService.getObjectFields(
+								objectDefinitionId)) {
+
+						consumer.accept(
+							InfoFieldSet.builder(
+							).name(
+								objectField.getName()
+							).labelInfoLocalizedValue(
+								InfoLocalizedValue.singleValue(
+									objectField.getName())
+							).build());
+					}
+				}
+			).labelInfoLocalizedValue(
+				fieldSetNameInfoLocalizedValue
+			).name(
+				objectDefinition.getName()
+			).build();
+		}
+		catch (NoSuchDefinitionException noSuchDefinitionException) {
+			throw noSuchDefinitionException;
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException("Unexpected exception", portalException);
+		}
+	}
+
+	private InfoForm _getInfoForm(long objectDefinitionId)
+		throws NoSuchFormVariationException {
+
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
+			InfoLocalizedValue.builder();
+
+		for (Locale locale : availableLocales) {
+			infoLocalizedValueBuilder.value(
+				locale,
+				ResourceActionsUtil.getModelResource(
+					locale, ObjectEntry.class.getName()));
+		}
+
+		try {
+			return InfoForm.builder(
+			).infoFieldSetEntry(
+				_getBasicInformationInfoFieldSet()
+			).<NoSuchDefinitionException>infoFieldSetEntry(
+				consumer -> {
+					if (objectDefinitionId != 0) {
+						consumer.accept(
+							_getDefinitionFieldSet(objectDefinitionId));
+					}
+				}
+			).infoFieldSetEntry(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+					ObjectEntry.class.getName())
+			).labelInfoLocalizedValue(
+				infoLocalizedValueBuilder.build()
+			).name(
+				ObjectEntry.class.getName()
+			).build();
+		}
+		catch (NoSuchDefinitionException noSuchDefinitionException) {
+			throw new NoSuchFormVariationException(
+				String.valueOf(objectDefinitionId), noSuchDefinitionException);
+		}
+	}
+
+	@Reference
+	private InfoItemFieldReaderFieldSetProvider
+		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+}

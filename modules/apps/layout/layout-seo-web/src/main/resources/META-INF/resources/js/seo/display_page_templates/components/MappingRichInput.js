@@ -35,15 +35,20 @@ function MappingInput({
 	selectedFieldKey,
 	selectedSource,
 }) {
+	const initialSelectedField = initialFields.find(
+		({key}) => key === selectedFieldKey
+	);
 	const fields = [
 		UNMAPPED_OPTION,
 		...initialFields.filter(({type}) => type === fieldType),
 	];
 	const [source, setSource] = useState(selectedSource);
-	const [field, setField] = useState(
-		fields.find(({key}) => key === selectedFieldKey) || UNMAPPED_OPTION
+	const [field, setField] = useState(initialSelectedField || UNMAPPED_OPTION);
+	const [value, setValue] = useState(
+		initialSelectedField
+			? FIELD_TEMPLATE(initialSelectedField.key).trim()
+			: ''
 	);
-	const [value, setValue] = useState('');
 	const inputEl = useRef(null);
 	const isMounted = useIsMounted();
 
@@ -94,13 +99,13 @@ function MappingInput({
 					<ClayInput
 						component="textarea"
 						id={name}
+						name={name}
 						onChange={(event) => {
 							setValue(event.target.value);
 						}}
 						ref={inputEl}
 						value={value}
 					/>
-					<ClayInput name={name} type="hidden" value={field.key} />
 				</ClayInput.GroupItem>
 				<ClayInput.GroupItem shrink>
 					<MappingPanel

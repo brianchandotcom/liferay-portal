@@ -370,12 +370,6 @@ definition {
 			depotName = "Test Depot Name",
 			noApplication = "true");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Collections,Web Content",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
@@ -417,12 +411,6 @@ definition {
 			applicationList = "Web Content",
 			depotName = "Test Depot Name",
 			noApplication = "true");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Collections,Documents and Media",
-			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 

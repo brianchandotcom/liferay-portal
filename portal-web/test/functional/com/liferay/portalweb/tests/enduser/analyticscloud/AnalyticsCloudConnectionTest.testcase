@@ -8,27 +8,13 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-
-		// Open Analytics Cloud, login, open faro demo workspace and take the token to connect to DXP
-
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-		Navigator.openURL(baseURL = "${analyticsCloudURL}");
-
-		// Take token from Analytics Cloud
-
-		ACLogin.loginAs();
-
-		ACWorkspace.openWorkspace();
+		ACUtils.launchAC();
 
 		ACSettings.takeTokenFromAnalyticsCloud();
 
-		// Go to DXP portal
-
 		TestCase.setUpPortalInstance();
 
-		Navigator.openURL();
-
-		User.firstLoginPG();
+		ACUtils.launchDXP();
 	}
 
 	tearDown {
@@ -41,6 +27,35 @@ definition {
 		}
 
 		ACUtils.tearDownAC();
+	}
+
+	@description = "Sync Liferay Data Source Contacts"
+	@priority = "5"
+	test CanSyncAllContactsFromDXPToAC {
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP");
+
+		ACNavigation.goToIndividuals();
+
+		ACNavigation.switchTab(tabName = "Known Individuals");
+
+		ACUtils.searchBar(searchItem = "Test Test");
+
+		ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Test Test");
+
+		ACNavigation.switchTab(tabName = "Details");
+
+		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "test@liferay.com");
+
+		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Test");
 	}
 
 	@description = "Validate if the user can connect AC to DXP"

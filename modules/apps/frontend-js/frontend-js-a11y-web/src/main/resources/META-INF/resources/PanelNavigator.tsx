@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
@@ -26,9 +27,16 @@ type PanelNavigatorProps = {
 	impact?: ImpactValue;
 	onBack: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	title: string;
+	tags: Array<string>;
 };
 
-function PanelNavigator({helpUrl, impact, onBack, title}: PanelNavigatorProps) {
+function PanelNavigator({
+	helpUrl,
+	impact,
+	onBack,
+	tags,
+	title,
+}: PanelNavigatorProps) {
 	return (
 		<div className="sidebar-header">
 			<ClayButton
@@ -36,9 +44,9 @@ function PanelNavigator({helpUrl, impact, onBack, title}: PanelNavigatorProps) {
 				displayType="unstyled"
 				onClick={onBack}
 			>
-				<ClayLayout.ContentCol className="align-self-center mr-2">
+				<div className="mr-2">
 					<ClayIcon symbol="angle-left" />
-				</ClayLayout.ContentCol>
+				</div>
 				<ClayLayout.ContentCol expand>
 					<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
 					{impact && (
@@ -49,10 +57,17 @@ function PanelNavigator({helpUrl, impact, onBack, title}: PanelNavigatorProps) {
 								displayType="unstyled"
 								href={helpUrl}
 							>
-								WCAG
+								{Liferay.Language.get('more-info')}
 							</ClayLink>
 						</ClayList.ItemText>
 					)}
+					<div className="list-group-detail">
+						{tags.map((tag) => (
+							<ClayLabel displayType="info" key={tag}>
+								{tag}
+							</ClayLabel>
+						))}
+					</div>
 				</ClayLayout.ContentCol>
 			</ClayButton>
 		</div>

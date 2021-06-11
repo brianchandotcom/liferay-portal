@@ -57,7 +57,7 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 
 	const currentViolation = violations[violationIndex];
 
-	const {helpUrl} = currentViolation;
+	const {helpUrl, tags} = currentViolation;
 
 	const {html, impact, target} = currentViolation.nodes[occurrenceIndex];
 
@@ -71,6 +71,7 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 						previous();
 					}
 				}}
+				tags={tags}
 				title={occurrenceName}
 			/>
 			<div className="a11y-panel__sidebar--occurrence-description-wrapper">

@@ -66,7 +66,7 @@ function Violation({
 
 	const {violationIndex} = navigationState;
 
-	const {description, helpUrl, id, impact, nodes} = violations[
+	const {description, helpUrl, id, impact, nodes, tags} = violations[
 		violationIndex
 	];
 
@@ -80,6 +80,7 @@ function Violation({
 						previous();
 					}
 				}}
+				tags={tags}
 				title={id}
 			/>
 			<div className="a11y-panel__sidebar--violation-panel-wrapper">
@@ -92,7 +93,7 @@ function Violation({
 							{nodes.map((_occurrence, index) => {
 								const occurrenceName = `${Liferay.Language.get(
 									'occurrence'
-								)} ${String(index)}`;
+								)} ${String(index + 1)}`;
 
 								return (
 									<Rule

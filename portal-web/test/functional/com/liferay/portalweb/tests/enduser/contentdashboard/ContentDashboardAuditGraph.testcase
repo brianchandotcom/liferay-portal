@@ -588,72 +588,80 @@ definition {
 	@description = "LPS-133797 When the user selects the option Available, the modal lists all the existing Global Vocabularies"
 	@priority = "5"
 	test CheckAvailableVocabulariesDisplayed {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+		task ("Create 2 new vocabularies") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				panel = "Site Administration",
+				portlet = "Categories");
 
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name 1");
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name 1");
 
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name 2");
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name 2");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Check if vocabularies are avalible") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
 
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementPresent(
-			columnName = "Available",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
-			vocabularyName = "Vocabulary Name 1");
+			AssertElementPresent(
+				columnName = "Available",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+				vocabularyName = "Vocabulary Name 1");
 
-		AssertElementPresent(
-			columnName = "Available",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
-			vocabularyName = "Vocabulary Name 2");
+			AssertElementPresent(
+				columnName = "Available",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+				vocabularyName = "Vocabulary Name 2");
+		}
 	}
 
 	@description = "LPS-133797 When clicks on the left or right arrows within Configuration and selects one or more vocabularies, the vocabularies go from Available to In use and vice versa"
 	@priority = "3"
 	test MoveVocabulariesAcrossConfiguration {
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task ("Go to Content Dashboard > Audic Graph configuration") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
 
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
 
-		Click(
-			columnName = "In Use",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
-			vocabularyName = "Audience");
+		task ("Move vocabulary from in use to available") {
+			Click(
+				columnName = "In Use",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+				vocabularyName = "Audience");
 
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON");
+			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON");
 
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
 
-		Click(
-			columnName = "Available",
-			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
-			vocabularyName = "Topic");
+		task ("Move vocabulary from available to in use") {
+			Click(
+				columnName = "Available",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+				vocabularyName = "Topic");
 
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
 
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		Pause(locator1 = "3000");
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
 	}
 
 }

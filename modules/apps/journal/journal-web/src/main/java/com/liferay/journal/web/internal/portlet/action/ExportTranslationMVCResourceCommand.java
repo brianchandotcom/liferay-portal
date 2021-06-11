@@ -85,8 +85,10 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			Object object = infoItemObjectProvider.getInfoItem(
 				new GroupKeyInfoItemIdentifier(
-					themeDisplay.getScopeGroupId(),
-					ParamUtil.getString(resourceRequest, "articleId")));
+					ParamUtil.getLong(
+						resourceRequest, "groupId",
+						themeDisplay.getScopeGroupId()),
+					ParamUtil.getString(resourceRequest, "key")));
 
 			InfoFieldValue<Object> infoItemFieldValue =
 				infoItemFieldValuesProvider.getInfoItemFieldValue(

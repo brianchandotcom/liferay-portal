@@ -49,8 +49,8 @@ const ExportTranslationModal = ({
 	const exportTranslationPortletURL = Liferay.Util.PortletURL.createPortletURL(
 		exportTranslationURL,
 		{
-			articleId: articleIds[0],
 			exportMimeType,
+			key: articleIds[0],
 			sourceLanguageId,
 			targetLanguageIds: selectedTargetLanguageIds.join(','),
 		}

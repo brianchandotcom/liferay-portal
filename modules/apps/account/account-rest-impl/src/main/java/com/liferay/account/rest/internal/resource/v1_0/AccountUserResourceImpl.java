@@ -22,6 +22,7 @@ import com.liferay.account.rest.internal.odata.entity.v1_0.AccountUserEntityMode
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
@@ -34,6 +35,9 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -78,6 +82,33 @@ public class AccountUserResourceImpl
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			emailAddress);
+	}
+
+	@Override
+	public void deleteAccountUsersByEmailAddress(
+			Long accountId, String[] userEmailAddresses)
+		throws Exception {
+
+		_withTransaction(
+			() -> {
+				for (String emailAddress : userEmailAddresses) {
+					deleteAccountUserByEmailAddress(accountId, emailAddress);
+				}
+			});
+	}
+
+	@Override
+	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] userEmailAddresses)
+		throws Exception {
+
+		_withTransaction(
+			() -> {
+				for (String emailAddress : userEmailAddresses) {
+					deleteAccountUserByExternalReferenceCodeByEmailAddress(
+						externalReferenceCode, emailAddress);
+				}
+			});
 	}
 
 	@Override
@@ -191,6 +222,33 @@ public class AccountUserResourceImpl
 			emailAddress);
 	}
 
+	@Override
+	public void postAccountUsersByEmailAddress(
+			Long accountId, String[] userEmailAddresses)
+		throws Exception {
+
+		_withTransaction(
+			() -> {
+				for (String emailAddress : userEmailAddresses) {
+					postAccountUserByEmailAddress(accountId, emailAddress);
+				}
+			});
+	}
+
+	@Override
+	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] userEmailAddresses)
+		throws Exception {
+
+		_withTransaction(
+			() -> {
+				for (String emailAddress : userEmailAddresses) {
+					postAccountUserByExternalReferenceCodeByEmailAddress(
+						externalReferenceCode, emailAddress);
+				}
+			});
+	}
+
 	private long _getListTypeId(String value, String type) {
 		ListType listType = _listTypeLocalService.addListType(value, type);
 
@@ -220,6 +278,27 @@ public class AccountUserResourceImpl
 	private AccountUser _toAccountUser(User user) throws Exception {
 		return _accountUserResourceDTOConverter.toDTO(user);
 	}
+
+	private void _withTransaction(UnsafeRunnable<Exception> runnable)
+		throws Exception {
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					runnable.run();
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
+	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.SUPPORTS, new Class<?>[] {Exception.class});
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

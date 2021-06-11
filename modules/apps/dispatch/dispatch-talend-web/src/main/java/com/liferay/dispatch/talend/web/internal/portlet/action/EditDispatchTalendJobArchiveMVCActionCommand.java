@@ -18,11 +18,8 @@ import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.talend.archive.TalendArchive;
 import com.liferay.dispatch.talend.archive.TalendArchiveParserUtil;
 import com.liferay.dispatch.talend.archive.exception.TalendArchiveException;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,14 +34,12 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import java.util.Properties;
 import java.util.zip.ZipException;
 
 import javax.portlet.ActionRequest;
@@ -129,26 +124,6 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		}
 	}
 
-	private String _getJVMOptions(String newJVMOptions, String oldJVMOptions) {
-		String[] jvmOptions = newJVMOptions.split("\\s");
-
-		StringBundler sb = new StringBundler((jvmOptions.length * 2) + 1);
-
-		for (String newJVMOption : jvmOptions) {
-			if (oldJVMOptions.contains(newJVMOption)) {
-				continue;
-			}
-
-			sb.append(newJVMOption);
-
-			sb.append(StringPool.SPACE);
-		}
-
-		sb.append(oldJVMOptions);
-
-		return sb.toString();
-	}
-
 	private boolean _isArchiveException(Exception exception) {
 		if (exception instanceof TalendArchiveException ||
 			exception instanceof ZipException ||
@@ -164,44 +139,14 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 			long dispatchTriggerId, InputStream jobArchiveInputStream)
 		throws PortalException {
 
-		TalendArchive talendArchive = TalendArchiveParserUtil.parse(
-			jobArchiveInputStream);
-
-		if (!talendArchive.hasJVMOptions()) {
-			return;
-		}
-
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
 
 		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		String newJVMOptions = talendArchive.getJVMOptions();
-
-		String oldJVMOptions =
-			dispatchTaskSettingsUnicodeProperties.getProperty("JAVA_OPTS");
-
-		if (Validator.isNotNull(oldJVMOptions)) {
-			newJVMOptions = _getJVMOptions(newJVMOptions, oldJVMOptions);
-		}
-
-		dispatchTaskSettingsUnicodeProperties.put("JAVA_OPTS", newJVMOptions);
-
-		Properties contextProperties = talendArchive.getContextProperties();
-
-		for (String propertyName : contextProperties.stringPropertyNames()) {
-			if (dispatchTaskSettingsUnicodeProperties.containsKey(
-					propertyName)) {
-
-				continue;
-			}
-
-			dispatchTaskSettingsUnicodeProperties.put(
-				propertyName,
-				contextProperties.getProperty(propertyName) +
-					" (Automatic Copy)");
-		}
+		TalendArchiveParserUtil.updateUnicodeProperties(
+			jobArchiveInputStream, dispatchTaskSettingsUnicodeProperties);
 
 		_dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties,

@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON</td>
+	<td>//button[contains(@class, 'move-left')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON</td>
+	<td>//button[contains(@class, 'move-right')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_STAGE_VOCABULARY</td>
 	<td>//option[contains(text(),'Stage')]</td>
 	<td></td>
@@ -31,16 +41,6 @@
 <tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE</td>
 	<td>//div[contains(@class, 'form-group')]/label[contains(text(), 'Available')]/../select/option[contains(text(), '${vocabularyName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'move-left')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'move-right')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -245,6 +245,26 @@
 <tr>
 	<td>SEARCH_TAG_FIELD</td>
 	<td>//*[contains(@class,'form-control input-group-inset input-group-inset-after') and contains(@name,'AssetTagsSelector')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY</td>
+	<td>//div[contains(@class, 'form-group-inline')] //label[contains(text(), 'Session Property Name')]/../select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_PROPERTY_OPTION</td>
+	<td>//label[contains(text(), 'Session Property Name')]/..//option[contains(text(), '${propertyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY</td>
+	<td>//div[contains(@class, 'form-group-inline')] //label[contains(text(), 'Vocabulary Name')]/../select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_PROPERTY_SESSION_LINK_VOCABULARY_OPTION</td>
+	<td>//label[contains(text(), 'Vocabulary Name')]/..//option[contains(text(), '${vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>

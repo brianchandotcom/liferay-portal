@@ -80,9 +80,13 @@ definition {
 
 		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
+		FormFields.viewLabel(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
 
 		Form.save();
 

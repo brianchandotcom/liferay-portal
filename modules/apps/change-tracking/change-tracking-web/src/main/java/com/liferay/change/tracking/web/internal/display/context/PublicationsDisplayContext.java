@@ -96,7 +96,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	}
 
 	public Map<String, Object> getCollaboratorsReactData(
-		CTCollection ctCollection, PermissionChecker permissionChecker) {
+		CTCollection ctCollection) {
 
 		return HashMapBuilder.<String, Object>put(
 			"autocompleteUserURL",
@@ -213,23 +213,10 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 			CTCollection ctCollection, PermissionChecker permissionChecker)
 		throws Exception {
 
-		if (ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED) {
-			return HashMapBuilder.<String, Object>put(
-				"reviewURL",
-				PublicationsPortletURLUtil.getHref(
-					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/change_tracking/view_changes", "ctCollectionId",
-					String.valueOf(ctCollection.getCtCollectionId()))
-			).put(
-				"spritemap",
-				_themeDisplay.getPathThemeImages() + "/clay/icons.svg"
-			).build();
-		}
+		Map<String, Object> data = getCollaboratorsReactData(ctCollection);
 
-		Map<String, Object> data = getCollaboratorsReactData(
-			ctCollection, permissionChecker);
-
-		if (CTCollectionPermission.contains(
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
+			CTCollectionPermission.contains(
 				permissionChecker, ctCollection, ActionKeys.UPDATE)) {
 
 			if (ctCollection.getCtCollectionId() != _ctCollectionId) {
@@ -259,7 +246,8 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 				"/change_tracking/view_changes", "ctCollectionId",
 				String.valueOf(ctCollection.getCtCollectionId())));
 
-		if (CTCollectionPermission.contains(
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
+			CTCollectionPermission.contains(
 				permissionChecker, ctCollection, ActionKeys.PERMISSIONS)) {
 
 			data.put(
@@ -279,7 +267,8 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 					ctCollection.getCtCollectionId(), _language));
 		}
 
-		if (isPublishEnabled(ctCollection.getCtCollectionId()) &&
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
+			isPublishEnabled(ctCollection.getCtCollectionId()) &&
 			CTCollectionPermission.contains(
 				permissionChecker, ctCollection, CTActionKeys.PUBLISH)) {
 

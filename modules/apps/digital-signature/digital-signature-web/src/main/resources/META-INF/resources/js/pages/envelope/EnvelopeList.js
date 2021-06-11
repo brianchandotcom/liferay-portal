@@ -167,6 +167,7 @@ const EnvelopeList = ({history}) => {
 
 					return response.json();
 				}}
+				defaultSort="desc"
 				filters={FILTERS}
 				history={history}
 			>

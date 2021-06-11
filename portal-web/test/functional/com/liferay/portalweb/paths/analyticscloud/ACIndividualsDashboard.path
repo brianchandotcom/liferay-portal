@@ -45,6 +45,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>KNOWN_INDIVIDUAL_ATTRIBUTE</td>
+    <td>//div[contains(@class,'table-responsive')]//td[contains(@class,'table-cell-expand') and contains(.,'${key_individualAttribute}')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>KNOWN_INDIVIDUALS_LIST_ITEMS</td>
     <td>//div[contains(@class,'table-title') and contains(.,'${key_individualName}')]</td>
     <td></td>

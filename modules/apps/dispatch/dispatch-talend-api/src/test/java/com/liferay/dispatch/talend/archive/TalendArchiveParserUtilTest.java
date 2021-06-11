@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
@@ -93,6 +94,39 @@ public class TalendArchiveParserUtilTest {
 		Assert.assertEquals(
 			"-Xms256M -Xmx1024M", talendArchive.getJVMOptions());
 		Assert.assertTrue(talendArchive.hasJVMOptions());
+	}
+
+	@Test
+	public void testUpdateUnicodeProperties() throws Exception {
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		TalendArchiveParserUtil.updateUnicodeProperties(
+			TalendArchiveUtil.getInputStream(), unicodeProperties);
+
+		Assert.assertEquals(
+			"2011 (Automatic Copy)",
+			unicodeProperties.getProperty("multiplier"));
+		Assert.assertEquals(
+			"Liferay (Automatic Copy)",
+			unicodeProperties.getProperty("prefix"));
+		Assert.assertEquals(
+			"-Xms256M -Xmx1024M", unicodeProperties.getProperty("JAVA_OPTS"));
+
+		unicodeProperties.put("multiplier", "4444");
+		unicodeProperties.remove("prefix");
+		unicodeProperties.put("JAVA_OPTS", "-Dtest");
+
+		TalendArchiveParserUtil.updateUnicodeProperties(
+			TalendArchiveUtil.getInputStream(), unicodeProperties);
+
+		Assert.assertEquals(
+			"4444", unicodeProperties.getProperty("multiplier"));
+		Assert.assertEquals(
+			"Liferay (Automatic Copy)",
+			unicodeProperties.getProperty("prefix"));
+		Assert.assertEquals(
+			"-Xms256M -Xmx1024M -Dtest",
+			unicodeProperties.getProperty("JAVA_OPTS"));
 	}
 
 	private static final String[] _CLASS_PATH_ENTRIES = {

@@ -235,22 +235,44 @@ describe('ReactFieldBase', () => {
 		expect(getByText('Tooltip Description')).toBeInTheDocument();
 	});
 
-	it('renders the FieldBase with hideField markup', () => {
-		const {getByText} = render(
-			<FieldBaseWithProvider
-				hideField
-				label="Text"
-				spritemap={spritemap}
-			/>
-		);
+	describe('Hide Field', () => {
+		it('renders the FieldBase with hideField markup', () => {
+			const {getByText} = render(
+				<FieldBaseWithProvider
+					hideField
+					label="Text"
+					spritemap={spritemap}
+				/>
+			);
 
-		expect(getByText('hidden')).toBeInTheDocument();
-		expect(getByText('Text')).toBeInTheDocument();
+			expect(getByText('hidden')).toBeInTheDocument();
+			expect(getByText('Text')).toBeInTheDocument();
 
-		expect(getByText('hidden').parentNode).toHaveAttribute(
-			'class',
-			'label ml-1 label-secondary'
-		);
-		expect(getByText('Text')).toHaveAttribute('class', 'text-secondary');
+			expect(getByText('hidden').parentNode).toHaveAttribute(
+				'class',
+				'label ml-1 label-secondary'
+			);
+			expect(getByText('Text')).toHaveAttribute(
+				'class',
+				'text-secondary'
+			);
+		});
+
+		it('renders the FieldBase with hideField markup when the label is empty', () => {
+			const {getByText} = render(
+				<FieldBaseWithProvider
+					hideField
+					label=""
+					spritemap={spritemap}
+				/>
+			);
+
+			expect(getByText('hidden')).toBeInTheDocument();
+
+			expect(getByText('hidden').parentNode).toHaveAttribute(
+				'class',
+				'label ml-1 label-secondary'
+			);
+		});
 	});
 });

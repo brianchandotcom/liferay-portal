@@ -277,13 +277,54 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6199. Get available quantities of one item in multiple warehouses"
-	@ignore = "true"
 	@priority = "3"
 	test GetAvailableQuantityFromMultipleWarehouses {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceWarehouses#GetAvailableQuantityFromMultipleWarehouses";
 
-		// TODO COMMERCE-6199 GetAvailableQuantityFromMultipleWarehouses Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+		CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		var quantity = "0";
+
+		for (var warehouse : list "Italy,United States - Northeast,United States - Southwest") {
+			quantity = MathUtil.sum("${quantity}", selenium.getElementValue(key_inventoryName = "${warehouse}", locator1 = "CommerceEntry#INVENTORY_INPUT"));
+		}
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "ABS Sensor");
+
+		Button.clickSubmitButton();
+
+		Click(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementPresent(
+			key_FilterOption = "${quantity} in Stock",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 
 	@description = "This is a test for COMMERCE-6204. Get stock quantity of a SKU for specific channel"

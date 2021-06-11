@@ -1,5 +1,39 @@
 definition {
 
+	@summary = "This calls the JSON WS API to add a Document entry comment"
+	macro addComment {
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			folderId = "${folderId}",
+			groupName = "${groupName}",
+			portalURL = "${baseURL}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(parentCommentId))) {
+			var parentCommentId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/documents/${fileEntryId}/comments \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test'
+			-d '{
+				"creator": {},
+				"parentCommentId": "${parentCommentId}",
+				"text": "${commentBody}"
+			}'
+		''';
+
+		echo("## Adding a 'Comment' with the following info using JSONWS:");
+
+		echo("## * commentBody: ${commentBody}");
+
+		echo("## * fileEntryId: ${fileEntryId}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to add a Document entry"
 	macro addFile {
 		var portalURL = JSONCompany.getPortalURL();

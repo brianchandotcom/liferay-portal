@@ -72,7 +72,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			visibilityExpression = _convertExpression(visibilityExpression);
+			visibilityExpression = _convertExpression(
+				ddmFormFieldsMap, visibilityExpression);
 
 			DDMFormRule ddmFormRule = new DDMFormRule(
 				Arrays.asList(
@@ -156,32 +157,32 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private String _convertExpression(String visibilityExpression) {
+	private String _convertExpression(
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		String visibilityExpression) {
+
+		StringBundler sb1 = new StringBundler();
+
 		List<String> parameterValues =
 			ExpressionParameterValueExtractor.extractParameterValues(
 				visibilityExpression);
 
-		StringBundler sb1 = new StringBundler();
-
 		for (String parameterValue : parameterValues) {
-			if (Validator.isNull(parameterValue) ||
-				Validator.isNumber(parameterValue) ||
-				StringUtil.startsWith(parameterValue, StringPool.QUOTE)) {
+			String unquotedParameterValue = StringUtil.unquote(parameterValue);
 
+			if (!ddmFormFieldsMap.containsKey(unquotedParameterValue)) {
 				continue;
 			}
-
-			StringBundler sb2 = new StringBundler(5);
-
-			sb2.append("getValue(");
-			sb2.append(StringPool.APOSTROPHE);
-			sb2.append(parameterValue);
-			sb2.append(StringPool.APOSTROPHE);
-			sb2.append(")");
 
 			int index = visibilityExpression.indexOf(parameterValue);
 
 			sb1.append(visibilityExpression.substring(0, index));
+
+			StringBundler sb2 = new StringBundler(3);
+
+			sb2.append("getValue(");
+			sb2.append(StringUtil.quote(unquotedParameterValue));
+			sb2.append(")");
 
 			sb1.append(sb2.toString());
 

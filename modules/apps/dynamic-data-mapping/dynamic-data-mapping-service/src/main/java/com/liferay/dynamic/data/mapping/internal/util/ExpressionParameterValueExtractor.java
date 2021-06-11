@@ -45,6 +45,6 @@ public class ExpressionParameterValueExtractor {
 	}
 
 	private static final String _FUNCTION_STRUCTURE_REGEX =
-		"\\(+|[aA-zZ]+\\(|,\\s*|\\)+|(\\|\\||&&)|\".*?\"";
+		"\\(+|[aA-zZ]+\\(|,\\s*|\\)+|(\\|\\||&&)";
 
 }

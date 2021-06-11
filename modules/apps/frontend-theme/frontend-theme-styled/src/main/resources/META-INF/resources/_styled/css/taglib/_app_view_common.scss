@@ -1,13 +1,5 @@
 .app-view-entry {
-	&:hover .entry-thumbnail {
-		border-color: #7abfdd;
-	}
-
 	&.selected {
-		.entry-thumbnail {
-			border-color: #057cb0;
-		}
-
 		.entry-metadata {
 			dt,
 			dd,
@@ -19,22 +11,76 @@
 		}
 	}
 
+	.entry-action {
+		position: absolute;
+		right: 6px;
+		top: 10px;
+
+		.btn {
+			padding: 0;
+		}
+	}
+
+	.entry-selector {
+		left: 5px;
+		position: absolute;
+		top: 10px;
+	}
+
 	.entry-title {
+		display: block;
+		font-size: 1.15em;
 		font-weight: bold;
+		padding: 5px 0 10px;
 	}
 
 	.entry-link {
+		display: block;
+		overflow: hidden;
+		text-align: left;
 		text-decoration: none;
 	}
 
 	.entry-metadata {
-		dt,
-		dd,
-		.entry-categories,
-		.entry-tags,
+		margin: 10px 0 20px;
+
+		@include media-breakpoint-down(md) {
+			margin: 0 0 5px 15px;
+			width: 85%;
+		}
+
+		.entry-title {
+			padding-bottom: 3px;
+		}
+
 		.entry-description {
-			color: #333;
-			word-wrap: break-word;
+			display: block;
+		}
+
+		dl {
+			margin: 0;
+
+			&.entry-latest-approved-container {
+				margin: 20px 0;
+			}
+
+			dt {
+				float: left;
+				margin-right: 3px;
+			}
+		}
+
+		.entry-categories,
+		.entry-tags {
+			display: block;
+		}
+
+		.entry-tags .tag {
+			margin-left: 15px;
+
+			&:first-child {
+				margin-left: 0;
+			}
 		}
 
 		.entry-categories .taglib-asset-categories-summary {
@@ -42,8 +88,38 @@
 
 			.asset-category {
 				font-weight: normal;
+				margin-left: 0.8em;
 			}
 		}
+
+		dt,
+		dd,
+		.entry-categories,
+		.entry-tags,
+		.entry-description {
+			color: #333;
+			line-height: 1.5em;
+			overflow: hidden;
+			word-wrap: break-word;
+		}
+
+		.taglib-workflow-status {
+			display: inline;
+
+			.workflow-status {
+				padding-left: 0.2em;
+			}
+		}
+	}
+
+	.overlay.entry-action a {
+		display: block;
+		width: 20px;
+	}
+
+	.entry-title .entry-categories,
+	a.entry-title .entry-tags {
+		font-size: 16px;
 	}
 
 	&.selected,
@@ -79,6 +155,17 @@
 
 		.entry-metadata .entry-title .entry-title-text {
 			text-decoration: underline;
+		}
+	}
+}
+
+.lfr-search-container td .overlay {
+	&.entry-action {
+		position: static;
+
+		.btn a {
+			display: block;
+			padding: 4px 12px;
 		}
 	}
 }

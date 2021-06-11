@@ -167,9 +167,13 @@ definition {
 			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/questions-page/questions/questions-test-category/title-addquestion");
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		Questions.viewStatus(status = "pending");
+
+		AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category");
 	}
 
 	@description = "Validate if the pending status can be returned through JSON once MB moderation Workflow is enabled."

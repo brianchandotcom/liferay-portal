@@ -993,9 +993,15 @@ definition {
 			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/questions-page/questions/questions-test-category/title-addquestion");
+		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.viewDetailsTitle(questionTitle = "Title AddQuestion");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category/title-addquestion");
 	}
 
 	@description = "Validate if the user can lock and unlock a question through the MB."

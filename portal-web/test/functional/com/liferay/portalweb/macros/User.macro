@@ -1921,6 +1921,15 @@ definition {
 				AssertClick(
 					locator1 = "UserBar#USER_SIGN_IN",
 					value1 = "Sign In");
+
+				if ("${samlMultiIdPs}" == "true") {
+					Select(
+						key_fieldLabel = "Identity Provider",
+						locator1 = "Select#GENERIC_SELECT_FIELD",
+						value1 = "${idpName}");
+
+					Button.click(button = "Sign In");
+				}
 			}
 			else if (IsElementPresent(key_text = "Sign In", locator1 = "Button#ANY")) {
 				Button.click(button = "Sign In");

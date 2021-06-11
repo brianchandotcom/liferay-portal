@@ -223,7 +223,7 @@ function FieldBase({
 
 	const inputEditedName = name + '_edited';
 	const renderLabel =
-		(label && showLabel) || required || tooltip || repeatable;
+		(label && showLabel) || hideField || repeatable || required || tooltip;
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 	const showLegend =
 		type &&

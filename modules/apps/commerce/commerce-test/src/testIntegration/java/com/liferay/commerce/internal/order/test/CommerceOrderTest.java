@@ -1084,7 +1084,6 @@ public class CommerceOrderTest {
 	private CommerceAccountOrganizationRelLocalService
 		_commerceAccountOrganizationRelLocalService;
 
-	@DeleteAfterTestRun
 	private final List<CommerceAccount> _commerceAccounts = new ArrayList<>();
 
 	@Inject

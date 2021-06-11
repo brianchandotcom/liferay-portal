@@ -318,7 +318,6 @@ public class CommerceOrderStatusNotificationTest {
 	private static Company _company;
 	private static User _user;
 
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;
 
 	@DeleteAfterTestRun

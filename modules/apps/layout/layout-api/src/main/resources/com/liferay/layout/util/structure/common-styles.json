@@ -15,6 +15,10 @@
 				"type": "select",
 				"validValues": [
 					{
+						"label": "default",
+						"value": ""
+					},
+					{
 						"label": "0",
 						"value": "0"
 					},
@@ -72,6 +76,10 @@
 				"responsiveTemplate": "mb{viewport}{value}",
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"label": "0",
 						"value": "0"
@@ -131,6 +139,10 @@
 				"type": "select",
 				"validValues": [
 					{
+						"label": "default",
+						"value": ""
+					},
+					{
 						"label": "0",
 						"value": "0"
 					},
@@ -188,6 +200,10 @@
 				"responsiveTemplate": "mr{viewport}{value}",
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"label": "0",
 						"value": "0"
@@ -252,6 +268,10 @@
 				"type": "select",
 				"validValues": [
 					{
+						"label": "default",
+						"value": ""
+					},
+					{
 						"label": "0",
 						"value": "0"
 					},
@@ -309,6 +329,10 @@
 				"responsiveTemplate": "pb{viewport}{value}",
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"label": "0",
 						"value": "0"
@@ -368,6 +392,10 @@
 				"type": "select",
 				"validValues": [
 					{
+						"label": "default",
+						"value": ""
+					},
+					{
 						"label": "0",
 						"value": "0"
 					},
@@ -425,6 +453,10 @@
 				"responsiveTemplate": "pr{viewport}{value}",
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"label": "0",
 						"value": "0"

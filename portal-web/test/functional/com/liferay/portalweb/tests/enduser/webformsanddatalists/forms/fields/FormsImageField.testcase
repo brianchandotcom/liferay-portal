@@ -70,8 +70,6 @@ definition {
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "Help Text Test",
 			fieldName = "Copy of Image");
-
-			
 	}
 
 	@description = "Verify that an Image Field can be set to repeatable"

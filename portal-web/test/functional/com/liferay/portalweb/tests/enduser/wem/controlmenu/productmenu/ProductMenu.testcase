@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-127446. Assert the Product Menu is shown correctly."
+	@description = "This is a use case for LPS-127446 and LPS-121106. Assert the Product Menu is shown correctly."
 	@priority = "5"
 	@uitest
 	test ViewProductMenuStyles {
@@ -35,6 +35,12 @@ definition {
 
 		task ("Open the Product Menu") {
 			ProductMenuHelper.openProductMenu();
+		}
+
+		task ("View the company logo shown in sticker") {
+			AssertVisible(
+				key_imageName = "company_logo",
+				locator1 = "ProductMenu#STICKER");
 		}
 
 		task ("Assert the padding settings of category") {

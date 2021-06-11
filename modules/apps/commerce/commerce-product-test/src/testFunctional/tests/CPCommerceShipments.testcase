@@ -653,13 +653,129 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6246. Check that shipping discount amount is correctly calculated in the order"
-	@ignore = "true"
 	@priority = "3"
 	test ViewOrderShipmentDiscountAmountIsCorrect {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceShipments#ViewOrderShipmentDiscountAmountIsCorrect";
 
-		// TODO COMMERCE-6246 ViewOrderShipmentDiscountAmountIsCorrect Pending Implementation
+		// TODO Review
 
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			channelsEligibility = "Minium Portal",
+			discountAmount = "7",
+			discountName = "Test Discount",
+			discountTarget = "Shipping",
+			discountType = "Fixed Amount");
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "buyer");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Refresh();
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Name");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "Italy");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "0100");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Roma");
+
+		Select(
+			key_fieldName = "Region",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "Roma");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_FilterOption = "Go to Order Details",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Delivery Discount",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "7.00");
 	}
 
 }

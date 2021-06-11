@@ -32,14 +32,46 @@ definition {
 	}
 
 	@description = "Verify that an Image Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133033 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Image");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "tip");
+
+		FormFields.duplicateField();
+
+		FormFields.viewLabel(
+			fieldLabel = "Image",
+			fieldName = "Image");
+
+		FormFields.viewLabel(
+			fieldLabel = "Copy of Image",
+			fieldName = "Copy of Image");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "Image");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "Copy of Image");
+
+			
 	}
 
 	@description = "Verify that an Image Field can be set to repeatable"

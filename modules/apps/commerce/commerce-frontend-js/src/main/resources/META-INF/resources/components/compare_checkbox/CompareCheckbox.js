@@ -72,7 +72,6 @@ function CompareCheckbox({
 			aria-label={label}
 			checked={inCompare}
 			className="compare-checkbox-component"
-			disabled={disabled && !inCompare}
 			label={label}
 			onChange={() =>
 				setInCompare((currentlyInCompare) => {
@@ -84,6 +83,7 @@ function CompareCheckbox({
 					return !currentlyInCompare;
 				})
 			}
+			readOnly={disabled && !inCompare}
 		/>
 	);
 }

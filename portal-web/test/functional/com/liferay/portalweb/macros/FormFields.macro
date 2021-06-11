@@ -1300,6 +1300,12 @@ definition {
 			locator1 = "FormFields#PUBLISHED_FORM_FIELD_BY_INDEX");
 	}
 
+	macro viewPublishedFormFieldSeparatorByIndex {
+		AssertElementPresent(
+			key_index = "${index}",
+			locator1 = "FormFields#PUBLISHED_FORM_FIELD_SEPARATOR_BY_INDEX");
+	}
+
 	macro viewRadioLabel {
 		AssertTextEquals.assertText(
 			key_fieldName = "${fieldName}",

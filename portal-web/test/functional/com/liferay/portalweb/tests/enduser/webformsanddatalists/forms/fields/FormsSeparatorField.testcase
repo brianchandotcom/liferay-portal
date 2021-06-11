@@ -65,14 +65,51 @@ definition {
 	}
 
 	@description = "Verify that a Separator Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133237 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldRepeatable();
+
+		AssertElementPresent(
+			key_fieldName = "Separator",
+			key_repeatableFieldNumber = "1",
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			fieldName = "Separator",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewPublishedFormFieldSeparatorByIndex(index = "1");
+
+		FormFields.viewPublishedFormFieldSeparatorByIndex(index = "2");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that a Form can be submitted with the Separator Field"

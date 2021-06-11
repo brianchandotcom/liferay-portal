@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-95042 and LPS-108339. View the Banner Center in content page. Can add fragments directly without Container to page."
+	@description = "This is a test for LPS-95042, LPS-108339 and LPS-122017. View the Banner Center in content page. Can add fragments directly without Container to page."
 	@priority = "4"
 	test ViewBannerCenterInContentPage {
 		task ("Add a Banner Center to page") {
@@ -65,6 +65,17 @@ definition {
 				fragmentName = "Banner Center",
 				id = "03-link");
 
+			var backgroundImage = Css.getCssValue(
+				attribute = "background-image",
+				element = "//div[contains(@data-lfr-background-image-id,'banner-center')]");
+
+			if (contains("${backgroundImage}","data:image/png")) {
+				echo("The image placeholder is shown in Banner Center");
+			}
+			else {
+				fail("The image placeholder is missing in Banner Center");
+			}
+
 			PageEditor.clickPublish();
 		}
 
@@ -90,6 +101,17 @@ definition {
 				key_position = "1",
 				key_text = "Go Somewhere",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			var backgroundImage = Css.getCssValue(
+				attribute = "background-image",
+				element = "//div[contains(@class,'banner')]");
+
+			if (contains("${backgroundImage}","data:image/png")) {
+				echo("The image placeholder is shown in Banner Center");
+			}
+			else {
+				fail("The image placeholder is missing in Banner Center");
+			}
 		}
 	}
 

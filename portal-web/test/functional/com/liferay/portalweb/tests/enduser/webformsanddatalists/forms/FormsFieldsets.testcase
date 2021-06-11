@@ -201,9 +201,13 @@ definition {
 			elementSetTitle = "Element Set 1",
 			fieldPositionNumber = "0");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Separator");
+		FormFields.viewLabel(
+			fieldLabel = "Separator",
+			fieldName = "Separator");
 
 		Form.save();
 
@@ -211,7 +215,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewRadioLabel(
+		FormFields.viewLabel(
 			fieldLabel = "Separator",
 			fieldName = "Separator");
 	}

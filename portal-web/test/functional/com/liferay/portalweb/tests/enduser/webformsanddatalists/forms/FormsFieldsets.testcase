@@ -80,6 +80,8 @@ definition {
 		Form.save();
 
 		Form.publishForm();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "Verify that a Form can be saved after adding a Fieldset"

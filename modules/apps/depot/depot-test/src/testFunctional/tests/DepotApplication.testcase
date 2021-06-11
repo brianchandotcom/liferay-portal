@@ -153,13 +153,15 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CollectionsRemainAfterReactivating {
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Manual Asset List");
 
-		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Dynamic Asset List");
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
@@ -205,11 +207,10 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpeg");
 
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.addManualSelection(
-			assetListTitle = "Depot Manual Asset List",
-			depotName = "Test Depot Name");
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Manual Asset List");
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 

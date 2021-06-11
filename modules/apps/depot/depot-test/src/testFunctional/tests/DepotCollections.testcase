@@ -269,6 +269,7 @@ definition {
 	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test ChangeScope {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -367,9 +368,11 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
-
-		AssetListsAdmin.addManualSelection(assetListTitle = "Site Manual Asset List");
+		JSONAssetlist.addManualAssetListEntryWithItemType(
+			groupName = "Site Name",
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article",
+			title = "Site Manual Asset List");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
@@ -377,9 +380,7 @@ definition {
 			assetListName = "Site Manual Asset List",
 			assetName = "WC WebContent Title",
 			assetType = "Basic Web Content",
-			depotName = "Test Depot Name",
-			itemSubtype = "Basic Web Content",
-			itemType = "Web Content Article");
+			depotName = "Test Depot Name");
 
 		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
@@ -601,6 +602,7 @@ definition {
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test DisplayImageInAP {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -667,6 +669,7 @@ definition {
 	@description = "This ensures that tagged the web content is displayed by AP through dynamic selection in a depot."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test DisplayWebContentWithTagInAP {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1174,6 +1177,7 @@ definition {
 	@description = "This ensures that the web content created by the structure can be selected via searching for the corresponding structure name."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test SelectWebContentWithStructure {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

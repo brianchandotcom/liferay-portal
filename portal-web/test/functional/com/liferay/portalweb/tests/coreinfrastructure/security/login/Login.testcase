@@ -267,7 +267,6 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
-			baseURL = "http://localhost:8080",
 			configurationCategory = "Localization",
 			configurationName = "Language",
 			configurationScope = "Virtual Instance Scope");
@@ -284,7 +283,8 @@ definition {
 
 		Portlet.assertServerStartup();
 
-		User.firstLoginUI(
+		User.loginLocalizationPG(
+			localization = "ES",
 			password = "test",
 			specificURL = "${portalURL}/es",
 			userEmailAddress = "test@liferay.com");

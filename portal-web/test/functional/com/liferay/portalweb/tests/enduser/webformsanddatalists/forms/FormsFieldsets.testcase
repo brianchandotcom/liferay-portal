@@ -135,9 +135,13 @@ definition {
 			elementSetTitle = "Element Set 1",
 			fieldPositionNumber = "0");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Image");
+		FormFields.viewLabel(
+			fieldLabel = "Image",
+			fieldName = "Image");
 
 		Form.save();
 
@@ -145,7 +149,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewRadioLabel(
+		FormFields.viewLabel(
 			fieldLabel = "Image",
 			fieldName = "Image");
 	}

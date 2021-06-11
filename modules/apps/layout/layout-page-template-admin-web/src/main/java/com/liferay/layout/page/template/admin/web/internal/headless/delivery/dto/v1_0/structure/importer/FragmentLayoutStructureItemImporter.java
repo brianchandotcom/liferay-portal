@@ -303,17 +303,6 @@ public class FragmentLayoutStructureItemImporter
 			}
 		}
 
-		Map<String, Object> valueI18nMap = (Map<String, Object>)map.get(
-			"value_i18n");
-
-		if (valueI18nMap != null) {
-			for (Map.Entry<String, Object> entry : valueI18nMap.entrySet()) {
-				jsonObject.put(entry.getKey(), entry.getValue());
-			}
-
-			return jsonObject;
-		}
-
 		Map<String, Object> defaultFragmentInlineValueMap =
 			(Map<String, Object>)map.get("defaultFragmentInlineValue");
 
@@ -325,6 +314,17 @@ public class FragmentLayoutStructureItemImporter
 		if (defaultFragmentInlineValueMap != null) {
 			jsonObject.put(
 				"defaultValue", defaultFragmentInlineValueMap.get("value"));
+		}
+
+		Map<String, Object> valueI18nMap = (Map<String, Object>)map.get(
+			"value_i18n");
+
+		if (valueI18nMap != null) {
+			for (Map.Entry<String, Object> entry : valueI18nMap.entrySet()) {
+				jsonObject.put(entry.getKey(), entry.getValue());
+			}
+
+			return jsonObject;
 		}
 
 		processMapping(jsonObject, (Map<String, Object>)map.get("mapping"));

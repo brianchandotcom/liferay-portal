@@ -62,11 +62,7 @@ definition {
 			applicationList = "Collections,Documents and Media,Translation Processes,Web Content",
 			status = "Enabled");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoDepotPortletViaBreadcrumb(
 			otherDepotName = "Test Depot Name",
@@ -128,7 +124,7 @@ definition {
 			applicationList = "Documents and Media,Web Content",
 			status = "Disabled");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
@@ -332,7 +328,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Test Site Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
@@ -346,7 +342,7 @@ definition {
 			applicationList = "Web Content",
 			status = "Disabled");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 

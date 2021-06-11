@@ -184,7 +184,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
@@ -192,7 +192,7 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
@@ -306,7 +306,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Depot",
 			textField = "DM Document Text");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 

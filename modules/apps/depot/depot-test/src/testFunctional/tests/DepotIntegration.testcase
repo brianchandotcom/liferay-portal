@@ -256,7 +256,7 @@ definition {
 			siteList = "Site Name",
 			tableEntryText = "Yes");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -298,7 +298,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -336,7 +336,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -377,7 +377,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -427,7 +427,7 @@ definition {
 			siteList = "Site Name",
 			tableEntryText = "No");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -474,7 +474,7 @@ definition {
 			siteList = "Site Name",
 			tableEntryText = "No");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -524,7 +524,7 @@ definition {
 			siteList = "Site Name",
 			tableEntryText = "No");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -577,7 +577,7 @@ definition {
 			siteList = "Site Name",
 			tableEntryText = "No");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -619,7 +619,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 
@@ -664,7 +664,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
 

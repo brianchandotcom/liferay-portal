@@ -86,7 +86,7 @@ definition {
 			depotName = "Test Depot Name",
 			uploadFileName = "Document_2.jpg");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 

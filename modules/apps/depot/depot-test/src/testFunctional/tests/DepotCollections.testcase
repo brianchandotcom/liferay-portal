@@ -157,7 +157,7 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
@@ -225,7 +225,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
@@ -235,7 +235,7 @@ definition {
 			assetListName = "Depot Manual Asset List",
 			depotName = "Test Depot Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
@@ -255,7 +255,7 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			baseURL = "http://localhost:9080",
 			pageName = "Test Page",
 			siteName = "Remote Site");
@@ -381,13 +381,13 @@ definition {
 			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
 		AssetPublisherPortlet.selectAssetList(assetListName = "Site Manual Asset List");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
@@ -462,7 +462,7 @@ definition {
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
@@ -646,7 +646,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
@@ -654,7 +654,7 @@ definition {
 			assetListName = "Depot Manual Asset List",
 			depotName = "Test Depot Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
@@ -722,7 +722,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
@@ -730,7 +730,7 @@ definition {
 			assetListName = "Depot Dynamic Asset List",
 			depotName = "Test Depot Name");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 

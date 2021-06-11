@@ -300,6 +300,51 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-127732. Edit the inline content style of rich text fragment."
+	@priority = "4"
+	@uitest
+	test EditInlineContentStyleOfRichTextFragment {
+		task ("Add a Paragraph fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+
+		task ("Change the inline text style to Lead") {
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				style = "Lead");
+		}
+
+		task ("View the inline text style") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				fragmentName = "Paragraph",
+				id = "element-text",
+				style = "//span[contains(@class,'lead')]");
+		}
+
+		task ("Change the inline text style to Normal") {
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				style = "Normal");
+		}
+
+		task ("View the inline text style") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				fragmentName = "Paragraph",
+				id = "element-text",
+				style = "//p");
+		}
+	}
+
 	@description = "This is a test for LPS-95045 and LPS-101328. A user should be able to display an image from Documents and Media in Image fragment."
 	@priority = "5"
 	test ViewImageFromDocumentsAndMediaInImageFragment {

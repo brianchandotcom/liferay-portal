@@ -120,26 +120,80 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testGetDSEnvelopesPage() throws Exception {
+		Class<?> clazz = getClass();
+
+		String randomName = RandomTestUtil.randomString();
+
 		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
+					dsDocuments = Collections.singletonList(
+						new DSDocument() {
+							{
+								data = Base64.encode(
+									FileUtil.getBytes(
+										clazz.getResourceAsStream(
+											"dependencies/Document.pdf")));
+								dsDocumentId = "1";
+								name = RandomTestUtil.randomString();
+							}
+						});
+					dsRecipients = Collections.singletonList(
+						new DSRecipient() {
+							{
+								dsRecipientId = "1";
+								emailAddress =
+									RandomTestUtil.randomString() +
+										"@liferay.com";
+								name = RandomTestUtil.randomString();
+							}
+						});
+					emailBlurb = RandomTestUtil.randomString();
 					emailSubject = RandomTestUtil.randomString();
-					status = "created";
+					name = randomName;
+					senderEmailAddress =
+						RandomTestUtil.randomString() + "@liferay.com";
+					status = "sent";
 				}
 			});
 		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
+					dsDocuments = Collections.singletonList(
+						new DSDocument() {
+							{
+								data = Base64.encode(
+									FileUtil.getBytes(
+										clazz.getResourceAsStream(
+											"dependencies/Document.pdf")));
+								dsDocumentId = "1";
+								name = RandomTestUtil.randomString();
+							}
+						});
+					dsRecipients = Collections.singletonList(
+						new DSRecipient() {
+							{
+								dsRecipientId = "1";
+								emailAddress =
+									RandomTestUtil.randomString() +
+										"@liferay.com";
+								name = RandomTestUtil.randomString();
+							}
+						});
+					emailBlurb = RandomTestUtil.randomString();
 					emailSubject = RandomTestUtil.randomString();
-					status = "created";
+					name = randomName + "Second";
+					senderEmailAddress =
+						RandomTestUtil.randomString() + "@liferay.com";
+					status = "sent";
 				}
 			});
 
 		Page<DSEnvelope> page = _dsEnvelopeManager.getDSEnvelopesPage(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			"2021-01-01", "desc", Pagination.of(1, 2));
+			"2021-01-01", randomName, "desc", "", Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getPageSize());
 

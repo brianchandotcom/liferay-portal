@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -36,6 +37,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,16 +107,35 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public Page<DSEnvelope> getDSEnvelopesPage(
-		long companyId, long groupId, String fromDateString, String order,
-		Pagination pagination) {
+		long companyId, long groupId, String fromDateString, String keywords,
+		String order, String status, Pagination pagination) {
 
-		JSONObject jsonObject = _dsHttp.get(
-			companyId, groupId,
-			StringBundler.concat(
-				"envelopes?from_date=", fromDateString, "&count=",
-				pagination.getPageSize(), "&start_position=",
-				pagination.getStartPosition(), "&folder_types=sentitems",
-				"&include=custom_fields,documents,recipients&order=", order));
+		String query = StringBundler.concat(
+			"envelopes?from_date=", fromDateString, "&count=",
+			pagination.getPageSize(), "&start_position=",
+			pagination.getStartPosition(),
+			"&include=custom_fields,documents,recipients&order=", order);
+
+		if (!Validator.isBlank(status)) {
+			query = StringBundler.concat(query, "&status=", status);
+		}
+
+		if (!Validator.isBlank(keywords)) {
+			query = StringBundler.concat(query, "&search_text=", keywords);
+		}
+
+		if (!Pattern.matches(
+				"[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}" +
+					"\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+				keywords)) {
+
+			query += "&folder_types=sentitems";
+		}
+		else {
+			query = StringBundler.concat(query, "&envelope_ids=", keywords);
+		}
+
+		JSONObject jsonObject = _dsHttp.get(companyId, groupId, query);
 
 		return Page.of(
 			JSONUtil.toList(

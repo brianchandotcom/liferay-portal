@@ -225,7 +225,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="key" />
 		</finder>
-		<finder name="C_C_P" return-type="AssetListEntryUsage" unique="true">
+		<finder db-index="false" name="C_C_P" return-type="AssetListEntryUsage">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="portletId" />

@@ -499,6 +499,81 @@ paths:
                     description:
                         ""
             tags: ["AccountUser"]
+    "/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address":
+        delete:
+            # @review
+            description:
+                Removes users from an account by their email addresses
+            operationId: deleteAccountUsersByExternalReferenceCodeByEmailAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                # @review
+                description:
+                    A list of user email addresses to remove from the account
+                required: true
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["AccountUser"]
+        post:
+            # @review
+            description:
+                Assigns users to an account by their email addresses
+            operationId: postAccountUsersByExternalReferenceCodeByEmailAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                # @review
+                description:
+                    A list of user email addresses to assign to the account
+                required: true
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["AccountUser"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}":
         delete:
             # @review
@@ -881,6 +956,83 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/AccountUser"
+                    description:
+                        ""
+            tags: ["AccountUser"]
+    "/accounts/{accountId}/account-users/by-email-address":
+        delete:
+            # @review
+            description:
+                Removes users from an account by their email addresses
+            operationId: deleteAccountUsersByEmailAddress
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                # @review
+                description:
+                    A list of user email addresses to remove from the account
+                required: true
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["AccountUser"]
+        post:
+            # @review
+            description:
+                Assigns users to an account by their email addresses
+            operationId: postAccountUsersByEmailAddress
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                # @review
+                description:
+                    A list of user email addresses to assign to the account
+                required: true
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["AccountUser"]

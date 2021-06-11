@@ -537,7 +537,8 @@ public class DLReferencesExportImportContentProcessor
 					StringPool.BLANK, false, false);
 
 				if (url.contains(StringPool.QUESTION)) {
-					content = StringUtil.replace(content, "$]?", "$]&");
+					url = url.substring(
+						0, url.lastIndexOf(StringPool.QUESTION));
 				}
 
 				String exportedReference = "[$dl-reference=" + path + "$]";

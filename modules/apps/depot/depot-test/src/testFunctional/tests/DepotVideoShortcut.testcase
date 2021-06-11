@@ -222,9 +222,7 @@ definition {
 
 		JSONDepot.disconnectSite(groupName = "Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 

@@ -53,11 +53,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoAddEntry();
-
-		Pause(locator1 = "3000");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -410,9 +406,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

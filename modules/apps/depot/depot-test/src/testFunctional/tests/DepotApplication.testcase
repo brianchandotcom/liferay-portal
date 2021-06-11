@@ -265,9 +265,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Test Site Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "test-site-name");
 
 		BlogsNavigator.gotoSelectFile();
 

@@ -2061,20 +2061,10 @@ definition {
 			id = "${id}");
 
 		if (isSet(text)) {
-			if ("${contributed}" == "false") {
-				Type(
-					id = "${id}",
-					key_fragmentName = "${fragmentName}",
-					locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",
-					value1 = "${text}");
-			}
-			else {
-				Type(
-					id = "${id}",
-					key_fragmentName = "${fragmentName}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
-					value1 = "${text}");
-			}
+			Type(
+				key_editor = "content",
+				locator1 = "AlloyEditor#EDITOR",
+				value1 = "${text}");
 		}
 
 		if (isSet(style)) {

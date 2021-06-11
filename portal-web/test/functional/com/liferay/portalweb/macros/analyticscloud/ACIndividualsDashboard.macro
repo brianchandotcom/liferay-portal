@@ -16,6 +16,11 @@ definition {
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_TIME_RANGE");
 	}
 
+	macro assertIndividualAttribute {
+		var key_individualAttribute = "${individualAttribute}";
+		Click(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
+	}
+
 	macro clickBreakdownTab {
 		var key_tabName = "${tabName}";
 

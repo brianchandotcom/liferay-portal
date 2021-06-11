@@ -18,21 +18,23 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.exception.XLIFFFileException;
@@ -67,12 +69,22 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JournalArticle article = ActionUtil.getArticle(actionRequest);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+			long classPK = ParamUtil.getLong(actionRequest, "classPK");
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+			String className = _portal.getClassName(classNameId);
+
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className);
+
+			Object object = infoItemObjectProvider.getInfoItem(classPK);
+
 			UploadPortletRequest uploadPortletRequest =
 				_portal.getUploadPortletRequest(actionRequest);
 
@@ -80,22 +92,25 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			_checkContentType(uploadPortletRequest.getContentType("file"));
 
-			_checkPermission(article, themeDisplay);
+			_checkPermission(
+				className, classPK, object,
+				themeDisplay.getPermissionChecker());
 
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
 
+				InfoItemFieldValuesUpdater<Object> infoItemFieldValuesUpdater =
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemFieldValuesUpdater.class, className);
+
 				InfoItemFieldValues infoItemFieldValues =
 					_translationInfoItemFieldValuesImporter.
 						importInfoItemFieldValues(
-							themeDisplay.getScopeGroupId(),
-							new InfoItemReference(
-								JournalArticle.class.getName(),
-								article.getResourcePrimKey()),
+							groupId, new InfoItemReference(className, classPK),
 							inputStream);
 
-				_journalArticleInfoItemFieldValuesUpdater.
-					updateFromInfoItemFieldValues(article, infoItemFieldValues);
+				infoItemFieldValuesUpdater.updateFromInfoItemFieldValues(
+					object, infoItemFieldValues);
 			}
 		}
 		catch (Exception exception) {
@@ -148,33 +163,24 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _checkPermission(
-			JournalArticle article, ThemeDisplay themeDisplay)
+			String className, long classPK, Object object,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		InfoItemPermissionProvider<Object> infoItemPermissionProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemPermissionProvider.class,
-				JournalArticle.class.getName());
+				InfoItemPermissionProvider.class, className);
 
 		if (!infoItemPermissionProvider.hasPermission(
-				themeDisplay.getPermissionChecker(), article,
-				ActionKeys.UPDATE)) {
+				permissionChecker, object, ActionKeys.UPDATE)) {
 
 			throw new PrincipalException.MustHavePermission(
-				themeDisplay.getPermissionChecker(),
-				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				ActionKeys.UPDATE);
+				permissionChecker, className, classPK, ActionKeys.UPDATE);
 		}
 	}
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference(
-		target = "(item.class.name=com.liferay.journal.model.JournalArticle)"
-	)
-	private InfoItemFieldValuesUpdater<JournalArticle>
-		_journalArticleInfoItemFieldValuesUpdater;
 
 	@Reference
 	private Portal _portal;

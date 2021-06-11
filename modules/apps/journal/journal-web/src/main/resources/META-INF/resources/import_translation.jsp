@@ -23,9 +23,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 
-String articleResourcePrimKey = String.valueOf(article.getResourcePrimKey());
-String articleTitle = article.getTitle();
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -37,10 +34,9 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 </liferay-util:html-top>
 
 <portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
-	<portlet:param name="articleResourcePrimKey" value="<%= articleResourcePrimKey %>" />
+	<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(JournalArticle.class.getName())) %>" />
+	<portlet:param name="classPK" value="<%= String.valueOf(article.getResourcePrimKey()) %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-	<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 </portlet:actionURL>
 
 <div class="translation">
@@ -53,8 +49,8 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 				<ul class="tbar-nav">
 					<li class="tbar-item tbar-item-expand">
 						<div class="pl-2 tbar-section text-left">
-							<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(articleTitle) %>">
-								<span class="text-truncate"><%= HtmlUtil.escape(articleTitle) %></span>
+							<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(article.getTitle()) %>">
+								<span class="text-truncate"><%= HtmlUtil.escape(article.getTitle()) %></span>
 							</h2>
 						</div>
 					</li>

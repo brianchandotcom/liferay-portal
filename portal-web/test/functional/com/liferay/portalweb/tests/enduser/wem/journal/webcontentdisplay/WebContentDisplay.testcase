@@ -615,6 +615,52 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 	}
 
+	@description = "This is a use case for LPS-130033. Display web content with Geolocation field in Web Content Display."
+	@priority = "4"
+	test DisplayWebContentWithGeolocationField {
+		task ("Add a web content structure with a Geolocation field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Geolocation",
+				fieldName = "Geolocation");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a web content based on new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Select the web content in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the web content is shown in Web Content Display") {
+			Portlet.viewTitle(portletName = "Web Content Title");
+
+			AssertVisible(
+				key_content = "//div[contains(@id,'Geolocation')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+	}
+
 	@priority = "4"
 	test EditWebContent {
 		property testray.component.names = "Web Content Display";

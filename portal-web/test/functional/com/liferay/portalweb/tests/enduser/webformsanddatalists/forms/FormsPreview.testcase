@@ -366,6 +366,8 @@ definition {
 		FormFields.selectSelectOption(
 			fieldName = "Select from List",
 			selectOption = "Option 1");
+
+		FormFields.viewSelectFromListOption(optionValue = "Option 1");
 	}
 
 	@description = "Verify that a Separator Field can be previewed"

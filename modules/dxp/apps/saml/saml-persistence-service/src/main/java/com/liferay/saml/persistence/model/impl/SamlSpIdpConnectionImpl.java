@@ -15,8 +15,9 @@
 package com.liferay.saml.persistence.model.impl;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.OrderedProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -32,13 +33,13 @@ public class SamlSpIdpConnectionImpl extends SamlSpIdpConnectionBaseImpl {
 	}
 
 	public Properties getNormalizedUserAttributeMappings() throws IOException {
-		Properties userAttributeMappingsProperties = new Properties();
+		Properties userAttributeMappingsProperties = new OrderedProperties();
 
 		String userAttributeMappings = getUserAttributeMappings();
 
 		if (Validator.isNotNull(userAttributeMappings)) {
-			userAttributeMappingsProperties = PropertiesUtil.load(
-				userAttributeMappings);
+			userAttributeMappingsProperties.load(
+				new UnsyncStringReader(userAttributeMappings));
 
 			userAttributeMappingsProperties.replaceAll(
 				(key, value) -> _removeDefaultPrefix(

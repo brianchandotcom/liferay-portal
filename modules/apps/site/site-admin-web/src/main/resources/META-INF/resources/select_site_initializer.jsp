@@ -35,7 +35,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			modelVar="siteInitializerItem"
 		>
 			<liferay-ui:search-container-column-text>
-				<button class="add-site-action-button btn btn-unstyled mb-4 w-100" type="button">
+				<button class="add-site-action-button align-items-stretch btn btn-unstyled form-check-card mb-4 w-100" type="button">
 					<clay:vertical-card
 						verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
 					/>

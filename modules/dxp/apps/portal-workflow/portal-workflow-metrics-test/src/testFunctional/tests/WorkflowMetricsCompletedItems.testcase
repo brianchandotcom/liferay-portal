@@ -137,9 +137,6 @@ definition {
 		AssertElementPresent(
 			key_cardName = "Untracked",
 			locator1 = "WorkflowMetricsProcessListView#ASSERT_PERCENTAGE_CARDS");
-
-
-			
 	}
 
 	@description = "LPS-94146 - Verify that when there are no results for a filter selection, the table should display the respective empty state"

@@ -19,10 +19,23 @@ definition {
 	}
 
 	macro addMentionViaComments {
+		if (isSet(parentComment)) {
+			AssertClick(
+				key_entryComment = "${parentComment}",
+				key_text = "Reply",
+				locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
+				value1 = "Reply");
+
+			AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		}
+		else {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		}
+
 		var key_entryComment = "${entryComment}";
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type.sendKeys(
 			locator1 = "CKEditor#BODY",
@@ -77,6 +90,13 @@ definition {
 				value1 = "Cancel");
 
 			SelectFrame(value1 = "relative=top");
+
+			Alert.viewSuccessMessage();
+		}
+		else if (isSet(parentComment)) {
+			AssertClick(
+				locator1 = "Button#REPLY_LAST",
+				value1 = "Reply");
 
 			Alert.viewSuccessMessage();
 		}

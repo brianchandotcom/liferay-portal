@@ -211,14 +211,44 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added to a Separator Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133243 HelpTextCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		FormFields.editHelpTextField(fieldHelpText = "Separator Help Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Separator Help Text",
+			fieldName = "Separator");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Separator Help Text",
+			fieldValue = "Separator Help Text");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that the Field Label can be changed"

@@ -1700,9 +1700,13 @@ public class DDMTemplateLocalServiceImpl
 
 		// Resources
 
+		String resourceName =
+			_ddmPermissionSupport.getTemplateModelResourceName(
+				template.getResourceClassName());
+
 		resourceLocalService.copyModelResources(
-			template.getCompanyId(), DDMTemplate.class.getName(),
-			template.getPrimaryKey(), newTemplate.getPrimaryKey());
+			template.getCompanyId(), resourceName, template.getPrimaryKey(),
+			newTemplate.getPrimaryKey());
 
 		// Small image
 

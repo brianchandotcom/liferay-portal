@@ -98,7 +98,7 @@ export const withEmpty = (Component) => {
 						<SearchAndFilteredEmpty
 							keywords={keywords}
 							{...DEFAULT_EMPTY.search}
-							{...emptyState.searchAndFiltered}
+							{...emptyState?.searchAndFiltered}
 						/>
 					);
 				}
@@ -107,7 +107,7 @@ export const withEmpty = (Component) => {
 					<SearchEmpty
 						keywords={keywords}
 						{...DEFAULT_EMPTY.search}
-						{...emptyState.search}
+						{...emptyState?.search}
 					/>
 				);
 			}
@@ -116,7 +116,7 @@ export const withEmpty = (Component) => {
 				return (
 					<FilteredEmpty
 						{...DEFAULT_EMPTY.search}
-						{...emptyState.filtered}
+						{...emptyState?.filtered}
 					/>
 				);
 			}

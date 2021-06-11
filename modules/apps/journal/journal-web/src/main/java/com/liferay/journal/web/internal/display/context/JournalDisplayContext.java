@@ -559,6 +559,13 @@ public class JournalDisplayContext {
 		getExportTranslationAvailableLocalesURL.setResourceID(
 			"/journal/get_export_translation_available_locales");
 
+		getExportTranslationAvailableLocalesURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+		getExportTranslationAvailableLocalesURL.setParameter(
+			"classNameId",
+			String.valueOf(
+				PortalUtil.getClassNameId(JournalArticle.class.getName())));
+
 		return HashMapBuilder.<String, Object>put(
 			"context",
 			Collections.singletonMap(

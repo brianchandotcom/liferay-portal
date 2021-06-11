@@ -18,7 +18,6 @@ import com.liferay.info.item.GroupKeyInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.util.ExportTranslationUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
@@ -62,9 +62,13 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
+
+		String className = _portal.getClassName(classNameId);
+
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, JournalArticle.class.getName());
+				InfoItemObjectProvider.class, className);
 
 		long groupId = ParamUtil.getLong(
 			resourceRequest, "groupId", themeDisplay.getScopeGroupId());
@@ -75,8 +79,7 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemLanguagesProvider.class,
-				JournalArticle.class.getName());
+				InfoItemLanguagesProvider.class, className);
 
 		Stream<String> stream = Arrays.stream(
 			infoItemLanguagesProvider.getAvailableLanguageIds(object));
@@ -100,5 +103,8 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Portal _portal;
 
 }

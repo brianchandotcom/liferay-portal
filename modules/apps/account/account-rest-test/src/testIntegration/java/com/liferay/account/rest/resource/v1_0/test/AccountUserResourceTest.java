@@ -27,8 +27,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -102,6 +107,83 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteAccountUsersByEmailAddress() throws Exception {
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRels(
+			_accountEntry.getAccountEntryId(), _toUserIds(users));
+
+		for (User user : users) {
+			Assert.assertNotNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		List<User> removeUsers = users.subList(0, 2);
+
+		accountUserResource.deleteAccountUsersByEmailAddress(
+			_accountEntry.getAccountEntryId(),
+			_toUserEmailAddresses(removeUsers));
+
+		for (User user : removeUsers) {
+			Assert.assertNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		List<User> keepUsers = users.subList(2, 4);
+
+		for (User user : keepUsers) {
+			Assert.assertNotNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+	}
+
+	@Override
+	@Test
+	public void testDeleteAccountUsersByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRels(
+			_accountEntry.getAccountEntryId(), _toUserIds(users));
+
+		for (User user : users) {
+			Assert.assertNotNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		List<User> removeUsers = users.subList(0, 2);
+
+		accountUserResource.
+			deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+				_accountEntry.getExternalReferenceCode(),
+				_toUserEmailAddresses(removeUsers));
+
+		for (User user : removeUsers) {
+			Assert.assertNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		List<User> keepUsers = users.subList(2, 4);
+
+		for (User user : keepUsers) {
+			Assert.assertNotNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+	}
+
+	@Override
+	@Test
 	public void testPostAccountUser() throws Exception {
 		super.testPostAccountUser();
 
@@ -156,6 +238,56 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		Assert.assertNotNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 				_accountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	@Override
+	@Test
+	public void testPostAccountUsersByEmailAddress() throws Exception {
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		for (User user : users) {
+			Assert.assertNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		accountUserResource.postAccountUsersByEmailAddress(
+			_accountEntry.getAccountEntryId(), _toUserEmailAddresses(users));
+
+		for (User user : users) {
+			Assert.assertNotNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+	}
+
+	@Override
+	@Test
+	public void testPostAccountUsersByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		for (User user : users) {
+			Assert.assertNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		accountUserResource.
+			postAccountUsersByExternalReferenceCodeByEmailAddress(
+				_accountEntry.getExternalReferenceCode(),
+				_toUserEmailAddresses(users));
+
+		for (User user : users) {
+			Assert.assertNotNull(
+				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
 	}
 
 	@Override
@@ -243,6 +375,15 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
 	private Long _getAccountEntryId() {
 		return _accountEntry.getAccountEntryId();
+	}
+
+	private String[] _toUserEmailAddresses(List<User> users) {
+		return TransformUtil.transformToArray(
+			users, User::getEmailAddress, String.class);
+	}
+
+	private long[] _toUserIds(List<User> users) {
+		return ListUtil.toLongArray(users, User.USER_ID_ACCESSOR);
 	}
 
 	private AccountEntry _accountEntry;

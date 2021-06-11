@@ -979,14 +979,82 @@ definition {
 	}
 
 	@description = "Verify that an Allow Multiple Selections Property persists after being added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PreserveTheMultipleSelectionsProperty {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133473 PreserveTheMultipleSelectionsProperty pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Allow Multiple Selections");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+
+		for (var label : list "Text,Select from List") {
+			FormFields.viewLabel(
+				fieldLabel = "${label}",
+				fieldName = "${label}");
+		}
+
+		FormsAdminNavigator.gotoEditField(
+			fieldName = "Select from List",
+			fieldPositionNumber = "1");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.viewSwitcherChecked(fieldName = "Allow Multiple Selections");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.selectSelectOption(
+			fieldName = "Select from List",
+			selectOption = "Option 1");
+
+		FormFields.enableCheckbox(fieldName = "Option 2");
+
+		for (var option : list "Option 1,Option 2") {
+			FormFields.viewSelectFromListOption(optionValue = "${option}");
+		}
 	}
 
 	@description = "Verify that a Placeholder Text persists after being added to a Form via Fieldset"

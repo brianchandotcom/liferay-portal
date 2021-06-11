@@ -47,7 +47,7 @@ function MappingInput({
 	const inputEl = useRef(null);
 	const isMounted = useIsMounted();
 
-	const isActive = !!field && field.key !== UNMAPPED_OPTION.key;
+	const isActive = !!value.trim();
 
 	const inititalSourceLabel = selectedSource
 		? selectedSource.classTypeLabel || selectedSource.classNameLabel

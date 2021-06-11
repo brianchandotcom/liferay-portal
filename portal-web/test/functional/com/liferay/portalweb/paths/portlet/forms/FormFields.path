@@ -548,6 +548,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_FIELD_MULTIPLE_OPTION_1</td>
+	<td>//span[@class='custom-control-label-text' and contains(text(), '${key_fieldType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FIELD_MULTIPLE_OPTION_REMOVE</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//button[contains(@class,'close')]</td>
 	<td></td>

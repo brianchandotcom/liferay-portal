@@ -262,7 +262,7 @@ definition {
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#UPLOAD_FIELD_GUEST_1");
 	}
-	
+
 	macro gotoItemSelectorViaSelectButtonByIndex {
 		Click(
 			key_index = "${index}",

@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_REPEATABLE_BUTTOM</td>
-	<td>//div[contains(@class,'ddm-field')]//div[contains(@data-field-name,'${key_fieldName}')]//button[contains(@class,'ddm-form-field-repeatable-add-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_ADD_REMOVE</td>
 	<td>//div[contains(@class,'ddm-field')]//button[contains(@class,'ddm-form-field-repeatable-delete-button')]</td>
 	<td></td>

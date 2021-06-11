@@ -415,7 +415,7 @@ definition {
 
 		FormFields.viewFieldRepeatableButton(
 			fieldName = "Upload",
-			key_repeatableFieldNumber = "1");
+			key_repeatableFieldsNumber = "1");
 
 		Form.save();
 
@@ -425,11 +425,11 @@ definition {
 
 		FormFields.addRepeatableField(
 			key_fieldName = "Upload",
-			key_repeatableFieldNumber = "1");
+			key_repeatableFieldsNumber = "1");
 
 		FormFields.viewFieldRepeatableButton(
 			fieldName = "Upload",
-			key_repeatableFieldNumber = "1,2");
+			key_repeatableFieldsNumber = "1,2");
 
 		ItemSelector.gotoItemSelectorViaSelectButton();
 
@@ -503,7 +503,7 @@ definition {
 			fieldName = "Upload",
 			fieldValidationErrorMessage = "You need to be signed in to edit this field.");
 
-		AppBuilderWorkflow.assertButtonDisabled(buttonName = "");
+		AssertElementPresent(locator1 = "FormFields#SELECT_UPLOAD_FIELD_DISABLE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			key_fieldName = "${uploadFieldName}",

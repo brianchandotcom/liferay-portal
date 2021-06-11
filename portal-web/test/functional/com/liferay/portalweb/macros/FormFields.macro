@@ -952,15 +952,6 @@ definition {
 			AssertElementPresent(
 				key_duplicatedIndex = "${number}",
 				locator1 = "FormFields#FIELD_REPEATABLE_BUTTON_BY_INDEX");
-	}
-
-	macro viewFieldRepeatableButton {
-		key_fieldName = "${fieldName}";
-
-		for (var number : list "${key_repeatableFieldNumber}") {
-			AssertElementPresent(
-				key_name = "${fieldName}",
-				locator1 = "FormFields#FIELD_REPEATABLE_BUTTOM");
 		}
 	}
 
@@ -1139,6 +1130,15 @@ definition {
 			value1 = "${fieldHelpText}");
 	}
 
+	macro viewRepeatableFields {
+		for (var row : list "${rows}") {
+			AssertElementPresent(
+				key_fieldName = "${fieldName}",
+				key_rowNumber = "${row}",
+				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_FIELD");
+		}
+	}
+
 	macro viewRepeatableSelectFromList {
 		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
@@ -1154,15 +1154,6 @@ definition {
 			key_fieldName = "${fieldName}",
 			key_rowNumber = "${rowNumber}",
 			locator1 = "FormFields#SELECT_SINGLE_SELECTION_ROW");
-	}
-
-	macro viewRepeatableFields {
-		for (var row : list "${rows}") {
-			AssertElementPresent(
-				key_fieldName = "${fieldName}",
-				key_rowNumber = "${row}",
-				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_FIELD");
-		}
 	}
 
 	macro viewRepeatableTextFieldLabel {

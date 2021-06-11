@@ -395,6 +395,8 @@ public class FriendlyURLEntryLocalServiceImpl
 		long groupId, long classNameId, long classPK, String urlTitle,
 		String languageId) {
 
+		urlTitle = urlTitle.replaceAll("^/+", StringPool.BLANK);
+
 		String normalizedUrlTitle =
 			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 

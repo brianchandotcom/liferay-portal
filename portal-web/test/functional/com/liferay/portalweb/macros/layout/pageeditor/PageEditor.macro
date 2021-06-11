@@ -2060,19 +2060,33 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		if ("${contributed}" == "false") {
-			Type(
-				id = "${id}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",
-				value1 = "${text}");
+		if (isSet(text)) {
+			if ("${contributed}" == "false") {
+				Type(
+					id = "${id}",
+					key_fragmentName = "${fragmentName}",
+					locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",
+					value1 = "${text}");
+			}
+			else {
+				Type(
+					id = "${id}",
+					key_fragmentName = "${fragmentName}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
+					value1 = "${text}");
+			}
 		}
-		else {
-			Type(
-				id = "${id}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
-				value1 = "${text}");
+
+		if (isSet(style)) {
+			SelectFieldText(
+				key_editor = "content",
+				locator1 = "AlloyEditor#EDITOR");
+
+			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_STYLE");
+
+			Click(
+				key_styleFormat = "${style}",
+				locator1 = "AlloyEditor#TEXT_FORMATTING_STYLE_DROPDOWN");
 		}
 
 		PageEditor.clickManagementBar();

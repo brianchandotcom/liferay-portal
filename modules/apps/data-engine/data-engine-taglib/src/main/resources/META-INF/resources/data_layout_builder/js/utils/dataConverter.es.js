@@ -96,13 +96,7 @@ export function getDDMFormFieldSettingsContext({
 				_fromDDMFormToDataDefinitionPropertyName(fieldName)
 			);
 
-			let value = propertyValue ?? field.value;
-
-			if (localizable && propertyValue && fieldName !== 'label') {
-				value =
-					propertyValue[editingLanguageId] ||
-					propertyValue[defaultLanguageId];
-			}
+			const value = propertyValue ?? field.value;
 
 			let localizedValue = {};
 

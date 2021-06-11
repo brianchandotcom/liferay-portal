@@ -90,7 +90,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 							).put(
 								"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
 							).put(
-								"worflowPending", journalEditArticleDisplayContext.isPending()
+								"workflowPending", journalEditArticleDisplayContext.isPending()
 							).build()
 						%>'
 					/>

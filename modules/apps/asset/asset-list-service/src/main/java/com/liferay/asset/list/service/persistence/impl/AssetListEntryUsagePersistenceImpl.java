@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -3912,6 +3913,23 @@ public class AssetListEntryUsagePersistenceImpl
 					}
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!productionMode || !useFinderCache) {
+								finderArgs = new Object[] {
+									classNameId, classPK, portletId
+								};
+							}
+
+							_log.warn(
+								"AssetListEntryUsagePersistenceImpl.fetchByC_C_P(long, long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					AssetListEntryUsage assetListEntryUsage = list.get(0);
 
 					result = assetListEntryUsage;
@@ -6594,9 +6612,6 @@ public class AssetListEntryUsagePersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
-
-		_uniqueIndexColumnNames.add(
-			new String[] {"classNameId", "classPK", "portletId"});
 
 		_uniqueIndexColumnNames.add(
 			new String[] {

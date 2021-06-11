@@ -67,11 +67,14 @@ describe('Validation', () => {
 	});
 
 	it('renders checkbox to enable Validation', () => {
+		const onChange = jest.fn();
+
 		const {container} = render(
 			<ValidationWithProvider
 				dataType="string"
 				label="Validator"
 				name="validation"
+				onChange={onChange}
 				spritemap={spritemap}
 				value={defaultValue}
 			/>

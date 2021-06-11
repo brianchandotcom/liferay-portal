@@ -283,7 +283,7 @@ definition {
 
 		Portlet.assertServerStartup();
 
-		User.loginLocalizationPG(
+		User.firstLoginUI(
 			localization = "ES",
 			password = "test",
 			specificURL = "${portalURL}/es",

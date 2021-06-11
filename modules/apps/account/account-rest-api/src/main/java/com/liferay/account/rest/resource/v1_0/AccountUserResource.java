@@ -59,6 +59,14 @@ public interface AccountUserResource {
 			String externalReferenceCode, AccountUser accountUser)
 		throws Exception;
 
+	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] strings)
+		throws Exception;
+
+	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] strings)
+		throws Exception;
+
 	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
 			String externalReferenceCode, String emailAddress)
 		throws Exception;
@@ -73,6 +81,13 @@ public interface AccountUserResource {
 		throws Exception;
 
 	public AccountUser postAccountUser(Long accountId, AccountUser accountUser)
+		throws Exception;
+
+	public void deleteAccountUsersByEmailAddress(
+			Long accountId, String[] strings)
+		throws Exception;
+
+	public void postAccountUsersByEmailAddress(Long accountId, String[] strings)
 		throws Exception;
 
 	public void deleteAccountUserByEmailAddress(

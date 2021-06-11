@@ -50,7 +50,13 @@ const HtmlPanel = ({content, title}) => (
 	<ClayPanel
 		collapsable
 		collapseClassNames="mb-4 mt-3"
-		displayTitle={title}
+		displayTitle={
+			<span className="c-inner" tabIndex="-1">
+				<ClayPanel.Title className="align-self-center panel-title">
+					{title}
+				</ClayPanel.Title>
+			</span>
+		}
 		displayType="unstyled"
 		showCollapseIcon={true}
 	>

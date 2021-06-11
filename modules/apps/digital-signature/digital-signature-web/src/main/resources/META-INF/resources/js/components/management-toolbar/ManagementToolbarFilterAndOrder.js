@@ -21,14 +21,14 @@ import React, {useContext, useState} from 'react';
 import DropDown, {CheckboxGroup, ItemsGroup, RadioGroup} from './DropDown';
 import SearchContext from './SearchContext';
 
-const getSortable = (columns, sort = '') => {
+const getSortable = (columns, sort = '', defaultSort) => {
 	if (sort.length) {
 		const [column, order] = sort.split(':');
 
 		return {asc: order === 'asc', column};
 	}
 	else if (columns.length) {
-		const {asc = true, key: column} =
+		const {asc = defaultSort === 'asc', key: column} =
 			columns.find(({asc}) => asc !== undefined) || columns[0];
 
 		return {asc, column};
@@ -38,15 +38,16 @@ const getSortable = (columns, sort = '') => {
 };
 
 export default ({columns = [], disabled, filters = []}) => {
-	const [{filters: appliedFilters = {}, sort}, dispatch] = useContext(
-		SearchContext
-	);
+	const [
+		{filters: appliedFilters = {}, defaultSort, sort},
+		dispatch,
+	] = useContext(SearchContext);
 	const [localFilters, setLocalFilters] = useState(appliedFilters);
 	const [isDropDownActive, setDropDownActive] = useState(false);
 
 	const sortableColumns = columns.filter(({sortable}) => sortable);
 
-	const {asc, column} = getSortable(sortableColumns, sort);
+	const {asc, column} = getSortable(sortableColumns, sort, defaultSort);
 	const [sortColumn, setSortColumn] = useState(column);
 
 	const filterItems = filters.map(

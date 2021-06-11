@@ -110,11 +110,23 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		long companyId, long groupId, String fromDateString, String keywords,
 		String order, String status, Pagination pagination) {
 
+		if (Pattern.matches(
+				"[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}" +
+					"\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+				keywords)) {
+
+			return Page.of(
+				Collections.singletonList(
+					getDSEnvelope(companyId, groupId, keywords)),
+				pagination, 1);
+		}
+
 		String query = StringBundler.concat(
 			"envelopes?from_date=", fromDateString, "&count=",
 			pagination.getPageSize(), "&start_position=",
 			pagination.getStartPosition(),
-			"&include=custom_fields,documents,recipients&order=", order);
+			"&include=custom_fields,documents,recipients",
+			"&folder_types=sentitems&order=", order);
 
 		if (!Validator.isBlank(status)) {
 			query = StringBundler.concat(query, "&status=", status);
@@ -122,17 +134,6 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 		if (!Validator.isBlank(keywords)) {
 			query = StringBundler.concat(query, "&search_text=", keywords);
-		}
-
-		if (!Pattern.matches(
-				"[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}" +
-					"\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
-				keywords)) {
-
-			query += "&folder_types=sentitems";
-		}
-		else {
-			query = StringBundler.concat(query, "&envelope_ids=", keywords);
 		}
 
 		JSONObject jsonObject = _dsHttp.get(companyId, groupId, query);

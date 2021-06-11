@@ -121,7 +121,7 @@ const FILTERS = [
 			{label: 'Voided', value: 'voided'},
 		],
 		key: 'status',
-		multiple: true,
+		multiple: false,
 		name: Liferay.Language.get('filter-by-status'),
 	},
 ];

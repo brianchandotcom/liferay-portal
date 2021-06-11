@@ -43,11 +43,12 @@ const ListView = ({
 	const [query, setQuery] = useQuery(
 		history,
 		{
+			defaultSort,
 			filters: {},
 			keywords: '',
 			page: 1,
 			pageSize: defaultDelta,
-			sort: defaultSort,
+			sort: '',
 			...queryParams,
 		},
 		scope

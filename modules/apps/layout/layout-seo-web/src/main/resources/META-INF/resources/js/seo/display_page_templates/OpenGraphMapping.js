@@ -19,6 +19,7 @@ import MappingInputs from './components/MappingInputs';
 import lang from './utils/lang';
 
 export default function OpenGraphMapping({
+	ffMetadataTemplateEnabled = false,
 	fields,
 	openGraphDescription,
 	openGraphImage,
@@ -29,6 +30,7 @@ export default function OpenGraphMapping({
 }) {
 	return (
 		<MappingInputs
+			ffMetadataTemplateEnabled={ffMetadataTemplateEnabled}
 			fields={fields}
 			inputs={[
 				{

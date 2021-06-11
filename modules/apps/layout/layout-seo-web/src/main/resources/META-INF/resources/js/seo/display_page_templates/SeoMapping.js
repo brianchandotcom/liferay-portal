@@ -20,6 +20,7 @@ import lang from './utils/lang';
 
 export default function SeoMapping({
 	description,
+	ffMetadataTemplateEnabled = false,
 	fields,
 	portletNamespace,
 	selectedSource,
@@ -27,6 +28,7 @@ export default function SeoMapping({
 }) {
 	return (
 		<MappingInputs
+			ffMetadataTemplateEnabled={ffMetadataTemplateEnabled}
 			fields={fields}
 			inputs={[
 				{

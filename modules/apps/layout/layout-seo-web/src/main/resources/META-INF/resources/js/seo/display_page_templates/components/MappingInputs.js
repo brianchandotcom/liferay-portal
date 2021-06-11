@@ -18,11 +18,16 @@ import React from 'react';
 import MappingInput from './MappingInput';
 import MappingRichInput from './MappingRichInput';
 
-function MappingInputs({fields, inputs, selectedSource}) {
+function MappingInputs({
+	ffMetadataTemplateEnabled,
+	fields,
+	inputs,
+	selectedSource,
+}) {
 	return (
 		<>
 			{inputs.map((props) =>
-				props.fieldType === 'text' ? (
+				ffMetadataTemplateEnabled && props.fieldType === 'text' ? (
 					<MappingRichInput
 						initialFields={fields}
 						key={props.name}

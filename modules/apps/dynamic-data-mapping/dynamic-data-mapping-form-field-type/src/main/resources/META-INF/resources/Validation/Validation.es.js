@@ -122,6 +122,13 @@ const Validation = ({
 		}
 	}, [defaultLanguageId, editingLanguageId, prevEditingLanguageId, value]);
 
+	useEffect(() => {
+		if (readOnly || !visible) {
+			handleChange('enableValidation', false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [readOnly, visible]);
+
 	return (
 		<ClayForm.Group className="lfr-ddm-form-field-validation">
 			<Checkbox
@@ -133,11 +140,11 @@ const Validation = ({
 				readOnly={readOnly}
 				showAsSwitcher
 				spritemap={spritemap}
-				value={enableValidation && !readOnly}
+				value={enableValidation}
 				visible={visible}
 			/>
 
-			{enableValidation && !readOnly && (
+			{enableValidation && (
 				<>
 					<Select
 						disableEmptyOption

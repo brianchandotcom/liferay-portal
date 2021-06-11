@@ -51,7 +51,7 @@ portletDisplay.setShowBackIcon(true);
 						<li class="tbar-item">
 							<react:component
 								module="publications/js/ManageCollaborators"
-								props="<%= publicationsDisplayContext.getCollaboratorsReactData(ctCollection, permissionChecker) %>"
+								props="<%= publicationsDisplayContext.getCollaboratorsReactData(ctCollection) %>"
 							/>
 						</li>
 					</c:if>

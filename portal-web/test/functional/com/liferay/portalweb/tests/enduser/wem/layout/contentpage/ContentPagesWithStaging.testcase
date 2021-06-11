@@ -537,6 +537,60 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-125564. Publish the draft content page to live site."
+	@priority = "4"
+	test PublishDraftContentPageToLive {
+		task ("Add a draft content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Content Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Publish to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Navigate to Live site via Product Menu") {
+			ProductMenu.gotoLiveSite();
+		}
+
+		task ("View the header title") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name");
+		}
+
+		task ("Navigate to staging site via Product Menu") {
+			ProductMenu.gotoStagingSite();
+		}
+
+		task ("Add a Heading fragment to page in the staging site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Publish to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Navigate to Live site via Product Menu") {
+			ProductMenu.gotoLiveSite();
+		}
+
+		task ("View the header title") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name");
+		}
+	}
+
 	@description = "Changes of content pages should not appear in the live site until after published."
 	@priority = "5"
 	test PublishEditedContentPageToLive {

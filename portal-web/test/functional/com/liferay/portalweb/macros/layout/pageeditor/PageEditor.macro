@@ -3346,12 +3346,25 @@ definition {
 	}
 
 	macro viewFragmentEditableText {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
 		if ("${contributed}" == "false") {
 			AssertTextEquals(
 				id = "${id}",
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#EDITABLE_FIELD",
 				value1 = "${editableText}");
+
+			if (isSet(style)) {
+				AssertVisible(
+					id = "${id}",
+					key_position = "${position}",
+					key_style = "${style}",
+					key_text = "${editableText}",
+					locator1 = "Fragment#INLINE_RICH_TEXT_STYLE");
+			}
 		}
 		else {
 			AssertTextEquals(
@@ -3359,6 +3372,15 @@ definition {
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 				value1 = "${editableText}");
+
+			if (isSet(style)) {
+				AssertVisible(
+					id = "${id}",
+					key_position = "${position}",
+					key_style = "${style}",
+					key_text = "${editableText}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_RICH_TEXT_STYLE");
+			}
 		}
 	}
 

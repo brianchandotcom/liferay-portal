@@ -200,6 +200,18 @@ definition {
 			value1 = "${key_fieldReference}");
 	}
 
+	macro editFrameField {
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Form#BODY_FIELD_FORM_IFRAME");
+
+		Type(
+			locator1 = "Form#BODY",
+			value1 = "${fielName}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro editGridOptions {
 		var key_gridField = "${gridField}";
 		var key_rowNumber = "${rowNumber}";

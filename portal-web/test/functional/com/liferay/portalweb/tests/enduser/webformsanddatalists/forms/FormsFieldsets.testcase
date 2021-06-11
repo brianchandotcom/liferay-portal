@@ -504,9 +504,13 @@ definition {
 			elementSetTitle = "Element Set 1",
 			fieldPositionNumber = "0");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
 
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Multiple Selection");
+		FormFields.viewLabel(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
 
 		Click(
 			key_name = "Multiple Selection",
@@ -526,17 +530,17 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewRadioLabel(
+		FormFields.viewLabel(
 			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
-		FormViewBuilder.validateFormMultipleSelectionField(
-			fieldLabel = "Option 1",
-			fieldName = "Multiple Selection");
+		AssertElementPresent(
+			key_fieldType = "Option 1",
+			locator1 = "FormFields#SELECT_FIELD_MULTIPLE_OPTION_1");
 
-		FormViewBuilder.validateFormMultipleSelectionField(
-			fieldLabel = "Option 2",
-			fieldName = "Multiple Selection");
+		AssertElementPresent(
+			key_fieldType = "Option 2",
+			locator1 = "FormFields#SELECT_FIELD_MULTIPLE_OPTION_1");
 	}
 
 	@description = "Verify that a Numeric Field can be added to a Form via Fieldset"

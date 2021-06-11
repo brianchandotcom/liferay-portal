@@ -16,10 +16,12 @@ package com.liferay.dispatch.talend.archive;
 
 import com.liferay.dispatch.talend.archive.exception.TalendArchiveException;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.BufferedReader;
@@ -48,6 +50,28 @@ import java.util.zip.ZipFile;
  */
 public class TalendArchiveParserUtil {
 
+	public static String getJVMOptions(
+		String newJVMOptions, String oldJVMOptions) {
+
+		String[] jvmOptions = newJVMOptions.split("\\s");
+
+		StringBundler sb = new StringBundler((jvmOptions.length * 2) + 1);
+
+		for (String newJVMOption : jvmOptions) {
+			if (oldJVMOptions.contains(newJVMOption)) {
+				continue;
+			}
+
+			sb.append(newJVMOption);
+
+			sb.append(StringPool.SPACE);
+		}
+
+		sb.append(oldJVMOptions);
+
+		return sb.toString();
+	}
+
 	public static TalendArchive parse(InputStream jobArchiveInputStream)
 		throws PortalException {
 
@@ -57,6 +81,41 @@ public class TalendArchiveParserUtil {
 		catch (IOException ioException) {
 			throw new TalendArchiveException(
 				"Unable to parse Talend archive", ioException);
+		}
+	}
+
+	public static void updateUnicodeProperties(
+			InputStream jobArchiveInputStream,
+			UnicodeProperties unicodeProperties)
+		throws PortalException {
+
+		TalendArchive talendArchive = parse(jobArchiveInputStream);
+
+		if (talendArchive.hasJVMOptions()) {
+			String newJVMOptions = talendArchive.getJVMOptions();
+
+			if (unicodeProperties.containsKey("JAVA_OPTS")) {
+				newJVMOptions = getJVMOptions(
+					newJVMOptions, unicodeProperties.get("JAVA_OPTS"));
+			}
+
+			unicodeProperties.put("JAVA_OPTS", newJVMOptions);
+		}
+		else {
+			unicodeProperties.put("JAVA_OPTS", "-Xms256M -Xmx1024M");
+		}
+
+		Properties contextProperties = talendArchive.getContextProperties();
+
+		for (String propertyName : contextProperties.stringPropertyNames()) {
+			if (unicodeProperties.containsKey(propertyName)) {
+				continue;
+			}
+
+			unicodeProperties.put(
+				propertyName,
+				contextProperties.getProperty(propertyName) +
+					" (Automatic Copy)");
 		}
 	}
 

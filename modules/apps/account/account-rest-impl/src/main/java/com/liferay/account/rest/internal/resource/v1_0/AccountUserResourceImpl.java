@@ -81,6 +81,27 @@ public class AccountUserResourceImpl
 	}
 
 	@Override
+	public void deleteAccountUsersByEmailAddress(
+			Long accountId, String[] userEmailAddresses)
+		throws Exception {
+
+		for (String emailAddress : userEmailAddresses) {
+			deleteAccountUserByEmailAddress(accountId, emailAddress);
+		}
+	}
+
+	@Override
+	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] userEmailAddresses)
+		throws Exception {
+
+		for (String emailAddress : userEmailAddresses) {
+			deleteAccountUserByExternalReferenceCodeByEmailAddress(
+				externalReferenceCode, emailAddress);
+		}
+	}
+
+	@Override
 	public Page<AccountUser> getAccountUsersByExternalReferenceCodePage(
 			String externalReferenceCode, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -189,6 +210,27 @@ public class AccountUserResourceImpl
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			emailAddress);
+	}
+
+	@Override
+	public void postAccountUsersByEmailAddress(
+			Long accountId, String[] userEmailAddresses)
+		throws Exception {
+
+		for (String emailAddress : userEmailAddresses) {
+			postAccountUserByEmailAddress(accountId, emailAddress);
+		}
+	}
+
+	@Override
+	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] userEmailAddresses)
+		throws Exception {
+
+		for (String emailAddress : userEmailAddresses) {
+			postAccountUserByExternalReferenceCodeByEmailAddress(
+				externalReferenceCode, emailAddress);
+		}
 	}
 
 	private long _getListTypeId(String value, String type) {

@@ -13,6 +13,7 @@
  */
 
 import ClayBadge from '@clayui/badge';
+import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
@@ -198,20 +199,23 @@ const Issue = ({issue}) => {
 
 	return (
 		issueTotal > 0 && (
-			<ClayList.Item
-				action
-				className="border-0 issue rounded-0"
-				flex
-				onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
-			>
-				<ClayList.ItemField expand>{issue.title}</ClayList.ItemField>
-
-				<ClayList.ItemField>
-					<ClayBadge
-						displayType={issueTotal === 0 ? 'success' : 'info'}
-						label={issueTotal}
-					/>
-				</ClayList.ItemField>
+			<ClayList.Item action className="border-0 issue rounded-0" flex>
+				<ClayButton
+					className="w-100"
+					displayType="unstyled"
+					onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
+				>
+					<span
+						className="align-items-center c-inner d-flex justify-content-between m-0 px-2 text-secondary w-100"
+						tabIndex="-1"
+					>
+						{issue.title}
+						<ClayBadge
+							displayType={issueTotal === 0 ? 'success' : 'info'}
+							label={issueTotal}
+						/>
+					</span>
+				</ClayButton>
 			</ClayList.Item>
 		)
 	);

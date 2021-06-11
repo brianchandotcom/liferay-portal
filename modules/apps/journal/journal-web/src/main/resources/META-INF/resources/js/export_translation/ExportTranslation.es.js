@@ -45,7 +45,7 @@ function ExportTranslation(props) {
 					const getExportTranslationAvailableLocalesURL = Liferay.Util.PortletURL.createPortletURL(
 						props.getExportTranslationAvailableLocalesURL,
 						{
-							articleId: articleIds[0],
+							key: articleIds[0],
 						}
 					);
 

@@ -68,10 +68,10 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 
 		long groupId = ParamUtil.getLong(
 			resourceRequest, "groupId", themeDisplay.getScopeGroupId());
-		String articleId = ParamUtil.getString(resourceRequest, "articleId");
+		String key = ParamUtil.getString(resourceRequest, "key");
 
 		Object object = infoItemObjectProvider.getInfoItem(
-			new GroupKeyInfoItemIdentifier(groupId, articleId));
+			new GroupKeyInfoItemIdentifier(groupId, key));
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 public class ReportGeneratorLogWrapper extends SanitizerLogWrapper {
 
 	public static boolean isEnabled() {
-		return _GENERATE_REPORT;
+		return _REPORT_GENERATION;
 	}
 
 	public ReportGeneratorLogWrapper(Log log, String name) {
@@ -78,8 +78,8 @@ public class ReportGeneratorLogWrapper extends SanitizerLogWrapper {
 		ReportEventPublisherUtil.addWarning(_className, throwable.getMessage());
 	}
 
-	private static final boolean _GENERATE_REPORT = GetterUtil.getBoolean(
-		SystemProperties.get(PropsKeys.GENERATE_REPORT));
+	private static final boolean _REPORT_GENERATION = GetterUtil.getBoolean(
+		SystemProperties.get(PropsKeys.REPORT_GENERATION));
 
 	private final String _className;
 

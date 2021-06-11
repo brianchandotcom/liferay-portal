@@ -199,7 +199,7 @@ public class UpgradeClient {
 
 		if (_report) {
 			jvmOptsCommands +=
-				" -Dgenerate.report=true " +
+				" -Dreport.generation=true " +
 					"-Dsystem.properties.set.override=false";
 		}
 

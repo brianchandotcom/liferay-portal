@@ -1143,9 +1143,6 @@ public class PropsValues {
 					PropsKeys.
 						FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS));
 
-	public static final boolean GENERATE_REPORT = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.GENERATE_REPORT));
-
 	public static final String[] GLOBAL_SHUTDOWN_EVENTS = PropsUtil.getArray(
 		PropsKeys.GLOBAL_SHUTDOWN_EVENTS);
 
@@ -2501,6 +2498,9 @@ public class PropsValues {
 	@Deprecated
 	public static final String REDIRECT_URL_SECURITY_MODE = PropsUtil.get(
 		PropsKeys.REDIRECT_URL_SECURITY_MODE);
+
+	public static final boolean REPORT_GENERATION = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.REPORT_GENERATION));
 
 	public static final boolean REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP =
 		GetterUtil.getBoolean(

@@ -105,29 +105,6 @@ public class DLReferencesExportImportContentProcessor
 		}
 	}
 
-	protected void deleteTimestampParameters(StringBuilder sb, int beginPos) {
-		beginPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
-
-		if ((beginPos == -1) || (beginPos == (sb.length() - 1)) ||
-			(sb.charAt(beginPos + 1) != CharPool.QUESTION)) {
-
-			return;
-		}
-
-		int endPos = StringUtil.indexOfAny(
-			sb.toString(), _DL_REFERENCE_LEGACY_STOP_STRINGS, beginPos + 2);
-
-		if (endPos == -1) {
-			return;
-		}
-
-		String urlParams = sb.substring(beginPos + 1, endPos);
-
-		urlParams = _http.removeParameter(urlParams, "t");
-
-		sb.replace(beginPos + 1, endPos, urlParams);
-	}
-
 	protected ObjectValuePair<String, Integer>
 		getDLReferenceEndPosObjectValuePair(
 			String content, int beginPos, int endPos) {
@@ -413,15 +390,6 @@ public class DLReferencesExportImportContentProcessor
 				}
 
 				sb.replace(beginPos, endPos, exportedReferenceSB.toString());
-
-				int deleteTimestampParametersOffset = beginPos;
-
-				if (fileEntry.isInTrash()) {
-					deleteTimestampParametersOffset = sb.indexOf(
-						"[#dl-reference=", beginPos);
-				}
-
-				deleteTimestampParameters(sb, deleteTimestampParametersOffset);
 			}
 			catch (Exception exception) {
 				StringBundler exceptionSB = new StringBundler(6);

@@ -553,6 +553,13 @@ public class JournalDisplayContext {
 
 		exportTranslationURL.setResourceID("/journal/export_translation");
 
+		exportTranslationURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+		exportTranslationURL.setParameter(
+			"classNameId",
+			String.valueOf(
+				PortalUtil.getClassNameId(JournalArticle.class.getName())));
+
 		ResourceURL getExportTranslationAvailableLocalesURL =
 			_liferayPortletResponse.createResourceURL();
 

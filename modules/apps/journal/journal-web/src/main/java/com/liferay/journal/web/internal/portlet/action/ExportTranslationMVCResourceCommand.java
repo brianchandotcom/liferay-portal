@@ -20,7 +20,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -73,15 +73,18 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			long classNameId = ParamUtil.getLong(
+				resourceRequest, "classNameId");
+
+			String className = _portal.getClassName(classNameId);
+
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					JournalArticle.class.getName());
+					InfoItemFieldValuesProvider.class, className);
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					JournalArticle.class.getName());
+					InfoItemObjectProvider.class, className);
 
 			Object object = infoItemObjectProvider.getInfoItem(
 				new GroupKeyInfoItemIdentifier(
@@ -155,6 +158,9 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private TranslationInfoItemFieldValuesExporterTracker

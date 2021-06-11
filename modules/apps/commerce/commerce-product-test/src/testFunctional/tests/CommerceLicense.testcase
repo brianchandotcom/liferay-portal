@@ -25,6 +25,7 @@ definition {
 	test AggregatedKeys {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-developer-aggregated.xml";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -58,6 +59,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-dxp-license-developer-combined.xml";
 		property dxp.license.file = "dxp-license-dummy.xml";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -131,6 +133,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-binary-license-developer.li";
 		property dxp.license.file = "dxp-binary-license-developer.li";
+		property portal.release = "false";
 
 		AssertConsoleTextNotPresent(value1 = "Processing ci-license.xml");
 		AssertConsoleTextNotPresent(value1 = "Processing ci-portal-commerce-license.xml");
@@ -179,6 +182,7 @@ definition {
 		property commerce.license.file = "commerce-license-production.xml";
 		property commerce.license.property = "hostname";
 		property dxp.license.file = "dxp-license-production.xml";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -189,6 +193,7 @@ definition {
 		property commerce.license.file = "commerce-license-production.xml";
 		property commerce.license.property = "ip-address";
 		property dxp.license.file = "dxp-license-production.xml";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -199,6 +204,7 @@ definition {
 		property commerce.license.file = "commerce-license-production.xml";
 		property commerce.license.property = "mac-address";
 		property dxp.license.file = "dxp-license-production.xml";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 	}
@@ -208,6 +214,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
 		property commerce.license.property = "expired";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 
@@ -222,6 +229,7 @@ definition {
 		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
 		property commerce.license.property = "expired";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 
@@ -260,6 +268,7 @@ definition {
 		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
 		property commerce.license.property = "expiration-warning";
 		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
+		property portal.release = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -324,6 +333,7 @@ definition {
 		property commerce.enabled = "true";
 		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
 		property commerce.license.property = "expiration-warning";
+		property portal.release = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 

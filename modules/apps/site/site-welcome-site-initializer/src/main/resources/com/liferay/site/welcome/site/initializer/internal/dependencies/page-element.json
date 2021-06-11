@@ -417,6 +417,42 @@
 														},
 														"fragmentImageClassPKReference": {
 															"classPKReferences": {
+																"ar_SA": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"bg_BG": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"ca_AD": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"cs_CZ": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"da_DK": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"de_DE": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"el_GR": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"en_AU": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
+																"en_GB": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "${TREE_IMAGE_ID}"
+																},
 																"en_US": {
 																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
 																	"classPK": "${TREE_IMAGE_ID}"

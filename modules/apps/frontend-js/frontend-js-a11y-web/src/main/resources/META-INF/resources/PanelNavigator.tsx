@@ -56,6 +56,7 @@ function PanelNavigator({
 								className="text-primary"
 								displayType="unstyled"
 								href={helpUrl}
+								onClick={(event) => event.stopPropagation()}
 							>
 								{Liferay.Language.get('more-info')}
 							</ClayLink>

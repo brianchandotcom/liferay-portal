@@ -17,10 +17,14 @@ package com.liferay.commerce.salesforce.connector.internal.activator;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.talend.archive.TalendArchiveParserUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Activate;
@@ -55,12 +59,26 @@ public class CommerceSalesforceConnectorActivator {
 
 		long userId = _userLocalService.getDefaultUserId(companyId);
 
-		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-			userId, "talend", new UnicodeProperties(), name, true);
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		_dispatchFileRepository.addFileEntry(
-			userId, dispatchTrigger.getDispatchTriggerId(), name, 0,
-			"application/zip", inputStream);
+		File connectorArchiveFile = FileUtil.createTempFile(inputStream);
+
+		try (FileInputStream fileInputStream = new FileInputStream(
+				connectorArchiveFile)) {
+
+			TalendArchiveParserUtil.updateUnicodeProperties(
+				fileInputStream, unicodeProperties);
+
+			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+				userId, "talend", unicodeProperties, name, true);
+
+			_dispatchFileRepository.addFileEntry(
+				userId, dispatchTrigger.getDispatchTriggerId(), name, 0,
+				"application/zip", new FileInputStream(connectorArchiveFile));
+		}
+		finally {
+			FileUtil.delete(connectorArchiveFile);
+		}
 	}
 
 	private void _createDispatchTriggers(String... names) throws Exception {

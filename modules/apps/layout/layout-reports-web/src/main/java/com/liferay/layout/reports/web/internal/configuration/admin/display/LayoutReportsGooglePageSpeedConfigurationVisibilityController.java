@@ -17,9 +17,6 @@ package com.liferay.layout.reports.web.internal.configuration.admin.display;
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.Serializable;
 
@@ -41,19 +38,8 @@ public class LayoutReportsGooglePageSpeedConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		try {
-			return _layoutReportsGooglePageSpeedConfigurationProvider.
-				isEnabled();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return false;
-		}
+		return _layoutReportsGooglePageSpeedConfigurationProvider.isEnabled();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutReportsGooglePageSpeedConfigurationVisibilityController.class);
 
 	@Reference
 	private LayoutReportsGooglePageSpeedConfigurationProvider

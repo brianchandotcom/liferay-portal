@@ -231,8 +231,9 @@ public class WikiPageResourceImpl
 		return _toWikiPage(
 			_wikiPageService.addPage(
 				wikiNodeId, wikiPage.getHeadline(), wikiPage.getContent(),
-				wikiPage.getHeadline(), true, wikiPage.getEncodingFormat(),
-				null, null, serviceContext));
+				wikiPage.getHeadline(), true,
+				_mapEncodingFormat(wikiPage.getEncodingFormat()), null, null,
+				serviceContext));
 	}
 
 	@Override
@@ -261,8 +262,8 @@ public class WikiPageResourceImpl
 				contextUser.getUserId(), parentWikiPage.getNodeId(),
 				wikiPage.getHeadline(), WikiPageConstants.VERSION_DEFAULT,
 				wikiPage.getContent(), wikiPage.getHeadline(), false,
-				wikiPage.getEncodingFormat(), false, parentWikiPage.getTitle(),
-				null, serviceContext));
+				_mapEncodingFormat(wikiPage.getEncodingFormat()), false,
+				parentWikiPage.getTitle(), null, serviceContext));
 	}
 
 	@Override
@@ -286,8 +287,8 @@ public class WikiPageResourceImpl
 			_wikiPageService.addPage(
 				externalReferenceCode, wikiPage.getWikiNodeId(),
 				wikiPage.getHeadline(), wikiPage.getContent(),
-				wikiPage.getDescription(), false, wikiPage.getEncodingFormat(),
-				null, null,
+				wikiPage.getDescription(), false,
+				_mapEncodingFormat(wikiPage.getEncodingFormat()), null, null,
 				ServiceContextRequestUtil.createServiceContext(
 					wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
 					_getExpandoBridgeAttributes(wikiPage),
@@ -362,6 +363,20 @@ public class WikiPageResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private String _mapEncodingFormat(String encodingFormat) {
+		if (encodingFormat.equals("text/x-wiki")) {
+			return "creole";
+		}
+		else if (encodingFormat.equals("text/html")) {
+			return "html";
+		}
+		else if (encodingFormat.equals("text/plain")) {
+			return "plain_text";
+		}
+
+		return encodingFormat;
+	}
+
 	private WikiPage _toWikiPage(com.liferay.wiki.model.WikiPage wikiPage)
 		throws Exception {
 
@@ -428,7 +443,8 @@ public class WikiPageResourceImpl
 			_wikiPageService.updatePage(
 				serviceBuilderWikiPage.getNodeId(), wikiPage.getHeadline(),
 				serviceBuilderWikiPage.getVersion(), wikiPage.getContent(),
-				wikiPage.getDescription(), true, wikiPage.getEncodingFormat(),
+				wikiPage.getDescription(), true,
+				_mapEncodingFormat(wikiPage.getEncodingFormat()),
 				serviceBuilderWikiPage.getParentTitle(),
 				serviceBuilderWikiPage.getRedirectTitle(), serviceContext));
 	}

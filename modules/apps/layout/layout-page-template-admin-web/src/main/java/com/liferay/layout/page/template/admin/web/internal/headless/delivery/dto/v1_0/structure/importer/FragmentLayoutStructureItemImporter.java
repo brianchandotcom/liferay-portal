@@ -293,6 +293,16 @@ public class FragmentLayoutStructureItemImporter
 			return jsonObject;
 		}
 
+		Map<String, Object> valueMap = (Map<String, Object>)map.get("value");
+
+		if (valueMap != null) {
+			String title = String.valueOf(valueMap.get("title"));
+
+			if (title != null) {
+				jsonObject.put("defaultValue", title);
+			}
+		}
+
 		Map<String, Object> valueI18nMap = (Map<String, Object>)map.get(
 			"value_i18n");
 

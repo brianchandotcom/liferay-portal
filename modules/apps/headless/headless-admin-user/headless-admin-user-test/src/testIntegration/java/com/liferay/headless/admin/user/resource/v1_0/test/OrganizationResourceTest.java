@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +95,46 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteUserAccountsByEmailAddress() throws Exception {
+		Organization organization = _toOrganization(
+			_addOrganization(randomOrganization(), "0"));
+
+		long organizationId = GetterUtil.getLong(organization.getId());
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		UserLocalServiceUtil.addOrganizationUsers(organizationId, users);
+
+		for (User user : users) {
+			Assert.assertTrue(
+				UserLocalServiceUtil.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+
+		List<User> removeUsers = users.subList(0, 2);
+
+		organizationResource.deleteUserAccountsByEmailAddress(
+			organization.getId(), _toUserEmailAddresses(removeUsers));
+
+		for (User user : removeUsers) {
+			Assert.assertFalse(
+				UserLocalServiceUtil.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+
+		List<User> keepUsers = users.subList(2, 4);
+
+		for (User user : keepUsers) {
+			Assert.assertTrue(
+				UserLocalServiceUtil.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+	}
+
+	@Override
+	@Test
 	public void testGetOrganizationsPage() throws Exception {
 		Page<Organization> page = organizationResource.getOrganizationsPage(
 			null, RandomTestUtil.randomString(), null, Pagination.of(1, 2),
@@ -144,6 +185,34 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		Assert.assertTrue(
 			_organizationLocalService.hasUserOrganization(
 				user.getUserId(), GetterUtil.getLong(organization.getId())));
+	}
+
+	@Override
+	@Test
+	public void testPostUserAccountsByEmailAddress() throws Exception {
+		Organization organization = _toOrganization(
+			_addOrganization(randomOrganization(), "0"));
+
+		long organizationId = GetterUtil.getLong(organization.getId());
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser(), UserTestUtil.addUser());
+
+		for (User user : users) {
+			Assert.assertFalse(
+				UserLocalServiceUtil.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
+
+		organizationResource.postUserAccountsByEmailAddress(
+			organization.getId(), _toUserEmailAddresses(users));
+
+		for (User user : users) {
+			Assert.assertTrue(
+				UserLocalServiceUtil.hasOrganizationUser(
+					organizationId, user.getUserId()));
+		}
 	}
 
 	@Override
@@ -300,6 +369,11 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				name = organization.getName();
 			}
 		};
+	}
+
+	private String[] _toUserEmailAddresses(List<User> users) {
+		return TransformUtil.transformToArray(
+			users, User::getEmailAddress, String.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

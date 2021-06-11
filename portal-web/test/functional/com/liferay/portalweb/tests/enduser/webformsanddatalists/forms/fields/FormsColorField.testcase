@@ -267,14 +267,46 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added to a Color Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133142 HelpTextCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Color");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Color Help Text",
+			fieldName = "tip");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Color Help Text",
+			fieldName = "Color");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Color Help Text",
+			fieldName = "Color");
+
+		FormFields.editColor(
+			colorSwatchItem = "FF0D0D",
+			fieldLabel = "Color");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that the Field Label can be changed"

@@ -37,13 +37,99 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6206. Add income items"
-	@ignore = "true"
 	@priority = "3"
 	test AddIncomeItems {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceWarehouses#AddIncomeItems";
 
-		// TODO COMMERCE-6206 AddIncomeItems Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Inventory");
+
+		CommerceNavigator.gotoEntry(entryName = "MIN00673");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Incoming");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_text = "Quantity",
+			locator1 = "TextInput#ANY",
+			value1 = "10");
+
+		Select(
+			key_fieldLabel = "Destination",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Italy");
+
+		Type(
+			key_value = "date",
+			locator1 = "TextInput#ANY_ID",
+			value1 = "06/11/2021");
+
+		Button.click(button = "Submit");
+
+		SelectFrameTop();
+
+		AssertElementPresent(
+			key_entryName = "Italy",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
+
+		CommerceNavigator.gotoEntry(entryName = "Italy");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_text = "Quantity",
+			locator1 = "TextInput#ANY",
+			value1 = "15");
+
+		Type(
+			key_value = "date",
+			locator1 = "TextInput#ANY_ID",
+			value1 = "06/12/2021");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "Italy");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertTextEquals(
+			key_text = "Quantity",
+			locator1 = "TextInput#ANY",
+			value1 = "15");
+
+		AssertTextEquals(
+			key_value = "date",
+			locator1 = "TextInput#ANY_ID",
+			value1 = "06/12/2021");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
+
+		ClickNoError(
+			key_entryName = "Italy",
+			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			key_entryName = "Italy",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-6200. Consume booked quantities of one item in multiple warehouses"

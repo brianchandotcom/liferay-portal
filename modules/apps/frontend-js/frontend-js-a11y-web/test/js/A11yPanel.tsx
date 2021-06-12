@@ -271,9 +271,9 @@ describe('A11yPanel', () => {
 			expect(occurrences.length).toBe(3);
 
 			const occurrencesFixture = [
-				'occurrence 0',
 				'occurrence 1',
 				'occurrence 2',
+				'occurrence 3',
 			];
 
 			occurrences.forEach((occurrence, index) =>
@@ -306,9 +306,9 @@ describe('A11yPanel', () => {
 				)
 			).toBeInTheDocument();
 
-			expect(getByText('occurrence 0')).toBeInTheDocument();
+			expect(getByText('occurrence 1')).toBeInTheDocument();
 
-			expect(queryByText('occurrence 2')).not.toBeInTheDocument();
+			expect(queryByText('occurrence 3')).not.toBeInTheDocument();
 		});
 	});
 

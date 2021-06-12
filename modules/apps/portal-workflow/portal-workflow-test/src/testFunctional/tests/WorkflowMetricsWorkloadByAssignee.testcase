@@ -209,12 +209,12 @@ definition {
 
 	}
 
-	@description = "LPS-98518 - Verify that the sum of items Overdue and On time of Workload by Assignee page are never bigger than the Total items"
+	@description = "LPS-98518 - Verify that a search bar is present in the step filter when the dropdown is higher than 496px"
 	@ignore = "Test Stub"
 	@priority = "3"
-	test SearchBarIsPresentInStepFilter {
+	test SearchBarIsPresentWhenDropdownIsHigherThan496Px {
 
-		// TODO LRQA-67574 SearchBarIsPresentInStepFilter pending implementation
+		// TODO LRQA-67574 SearchBarIsPresentWhenDropdownIsHigherThan496Px pending implementation
 
 	}
 

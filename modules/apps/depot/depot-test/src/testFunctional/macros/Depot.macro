@@ -573,7 +573,9 @@ definition {
 			panel = "Applications",
 			portlet = "Asset Libraries");
 
-		DepotNavigator.openDepotSettingsGeneral(depotName = "${depotName}");
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "${depotName}",
+			portlet = "Settings");
 
 		var depotID = selenium.getElementValue("//input[contains(@id,'assetLibraryId')]");
 

@@ -182,13 +182,17 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Blogs.addEntryWithCoverImageFromDepot(
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
 			depotName = "Test Depot Name",
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
 			imageFileName = "Document_2.jpg",
-			siteURLKey = "site-name");
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -1161,16 +1165,13 @@ definition {
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
-		AlloyEditor.addContent(content = "Blogs Entry Content");
-
-		ItemSelector.gotoItemSelectorViaAlloyEditor();
-
-		ItemSelector.selectRepositoryImage(
+		BlogsEntry.addContentWithInlineImage(
 			depotName = "Test Depot Name",
+			entryContent = "Blogs Entry Content",
 			imageFileName = "Document_2.jpg",
 			navTab = "Documents and Media");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -1294,12 +1295,6 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 
 		BlogsEntry.addEntryContent(
@@ -1314,6 +1309,12 @@ definition {
 			navTab = "Documents and Media");
 
 		PortletEntry.publish();
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
 
 		Staging.gotoPublishToLive();
 

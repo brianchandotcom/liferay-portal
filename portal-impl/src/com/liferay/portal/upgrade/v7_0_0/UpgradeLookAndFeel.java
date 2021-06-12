@@ -17,6 +17,11 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.PortletPreferencesFactoryImpl;
+import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.Preference;
+
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -36,19 +41,28 @@ public class UpgradeLookAndFeel extends BasePortletPreferencesUpgradeProcess {
 			String portletId, String xml)
 		throws Exception {
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
+		Map<String, Preference> preferencesMap =
+			PortletPreferencesFactoryImpl.createPreferencesMap(xml);
 
-		boolean showBorders = GetterUtil.getBoolean(
-			portletPreferences.getValue("portletSetupShowBorders", null), true);
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
-		if (!showBorders) {
-			portletPreferences.setValue(
-				"portletSetupPortletDecoratorId", "borderless");
+		for (Map.Entry<String, Preference> entry : preferencesMap.entrySet()) {
+			String key = entry.getKey();
+			Preference preference = entry.getValue();
+
+			if (key.equals("portletSetupShowBorders")) {
+				boolean showBorders = GetterUtil.getBoolean(
+					preference.getValues()[0], true);
+
+				if (!showBorders) {
+					portletPreferences.setValue(
+						"portletSetupPortletDecoratorId", "borderless");
+				}
+			}
+			else {
+				portletPreferences.setValues(key, preference.getValues());
+			}
 		}
-
-		portletPreferences.reset("portletSetupShowBorders");
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

@@ -265,25 +265,13 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Test Site Name");
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "test-site-name");
-
-		BlogsNavigator.gotoSelectFile();
-
-		ItemSelector.selectRepositoryImage(
+		Blogs.addEntryWithCoverImageFromDepot(
 			depotName = "Test Depot Name",
-			imageFileName = "Document_1.jpg",
-			navTab = "Documents and Media");
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
-
-		Button.clickPublish();
-
-		Pause(locator1 = "10000");
+			entryTitle = "Blogs Entry Title",
+			imageFileName = "Document_1.jpg",
+			siteURLKey = "test-site-name");
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 

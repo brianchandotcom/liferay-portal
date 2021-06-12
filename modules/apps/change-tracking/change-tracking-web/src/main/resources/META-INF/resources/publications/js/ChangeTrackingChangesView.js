@@ -2208,18 +2208,17 @@ export default ({
 						title={Liferay.Language.get('reverse-sort-direction')}
 					>
 						<ClayButton
-							className={
-								ascendingState
-									? 'order-arrow-down-active'
-									: 'order-arrow-up-active'
-							}
 							disabled={changes.length === 0}
 							displayType="unstyled"
 							onClick={() => setAscendingState(!ascendingState)}
 						>
 							<ClayIcon
 								spritemap={spritemap}
-								symbol="order-arrow"
+								symbol={
+									ascendingState
+										? 'order-list-down'
+										: 'order-list-up'
+								}
 							/>
 						</ClayButton>
 					</ClayManagementToolbar.Item>

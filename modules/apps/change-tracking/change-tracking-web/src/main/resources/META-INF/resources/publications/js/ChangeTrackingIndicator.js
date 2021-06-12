@@ -390,19 +390,18 @@ const PublicationsSearchContainer = ({
 						title={Liferay.Language.get('reverse-sort-direction')}
 					>
 						<ClayButton
-							className={
-								'nav-link nav-link-monospaced ' +
-								(ascending
-									? 'order-arrow-down-active'
-									: 'order-arrow-up-active')
-							}
+							className="nav-link nav-link-monospaced"
 							disabled={filterDisabled}
 							displayType="unstyled"
 							onClick={() => setAscending(!ascending)}
 						>
 							<ClayIcon
 								spritemap={spritemap}
-								symbol="order-arrow"
+								symbol={
+									ascending
+										? 'order-list-down'
+										: 'order-list-up'
+								}
 							/>
 						</ClayButton>
 					</ClayManagementToolbar.Item>

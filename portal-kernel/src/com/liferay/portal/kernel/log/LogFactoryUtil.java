@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.log;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

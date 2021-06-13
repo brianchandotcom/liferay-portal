@@ -277,6 +277,8 @@ public interface CartResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			httpInvoker.body(object.toString(), "application/json");
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -672,8 +674,6 @@ public interface CartResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(cartId.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

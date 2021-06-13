@@ -584,6 +584,8 @@ public interface OrganizationResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			httpInvoker.body(object.toString(), "application/json");
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1079,8 +1081,6 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(emailAddress.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

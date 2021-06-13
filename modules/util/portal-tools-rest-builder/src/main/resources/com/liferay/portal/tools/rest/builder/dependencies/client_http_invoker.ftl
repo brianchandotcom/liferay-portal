@@ -361,13 +361,6 @@ public class HttpInvoker {
 			return;
 		}
 
-		if ((_httpMethod == HttpMethod.DELETE) ||
-			(_httpMethod == HttpMethod.GET)) {
-
-			throw new IllegalArgumentException(
-				"HTTP method " + _httpMethod + " must not contain a body");
-		}
-
 		httpURLConnection.setDoOutput(true);
 
 		OutputStream outputStream = httpURLConnection.getOutputStream();

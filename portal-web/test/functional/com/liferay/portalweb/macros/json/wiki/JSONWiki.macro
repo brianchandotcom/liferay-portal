@@ -33,13 +33,12 @@ definition {
 	macro addWikiNode {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName}");
 
-		var groupId = JSONWikiSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+		var serviceContext = JSONWikiSetter.setServiceContext(groupName = "${groupName}");
 
 		JSONWikiAPI._addWikiNode(
 			description = "${wikiNodeDescription}",
-			groupId = "${groupId}",
 			name = "${wikiNodeName}",
-			viewableBy = "${viewableBy}");
+			serviceContext = "${serviceContext}");
 	}
 
 	@summary = "Directly calls the JSON WS API to add a wiki page"

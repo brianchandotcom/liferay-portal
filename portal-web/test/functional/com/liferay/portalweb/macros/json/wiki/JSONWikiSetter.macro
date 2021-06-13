@@ -61,7 +61,8 @@ definition {
 	macro setServiceContext {
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}");
+			assetTagNames = "${assetTagNames}",
+			groupName = "${groupName}");
 
 		return "${serviceContext}";
 	}

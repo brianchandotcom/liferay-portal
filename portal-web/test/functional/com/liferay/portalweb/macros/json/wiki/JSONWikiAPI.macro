@@ -84,7 +84,7 @@ definition {
 
 	@summary = "Helper function to add a wiki node via JSON"
 	macro _addWikiNode {
-		Variables.assertDefined(parameterList = "${groupId}");
+		Variables.assertDefined(parameterList = "${name}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -95,26 +95,15 @@ definition {
 			var description = "";
 		}
 
-		if (isSet(viewableBy)) {
-			var viewableBy = "${viewableBy}";
-		}
-		else {
-			var viewableBy = "Anyone";
-		}
-
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/wiki-nodes \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test' \
-			-d '{
-				"creator": {},
-				"description": "${description}",
-				"name": "${name}",
-				"viewableBy": "${viewableBy}"
-			}'
+			${portalURL}/api/jsonws/wiki.wikinode/add-node \
+				-u test@liferay.com:test \
+				-d name=${name} \
+				-d description=${description} \
+				-d serviceContext=${serviceContext}
 		''';
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	@summary = "Helper function to add a wiki page via JSON"

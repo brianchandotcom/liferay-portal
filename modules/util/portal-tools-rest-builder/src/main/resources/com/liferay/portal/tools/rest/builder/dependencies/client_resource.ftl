@@ -199,7 +199,7 @@ public interface ${schemaName}Resource {
 			public HttpInvoker.HttpResponse ${javaMethodSignature.methodName}HttpResponse(${parameters}) throws Exception {
 				HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-				<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch", "post", "put")>
+				<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete", "patch", "post", "put")>
 					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 						httpInvoker.multipart();
 
@@ -209,25 +209,36 @@ public interface ${schemaName}Resource {
 							httpInvoker.part(entry.getKey(), entry.getValue());
 						}
 					<#else>
-						httpInvoker.body(
+						<#assign
+							bodyParameters = freeMarkerTool.getBodyParameters(javaMethodSignature)
+						/>
 
-						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if javaMethodParameter?is_last>
-								<#if javaMethodParameter.parameterType?starts_with("[L")>
-									Stream.of(
-										${javaMethodParameter.parameterName}
-									).map(
-										value -> String.valueOf(value)
-									).collect(
-										Collectors.toList()
-									).toString()
-								<#else>
-									${javaMethodParameter.parameterName}.toString()
+						<#if bodyParameters?has_content>
+
+							httpInvoker.body(
+							<#list bodyParameters as javaMethodParameter>
+								<#if javaMethodParameter?is_last>
+									<#if javaMethodParameter.parameterType?starts_with("[L")>
+										Stream.of(
+											${javaMethodParameter.parameterName}
+										).map(
+											value ->
+											<#if javaMethodParameter.parameterType?contains("String")>
+												"\"" + String.valueOf(value) + "\""
+											<#else>
+												String.valueOf(value)
+											</#if>
+										).collect(
+											Collectors.toList()
+										).toString()
+									<#else>
+										${javaMethodParameter.parameterName}.toString()
+									</#if>
 								</#if>
-							</#if>
-						</#list>
+							</#list>
 
-						, "application/json");
+							, "application/json");
+						</#if>
 					</#if>
 				</#if>
 

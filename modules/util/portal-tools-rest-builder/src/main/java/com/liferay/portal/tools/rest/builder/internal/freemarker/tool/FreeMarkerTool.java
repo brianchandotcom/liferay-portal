@@ -132,6 +132,40 @@ public class FreeMarkerTool {
 		return schemas;
 	}
 
+	public List<JavaMethodParameter> getBodyParameters(
+		JavaMethodSignature javaMethodSignature) {
+
+		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+
+		for (JavaMethodParameter javaMethodParameter :
+				javaMethodSignature.getJavaMethodParameters()) {
+
+			boolean notFound = true;
+
+			for (JavaMethodParameter pathJavaMethodParameter :
+					javaMethodSignature.getPathJavaMethodParameters()) {
+
+				if (Objects.equals(
+						pathJavaMethodParameter.getParameterName(),
+						javaMethodParameter.getParameterName()) &&
+					Objects.equals(
+						pathJavaMethodParameter.getParameterType(),
+						javaMethodParameter.getParameterType())) {
+
+					notFound = false;
+
+					break;
+				}
+			}
+
+			if (notFound) {
+				javaMethodParameters.add(javaMethodParameter);
+			}
+		}
+
+		return javaMethodParameters;
+	}
+
 	public String getClientParameters(
 		List<JavaMethodParameter> javaMethodParameters, String schemaName,
 		String schemaVarName) {

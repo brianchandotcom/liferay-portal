@@ -147,6 +147,7 @@ public class SelectAssetDisplayPageDisplayContext {
 			layoutItemSelectorCriterion.setCheckDisplayPage(true);
 			layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 				new UUIDItemSelectorReturnType());
+			layoutItemSelectorCriterion.setShowBreadcrumb(false);
 			layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 			itemSelectorCriteria.add(layoutItemSelectorCriterion);

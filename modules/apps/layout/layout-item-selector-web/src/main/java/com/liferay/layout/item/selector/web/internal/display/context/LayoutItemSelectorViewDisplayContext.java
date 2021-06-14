@@ -14,23 +14,19 @@
 
 package com.liferay.layout.item.selector.web.internal.display.context;
 
-import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -92,24 +88,7 @@ public class LayoutItemSelectorViewDisplayContext {
 	}
 
 	public boolean isShowBreadcrumb() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		boolean showBreadcrumb = ParamUtil.getBoolean(
-			_httpServletRequest, "showBreadcrumb");
-
-		if (Objects.equals(
-				ItemSelectorPortletKeys.ITEM_SELECTOR,
-				portletDisplay.getPortletName()) ||
-			showBreadcrumb) {
-
-			return true;
-		}
-
-		return false;
+		return _layoutItemSelectorCriterion.isShowBreadcrumb();
 	}
 
 	public boolean isShowHiddenPages() {

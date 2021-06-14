@@ -15,17 +15,19 @@
 package com.liferay.portal.change.tracking.internal;
 
 import com.liferay.petra.io.unsync.UnsyncStringReader;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -169,20 +171,12 @@ import net.sf.jsqlparser.statement.values.ValuesStatement;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = CTSQLTransformer.class)
 public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 	@Override
@@ -247,25 +241,37 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		}
 	}
 
-	@Activate
 	@SuppressWarnings("unchecked")
-	protected void activate(BundleContext bundleContext) {
-		_portalCache =
-			(PortalCache<String, String>)_singleVMPool.getPortalCache(
-				CTSQLTransformerImpl.class.getName());
+	protected void activate(BundleContext bundleContext) throws Exception {
+		_portalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			CTSQLTransformerImpl.class.getName());
 
-		_serviceTracker = new ServiceTracker<>(
+		_ctServiceServiceTracker = new ServiceTracker<>(
 			bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class,
 			new CTServiceTrackerCustomizer(bundleContext));
 
-		_serviceTracker.open();
+		_ctServiceServiceTracker.open();
+
+		_releaseServiceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", Release.class.getName(),
+					")(release.bundle.symbolic.name=",
+					"com.liferay.change.tracking.service)",
+					"(release.schema.version>=2.1.0))")),
+			null);
+
+		_releaseServiceTracker.open();
 	}
 
-	@Deactivate
 	protected void deactivate() {
 		_portalCache.removeAll();
 
-		_serviceTracker.close();
+		_ctServiceServiceTracker.close();
+
+		_releaseServiceTracker.close();
 	}
 
 	/**
@@ -289,29 +295,11 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 	private static final JSqlParser _jSqlParser = new CCJSqlParserManager();
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ClassNameLocalService _classNameLocalService;
-
 	private final Map<Class<?>, CTService<?>> _ctServiceMap =
 		new ConcurrentHashMap<>();
+	private ServiceTracker<?, ?> _ctServiceServiceTracker;
 	private PortalCache<String, String> _portalCache;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(release.bundle.symbolic.name=com.liferay.change.tracking.service)(release.schema.version>=2.1.0))"
-	)
-	private volatile Release _release;
-
-	private ServiceTracker<?, ?> _serviceTracker;
-
-	@Reference
-	private SingleVMPool _singleVMPool;
+	private ServiceTracker<?, ?> _releaseServiceTracker;
 
 	private abstract static class BaseStatementVisitor
 		implements ExpressionVisitor, FromItemVisitor, ItemsListVisitor,
@@ -1246,10 +1234,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 					new Column(table, "ctCollectionId"), new LongValue("0"));
 			}
 
-			ClassNameLocalService classNameLocalService =
-				_classNameLocalService;
-
-			if ((classNameLocalService == null) || (_release == null)) {
+			if (_releaseServiceTracker.getService() == null) {
 				return equalsTo(
 					new Column(table, "ctCollectionId"), new LongValue("0"));
 			}
@@ -1273,7 +1258,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 					equalsTo(
 						new Column(ctEntryTable, "modelClassNameId"),
 						new LongValue(
-							classNameLocalService.getClassNameId(
+							ClassNameLocalServiceUtil.getClassNameId(
 								ctModelRegistration.getModelClass())))));
 
 			SelectBody selectBody = ctEntryPlainSelect;

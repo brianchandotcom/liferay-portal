@@ -62,3 +62,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		</aui:button-row>
 	</aui:form>
 </div>
+
+<liferay-frontend:component
+	module="js/AddConfigurationTemplateEventHandler"
+/>

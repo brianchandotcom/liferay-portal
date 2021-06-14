@@ -610,7 +610,13 @@ public class AssetCategoryLocalServiceImpl
 
 		// Category
 
-		String name = titleMap.get(LocaleUtil.getSiteDefault());
+		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
+			categoryId);
+
+		Locale defaultLocale = PortalUtil.getSiteDefaultLocale(
+			category.getGroupId());
+
+		String name = titleMap.get(defaultLocale);
 
 		name = ModelHintsUtil.trimString(
 			AssetCategory.class.getName(), "name", name);
@@ -627,9 +633,6 @@ public class AssetCategoryLocalServiceImpl
 			parentCategory = assetCategoryPersistence.findByPrimaryKey(
 				parentCategoryId);
 		}
-
-		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
-			categoryId);
 
 		if (vocabularyId != category.getVocabularyId()) {
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);

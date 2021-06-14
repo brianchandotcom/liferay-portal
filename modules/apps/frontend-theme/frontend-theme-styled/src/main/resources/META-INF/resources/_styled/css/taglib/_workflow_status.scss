@@ -4,4 +4,12 @@
 	.workflow-status {
 		color: #999;
 	}
+
+	.table-cell & {
+		margin: 0;
+
+		.workflow-status {
+			padding-left: 0;
+		}
+	}
 }

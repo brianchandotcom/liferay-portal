@@ -746,6 +746,11 @@
 	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-td')][3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>QUANTITY_IN_SHIPMENT_BY_WAREHOUSE</td>
+	<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_warehouseName}')]/..//div[5]</td>
+	<td></td>
+</tr>
 <!--WAREHOUSES-->
 <tr>
 	<td>WAREHOUSE_INVENTORY_ITEM_QUANTITY</td>

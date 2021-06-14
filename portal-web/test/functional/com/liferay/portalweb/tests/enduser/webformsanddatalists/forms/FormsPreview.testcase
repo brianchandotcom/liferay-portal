@@ -542,14 +542,45 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test UploadFieldCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133791 UploadFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "tip");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewLabel(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.docx");
+
+		AssertElementPresent(
+			key_fieldName = "Upload",
+			key_value = "Document_1.docx",
+			locator1 = "FormFields#UPLOAD_FIELD_BY_VALUE");
 	}
 
 }

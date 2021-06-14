@@ -227,6 +227,26 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
+			KaleoInstance kaleoInstance, long userId)
+		throws PortalException {
+
+		List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
+			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
+				kaleoInstance.getKaleoInstanceId(), false, 0, 1, null,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), 0L));
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			kaleoTaskInstanceTokens.get(0);
+
+		return _kaleoTaskInstanceTokenLocalService.assignKaleoTaskInstanceToken(
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+			User.class.getName(), userId,
+			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
 			KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws PortalException {
 

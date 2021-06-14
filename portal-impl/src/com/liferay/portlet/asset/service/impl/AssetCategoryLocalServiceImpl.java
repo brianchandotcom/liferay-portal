@@ -49,8 +49,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -88,7 +88,9 @@ public class AssetCategoryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		String name = titleMap.get(LocaleUtil.getSiteDefault());
+		Locale defaultLocale = PortalUtil.getSiteDefaultLocale(groupId);
+
+		String name = titleMap.get(defaultLocale);
 
 		name = ModelHintsUtil.trimString(
 			AssetCategory.class.getName(), "name", name);
@@ -157,7 +159,7 @@ public class AssetCategoryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getSiteDefault();
+		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		return assetCategoryLocalService.addCategory(
 			userId, groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,

@@ -15,20 +15,25 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
-import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException;
+import com.liferay.batch.planner.constants.BatchPlannerConstants;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.service.BatchPlannerPlanService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.batch.planner.service.test.util.BatchPlannerPlanTestUtil;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -38,7 +43,6 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Igor Beslic
- * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
 public class BatchPlannerPlanServiceTest {
@@ -46,89 +50,99 @@ public class BatchPlannerPlanServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
 	public void testAddBatchPlannerPlan() throws Exception {
-		String name = RandomTestUtil.randomString();
+		Class<?> exceptionClass = Exception.class;
 
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanService.addBatchPlannerPlan(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, name);
+		try {
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(null);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
 
 		Assert.assertEquals(
-			BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-			batchPlannerPlan.getExternalType());
-		Assert.assertEquals(name, batchPlannerPlan.getName());
+			"Add batch planner plan with no name",
+			BatchPlannerPlanNameException.class, exceptionClass);
 
 		try {
-			_batchPlannerPlanService.addBatchPlannerPlan(
-				"", RandomTestUtil.randomString());
+			exceptionClass = Exception.class;
 
-			Assert.fail();
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(
+				RandomTestUtil.randomString(80));
 		}
-		catch (BatchPlannerPlanExternalTypeException
-					batchPlannerPlanExternalTypeException) {
-
-			String externalTypesString = StringUtil.merge(
-				BatchPlannerPlanConstants.EXTERNAL_TYPES, StringPool.COMMA);
-
-			Assert.assertEquals(
-				"Batch planner plan external type must be one of following: " +
-					externalTypesString,
-				batchPlannerPlanExternalTypeException.getMessage());
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
 		}
+
+		Assert.assertEquals(
+			"Add batch planner plan with too long name",
+			BatchPlannerPlanNameException.class, exceptionClass);
+
+		BatchPlannerPlan batchPlannerPlan1 =
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(300);
+
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(), batchPlannerPlan1.getCompanyId());
 
 		try {
-			_batchPlannerPlanService.addBatchPlannerPlan(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, "");
-
-			Assert.fail();
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(
+				batchPlannerPlan1.getName());
 		}
-		catch (BatchPlannerPlanNameException batchPlannerPlanNameException) {
-			Assert.assertEquals(
-				"Batch planner plan name is null for company " +
-					TestPropsValues.getCompanyId(),
-				batchPlannerPlanNameException.getMessage());
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
 		}
 
-		int maxLength = 75;
+		Assert.assertEquals(
+			"Add batch planner plan with existing name",
+			DuplicateBatchPlannerPlanException.class, exceptionClass);
 
-		try {
-			_batchPlannerPlanService.addBatchPlannerPlan(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				RandomTestUtil.randomString(maxLength + 1));
+		User omniAdminUser = UserTestUtil.addOmniAdminUser();
 
-			Assert.fail();
-		}
-		catch (BatchPlannerPlanNameException batchPlannerPlanNameException) {
-			Assert.assertEquals(
-				"Batch planner plan name must not be longer than " + maxLength,
-				batchPlannerPlanNameException.getMessage());
-		}
+		UserTestUtil.setUser(omniAdminUser);
 
-		try {
-			_batchPlannerPlanService.addBatchPlannerPlan(
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, name);
+		Company company1 = CompanyTestUtil.addCompany();
 
-			Assert.fail();
-		}
-		catch (DuplicateBatchPlannerPlanException
-					duplicateBatchPlannerPlanException) {
+		_addResourcePermission(company1.getCompanyId());
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Batch planner plan name \"", name,
-					"\" already exists for company ",
-					TestPropsValues.getCompanyId()),
-				duplicateBatchPlannerPlanException.getMessage());
-		}
+		User user2 = UserTestUtil.addCompanyAdminUser(company1);
 
-		_batchPlannerPlanService.deleteBatchPlannerPlan(
-			batchPlannerPlan.getBatchPlannerPlanId());
+		UserTestUtil.setUser(user2);
+
+		BatchPlannerPlan batchPlannerPlan2 =
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(
+				batchPlannerPlan1.getName());
+
+		Assert.assertEquals(
+			user2.getCompanyId(), batchPlannerPlan2.getCompanyId());
+
+		Assert.assertEquals(
+			batchPlannerPlan1.getName(), batchPlannerPlan2.getName());
 	}
 
-	@Inject
-	private BatchPlannerPlanService _batchPlannerPlanService;
+	private ResourcePermission _addResourcePermission(long companyId) {
+		long resourcePermissionId = CounterLocalServiceUtil.increment(
+			ResourcePermission.class.getName());
+
+		ResourcePermission resourcePermission =
+			ResourcePermissionLocalServiceUtil.createResourcePermission(
+				resourcePermissionId);
+
+		resourcePermission.setCompanyId(companyId);
+		resourcePermission.setName(BatchPlannerConstants.RESOURCE_NAME);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setPrimKey(BatchPlannerConstants.RESOURCE_NAME);
+		resourcePermission.setRoleId(RandomTestUtil.randomInt());
+		resourcePermission.setActionIds(RandomTestUtil.randomInt());
+		resourcePermission.setViewActionId(true);
+
+		return ResourcePermissionLocalServiceUtil.addResourcePermission(
+			resourcePermission);
+	}
 
 }

@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
-	@priority = "5"
+	@priority = "3"
 	test PageAuditBackButton {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditBackButton";
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
-	@priority = "5"
+	@priority = "3"
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditCancelButton";
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
-	@priority = "5"
+	@priority = "3"
 	test PageAuditContentPageDisabled {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPageDisabled";
@@ -233,7 +233,7 @@ definition {
 	}
 
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
-	@priority = "5"
+	@priority = "3"
 	test PageAuditDisplayPageDisabled {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPageDisabled";
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
-	@priority = "5"
+	@priority = "3"
 	test PageAuditWidgetPageDisabled {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPageDisabled";

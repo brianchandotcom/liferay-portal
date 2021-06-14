@@ -23,7 +23,7 @@
 	<td>//div[contains(@class,'pagination-bar')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON</td>
 	<td>//button[contains(@class, 'page-link') and contains(@aria-label,'Next')]</td>
 	<td></td>
@@ -37,10 +37,6 @@
 	<td>METRICS_WORKFLOW_PAGINATION_PREVIOUS_BUTTON</td>
 	<td>//button[contains(@class, 'page-link') and contains(@aria-label,'Previous')]</td>
 	<td></td>
-<tr>
-    <td>ASSERT_PERCENTAGE_CARDS</td>
-    <td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
-    <td></td>
 </tr>
 </tbody>
 </table>

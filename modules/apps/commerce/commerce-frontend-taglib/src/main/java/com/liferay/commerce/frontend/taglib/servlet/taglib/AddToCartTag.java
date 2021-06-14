@@ -128,8 +128,9 @@ public class AddToCartTag extends IncludeTag {
 
 				if (!_disabled) {
 					_disabled =
-						!_productSettingsModel.isBackOrders() &&
-						(_stockQuantity <= 0);
+						(!_productSettingsModel.isBackOrders() &&
+						 (_stockQuantity <= 0)) ||
+						!cpSku.isPublished();
 				}
 			}
 		}

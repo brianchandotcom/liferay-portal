@@ -141,6 +141,7 @@
 /portal/httpmime.jar
 /portal/ical4j.jar
 /portal/im4java.jar
+/portal/istack-commons-runtime.jar
 /portal/isoparser.jar
 /portal/jabsorb.jar
 /portal/jai-imageio-core.jar
@@ -156,7 +157,7 @@
 /portal/java-libpst.jar
 /portal/javassist.jar
 /portal/jaxb-api.jar
-/portal/jaxb-impl.jar
+/portal/jaxb-runtime.jar
 /portal/jaxen.jar
 /portal/jaxrpc.jar
 /portal/jaxrs-api.jar

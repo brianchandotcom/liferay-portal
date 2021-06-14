@@ -365,7 +365,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Color");
 
-		FormFields.editColorPredefinedValue(fieldValue = "7F26FF");
+		FormFields.editPredefinedValueInput(fieldValue = "7F26FF");
 
 		Form.save();
 

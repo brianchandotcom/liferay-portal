@@ -140,14 +140,6 @@ definition {
 			locator1 = "FormFields#COLOR_SWATCH_ITEM");
 	}
 
-	macro editColorPredefinedValue {
-		Form.gotoAdvancedTab();
-
-		Type(
-			locator1 = "FormFields#PREDEFINED_VALUE_INPUT",
-			value1 = "${fieldValue}");
-	}
-
 	macro editConfirmationFieldText {
 		AssertElementPresent.assertVisible(
 			key_fieldName = "${fieldName}",
@@ -298,6 +290,14 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
 			value1 = "${key_predefinedValue}");
+	}
+
+	macro editPredefinedValueInput {
+		Form.gotoAdvancedTab();
+
+		Type(
+			locator1 = "FormFields#PREDEFINED_VALUE_INPUT",
+			value1 = "${fieldValue}");
 	}
 
 	macro editRepeatableImage {

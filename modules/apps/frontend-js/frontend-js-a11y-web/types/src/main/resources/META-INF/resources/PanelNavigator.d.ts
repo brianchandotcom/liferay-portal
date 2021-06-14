@@ -12,16 +12,20 @@
  * details.
  */
 
-declare global {
-	var Liferay: {
-		Language: {
-			get(value: string): string;
-		};
-		Util: {
-			sub(...value: string[]): string;
-		};
-	};
-}
-
-export {A11y} from './A11y';
-export {A11yPanel} from './A11yPanel';
+import React from 'react';
+import type {ImpactValue} from 'axe-core';
+declare type PanelNavigatorProps = {
+	helpUrl: string;
+	impact?: ImpactValue;
+	onBack: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	title: string;
+	tags: Array<string>;
+};
+declare function PanelNavigator({
+	helpUrl,
+	impact,
+	onBack,
+	tags,
+	title,
+}: PanelNavigatorProps): JSX.Element;
+export default PanelNavigator;

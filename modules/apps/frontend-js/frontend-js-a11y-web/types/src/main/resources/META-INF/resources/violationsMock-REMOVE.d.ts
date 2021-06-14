@@ -12,16 +12,6 @@
  * details.
  */
 
-declare global {
-	var Liferay: {
-		Language: {
-			get(value: string): string;
-		};
-		Util: {
-			sub(...value: string[]): string;
-		};
-	};
-}
-
-export {A11y} from './A11y';
-export {A11yPanel} from './A11yPanel';
+import type {Result} from 'axe-core';
+declare const violations: Result[];
+export default violations;

@@ -12,16 +12,22 @@
  * details.
  */
 
-declare global {
-	var Liferay: {
-		Language: {
-			get(value: string): string;
-		};
-		Util: {
-			sub(...value: string[]): string;
-		};
-	};
-}
+/// <reference types="react" />
 
-export {A11y} from './A11y';
-export {A11yPanel} from './A11yPanel';
+import './Occurrence.scss';
+import type {Result} from 'axe-core';
+declare type OccurrenceProps = {
+	navigationState?: {
+		occurrenceIndex: number;
+		occurrenceName: string;
+		violationIndex: number;
+	};
+	previous?: () => void;
+	violations: Array<Result>;
+};
+declare function Occurrence({
+	navigationState,
+	previous,
+	violations,
+}: OccurrenceProps): JSX.Element | null;
+export default Occurrence;

@@ -123,9 +123,18 @@ export default function propsTransformer({
 			}
 		},
 		onShowMoreButtonClick() {
+			let refreshOnClose = true;
+
 			openSelectionModal({
+				onClose: () => {
+					if (refreshOnClose) {
+						navigate(location.href);
+					}
+				},
 				onSelect: (selectedItem) => {
 					if (selectedItem) {
+						refreshOnClose = false;
+
 						navigate(
 							addParams(
 								`${portletNamespace}ddmStructureKey=${selectedItem.ddmstructurekey}`,

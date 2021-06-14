@@ -829,14 +829,54 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddAUploadFieldToAForm {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133496 CanAddAUploadFieldToAForm pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Upload");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Upload");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Upload");
 	}
 
 	@description = "Verify that a Fieldset can be added to a Fieldset"

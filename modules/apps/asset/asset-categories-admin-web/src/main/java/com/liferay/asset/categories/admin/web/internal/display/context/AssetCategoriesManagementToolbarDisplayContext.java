@@ -24,6 +24,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -82,7 +84,11 @@ public class AssetCategoriesManagementToolbarDisplayContext
 		if (_assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.UPDATE)) {
 
-			return "deleteSelectedCategories";
+			return StringUtil.merge(
+				Arrays.asList(
+					"setCategoryDisplayPageTemplate",
+					"deleteSelectedCategories"),
+				StringPool.COMMA);
 		}
 
 		return StringPool.BLANK;

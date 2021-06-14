@@ -589,16 +589,11 @@ definition {
 	@priority = "5"
 	test CheckAvailableVocabulariesDisplayed {
 		task ("Create 2 new vocabularies") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
-
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Categories");
-
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name 1");
-
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name 2");
+			for (var vocabularyNumber : list "1,2") {
+				JSONCategory.addVocabulary(
+					groupName = "Global",
+					title = "Vocabulary Name ${vocabularyNumber}");
+			}
 		}
 
 		task ("Check if vocabularies are avalible") {
@@ -612,13 +607,11 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertElementPresent(
-				columnName = "Available",
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE",
 				vocabularyName = "Vocabulary Name 1");
 
 			AssertElementPresent(
-				columnName = "Available",
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE",
 				vocabularyName = "Vocabulary Name 2");
 		}
 	}
@@ -631,36 +624,14 @@ definition {
 				category = "Content",
 				panel = "Applications",
 				portlet = "Content Dashboard");
-
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		task ("Move vocabulary from in use to available") {
-			Click(
-				columnName = "In Use",
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
-				vocabularyName = "Audience");
-
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON");
-
-			AssertClick(
-				locator1 = "Button#SAVE",
-				value1 = "Save");
+			ContentDashboard.MoveVocabularyDisplayConfiguration(vocabularyName = "Audience");
 		}
 
 		task ("Move vocabulary from available to in use") {
-			Click(
-				columnName = "Available",
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
-				vocabularyName = "Topic");
-
-			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
-
-			AssertClick(
-				locator1 = "Button#SAVE",
-				value1 = "Save");
+			ContentDashboard.MoveVocabularyDisplayConfiguration(vocabularyName = "Topic");
 		}
 	}
 

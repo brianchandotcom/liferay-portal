@@ -24,8 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME</td>
-	<td>//div[contains(@class, 'form-group')]/label[contains(text(), '${columnName}')]/../select/option[contains(text(), '${vocabularyName}')]</td>
+	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE</td>
+	<td>//div[contains(@class, 'form-group')]/label[contains(text(), 'In Use')]/../select/option[contains(text(), '${vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_AVAILABLE</td>
+	<td>//div[contains(@class, 'form-group')]/label[contains(text(), 'Available')]/../select/option[contains(text(), '${vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -245,11 +250,6 @@
 <tr>
 	<td>SITE_ASSET_LIBRARY_COLUMN</td>
 	<td>//*[contains(@class,'lfr-site-or-asset-library-column') and contains(text(), '${siteAssetValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHECKBOX_TAGS</td>
-	<td>//*[contains(@title,'Select') and contains(@value,'${tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

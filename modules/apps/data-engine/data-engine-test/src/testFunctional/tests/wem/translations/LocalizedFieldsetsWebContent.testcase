@@ -411,7 +411,7 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewWithStructureCP(
-			webContentDate = "22/02/2021",
+			webContentDate = "23/02/2021",
 			webContentDateFieldLabel = "Date pt-BR",
 			webContentLocaleFieldLabel = "pt-BR",
 			webContentNumeric = "2",

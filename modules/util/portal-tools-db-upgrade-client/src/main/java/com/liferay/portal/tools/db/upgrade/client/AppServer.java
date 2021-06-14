@@ -122,6 +122,10 @@ public class AppServer {
 		return new File(getPortalDir(), "/WEB-INF/lib");
 	}
 
+	public File getPortalShieldedContainerLibDir() {
+		return new File(getPortalDir(), "/WEB-INF/shielded-container-lib");
+	}
+
 	public String getServerDetectorServerId() {
 		return _serverDetectorServerId;
 	}

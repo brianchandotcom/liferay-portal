@@ -745,14 +745,10 @@ public class AssetCategoryLocalServiceImpl
 			parentCategoryId, name, vocabularyId);
 
 		if ((category != null) && (category.getCategoryId() != categoryId)) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("There is another category named ");
-			sb.append(name);
-			sb.append(" as a child of category ");
-			sb.append(parentCategoryId);
-
-			throw new DuplicateCategoryException(sb.toString());
+			throw new DuplicateCategoryException(
+				StringBundler.concat(
+					"There is another category named ", name,
+					" as a child of category ", parentCategoryId));
 		}
 	}
 

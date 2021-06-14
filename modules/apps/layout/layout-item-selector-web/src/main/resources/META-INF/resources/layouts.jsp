@@ -21,9 +21,11 @@ LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (Lay
 %>
 
 <c:if test="<%= layoutItemSelectorViewDisplayContext.isShowBreadcrumb() %>">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= layoutItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
-	/>
+	<div class="container-fluid container-fluid-max-xl mt-2 pl-3">
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= layoutItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
+		/>
+	</div>
 </c:if>
 
 <liferay-layout:select-layout

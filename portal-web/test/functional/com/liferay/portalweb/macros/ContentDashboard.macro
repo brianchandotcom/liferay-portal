@@ -376,6 +376,12 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro openAuditGraphConfiguration {
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro openInfoPanelByDropdownMenu {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 

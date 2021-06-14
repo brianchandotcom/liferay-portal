@@ -263,8 +263,8 @@ AUI.add(
 					A.io.request(instance.get('viewAttachmentURL'), {
 						data,
 						on: {
-							success(event, id, obj) {
-								var response = JSON.parse(obj.response);
+							success(event, id, object) {
+								var response = JSON.parse(object.response);
 
 								instance._renderThumbsImages(response);
 							},

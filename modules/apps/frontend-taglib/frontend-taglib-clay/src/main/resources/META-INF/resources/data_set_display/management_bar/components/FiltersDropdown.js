@@ -81,7 +81,7 @@ function FiltersDropdown() {
 			) : (
 				<ClayDropDown.Group header={Liferay.Language.get('filters')}>
 					<ClayDropDown.Search
-						onChange={(e) => setQuery(e.target.value)}
+						onChange={(event) => setQuery(event.target.value)}
 						value={query}
 					/>
 					<ClayDropDown.Divider className="m-0" />

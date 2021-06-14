@@ -18,8 +18,8 @@ import '@testing-library/jest-dom/extend-expect';
 
 /* eslint-disable no-unused-vars */
 jest.mock('react-dnd', () => ({
-	DragSource: (el) => (el) => el,
-	DropTarget: (el) => (el) => el,
+	DragSource: (element) => (element) => element,
+	DropTarget: (element) => (element) => element,
 }));
 /* eslint-enable no-unused-vars */
 
@@ -77,9 +77,9 @@ describe('Item', () => {
 	`('shows the appropriate $name', ({selector, text}) => {
 		const {container} = renderTestItem();
 
-		text.forEach((txt, idx) =>
+		text.forEach((txt, i) =>
 			expect(
-				container.querySelectorAll(`.${selector}`)[idx]
+				container.querySelectorAll(`.${selector}`)[i]
 			).toHaveTextContent(txt)
 		);
 	});

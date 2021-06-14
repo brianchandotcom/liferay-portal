@@ -57,8 +57,10 @@ AUI().ready(() => {
 			Liferay.componentReady('SpeedwellSlider')
 				.catch(retrySlidersBootUp)
 				.then((sliderComponent) => {
-					Speedwell.features.sliderCallbacks.forEach((cb) => {
-						Speedwell.features.sliders.push(cb(sliderComponent));
+					Speedwell.features.sliderCallbacks.forEach((callback) => {
+						Speedwell.features.sliders.push(
+							callback(sliderComponent)
+						);
 					});
 
 					return Promise.resolve();

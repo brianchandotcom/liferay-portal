@@ -25,7 +25,7 @@ const getRowsArray = (rows) => {
 		try {
 			return JSON.parse(rows);
 		}
-		catch (e) {
+		catch (error) {
 			return [];
 		}
 	}

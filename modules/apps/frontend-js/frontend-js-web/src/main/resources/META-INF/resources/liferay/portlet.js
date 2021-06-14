@@ -523,7 +523,7 @@
 					var handle = portlet.on(events, () => {
 						Util.portletTitleEdit({
 							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							obj: portlet,
+							object: portlet,
 							plid: themeDisplay.getPlid(),
 							portletId,
 						});

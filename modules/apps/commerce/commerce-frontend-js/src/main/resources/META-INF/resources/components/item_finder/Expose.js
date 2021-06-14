@@ -18,7 +18,7 @@ export default function Expose({active, children, onClose}) {
 	const content = React.useRef();
 
 	React.useEffect(() => {
-		const handleEscKey = (e) => e.key === 'Escape' && onClose();
+		const handleEscKey = (event) => event.key === 'Escape' && onClose();
 
 		if (active) {
 			window.addEventListener('keydown', handleEscKey);

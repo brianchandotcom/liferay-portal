@@ -18,7 +18,7 @@ import {wrapInTestContext} from 'react-dnd-test-utils';
 
 import {default as Component} from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaGroup.es';
 
-const connectDnd = jest.fn((el) => el);
+const connectDnd = jest.fn((element) => element);
 
 const CriteriaGroup = wrapInTestContext(Component);
 

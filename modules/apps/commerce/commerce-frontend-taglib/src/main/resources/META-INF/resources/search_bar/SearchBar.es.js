@@ -33,34 +33,34 @@ class SearchBar extends Component {
 
 	_addOpenButtonListener() {
 		return Array.from(document.querySelectorAll('.js-toggle-search')).map(
-			(el) => {
-				return el.addEventListener('click', this.toggle);
+			(element) => {
+				return element.addEventListener('click', this.toggle);
 			}
 		);
 	}
 
 	_removeOpenButtonListener() {
 		return Array.from(document.querySelectorAll('.js-toggle-search')).map(
-			(el) => {
-				return el.removeEventListener('click', this.toggle);
+			(element) => {
+				return element.removeEventListener('click', this.toggle);
 			}
 		);
 	}
 
-	_handleClickOutside(e) {
+	_handleClickOutside(event) {
 		const suggestions = document.querySelector('.commerce-suggestions');
 		if (
 			!(
-				this.element.contains(e.target) ||
-				(suggestions && suggestions.contains(e.target))
+				this.element.contains(event.target) ||
+				(suggestions && suggestions.contains(event.target))
 			)
 		) {
 			this.toggle();
 		}
 	}
 
-	_handleDocumentKeypress(evt) {
-		if (this.active && evt.key === 'Escape') {
+	_handleDocumentKeypress(event) {
+		if (this.active && event.key === 'Escape') {
 			this.close();
 		}
 
@@ -70,11 +70,11 @@ class SearchBar extends Component {
 
 		if (
 			!this.active &&
-			evt.key === '/' &&
-			evt.target.tagName !== 'INPUT' &&
+			event.key === '/' &&
+			event.target.tagName !== 'INPUT' &&
 			noModalsActive
 		) {
-			evt.preventDefault();
+			event.preventDefault();
 			this.open();
 		}
 	}
@@ -83,18 +83,18 @@ class SearchBar extends Component {
 		this._updateQuery('');
 	}
 
-	_handleKeyDown(evt) {
-		if (evt.key === 'ArrowDown' || evt.key === 'ArrowUp') {
-			evt.preventDefault();
+	_handleKeyDown(event) {
+		if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+			event.preventDefault();
 		}
 	}
 
-	_handleKeyUp(evt) {
-		this._updateQuery(evt.target.value);
+	_handleKeyUp(event) {
+		this._updateQuery(event.target.value);
 	}
 
-	_handleSubmit(evt) {
-		evt.preventDefault();
+	_handleSubmit(event) {
+		event.preventDefault();
 
 		window.Liferay.fire('search-term-submit', {
 			term: this.query,

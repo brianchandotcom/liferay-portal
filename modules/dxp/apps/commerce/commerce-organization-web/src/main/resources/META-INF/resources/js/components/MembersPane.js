@@ -106,8 +106,8 @@ class MembersPane extends Component {
 		}));
 	}
 
-	handleLookUp(e) {
-		const name = e.target.value,
+	handleLookUp(event) {
+		const name = event.target.value,
 			{apiURL, id} = this.props,
 			{listBy} = this.state,
 			fromState =

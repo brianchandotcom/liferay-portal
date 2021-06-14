@@ -421,8 +421,8 @@ SideNavigation.prototype = {
 
 					instance.setHeight();
 				})
-				.catch((err) => {
-					console.error(err);
+				.catch((error) => {
+					console.error(error);
 				});
 		}
 	},

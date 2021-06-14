@@ -13,19 +13,19 @@
  */
 
 function convertMapToArr(mapInstance) {
-	const arr = [];
+	const array = [];
 
-	mapInstance.forEach((value, key) => arr.push([key, value]));
+	mapInstance.forEach((value, key) => array.push([key, value]));
 
-	return arr;
+	return array;
 }
 
 function getMapKeys(mapInstance) {
-	const arr = [];
+	const array = [];
 
-	mapInstance.forEach((value, key) => arr.push(key));
+	mapInstance.forEach((value, key) => array.push(key));
 
-	return arr;
+	return array;
 }
 
 export {convertMapToArr, getMapKeys};

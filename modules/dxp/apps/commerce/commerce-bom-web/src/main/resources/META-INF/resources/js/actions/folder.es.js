@@ -32,9 +32,9 @@ const getFolder = (dispatch) => (endpoint, id) => {
 				type: actionDefinition.GET_FOLDER_FULFILLED,
 			})
 		)
-		.catch((err) =>
+		.catch((error) =>
 			dispatch({
-				payload: err,
+				payload: error,
 				type: actionDefinition.GET_FOLDER_REJECTED,
 			})
 		);

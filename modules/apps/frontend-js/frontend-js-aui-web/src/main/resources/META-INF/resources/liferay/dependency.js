@@ -18,16 +18,16 @@
 	var usedModules = {};
 
 	var Dependency = {
-		_getAOP(obj, methodName) {
-			return obj._yuiaop && obj._yuiaop[methodName];
+		_getAOP(object, methodName) {
+			return object._yuiaop && object._yuiaop[methodName];
 		},
 
-		_proxy(obj, methodName, methodFn, context, guid, modules, _A) {
+		_proxy(object, methodName, methodFn, context, guid, modules, _A) {
 			var args;
 
 			var queue = Dependency._proxyLoaders[guid];
 
-			Dependency._replaceMethod(obj, methodName, methodFn, context);
+			Dependency._replaceMethod(object, methodName, methodFn, context);
 
 			while ((args = queue.next())) {
 				methodFn.apply(context, args);
@@ -40,10 +40,10 @@
 
 		_proxyLoaders: {},
 
-		_replaceMethod(obj, methodName, methodFn) {
-			var AOP = Dependency._getAOP(obj, methodName);
+		_replaceMethod(object, methodName, methodFn) {
+			var AOP = Dependency._getAOP(object, methodName);
 
-			var proxy = obj[methodName];
+			var proxy = object[methodName];
 
 			if (AOP) {
 				proxy = AOP.method;
@@ -51,13 +51,13 @@
 				AOP.method = methodFn;
 			}
 			else {
-				obj[methodName] = methodFn;
+				object[methodName] = methodFn;
 			}
 
 			A.mix(methodFn, proxy);
 		},
 
-		provide(obj, methodName, methodFn, modules, proto) {
+		provide(object, methodName, methodFn, modules, proto) {
 			if (!Array.isArray(modules)) {
 				modules = [modules];
 			}
@@ -77,20 +77,20 @@
 				}
 			}
 
-			if (proto && A.Lang.isFunction(obj)) {
-				obj = obj.prototype;
+			if (proto && A.Lang.isFunction(object)) {
+				object = object.prototype;
 			}
 
-			var AOP = Dependency._getAOP(obj, methodName);
+			var AOP = Dependency._getAOP(object, methodName);
 
 			if (AOP) {
-				delete obj._yuiaop[methodName];
+				delete object._yuiaop[methodName];
 			}
 
 			var proxy = function () {
 				var args = arguments;
 
-				var context = obj;
+				var context = object;
 
 				if (proto) {
 					context = this;
@@ -99,7 +99,7 @@
 				if (modules.length == 1) {
 					if (modules[0] in usedModules) {
 						Dependency._replaceMethod(
-							obj,
+							object,
 							methodName,
 							methodFn,
 							context
@@ -130,7 +130,7 @@
 						A.bind(
 							Dependency._proxy,
 							Liferay,
-							obj,
+							object,
 							methodName,
 							methodFn,
 							context,
@@ -147,7 +147,7 @@
 				return methodFn.toString();
 			};
 
-			obj[methodName] = proxy;
+			object[methodName] = proxy;
 		},
 	};
 

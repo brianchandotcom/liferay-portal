@@ -39,7 +39,7 @@ export function showNotification(
 }
 
 export function showErrorNotification(
-	e = Liferay.Language.get('unexpected-error')
+	error = Liferay.Language.get('unexpected-error')
 ) {
-	showNotification(e, 'danger');
+	showNotification(error, 'danger');
 }

@@ -95,7 +95,7 @@ class AddOrCreateBase extends Component {
 				className={`card mb-0 add-or-create ${
 					this.state.focus ? 'has-focus' : ''
 				}`}
-				onFocus={(e) => this.handleFocusIn(e)}
+				onFocus={(event) => this.handleFocusIn(event)}
 			>
 				<h4 className="align-items-center card-header py-3">
 					{this.props.panelHeaderLabel}
@@ -105,12 +105,12 @@ class AddOrCreateBase extends Component {
 						<div className="input-group-item">
 							<input
 								className="form-control input-group-inset input-group-inset-after"
-								onChange={(e) =>
+								onChange={(event) =>
 									this.props.onInputSearchChange(
-										e.target.value
+										event.target.value
 									)
 								}
-								onFocus={(e) => this.focus(e)}
+								onFocus={(event) => this.focus(event)}
 								placeholder={this.props.inputPlaceholder}
 								ref={this.input}
 								type="text"
@@ -322,8 +322,8 @@ AddOrCreateBase.defaultProps = {
 export default React.forwardRef((props, ref) => {
 	const [active, setActive] = React.useState(false);
 
-	function closeAndSubmit(e) {
-		props.onSubmit(e);
+	function closeAndSubmit(event) {
+		props.onSubmit(event);
 		setActive(false);
 	}
 

@@ -438,11 +438,11 @@ describe('App', function () {
 
 		const callback = () => {
 
-			//this.app.clearScreensCache();
+			// this.app.clearScreensCache();
 
 			expect(Object.keys(this.app.screens)).toHaveLength(1);
 
-			//event.dispose();
+			// event.dispose();
 
 			done();
 		};
@@ -2129,7 +2129,7 @@ describe('App', function () {
 							done();
 						});
 
-						//pendingNavigate.cancel();
+						// pendingNavigate.cancel();
 
 					}
 				});

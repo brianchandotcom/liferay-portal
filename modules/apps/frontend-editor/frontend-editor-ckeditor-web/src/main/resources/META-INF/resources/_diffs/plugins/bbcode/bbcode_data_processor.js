@@ -34,7 +34,7 @@
 		em: '_handleEm',
 		font: '_handleFont',
 		i: '_handleEm',
-		img: '_handleImage',
+		image: '_handleImage',
 		li: '_handleListItem',
 		ol: '_handleOrderedList',
 		pre: '_handlePre',

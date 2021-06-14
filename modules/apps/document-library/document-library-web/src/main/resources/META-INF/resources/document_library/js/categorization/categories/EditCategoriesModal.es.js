@@ -194,7 +194,7 @@ const EditCategoriesModal = ({
 
 			const categoryIds = categories.map((item) => item.value);
 
-			const obj = {
+			const object = {
 				id: vocabulary.taxonomyVocabularyId.toString(),
 				required: vocabulary.required,
 				selectedCategoryIds: categoryIds.join(','),
@@ -203,10 +203,10 @@ const EditCategoriesModal = ({
 				title: vocabulary.name,
 			};
 
-			vocabulariesList.push(obj);
+			vocabulariesList.push(object);
 
 			if (vocabulary.required) {
-				requiredVocabularies.push(obj);
+				requiredVocabularies.push(object);
 			}
 
 			initialCategories = initialCategories.concat(categoryIds);

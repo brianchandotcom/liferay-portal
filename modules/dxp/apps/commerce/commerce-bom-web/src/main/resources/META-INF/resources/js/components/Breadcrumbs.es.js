@@ -18,21 +18,23 @@ function Breadcrumbs(props) {
 
 	return props.data ? (
 		<ol className="breadcrumb mb-3">
-			{props.data.map((el, i) => {
+			{props.data.map((element, i) => {
 				const content = (
-					<span className="breadcrumb-text-truncate">{el.label}</span>
+					<span className="breadcrumb-text-truncate">
+						{element.label}
+					</span>
 				);
 
-				function handleBreadcrumbLink(e) {
-					e.preventDefault();
-					const filteredId = /^.*\/(.*)$/.exec(el.url)[1];
+				function handleBreadcrumbLink(event) {
+					event.preventDefault();
+					const filteredId = /^.*\/(.*)$/.exec(element.url)[1];
 					const formattedUrl = `?folderId=${filteredId}`;
 					state.app.history.push(formattedUrl);
 				}
 
 				return (
 					<li className="breadcrumb-item" key={i}>
-						{el.url ? (
+						{element.url ? (
 							<a
 								data-senna-off
 								href="#"

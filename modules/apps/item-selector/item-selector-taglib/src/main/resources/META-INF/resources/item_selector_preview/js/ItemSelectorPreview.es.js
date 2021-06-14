@@ -104,12 +104,12 @@ const ItemSelectorPreview = ({
 	}, [itemList.length]);
 
 	const handleOnKeyDown = useCallback(
-		(e) => {
+		(event) => {
 			if (!isMounted()) {
 				return;
 			}
 
-			switch (e.which || e.keyCode) {
+			switch (event.which || event.keyCode) {
 				case KEY_CODE.LEFT:
 					handleClickPrevious();
 					break;
@@ -117,8 +117,8 @@ const ItemSelectorPreview = ({
 					handleClickNext();
 					break;
 				case KEY_CODE.ESC:
-					e.preventDefault();
-					e.stopPropagation();
+					event.preventDefault();
+					event.stopPropagation();
 					close();
 					break;
 				default:

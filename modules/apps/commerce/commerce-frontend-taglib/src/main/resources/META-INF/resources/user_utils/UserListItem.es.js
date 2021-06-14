@@ -59,8 +59,8 @@ class UserListItem extends Component {
 		return this._status;
 	}
 
-	_handleToggleInvitation(e) {
-		e.preventDefault();
+	_handleToggleInvitation(event) {
+		event.preventDefault();
 
 		return this.emit('toggleInvitation', {
 			email: this.email,

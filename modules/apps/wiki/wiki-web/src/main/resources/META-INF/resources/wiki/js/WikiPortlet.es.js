@@ -78,8 +78,8 @@ class WikiPortlet {
 			].text.trim();
 			this._currentFormatIndex = formatSelect.selectedIndex;
 
-			this._addEventListener(formatSelect, 'change', (e) => {
-				this._changeWikiFormat(e);
+			this._addEventListener(formatSelect, 'change', (event) => {
+				this._changeWikiFormat(event);
 			});
 		}
 

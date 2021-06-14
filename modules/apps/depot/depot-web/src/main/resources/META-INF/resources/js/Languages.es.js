@@ -23,11 +23,11 @@ import ManageLanguages from './ManageLanguages.es';
 
 import '../css/Languages.scss';
 
-const getLocalesInputValue = (arr) =>
-	arr.map(({localeId}) => localeId).join(',');
+const getLocalesInputValue = (array) =>
+	array.map(({localeId}) => localeId).join(',');
 
-function move(arr, from, to) {
-	const clonedArr = [...arr];
+function move(array, from, to) {
+	const clonedArr = [...array];
 	const removedItem = clonedArr.splice(from, 1)[0];
 	clonedArr.splice(to, 0, removedItem);
 

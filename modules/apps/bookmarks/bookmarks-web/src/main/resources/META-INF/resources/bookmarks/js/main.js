@@ -43,14 +43,14 @@ AUI.add(
 			NAME: 'bookmarks',
 
 			prototype: {
-				_moveToFolder(obj) {
+				_moveToFolder(object) {
 					var instance = this;
 
 					var namespace = instance.NS;
 
-					var dropTarget = obj.targetItem;
+					var dropTarget = object.targetItem;
 
-					var selectedItems = obj.selectedItems;
+					var selectedItems = object.selectedItems;
 
 					var folderId = dropTarget.attr('data-folder-id');
 

@@ -58,7 +58,7 @@ function defineServerResponses(app) {
 						},
 					],
 					id: 'asd',
-					img: {
+					image: {
 						src: '//via.placeholder.com/250x250',
 					},
 					name: 'ABS Sensor',
@@ -113,7 +113,7 @@ function defineServerResponses(app) {
 								},
 							],
 							id: '111',
-							img: {
+							image: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 1',
@@ -163,7 +163,7 @@ function defineServerResponses(app) {
 								},
 							],
 							id: '112',
-							img: {
+							image: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 2',
@@ -177,7 +177,7 @@ function defineServerResponses(app) {
 						},
 						{
 							id: '113',
-							img: {
+							image: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 3',
@@ -191,7 +191,7 @@ function defineServerResponses(app) {
 						},
 						{
 							id: '114',
-							img: {
+							image: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 4',
@@ -243,7 +243,7 @@ function defineServerResponses(app) {
 						},
 					],
 					id: 'sdf',
-					img: {
+					image: {
 						src: '//via.placeholder.com/500x500',
 					},
 					name: 'SBA Sensor',

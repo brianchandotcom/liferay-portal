@@ -119,7 +119,7 @@
 
 				pictureEl = CKEDITOR.dom.element.createFromHtml(pictureHtml);
 			}
-			catch (e) {}
+			catch (error) {}
 
 			return pictureEl;
 		},

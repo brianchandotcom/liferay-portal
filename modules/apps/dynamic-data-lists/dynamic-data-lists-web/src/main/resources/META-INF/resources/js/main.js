@@ -164,8 +164,8 @@ AUI.add(
 							return checkedValue;
 						};
 
-						item.formatter = function (obj) {
-							var data = obj.data;
+						item.formatter = function (object) {
+							var data = object.data;
 
 							var value = data[name];
 
@@ -207,8 +207,8 @@ AUI.add(
 							});
 						};
 
-						item.formatter = function (obj) {
-							var data = obj.data;
+						item.formatter = function (object) {
+							var data = object.data;
 
 							var value = data[name];
 
@@ -236,8 +236,8 @@ AUI.add(
 							return numberValue;
 						};
 
-						item.formatter = function (obj) {
-							var data = obj.data;
+						item.formatter = function (object) {
+							var data = object.data;
 
 							var value = A.DataType.Number.parse(data[name]);
 
@@ -249,8 +249,8 @@ AUI.add(
 						};
 					}
 					else if (type === 'ddm-documentlibrary') {
-						item.formatter = function (obj) {
-							var data = obj.data;
+						item.formatter = function (object) {
+							var data = object.data;
 
 							var label = STR_EMPTY;
 							var value = data[name];
@@ -269,8 +269,8 @@ AUI.add(
 						};
 					}
 					else if (type === 'ddm-link-to-page') {
-						item.formatter = function (obj) {
-							var data = obj.data;
+						item.formatter = function (object) {
+							var data = object.data;
 
 							var label = STR_EMPTY;
 							var value = data[name];
@@ -316,8 +316,8 @@ AUI.add(
 							locale
 						);
 
-						item.formatter = function (obj) {
-							var data = obj.data;
+						item.formatter = function (object) {
+							var data = object.data;
 
 							var label = [];
 							var value = data[name];
@@ -338,8 +338,8 @@ AUI.add(
 					else if (type === 'textarea') {
 						item.allowHTML = true;
 
-						item.formatter = function (obj) {
-							var data = obj.data;
+						item.formatter = function (object) {
+							var data = object.data;
 
 							var value = data[name];
 

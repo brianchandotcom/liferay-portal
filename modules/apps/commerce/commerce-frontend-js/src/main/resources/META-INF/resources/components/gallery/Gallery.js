@@ -97,13 +97,13 @@ export default class Gallery extends React.Component {
 		);
 	}
 
-	goToPrev(e) {
-		e.stopPropagation();
+	goToPrev(event) {
+		event.stopPropagation();
 		this.goTo(this.state.selected - 1);
 	}
 
-	goToNext(e) {
-		e.stopPropagation();
+	goToNext(event) {
+		event.stopPropagation();
 		this.goTo(this.state.selected + 1);
 	}
 

@@ -64,17 +64,17 @@ class SearchResults extends Component {
 		}
 	}
 
-	handleKeyDown(e) {
-		if (e.key === 'ArrowDown') {
+	handleKeyDown(event) {
+		if (event.key === 'ArrowDown') {
 			this.selectNext();
 		}
-		else if (e.key === 'ArrowUp') {
+		else if (event.key === 'ArrowUp') {
 			this.selectPrevious();
 		}
 	}
 
-	handleMouseEnter(e) {
-		this.selectedIndex = parseInt(e.delegateTarget.dataset.pos, 10);
+	handleMouseEnter(event) {
+		this.selectedIndex = parseInt(event.delegateTarget.dataset.pos, 10);
 	}
 
 	handleMouseLeave(_e) {

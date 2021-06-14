@@ -180,7 +180,7 @@ AUI.add(
 					return prefix + score;
 				},
 
-				_getLabel(desc, totalEntries) {
+				_getLabel(description, totalEntries) {
 					var instance = this;
 
 					var tplLabel = '';
@@ -202,7 +202,7 @@ AUI.add(
 					}
 
 					return Lang.sub(tplLabel, {
-						desc,
+						description,
 						totalEntries,
 						voteLabel,
 					});

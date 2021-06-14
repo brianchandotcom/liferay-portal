@@ -119,19 +119,19 @@ function defineServerResponses(app) {
 
 	app.post(apiEndpointDefinitions.AREA + '/:areaId', (_, res) => {
 		res.json({
-			success: true, //placeholder: if statusCode === 200 then it calls the main get again
+			success: true, // placeholder: if statusCode === 200 then it calls the main get again
 		});
 	});
 
 	app.put(apiEndpointDefinitions.AREA + '/:areaId/:spotId', (_, res) => {
 		res.json({
-			success: true, //placeholder: if statusCode === 200 then it calls the main get again
+			success: true, // placeholder: if statusCode === 200 then it calls the main get again
 		});
 	});
 
 	app.delete(apiEndpointDefinitions.AREA + '/:areaId/:spotId', (_, res) => {
 		res.json({
-			success: true, //placeholder: if statusCode === 200 then it calls the main get again
+			success: true, // placeholder: if statusCode === 200 then it calls the main get again
 		});
 	});
 

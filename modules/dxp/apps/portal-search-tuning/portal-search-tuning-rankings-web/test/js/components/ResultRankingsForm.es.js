@@ -111,8 +111,8 @@ describe('ResultRankingsForm', () => {
 
 		expect(tagsElement).toHaveLength(expected.length);
 
-		tagsElement.forEach((element, idx) => {
-			expect(element).toHaveTextContent(expected[idx]);
+		tagsElement.forEach((element, i) => {
+			expect(element).toHaveTextContent(expected[i]);
 		});
 	});
 

@@ -17,7 +17,7 @@ export const convertValueToJSON = (value) => {
 		try {
 			return JSON.parse(value);
 		}
-		catch (e) {
+		catch (error) {
 			console.warn('Unable to parse JSON', value);
 		}
 	}

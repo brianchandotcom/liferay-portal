@@ -184,7 +184,7 @@ AUI.add(
 			try {
 				jsonObj = JSON.parse(val);
 			}
-			catch (e) {}
+			catch (error) {}
 
 			return jsonObj;
 		};
@@ -200,7 +200,7 @@ AUI.add(
 					JSON.stringify(val, null, STR_CHAR_TAB) +
 					STR_CHAR_CRLF;
 			}
-			catch (e) {}
+			catch (error) {}
 
 			return jsonString;
 		};

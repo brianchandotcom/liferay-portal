@@ -28,9 +28,11 @@ AUI().ready(
 
 		if (searchBar) {
 			searchBar.on('toggled', (status) => {
-				document.querySelectorAll('.js-toggle-search').forEach((el) => {
-					el.classList.toggle('is-active', status);
-				});
+				document
+					.querySelectorAll('.js-toggle-search')
+					.forEach((element) => {
+						element.classList.toggle('is-active', status);
+					});
 
 				document
 					.getElementById('minium')

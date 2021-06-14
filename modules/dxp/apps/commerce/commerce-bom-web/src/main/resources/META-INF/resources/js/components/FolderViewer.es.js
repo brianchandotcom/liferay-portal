@@ -46,7 +46,7 @@ function Brands(props) {
 				</h2>
 			</div>
 			<div className="panel-body">
-				{props.data.map((el, i) => (
+				{props.data.map((element, i) => (
 					<Collapse
 						additionalWrapperClasses={i !== 0 && 'mt-3'}
 						closedIcon={
@@ -55,7 +55,7 @@ function Brands(props) {
 								symbol="plus"
 							/>
 						}
-						content={<ModelsList models={el.models} />}
+						content={<ModelsList models={element.models} />}
 						handleClose={() => setSelectedBrand(null)}
 						handleOpen={() => setSelectedBrand(i)}
 						key={i}
@@ -66,7 +66,7 @@ function Brands(props) {
 								symbol="minus"
 							/>
 						}
-						title={el.name}
+						title={element.name}
 					/>
 				))}
 			</div>
@@ -102,8 +102,8 @@ function Card(props) {
 		</div>
 	);
 
-	function handleCardLink(e) {
-		e.preventDefault();
+	function handleCardLink(event) {
+		event.preventDefault();
 		const url = `?${props.type === 'folder' ? 'folderId' : 'areaId'}=${
 			props.id
 		}`;
@@ -125,17 +125,17 @@ function Card(props) {
 function CardContainer(props) {
 	return (
 		<div className="area-list row">
-			{props.items.map((el, i) => {
+			{props.items.map((element, i) => {
 				return (
 					<div
 						className={props.cardsWrapperAdditionalClasses}
 						key={i}
 					>
 						<Card
-							id={el.id}
-							thumbnail={el.thumbnail}
-							title={el.name}
-							type={el.type}
+							id={element.id}
+							thumbnail={element.thumbnail}
+							title={element.name}
+							type={element.type}
 						/>
 					</div>
 				);

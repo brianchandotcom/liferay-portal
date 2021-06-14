@@ -71,9 +71,9 @@ const getArea = (dispatch) => (endpoint, id) => {
 				type: actionDefinition.GET_AREA_FULFILLED,
 			})
 		)
-		.catch((err) =>
+		.catch((error) =>
 			dispatch({
-				payload: err,
+				payload: error,
 				type: actionDefinition.GET_AREA_REJECTED,
 			})
 		);
@@ -92,9 +92,9 @@ const getProducts = (dispatch) => (endpoint, query) => {
 				type: actionDefinition.GET_PRODUCTS_FULFILLED,
 			})
 		)
-		.catch((err) =>
+		.catch((error) =>
 			dispatch({
-				payload: err,
+				payload: error,
 				type: actionDefinition.GET_PRODUCTS_REJECTED,
 			})
 		);
@@ -150,9 +150,9 @@ const submitNewSpot = (dispatch) => (endpoint, areaId, formData) => {
 
 			return getArea(dispatch)(endpoint, areaId);
 		})
-		.catch((err) =>
+		.catch((error) =>
 			dispatch({
-				payload: err,
+				payload: error,
 				type: actionDefinition.SUBMIT_NEW_SPOT_REJECTED,
 			})
 		);
@@ -173,9 +173,9 @@ const deleteSpot = (dispatch) => (endpoint, areaId, spotId) => {
 
 			return getArea(dispatch)(endpoint, areaId);
 		})
-		.catch((err) =>
+		.catch((error) =>
 			dispatch({
-				payload: err,
+				payload: error,
 				type: actionDefinition.DELETE_SPOT_REJECTED,
 			})
 		);
@@ -200,9 +200,9 @@ const submitSpotChanges = (dispatch) => (endpoint, areaId, formData) => {
 
 			return getArea(dispatch)(endpoint, areaId);
 		})
-		.catch((err) =>
+		.catch((error) =>
 			dispatch({
-				payload: err,
+				payload: error,
 				type: actionDefinition.SUBMIT_SPOT_CHANGES_REJECTED,
 			})
 		);

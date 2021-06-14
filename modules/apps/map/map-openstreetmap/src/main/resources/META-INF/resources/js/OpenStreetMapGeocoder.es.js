@@ -40,7 +40,7 @@ class OpenStreetMapGeocoder extends State {
 	_handleReverseJSONP({display_name, error, lat, lon}, callback) {
 		const result = {
 			data: {},
-			err: error,
+			error,
 		};
 
 		if (!result.err) {

@@ -178,7 +178,7 @@ const decodeUpdateString = function (pageRenderState, updateString) {
 			});
 		}
 	}
-	catch (e) {
+	catch (error) {
 
 		// Do nothing
 

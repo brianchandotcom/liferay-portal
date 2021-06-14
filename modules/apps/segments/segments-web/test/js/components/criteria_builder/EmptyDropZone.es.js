@@ -17,7 +17,7 @@ import React from 'react';
 
 import EmptyDropZone from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/EmptyDropZone.es';
 
-const connectDnd = jest.fn((el) => el);
+const connectDnd = jest.fn((element) => element);
 
 describe('EmptyDropZone', () => {
 	afterEach(cleanup);

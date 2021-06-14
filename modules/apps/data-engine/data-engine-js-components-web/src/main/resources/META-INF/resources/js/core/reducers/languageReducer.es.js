@@ -76,13 +76,13 @@ const getLocalizedValue = ({
 	try {
 		_value = type === 'numeric' ? _value : JSON.parse(_value);
 	}
-	catch (e) {}
+	catch (error) {}
 
 	if (type === 'image') {
 		try {
 			return JSON.parse(value);
 		}
-		catch (e) {}
+		catch (error) {}
 	}
 
 	return _value;

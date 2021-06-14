@@ -25,9 +25,9 @@ export function CheckableListElement(props) {
 			<input
 				autoComplete="off"
 				checked={props.selected}
-				onChange={(e) => {
+				onChange={(event) => {
 					props.updateElementState(
-						e,
+						event,
 						{
 							label: props.label,
 							value: props.value,
@@ -51,10 +51,10 @@ export function BaseListElement(props) {
 	return (
 		<div
 			className={detaElementClasses}
-			onClick={(e) =>
+			onClick={(event) =>
 				props.value
 					? props.updateElementState(
-							e,
+							event,
 							{
 								label: props.label,
 								value: props.value,

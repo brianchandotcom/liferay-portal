@@ -129,7 +129,7 @@ CKEDITOR.plugins.link = {
 				selectedLink = root.getAscendant('a', true);
 			}
 		}
-		catch (e) {}
+		catch (error) {}
 
 		return selectedLink;
 	},

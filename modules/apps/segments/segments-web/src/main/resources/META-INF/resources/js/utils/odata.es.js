@@ -429,7 +429,7 @@ function translateQueryToCriteria(queryString) {
 			? criteriaArray[0]
 			: wrapInCriteriaGroup(criteriaArray);
 	}
-	catch (e) {
+	catch (error) {
 		criteria = null;
 	}
 

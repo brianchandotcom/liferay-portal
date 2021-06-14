@@ -72,8 +72,8 @@ class LocalizedDropdown extends React.Component {
 
 	_handleLanguageClick = (langKey) => () => this._changeLanguage(langKey);
 
-	_handleLanguageKeyboard = (langKey) => (e) => {
-		if (e.keyCode === ENTER) {
+	_handleLanguageKeyboard = (langKey) => (event) => {
+		if (event.keyCode === ENTER) {
 			this._changeLanguage(langKey);
 		}
 	};

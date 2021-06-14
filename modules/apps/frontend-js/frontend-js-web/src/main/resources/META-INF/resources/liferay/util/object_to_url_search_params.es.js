@@ -21,14 +21,14 @@ import isObject from './is_object';
  * @review
  */
 
-export default function objectToURLSearchParams(obj) {
-	if (!isObject(obj)) {
+export default function objectToURLSearchParams(object) {
+	if (!isObject(object)) {
 		throw new TypeError('Parameter obj must be an object');
 	}
 
 	const urlSearchParams = new URLSearchParams();
 
-	Object.entries(obj).forEach(([key, value]) => {
+	Object.entries(object).forEach(([key, value]) => {
 		if (Array.isArray(value)) {
 			for (let i = 0; i < value.length; i++) {
 				urlSearchParams.append(key, value[i]);

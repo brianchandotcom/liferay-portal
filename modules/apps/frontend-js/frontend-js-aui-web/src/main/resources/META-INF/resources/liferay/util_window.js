@@ -352,7 +352,7 @@ AUI.add(
 						try {
 							originalFn.call(this);
 						}
-						catch (err) {}
+						catch (error) {}
 					};
 
 					modal.get('boundingBox').addClass('dialog-iframe-modal');

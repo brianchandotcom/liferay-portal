@@ -96,24 +96,27 @@ const QuestionsEditor = ({
 		window
 	);
 
-	const insertTextAtCursor = (el, text) => {
-		const val = el.value;
+	const insertTextAtCursor = (element, text) => {
+		const val = element.value;
 		let endIndex;
 		let range;
 		if (
-			typeof el.selectionStart != 'undefined' &&
-			typeof el.selectionEnd != 'undefined'
+			typeof element.selectionStart != 'undefined' &&
+			typeof element.selectionEnd != 'undefined'
 		) {
-			endIndex = el.selectionEnd;
-			el.value =
-				val.slice(0, el.selectionStart) + text + val.slice(endIndex);
-			el.selectionStart = el.selectionEnd = endIndex + text.length;
+			endIndex = element.selectionEnd;
+			element.value =
+				val.slice(0, element.selectionStart) +
+				text +
+				val.slice(endIndex);
+			element.selectionStart = element.selectionEnd =
+				endIndex + text.length;
 		}
 		else if (
 			typeof document.selection != 'undefined' &&
 			typeof document.selection.createRange != 'undefined'
 		) {
-			el.focus();
+			element.focus();
 			range = document.selection.createRange();
 			range.collapse(false);
 			range.text = text;

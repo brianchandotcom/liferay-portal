@@ -21,8 +21,8 @@ class PaneSearchBar extends Component {
 		this.onSubmit.bind(this);
 	}
 
-	onSubmit(e) {
-		e.preventDefault();
+	onSubmit(event) {
+		event.preventDefault();
 	}
 
 	render() {

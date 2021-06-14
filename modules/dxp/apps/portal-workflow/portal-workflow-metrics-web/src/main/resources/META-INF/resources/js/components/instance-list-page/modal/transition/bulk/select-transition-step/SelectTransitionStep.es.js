@@ -36,12 +36,12 @@ function SelectTransitionStep({setErrorToast}) {
 
 		if (tasks.length) {
 			return [
-				postData().catch((err) => {
+				postData().catch((error) => {
 					setErrorToast(
 						Liferay.Language.get('your-request-has-failed')
 					);
 
-					return Promise.reject(err);
+					return Promise.reject(error);
 				}),
 			];
 		}

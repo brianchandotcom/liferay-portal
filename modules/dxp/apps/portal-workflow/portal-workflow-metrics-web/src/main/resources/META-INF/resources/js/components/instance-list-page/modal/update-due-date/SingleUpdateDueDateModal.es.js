@@ -102,12 +102,12 @@ export default function SingleUpdateDueDateModal() {
 
 		if (selectedInstance?.id && visibleModal === 'updateDueDate') {
 			return [
-				fetchData().catch((err) => {
+				fetchData().catch((error) => {
 					setErrorToast(
 						Liferay.Language.get('your-request-has-failed')
 					);
 
-					return Promise.reject(err);
+					return Promise.reject(error);
 				}),
 			];
 		}

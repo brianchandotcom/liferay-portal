@@ -20,7 +20,7 @@ const getItem = (key) => {
 	try {
 		data = JSON.parse(item);
 	}
-	catch (e) {
+	catch (error) {
 		return;
 	}
 
@@ -31,7 +31,7 @@ const setItem = (key, value) => {
 	try {
 		localStorage.setItem(key, JSON.stringify(value));
 	}
-	catch (e) {
+	catch (error) {
 		return;
 	}
 };

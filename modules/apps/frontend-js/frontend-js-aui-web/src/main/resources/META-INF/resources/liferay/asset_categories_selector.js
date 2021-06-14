@@ -784,8 +784,8 @@ AUI.add(
 
 					var matchKey = instance.get('matchKey');
 
-					instance.entries.getKey = function (obj) {
-						return obj.categoryId;
+					instance.entries.getKey = function (object) {
+						return object.categoryId;
 					};
 
 					var curEntries = instance.get('curEntries');

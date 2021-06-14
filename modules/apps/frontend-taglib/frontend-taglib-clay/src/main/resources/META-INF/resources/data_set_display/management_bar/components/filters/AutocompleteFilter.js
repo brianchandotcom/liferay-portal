@@ -87,7 +87,7 @@ function composeSingleValuesOdataString(key, value, exclude) {
 
 const formatValue = (value, exclude) =>
 	(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
-	value.map((el) => el.label).join(', ');
+	value.map((element) => element.label).join(', ');
 
 function getOdataString(selectedItems, key, selectionType, exclude) {
 	if (selectedItems?.length) {
@@ -307,12 +307,13 @@ function AutocompleteFilter({
 										onChange={() => {
 											setSelectedItems(
 												selectedItems.find(
-													(el) =>
-														el.value === itemValue
+													(element) =>
+														element.value ===
+														itemValue
 												)
 													? selectedItems.filter(
-															(el) =>
-																el.value !==
+															(element) =>
+																element.value !==
 																itemValue
 													  )
 													: selectionType ===
@@ -326,7 +327,8 @@ function AutocompleteFilter({
 										}}
 										selected={Boolean(
 											selectedItems.find(
-												(el) => el.value === itemValue
+												(element) =>
+													element.value === itemValue
 											)
 										)}
 										selectionType={selectionType}

@@ -30,14 +30,14 @@ AUI.add(
 					);
 				},
 
-				_serviceCallbackFn(obj, xHR, event) {
+				_serviceCallbackFn(object, xHR, event) {
 					var instance = this;
 
 					instance.fire(
 						'data',
 						A.mix(
 							{
-								data: obj,
+								data: object,
 							},
 							event
 						)

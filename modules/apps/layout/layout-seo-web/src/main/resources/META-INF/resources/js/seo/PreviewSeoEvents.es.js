@@ -15,9 +15,9 @@
 const previewSeoFireChange = (portletNamespace, data) =>
 	Liferay.fire(`${portletNamespace}PreviewSeo:changed`, {data});
 
-const previewSeoOnChange = (portletNamespace, cb) =>
+const previewSeoOnChange = (portletNamespace, callback) =>
 	Liferay.on(`${portletNamespace}PreviewSeo:changed`, (event) => {
-		cb(event.data);
+		callback(event.data);
 	});
 
 export {previewSeoFireChange, previewSeoOnChange};

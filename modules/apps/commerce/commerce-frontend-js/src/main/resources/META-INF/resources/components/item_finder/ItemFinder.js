@@ -72,8 +72,8 @@ function ItemFinder(props) {
 			.getSelectedItems()
 			.then((selectedItems = []) => updateSelectedItems(selectedItems));
 
-		function handleDatasetActions(e) {
-			if (props.linkedDatasetsId.includes(e.id)) {
+		function handleDatasetActions(event) {
+			if (props.linkedDatasetsId.includes(event.id)) {
 				props
 					.getSelectedItems()
 					.then((selectedItems = []) =>

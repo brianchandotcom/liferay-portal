@@ -705,13 +705,13 @@
 	 * @param {Element} el The element whose bounding rect to get.
 	 * @return {Object} The (possibly shimmed) rect of the element.
 	 */
-	function getBoundingClientRect(el) {
+	function getBoundingClientRect(element) {
 		var rect;
 
 		try {
-			rect = el.getBoundingClientRect();
+			rect = element.getBoundingClientRect();
 		}
-		catch (err) {
+		catch (error) {
 
 			// Ignore Windows 7 IE11 "Unspecified error"
 			// https://github.com/w3c/IntersectionObserver/pull/205

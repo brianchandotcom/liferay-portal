@@ -46,7 +46,9 @@ function NumberFilter({
 								className="form-control"
 								max={max}
 								min={min}
-								onChange={(e) => setValue(e.target.value)}
+								onChange={(event) =>
+									setValue(event.target.value)
+								}
 								type="number"
 								value={value !== undefined ? value : ''}
 							/>

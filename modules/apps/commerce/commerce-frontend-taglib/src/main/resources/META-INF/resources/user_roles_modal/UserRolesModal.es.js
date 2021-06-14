@@ -36,8 +36,8 @@ class UserRolesModal extends Component {
 		}
 	}
 
-	_handleCloseModal(e) {
-		e.preventDefault();
+	_handleCloseModal(event) {
+		event.preventDefault();
 		this._modalVisible = false;
 	}
 
@@ -45,8 +45,8 @@ class UserRolesModal extends Component {
 		return this._filterRoles();
 	}
 
-	_handleFormSubmit(evt) {
-		evt.preventDefault();
+	_handleFormSubmit(event) {
+		event.preventDefault();
 		let result = false;
 
 		if (this.filteredRoles.length) {
@@ -58,15 +58,15 @@ class UserRolesModal extends Component {
 		return result;
 	}
 
-	_handleInputBox(evt) {
-		if (evt.keyCode === 8 && !this.query.length) {
+	_handleInputBox(event) {
+		if (event.keyCode === 8 && !this.query.length) {
 			this.selectedRoles = this.selectedRoles.slice(0, -1);
 		}
 		else {
-			this.query = evt.target.value;
+			this.query = event.target.value;
 		}
 
-		return evt;
+		return event;
 	}
 
 	_toggleItem(item) {

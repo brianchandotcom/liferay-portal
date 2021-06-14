@@ -27,12 +27,7 @@ type Task<T> = {
 	target: T;
 };
 
-type Selector<T> = (
-	this: void,
-	value: T,
-	index: number,
-	obj: Array<T>
-) => unknown;
+type Selector<T> = (this: void, value: T, index: number, object) => unknown;
 
 class Queue<T> {
 	queue: Array<T> = [];

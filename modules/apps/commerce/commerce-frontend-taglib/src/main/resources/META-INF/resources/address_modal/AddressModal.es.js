@@ -33,37 +33,37 @@ class AddressModal extends Component {
 		return this._validateForms();
 	}
 
-	_handleFirstDotClick(e) {
-		e.preventDefault();
+	_handleFirstDotClick(event) {
+		event.preventDefault();
 		this._stage = 1;
 
 		return this._stage;
 	}
 
-	_handleSecondDotClick(e) {
-		return this._handleNextButton(e);
+	_handleSecondDotClick(event) {
+		return this._handleNextButton(event);
 	}
 
-	_handleNextButton(e) {
-		e.preventDefault();
+	_handleNextButton(event) {
+		event.preventDefault();
 		this._firstFormValid = this.refs.modal.refs.firstForm.checkValidity();
 		if (this._firstFormValid) {
 			this._stage = 2;
 		}
 
-		return e;
+		return event;
 	}
 
-	_handleCloseModal(e) {
-		e.preventDefault();
+	_handleCloseModal(event) {
+		event.preventDefault();
 		this._modalVisible = false;
 
-		return e;
+		return event;
 	}
 
-	_handleSelectBox(e) {
-		const value = e.target.value;
-		if (e.target.name === 'commerceCountry') {
+	_handleSelectBox(event) {
+		const value = event.target.value;
+		if (event.target.name === 'commerceCountry') {
 			this._formData = {
 				...this._formData,
 				country: value,
@@ -83,7 +83,7 @@ class AddressModal extends Component {
 				this._regions = [];
 			}
 		}
-		else if (e.target.name === 'addressType') {
+		else if (event.target.name === 'addressType') {
 			this._formData = {
 				...this._formData,
 				addressType: value,
@@ -99,13 +99,13 @@ class AddressModal extends Component {
 		return value;
 	}
 
-	_handleInputBox(evt) {
+	_handleInputBox(event) {
 		this._formData = {
 			...this._formData,
-			[evt.target.name]: evt.target.value,
+			[event.target.name]: event.target.value,
 		};
 
-		return evt.target.value;
+		return event.target.value;
 	}
 
 	_validateForms() {
@@ -174,13 +174,13 @@ class AddressModal extends Component {
 			});
 	}
 
-	_handleFormSubmit(e) {
-		e.preventDefault();
+	_handleFormSubmit(event) {
+		event.preventDefault();
 		if (this._firstFormValid && this._secondFormValid) {
-			this._addAddress(e);
+			this._addAddress(event);
 		}
 
-		return e;
+		return event;
 	}
 
 	_addAddress(_e) {

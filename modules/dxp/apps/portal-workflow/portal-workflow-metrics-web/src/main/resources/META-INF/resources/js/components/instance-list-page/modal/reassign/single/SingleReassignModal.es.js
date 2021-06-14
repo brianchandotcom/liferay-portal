@@ -85,10 +85,10 @@ function SingleReassignModal() {
 
 		if (selectedInstance?.id && visibleModal === 'singleReassign') {
 			return [
-				fetchData().catch((err) => {
+				fetchData().catch((error) => {
 					setErrorToast(true);
 
-					return Promise.reject(err);
+					return Promise.reject(error);
 				}),
 			];
 		}

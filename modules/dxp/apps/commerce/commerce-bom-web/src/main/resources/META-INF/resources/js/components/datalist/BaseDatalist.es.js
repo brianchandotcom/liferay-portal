@@ -24,9 +24,9 @@ export function SelectedData(props) {
 						{selectedElement.label}
 						<button
 							className="commerce-datalist__delete-value"
-							onClick={(e) =>
+							onClick={(event) =>
 								props.updateElementState(
-									e,
+									event,
 									{
 										label: selectedElement.label,
 										value: selectedElement.value,
@@ -75,20 +75,20 @@ export function BaseDatalist(props) {
 		return newValues;
 	}
 
-	function handleOutsideClick(e) {
-		e.preventDefault();
-		if (!datalistRef.current.contains(e.target)) {
+	function handleOutsideClick(event) {
+		event.preventDefault();
+		if (!datalistRef.current.contains(event.target)) {
 			collapseDropdown();
 		}
 	}
 
-	function updateElementState(e, listElement, toBeAdded = true) {
+	function updateElementState(event, listElement, toBeAdded = true) {
 		if (props.multiselect) {
 			handleChangeAndUpdateData(
 				toBeAdded
 					? [...selectedData, listElement]
 					: selectedData.filter(
-							(el) => el.label !== listElement.label
+							(element) => element.label !== listElement.label
 					  )
 			);
 		}
@@ -99,8 +99,8 @@ export function BaseDatalist(props) {
 		collapseDropdown();
 	}
 
-	function handleInputChange(e) {
-		updateQuery(e.target.value);
+	function handleInputChange(event) {
+		updateQuery(event.target.value);
 	}
 
 	function updateQuery(value = null) {
@@ -152,7 +152,7 @@ export function BaseDatalist(props) {
 
 	useEffect(() => {
 		const newSelectedValues = selectedData
-			? selectedData.map((el) => el.value)
+			? selectedData.map((element) => element.value)
 			: [];
 		if (
 			JSON.stringify(selectedValues) !== JSON.stringify(newSelectedValues)
@@ -183,8 +183,8 @@ export function BaseDatalist(props) {
 			)}
 			<div
 				className={inputWrapperClasses}
-				onClick={(e) =>
-					dropdownState === 'collapsed' && expandDropdown(e)
+				onClick={(event) =>
+					dropdownState === 'collapsed' && expandDropdown(event)
 				}
 			>
 				<div className="commerce-datalist__mask">
@@ -204,9 +204,9 @@ export function BaseDatalist(props) {
 							className="commerce-datalist__query-input"
 							id={props.inputId}
 							onChange={handleInputChange}
-							onFocus={(e) =>
+							onFocus={(event) =>
 								dropdownState === 'collapsed' &&
-								expandDropdown(e)
+								expandDropdown(event)
 							}
 							placeholder={props.placeholder}
 							type="text"

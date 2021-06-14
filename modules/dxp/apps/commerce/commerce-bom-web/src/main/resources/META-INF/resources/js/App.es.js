@@ -80,7 +80,10 @@ function App(props) {
 								notified: (values, setState, datasource) => {
 									const emittersHaveValuesSelected = Object.values(
 										values
-									).reduce((acc, el) => acc && !!el, true);
+									).reduce(
+										(acc, element) => acc && !!element,
+										true
+									);
 
 									if (emittersHaveValuesSelected) {
 										setState({
@@ -138,7 +141,10 @@ function App(props) {
 								notified: (values, setState, datasource) => {
 									const emittersHaveValuesSelected = Object.values(
 										values
-									).reduce((acc, el) => acc && !!el, true);
+									).reduce(
+										(acc, element) => acc && !!element,
+										true
+									);
 
 									if (emittersHaveValuesSelected) {
 										setState({
@@ -208,10 +214,16 @@ function App(props) {
 							notified: (values) => {
 								const emittersHaveValuesSelected = Object.values(
 									values
-								).reduce((acc, el) => acc && !!el, true);
+								).reduce(
+									(acc, element) => acc && !!element,
+									true
+								);
 								if (emittersHaveValuesSelected) {
 									const query = Object.entries(values)
-										.map((el) => `${el[0]}=${el[1]}`)
+										.map(
+											(element) =>
+												`${element[0]}=${element[1]}`
+										)
 										.join('&');
 									history.push('/folders/' + query);
 								}

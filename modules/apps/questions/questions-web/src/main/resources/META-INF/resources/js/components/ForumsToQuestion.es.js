@@ -14,7 +14,7 @@
 
 import {useQuery} from 'graphql-hooks';
 
-/*eslint-disable no-unused-vars*/
+/* eslint-disable no-unused-vars*/
 import React, {useContext, useEffect, useMemo} from 'react';
 import {withRouter} from 'react-router-dom';
 

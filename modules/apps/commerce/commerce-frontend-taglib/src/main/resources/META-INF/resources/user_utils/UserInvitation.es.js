@@ -63,8 +63,8 @@ class UserInvitation extends Component {
 		return this._debouncedFetchUsers();
 	}
 
-	_handleFormSubmit(evt) {
-		evt.preventDefault();
+	_handleFormSubmit(event) {
+		event.preventDefault();
 
 		if (this.query.match(EMAIL_REGEX)) {
 			this.addedUsers = [
@@ -85,10 +85,10 @@ class UserInvitation extends Component {
 		return false;
 	}
 
-	_handleInputBox(evt) {
-		evt.preventDefault();
+	_handleInputBox(event) {
+		event.preventDefault();
 
-		if (evt.keyCode === 8 && !this.query.length) {
+		if (event.keyCode === 8 && !this.query.length) {
 			this.addedUsers = this.addedUsers.slice(0, -1);
 
 			this.testAddedUsers();
@@ -96,7 +96,7 @@ class UserInvitation extends Component {
 			return false;
 		}
 
-		this.query = evt.target.value;
+		this.query = event.target.value;
 
 		this.testQuery();
 

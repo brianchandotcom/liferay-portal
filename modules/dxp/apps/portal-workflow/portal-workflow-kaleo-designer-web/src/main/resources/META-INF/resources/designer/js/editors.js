@@ -2785,10 +2785,10 @@ AUI.add(
 					return timerActions;
 				},
 
-				_put(obj, key, value) {
-					obj[key] = obj[key] || [];
+				_put(object, key, value) {
+					object[key] = object[key] || [];
 
-					obj[key].push(value);
+					object[key].push(value);
 				},
 
 				_renderDelaysEditor() {

@@ -16,13 +16,13 @@ import {fetch} from 'frontend-js-web';
 
 export function fetchImage(url) {
 	return new Promise((resolve) => {
-		const img = window.document.createElement('img');
+		const image = window.document.createElement('img');
 
-		img.onload = () => {
+		image.onload = () => {
 			resolve(url);
 		};
 
-		img.src = url;
+		image.src = url;
 	});
 }
 

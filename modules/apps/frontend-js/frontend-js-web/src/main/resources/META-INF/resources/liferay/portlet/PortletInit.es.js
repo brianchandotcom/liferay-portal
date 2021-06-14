@@ -132,8 +132,8 @@ class PortletInit {
 
 							resolve(updatedIds);
 						})
-						.catch((err) => {
-							reject(err);
+						.catch((error) => {
+							reject(error);
 						});
 				}
 			);
@@ -167,7 +167,7 @@ class PortletInit {
 	 * @review
 	 */
 
-	_reportError(portletId, err) {
+	_reportError(portletId, error) {
 		Object.keys(eventListeners).map((key) => {
 			const listener = eventListeners[key];
 
@@ -176,7 +176,7 @@ class PortletInit {
 				listener.type === 'portlet.onError'
 			) {
 				setTimeout(() => {
-					listener.handler('portlet.onError', err);
+					listener.handler('portlet.onError', error);
 				});
 			}
 
@@ -210,10 +210,10 @@ class PortletInit {
 			(updatedIds) => {
 				this._updatePortletStates(updatedIds);
 			},
-			(err) => {
+			(error) => {
 				busy = false;
 
-				this._reportError(portletId, err);
+				this._reportError(portletId, error);
 			}
 		);
 	}
@@ -330,10 +330,10 @@ class PortletInit {
 					}
 				);
 			},
-			(err) => {
+			(error) => {
 				busy = false;
 
-				this._reportError(this._portletId, err);
+				this._reportError(this._portletId, error);
 			}
 		);
 	}
@@ -359,7 +359,7 @@ class PortletInit {
 					try {
 						history.pushState(token, '', url);
 					}
-					catch (e) {
+					catch (error) {
 
 						// Do nothing
 
@@ -389,8 +389,10 @@ class PortletInit {
 
 				resolve(updatedIds);
 			}
-			catch (e) {
-				reject(new Error(`Partial Action decode status: ${e.message}`));
+			catch (error) {
+				reject(
+					new Error(`Partial Action decode status: ${error.message}`)
+				);
 			}
 		});
 	}
@@ -488,9 +490,9 @@ class PortletInit {
 			.then((updatedIds) => {
 				this._updatePortletStates(updatedIds);
 			})
-			.catch((err) => {
+			.catch((error) => {
 				busy = false;
-				this._reportError(this._portletId, err);
+				this._reportError(this._portletId, error);
 			});
 	}
 
@@ -572,17 +574,17 @@ class PortletInit {
 	action(...args) {
 		let actionParameters = null;
 		let argCount = 0;
-		let el = null;
+		let element = null;
 
 		args.forEach((arg) => {
 			if (arg instanceof HTMLFormElement) {
-				if (el !== null) {
+				if (element !== null) {
 					throw new TypeError(
-						`Too many [object HTMLFormElement] arguments: ${arg}, ${el}`
+						`Too many [object HTMLFormElement] arguments: ${arg}, ${element}`
 					);
 				}
 
-				el = arg;
+				element = arg;
 			}
 			else if (isObject(arg)) {
 				validateParameters(arg);
@@ -605,16 +607,16 @@ class PortletInit {
 			argCount++;
 		});
 
-		if (el) {
-			validateForm(el);
+		if (element) {
+			validateForm(element);
 		}
 
-		return this._setupAction(actionParameters, el)
+		return this._setupAction(actionParameters, element)
 			.then((val) => {
 				Promise.resolve(val);
 			})
-			.catch((err) => {
-				Promise.reject(err);
+			.catch((error) => {
+				Promise.reject(error);
 			});
 	}
 

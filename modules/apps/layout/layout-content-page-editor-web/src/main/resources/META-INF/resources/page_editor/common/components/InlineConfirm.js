@@ -87,7 +87,9 @@ export default function InlineConfirm({
 	return (
 		<div
 			className="page-editor__inline-confirm"
-			onKeyDown={(e) => e.key === 'Escape' && onCancelButtonClick()}
+			onKeyDown={(event) =>
+				event.key === 'Escape' && onCancelButtonClick()
+			}
 			ref={wrapper}
 			role="alertdialog"
 			tabIndex="-1"

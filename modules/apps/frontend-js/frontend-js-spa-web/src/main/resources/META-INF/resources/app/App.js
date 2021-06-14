@@ -808,7 +808,7 @@ class App extends EventEmitter {
 		try {
 			this.navigate(getUrlPath(href), false, event);
 		}
-		catch (err) {
+		catch (error) {
 
 			// Do not prevent link navigation in case some synchronous error occurs
 
@@ -1439,7 +1439,7 @@ class App extends EventEmitter {
 	stopPendingNavigate_() {
 		if (this.pendingNavigate) {
 
-			//this.pendingNavigate.cancel('Cancel pending navigation');
+			// this.pendingNavigate.cancel('Cancel pending navigation');
 
 		}
 		this.pendingNavigate = null;

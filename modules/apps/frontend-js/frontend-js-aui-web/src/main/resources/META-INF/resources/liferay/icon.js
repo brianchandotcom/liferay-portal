@@ -75,10 +75,10 @@ AUI.add(
 			},
 
 			_onMouseHover(event, src) {
-				var img = event.currentTarget.one('img');
+				var image = event.currentTarget.one('img');
 
-				if (img) {
-					img.attr('src', src);
+				if (image) {
+					image.attr('src', src);
 				}
 			},
 

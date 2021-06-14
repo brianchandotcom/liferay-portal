@@ -24,11 +24,11 @@ import isObject from './../is_object';
  */
 
 export default function objectToFormData(
-	obj = {},
+	object = {},
 	formData = new FormData(),
 	namespace
 ) {
-	Object.entries(obj).forEach(([key, value]) => {
+	Object.entries(object).forEach(([key, value]) => {
 		const formKey = namespace ? `${namespace}[${key}]` : key;
 
 		if (Array.isArray(value)) {

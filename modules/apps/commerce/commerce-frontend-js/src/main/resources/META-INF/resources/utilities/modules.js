@@ -20,7 +20,7 @@ export function getLiferayJsModule(moduleUrl) {
 		Liferay.Loader.require(
 			moduleUrl,
 			(jsModule) => resolve(jsModule.default || jsModule),
-			(err) => reject(err)
+			(error) => reject(error)
 		);
 	});
 }

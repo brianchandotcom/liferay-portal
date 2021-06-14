@@ -46,7 +46,7 @@ export default function reducer(state = initialState, action) {
 				null
 			);
 			const relatedProduct = state.mappedProducts.reduce(
-				(acc, el) => acc || (el.id === productId && el),
+				(acc, element) => acc || (element.id === productId && element),
 				null
 			);
 

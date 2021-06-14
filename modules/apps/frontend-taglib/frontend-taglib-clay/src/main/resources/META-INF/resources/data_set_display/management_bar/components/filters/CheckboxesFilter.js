@@ -124,7 +124,7 @@ function CheckboxesFilter({id, items, updateFilterState, value: valueProp}) {
 
 						if (itemsValues) {
 							checked = itemsValues.reduce(
-								(acc, el) => acc || el === item.value,
+								(acc, element) => acc || element === item.value,
 								false
 							);
 						}

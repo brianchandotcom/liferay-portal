@@ -24,7 +24,7 @@ const parse = (value, defaultValue) => {
 	try {
 		return JSON.parse(value);
 	}
-	catch (e) {
+	catch (error) {
 		return defaultValue !== undefined ? defaultValue : {};
 	}
 };

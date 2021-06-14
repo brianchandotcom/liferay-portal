@@ -43,7 +43,7 @@ AUI.add(
 			TIME_DESC: ['weeks', 'days', 'hours', 'minutes'],
 
 			getDescription(milliseconds) {
-				var desc = 'minutes';
+				var description = 'minutes';
 				var value = 0;
 
 				if (milliseconds > 0) {
@@ -56,14 +56,14 @@ AUI.add(
 
 					timeArray.some((item, index) => {
 						value = milliseconds / item;
-						desc = Time.TIME_DESC[index];
+						description = Time.TIME_DESC[index];
 
 						return milliseconds % item === 0;
 					});
 				}
 
 				return {
-					desc,
+					description,
 					value,
 				};
 			},

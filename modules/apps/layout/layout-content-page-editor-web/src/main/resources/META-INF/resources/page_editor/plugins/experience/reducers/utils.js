@@ -55,7 +55,7 @@ function addExperience(state, experience) {
 function setExperienceLock(state, experience) {
 	const lockedSegmentsExperience = experience.hasLockedSegmentsExperiment;
 
-	//TODO selectedSidebarPanelId
+	// TODO selectedSidebarPanelId
 
 	return {
 		...state,

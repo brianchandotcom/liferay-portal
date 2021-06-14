@@ -17,7 +17,7 @@ import React from 'react';
 
 import DropZone from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/DropZone.es';
 
-const connectDnd = jest.fn((el) => el);
+const connectDnd = jest.fn((element) => element);
 
 describe('DropZone', () => {
 	afterEach(cleanup);

@@ -20,7 +20,7 @@ import {PROPERTY_TYPES} from '../../../../src/main/resources/META-INF/resources/
 
 import '@testing-library/jest-dom/extend-expect';
 
-const connectDnd = jest.fn((el) => el);
+const connectDnd = jest.fn((element) => element);
 
 describe('CriteriaRow', () => {
 	afterEach(cleanup);

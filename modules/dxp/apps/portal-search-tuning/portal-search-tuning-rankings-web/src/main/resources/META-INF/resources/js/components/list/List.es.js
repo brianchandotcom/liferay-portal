@@ -255,8 +255,8 @@ class List extends PureComponent {
 								className="list-group show-quick-actions-on-hover"
 								onKeyDown={this._handleKeyDown}
 							>
-								{resultIds.map((id, index, arr) =>
-									this._renderItem(id, index, arr)
+								{resultIds.map((id, index, array) =>
+									this._renderItem(id, index, array)
 								)}
 							</ul>
 						)}

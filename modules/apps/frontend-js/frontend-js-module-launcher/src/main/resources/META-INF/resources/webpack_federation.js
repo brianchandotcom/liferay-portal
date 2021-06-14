@@ -323,10 +323,10 @@
 
 							dispatchNextQueuedCall();
 						})
-						.catch((err) => {
-							explain(callId, 'Rejecting module', err);
+						.catch((error) => {
+							explain(callId, 'Rejecting module', error);
 
-							reject(err);
+							reject(error);
 
 							dispatchNextQueuedCall();
 						});

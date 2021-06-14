@@ -38,7 +38,7 @@ describe('DocumentLibraryOpener', () => {
 		global.Liferay.Portlet = {refresh: jest.fn()};
 		global.Liferay.Util.openWindow = jest
 			.fn()
-			.mockImplementation((_, cb) => cb());
+			.mockImplementation((_, callback) => callback());
 		global.Liferay.Util.getWindow = () => ({hide: jest.fn()});
 		global.themeDisplay = {
 			getPathThemeImages: jest.fn().mockImplementation(() => '//images/'),

@@ -71,7 +71,7 @@ describe('delegate', () => {
 
 		document
 			.querySelector('.match')
-			.addEventListener('click', (e) => e.stopPropagation());
+			.addEventListener('click', (event) => event.stopPropagation());
 
 		userEvent.click(getByTestId(document, 'match'));
 

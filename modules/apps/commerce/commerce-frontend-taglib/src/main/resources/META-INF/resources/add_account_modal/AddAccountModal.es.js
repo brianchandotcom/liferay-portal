@@ -47,11 +47,11 @@ class AddAccountModal extends Component {
 		}
 	}
 
-	_handleCloseModal(e) {
-		e.preventDefault();
+	_handleCloseModal(event) {
+		event.preventDefault();
 		this._modalVisible = false;
 
-		return e;
+		return event;
 	}
 
 	syncQuery() {
@@ -60,8 +60,8 @@ class AddAccountModal extends Component {
 		return this._debouncedFetchUser();
 	}
 
-	_handleFormSubmit(evt) {
-		evt.preventDefault();
+	_handleFormSubmit(event) {
+		event.preventDefault();
 		let result = false;
 		if (this.query.match(EMAIL_REGEX)) {
 			this.addedUsers = [
@@ -77,21 +77,21 @@ class AddAccountModal extends Component {
 		return result;
 	}
 
-	_handleInputBox(evt) {
-		if (evt.keyCode === 8 && !this.query.length) {
+	_handleInputBox(event) {
+		if (event.keyCode === 8 && !this.query.length) {
 			this.addedUsers = this.addedUsers.slice(0, -1);
 		}
 		else {
-			this.query = evt.target.value;
+			this.query = event.target.value;
 		}
 
-		return evt;
+		return event;
 	}
 
-	_handleInputName(evt) {
-		this.accountName = evt.target.value;
+	_handleInputName(event) {
+		this.accountName = event.target.value;
 
-		return evt;
+		return event;
 	}
 
 	_toggleInvitation(userToBeToggled) {

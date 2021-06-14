@@ -42,7 +42,7 @@
 		email: '_handleEmail',
 		font: '_handleFont',
 		i: '_handleEm',
-		img: '_handleImage',
+		image: '_handleImage',
 		justify: '_handleTextAlign',
 		left: '_handleTextAlign',
 		li: '_handleListItem',

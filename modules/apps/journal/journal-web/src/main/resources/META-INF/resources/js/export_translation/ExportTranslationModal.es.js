@@ -84,8 +84,8 @@ const ExportTranslationModal = ({
 			return (
 				<ClaySelect
 					name={`_${namespace}_sourceLanguageId`}
-					onChange={(e) => {
-						setSourceLanguageId(e.currentTarget.value);
+					onChange={(event) => {
+						setSourceLanguageId(event.currentTarget.value);
 					}}
 					value={sourceLanguageId}
 				>
@@ -114,8 +114,8 @@ const ExportTranslationModal = ({
 			return (
 				<ClaySelect
 					name={`_${namespace}_exportMimeType`}
-					onChange={(e) => {
-						setExportMimeType(e.currentTarget.value);
+					onChange={(event) => {
+						setExportMimeType(event.currentTarget.value);
 					}}
 					value={exportMimeType}
 				>
@@ -155,8 +155,8 @@ const ExportTranslationModal = ({
 
 			<ClayForm
 				className="export-modal-content"
-				onSubmit={(e) => {
-					e.preventDefault();
+				onSubmit={(event) => {
+					event.preventDefault();
 					onModalClose();
 					location.href = Liferay.Util.addParams(
 						'download=true',

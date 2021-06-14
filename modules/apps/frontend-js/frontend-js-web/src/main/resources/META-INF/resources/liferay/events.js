@@ -24,13 +24,13 @@
 		Liferay,
 		'delegateClick',
 		(id, fn) => {
-			var el = A.config.doc.getElementById(id);
+			var element = A.config.doc.getElementById(id);
 
-			if (!el || el.id != id) {
+			if (!element || element.id != id) {
 				return;
 			}
 
-			var guid = A.one(el).addClass('lfr-delegate-click').guid();
+			var guid = A.one(element).addClass('lfr-delegate-click').guid();
 
 			CLICK_EVENTS[guid] = fn;
 

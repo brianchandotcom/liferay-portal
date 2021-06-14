@@ -38,8 +38,8 @@ export function credentialToObject(credential) {
 	try {
 		clientExtensionResults = credential.getClientExtensionResults();
 	}
-	catch (e) {
-		console.error('getClientExtensionResults failed', e);
+	catch (error) {
+		console.error('getClientExtensionResults failed', error);
 	}
 
 	const {id, response, type} = credential;

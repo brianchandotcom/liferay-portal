@@ -17,8 +17,8 @@ import './A11y.scss';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayPopover from '@clayui/popover';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import ReactDOM from 'react-dom';
 
 import useA11y from './useA11y';
 
@@ -86,17 +86,23 @@ const useObserveRect = (
 const Overlay = React.forwardRef<
 	HTMLDivElement,
 	React.ButtonHTMLAttributes<HTMLDivElement>
->(({style, ...othersProps}, ref) =>
-	ReactDOM.createPortal(
-		<div {...othersProps} className="a11y-overlay" ref={ref} style={style}>
-			<div className="a11y-indicator">
-				<ClayIcon symbol="info-circle" />
-			</div>
-			<div className="a11y-backdrop" />
-		</div>,
-		document.body
-	)
-);
+>(({style, ...othersProps}, ref) => (
+	<ReactPortal
+		wrapper={
+			<div
+				{...othersProps}
+				className="a11y-overlay"
+				ref={ref}
+				style={style}
+			/>
+		}
+	>
+		<div className="a11y-indicator">
+			<ClayIcon symbol="info-circle" />
+		</div>
+		<div className="a11y-backdrop" />
+	</ReactPortal>
+));
 
 type ViolationProps = {
 	modifyIndex: number;

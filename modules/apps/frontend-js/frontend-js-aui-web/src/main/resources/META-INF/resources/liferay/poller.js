@@ -238,8 +238,8 @@ AUI.add(
 			return _sendChannel;
 		}
 
-		function _processResponse(id, obj) {
-			var response = JSON.parse(obj.responseText);
+		function _processResponse(id, object) {
+			var response = JSON.parse(object.responseText);
 			var send = false;
 
 			if (Array.isArray(response)) {

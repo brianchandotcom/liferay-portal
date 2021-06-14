@@ -344,9 +344,11 @@
 			editor.lang.fakeobjects.video = Liferay.Language.get('video');
 		},
 
-		isElementType(el, type) {
+		isElementType(element, type) {
 			return (
-				el && el.is('img') && el.data('cke-real-element-type') === type
+				element &&
+				element.is('img') &&
+				element.data('cke-real-element-type') === type
 			);
 		},
 

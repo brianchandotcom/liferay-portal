@@ -26,7 +26,7 @@ const useSLANodes = (processId) => {
 			if (node.type === 'STATE') {
 				const newNode = {
 					...node,
-					desc: node.initial
+					description: node.initial
 						? Liferay.Language.get('process-begins')
 						: `${Liferay.Language.get('process-ends')} ${
 								node.label
@@ -44,7 +44,7 @@ const useSLANodes = (processId) => {
 			else if (node.type === 'TASK') {
 				nodeEnters.push({
 					...node,
-					desc: `${Liferay.Language.get('enters-task')} ${
+					description: `${Liferay.Language.get('enters-task')} ${
 						node.label
 					}`,
 					executionType: 'enter',
@@ -52,7 +52,7 @@ const useSLANodes = (processId) => {
 
 				nodeLeaves.push({
 					...node,
-					desc: `${Liferay.Language.get('leaves-task')} ${
+					description: `${Liferay.Language.get('leaves-task')} ${
 						node.label
 					}`,
 					executionType: 'leave',
@@ -101,7 +101,7 @@ const useSLANodes = (processId) => {
 			.map((node) => ({
 				...node,
 				compositeId: `${node.id}:on`,
-				desc: `${onTaskString} ${node.label}`,
+				description: `${onTaskString} ${node.label}`,
 				executionType: 'on',
 			}));
 	};

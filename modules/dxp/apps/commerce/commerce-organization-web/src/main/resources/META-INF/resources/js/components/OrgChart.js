@@ -99,13 +99,13 @@ class OrgChart extends Component {
 			<div className="org-chart-container">
 				<div className="svg-wrapper">
 					<svg
-						ref={(e) => {
-							this.chartSVG = e;
+						ref={(element) => {
+							this.chartSVG = element;
 						}}
 					>
 						<g
-							ref={(e) => {
-								this.tree = e;
+							ref={(element) => {
+								this.tree = element;
 							}}
 						/>
 					</svg>
@@ -118,8 +118,8 @@ class OrgChart extends Component {
 						</span>
 						<span
 							className="zoom-percentage"
-							ref={(e) => {
-								this.zoomPercent = e;
+							ref={(element) => {
+								this.zoomPercent = element;
 							}}
 						>
 							100%
@@ -419,14 +419,14 @@ class OrgChart extends Component {
 		return '';
 	}
 
-	setSelectedId(node, arr = []) {
+	setSelectedId(node, array = []) {
 		const {parent} = node;
 
 		if (parent) {
-			arr = this.setSelectedId(parent, arr);
+			array = this.setSelectedId(parent, array);
 		}
 
-		return [...arr, node.data.organizationId];
+		return [...array, node.data.organizationId];
 	}
 
 	setUpRoot(data) {

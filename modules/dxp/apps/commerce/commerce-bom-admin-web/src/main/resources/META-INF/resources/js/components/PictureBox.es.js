@@ -102,12 +102,12 @@ function PictureBox() {
 		y: 0,
 	});
 
-	function handleMouseMove(e) {
+	function handleMouseMove(event) {
 		switch (true) {
-			case e.target.className === 'custom-cursor-wrapper': {
+			case event.target.className === 'custom-cursor-wrapper': {
 				const containerRect = containerRef.current.getBoundingClientRect();
-				const pxLeft = e.pageX - containerRect.left;
-				const pxTop = e.pageY - containerRect.top - window.scrollY;
+				const pxLeft = event.pageX - containerRect.left;
+				const pxTop = event.pageY - containerRect.top - window.scrollY;
 
 				updateCursor({
 					visible: true,
@@ -126,11 +126,11 @@ function PictureBox() {
 		}
 	}
 
-	function handleClick(e) {
-		if (e.target.className === 'custom-cursor-wrapper') {
+	function handleClick(event) {
+		if (event.target.className === 'custom-cursor-wrapper') {
 			const containerRect = containerRef.current.getBoundingClientRect();
-			const pxLeft = e.pageX - containerRect.left;
-			const pxTop = e.pageY - containerRect.top - window.scrollY;
+			const pxLeft = event.pageX - containerRect.left;
+			const pxTop = event.pageY - containerRect.top - window.scrollY;
 			const x =
 				Math.round((100 / containerRect.width) * pxLeft * 1000) / 1000;
 			const y =

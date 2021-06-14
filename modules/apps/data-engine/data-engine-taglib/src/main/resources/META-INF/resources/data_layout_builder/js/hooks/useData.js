@@ -15,8 +15,8 @@
 import {useResource} from '@clayui/data-provider';
 import {fetch} from 'frontend-js-web';
 
-const omit = (obj, props) => {
-	const result = {...obj};
+const omit = (object, props) => {
+	const result = {...object};
 
 	props.forEach((prop) => {
 		delete result[prop];

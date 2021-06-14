@@ -12,7 +12,7 @@
  * details.
  */
 
-/*global module*/
+/* global module*/
 
 module.exports = {
 	plugins: {

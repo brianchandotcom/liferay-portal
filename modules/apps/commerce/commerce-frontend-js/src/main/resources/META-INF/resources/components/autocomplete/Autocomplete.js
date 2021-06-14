@@ -162,11 +162,11 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 	}, [items, onItemsUpdated]);
 
 	useEffect(() => {
-		function handleClick(e) {
+		function handleClick(event) {
 			if (
-				node.current.contains(e.target) ||
+				node.current.contains(event.target) ||
 				(dropdownNode.current &&
-					dropdownNode.current.contains(e.target))
+					dropdownNode.current.contains(event.target))
 			) {
 				return;
 			}
@@ -265,8 +265,8 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 							setActive(true);
 							setInitialised(true);
 						}}
-						onKeyUp={(e) => {
-							setActive(e.keyCode !== 27);
+						onKeyUp={(event) => {
+							setActive(event.keyCode !== 27);
 						}}
 						placeholder={props.inputPlaceholder}
 						ref={inputNode}

@@ -200,7 +200,7 @@ AUI.add(
 							try {
 								paginationMap = JSON.parse(responseData);
 							}
-							catch (e) {}
+							catch (error) {}
 
 							updatePaginationMap(paginationMap, target);
 

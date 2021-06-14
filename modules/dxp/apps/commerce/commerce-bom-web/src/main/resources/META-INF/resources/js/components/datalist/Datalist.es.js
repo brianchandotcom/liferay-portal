@@ -35,14 +35,14 @@ class Datalist extends Component {
 			...settings,
 			on: {
 				read: (data) => {
-					const formattedData = data.map((el) => ({
+					const formattedData = data.map((element) => ({
 						label:
-							el[
+							element[
 								this.props.datasourceSettings.labelField ||
 									'label'
 							],
 						value:
-							el[
+							element[
 								this.props.datasourceSettings.valueField ||
 									'value'
 							],
@@ -131,7 +131,7 @@ class Datalist extends Component {
 			<BaseDatalist
 				data={this.state.data || this.props.data || null}
 				disabled={disabledState}
-				emit={(e, payload) => this.emit(e, payload)}
+				emit={(event, payload) => this.emit(event, payload)}
 				value={this.state.selected}
 				{...baseProps}
 			/>

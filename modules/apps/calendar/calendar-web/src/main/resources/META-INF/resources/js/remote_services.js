@@ -138,9 +138,9 @@ AUI.add(
 								callback.success.apply(this, [data]);
 							}
 						})
-						.catch((err) => {
+						.catch((error) => {
 							if (typeof callback.failure === 'function') {
-								callback.failure(err);
+								callback.failure(error);
 							}
 						});
 				},

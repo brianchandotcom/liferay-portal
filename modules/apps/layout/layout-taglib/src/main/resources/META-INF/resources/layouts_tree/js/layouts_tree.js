@@ -411,7 +411,7 @@ AUI.add(
 
 									this.syncUI();
 								}
-								catch (e) {}
+								catch (error) {}
 
 								this.fire('ioSuccess');
 							},

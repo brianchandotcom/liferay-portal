@@ -355,20 +355,20 @@ AUI.add(
 					instance.on('statusChange', instance._onStatusChange);
 				},
 
-				intersects(evt) {
+				intersects(event) {
 					var instance = this;
 
 					var endDate = instance.get('endDate');
 					var startDate = instance.get('startDate');
 
-					var evtStartDate = evt.get('startDate');
+					var evtStartDate = event.get('startDate');
 
 					return (
 						DateMath.between(evtStartDate, startDate, endDate) ||
 						instance._isShortDurationEventIntersecting(
 							evtStartDate
 						) ||
-						instance.sameStartDate(evt)
+						instance.sameStartDate(event)
 					);
 				},
 

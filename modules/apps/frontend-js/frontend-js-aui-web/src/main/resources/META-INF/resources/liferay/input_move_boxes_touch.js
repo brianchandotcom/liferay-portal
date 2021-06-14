@@ -159,17 +159,17 @@ AUI.add(
 				_onEditSelectionClick(event) {
 					var instance = this;
 
-					var btn = event.currentTarget;
+					var button = event.currentTarget;
 
-					btn.toggleClass('active');
+					button.toggleClass('active');
 
 					var btnText = Liferay.Language.get('edit');
 
-					if (btn.hasClass('active')) {
+					if (button.hasClass('active')) {
 						btnText = Liferay.Language.get('stop-editing');
 					}
 
-					btn.one('.btn-text').text(btnText);
+					button.one('.btn-text').text(btnText);
 
 					var sortableContainer = instance._sortableContainer;
 

@@ -28,7 +28,7 @@ function ListRenderer(props) {
 	}
 
 	return props.value
-		.map((el) => getValueFromItem(el, props.options.labelKey))
+		.map((element) => getValueFromItem(element, props.options.labelKey))
 		.join(props.options.separator || ', ');
 }
 

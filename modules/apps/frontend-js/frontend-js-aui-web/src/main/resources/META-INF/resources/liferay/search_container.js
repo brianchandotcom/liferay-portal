@@ -92,7 +92,7 @@ AUI.add(
 					instance._parentContainer[action]();
 				},
 
-				addRow(arr, id) {
+				addRow(array, id) {
 					var instance = this;
 
 					var row;
@@ -107,7 +107,7 @@ AUI.add(
 
 							cells.empty();
 
-							arr.forEach((item, index) => {
+							array.forEach((item, index) => {
 								var cell = cells.item(index);
 
 								if (cell) {
@@ -130,7 +130,7 @@ AUI.add(
 							id,
 							ids: instance._ids,
 							row,
-							rowData: arr,
+							rowData: array,
 						});
 					}
 
@@ -149,24 +149,27 @@ AUI.add(
 					});
 				},
 
-				deleteRow(obj, id) {
+				deleteRow(object, id) {
 					var instance = this;
 
-					if (Lang.isNumber(obj) || Lang.isString(obj)) {
+					if (Lang.isNumber(object) || Lang.isString(object)) {
 						var row = null;
 
 						instance._table.all('tr').some((item, index) => {
-							if (!item.hasClass(CSS_TEMPLATE) && index == obj) {
+							if (
+								!item.hasClass(CSS_TEMPLATE) &&
+								index == object
+							) {
 								row = item;
 							}
 
 							return row;
 						});
 
-						obj = row;
+						object = row;
 					}
 					else {
-						obj = A.one(obj);
+						object = A.one(object);
 					}
 
 					if (id) {
@@ -182,18 +185,18 @@ AUI.add(
 					instance.fire('deleteRow', {
 						id,
 						ids: instance._ids,
-						row: obj,
+						row: object,
 					});
 
-					if (obj) {
-						if (obj.get('nodeName').toLowerCase() !== 'tr') {
-							obj = obj.ancestor('tr');
+					if (object) {
+						if (object.get('nodeName').toLowerCase() !== 'tr') {
+							object = object.ancestor('tr');
 						}
 
 						// LPS-83031
 
 						setTimeout(() => {
-							obj.remove(true);
+							object.remove(true);
 						}, 0);
 					}
 				},
@@ -318,19 +321,19 @@ AUI.add(
 				},
 			},
 
-			register(obj) {
+			register(object) {
 				var instance = this;
 
-				var id = obj.get('id');
+				var id = object.get('id');
 
-				instance._cache[id] = obj;
+				instance._cache[id] = object;
 
-				Liferay.component(id, obj, {
+				Liferay.component(id, object, {
 					destroyOnNavigate: true,
 				});
 
 				Liferay.fire('search-container:registered', {
-					searchContainer: obj,
+					searchContainer: object,
 				});
 			},
 		});

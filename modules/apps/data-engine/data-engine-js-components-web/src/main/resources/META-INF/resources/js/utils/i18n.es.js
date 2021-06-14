@@ -12,12 +12,12 @@
  * details.
  */
 
-export const setValue = (obj, languageId, prop, val) => {
-	if (!obj[prop]) {
-		obj[prop] = {};
+export const setValue = (object, languageId, prop, val) => {
+	if (!object[prop]) {
+		object[prop] = {};
 	}
 
-	obj[prop][languageId] = val;
+	object[prop][languageId] = val;
 
-	return obj;
+	return object;
 };

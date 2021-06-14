@@ -1361,8 +1361,8 @@ AUI.add(
 								strings: editorLocalizedStrings,
 							});
 
-							item.formatter = function (obj) {
-								var data = obj.data;
+							item.formatter = function (object) {
+								var data = object.data;
 
 								var label = STR_BLANK;
 

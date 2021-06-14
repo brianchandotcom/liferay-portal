@@ -40,10 +40,10 @@ _.mixin({
 
 _.mixin(
 	{
-		namespace(obj, path) {
+		namespace(object, path) {
 			if (arguments.length === 1) {
-				path = obj;
-				obj = this;
+				path = object;
+				object = this;
 			}
 
 			if (_.isString(path)) {
@@ -53,11 +53,11 @@ _.mixin(
 			for (var i = 0; i < path.length; i++) {
 				var name = path[i];
 
-				obj[name] = obj[name] || {};
-				obj = obj[name];
+				object[name] = object[name] || {};
+				object = object[name];
 			}
 
-			return obj;
+			return object;
 		},
 	},
 	{

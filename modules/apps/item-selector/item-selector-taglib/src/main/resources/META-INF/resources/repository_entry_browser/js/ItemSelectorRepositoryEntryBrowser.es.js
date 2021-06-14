@@ -64,9 +64,9 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		if (items.length === clicableItems.length) {
 			clicableItems.forEach((clicableItem, index) => {
-				clicableItem.addEventListener('click', (e) => {
-					e.preventDefault();
-					e.stopPropagation();
+				clicableItem.addEventListener('click', (event) => {
+					event.preventDefault();
+					event.stopPropagation();
 
 					this.openItemSelectorPreview(items, index);
 				});

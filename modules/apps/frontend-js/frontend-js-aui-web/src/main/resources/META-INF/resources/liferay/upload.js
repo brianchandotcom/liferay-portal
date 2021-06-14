@@ -835,7 +835,7 @@ AUI.add(
 					try {
 						data = JSON.parse(data);
 					}
-					catch (e) {}
+					catch (error) {}
 
 					if (
 						data.status &&

@@ -278,8 +278,8 @@ AUI.add(
 						arguments
 					);
 
-					instance.entries.getKey = function (obj) {
-						return obj.categoryId;
+					instance.entries.getKey = function (object) {
+						return object.categoryId;
 					};
 
 					var categoryTitles = instance.get('categoryTitles');

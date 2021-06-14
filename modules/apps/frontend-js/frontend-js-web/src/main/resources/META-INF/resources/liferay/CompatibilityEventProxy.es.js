@@ -80,7 +80,7 @@ class CompatibilityEventProxy extends State {
 					try {
 						event.target = this.host;
 					}
-					catch (e) {
+					catch (error) {
 
 						// Do nothing
 

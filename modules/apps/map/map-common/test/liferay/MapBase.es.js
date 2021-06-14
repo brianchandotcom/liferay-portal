@@ -53,8 +53,8 @@ describe('MapBase', () => {
 	const DialogImpl = jest.fn().mockImplementation(() => {});
 
 	const geocoderImpl = {
-		reverse(location, cb) {
-			cb({data: {location, name: 'data'}});
+		reverse(location, callback) {
+			callback({data: {location, name: 'data'}});
 		},
 	};
 

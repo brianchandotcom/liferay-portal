@@ -21,7 +21,7 @@ export function DropdownItem(props) {
 			<a
 				className="dropdown-item"
 				href={`#${props.value}`}
-				onClick={(e) => props.handleClickFn(e, props.value)}
+				onClick={(event) => props.handleClickFn(event, props.value)}
 			>
 				<HighlightedText
 					inverted={false}
@@ -75,13 +75,13 @@ export function DropdownInput(props) {
 			)}
 			{props.elements && props.elements.length ? (
 				<ul className="dropdown-menu show">
-					{props.elements.map((el, i) => (
+					{props.elements.map((element, i) => (
 						<DropdownItem
 							handleClickFn={props.handleClickOnItem}
 							key={i}
-							label={el.label}
+							label={element.label}
 							query={props.query}
-							value={el.value}
+							value={element.value}
 						/>
 					))}
 				</ul>
@@ -101,7 +101,7 @@ const EditNumberForm = React.memo((props) => {
 
 	function isNumberAlreadyAdded(number) {
 		return state.area.spots.reduce(
-			(acc, el) => acc || el.number === number,
+			(acc, element) => acc || element.number === number,
 			false
 		);
 	}
@@ -139,9 +139,11 @@ const EditNumberForm = React.memo((props) => {
 		);
 	}
 
-	function handleNumberChange(e) {
-		e.preventDefault();
-		const number = e.target.value ? parseInt(e.target.value, 10) : null;
+	function handleNumberChange(event) {
+		event.preventDefault();
+		const number = event.target.value
+			? parseInt(event.target.value, 10)
+			: null;
 
 		actions.updateFormValue('number', number);
 
@@ -157,8 +159,8 @@ const EditNumberForm = React.memo((props) => {
 		}
 	}
 
-	function handleProductInputChange(e) {
-		const query = e.target.value || null;
+	function handleProductInputChange(event) {
+		const query = event.target.value || null;
 		actions.updateFormValue('query', query);
 
 		if (query) {
@@ -181,10 +183,10 @@ const EditNumberForm = React.memo((props) => {
 		actions.resetProducts();
 	}
 
-	function handleClickOnDropdownItem(e, value) {
-		e.preventDefault();
+	function handleClickOnDropdownItem(event, value) {
+		event.preventDefault();
 		const productToBeMapped = state.area.availableProducts.reduce(
-			(acc, el) => acc || (el.id === value && el),
+			(acc, element) => acc || (element.id === value && element),
 			null
 		);
 		selectProduct(productToBeMapped);
@@ -276,7 +278,10 @@ const EditNumberForm = React.memo((props) => {
 								<DropdownInput
 									disabled={dropdownDisabled}
 									elements={state.area.availableProducts.map(
-										(el) => ({label: el.name, value: el.id})
+										(element) => ({
+											label: element.name,
+											value: element.id,
+										})
 									)}
 									handleChangeFn={handleProductInputChange}
 									handleClickOnItem={

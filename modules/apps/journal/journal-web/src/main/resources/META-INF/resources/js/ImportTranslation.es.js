@@ -53,8 +53,8 @@ export default function ImportTranslation({
 					accept={VALID_EXTENSIONS}
 					className="d-none"
 					name="file"
-					onChange={(e) => {
-						setImportFile(e.target.files[0]);
+					onChange={(event) => {
+						setImportFile(event.target.files[0]);
 					}}
 					ref={inputFileRef}
 					type="file"

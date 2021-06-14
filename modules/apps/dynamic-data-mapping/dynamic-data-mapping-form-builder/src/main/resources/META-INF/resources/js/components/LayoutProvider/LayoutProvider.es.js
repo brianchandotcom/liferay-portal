@@ -55,8 +55,8 @@ class LayoutProvider extends Component {
 		try {
 			this.emit(event, payload);
 		}
-		catch (e) {
-			console.error(e.message);
+		catch (error) {
+			console.error(error.message);
 		}
 	};
 

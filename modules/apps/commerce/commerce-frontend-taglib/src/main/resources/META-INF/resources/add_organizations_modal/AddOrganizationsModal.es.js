@@ -48,8 +48,8 @@ class AddOrganizationModal extends Component {
 		}
 	}
 
-	_handleCloseModal(e) {
-		e.preventDefault();
+	_handleCloseModal(event) {
+		event.preventDefault();
 		this._modalVisible = false;
 	}
 
@@ -59,19 +59,19 @@ class AddOrganizationModal extends Component {
 		return this._debouncedFetchOrganizations();
 	}
 
-	_handleFormSubmit(e) {
-		e.preventDefault();
+	_handleFormSubmit(event) {
+		event.preventDefault();
 
 		if (this.organizations.length) {
 			this._toggleItem(this.organizations[0]);
 			this.query = '';
 		}
 
-		return e;
+		return event;
 	}
 
-	_handleInputBox(e) {
-		if (e.keyCode === 8 && !this.query.length) {
+	_handleInputBox(event) {
+		if (event.keyCode === 8 && !this.query.length) {
 			this.selectedOrganizations = this.selectedOrganizations.slice(
 				0,
 				-1
@@ -79,7 +79,7 @@ class AddOrganizationModal extends Component {
 
 			return false;
 		}
-		this.query = e.target.value;
+		this.query = event.target.value;
 
 		return this.query;
 	}

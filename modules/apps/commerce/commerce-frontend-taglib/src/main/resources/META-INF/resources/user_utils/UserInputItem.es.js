@@ -20,8 +20,8 @@ import Soy, {Config} from 'metal-soy';
 import template from './UserInputItem.soy';
 
 class UserInputItem extends Component {
-	_handleRemoveItem(evt) {
-		evt.preventDefault();
+	_handleRemoveItem(event) {
+		event.preventDefault();
 
 		return this.emit('removeItem', {
 			email: this.email,

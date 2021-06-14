@@ -20,10 +20,10 @@
 export function hideLayoutPane(options) {
 	options = options || {};
 
-	var obj = options.obj;
+	var object = options.obj;
 	var pane = options.pane;
 
-	if (obj && obj.checked) {
+	if (object && object.checked) {
 		pane = document.querySelector(pane);
 
 		if (pane) {
@@ -136,10 +136,10 @@ export function publishToLive(options) {
 export function showLayoutPane(options) {
 	options = options || {};
 
-	var obj = options.obj;
+	var object = options.obj;
 	var pane = options.pane;
 
-	if (obj && obj.checked) {
+	if (object && object.checked) {
 		pane = document.querySelector(pane);
 
 		if (pane) {
@@ -157,9 +157,9 @@ export function toggleLayoutDetails(options) {
 	options = options || {};
 
 	var detail = document.querySelector(options.detail);
-	var img = document.querySelector(options.toggle);
+	var image = document.querySelector(options.toggle);
 
-	if (detail && img) {
+	if (detail && image) {
 		var icon = themeDisplay.getPathThemeImages() + '/arrows/01_plus.png';
 
 		if (detail.classList.contains('hide')) {
@@ -171,6 +171,6 @@ export function toggleLayoutDetails(options) {
 			detail.classList.add('hide');
 		}
 
-		img.setAttribute('src', icon);
+		image.setAttribute('src', icon);
 	}
 }

@@ -89,7 +89,7 @@ function MiniCompare(props) {
 			};
 
 			updateItems((items) => {
-				const included = items.find((el) => el.id === id);
+				const included = items.find((element) => element.id === id);
 
 				toggleStatus(props.commerceChannelGroupId, id, !included);
 
@@ -130,8 +130,8 @@ function MiniCompare(props) {
 							<Item
 								{...currentItem}
 								key={i}
-								onDelete={(e) => {
-									e.preventDefault();
+								onDelete={(event) => {
+									event.preventDefault();
 									updateItems(
 										items.filter(
 											(v) => v.id !== currentItem.id

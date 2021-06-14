@@ -25,7 +25,9 @@ class AutocompleteItem extends Component {
 		const results = regex.exec(this.text);
 
 		if (results) {
-			this.updateHighlightedText(results.map((el) => el.toString()));
+			this.updateHighlightedText(
+				results.map((element) => element.toString())
+			);
 		}
 		else {
 			this.reinitializeTextGroups();

@@ -36,7 +36,7 @@ function TestFilter({id, inputText, updateFilterState, value: valueProp}) {
 					>
 						<input
 							className="form-control"
-							onChange={(e) => setValue(e.target.value)}
+							onChange={(event) => setValue(event.target.value)}
 							type="text"
 							value={value || ''}
 						/>

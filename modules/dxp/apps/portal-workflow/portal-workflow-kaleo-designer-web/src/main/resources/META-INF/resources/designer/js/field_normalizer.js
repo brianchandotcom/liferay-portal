@@ -119,14 +119,14 @@ AUI.add(
 			}
 		};
 
-		var _put = function (obj, key, value, index) {
-			obj[key] = obj[key] || [];
+		var _put = function (object, key, value, index) {
+			object[key] = object[key] || [];
 
 			if (index === undefined) {
-				obj[key].push(value);
+				object[key].push(value);
 			}
 			else {
-				obj[key][index] = value;
+				object[key][index] = value;
 			}
 		};
 

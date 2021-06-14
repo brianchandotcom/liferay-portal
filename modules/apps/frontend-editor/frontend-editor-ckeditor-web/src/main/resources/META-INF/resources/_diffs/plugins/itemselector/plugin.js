@@ -220,7 +220,7 @@
 						  encodeURIComponent(itemValue.title)
 						: itemValue.url;
 				}
-				catch (e) {}
+				catch (error) {}
 			}
 
 			return itemSrc;

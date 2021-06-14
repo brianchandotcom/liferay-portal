@@ -27,8 +27,8 @@
 		searchBarElement = w.document.querySelector(SEARCHBAR_SELECTOR);
 
 		searchBar.on('toggled', (status) => {
-			searchToggles.forEach((el) => {
-				el.classList.toggle(IS_ACTIVE_CLASS, status);
+			searchToggles.forEach((element) => {
+				element.classList.toggle(IS_ACTIVE_CLASS, status);
 			});
 
 			w.document

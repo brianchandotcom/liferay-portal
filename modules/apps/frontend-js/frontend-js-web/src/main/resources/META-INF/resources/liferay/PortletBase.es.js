@@ -127,8 +127,8 @@ class PortletBase extends Component {
 	 * @return {Object|string} An object with its properties namespaced, using
 	 *         the portlet namespace or a namespaced string.
 	 */
-	ns(obj) {
-		return Liferay.Util.ns(this.portletNamespace || this.namespace, obj);
+	ns(object) {
+		return Liferay.Util.ns(this.portletNamespace || this.namespace, object);
 	}
 
 	/**

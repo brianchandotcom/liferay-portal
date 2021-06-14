@@ -75,15 +75,15 @@ function AssetVocabulariesCategoriesSelector({
 		}
 	}, [inputValue, previousInputValue, refetch]);
 
-	const getUnique = (arr, property) => {
-		return arr
+	const getUnique = (array, property) => {
+		return array
 			.map((element) => element[property])
 			.map(
-				(element, index, array) =>
-					array.indexOf(element) === index && index
+				(element, index, initialArray) =>
+					initialArray.indexOf(element) === index && index
 			)
-			.filter((element) => arr[element])
-			.map((element) => arr[element]);
+			.filter((element) => array[element])
+			.map((element) => array[element]);
 	};
 
 	const handleItemsChange = (items) => {
@@ -132,7 +132,8 @@ function AssetVocabulariesCategoriesSelector({
 	};
 
 	const handleSelectButtonClick = () => {
-		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
+		const sub = (str, object) =>
+			str.replace(/\{([^}]+)\}/g, (_, m) => object[m]);
 
 		const url = sub(decodeURIComponent(portletURL), {
 			selectedCategories: selectedItems.map((item) => item.value).join(),

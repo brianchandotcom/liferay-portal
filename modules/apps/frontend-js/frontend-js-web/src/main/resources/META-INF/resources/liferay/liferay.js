@@ -27,25 +27,25 @@ Liferay = window.Liferay || {};
 
 	var STR_MULTIPART = 'multipart/form-data';
 
-	Liferay.namespace = function namespace(obj, path) {
+	Liferay.namespace = function namespace(object, path) {
 		if (path === undefined) {
-			path = obj;
+			path = object;
 
-			obj = this;
+			object = this;
 		}
 
 		var parts = path.split('.');
 
 		for (var part; parts.length && (part = parts.shift()); ) {
-			if (obj[part] && obj[part] !== Object.prototype[part]) {
-				obj = obj[part];
+			if (object[part] && object[part] !== Object.prototype[part]) {
+				object = object[part];
 			}
 			else {
-				obj = obj[part] = {};
+				object = object[part] = {};
 			}
 		}
 
-		return obj;
+		return object;
 	};
 
 	/**

@@ -194,9 +194,10 @@ SpeedwellSlider.prototype = {
 		this.setupData()
 			.then(this.setupSliders.bind(this))
 			.then(this.attachListeners.bind(this))
-			.catch((e) => {
+			.catch((error) => {
 				const errorMessage =
-					`Request code: ${e.statusCode.toString()}` || 'API error';
+					`Request code: ${error.statusCode.toString()}` ||
+					'API error';
 
 				showNotification(errorMessage, 'danger');
 			});
@@ -258,8 +259,8 @@ SpeedwellSlider.prototype = {
 				this.datasetSize = this.dataset.length;
 				resolve();
 			}
-			catch (e) {
-				reject(new Error(e));
+			catch (error) {
+				reject(new Error(error));
 			}
 		});
 	},
@@ -291,10 +292,10 @@ SpeedwellSlider.prototype = {
 	slides: [],
 	stateCycleMap: {},
 
-	throttleInteraction(e) {
+	throttleInteraction(event) {
 		const direction =
-				e instanceof Event &&
-				e.currentTarget.className.indexOf('prev') > -1
+				event instanceof Event &&
+				event.currentTarget.className.indexOf('prev') > -1
 					? BACKWARDS
 					: FORWARDS,
 			prepare =

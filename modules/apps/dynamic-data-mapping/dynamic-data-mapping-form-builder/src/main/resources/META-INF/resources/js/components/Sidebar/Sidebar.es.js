@@ -467,7 +467,7 @@ class Sidebar extends Component {
 	}
 
 	_getTransitionEndEvent() {
-		const el = document.createElement('metalClayTransitionEnd');
+		const element = document.createElement('metalClayTransitionEnd');
 
 		const transitionEndEvents = {
 			MozTransition: 'transitionend',
@@ -479,7 +479,7 @@ class Sidebar extends Component {
 		let eventName = false;
 
 		Object.keys(transitionEndEvents).some((name) => {
-			if (el.style[name] !== undefined) {
+			if (element.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
 
 				return true;

@@ -23,10 +23,10 @@ Liferay.component(
 
 		const CONTAINER = document.getElementById('speedwell');
 
-		function showCategoryNavigationMenu(e) {
+		function showCategoryNavigationMenu(event) {
 			const isCatalogLink =
-				e.currentTarget.href.indexOf('/car-parts') > -1 ||
-				e.currentTarget.href.indexOf('/catalog') > -1;
+				event.currentTarget.href.indexOf('/car-parts') > -1 ||
+				event.currentTarget.href.indexOf('/catalog') > -1;
 
 			if (isCatalogLink) {
 				categoryNavigationElement.focus();

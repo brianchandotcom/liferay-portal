@@ -49,9 +49,9 @@ const getArea = (dispatch) => (endpoint, id) => {
 				type: actionDefinition.GET_AREA_FULFILLED,
 			})
 		)
-		.catch((err) =>
+		.catch((error) =>
 			dispatch({
-				payload: err,
+				payload: error,
 				type: actionDefinition.GET_AREA_REJECTED,
 			})
 		);

@@ -24,12 +24,12 @@ describe('Liferay.Util.objectToURLSearchParams', () => {
 	});
 
 	it('converts given object into URLSearchParams', () => {
-		const obj = {
+		const object = {
 			key1: 'value1',
 			key2: 123,
 		};
 
-		const urlSearchParams = objectToURLSearchParams(obj);
+		const urlSearchParams = objectToURLSearchParams(object);
 
 		expect(urlSearchParams.constructor.name).toEqual('URLSearchParams');
 
@@ -38,11 +38,11 @@ describe('Liferay.Util.objectToURLSearchParams', () => {
 	});
 
 	it('converts given object parameter with array value into multiple request parameters with the same key', () => {
-		const obj = {
+		const object = {
 			key: ['abc', 'def'],
 		};
 
-		const urlSearchParams = objectToURLSearchParams(obj);
+		const urlSearchParams = objectToURLSearchParams(object);
 
 		expect(urlSearchParams.getAll('key')).toEqual(['abc', 'def']);
 	});

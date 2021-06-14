@@ -48,9 +48,9 @@ const apiFetch = (url, method = 'get', data, contentType, headers) => {
 	});
 
 	function getHeaders(headers) {
-		if (headers && headers.filter((obj) => obj.key).length) {
+		if (headers && headers.filter((object) => object.key).length) {
 			return Object.assign(
-				...headers.map((obj) => ({[obj.key]: obj.value}))
+				...headers.map((object) => ({[object.key]: object.value}))
 			);
 		}
 

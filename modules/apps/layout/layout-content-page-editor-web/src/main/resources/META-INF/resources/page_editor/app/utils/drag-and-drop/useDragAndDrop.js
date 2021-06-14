@@ -95,9 +95,9 @@ const DragAndDropContext = React.createContext(initialDragDrop);
 export const NotDraggableArea = ({children}) => (
 	<div
 		draggable
-		onDragStart={(e) => {
-			e.preventDefault();
-			e.stopPropagation();
+		onDragStart={(event) => {
+			event.preventDefault();
+			event.stopPropagation();
 		}}
 	>
 		{children}

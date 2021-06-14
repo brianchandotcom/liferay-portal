@@ -35,7 +35,7 @@ export default function generateQRCode(
 
 			container.appendChild(image);
 		})
-		.catch((err) => {
-			console.error(err);
+		.catch((error) => {
+			console.error(error);
 		});
 }

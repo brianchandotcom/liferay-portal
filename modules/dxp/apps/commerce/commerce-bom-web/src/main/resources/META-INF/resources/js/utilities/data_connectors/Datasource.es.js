@@ -87,7 +87,9 @@ export default class Datasource {
 		}
 
 		if (this.filters && !value) {
-			this.filters = this.filters.filter((el) => el.field !== field);
+			this.filters = this.filters.filter(
+				(element) => element.field !== field
+			);
 		}
 
 		if (!this.filters && value) {
@@ -219,11 +221,11 @@ export default class Datasource {
 
 				return jsonResponse;
 			})
-			.catch((err) => {
+			.catch((error) => {
 				if (this.on.error) {
-					return this.on.error(err, crudOperation, serializedData);
+					return this.on.error(error, crudOperation, serializedData);
 				}
-				throw new Error(err);
+				throw new Error(error);
 			});
 	}
 

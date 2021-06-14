@@ -182,8 +182,8 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 		return result;
 	};
 
-	const resizeElement = function (el, width, height) {
-		const wrapperElement = el.parentElement;
+	const resizeElement = function (element, width, height) {
+		const wrapperElement = element.parentElement;
 
 		if (wrapperElement && width > 0 && height > 0) {
 			wrapperElement.setAttribute('style', `width:${width}px;`);

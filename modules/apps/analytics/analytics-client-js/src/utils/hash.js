@@ -15,18 +15,18 @@
 import sha256 from 'hash.js/lib/hash/sha/256';
 import objectHash from 'object-hash';
 
-function sort(obj) {
-	if (typeof obj !== 'object' || !obj) {
-		return obj;
+function sort(object) {
+	if (typeof object !== 'object' || !object) {
+		return object;
 	}
-	else if (Array.isArray(obj)) {
-		return obj.sort().map(sort);
+	else if (Array.isArray(object)) {
+		return object.sort().map(sort);
 	}
 
-	return Object.keys(obj)
+	return Object.keys(object)
 		.sort()
 		.reduce((acc, cur) => {
-			acc[cur] = sort(obj[cur]);
+			acc[cur] = sort(object[cur]);
 
 			return acc;
 		}, {});

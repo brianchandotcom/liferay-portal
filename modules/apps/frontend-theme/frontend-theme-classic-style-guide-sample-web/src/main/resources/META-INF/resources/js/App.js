@@ -100,12 +100,12 @@ const THEME_COLORS = [
 	'dark',
 ];
 
-const TokenGroup = ({children, group, md, title}) => {
+const TokenGroup = ({children, group, medium, title}) => {
 	return (
 		<ClayLayout.Col
 			className={'token-group token-group-' + group}
-			md={md}
-			size={!md && '12'}
+			md={medium}
+			size={!medium && '12'}
 		>
 			{title && <h2>{title}</h2>}
 			{children && <div className="token-items">{children}</div>}

@@ -16,8 +16,8 @@ import launcher from '../../../src/main/resources/META-INF/resources/components/
 
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 
-function getImgUrl(img, width) {
-	return `https://images.unsplash.com/${img}?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=${width}&q=80`;
+function getImgUrl(image, width) {
+	return `https://images.unsplash.com/${image}?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=${width}&q=80`;
 }
 
 const props = {
@@ -27,10 +27,10 @@ const props = {
 		'photo-1505740420928-5e560c06d30e',
 		'photo-1526434426615-1abe81efcb0b',
 		'photo-1518131672697-613becd4fab5',
-	].map((img) => ({
-		thumbnailUrl: getImgUrl(img, 100),
-		title: img,
-		url: getImgUrl(img, 800),
+	].map((image) => ({
+		thumbnailUrl: getImgUrl(image, 100),
+		title: image,
+		url: getImgUrl(image, 800),
 	})),
 };
 

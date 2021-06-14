@@ -25,8 +25,8 @@
 		clearTimeout(removeAfter);
 	}, TIMEOUT);
 
-	function needsAccessibility(e) {
-		const isTabbing = e.which === TAB_KEYCODE;
+	function needsAccessibility(event) {
+		const isTabbing = event.which === TAB_KEYCODE;
 
 		if (isTabbing) {
 			w.document.body.classList.add(ACCESSIBILITY_CLASS);

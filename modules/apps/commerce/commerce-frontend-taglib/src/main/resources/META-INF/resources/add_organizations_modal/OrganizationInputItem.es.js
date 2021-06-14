@@ -20,8 +20,8 @@ import Soy, {Config} from 'metal-soy';
 import template from './OrganizationInputItem.soy';
 
 class OrganizationInputItem extends Component {
-	_handleRemoveItem(e) {
-		e.preventDefault();
+	_handleRemoveItem(event) {
+		event.preventDefault();
 
 		return this.emit('removeItem', {
 			id: this.id,

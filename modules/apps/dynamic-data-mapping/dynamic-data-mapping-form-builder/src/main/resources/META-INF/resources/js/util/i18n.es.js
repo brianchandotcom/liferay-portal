@@ -14,20 +14,20 @@
 
 import {capitalize} from './strings.es';
 
-export const setValue = (obj, languageId, prop, val) => {
-	if (!obj[prop]) {
-		obj[prop] = {};
+export const setValue = (object, languageId, prop, val) => {
+	if (!object[prop]) {
+		object[prop] = {};
 	}
 
-	obj[prop][languageId] = val;
+	object[prop][languageId] = val;
 
-	return obj;
+	return object;
 };
 
-export const setLocalizedValue = (obj, languageId, prop, val) => {
-	obj[prop] = val;
+export const setLocalizedValue = (object, languageId, prop, val) => {
+	object[prop] = val;
 
 	const localizedProperty = `localized${capitalize(prop)}`;
 
-	return setValue(obj, languageId, localizedProperty, val);
+	return setValue(object, languageId, localizedProperty, val);
 };

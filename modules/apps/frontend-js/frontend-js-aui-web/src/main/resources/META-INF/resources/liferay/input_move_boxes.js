@@ -339,8 +339,8 @@ AUI.add(
 					}
 				},
 
-				_toggleBtnState(btn, state) {
-					Util.toggleDisabled(btn, state);
+				_toggleBtnState(button, state) {
+					Util.toggleDisabled(button, state);
 				},
 
 				_toggleReorderToolbar(sideReorderToolbar, sideColumn) {

@@ -193,7 +193,7 @@ AUI.add(
 					value: {
 						strings: {
 							asc: Liferay.Language.get('ascending'),
-							desc: Liferay.Language.get('descending'),
+							description: Liferay.Language.get('descending'),
 							propertyName: Liferay.Language.get('property-name'),
 							reverseSortBy: Lang.sub(
 								Liferay.Language.get('reverse-sort-by-x'),
@@ -1088,7 +1088,7 @@ AUI.add(
 				try {
 					data = JSON.parse(value);
 				}
-				catch (e) {}
+				catch (error) {}
 
 				return data;
 			},

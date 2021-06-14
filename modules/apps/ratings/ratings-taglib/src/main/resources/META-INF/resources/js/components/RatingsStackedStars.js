@@ -38,9 +38,9 @@ export default function RatingsStackedStars({
 				title={averageScore.toFixed(1)}
 			>
 				<span className="inline-item inline-item-before">
-					{starScores.map(({label: score}, index, arr) => {
+					{starScores.map(({label: score}, index, array) => {
 						const previousScore =
-							arr[index - 1] && arr[index - 1].label;
+							array[index - 1] && array[index - 1].label;
 						let symbol = 'star-o';
 
 						if (averageScore >= score) {

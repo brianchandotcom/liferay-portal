@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
@@ -89,7 +90,9 @@ public class AssetCategoriesSelectorDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				assetVocabulary.getGroupId(),
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				ActionKeys.ADD_CATEGORY)) {
+				ActionKeys.ADD_CATEGORY) ||
+			!Objects.equals(
+				assetVocabulary.getGroupId(), themeDisplay.getScopeGroupId())) {
 
 			return null;
 		}

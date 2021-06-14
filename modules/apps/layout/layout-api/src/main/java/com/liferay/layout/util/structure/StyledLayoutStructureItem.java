@@ -255,8 +255,17 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 			for (String styleName : availableStyleNames) {
 				if (itemConfigJSONObject.has(styleName)) {
-					stylesJSONObject.put(
-						styleName, itemConfigJSONObject.get(styleName));
+					Object styleValue = stylesJSONObject.get(styleName);
+
+					if (Objects.equals(
+							styleValue,
+							CommonStylesUtil.getDefaultStyleValue(styleName))) {
+
+						stylesJSONObject.remove(styleName);
+					}
+					else {
+						stylesJSONObject.put(styleName, styleValue);
+					}
 				}
 			}
 
@@ -266,8 +275,18 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 				for (String styleName : availableStyleNames) {
 					if (newStylesJSONObject.has(styleName)) {
-						stylesJSONObject.put(
-							styleName, newStylesJSONObject.get(styleName));
+						Object styleValue = newStylesJSONObject.get(styleName);
+
+						if (Objects.equals(
+								styleValue,
+								CommonStylesUtil.getDefaultStyleValue(
+									styleName))) {
+
+							stylesJSONObject.remove(styleName);
+						}
+						else {
+							stylesJSONObject.put(styleName, styleValue);
+						}
 					}
 				}
 			}
@@ -298,8 +317,21 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 					for (String styleName : availableStyleNames) {
 						if (newStylesJSONObject.has(styleName)) {
-							currentViewportStyleJSONObject.put(
-								styleName, newStylesJSONObject.get(styleName));
+							Object styleValue = newStylesJSONObject.get(
+								styleName);
+
+							if (Objects.equals(
+									styleValue,
+									CommonStylesUtil.getDefaultStyleValue(
+										styleName))) {
+
+								currentViewportStyleJSONObject.remove(
+									styleName);
+							}
+							else {
+								currentViewportStyleJSONObject.put(
+									styleName, styleValue);
+							}
 						}
 					}
 				}

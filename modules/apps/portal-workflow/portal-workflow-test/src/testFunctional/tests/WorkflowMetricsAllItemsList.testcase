@@ -795,12 +795,39 @@ definition {
 	}
 
 	@description = "LPS-130166 - Verify that the popover is not displayd when hovering untracked items on Due Date column item"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PopoverIsNotDisplayedForUntrackedItems {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67768 PopoverIsNotDisplayedForUntrackedItems pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry Title",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		MouseOver(
+			key_workflowInstanceName = "Blogs Entry Title",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		MouseOver(locator1 = "WorkflowMetricsAllItemsList#DUE_DATE_BUTTON_ALL_ITEMS_LIST");
+
+		AssertElementNotPresent(locator1 = "WorkflowDefinition#DIALOG_BOX_BODY");
 	}
 
 	@description = "LPS-130217 - Verify that user is able to click on the table header title to order items by Creation Date: old-new / new-old"

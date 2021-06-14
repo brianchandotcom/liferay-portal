@@ -12,9 +12,28 @@
  * details.
  */
 
-import {addParams, openSelectionModal} from 'frontend-js-web';
+import {addParams, navigate, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
+	const setCategoryDisplayPageTemplate = (
+		setCategoryDisplayPageTemplateURL
+	) => {
+		const nodes = document.querySelectorAll(
+			`input[name="${portletNamespace}rowIds"]`
+		);
+
+		nodes.forEach((node) => {
+			if (node.checked) {
+				setCategoryDisplayPageTemplateURL = addParams(
+					`${portletNamespace}categoryIds=${node.value}`,
+					setCategoryDisplayPageTemplateURL
+				);
+			}
+		});
+
+		navigate(setCategoryDisplayPageTemplateURL);
+	};
+
 	const deleteSelectedCategories = () => {
 		if (
 			confirm(
@@ -56,6 +75,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 			const action = data?.action;
 
+			if (action === 'setCategoryDisplayPageTemplate') {
+				setCategoryDisplayPageTemplate(
+					data.setCategoryDisplayPageTemplateURL
+				);
+			}
 			if (action === 'deleteSelectedCategories') {
 				deleteSelectedCategories();
 			}

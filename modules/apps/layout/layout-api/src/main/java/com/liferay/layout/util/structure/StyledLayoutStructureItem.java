@@ -250,45 +250,13 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		try {
-			List<String> availableStyleNames =
-				CommonStylesUtil.getAvailableStyleNames();
-
-			for (String styleName : availableStyleNames) {
-				if (itemConfigJSONObject.has(styleName)) {
-					Object styleValue = stylesJSONObject.get(styleName);
-
-					if (Objects.equals(
-							styleValue,
-							CommonStylesUtil.getDefaultStyleValue(styleName))) {
-
-						stylesJSONObject.remove(styleName);
-					}
-					else {
-						stylesJSONObject.put(styleName, styleValue);
-					}
-				}
-			}
+			_updateItemConfigValues(stylesJSONObject, itemConfigJSONObject);
 
 			if (itemConfigJSONObject.has("styles")) {
 				JSONObject newStylesJSONObject =
 					itemConfigJSONObject.getJSONObject("styles");
 
-				for (String styleName : availableStyleNames) {
-					if (newStylesJSONObject.has(styleName)) {
-						Object styleValue = newStylesJSONObject.get(styleName);
-
-						if (Objects.equals(
-								styleValue,
-								CommonStylesUtil.getDefaultStyleValue(
-									styleName))) {
-
-							stylesJSONObject.remove(styleName);
-						}
-						else {
-							stylesJSONObject.put(styleName, styleValue);
-						}
-					}
-				}
+				_updateItemConfigValues(stylesJSONObject, newStylesJSONObject);
 			}
 
 			for (ViewportSize viewportSize : ViewportSize.values()) {
@@ -315,25 +283,8 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 						continue;
 					}
 
-					for (String styleName : availableStyleNames) {
-						if (newStylesJSONObject.has(styleName)) {
-							Object styleValue = newStylesJSONObject.get(
-								styleName);
-
-							if (Objects.equals(
-									styleValue,
-									CommonStylesUtil.getDefaultStyleValue(
-										styleName))) {
-
-								currentViewportStyleJSONObject.remove(
-									styleName);
-							}
-							else {
-								currentViewportStyleJSONObject.put(
-									styleName, styleValue);
-							}
-						}
-					}
+					_updateItemConfigValues(
+						currentViewportStyleJSONObject, newStylesJSONObject);
 				}
 
 				viewportStyleJSONObjects.put(
@@ -434,6 +385,30 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		}
 
 		return CommonStylesUtil.getDefaultStyleValue(propertyKey);
+	}
+
+	private void _updateItemConfigValues(
+			JSONObject currentJSONObject, JSONObject newJSONObject)
+		throws Exception {
+
+		List<String> availableStyleNames =
+			CommonStylesUtil.getAvailableStyleNames();
+
+		for (String styleName : availableStyleNames) {
+			if (currentJSONObject.has(styleName)) {
+				Object styleValue = newJSONObject.get(styleName);
+
+				if (Objects.equals(
+						styleValue,
+						CommonStylesUtil.getDefaultStyleValue(styleName))) {
+
+					currentJSONObject.remove(styleName);
+				}
+				else {
+					currentJSONObject.put(styleName, styleValue);
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

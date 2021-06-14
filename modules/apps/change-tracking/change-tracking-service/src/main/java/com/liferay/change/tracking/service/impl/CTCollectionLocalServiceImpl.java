@@ -421,7 +421,10 @@ public class CTCollectionLocalServiceImpl
 			_ctProcessLocalService.deleteCTProcess(ctProcess);
 		}
 
-		Group group = ctCollection.getGroup();
+		Group group = _groupLocalService.fetchGroup(
+			ctCollection.getCompanyId(),
+			_classNameLocalService.getClassNameId(CTCollection.class),
+			ctCollection.getCtCollectionId());
 
 		if (group != null) {
 			_groupLocalService.deleteGroup(group);

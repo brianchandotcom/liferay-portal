@@ -135,7 +135,10 @@ public class InviteUsersMVCResourceCommand
 			return;
 		}
 
-		Group group = ctCollection.getGroup();
+		Group group = _groupLocalService.fetchGroup(
+			ctCollection.getCompanyId(),
+			_portal.getClassNameId(CTCollection.class),
+			ctCollection.getCtCollectionId());
 
 		if (group == null) {
 			group = _groupLocalService.addGroup(

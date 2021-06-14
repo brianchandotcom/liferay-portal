@@ -18,10 +18,13 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,8 +79,13 @@ public class CTCollectionModelResourcePermission
 			return true;
 		}
 
+		Group group = _groupLocalService.fetchGroup(
+			ctCollection.getCompanyId(),
+			_classNameLocalService.getClassNameId(CTCollection.class),
+			ctCollection.getCtCollectionId());
+
 		return permissionChecker.hasPermission(
-			ctCollection.getGroup(), CTCollection.class.getName(),
+			group, CTCollection.class.getName(),
 			ctCollection.getCtCollectionId(), actionId);
 	}
 
@@ -104,7 +112,13 @@ public class CTCollectionModelResourcePermission
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

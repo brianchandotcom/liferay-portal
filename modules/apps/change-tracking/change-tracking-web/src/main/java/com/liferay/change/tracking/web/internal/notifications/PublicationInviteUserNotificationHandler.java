@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -73,9 +75,17 @@ public class PublicationInviteUserNotificationHandler
 
 		int roleValue = jsonObject.getInt("roleValue");
 
-		Role role = null;
+		Group group = null;
 
 		if (ctCollection != null) {
+			group = _groupLocalService.fetchGroup(
+				ctCollection.getCompanyId(),
+				_portal.getClassNameId(CTCollection.class), ctCollectionId);
+		}
+
+		Role role = null;
+
+		if (group != null) {
 			role = _roleLocalService.fetchRole(
 				ctCollection.getCompanyId(),
 				PublicationRoleConstants.getRoleName(roleValue));
@@ -85,7 +95,7 @@ public class PublicationInviteUserNotificationHandler
 
 		if (role != null) {
 			userGroupRole = _userGroupRoleLocalService.fetchUserGroupRole(
-				userNotificationEvent.getUserId(), ctCollection.getGroupId(),
+				userNotificationEvent.getUserId(), group.getGroupId(),
 				role.getRoleId());
 		}
 
@@ -144,6 +154,9 @@ public class PublicationInviteUserNotificationHandler
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -117,7 +118,10 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				));
 		}
 
-		Group group = ctCollection.getGroup();
+		Group group = _groupLocalService.fetchGroup(
+			ctCollection.getCompanyId(),
+			_portal.getClassNameId(CTCollection.class),
+			ctCollection.getCtCollectionId());
 
 		if (group == null) {
 			JSONPortletResponseUtil.writeJSON(
@@ -219,6 +223,9 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

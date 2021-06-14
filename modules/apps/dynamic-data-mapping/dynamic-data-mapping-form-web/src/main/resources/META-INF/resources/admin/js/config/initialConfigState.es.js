@@ -36,8 +36,6 @@ export const INITIAL_CONFIG_STATE = {
 	tabs,
 	unimplementedProperties: [
 		'fieldNamespace',
-		'hideField',
-		'inputMask',
 		'readOnly',
 		'visibilityExpression',
 	],

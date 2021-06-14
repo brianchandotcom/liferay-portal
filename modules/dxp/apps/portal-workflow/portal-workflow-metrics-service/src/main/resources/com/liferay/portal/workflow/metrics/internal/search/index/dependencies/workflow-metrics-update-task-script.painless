@@ -3,6 +3,7 @@ if (ctx._source.containsKey("tasks")) {
 
 	if (task != null) {
 		task.assigneeIds = params.assigneeIds;
+		task.assigneeName = params.assigneeName;
 		task.assigneeType = params.assigneeType;
 	}
 }

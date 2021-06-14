@@ -14,7 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
@@ -307,26 +309,38 @@ public class TaskWorkflowMetricsIndexerImpl
 
 				ScriptBuilder builder = scripts.builder();
 
+				builder.idOrCode(
+					StringUtil.read(
+						getClass(),
+						"dependencies/workflow-metrics-update-task-" +
+							"script.painless")
+				).language(
+					"painless"
+				).putParameter(
+					"assigneeIds", assigneeIds
+				);
+
+				if (Objects.equals(assigneeType, User.class.getName()) &&
+					(assigneeIds != null)) {
+
+					User user = _userLocalService.fetchUser(assigneeIds[0]);
+
+					builder.putParameter("assigneeName", user.getFullName());
+				}
+
+				builder.putParameter(
+					"assigneeType", assigneeType
+				).putParameter(
+					"taskId", taskId
+				).scriptType(
+					ScriptType.INLINE
+				);
+
 				searchEngineAdapter.execute(
 					new UpdateByQueryDocumentRequest(
 						queries.nested(
 							"tasks", queries.term("tasks.taskId", taskId)),
-						builder.idOrCode(
-							StringUtil.read(
-								getClass(),
-								"dependencies/workflow-metrics-update-task-" +
-									"script.painless")
-						).language(
-							"painless"
-						).putParameter(
-							"assigneeIds", assigneeIds
-						).putParameter(
-							"assigneeType", assigneeType
-						).putParameter(
-							"taskId", taskId
-						).scriptType(
-							ScriptType.INLINE
-						).build(),
+						builder.build(),
 						_instanceWorkflowMetricsIndex.getIndexName(companyId)));
 			});
 
@@ -370,5 +384,8 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

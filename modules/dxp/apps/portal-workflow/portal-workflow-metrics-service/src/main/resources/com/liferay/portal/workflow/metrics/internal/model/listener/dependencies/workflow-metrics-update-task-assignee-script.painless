@@ -1,0 +1,7 @@
+if (ctx._source.containsKey("tasks")) {
+	for (task in ctx._source.tasks) {
+		if (task.assigneeIds.contains(params.userId)) {
+			task.assigneeName = params.userName;
+		}
+	}
+}

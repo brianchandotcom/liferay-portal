@@ -225,11 +225,6 @@
 			<finder-column name="classNameId" />
 			<finder-column name="key" />
 		</finder>
-		<finder name="C_C_P" return-type="AssetListEntryUsage" unique="true">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="portletId" />
-		</finder>
 		<finder name="CK_CT_P" return-type="Collection">
 			<finder-column name="containerKey" />
 			<finder-column name="containerType" />

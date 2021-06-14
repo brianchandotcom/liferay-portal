@@ -140,14 +140,15 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 			}
 
 			Role role = _roleLocalService.fetchRole(
-				companyId, CTConstants.PUBLICATIONS_USER);
+				companyId, CTConstants.PUBLICATIONS_USER_ROLE_NAME);
 
 			if (role == null) {
 				role = _roleLocalService.addRole(
 					_userLocalService.getDefaultUserId(companyId), null, 0,
-					CTConstants.PUBLICATIONS_USER,
+					CTConstants.PUBLICATIONS_USER_ROLE_NAME,
 					HashMapBuilder.put(
-						LocaleUtil.getDefault(), CTConstants.PUBLICATIONS_USER
+						LocaleUtil.getDefault(),
+						CTConstants.PUBLICATIONS_USER_ROLE_NAME
 					).build(),
 					null, RoleConstants.TYPE_REGULAR, null, null);
 

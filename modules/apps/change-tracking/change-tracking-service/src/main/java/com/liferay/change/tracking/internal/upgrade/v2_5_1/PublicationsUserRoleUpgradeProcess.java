@@ -53,7 +53,8 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select CTPreferences.companyId from CTPreferences left ",
 					"join Role_ on Role_.companyId = CTPreferences.companyId ",
-					"and Role_.name = '", CTConstants.PUBLICATIONS_USER,
+					"and Role_.name = '",
+					CTConstants.PUBLICATIONS_USER_ROLE_NAME,
 					"' where CTPreferences.userId = 0 and Role_.roleId is ",
 					"null"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -65,11 +66,12 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 					companyId);
 
 				Role role = _roleLocalService.addRole(
-					defaultUserId, null, 0, CTConstants.PUBLICATIONS_USER,
+					defaultUserId, null, 0,
+					CTConstants.PUBLICATIONS_USER_ROLE_NAME,
 					HashMapBuilder.put(
 						LocaleUtil.fromLanguageId(
 							UpgradeProcessUtil.getDefaultLanguageId(companyId)),
-						CTConstants.PUBLICATIONS_USER
+						CTConstants.PUBLICATIONS_USER_ROLE_NAME
 					).build(),
 					null, RoleConstants.TYPE_REGULAR, null, null);
 

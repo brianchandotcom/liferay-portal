@@ -156,7 +156,8 @@ public class InviteUsersMVCResourceCommand
 
 		if (publicationsUserRoleUserIds.length > 0) {
 			Role publicationsUserRole = _roleLocalService.fetchRole(
-				themeDisplay.getCompanyId(), CTConstants.PUBLICATIONS_USER);
+				themeDisplay.getCompanyId(),
+				CTConstants.PUBLICATIONS_USER_ROLE_NAME);
 
 			if (publicationsUserRole == null) {
 				JSONPortletResponseUtil.writeJSON(

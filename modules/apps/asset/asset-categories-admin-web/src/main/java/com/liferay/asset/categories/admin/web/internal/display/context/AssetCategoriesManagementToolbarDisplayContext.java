@@ -69,6 +69,31 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
+				PortletURL setCategoryDisplayPageTemplateURL =
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/set_category_display_page_template.jsp"
+					).setRedirect(
+						currentURLObj.toString()
+					).setParameter(
+						"vocabularyId",
+						_assetCategoriesDisplayContext.getVocabularyId()
+					).build();
+
+				dropdownItem.putData(
+					"action", "setCategoryDisplayPageTemplate");
+				dropdownItem.putData(
+					"setCategoryDisplayPageTemplateURL",
+					setCategoryDisplayPageTemplateURL.toString());
+				dropdownItem.setIcon("page");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest, "assign-display-page-template"));
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedCategories");
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(

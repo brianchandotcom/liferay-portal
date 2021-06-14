@@ -295,16 +295,6 @@ public class AssetListEntryUsagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_P() throws Exception {
-		_persistence.countByC_C_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
-
-		_persistence.countByC_C_P(0L, 0L, "null");
-
-		_persistence.countByC_C_P(0L, 0L, (String)null);
-	}
-
-	@Test
 	public void testCountByCK_CT_P() throws Exception {
 		_persistence.countByCK_CT_P(
 			"", RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -663,22 +653,6 @@ public class AssetListEntryUsagePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				assetListEntryUsage, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
-
-		Assert.assertEquals(
-			Long.valueOf(assetListEntryUsage.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				assetListEntryUsage, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
-		Assert.assertEquals(
-			Long.valueOf(assetListEntryUsage.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				assetListEntryUsage, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
-		Assert.assertEquals(
-			assetListEntryUsage.getPortletId(),
-			ReflectionTestUtil.invoke(
-				assetListEntryUsage, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "portletId"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetListEntryUsage.getGroupId()),

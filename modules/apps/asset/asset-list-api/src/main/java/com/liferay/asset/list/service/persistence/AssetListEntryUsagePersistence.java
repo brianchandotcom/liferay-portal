@@ -1001,65 +1001,6 @@ public interface AssetListEntryUsagePersistence
 	public int countByG_C_K(long groupId, long classNameId, String key);
 
 	/**
-	 * Returns the asset list entry usage where classNameId = &#63; and classPK = &#63; and portletId = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param portletId the portlet ID
-	 * @return the matching asset list entry usage
-	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
-	 */
-	public AssetListEntryUsage findByC_C_P(
-			long classNameId, long classPK, String portletId)
-		throws NoSuchEntryUsageException;
-
-	/**
-	 * Returns the asset list entry usage where classNameId = &#63; and classPK = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param portletId the portlet ID
-	 * @return the matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	public AssetListEntryUsage fetchByC_C_P(
-		long classNameId, long classPK, String portletId);
-
-	/**
-	 * Returns the asset list entry usage where classNameId = &#63; and classPK = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param portletId the portlet ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	public AssetListEntryUsage fetchByC_C_P(
-		long classNameId, long classPK, String portletId,
-		boolean useFinderCache);
-
-	/**
-	 * Removes the asset list entry usage where classNameId = &#63; and classPK = &#63; and portletId = &#63; from the database.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param portletId the portlet ID
-	 * @return the asset list entry usage that was removed
-	 */
-	public AssetListEntryUsage removeByC_C_P(
-			long classNameId, long classPK, String portletId)
-		throws NoSuchEntryUsageException;
-
-	/**
-	 * Returns the number of asset list entry usages where classNameId = &#63; and classPK = &#63; and portletId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param portletId the portlet ID
-	 * @return the number of matching asset list entry usages
-	 */
-	public int countByC_C_P(long classNameId, long classPK, String portletId);
-
-	/**
 	 * Returns all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param containerKey the container key

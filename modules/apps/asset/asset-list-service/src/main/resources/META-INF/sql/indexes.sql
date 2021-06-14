@@ -26,7 +26,6 @@ create unique index IX_29F4FD05 on AssetListEntrySegmentsEntryRel (uuid_[$COLUMN
 
 create index IX_76643456 on AssetListEntryUsage (assetListEntryId, classNameId, ctCollectionId);
 create index IX_6E1C4974 on AssetListEntryUsage (assetListEntryId, ctCollectionId);
-create unique index IX_78341F6B on AssetListEntryUsage (classNameId, classPK, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
 create index IX_669BC47F on AssetListEntryUsage (containerKey[$COLUMN_LENGTH:255$], containerType, plid, ctCollectionId);
 create unique index IX_624112AF on AssetListEntryUsage (groupId, classNameId, containerKey[$COLUMN_LENGTH:255$], containerType, key_[$COLUMN_LENGTH:255$], plid, ctCollectionId);
 create index IX_AF0F2C99 on AssetListEntryUsage (groupId, classNameId, key_[$COLUMN_LENGTH:255$], ctCollectionId);

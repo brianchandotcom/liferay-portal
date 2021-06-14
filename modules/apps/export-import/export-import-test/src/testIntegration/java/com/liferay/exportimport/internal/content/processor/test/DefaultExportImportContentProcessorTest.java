@@ -92,7 +92,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -248,42 +247,6 @@ public class DefaultExportImportContentProcessorTest {
 
 		_layoutReferencesExportImportContentProcessor =
 			_serviceTracker.getService();
-	}
-
-	@Test
-	public void testDeleteTimestampFromDLReferenceURLs() throws Exception {
-		String content = replaceParameters(
-			getContent("dl_references.txt"), _fileEntry);
-
-		List<String> urls = getURLs(content);
-
-		String urlContent = StringUtil.merge(urls, StringPool.NEW_LINE);
-
-		content = _exportImportContentProcessor.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, urlContent, true,
-			true);
-
-		String[] exportedURLs = content.split(StringPool.NEW_LINE);
-
-		Assert.assertEquals(
-			Arrays.toString(exportedURLs), urls.size(), exportedURLs.length);
-
-		for (int i = 0; i < urls.size(); i++) {
-			String exportedUrl = exportedURLs[i];
-			String url = urls.get(i);
-
-			Assert.assertFalse(exportedUrl, exportedUrl.matches("[?&]t="));
-
-			if (url.contains("/documents/") && url.contains("?")) {
-				Assert.assertTrue(
-					exportedUrl, exportedUrl.contains("width=100&height=100"));
-			}
-
-			if (url.contains("/documents/") && url.contains("mustkeep")) {
-				Assert.assertTrue(
-					exportedUrl, exportedUrl.contains("mustkeep"));
-			}
-		}
 	}
 
 	@Test

@@ -25,7 +25,9 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 	propsTransformer="js/TranslationManagementToolbarPropsTransformer"
 />
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-view"
+>
 	<aui:form action="<%= viewDisplayContext.getActionURL() %>" name="fm">
 		<liferay-ui:breadcrumb
 			showLayout="<%= false %>"

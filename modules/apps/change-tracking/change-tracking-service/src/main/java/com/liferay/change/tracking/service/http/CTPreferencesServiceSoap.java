@@ -83,6 +83,24 @@ public class CTPreferencesServiceSoap {
 		}
 	}
 
+	public static com.liferay.change.tracking.model.CTPreferencesSoap
+			enablePublications(long companyId, boolean enable)
+		throws RemoteException {
+
+		try {
+			com.liferay.change.tracking.model.CTPreferences returnValue =
+				CTPreferencesServiceUtil.enablePublications(companyId, enable);
+
+			return com.liferay.change.tracking.model.CTPreferencesSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CTPreferencesServiceSoap.class);
 

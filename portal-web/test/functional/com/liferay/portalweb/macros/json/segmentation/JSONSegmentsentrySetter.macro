@@ -43,7 +43,10 @@ definition {
 	macro setField {
 		Variables.assertDefined(parameterList = "${fieldName}");
 
-		if ("${fieldName}" == "Date Modified") {
+		if ("${fieldName}" == "Browser") {
+			var field = "browser";
+		}
+		else if ("${fieldName}" == "Date Modified") {
 			var field = "dateModified";
 		}
 		else if ("${fieldName}" == "Date of Birth") {

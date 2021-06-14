@@ -22,12 +22,14 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
+import com.liferay.portal.search.query.util.NestedFieldQueryHelper;
 
 import java.text.Format;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -48,7 +50,11 @@ public class ExpressionConvertImpl implements ExpressionConvert<Filter> {
 			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
 
 		return (Filter)expression.accept(
-			new ExpressionVisitorImpl(format, locale, entityModel));
+			new ExpressionVisitorImpl(
+				format, locale, entityModel, nestedFieldQueryHelper));
 	}
+
+	@Reference
+	protected NestedFieldQueryHelper nestedFieldQueryHelper;
 
 }

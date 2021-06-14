@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>GOOGLE_PAGESPEED_TITLE</td>
-	<td>//h2[contains(text(), 'Google PageSpeed')]</td>
+	<td>//h2[contains(text(), 'Google PageSpeed Insights')]</td>
 	<td></td>
 </tr>
 <tr>

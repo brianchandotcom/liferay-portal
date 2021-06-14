@@ -22,16 +22,16 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed",
+			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Virtual Instance Scope");
 
-		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled")) {
+		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
 			Click.javaScriptClick(
-				checkboxName = "Enabled",
+				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				checkboxName = "Enabled",
+				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
@@ -52,16 +52,16 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed",
+			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Virtual Instance Scope");
 
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled")) {
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable")) {
 			Click.javaScriptClick(
-				checkboxName = "Enabled",
+				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "Enabled",
+				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 

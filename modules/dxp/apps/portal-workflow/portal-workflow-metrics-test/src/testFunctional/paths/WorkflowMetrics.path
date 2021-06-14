@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_CUSTOM_RANGE</td>
+	<td>//div[contains(@class,'has-error')]//span[contains(text(), '${key_errorMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_CLEAR_ALL</td>
 	<td>//span[contains(text(),'Clear All')] | //button[contains(text(),'Clear All')]</td>
 	<td></td>
@@ -151,6 +156,11 @@
 <tr>
 	<td>METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle filter-dropdown-button')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_DATE_RANGE_DROPDOWN_BY_TITLE</td>
+	<td>//div//span[contains(text(),'${key_title}')]/../../../..//button[contains(@class, 'dropdown-toggle filter-dropdown-button') and contains(text(),'${key_dateRange}')]</td>
 	<td></td>
 </tr>
 <tr>

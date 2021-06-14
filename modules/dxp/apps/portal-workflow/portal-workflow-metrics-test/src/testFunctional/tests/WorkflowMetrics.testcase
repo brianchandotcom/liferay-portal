@@ -2521,8 +2521,10 @@ definition {
 
 		WorkflowMetrics.selectDateRange(
 			completionVelocityDateRange = "Custom Range",
+			dateRange = "Last 30 Days",
 			endDateRange = "11/11/2018",
-			startDateRange = "09/22/2018");
+			startDateRange = "09/22/2018",
+			title = "Completion Velocity");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",

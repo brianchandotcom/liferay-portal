@@ -803,7 +803,10 @@ definition {
 		var key_endDateRange = "${endDateRange}";
 		var key_startDateRange = "${startDateRange}";
 
-		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN");
+		Click(
+			key_dateRange = "${dateRange}",
+			key_title = "${title}",
+			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
 
@@ -1251,6 +1254,12 @@ definition {
 		for (var key_workflowFilterValue : list "${isFilterOptionPresent}") {
 			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
 		}
+	}
+
+	macro viewDateRangeErrorMessage {
+		var key_errorMessage = "${errorMessage}";
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#ERROR_MESSAGE_CUSTOM_RANGE");
 	}
 
 	macro viewItemFilterByOnAllItemsPage {

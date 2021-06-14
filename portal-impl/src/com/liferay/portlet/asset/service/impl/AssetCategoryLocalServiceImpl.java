@@ -735,15 +735,6 @@ public class AssetCategoryLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(
-				"Asset category name cannot be null for key {categoryId=");
-			sb.append(categoryId);
-			sb.append(", vocabularyId=");
-			sb.append(vocabularyId);
-			sb.append("}");
-
 			throw new AssetCategoryNameException(
 				StringBundler.concat(
 					"Category name cannot be null for category ", categoryId,

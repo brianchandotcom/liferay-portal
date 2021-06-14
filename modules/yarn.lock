@@ -1536,10 +1536,10 @@
   resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-4.3.1.tgz#35cde6128f6e2795b7e45378e8f115f596b6cdda"
   integrity sha512-95i+LRK3gPTiBc75lJsr9OwRNFdzaamSe3B5x+kHLHYr78qS/4WD5mkDJ+WYv3CY0jFFnROTNLl3x6zCRuDMxw==
 
-"@liferay/eslint-config@24.0.1":
-  version "24.0.1"
-  resolved "https://registry.yarnpkg.com/@liferay/eslint-config/-/eslint-config-24.0.1.tgz#2ec949a4a0ce31fca79a416ad1b53d3e44641034"
-  integrity sha512-zT6hUDsDDiOJ9XqEmFvPaKBiafV8eQZMBc3o+htFiMHM101tQZL7vMpTfAQYupbWl7otlkNAKnBL4NYAxXZrhA==
+"@liferay/eslint-config@25.0.1":
+  version "25.0.1"
+  resolved "https://registry.yarnpkg.com/@liferay/eslint-config/-/eslint-config-25.0.1.tgz#b1ce8cdfe9816a76796b3536811239e17e12563d"
+  integrity sha512-8GQdxVAjv/CyKVWmerbCvlGMo96q4eX8LP12MgnXLQLxi+L/fgugCqriL3Mx+LoMsM28rY7OVpVzJAzd5Fvn/A==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.19.0"
     "@typescript-eslint/parser" "4.19.0"
@@ -1606,10 +1606,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@45.0.0":
-  version "45.0.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-45.0.0.tgz#17589f2b0b60acc455b988da1b11f707f8fb7e1d"
-  integrity sha512-2Sptt4789rfal1YVawuAhxuFTFfA4WteUBklPm+TGswPjCZkVyOVqYXD0nBjT1BReroH7RUho93LMXrLhh6dbQ==
+"@liferay/npm-scripts@46.0.1":
+  version "46.0.1"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-46.0.1.tgz#447a5decc81ddb486e860dd324e37e2ac7d0a575"
+  integrity sha512-3HJXJiOExKS71krNNzbtLJvR8phf+mH9gSK+jUZHOaj6tIjWCZCK9da5LN2w2tw1aXudjjv878pjH1zLwBLCnA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1621,7 +1621,7 @@
     "@babel/preset-env" "^7.4.2"
     "@babel/preset-react" "^7.8.3"
     "@babel/preset-typescript" "^7.10.4"
-    "@liferay/eslint-config" "24.0.1"
+    "@liferay/eslint-config" "25.0.1"
     "@liferay/jest-junit-reporter" "1.2.0"
     "@liferay/js-toolkit-core" "3.0.1"
     "@testing-library/dom" "^5.6.1"
@@ -2379,10 +2379,10 @@ alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.12.0.tgz#8ff149be5984fecfbf00a9bd64d05ebb92fbe5bf"
-  integrity sha512-8Zjeo95j7zpjc+H44ZH5i5XZUDCLPe+YogVoa7IQwfwE2ulotmnBadcHVZa3gufLp1u7xFWNHtMRySf/Y/przw==
+alloyeditor@2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.14.0.tgz#93627e77bfb8db5553b097147ccc6c4d0f5ef4d9"
+  integrity sha512-nyEbDHCbNIEMZjUTcqCAeKzHgCLEwlKFIrPJJAv0V7bFxGdMTvzRYnXPz3+gTSuX1ckfTiTNd6HGK2VpnGtnAA==
   dependencies:
     clay-css "^2.11.1"
     prop-types "^15.6.2"
@@ -9541,10 +9541,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-ckeditor@4.16.0-liferay.2:
-  version "4.16.0-liferay.2"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.16.0-liferay.2.tgz#faafc1b5c51aab5c76356e7c7b9d0875afbaff92"
-  integrity sha512-7tW6GgNM42D4cdMOdmm79I2QKLSM4Efkc2bP7GB/WaJ90EyOno31WP+jifHyxKpsmWPupwU1S6cPn4k+Rsyudg==
+liferay-ckeditor@4.16.1-liferay.1:
+  version "4.16.1-liferay.1"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.16.1-liferay.1.tgz#f359a29f47b71bd3736a27f0bd5ec8e7c5539da6"
+  integrity sha512-HwK8xdKSjWVP9acsP+qIOzPRlcSQA3Pj7EPTK7AwdMQmPzZBUghimyoQtiiXXyJwOWwe5yiGrE4lmvfhiy/5xw==
 
 liferay-font-awesome@3.4.0:
   version "3.4.0"
@@ -9684,10 +9684,10 @@ liferay-npm-bundler@2.24.2:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-theme-tasks@10.3.0:
-  version "10.3.0"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-10.3.0.tgz#4436d52ea80ba459fabfdeaa54e95c58fda431d2"
-  integrity sha512-Qc+Ysb1IDRv4fxiZ28hRpZU0ExPSAMlJDT4fhbO80gRXcpWWwB80NTxfwfbvxFm7jQSRqWJf+qtHP4p2+4lhew==
+liferay-theme-tasks@10.4.0:
+  version "10.4.0"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-10.4.0.tgz#fd11d46342d878d2ed04cd83bb07773c35b30f11"
+  integrity sha512-6b8w18bM2akqb6dPaThVb613Ba/dI9nM9WCnBTMFfATtLBVuf0cod8XGv8j73f5TEYgzR1DeJJ+ApxYZug5rfg==
   dependencies:
     ansi-colors "^4.1.1"
     async "^2.6.1"

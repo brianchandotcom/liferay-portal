@@ -1,5 +1,4 @@
-#wrapper,
-.control-menu-container {
+#wrapper {
 	@include media-breakpoint-up(sm) {
 		body.sidenav-transition & {
 			@include transition(padding 0.5s ease);
@@ -18,7 +17,12 @@
 
 .lfr-admin-panel {
 	&.sidenav-menu-slider {
+		top: $has-control-menu-margin-top-desktop;
 		z-index: $admin-panel-zindex;
+
+		@include media-breakpoint-down(sm) {
+			top: $has-control-menu-margin-top-mobile;
+		}
 
 		.product-menu {
 			width: $admin-panel-width;

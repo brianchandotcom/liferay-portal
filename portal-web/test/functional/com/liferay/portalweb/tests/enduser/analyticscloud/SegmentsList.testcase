@@ -1,0 +1,86 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+    @description = "Create a dynamic segment with individuals"
+	@priority = "5"
+	test CanSearchField {
+        JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+        User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+        ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+        ACSegments.addStaticMember(tableMember = "Test Test");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+        ACSegments.createStaticSegment();
+
+        ACSegments.nameSegment(segmentName = "Static Segment Test 2");
+
+        ACSegments.addStaticMember(tableMember = "userfn userln");
+
+        ACSegments.saveSegment();
+
+        ACNavigation.goToSegments();
+
+        ACSegments.viewSegmentName(searchTerm = "Static Segment Test");
+
+        ACSegments.viewSegmentName(searchTerm = "Static Segment Test 2");
+
+        ACSegments.deleteSegment(searchTerm = "Static Segment Test");
+
+        ACSegments.deleteSegment(searchTerm = "Static Segment Test 2");
+	}
+
+}

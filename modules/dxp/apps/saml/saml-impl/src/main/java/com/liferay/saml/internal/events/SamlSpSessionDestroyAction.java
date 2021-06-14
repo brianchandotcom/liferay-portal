@@ -84,17 +84,21 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 			return;
 		}
 
+		SamlSpSession samlSpSession =
+			_samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(
+				session.getId());
+
+		if (samlSpSession == null) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"HTTP session expiring SAML SP session " +
+					samlSpSession.getSamlSpSessionKey());
+		}
+
 		try {
-			SamlSpSession samlSpSession =
-				_samlSpSessionLocalService.getSamlSpSessionByJSessionId(
-					session.getId());
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"HTTP session expiring SAML SP session " +
-						samlSpSession.getSamlSpSessionKey());
-			}
-
 			_samlSpSessionLocalService.deleteSamlSpSession(
 				samlSpSession.getSamlSpSessionId());
 		}

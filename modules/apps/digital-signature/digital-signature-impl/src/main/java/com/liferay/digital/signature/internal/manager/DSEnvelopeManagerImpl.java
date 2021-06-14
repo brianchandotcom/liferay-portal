@@ -110,11 +110,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		long companyId, long groupId, String fromDateString, String keywords,
 		String order, Pagination pagination, String status) {
 
-		if (Pattern.matches(
-				"[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}" +
-					"\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
-				keywords)) {
-
+		if (Pattern.matches(_UUID_PATTERN, keywords)) {
 			DSEnvelope dsEnvelope = getDSEnvelope(companyId, groupId, keywords);
 
 			if (Validator.isNull(dsEnvelope.getDSEnvelopeId())) {
@@ -132,7 +128,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			"&include=custom_fields,documents,recipients&order=", order);
 
 		if (!Validator.isBlank(keywords)) {
-			location = "&search_text=" + keywords;
+			location += "&search_text=" + keywords;
 		}
 
 		if (!Validator.isBlank(status)) {
@@ -248,6 +244,10 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			return null;
 		}
 	}
+
+	private static final String _UUID_PATTERN =
+		"[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}" +
+			"\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DSEnvelopeManagerImpl.class);

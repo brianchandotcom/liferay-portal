@@ -320,6 +320,23 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			categoryId, parentCategoryId, vocabularyId, serviceContext);
 	}
 
+	public void setCategoryDisplayPageTemplate(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] categoryIds = ParamUtil.getLongValues(
+			actionRequest, "categoryIds");
+
+		for (long categoryId : categoryIds) {
+			_assetDisplayPageEntryFormProcessor.process(
+				AssetCategory.class.getName(), categoryId, actionRequest);
+		}
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

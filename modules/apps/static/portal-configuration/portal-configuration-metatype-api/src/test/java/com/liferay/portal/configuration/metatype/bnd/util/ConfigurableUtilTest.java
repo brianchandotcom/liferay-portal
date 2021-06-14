@@ -196,6 +196,16 @@ public class ConfigurableUtilTest {
 			"testReqiredString3");
 	}
 
+	@Test
+	public void testSyntheticMethod() {
+		TestSyntheticMethodConfiguration testSyntheticMethodConfiguration =
+			ConfigurableUtil.createConfigurable(
+				TestSyntheticMethodConfiguration.class, Collections.emptyMap());
+
+		Assert.assertEquals(
+			"test_string", testSyntheticMethodConfiguration.testString());
+	}
+
 	@Aspect
 	public static class ConfigurableUtilAdvice {
 
@@ -340,6 +350,16 @@ public class ConfigurableUtilTest {
 	private enum TestEnum {
 
 		TEST_VALUE
+
+	}
+
+	private interface TestSyntheticMethodConfiguration {
+
+		@Meta.AD(deflt = "test_string", required = false)
+		public String testString();
+
+		public Runnable runnable = () -> {
+		};
 
 	}
 

@@ -1,0 +1,18 @@
+.taglib-vertical-card {
+	.vertical-card-container {
+		background-color: #f1f5fa;
+	}
+
+	.icon-vertical-card-image {
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+
+		.lexicon-icon {
+			height: 80px;
+			opacity: 0.2;
+			width: 80px;
+		}
+	}
+}

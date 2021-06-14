@@ -29,3 +29,7 @@ RowChecker rowChecker = (RowChecker)request.getAttribute("liferay-frontend:card:
 boolean showCheckbox = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:showCheckbox"));
 String url = (String)request.getAttribute("liferay-frontend:card:url");
 %>
+
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/card.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>

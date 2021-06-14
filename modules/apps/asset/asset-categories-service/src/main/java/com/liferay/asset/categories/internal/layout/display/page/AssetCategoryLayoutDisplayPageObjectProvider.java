@@ -77,7 +77,7 @@ public class AssetCategoryLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		return null;
+		return String.valueOf(_assetCategory.getCategoryId());
 	}
 
 	private final AssetCategory _assetCategory;

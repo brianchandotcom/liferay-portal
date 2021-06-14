@@ -162,6 +162,84 @@ public class ObjectDefinitionGraphQLTest {
 	}
 
 	@Test
+	public void testGetListObjectEntryFilterByObjectFieldUsingContains()
+		throws Exception {
+
+		String key = TextFormatter.formatPlural(
+			StringUtil.lowerCaseFirstLetter(_objectDefinitionName));
+
+		JSONObject jsonObject = _invoke(
+			new GraphQLField(
+				"query",
+				new GraphQLField(
+					key,
+					HashMapBuilder.<String, Object>put(
+						"filter",
+						"\"contains(" + _objectFieldName +
+							",'peter@liferay.com')\""
+					).build(),
+					new GraphQLField(
+						"items", new GraphQLField(_objectFieldName)))));
+
+		Assert.assertEquals(
+			"peter@liferay.com",
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/" + key,
+				"Object/items", "Object/0", "Object/" + _objectFieldName));
+	}
+
+	@Test
+	public void testGetListObjectEntryFilterByObjectFieldUsingEquals()
+		throws Exception {
+
+		String key = TextFormatter.formatPlural(
+			StringUtil.lowerCaseFirstLetter(_objectDefinitionName));
+
+		JSONObject jsonObject = _invoke(
+			new GraphQLField(
+				"query",
+				new GraphQLField(
+					key,
+					HashMapBuilder.<String, Object>put(
+						"filter",
+						"\"" + _objectFieldName + " eq 'peter@liferay.com'\""
+					).build(),
+					new GraphQLField(
+						"items", new GraphQLField(_objectFieldName)))));
+
+		Assert.assertEquals(
+			"peter@liferay.com",
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data", "JSONObject/" + key,
+				"Object/items", "Object/0", "Object/" + _objectFieldName));
+	}
+
+	@Test
+	public void testGetListObjectEntryFilterByObjectFieldUsingNotEquals()
+		throws Exception {
+
+		String key = TextFormatter.formatPlural(
+			StringUtil.lowerCaseFirstLetter(_objectDefinitionName));
+
+		JSONObject jsonObject = _invoke(
+			new GraphQLField(
+				"query",
+				new GraphQLField(
+					key,
+					HashMapBuilder.<String, Object>put(
+						"filter",
+						"\"" + _objectFieldName + " ne 'peter@liferay.com'\""
+					).build(),
+					new GraphQLField("totalCount"))));
+
+		Assert.assertEquals(
+			0,
+			JSONUtil.getValueAsInt(
+				jsonObject, "JSONObject/data", "JSONObject/" + key,
+				"Object/totalCount"));
+	}
+
+	@Test
 	public void testGetObjectEntry() throws Exception {
 		String key = StringUtil.lowerCaseFirstLetter(_objectDefinitionName);
 
@@ -242,6 +320,8 @@ public class ObjectDefinitionGraphQLTest {
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
+		objectField.setIndexed(true);
+		objectField.setIndexedAsKeyword(true);
 		objectField.setName(name);
 		objectField.setType(type);
 

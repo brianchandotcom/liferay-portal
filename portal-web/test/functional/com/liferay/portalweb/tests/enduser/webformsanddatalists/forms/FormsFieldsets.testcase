@@ -1157,14 +1157,92 @@ definition {
 	}
 
 	@description = "Verify that a Field with the Autocomplete Property persists after being added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveTheAutoCompleteProperty {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133464 PreserveTheAutoCompleteProperty pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormViewBuilder.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		Form.gotoAutocompleteTab();
+
+		Form.enableAutocompleteConfiguration();
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Manually");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Text");
+
+		Form.gotoAutocompleteTab();
+
+		FormFields.viewSwitcherChecked(fieldName = "Autocomplete");
+
+		FormFields.viewRadioValue(
+			fieldName = "dataSourceType",
+			fieldValue = "Manually");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Option 2",
+			rowNumber = "2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Option",
+			key_fieldLabel = "Text");
+
+		FormFields.selectAutoCompleteOption(autocompleteOption = "Option 1");
 	}
 
 	@description = "Verify that the Help Text property persists after being added to a Form via Fieldset"

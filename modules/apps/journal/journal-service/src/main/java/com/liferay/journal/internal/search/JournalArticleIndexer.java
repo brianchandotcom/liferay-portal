@@ -188,10 +188,10 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 			Locale locale = searchContext.getLocale();
 
-			if (ArrayUtil.isNotEmpty(searchContext.getGroupIds())) {
-				long groupId = searchContext.getGroupIds()[0];
+			long[] groupIds = searchContext.getGroupIds();
 
-				locale = _portal.getSiteDefaultLocale(groupId);
+			if (ArrayUtil.isNotEmpty(groupIds)) {
+				locale = _portal.getSiteDefaultLocale(groupIds[0]);
 			}
 
 			QueryFilter queryFilter = _ddmIndexer.createFieldValueQueryFilter(

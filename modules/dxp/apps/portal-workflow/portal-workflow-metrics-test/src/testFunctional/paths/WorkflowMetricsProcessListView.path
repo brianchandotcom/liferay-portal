@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEMS_PER_PAGE_SELECT</td>
+	<td>//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_RESULTS</td>
+	<td>//div[@class='pagination-results']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON</td>
 	<td>//button[contains(@class, 'page-link') and contains(@aria-label,'Next')]</td>
 	<td></td>

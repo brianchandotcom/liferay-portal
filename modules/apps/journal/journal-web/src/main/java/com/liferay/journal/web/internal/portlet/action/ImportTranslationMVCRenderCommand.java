@@ -15,10 +15,12 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemWorkflowProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.display.context.ImportTranslationDisplayContext;
 import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.trash.TrashHelper;
@@ -49,10 +51,16 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			InfoItemWorkflowProvider<Object> infoItemWorkflowProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemWorkflowProvider.class,
+					JournalArticle.class.getName());
+
 			renderRequest.setAttribute(
 				ImportTranslationDisplayContext.class.getName(),
 				new ImportTranslationDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
+					infoItemWorkflowProvider,
 					JournalDisplayContext.create(
 						_portal.getHttpServletRequest(renderRequest),
 						_portal.getLiferayPortletRequest(renderRequest),
@@ -63,14 +71,18 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 									getName()),
 						(TrashHelper)renderRequest.getAttribute(
 							TrashWebKeys.TRASH_HELPER)),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					_portal.getLiferayPortletResponse(renderResponse),
+					ActionUtil.getArticle(renderRequest)));
 
 			return "/import_translation.jsp";
 		}
-		catch (PortalException portalException) {
-			throw new PortletException(portalException);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;

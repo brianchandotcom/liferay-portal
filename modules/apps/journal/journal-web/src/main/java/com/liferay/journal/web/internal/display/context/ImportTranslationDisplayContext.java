@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.info.item.provider.InfoItemWorkflowProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.PortletURL;
 
@@ -33,18 +35,16 @@ public class ImportTranslationDisplayContext {
 
 	public ImportTranslationDisplayContext(
 			HttpServletRequest httpServletRequest,
+			InfoItemWorkflowProvider<Object> infoItemWorkflowProvider,
 			JournalDisplayContext journalDisplayContext,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletResponse liferayPortletResponse, Object model)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
+		_infoItemWorkflowProvider = infoItemWorkflowProvider;
 		_journalDisplayContext = journalDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		_journalEditArticleDisplayContext =
-			new JournalEditArticleDisplayContext(
-				httpServletRequest, liferayPortletResponse,
-				journalDisplayContext.getArticle());
+		_model = model;
 	}
 
 	public PortletURL getImportTranslationURL() throws PortalException {
@@ -62,7 +62,13 @@ public class ImportTranslationDisplayContext {
 	}
 
 	public String getPublishButtonLabel() throws PortalException {
-		return _journalEditArticleDisplayContext.getPublishButtonLabel();
+		if ((_infoItemWorkflowProvider == null) ||
+			!_infoItemWorkflowProvider.isWorkflowEnabled(_model)) {
+
+			return "publish";
+		}
+
+		return "submit-for-publication";
 	}
 
 	public String getRedirect() {
@@ -76,7 +82,21 @@ public class ImportTranslationDisplayContext {
 	}
 
 	public String getSaveButtonLabel() {
-		return _journalEditArticleDisplayContext.getSaveButtonLabel();
+		if (_infoItemWorkflowProvider == null) {
+			return "save";
+		}
+
+		int status = _infoItemWorkflowProvider.getStatus(_model);
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) ||
+			(status == WorkflowConstants.STATUS_DRAFT) ||
+			(status == WorkflowConstants.STATUS_EXPIRED) ||
+			(status == WorkflowConstants.STATUS_SCHEDULED)) {
+
+			return "save-as-draft";
+		}
+
+		return "save";
 	}
 
 	public String getTitle() throws PortalException {
@@ -86,7 +106,19 @@ public class ImportTranslationDisplayContext {
 	}
 
 	public boolean isPending() throws PortalException {
-		return _journalEditArticleDisplayContext.isPending();
+		if ((_infoItemWorkflowProvider == null) ||
+			!_infoItemWorkflowProvider.isWorkflowEnabled(_model)) {
+
+			return false;
+		}
+
+		if (_infoItemWorkflowProvider.getStatus(_model) ==
+				WorkflowConstants.STATUS_PENDING) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private long _getClassNameId() {
@@ -106,10 +138,10 @@ public class ImportTranslationDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemWorkflowProvider<Object> _infoItemWorkflowProvider;
 	private final JournalDisplayContext _journalDisplayContext;
-	private final JournalEditArticleDisplayContext
-		_journalEditArticleDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final Object _model;
 	private String _redirect;
 
 }

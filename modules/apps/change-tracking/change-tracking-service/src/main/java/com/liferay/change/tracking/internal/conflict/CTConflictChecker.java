@@ -441,6 +441,11 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			connection, ctPersistence, CTColumnResolutionType.IGNORE,
 			selectSQL);
 
+		resolvedPrimaryKeys.addAll(
+			_getModifiedPrimaryKeys(
+				connection, ctPersistence, CTColumnResolutionType.MAX,
+				selectSQL));
+
 		for (Long resolvedPrimaryKey : resolvedPrimaryKeys) {
 			conflictInfos.add(
 				new ModificationConflictInfo(resolvedPrimaryKey, true));
@@ -691,6 +696,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Set<String> ignoredColumnNames = ctPersistence.getCTColumnNames(
 			CTColumnResolutionType.IGNORE);
 
+		Set<String> maxColumnNames = ctPersistence.getCTColumnNames(
+			CTColumnResolutionType.MAX);
+
 		for (String name : tableColumnsMap.keySet()) {
 			if (name.equals("ctCollectionId")) {
 				sb.append(_sourceCTCollectionId);
@@ -702,23 +710,54 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			else if (ignoredColumnNames.contains(name)) {
 				sb.append("t2.");
 			}
+			else if (maxColumnNames.contains(name)) {
+				sb.append("max(max.");
+			}
 			else {
 				sb.append("t1.");
 			}
 
 			sb.append(name);
+
+			if (maxColumnNames.contains(name)) {
+				sb.append(")");
+			}
+
 			sb.append(", ");
 		}
 
 		sb.setStringAt(" from ", sb.index() - 1);
 
-		sb.append(ctPersistence.getTableName());
-		sb.append(" t1, ");
-		sb.append(ctPersistence.getTableName());
-		sb.append(" t2 where t1.");
-		sb.append(primaryKeyName);
-		sb.append(" = t2.");
-		sb.append(primaryKeyName);
+		if (!maxColumnNames.isEmpty()) {
+			sb.append(ctPersistence.getTableName());
+			sb.append(" t2 inner join ");
+			sb.append(ctPersistence.getTableName());
+			sb.append(" t1 on t2.");
+			sb.append(primaryKeyName);
+			sb.append(" = t1.");
+			sb.append(primaryKeyName);
+			sb.append(" inner join ");
+			sb.append(ctPersistence.getTableName());
+			sb.append(" max on max.");
+			sb.append(primaryKeyName);
+			sb.append(" = t2.");
+			sb.append(primaryKeyName);
+			sb.append(" where max.ctCollectionId in (");
+			sb.append(_targetCTCollectionId);
+			sb.append(", ");
+			sb.append(tempCTCollectionId);
+			sb.append(") ");
+		}
+		else {
+			sb.append(ctPersistence.getTableName());
+			sb.append(" t1, ");
+			sb.append(ctPersistence.getTableName());
+			sb.append(" t2 where t1.");
+			sb.append(primaryKeyName);
+			sb.append(" = t2.");
+			sb.append(primaryKeyName);
+		}
+
 		sb.append(" and t1.ctCollectionId = ");
 		sb.append(tempCTCollectionId);
 		sb.append(" and t2.ctCollectionId = ");

@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.change.tracking;
  */
 public enum CTColumnResolutionType {
 
-	CONTROL, IGNORE, MERGE, PK, STRICT
+	CONTROL, IGNORE, MAX, MERGE, PK, STRICT
 
 }

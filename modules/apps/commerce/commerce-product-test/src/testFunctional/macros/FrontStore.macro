@@ -71,10 +71,12 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "${cartItemQuantity}");
 
-		AssertTextEquals.assertPartialText(
-			key_cartItemSKU = "${cartItemSKU}",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
-			value1 = "$ ${cartItemPriceValue}");
+		if (isSet(cartItemPriceValue)) {
+			AssertTextEquals.assertPartialText(
+				key_cartItemSKU = "${cartItemSKU}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+				value1 = "$ ${cartItemPriceValue}");
+		}
 
 		AssertElementPresent(
 			key_cartItemSKU = "${cartItemSKU}",

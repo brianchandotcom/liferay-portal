@@ -703,13 +703,180 @@ definition {
 	}
 
 	@description = "COMMERCE-6334. As a buyer, I want to be able to view bundled product details in the mini-cart(Name, SKU, Bundled Items, Quantity, List Price, Image)"
-	@ignore = "true"
 	@priority = "3"
 	test ViewMiniCartBundledProductDetails {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartBundledProductDetails";
 
-		// TODO COMMERCE-6334 ViewMiniCartBundledProductDetails pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
+
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "Option Description",
+			optionFieldType = "Select from List",
+			optionName = "Color");
+
+		Button.clickSave();
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Use in Faceted Navigation",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Required",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "SKU Contributor",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		CommerceEntry.addOptionValue(
+			valueName = "Black",
+			valuePosition = "");
+
+		Button.click(button = "Submit");
+
+		SelectFrameTop();
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Bundled Product",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		Type(
+			key_title = "Add Options",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "Color");
+
+		Button.click(button = "Select");
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "Color");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Select(
+			key_fieldLabel = "Price Type",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Static");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(
+			key_index = "Black",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Type(
+			key_fieldLabel = "Delta Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "60.00");
+
+		Type(
+			key_fieldLabel = "SKU",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "MIN55861");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		Click(locator1 = "Button#PLUS");
+
+		Click(
+			key_fieldName = "Add SKU",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = "SKU",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "BLACKSKU");
+
+		Click(locator1 = "Dropdown#TRIGGER");
+
+		Click(
+			key_fieldName = "Black",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Purchasable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Type(
+			key_fieldLabel = "Base Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10.0");
+
+		Button.click(button = "Publish");
+
+		Pause(locator1 = "1000");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "First Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Click(
+			key_productName = "bundled-product",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+
+		Click(
+			key_productName = "Bundled Product",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_BY_PRODUCT");
+
+		CommerceNavigator.gotoMiniCart();
+
+		FrontStore.viewMiniCartItem(
+			cartItemName = "Bundled Product",
+			cartItemOption = "black",
+			cartItemQuantity = "1",
+			cartItemSKU = "BLACKSKU");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_BUNDLED_ITEMS",
+			value1 = "1 × U-Joint");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+			value1 = "70.00");
+
+		AssertElementPresent(
+			key_imageName = "default",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_THUMBNAIL_STYLE");
 	}
 
 	@description = "COMMERCE-6332. As a buyer, I want to view cart item details in the mini-cart(Name, SKU, Quantity, Options(if present), List Price, Image) and I want to be able to view the number of different products I have in my cart"

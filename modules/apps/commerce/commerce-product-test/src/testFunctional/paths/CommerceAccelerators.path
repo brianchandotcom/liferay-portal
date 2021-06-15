@@ -392,6 +392,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_THUMBNAIL_STYLE</td>
+	<td>//div[@class='mini-cart-item-thumbnail' and contains(@style, '${key_imageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_BUNDLED_ITEMS</td>
+	<td>//div[@class='child-item']//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_INFO_EXTRA</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../div[@class='item-info-extra mt-3']/*</td>
 	<td></td>

@@ -616,14 +616,52 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Require) action can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test RequireRuleCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133810 RequireRuleCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Contains",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
+
+		FormFields.viewTextLabel(fieldLabel = "Indicates Required Fields");
 	}
 
 	@description = "Verify that a Rich Text Field can be previewed"

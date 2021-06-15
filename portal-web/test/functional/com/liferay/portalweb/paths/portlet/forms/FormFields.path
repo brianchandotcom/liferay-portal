@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_DISABLED</td>
+	<td>//label[text()='${key_fieldLabel}']//..//input[@disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREDEFINED_VALUE_INPUT</td>
 	<td>//input[contains(@name,'predefinedValue')]/..//input[@type!="hidden"]</td>
 	<td></td>

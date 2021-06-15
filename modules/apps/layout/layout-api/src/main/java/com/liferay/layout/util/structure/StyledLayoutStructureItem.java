@@ -129,20 +129,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		try {
-			Map<String, Object> defaultValues =
-				CommonStylesUtil.getDefaultStyleValues();
-
-			for (Map.Entry<String, Object> entry : defaultValues.entrySet()) {
-				if (!stylesJSONObject.has(entry.getKey())) {
-					stylesJSONObject.put(entry.getKey(), entry.getValue());
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get default style values", exception);
-		}
-
 		JSONObject jsonObject = JSONUtil.put("styles", stylesJSONObject);
 
 		for (ViewportSize viewportSize : ViewportSize.values()) {

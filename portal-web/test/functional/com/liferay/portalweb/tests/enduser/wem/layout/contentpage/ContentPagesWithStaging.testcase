@@ -806,4 +806,112 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-130482. View the custom CSS of content page in staging site"
+	@priority = "4"
+	test ViewCustomCSSOfContentPageInStagingSite {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Content Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Navigate to the content page in the staging site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Select Define specific look and feel under Theme tab") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Theme.configureLookAndFeelSpecificLook();
+		}
+
+		task ("Add the custom CSS under the box and save") {
+			Theme.configureLookAndFeelCustomCSS(cssText = '''div.component-paragraph {background-color: red; color:white;}''');
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+		}
+
+		task ("Add a Paragraph fragment to the content page and publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Open View content page in new site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("View the Text Color of Paragraph") {
+			AssertCssValue(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				locator2 = "color",
+				value1 = "rgba(255, 255, 255, 1)");
+		}
+
+		task ("View the Background Color of Paragraph") {
+			AssertCssValue(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				locator2 = "background-color",
+				value1 = "rgba(255, 0, 0, 1)");
+		}
+
+		task ("Navigate to the content page in the staging site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Navigate to Look and Feel ") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+		}
+
+		task ("Add the custom CSS under the box and save") {
+			Theme.configureLookAndFeelCustomCSS(cssText = '''div.component-paragraph {background-color: blue; color:black;}''');
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Open View content page in new site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("View the Text Color of Paragraph") {
+			AssertCssValue(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				locator2 = "color",
+				value1 = "rgba(0, 0, 0, 1)");
+		}
+
+		task ("View the Background Color of Paragraph") {
+			AssertCssValue(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				locator2 = "background-color",
+				value1 = "rgba(0, 0, 255, 1)");
+		}
+	}
+
 }

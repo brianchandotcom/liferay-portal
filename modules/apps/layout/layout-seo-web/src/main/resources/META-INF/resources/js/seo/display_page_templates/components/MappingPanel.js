@@ -50,6 +50,17 @@ function MappingPanel({
 
 		setFieldValue(field.key);
 
+		if (!ffMetadataTemplateEnabled) {
+			onSelect({
+				field,
+				source,
+			});
+		}
+	};
+
+	const handleOnSelect = () => {
+		const field = fields.find(({key}) => key === fieldValue);
+
 		onSelect({
 			field,
 			source,
@@ -100,6 +111,15 @@ function MappingPanel({
 								value={fieldValue}
 							/>
 						</ClayForm.Group>
+						{ffMetadataTemplateEnabled && (
+							<ClayButton
+								block
+								displayType="primary"
+								onClick={handleOnSelect}
+							>
+								{Liferay.Language.get('map-content')}
+							</ClayButton>
+						)}
 					</div>
 				</div>
 			)}

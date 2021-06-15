@@ -16,7 +16,12 @@ import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import React from 'react';
 
-const FileEntryList = ({errors, fileEntries = [], setFieldValue}) => {
+const FileEntryList = ({
+	errors,
+	fileEntries = [],
+	setFieldValue,
+	showRemoveButton,
+}) => {
 	const hasError = (fileEntryId) => {
 		if (errors) {
 			return !!errors.find((entry) => entry.fileEntryId === fileEntryId);
@@ -61,14 +66,16 @@ const FileEntryList = ({errors, fileEntries = [], setFieldValue}) => {
 							</ClayList.ItemTitle>
 						)}
 					</ClayList.ItemField>
-					<ClayList.ItemField>
-						<ClayList.QuickActionMenu>
-							<ClayList.QuickActionMenu.Item
-								onClick={() => onRemoveFileEntry(index)}
-								symbol="trash"
-							/>
-						</ClayList.QuickActionMenu>
-					</ClayList.ItemField>
+					{showRemoveButton && (
+						<ClayList.ItemField>
+							<ClayList.QuickActionMenu>
+								<ClayList.QuickActionMenu.Item
+									onClick={() => onRemoveFileEntry(index)}
+									symbol="trash"
+								/>
+							</ClayList.QuickActionMenu>
+						</ClayList.ItemField>
+					)}
 				</ClayList.Item>
 			))}
 		</ClayList>

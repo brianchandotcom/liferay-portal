@@ -92,6 +92,9 @@ const DigitalSignatureFormBase = ({
 				errors={errors.fileEntries}
 				fileEntries={values.fileEntries}
 				setFieldValue={setFieldValue}
+				showRemoveButton={
+					showDocumentLibraryInput || values.fileEntries.length > 1
+				}
 			/>
 
 			{values.recipients.map((recipient, index) => (

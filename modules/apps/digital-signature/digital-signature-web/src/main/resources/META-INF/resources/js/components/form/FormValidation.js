@@ -19,10 +19,14 @@ const required = (value) => {
 };
 
 const withInvalidExtensions = (fileEntries, availableExtensions) => {
-	const fileEntriesError = fileEntries.filter(({title}) =>
-		availableExtensions.every(
-			(availableExtension) => !title.endsWith(availableExtension)
-		)
+	const fileEntriesError = fileEntries.filter(({extension, title}) =>
+		availableExtensions.every((availableExtension) => {
+			if (extension) {
+				return extension !== availableExtension;
+			}
+
+			return !title.endsWith(availableExtension);
+		})
 	);
 
 	if (fileEntriesError.length) {

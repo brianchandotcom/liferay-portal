@@ -110,6 +110,17 @@ const DigitalSignatureForm = ({
 		onGoBack();
 	};
 
+	const getInitialErrors = () => {
+		if (fileEntries.length) {
+			return {
+				fileEntries: withInvalidExtensions(
+					fileEntries,
+					allowedFileExtensions
+				),
+			};
+		}
+	};
+
 	const onValidate = (values) => {
 		let errorList = {};
 
@@ -157,6 +168,7 @@ const DigitalSignatureForm = ({
 		setFieldValue,
 		values,
 	} = useFormik({
+		initialErrors: getInitialErrors(),
 		initialValues: {
 			emailMessage: '',
 			emailSubject: '',

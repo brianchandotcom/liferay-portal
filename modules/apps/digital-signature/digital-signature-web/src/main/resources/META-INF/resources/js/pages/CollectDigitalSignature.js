@@ -17,21 +17,10 @@ import React from 'react';
 import {AppContextProvider} from '../AppContext';
 import DigitalSignatureForm from '../components/digital-signature-form/DigitalSignatureForm';
 
-const CollectDigitalSignature = ({baseResourceURL, portletNamespace}) => {
-	const urlSearchParams = new URLSearchParams(window.location.search);
-
-	const fileEntryIds = urlSearchParams
-		.get(`${portletNamespace}fileEntryId`)
-		.split(',');
-
-	return (
-		<AppContextProvider
-			baseResourceURL={baseResourceURL}
-			portletNamespace={portletNamespace}
-		>
-			<DigitalSignatureForm fileEntryIds={fileEntryIds} />
-		</AppContextProvider>
-	);
-};
+const CollectDigitalSignature = ({fileEntries, ...otherProps}) => (
+	<AppContextProvider {...otherProps}>
+		<DigitalSignatureForm fileEntries={fileEntries} />
+	</AppContextProvider>
+);
 
 export default CollectDigitalSignature;

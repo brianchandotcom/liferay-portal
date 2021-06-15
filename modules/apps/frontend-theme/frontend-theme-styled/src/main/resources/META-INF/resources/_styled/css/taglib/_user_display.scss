@@ -1,19 +1,69 @@
 .taglib-user-display {
-	a .user-name {
-		text-decoration: underline;
-	}
+	padding: 0.5em;
 
 	.avatar {
 		background: no-repeat center;
 		background-size: 60px;
+		display: block;
+		height: 60px;
+		margin: 0 auto;
+		width: 60px;
 
 		&.author:after {
 			background: transparentize(#32a8e6, 0.5);
+			border-radius: 50%;
+			content: '';
+			display: block;
+			height: 100%;
+			width: 100%;
 		}
+	}
+
+	.user-details {
+		margin-top: 1em;
 	}
 
 	.user-name {
 		font-size: 1.1em;
 		font-weight: bold;
+	}
+
+	a .user-name {
+		text-decoration: underline;
+	}
+
+	&.display-style-1 {
+		.user-profile-image {
+			float: left;
+			margin-right: 24px;
+		}
+
+		.user-name {
+			display: inline-block;
+			margin-top: 10px;
+		}
+
+		.user-details {
+			margin-top: 0;
+		}
+	}
+
+	&.display-style-2 {
+		.user-profile-image,
+		.user-name {
+			clear: both;
+			display: block;
+			min-height: 20px;
+			text-align: center;
+		}
+	}
+
+	&.display-style-3 {
+		padding: 0;
+
+		.user-profile-image {
+			display: inline-block;
+			vertical-align: middle;
+		}
 	}
 }

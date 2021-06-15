@@ -20,6 +20,10 @@
 	position: fixed;
 }
 
+.dropdown-menu.ddm-select-dropdown.show {
+	position: fixed;
+}
+
 .dropdown-menu.dropdown-opened {
 	display: block;
 	min-width: 100%;

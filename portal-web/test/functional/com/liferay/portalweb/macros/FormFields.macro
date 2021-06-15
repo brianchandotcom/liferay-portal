@@ -1016,6 +1016,12 @@ definition {
 			value1 = "${fieldHelpText}");
 	}
 
+	macro viewFieldHidden {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#FIELD_HIDDEN");
+	}
+
 	macro viewFieldLabel {
 		var key_fieldName = "${fieldName}";
 

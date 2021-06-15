@@ -195,7 +195,7 @@ public class SegmentsContextVocabularyConfigurationDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
-			"/view_configuration_screen"
+			"/configuration_admin/view_configuration_screen"
 		).setParameter(
 			"configurationScreenKey",
 			"segments-context-vocabulary-configuration-name"

@@ -473,8 +473,9 @@ public class GraphQLServletExtender {
 
 					for (GraphQLType childGraphQLType2 : childrenGraphQLType2) {
 						if (StringUtil.equals(
-								childGraphQLType2.getName(),
-								childGraphQLType1.getName())) {
+								childGraphQLType1.getName(),
+								childGraphQLType2.getName()) &&
+							_equals(childGraphQLType1, childGraphQLType2)) {
 
 							found = true;
 

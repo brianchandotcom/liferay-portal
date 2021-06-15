@@ -186,9 +186,16 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
+			Locale locale = searchContext.getLocale();
+
+			if (ArrayUtil.isNotEmpty(searchContext.getGroupIds())) {
+				long groupId = searchContext.getGroupIds()[0];
+
+				locale = _portal.getSiteDefaultLocale(groupId);
+			}
+
 			QueryFilter queryFilter = _ddmIndexer.createFieldValueQueryFilter(
-				ddmStructureFieldName, ddmStructureFieldValue,
-				searchContext.getLocale());
+				ddmStructureFieldName, ddmStructureFieldValue, locale);
 
 			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}

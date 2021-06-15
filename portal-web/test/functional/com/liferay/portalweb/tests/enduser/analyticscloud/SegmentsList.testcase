@@ -31,7 +31,7 @@ definition {
 
 	@description = "Search for specific segment"
 	@priority = "5"
-	test CanSearchField {
+	test CanSearchForSegment {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

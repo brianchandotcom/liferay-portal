@@ -47,16 +47,19 @@ function Body({items, totalCount}) {
 	);
 }
 
-function Footer({processId, timeRange, totalCount}) {
+function Footer({processId, processVersion, timeRange, totalCount}) {
 	const {defaultDelta} = useContext(AppContext);
 	const filters = {};
 
 	const {dateEnd, dateStart, key} = timeRange;
+
 	if (dateEnd && dateStart && key) {
 		filters.dateEnd = dateEnd;
 		filters.dateStart = dateStart;
 		filters.timeRange = [key];
 	}
+
+	filters.processVersion = processVersion;
 
 	const viewAllStepsQuery = {filters};
 	const viewAllStepsUrl = `/performance/step/${processId}/${defaultDelta}/1/breachedInstancePercentage:desc`;

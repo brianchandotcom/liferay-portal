@@ -610,6 +610,10 @@ public interface WebKeys {
 	public static final String SERVLET_CONTEXT_INCLUDE_FILTER_THEME =
 		"SERVLET_CONTEXT_INCLUDE_FILTER_THEME";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SERVLET_MAPPING = "SERVLET_MAPPING";
 
 	public static final String SERVLET_PATH = "SERVLET_PATH";

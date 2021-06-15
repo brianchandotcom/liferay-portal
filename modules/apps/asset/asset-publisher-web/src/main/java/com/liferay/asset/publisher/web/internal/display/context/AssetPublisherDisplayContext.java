@@ -454,7 +454,7 @@ public class AssetPublisherDisplayContext {
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
 
 		configureSubtypeFieldFilter(
-			_assetEntryQuery, _themeDisplay.getLocale());
+			_assetEntryQuery, _themeDisplay.getSiteDefaultLocale());
 
 		_assetEntryQuery.setPaginationType(getPaginationType());
 

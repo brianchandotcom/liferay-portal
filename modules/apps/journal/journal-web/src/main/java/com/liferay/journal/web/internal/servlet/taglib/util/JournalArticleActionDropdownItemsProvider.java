@@ -526,7 +526,12 @@ public class JournalArticleActionDropdownItemsProvider {
 				).setRedirect(
 					_getRedirect()
 				).setParameter(
-					"articleId", _article.getArticleId()
+					"classNameId",
+					PortalUtil.getClassNameId(JournalArticle.class)
+				).setParameter(
+					"classPK", _article.getResourcePrimKey()
+				).setParameter(
+					"groupId", _article.getGroupId()
 				).setParameter(
 					"referringPortletResource", _getReferringPortletResource()
 				).build());

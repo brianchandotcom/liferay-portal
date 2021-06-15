@@ -85,7 +85,7 @@ public class PortletURLBuilderCheck extends BaseBuilderCheck {
 
 	@Override
 	protected List<String> getAvoidCastStringMethodNames() {
-		return ListUtil.fromArray("setParameter");
+		return ListUtil.fromArray("setParameter", "setRedirect");
 	}
 
 	@Override

@@ -2266,6 +2266,12 @@ definition {
 	}
 
 	macro viewCustomSiteSetting {
+		task ("Get the default site name") {
+			Navigator.openURL();
+
+			var siteName = selenium.getText("Home#SITE_NAME");
+		}
+
 		task ("Navigate to Site Settings admin in custom site") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
@@ -2294,7 +2300,7 @@ definition {
 			AssertTextEquals(
 				key_fieldFieldLabel = "Parent Site",
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${parentSiteName} (Open)");
+				value1 = "${siteName} (Open)");
 
 			Navigator.gotoBack();
 
@@ -2302,7 +2308,7 @@ definition {
 
 			Site.viewChildCP(
 				childSiteName = "Test Site Name",
-				siteName = "${parentSiteName}");
+				siteName = "${siteName}");
 		}
 
 		task ("View the site default language") {

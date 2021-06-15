@@ -32,12 +32,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 	rules = {
 		@DDMFormRule(
 			actions = {
-				"setValue('inputMask', FALSE)", "setVisible('inputMask', FALSE)"
-			},
-			condition = "equals(getValue('dataType'), 'double')"
-		),
-		@DDMFormRule(
-			actions = {
 				"setVisible('inputMask', TRUE)",
 				"setVisible('repeatable', TRUE)",
 				"setVisible('requireConfirmation', TRUE)",
@@ -59,6 +53,12 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setVisible('validation', FALSE)"
 			},
 			condition = "equals(getValue('hideField'), TRUE)"
+		),
+		@DDMFormRule(
+			actions = {
+				"setValue('inputMask', FALSE)", "setVisible('inputMask', FALSE)"
+			},
+			condition = "equals(getValue('dataType'), 'double')"
 		),
 		@DDMFormRule(
 			actions = {

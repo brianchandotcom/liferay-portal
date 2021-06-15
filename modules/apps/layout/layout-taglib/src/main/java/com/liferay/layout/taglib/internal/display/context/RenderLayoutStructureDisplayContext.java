@@ -632,9 +632,7 @@ public class RenderLayoutStructureDisplayContext {
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler styleSB = new StringBundler(60);
-
-		styleSB.append("box-sizing: border-box;");
+		StringBundler styleSB = new StringBundler(59);
 
 		if (Validator.isNotNull(
 				styledLayoutStructureItem.getBackgroundColor())) {

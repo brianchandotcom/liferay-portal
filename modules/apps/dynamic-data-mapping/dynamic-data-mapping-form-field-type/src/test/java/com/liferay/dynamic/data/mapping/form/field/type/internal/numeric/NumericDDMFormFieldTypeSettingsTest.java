@@ -188,22 +188,10 @@ public class NumericDDMFormFieldTypeSettingsTest
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
 		Assert.assertEquals(
-			"equals(getValue('dataType'), 'double')",
+			"equals(getValue('hideField'), FALSE)",
 			ddmFormRule0.getCondition());
 
 		List<String> actions = ddmFormRule0.getActions();
-
-		Assert.assertEquals(actions.toString(), 2, actions.size());
-		Assert.assertEquals("setValue('inputMask', FALSE)", actions.get(0));
-		Assert.assertEquals("setVisible('inputMask', FALSE)", actions.get(1));
-
-		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
-
-		Assert.assertEquals(
-			"equals(getValue('hideField'), FALSE)",
-			ddmFormRule1.getCondition());
-
-		actions = ddmFormRule1.getActions();
 
 		Assert.assertEquals(actions.toString(), 6, actions.size());
 		Assert.assertEquals("setVisible('inputMask', TRUE)", actions.get(0));
@@ -214,12 +202,12 @@ public class NumericDDMFormFieldTypeSettingsTest
 		Assert.assertEquals("setVisible('showLabel', TRUE)", actions.get(4));
 		Assert.assertEquals("setVisible('validation', TRUE)", actions.get(5));
 
-		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
+		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
 
 		Assert.assertEquals(
-			"equals(getValue('hideField'), TRUE)", ddmFormRule2.getCondition());
+			"equals(getValue('hideField'), TRUE)", ddmFormRule1.getCondition());
 
-		actions = ddmFormRule2.getActions();
+		actions = ddmFormRule1.getActions();
 
 		Assert.assertEquals(actions.toString(), 11, actions.size());
 		Assert.assertEquals("setValue('inputMask', FALSE)", actions.get(0));
@@ -235,6 +223,18 @@ public class NumericDDMFormFieldTypeSettingsTest
 		Assert.assertEquals("setVisible('required', FALSE)", actions.get(8));
 		Assert.assertEquals("setVisible('showLabel', FALSE)", actions.get(9));
 		Assert.assertEquals("setVisible('validation', FALSE)", actions.get(10));
+
+		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
+
+		Assert.assertEquals(
+			"equals(getValue('dataType'), 'double')",
+			ddmFormRule2.getCondition());
+
+		actions = ddmFormRule2.getActions();
+
+		Assert.assertEquals(actions.toString(), 2, actions.size());
+		Assert.assertEquals("setValue('inputMask', FALSE)", actions.get(0));
+		Assert.assertEquals("setVisible('inputMask', FALSE)", actions.get(1));
 
 		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
 

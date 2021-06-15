@@ -227,27 +227,10 @@ public class TextDDMFormFieldTypeSettingsTest
 		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
 
 		Assert.assertEquals(
-			"not(equals(getValue('displayStyle'), 'singleline'))",
+			"equals(getValue('hideField'), FALSE)",
 			ddmFormRule1.getCondition());
 
 		actions = ddmFormRule1.getActions();
-
-		Assert.assertEquals(actions.toString(), 4, actions.size());
-		Assert.assertEquals("setValue('autocomplete', FALSE)", actions.get(0));
-		Assert.assertEquals(
-			"setValue('requireConfirmation', FALSE)", actions.get(1));
-		Assert.assertEquals(
-			"setVisible('autocomplete', FALSE)", actions.get(2));
-		Assert.assertEquals(
-			"setVisible('requireConfirmation', FALSE)", actions.get(3));
-
-		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
-
-		Assert.assertEquals(
-			"equals(getValue('hideField'), FALSE)",
-			ddmFormRule2.getCondition());
-
-		actions = ddmFormRule2.getActions();
 
 		Assert.assertEquals(actions.toString(), 6, actions.size());
 		Assert.assertEquals("setVisible('autocomplete', TRUE)", actions.get(0));
@@ -258,12 +241,12 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertEquals("setVisible('showLabel', TRUE)", actions.get(4));
 		Assert.assertEquals("setVisible('validation', TRUE)", actions.get(5));
 
-		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
+		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
 
 		Assert.assertEquals(
-			"equals(getValue('hideField'), TRUE)", ddmFormRule3.getCondition());
+			"equals(getValue('hideField'), TRUE)", ddmFormRule2.getCondition());
 
-		actions = ddmFormRule3.getActions();
+		actions = ddmFormRule2.getActions();
 
 		Assert.assertEquals(actions.toString(), 11, actions.size());
 		Assert.assertEquals("setValue('autocomplete', FALSE)", actions.get(0));
@@ -280,6 +263,23 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertEquals("setVisible('required', FALSE)", actions.get(8));
 		Assert.assertEquals("setVisible('showLabel', FALSE)", actions.get(9));
 		Assert.assertEquals("setVisible('validation', FALSE)", actions.get(10));
+
+		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
+
+		Assert.assertEquals(
+			"not(equals(getValue('displayStyle'), 'singleline'))",
+			ddmFormRule3.getCondition());
+
+		actions = ddmFormRule3.getActions();
+
+		Assert.assertEquals(actions.toString(), 4, actions.size());
+		Assert.assertEquals("setValue('autocomplete', FALSE)", actions.get(0));
+		Assert.assertEquals(
+			"setValue('requireConfirmation', FALSE)", actions.get(1));
+		Assert.assertEquals(
+			"setVisible('autocomplete', FALSE)", actions.get(2));
+		Assert.assertEquals(
+			"setVisible('requireConfirmation', FALSE)", actions.get(3));
 
 		DDMFormRule ddmFormRule4 = ddmFormRules.get(4);
 

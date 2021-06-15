@@ -416,6 +416,13 @@ public class PortletURLBuilder {
 		}
 
 		@Override
+		public AfterRedirectStep setRedirect(Object value) {
+			_setParameter("redirect", String.valueOf(value), false);
+
+			return this;
+		}
+
+		@Override
 		public AfterRedirectStep setRedirect(String value) {
 			_setParameter("redirect", value, false);
 
@@ -751,6 +758,8 @@ public class PortletURLBuilder {
 	}
 
 	public interface RedirectStep {
+
+		public AfterRedirectStep setRedirect(Object value);
 
 		public AfterRedirectStep setRedirect(String value);
 

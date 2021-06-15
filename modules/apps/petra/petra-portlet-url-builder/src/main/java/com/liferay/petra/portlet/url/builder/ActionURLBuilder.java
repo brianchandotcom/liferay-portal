@@ -339,6 +339,13 @@ public class ActionURLBuilder {
 		}
 
 		@Override
+		public AfterRedirectStep setRedirect(Object value) {
+			_setParameter("redirect", String.valueOf(value), false);
+
+			return this;
+		}
+
+		@Override
 		public AfterRedirectStep setRedirect(String value) {
 			_setParameter("redirect", value, false);
 
@@ -802,6 +809,8 @@ public class ActionURLBuilder {
 	}
 
 	public interface RedirectStep {
+
+		public AfterRedirectStep setRedirect(Object value);
 
 		public AfterRedirectStep setRedirect(String value);
 

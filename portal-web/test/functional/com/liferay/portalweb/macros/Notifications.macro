@@ -204,6 +204,18 @@ definition {
 		}
 	}
 
+	macro viewNoPermissions {
+		Notifications.viewBadgeCount(notificationCount = "${notificationCount}");
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "${contentBody}");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Forbidden");
+	}
+
 	macro viewNoRequest {
 		AssertElementNotPresent(locator1 = "Button#CONFIRM");
 

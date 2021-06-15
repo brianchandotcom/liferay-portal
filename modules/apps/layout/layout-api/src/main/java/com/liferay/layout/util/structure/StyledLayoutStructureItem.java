@@ -185,7 +185,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public int getOpacity() {
-		return GetterUtil.getInteger(_getStyleProperty("opacity"));
+		return GetterUtil.getInteger(_getStyleProperty("opacity"), -1);
 	}
 
 	public String getOverflow() {

@@ -783,7 +783,7 @@ public class RenderLayoutStructureDisplayContext {
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
-		if (styledLayoutStructureItem.getOpacity() != -1L) {
+		if (styledLayoutStructureItem.getOpacity() != -1) {
 			styleSB.append("opacity: ");
 			styleSB.append(styledLayoutStructureItem.getOpacity() / 100.0);
 			styleSB.append(StringPool.SEMICOLON);

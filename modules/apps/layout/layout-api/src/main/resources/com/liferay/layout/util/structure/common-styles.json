@@ -852,7 +852,7 @@
 		"styles": [
 			{
 				"dataType": "number",
-				"defaultValue": 100,
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "opacity",

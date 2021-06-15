@@ -200,12 +200,9 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that the Clear All option cleans the search results"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ClearAllSearchResults {
-
-		// TODO LRQA-67508 ClearAllSearchResults pending implementation
-
+		WorkflowMetricsProcessListView.metricsWorkflowSearchClearAll(workflowSearchName = "Test");
 	}
 
 	@description = "LPS-88573 - Verify that the specific empty state is displayed when there are no metrics available"

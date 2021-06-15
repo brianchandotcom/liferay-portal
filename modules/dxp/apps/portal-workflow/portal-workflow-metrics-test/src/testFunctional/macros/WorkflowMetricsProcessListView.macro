@@ -45,4 +45,19 @@ definition {
 			value1 = "${results}");
 	}
 
+	macro metricsWorkflowSearchClearAll {
+		var key_workflowSearchName = "${workflowSearchName}";
+
+		Type(
+			key_fieldLabel = "Search for",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
+			value1 = "${workflowSearchName}");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+
+		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
+
+		AssertElementNotPresent(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
+	}
+
 }

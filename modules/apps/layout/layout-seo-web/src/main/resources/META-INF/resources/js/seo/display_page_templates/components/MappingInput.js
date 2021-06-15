@@ -47,7 +47,7 @@ function MappingInput({
 		? selectedSource.classTypeLabel || selectedSource.classNameLabel
 		: '';
 
-	const handleOnchange = ({field, source}) => {
+	const handleOnSelect = ({field, source}) => {
 		setSource(source);
 		setField(field);
 	};
@@ -79,7 +79,7 @@ function MappingInput({
 						fields={fields}
 						isActive={isActive}
 						name={name}
-						onChange={handleOnchange}
+						onSelect={handleOnSelect}
 						source={{
 							...source,
 							initialValue: inititalSourceLabel,

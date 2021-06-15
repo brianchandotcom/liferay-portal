@@ -32,21 +32,23 @@ function MappingPanel({
 	isActive = false,
 	name,
 	fields,
-	field,
+	field: initialField,
 	source,
-	onChange = noop,
+	onSelect = noop,
 }) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
+	const [fieldValue, setFieldValue] = useState(initialField.key);
 	const wrapperRef = useRef(null);
 
 	useOnClickOutside([wrapperRef.current], () => setIsPanelOpen(false));
 
 	const handleChangeField = (event) => {
 		const {value} = event.target;
-
 		const field = fields.find(({key}) => key === value);
 
-		onChange({
+		setFieldValue(field.key);
+
+		onSelect({
 			field,
 			source,
 		});
@@ -93,7 +95,7 @@ function MappingPanel({
 								id={`${name}_mappingSelectorFieldSelect`}
 								onChange={handleChangeField}
 								options={fields.map(normalizeField)}
-								value={field.key}
+								value={fieldValue}
 							/>
 						</ClayForm.Group>
 					</div>
@@ -116,6 +118,7 @@ MappingPanel.propTypes = {
 	).isRequired,
 	isActive: PropTypes.bool,
 	name: PropTypes.string.isRequired,
+	onSelect: PropTypes.func,
 	source: PropTypes.shape({
 		initialValue: PropTypes.string,
 	}).isRequired,

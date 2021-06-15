@@ -43,23 +43,17 @@ definition {
 
 	@priority = "5"
 	test AddAudioViaWebContent {
-		property custom.properties = "xuggler.enabled=true";
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddAudioViaWebContent";
 		property testray.component.names = "Training,Web Content Administration";
 
-		ServerAdministration.openServerAdmin();
+		task ("Enable the FFMPEG Audio Converter in System Settings") {
+			DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+			FormFields.enableCheckbox(fieldName = "enabled");
 
-		Portlet.shutdownServer();
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+			SystemSettings.saveConfiguration();
+		}
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

@@ -188,7 +188,11 @@ const FailingElement = ({element}) => {
 							key={index}
 						>
 							<span className="mr-1 text-secondary">{`${section.label}:`}</span>
-							<span className="font-weight-semi-bold">
+							<span
+								className="font-weight-semi-bold"
+								data-tooltip-align="bottom"
+								title={section.value}
+							>
 								{section.value}
 							</span>
 						</ClayList.ItemText>

@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+
 /**
  * @author Leonardo Barros
  */
@@ -21,6 +23,10 @@ public final class DDMStorageAdapterSaveRequest {
 
 	public String getClassName() {
 		return _className;
+	}
+
+	public DDMFormInstance getDDMFormInstance() {
+		return _ddmFormInstance;
 	}
 
 	public DDMFormValues getDDMFormValues() {
@@ -73,6 +79,12 @@ public final class DDMStorageAdapterSaveRequest {
 			return this;
 		}
 
+		public Builder withDDMFormInstance(DDMFormInstance ddmFormInstance) {
+			_ddmStorageAdapterSaveRequest._ddmFormInstance = ddmFormInstance;
+
+			return this;
+		}
+
 		public Builder withPrimaryKey(long primaryKey) {
 			_ddmStorageAdapterSaveRequest._primaryKey = primaryKey;
 
@@ -108,6 +120,7 @@ public final class DDMStorageAdapterSaveRequest {
 	}
 
 	private String _className;
+	private DDMFormInstance _ddmFormInstance;
 	private DDMFormValues _ddmFormValues;
 	private long _primaryKey;
 	private long _scopeGroupId;

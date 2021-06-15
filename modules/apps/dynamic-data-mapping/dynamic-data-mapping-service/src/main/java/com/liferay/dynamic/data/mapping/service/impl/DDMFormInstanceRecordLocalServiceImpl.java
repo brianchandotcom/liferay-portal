@@ -659,6 +659,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 					serviceContext.getUuid()
 				).withClassName(
 					DDMStorageLink.class.getName()
+				).withDDMFormInstance(
+					ddmFormInstance
 				).build());
 
 		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
@@ -913,6 +915,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				ddmFormInstance.getStructureId()
 			).withPrimaryKey(
 				ddmFormInstanceRecordVersion.getStorageId()
+			).withDDMFormInstance(
+				ddmFormInstance
 			).build());
 	}
 

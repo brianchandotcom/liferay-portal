@@ -208,7 +208,11 @@ export default function Header({
 							</strong>
 						</ClayManagementToolbar.Item>
 
-						<SLAStatusFilter />
+						<SLAStatusFilter
+							options={{
+								withSelectionTitle: false,
+							}}
+						/>
 
 						<ProcessStatusFilter />
 

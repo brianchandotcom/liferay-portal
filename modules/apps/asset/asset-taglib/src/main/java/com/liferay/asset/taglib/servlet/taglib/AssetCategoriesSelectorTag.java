@@ -377,6 +377,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 						PortalUtil.getClassNameId(_className), _classTypePK) &&
 					_showRequiredLabel
 				).put(
+					"singleSelect", !vocabulary.isMultiValued()
+				).put(
 					"selectedCategories", selectedCategoryIds
 				).put(
 					"title",
@@ -409,8 +411,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 				vocabulariesMap.put("selectedItems", selectedItems);
 			}
-
-			vocabulariesMap.put("singleSelect", !vocabulary.isMultiValued());
 
 			vocabulariesList.add(vocabulariesMap);
 		}

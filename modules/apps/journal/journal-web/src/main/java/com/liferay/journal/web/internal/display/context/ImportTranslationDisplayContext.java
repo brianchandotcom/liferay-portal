@@ -15,12 +15,10 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.info.item.provider.InfoItemWorkflowProvider;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -34,30 +32,33 @@ import javax.servlet.http.HttpServletRequest;
 public class ImportTranslationDisplayContext {
 
 	public ImportTranslationDisplayContext(
-			HttpServletRequest httpServletRequest,
-			InfoItemWorkflowProvider<Object> infoItemWorkflowProvider,
-			JournalDisplayContext journalDisplayContext,
-			LiferayPortletResponse liferayPortletResponse, Object model)
-		throws PortalException {
+		long classNameId, long classPK, long groupId,
+		HttpServletRequest httpServletRequest,
+		InfoItemWorkflowProvider<Object> infoItemWorkflowProvider,
+		LiferayPortletResponse liferayPortletResponse, Object model,
+		String title) {
 
+		_classNameId = classNameId;
+		_classPK = classPK;
+		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_infoItemWorkflowProvider = infoItemWorkflowProvider;
-		_journalDisplayContext = journalDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
 		_model = model;
+		_title = title;
 	}
 
-	public PortletURL getImportTranslationURL() throws PortalException {
+	public PortletURL getImportTranslationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			"/journal/import_translation"
 		).setParameter(
-			"classNameId", _getClassNameId()
+			"classNameId", _classNameId
 		).setParameter(
-			"classPK", _getClassPK()
+			"classPK", _classPK
 		).setParameter(
-			"groupId", _getGroupId()
+			"groupId", _groupId
 		).build();
 	}
 
@@ -100,9 +101,7 @@ public class ImportTranslationDisplayContext {
 	}
 
 	public String getTitle() throws PortalException {
-		JournalArticle article = _journalDisplayContext.getArticle();
-
-		return article.getTitle();
+		return _title;
 	}
 
 	public boolean isPending() throws PortalException {
@@ -121,27 +120,14 @@ public class ImportTranslationDisplayContext {
 		return false;
 	}
 
-	private long _getClassNameId() {
-		return PortalUtil.getClassNameId(JournalArticle.class.getName());
-	}
-
-	private long _getClassPK() throws PortalException {
-		JournalArticle article = _journalDisplayContext.getArticle();
-
-		return article.getResourcePrimKey();
-	}
-
-	private long _getGroupId() throws PortalException {
-		JournalArticle article = _journalDisplayContext.getArticle();
-
-		return article.getGroupId();
-	}
-
+	private final long _classNameId;
+	private final long _classPK;
+	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemWorkflowProvider<Object> _infoItemWorkflowProvider;
-	private final JournalDisplayContext _journalDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Object _model;
 	private String _redirect;
+	private final String _title;
 
 }

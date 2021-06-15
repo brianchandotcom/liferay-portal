@@ -14,17 +14,13 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemWorkflowProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.display.context.ImportTranslationDisplayContext;
-import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.trash.TrashHelper;
-import com.liferay.trash.util.TrashWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -56,23 +52,17 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 					InfoItemWorkflowProvider.class,
 					JournalArticle.class.getName());
 
+			JournalArticle article = ActionUtil.getArticle(renderRequest);
+
 			renderRequest.setAttribute(
 				ImportTranslationDisplayContext.class.getName(),
 				new ImportTranslationDisplayContext(
+					_portal.getClassNameId(JournalArticle.class),
+					article.getResourcePrimKey(), article.getGroupId(),
 					_portal.getHttpServletRequest(renderRequest),
 					infoItemWorkflowProvider,
-					JournalDisplayContext.create(
-						_portal.getHttpServletRequest(renderRequest),
-						_portal.getLiferayPortletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse),
-						(AssetDisplayPageFriendlyURLProvider)
-							renderRequest.getAttribute(
-								AssetDisplayPageFriendlyURLProvider.class.
-									getName()),
-						(TrashHelper)renderRequest.getAttribute(
-							TrashWebKeys.TRASH_HELPER)),
-					_portal.getLiferayPortletResponse(renderResponse),
-					ActionUtil.getArticle(renderRequest)));
+					_portal.getLiferayPortletResponse(renderResponse), article,
+					article.getTitle()));
 
 			return "/import_translation.jsp";
 		}

@@ -58,6 +58,26 @@
     <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
     <td></td>
 </tr>
+<tr>
+	<td>ANY_ARROW_ORDER</td>
+    <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>CLEAR_SEARCH</td>
+	<td>//button[contains(text(),'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR_INPUT</td>
+	<td>//input[contains(@class, 'input-group')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//*[contains(@class,'lexicon-icon-search')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

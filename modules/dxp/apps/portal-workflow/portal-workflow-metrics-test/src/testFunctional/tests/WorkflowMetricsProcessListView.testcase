@@ -358,12 +358,95 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SavedOrderOptionStaysInMetricsContext {
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver A");
 
-		// TODO LRQA-67513 SavedOrderOptionStaysInMetricsContext pending implementation
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver B");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry A");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry B");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		Click(
+			key_value = "down",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
+
+		Refresh();
+
+		Type(
+			locator1 = "WorkflowMetricsProcessListView#SEARCH_BAR_INPUT",
+			value1 = "Single Approver B");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#SEARCH_BUTTON");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#CLEAR_SEARCH");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+		Click(
+			key_assigneeName = "Total Pending",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		WaitForElementPresent(
+			key_value = "down",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
+
+		Refresh();
+
+		WaitForElementPresent(
+			key_value = "down",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
+
+		Type(
+			locator1 = "WorkflowMetricsProcessListView#SEARCH_BAR_INPUT",
+			value1 = "abc");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#SEARCH_BUTTON");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#CLEAR_SEARCH");
+
+		AssertTextEquals(
+			key_rowNumber = "1",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver");
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "message-boards-user-stats-moderation");
+
+		AssertTextEquals(
+			key_rowNumber = "3",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver A");
+
+		AssertTextEquals(
+			key_rowNumber = "4",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver B");
 	}
 
 	@description = "LPS-88573 - Verify that when an instance from Asset is added to the list of process, the count number should be reflected on the Process List"

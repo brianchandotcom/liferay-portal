@@ -236,10 +236,13 @@ public class ResponsiveLayoutStructureUtil {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("align-items-lg-");
-		sb.append(
-			_getVerticalAlignmentCssClass(
-				rowStyledLayoutStructureItem.getVerticalAlignment()));
+		String defaultVerticalAlignment =
+			rowStyledLayoutStructureItem.getVerticalAlignment();
+
+		if (Validator.isNotNull(defaultVerticalAlignment)) {
+			sb.append("align-items-lg-");
+			sb.append(_getVerticalAlignmentCssClass(defaultVerticalAlignment));
+		}
 
 		Map<String, JSONObject> rowViewportConfigurations =
 			rowStyledLayoutStructureItem.getViewportConfigurations();
@@ -252,13 +255,14 @@ public class ResponsiveLayoutStructureUtil {
 			String verticalAlignment = GetterUtil.getString(
 				getResponsivePropertyValue(
 					viewportSize, rowViewportConfigurations,
-					"verticalAlignment",
-					rowStyledLayoutStructureItem.getVerticalAlignment()));
+					"verticalAlignment", defaultVerticalAlignment));
 
-			sb.append(StringPool.SPACE);
-			sb.append("align-items");
-			sb.append(viewportSize.getCssClassPrefix());
-			sb.append(_getVerticalAlignmentCssClass(verticalAlignment));
+			if (Validator.isNotNull(verticalAlignment)) {
+				sb.append(StringPool.SPACE);
+				sb.append("align-items");
+				sb.append(viewportSize.getCssClassPrefix());
+				sb.append(_getVerticalAlignmentCssClass(verticalAlignment));
+			}
 		}
 
 		sb.append(StringPool.SPACE);

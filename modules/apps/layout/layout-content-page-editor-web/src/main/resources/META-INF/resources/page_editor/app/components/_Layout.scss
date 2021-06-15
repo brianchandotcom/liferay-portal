@@ -129,6 +129,10 @@ $dashedBorderWidth: 2px;
 		justify-content: flex-end;
 	}
 
+	&__row.align-top .page-editor__col .page-editor__col__border {
+		justify-content: flex-start;
+	}
+
 	&__collection-item {
 		&:before {
 			left: 0;

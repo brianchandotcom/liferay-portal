@@ -23,6 +23,7 @@ import com.liferay.saml.persistence.internal.upgrade.v3_0_0.util.SamlSpSessionTa
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * @author Stian Sigvartsen
@@ -40,36 +41,75 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 					new AlterTableAddColumn("samlPeerBindingId", "LONG null"));
 			}
 
-			int samlSpSessionIdOffset = 0;
+			runSQL(
+				StringBundler.concat(
+					"DELETE FROM SamlPeerBinding WHERE ",
+					"SamlPeerBinding.samlPeerBindingId NOT IN (SELECT ",
+					"samlPeerBindingId FROM SamlIdpSpSession)"));
 
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select min(samlSpSessionId) - 1 from SamlSpSession");
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-				if (resultSet.next()) {
-					samlSpSessionIdOffset = resultSet.getInt(1);
-				}
-			}
+			int samlSpSessionIdOffset = _getSamlSpSessionIdOffset();
 
 			int latestSamlPeerBindingId = _getLatestSamlPeerBindingId();
 
-			runSQL(
-				StringBundler.concat(
-					"insert into SamlPeerBinding (samlPeerBindingId, ",
-					"companyId, createDate, userId, userName, deleted, ",
-					"samlNameIdFormat, samlNameIdNameQualifier, ",
-					"samlNameIdSpNameQualifier, samlNameIdSpProvidedId, ",
-					"samlNameIdValue, samlPeerEntityId) select ",
-					"min(samlSpSessionId) + ",
-					-samlSpSessionIdOffset + latestSamlPeerBindingId,
-					", companyId, min(createDate), userId, userName, '0' as ",
-					"deleted, nameIdFormat, nameIdNameQualifier, null as ",
-					"samlNameIdSpNameQualifier, null as nameIdSpProvidedId, ",
-					"nameIdValue, samlIdpEntityId from SamlSpSession group by ",
-					"companyId, userId, userName, nameIdFormat, ",
-					"nameIdNameQualifier, nameIdSPNameQualifier, nameIdValue, ",
-					"samlIdpEntityId"));
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select min(samlSpSessionId) as samlSpSessionId, ",
+							"companyId, min(createDate) as createDate, ",
+							"userId, userName, nameIdFormat, ",
+							"nameIdNameQualifier, nameIdValue, ",
+							"samlIdpEntityId from SamlSpSession group by ",
+							"companyId, userId, userName, nameIdFormat, ",
+							"nameIdNameQualifier, nameIdValue, ",
+							"samlIdpEntityId"));
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				while (resultSet.next()) {
+					int samlSpSessionId = resultSet.getInt("samlSpSessionId");
+					long companyId = resultSet.getLong("companyId");
+					Timestamp createDate = resultSet.getTimestamp("createDate");
+					long userId = resultSet.getLong("userId");
+					String userName = resultSet.getString("userName");
+					String nameIdFormat = resultSet.getString("nameIdFormat");
+					String nameIdNameQualifier = resultSet.getString(
+						"nameIdNameQualifier");
+					String nameIdValue = resultSet.getString("nameIdValue");
+					String samlIdpEntityId = resultSet.getString(
+						"samlIdpEntityId");
+
+					int samlPeerBindingId =
+						samlSpSessionId + -samlSpSessionIdOffset +
+							latestSamlPeerBindingId;
+
+					String insertSql = StringBundler.concat(
+						"insert into SamlPeerBinding (samlPeerBindingId, ",
+						"companyId, createDate, userId, userName, deleted, ",
+						"samlNameIdFormat, samlNameIdNameQualifier, ",
+						"samlNameIdSpNameQualifier, samlNameIdSpProvidedId, ",
+						"samlNameIdValue, samlPeerEntityId) values (?, ?, ?, ",
+						"?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+					try (PreparedStatement insertPreparedStatement =
+							connection.prepareStatement(insertSql)) {
+
+						insertPreparedStatement.setInt(1, samlPeerBindingId);
+						insertPreparedStatement.setLong(2, companyId);
+						insertPreparedStatement.setTimestamp(3, createDate);
+						insertPreparedStatement.setLong(4, userId);
+						insertPreparedStatement.setString(5, userName);
+						insertPreparedStatement.setBoolean(6, false);
+						insertPreparedStatement.setString(7, nameIdFormat);
+						insertPreparedStatement.setString(
+							8, nameIdNameQualifier);
+						insertPreparedStatement.setString(9, null);
+						insertPreparedStatement.setString(10, null);
+						insertPreparedStatement.setString(11, nameIdValue);
+						insertPreparedStatement.setString(12, samlIdpEntityId);
+
+						insertPreparedStatement.executeUpdate();
+					}
+				}
+			}
 
 			runSQL(
 				StringBundler.concat(
@@ -95,6 +135,19 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 	private int _getLatestSamlPeerBindingId() throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select max(samlPeerBindingId) from SamlPeerBinding");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		return 0;
+	}
+
+	private int _getSamlSpSessionIdOffset() throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select min(samlSpSessionId) - 1 from SamlSpSession");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

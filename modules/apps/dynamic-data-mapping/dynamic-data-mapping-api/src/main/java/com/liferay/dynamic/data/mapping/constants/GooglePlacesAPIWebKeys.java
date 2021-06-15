@@ -19,6 +19,9 @@ package com.liferay.dynamic.data.mapping.constants;
  */
 public class GooglePlacesAPIWebKeys {
 
+	public static final String GOOGLE_PLACES_API_INPUT_NAME_PREFIX =
+		"GOOGLE_PLACES_API_INPUT_NAME_PREFIX";
+
 	public static final String GOOGLE_PLACES_API_KEY = "GOOGLE_PLACES_API_KEY";
 
 }

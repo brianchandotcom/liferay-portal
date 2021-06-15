@@ -1,0 +1,103 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.dynamic.data.mapping.form.web.internal.portal.settings.configuration.admin.display;
+
+import com.liferay.dynamic.data.mapping.constants.GooglePlacesAPIWebKeys;
+import com.liferay.dynamic.data.mapping.util.GooglePlacesAPIUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+
+import java.util.Locale;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Rodrigo Paulino
+ */
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class GooglePlacesAPIPortalSettingsConfigurationScreenContributor
+	implements PortalSettingsConfigurationScreenContributor {
+
+	@Override
+	public String getCategoryKey() {
+		return "third-party";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/settings/google_places_api.jsp";
+	}
+
+	@Override
+	public String getKey() {
+		return "third-party-google-places-api";
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(
+				locale,
+				GooglePlacesAPIPortalSettingsConfigurationScreenContributor.
+					class),
+			"places");
+	}
+
+	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		PortalSettingsConfigurationScreenContributor.super.setAttributes(
+			httpServletRequest, httpServletResponse);
+
+		httpServletRequest.setAttribute(
+			GooglePlacesAPIWebKeys.GOOGLE_PLACES_API_INPUT_NAME_PREFIX,
+			"settings");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		httpServletRequest.setAttribute(
+			GooglePlacesAPIWebKeys.GOOGLE_PLACES_API_KEY,
+			GooglePlacesAPIUtil.getGooglePlacesAPIKey(
+				themeDisplay.getCompanyId()));
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.web)"
+	)
+	private ServletContext _servletContext;
+
+}

@@ -18,7 +18,6 @@ import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -51,11 +50,6 @@ public class CPRequestHelper extends BaseRequestHelper {
 	public long getChannelGroupId() throws PortalException {
 		return CommerceChannelLocalServiceUtil.
 			getCommerceChannelGroupIdBySiteGroupId(getScopeGroupId());
-	}
-
-	@Override
-	public String getCurrentURL() {
-		return PortalUtil.getCurrentURL(getRequest());
 	}
 
 	public RenderRequest getRenderRequest() {

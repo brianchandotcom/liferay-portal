@@ -1282,14 +1282,62 @@ definition {
 	}
 
 	@description = "Verify that a Text field's Label, Placeholder Text and Help Text can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TextFieldBasicPropertiesCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133481 TextFieldBasicPropertiesCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Test Placeholder Text");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Texto");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Texto del Marcador");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		Form.viewFormPlaceholderText(fieldPlaceholderText = "Test Placeholder Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Text");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Texto");
+
+		Form.viewFormPlaceholderText(fieldPlaceholderText = "Texto del Marcador");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Texto de Ayuda",
+			fieldName = "Texto");
 	}
 
 	@description = "Verify that a Text field's Predefined Value can be translated"

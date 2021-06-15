@@ -20,7 +20,7 @@ import ExportTranslationContext from './ExportTranslationContext.es';
 import ExportTranslationModal from './ExportTranslationModal.es';
 
 function ExportTranslation(props) {
-	const [articleIds, setArticleIds] = useState();
+	const [keys, setKeys] = useState();
 	const [showModal, setShowModal] = useState();
 	const {namespace} = useContext(ExportTranslationContext);
 	const bridgeComponentId = `${namespace}ExportForTranslationComponent`;
@@ -41,11 +41,11 @@ function ExportTranslation(props) {
 		Liferay.component(
 			bridgeComponentId,
 			{
-				open: (articleIds) => {
+				open: (keys) => {
 					const getExportTranslationAvailableLocalesURL = Liferay.Util.PortletURL.createPortletURL(
 						props.getExportTranslationAvailableLocalesURL,
 						{
-							key: articleIds[0],
+							key: keys[0],
 						}
 					);
 
@@ -53,7 +53,7 @@ function ExportTranslation(props) {
 						.then((res) => res.json())
 						.then(({availableLocales, defaultLanguageId}) => {
 							setAvailableSourceLocales(availableLocales);
-							setArticleIds(articleIds);
+							setKeys(keys);
 							setDefaultSourceLanguageId(defaultLanguageId);
 							setShowModal(true);
 						});
@@ -70,7 +70,7 @@ function ExportTranslation(props) {
 			{showModal && (
 				<ExportTranslationModal
 					{...props}
-					articleIds={articleIds}
+					keys={keys}
 					availableSourceLocales={availableSourceLocales}
 					defaultSourceLanguageId={defaultSourceLanguageId}
 					observer={observer}

@@ -23,7 +23,7 @@ import ExportTranslationContext from './ExportTranslationContext.es';
 const noop = () => {};
 
 const ExportTranslationModal = ({
-	articleIds,
+	keys,
 	availableExportFileFormats,
 	availableSourceLocales,
 	availableTargetLocales,
@@ -50,7 +50,7 @@ const ExportTranslationModal = ({
 		exportTranslationURL,
 		{
 			exportMimeType,
-			key: articleIds[0],
+			key: keys[0],
 			sourceLanguageId,
 			targetLanguageIds: selectedTargetLanguageIds.join(','),
 		}
@@ -195,7 +195,7 @@ const ExportTranslationModal = ({
 					<ClayInput
 						name={`_${namespace}_articleIdsIds`}
 						type="hidden"
-						value={articleIds}
+						value={keys}
 					/>
 				</ClayModal.Body>
 
@@ -227,7 +227,7 @@ const ExportTranslationModal = ({
 };
 
 ExportTranslationModal.propTypes = {
-	articleIds: PropTypes.array,
+	keys: PropTypes.array,
 	availableExportFileFormats: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,

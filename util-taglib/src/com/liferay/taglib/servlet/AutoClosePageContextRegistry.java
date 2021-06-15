@@ -74,10 +74,12 @@ public class AutoClosePageContextRegistry {
 	static {
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
+		Map<PageContext, List<Runnable>> runnables = null;
+
 		if (AutoClosePageContextRegistry.class.getClassLoader() ==
 				portalClassLoader) {
 
-			_runnables = new ConcurrentHashMap<>();
+			runnables = new ConcurrentHashMap<>();
 		}
 		else {
 			try {
@@ -89,13 +91,15 @@ public class AutoClosePageContextRegistry {
 
 				field.setAccessible(true);
 
-				_runnables = (Map<PageContext, List<Runnable>>)field.get(null);
+				runnables = (Map<PageContext, List<Runnable>>)field.get(null);
 			}
 			catch (ReflectiveOperationException reflectiveOperationException) {
 				throw new ExceptionInInitializerError(
 					reflectiveOperationException);
 			}
 		}
+
+		_runnables = runnables;
 	}
 
 }

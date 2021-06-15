@@ -540,7 +540,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		Map<Long, List<String>> vocabulariesMap = new HashMap<>();
 
 		List<String> categoryIdsList = StringUtil.split(
-			categoryIds, CharPool.COMMA);
+			categoryIds);
 
 		for (String categoryId : categoryIdsList) {
 			AssetCategory category =

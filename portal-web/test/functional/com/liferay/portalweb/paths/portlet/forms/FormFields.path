@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_HIDDEN</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}') and contains(@class,'hide')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_ADD_DUPLICATE</td>
 	<td>//div[contains(@class,'ddm-field')]//button[contains(@class,'ddm-form-field-repeatable-add-button')]</td>
 	<td></td>

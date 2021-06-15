@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>WorkflowMetricsWorkloadByStep</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowMetricsWorkloadByStep</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_ONTIME_VALUE</td>
+    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[2]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_STEP_NAME</td>
+    <td>//td[contains(text(),'${key_stepName}')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

@@ -95,12 +95,54 @@ definition {
 	}
 
 	@description = "LPS-86642 - Verify that the On Time is the total number of pending instances that didn't breach any SLAs target times"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PendingItemsThatDoNotBreachSlaIsOnTime {
+		property portal.acceptance = "true";
 
-		// TODO LRQA-67557 PendingItemsThatDoNotBreachSlaIsOnTime pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "Test",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Pause(locator1 = "40000");
+
+		Refresh();
+
+		WorkflowMetrics.checkPendingWorkflowValues(
+			key_ontime = "1",
+			key_overdue = "0",
+			key_pending = "1",
+			key_untracked = "0");
+
+		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOntimeValue(
+			ontimeValue = "1",
+			stepName = "Review");
 	}
 
 	@description = "LPS-86642 - Verify that when are parallel branches on the workflow, the sum of all pending items of the steps will be greater than the total pending items"

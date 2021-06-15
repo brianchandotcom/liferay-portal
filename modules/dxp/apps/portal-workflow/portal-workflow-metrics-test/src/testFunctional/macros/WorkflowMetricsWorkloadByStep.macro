@@ -1,0 +1,13 @@
+definition {
+
+	macro viewWorkloadByStepOntimeValue {
+		var key_stepName = "${stepName}";
+
+		AssertElementPresent(locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		AssertElementPresent(
+			locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_ONTIME_VALUE",
+			value1 = "${ontimeValue}");
+	}
+
+}

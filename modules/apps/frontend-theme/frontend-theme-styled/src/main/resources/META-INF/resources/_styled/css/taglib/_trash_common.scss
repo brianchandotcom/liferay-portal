@@ -1,6 +1,8 @@
 .trash-undo-button.btn-link,
 .trash-empty-button.btn-link {
 	font-weight: 600;
+	padding: 0;
+	vertical-align: inherit;
 
 	&:hover {
 		text-decoration: none;
@@ -9,7 +11,4 @@
 	&:focus {
 		background-color: transparent;
 	}
-
-	padding: 0;
-	vertical-align: inherit;
 }

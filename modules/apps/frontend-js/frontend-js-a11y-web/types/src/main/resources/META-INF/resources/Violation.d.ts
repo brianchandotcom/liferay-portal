@@ -12,16 +12,27 @@
  * details.
  */
 
-declare global {
-	var Liferay: {
-		Language: {
-			get(value: string): string;
-		};
-		Util: {
-			sub(...value: string[]): string;
-		};
-	};
-}
+/// <reference types="react" />
 
-export {A11y} from './A11y';
-export {A11yPanel} from './A11yPanel';
+import './Violation.scss';
+import type {Result} from 'axe-core';
+declare type TViolationNext = {
+	occurrenceIndex: number;
+	occurrenceName: string;
+	violationIndex: number;
+};
+declare type ViolationProps = {
+	navigationState?: {
+		violationIndex: number;
+	};
+	next?: (payload: TViolationNext) => void;
+	previous?: () => void;
+	violations: Array<Result>;
+};
+declare function Violation({
+	navigationState,
+	next,
+	previous,
+	violations,
+}: ViolationProps): JSX.Element | null;
+export default Violation;

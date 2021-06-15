@@ -25,12 +25,6 @@ import useA11y from './useA11y';
 import type {A11yCheckerOptions} from './A11yChecker';
 import type {Violation as TViolation} from './useA11y';
 
-declare var Liferay: {
-	Language: {
-		get(value: string): string;
-	};
-};
-
 const rectAttrs: Array<keyof DOMRect> = [
 	'bottom',
 	'height',

@@ -12,16 +12,11 @@
  * details.
  */
 
-declare global {
-	var Liferay: {
-		Language: {
-			get(value: string): string;
-		};
-		Util: {
-			sub(...value: string[]): string;
-		};
-	};
-}
+/// <reference types="react" />
 
-export {A11y} from './A11y';
-export {A11yPanel} from './A11yPanel';
+import type {Result} from 'axe-core';
+declare type A11yPanelProps = {
+	violations: Array<Result>;
+};
+export declare function A11yPanel({violations}: A11yPanelProps): JSX.Element;
+export {};

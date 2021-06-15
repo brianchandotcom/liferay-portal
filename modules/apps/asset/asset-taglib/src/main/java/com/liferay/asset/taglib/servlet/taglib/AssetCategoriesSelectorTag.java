@@ -539,10 +539,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	private Map<Long, List<String>> _getVocabulariesMap(String categoryIds) {
 		Map<Long, List<String>> vocabulariesMap = new HashMap<>();
 
-		List<String> categoryIdsList = StringUtil.split(
-			categoryIds);
-
-		for (String categoryId : categoryIdsList) {
+		for (String categoryId : StringUtil.split(categoryIds)) {
 			AssetCategory category =
 				AssetCategoryLocalServiceUtil.fetchCategory(
 					GetterUtil.getLong(categoryId));

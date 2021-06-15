@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
+import com.liferay.taglib.TagSupport;
 
 import freemarker.cache.TemplateCache;
 
@@ -101,6 +102,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
@@ -376,7 +378,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_bundle = bundleContext.getBundle();
 
-		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(_bundle);
+		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
+			_bundle, FrameworkUtil.getBundle(TagSupport.class));
 
 		int stateMask = ~Bundle.INSTALLED & ~Bundle.UNINSTALLED;
 

@@ -70,9 +70,9 @@ function ExportTranslation(props) {
 			{showModal && (
 				<ExportTranslationModal
 					{...props}
-					keys={keys}
 					availableSourceLocales={availableSourceLocales}
 					defaultSourceLanguageId={defaultSourceLanguageId}
+					keys={keys}
 					observer={observer}
 					onModalClose={onClose}
 				/>

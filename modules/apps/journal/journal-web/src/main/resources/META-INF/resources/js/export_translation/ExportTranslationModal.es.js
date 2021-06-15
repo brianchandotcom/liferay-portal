@@ -23,12 +23,12 @@ import ExportTranslationContext from './ExportTranslationContext.es';
 const noop = () => {};
 
 const ExportTranslationModal = ({
-	keys,
 	availableExportFileFormats,
 	availableSourceLocales,
 	availableTargetLocales,
 	defaultSourceLanguageId,
 	exportTranslationURL,
+	keys,
 	observer,
 	onModalClose = noop,
 }) => {
@@ -227,7 +227,6 @@ const ExportTranslationModal = ({
 };
 
 ExportTranslationModal.propTypes = {
-	keys: PropTypes.array,
 	availableExportFileFormats: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
@@ -247,6 +246,7 @@ ExportTranslationModal.propTypes = {
 		})
 	).isRequired,
 	defaultSourceLanguageId: PropTypes.string.isRequired,
+	keys: PropTypes.array,
 };
 
 export default ExportTranslationModal;

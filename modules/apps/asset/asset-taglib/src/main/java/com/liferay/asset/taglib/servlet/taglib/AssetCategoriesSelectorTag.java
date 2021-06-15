@@ -211,11 +211,11 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				}
 			}
 
-			Map<Long, List<String>> vocabularyMap = _getVocabularyMap(
+			Map<Long, List<String>> vocabulariesMap = _getVocabulariesMap(
 				categoryIds);
 
 			for (AssetVocabulary vocabulary : _getVocabularies()) {
-				List<String> categories = vocabularyMap.get(
+				List<String> categories = vocabulariesMap.get(
 					vocabulary.getVocabularyId());
 
 				String[] categoryIdsTitle =
@@ -368,7 +368,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 			String selectedCategoryIds = categoryIdsTitles.get(index)[0];
 
-			Map<String, Object> vocabularyMap =
+			Map<String, Object> vocabulariesMap =
 				HashMapBuilder.<String, Object>put(
 					"id", vocabulary.getVocabularyId()
 				).put(
@@ -407,12 +407,12 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 						).build());
 				}
 
-				vocabularyMap.put("selectedItems", selectedItems);
+				vocabulariesMap.put("selectedItems", selectedItems);
 			}
 
-			vocabularyMap.put("singleSelect", !vocabulary.isMultiValued());
+			vocabulariesMap.put("singleSelect", !vocabulary.isMultiValued());
 
-			vocabulariesList.add(vocabularyMap);
+			vocabulariesList.add(vocabulariesMap);
 		}
 
 		return vocabulariesList;
@@ -536,8 +536,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			});
 	}
 
-	private Map<Long, List<String>> _getVocabularyMap(String categoryIds) {
-		Map<Long, List<String>> vocabularyMap = new HashMap<>();
+	private Map<Long, List<String>> _getVocabulariesMap(String categoryIds) {
+		Map<Long, List<String>> vocabulariesMap = new HashMap<>();
 
 		List<String> categoryIdsList = StringUtil.split(
 			categoryIds, CharPool.COMMA);
@@ -551,14 +551,14 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				continue;
 			}
 
-			List<String> vocabularyCategories = vocabularyMap.computeIfAbsent(
+			List<String> vocabularyCategories = vocabulariesMap.computeIfAbsent(
 				category.getVocabularyId(),
 				categoriesList -> new ArrayList<>());
 
 			vocabularyCategories.add(categoryId);
 		}
 
-		return vocabularyMap;
+		return vocabulariesMap;
 	}
 
 	private static final String _PAGE = "/asset_categories_selector/page.jsp";

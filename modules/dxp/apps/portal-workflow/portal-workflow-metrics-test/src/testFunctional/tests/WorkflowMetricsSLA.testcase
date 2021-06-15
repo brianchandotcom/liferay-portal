@@ -836,12 +836,13 @@ definition {
 	}
 
 	@description = "LPS-94760 - Verify that when there is no SLA defined to the process, the message is not displayed"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SLAProcessingDateIsNotDisplayedWhenNoSLA {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67839 SLAProcessingDateIsNotDisplayedWhenNoSLA pending implementation
-
+		AssertVisible(
+			key_warningMessage = "No SLAs are defined for this process.",
+			locator1 = "Message#WARNING_SPECIFIC");
 	}
 
 	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"

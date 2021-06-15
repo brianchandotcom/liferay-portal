@@ -837,6 +837,71 @@ public class CommerceOrderTest {
 	}
 
 	@Test
+	public void testGetPendingCommerceOrderByPartialOrderId() throws Exception {
+		frutillaRule.scenario(
+			"Try to get a pending order based on the orderId"
+		).given(
+			"A B2B Site"
+		).and(
+			"A Group"
+		).and(
+			"A User"
+		).when(
+			"I try to get that order by a partial orderId"
+		).then(
+			"I should be able to get the order"
+		);
+
+		CommerceAccount commerceAccount =
+			_commerceAccountLocalService.addBusinessCommerceAccount(
+				"Test Business Account", 0, null, null, true, null,
+				new long[] {_user.getUserId()},
+				new String[] {_user.getEmailAddress()}, _serviceContext);
+
+		long commerceChannelGroupId = _commerceChannel.getGroupId();
+
+		CommerceOrder commerceOrder1 =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), commerceChannelGroupId,
+				commerceAccount.getCommerceAccountId(),
+				_commerceCurrency.getCommerceCurrencyId());
+
+		String commerceOrderId = String.valueOf(
+			commerceOrder1.getCommerceOrderId());
+
+		String partialCommerceOrderId = commerceOrderId.substring(
+			0, commerceOrderId.length() - 1);
+
+		int ordersCountByAccountId =
+			_commerceOrderService.getPendingCommerceOrdersCount(
+				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+				partialCommerceOrderId);
+
+		Assert.assertEquals(1, ordersCountByAccountId);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderService.getPendingCommerceOrders(
+				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
+				partialCommerceOrderId, 0, 1);
+
+		CommerceOrder actualCommerceOrder = commerceOrders.get(0);
+
+		Assert.assertEquals(commerceOrder1, actualCommerceOrder);
+
+		long ordersCountByUser = _getUserOrdersCount(
+			commerceChannelGroupId, false);
+
+		Assert.assertEquals(1, ordersCountByUser);
+
+		commerceOrders = _getUserOrders(commerceChannelGroupId, false);
+
+		Assert.assertEquals(commerceOrder1, commerceOrders.get(0));
+
+		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
+		_commerceAccountLocalService.deleteCommerceAccount(commerceAccount);
+	}
+
+	@Test
 	public void testGetPlacedCommerceOrder() throws Exception {
 		frutillaRule.scenario(
 			"Try to get a placed order based on the userId, and directly " +

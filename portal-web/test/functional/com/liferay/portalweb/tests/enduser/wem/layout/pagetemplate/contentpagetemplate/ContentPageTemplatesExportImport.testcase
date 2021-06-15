@@ -799,6 +799,39 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-129107 Unable to import a page template that includes a deleted fragment."
+	@priority = "4"
+	test ImportContentPageTemplateThatIncludesDeletedFragment {
+
+		task ("Create a new test page fragment.") {
+
+		}
+		task ("Create a new page template.") {
+
+	  	}
+		task ("Add the test page fragment to the page template.") {
+
+		}
+	  	task ("Add 2 heading components after the test page fragment.") {
+
+	  	}
+		task ("Save the template.") {
+
+		}
+		task ("Export the template.") {
+
+		}
+		task ("Delete the template.") {
+
+		}
+		task ("Delete the test page fragment.") {
+
+		}
+		task ("Import the exported page template.") {
+
+		}
+	}
+
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."
 	@priority = "4"
 	test OnlyPublishedVersionIsExported {

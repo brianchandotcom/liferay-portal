@@ -431,7 +431,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 							linkToDocumentationURL();
 					}
 				).put(
-					"portletURL", getPortletURL().toString()
+					"portletURL", String.valueOf(getPortletURL())
 				).put(
 					"vocabularies", getVocabularies()
 				).build());

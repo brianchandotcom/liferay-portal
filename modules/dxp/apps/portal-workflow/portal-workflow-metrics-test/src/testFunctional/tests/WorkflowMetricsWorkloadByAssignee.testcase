@@ -266,49 +266,44 @@ definition {
 	@description = "LPS-103365 - Verify that when the user clicks on the username or item number of the table inside (Workload by Assignee) page, the user is directed to the All Items page with the appropriate filters applied"
 	@priority = "4"
 	test UserIsDirectedToAllItemsPage {
-
 		ApplicationsMenu.gotoPortlet(
-            category = "Workflow",
-            panel = "Applications",
-            portlet = "Process Builder");
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-        Navigator.gotoNavItem(navItem = "Configuration");
+		Navigator.gotoNavItem(navItem = "Configuration");
 
-        Workflow.configureWorkflow(
-            workflowDefinition = "Single Approver",
-            workflowResourceValue = "Blogs Entry");
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
 		JSONBlog.addEntry(
-			entryContent = "Blogs Entry A", 
+			entryContent = "Blogs Entry A",
 			entryTitle = "Blogs Entry Title A");
-		
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title A",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
+			workflowAssetTitle = "Blogs Entry Title A",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
 		ApplicationsMenu.gotoPortlet(
-            category = "Workflow",
-            panel = "Applications",
-            portlet = "Metrics");
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-			
 
 		Click(
-			key_assigneesNumber="1",
-			locator1= "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
-		
-		Click(
-			key_assignee="Test Test",
-			locator1= "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_NAME");
+			key_assigneesNumber = "1",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
+		Click(
+			key_assignee = "Test Test",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_NAME");
 
 		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Test Test,Pending");
-
-
 	}
 
 	@description = "LPS-97669 - Verify that the card (Workload by Assignee) has no more than 10 users"

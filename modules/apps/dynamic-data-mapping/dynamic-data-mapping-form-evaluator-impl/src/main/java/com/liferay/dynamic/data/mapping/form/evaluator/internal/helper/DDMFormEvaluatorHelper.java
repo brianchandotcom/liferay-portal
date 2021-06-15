@@ -895,11 +895,23 @@ public class DDMFormEvaluatorHelper {
 	private boolean _isValueWithInputMaskInvalid(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		String value = String.valueOf(
-			_getFieldPropertyResponseValue(
-				ddmFormEvaluatorFieldContextKey, "value"));
+		DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
+			ddmFormEvaluatorFieldContextKey);
 
-		if (Validator.isNull(value)) {
+		if (ddmFormFieldValue == null) {
+			return false;
+		}
+
+		Value value = ddmFormFieldValue.getValue();
+
+		if (value == null) {
+			return false;
+		}
+
+		String valueString = value.getString(
+			_ddmFormEvaluatorEvaluateRequest.getLocale());
+
+		if (Validator.isNull(valueString)) {
 			return false;
 		}
 
@@ -914,7 +926,7 @@ public class DDMFormEvaluatorHelper {
 		String inputMaskFormat = localizedValue.getString(
 			_ddmFormEvaluatorEvaluateRequest.getLocale());
 
-		if (value.length() < StringUtil.count(inputMaskFormat, "9")) {
+		if (valueString.length() < StringUtil.count(inputMaskFormat, "9")) {
 			return true;
 		}
 

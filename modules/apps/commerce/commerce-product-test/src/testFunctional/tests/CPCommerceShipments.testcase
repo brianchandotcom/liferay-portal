@@ -87,13 +87,107 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6251. Delete shipment"
-	@ignore = "true"
 	@priority = "3"
 	test AssertShippedShipmentNotDeletable {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceShipments#AssertShippedShipmentNotDeletable";
 
-		// TODO COMMERCE-6251 AssertStateShippedShipmentNotDeletable Pending Implementation
+		// TODO Review
 
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "buyer");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Refresh();
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		ClickNoError(
+			key_orderStatus = "Pending",
+			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+		CommerceEntry.clickNoError(menuItem = "View");
+
+		Click(
+			key_index = "Accept Order",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		CommerceOrders.createShipment(
+			productSKUList = "MIN55861",
+			warehouseName = "Italy");
+
+		AssertElementNotPresent(
+			key_index = "Create Shipment",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 	}
 
 	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"

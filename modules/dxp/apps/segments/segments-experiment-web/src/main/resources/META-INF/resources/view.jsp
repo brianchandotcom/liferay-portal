@@ -17,12 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <div class="lfr-segments-experiment-sidebar" id="segmentsExperimentSidebar">
-	<div class="sidebar-header">
+	<div class="d-flex justify-content-between p-3 sidebar-header">
 		<h1 class="sr-only"><liferay-ui:message key="ab-test-panel" /></h1>
 
-		<span><liferay-ui:message key="ab-test" /></span>
+		<span class="font-weight-bold"><liferay-ui:message key="ab-test" /></span>
 
-		<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+		<clay:button
+			cssClass="sidenav-close text-secondary"
+			displayType="unstyled"
+			icon="times"
+			monospaced="<%= true %>"
+		/>
 	</div>
 
 	<div class="sidebar-body">

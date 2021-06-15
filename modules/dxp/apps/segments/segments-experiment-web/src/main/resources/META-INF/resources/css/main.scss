@@ -1,3 +1,4 @@
+@import 'atlas-variables';
 @import 'mixins';
 
 @import './click-goal';
@@ -8,11 +9,8 @@
 		width: 320px;
 	}
 
-	.sidebar-body {
-		background-color: #fff;
-		border-left-color: #e7e7ed;
-		border-left-style: solid;
-		border-left-width: 1px;
+	.sidebar {
+		border-left: 1px solid $gray-300;
 	}
 }
 
@@ -43,14 +41,12 @@
 		}
 	}
 	.sidebar-header {
-		background-color: #272833;
-		color: #d5d6e1;
-		display: flex;
-		justify-content: space-between;
+		height: 64px;
 		line-height: 32px;
-		padding-bottom: 8px;
-		padding-right: 9px;
-		padding-top: 8px;
+
+		.lexicon-icon {
+			font-size: 14px;
+		}
 	}
 	.sidebar-body {
 		bottom: 0;

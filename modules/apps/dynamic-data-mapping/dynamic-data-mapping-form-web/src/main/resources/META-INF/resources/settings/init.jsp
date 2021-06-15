@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,17 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.dynamic.data.mapping.constants;
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-/**
- * @author Rodrigo Paulino
- */
-public class PlacesProviderWebKeys {
+<%@ page import="com.liferay.dynamic.data.mapping.constants.PlacesProviderWebKeys" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %>
 
-	public static final String PLACES_INPUT_NAME_PREFIX =
-		"PLACES_INPUT_NAME_PREFIX";
-
-	public static final String PLACES_PROVIDER_KEY = "PLACES_PROVIDER_KEY";
-
-}
+<%
+String placesInputNamePrefix = (String)request.getAttribute(PlacesProviderWebKeys.PLACES_INPUT_NAME_PREFIX);
+String placesProviderKey = (String)request.getAttribute(PlacesProviderWebKeys.PLACES_PROVIDER_KEY);
+%>

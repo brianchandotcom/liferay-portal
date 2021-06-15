@@ -11,7 +11,6 @@
 	<version>1.1.0</version>
 	<packaging>mule-extension</packaging>
 	<name>Liferay Connector - Mule 4</name>
-
 	<properties>
 		<munit.input.directory>src/test/munit</munit.input.directory>
 		<munit.output.directory>${basedir}/target/test-mule/munit</munit.output.directory>
@@ -22,7 +21,6 @@
 		<mavenResourcesVersion>3.2.0</mavenResourcesVersion>
 		<jacoco.version>0.8.6</jacoco.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -160,7 +158,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -200,7 +197,9 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<!-- Plugin included to add Integration Tests (IT) to the build lifecycle. -->
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>

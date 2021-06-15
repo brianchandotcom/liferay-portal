@@ -81,7 +81,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					).setActionName(
 						"/account_admin/remove_account_organizations"
 					).setRedirect(
-						currentURLObj.toString()
+						currentURLObj
 					).buildString());
 
 				dropdownItem.setIcon("times-circle");
@@ -124,7 +124,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					).setActionName(
 						"/account_admin/assign_account_organizations"
 					).setRedirect(
-						currentURLObj.toString()
+						currentURLObj
 					).buildString());
 
 				dropdownItem.putData(

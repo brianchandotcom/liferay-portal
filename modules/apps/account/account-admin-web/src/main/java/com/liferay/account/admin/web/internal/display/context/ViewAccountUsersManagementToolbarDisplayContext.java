@@ -82,7 +82,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					).setActionName(
 						"/account_admin/remove_account_users"
 					).setRedirect(
-						currentURLObj.toString()
+						currentURLObj
 					).buildString());
 
 				dropdownItem.setIcon("times-circle");

@@ -403,7 +403,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 		).setMVCRenderCommandName(
 			"/message_boards_admin/search"
 		).setRedirect(
-			_currentURLObj.toString()
+			_currentURLObj
 		).setParameter(
 			"breadcrumbsCategoryId", categoryId
 		).setParameter(

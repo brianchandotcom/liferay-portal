@@ -62,7 +62,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 			String editQuestionURL = PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), PollsPortletKeys.POLLS, 0, plid, PortletRequest.RENDER_PHASE)
 			).setRedirect(
-				redirectURL.toString()
+				redirectURL
 			).setParameter(
 				"referringPortletResource", portletDisplay.getId()
 			).setParameter(
@@ -94,7 +94,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 			).setMVCRenderCommandName(
 				"/polls/edit_question"
 			).setRedirect(
-				redirectURL.toString()
+				redirectURL
 			).setParameter(
 				"questionId", question.getQuestionId()
 			).setParameter(

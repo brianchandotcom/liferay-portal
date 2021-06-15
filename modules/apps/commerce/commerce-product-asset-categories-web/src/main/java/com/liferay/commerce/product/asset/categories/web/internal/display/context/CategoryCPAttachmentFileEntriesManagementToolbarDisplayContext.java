@@ -60,7 +60,7 @@ public class CategoryCPAttachmentFileEntriesManagementToolbarDisplayContext
 						"/commerce_product_asset_categories" +
 							"/edit_asset_category_cp_attachment_file_entry"
 					).setRedirect(
-						currentURLObj.toString()
+						currentURLObj
 					).setParameter(
 						"categoryId", assetCategory.getCategoryId()
 					).build());

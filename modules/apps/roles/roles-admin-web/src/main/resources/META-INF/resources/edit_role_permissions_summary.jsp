@@ -180,7 +180,7 @@ for (int i = 0; i < results.size(); i++) {
 	).setCMD(
 		Constants.EDIT
 	).setRedirect(
-		permissionsAllURL.toString()
+		permissionsAllURL
 	).setPortletResource(
 		curPortletName
 	).setTabs1(

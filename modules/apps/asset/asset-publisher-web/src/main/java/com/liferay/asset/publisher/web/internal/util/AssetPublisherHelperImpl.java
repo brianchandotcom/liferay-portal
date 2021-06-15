@@ -576,7 +576,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				liferayPortletRequest, liferayPortletResponse, assetRenderer,
 				assetEntry)
 		).setRedirect(
-			redirectURL.toString()
+			redirectURL
 		).build();
 
 		String viewURL = null;

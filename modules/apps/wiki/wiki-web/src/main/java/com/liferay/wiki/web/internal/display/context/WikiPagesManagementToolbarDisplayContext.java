@@ -151,7 +151,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		).setMVCRenderCommandName(
 			"/wiki/view_pages"
 		).setRedirect(
-			_currentURLObj.toString()
+			_currentURLObj
 		).setParameter(
 			"nodeId",
 			() -> {
@@ -246,7 +246,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		return PortletURLBuilder.create(
 			_wikiURLHelper.getSearchURL()
 		).setRedirect(
-			_currentURLObj.toString()
+			_currentURLObj
 		).setParameter(
 			"nodeId",
 			() -> {
@@ -415,7 +415,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		).setMVCRenderCommandName(
 			"/wiki/view_pages"
 		).setRedirect(
-			_currentURLObj.toString()
+			_currentURLObj
 		).build();
 	}
 

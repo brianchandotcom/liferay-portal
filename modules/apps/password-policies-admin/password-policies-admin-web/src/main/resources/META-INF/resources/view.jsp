@@ -106,7 +106,7 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 					).setMVCPath(
 						"/edit_password_policy.jsp"
 					).setRedirect(
-						redirectURL.toString()
+						redirectURL
 					).setParameter(
 						"passwordPolicyId", passwordPolicy.getPasswordPolicyId()
 					).buildString();

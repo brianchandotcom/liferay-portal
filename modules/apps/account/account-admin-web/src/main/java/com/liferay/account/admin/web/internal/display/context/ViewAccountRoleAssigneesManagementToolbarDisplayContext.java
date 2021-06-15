@@ -69,7 +69,7 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 					).setActionName(
 						"/account_admin/remove_account_role_users"
 					).setRedirect(
-						currentURLObj.toString()
+						currentURLObj
 					).setParameter(
 						"accountEntryId",
 						ParamUtil.getString(

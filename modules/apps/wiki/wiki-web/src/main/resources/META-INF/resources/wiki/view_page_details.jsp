@@ -358,7 +358,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 								).setMVCRenderCommandName(
 									"/wiki/move_page"
 								).setRedirect(
-									viewPageURL.toString()
+									viewPageURL
 								).buildString()
 							%>'
 						/>

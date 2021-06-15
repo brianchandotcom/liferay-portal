@@ -84,9 +84,8 @@ public class MBEditMessageDisplayContext {
 				).setMVCRenderCommandName(
 					"/message_boards/view_deleted_message_attachments"
 				).setRedirect(
-					String.valueOf(
-						PortletURLUtil.getCurrent(
-							_liferayPortletRequest, _liferayPortletResponse))
+					PortletURLUtil.getCurrent(
+						_liferayPortletRequest, _liferayPortletResponse)
 				).setParameter(
 					"messageId", _message.getMessageId()
 				).setWindowState(

@@ -426,7 +426,7 @@ public class DDMDisplayContext {
 				).setMVCPath(
 					"/edit_structure.jsp"
 				).setRedirect(
-					redirectURL.toString()
+					redirectURL
 				).setParameter(
 					"groupId", _ddmWebRequestHelper.getScopeGroupId()
 				).build(),

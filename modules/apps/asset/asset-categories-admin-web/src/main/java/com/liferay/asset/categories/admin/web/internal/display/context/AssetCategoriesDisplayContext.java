@@ -889,7 +889,7 @@ public class AssetCategoriesDisplayContext {
 		).setMVCPath(
 			"/view.jsp"
 		).setRedirect(
-			currentURL.toString()
+			currentURL
 		).setNavigation(
 			getNavigation()
 		).build();

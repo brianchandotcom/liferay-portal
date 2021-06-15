@@ -40,7 +40,7 @@ PortletURL editPageURL = PortletURLBuilder.createRenderURL(
 ).setMVCRenderCommandName(
 	"/wiki/edit_page"
 ).setRedirect(
-	viewPageURL.toString()
+	viewPageURL
 ).setParameter(
 	"nodeId", node.getNodeId()
 ).setParameter(
@@ -52,7 +52,7 @@ PortletURL viewPageDetailsURL = PortletURLBuilder.createRenderURL(
 ).setMVCRenderCommandName(
 	"/wiki/view_page_details"
 ).setRedirect(
-	viewPageURL.toString()
+	viewPageURL
 ).setParameter(
 	"nodeId", node.getNodeId()
 ).setParameter(

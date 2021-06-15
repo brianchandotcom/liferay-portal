@@ -169,7 +169,7 @@ PortletURL simplePublishRedirectURL = PortletURLBuilder.createRenderURL(
 						).setCMD(
 							"localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE"
 						).setRedirect(
-							simplePublishRedirectURL.toString()
+							simplePublishRedirectURL
 						).setParameter(
 							"lastImportUserName", user.getFullName()
 						).setParameter(

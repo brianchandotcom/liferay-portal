@@ -69,7 +69,7 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 					).setActionName(
 						"/account_admin/delete_account_entry_addresses"
 					).setRedirect(
-						currentURLObj.toString()
+						currentURLObj
 					).buildString());
 
 				dropdownItem.setIcon("times-circle");

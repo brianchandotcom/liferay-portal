@@ -338,7 +338,7 @@ public class CPSearchResultsDisplayContext {
 
 	protected String getURLString() {
 		return HttpUtil.removeParameter(
-			_cpRequestHelper.getCurrentURL(), "start");
+			PortalUtil.getCurrentURL(_cpRequestHelper.getRequest()), "start");
 	}
 
 	private final CPContentListEntryRendererRegistry

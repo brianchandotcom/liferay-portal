@@ -153,19 +153,19 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public int getMarginBottom() {
-		return GetterUtil.getInteger(_getStyleProperty("marginBottom"));
+		return GetterUtil.getInteger(_getStyleProperty("marginBottom"), -1);
 	}
 
 	public int getMarginLeft() {
-		return GetterUtil.getInteger(_getStyleProperty("marginLeft"));
+		return GetterUtil.getInteger(_getStyleProperty("marginLeft"), -1);
 	}
 
 	public int getMarginRight() {
-		return GetterUtil.getInteger(_getStyleProperty("marginRight"));
+		return GetterUtil.getInteger(_getStyleProperty("marginRight"), -1);
 	}
 
 	public int getMarginTop() {
-		return GetterUtil.getInteger(_getStyleProperty("marginTop"));
+		return GetterUtil.getInteger(_getStyleProperty("marginTop"), -1);
 	}
 
 	public String getMaxHeight() {
@@ -193,19 +193,19 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public int getPaddingBottom() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingBottom"));
+		return GetterUtil.getInteger(_getStyleProperty("paddingBottom"), -1);
 	}
 
 	public int getPaddingLeft() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingLeft"));
+		return GetterUtil.getInteger(_getStyleProperty("paddingLeft"), -1);
 	}
 
 	public int getPaddingRight() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingRight"));
+		return GetterUtil.getInteger(_getStyleProperty("paddingRight"), -1);
 	}
 
 	public int getPaddingTop() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingTop"));
+		return GetterUtil.getInteger(_getStyleProperty("paddingTop"), -1);
 	}
 
 	public String getShadow() {

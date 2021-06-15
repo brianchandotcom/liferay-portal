@@ -475,44 +475,44 @@ public class RenderLayoutStructureDisplayContext {
 			}
 		}
 
-		if (styledLayoutStructureItem.getMarginBottom() != -1L) {
+		if (styledLayoutStructureItem.getMarginBottom() != -1) {
 			cssClassSB.append(" mb-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getMarginBottom());
 		}
 
 		if (addHorizontalMargin) {
-			if (styledLayoutStructureItem.getMarginLeft() != -1L) {
+			if (styledLayoutStructureItem.getMarginLeft() != -1) {
 				cssClassSB.append(" ml-lg-");
 				cssClassSB.append(styledLayoutStructureItem.getMarginLeft());
 			}
 
-			if (styledLayoutStructureItem.getMarginRight() != -1L) {
+			if (styledLayoutStructureItem.getMarginRight() != -1) {
 				cssClassSB.append(" mr-lg-");
 				cssClassSB.append(styledLayoutStructureItem.getMarginRight());
 			}
 		}
 
-		if (styledLayoutStructureItem.getMarginTop() != -1L) {
+		if (styledLayoutStructureItem.getMarginTop() != -1) {
 			cssClassSB.append(" mt-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getMarginTop());
 		}
 
-		if (styledLayoutStructureItem.getPaddingBottom() != -1L) {
+		if (styledLayoutStructureItem.getPaddingBottom() != -1) {
 			cssClassSB.append(" pb-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingBottom());
 		}
 
-		if (styledLayoutStructureItem.getPaddingLeft() != -1L) {
+		if (styledLayoutStructureItem.getPaddingLeft() != -1) {
 			cssClassSB.append(" pl-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingLeft());
 		}
 
-		if (styledLayoutStructureItem.getPaddingRight() != -1L) {
+		if (styledLayoutStructureItem.getPaddingRight() != -1) {
 			cssClassSB.append(" pr-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingRight());
 		}
 
-		if (styledLayoutStructureItem.getPaddingTop() != -1L) {
+		if (styledLayoutStructureItem.getPaddingTop() != -1) {
 			cssClassSB.append(" pt-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingTop());
 		}

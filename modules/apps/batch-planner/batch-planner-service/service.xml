@@ -176,5 +176,7 @@
 		<exception>BatchPlannerPlanName</exception>
 		<exception>BatchPlannerPolicyName</exception>
 		<exception>DuplicateBatchPlannerPlan</exception>
+		<exception>RequiredBatchPlannerLogField</exception>
+		<exception>RequiredBatchPlannerMappingField</exception>
 	</exceptions>
 </service-builder>

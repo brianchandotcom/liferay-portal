@@ -381,6 +381,35 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"selectedCategories", selectedCategoryIds
 				).put(
+					"selectedItems",
+					() -> {
+						if (Validator.isNull(selectedCategoryIds)) {
+							return null;
+						}
+
+						List<Map<String, Object>> selectedItems =
+							new ArrayList<>();
+
+						String[] categoryIds = selectedCategoryIds.split(",");
+
+						String selectedCategoryIdTitles =
+							categoryIdsTitles.get(index)[1];
+
+						String[] categoryTitles = selectedCategoryIdTitles.split(
+							AssetCategoryUtil.CATEGORY_SEPARATOR);
+
+						for (int j = 0; j < categoryIds.length; j++) {
+							selectedItems.add(
+								HashMapBuilder.<String, Object>put(
+									"label", categoryTitles[j]
+								).put(
+									"value", categoryIds[j]
+								).build());
+						}
+
+						return selectedItems;
+					}
+				).put(
 					"title",
 					vocabulary.getUnambiguousTitle(
 						vocabularies, themeDisplay.getScopeGroupId(),
@@ -388,29 +417,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"visibilityType", vocabulary.getVisibilityType()
 				).build();
-
-			if (Validator.isNotNull(selectedCategoryIds)) {
-				List<Map<String, Object>> selectedItems = new ArrayList<>();
-
-				String[] categoryIds = selectedCategoryIds.split(",");
-
-				String selectedCategoryIdTitles =
-					categoryIdsTitles.get(index)[1];
-
-				String[] categoryTitles = selectedCategoryIdTitles.split(
-					AssetCategoryUtil.CATEGORY_SEPARATOR);
-
-				for (int j = 0; j < categoryIds.length; j++) {
-					selectedItems.add(
-						HashMapBuilder.<String, Object>put(
-							"label", categoryTitles[j]
-						).put(
-							"value", categoryIds[j]
-						).build());
-				}
-
-				vocabulariesMap.put("selectedItems", selectedItems);
-			}
 
 			vocabulariesList.add(vocabulariesMap);
 		}

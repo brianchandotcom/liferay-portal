@@ -7,9 +7,9 @@ create table JSONStoreEntry (
 	classPK LONG,
 	parentJSONStoreEntryId LONG,
 	index_ INTEGER,
-	key_ VARCHAR(75) null,
+	key_ VARCHAR(255) null,
 	type_ INTEGER,
 	valueLong LONG,
-	valueString VARCHAR(75) null,
+	valueString TEXT null,
 	primary key (jsonStoreEntryId, ctCollectionId)
 );

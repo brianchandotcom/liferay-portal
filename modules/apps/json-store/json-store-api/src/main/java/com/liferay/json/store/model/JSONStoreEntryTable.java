@@ -17,6 +17,7 @@ package com.liferay.json.store.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -57,8 +58,8 @@ public class JSONStoreEntryTable extends BaseTable<JSONStoreEntryTable> {
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<JSONStoreEntryTable, Long> valueLong = createColumn(
 		"valueLong", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<JSONStoreEntryTable, String> valueString = createColumn(
-		"valueString", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<JSONStoreEntryTable, Clob> valueString = createColumn(
+		"valueString", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private JSONStoreEntryTable() {
 		super("JSONStoreEntry", JSONStoreEntryTable::new);

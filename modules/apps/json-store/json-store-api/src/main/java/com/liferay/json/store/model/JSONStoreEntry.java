@@ -56,4 +56,8 @@ public interface JSONStoreEntry extends JSONStoreEntryModel, PersistedModel {
 
 		};
 
+	public Object getValue();
+
+	public void setValue(Object value);
+
 }

@@ -253,7 +253,7 @@ public class JSONStoreEntryPersistenceTest {
 			"JSONStoreEntry", "mvccVersion", true, "ctCollectionId", true,
 			"jsonStoreEntryId", true, "companyId", true, "classNameId", true,
 			"classPK", true, "parentJSONStoreEntryId", true, "index", true,
-			"key", true, "type", true, "valueLong", true, "valueString", true);
+			"key", true, "type", true, "valueLong", true);
 	}
 
 	@Test

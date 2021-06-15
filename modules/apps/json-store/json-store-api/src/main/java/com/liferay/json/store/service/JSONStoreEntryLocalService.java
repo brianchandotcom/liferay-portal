@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -67,6 +70,8 @@ public interface JSONStoreEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.json.store.service.impl.JSONStoreEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the json store entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link JSONStoreEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public void addJSON(
+		long companyId, long classNameId, long classPK, String json);
 
 	/**
 	 * Adds the json store entry to the database. Also notifies the appropriate model listeners.
@@ -95,6 +100,8 @@ public interface JSONStoreEntryLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void deleteJSON(long classNameId, long classPK);
 
 	/**
 	 * Deletes the json store entry from the database. Also notifies the appropriate model listeners.
@@ -210,7 +217,25 @@ public interface JSONStoreEntryLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getClassPKs(
+		long companyId, long classNameId, Object[] pathParts, Object value,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getClassPKsCount(
+		long companyId, long classNameId, Object[] pathParts, Object value);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONArray getJSONArray(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONObject getJSONObject(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONSerializable getJSONSerializable(long classNameId, long classPK);
 
 	/**
 	 * Returns a range of all the json store entries.
@@ -245,6 +270,9 @@ public interface JSONStoreEntryLocalService
 	public JSONStoreEntry getJSONStoreEntry(long jsonStoreEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getJSONString(long classNameId, long classPK);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -259,6 +287,9 @@ public interface JSONStoreEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void updateJSON(
+		long companyId, long classNameId, long classPK, String json);
 
 	/**
 	 * Updates the json store entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

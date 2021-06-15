@@ -71,7 +71,7 @@ public class JSONStoreEntryModelImpl
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"parentJSONStoreEntryId", Types.BIGINT}, {"index_", Types.INTEGER},
 		{"key_", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"valueLong", Types.BIGINT}, {"valueString", Types.VARCHAR}
+		{"valueLong", Types.BIGINT}, {"valueString", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,11 +89,11 @@ public class JSONStoreEntryModelImpl
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("valueLong", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("valueString", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("valueString", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JSONStoreEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,jsonStoreEntryId LONG not null,companyId LONG,classNameId LONG,classPK LONG,parentJSONStoreEntryId LONG,index_ INTEGER,key_ VARCHAR(75) null,type_ INTEGER,valueLong LONG,valueString VARCHAR(75) null,primary key (jsonStoreEntryId, ctCollectionId))";
+		"create table JSONStoreEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,jsonStoreEntryId LONG not null,companyId LONG,classNameId LONG,classPK LONG,parentJSONStoreEntryId LONG,index_ INTEGER,key_ VARCHAR(255) null,type_ INTEGER,valueLong LONG,valueString TEXT null,primary key (jsonStoreEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table JSONStoreEntry";
 

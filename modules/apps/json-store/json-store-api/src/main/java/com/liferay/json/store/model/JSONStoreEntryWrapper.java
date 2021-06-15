@@ -255,6 +255,11 @@ public class JSONStoreEntryWrapper
 		return model.getType();
 	}
 
+	@Override
+	public Object getValue() {
+		return model.getValue();
+	}
+
 	/**
 	 * Returns the value long of this json store entry.
 	 *
@@ -393,6 +398,11 @@ public class JSONStoreEntryWrapper
 	@Override
 	public void setType(int type) {
 		model.setType(type);
+	}
+
+	@Override
+	public void setValue(Object value) {
+		model.setValue(value);
 	}
 
 	/**

@@ -12,71 +12,29 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Page");
 
-		SitePages.addPublicPage(
-			pageName = "Wiki Page",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Wiki Page");
-
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.gotoPage(pageName = "Wiki Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Page",
+			widgetName = "Wiki");
 
 		JSONUser.addUser(
-			userEmailAddress = PropsUtil.get("email.address.4"),
+			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = PropsUtil.get("email.address.4"));
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = PropsUtil.get("email.address.4"));
-
-		User.logoutPG();
-
-		User.loginPG();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
-
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
-
-		Navigator.gotoPage(pageName = "Wiki Page");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
-
-		PortalInstances.editCP(
-			mailDomain = "gmail.com",
-			virtualHost = "localhost");
-
-		Navigator.gotoPage(pageName = "Wiki Page");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 	}
 
 	tearDown {
@@ -95,39 +53,19 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test ViewWikiCommentMentionedUser {
-		property test.name.skip.portal.instance = "MentionsWiki#ViewWikiCommentMentionedUser";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoAllPagesCP();
-
-		LexiconEntry.gotoAdd();
-
-		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
-
-		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
-
-		SelectFrame(value1 = "relative=top");
-
-		PortletEntry.publish();
-
-		Navigator.openURL();
+	@refactordone
+	test CanViewWikiCommentMentionedUser {
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
 		WikiNavigator.gotoAllPagesPG();
 
 		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page Title");
-
-		Pause(locator1 = "30000");
 
 		Mentions.addMentionViaComments(
 			entryComment = "Comment mentioning",

@@ -41,6 +41,8 @@ definition {
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Overdue"
 	@priority = "3"
 	test CanOrderByOverdueItems {
+		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#CanOrderByOverdueItems";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -181,6 +183,8 @@ definition {
 	@description = "LPS-86638 - Verify that the pagination button indicates the selected page, even when there is only 1 page"
 	@priority = "3"
 	test PaginationButtonIndicatesSelectedPage {
+		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationButtonIndicatesSelectedPage";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -224,6 +228,8 @@ definition {
 	@description = "LPS-86638 - Verify that the pagination component is displayed when the table has 5 items or more"
 	@priority = "3"
 	test PaginationIsDisplayedWhenTableHas5Items {
+		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationIsDisplayedWhenTableHas5Items";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

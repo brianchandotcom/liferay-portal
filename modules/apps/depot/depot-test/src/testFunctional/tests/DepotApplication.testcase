@@ -32,7 +32,7 @@ definition {
 
 	@description = "This ensures that the Applications can be set in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDisableAndEnableApps {
 		property portal.acceptance = "true";
 		property testray.component.names = "Asset Lists";
@@ -88,7 +88,7 @@ definition {
 
 	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotSelectDisabledAssetsFromItemSelector {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -151,7 +151,7 @@ definition {
 
 	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CollectionsRemainAfterReactivating {
 		JSONAssetlist.addManualAssetListEntry(
 			groupName = "Test Depot Name",
@@ -192,7 +192,7 @@ definition {
 
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test DisabledAssetsRemainInCollections {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -250,7 +250,7 @@ definition {
 
 	@description = "This ensures that a depot image persists in blog entry as previously and it's not appeared in the item selector on a connected site when DM application is disabled."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test DisabledImageRemainsInBlogs {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -292,7 +292,7 @@ definition {
 
 	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test DisabledWCRemainsInWCD {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -338,7 +338,7 @@ definition {
 
 	@description = "This ensures that the DM application can be viewed after reactivating in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test DMRemainsAfterReactivating {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -379,7 +379,7 @@ definition {
 
 	@description = "This ensures that the WC application can be viewed after reactivating in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test WCRemainsAfterReactivating {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

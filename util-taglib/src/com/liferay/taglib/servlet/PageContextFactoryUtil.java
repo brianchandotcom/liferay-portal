@@ -60,7 +60,7 @@ public class PageContextFactoryUtil {
 
 		};
 
-		PageContext pageContext = _jspFactory.getPageContext(
+		return _jspFactory.getPageContext(
 			new Servlet() {
 
 				@Override
@@ -89,11 +89,6 @@ public class PageContextFactoryUtil {
 
 			},
 			httpServletRequest, httpServletResponse, null, true, 0, false);
-
-		pageContext.removeAttribute(
-			AutoClosePageContextRegistry.AUTO_CLOSEABLE);
-
-		return pageContext;
 	}
 
 	private static final JspFactory _jspFactory =

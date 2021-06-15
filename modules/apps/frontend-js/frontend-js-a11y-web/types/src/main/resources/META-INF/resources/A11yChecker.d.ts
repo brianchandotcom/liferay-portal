@@ -28,7 +28,7 @@ declare type Selector<T> = (
 	this: void,
 	value: T,
 	index: number,
-	obj: Array<T>
+	object: Array<T>
 ) => unknown;
 
 /**

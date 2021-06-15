@@ -25,12 +25,15 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	 * a 'div' element.
 	 */
 	wrapper?:
-		| keyof JSX.IntrinsicElements
+		| string
 		| React.ComponentType<{
 				className: string;
 				id?: string;
+				ref?: React.Ref<HTMLElement>;
 		  }>
 		| false;
 }
-declare const ReactPortal: React.FunctionComponent<IProps>;
+declare const ReactPortal: React.ForwardRefExoticComponent<
+	IProps & React.RefAttributes<HTMLElement>
+>;
 export default ReactPortal;

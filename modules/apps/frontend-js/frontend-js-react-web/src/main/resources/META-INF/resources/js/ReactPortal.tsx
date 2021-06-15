@@ -28,41 +28,51 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	 * a 'div' element.
 	 */
 	wrapper?:
-		| keyof JSX.IntrinsicElements
-		| React.ComponentType<{className: string; id?: string}>
+		| string
+		| React.ComponentType<{
+				className: string;
+				id?: string;
+				ref?: React.Ref<HTMLElement>;
+		  }>
 		| false;
 }
 
-const ReactPortal: React.FunctionComponent<IProps> = ({
-	children,
-	className,
-	container,
-	id,
-	wrapper: Wrapper = 'div',
-}) => {
-	const cssClass = classNames('lfr-tooltip-scope', className);
+const ReactPortal = React.forwardRef<HTMLElement, IProps>(
+	(
+		{
+			children,
+			className,
+			container,
+			id,
+			wrapper: Wrapper = 'div',
+			...otherProps
+		},
+		ref
+	) => {
+		const cssClass = classNames('lfr-tooltip-scope', className);
 
-	let content;
+		let content;
 
-	if (Wrapper) {
-		content = (
-			<Wrapper className={cssClass} id={id}>
-				{children}
-			</Wrapper>
-		);
+		if (Wrapper) {
+			content = (
+				<Wrapper className={cssClass} id={id} ref={ref} {...otherProps}>
+					{children}
+				</Wrapper>
+			);
+		}
+		else if (
+			React.isValidElement(children) &&
+			React.Children.only(children)
+		) {
+			content = React.cloneElement(
+				children as React.DetailedReactHTMLElement<any, HTMLElement>,
+				{className: classNames(cssClass, children.props.className), id}
+			);
+		}
+
+		// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal
+		return createPortal(content, container || document.body);
 	}
-	else if (
-		React.isValidElement(children) &&
-		React.Children.only(children)
-	) {
-		content = React.cloneElement(
-			children as React.DetailedReactHTMLElement<any, HTMLElement>,
-			{className: classNames(cssClass, children.props.className), id}
-		);
-	}
-
-	// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal
-	return createPortal(content, container || document.body);
-};
+);
 
 export default ReactPortal;

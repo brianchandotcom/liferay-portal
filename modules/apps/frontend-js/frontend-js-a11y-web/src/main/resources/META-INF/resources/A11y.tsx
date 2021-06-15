@@ -88,14 +88,10 @@ const Overlay = React.forwardRef<
 	React.ButtonHTMLAttributes<HTMLDivElement>
 >(({style, ...othersProps}, ref) => (
 	<ReactPortal
-		wrapper={
-			<div
-				{...othersProps}
-				className="a11y-overlay"
-				ref={ref}
-				style={style}
-			/>
-		}
+		{...othersProps}
+		className="a11y-overlay"
+		ref={ref}
+		style={style}
 	>
 		<div className="a11y-indicator">
 			<ClayIcon symbol="info-circle" />

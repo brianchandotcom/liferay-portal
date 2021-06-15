@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -138,8 +137,7 @@ public class DepotEntryVerticalCard
 	@Override
 	public String getTitle() {
 		try {
-			return HtmlUtil.escape(
-				_group.getDescriptiveName(_themeDisplay.getLocale()));
+			return _group.getDescriptiveName(_themeDisplay.getLocale());
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

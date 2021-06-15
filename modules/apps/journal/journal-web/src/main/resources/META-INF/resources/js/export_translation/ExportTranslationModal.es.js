@@ -191,12 +191,6 @@ const ExportTranslationModal = ({
 							/>
 						))}
 					</ClayForm.Group>
-
-					<ClayInput
-						name={`_${namespace}_articleIdsIds`}
-						type="hidden"
-						value={keys}
-					/>
 				</ClayModal.Body>
 
 				<ClayModal.Footer

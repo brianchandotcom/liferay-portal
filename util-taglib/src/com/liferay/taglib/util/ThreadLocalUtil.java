@@ -14,8 +14,8 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.lang.reflect.Field;
 
@@ -30,15 +30,17 @@ public class ThreadLocalUtil {
 		Class<?> declaringClass, String fieldName,
 		Function<String, ThreadLocal<T>> function) {
 
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+		ClassLoader shieldedContainerClassLoader =
+			ClassLoaderPool.getClassLoader("ShieldedContainerClassLoader");
 
-		if (declaringClass.getClassLoader() == portalClassLoader) {
+		if (declaringClass.getClassLoader() == shieldedContainerClassLoader) {
 			return function.apply(declaringClass.getName() + "." + fieldName);
 		}
 
 		try {
-			Class<?> portalDeclaringClass = portalClassLoader.loadClass(
-				declaringClass.getName());
+			Class<?> portalDeclaringClass =
+				shieldedContainerClassLoader.loadClass(
+					declaringClass.getName());
 
 			Field field = portalDeclaringClass.getDeclaredField(fieldName);
 

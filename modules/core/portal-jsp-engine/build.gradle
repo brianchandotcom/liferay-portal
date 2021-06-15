@@ -21,12 +21,14 @@ dependencies {
 	compileOnly group: "org.eclipse.jdt", name: "ecj", version: "3.24.0"
 	compileOnly group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-jasper-plugins-taglib")
+	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:shielded-container-api")
 }
 
 deployDependencies {
 	from configurations.compileOnly
 
+	exclude "com.liferay.petra.lang-*.jar"
 	exclude "com.liferay.portal.impl-*.jar"
 	exclude "com.liferay.portal.kernel-*.jar"
 	exclude "com.liferay.shielded.container.api-*.jar"

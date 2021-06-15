@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsp.engine.internal;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.jsp.engine.internal.delegate.CheckEnabledServletDelegate;
 import com.liferay.portal.jsp.engine.internal.delegate.JspConfigDescriptorServletContextDelegate;
@@ -72,6 +73,9 @@ public class JSPEngineShieldedContainerInitializer
 		catch (IOException ioException) {
 			throw new ServletException(ioException);
 		}
+
+		ClassLoaderPool.register(
+			"ShieldedContainerClassLoader", servletContext.getClassLoader());
 
 		PropsUtil.setProps(new PropsImpl());
 

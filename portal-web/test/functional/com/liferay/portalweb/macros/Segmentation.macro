@@ -41,25 +41,25 @@ definition {
 
 	macro checkModifiedDate {
 		var displayDateDay = DateUtil.getCurrentDate();
-			var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateMonth = DateUtil.getCurrentMonth();
 
-			if (("${displayDateMonth}" != "10") && ("${displayDateMonth}" != "11") && ("${displayDateMonth}" != "12")) {
-				var displayDateMonth= "0${displayDateMonth}";
-			}
+		if (("${displayDateMonth}" != "10") && ("${displayDateMonth}" != "11") && ("${displayDateMonth}" != "12")) {
+			var displayDateMonth= "0${displayDateMonth}";
+		}
 
-			var displayDateYear = DateUtil.getCurrentYear();
+		var displayDateYear = DateUtil.getCurrentYear();
 
-			var i = MathUtil.quotient("${displayDateDay}", "10");
+		var i = MathUtil.quotient("${displayDateDay}", "10");
 
-			if ("${i}" == "0") {
-				var displayDateDay= "0${displayDateDay}";
-			}
+		if ("${i}" == "0") {
+			var displayDateDay= "0${displayDateDay}";
+		}
 
-			var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
+		var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
 
-			Segmentation.viewSegment(
-				criterion = "date",
-				value = "${displayDate}");
+		Segmentation.viewSegment(
+			criterion = "date",
+			value = "${displayDate}");
 	}
 
 	macro clickAssignSiteRolesOption {

@@ -205,13 +205,14 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 5, actions.size());
-		Assert.assertEquals("setVisible('repeatable', TRUE)", actions.get(0));
+		Assert.assertEquals(actions.toString(), 6, actions.size());
+		Assert.assertEquals("setVisible('inputMask', TRUE)", actions.get(0));
+		Assert.assertEquals("setVisible('repeatable', TRUE)", actions.get(1));
 		Assert.assertEquals(
-			"setVisible('requireConfirmation', TRUE)", actions.get(1));
-		Assert.assertEquals("setVisible('required', TRUE)", actions.get(2));
-		Assert.assertEquals("setVisible('showLabel', TRUE)", actions.get(3));
-		Assert.assertEquals("setVisible('validation', TRUE)", actions.get(4));
+			"setVisible('requireConfirmation', TRUE)", actions.get(2));
+		Assert.assertEquals("setVisible('required', TRUE)", actions.get(3));
+		Assert.assertEquals("setVisible('showLabel', TRUE)", actions.get(4));
+		Assert.assertEquals("setVisible('validation', TRUE)", actions.get(5));
 
 		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
 
@@ -220,18 +221,20 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule2.getActions();
 
-		Assert.assertEquals(actions.toString(), 9, actions.size());
-		Assert.assertEquals("setValue('repeatable', FALSE)", actions.get(0));
+		Assert.assertEquals(actions.toString(), 11, actions.size());
+		Assert.assertEquals("setValue('inputMask', FALSE)", actions.get(0));
+		Assert.assertEquals("setValue('repeatable', FALSE)", actions.get(1));
 		Assert.assertEquals(
-			"setValue('requireConfirmation', FALSE)", actions.get(1));
-		Assert.assertEquals("setValue('required', FALSE)", actions.get(2));
-		Assert.assertEquals("setValue('showLabel', TRUE)", actions.get(3));
-		Assert.assertEquals("setVisible('repeatable', FALSE)", actions.get(4));
+			"setValue('requireConfirmation', FALSE)", actions.get(2));
+		Assert.assertEquals("setValue('required', FALSE)", actions.get(3));
+		Assert.assertEquals("setValue('showLabel', TRUE)", actions.get(4));
+		Assert.assertEquals("setVisible('inputMask', FALSE)", actions.get(5));
+		Assert.assertEquals("setVisible('repeatable', FALSE)", actions.get(6));
 		Assert.assertEquals(
-			"setVisible('requireConfirmation', FALSE)", actions.get(5));
-		Assert.assertEquals("setVisible('required', FALSE)", actions.get(6));
-		Assert.assertEquals("setVisible('showLabel', FALSE)", actions.get(7));
-		Assert.assertEquals("setVisible('validation', FALSE)", actions.get(8));
+			"setVisible('requireConfirmation', FALSE)", actions.get(7));
+		Assert.assertEquals("setVisible('required', FALSE)", actions.get(8));
+		Assert.assertEquals("setVisible('showLabel', FALSE)", actions.get(9));
+		Assert.assertEquals("setVisible('validation', FALSE)", actions.get(10));
 
 		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
 

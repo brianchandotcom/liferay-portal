@@ -48,7 +48,7 @@ definition {
 				fail("'${value}' already exists inside 'JSON'");
 			}
 
-			if ("${temp}" == "") {
+			if ("${temp}" == "[]") {
 
 				// If empty no need to add comma
 

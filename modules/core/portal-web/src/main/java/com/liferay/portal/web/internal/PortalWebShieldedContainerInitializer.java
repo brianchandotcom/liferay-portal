@@ -18,9 +18,9 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.AxisServlet;
 import com.liferay.portal.servlet.PortalSessionListener;
-import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.shielded.container.Ordered;
 import com.liferay.shielded.container.ShieldedContainerInitializer;
@@ -28,10 +28,13 @@ import com.liferay.shielded.container.ShieldedContainerInitializer;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -149,6 +152,16 @@ public class PortalWebShieldedContainerInitializer
 					urlPatterns.add(
 						_getChildText(servletMappingElement, "url-pattern"));
 				});
+
+			Set<String> portalServletURLPatterns = new HashSet<>();
+
+			for (List<String> urlPatterns : servletMappingMap.values()) {
+				portalServletURLPatterns.addAll(urlPatterns);
+			}
+
+			servletContext.setAttribute(
+				WebKeys.PORTAL_SERVLET_URL_PATTERNS,
+				Collections.unmodifiableSet(portalServletURLPatterns));
 
 			// Servlets
 

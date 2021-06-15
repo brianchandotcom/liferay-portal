@@ -18,16 +18,14 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
@@ -185,22 +183,9 @@ public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 						"Portal servlet context is not initialized");
 				}
 
-				Map<String, ? extends ServletRegistration>
-					servletRegistrations =
-						servletContext.getServletRegistrations();
-
-				for (ServletRegistration servletRegistration :
-						servletRegistrations.values()) {
-
-					Collection<String> mappings =
-						servletRegistration.getMappings();
-
-					// LPS-86502
-
-					if (mappings != null) {
-						addAll(mappings);
-					}
-				}
+				addAll(
+					(Set<String>)servletContext.getAttribute(
+						WebKeys.PORTAL_SERVLET_URL_PATTERNS));
 			}
 		};
 

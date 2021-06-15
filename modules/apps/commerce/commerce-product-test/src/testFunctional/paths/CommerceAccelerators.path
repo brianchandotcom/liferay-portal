@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_DISCOUNT_LEVELS</td>
+	<td>//div[contains(@class,'price')]//span[contains(@class,'price-value-discount')]/span[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_LIST_PRICE</td>
 	<td>//div[contains(@class,'price')]//span[@class='price-value']</td>
 	<td></td>

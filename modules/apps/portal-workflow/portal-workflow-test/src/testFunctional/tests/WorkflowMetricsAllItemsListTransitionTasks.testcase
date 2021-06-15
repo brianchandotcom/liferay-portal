@@ -112,87 +112,84 @@ definition {
 	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by steps"
 	@priority = "3"
 	test OnChooseTransitionPerStepCanFilterByStep {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Process Builder");
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-			Navigator.gotoNavItem(navItem = "Configuration");
+		Navigator.gotoNavItem(navItem = "Configuration");
 
-			Workflow.configureWorkflow(
-				workflowDefinition = "Single Approver",
-				workflowResourceValue = "Blogs Entry");
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry A",
-				entryTitle = "First Blogs Entry Title");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry A",
+			entryTitle = "First Blogs Entry Title");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry B",
-				entryTitle = "Second Blogs Entry Title");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry B",
+			entryTitle = "Second Blogs Entry Title");
 
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-			Workflow.assignToMeTaskByActions(
-				workflowAssetTitle = "First Blogs Entry Title",
-				workflowAssetType = "Blogs Entry",
-				workflowTask = "Review");
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "First Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
-			Workflow.assignToMeTaskByActions(
-				workflowAssetTitle = "Second Blogs Entry Title",
-				workflowAssetType = "Blogs Entry",
-				workflowTask = "Review");
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Second Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
-			Workflow.rejectTaskByDetails(
-				workflowAssetContent = "Blogs Entry A",
-				workflowAssetTitle = "First Blogs Entry Title",
-				workflowAssetType = "Blogs Entry",
-				workflowTask = "Review");
+		Workflow.rejectTaskByDetails(
+			workflowAssetContent = "Blogs Entry A",
+			workflowAssetTitle = "First Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Metrics");
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
 
-			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-			Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
 
-			WorkflowMetrics.goToDashboardAllItemsWithFilter(
-				workflowFilterOption = "PENDING",
-				workflowMetricsTab = "DASHBOARD",
-				workflowProcess = "Single Approver");
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
 
-			WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
 
-			Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
 
-			Click(
-				key_processName = "Review",
-				locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
+		Click(
+			key_processName = "Review",
+			locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
 
-			Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
 
-			AssertElementPresent(
-				key_itemName = "Blogs Entry: Second Blogs Entry Title",
-				locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
+		AssertElementPresent(
+			key_itemName = "Blogs Entry: Second Blogs Entry Title",
+			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
 
-			Click(locator1 = "WorkflowReassignModal#CLEAR_SEARCH_MODAL_BUTTON");
+		Click(locator1 = "WorkflowReassignModal#CLEAR_SEARCH_MODAL_BUTTON");
 
-			Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
 
-			Click(
-				key_processName = "Update",
-				locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
+		Click(
+			key_processName = "Update",
+			locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
 
-			Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
 
-			AssertElementPresent(
-				key_itemName = "Blogs Entry: First Blogs Entry Title",
-				locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
-	
-	
-	
+		AssertElementPresent(
+			key_itemName = "Blogs Entry: First Blogs Entry Title",
+			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
 	}
 
 	@description = "LPS-108138 - Verify that only the tasks selected on -Select Steps to Transition- are being considered to be transitioned in the -Choose Transition Per Step- step"

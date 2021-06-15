@@ -2298,7 +2298,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						else if (_isUtilTaglibDependency(group, name)) {
 							file = new File(
 								utilTaglibDependencyDir,
-								"WEB-INF/lib/util-taglib.jar");
+								"WEB-INF/shielded-container-lib" +
+									"/util-taglib.jar");
 
 							if (!file.exists()) {
 								throw new GradleException(

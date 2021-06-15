@@ -26,7 +26,6 @@ import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.asset.taglib.internal.util.AssetCategoryUtil;
 import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -211,16 +210,17 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				}
 			}
 
-			Map<Long, List<String>> vocabulariesMap = _getVocabulariesMap(
-				categoryIds);
+			Map<Long, List<String>> vocabularyCategoryIdsMap =
+				_getVocabularyCategoryIdsMap(categoryIds);
 
 			for (AssetVocabulary vocabulary : _getVocabularies()) {
-				List<String> categories = vocabulariesMap.get(
-					vocabulary.getVocabularyId());
+				List<String> vocabularyCategoryIds =
+					vocabularyCategoryIdsMap.get(vocabulary.getVocabularyId());
 
 				String[] categoryIdsTitle =
 					AssetCategoryUtil.getCategoryIdsTitles(
-						StringUtil.merge(categories, StringPool.COMMA),
+						StringUtil.merge(
+							vocabularyCategoryIds, StringPool.COMMA),
 						StringPool.BLANK, 0, themeDisplay);
 
 				categoryIdsTitles.add(categoryIdsTitle);
@@ -536,8 +536,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			});
 	}
 
-	private Map<Long, List<String>> _getVocabulariesMap(String categoryIds) {
-		Map<Long, List<String>> vocabulariesMap = new HashMap<>();
+	private Map<Long, List<String>> _getVocabularyCategoryIdsMap(
+		String categoryIds) {
+
+		Map<Long, List<String>> vocabularyCategoryIdsMap = new HashMap<>();
 
 		for (String categoryId : StringUtil.split(categoryIds)) {
 			AssetCategory category =
@@ -548,14 +550,15 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				continue;
 			}
 
-			List<String> vocabularyCategories = vocabulariesMap.computeIfAbsent(
-				category.getVocabularyId(),
-				categoriesList -> new ArrayList<>());
+			List<String> vocabularyCategoryIds =
+				vocabularyCategoryIdsMap.computeIfAbsent(
+					category.getVocabularyId(),
+					categoriesList -> new ArrayList<>());
 
-			vocabularyCategories.add(categoryId);
+			vocabularyCategoryIds.add(categoryId);
 		}
 
-		return vocabulariesMap;
+		return vocabularyCategoryIdsMap;
 	}
 
 	private static final String _PAGE = "/asset_categories_selector/page.jsp";

@@ -66,10 +66,9 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ApproveMessageBoardsThreadPG {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addWithWorkflowPG(
@@ -134,9 +133,9 @@ definition {
 			threadSubject = "MB Thread Subject");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test RejectMessageBoardsThreadPG {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowadminPGMessageboards#RejectMessageBoardsThreadPG";
 
 		Navigator.gotoPage(pageName = "Message Boards Page");

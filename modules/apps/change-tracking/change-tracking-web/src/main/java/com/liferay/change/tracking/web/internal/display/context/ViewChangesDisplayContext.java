@@ -376,25 +376,25 @@ public class ViewChangesDisplayContext {
 				return getCTCommentsURL.toString();
 			}
 		).put(
-			"models",
+			"modelData",
 			() -> {
-				JSONObject modelsJSONObject =
+				JSONObject modelDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
 
 				for (ModelInfo modelInfo : modelInfoMap.values()) {
 					if (modelInfo._jsonObject != null) {
-						modelsJSONObject.put(
+						modelDataJSONObject.put(
 							String.valueOf(modelInfo._modelKey),
 							modelInfo._jsonObject);
 					}
 				}
 
-				return modelsJSONObject;
+				return modelDataJSONObject;
 			}
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
-			"pathParam", ParamUtil.getString(_renderRequest, "path")
+			"pathFromURL", ParamUtil.getString(_renderRequest, "path")
 		).put(
 			"rootDisplayClasses",
 			() -> {
@@ -413,7 +413,7 @@ public class ViewChangesDisplayContext {
 				return rootDisplayClassesJSONArray;
 			}
 		).put(
-			"showHideableParam",
+			"showHideableFromURL",
 			ParamUtil.getBoolean(_renderRequest, "showHideable")
 		).put(
 			"siteNames",

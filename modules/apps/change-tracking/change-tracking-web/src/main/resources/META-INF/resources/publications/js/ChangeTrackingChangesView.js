@@ -27,7 +27,7 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
@@ -81,12 +81,12 @@ const CTComments = ({
 	spritemap,
 	updateCommentURL,
 }) => {
-	const [delta, setDelta] = useState(20);
+	const [deltaState, setDeltaState] = useState(20);
 	const [editing, setEditing] = useState(0);
 	const [fetchData, setFetchData] = useState(null);
 	const [initialized, setInitialized] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [page, setPage] = useState(1);
+	const [pageState, setPageState] = useState(1);
 	const [value, setValue] = useState('');
 
 	useEffect(() => {
@@ -184,10 +184,10 @@ const CTComments = ({
 		});
 	};
 
-	const handleDeltaChange = (newDelta) => {
-		setDelta(newDelta);
+	const handleDeltaChange = (delta) => {
+		setDeltaState(delta);
 		setEditing(0);
-		setPage(1);
+		setPageState(1);
 
 		if (fetchData.updatedCommentId) {
 			const newFetchData = clone(fetchData);
@@ -198,9 +198,9 @@ const CTComments = ({
 		}
 	};
 
-	const handlePageChange = (newPage) => {
+	const handlePageChange = (page) => {
 		setEditing(0);
-		setPage(newPage);
+		setPageState(page);
 
 		if (fetchData.updatedCommentId) {
 			const newFetchData = clone(fetchData);
@@ -325,8 +325,8 @@ const CTComments = ({
 
 		if (filteredComments.length > 5) {
 			filteredComments = filteredComments.slice(
-				delta * (page - 1),
-				delta * page
+				deltaState * (pageState - 1),
+				deltaState * pageState
 			);
 		}
 
@@ -430,8 +430,8 @@ const CTComments = ({
 
 		return (
 			<ClayPaginationBarWithBasicItems
-				activeDelta={delta}
-				activePage={page}
+				activeDelta={deltaState}
+				activePage={pageState}
 				deltas={[4, 8, 20, 40, 60].map((size) => ({
 					label: size,
 				}))}
@@ -517,412 +517,456 @@ const CTComments = ({
 	);
 };
 
-class ChangeTrackingChangesView extends React.Component {
-	constructor(props) {
-		super(props);
+export default ({
+	activeCTCollection,
+	changes,
+	contextView,
+	ctCollectionId,
+	currentUser,
+	dataURL,
+	deleteCTCommentURL,
+	discardURL,
+	expired,
+	getCTCommentsURL,
+	modelData,
+	namespace,
+	pathFromURL,
+	rootDisplayClasses,
+	showHideableFromURL,
+	siteNames,
+	spritemap,
+	typeNames,
+	updateCTCommentURL,
+	userInfo,
+}) => {
+	const CHANGE_TYPE_ADDED = 'added';
+	const CHANGE_TYPE_DELETED = 'deleted';
+	const COLUMN_CHANGE_TYPE = 'CHANGE_TYPE';
+	const COLUMN_MODIFIED_DATE = 'MODIFIED_DATE';
+	const COLUMN_SITE = 'SITE';
+	const COLUMN_TITLE = 'TITLE';
+	const COLUMN_USER = 'USER';
+	const FILTER_CLASS_EVERYTHING = 'everything';
+	const GLOBAL_SITE_NAME = Liferay.Language.get('global');
+	const MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
+	const PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
+	const PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
+	const PARAM_PATH = namespace + 'path';
+	const PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
+	const POP_STATE = 'popstate';
+	const VIEW_TYPE_CHANGES = 'changes';
+	const VIEW_TYPE_CONTEXT = 'context';
 
-		const {
-			activeCTCollection,
-			changes,
-			contextView,
-			ctCollectionId,
-			currentUser,
-			dataURL,
-			deleteCTCommentURL,
-			discardURL,
-			expired,
-			getCTCommentsURL,
-			models,
-			namespace,
-			pathParam,
-			rootDisplayClasses,
-			showHideableParam,
-			siteNames,
-			spritemap,
-			typeNames,
-			updateCTCommentURL,
-			userInfo,
-		} = props;
+	const modelsRef = useRef(null);
 
-		this.CHANGE_TYPE_ADDED = 'added';
-		this.CHANGE_TYPE_DELETED = 'deleted';
-		this.COLUMN_CHANGE_TYPE = 'CHANGE_TYPE';
-		this.COLUMN_MODIFIED_DATE = 'MODIFIED_DATE';
-		this.COLUMN_SITE = 'SITE';
-		this.COLUMN_TITLE = 'TITLE';
-		this.COLUMN_USER = 'USER';
-		this.FILTER_CLASS_EVERYTHING = 'everything';
-		this.GLOBAL_SITE_NAME = Liferay.Language.get('global');
-		this.MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
-		this.PARAM_CT_COLLECTION_ID = namespace + 'ctCollectionId';
-		this.PARAM_MVC_RENDER_COMMAND_NAME = namespace + 'mvcRenderCommandName';
-		this.PARAM_PATH = namespace + 'path';
-		this.PARAM_SHOW_HIDEABLE = namespace + 'showHideable';
-		this.POP_STATE = 'popstate';
-		this.VIEW_TYPE_CHANGES = 'changes';
-		this.VIEW_TYPE_CONTEXT = 'context';
+	if (modelsRef.current === null) {
+		modelsRef.current = JSON.parse(JSON.stringify(modelData));
 
-		this.activeCTCollection = activeCTCollection;
-		this.changes = changes;
-		this.contextView = contextView;
-		this.ctCollectionId = ctCollectionId;
-		this.currentUser = currentUser;
-		this.dataURL = dataURL;
-		this.discardURL = discardURL;
-		this.deleteCTCommentURL = deleteCTCommentURL;
-		this.expired = expired;
-		this.getCTCommentsURL = getCTCommentsURL;
-		this.namespace = namespace;
-		this.models = models;
-		this.rootDisplayClasses = rootDisplayClasses;
-		this.spritemap = spritemap;
-		this.updateCTCommentURL = updateCTCommentURL;
-		this.userInfo = userInfo;
+		const modelKeys = Object.keys(modelsRef.current);
 
-		this.renderCache = {};
+		for (let i = 0; i < modelKeys.length; i++) {
+			const model = modelsRef.current[modelKeys[i]];
 
-		this._populateModelInfo(siteNames, typeNames);
+			if (model.groupId) {
+				model.siteName = siteNames[model.groupId.toString()];
+			}
+			else {
+				model.siteName = GLOBAL_SITE_NAME;
+			}
 
-		const pathState = this._getPathState(pathParam);
+			model.typeName = typeNames[model.modelClassNameId.toString()];
 
-		const filterClass = pathState.filterClass;
-		const nodeId = pathState.nodeId;
-		const viewType = pathState.viewType;
+			if (model.ctEntryId) {
+				model.changeTypeLabel = Liferay.Language.get('modified');
 
-		const node = this._getNode(filterClass, nodeId, viewType);
+				if (model.changeType === CHANGE_TYPE_ADDED) {
+					model.changeTypeLabel = Liferay.Language.get('added');
+				}
+				else if (model.changeType === CHANGE_TYPE_DELETED) {
+					model.changeTypeLabel = Liferay.Language.get('deleted');
+				}
 
-		const breadcrumbItems = this._getBreadcrumbItems(
-			node,
-			filterClass,
-			nodeId,
-			viewType
-		);
+				model.userName = userInfo[model.userId.toString()].userName;
 
-		const pathname = window.location.pathname;
-		const search = window.location.search;
+				if (model.siteName === GLOBAL_SITE_NAME) {
+					let key = Liferay.Language.get('x-modified-a-x-x-ago');
 
-		const params = new URLSearchParams(search);
+					if (model.changeType === CHANGE_TYPE_ADDED) {
+						key = Liferay.Language.get('x-added-a-x-x-ago');
+					}
+					else if (model.changeType === CHANGE_TYPE_DELETED) {
+						key = Liferay.Language.get('x-deleted-a-x-x-ago');
+					}
 
-		if (this._isWithinApp(params)) {
-			const state = {
-				path: pathname + search,
-				senna: true,
+					model.description = Liferay.Util.sub(
+						key,
+						model.userName,
+						model.typeName,
+						model.timeDescription
+					);
+				}
+				else {
+					let key = Liferay.Language.get('x-modified-a-x-in-x-x-ago');
+
+					if (model.changeType === CHANGE_TYPE_ADDED) {
+						key = Liferay.Language.get('x-added-a-x-in-x-x-ago');
+					}
+					else if (model.changeType === CHANGE_TYPE_DELETED) {
+						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
+					}
+
+					model.description = Liferay.Util.sub(
+						key,
+						model.userName,
+						model.typeName,
+						model.siteName,
+						model.timeDescription
+					);
+				}
+			}
+		}
+	}
+
+	const contextViewRef = useRef(null);
+
+	if (contextViewRef.current === null) {
+		contextViewRef.current = JSON.parse(JSON.stringify(contextView));
+
+		for (let i = 0; i < rootDisplayClasses.length; i++) {
+			const rootClass = contextViewRef.current[rootDisplayClasses[i]];
+
+			let hideable = true;
+
+			for (let i = 0; i < rootClass.children.length; i++) {
+				const model =
+					modelsRef.current[
+						rootClass.children[i].modelKey.toString()
+					];
+
+				if (!model.hideable) {
+					hideable = false;
+
+					break;
+				}
+			}
+
+			rootClass.hideable = hideable;
+		}
+	}
+
+	const renderCache = useRef({});
+
+	const getModels = useCallback((nodes) => {
+		if (!nodes) {
+			return [];
+		}
+
+		const models = [];
+
+		for (let i = 0; i < nodes.length; i++) {
+			const node = nodes[i];
+
+			let modelKey = node;
+			let nodeId = node;
+
+			if (typeof node === 'object') {
+				modelKey = node.modelKey;
+				nodeId = node.nodeId;
+			}
+
+			if (
+				!Object.prototype.hasOwnProperty.call(
+					modelsRef.current,
+					modelKey.toString()
+				)
+			) {
+				continue;
+			}
+
+			const json = JSON.parse(
+				JSON.stringify(modelsRef.current[modelKey.toString()])
+			);
+
+			json.nodeId = nodeId;
+
+			models.push(json);
+		}
+
+		return models;
+	}, []);
+
+	const getPathState = useCallback(
+		(param) => {
+			if (!param) {
+				return {
+					filterClass: FILTER_CLASS_EVERYTHING,
+					nodeId: 0,
+					viewType: VIEW_TYPE_CHANGES,
+				};
+			}
+
+			const parts = param.split('/');
+
+			const path = [];
+
+			if (parts.length > 2) {
+				for (let i = 2; i < parts.length; i++) {
+					const part = parts[i];
+
+					const keys = part.split('-');
+
+					path.push({
+						modelClassNameId: keys[0],
+						modelClassPK: keys[1],
+					});
+				}
+			}
+
+			const pathState = {
+				filterClass: parts[1],
+				nodeId: 0,
+				viewType: parts[0],
 			};
 
-			window.history.replaceState(state, document.title);
-		}
+			if (
+				pathState.filterClass !== FILTER_CLASS_EVERYTHING &&
+				!contextViewRef.current[pathState.filterClass]
+			) {
+				pathState.filterClass = FILTER_CLASS_EVERYTHING;
+			}
+			else if (
+				pathState.viewType === VIEW_TYPE_CHANGES &&
+				path.length > 0
+			) {
+				const modelClassNameId = path[0].modelClassNameId;
+				const modelClassPK = path[0].modelClassPK;
 
-		params.delete(this.PARAM_PATH);
-		params.delete(this.PARAM_SHOW_HIDEABLE);
+				for (let i = 0; i < changes.length; i++) {
+					const modelKey = changes[i];
 
-		this.basePath = pathname + '?' + params.toString();
+					const model = modelsRef.current[modelKey.toString()];
 
-		let showHideable = showHideableParam;
+					if (
+						modelClassNameId === model.modelClassNameId &&
+						modelClassPK === model.modelClassPK
+					) {
+						pathState.nodeId = modelKey;
+					}
+				}
+			}
+			else if (pathState.viewType === VIEW_TYPE_CONTEXT) {
+				let contextNode = contextViewRef.current.everything;
 
-		if (
-			node.hideable ||
-			(filterClass !== this.FILTER_CLASS_EVERYTHING &&
-				this.contextView[filterClass].hideable)
-		) {
-			showHideable = true;
-		}
+				if (pathState.filterClass !== FILTER_CLASS_EVERYTHING) {
+					contextNode = contextViewRef.current[pathState.filterClass];
+				}
 
-		this.state = {
-			ascending: true,
-			breadcrumbItems,
-			children: this._filterHideableNodes(node.children, showHideable),
-			column: this.COLUMN_TITLE,
-			delta: 20,
-			filterClass,
-			node,
-			page: 1,
-			showHideable,
-			sortDirectionClass: 'order-arrow-down-active',
-			viewType,
+				for (let i = 0; i < path.length; i++) {
+					if (!contextNode.children) {
+						break;
+					}
+
+					const sessionNode = path[i];
+
+					for (let j = 0; j < contextNode.children.length; j++) {
+						const child = contextNode.children[j];
+
+						const model =
+							modelsRef.current[child.modelKey.toString()];
+
+						if (
+							model.modelClassNameId ===
+								sessionNode.modelClassNameId &&
+							model.modelClassPK === sessionNode.modelClassPK
+						) {
+							if (
+								pathState.filterClass !==
+									FILTER_CLASS_EVERYTHING &&
+								i === 0
+							) {
+								const stack = [
+									contextViewRef.current.everything,
+								];
+
+								while (stack.length > 0) {
+									const element = stack.pop();
+
+									if (element.nodeId === child.nodeId) {
+										contextNode = element;
+
+										break;
+									}
+									else if (!element.children) {
+										continue;
+									}
+
+									for (
+										let i = 0;
+										i < element.children.length;
+										i++
+									) {
+										stack.push(element.children[i]);
+									}
+								}
+							}
+							else {
+								contextNode = child;
+							}
+
+							pathState.nodeId = contextNode.nodeId;
+
+							break;
+						}
+					}
+				}
+			}
+
+			return pathState;
+		},
+		[FILTER_CLASS_EVERYTHING, changes]
+	);
+
+	const pathState = getPathState(pathFromURL);
+
+	const initialFilterClass = pathState.filterClass;
+	const initialNodeId = pathState.nodeId;
+	const initialViewType = pathState.viewType;
+
+	const getNode = useCallback(
+		(filterClass, nodeId, viewType) => {
+			if (viewType === VIEW_TYPE_CHANGES) {
+				if (nodeId === 0) {
+					return {children: getModels(changes)};
+				}
+
+				return JSON.parse(
+					JSON.stringify(modelsRef.current[nodeId.toString()])
+				);
+			}
+			else if (
+				filterClass !== FILTER_CLASS_EVERYTHING &&
+				nodeId === 0
+			) {
+				return {
+					children: getModels(
+						contextViewRef.current[filterClass].children
+					),
+				};
+			}
+
+			const rootNode = contextViewRef.current.everything;
+
+			if (nodeId === 0) {
+				return {children: getModels(rootNode.children)};
+			}
+
+			if (!rootNode.parents) {
+				rootNode.parents = [];
+
+				for (let i = 0; i < rootNode.children.length; i++) {
+					rootNode.children[i].parents = [];
+				}
+			}
+
+			const stack = [rootNode];
+
+			while (stack.length > 0) {
+				const element = stack.pop();
+
+				if (element.nodeId === nodeId) {
+					const entry = JSON.parse(
+						JSON.stringify(
+							modelsRef.current[element.modelKey.toString()]
+						)
+					);
+
+					entry.children = getModels(element.children);
+					entry.nodeId = nodeId;
+					entry.parents = element.parents;
+
+					return entry;
+				}
+				else if (!element.children) {
+					continue;
+				}
+
+				for (let i = 0; i < element.children.length; i++) {
+					const child = element.children[i];
+
+					if (!child.parents) {
+						const parents = element.parents.slice(0);
+
+						const model =
+							modelsRef.current[element.modelKey.toString()];
+
+						parents.push({
+							hideable: model.hideable,
+							modelClassNameId: model.modelClassNameId,
+							modelClassPK: model.modelClassPK,
+							nodeId: element.nodeId,
+							title: model.title,
+							typeName: model.typeName,
+						});
+
+						child.parents = parents;
+					}
+
+					stack.push(child);
+				}
+			}
+
+			return null;
+		},
+		[FILTER_CLASS_EVERYTHING, changes, getModels]
+	);
+
+	const isWithinApp = useCallback(
+		(params) => {
+			const ctCollectionIdParam = params.get(PARAM_CT_COLLECTION_ID);
+			const mvcRenderCommandName = params.get(
+				PARAM_MVC_RENDER_COMMAND_NAME
+			);
+
+			if (
+				ctCollectionIdParam &&
+				ctCollectionIdParam === ctCollectionId.toString() &&
+				mvcRenderCommandName &&
+				mvcRenderCommandName === MVC_RENDER_COMMAND_NAME
+			) {
+				return true;
+			}
+
+			return false;
+		},
+		[
+			MVC_RENDER_COMMAND_NAME,
+			PARAM_CT_COLLECTION_ID,
+			PARAM_MVC_RENDER_COMMAND_NAME,
+			ctCollectionId,
+		]
+	);
+
+	const pathname = window.location.pathname;
+
+	const search = window.location.search;
+
+	const params = new URLSearchParams(search);
+
+	if (isWithinApp(params)) {
+		const state = {
+			path: pathname + search,
+			senna: true,
 		};
 
-		this._handlePopState = this._handlePopState.bind(this);
+		window.history.replaceState(state, document.title);
 	}
 
-	componentDidMount() {
-		window.addEventListener(this.POP_STATE, this._handlePopState);
+	params.delete(PARAM_PATH);
+	params.delete(PARAM_SHOW_HIDEABLE);
 
-		if (Liferay.SPA && Liferay.SPA.app) {
-			Liferay.SPA.app.skipLoadPopstate = true;
-		}
-	}
+	const basePath = useRef(pathname + '?' + params.toString());
 
-	componentWillUnmount() {
-		window.removeEventListener(this.POP_STATE, this._handlePopState);
-
-		if (Liferay.SPA && Liferay.SPA.app) {
-			Liferay.SPA.app.skipLoadPopstate = false;
-		}
-	}
-
-	_clone(json) {
-		const clone = {};
-
-		if (typeof json !== 'object') {
-			return null;
-		}
-
-		const keys = Object.keys(json);
-
-		for (let i = 0; i < keys.length; i++) {
-			clone[keys[i]] = json[keys[i]];
-		}
-
-		return clone;
-	}
-
-	_filterDisplayNodes(nodes) {
-		const ascending = this.state.ascending;
-
-		if (this._getColumn() === this.COLUMN_CHANGE_TYPE) {
-			nodes.sort((a, b) => {
-				if (a.changeType < b.changeType) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (a.changeType > b.changeType) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				const typeNameA = a.typeName.toLowerCase();
-				const typeNameB = b.typeName.toLowerCase();
-
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
-
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				const titleA = a.title.toLowerCase();
-				const titleB = b.title.toLowerCase();
-
-				if (titleA < titleB) {
-					return -1;
-				}
-
-				if (titleA > titleB) {
-					return 1;
-				}
-
-				return 0;
-			});
-		}
-		else if (this._getColumn() === this.COLUMN_SITE) {
-			nodes.sort((a, b) => {
-				const siteNameA = a.siteName.toLowerCase();
-				const siteNameB = b.siteName.toLowerCase();
-
-				if (
-					siteNameA < siteNameB ||
-					(a.siteName === this.GLOBAL_SITE_NAME &&
-						b.siteName !== this.GLOBAL_SITE_NAME)
-				) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (
-					siteNameA > siteNameB ||
-					(a.siteName !== this.GLOBAL_SITE_NAME &&
-						b.siteName === this.GLOBAL_SITE_NAME)
-				) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				const typeNameA = a.typeName.toLowerCase();
-				const typeNameB = b.typeName.toLowerCase();
-
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
-
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				const titleA = a.title.toLowerCase();
-				const titleB = b.title.toLowerCase();
-
-				if (titleA < titleB) {
-					return -1;
-				}
-
-				if (titleA > titleB) {
-					return 1;
-				}
-
-				return 0;
-			});
-		}
-		else if (this._getColumn() === this.COLUMN_TITLE) {
-			nodes.sort((a, b) => {
-				const typeNameA = a.typeName.toLowerCase();
-				const typeNameB = b.typeName.toLowerCase();
-
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
-
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				const titleA = a.title.toLowerCase();
-				const titleB = b.title.toLowerCase();
-
-				if (titleA < titleB) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (titleA > titleB) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				return 0;
-			});
-		}
-		else if (this._getColumn() === this.COLUMN_USER) {
-			nodes.sort((a, b) => {
-				const userNameA = a.userName.toLowerCase();
-				const userNameB = b.userName.toLowerCase();
-
-				if (userNameA < userNameB) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (userNameA > userNameB) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				const typeNameA = a.typeName.toLowerCase();
-				const typeNameB = b.typeName.toLowerCase();
-
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
-
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				const titleA = a.title.toLowerCase();
-				const titleB = b.title.toLowerCase();
-
-				if (titleA < titleB) {
-					return -1;
-				}
-
-				if (titleA > titleB) {
-					return 1;
-				}
-
-				return 0;
-			});
-		}
-		else {
-			nodes.sort((a, b) => {
-				if (a.modifiedTime < b.modifiedTime) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (a.modifiedTime > b.modifiedTime) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				return 0;
-			});
-		}
-
-		if (nodes.length > 5) {
-			nodes = nodes.slice(
-				this.state.delta * (this.state.page - 1),
-				this.state.delta * this.state.page
-			);
-		}
-
-		if (this._getColumn() === this.COLUMN_MODIFIED_DATE) {
-			nodes.sort((a, b) => {
-				const typeNameA = a.typeName.toLowerCase();
-				const typeNameB = b.typeName.toLowerCase();
-
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
-
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				if (a.modifiedTime < b.modifiedTime) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (a.modifiedTime > b.modifiedTime) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				return 0;
-			});
-		}
-
-		return nodes;
-	}
-
-	_filterHideableNodes(nodes, showHideable) {
+	const filterHideableNodes = (nodes, showHideable) => {
 		if (!nodes || showHideable) {
 			return nodes;
 		}
@@ -930,42 +974,279 @@ class ChangeTrackingChangesView extends React.Component {
 		const filterNodes = [];
 
 		for (let i = 0; i < nodes.length; i++) {
-			const node = nodes[i];
-
-			if (!node.hideable) {
-				filterNodes.push(node);
+			if (!nodes[i].hideable) {
+				filterNodes.push(nodes[i]);
 			}
 		}
 
 		return filterNodes;
-	}
+	};
 
-	_format(key, args) {
-		const SPLIT_REGEX = /({\d+})/g;
+	const getPath = useCallback(
+		(pathParam, showHideable) => {
+			return (
+				basePath.current +
+				'&' +
+				PARAM_PATH +
+				'=' +
+				pathParam +
+				'&' +
+				PARAM_SHOW_HIDEABLE +
+				'=' +
+				showHideable.toString()
+			);
+		},
+		[PARAM_PATH, PARAM_SHOW_HIDEABLE]
+	);
 
-		const keyArray = key
-			.split(SPLIT_REGEX)
-			.filter((val) => val.length !== 0);
+	const getPathParam = (filterClass, node, viewType) => {
+		let path = viewType + '/' + filterClass;
 
-		for (let i = 0; i < args.length; i++) {
-			const arg = args[i];
+		const nodes = [];
 
-			const indexKey = `{${i}}`;
+		if (viewType !== VIEW_TYPE_CHANGES && node.parents) {
+			for (let i = 0; i < node.parents.length; i++) {
+				const parent = node.parents[i];
 
-			let argIndex = keyArray.indexOf(indexKey);
-
-			while (argIndex >= 0) {
-				keyArray.splice(argIndex, 1, arg);
-
-				argIndex = keyArray.indexOf(indexKey);
+				if (parent.modelClassNameId) {
+					nodes.push({
+						label: parent.title,
+						modelClassNameId: parent.modelClassNameId,
+						modelClassPK: parent.modelClassPK,
+					});
+				}
 			}
 		}
 
-		return keyArray.join('');
-	}
+		if (node.modelClassNameId) {
+			nodes.push({
+				label: node.title,
+				modelClassNameId: node.modelClassNameId,
+				modelClassPK: node.modelClassPK,
+			});
+		}
 
-	_getBreadcrumbItems(node, filterClass, nodeId, viewType) {
-		if (viewType === this.VIEW_TYPE_CHANGES) {
+		if (nodes.length > 0) {
+			let tree = '';
+
+			for (let i = 0; i < nodes.length; i++) {
+				const node = nodes[i];
+
+				if (node.modelClassNameId) {
+					tree +=
+						'/' +
+						node.modelClassNameId.toString() +
+						'-' +
+						node.modelClassPK.toString();
+				}
+			}
+
+			path += tree;
+		}
+
+		return path;
+	};
+
+	const initialNode = getNode(
+		initialFilterClass,
+		initialNodeId,
+		initialViewType
+	);
+
+	const initialShowHideable =
+		initialNode.hideable ||
+		(initialFilterClass !== FILTER_CLASS_EVERYTHING &&
+			contextViewRef.current[initialFilterClass].hideable)
+			? true
+			: !!showHideableFromURL;
+
+	const [ascendingState, setAscendingState] = useState(true);
+	const [columnState, setColumnState] = useState(COLUMN_TITLE);
+	const [deltaState, setDeltaState] = useState(20);
+	const [renderState, setRenderState] = useState({
+		children: filterHideableNodes(
+			initialNode.children,
+			initialShowHideable
+		),
+		filterClass: initialFilterClass,
+		id: initialNodeId,
+		node: initialNode,
+		page: 1,
+		showHideable: initialShowHideable,
+		viewType: initialViewType,
+	});
+
+	const handleNavigationUpdate = useCallback(
+		(json) => {
+			let filterClass = json.filterClass;
+
+			if (!filterClass) {
+				filterClass = renderState.filterClass;
+			}
+
+			const nodeId = json.nodeId;
+
+			let showHideable = renderState.showHideable;
+
+			if (Object.prototype.hasOwnProperty.call(json, 'showHideable')) {
+				showHideable = json.showHideable;
+			}
+
+			let viewType = json.viewType;
+
+			if (!viewType) {
+				viewType = renderState.viewType;
+			}
+
+			if (
+				viewType === VIEW_TYPE_CONTEXT &&
+				contextViewRef.current.errorMessage
+			) {
+				setRenderState({
+					children: renderState.children,
+					filterClass: renderState.filterClass,
+					id: renderState.id,
+					node: renderState.node,
+					page: renderState.page,
+					showHideable: renderState.showHideable,
+					viewType: VIEW_TYPE_CONTEXT,
+				});
+
+				return;
+			}
+
+			const node = getNode(filterClass, nodeId, viewType);
+
+			const pathParam = getPathParam(filterClass, node, viewType);
+
+			const path = getPath(pathParam, showHideable);
+
+			const state = {
+				path,
+				senna: true,
+			};
+
+			window.history.pushState(state, document.title, path);
+
+			setRenderState({
+				children: filterHideableNodes(node.children, showHideable),
+				filterClass,
+				id: nodeId,
+				node,
+				page: 1,
+				showHideable,
+				viewType,
+			});
+
+			window.scrollTo(0, 0);
+		},
+		[VIEW_TYPE_CONTEXT, getNode, getPath, renderState]
+	);
+
+	const handlePopState = useCallback(
+		(event) => {
+			const state = event.state;
+
+			let search = window.location.search;
+
+			if (state) {
+				const index = state.path.indexOf('?');
+
+				if (index < 0) {
+					if (Liferay.SPA && Liferay.SPA.app) {
+						Liferay.SPA.app.skipLoadPopstate = false;
+
+						Liferay.SPA.app.navigate(window.location.href, true);
+					}
+
+					return;
+				}
+
+				search = state.path.substring(index);
+			}
+
+			const params = new URLSearchParams(search);
+
+			if (!isWithinApp(params)) {
+				if (Liferay.SPA && Liferay.SPA.app) {
+					Liferay.SPA.app.skipLoadPopstate = false;
+
+					Liferay.SPA.app.navigate(window.location.href, true);
+				}
+
+				return;
+			}
+
+			const pathState = getPathState(params.get(PARAM_PATH));
+
+			const filterClass = pathState.filterClass;
+			const nodeId = pathState.nodeId;
+			const viewType = pathState.viewType;
+
+			if (
+				viewType === VIEW_TYPE_CONTEXT &&
+				contextViewRef.current.errorMessage
+			) {
+				setRenderState({
+					children: renderState.children,
+					filterClass: renderState.filterClass,
+					id: renderState.id,
+					node: renderState.node,
+					page: renderState.page,
+					showHideable: renderState.showHideable,
+					viewType: VIEW_TYPE_CONTEXT,
+				});
+
+				return;
+			}
+
+			const node = getNode(filterClass, nodeId, viewType);
+
+			const showHideable =
+				node.hideable ||
+				(filterClass !== FILTER_CLASS_EVERYTHING &&
+					contextViewRef.current[filterClass].hideable)
+					? true
+					: !!renderState.showHideable;
+
+			setRenderState({
+				children: filterHideableNodes(node.children, showHideable),
+				filterClass,
+				id: nodeId,
+				node,
+				page: 1,
+				showHideable,
+				viewType,
+			});
+		},
+		[
+			PARAM_PATH,
+			VIEW_TYPE_CONTEXT,
+			getNode,
+			getPathState,
+			isWithinApp,
+			renderState,
+		]
+	);
+
+	useEffect(() => {
+		window.addEventListener(POP_STATE, handlePopState);
+
+		if (Liferay.SPA && Liferay.SPA.app) {
+			Liferay.SPA.app.skipLoadPopstate = true;
+		}
+
+		return () => {
+			window.removeEventListener(POP_STATE, handlePopState);
+
+			if (Liferay.SPA && Liferay.SPA.app) {
+				Liferay.SPA.app.skipLoadPopstate = false;
+			}
+		};
+	}, [handlePopState]);
+
+	const getBreadcrumbItems = (filterClass, node, nodeId, viewType) => {
+		if (viewType === VIEW_TYPE_CHANGES) {
 			if (nodeId === 0) {
 				return [
 					{
@@ -979,7 +1260,7 @@ class ChangeTrackingChangesView extends React.Component {
 				{
 					label: Liferay.Language.get('home'),
 					onClick: () =>
-						this._handleNavigationUpdate({
+						handleNavigationUpdate({
 							nodeId: 0,
 						}),
 				},
@@ -995,7 +1276,7 @@ class ChangeTrackingChangesView extends React.Component {
 		const breadcrumbItems = [];
 		const homeBreadcrumbItem = {label: Liferay.Language.get('home')};
 
-		if (filterClass === this.FILTER_CLASS_EVERYTHING && nodeId === 0) {
+		if (filterClass === FILTER_CLASS_EVERYTHING && nodeId === 0) {
 			homeBreadcrumbItem.active = true;
 
 			breadcrumbItems.push(homeBreadcrumbItem);
@@ -1004,8 +1285,8 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		homeBreadcrumbItem.onClick = () =>
-			this._handleNavigationUpdate({
-				filterClass: this.FILTER_CLASS_EVERYTHING,
+			handleNavigationUpdate({
+				filterClass: FILTER_CLASS_EVERYTHING,
 				nodeId: 0,
 			});
 
@@ -1013,7 +1294,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		let showParent = false;
 
-		if (filterClass === this.FILTER_CLASS_EVERYTHING) {
+		if (filterClass === FILTER_CLASS_EVERYTHING) {
 			showParent = true;
 		}
 		else {
@@ -1037,8 +1318,8 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 
 			rootDisplayClassBreadcrumb.onClick = () =>
-				this._handleNavigationUpdate({
-					filterClass,
+				handleNavigationUpdate({
+					filterClass: renderState.filterClass,
 					nodeId: 0,
 				});
 
@@ -1067,8 +1348,8 @@ class ChangeTrackingChangesView extends React.Component {
 				modelClassPK: parent.modelClassPK,
 				nodeId: parent.nodeId,
 				onClick: () =>
-					this._handleNavigationUpdate({
-						filterClass,
+					handleNavigationUpdate({
+						filterClass: renderState.filterClass,
 						nodeId: parent.nodeId,
 					}),
 			});
@@ -1082,222 +1363,328 @@ class ChangeTrackingChangesView extends React.Component {
 		});
 
 		return breadcrumbItems;
-	}
+	};
 
-	_getColumn() {
-		if (this.state.viewType === this.VIEW_TYPE_CONTEXT) {
-			return this.COLUMN_TITLE;
+	const filterDisplayNodes = (nodes) => {
+		if (getColumn() === COLUMN_CHANGE_TYPE) {
+			nodes.sort((a, b) => {
+				if (a.changeType < b.changeType) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (a.changeType > b.changeType) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
+					return -1;
+				}
+
+				if (titleA > titleB) {
+					return 1;
+				}
+
+				return 0;
+			});
+		}
+		else if (getColumn() === COLUMN_SITE) {
+			nodes.sort((a, b) => {
+				const siteNameA = a.siteName.toLowerCase();
+				const siteNameB = b.siteName.toLowerCase();
+
+				if (
+					siteNameA < siteNameB ||
+					(a.siteName === GLOBAL_SITE_NAME &&
+						b.siteName !== GLOBAL_SITE_NAME)
+				) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (
+					siteNameA > siteNameB ||
+					(a.siteName !== GLOBAL_SITE_NAME &&
+						b.siteName === GLOBAL_SITE_NAME)
+				) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
+					return -1;
+				}
+
+				if (titleA > titleB) {
+					return 1;
+				}
+
+				return 0;
+			});
+		}
+		else if (getColumn() === COLUMN_TITLE) {
+			nodes.sort((a, b) => {
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (titleA > titleB) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
+		}
+		else if (getColumn() === COLUMN_USER) {
+			nodes.sort((a, b) => {
+				const userNameA = a.userName.toLowerCase();
+				const userNameB = b.userName.toLowerCase();
+
+				if (userNameA < userNameB) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (userNameA > userNameB) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
+					return -1;
+				}
+
+				if (titleA > titleB) {
+					return 1;
+				}
+
+				return 0;
+			});
+		}
+		else {
+			nodes.sort((a, b) => {
+				if (a.modifiedTime < b.modifiedTime) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (a.modifiedTime > b.modifiedTime) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
 		}
 
-		return this.state.column;
-	}
+		if (nodes.length > 5) {
+			nodes = nodes.slice(
+				deltaState * (renderState.page - 1),
+				deltaState * renderState.page
+			);
+		}
 
-	_getDataURL(node) {
+		if (getColumn() === COLUMN_MODIFIED_DATE) {
+			nodes.sort((a, b) => {
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				if (a.modifiedTime < b.modifiedTime) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (a.modifiedTime > b.modifiedTime) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
+		}
+
+		return nodes;
+	};
+
+	const format = (key, args) => {
+		const SPLIT_REGEX = /({\d+})/g;
+
+		const keyArray = key
+			.split(SPLIT_REGEX)
+			.filter((val) => val.length !== 0);
+
+		for (let i = 0; i < args.length; i++) {
+			const arg = args[i];
+
+			const indexKey = `{${i}}`;
+
+			let argIndex = keyArray.indexOf(indexKey);
+
+			while (argIndex >= 0) {
+				keyArray.splice(argIndex, 1, arg);
+
+				argIndex = keyArray.indexOf(indexKey);
+			}
+		}
+
+		return keyArray.join('');
+	};
+
+	const getColumn = () => {
+		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
+			return COLUMN_TITLE;
+		}
+
+		return columnState;
+	};
+
+	const getDataURL = (node) => {
 		if (node.ctEntryId) {
-			return this._setParameter(
-				this.dataURL,
+			return setParameter(
+				dataURL,
 				'ctEntryId',
 				node.ctEntryId.toString()
 			);
 		}
 
-		const dataURL = this._setParameter(
-			this.dataURL,
-			'modelClassNameId',
-			node.modelClassNameId.toString()
-		);
-
-		return this._setParameter(
+		const url = setParameter(
 			dataURL,
-			'modelClassPK',
-			node.modelClassPK.toString()
-		);
-	}
-
-	_getDiscardURL(node) {
-		const discardURL = this._setParameter(
-			this.discardURL,
 			'modelClassNameId',
 			node.modelClassNameId.toString()
 		);
 
-		return this._setParameter(
+		return setParameter(url, 'modelClassPK', node.modelClassPK.toString());
+	};
+
+	const getDiscardURL = (node) => {
+		const url = setParameter(
 			discardURL,
-			'modelClassPK',
-			node.modelClassPK.toString()
+			'modelClassNameId',
+			node.modelClassNameId.toString()
 		);
-	}
 
-	_getModels(nodes) {
-		if (!nodes) {
-			return [];
-		}
+		return setParameter(url, 'modelClassPK', node.modelClassPK.toString());
+	};
 
-		const models = [];
-
-		for (let i = 0; i < nodes.length; i++) {
-			const node = nodes[i];
-
-			let modelKey = node;
-			let nodeId = node;
-
-			if (typeof node === 'object') {
-				modelKey = node.modelKey;
-				nodeId = node.nodeId;
-			}
-
-			const model = this._clone(this.models[modelKey.toString()]);
-
-			if (model === null) {
-				continue;
-			}
-
-			model.nodeId = nodeId;
-
-			models.push(model);
-		}
-
-		return models;
-	}
-
-	_getNode(filterClass, nodeId, viewType) {
-		if (viewType === this.VIEW_TYPE_CHANGES) {
-			if (nodeId === 0) {
-				return {children: this._getModels(this.changes)};
-			}
-
-			return this._clone(this.models[nodeId.toString()]);
-		}
-		else if (
-			filterClass !== this.FILTER_CLASS_EVERYTHING &&
-			nodeId === 0
-		) {
-			return {
-				children: this._getModels(
-					this.contextView[filterClass].children
-				),
-			};
-		}
-
-		const rootNode = this.contextView.everything;
-
-		if (nodeId === 0) {
-			return {children: this._getModels(rootNode.children)};
-		}
-
-		if (!rootNode.parents) {
-			rootNode.parents = [];
-
-			for (let i = 0; i < rootNode.children.length; i++) {
-				rootNode.children[i].parents = [];
-			}
-		}
-
-		const stack = [rootNode];
-
-		while (stack.length > 0) {
-			const element = stack.pop();
-
-			if (element.nodeId === nodeId) {
-				const entry = this._clone(
-					this.models[element.modelKey.toString()]
-				);
-
-				entry.children = this._getModels(element.children);
-				entry.nodeId = nodeId;
-				entry.parents = element.parents;
-
-				return entry;
-			}
-			else if (!element.children) {
-				continue;
-			}
-
-			for (let i = 0; i < element.children.length; i++) {
-				const child = element.children[i];
-
-				if (!child.parents) {
-					const parents = element.parents.slice(0);
-
-					const model = this.models[element.modelKey.toString()];
-
-					parents.push({
-						hideable: model.hideable,
-						modelClassNameId: model.modelClassNameId,
-						modelClassPK: model.modelClassPK,
-						nodeId: element.nodeId,
-						title: model.title,
-						typeName: model.typeName,
-					});
-
-					child.parents = parents;
-				}
-
-				stack.push(child);
-			}
-		}
-
-		return null;
-	}
-
-	_getPath(pathParam, showHideable) {
-		return (
-			this.basePath +
-			'&' +
-			this.PARAM_PATH +
-			'=' +
-			pathParam +
-			'&' +
-			this.PARAM_SHOW_HIDEABLE +
-			'=' +
-			showHideable.toString()
-		);
-	}
-
-	_getPathParam(breadcrumbItems, filterClass, viewType) {
-		let path = viewType + '/' + filterClass;
-
-		if (breadcrumbItems && breadcrumbItems.length > 0) {
-			let tree = '';
-
-			for (let i = 0; i < breadcrumbItems.length; i++) {
-				const breadcrumbItem = breadcrumbItems[i];
-
-				if (breadcrumbItem.modelClassNameId) {
-					tree +=
-						'/' +
-						breadcrumbItem.modelClassNameId.toString() +
-						'-' +
-						breadcrumbItem.modelClassPK.toString();
-				}
-			}
-
-			path += tree;
-		}
-
-		return path;
-	}
-
-	_getPortraitURL(node) {
-		return this.userInfo[node.userId.toString()].portraitURL;
-	}
-
-	_getRootDisplayOptions() {
+	const getRootDisplayOptions = () => {
 		const rootDisplayOptions = [];
 
 		rootDisplayOptions.push(
 			<ClayRadio
 				label={Liferay.Language.get('everything')}
-				value={this.FILTER_CLASS_EVERYTHING}
+				value={FILTER_CLASS_EVERYTHING}
 			/>
 		);
 
-		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
-			const className = this.rootDisplayClasses[i];
+		for (let i = 0; i < rootDisplayClasses.length; i++) {
+			const className = rootDisplayClasses[i];
 
 			if (
-				!this.state.showHideable &&
-				this.contextView[className].hideable
+				!renderState.showHideable &&
+				contextViewRef.current[className].hideable
 			) {
 				continue;
 			}
@@ -1317,135 +1704,10 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return rootDisplayOptions;
-	}
+	};
 
-	_getPathState(pathParam) {
-		if (!pathParam) {
-			return {
-				filterClass: this.FILTER_CLASS_EVERYTHING,
-				nodeId: 0,
-				viewType: this.VIEW_TYPE_CHANGES,
-			};
-		}
-
-		const parts = pathParam.split('/');
-
-		const path = [];
-
-		if (parts.length > 2) {
-			for (let i = 2; i < parts.length; i++) {
-				const part = parts[i];
-
-				const keys = part.split('-');
-
-				path.push({
-					modelClassNameId: keys[0],
-					modelClassPK: keys[1],
-				});
-			}
-		}
-
-		const pathState = {
-			filterClass: parts[1],
-			nodeId: 0,
-			viewType: parts[0],
-		};
-
-		if (
-			pathState.filterClass !== this.FILTER_CLASS_EVERYTHING &&
-			!this.contextView[pathState.filterClass]
-		) {
-			pathState.filterClass = this.FILTER_CLASS_EVERYTHING;
-		}
-		else if (
-			pathState.viewType === this.VIEW_TYPE_CHANGES &&
-			path.length > 0
-		) {
-			const modelClassNameId = path[0].modelClassNameId;
-			const modelClassPK = path[0].modelClassPK;
-
-			for (let i = 0; i < this.changes.length; i++) {
-				const modelKey = this.changes[i];
-
-				const model = this.models[modelKey.toString()];
-
-				if (
-					modelClassNameId === model.modelClassNameId &&
-					modelClassPK === model.modelClassPK
-				) {
-					pathState.nodeId = modelKey;
-				}
-			}
-		}
-		else if (pathState.viewType === this.VIEW_TYPE_CONTEXT) {
-			let contextNode = this.contextView.everything;
-
-			if (pathState.filterClass !== this.FILTER_CLASS_EVERYTHING) {
-				contextNode = this.contextView[pathState.filterClass];
-			}
-
-			for (let i = 0; i < path.length; i++) {
-				if (!contextNode.children) {
-					break;
-				}
-
-				const sessionNode = path[i];
-
-				for (let j = 0; j < contextNode.children.length; j++) {
-					const child = contextNode.children[j];
-
-					const model = this.models[child.modelKey.toString()];
-
-					if (
-						model.modelClassNameId ===
-							sessionNode.modelClassNameId &&
-						model.modelClassPK === sessionNode.modelClassPK
-					) {
-						if (
-							pathState.filterClass !==
-								this.FILTER_CLASS_EVERYTHING &&
-							i === 0
-						) {
-							const stack = [this.contextView.everything];
-
-							while (stack.length > 0) {
-								const element = stack.pop();
-
-								if (element.nodeId === child.nodeId) {
-									contextNode = element;
-
-									break;
-								}
-								else if (!element.children) {
-									continue;
-								}
-
-								for (
-									let i = 0;
-									i < element.children.length;
-									i++
-								) {
-									stack.push(element.children[i]);
-								}
-							}
-						}
-						else {
-							contextNode = child;
-						}
-
-						pathState.nodeId = contextNode.nodeId;
-
-						break;
-					}
-				}
-			}
-		}
-
-		return pathState;
-	}
-
-	_getTableHead() {
-		if (this.state.viewType === this.VIEW_TYPE_CONTEXT) {
+	const getTableHead = () => {
+		if (renderState.viewType === VIEW_TYPE_CONTEXT) {
 			return '';
 		}
 
@@ -1477,9 +1739,9 @@ class ChangeTrackingChangesView extends React.Component {
 				</ClayTable.Row>
 			</ClayTable.Head>
 		);
-	}
+	};
 
-	_getTableRows(nodes) {
+	const getTableRows = (nodes) => {
 		const rows = [];
 
 		if (!nodes) {
@@ -1489,21 +1751,21 @@ class ChangeTrackingChangesView extends React.Component {
 		let currentTypeName = '';
 
 		for (let i = 0; i < nodes.length; i++) {
-			const node = nodes[i];
+			const item = nodes[i];
 
-			if (node.typeName !== currentTypeName) {
-				currentTypeName = node.typeName;
+			if (item.typeName !== currentTypeName) {
+				currentTypeName = item.typeName;
 
 				rows.push(
 					<ClayTable.Row divider>
 						<ClayTable.Cell
 							colSpan={
-								this.state.viewType === this.VIEW_TYPE_CHANGES
+								renderState.viewType === VIEW_TYPE_CHANGES
 									? 5
 									: 1
 							}
 						>
-							{node.typeName}
+							{item.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				);
@@ -1511,14 +1773,14 @@ class ChangeTrackingChangesView extends React.Component {
 
 			const cells = [];
 
-			if (this.state.viewType === this.VIEW_TYPE_CONTEXT) {
+			if (renderState.viewType === VIEW_TYPE_CONTEXT) {
 				cells.push(
 					<ClayTable.Cell>
-						<div className="publication-name">{node.title}</div>
+						<div className="publication-name">{item.title}</div>
 
-						{node.description && (
+						{item.description && (
 							<div className="publication-description">
-								{node.description}
+								{item.description}
 							</div>
 						)}
 					</ClayTable.Cell>
@@ -1528,33 +1790,31 @@ class ChangeTrackingChangesView extends React.Component {
 				cells.push(
 					<ClayTable.Cell>
 						<div
-							dangerouslySetInnerHTML={this._getUserPortraitHTML(
-								node
-							)}
+							dangerouslySetInnerHTML={getUserPortraitHTML(item)}
 							data-tooltip-align="top"
-							title={node.userName}
+							title={item.userName}
 						/>
 					</ClayTable.Cell>
 				);
 
-				cells.push(<ClayTable.Cell>{node.siteName}</ClayTable.Cell>);
+				cells.push(<ClayTable.Cell>{item.siteName}</ClayTable.Cell>);
 
 				cells.push(
 					<ClayTable.Cell className="publication-name table-cell-expand">
-						{node.title}
+						{item.title}
 					</ClayTable.Cell>
 				);
 
 				cells.push(
 					<ClayTable.Cell className="table-cell-expand-smallest">
-						{node.changeTypeLabel}
+						{item.changeTypeLabel}
 					</ClayTable.Cell>
 				);
 
 				cells.push(
 					<ClayTable.Cell className="table-cell-expand-smallest">
-						{this._format(Liferay.Language.get('x-ago'), [
-							node.timeDescription,
+						{format(Liferay.Language.get('x-ago'), [
+							item.timeDescription,
 						])}
 					</ClayTable.Cell>
 				);
@@ -1564,8 +1824,8 @@ class ChangeTrackingChangesView extends React.Component {
 				<ClayTable.Row
 					className="cursor-pointer"
 					onClick={() =>
-						this._handleNavigationUpdate({
-							nodeId: node.nodeId,
+						handleNavigationUpdate({
+							nodeId: item.nodeId,
 						})
 					}
 				>
@@ -1575,37 +1835,37 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return rows;
-	}
+	};
 
-	_getUserPortraitHTML(node) {
-		return {__html: this.userInfo[node.userId.toString()].userPortraitHTML};
-	}
+	const getUserPortraitHTML = (node) => {
+		return {__html: userInfo[node.userId.toString()].userPortraitHTML};
+	};
 
-	_getViewTypes() {
-		if (!this.contextView) {
+	const getViewTypes = () => {
+		if (!contextViewRef.current) {
 			return '';
 		}
 
 		const items = [
 			{
-				active: this.state.viewType === this.VIEW_TYPE_CHANGES,
+				active: renderState.viewType === VIEW_TYPE_CHANGES,
 				label: Liferay.Language.get('changes'),
 				onClick: () =>
-					this._handleNavigationUpdate({
-						filterClass: this.FILTER_CLASS_EVERYTHING,
+					handleNavigationUpdate({
+						filterClass: FILTER_CLASS_EVERYTHING,
 						nodeId: 0,
-						viewType: this.VIEW_TYPE_CHANGES,
+						viewType: VIEW_TYPE_CHANGES,
 					}),
 				symbolLeft: 'list',
 			},
 			{
-				active: this.state.viewType === this.VIEW_TYPE_CONTEXT,
+				active: renderState.viewType === VIEW_TYPE_CONTEXT,
 				label: Liferay.Language.get('context'),
 				onClick: () =>
-					this._handleNavigationUpdate({
-						filterClass: this.FILTER_CLASS_EVERYTHING,
+					handleNavigationUpdate({
+						filterClass: FILTER_CLASS_EVERYTHING,
 						nodeId: 0,
-						viewType: this.VIEW_TYPE_CONTEXT,
+						viewType: VIEW_TYPE_CONTEXT,
 					}),
 				symbolLeft: 'pages-tree',
 			},
@@ -1619,18 +1879,17 @@ class ChangeTrackingChangesView extends React.Component {
 				<ClayDropDownWithItems
 					alignmentPosition={Align.BottomLeft}
 					items={items}
-					spritemap={this.spritemap}
+					spritemap={spritemap}
 					trigger={
 						<ClayButton
 							className="nav-link nav-link-monospaced"
-							disabled={this.changes.length === 0}
+							disabled={changes.length === 0}
 							displayType="unstyled"
 						>
 							<ClayIcon
-								spritemap={this.spritemap}
+								spritemap={spritemap}
 								symbol={
-									this.state.viewType ===
-									this.VIEW_TYPE_CHANGES
+									renderState.viewType === VIEW_TYPE_CHANGES
 										? 'list'
 										: 'pages-tree'
 								}
@@ -1640,197 +1899,34 @@ class ChangeTrackingChangesView extends React.Component {
 				/>
 			</ClayManagementToolbar.Item>
 		);
-	}
+	};
 
-	_handleDeltaChange(delta) {
-		this.setState({
-			delta,
-			page: 1,
-		});
-	}
-
-	_handleNavigationUpdate(json) {
-		if (Liferay.SPA && Liferay.SPA.app) {
-			Liferay.SPA.app.skipLoadPopstate = true;
-		}
-
-		let filterClass = json.filterClass;
-
-		if (!filterClass) {
-			filterClass = this.state.filterClass;
-		}
-
-		const nodeId = json.nodeId;
-
-		let showHideable = this.state.showHideable;
-
-		if (Object.prototype.hasOwnProperty.call(json, 'showHideable')) {
-			showHideable = json.showHideable;
-		}
-
-		let viewType = json.viewType;
-
-		if (!viewType) {
-			viewType = this.state.viewType;
-		}
-
-		if (
-			viewType === this.VIEW_TYPE_CONTEXT &&
-			this.contextView.errorMessage
-		) {
-			this.setState({
-				viewType,
-			});
-
-			return;
-		}
-
-		const node = this._getNode(filterClass, nodeId, viewType);
-
-		const breadcrumbItems = this._getBreadcrumbItems(
-			node,
-			filterClass,
-			nodeId,
-			viewType
+	const handleShowHideableToggle = (showHideable) => {
+		const breadcrumbItems = getBreadcrumbItems(
+			renderState.filterClass,
+			renderState.node,
+			renderState.id,
+			renderState.viewType
 		);
 
-		const pathParam = this._getPathParam(
-			breadcrumbItems,
-			filterClass,
-			viewType
-		);
-
-		const path = this._getPath(pathParam, showHideable);
-
-		const state = {
-			path,
-			senna: true,
-		};
-
-		window.history.pushState(state, document.title, path);
-
-		this.setState({
-			breadcrumbItems,
-			children: this._filterHideableNodes(node.children, showHideable),
-			filterClass,
-			node,
-			page: 1,
-			showHideable,
-			viewType,
-		});
-
-		window.scrollTo(0, 0);
-	}
-
-	_handlePageChange(page) {
-		this.setState({
-			page,
-		});
-	}
-
-	_handlePopState(event) {
-		const state = event.state;
-
-		let search = window.location.search;
-
-		if (state) {
-			const index = state.path.indexOf('?');
-
-			if (index < 0) {
-				if (Liferay.SPA && Liferay.SPA.app) {
-					Liferay.SPA.app.skipLoadPopstate = false;
-
-					Liferay.SPA.app.navigate(window.location.href, true);
-				}
-
-				return;
-			}
-
-			search = state.path.substring(index);
-		}
-
-		const params = new URLSearchParams(search);
-
-		if (!this._isWithinApp(params)) {
-			if (Liferay.SPA && Liferay.SPA.app) {
-				Liferay.SPA.app.skipLoadPopstate = false;
-
-				Liferay.SPA.app.navigate(window.location.href, true);
-			}
-
-			return;
-		}
-
-		const pathState = this._getPathState(params.get(this.PARAM_PATH));
-
-		const filterClass = pathState.filterClass;
-		const nodeId = pathState.nodeId;
-		const viewType = pathState.viewType;
-
-		if (
-			viewType === this.VIEW_TYPE_CONTEXT &&
-			this.contextView.errorMessage
-		) {
-			this.setState({
-				viewType,
-			});
-
-			return;
-		}
-
-		const node = this._getNode(filterClass, nodeId, viewType);
-
-		const breadcrumbItems = this._getBreadcrumbItems(
-			node,
-			filterClass,
-			nodeId,
-			viewType
-		);
-
-		let showHideable = this.state.showHideable;
-
-		if (
-			node.hideable ||
-			(filterClass !== this.FILTER_CLASS_EVERYTHING &&
-				this.contextView[filterClass].hideable)
-		) {
-			showHideable = true;
-		}
-
-		this.setState({
-			breadcrumbItems,
-			children: this._filterHideableNodes(node.children, showHideable),
-			filterClass,
-			node,
-			page: 1,
-			showHideable,
-			viewType,
-		});
-	}
-
-	_handleShowHideableToggle(showHideable) {
 		if (!showHideable) {
 			if (
-				this.state.viewType === this.VIEW_TYPE_CONTEXT &&
-				this.contextView[this.state.filterClass].hideable
+				renderState.viewType === VIEW_TYPE_CONTEXT &&
+				contextViewRef.current[renderState.filterClass].hideable
 			) {
-				this._handleNavigationUpdate({
-					filterClass: this.FILTER_CLASS_EVERYTHING,
+				handleNavigationUpdate({
+					filterClass: FILTER_CLASS_EVERYTHING,
 					nodeId: 0,
 					showHideable,
 				});
 
 				return;
 			}
-			else if (this.state.node.hideable) {
+			else if (renderState.node.hideable) {
 				let nodeId = 0;
 
-				for (
-					let i = this.state.breadcrumbItems.length - 2;
-					i > 0;
-					i--
-				) {
-					const breadcrumbItem = this.state.breadcrumbItems[i];
+				for (let i = breadcrumbItems.length - 2; i > 0; i--) {
+					const breadcrumbItem = breadcrumbItems[i];
 
 					if (!breadcrumbItem.hideable) {
 						if (breadcrumbItem.nodeId) {
@@ -1841,7 +1937,7 @@ class ChangeTrackingChangesView extends React.Component {
 					}
 				}
 
-				this._handleNavigationUpdate({
+				handleNavigationUpdate({
 					nodeId,
 					showHideable,
 				});
@@ -1852,21 +1948,21 @@ class ChangeTrackingChangesView extends React.Component {
 
 		const oldState = window.history.state;
 
-		const newPathParam = this._getPathParam(
-			this.state.breadcrumbItems,
-			this.state.filterClass,
-			this.state.viewType
+		const pathParam = getPathParam(
+			renderState.filterClass,
+			renderState.node,
+			renderState.viewType
 		);
 
 		const params = new URLSearchParams(window.location.search);
 
-		const oldPathParam = params.get(this.PARAM_PATH);
+		const oldPathParam = params.get(PARAM_PATH);
 
 		if (
-			this._isWithinApp(params) &&
-			(!oldPathParam || oldPathParam === newPathParam)
+			isWithinApp(params) &&
+			(!oldPathParam || oldPathParam === pathParam)
 		) {
-			const path = this._getPath(newPathParam, showHideable);
+			const path = getPath(pathParam, showHideable);
 
 			let newState = {
 				path,
@@ -1874,7 +1970,7 @@ class ChangeTrackingChangesView extends React.Component {
 			};
 
 			if (oldState) {
-				newState = this._clone(oldState);
+				newState = JSON.parse(JSON.stringify(oldState));
 
 				newState.path = path;
 			}
@@ -1882,147 +1978,26 @@ class ChangeTrackingChangesView extends React.Component {
 			window.history.replaceState(newState, document.title, path);
 		}
 
-		this.setState({
-			children: this._filterHideableNodes(
-				this.state.node.children,
+		setRenderState({
+			children: filterHideableNodes(
+				renderState.node.children,
 				showHideable
 			),
+			filterClass: renderState.filterClass,
+			id: renderState.id,
+			node: renderState.node,
+			page: renderState.page,
 			showHideable,
+			viewType: renderState.viewType,
 		});
-	}
+	};
 
-	_handleSortColumnChange(column) {
-		this.setState({
-			column,
-		});
-	}
-
-	_handleSortDirectionChange() {
-		if (this.state.ascending) {
-			this.setState({
-				ascending: false,
-				sortDirectionClass: 'order-arrow-up-active',
-			});
-
-			return;
-		}
-
-		this.setState({
-			ascending: true,
-			sortDirectionClass: 'order-arrow-down-active',
-		});
-	}
-
-	_isWithinApp(params) {
-		const ctCollectionId = params.get(this.PARAM_CT_COLLECTION_ID);
-		const mvcRenderCommandName = params.get(
-			this.PARAM_MVC_RENDER_COMMAND_NAME
-		);
-
-		if (
-			ctCollectionId &&
-			ctCollectionId === this.ctCollectionId.toString() &&
-			mvcRenderCommandName &&
-			mvcRenderCommandName === this.MVC_RENDER_COMMAND_NAME
-		) {
-			return true;
-		}
-
-		return false;
-	}
-
-	_populateModelInfo(siteNames, typeNames) {
-		const keys = Object.keys(this.models);
-
-		for (let i = 0; i < keys.length; i++) {
-			const model = this.models[keys[i]];
-
-			if (model.groupId) {
-				model.siteName = siteNames[model.groupId.toString()];
-			}
-			else {
-				model.siteName = this.GLOBAL_SITE_NAME;
-			}
-
-			model.typeName = typeNames[model.modelClassNameId.toString()];
-
-			if (model.ctEntryId) {
-				model.changeTypeLabel = Liferay.Language.get('modified');
-
-				if (model.changeType === this.CHANGE_TYPE_ADDED) {
-					model.changeTypeLabel = Liferay.Language.get('added');
-				}
-				else if (model.changeType === this.CHANGE_TYPE_DELETED) {
-					model.changeTypeLabel = Liferay.Language.get('deleted');
-				}
-
-				model.userName = this.userInfo[
-					model.userId.toString()
-				].userName;
-
-				if (model.siteName === this.GLOBAL_SITE_NAME) {
-					let key = Liferay.Language.get('x-modified-a-x-x-ago');
-
-					if (model.changeType === this.CHANGE_TYPE_ADDED) {
-						key = Liferay.Language.get('x-added-a-x-x-ago');
-					}
-					else if (model.changeType === this.CHANGE_TYPE_DELETED) {
-						key = Liferay.Language.get('x-deleted-a-x-x-ago');
-					}
-
-					model.description = this._format(key, [
-						model.userName,
-						model.typeName,
-						model.timeDescription,
-					]);
-				}
-				else {
-					let key = Liferay.Language.get('x-modified-a-x-in-x-x-ago');
-
-					if (model.changeType === this.CHANGE_TYPE_ADDED) {
-						key = Liferay.Language.get('x-added-a-x-in-x-x-ago');
-					}
-					else if (model.changeType === this.CHANGE_TYPE_DELETED) {
-						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
-					}
-
-					model.description = this._format(key, [
-						model.userName,
-						model.typeName,
-						model.siteName,
-						model.timeDescription,
-					]);
-				}
-			}
-		}
-
-		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
-			const rootDisplayClassInfo = this.contextView[
-				this.rootDisplayClasses[i]
-			];
-
-			let hideable = true;
-
-			for (let i = 0; i < rootDisplayClassInfo.children.length; i++) {
-				const model = this.models[
-					rootDisplayClassInfo.children[i].modelKey.toString()
-				];
-
-				if (!model.hideable) {
-					hideable = false;
-				}
-			}
-
-			rootDisplayClassInfo.hideable = hideable;
-		}
-	}
-
-	_renderDropdown() {
-		if (!this.state.node.modelClassNameId) {
+	const renderDropdown = () => {
+		if (!renderState.node.modelClassNameId) {
 			return '';
 		}
 
-		let dropdownItems = this.state.node.dropdownItems;
+		let dropdownItems = renderState.node.dropdownItems;
 
 		if (!dropdownItems) {
 			dropdownItems = [];
@@ -2031,9 +2006,9 @@ class ChangeTrackingChangesView extends React.Component {
 			dropdownItems = dropdownItems.slice(0);
 		}
 
-		if (this.activeCTCollection) {
+		if (activeCTCollection) {
 			dropdownItems.push({
-				href: this._getDiscardURL(this.state.node),
+				href: getDiscardURL(renderState.node),
 				label: Liferay.Language.get('discard'),
 				symbolLeft: 'times-circle',
 			});
@@ -2082,22 +2057,22 @@ class ChangeTrackingChangesView extends React.Component {
 				<ClayDropDownWithItems
 					alignmentPosition={Align.BottomLeft}
 					items={dropdownItems}
-					spritemap={this.spritemap}
+					spritemap={spritemap}
 					trigger={
 						<ClayButtonWithIcon
 							displayType="unstyled"
 							small
-							spritemap={this.spritemap}
+							spritemap={spritemap}
 							symbol="ellipsis-v"
 						/>
 					}
 				/>
 			</div>
 		);
-	}
+	};
 
-	_renderEntry() {
-		if (!this.state.node.modelClassNameId) {
+	const renderEntry = () => {
+		if (!renderState.node.modelClassNameId) {
 			return '';
 		}
 
@@ -2105,78 +2080,74 @@ class ChangeTrackingChangesView extends React.Component {
 			<div className="sheet">
 				<div className="autofit-row sheet-title">
 					<div className="autofit-col autofit-col-expand">
-						<h2>{this.state.node.title} </h2>
+						<h2>{renderState.node.title} </h2>
 
 						<div className="entry-description">
-							{this.state.node.description
-								? this.state.node.description
-								: this.state.node.typeName}
+							{renderState.node.description
+								? renderState.node.description
+								: renderState.node.typeName}
 						</div>
 					</div>
 
-					{this._renderDropdown()}
+					{renderDropdown()}
 				</div>
 				<div className="sheet-section">
 					<ChangeTrackingRenderView
-						ctEntry={this.state.node.ctEntryId ? true : false}
-						dataURL={this._getDataURL(this.state.node)}
+						ctEntry={renderState.node.ctEntryId ? true : false}
+						dataURL={getDataURL(renderState.node)}
 						getCache={() =>
-							this.renderCache[
-								this.state.node.modelClassNameId.toString() +
+							renderCache.current[
+								renderState.node.modelClassNameId.toString() +
 									'-' +
-									this.state.node.modelClassPK.toString()
+									renderState.node.modelClassPK.toString()
 							]
 						}
-						spritemap={this.spritemap}
+						spritemap={spritemap}
 						updateCache={(data) => {
-							this.renderCache[
-								this.state.node.modelClassNameId.toString() +
+							renderCache.current[
+								renderState.node.modelClassNameId.toString() +
 									'-' +
-									this.state.node.modelClassPK.toString()
+									renderState.node.modelClassPK.toString()
 							] = data;
 						}}
 					/>
 				</div>
 			</div>
 		);
-	}
+	};
 
-	_renderManagementToolbar() {
+	const renderManagementToolbar = () => {
 		let items = [];
 
-		if (this.state.viewType === this.VIEW_TYPE_CHANGES) {
+		if (renderState.viewType === VIEW_TYPE_CHANGES) {
 			items = [
 				{
-					active: this._getColumn() === this.COLUMN_CHANGE_TYPE,
+					active: getColumn() === COLUMN_CHANGE_TYPE,
 					label: Liferay.Language.get('change-type'),
-					onClick: () =>
-						this._handleSortColumnChange(this.COLUMN_CHANGE_TYPE),
+					onClick: () => setColumnState(COLUMN_CHANGE_TYPE),
 				},
 				{
-					active: this._getColumn() === this.COLUMN_MODIFIED_DATE,
+					active: getColumn() === COLUMN_MODIFIED_DATE,
 					label: Liferay.Language.get('modified-date'),
-					onClick: () =>
-						this._handleSortColumnChange(this.COLUMN_MODIFIED_DATE),
+					onClick: () => setColumnState(COLUMN_MODIFIED_DATE),
 				},
 				{
-					active: this._getColumn() === this.COLUMN_SITE,
+					active: getColumn() === COLUMN_SITE,
 					label: Liferay.Language.get('site'),
-					onClick: () =>
-						this._handleSortColumnChange(this.COLUMN_SITE),
+					onClick: () => setColumnState(COLUMN_SITE),
 				},
 				{
-					active: this._getColumn() === this.COLUMN_USER,
+					active: getColumn() === COLUMN_USER,
 					label: Liferay.Language.get('user'),
-					onClick: () =>
-						this._handleSortColumnChange(this.COLUMN_USER),
+					onClick: () => setColumnState(COLUMN_USER),
 				},
 			];
 		}
 
 		items.push({
-			active: this._getColumn() === this.COLUMN_TITLE,
+			active: getColumn() === COLUMN_TITLE,
 			label: Liferay.Language.get('title'),
-			onClick: () => this._handleSortColumnChange(this.COLUMN_TITLE),
+			onClick: () => setColumnState(COLUMN_TITLE),
 		});
 
 		items.sort((a, b) => {
@@ -2201,11 +2172,11 @@ class ChangeTrackingChangesView extends React.Component {
 					<ClayManagementToolbar.Item>
 						<ClayDropDownWithItems
 							items={dropdownItems}
-							spritemap={this.spritemap}
+							spritemap={spritemap}
 							trigger={
 								<ClayButton
 									className="nav-link"
-									disabled={this.changes.length === 0}
+									disabled={changes.length === 0}
 									displayType="unstyled"
 								>
 									<span className="navbar-breakpoint-down-d-none">
@@ -2217,13 +2188,13 @@ class ChangeTrackingChangesView extends React.Component {
 
 										<ClayIcon
 											className="inline-item inline-item-after"
-											spritemap={this.spritemap}
+											spritemap={spritemap}
 											symbol="caret-bottom"
 										/>
 									</span>
 									<span className="navbar-breakpoint-d-none">
 										<ClayIcon
-											spritemap={this.spritemap}
+											spritemap={spritemap}
 											symbol="filter"
 										/>
 									</span>
@@ -2237,13 +2208,17 @@ class ChangeTrackingChangesView extends React.Component {
 						title={Liferay.Language.get('reverse-sort-direction')}
 					>
 						<ClayButton
-							className={this.state.sortDirectionClass}
-							disabled={this.changes.length === 0}
+							className={
+								ascendingState
+									? 'order-arrow-down-active'
+									: 'order-arrow-up-active'
+							}
+							disabled={changes.length === 0}
 							displayType="unstyled"
-							onClick={() => this._handleSortDirectionChange()}
+							onClick={() => setAscendingState(!ascendingState)}
 						>
 							<ClayIcon
-								spritemap={this.spritemap}
+								spritemap={spritemap}
 								symbol="order-arrow"
 							/>
 						</ClayButton>
@@ -2253,43 +2228,64 @@ class ChangeTrackingChangesView extends React.Component {
 
 					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
-							disabled={this.changes.length === 0}
+							disabled={changes.length === 0}
 							label={Liferay.Language.get('show-all-items')}
 							onToggle={(showHideable) =>
-								this._handleShowHideableToggle(showHideable)
+								handleShowHideableToggle(showHideable)
 							}
-							toggled={this.state.showHideable}
+							toggled={renderState.showHideable}
 						/>
 					</ClayManagementToolbar.Item>
 
-					{this._getViewTypes()}
+					{getViewTypes()}
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
 		);
-	}
+	};
 
-	_renderPagination() {
-		if (this.state.children.length <= 5) {
+	const renderPagination = () => {
+		if (renderState.children.length <= 5) {
 			return '';
 		}
 
 		return (
 			<ClayPaginationBarWithBasicItems
-				activeDelta={this.state.delta}
-				activePage={this.state.page}
+				activeDelta={deltaState}
+				activePage={renderState.page}
 				deltas={[4, 8, 20, 40, 60].map((size) => ({
 					label: size,
 				}))}
 				ellipsisBuffer={3}
-				onDeltaChange={(delta) => this._handleDeltaChange(delta)}
-				onPageChange={(page) => this._handlePageChange(page)}
-				totalItems={this.state.children.length}
+				onDeltaChange={(delta) => {
+					setDeltaState(delta);
+					setRenderState({
+						children: renderState.children,
+						filterClass: renderState.filterClass,
+						id: renderState.id,
+						node: renderState.node,
+						page: 1,
+						showHideable: renderState.showHideable,
+						viewType: renderState.viewType,
+					});
+				}}
+				onPageChange={(page) =>
+					setRenderState({
+						children: renderState.children,
+						filterClass: renderState.filterClass,
+						id: renderState.id,
+						node: renderState.node,
+						page,
+						showHideable: renderState.showHideable,
+						viewType: renderState.viewType,
+					})
+				}
+				totalItems={renderState.children.length}
 			/>
 		);
-	}
+	};
 
-	_renderPanel() {
-		if (this.state.viewType === this.VIEW_TYPE_CHANGES) {
+	const renderPanel = () => {
+		if (renderState.viewType === VIEW_TYPE_CHANGES) {
 			return '';
 		}
 
@@ -2299,27 +2295,27 @@ class ChangeTrackingChangesView extends React.Component {
 					<div className="panel-body">
 						<ClayRadioGroup
 							onSelectedValueChange={(filterClass) =>
-								this._handleNavigationUpdate({
+								handleNavigationUpdate({
 									filterClass,
 									nodeId: 0,
 								})
 							}
-							selectedValue={this.state.filterClass}
+							selectedValue={renderState.filterClass}
 						>
-							{this._getRootDisplayOptions()}
+							{getRootDisplayOptions()}
 						</ClayRadioGroup>
 					</div>
 				</div>
 			</div>
 		);
-	}
+	};
 
-	_renderTable() {
-		if (!this.state.children || this.state.children.length === 0) {
+	const renderTable = () => {
+		if (!renderState.children || renderState.children.length === 0) {
 			if (
-				this.state.node.children &&
-				this.state.node.children.length > 0 &&
-				this.state.viewType === this.VIEW_TYPE_CHANGES
+				renderState.node.children &&
+				renderState.node.children.length > 0 &&
+				renderState.viewType === VIEW_TYPE_CHANGES
 			) {
 				return (
 					<div className="sheet taglib-empty-result-message">
@@ -2344,104 +2340,113 @@ class ChangeTrackingChangesView extends React.Component {
 					hover
 					noWrap
 				>
-					{this._getTableHead()}
+					{getTableHead()}
 
 					<ClayTable.Body>
-						{this._getTableRows(
-							this._filterDisplayNodes(this.state.children)
-						)}
+						{getTableRows(filterDisplayNodes(renderState.children))}
 					</ClayTable.Body>
 				</ClayTable>
 
-				{this._renderPagination()}
+				{renderPagination()}
 			</>
 		);
+	};
+
+	const setParameter = (url, name, value) => {
+		return url + '&' + namespace + name + '=' + value;
+	};
+
+	let content;
+
+	if (
+		renderState.viewType === VIEW_TYPE_CONTEXT &&
+		contextViewRef.current.errorMessage
+	) {
+		content = (
+			<ClayAlert displayType="danger">
+				{contextViewRef.current.errorMessage}
+			</ClayAlert>
+		);
 	}
+	else if (changes.length === 0) {
+		content = (
+			<div className="container-fluid container-fluid-max-xl">
+				{expired && (
+					<ClayAlert
+						displayType="warning"
+						spritemap={spritemap}
+						title={Liferay.Language.get('out-of-date')}
+					>
+						{Liferay.Language.get(
+							'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
+						)}
+					</ClayAlert>
+				)}
 
-	_setParameter(url, name, value) {
-		return url + '&' + this.namespace + name + '=' + value;
-	}
-
-	render() {
-		let content;
-
-		if (
-			this.state.viewType === this.VIEW_TYPE_CONTEXT &&
-			this.contextView.errorMessage
-		) {
-			content = (
-				<ClayAlert displayType="danger">
-					{this.contextView.errorMessage}
-				</ClayAlert>
-			);
-		}
-		else if (this.changes.length === 0) {
-			content = (
-				<div className="container-fluid container-fluid-max-xl">
-					<div className="sheet taglib-empty-result-message">
-						<div className="taglib-empty-result-message-header" />
-						<div className="sheet-text text-center">
-							{Liferay.Language.get('no-changes-were-found')}
-						</div>
+				<div className="sheet taglib-empty-result-message">
+					<div className="taglib-empty-result-message-header" />
+					<div className="sheet-text text-center">
+						{Liferay.Language.get('no-changes-were-found')}
 					</div>
 				</div>
-			);
-		}
-		else {
-			content = (
-				<div className="container-fluid container-fluid-max-xl">
-					{this.expired && (
-						<ClayAlert
-							displayType="warning"
-							spritemap={this.spritemap}
-							title={Liferay.Language.get('out-of-date')}
-						>
-							{Liferay.Language.get(
-								'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
-							)}
-						</ClayAlert>
+			</div>
+		);
+	}
+	else {
+		content = (
+			<div className="container-fluid container-fluid-max-xl">
+				{expired && (
+					<ClayAlert
+						displayType="warning"
+						spritemap={spritemap}
+						title={Liferay.Language.get('out-of-date')}
+					>
+						{Liferay.Language.get(
+							'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
+						)}
+					</ClayAlert>
+				)}
+
+				<ClayBreadcrumb
+					ellipsisBuffer={1}
+					items={getBreadcrumbItems(
+						renderState.filterClass,
+						renderState.node,
+						renderState.id,
+						renderState.viewType
 					)}
+					spritemap={spritemap}
+				/>
 
-					<ClayBreadcrumb
-						ellipsisBuffer={1}
-						items={this.state.breadcrumbItems}
-						spritemap={this.spritemap}
-					/>
+				<div className="publications-changes-content row">
+					{renderPanel()}
 
-					<div className="publications-changes-content row">
-						{this._renderPanel()}
-
-						<div
-							className={
-								this.state.viewType === this.VIEW_TYPE_CHANGES
-									? 'col-md-12'
-									: 'col-md-9'
-							}
-						>
-							{this._renderEntry()}
-							{this._renderTable()}
-						</div>
+					<div
+						className={
+							renderState.viewType === VIEW_TYPE_CHANGES
+								? 'col-md-12'
+								: 'col-md-9'
+						}
+					>
+						{renderEntry()}
+						{renderTable()}
 					</div>
 				</div>
-			);
-		}
-
-		return (
-			<>
-				{this._renderManagementToolbar()}
-				{content}
-				<CTComments
-					currentUser={this.currentUser}
-					deleteCommentURL={this.deleteCTCommentURL}
-					getCommentsURL={this.getCTCommentsURL}
-					spritemap={this.spritemap}
-					updateCommentURL={this.updateCTCommentURL}
-				/>
-			</>
+			</div>
 		);
 	}
-}
 
-export default function (props) {
-	return <ChangeTrackingChangesView {...props} />;
-}
+	return (
+		<>
+			{renderManagementToolbar()}
+			{content}
+			<CTComments
+				currentUser={currentUser}
+				deleteCommentURL={deleteCTCommentURL}
+				getCommentsURL={getCTCommentsURL}
+				spritemap={spritemap}
+				updateCommentURL={updateCTCommentURL}
+			/>
+		</>
+	);
+};

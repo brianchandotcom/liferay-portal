@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR_SEARCH_MODAL_BUTTON</td>
+	<td>//div[contains(@class, 'modal-content')]//button[contains(text(),'Clear All')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REASSIGN_MODAL</td>
 	<td>//div[contains(@class,'fade modal')]</td>
 	<td></td>
@@ -27,7 +32,17 @@
 	<td>SELECT_ALL</td>
 	<td>xpath=(//div[contains(@class,'fade modal')]//label)</td>
 	<td></td>
-</tr>S
+</tr>
+<tr>
+	<td>PROCESS_STEP_DROPDOWN</td>
+	<td>//button[contains(@class, 'dropdown-toggle filter-dropdown-button btn btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_STEP_DROPDOWN_OPTION</td>
+	<td>//input/following-sibling::span//span[text()='${key_processName}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>NEXT_BUTTON</td>
 	<td>//button[contains(@class, 'btn-primary') and contains(text(),'Next')] | //button[contains(@class, 'btn-primary') and contains(text(),'Reassign')]</td>

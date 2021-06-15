@@ -970,12 +970,13 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the SLA settings is available when accessing the metrics page of a process"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SLASettingsAvailableOnMetricsPage {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67847 SLASettingsAvailableOnMetricsPage pending implementation
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
 
+		Click(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
 	}
 
 	@description = "LPS-89015 - Verify the options for start field are: Process begins, Enters task: [task-name], and Leaves task: [task-name]"

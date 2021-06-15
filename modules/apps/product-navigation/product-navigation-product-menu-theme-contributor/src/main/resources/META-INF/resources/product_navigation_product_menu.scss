@@ -161,7 +161,6 @@
 		}
 
 		.sidebar-body {
-			border-left: 1px solid $gray-300;
 			top: $product-menu-header-height;
 
 			@include media-breakpoint-up(sm) {

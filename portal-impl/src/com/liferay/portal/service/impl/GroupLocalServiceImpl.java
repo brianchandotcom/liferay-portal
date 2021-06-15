@@ -4313,7 +4313,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			groups.retainAll(rolePersistence.getGroups(roleId));
 		}
 
+		String actionId = (String)params.remove("actionId");
+
 		if (userId == null) {
+			if (actionId != null) {
+				return _filterGroups(actionId, groups);
+			}
+
 			return groups;
 		}
 
@@ -4357,30 +4363,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		String actionId = (String)params.remove("actionId");
-
 		if (actionId != null) {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			for (Group group : groups) {
-				try {
-					if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
-						GroupPermissionUtil.contains(
-							permissionChecker, group.getGroupId(), actionId)) {
-
-						joinedGroups.add(group);
-					}
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to check permission for group " +
-								group.getGroupId(),
-							portalException);
-					}
-				}
-			}
+			joinedGroups.addAll(_filterGroups(actionId, groups));
 		}
 
 		if (_log.isDebugEnabled() && !params.isEmpty()) {
@@ -5213,6 +5197,36 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected File publicLARFile;
+
+	private Collection<Group> _filterGroups(
+		String actionId, Collection<Group> groups) {
+
+		Collection<Group> filteredGroups = new HashSet<>();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		for (Group group : groups) {
+			try {
+				if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
+					GroupPermissionUtil.contains(
+						permissionChecker, group.getGroupId(), actionId)) {
+
+					filteredGroups.add(group);
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to check permission for group " +
+							group.getGroupId(),
+						portalException);
+				}
+			}
+		}
+
+		return filteredGroups;
+	}
 
 	private Map<Locale, String> _normalizeNameMap(Map<Locale, String> nameMap) {
 		Map<Locale, String> normalizedNameMap = new HashMap<>();

@@ -31,6 +31,10 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+
+	testCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	testCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
+	testCompile project(":apps:portal-vulcan:portal-vulcan-api")
 }
 
 liferayOSGi {

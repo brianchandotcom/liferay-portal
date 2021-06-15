@@ -126,12 +126,48 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Process Name"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderByProcessName {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67509 CanOrderByProcessName pending implementation
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver 2");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		Click(
+			key_assigneeName = "Process Name",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		AssertTextEquals(
+			key_rowNumber = "1",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver 2");
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver");
+			
+
+		Click(
+			key_assigneeName = "Process Name",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		AssertTextEquals(
+			key_rowNumber = "3",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver 2");
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver");
 	}
 
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Total Pending"

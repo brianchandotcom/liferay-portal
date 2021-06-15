@@ -709,7 +709,7 @@ public class RenderLayoutStructureDisplayContext {
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
-		if (styledLayoutStructureItem.getBorderWidth() != -1L) {
+		if (styledLayoutStructureItem.getBorderWidth() != 0) {
 			styleSB.append("border-style: solid; border-width: ");
 			styleSB.append(styledLayoutStructureItem.getBorderWidth());
 			styleSB.append("px;");

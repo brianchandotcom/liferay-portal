@@ -381,7 +381,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 			CommonStylesUtil.getAvailableStyleNames();
 
 		for (String styleName : availableStyleNames) {
-			if (currentJSONObject.has(styleName)) {
+			if (newJSONObject.has(styleName)) {
 				Object styleValue = newJSONObject.get(styleName);
 
 				if (Objects.equals(

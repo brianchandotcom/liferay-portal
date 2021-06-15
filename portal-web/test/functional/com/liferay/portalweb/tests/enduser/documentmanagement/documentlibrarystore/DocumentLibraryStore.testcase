@@ -64,7 +64,6 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AWSS3StoreSmoke {
 		property aws.store.enabled = "true";

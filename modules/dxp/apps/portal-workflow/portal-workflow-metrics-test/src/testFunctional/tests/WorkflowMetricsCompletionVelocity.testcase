@@ -30,12 +30,23 @@ definition {
 	}
 
 	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DefaultDateFormatIsMMDDYYYY {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67661 DefaultDateFormatIsMMDDYYYY pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN");
+
+		Click(
+			completionVelocityDateRange = "Custom Range",
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+
+		Pause(locator1 = "1000");
+
+		AssertElementPresent(
+			key_dateFormat = "Default date format is MM/DD/YYYY.",
+			locator1 = "WorkflowMetricsCompletionVelocity#DEFAULT_DATE_FORMAT_MESSAGE");
 	}
 
 	@description = "LPS-98001 - Verify that when there is an unexpected error, the card should display the specific error state"

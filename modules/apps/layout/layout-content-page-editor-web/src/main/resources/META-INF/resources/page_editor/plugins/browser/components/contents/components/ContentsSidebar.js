@@ -26,6 +26,10 @@ import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
 const getEditableTitle = (editable, languageId) => {
+	if (editable.type === EDITABLE_TYPES['rich-text']) {
+		return Liferay.Language.get('rich-text');
+	}
+
 	const div = document.createElement('div');
 
 	div.innerHTML =
@@ -64,6 +68,7 @@ const getEditableValues = (fragmentEntryLinks, segmentsExperienceId) =>
 				.map(([key, value]) => ({
 					...value,
 					editableId: `${fragmentEntryLink.fragmentEntryLinkId}-${key}`,
+					type: fragmentEntryLink.editableTypes[key],
 				}));
 		})
 		.reduce(

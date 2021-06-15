@@ -17,14 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-JournalArticle article = journalDisplayContext.getArticle();
-
-JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
+ImportTranslationDisplayContext importTranslationDisplayContext = new ImportTranslationDisplayContext(request, journalDisplayContext, liferayPortletResponse);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(importTranslationDisplayContext.getRedirect());
 
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 %>
@@ -33,15 +29,9 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/translation-web/css/main.css") %>" rel="stylesheet" />
 </liferay-util:html-top>
 
-<portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
-	<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(JournalArticle.class.getName())) %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(article.getResourcePrimKey()) %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-</portlet:actionURL>
-
 <div class="translation">
-	<aui:form action="<%= importTranslationURL %>" cssClass="translation-import" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= importTranslationDisplayContext.getRedirect() %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 		<nav class="component-tbar subnav-tbar-light tbar">
@@ -49,18 +39,18 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 				<ul class="tbar-nav">
 					<li class="tbar-item tbar-item-expand">
 						<div class="pl-2 tbar-section text-left">
-							<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(article.getTitle()) %>">
-								<span class="text-truncate"><%= HtmlUtil.escape(article.getTitle()) %></span>
+							<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(importTranslationDisplayContext.getTitle()) %>">
+								<span class="text-truncate"><%= HtmlUtil.escape(importTranslationDisplayContext.getTitle()) %></span>
 							</h2>
 						</div>
 					</li>
 					<li class="tbar-item">
 						<div class="metadata-type-button-row tbar-section text-right">
-							<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+							<aui:button cssClass="btn-sm mr-3" href="<%= importTranslationDisplayContext.getRedirect() %>" type="cancel" />
 
-							<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
+							<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= importTranslationDisplayContext.getSaveButtonLabel() %>" />
 
-							<aui:button cssClass="btn-sm mr-3" disabled="<%= journalEditArticleDisplayContext.isPending() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= journalEditArticleDisplayContext.getPublishButtonLabel() %>" />
+							<aui:button cssClass="btn-sm mr-3" disabled="<%= importTranslationDisplayContext.isPending() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= importTranslationDisplayContext.getPublishButtonLabel() %>" />
 						</div>
 					</li>
 				</ul>
@@ -90,7 +80,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 							).put(
 								"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"
 							).put(
-								"workflowPending", journalEditArticleDisplayContext.isPending()
+								"workflowPending", importTranslationDisplayContext.isPending()
 							).build()
 						%>'
 					/>

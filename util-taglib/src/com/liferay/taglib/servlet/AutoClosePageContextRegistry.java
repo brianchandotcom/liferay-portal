@@ -33,17 +33,19 @@ public class AutoClosePageContextRegistry {
 	public static final String AUTO_CLOSEABLE =
 		AutoClosePageContextRegistry.class.getName() + "_autoCloseable";
 
-	public static void registerCloseCallback(
+	public static boolean registerCloseCallback(
 		PageContext pageContext, Runnable runnable) {
 
 		if (!_isAutoCloseable(pageContext)) {
-			return;
+			return false;
 		}
 
 		List<Runnable> runnables = _runnables.computeIfAbsent(
 			pageContext, pc -> new ArrayList<>());
 
 		runnables.add(runnable);
+
+		return true;
 	}
 
 	public static void runAutoCloseRunnables(PageContext pageContext) {

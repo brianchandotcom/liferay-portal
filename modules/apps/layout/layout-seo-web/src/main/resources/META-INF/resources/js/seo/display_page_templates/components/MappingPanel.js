@@ -17,9 +17,10 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {PropTypes} from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import useOnClickOutside from '../hooks/useOnClickOutside';
+import MappingContext from './MappingContext';
 
 const noop = () => {};
 
@@ -38,6 +39,7 @@ function MappingPanel({
 }) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
 	const [fieldValue, setFieldValue] = useState(initialField.key);
+	const {ffMetadataTemplateEnabled} = useContext(MappingContext);
 	const wrapperRef = useRef(null);
 
 	useOnClickOutside([wrapperRef.current], () => setIsPanelOpen(false));

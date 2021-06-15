@@ -15,6 +15,7 @@
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
+import MappingContext from './MappingContext';
 import MappingInput from './MappingInput';
 import MappingRichInput from './MappingRichInput';
 
@@ -25,7 +26,7 @@ function MappingInputs({
 	selectedSource,
 }) {
 	return (
-		<>
+		<MappingContext.Provider value={{ffMetadataTemplateEnabled}}>
 			{inputs.map((props) =>
 				ffMetadataTemplateEnabled && props.fieldType === 'text' ? (
 					<MappingRichInput
@@ -43,7 +44,7 @@ function MappingInputs({
 					/>
 				)
 			)}
-		</>
+		</MappingContext.Provider>
 	);
 }
 

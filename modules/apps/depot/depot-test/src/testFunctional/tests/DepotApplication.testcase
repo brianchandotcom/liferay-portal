@@ -86,7 +86,7 @@ definition {
 			value1 = "Translation Processes");
 	}
 
-	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
+	@description = "This ensures that the disabled assets are not appeared in the item selector on a connected site when WC and DM applications are disabled."
 	@priority = "5"
 	@refactordone
 	test CanNotSelectDisabledAssetsFromItemSelector {
@@ -248,7 +248,7 @@ definition {
 			assetType = "Document");
 	}
 
-	@description = "This ensures that a depot image persists in blog entry as previously and it's not appeared in the item selector on a connected site when DM application is disabled."
+	@description = "This ensures that a depot image persists in blog entry as previously on a connected site when DM application is disabled."
 	@priority = "5"
 	@refactordone
 	test DisabledImageRemainsInBlogs {
@@ -290,7 +290,7 @@ definition {
 			uploadFileName = "Document_1");
 	}
 
-	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
+	@description = "This ensures that a depot web content persists in WCD as previously on a connected site when WC application is disabled."
 	@priority = "5"
 	@refactordone
 	test DisabledWCRemainsInWCD {

@@ -208,6 +208,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		showHeader: <%= showSchedulerHeader %>,
 		strings: {
 			agenda: '<liferay-ui:message key="agenda" />',
+			currentDate: '<liferay-ui:message key="current-date" />',
 			day: '<liferay-ui:message key="day" />',
 			month: '<liferay-ui:message key="month" />',
 			today: '<liferay-ui:message key="today" />',

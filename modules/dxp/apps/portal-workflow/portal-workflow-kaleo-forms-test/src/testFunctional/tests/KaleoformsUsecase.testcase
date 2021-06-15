@@ -2687,6 +2687,10 @@ definition {
 
 		KaleoFormsAdmin.saveFieldSet();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.editProcess(kfProcessName = "Kaleo Forms Process");
@@ -3131,6 +3135,10 @@ definition {
 
 		KaleoFormsAdmin.saveFieldSet();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
 		KaleoFormsAdmin.editProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.editProcessDetails(kfPendingForm = "true");
@@ -3252,6 +3260,10 @@ definition {
 			fieldName = "Date");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 

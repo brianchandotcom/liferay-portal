@@ -557,9 +557,9 @@ definition {
 			kfProgressName = "Forms",
 			kfProgressStep = "4");
 
-		Refresh();
-
-		AssertElementNotPresent(locator1 = "Button#SAVE_INACTIVE");
+		if (IsElementNotPresent(key_text = "Save",locator1 = "Button#ANY")) {
+			Refresh();
+		}
 
 		Button.clickSave();
 	}

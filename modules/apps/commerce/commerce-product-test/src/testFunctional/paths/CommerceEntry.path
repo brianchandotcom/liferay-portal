@@ -751,6 +751,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INVENTORY_COLUMN</td>
+	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-td')][${key_columnNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WAREHOUSE_INVENTORY_SAVE_BUTTON</td>
 	<td>//td[contains(@class, 'text-center')]//button[contains(@id,'_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_saveButton${key_value1}')]</td>
 	<td></td>

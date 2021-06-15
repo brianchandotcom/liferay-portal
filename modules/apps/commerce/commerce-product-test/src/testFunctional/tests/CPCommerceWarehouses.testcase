@@ -27,13 +27,128 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6207. UI inventory items lifecycle"
-	@ignore = "true"
 	@priority = "3"
 	test AddEditAndRemoveItemToWarehouse {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceWarehouses#AddEditAndRemoveItemToWarehouse";
 
-		// TODO COMMERCE-6207 AddItemToWarehouse Pending Implementation
+		// TODO Review
 
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "TestWH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Click(
+			key_contentType = "Geolocation",
+			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+
+		WaitForElementPresent(
+			key_specifiedCollapse = "Geolocation",
+			locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN");
+
+		Type(
+			key_fieldLabel = "Latitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "12345");
+
+		Type(
+			key_fieldLabel = "Longitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "12345");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Inventory");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "SKU",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "TestSKU");
+
+		Select(
+			key_fieldLabel = "Warehouse",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "TestWH");
+
+		Type(
+			key_fieldLabel = "Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "50");
+
+		Button.click(button = "Submit");
+
+		AppBuilderAdmin.searchByItem(itemName = "TestSKU");
+
+		CommerceNavigator.gotoEntry(entryName = "TestSKU");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#INVENTORY_BY_WAREHOUSE_NAME",
+			value1 = "TestWH");
+
+		AssertTextEquals(
+			key_columnNumber = "4",
+			locator1 = "CommerceEntry#INVENTORY_COLUMN",
+			value1 = "50");
+
+		Click(
+			key_entryName = "TestWH",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = "Safety Stock Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "20");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		AssertTextEquals(
+			key_columnNumber = "3",
+			locator1 = "CommerceEntry#INVENTORY_COLUMN",
+			value1 = "20");
+
+		AssertTextEquals(
+			key_columnNumber = "4",
+			locator1 = "CommerceEntry#INVENTORY_COLUMN",
+			value1 = "30");
+
+		Click(
+			key_currentLocale = "ellipsis-v",
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		Click(
+			key_index = "Delete",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Navigator.gotoBack();
+
+		AppBuilderAdmin.searchByItem(itemName = "TestSKU");
+
+		AssertElementNotPresent(
+			key_entryName = "TestSKU",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-6206. Add income items"

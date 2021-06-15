@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ImportTranslationDisplayContext importTranslationDisplayContext = new ImportTranslationDisplayContext(request, journalDisplayContext, liferayPortletResponse);
+ImportTranslationDisplayContext importTranslationDisplayContext = (ImportTranslationDisplayContext)request.getAttribute(ImportTranslationDisplayContext.class.getName());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(importTranslationDisplayContext.getRedirect());

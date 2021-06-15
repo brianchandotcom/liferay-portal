@@ -359,7 +359,9 @@ describe('A11yPanel', () => {
 			expect(mockWarnings).not.toBeCalled();
 
 			expect(
-				getByText('set-of-rules-violated-by-the-highlighted-issues')
+				getByText(
+					'please-check-the-list-of-violated-rules-highlighted-on-the-page'
+				)
 			).toBeInTheDocument();
 			expect(
 				getByLabelText('open-violations-filter')

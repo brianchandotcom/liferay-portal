@@ -35,15 +35,13 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "user2@liferay.com");
 
-			User.logoutPG();
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user2@liferay.com",
+				userLoginFullName = "userfn userln");
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "user2@liferay.com");
-
-			User.logoutPG();
-
-			User.loginPG();
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 		}
 	}
 
@@ -55,13 +53,15 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 
 	@description = "This case ensures a user can be mentioned in a comment when he has valid permission."
 	@priority = "5"
-	@refactorneeded
-	test MentionUserWithValidPermissions {
+	@refactordone
+	test CanMentionUserWithValidPermissions {
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "userfn1",
@@ -73,40 +73,35 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "user1@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
-		User.logoutPG();
-
-		User.loginPG();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Regrole Name");
+		JSONRole.addRegularRole(
+			roleKey = "Regrole Name",
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
 			resourceName = "com.liferay.portal.kernel.model.Layout",
 			roleTitle = "Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Regrole Name",
-			userScreenName = "user1");
+			userEmailAddress = "user1@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -118,45 +113,32 @@ definition {
 			fragmentName = "Title",
 			position = "1");
 
-		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
-
-		Type.sendKeys(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
-			value1 = "@user");
-
-		AssertElementNotPresent(
-			key_mentionsUserScreenName = "user2",
-			locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
-
-		Click.clickNoMouseOver(
-			key_mentionsUserScreenName = "user1",
-			locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
+		PageEditor.viewMentionsDisplayOption(
+			fragmentComment = "@user",
+			mentionsUserScreenName = "user1",
+			noMentionsUserScreenName = "user2");
 	}
 
 	@description = "This case ensures that the user can mention the other user in a comment."
 	@priority = "5"
-	@refactorneeded
-	test ViewCommentMentionedUser {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+	@refactordone
+	test CanViewCommentMentionedUser {
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "user2");
+			userEmailAddress = "user2@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
 
 		PageEditor.addComment(
 			fragmentComment = "Comment by Test",
@@ -172,40 +154,33 @@ definition {
 
 	@description = "This case ensures a user cannot access a comment he is mentioned on after his permissions are revoked."
 	@priority = "5"
-	@refactorneeded
-	test ViewMentionAfterRevokingPermissions {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Regrole Name");
+	@refactordone
+	test CanViewMentionAfterRevokingPermissions {
+		JSONRole.addRegularRole(
+			roleKey = "Regrole Name",
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
 			resourceName = "com.liferay.portal.kernel.model.Layout",
 			roleTitle = "Regrole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Regrole Name",
-			userScreenName = "user2");
+			userEmailAddress = "user2@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
 
 		PageEditor.addComment(
 			fragmentComment = "Comment by Test",
@@ -227,15 +202,9 @@ definition {
 			userLoginEmailAddress = "user2@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		Notifications.navigateToContent(contentBody = "user2");
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Forbidden");
+		Notifications.viewNoPermissions(
+			contentBody = "user2",
+			notificationCount = "1");
 	}
 
 }

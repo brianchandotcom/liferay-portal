@@ -2259,20 +2259,14 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editCategorizationCP(
 			categoryName = "Category Name 1",
 			userScreenName = "usersn",
 			vocabularyName = "Vocabulary Name 1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
@@ -2280,10 +2274,7 @@ definition {
 
 		PortletEntry.save();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 

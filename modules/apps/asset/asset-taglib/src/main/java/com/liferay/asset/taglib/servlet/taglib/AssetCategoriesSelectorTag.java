@@ -344,122 +344,115 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		return null;
 	}
 
-	protected List<Map<String, Object>> getVocabularies() throws Exception {
-		HttpServletRequest httpServletRequest = getRequest();
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-asset:asset-categories-selector:data",
+			_getData(
+				getCategoryIdsTitles(), httpServletRequest,
+				new IntegerWrapper(-1), _getVocabularies()));
+	}
+
+	private Map<String, Object> _getData(
+		List<String[]> categoryIdsTitles, HttpServletRequest httpServletRequest,
+		IntegerWrapper index, List<AssetVocabulary> vocabularies) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
-		IntegerWrapper index = new IntegerWrapper(-1);
-		List<AssetVocabulary> vocabularies = _getVocabularies();
+		return HashMapBuilder.<String, Object>put(
+			"eventName", getEventName()
+		).put(
+			"groupIds", ListUtil.fromArray(getGroupIds())
+		).put(
+			"id", _getNamespace() + _getId() + "assetCategoriesSelector"
+		).put(
+			"inputName", _getInputName()
+		).put(
+			"learnHowURL",
+			() -> {
+				AssetCategoriesCompanyConfiguration
+					assetCategoriesCompanyConfiguration =
+						ConfigurationProviderUtil.getCompanyConfiguration(
+							AssetCategoriesCompanyConfiguration.class,
+							themeDisplay.getCompanyId());
 
-		return TransformUtil.transform(
-			vocabularies,
-			vocabulary -> {
-				index.increment();
+				return assetCategoriesCompanyConfiguration.
+					linkToDocumentationURL();
+			}
+		).put(
+			"portletURL", String.valueOf(getPortletURL())
+		).put(
+			"vocabularies",
+			TransformUtil.transform(
+				vocabularies,
+				vocabulary -> {
+					index.increment();
 
-				if (!ArrayUtil.contains(
-						getVisibilityTypes(), vocabulary.getVisibilityType())) {
+					if (!ArrayUtil.contains(
+							getVisibilityTypes(),
+							vocabulary.getVisibilityType())) {
 
-					return null;
-				}
-
-				String selectedCategoryIds = categoryIdsTitles.get(
-					index.getValue())[0];
-
-				return HashMapBuilder.<String, Object>put(
-					"id", vocabulary.getVocabularyId()
-				).put(
-					"required",
-					vocabulary.isRequired(
-						PortalUtil.getClassNameId(_className), _classTypePK) &&
-					_showRequiredLabel
-				).put(
-					"singleSelect", !vocabulary.isMultiValued()
-				).put(
-					"selectedCategories", selectedCategoryIds
-				).put(
-					"selectedItems",
-					() -> {
-						if (Validator.isNull(selectedCategoryIds)) {
-							return null;
-						}
-
-						List<Map<String, Object>> selectedItems =
-							new ArrayList<>();
-
-						String[] categoryIds = selectedCategoryIds.split(",");
-
-						String selectedCategoryIdTitles =
-							categoryIdsTitles.get(index.getValue())[1];
-
-						String[] categoryTitles = selectedCategoryIdTitles.split(
-							AssetCategoryUtil.CATEGORY_SEPARATOR);
-
-						for (int j = 0; j < categoryIds.length; j++) {
-							selectedItems.add(
-								HashMapBuilder.<String, Object>put(
-									"label", categoryTitles[j]
-								).put(
-									"value", categoryIds[j]
-								).build());
-						}
-
-						return selectedItems;
+						return null;
 					}
-				).put(
-					"title",
-					vocabulary.getUnambiguousTitle(
-						vocabularies, themeDisplay.getScopeGroupId(),
-						themeDisplay.getLocale())
-				).put(
-					"visibilityType", vocabulary.getVisibilityType()
-				).build();
-			});
-	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		try {
-			httpServletRequest.setAttribute(
-				"liferay-asset:asset-categories-selector:data",
-				HashMapBuilder.<String, Object>put(
-					"eventName", getEventName()
-				).put(
-					"groupIds", ListUtil.fromArray(getGroupIds())
-				).put(
-					"id", _getNamespace() + _getId() + "assetCategoriesSelector"
-				).put(
-					"inputName", _getInputName()
-				).put(
-					"learnHowURL",
-					() -> {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
+					String selectedCategoryIds =
+						categoryIdsTitles.get(index.getValue())[0];
 
-						AssetCategoriesCompanyConfiguration
-							assetCategoriesCompanyConfiguration =
-								ConfigurationProviderUtil.
-									getCompanyConfiguration(
-										AssetCategoriesCompanyConfiguration.
-											class,
-										themeDisplay.getCompanyId());
+					return HashMapBuilder.<String, Object>put(
+						"id", vocabulary.getVocabularyId()
+					).put(
+						"required",
+						vocabulary.isRequired(
+							PortalUtil.getClassNameId(_className),
+							_classTypePK) &&
+						_showRequiredLabel
+					).put(
+						"selectedCategories", selectedCategoryIds
+					).put(
+						"selectedItems",
+						() -> {
+							if (Validator.isNull(selectedCategoryIds)) {
+								return null;
+							}
 
-						return assetCategoriesCompanyConfiguration.
-							linkToDocumentationURL();
-					}
-				).put(
-					"portletURL", String.valueOf(getPortletURL())
-				).put(
-					"vocabularies", getVocabularies()
-				).build());
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
+							List<Map<String, Object>> selectedItems =
+								new ArrayList<>();
+
+							String[] categoryIds = selectedCategoryIds.split(
+								",");
+
+							String selectedCategoryIdTitles =
+								categoryIdsTitles.get(index.getValue())[1];
+
+							String[] categoryTitles =
+								selectedCategoryIdTitles.split(
+									AssetCategoryUtil.CATEGORY_SEPARATOR);
+
+							for (int j = 0; j < categoryIds.length; j++) {
+								selectedItems.add(
+									HashMapBuilder.<String, Object>put(
+										"label", categoryTitles[j]
+									).put(
+										"value", categoryIds[j]
+									).build());
+							}
+
+							return selectedItems;
+						}
+					).put(
+						"singleSelect", !vocabulary.isMultiValued()
+					).put(
+						"title",
+						vocabulary.getUnambiguousTitle(
+							vocabularies, themeDisplay.getScopeGroupId(),
+							themeDisplay.getLocale())
+					).put(
+						"visibilityType", vocabulary.getVisibilityType()
+					).build();
+				})
+		).build();
 	}
 
 	private String _getId() {

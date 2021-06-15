@@ -31,6 +31,9 @@ public class DigitalSignatureWebKeys {
 	public static final String DIGITAL_SIGNATURE_ENABLED =
 		"DIGITAL_SIGNATURE_ENABLED";
 
+	public static final String DIGITAL_SIGNATURE_FILE_ENTRIES =
+		"DIGITAL_SIGNATURE_FILE_ENTRIES";
+
 	public static final String DIGITAL_SIGNATURE_FILE_ENTRY_ID =
 		"DIGITAL_SIGNATURE_FILE_ENTRY_ID";
 

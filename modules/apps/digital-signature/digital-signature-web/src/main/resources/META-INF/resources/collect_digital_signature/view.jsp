@@ -34,6 +34,8 @@ if (digitalSignatureTitle != null) {
 				"allowedFileExtensions", StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS)
 			).put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
+			).put(
+				"fileEntries", (JSONArray)request.getAttribute(DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRIES)
 			).build()
 		%>'
 	/>

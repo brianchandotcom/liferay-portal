@@ -17,7 +17,8 @@ package com.liferay.digital.signature.web.internal.portlet;
 import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.digital.signature.web.internal.constants.DigitalSignatureWebKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -83,18 +85,24 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			long[] fileEntryIds = ParamUtil.getLongValues(
 				renderRequest, "fileEntryId");
 
-			long fileEntryId = fileEntryIds[0];
+			JSONArray jsonArray = _jsonArray(fileEntryIds);
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+			renderRequest.setAttribute(
+				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRIES,
+				jsonArray);
 
-			if (fileEntry != null) {
-				renderRequest.setAttribute(
-					DigitalSignatureWebKeys.DIGITAL_SIGNATURE_TITLE,
-					_getTitle(fileEntry.getTitle(), fileEntryIds.length - 1));
-			}
+			renderRequest.setAttribute(
+				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_TITLE,
+				_getTitle(
+					jsonArray.getJSONObject(
+						0
+					).getString(
+						"title"
+					),
+					fileEntryIds.length - 1));
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -109,6 +117,25 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			ResourceBundleUtil.getBundle("content.Language", getClass()),
 			(count == 1) ? "x-and-x-other-file" : "x-and-x-other-files",
 			new String[] {fileEntryTitle, String.valueOf(count)}, false);
+	}
+
+	private JSONArray _jsonArray(long[] fileEntryIds) throws Exception {
+		return JSONUtil.toJSONArray(
+			ArrayUtil.toLongArray(fileEntryIds),
+			fileEntryId -> {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					fileEntryId);
+
+				return JSONUtil.put(
+					"extension", fileEntry.getExtension()
+				).put(
+					"fileEntryId", fileEntryId
+				).put(
+					"groupId", fileEntry.getGroupId()
+				).put(
+					"title", fileEntry.getTitle()
+				);
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

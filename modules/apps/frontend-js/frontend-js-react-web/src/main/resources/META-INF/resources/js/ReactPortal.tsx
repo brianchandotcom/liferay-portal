@@ -61,6 +61,7 @@ const ReactPortal: React.FunctionComponent<IProps> = ({
 		);
 	}
 
+	// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal
 	return createPortal(content, container || document.body);
 };
 

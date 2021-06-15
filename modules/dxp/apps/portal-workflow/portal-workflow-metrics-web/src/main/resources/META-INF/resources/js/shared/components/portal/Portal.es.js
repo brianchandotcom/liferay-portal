@@ -53,6 +53,7 @@ const Portal = ({
 		return null;
 	}
 
+	// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal
 	return <>{ReactDOM.createPortal(children, portalElement)}</>;
 };
 

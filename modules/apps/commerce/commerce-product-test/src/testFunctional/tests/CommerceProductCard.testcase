@@ -49,7 +49,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = "U-Joint");
-
 	}
 
 	@description = "COMMERCE-5859. As a buyer, I want to view the product price with the default channel currency"
@@ -548,8 +547,7 @@ definition {
 
 		ClickNoError(
 			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME"
-		);
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
 		AssertElementPresent(
 			key_productName = "Simple T-Shirt",
@@ -579,7 +577,7 @@ definition {
 			validationImage = "true");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
-		
+
 		AssertElementPresent(
 			key_itemImage = "Commerce_Blue",
 			key_itemName = "Blue T-Shirt",
@@ -594,9 +592,9 @@ definition {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
-		
+
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-		
+
 		AssertTextEquals(
 			key_productName = "abs-sensor",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL",
@@ -606,59 +604,7 @@ definition {
 			key_productName = "ABS Sensor",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
-		AssertElementPresent(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceEntry#PRODUCT_CARD_DEFAULT_IMAGE");
-	}
-	}
-
-	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"
-	@priority = "3"
-	test AssertProductCardShowsCustomImageIfSet {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Minium",
-			productName = "Blue T-Shirt",
-			productType = "Simple");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-        CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-        ApplicationsMenu.gotoSite(site = "Minium");
-
-        CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-		
-        AssertTextEquals(
-            key_productName = "catalytic-converters",
-            locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL",
-            value1 = "Unavailable");
-    }
-
-	@description = "COMMERCE-5871. As a buyer, I want to view the availability of the product, if set and configured admin-side(product unavailable)"
-    @priority = "3"
-    test AssertProductIsUnavailable {
-        property portal.acceptance = "false";
-		
-	}
-
-	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
-	@ignore = "true"
-	@priority = "3"
-	test AssertProductIsAvailable {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-5872 AssertProductIsAvailable pending implementation
-
+		AssertElementPresent(locator1 = "CommerceEntry#DEFAULT_PRODUCT_IMAGE");
 	}
 
 	@description = "COMMERCE-5861. As a buyer, I want to view the product name with the correct localization"
@@ -754,8 +700,7 @@ definition {
 
 		AssertTextEquals(
 			key_productName = "U-Joint",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-			value1 = "4");
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
 	}
 
 	@description = "COMMERCE-6161. As a buyer, I want to be able to select the quantity of a product starting from a minimum quantity, if set"
@@ -1002,8 +947,17 @@ definition {
 	test CompareProductFromProductCard {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5868 CompareProductFromProductCard pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Check.checkToggleSwitch(
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+		AssertElementPresent(
+			key_value = "0",
+			locator1 = "CommerceEntry#MINI_COMPARE_ITEM_ACTIVE");
 	}
 
 	@description = "COMMERCE-5869. As a buyer, I want to be able to remove a product from a product comparison items list, by unchecking the product via checkbox"
@@ -1258,6 +1212,7 @@ definition {
 	@priority = "3"
 	test ViewProductCardStartingPrice {
 		property portal.acceptance = "false";
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -1268,7 +1223,6 @@ definition {
 			key_productName = "Brake Fluid",
 			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 			value1 = "From $ 80.00");
-
 	}
 
 }

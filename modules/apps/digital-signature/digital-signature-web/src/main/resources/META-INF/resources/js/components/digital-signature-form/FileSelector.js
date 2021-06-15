@@ -28,7 +28,6 @@ const getDocumentLibrarySelectorURL = (portletNamespace) => {
 		criteria:
 			'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
 		itemSelectedEventName: `${portletNamespace}selectDocumentLibrary`,
-		multipleSelection: true,
 		p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 		p_p_state: 'pop_up',
 		refererGroupId: Liferay.ThemeDisplay.getSiteGroupId(),

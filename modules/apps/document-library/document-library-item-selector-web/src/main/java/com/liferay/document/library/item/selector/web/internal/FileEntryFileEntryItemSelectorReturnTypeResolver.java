@@ -55,6 +55,8 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 		throws Exception {
 
 		JSONObject fileEntryJSONObject = JSONUtil.put(
+			"extension", fileEntry.getExtension()
+		).put(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
 		).put(
 			"groupId", String.valueOf(fileEntry.getGroupId())

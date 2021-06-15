@@ -9,6 +9,21 @@
 </thead>
 <tbody>
 <tr>
+    <td>DATE_RANGE_DROPDOWN_COMPLETED_ITEMS</td>
+    <td>//button[contains(@class, 'filter-dropdown-button')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS</td>
+    <td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_dateRange}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DESCRIPTION_DROPDOWN_COMPLETED_ITEMS</td>
+    <td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_dateRange}')]/..//div[contains(@class, 'description')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>PERCENTAGE_CARDS</td>
     <td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
     <td></td>

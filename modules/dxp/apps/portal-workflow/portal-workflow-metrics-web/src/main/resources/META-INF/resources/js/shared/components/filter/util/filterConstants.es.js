@@ -25,6 +25,11 @@ const filterConstants = {
 		pinned: false,
 		title: Liferay.Language.get('process-step'),
 	},
+	processVersion: {
+		key: 'processVersion',
+		pinned: false,
+		title: Liferay.Language.get('process-version'),
+	},
 	roles: {
 		key: 'roleIds',
 		pinned: false,

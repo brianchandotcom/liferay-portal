@@ -22,6 +22,7 @@ import {useFilterState} from './useFilterState.es';
 
 const useFilterFetch = ({
 	filterKey,
+	formatItem,
 	labelPropertyName = 'label',
 	prefixKey,
 	requestBody: data = {},
@@ -48,6 +49,7 @@ const useFilterFetch = ({
 		const mergedItems = mergeItemsArray(staticItems, data.items);
 
 		const mappedItems = buildFilterItems({
+			formatItem,
 			items: mergedItems,
 			propertyKey,
 			selectedKeys,

@@ -35,9 +35,18 @@ const buildFilterItem = (data) => {
 	};
 };
 
-const buildFilterItems = ({items, propertyKey = 'key', selectedKeys}) => {
+const buildFilterItems = ({
+	formatItem,
+	items,
+	propertyKey = 'key',
+	selectedKeys,
+}) => {
 	return items.map((item, index) => {
 		const key = String(item[propertyKey]);
+
+		if (formatItem) {
+			item = formatItem(item);
+		}
 
 		return {
 			...item,

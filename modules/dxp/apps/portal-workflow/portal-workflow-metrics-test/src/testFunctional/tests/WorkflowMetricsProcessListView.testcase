@@ -76,25 +76,20 @@ definition {
 				workflowDefinition = "${workflowName}",
 				workflowResourceValue = "Blogs Entry");
 
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				panel = "Site Administration",
-				portlet = "Blogs");
-
-			Blogs.addWithWorkflow(
+			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
-				entrySubtitle = "Subtitle",
 				entryTitle = "Blogs Entry Title");
 		}
 
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Pause(locator1 = "100000");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForSLA(
+			key_expectedValue = "0",
+			key_status = "OVERDUE");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -107,12 +102,12 @@ definition {
 
 		AssertTextEquals(
 			key_rowNumber = "3",
-			locator1 = "WorkflowAllItems#METRICS_OVERDUE_ITEMS_TABLE_ROW",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_OVERDUE_ITEMS_TABLE_ROW",
 			value1 = "2");
 
 		AssertTextEquals(
 			key_rowNumber = "2",
-			locator1 = "WorkflowAllItems#METRICS_OVERDUE_ITEMS_TABLE_ROW",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_OVERDUE_ITEMS_TABLE_ROW",
 			value1 = "1");
 
 		Click(
@@ -121,12 +116,12 @@ definition {
 
 		AssertTextEquals(
 			key_rowNumber = "1",
-			locator1 = "WorkflowAllItems#METRICS_OVERDUE_ITEMS_TABLE_ROW",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_OVERDUE_ITEMS_TABLE_ROW",
 			value1 = "2");
 
 		AssertTextEquals(
 			key_rowNumber = "2",
-			locator1 = "WorkflowAllItems#METRICS_OVERDUE_ITEMS_TABLE_ROW",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_OVERDUE_ITEMS_TABLE_ROW",
 			value1 = "1");
 	}
 

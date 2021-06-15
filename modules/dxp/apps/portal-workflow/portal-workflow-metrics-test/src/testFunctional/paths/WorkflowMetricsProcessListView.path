@@ -23,7 +23,7 @@
 	<td>//div[contains(@class,'pagination-bar')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON</td>
 	<td>//button[contains(@class, 'page-link') and contains(@aria-label,'Next')]</td>
 	<td></td>
@@ -37,6 +37,11 @@
 	<td>METRICS_WORKFLOW_PAGINATION_PREVIOUS_BUTTON</td>
 	<td>//button[contains(@class, 'page-link') and contains(@aria-label,'Previous')]</td>
 	<td></td>
+</tr>
+<tr>
+    <td>METRICS_OVERDUE_ITEMS_TABLE_ROW</td>
+    <td>//tr[${key_rowNumber}]//td[2]</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

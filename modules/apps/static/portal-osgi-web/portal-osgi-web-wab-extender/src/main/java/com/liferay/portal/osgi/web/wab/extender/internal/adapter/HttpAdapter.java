@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +31,7 @@ import java.util.Objects;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
@@ -209,6 +211,18 @@ public class HttpAdapter {
 						 method.getReturnType())) {
 
 				return null;
+			}
+			else if (methodName.equals("getServletRegistration") &&
+					 (args != null) && (args.length == 1)) {
+
+				if (Objects.equals(args[0], "Module Framework Servlet")) {
+					ServletRegistration servletRegistration =
+						new ServletRegistrationImpl();
+
+					servletRegistration.addMapping("/o/*");
+
+					return servletRegistration;
+				}
 			}
 
 			try {

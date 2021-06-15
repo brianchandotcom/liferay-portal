@@ -1293,14 +1293,40 @@ definition {
 	}
 
 	@description = "Verify that a Text field's Predefined Value can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TextFieldPredefinedValueCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133494 TextFieldPredefinedValueCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormFields.editPredefinedValueInput(fieldValue = "Predefined value");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		FormFields.editPredefinedValueInput(fieldValue = "Valor predefinido");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldValue = "Valor predefinido",
+			key_fieldName = "Text");
 	}
 
 	@description = "Verify that an Upload field's Label and Help Text can be translated"

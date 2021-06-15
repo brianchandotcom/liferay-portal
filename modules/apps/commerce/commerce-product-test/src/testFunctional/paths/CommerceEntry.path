@@ -416,6 +416,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN</td>
+	<td>//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_GROUPS_RELS_SELECT</td>
 	<td>//button[contains(@id,'selectCommercePriceListCommerceAccountGroupRel')]</td>
 	<td></td>

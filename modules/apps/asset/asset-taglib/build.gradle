@@ -26,6 +26,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-item-selector-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

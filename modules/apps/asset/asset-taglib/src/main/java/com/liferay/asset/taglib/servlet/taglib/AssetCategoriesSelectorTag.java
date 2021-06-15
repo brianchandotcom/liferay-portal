@@ -38,11 +38,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
@@ -349,27 +351,25 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<Map<String, Object>> vocabulariesList = new ArrayList<>();
-
+		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
+		IntegerWrapper index = new IntegerWrapper(-1);
 		List<AssetVocabulary> vocabularies = _getVocabularies();
 
-		List<String[]> categoryIdsTitles = getCategoryIdsTitles();
+		return TransformUtil.transform(
+			vocabularies,
+			vocabulary -> {
+				index.increment();
 
-		for (int i = 0; i < vocabularies.size(); i++) {
-			AssetVocabulary vocabulary = vocabularies.get(i);
+				if (!ArrayUtil.contains(
+						getVisibilityTypes(), vocabulary.getVisibilityType())) {
 
-			if (!ArrayUtil.contains(
-					getVisibilityTypes(), vocabulary.getVisibilityType())) {
+					return null;
+				}
 
-				continue;
-			}
+				String selectedCategoryIds = categoryIdsTitles.get(
+					index.getValue())[0];
 
-			int index = i;
-
-			String selectedCategoryIds = categoryIdsTitles.get(index)[0];
-
-			Map<String, Object> vocabulariesMap =
-				HashMapBuilder.<String, Object>put(
+				return HashMapBuilder.<String, Object>put(
 					"id", vocabulary.getVocabularyId()
 				).put(
 					"required",
@@ -393,7 +393,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 						String[] categoryIds = selectedCategoryIds.split(",");
 
 						String selectedCategoryIdTitles =
-							categoryIdsTitles.get(index)[1];
+							categoryIdsTitles.get(index.getValue())[1];
 
 						String[] categoryTitles = selectedCategoryIdTitles.split(
 							AssetCategoryUtil.CATEGORY_SEPARATOR);
@@ -417,11 +417,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"visibilityType", vocabulary.getVisibilityType()
 				).build();
-
-			vocabulariesList.add(vocabulariesMap);
-		}
-
-		return vocabulariesList;
+			});
 	}
 
 	@Override

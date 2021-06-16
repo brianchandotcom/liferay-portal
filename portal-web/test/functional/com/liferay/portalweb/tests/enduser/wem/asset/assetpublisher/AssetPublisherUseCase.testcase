@@ -793,6 +793,87 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-129830. Should be Remove multiple manual selection asset entries in Asset Publisher"
+	@priority = "4"
+	test RemoveMultipleManualSelectionAssetEntries {
+		task ("Stop and start module controller portlet from GogoShell") {
+			GogoShell.openGogoShellAdmin(siteURLKey = "test-site-name");
+
+			var moduleID = GogoShell.getModuleID(moduleName = "com.liferay.layout.type.controller.portlet");
+
+			GogoShell.stopModule(moduleID = "${moduleID}");
+
+			GogoShell.viewModuleStatus(
+				moduleName = "com.liferay.layout.type.controller.portlet",
+				moduleStatus = "Resolved");
+
+			GogoShell.startModule(moduleID = "${moduleID}");
+
+			GogoShell.viewModuleStatus(
+				moduleName = "com.liferay.layout.type.controller.portlet",
+				moduleStatus = "Active");
+		}
+
+		task ("Add three web content based on Basic Web Content") {
+			for (var n : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+			}
+		}
+
+		task ("Go to Asset Publisher Page") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Configure the Asset Publisher to Manual Selection and Select all Web Content") {
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetType = "Basic Web Content",
+				searchInfo = "3 Results for Web Content",
+				searchTerm = "Web Content");
+		}
+
+		task ("View the titles of Web Content") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var n : list "1,2,3") {
+				AssertTextEquals(
+					key_assetTitle = "Web Content Title ${n}",
+					locator1 = "AssetLists#ASSET_TITLE_ROW",
+					value1 = "Web Content Title ${n}");
+			}
+
+			IFrame.closeFrame();
+		}
+
+		task ("Go to Asset Publisher widget configuration") {
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+		}
+
+		task ("Delete two Web Content from Asset Entries") {
+			for (var n : list "2,3") {
+				AssetListsAdmin.deleteManualSelectionAssets(assetsList = "Web Content Title ${n}");
+			}
+		}
+
+		task ("Assert the two deleted Web Content are not shown") {
+			for (var n : list "2,3") {
+				AssertElementNotPresent(
+					key_assetTitle = "Web Content Title ${n}",
+					locator1 = "AssetLists#ASSET_TITLE_ROW");
+			}
+		}
+
+		task ("View the first Web Content is shown") {
+			AssertVisible(
+				key_assetTitle = "Web Content Title 1",
+				locator1 = "AssetLists#ASSET_TITLE_ROW");
+		}
+	}
+
 	@description = "View assets filter by tag or category in Asset Publisher."
 	@priority = "4"
 	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {

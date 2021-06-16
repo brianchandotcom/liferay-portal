@@ -467,7 +467,7 @@ definition {
 
 		if (isSet(assetTitle) || isSet(searchTerm)) {
 			Panel.expandPanel(panel = "Asset Entries");
-		
+
 			if (isSet(depotName)) {
 				Click(
 					key_depotName = "${depotName}",
@@ -496,7 +496,7 @@ definition {
 						key_rowEntry = "${assetTitle}",
 						locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 				}
-				
+
 				else {
 					WaitForElementPresent(
 						key_rowEntry = "${assetTitle}",
@@ -507,7 +507,7 @@ definition {
 						locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 				}
 			}
-			
+
 			if (isSet(searchTerm)) {
 				Search.searchCP(searchTerm = "${searchTerm}");
 
@@ -517,7 +517,7 @@ definition {
 
 				PortletEntry.selectAll();
 			}
-			
+
 			SelectFrameTop();
 
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");

@@ -14,8 +14,12 @@
 
 package com.liferay.portal.odata.internal.filter;
 
-import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryTerm;
+import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -38,9 +42,11 @@ import com.liferay.portal.odata.internal.filter.expression.ListExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
+import com.liferay.portal.search.internal.query.util.NestedFieldQueryHelperImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -87,11 +93,15 @@ public class ExpressionConvertImplTest {
 			BinaryExpression.Operation.EQ,
 			new LiteralExpressionImpl("test", LiteralExpression.Type.STRING));
 
-		TermFilter termFilter = (TermFilter)_expressionConvertImpl.convert(
+		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
 			binaryExpression, LocaleUtil.getDefault(), _entityModel);
 
-		Assert.assertEquals("title", termFilter.getField());
-		Assert.assertEquals("test", termFilter.getValue());
+		TermQuery termQuery = (TermQuery)queryFilter.getQuery();
+
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		Assert.assertEquals("title", queryTerm.getField());
+		Assert.assertEquals("test", queryTerm.getValue());
 	}
 
 	@Test
@@ -106,14 +116,23 @@ public class ExpressionConvertImplTest {
 				new LiteralExpressionImpl(
 					"test", LiteralExpression.Type.STRING)));
 
-		TermsFilter termsFilter = (TermsFilter)_expressionConvertImpl.convert(
+		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
 			listExpression, LocaleUtil.getDefault(), _entityModel);
 
-		Assert.assertEquals("title", termsFilter.getField());
+		BooleanQuery booleanQuery = (BooleanQuery)queryFilter.getQuery();
 
-		String[] values = termsFilter.getValues();
+		List<BooleanClause<Query>> clauses = booleanQuery.clauses();
 
-		Assert.assertEquals("test", values[0]);
+		Assert.assertEquals(clauses.toString(), 1, clauses.size());
+
+		BooleanClause<Query> clause = clauses.get(0);
+
+		TermQuery termQuery = (TermQuery)clause.getClause();
+
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		Assert.assertEquals("title", queryTerm.getField());
+		Assert.assertEquals("test", queryTerm.getValue());
 	}
 
 	@Test
@@ -132,12 +151,16 @@ public class ExpressionConvertImplTest {
 						new LiteralExpressionImpl(
 							"'keyword1'", LiteralExpression.Type.STRING)))));
 
-		TermFilter termFilter = (TermFilter)_expressionConvertImpl.convert(
+		QueryFilter queryFilter = (QueryFilter)_expressionConvertImpl.convert(
 			memberExpression, LocaleUtil.getDefault(), _entityModel);
 
-		Assert.assertNotNull(termFilter);
-		Assert.assertEquals("keywords.raw", termFilter.getField());
-		Assert.assertEquals("keyword1", termFilter.getValue());
+		TermQuery termQuery = (TermQuery)queryFilter.getQuery();
+
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		Assert.assertNotNull(queryTerm);
+		Assert.assertEquals("keywords.raw", queryTerm.getField());
+		Assert.assertEquals("keyword1", queryTerm.getValue());
 	}
 
 	private static final EntityModel _entityModel = new EntityModel() {
@@ -162,6 +185,10 @@ public class ExpressionConvertImplTest {
 	};
 
 	private final ExpressionConvertImpl _expressionConvertImpl =
-		new ExpressionConvertImpl();
+		new ExpressionConvertImpl() {
+			{
+				nestedFieldQueryHelper = new NestedFieldQueryHelperImpl();
+			}
+		};
 
 }

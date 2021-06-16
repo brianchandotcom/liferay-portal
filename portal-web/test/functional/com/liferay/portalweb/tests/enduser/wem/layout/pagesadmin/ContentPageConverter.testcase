@@ -141,7 +141,7 @@ definition {
 		}
 
 		task ("Get plids of widget pages before conversion") {
-			var plidsBeforeConversion = "";
+			var list = ListUtil.newList();
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				Navigator.gotoSitePage(
@@ -151,16 +151,14 @@ definition {
 				var plidBeforeConversion = Page.getPlidFromHtmlSource();
 
 				if ("${i}" == "1") {
-					var plidsBeforeConversion = List.add(
-						item = "${plidBeforeConversion}",
-						list = "${plidsBeforeConversion}");
+					ListUtil.add("${list}","${plidBeforeConversion}");
 				}
 				else {
-					var plidsBeforeConversion = List.add(
-						item = " ${plidBeforeConversion}",
-						list = "${plidsBeforeConversion}");
+					ListUtil.add("${list}"," ${plidBeforeConversion}");
 				}
 			}
+
+			var plidsBeforeConversion = ListUtil.toString("${list}");
 
 			echo("${plidsBeforeConversion}");
 		}
@@ -196,7 +194,7 @@ definition {
 		}
 
 		task ("Get plids of converted pages") {
-			var plidsAfterConversion = "";
+			var list = ListUtil.newList();
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				ContentPagesNavigator.openViewContentPage(
@@ -208,16 +206,14 @@ definition {
 				var plidAfterConversion = Page.getPlidFromHtmlSource();
 
 				if ("${i}" == "1") {
-					var plidsAfterConversion = List.add(
-						item = "${plidAfterConversion}",
-						list = "${plidsAfterConversion}");
+					ListUtil.add("${list}","${plidAfterConversion}");
 				}
 				else {
-					var plidsAfterConversion = List.add(
-						item = " ${plidAfterConversion}",
-						list = "${plidsAfterConversion}");
+					ListUtil.add("${list}"," ${plidAfterConversion}");
 				}
 			}
+
+			var plidsAfterConversion = ListUtil.toString("${list}");
 
 			echo("${plidsAfterConversion}");
 		}

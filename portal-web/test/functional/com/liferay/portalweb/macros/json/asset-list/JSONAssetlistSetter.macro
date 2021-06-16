@@ -31,33 +31,36 @@ definition {
 			groupName = "Global",
 			site = "true");
 
-		var values = "";
-		var values = List.add(item = "com.liferay.blogs.model.BlogsEntry", list = "${values}");
-		var values = List.add(item = "com.liferay.bookmarks.model.BookmarksEntry", list = "${values}");
-		var values = List.add(item = "com.liferay.bookmarks.model.BookmarksFolder", list = "${values}");
-		var values = List.add(item = "com.liferay.calendar.model.CalendarBooking", list = "${values}");
-		var values = List.add(item = "com.liferay.commerce.model.CommerceOrder", list = "${values}");
-		var values = List.add(item = "com.liferay.document.library.kernel.model.DLFileEntry", list = "${values}");
-		var values = List.add(item = "com.liferay.document.library.kernel.model.DLFolder", list = "${values}");
-		var values = List.add(item = "com.liferay.dynamic.data.lists.model.DDLRecord", list = "${values}");
-		var values = List.add(item = "com.liferay.knowledge.base.model.KBArticle", list = "${values}");
-		var values = List.add(item = "com.liferay.message.boards.model.MBMessage", list = "${values}");
-		var values = List.add(item = "com.liferay.translation.model.TranslationEntry", list = "${values}");
-		var values = List.add(item = "com.liferay.journal.model.JournalArticle", list = "${values}");
-		var values = List.add(item = "com.liferay.journal.model.JournalFolder", list = "${values}");
-		var values = List.add(item = "com.liferay.wiki.model.WikiPage", list = "${values}");
+		var list = ListUtil.newList();
 
-		var classNameIds = "";
+		ListUtil.add("${list}", "com.liferay.blogs.model.BlogsEntry");
+		ListUtil.add("${list}", "com.liferay.bookmarks.model.BookmarksEntry");
+		ListUtil.add("${list}", "com.liferay.bookmarks.model.BookmarksFolder");
+		ListUtil.add("${list}", "com.liferay.calendar.model.CalendarBooking");
+		ListUtil.add("${list}", "com.liferay.commerce.model.CommerceOrder");
+		ListUtil.add("${list}", "com.liferay.document.library.kernel.model.DLFileEntry");
+		ListUtil.add("${list}", "com.liferay.document.library.kernel.model.DLFolder");
+		ListUtil.add("${list}", "com.liferay.dynamic.data.lists.model.DDLRecord");
+		ListUtil.add("${list}", "com.liferay.knowledge.base.model.KBArticle");
+		ListUtil.add("${list}", "com.liferay.message.boards.model.MBMessage");
+		ListUtil.add("${list}", "com.liferay.translation.model.TranslationEntry");
+		ListUtil.add("${list}", "com.liferay.journal.model.JournalArticle");
+		ListUtil.add("${list}", "com.liferay.journal.model.JournalFolder");
+		ListUtil.add("${list}", "com.liferay.wiki.model.WikiPage");
+
+		var values = ListUtil.toString("${list}");
+
+		var list = ListUtil.newList();
 
 		for (var value : list "${values}") {
 			var classNameId = JSONClassname._getClassNameId(value = "${value}");
 
 			if ("${value}" != "") {
-				var classNameIds = List.add(
-					item = "${classNameId}",
-					list = "${classNameIds}");
+				ListUtil.add("${list}","${classNameId}");
 			}
 		}
+
+		var classNameIds = ListUtil.toString("${list}");
 
 		var googleDriveShortcutClassTypeId = JSONDLfileentrytype._getFileEntryTypeId(
 			fileEntryTypeName = "Google Drive Shortcut",

@@ -857,14 +857,64 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SingleSelectionFieldCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133794 SingleSelectionFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 1",
+			optionValue = "1");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 2",
+			optionValue = "2");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "tip");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewLabel(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Test Help Text");
+
+		FormFields.viewSingleSelectionOption(
+			key_optionLabel = "Option 1",
+			key_position = "1");
+
+		FormFields.viewSingleSelectionOption(
+			key_optionLabel = "Option 2",
+			key_position = "2");
+
+		FormFields.editRepeatableSingleSelection(
+			fieldName = "SingleSelection",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldName = "SingleSelection",
+			key_optionNumber = "",
+			locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
 	@description = "Verify that a Text Field can be previewed"

@@ -62,9 +62,7 @@ public class JournalArticleFriendlyURLTest {
 	}
 
 	@Test
-	public void testFriendlyURLPersistAfterRemoveLastVersion()
-		throws Exception {
-
+	public void testFriendlyURLAfterRemovingLastVersion() throws Exception {
 		String esTitle = RandomTestUtil.randomString();
 		String frTitle = RandomTestUtil.randomString();
 
@@ -101,7 +99,8 @@ public class JournalArticleFriendlyURLTest {
 			updatedArticle2, updatedArticle2.getUrlTitle(), serviceContext);
 
 		JournalArticle persistedArticle =
-			_journalArticleLocalService.fetchArticle(article.getId());
+			_journalArticleLocalService.fetchLatestArticle(
+				article.getResourcePrimKey());
 
 		Map<Locale, String> friendlyURLMap =
 			persistedArticle.getFriendlyURLMap();

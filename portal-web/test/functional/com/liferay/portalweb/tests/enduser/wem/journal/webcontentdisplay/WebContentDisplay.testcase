@@ -833,7 +833,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.searchWebContentNo(webContentTitle = "WC2 WebContent2 Title2");
+		WebContentDisplayPortlet.searchForNoWebContent(webContentTitle = "WC2 WebContent2 Title2");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
@@ -847,7 +847,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.searchWebContentNo(
+		WebContentDisplayPortlet.searchForNoWebContent(
 			webContentSearchValue = "&quot;WC2 WebContent2 Title2&quot;",
 			webContentTitle = "WC2 WebContent2 Title2");
 	}

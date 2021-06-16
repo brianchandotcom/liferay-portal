@@ -247,7 +247,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro searchWebContentNo {
+	macro searchForNoWebContent {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");

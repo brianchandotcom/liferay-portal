@@ -99,7 +99,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.searchWebContentNo(
+		WebContentDisplayPortlet.searchForNoWebContent(
 			depotName = "Test Depot Name",
 			webContentTitle = "WC Depot Title");
 

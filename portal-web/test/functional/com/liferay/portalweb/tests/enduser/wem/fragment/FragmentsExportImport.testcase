@@ -1629,4 +1629,129 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for LPS-128652. View the changes of fragment on content page still persist after overwrite the fragment."
+	@priority = "4"
+	test ViewChangesOfFragmentOnContentPagePersistAfterOverwriteTheFragment {
+		property test.name.skip.portal.instance = "FragmentsExportImport#ViewChangesOfFragmentOnContentPagePersistAfterOverwriteTheFragment";
+
+		task ("Enable Propagate Fragment Changes Automatically in System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Page Fragments",
+				configurationName = "Page Fragments",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkNotVisible(
+				checkboxName = "Propagate Fragment Changes Automatically",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Copy Tabs fragment to created collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Tabs",
+				item = "Copy To");
+
+			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
+		}
+
+		task ("Export the fragment collection") {
+			FragmentsAdmin.exportCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Navigate to the content page in the Test Site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add a Container to page") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Grid element to Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+		}
+
+		task ("Add two Tabs fragment to second module of Grid") {
+			for (var fragmentName : list "Tabs (Copy),Tabs (Copy)") {
+				PageEditor.addElementToColumn(
+					collectionName = "Collection Name",
+					columnNumber = "2",
+					fragmentName = "${fragmentName}",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("Increase number of tabs to the first Tabs") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs (Copy)");
+
+			PageEditor.configureFragment(numberOfTabs = "5");
+		}
+
+		task ("Edit inline text of the fifth tabs") {
+			PageEditor.editFragmentText(
+				fragmentName = "Tabs (Copy)",
+				id = "title5",
+				text = "Test");
+		}
+
+		task ("View the inline text of the fifth tabs") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Test",
+				fragmentName = "Tabs (Copy)",
+				id = "title5");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to Fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Import the fragment collection") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Navigate to the content page in edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the inline text of the fifth tabs") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Test",
+				fragmentName = "Tabs (Copy)",
+				id = "title5");
+		}
+	}
+
 }

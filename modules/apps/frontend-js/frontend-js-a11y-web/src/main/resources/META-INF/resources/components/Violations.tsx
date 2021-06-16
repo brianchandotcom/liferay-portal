@@ -21,8 +21,11 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import React, {useState} from 'react';
 
+import {
+	TYPES,
+	useFilteredViolationsDispatch,
+} from '../hooks/useFilteredViolations';
 import Rule from './Rule';
-import {TYPES, useFilteredViolationsDispatch} from './useFilteredViolations';
 
 import type {ImpactValue, Result} from 'axe-core';
 

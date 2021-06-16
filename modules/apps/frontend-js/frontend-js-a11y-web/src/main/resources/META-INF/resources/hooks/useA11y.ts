@@ -14,11 +14,11 @@
 
 import {useEffect, useState} from 'react';
 
-import {A11yChecker} from './A11yChecker';
+import {A11yChecker} from '../A11yChecker';
 
 import type {CheckResult, ImpactValue, Result} from 'axe-core';
 
-import type {A11yCheckerOptions} from './A11yChecker';
+import type {A11yCheckerOptions} from '../A11yChecker';
 
 export type Violation = {
 	all: Array<CheckResult>;

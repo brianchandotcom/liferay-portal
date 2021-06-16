@@ -20,10 +20,10 @@ import ClayPopover from '@clayui/popover';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import useA11y from './useA11y';
+import useA11y from './hooks/useA11y';
 
 import type {A11yCheckerOptions} from './A11yChecker';
-import type {Violation as TViolation} from './useA11y';
+import type {Violation as TViolation} from './hooks/useA11y';
 
 const rectAttrs: Array<keyof DOMRect> = [
 	'bottom',

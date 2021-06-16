@@ -14,10 +14,10 @@
 
 import React, {useState} from 'react';
 
-import Occurrence from './Occurrence';
-import Violation from './Violation';
-import Violations from './Violations';
-import {FilteredViolationsContextProvider} from './useFilteredViolations';
+import Occurrence from './components/Occurrence';
+import Violation from './components/Violation';
+import Violations from './components/Violations';
+import {FilteredViolationsContextProvider} from './hooks/useFilteredViolations';
 
 import type {ImpactValue, Result} from 'axe-core';
 

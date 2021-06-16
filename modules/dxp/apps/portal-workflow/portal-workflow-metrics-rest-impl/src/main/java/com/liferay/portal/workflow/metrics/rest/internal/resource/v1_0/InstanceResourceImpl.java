@@ -1138,6 +1138,22 @@ public class InstanceResourceImpl
 				sort.getFieldName(),
 				sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
 		}
+		else if (StringUtil.equals(sort.getFieldName(), "assigneeName")) {
+			fieldSort = _sorts.field(
+				"tasks.assigneeName",
+				sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
+
+			fieldSort.setMissing("_last");
+
+			NestedSort nestedSort = _sorts.nested("tasks");
+
+			nestedSort.setFilterQuery(
+				_queries.term("tasks.assigneeType", User.class.getName()));
+
+			fieldSort.setNestedSort(nestedSort);
+
+			fieldSort.setSortMode(SortMode.MIN);
+		}
 		else if (StringUtil.equals(sort.getFieldName(), "createDate")) {
 			fieldSort = _sorts.field(
 				"createDate",

@@ -882,6 +882,26 @@ definition {
 
 		}
 
+		task ("Import the exported page template.") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			var pageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "page-template-*.zip");
+
+			UploadTempFile(
+					locator1 = "TextInput#FILE",
+					value1 = "${pageTemplateZipFileName}");
+
+			Button.clickImport();
+
+			Alert.viewSuccessMessage();
+
+		}
 	}
 
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."

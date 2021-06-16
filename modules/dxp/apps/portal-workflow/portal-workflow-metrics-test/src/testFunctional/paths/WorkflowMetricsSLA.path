@@ -141,6 +141,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_INPUT_START</td>
+	<td>//label[@for="slaTimeStart"]/following-sibling::div//div[contains(@class, 'align-items-start')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_INPUT_PAUSE</td>
+	<td>//label[@for="slaTimePause"]/following-sibling::div//div[contains(@class, 'align-items-start')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_INPUT_STOP</td>
+	<td>//label[@for="slaTimeStop"]/following-sibling::div//div[contains(@class, 'align-items-start')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_ERROR_MESSAGE</td>
 	<td>//div[contains(text(), '${key_errorMessage}')]</td>
 	<td></td>

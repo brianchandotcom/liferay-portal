@@ -278,12 +278,53 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields filter the dropdown list according to search terms"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test MultiSelectFieldsFilterDropdownListAccordingSearchTerms {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67873 MultiSelectFieldsFilterDropdownListAccordingSearchTerms pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_INPUT_START",
+			value1 = "Review");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "Enters Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "Leaves Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_INPUT_PAUSE",
+			value1 = "Task");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		AssertElementPresent(
+			key_slaDefinitionPause = "On Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_INPUT_STOP",
+			value1 = "Approved");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		AssertElementPresent(
+			key_slaDefinitionEnd = "Process Ends: Approved",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION");
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields provide feedback when typing terms that doesn't exist"

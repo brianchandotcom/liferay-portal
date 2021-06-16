@@ -1028,6 +1028,14 @@ public class SourceFormatter {
 			_readProperties(new File(modulePropertiesFileName));
 		}
 
+		for (Properties properties : _propertiesMap.values()) {
+			if (GetterUtil.getBoolean(properties.get("liferay.source"))) {
+				_portalSource = true;
+
+				break;
+			}
+		}
+
 		if (!_portalSource && _containsDir("modules/private/apps")) {
 
 			// Grab and read properties from portal branch

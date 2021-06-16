@@ -77,8 +77,14 @@ const chartFactory = ({
 					totalEntries={sumTotalValues}
 				/>
 			);
+		case 'address':
+		case 'city':
 		case 'color':
+		case 'country':
 		case 'date':
+		case 'place':
+		case 'postal-code':
+		case 'state':
 		case 'text': {
 			if (Array.isArray(values)) {
 				return (
@@ -94,7 +100,6 @@ const chartFactory = ({
 				return '';
 			}
 		}
-
 		default:
 			return null;
 	}

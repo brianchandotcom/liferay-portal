@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -57,6 +59,55 @@ public class JournalArticleFriendlyURLTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testFriendlyURLPersistAfterRemoveLastVersion()
+		throws Exception {
+
+		String esTitle = RandomTestUtil.randomString();
+		String frTitle = RandomTestUtil.randomString();
+
+		String usTitle = RandomTestUtil.randomString();
+
+		JournalArticle article = _addJournalArticleWithTitleMap(
+			HashMapBuilder.put(
+				LocaleUtil.US, usTitle
+			).build());
+
+		JournalArticle updatedArticle1 = _updateJournalArticleWithTitleMap(
+			article,
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, frTitle
+			).put(
+				LocaleUtil.US, usTitle
+			).build());
+
+		JournalArticle updatedArticle2 = _updateJournalArticleWithTitleMap(
+			updatedArticle1,
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, frTitle
+			).put(
+				LocaleUtil.SPAIN, esTitle
+			).put(
+				LocaleUtil.US, usTitle
+			).build());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_journalArticleLocalService.deleteArticle(
+			updatedArticle2, updatedArticle2.getUrlTitle(), serviceContext);
+
+		JournalArticle persistedArticle =
+			_journalArticleLocalService.fetchArticle(article.getId());
+
+		Map<Locale, String> friendlyURLMap =
+			persistedArticle.getFriendlyURLMap();
+
+		Assert.assertEquals(
+			friendlyURLMap.toString(), 3, friendlyURLMap.size());
 	}
 
 	@Test
@@ -211,5 +262,8 @@ public class JournalArticleFriendlyURLTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -36,7 +37,9 @@ public class AccountRoleRowChecker extends EmptyOnClickRowChecker {
 
 		Role role = accountRoleDisplay.getRole();
 
-		if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
+		if ((role.getType() == RoleConstants.TYPE_ACCOUNT) &&
+			AccountRoleConstants.isSharedRole(role)) {
+
 			return true;
 		}
 

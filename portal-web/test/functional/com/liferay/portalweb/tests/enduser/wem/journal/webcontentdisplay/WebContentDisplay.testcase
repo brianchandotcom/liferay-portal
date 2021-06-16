@@ -584,6 +584,88 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
+	@description = "This is a test for LPS-129944. Should be configure WCD when selected web content based on template with embedded widget."
+	@priority = "4"
+	test ConfigureWCDWhenSelectedWebContentBasedOnTemplateWithEmbeddedWidget {
+		task ("Add Web Content Structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add Web Content Template based on the Structure") {
+			NavItem.gotoTemplates();
+
+			LexiconEntry.gotoAdd();
+
+			WebContentTemplates.inputTemplateAddScreenFields(
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name");
+
+			var instanceId = StringUtil.randomString("12");
+
+			var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_journal_content_web_portlet_JournalContentPortlet" instanceId="${instanceId}" />''';
+
+			WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+			PortletEntry.save();
+		}
+
+		task ("Add Web Content based on the Structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				webContentTitle = "WC WebContent Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add the web content via Content tab of Add panel") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Content.addPG(
+				assetTitle = "WC WebContent Title",
+				pageName = "Test Page Name");
+		}
+
+		task ("Configure the WCD to Related Assets") {
+			Portlet.gotoPortletOptions(
+				portletName = "Web Content Display",
+				portletOption = "Configuration");
+
+			WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Related Assets");
+
+			WebContentDisplayPortlet.saveConfiguration();
+
+			IFrame.closeFrame();
+		}
+
+		task ("View Web Content Title on WCD") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_TITLE",
+				value1 = "WC WebContent Title");
+		}
+	}
+
 	@description = "This is a use case for LPS-118702. Display web content article from other site."
 	@priority = "5"
 	test DisplayWebContentFromOtherSite {

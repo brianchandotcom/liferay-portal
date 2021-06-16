@@ -86,7 +86,8 @@
 		color: 1,
 		font: 1,
 		i: 1,
-		image: 1,
+		// eslint-disable-next-line @liferay/liferay/no-abbreviations
+		img: 1,
 		s: 1,
 		size: 1,
 		u: 1,
@@ -342,7 +343,8 @@
 		email: '_handleEmail',
 		font: '_handleFont',
 		i: '_handleEm',
-		image: '_handleImage',
+		// eslint-disable-next-line @liferay/liferay/no-abbreviations
+		img: '_handleImage',
 		justify: '_handleTextAlign',
 		left: '_handleTextAlign',
 		li: '_handleListItem',

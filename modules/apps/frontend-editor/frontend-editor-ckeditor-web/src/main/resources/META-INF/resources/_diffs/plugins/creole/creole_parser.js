@@ -288,8 +288,8 @@
 			},
 
 			hr: {regex: /(^|\n)\s*----\s*(\n|$)/, tag: 'hr'},
-
-			image: {
+			// eslint-disable-next-line @liferay/liferay/no-abbreviations
+			img: {
 				build(node, r, options) {
 					var imagePath = r[1];
 					var imagePathPrefix = options ? options.imagePrefix : '';

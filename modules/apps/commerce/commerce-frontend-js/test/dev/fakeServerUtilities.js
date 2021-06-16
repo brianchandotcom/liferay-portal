@@ -58,7 +58,8 @@ function defineServerResponses(app) {
 						},
 					],
 					id: 'asd',
-					image: {
+					// eslint-disable-next-line @liferay/liferay/no-abbreviations
+					img: {
 						src: '//via.placeholder.com/250x250',
 					},
 					name: 'ABS Sensor',
@@ -113,7 +114,8 @@ function defineServerResponses(app) {
 								},
 							],
 							id: '111',
-							image: {
+							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							img: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 1',
@@ -163,7 +165,8 @@ function defineServerResponses(app) {
 								},
 							],
 							id: '112',
-							image: {
+							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							img: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 2',
@@ -177,7 +180,8 @@ function defineServerResponses(app) {
 						},
 						{
 							id: '113',
-							image: {
+							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							img: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 3',
@@ -191,7 +195,8 @@ function defineServerResponses(app) {
 						},
 						{
 							id: '114',
-							image: {
+							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							img: {
 								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 4',
@@ -243,7 +248,8 @@ function defineServerResponses(app) {
 						},
 					],
 					id: 'sdf',
-					image: {
+					// eslint-disable-next-line @liferay/liferay/no-abbreviations
+					img: {
 						src: '//via.placeholder.com/500x500',
 					},
 					name: 'SBA Sensor',

@@ -193,7 +193,8 @@ AUI.add(
 					value: {
 						strings: {
 							asc: Liferay.Language.get('ascending'),
-							description: Liferay.Language.get('descending'),
+							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							desc: Liferay.Language.get('descending'),
 							propertyName: Liferay.Language.get('property-name'),
 							reverseSortBy: Lang.sub(
 								Liferay.Language.get('reverse-sort-by-x'),

@@ -40,7 +40,7 @@ AUI.add(
 
 		var STR_YOUR_SCORE = 'yourScore';
 
-		var TPL_LABEL_SCORE = '{desc} ({totalEntries} {voteLabel})';
+		var TPL_LABEL_SCORE = '{description} ({totalEntries} {voteLabel})';
 		var TPL_LABEL_SCORE_STACKED = '({totalEntries} {voteLabel})';
 
 		var buffer = [];

@@ -136,6 +136,18 @@ definition {
 			value1 = "${categoryName}");
 	}
 
+	macro viewNoAddPermissions {
+		Panel.expandPanel(panel = "Categorization");
+
+		Click(
+			key_vocabularyName = "${vocabularyName}",
+			locator1 = "AssetCategorization#CATEGORY_SELECT");
+
+		IFrame.selectCategoryFrame();
+
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+	}
+
 	macro viewNoVocabularyField {
 		Panel.expandPanel(panel = "Categorization");
 

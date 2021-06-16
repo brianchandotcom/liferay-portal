@@ -435,6 +435,10 @@ public class AssetListAssetEntryProviderImpl
 	private BooleanClause[] _getAssetCategoryIdsBooleanClauses(
 		long[][] assetCategoryIds) {
 
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return new BooleanClause[0];
+		}
+
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 		BooleanFilter assetCategoryIdsBooleanFilter = new BooleanFilter();

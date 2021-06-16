@@ -806,7 +806,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130482. View the custom CSS of content page in staging site"
+	@description = "This is a test for LPS-130482. View the custom CSS of content page in staging site."
 	@priority = "4"
 	test ViewCustomCSSOfContentPageInStagingSite {
 		task ("Add a content page") {
@@ -817,21 +817,21 @@ definition {
 				type = "content");
 		}
 
-		task ("Navigate to the content page in the staging site") {
+		task ("Navigate to the content page at edit mode in staging site") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name Staging");
 		}
 
-		task ("Select Define specific look and feel under Theme tab") {
+		task ("Navigate to the Look and Feel settings") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Theme.configureLookAndFeelSpecificLook();
 		}
 
-		task ("Add the custom CSS under the box and save") {
+		task ("Define the custom CSS") {
+			Theme.configureLookAndFeelSpecificLook();
+
 			Theme.configureLookAndFeelCustomCSS(cssText = '''div.component-paragraph {background-color: red; color:white;}''');
 
 			PortletEntry.save();
@@ -847,7 +847,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Open View content page in new site") {
+		task ("Navigate to the content page at view mode in staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name Staging");
@@ -869,19 +869,19 @@ definition {
 				value1 = "rgba(255, 0, 0, 1)");
 		}
 
-		task ("Navigate to the content page in the staging site") {
+		task ("Navigate to the content page at edit mode in staging site") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name Staging");
 		}
 
-		task ("Navigate to Look and Feel ") {
+		task ("Navigate to the Look and Feel settings") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 		}
 
-		task ("Add the custom CSS under the box and save") {
+		task ("Change the custom CSS") {
 			Theme.configureLookAndFeelCustomCSS(cssText = '''div.component-paragraph {background-color: blue; color:black;}''');
 
 			PortletEntry.save();
@@ -891,7 +891,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Open View content page in new site") {
+		task ("Navigate to the content page at view mode in staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name Staging");

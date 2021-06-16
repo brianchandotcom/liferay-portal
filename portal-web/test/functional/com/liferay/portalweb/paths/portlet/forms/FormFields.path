@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LABEL_BY_DATA_FIELD_NAME</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'${key_fieldName}')]//label[text()='${key_fieldLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPEN_GRAPH_LABEL</td>
 	<td>//div[contains(@class,'form-group')]/label[normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>

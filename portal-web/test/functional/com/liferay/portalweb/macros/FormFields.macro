@@ -990,6 +990,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewFieldLabelByDataFieldName {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#LABEL_BY_DATA_FIELD_NAME");
+	}
+
 	macro viewFieldLabelNotPresent {
 		AssertElementNotPresent(
 			key_fieldLabel = "${fieldLabel}",

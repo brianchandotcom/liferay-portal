@@ -14,6 +14,9 @@
 
 package com.liferay.portal.vulcan.openapi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Javier Gamarra
  */
@@ -23,10 +26,19 @@ public class OpenAPISchemaFilter {
 		return _dtoProperty;
 	}
 
+	public Map<String, String> getSchemaMappings() {
+		return _schemaMappings;
+	}
+
 	public void setDTOProperty(DTOProperty dtoProperty) {
 		_dtoProperty = dtoProperty;
 	}
 
+	public void setSchemaMappings(Map<String, String> schemaMappings) {
+		_schemaMappings = schemaMappings;
+	}
+
 	private DTOProperty _dtoProperty;
+	private Map<String, String> _schemaMappings = new HashMap<>();
 
 }

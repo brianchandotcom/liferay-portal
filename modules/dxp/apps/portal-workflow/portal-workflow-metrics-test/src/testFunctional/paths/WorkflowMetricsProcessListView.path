@@ -11,9 +11,14 @@
 
 <tbody>
 <tr>
-	<td>METRICS_WORKFLOW_SEARCH_BAR</td>
-	<td>//input[@placeholder='Search for']</td>
-	<td></td>
+    <td>DELETE_SLA_MESSAGE</td>
+    <td>//p[contains(text(),'Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>METRICS_WORKFLOW_SEARCH_BAR</td>
+    <td>//input[@placeholder='Search for']</td>
+    <td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_SEARCH_BAR_BUTTON</td>

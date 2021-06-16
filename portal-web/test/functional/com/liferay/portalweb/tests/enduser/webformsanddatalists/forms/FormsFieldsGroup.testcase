@@ -140,14 +140,58 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeRepeatable {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133875 CanBeRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Text",
+			key_fieldName = "Numeric");
+
+		Form.gotoFieldContainer(fieldName = "Fields Group");
+
+		FormFields.enableSwitcher(fieldName = "Repeatable");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			fieldName = "FieldsGroup",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewRepeatableFieldGroup(repeatableFieldNumber = "2");
+
+		FormFields.viewRepeatableFieldInFieldGroup(
+			fieldName = "Text",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewRepeatableFieldInFieldGroup(
+			fieldName = "Text",
+			repeatableFieldNumber = "2");
+
+		FormFields.viewRepeatableFieldInFieldGroup(
+			fieldName = "Numeric",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewRepeatableFieldInFieldGroup(
+			fieldName = "Numeric",
+			repeatableFieldNumber = "2");
 	}
 
 	@description = "Verify that fields within a Fields Group can be reordered"

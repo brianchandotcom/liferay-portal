@@ -46,6 +46,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_REPEATABLE_FIELD_GROUP</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_REPEATABLE_FIELD_IN_FIELD_GROUP</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}]//div[@class='ddm-field' and contains(@data-field-name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_REPEATABLE_BUTTON_BY_INDEX</td>
 	<td>//div[${key_duplicatedIndex}][contains(@class,'ddm-field')]//div[contains(@data-field-name,'${key_fieldName}')]//button[contains(@class,'ddm-form-field-repeatable-add-button')]</td>
 	<td></td>

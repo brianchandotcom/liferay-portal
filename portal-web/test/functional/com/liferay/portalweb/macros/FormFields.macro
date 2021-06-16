@@ -1328,12 +1328,25 @@ definition {
 		AssertVisible(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 	}
 
+	macro viewRepeatableFieldGroup {
+		AssertElementPresent(
+			key_repeatableFieldNumber = "${repeatableFieldNumber}",
+			locator1 = "FormFields#FIELD_REPEATABLE_FIELD_GROUP");
+	}
+
 	macro viewRepeatableFieldHelpText {
 		AssertTextEquals(
 			key_fieldName = "${fieldName}",
 			key_repeatableFieldNumber = "${repeatableFieldNumber}",
 			locator1 = "FormFields#REPEATABLE_HELP_TEXT",
 			value1 = "${fieldHelpText}");
+	}
+
+	macro viewRepeatableFieldInFieldGroup {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_repeatableFieldNumber = "${repeatableFieldNumber}",
+			locator1 = "FormFields#FIELD_REPEATABLE_FIELD_IN_FIELD_GROUP");
 	}
 
 	macro viewRepeatableFields {

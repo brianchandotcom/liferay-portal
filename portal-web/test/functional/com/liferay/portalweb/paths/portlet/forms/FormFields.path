@@ -645,6 +645,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SEPARATOR-->
+<tr>
+	<td>SEPARATOR_LINE</td>
+	<td>//label[text()='${key_fieldLabel}']/following-sibling::div[contains(@class,'separator')]</td>
+	<td></td>
+</tr>
 <!--SWITCHER-->
 <tr>
 	<td>SWITCHER</td>

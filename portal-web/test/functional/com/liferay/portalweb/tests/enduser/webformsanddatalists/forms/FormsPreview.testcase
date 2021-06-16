@@ -348,14 +348,45 @@ definition {
 	}
 
 	@description = "Verify that an Image Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ImageFieldCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133789 ImageFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Image");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "tip");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewLabel(
+			fieldLabel = "Image",
+			fieldName = "Image");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Image");
+
+		FormFields.selectImageUpload(
+			fileName = "Document_1.jpg",
+			navTab = "Documents and Media",
+			rowNumber = "1");
+
+		FormFields.validateImagePredefinedValue(fileName = "Document_1.jpg");
 	}
 
 	@description = "Verify that is is not possible to preview an invalid Form (ie. no Fields or a Paragraph field with no body text)"

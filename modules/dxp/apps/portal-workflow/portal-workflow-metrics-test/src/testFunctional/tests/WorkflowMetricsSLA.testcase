@@ -301,12 +301,46 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to hit enter key to select an option from the dropdown list"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test MultiSelectFieldsAllowHitEnterKeyToSelectOption {
+		var key_testSLADefinitionDays = "1";
+		var key_testSLADefinitionHours = "00:00";
+		var key_testSLADefinitionDescription = "SLA Description";
+		var key_testSLADefinitionEnd = "Process Ends: Approved";
+		var key_testSLADefinitionName = "SLA Name";
+		var key_testSLADefinitionStart = "Process Begins";
 
-		// TODO LRQA-67877 MultiSelectFieldsAllowHitEnterKeyToSelectOption pending implementation
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "${key_testSLADefinitionDays}",
+			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
+			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}",
+			slaDefinitionName = "${key_testSLADefinitionName}",
+			slaDefinitionStart = "${key_testSLADefinitionStart}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
+			value1 = "${key_testSLADefinitionName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
+			value1 = "${key_testSLADefinitionDescription}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
+			value1 = "${key_testSLADefinitionStart}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
+			value1 = "${key_testSLADefinitionEnd}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
+			value1 = "${key_testSLADefinitionDays}");
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to navigate from the input field to the dropdown list vertically by using up/down keys"

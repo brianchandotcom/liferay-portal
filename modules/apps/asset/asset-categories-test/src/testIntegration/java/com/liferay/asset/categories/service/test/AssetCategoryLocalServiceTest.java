@@ -172,11 +172,12 @@ public class AssetCategoryLocalServiceTest {
 	public void testUpdateAssetCategoryWithTranslationInSiteDefaultLocale()
 		throws PortalException {
 
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Título",
-			_assetVocabulary.getVocabularyId(), new ServiceContext());
-
 		String expectedAssetCategoryTitle = "Título";
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			expectedAssetCategoryTitle, _assetVocabulary.getVocabularyId(),
+			new ServiceContext());
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.FRANCE, "Qualification"

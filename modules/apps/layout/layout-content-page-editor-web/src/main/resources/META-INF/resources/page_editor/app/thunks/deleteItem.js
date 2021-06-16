@@ -13,7 +13,6 @@
  */
 
 import deleteItemAction from '../actions/deleteItem';
-import deleteWidgets from '../actions/deleteWidgets';
 import updatePageContents from '../actions/updatePageContents';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import InfoItemService from '../services/InfoItemService';
@@ -31,45 +30,23 @@ export default function deleteItem({itemId, selectItem = () => {}, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		})
-			.then(
-				({
-					deletedFragmentEntryLinkIds = [],
-					portletIds = [],
+			.then(({portletIds = [], layoutData}) => {
+				selectItem(null);
+
+				const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
+					itemId,
 					layoutData,
-				}) => {
-					const deletedWidgets = deletedFragmentEntryLinkIds
-						.map(
-							(fragmentEntryLinkId) =>
-								store.fragmentEntryLinks[fragmentEntryLinkId]
-						)
-						.filter(
-							(fragmentEntryLink) =>
-								fragmentEntryLink.editableValues.portletId
-						);
+				});
 
-					if (deletedWidgets.length) {
-						dispatch(deleteWidgets(deletedWidgets));
-					}
-
-					selectItem(null);
-
-					const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId(
-						{
-							itemId,
-							layoutData,
-						}
-					);
-
-					dispatch(
-						deleteItemAction({
-							fragmentEntryLinkIds,
-							itemId,
-							layoutData,
-							portletIds,
-						})
-					);
-				}
-			)
+				dispatch(
+					deleteItemAction({
+						fragmentEntryLinkIds,
+						itemId,
+						layoutData,
+						portletIds,
+					})
+				);
+			})
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,

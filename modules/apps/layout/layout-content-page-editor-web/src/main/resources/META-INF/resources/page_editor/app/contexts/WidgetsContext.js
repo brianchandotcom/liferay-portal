@@ -12,8 +12,10 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
+import WidgetService from '../services/WidgetService';
 import {useSelector} from './StoreContext';
 
 const WidgetsContext = React.createContext([]);
@@ -21,7 +23,15 @@ const WidgetsContext = React.createContext([]);
 export const useWidgets = () => useContext(WidgetsContext);
 
 export const WidgetsContextProvider = ({children}) => {
-	const widgets = useSelector((state) => state.widgets);
+	const fragmentEntryLinksIds = useSelector((state) =>
+		Object.keys(state.fragmentEntryLinks).join(',')
+	);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const [widgets, setWidgets] = useState([]);
+
+	useEffect(() => {
+		WidgetService.getWidgets().then(setWidgets);
+	}, [fragmentEntryLinksIds, segmentsExperienceId]);
 
 	return (
 		<WidgetsContext.Provider value={widgets}>

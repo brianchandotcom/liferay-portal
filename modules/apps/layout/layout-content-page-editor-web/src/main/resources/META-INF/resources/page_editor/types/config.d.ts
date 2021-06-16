@@ -126,6 +126,7 @@ export interface Config {
 	getInfoItemMappingFieldsURL: string;
 	getLayoutFriendlyURL: string;
 	getPageContentsURL: string;
+	getWidgetsURL: string;
 	imageSelectorURL: string;
 	infoItemPreviewSelectorURL: string;
 	infoItemSelectorURL: string;

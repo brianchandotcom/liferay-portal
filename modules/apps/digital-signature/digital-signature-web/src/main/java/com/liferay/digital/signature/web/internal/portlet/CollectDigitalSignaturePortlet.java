@@ -85,7 +85,7 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			long[] fileEntryIds = ParamUtil.getLongValues(
 				renderRequest, "fileEntryId");
 
-			JSONArray jsonArray = _jsonArray(fileEntryIds);
+			JSONArray jsonArray = _getJSONArray(fileEntryIds);
 
 			renderRequest.setAttribute(
 				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRIES,
@@ -108,18 +108,7 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	private String _getTitle(String fileEntryTitle, int count) {
-		if (count == 0) {
-			return fileEntryTitle;
-		}
-
-		return LanguageUtil.format(
-			ResourceBundleUtil.getBundle("content.Language", getClass()),
-			(count == 1) ? "x-and-x-other-file" : "x-and-x-other-files",
-			new String[] {fileEntryTitle, String.valueOf(count)}, false);
-	}
-
-	private JSONArray _jsonArray(long[] fileEntryIds) throws Exception {
+	private JSONArray _getJSONArray(long[] fileEntryIds) throws Exception {
 		return JSONUtil.toJSONArray(
 			ArrayUtil.toLongArray(fileEntryIds),
 			fileEntryId -> {
@@ -136,6 +125,17 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 					"title", fileEntry.getTitle()
 				);
 			});
+	}
+
+	private String _getTitle(String fileEntryTitle, int count) {
+		if (count == 0) {
+			return fileEntryTitle;
+		}
+
+		return LanguageUtil.format(
+			ResourceBundleUtil.getBundle("content.Language", getClass()),
+			(count == 1) ? "x-and-x-other-file" : "x-and-x-other-files",
+			new String[] {fileEntryTitle, String.valueOf(count)}, false);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -44,7 +44,9 @@ const DigitalSignatureFormBase = ({
 		);
 
 		if (fileEntryExist) {
-			return errorToast(Liferay.Language.get('the-document-already-exists'));
+			return errorToast(
+				Liferay.Language.get('the-document-already-exists')
+			);
 		}
 
 		setFieldValue('fileEntries', [...values.fileEntries, fileEntry]);

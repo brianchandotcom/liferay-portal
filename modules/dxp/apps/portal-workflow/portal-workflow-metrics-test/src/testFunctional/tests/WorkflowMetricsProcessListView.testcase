@@ -355,9 +355,6 @@ definition {
 			key_overdueValue = "0",
 			key_totalPendingValue = "1",
 			key_workflowProcessName = "Single Approver");
-
-
-			
 	}
 
 	@description = "LPS-88573 - Verify that the table entries are ordered by Overdue, from biggest to the smaller value, by default"

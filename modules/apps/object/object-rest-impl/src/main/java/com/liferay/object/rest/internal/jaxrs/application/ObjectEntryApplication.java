@@ -20,6 +20,7 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
@@ -93,6 +94,12 @@ public class ObjectEntryApplication extends Application {
 			));
 
 		openAPISchemaFilter.setDTOProperty(dtoProperty);
+		openAPISchemaFilter.setSchemaMappings(
+			HashMapBuilder.put(
+				"ObjectEntry", _applicationName
+			).put(
+				"PageObjectEntry", "Page" + _applicationName
+			).build());
 
 		return openAPISchemaFilter;
 	}

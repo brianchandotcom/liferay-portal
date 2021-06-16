@@ -14,12 +14,10 @@
 
 package com.liferay.project.templates.mvc.portlet;
 
-import aQute.bnd.version.Version;
-import aQute.bnd.version.VersionRange;
-
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.File;
@@ -82,11 +80,7 @@ public class ProjectTemplatesMVCPortletSuffixTest
 			temporaryFolder, "mvc-portlet", "portlet-portlet", "portlet",
 			_liferayVersion, mavenExecutor, _gradleDistribution);
 
-		Version version = Version.parseVersion(_liferayVersion);
-
-		VersionRange versionRange = new VersionRange("[7.0,7.3)");
-
-		if (versionRange.includes(version)) {
+		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
 			testContains(
 				gradleProjectDir, "build.gradle", DEPENDENCY_JAVAX_PORTLET_API,
 				DEPENDENCY_JAVAX_SERVLET_API, DEPENDENCY_ORG_OSGI_ANNOTATIONS);

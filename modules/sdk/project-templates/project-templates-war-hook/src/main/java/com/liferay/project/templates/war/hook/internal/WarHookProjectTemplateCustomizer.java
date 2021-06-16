@@ -14,11 +14,10 @@
 
 package com.liferay.project.templates.war.hook.internal;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
 import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 import com.liferay.project.templates.extensions.util.FileUtil;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 
 import java.io.File;
 
@@ -53,12 +52,9 @@ public class WarHookProjectTemplateCustomizer
 
 		File webINFDir = new File(buildDir, "src/main/webapp/WEB-INF");
 
-		Version version = Version.parseVersion(
-			projectTemplatesArgs.getLiferayVersion());
-
-		int minorVersion = version.getMinor();
-
-		String minorVersionString = String.valueOf(minorVersion);
+		String minorVersionString = String.valueOf(
+			VersionUtil.getMinorVersion(
+				projectTemplatesArgs.getLiferayVersion()));
 
 		File liferayHookXMLFile = new File(webINFDir, "liferay-hook.xml");
 

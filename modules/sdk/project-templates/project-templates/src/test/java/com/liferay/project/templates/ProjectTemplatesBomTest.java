@@ -14,9 +14,8 @@
 
 package com.liferay.project.templates;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.File;
@@ -28,7 +27,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Properties;
-import java.util.stream.IntStream;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -62,23 +60,7 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 	public void testBomVersion() throws Exception {
 		Assume.assumeTrue(_isBomTest());
 
-		String normalizedBomVersion = _BOM_VERSION.replaceAll("-", ".");
-
-		IntStream intStream = normalizedBomVersion.chars();
-
-		long componentCount = intStream.filter(
-			components -> components == '.'
-		).count();
-
-		if (componentCount > 3) {
-			normalizedBomVersion = normalizedBomVersion.substring(
-				0, normalizedBomVersion.lastIndexOf("."));
-		}
-
-		Version version = Version.parseVersion(normalizedBomVersion);
-
-		File workspaceDir = buildWorkspace(
-			temporaryFolder, version.getMajor() + "." + version.getMinor());
+		File workspaceDir = buildWorkspace(temporaryFolder, _BOM_VERSION);
 
 		writeGradlePropertiesInWorkspace(
 			workspaceDir,
@@ -86,7 +68,7 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 
 		String product = "portal";
 
-		if (version.getMicro() >= 10) {
+		if (VersionUtil.getMicroVersion(_BOM_VERSION) >= 10) {
 			product = "dxp";
 		}
 

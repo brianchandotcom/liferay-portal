@@ -14,11 +14,10 @@
 
 package com.liferay.project.templates.spring.mvc.portlet.internal;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
 import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 import com.liferay.project.templates.extensions.util.FileUtil;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 
 import java.io.File;
 
@@ -84,12 +83,9 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			FileUtil.deleteDir(spring4JavaPkgDir.toPath());
 		}
 
-		Version version = Version.parseVersion(
-			projectTemplatesArgs.getLiferayVersion());
-
-		int minorVersion = version.getMinor();
-
-		String minorVersionString = String.valueOf(minorVersion);
+		String minorVersionString = String.valueOf(
+			VersionUtil.getMinorVersion(
+				projectTemplatesArgs.getLiferayVersion()));
 
 		File liferayPortletXML = new File(
 			webappDir, "WEB-INF/liferay-display.xml");

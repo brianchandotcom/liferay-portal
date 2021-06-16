@@ -14,12 +14,10 @@
 
 package com.liferay.project.templates.service;
 
-import aQute.bnd.version.Version;
-import aQute.bnd.version.VersionRange;
-
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.BufferedWriter;
@@ -100,11 +98,7 @@ public class ProjectTemplatesServiceTest
 			_liferayVersion, "--class-name", "FooAction", "--service",
 			"com.liferay.portal.kernel.events.LifecycleAction");
 
-		Version version = Version.parseVersion(_liferayVersion);
-
-		VersionRange versionRange = new VersionRange("[7.0,7.3)");
-
-		if (versionRange.includes(version)) {
+		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
 			testContains(
 				gradleProjectDir, "build.gradle",
 				DEPENDENCY_ORG_OSGI_ANNOTATIONS);

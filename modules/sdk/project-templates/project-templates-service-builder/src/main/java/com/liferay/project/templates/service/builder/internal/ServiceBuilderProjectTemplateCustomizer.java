@@ -14,11 +14,10 @@
 
 package com.liferay.project.templates.service.builder.internal;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
 import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 import com.liferay.project.templates.extensions.util.FileUtil;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 
 import java.io.File;
@@ -72,12 +71,9 @@ public class ServiceBuilderProjectTemplateCustomizer
 
 		File serviceXMLFile = new File(serviceDir, "service.xml");
 
-		Version version = Version.parseVersion(
-			projectTemplatesArgs.getLiferayVersion());
-
-		int minorVersion = version.getMinor();
-
-		String minorVersionString = String.valueOf(minorVersion);
+		String minorVersionString = String.valueOf(
+			VersionUtil.getMinorVersion(
+				projectTemplatesArgs.getLiferayVersion()));
 
 		FileUtil.replaceString(
 			serviceXMLFile, "7.0", "7." + minorVersionString);

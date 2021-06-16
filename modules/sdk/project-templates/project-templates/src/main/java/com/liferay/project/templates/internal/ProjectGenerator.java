@@ -14,15 +14,13 @@
 
 package com.liferay.project.templates.internal;
 
-import aQute.bnd.version.Version;
-import aQute.bnd.version.VersionRange;
-
 import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
 import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 import com.liferay.project.templates.extensions.constants.ProjectTemplatesConstants;
 import com.liferay.project.templates.extensions.util.FileUtil;
 import com.liferay.project.templates.extensions.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 
 import java.io.File;
@@ -71,7 +69,7 @@ public class ProjectGenerator {
 			templateFile, "Liferay-Versions");
 
 		if ((liferayVersions != null) &&
-			!_isInVersionRange(liferayVersion, liferayVersions)) {
+			!VersionUtil.isLiferayVersion(liferayVersion)) {
 
 			throw new IllegalArgumentException(
 				"Specified Liferay version is invalid. Must be in range " +
@@ -196,14 +194,6 @@ public class ProjectGenerator {
 		}
 
 		return null;
-	}
-
-	private boolean _isInVersionRange(String versionString, String range) {
-		Version version = new Version(versionString);
-
-		VersionRange versionRange = new VersionRange(range);
-
-		return versionRange.includes(version);
 	}
 
 	private void _setProperty(

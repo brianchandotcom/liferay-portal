@@ -1762,8 +1762,6 @@ definition {
 		if ("${minutes}" == "58") {
 			var minutes = "00";
 
-			// TODO COMMERCE-6221 ViewExpiredPL Pending Implementation
-
 			if ("${hours}" == "12") {
 				var hours = "01";
 
@@ -1984,13 +1982,200 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6223. Tier Price Entry expiration management"
-	@ignore = "true"
 	@priority = "3"
 	test ViewExpiredTierPriceEntry {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#ViewExpiredTierPriceEntry";
 
-		// TODO COMMERCE-6223 ViewExpiredTierPriceEntry Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		Click(
+			key_text = "Pricing",
+			locator1 = "Link#ANY");
+
+		Click(
+			key_text = "Tier Price Entries",
+			locator1 = "Link#ANY");
+
+		Type(
+			key_text = "Check Interval",
+			locator1 = "TextInput#ANY",
+			value1 = "1");
+
+		Button.clickSave();
+
+		Pause(locator1 = "1000");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Pricing",
+			panel = "Commerce",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Minium",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "MIN55861",
+			title = "Add SKUs");
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_text = "Price List Price",
+			locator1 = "TextInput#ANY",
+			value1 = "30");
+
+		var timeString = selenium.getElementValue(locator1 = "TextInput#DATE_TIME_PRICE_LISTS");
+
+		Click(
+			key_radioOption = "Bulk Pricing",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
+		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
+		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
+
+		if ("${minutes}" == "58") {
+			var minutes = "00";
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+
+				if ("${ampm}" == "PM") {
+					var ampm = "AM";
+				}
+				else {
+					var ampm = "PM";
+				}
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+		else if ( "${minutes}" == "59") {
+			var minutes = "01";
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+
+				if ("${ampm}" == "PM") {
+					var ampm = "AM";
+				}
+				else {
+					var ampm = "PM";
+				}
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+		else {
+			var minutes = ${minutes} + 2;
+		}
+
+		Type(
+			key_fieldLabel = "Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10");
+
+		Type(
+			key_fieldLabel = "Tier Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10");
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Never Expire",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			key_value = "expirationDateTime",
+			locator1 = "TextInput#ANY_ID",
+			value1 = "${hours}:${minutes} ${ampm}");
+
+		Button.clickSubmitButton();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "10");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals.assertPartialText(
+			key_cartItemSKU = "MIN55861",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 10.00");
+
+		Click(locator1 = "Icon#DELETE");
+
+		Pause(locator1 = "120000");
+
+		Refresh();
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "10");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals.assertPartialText(
+			key_cartItemSKU = "MIN55861",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 10.00");
 	}
 
 	@description = "This is a test for COMMERCE-6228. Check that an expired entity is not considered in the price calculation"

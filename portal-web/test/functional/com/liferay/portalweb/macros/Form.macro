@@ -404,7 +404,7 @@ definition {
 			value1 = "${elementSetTitle}");
 	}
 
-	@description = "Add the ${key_fieldType} field inside page ${formPageNumber} in position ${fieldPositionNumber}."
+	@summary = "Add the ${key_fieldType} field inside page ${formPageNumber} in position ${fieldPositionNumber}."
 	macro gotoAddField {
 		Form.openSidebar();
 

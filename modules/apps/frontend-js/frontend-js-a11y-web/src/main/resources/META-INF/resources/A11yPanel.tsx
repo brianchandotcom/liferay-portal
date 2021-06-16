@@ -12,75 +12,15 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 
 import Occurrence from './components/Occurrence';
+import {StackNavigator} from './components/StackNavigator';
 import Violation from './components/Violation';
 import Violations from './components/Violations';
 import {FilteredViolationsContextProvider} from './hooks/useFilteredViolations';
 
 import type {ImpactValue, Result} from 'axe-core';
-
-function isBetweenRange(childrenCount: number, newIndex: number) {
-	return 0 <= newIndex && newIndex <= childrenCount;
-}
-
-type SidebarPanelNavigatorProps = {
-	children: React.ReactNode;
-};
-
-type TNavigationState = {
-	occurrenceIndex?: number;
-	occurrenceName?: string;
-	violationsIndex: number;
-};
-
-function SidebarPanelsNavigator({children}: SidebarPanelNavigatorProps) {
-	const [activePageIndex, setActivePageIndex] = useState(0);
-
-	const [navigationState, setNavigationState] = useState<TNavigationState>({
-		violationsIndex: 0,
-	});
-
-	return (
-		<div className="a11y-panel__sidebar sidebar sidebar-light">
-			{React.Children.map(children, (child, index) => {
-				const childrenCount = React.Children.count(children);
-
-				if (index === activePageIndex && React.isValidElement(child)) {
-					return (
-						child &&
-						React.cloneElement(child, {
-							index: activePageIndex,
-							key: index,
-							navigationState,
-							next: (newPayload: TNavigationState) => {
-								const newIndex = activePageIndex + 1;
-
-								if (isBetweenRange(childrenCount, newIndex)) {
-									setActivePageIndex(newIndex);
-									setNavigationState(newPayload);
-								}
-							},
-							previous: (newPayload: TNavigationState) => {
-								const newIndex = activePageIndex - 1;
-
-								if (isBetweenRange(childrenCount, newIndex)) {
-									setActivePageIndex(newIndex);
-
-									if (newPayload) {
-										setNavigationState(newPayload);
-									}
-								}
-							},
-							...child.props,
-						})
-					);
-				}
-			})}
-		</div>
-	);
-}
 
 const IMPACT_PRIORITY = {
 	critical: 4,
@@ -120,15 +60,17 @@ export function A11yPanel({violations}: A11yPanelProps) {
 	return (
 		<FilteredViolationsContextProvider value={sortedByImpactViolations}>
 			{({filteredViolations, selectedCategories, selectedImpact}) => (
-				<SidebarPanelsNavigator>
-					<Violations
-						selectedCategories={selectedCategories}
-						selectedImpact={selectedImpact}
-						violations={filteredViolations}
-					/>
-					<Violation violations={filteredViolations} />
-					<Occurrence violations={filteredViolations} />
-				</SidebarPanelsNavigator>
+				<div className="a11y-panel__sidebar sidebar sidebar-light">
+					<StackNavigator>
+						<Violations
+							selectedCategories={selectedCategories}
+							selectedImpact={selectedImpact}
+							violations={filteredViolations}
+						/>
+						<Violation violations={filteredViolations} />
+						<Occurrence violations={filteredViolations} />
+					</StackNavigator>
+				</div>
 			)}
 		</FilteredViolationsContextProvider>
 	);

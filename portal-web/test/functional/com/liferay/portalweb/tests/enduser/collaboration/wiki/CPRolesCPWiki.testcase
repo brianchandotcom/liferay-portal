@@ -35,9 +35,137 @@ definition {
 		}
 	}
 
+	@description = "This ensures that user can not edit and delete wiki node when the regular role with permissions."
 	@priority = "4"
-	@refactorneeded
-	test ViewWikiPortletRegRole {
+	@refactordone
+	test CanEditAndDeleteWikiNodeWithPermissions {
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_wiki_web_portlet_WikiAdminPortlet",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_NODE",
+			resourceName = "com.liferay.wiki",
+			roleTitle = "Regrole Name");
+
+		for (var resourceAction : list "DELETE,UPDATE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com.liferay.wiki.model.WikiNode",
+				roleTitle = "Regrole Name");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		WikiNode.editCP(
+			wikiNodeDescriptionEdit = "Wiki Node Description Edit",
+			wikiNodeName = "Wiki Node Name",
+			wikiNodeNameEdit = "Wiki Node Name Edit");
+
+		WikiNode.deleteCP(wikiNodeName = "Wiki Node Name Edit");
+
+		WikiNode.viewNoCP(wikiNodeName = "Wiki Node Name Edit");
+	}
+
+	@description = "This ensures that user can not edit and delete wiki page when the regular role with permissions."
+	@priority = "4"
+	@refactordone
+	test CanEditAndDeleteWikiPageWithPermissions {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(roleTitle = "Roles Siterole Name");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_wiki_web_portlet_WikiAdminPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_PAGE",
+			resourceName = "com.liferay.wiki.model.WikiNode",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		for (var resourceAction : list "DELETE,UPDATE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com.liferay.wiki.model.WikiPage",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.editPageCP(
+			wikiPageContentEdit = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Title");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		WikiPage.deleteCP(wikiPageTitle = "Wiki Page Title");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Wiki Page Title");
+	}
+
+	@description = "This ensures that user can not add wiki assets when the regular role without permissions."
+	@priority = "4"
+	@refactordone
+	test CannotAddWikiAssetsWhenRegularRoleWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(
@@ -47,8 +175,6 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Navigator.openURL();
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
@@ -63,35 +189,38 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiPortlet.viewNoPermissionCP();
 	}
 
+	@description = "This ensures that user can not add wiki assets when the regular role without permissions."
 	@priority = "4"
-	@refactorneeded
-	test ViewWikiPortletSiteRole {
-		Permissions.setUpSiteRoleLoginUserCP(
-			pageName = "Wiki Page",
-			portletName = "Wiki",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
-			siteName = "Site Name",
-			sitePagePrivacy = "Public",
+	@refactordone
+	test CannotAddWikiAssetsWhenSiteRoleWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(
-			pageName = "Wiki Page",
-			siteName = "Site Name");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(roleTitle = "Roles Siterole Name");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
@@ -109,11 +238,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiPortlet.viewNoPermissionCP();
 	}

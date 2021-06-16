@@ -218,6 +218,19 @@ definition {
 			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[<p>${webContentContent}</p>]]></target> -Dtranslation.content.target=<![CDATA[<p>${contentTranslateion}</p>]]></target> -Dtranslation.description.target.original=<![CDATA[<p>${webContentDescription}</p>]]></target> -Dtranslation.description.target=<![CDATA[<p>${descriptionTranslateion}</p>]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
+	macro translateSpecificFieldsWithGoogle {
+		for (var fieldName : list "${fieldNameList}") {
+			Click.clickNoMouseOver(
+				key_title = "Auto Translate ${fieldName} Field",
+				locator1 = "Button#ANY_TITLE");
+
+			AssertTextEquals(
+				key_fieldName = "${fieldName}",
+				locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED",
+				value1 = "Field Translated");
+		}
+	}
+
 	macro translateWithGoogle {
 		Click(
 			key_text = "Auto Translate",

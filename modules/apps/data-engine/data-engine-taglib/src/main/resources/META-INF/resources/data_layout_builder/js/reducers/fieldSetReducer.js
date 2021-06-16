@@ -156,7 +156,7 @@ export default (state, action, config) => {
 			const fieldSetId = `${id}`;
 			const visitor = new PagesVisitor(pages);
 			const newPages = visitor.mapFields((field) => {
-				if (field.ddmStructureId !== fieldSetId) {
+				if (String(field.ddmStructureId) !== fieldSetId) {
 					return field;
 				}
 				const nestedFields = dataDefinitionFields.map(({name}) => {

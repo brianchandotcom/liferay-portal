@@ -129,9 +129,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
+    <td>RULE_BUILDER_CALCULATE_NUMBERS_KEYBOARD</td>
+    <td>//div[contains(@class,'calculator-button-area')]//button[contains(., '${key_buttonName}') and contains(@class, 'calculator-button')] | //div[contains(@class,'calculator-button-area')]//button[contains(@title, '${key_titleName}') and contains(@class, 'calculator-button')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
 </tr>
 <!--RULE_BUILDER_SUMMARY-->
 <tr>

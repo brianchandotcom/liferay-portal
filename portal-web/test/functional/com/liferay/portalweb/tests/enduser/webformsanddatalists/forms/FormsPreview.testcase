@@ -47,14 +47,68 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Calculate) action can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CalculateRuleCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133812 CalculateRuleCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Contains",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Calculate",
+			actionRowNumber = "1",
+			actionTarget = "Numeric");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "+");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "20");
 	}
 
 	@description = "Verify that a user can navigate to different pages of a preview"

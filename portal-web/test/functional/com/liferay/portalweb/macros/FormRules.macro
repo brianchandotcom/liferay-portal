@@ -30,6 +30,13 @@ definition {
 			value1 = "${calculateOperator}");
 	}
 
+	macro clickOnCalculatorNumbersKeyboard {
+		Click(
+			key_buttonName = "${buttonName}",
+			key_titleName = "${titleName}",
+			locator1 = "FormRules#RULE_BUILDER_CALCULATE_NUMBERS_KEYBOARD");
+	}
+
 	macro configureActionOptions {
 		FormRules.selectAction(
 			action = "${action}",

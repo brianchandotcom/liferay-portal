@@ -30,12 +30,23 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header On Time"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderByOnTimeItems {
+		Click(
+			key_assigneeName = "On Time",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
 
-		// TODO LRQA-67511 CanOrderByOnTimeItems pending implementation
+		WaitForElementPresent(
+			key_value = "down",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
 
+		Click(
+			key_assigneeName = "On Time",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		WaitForElementPresent(
+			key_value = "up",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
 	}
 
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Overdue"

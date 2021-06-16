@@ -51,6 +51,11 @@
 <tr>
     <td>METRICS_OVERDUE_ITEMS_TABLE_ROW</td>
     <td>//tr[${key_rowNumber}]//td[2]</td>
+		<td></td>
+</tr>
+<tr>	
+    <td>ANY_ARROW_ORDER</td>
+    <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
     <td></td>
 </tr>
 </tbody>

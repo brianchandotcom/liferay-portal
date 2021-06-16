@@ -30,12 +30,84 @@ definition {
 	}
 
 	@description = "LPS-102664 - Verify that the user can reassign several tasks to a different users and All Items page is updated accordingly"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test AllItemsPageIsUpdatedAfterReassignTasksToDifferentUser {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
-		// TODO LRQA-67838 AllItemsPageIsUpdatedAfterReassignTasksToDifferentUser pending implementation
+		User.addCP(
+			userEmailAddress = "usertest@liferay.com",
+			userFirstName = "User",
+			userLastName = "Test",
+			userScreenName = "usertest");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usertest");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content 1",
+			entryTitle = "Blogs Entry Title 1");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "Test Test",
+			taskList = "Blogs Entry: Blogs Entry Title,Blogs Entry: Blogs Entry Title 1");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.assertAllItemsCurrentAssignee(
+			workflowInstanceAssignee = "Test Test",
+			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
+
+		WorkflowMetrics.assertAllItemsCurrentAssignee(
+			workflowInstanceAssignee = "Test Test",
+			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "User Test",
+			taskList = "Blogs Entry: Blogs Entry Title,Blogs Entry: Blogs Entry Title 1");
+
+		Refresh();
+
+		WorkflowMetrics.assertAllItemsCurrentAssignee(
+			workflowInstanceAssignee = "User Test",
+			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
+
+		WorkflowMetrics.assertAllItemsCurrentAssignee(
+			workflowInstanceAssignee = "User Test",
+			workflowInstanceName = "Blogs Entry: Blogs Entry Title 1");
 	}
 
 	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the Assignee filter contains only the options that are displayed in the modal"

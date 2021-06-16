@@ -473,7 +473,9 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
 		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
 
-		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2");
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "Test Test",
+			taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2");
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 
@@ -1251,7 +1253,9 @@ definition {
 
 		WorkflowMetrics.assertAssignees();
 
-		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title 1");
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "Test Test",
+			taskList = "Blogs Entry: Blogs Entry Title 1");
 
 		MouseOver(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",

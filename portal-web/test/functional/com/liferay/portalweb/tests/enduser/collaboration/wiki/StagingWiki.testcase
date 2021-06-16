@@ -16,9 +16,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 	}
 
 	tearDown {
@@ -32,34 +30,23 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the deleted page can not be viewed in the live site after publishing."
 	@priority = "4"
-	@refactorneeded
-	test AddWikiAndCreateContentWithStagingThenPublishAfterDelete {
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+	@refactordone
+	test CannotViewDeletedWikiPageAfterPublishing {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging Test Page",
+			site = "false",
+			widgetName = "Wiki");
 
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		WikiNavigator.gotoAllPagesPG();
-
-		for (var entryCount : list "1,2,3") {
-			WikiPage.addPG(
-				wikiPageContent = "Wiki Page${entryCount} Content",
-				wikiPageTitle = "Wiki Page${entryCount} Title");
-
-			Refresh();
-		}
+		JSONWiki.addWikiPage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -69,29 +56,13 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name-staging",
+			tabURLKey = "all_pages",
+			wikiNodeName = "Main");
 
-		WikiNavigator.gotoAllPagesPG();
-
-		AssertElementPresent(locator1 = "WikiTable#ALL_PAGES_PAGE_2");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		for (var entryCount : list "1,2,3") {
-			WikiNavigator.gotoAllPagesPG();
-
-			WikiPage.deleteCP(wikiPageTitle = "Wiki Page${entryCount} Title");
-
-			WikiNavigator.gotoAllPagesPG();
-
-			WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page${entryCount} Title");
-		}
-
-		WikiPage.deletePG(wikiPageTitle = "FrontPage");
+		WikiPage.deletePG(wikiPageTitle = "Wiki Page Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -101,40 +72,40 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			tabURLKey = "all_pages",
+			wikiNodeName = "Main");
 
-		WikiNavigator.gotoAllPagesPG();
-
-		AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_PAGE_2");
+		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Title");
 	}
 
-	@description = "This is a use case for LPS-73992."
+	@description = "This is a use case for LPS-73992. It asserts removed wiki attachment file can not be viewed after publishing."
 	@priority = "5"
 	@refactorneeded
-	test RemoveStagedWikiAttachment {
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+	test CannotViewRemovedAttachmentAfterPublishing {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging Test Page",
+			site = "false",
+			widgetName = "Wiki");
 
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		WikiNavigator.gotoAllPagesPG();
-
-		WikiPage.addPG(
+		JSONWiki.addWikiPage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
+			wikiPageName = "Wiki Page Title");
 
-		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
-
-		WikiPage.addAttachmentViaPageEdit(
-			attachmentFileName = "Document_1.jpg",
-			wikiPageTitle = "Wiki Page Title");
+		JSONWiki.addAttachmentToWikiPage(
+			fileName = "Document_1.jpg",
+			groupName = "Site Name (Staging)",
+			mimeType = "image/jpeg",
+			site = "false",
+			wikiNodeName = "Main",
+			wikiPageName = "Wiki Page Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -143,17 +114,6 @@ definition {
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
-
-		WikiPage.viewPageWithAttachment(
-			attachmentFileName = "Document_1.jpg",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -183,49 +143,126 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
-	@description = "This is a use case for LPS-73471."
-	@priority = "5"
-	@refactorneeded
-	test RenameChildPageNameCP {
+	@description = "This test covers LPS-95501. It asserts added wiki attachment file can be viewed after publishing."
+	@priority = "4"
+	@refactordone
+	test CanViewAttachmentAfterPublish {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging Test Page",
+			site = "false",
+			widgetName = "Wiki");
+
+		JSONWiki.addWikiPage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
+
+		JSONWiki.addAttachmentToWikiPage(
+			fileName = "Document_1.jpg",
+			groupName = "Site Name (Staging)",
+			mimeType = "image/jpeg",
+			site = "false",
+			wikiNodeName = "Main",
+			wikiPageName = "Wiki Page Title");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		Staging.gotoPublishToLive();
 
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
+		Staging.publishToLive();
 
-		WikiPage.addCP(
-			wikiPageContent = "Wiki Page Content 1",
-			wikiPageTitle = "Wiki Page 1");
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		WikiPage.viewPageWithAttachment(
+			attachmentFileName = "Document_1.jpg",
+			inlineImage = "true",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
 
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name-staging",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
 
-		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page 1");
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_1.jpg",
+			wikiPageTitle = "Wiki Page Title");
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Add Child Page");
+		ItemSelector.viewWikiAttachment(imageFileName = "Document_1.jpg");
+	}
 
-		WikiEntry.addPageTitle(wikiPageTitle = "Child Page Title");
+	@description = "This ensures that the added front page can be viewed in the live site after publishing."
+	@priority = "4"
+	@refactordone
+	test CanViewFrontPageAfterPublishing {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging Test Page",
+			site = "false",
+			widgetName = "Wiki");
 
-		WikiEntry.addPageContent(wikiPageContent = "Child Page Content");
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
-		SelectFrame(value1 = "relative=top");
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
 
-		PortletEntry.publish();
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		Staging.gotoPublishToLive();
 
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
+		Staging.publishToLive();
 
-		WikiNavigator.gotoCP(wikiPageTitle = "Child Page Title");
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			tabURLKey = "all_pages",
+			wikiNodeName = "Main");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage");
+	}
+
+	@description = "This is a use case for LPS-73471. It asserts the renamed child page can be viewed after publishing."
+	@priority = "5"
+	@refactordone
+	test CanViewRenamedChildPageAfterPublishing {
+		JSONWiki.addWikiPage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
+
+		JSONWiki.addWikiChildPage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			wikiChildPageContent = "Child Page Content",
+			wikiChildPageName = "Child Page Title",
+			wikiNodeName = "Main",
+			wikiParentPageName = "Wiki Page Title");
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "site-name-staging",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Child Page Title");
 
 		WikiPage.renameWikiPageCP(
 			wikiPageTitle = "Child Page Title",
@@ -241,13 +278,10 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "Child Page Title");
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "site-name-staging",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Child Page Title");
 
 		WikiPage.renameWikiPageCP(
 			wikiPageTitle = "Child Page Title",
@@ -263,17 +297,54 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
+		WikiNavigator.openToWikiNode(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			wikiNodeName = "Main");
 
 		for (var wikiPageTitle : list "Child Page Title,Rename Page Title,Rename Page Title 1") {
 			LexiconEntry.viewEntryName(rowEntry = "${wikiPageTitle}");
 		}
+	}
+
+	@description = "This ensures that the added page can be viewed in the live site after publishing."
+	@priority = "4"
+	@refactordone
+	test CanViewWikiPageAfterPublishing {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging Test Page",
+			site = "false",
+			widgetName = "Wiki");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			tabURLKey = "all_pages",
+			wikiNodeName = "Main");
+
+		WikiTable.viewEntry(
+			entryStatus = "APPROVED",
+			wikiPageTitle = "Wiki Page Title");
 	}
 
 }

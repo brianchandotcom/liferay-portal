@@ -841,6 +841,7 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 				continue;
 			}
 
+			outerLoop:
 			for (DetailAST expressionDetailAST : expressionDetailASTList) {
 				if (expressionDetailAST.getType() != TokenTypes.EXPR) {
 					continue;
@@ -848,20 +849,41 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 
 				DetailAST childDetailAST = expressionDetailAST.getFirstChild();
 
-				if (childDetailAST.getType() == TokenTypes.METHOD_CALL) {
-					FullIdent fullIdent = FullIdent.createFullIdentBelow(
-						childDetailAST);
+				if (childDetailAST.getType() != TokenTypes.METHOD_CALL) {
+					continue;
+				}
 
-					String methodCall = fullIdent.getText();
+				FullIdent fullIdent = FullIdent.createFullIdentBelow(
+					childDetailAST);
 
-					if (methodCall.equals("String.valueOf") ||
-						methodCall.endsWith(".toString")) {
+				String methodCall = fullIdent.getText();
 
-						log(
-							expressionDetailAST, _MSG_UNNEEDED_STRING_CAST,
-							avoidCastStringMethodName);
+				if (!methodCall.equals("String.valueOf") &&
+					!methodCall.endsWith(".toString")) {
+
+					continue;
+				}
+
+				// LiferayPortletResponse.createActionURL and
+				// LiferayPortletResponse.createRenderURL should be cast to
+				// String to avoid compile errors.
+
+				List<DetailAST> identDetailASTList = getAllChildTokens(
+					expressionDetailAST, true, TokenTypes.IDENT);
+
+				for (DetailAST identDetailAST : identDetailASTList) {
+					String name = identDetailAST.getText();
+
+					if (name.equals("createActionURL") ||
+						name.equals("createRenderURL")) {
+
+						continue outerLoop;
 					}
 				}
+
+				log(
+					expressionDetailAST, _MSG_UNNEEDED_STRING_CAST,
+					avoidCastStringMethodName);
 			}
 		}
 	}

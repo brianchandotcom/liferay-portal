@@ -13,12 +13,17 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import {useMutation} from 'graphql-hooks';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
 
@@ -28,16 +33,15 @@ import Answer from '../../components/Answer.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import Breadcrumb from '../../components/Breadcrumb.es';
 import CreatorRow from '../../components/CreatorRow.es';
+import DefaultQuestionsEditor from '../../components/DefaultQuestionsEditor.es';
 import DeleteQuestion from '../../components/DeleteQuestion.es';
 import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
-import QuestionsEditor from '../../components/QuestionsEditor';
 import Rating from '../../components/Rating.es';
 import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
-import TextLengthValidation from '../../components/TextLengthValidation.es';
 import {
 	createAnswerQuery,
 	getMessages,
@@ -51,7 +55,6 @@ import {
 	deleteCacheKey,
 	getContextLink,
 	getFullPath,
-	stripHTML,
 } from '../../utils/utils.es';
 
 export default withRouter(
@@ -65,7 +68,9 @@ export default withRouter(
 
 		const [error, setError] = useState(null);
 
-		const [articleBody, setArticleBody] = useState();
+		const editor = useRef('');
+
+		const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
 		const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
 
 		const [page, setPage] = useState(1);
@@ -380,70 +385,21 @@ export default withRouter(
 									question.actions &&
 									question.actions['reply-to-thread'] && (
 										<div className="c-mt-5">
-											<ClayForm>
-												<ClayForm.Group className="form-group-sm">
-													<label htmlFor="basicInput">
-														{Liferay.Language.get(
-															'your-answer'
-														)}
-
-														<span className="c-ml-2 reference-mark">
-															<ClayIcon symbol="asterisk" />
-														</span>
-													</label>
-
-													<div className="c-mt-2">
-														{question.locked && (
-															<div className="question-locked-text">
-																<span>
-																	<ClayIcon symbol="lock" />
-																</span>
-																{Liferay.Language.get(
-																	'this-question-is-closed-new-answers-and-comments-are-disabled'
-																)}
-															</div>
-														)}
-														<QuestionsEditor
-															contents={
-																articleBody
-															}
-															cssClass={
-																question.locked
-																	? 'question-locked'
-																	: ''
-															}
-															editorConfig={{
-																readOnly:
-																	question.locked,
-															}}
-															onChange={(
-																event
-															) => {
-																setArticleBody(
-																	event.editor.getData()
-																);
-															}}
-														/>
-													</div>
-
-													<ClayForm.FeedbackGroup>
-														<ClayForm.FeedbackItem>
-															<TextLengthValidation
-																text={
-																	articleBody
-																}
-															/>
-														</ClayForm.FeedbackItem>
-													</ClayForm.FeedbackGroup>
-												</ClayForm.Group>
-											</ClayForm>
+											<DefaultQuestionsEditor
+												label={Liferay.Language.get(
+													'your-answer'
+												)}
+												onContentLengthValid={
+													setIsPostButtonDisable
+												}
+												question={question}
+												ref={editor}
+											/>
 
 											{!question.locked && (
 												<ClayButton
 													disabled={
-														!articleBody ||
-														stripHTML(articleBody)
-															.length < 15
+														isPostButtonDisable
 													}
 													displayType="primary"
 													onClick={() => {
@@ -452,12 +408,12 @@ export default withRouter(
 																`${sectionTitle}/${questionId}`
 															),
 															variables: {
-																articleBody,
+																articleBody: editor.current.getContent(),
 																messageBoardThreadId:
 																	question.id,
 															},
 														}).then(() => {
-															setArticleBody('');
+															editor.current.clearContent();
 															fetchMessages();
 														});
 													}}

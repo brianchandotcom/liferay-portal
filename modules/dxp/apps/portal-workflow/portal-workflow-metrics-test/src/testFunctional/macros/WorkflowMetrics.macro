@@ -264,6 +264,13 @@ definition {
 			value1 = "Current Assignee");
 	}
 
+	macro assertSlaPosition {
+		AssertElementPresent(
+			key_slaPosition = "${slaPosition}",
+			key_slaTitle = "${slaTitle}",
+			locator1 = "WorkflowMetricsSLA#SLA_POSITION_BY_TITLE");
+	}
+
 	macro assertTransitionTaskOptionNotPresent {
 		var key_taskName = "${taskName}";
 		var key_transitionOption = "${transitionOption}";

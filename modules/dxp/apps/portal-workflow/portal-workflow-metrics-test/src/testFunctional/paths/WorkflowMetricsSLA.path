@@ -171,6 +171,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_POSITION_BY_TITLE</td>
+	<td>//div[@class='table-responsive']//tbody//tr[contains(.,'')][${key_slaPosition}]//div[@class='table-list-title']//a[contains(text(),'${key_slaTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_RECORD_ELLIPSIS</td>
 	<td>//tr[contains(.,'${key_slaName}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>

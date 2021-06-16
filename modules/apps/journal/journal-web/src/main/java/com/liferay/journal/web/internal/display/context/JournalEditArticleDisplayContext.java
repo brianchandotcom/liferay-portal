@@ -777,11 +777,9 @@ public class JournalEditArticleDisplayContext {
 
 		_showSelectFolder = false;
 
-		boolean showSelectFolder = ParamUtil.getBoolean(
-			_httpServletRequest, "showSelectFolder");
-
-		if ((_article == null) && showSelectFolder) {
-			_showSelectFolder = true;
+		if (_article == null) {
+			_showSelectFolder = ParamUtil.getBoolean(
+				_httpServletRequest, "showSelectFolder", true);
 		}
 
 		return _showSelectFolder;

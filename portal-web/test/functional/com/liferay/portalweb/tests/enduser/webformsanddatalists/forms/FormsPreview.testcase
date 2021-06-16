@@ -180,14 +180,90 @@ definition {
 	}
 
 	@description = "Verify that a Grid Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test GridFieldCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133786 GridFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option A",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option B",
+			rowNumber = "2");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "tip");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Grid");
+
+		FormFields.viewLabel(
+			fieldLabel = "Grid",
+			fieldName = "Grid");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Test Help Text");
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			optionName = "Option 1",
+			rowNumber = "1");
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			optionName = "Option 2",
+			rowNumber = "2");
+
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Grid",
+			optionName = "Option A",
+			rowNumber = "1");
+
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Grid",
+			optionName = "Option B",
+			rowNumber = "1");
+
+		FormFields.selectGridRadioOptionWithoutCategory(
+			fieldName = "Grid",
+			optionColumnNumber = "A",
+			optionRowNumber = "1");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldName = "Grid",
+			key_optionNumber = "1",
+			locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
 	@description = "Verify that an Image Field can be previewed"

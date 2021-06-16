@@ -29,8 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -50,6 +48,51 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 		}
 
 		return _formatPortalProperties(content);
+	}
+
+	private String _addEnvVariables(
+		String content, String commentBlock, String variablesContent,
+		int lineNumber) {
+
+		Set<String> environmentVariables = _getEnvironmentVariables(
+			variablesContent);
+
+		if (environmentVariables.isEmpty()) {
+			return content;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		if (Validator.isNull(commentBlock)) {
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.FOUR_SPACES);
+			sb.append(StringPool.POUND);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		for (String environmentVariable : environmentVariables) {
+			sb.append(StringPool.FOUR_SPACES);
+			sb.append("# Env: ");
+			sb.append(environmentVariable);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.append(StringPool.FOUR_SPACES);
+		sb.append(StringPool.POUND);
+		sb.append(StringPool.NEW_LINE);
+
+		String environmentVariablesComment = sb.toString();
+
+		if (commentBlock.endsWith(environmentVariablesComment)) {
+			return content;
+		}
+
+		variablesContent = StringUtil.replaceLast(variablesContent, "\n", "");
+
+		return StringUtil.replaceFirst(
+			content, variablesContent,
+			environmentVariablesComment + variablesContent,
+			getLineStartPos(content, lineNumber + 1));
 	}
 
 	private String _encode(String s) {
@@ -74,51 +117,47 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 	}
 
 	private String _formatPortalProperties(String content) {
-		Matcher matcher = _pattern.matcher(content);
+		StringBundler commentBlockSB = new StringBundler();
+		StringBundler variablesContentSB = new StringBundler();
 
-		while (matcher.find()) {
-			String variablesContent = matcher.group(4);
+		int lineNumber = 0;
 
-			Set<String> environmentVariables = _getEnvironmentVariables(
-				variablesContent);
+		String[] lines = StringUtil.splitLines(content);
 
-			if (environmentVariables.isEmpty()) {
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+
+			if (line.startsWith("        ") || line.matches("    #?\\w.*")) {
+				variablesContentSB.append(line);
+				variablesContentSB.append("\n");
+
 				continue;
 			}
 
-			String commentBlock = matcher.group(1);
+			if (variablesContentSB.index() > 0) {
+				String newContent = _addEnvVariables(
+					content, commentBlockSB.toString(),
+					variablesContentSB.toString(), lineNumber);
 
-			StringBundler sb = new StringBundler();
+				if (!content.equals(newContent)) {
+					return newContent;
+				}
 
-			if (Validator.isNull(commentBlock)) {
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append(StringPool.POUND);
-				sb.append(StringPool.NEW_LINE);
+				commentBlockSB = new StringBundler();
+				variablesContentSB = new StringBundler();
+
+				lineNumber = i;
 			}
 
-			for (String environmentVariable : environmentVariables) {
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append("# Env: ");
-				sb.append(environmentVariable);
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			sb.append(StringPool.FOUR_SPACES);
-			sb.append(StringPool.POUND);
-			sb.append(StringPool.NEW_LINE);
-
-			String environmentVariablesComment = sb.toString();
-
-			if (!commentBlock.endsWith(environmentVariablesComment)) {
-				return StringUtil.replaceFirst(
-					content, variablesContent,
-					environmentVariablesComment + variablesContent,
-					matcher.start() - 1);
+			if (line.equals("    #") || line.startsWith("    # ")) {
+				commentBlockSB.append(line);
+				commentBlockSB.append("\n");
 			}
 		}
 
-		return content;
+		return _addEnvVariables(
+			content, commentBlockSB.toString(),
+			variablesContentSB.toString(), lineNumber);
 	}
 
 	private Set<String> _getEnvironmentVariables(String s) {
@@ -170,8 +209,5 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 				}
 			}
 		};
-
-	private static final Pattern _pattern = Pattern.compile(
-		"\n((    #( .*)?\n)*)((    ( |#?\\w).*\n)+)");
 
 }

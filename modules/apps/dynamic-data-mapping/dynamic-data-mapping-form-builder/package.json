@@ -1,9 +1,9 @@
 {
 	"dependencies": {
 		"classnames": "2.3.1",
-		"clay-dropdown": "2.22.3",
-		"clay-icon": "2.22.2",
-		"clay-modal": "2.22.2",
+		"clay-dropdown": "2.22.4",
+		"clay-icon": "2.22.4",
+		"clay-modal": "2.22.4",
 		"metal-drag-drop": "3.3.1",
 		"metal-jsx": "2.16.8",
 		"metal-state": "2.16.8"

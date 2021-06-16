@@ -31,36 +31,54 @@ import org.osgi.service.component.annotations.Deactivate;
 public class DDMDataProviderTracker {
 
 	public DDMDataProvider getDDMDataProvider(String type) {
+		_initializeDDMDataProviderTypeTrackerMap();
+
 		return _ddmDataProviderTypeTrackerMap.getService(type);
 	}
 
 	public DDMDataProvider getDDMDataProviderByInstanceId(String instanceId) {
+		if (_ddmDataProviderInstanceIdTrackerMap == null) {
+			_ddmDataProviderInstanceIdTrackerMap =
+				ServiceTrackerMapFactory.openSingleValueMap(
+					_bundleContext, DDMDataProvider.class,
+					"ddm.data.provider.instance.id");
+		}
+
 		return _ddmDataProviderInstanceIdTrackerMap.getService(instanceId);
 	}
 
 	public Set<String> getDDMDataProviderTypes() {
+		_initializeDDMDataProviderTypeTrackerMap();
+
 		return _ddmDataProviderTypeTrackerMap.keySet();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_ddmDataProviderInstanceIdTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DDMDataProvider.class,
-				"ddm.data.provider.instance.id");
-
-		_ddmDataProviderTypeTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DDMDataProvider.class, "ddm.data.provider.type");
+		_bundleContext = bundleContext;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmDataProviderInstanceIdTrackerMap.close();
+		if (_ddmDataProviderInstanceIdTrackerMap != null) {
+			_ddmDataProviderInstanceIdTrackerMap.close();
+		}
 
-		_ddmDataProviderTypeTrackerMap.close();
+		if (_ddmDataProviderTypeTrackerMap != null) {
+			_ddmDataProviderTypeTrackerMap.close();
+		}
 	}
 
+	private void _initializeDDMDataProviderTypeTrackerMap() {
+		if (_ddmDataProviderTypeTrackerMap == null) {
+			_ddmDataProviderTypeTrackerMap =
+				ServiceTrackerMapFactory.openSingleValueMap(
+					_bundleContext, DDMDataProvider.class,
+					"ddm.data.provider.type");
+		}
+	}
+
+	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, DDMDataProvider>
 		_ddmDataProviderInstanceIdTrackerMap;
 	private ServiceTrackerMap<String, DDMDataProvider>

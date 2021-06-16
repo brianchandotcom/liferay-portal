@@ -61,6 +61,8 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 					"/select_folder.jsp"
 				).setParameter(
 					"folderId", journalEditArticleDisplayContext.getFolderId()
+				).setWindowState(
+					LiferayWindowState.POP_UP
 				).buildString()
 			).build()
 		%>'

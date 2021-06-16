@@ -14,9 +14,19 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			description = "This is the description of a web article in English",
 			groupName = "Site Name",
-			layoutName = "Staging Test Page");
+			title = "This is the title of a web article in English");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
 	}
 
 	tearDown {
@@ -39,20 +49,6 @@ definition {
 	@priority = "5"
 	test CanTranslateContentFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateContentFieldIndependently";
-
-		JSONWebcontent.addWebContent(
-			content = "This is the content of a web article in English",
-			description = "This is the description of a web article in English",
-			groupName = "Site Name",
-			title = "This is the title of a web article in English");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -88,20 +84,6 @@ definition {
 	test CanTranslateDescriptionFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateDescriptionFieldIndependently";
 
-		JSONWebcontent.addWebContent(
-			content = "This is the content of a web article in English",
-			description = "This is the description of a web article in English",
-			groupName = "Site Name",
-			title = "This is the title of a web article in English");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
-
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
 			siteURLKey = "site-name",
@@ -135,14 +117,6 @@ definition {
 	@priority = "5"
 	test CanTranslateNumericAndDecimalFieldsIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateNumericAndDecimalFieldsIndependently";
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -221,14 +195,6 @@ definition {
 	test CanTranslateRichTextFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateRichTextFieldIndependently";
 
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		NavItem.gotoStructures();
@@ -290,14 +256,6 @@ definition {
 	@priority = "5"
 	test CanTranslateTextBoxFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextBoxFieldIndependently";
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -364,14 +322,6 @@ definition {
 	test CanTranslateTextFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextFieldIndependently";
 
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		NavItem.gotoStructures();
@@ -434,20 +384,6 @@ definition {
 	test CanTranslateTitleFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTitleFieldIndependently";
 
-		JSONWebcontent.addWebContent(
-			content = "This is the content of a web article in English",
-			description = "This is the description of a web article in English",
-			groupName = "Site Name",
-			title = "This is the title of a web article in English");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
-
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
 			siteURLKey = "site-name",
@@ -482,20 +418,6 @@ definition {
 	test CanTranslateWCToJapaneseWithGoogle {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateWCToJapaneseWithGoogle";
 
-		JSONWebcontent.addWebContent(
-			content = "This is the content of a web article in English",
-			description = "This is the description of a web article in English",
-			groupName = "Site Name",
-			title = "This is the title of a web article in English");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
@@ -527,20 +449,6 @@ definition {
 	@priority = "5"
 	test CanViewTranslationAfterDisablingGoogleConfiguration {
 		property test.name.skip.portal.instance = "AutoTranslation#CanViewTranslationAfterDisablingGoogleConfiguration";
-
-		JSONWebcontent.addWebContent(
-			content = "This is the content of a web article in English",
-			description = "This is the description of a web article in English",
-			groupName = "Site Name",
-			title = "This is the title of a web article in English");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -580,19 +488,6 @@ definition {
 	@priority = "4"
 	test TranslateButtonIsDisabledWhenFieldIsNull {
 		property test.name.skip.portal.instance = "AutoTranslation#TranslateButtonIsDisabledWhenFieldIsNull";
-
-		JSONWebcontent.addWebContent(
-			content = "Content Translate Button is Disabled When Field is Null",
-			groupName = "Site Name",
-			title = "Title Translate Button is Disabled When Field is Null");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enabled",
-			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",

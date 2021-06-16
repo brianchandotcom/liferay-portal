@@ -119,6 +119,24 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro copyCP {
+		WebContentTemplates.gotoTemplateEllipsisItem(
+			item = "Copy",
+			templateName = "${templateName}");
+
+		if (isSet(templateCopyName)) {
+			PortletEntry.inputName(name = "${templateCopyName}");
+		}
+
+		if (isSet(description)) {
+			PortletEntry.inputDescription(description = "${description}");
+		}
+
+		Click(locator1 = "Button#COPY");
+
+		Alert.viewSuccessMessage();
+	}
+
 	@summary = "Attempt to delete the template '${templateName}'"
 	macro deleteCP {
 		var key_ddlTemplateName = "${templateName}";

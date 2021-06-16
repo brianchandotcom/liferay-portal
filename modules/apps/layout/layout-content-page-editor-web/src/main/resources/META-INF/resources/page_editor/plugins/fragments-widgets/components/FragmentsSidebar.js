@@ -18,6 +18,7 @@ import React, {useMemo, useState} from 'react';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/contexts/StoreContext';
+import {useWidgets} from '../../../app/contexts/WidgetsContext';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
@@ -124,7 +125,7 @@ const normalizeFragmentEntry = (fragmentEntry) => {
 
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
-	const widgets = useSelector((state) => state.widgets);
+	const widgets = useWidgets();
 
 	const [displayStyle, setDisplayStyle] = useState(
 		window.sessionStorage.getItem(FRAGMENTS_DISPLAY_STYLE_KEY) ||

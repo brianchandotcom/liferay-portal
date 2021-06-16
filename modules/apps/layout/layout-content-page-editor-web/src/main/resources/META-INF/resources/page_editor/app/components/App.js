@@ -26,6 +26,7 @@ import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePrev
 import {EditableProcessorContextProvider} from '../contexts/EditableProcessorContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {StoreContextProvider, useSelector} from '../contexts/StoreContext';
+import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
@@ -71,27 +72,31 @@ export default function App({state}) {
 					<DragAndDropContextProvider>
 						<EditableProcessorContextProvider>
 							<DisplayPagePreviewItemContextProvider>
-								{displayPagePreviewItemSelectorWrapper ? (
-									<ReactPortal
-										container={
-											displayPagePreviewItemSelectorWrapper
-										}
-									>
-										<DisplayPagePreviewItemSelector dark />
-									</ReactPortal>
-								) : null}
+								<WidgetsContextProvider>
+									{displayPagePreviewItemSelectorWrapper ? (
+										<ReactPortal
+											container={
+												displayPagePreviewItemSelectorWrapper
+											}
+										>
+											<DisplayPagePreviewItemSelector
+												dark
+											/>
+										</ReactPortal>
+									) : null}
 
-								<DragPreview />
-								<Toolbar />
-								<ShortcutManager />
+									<DragPreview />
+									<Toolbar />
+									<ShortcutManager />
 
-								<GlobalContextProvider>
-									<LayoutViewport />
+									<GlobalContextProvider>
+										<LayoutViewport />
 
-									<StyleBookContextProvider>
-										<Sidebar />
-									</StyleBookContextProvider>
-								</GlobalContextProvider>
+										<StyleBookContextProvider>
+											<Sidebar />
+										</StyleBookContextProvider>
+									</GlobalContextProvider>
+								</WidgetsContextProvider>
 							</DisplayPagePreviewItemContextProvider>
 						</EditableProcessorContextProvider>
 					</DragAndDropContextProvider>

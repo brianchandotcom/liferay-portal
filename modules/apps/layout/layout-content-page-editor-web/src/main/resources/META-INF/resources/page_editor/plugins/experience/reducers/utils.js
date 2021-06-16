@@ -144,38 +144,6 @@ function removeLayoutDataItemById(state, segmentsExperienceId) {
 }
 
 /**
- * Sets used widgets based on the portletIds array
- * @param {!Array} widgets
- * @param {{!Array} portletIds
- * @return {Array}
- * @review
- */
-function updateUsedWidgets(widgets, portletIds) {
-	const filteredWidgets = [...widgets];
-
-	filteredWidgets.forEach((widgetCategory) => {
-		const {categories = [], portlets = []} = widgetCategory;
-
-		widgetCategory.categories = updateUsedWidgets(categories, portletIds);
-		widgetCategory.portlets = portlets.map((portlet) => {
-			if (
-				portletIds.indexOf(portlet.portletId) !== -1 &&
-				!portlet.instanceable
-			) {
-				portlet.used = true;
-			}
-			else {
-				portlet.used = false;
-			}
-
-			return portlet;
-		});
-	});
-
-	return filteredWidgets;
-}
-
-/**
  * Attaches to the state a the experiment status of a experience
  */
 function setExperimentStatus(state, experienceId) {
@@ -187,21 +155,6 @@ function setExperimentStatus(state, experienceId) {
 	};
 }
 
-/**
- *
- * @param {object} state
- * @param {string} segmentsExperienceId
- * @returns {object}
- */
-function setUsedWidgets(state, {portletIds}) {
-	const updatedWidgets = updateUsedWidgets(state.widgets, portletIds);
-
-	return {
-		...state,
-		widgets: updatedWidgets,
-	};
-}
-
 export {
 	addExperience,
 	deleteExperienceById,
@@ -209,7 +162,6 @@ export {
 	selectExperience,
 	setExperienceLock,
 	setExperimentStatus,
-	setUsedWidgets,
 	storeNewLayoutData,
 	switchLayoutData,
 };

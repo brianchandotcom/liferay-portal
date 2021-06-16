@@ -36,7 +36,6 @@ const reducer = (state, action) => {
 				segmentsExperience: action.payload.segmentsExperience,
 			});
 			nextState = selectExperienceReducer(nextState, {
-				portletIds: action.payload.portletIds,
 				segmentsExperienceId:
 					action.payload.segmentsExperience.segmentsExperienceId,
 			});
@@ -48,7 +47,6 @@ const reducer = (state, action) => {
 			break;
 		case SELECT_SEGMENTS_EXPERIENCE:
 			nextState = selectExperienceReducer(nextState, {
-				portletIds: action.payload.portletIds,
 				segmentsExperienceId: action.payload.segmentsExperienceId,
 			});
 			break;

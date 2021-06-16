@@ -12,23 +12,20 @@
  * details.
  */
 
-import {selectExperience, setExperimentStatus, switchLayoutData} from './utils';
+import React, {useContext} from 'react';
 
-function selectExperienceReducer(state, payload) {
-	let nextState = state;
+import {useSelector} from './StoreContext';
 
-	const {segmentsExperienceId} = payload;
+const WidgetsContext = React.createContext([]);
 
-	nextState = switchLayoutData(nextState, {
-		currentExperienceId: nextState.segmentsExperienceId,
-		targetExperienceId: segmentsExperienceId,
-	});
+export const useWidgets = () => useContext(WidgetsContext);
 
-	nextState = selectExperience(nextState, segmentsExperienceId);
+export const WidgetsContextProvider = ({children}) => {
+	const widgets = useSelector((state) => state.widgets);
 
-	nextState = setExperimentStatus(nextState, segmentsExperienceId);
-
-	return nextState;
-}
-
-export default selectExperienceReducer;
+	return (
+		<WidgetsContext.Provider value={widgets}>
+			{children}
+		</WidgetsContext.Provider>
+	);
+};

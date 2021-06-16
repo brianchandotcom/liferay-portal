@@ -21,6 +21,7 @@ import React, {useMemo, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../prop-types/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
+import {useWidgets} from '../contexts/WidgetsContext';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
 import canBeDuplicated from '../utils/canBeDuplicated';
@@ -32,14 +33,10 @@ export default function ItemActions({item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
-
 	const state = useSelector((state) => state);
-	const {
-		fragmentEntryLinks,
-		layoutData,
-		segmentsExperienceId,
-		widgets,
-	} = state;
+	const widgets = useWidgets();
+
+	const {fragmentEntryLinks, layoutData, segmentsExperienceId} = state;
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 

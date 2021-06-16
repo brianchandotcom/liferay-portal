@@ -855,6 +855,19 @@ definition {
 
 		}
 
+		task ("Export the template.") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+					item = "Export",
+					pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
+
+		}
+
 	}
 
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."

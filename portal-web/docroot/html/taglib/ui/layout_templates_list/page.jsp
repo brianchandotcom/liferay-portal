@@ -22,7 +22,7 @@ String layoutTemplateIdPrefix = (String)request.getAttribute("liferay-ui:layout-
 List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribute("liferay-ui:layout-templates-list:layoutTemplates");
 %>
 
-<div class="container-fluid lfr-page-layouts">
+<div class="container-fluid <portlet:namespace />layout-template-list lfr-page-layouts">
 	<ul class="card-page">
 
 		<%
@@ -72,7 +72,7 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 <aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
 	const delegate = delegateModule.default;
 
-	const delegateHandler = delegate(document.querySelector('.lfr-page-layouts'), 'click', '.lfr-layout-template', (event) => {
+	const delegateHandler = delegate(document.querySelector('.<portlet:namespace />layout-template-list.lfr-page-layouts'), 'click', '.lfr-layout-template', (event) => {
 		const layoutTemplateInput = event.delegateTarget.querySelector('input');
 
 		if (layoutTemplateInput) {

@@ -325,26 +325,6 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return _caseSensitive;
 	}
 
-	public boolean isChangeTrackingControl() {
-		return _ctColumnResolutionType.equals(CTColumnResolutionType.CONTROL);
-	}
-
-	public boolean isChangeTrackingIgnore() {
-		return _ctColumnResolutionType.equals(CTColumnResolutionType.IGNORE);
-	}
-
-	public boolean isChangeTrackingMerge() {
-		return _ctColumnResolutionType.equals(CTColumnResolutionType.MERGE);
-	}
-
-	public boolean isChangeTrackingPK() {
-		return _ctColumnResolutionType.equals(CTColumnResolutionType.PK);
-	}
-
-	public boolean isChangeTrackingStrict() {
-		return _ctColumnResolutionType.equals(CTColumnResolutionType.STRICT);
-	}
-
 	public boolean isCollection() {
 		if (_type.equals("Collection")) {
 			return true;

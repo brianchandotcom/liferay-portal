@@ -6807,21 +6807,6 @@ public class ServiceBuilder {
 						" for entity ", entityName, " on column ",
 						pkEntityColumn.getName()));
 			}
-
-			for (EntityFinder entityFinder : entityFinders) {
-				for (EntityColumn entityColumn :
-						entityFinder.getEntityColumns()) {
-
-					if (entityColumn.isChangeTrackingMerge()) {
-						throw new ServiceBuilderException(
-							StringBundler.concat(
-								"Illegal change-tracking-resolution-type ",
-								entityColumn.getCTColumnResolutionType(),
-								" for entity ", entityName, " on column ",
-								pkEntityColumn.getName()));
-					}
-				}
-			}
 		}
 
 		_entities.add(entity);

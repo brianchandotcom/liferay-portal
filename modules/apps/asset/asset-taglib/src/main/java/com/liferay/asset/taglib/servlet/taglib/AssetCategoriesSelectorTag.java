@@ -366,8 +366,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					return null;
 				}
 
-				String selectedCategoryIds = categoryIdsTitles.get(
-					index.getValue())[0];
+				String selectedCategoryIds =
+					categoryIdsTitles.get(index.getValue())[0];
 
 				return HashMapBuilder.<String, Object>put(
 					"id", vocabulary.getVocabularyId()
@@ -376,8 +376,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					vocabulary.isRequired(
 						PortalUtil.getClassNameId(_className), _classTypePK) &&
 					_showRequiredLabel
-				).put(
-					"singleSelect", !vocabulary.isMultiValued()
 				).put(
 					"selectedCategories", selectedCategoryIds
 				).put(
@@ -395,8 +393,9 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 						String selectedCategoryIdTitles =
 							categoryIdsTitles.get(index.getValue())[1];
 
-						String[] categoryTitles = selectedCategoryIdTitles.split(
-							AssetCategoryUtil.CATEGORY_SEPARATOR);
+						String[] categoryTitles =
+							selectedCategoryIdTitles.split(
+								AssetCategoryUtil.CATEGORY_SEPARATOR);
 
 						for (int j = 0; j < categoryIds.length; j++) {
 							selectedItems.add(
@@ -409,6 +408,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 						return selectedItems;
 					}
+				).put(
+					"singleSelect", !vocabulary.isMultiValued()
 				).put(
 					"title",
 					vocabulary.getUnambiguousTitle(

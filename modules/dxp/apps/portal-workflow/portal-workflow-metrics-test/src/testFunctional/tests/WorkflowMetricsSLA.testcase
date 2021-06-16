@@ -192,12 +192,50 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the SLA infos are correctly displayed on the table view"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SLAInfosAreCorrectlyDisplayed {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67860 SLAInfosAreCorrectlyDisplayed pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "SLA Definition",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		AssertElementPresent(
+			key_slaName = "SLA Definition",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_SLA_NAME");
+
+		AssertElementPresent(
+			key_columnName = "Description",
+			key_fieldName = "SLA Description",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_SLA_INFO");
+
+		AssertElementPresent(
+			key_columnName = "Status",
+			key_fieldName = "Running",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_SLA_INFO");
+
+		AssertElementPresent(
+			key_columnName = "Duration",
+			key_fieldName = "1min",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_SLA_INFO");
+
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonthName();
+		var currentDateMonthShort = StringUtil.substring("${displayDateMonth}", "0", "3");
+		var displayDate = "${currentDateMonthShort} ${displayDateDay}";
+
+		AssertElementPresent(
+			key_columnName = "Last Modified",
+			key_fieldName = "${displayDate}",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_SLA_INFO");
 	}
 
 	@description = "LPS-89082 - Verify that the SLA list should group SLAs into Blocked and Running sections when there is at least 1 blocked SLA"

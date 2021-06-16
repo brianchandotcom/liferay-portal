@@ -85,6 +85,16 @@
 	<td>//td[contains(@class,'table-title')]//a[contains(text(),'${key_processName}')]</td>
 	<td></td>
 </tr>
+<tr>
+    <td>ASSERT_SLA_INFO</td>
+    <td>//th[contains(text(),'${key_columnName}')]/../../..//td[contains(text(),'${key_fieldName}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ASSERT_SLA_NAME</td>
+    <td>//th[contains(text(),'SLA Name')]/../../..//a[contains(text(),'${key_slaName}')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

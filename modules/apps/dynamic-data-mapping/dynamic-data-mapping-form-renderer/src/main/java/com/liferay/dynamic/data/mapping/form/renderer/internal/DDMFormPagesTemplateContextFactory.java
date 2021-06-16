@@ -31,9 +31,11 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.google.places.util.GooglePlacesUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -62,13 +64,14 @@ public class DDMFormPagesTemplateContextFactory {
 		DDMFormRenderingContext ddmFormRenderingContext,
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
-		JSONFactory jsonFactory) {
+		GroupLocalService groupLocalService, JSONFactory jsonFactory) {
 
 		_ddmForm = ddmForm;
 		_ddmFormLayout = ddmFormLayout;
 		_ddmFormRenderingContext = ddmFormRenderingContext;
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 
 		DDMFormValues ddmFormValues =
@@ -169,8 +172,8 @@ public class DDMFormPagesTemplateContextFactory {
 					getDDMFormFieldsPropertyChanges(),
 				_ddmFormFieldValuesMap.get(ddmFormFieldName),
 				_ddmFormRenderingContext, _ddmStructureLayoutLocalService,
-				_ddmStructureLocalService, _jsonFactory, _pageEnabled,
-				_ddmFormLayout);
+				_ddmStructureLocalService, _groupLocalService, _jsonFactory,
+				_pageEnabled, _ddmFormLayout);
 
 		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
 			_ddmFormFieldTypeServicesTracker);
@@ -338,29 +341,35 @@ public class DDMFormPagesTemplateContextFactory {
 
 	private void _evaluate() {
 		try {
+			HttpServletRequest httpServletRequest =
+				_ddmFormRenderingContext.getHttpServletRequest();
+
+			long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
 			DDMFormEvaluatorEvaluateRequest.Builder
 				formEvaluatorEvaluateRequestBuilder =
 					DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
 						_ddmForm, _ddmFormValues, _locale);
 
-			HttpServletRequest httpServletRequest =
-				_ddmFormRenderingContext.getHttpServletRequest();
-
 			formEvaluatorEvaluateRequestBuilder.withCompanyId(
-				PortalUtil.getCompanyId(httpServletRequest));
-
-			formEvaluatorEvaluateRequestBuilder.withDDMFormInstanceId(
-				_ddmFormRenderingContext.getDDMFormInstanceId());
-			formEvaluatorEvaluateRequestBuilder.withDDMFormLayout(
-				_ddmFormLayout);
-			formEvaluatorEvaluateRequestBuilder.withEditingFieldValue(
-				Validator.isNotNull(
-					httpServletRequest.getParameter("trigger")));
-			formEvaluatorEvaluateRequestBuilder.withGroupId(
-				_ddmFormRenderingContext.getGroupId());
-			formEvaluatorEvaluateRequestBuilder.withUserId(
-				PortalUtil.getUserId(httpServletRequest));
-			formEvaluatorEvaluateRequestBuilder.withViewMode(_isViewMode());
+				companyId
+			).withDDMFormInstanceId(
+				_ddmFormRenderingContext.getDDMFormInstanceId()
+			).withDDMFormLayout(
+				_ddmFormLayout
+			).withEditingFieldValue(
+				Validator.isNotNull(httpServletRequest.getParameter("trigger"))
+			).withGooglePlacesAPIKey(
+				GooglePlacesUtil.getGooglePlacesAPIKey(
+					companyId, _ddmFormRenderingContext.getGroupId(),
+					_groupLocalService)
+			).withGroupId(
+				_ddmFormRenderingContext.getGroupId()
+			).withUserId(
+				PortalUtil.getUserId(httpServletRequest)
+			).withViewMode(
+				_isViewMode()
+			);
 
 			_ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
 				formEvaluatorEvaluateRequestBuilder.build());
@@ -410,6 +419,7 @@ public class DDMFormPagesTemplateContextFactory {
 	private final DDMStructureLayoutLocalService
 		_ddmStructureLayoutLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private boolean _pageEnabled;

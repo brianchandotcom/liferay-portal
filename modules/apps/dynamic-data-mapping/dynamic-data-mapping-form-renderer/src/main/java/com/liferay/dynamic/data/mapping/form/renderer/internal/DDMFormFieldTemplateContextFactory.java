@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -84,8 +85,8 @@ public class DDMFormFieldTemplateContextFactory {
 		DDMFormRenderingContext ddmFormRenderingContext,
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
-		JSONFactory jsonFactory, boolean pageEnabled,
-		DDMFormLayout parentDDMFormLayout) {
+		GroupLocalService groupLocalService, JSONFactory jsonFactory,
+		boolean pageEnabled, DDMFormLayout parentDDMFormLayout) {
 
 		_ddmFormEvaluator = ddmFormEvaluator;
 		_ddmFormFieldName = ddmFormFieldName;
@@ -95,6 +96,7 @@ public class DDMFormFieldTemplateContextFactory {
 		_ddmFormRenderingContext = ddmFormRenderingContext;
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 		_pageEnabled = pageEnabled;
 		_parentDDMFormLayout = parentDDMFormLayout;
@@ -1031,7 +1033,8 @@ public class DDMFormFieldTemplateContextFactory {
 						ddmFormField.getDDMForm(), ddmFormLayout,
 						_ddmFormRenderingContext,
 						_ddmStructureLayoutLocalService,
-						_ddmStructureLocalService, _jsonFactory);
+						_ddmStructureLocalService, _groupLocalService,
+						_jsonFactory);
 
 			ddmFormPagesTemplateContextFactory.setDDMFormEvaluator(
 				_ddmFormEvaluator);
@@ -1122,6 +1125,7 @@ public class DDMFormFieldTemplateContextFactory {
 	private final DDMStructureLayoutLocalService
 		_ddmStructureLayoutLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private final boolean _pageEnabled;

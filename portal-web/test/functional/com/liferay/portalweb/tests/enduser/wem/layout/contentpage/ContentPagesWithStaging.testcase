@@ -888,6 +888,8 @@ definition {
 
 			Navigator.gotoBack();
 
+			PageEditor.assertFragmentSidebarLoaded();
+
 			PageEditor.clickPublish();
 		}
 

@@ -421,4 +421,29 @@ definition {
 		UserBar.viewNoDropdownItem(dropdownItem = "My Profile");
 	}
 
+	@priority = "3"
+	test ViewUserIconIsAccessibleViaKeyboard {
+		AssertAccessible();
+
+		KeyPress(
+			locator1 = "Button#SUBMIT",
+			value1 = "\TAB");
+
+		KeyPress(
+			locator1 = "UserBar#USER_AVATAR_BUTTON",
+			value1 = "\ENTER");
+
+		KeyPress(
+			key_dropdownItem = "My Profile",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
+			value1 = "\TAB");
+
+		KeyPress(
+			key_dropdownItem = "My Dashboard",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
+			value1 = "\ENTER");
+
+		AssertAccessible();
+	}
+
 }

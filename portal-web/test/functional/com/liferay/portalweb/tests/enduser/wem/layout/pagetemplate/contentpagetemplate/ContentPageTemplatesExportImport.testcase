@@ -803,31 +803,55 @@ definition {
 	@priority = "4"
 	test ImportContentPageTemplateThatIncludesDeletedFragment {
 
-		task ("Create a new test page fragment.") {
+		task ("Create a new test fragment.") {
+			JSONFragment.addFragmentCollection(
+					groupName = "Test Site Name",
+					name = "Collection Name");
+
+			JSONFragment.addSection(
+					collectionName = "Collection Name",
+					groupName = "Test Site Name",
+					name = "Fragment Name");
 
 		}
+
 		task ("Create a new page template.") {
+			Pause(locator1 = "10000");
 
 	  	}
+
 		task ("Add the test page fragment to the page template.") {
+			Pause(locator1 = "10000");
 
 		}
+
 	  	task ("Add 2 heading components after the test page fragment.") {
+			Pause(locator1 = "1");
 
 	  	}
+
 		task ("Save the template.") {
+			Pause(locator1 = "1");
 
 		}
+
 		task ("Export the template.") {
+			Pause(locator1 = "1");
 
 		}
+
 		task ("Delete the template.") {
+			Pause(locator1 = "1");
 
 		}
+
 		task ("Delete the test page fragment.") {
+			Pause(locator1 = "1");
 
 		}
+
 		task ("Import the exported page template.") {
+			Pause(locator1 = "1");
 
 		}
 	}

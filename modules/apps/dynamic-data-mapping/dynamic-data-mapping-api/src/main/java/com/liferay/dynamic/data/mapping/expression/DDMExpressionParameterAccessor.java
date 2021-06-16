@@ -26,6 +26,8 @@ public interface DDMExpressionParameterAccessor {
 
 	public long getCompanyId();
 
+	public String getGooglePlacesAPIKey();
+
 	public long getGroupId();
 
 	public Locale getLocale();

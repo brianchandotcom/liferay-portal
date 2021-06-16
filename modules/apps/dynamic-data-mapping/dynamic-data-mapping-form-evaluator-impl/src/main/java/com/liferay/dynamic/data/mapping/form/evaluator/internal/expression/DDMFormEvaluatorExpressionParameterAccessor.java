@@ -37,6 +37,11 @@ public class DDMFormEvaluatorExpressionParameterAccessor
 	}
 
 	@Override
+	public String getGooglePlacesAPIKey() {
+		return _ddmFormEvaluatorEvaluateRequest.getGooglePlacesAPIKey();
+	}
+
+	@Override
 	public long getGroupId() {
 		return _ddmFormEvaluatorEvaluateRequest.getGroupId();
 	}

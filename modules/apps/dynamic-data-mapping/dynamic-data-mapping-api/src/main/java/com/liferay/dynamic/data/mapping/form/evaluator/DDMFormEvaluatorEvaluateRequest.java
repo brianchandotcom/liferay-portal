@@ -45,6 +45,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _ddmFormValues;
 	}
 
+	public String getGooglePlacesAPIKey() {
+		return _googlePlacesAPIKey;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -103,6 +107,13 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return this;
 		}
 
+		public Builder withGooglePlacesAPIKey(String googlePlacesAPIKey) {
+			_ddmFormEvaluatorEvaluateRequest._googlePlacesAPIKey =
+				googlePlacesAPIKey;
+
+			return this;
+		}
+
 		public Builder withGroupId(long groupId) {
 			_ddmFormEvaluatorEvaluateRequest._groupId = groupId;
 
@@ -144,6 +155,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 	private DDMFormLayout _ddmFormLayout;
 	private DDMFormValues _ddmFormValues;
 	private boolean _editingFieldValue;
+	private String _googlePlacesAPIKey;
 	private long _groupId;
 	private Locale _locale;
 	private long _userId;

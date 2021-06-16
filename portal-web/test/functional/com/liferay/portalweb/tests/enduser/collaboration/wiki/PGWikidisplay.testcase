@@ -5,23 +5,22 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Wiki";
 
-	var pageName = "Wiki Display Test Page";
-	var portletName = "Wiki Display";
-
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Display Test Page");
 
-		SitePages.addPublicPage(pageName = "Wiki Display Test Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Display Test Page",
+			widgetName = "Wiki Display");
 
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		Portlet.addPG(portletName = "Wiki Display");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 	}
 
 	tearDown {
@@ -39,22 +38,15 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a child page can be added via wiki display widget."
 	@priority = "5"
-	@refactorneeded
-	test AddWikiFrontPageChildPage {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageCP(
-			wikiFrontPageContent = "Wiki FrontPage Content",
-			wikiNodeName = "Main");
+	@refactordone
+	test CanAddChildPageViaWD {
+		JSONWiki.updateWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
@@ -62,9 +54,9 @@ definition {
 			wikiNodeName = "Main",
 			wikiPageName = "FrontPage");
 
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
+		Navigator.gotoSitePage(
+			pageName = "Wiki Display Test Page",
+			siteName = "Guest");
 
 		WikiPage.addChildPagePGViaWD(
 			wikiChildPageContent = "Wiki FrontPage Child Page Content",
@@ -72,7 +64,9 @@ definition {
 			wikiPageContent = "Wiki FrontPage Content",
 			wikiPageTitle = "FrontPage");
 
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
+		Navigator.gotoSitePage(
+			pageName = "Wiki Display Test Page",
+			siteName = "Guest");
 
 		WikiPage.viewChildPagePGViaWD(
 			wikiChildPageContent = "Wiki FrontPage Child Page Content",
@@ -81,52 +75,36 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
+	@description = "This ensures that a child page can be added with HTML format via wiki display widget."
 	@priority = "4"
-	@refactorneeded
-	test AddWikiFrontPageChildPageFormatHTML {
+	@refactordone
+	test CanAddChildPageWithHTMLViaWD {
+		JSONWiki.updateWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki Display Test Page");
+
+		WikiDisplayPortlet.configureSetupPG(
+			wikiNodeName = "Main",
+			wikiPageName = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki Display Test Page");
+
+		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
+
 		var welcomeToLiferay = '''
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
 			''';
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageCP(
-			wikiFrontPageContent = "Wiki FrontPage Content",
-			wikiNodeName = "Main");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiDisplayPortlet.configureSetupPG(
-			wikiNodeName = "Main",
-			wikiPageName = "FrontPage");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		AssertClick(
-			locator1 = "Link#ADD_CHILD_PAGE",
-			value1 = "Add Child Page");
-
-		WikiEntry.addPageTitle(wikiPageTitle = "Wiki FrontPage Child Page Title");
-
-		WikiEntry.selectPageFormat(pageFormat = "HTML");
-
-		WikiEntry.confirmHTML();
-
-		CKEditor.addSourceContent(content = "${welcomeToLiferay}");
-
-		SelectFrame(value1 = "relative=top");
-
-		PortletEntry.publish();
+		WikiPage.addChildPagePGViaWD(
+			htmlSource = "true",
+			wikiChildPageContent = "${welcomeToLiferay}",
+			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
@@ -135,31 +113,12 @@ definition {
 			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
 			wikiPageContent = "Wiki FrontPage Content",
 			wikiPageTitle = "FrontPage");
-
-		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki FrontPage Child Page Title");
-
-		WikiPage.viewChildPagePG(
-			wikiChildPageContent = "Welcome to LIFERAY",
-			wikiChildPageTitle = "Wiki FrontPage Child Page Title");
 	}
 
+	@description = "This ensures that the front page can be added via wiki display widget."
 	@priority = "4"
-	@refactorneeded
-	test AddWikiFrontPageChildPageInvalidTitle {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageCP(
-			wikiFrontPageContent = "Wiki FrontPage Content",
-			wikiNodeName = "Main");
-
+	@refactordone
+	test CanAddFrontPageViaWD {
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
 		WikiDisplayPortlet.configureSetupPG(
@@ -168,89 +127,24 @@ definition {
 
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki\ Front\ Page\ Child\ Page\ Title\");
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
 
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki] Front] Page] Child] Page] Title]");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki[ Front[ Page[ Child[ Page[ Title[");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki; Front; Page; Child; Page; Title;");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki: Front: Page: Child: Page: Title:");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki| Front| Page| Child| Page| Title|");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki&lt; Front&lt; Page&lt; Child&lt; Page&lt; Title&lt;");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageChildPageInvalidTitleViaWD(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki&gt; Front&gt; Page&gt; Child&gt; Page&gt; Title&gt;");
-
-		Navigator.gotoPage(pageName = "Wiki Display Test Page");
-
-		WikiPage.viewNoChildPagePGViaWD();
+		WikiPage.viewPGViaWD(
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage");
 	}
 
+	@description = "This ensures that a front page can be deleted via wiki display widget."
 	@priority = "4"
-	@refactorneeded
-	test DeleteWikiFrontPage {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageCP(
-			wikiFrontPageContent = "Wiki FrontPage Content",
-			wikiNodeName = "Main");
+	@refactordone
+	test CanDeleteWikiFrontPageViaWD {
+		JSONWiki.updateWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
@@ -274,22 +168,15 @@ definition {
 			wikiPageName = "FrontPage");
 	}
 
+	@description = "This ensures that a child page can be added with HTML format via wiki display widget."
 	@priority = "4"
-	@refactorneeded
-	test ViewConfigurationSetupPageFrontPage {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
-
-		WikiPage.addFrontPageCP(
-			wikiFrontPageContent = "Wiki FrontPage Content",
-			wikiNodeName = "Main");
+	@refactordone
+	test CannotAddChildPageWithInvalidTitleViaWD {
+		JSONWiki.updateWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
@@ -297,13 +184,19 @@ definition {
 			wikiNodeName = "Main",
 			wikiPageName = "FrontPage");
 
+		for (var invalidCharacter : list "\,],;,|,&lt;") {
+			Navigator.gotoPage(pageName = "Wiki Display Test Page");
+
+			WikiNavigator.gotoPGViaWD(wikiPageTitle = "FrontPage");
+
+			WikiPage.addFrontPageChildPageInvalidTitleViaWD(
+				wikiChildPageContent = "Wiki FrontPage Child Page Content",
+				wikiChildPageTitle = "Wiki Front Page Child Page Title ${invalidCharacter}");
+		}
+
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
 
-		WikiPage.viewPGViaWD(
-			wikiPageContent = "Wiki FrontPage Content",
-			wikiPageRevision = "1.1",
-			wikiPageTitle = "FrontPage",
-			wikiPageUsername = "Test Test");
+		WikiPage.viewNoChildPagePGViaWD();
 	}
 
 }

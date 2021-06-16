@@ -245,6 +245,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 			"com.liferay.calendar.model.CalendarBooking",
 			"CalendarBooking,groupId,calendarBookingId"
 		).put(
+			"com.liferay.knowledgebase.model.KBArticle",
+			"KBArticle,groupId,kbArticleId"
+		).put(
 			"com.liferay.message.boards.kernel.model.MBCategory",
 			"MBCategory,groupId,categoryId"
 		).put(

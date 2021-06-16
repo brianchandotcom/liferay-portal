@@ -241,14 +241,56 @@ definition {
 	}
 
 	@description = "Verify that a Fieldsets can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsetsCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133799 FieldsetsCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewFieldLabel(
+			fieldName = "Text",
+			fieldValue = "");
+
+		FormFields.viewFieldLabel(
+			fieldName = "Numeric",
+			fieldValue = "");
 	}
 
 	@description = "Verify that a Fields Groups can be previewed"

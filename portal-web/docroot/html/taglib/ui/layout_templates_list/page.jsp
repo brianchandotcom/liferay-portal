@@ -45,14 +45,16 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 					<label class="d-block" for="<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>">
 						<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>' label="" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" wrappedField="<%= true %>" />
 
-						<div class="card card-horizontal">
-							<div class="card-body card-row">
-								<div class="autofit-col">
-									<img alt="" class="layout-template-entry inline-item-before modify-linkm <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" height="28" onclick="document.getElementById('<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" width="28" />
-								</div>
+						<div class="card card-interactive card-interactive-primary card-type-template <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "active" : StringPool.BLANK %>">
+							<div class="card-body">
+								<div class="card-row">
+									<div class="autofit-col">
+										<img alt="" class="layout-template-entry inline-item-before modify-linkm <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" height="28" src="<%= layoutTemplate.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" width="28" />
+									</div>
 
-								<div class="autofit-col autofit-col-expand">
-									<span class="text-truncate" title="<%= HtmlUtil.escape(layoutTemplate.getName(locale)) %>"><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
+									<div class="autofit-col autofit-col-expand">
+										<span class="text-truncate" title="<%= HtmlUtil.escape(layoutTemplate.getName(locale)) %>"><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -66,3 +68,35 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 
 	</ul>
 </div>
+
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+	const delegate = delegateModule.default;
+
+	const delegateHandler = delegate(document.querySelector('.lfr-page-layouts'), 'click', '.lfr-layout-template', (event) => {
+		const layoutTemplateInput = event.delegateTarget.querySelector('input');
+
+		if (layoutTemplateInput) {
+			layoutTemplateInput.checked = true;
+		}
+
+		const currentActiveCard = event.currentTarget.querySelector('.active');
+
+		if (currentActiveCard) {
+			currentActiveCard.classList.remove('active');
+		}
+
+		const card = event.delegateTarget.querySelector('.card');
+
+		if (card) {
+			card.classList.add('active');
+		}
+	});
+
+	const onDestroyPortlet = () => {
+		delegateHandler.dispose();
+
+		Liferay.detach('destroyPortlet', onDestroyPortlet);
+	};
+
+	Liferay.once('destroyPortlet', onDestroyPortlet);
+</aui:script>

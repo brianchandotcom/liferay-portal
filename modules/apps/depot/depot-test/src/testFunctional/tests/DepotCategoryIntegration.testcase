@@ -248,6 +248,24 @@ definition {
 		DMDocument.viewCategoriesInfo(categoryName = "apple");
 	}
 
+	@description = "This test covers LPS-131849. It ensures that a user cannot add a category to depot from the connected site."
+	@priority = "3"
+	test CategoryCannotBeAddedToDepotFromConnectedSite {
+		JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "depot",
+			vocabularyName = "Vocabulary Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		DMNavigator.openToAddBasicFile(siteURLKey = "site-name");
+
+		AssetCategorization.viewNoAddPermissions(vocabularyName = "Vocabulary Name");
+	}
+
 	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site."
 	@priority = "4"
 	test VocabularyShouldNotBeViewedFromDisconnectedSite {

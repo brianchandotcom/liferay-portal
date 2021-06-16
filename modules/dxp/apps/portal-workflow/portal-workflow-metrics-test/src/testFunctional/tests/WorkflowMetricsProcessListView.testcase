@@ -185,7 +185,6 @@ definition {
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Total Pending"
 	@priority = "3"
 	test CanOrderByTotalPendingItems {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -232,8 +231,6 @@ definition {
 		WaitForElementPresent(
 			key_value = "up",
 			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
-
-
 	}
 
 	@description = "LPS-88573 - Verify that the search can be done by similar words, not having 100% match needs of the string"

@@ -33,7 +33,7 @@ definition {
 	@description = "This ensures that the Applications can be set in a depot."
 	@priority = "5"
 	@refactordone
-	test CanDisableAndEnableApps {
+	test CanDisableApps {
 		property portal.acceptance = "true";
 		property testray.component.names = "Asset Lists";
 
@@ -55,35 +55,6 @@ definition {
 			applicationList = "Collections,Documents and Media,Recycle Bin,Translation Processes,Web Content",
 			depotName = "Test Depot Name",
 			noApplication = "true");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureApplication(
-			applicationList = "Collections,Documents and Media,Translation Processes,Web Content",
-			status = "Enabled");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoDepotPortletViaBreadcrumb(
-			otherDepotName = "Test Depot Name",
-			portlet = "Documents and Media");
-
-		DepotNavigator.gotoDepotPortletViaBreadcrumb(
-			otherDepotName = "Test Depot Name",
-			portlet = "Collections");
-
-		DepotNavigator.gotoDepotPortletViaBreadcrumb(
-			otherDepotName = "Test Depot Name",
-			portlet = "Recycle Bin");
-
-		// There is a bug for Translation Processes Breadcrumb: LPS-133904, will update the below steps after it fixed
-
-		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
-
-		AssertTextEquals(
-			key_card = "Translation Processes",
-			locator1 = "Card#CARD_TITLE",
-			value1 = "Translation Processes");
 	}
 
 	@description = "This ensures that the disabled assets are not appeared in the item selector on a connected site when WC and DM applications are disabled."

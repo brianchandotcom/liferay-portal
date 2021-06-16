@@ -98,7 +98,7 @@ definition {
 		}
 
 		task ("Navigate to the display page template at view mode in live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/remote-site/w/webcontent-title");
+			Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/w/webcontent-title");
 		}
 
 		task ("View the web content shown in Asset Publisher") {

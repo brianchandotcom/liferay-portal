@@ -18,7 +18,7 @@ import Occurrence from './components/Occurrence';
 import {StackNavigator} from './components/StackNavigator';
 import Violation from './components/Violation';
 import Violations from './components/Violations';
-import {FilteredViolationsContextProvider} from './hooks/useFilteredViolations';
+import {useFilteredViolations} from './hooks/useFilteredViolations';
 
 import type {ImpactValue, Result} from 'axe-core';
 
@@ -55,23 +55,25 @@ type A11yPanelProps = {
 };
 
 export function A11yPanel({violations}: A11yPanelProps) {
-	const sortedByImpactViolations = sortByImpact(violations);
+	const [
+		{filteredViolations, selectedCategories, selectedImpact},
+		dispatch,
+	] = useFilteredViolations(sortByImpact(violations));
 
 	return (
-		<FilteredViolationsContextProvider value={sortedByImpactViolations}>
-			{({filteredViolations, selectedCategories, selectedImpact}) => (
-				<div className="a11y-panel__sidebar sidebar sidebar-light">
-					<StackNavigator>
-						<Violations
-							selectedCategories={selectedCategories}
-							selectedImpact={selectedImpact}
-							violations={filteredViolations}
-						/>
-						<Violation violations={filteredViolations} />
-						<Occurrence violations={filteredViolations} />
-					</StackNavigator>
-				</div>
-			)}
-		</FilteredViolationsContextProvider>
+		<div className="a11y-panel__sidebar sidebar sidebar-light">
+			<StackNavigator>
+				<Violations
+					onFilterChange={(type, value) =>
+						dispatch({payload: {value}, type})
+					}
+					selectedCategories={selectedCategories}
+					selectedImpact={selectedImpact}
+					violations={filteredViolations}
+				/>
+				<Violation violations={filteredViolations} />
+				<Occurrence violations={filteredViolations} />
+			</StackNavigator>
+		</div>
 	);
 }

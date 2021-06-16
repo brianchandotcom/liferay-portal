@@ -12,13 +12,7 @@
  * details.
  */
 
-import React, {
-	Dispatch,
-	createContext,
-	useContext,
-	useMemo,
-	useReducer,
-} from 'react';
+import React, {useMemo, useReducer} from 'react';
 
 import type {ImpactValue, Result} from 'axe-core';
 
@@ -31,81 +25,63 @@ export const TYPES = {
 
 type TAction = {
 	payload: {value: string};
-	type: 'CATEGORY_ADD' | 'CATEGORY_REMOVE' | 'IMPACT_ADD' | 'IMPACT_REMOVE';
+	type: keyof typeof TYPES;
 };
 
-type TState = {
+type TFunctionRenderProps = {
+	dispatch: React.Dispatch<TAction>;
 	filteredViolations: Array<Result>;
 	selectedCategories: Array<string> | [];
 	selectedImpact: Array<ImpactValue>;
 };
 
-const INITIAL_STATE: Omit<TState, 'filteredViolations'> = {
+type TState = Omit<TFunctionRenderProps, 'dispatch' | 'filteredViolations'>;
+
+const initialState: TState = {
 	selectedCategories: [],
 	selectedImpact: [],
 };
 
-function violationsReducer(state = INITIAL_STATE, action: TAction) {
+function reducer(state: TState, action: TAction) {
 	const {selectedCategories, selectedImpact} = state;
 
 	const {value} = action.payload;
 
 	switch (action.type) {
-		case TYPES.CATEGORY_ADD: {
+		case TYPES.CATEGORY_ADD:
 			return {
 				...state,
 				selectedCategories: [...selectedCategories, value],
 			};
-		}
-		case TYPES.CATEGORY_REMOVE: {
+		case TYPES.CATEGORY_REMOVE:
 			return {
 				...state,
 				selectedCategories: selectedCategories.filter(
 					(currentItem) => currentItem !== value
 				),
 			};
-		}
-		case TYPES.IMPACT_ADD: {
+		case TYPES.IMPACT_ADD:
 			return {
 				...state,
 				selectedImpact: [...selectedImpact, value] as ImpactValue[],
 			};
-		}
-		case TYPES.IMPACT_REMOVE: {
+		case TYPES.IMPACT_REMOVE:
 			return {
 				...state,
 				selectedImpact: selectedImpact.filter(
 					(currentItem) => currentItem !== value
 				) as ImpactValue[],
 			};
-		}
 		default:
 			return state;
 	}
 }
 
-const FilteredViolationsDispatchContext = createContext(
-	{} as Dispatch<TAction>
-);
-
-export const useFilteredViolationsDispatch = () =>
-	useContext(FilteredViolationsDispatchContext);
-
-type FilteredViolationsContextProviderProps = {
-	children: (props: TState) => React.ReactNode;
-	value: Array<Result>;
-};
-
-export function FilteredViolationsContextProvider({
-	children,
-	value: violations,
-}: FilteredViolationsContextProviderProps) {
-	const [state, dispatch] = useReducer(violationsReducer, {
-		...INITIAL_STATE,
-		...violations,
-	});
-
-	const {selectedCategories, selectedImpact} = state;
+export function useFilteredViolations(violations: Array<Result>) {
+	const [{selectedCategories, selectedImpact}, dispatch] = useReducer(
+		reducer,
+		initialState
+	);
 
 	const filteredViolations = useMemo(() => {
 		if (!selectedCategories.length && !selectedImpact.length) {
@@ -125,9 +101,8 @@ export function FilteredViolationsContextProvider({
 		});
 	}, [violations, selectedCategories, selectedImpact]);
 
-	return (
-		<FilteredViolationsDispatchContext.Provider value={dispatch}>
-			{children({...state, filteredViolations})}
-		</FilteredViolationsDispatchContext.Provider>
-	);
+	return [
+		{filteredViolations, selectedCategories, selectedImpact},
+		dispatch,
+	] as const;
 }

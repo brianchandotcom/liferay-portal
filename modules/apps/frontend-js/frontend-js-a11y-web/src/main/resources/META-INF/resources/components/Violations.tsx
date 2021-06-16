@@ -21,10 +21,7 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import React, {useState} from 'react';
 
-import {
-	TYPES,
-	useFilteredViolationsDispatch,
-} from '../hooks/useFilteredViolations';
+import {TYPES} from '../hooks/useFilteredViolations';
 import Rule from './Rule';
 
 import type {ImpactValue, Result} from 'axe-core';
@@ -44,111 +41,13 @@ const CATEGORY_FILTER_OPTIONS = [
 	{label: 'Best Practices', value: 'best-practice'},
 ];
 
-type ViolationsFilterProps = {
-	selectedCategories: Array<String>;
-	selectedImpact: Array<ImpactValue>;
-};
-
-function ViolationsFilter({
-	selectedCategories,
-	selectedImpact,
-}: ViolationsFilterProps) {
-	const [dropdownExpanded, setDropdownExpanded] = useState(false);
-	const dispatch = useFilteredViolationsDispatch();
-
-	return (
-		<>
-			<ClayDropDown
-				active={dropdownExpanded}
-				closeOnClickOutside
-				onActiveChange={setDropdownExpanded}
-				trigger={
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get(
-							'open-violations-filter'
-						)}
-						displayType="unstyled"
-						small
-						symbol="filter"
-					/>
-				}
-			>
-				<ClayDropDown.ItemList>
-					<ClayDropDown.Group
-						header={Liferay.Language.get('filter-by-impact')}
-					>
-						{IMPACT_FILTER_OPTIONS.map((item) => {
-							const existsImpact =
-								selectedImpact.findIndex(
-									(element) => element === item.value
-								) !== -1;
-
-							return (
-								<ClayDropDown.Section
-									active={existsImpact}
-									key={item.value}
-								>
-									<ClayCheckbox
-										checked={existsImpact}
-										data-testid={item.value}
-										label={item.label}
-										onChange={() => {
-											dispatch({
-												payload: {
-													value: item.value,
-												},
-												type: existsImpact
-													? TYPES.IMPACT_REMOVE
-													: TYPES.IMPACT_ADD,
-											});
-										}}
-									></ClayCheckbox>
-								</ClayDropDown.Section>
-							);
-						})}
-					</ClayDropDown.Group>
-					<ClayDropDown.Group
-						header={Liferay.Language.get('filter-by-category')}
-					>
-						{CATEGORY_FILTER_OPTIONS.map((item) => {
-							const existsCategory =
-								selectedCategories.findIndex(
-									(element) => element === item.value
-								) !== -1;
-
-							return (
-								<ClayDropDown.Section key={item.value}>
-									<ClayCheckbox
-										checked={existsCategory}
-										data-testid={item.value}
-										label={item.label}
-										onChange={() => {
-											dispatch({
-												payload: {
-													value: item.value,
-												},
-												type: existsCategory
-													? TYPES.CATEGORY_REMOVE
-													: TYPES.CATEGORY_ADD,
-											});
-										}}
-									></ClayCheckbox>
-								</ClayDropDown.Section>
-							);
-						})}
-					</ClayDropDown.Group>
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
-		</>
-	);
-}
-
 type TViolationNext = {
 	violationIndex: number;
 };
 
 type ViolationsProps = {
 	next?: (payload: TViolationNext) => void;
+	onFilterChange: (type: keyof typeof TYPES, value: string) => void;
 	selectedCategories: Array<String>;
 	selectedImpact: Array<ImpactValue>;
 	violations: Array<Result>;
@@ -156,10 +55,13 @@ type ViolationsProps = {
 
 export default function Violations({
 	next,
+	onFilterChange,
 	selectedCategories,
 	selectedImpact,
 	violations,
 }: ViolationsProps) {
+	const [expanded, setExpanded] = useState(false);
+
 	const hasViolations = !!violations.length;
 
 	return (
@@ -178,13 +80,99 @@ export default function Violations({
 						</span>
 					</div>
 					<div className="inline-item inline-item-after">
-						<ViolationsFilter
-							selectedCategories={selectedCategories}
-							selectedImpact={selectedImpact}
-						/>
+						<ClayDropDown
+							active={expanded}
+							closeOnClickOutside
+							onActiveChange={setExpanded}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'open-violations-filter'
+									)}
+									displayType="unstyled"
+									small
+									symbol="filter"
+								/>
+							}
+						>
+							<ClayDropDown.ItemList>
+								<ClayDropDown.Group
+									header={Liferay.Language.get(
+										'filter-by-impact'
+									)}
+								>
+									{IMPACT_FILTER_OPTIONS.map(
+										({label, value}) => {
+											const existsImpact =
+												selectedImpact.findIndex(
+													(element) =>
+														element === value
+												) !== -1;
+
+											return (
+												<ClayDropDown.Section
+													active={existsImpact}
+													key={value}
+												>
+													<ClayCheckbox
+														checked={existsImpact}
+														data-testid={value}
+														label={label}
+														onChange={() =>
+															onFilterChange(
+																existsImpact
+																	? TYPES.IMPACT_REMOVE
+																	: TYPES.IMPACT_ADD,
+																value
+															)
+														}
+													/>
+												</ClayDropDown.Section>
+											);
+										}
+									)}
+								</ClayDropDown.Group>
+								<ClayDropDown.Group
+									header={Liferay.Language.get(
+										'filter-by-category'
+									)}
+								>
+									{CATEGORY_FILTER_OPTIONS.map(
+										({label, value}) => {
+											const existsCategory =
+												selectedCategories.findIndex(
+													(element) =>
+														element === value
+												) !== -1;
+
+											return (
+												<ClayDropDown.Section
+													key={value}
+												>
+													<ClayCheckbox
+														checked={existsCategory}
+														data-testid={value}
+														label={label}
+														onChange={() =>
+															onFilterChange(
+																existsCategory
+																	? TYPES.CATEGORY_REMOVE
+																	: TYPES.CATEGORY_ADD,
+																value
+															)
+														}
+													/>
+												</ClayDropDown.Section>
+											);
+										}
+									)}
+								</ClayDropDown.Group>
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
 					</div>
 				</div>
 			</div>
+
 			<div className="a11y-panel__sidebar--violations-panel-header-description">
 				{!hasViolations
 					? Liferay.Language.get(
@@ -194,6 +182,7 @@ export default function Violations({
 							'check-the-list-of-violated-rules-highlighted-on-the-page'
 					  )}
 			</div>
+
 			{hasViolations && (
 				<ClayList
 					aria-label={Liferay.Language.get('violations-list')}
@@ -212,11 +201,7 @@ export default function Violations({
 									id
 								)}
 								key={id}
-								onClick={() => {
-									if (next) {
-										next({violationIndex: index});
-									}
-								}}
+								onClick={() => next!({violationIndex: index})}
 								quantity={nodes.length}
 								ruleSubtext={impact}
 								ruleTitle={id}

@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.layout.seo.web.internal.configuration.FFMetadataTemplateConfiguration"
+	id = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping"
 )
-public interface FFMetadataTemplateConfiguration {
+public interface FFSEOInlineFieldMapping {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();

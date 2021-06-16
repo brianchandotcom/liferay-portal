@@ -16,12 +16,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const MappingContext = React.createContext({
-	ffMetadataTemplateEnabled: false,
+	ffSEOInlineFieldMappingEnabled: false,
 });
 
 MappingContext.Provider.propTypes = {
 	value: PropTypes.shape({
-		ffMetadataTemplateEnabled: PropTypes.bool,
+		ffSEOInlineFieldMappingEnabled: PropTypes.bool,
 	}),
 };
 

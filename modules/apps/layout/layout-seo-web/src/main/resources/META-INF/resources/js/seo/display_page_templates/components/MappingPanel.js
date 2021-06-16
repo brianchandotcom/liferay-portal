@@ -39,7 +39,7 @@ function MappingPanel({
 }) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
 	const [fieldValue, setFieldValue] = useState(initialField.key);
-	const {ffMetadataTemplateEnabled} = useContext(MappingContext);
+	const {ffSEOInlineFieldMappingEnabled} = useContext(MappingContext);
 	const wrapperRef = useRef(null);
 
 	useOnClickOutside([wrapperRef.current], () => setIsPanelOpen(false));
@@ -50,7 +50,7 @@ function MappingPanel({
 
 		setFieldValue(field.key);
 
-		if (!ffMetadataTemplateEnabled) {
+		if (!ffSEOInlineFieldMappingEnabled) {
 			onSelect({
 				field,
 				source,
@@ -111,7 +111,7 @@ function MappingPanel({
 								value={fieldValue}
 							/>
 						</ClayForm.Group>
-						{ffMetadataTemplateEnabled && (
+						{ffSEOInlineFieldMappingEnabled && (
 							<ClayButton
 								block
 								displayType="primary"

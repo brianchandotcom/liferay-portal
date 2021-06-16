@@ -14,7 +14,7 @@
 
 package com.liferay.layout.seo.web.internal.configuration.util;
 
-import com.liferay.layout.seo.web.internal.configuration.FFMetadataTemplateConfiguration;
+import com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
@@ -30,20 +30,19 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping",
 	immediate = true, service = {}
 )
-public class FFMetadataTemplateConfigurationUtil {
+public class FFSEOInlineFieldMappingConfigurationUtil {
 
 	public static boolean enabled() {
-		return _ffMetadataTemplateConfiguration.enabled();
+		return _ffSEOInlineFieldMapping.enabled();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ffMetadataTemplateConfiguration = ConfigurableUtil.createConfigurable(
-			FFMetadataTemplateConfiguration.class, properties);
+		_ffSEOInlineFieldMapping = ConfigurableUtil.createConfigurable(
+			FFSEOInlineFieldMapping.class, properties);
 	}
 
-	private static volatile FFMetadataTemplateConfiguration
-		_ffMetadataTemplateConfiguration;
+	private static volatile FFSEOInlineFieldMapping _ffSEOInlineFieldMapping;
 
 }

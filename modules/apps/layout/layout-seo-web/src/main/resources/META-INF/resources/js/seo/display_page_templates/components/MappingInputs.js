@@ -20,15 +20,15 @@ import MappingInput from './MappingInput';
 import MappingRichInput from './MappingRichInput';
 
 function MappingInputs({
-	ffMetadataTemplateEnabled,
+	ffSEOInlineFieldMappingEnabled,
 	fields,
 	inputs,
 	selectedSource,
 }) {
 	return (
-		<MappingContext.Provider value={{ffMetadataTemplateEnabled}}>
+		<MappingContext.Provider value={{ffSEOInlineFieldMappingEnabled}}>
 			{inputs.map((props) =>
-				ffMetadataTemplateEnabled && props.fieldType === 'text' ? (
+				ffSEOInlineFieldMappingEnabled && props.fieldType === 'text' ? (
 					<MappingRichInput
 						initialFields={fields}
 						key={props.name}

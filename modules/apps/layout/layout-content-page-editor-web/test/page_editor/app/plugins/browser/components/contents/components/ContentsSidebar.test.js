@@ -21,7 +21,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../src/mai
 import {StoreContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import ContentsSidebar from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/contents/components/ContentsSidebar';
 
-const pageContents = [
+const PAGE_CONTENTS = [
 	{
 		subtype: 'Basic Web Content',
 		title: 'WC1',
@@ -34,7 +34,7 @@ const pageContents = [
 	},
 ];
 
-const fragmentEntryLinks = {
+const FRAGMENT_ENTRY_LINKS = {
 	39682: {
 		editableTypes: {'element-text': 'text'},
 		editableValues: {
@@ -78,8 +78,8 @@ const fragmentEntryLinks = {
 };
 
 const renderPageContent = ({
-	fragmentEntryLinks = {},
-	pageContents = [],
+	fragmentEntryLinks = FRAGMENT_ENTRY_LINKS,
+	pageContents = PAGE_CONTENTS,
 	languageId = 'en_US',
 	segmentsExperienceId = '0',
 }) =>
@@ -100,25 +100,26 @@ describe('ContentsSidebar', () => {
 	afterEach(cleanup);
 
 	it('shows the content list', () => {
-		const {getByText} = renderPageContent({pageContents});
+		const {getByText} = renderPageContent({});
 
 		expect(getByText('WC1')).toBeInTheDocument();
 		expect(getByText('WC2')).toBeInTheDocument();
 	});
 
-	it('shows inline text within the content list', () => {
-		const {getByText} = renderPageContent({
-			fragmentEntryLinks,
-			pageContents,
-		});
+	it('shows inline text within the content list when the editable type is text', () => {
+		const {getByText} = renderPageContent({});
 
 		expect(getByText('Heading Example')).toBeInTheDocument();
-		expect(getByText('A paragraph')).toBeInTheDocument();
+	});
+
+	it('shows inline text within the content list when the editable type is rich-text', () => {
+		const {getByText} = renderPageContent({});
+
+		expect(getByText('rich-text')).toBeInTheDocument();
 	});
 
 	it('shows inline text corresponding to an experience', () => {
 		const {queryByText} = renderPageContent({
-			fragmentEntryLinks,
 			segmentsExperienceId: '1',
 		});
 
@@ -130,35 +131,37 @@ describe('ContentsSidebar', () => {
 	});
 
 	it('shows an alert when there is no content', () => {
-		const {getByText} = renderPageContent({});
+		const {getByText} = renderPageContent({
+			fragmentEntryLinks: {},
+			pageContents: [],
+		});
 
 		expect(
 			getByText('there-is-no-content-on-this-page')
 		).toBeInTheDocument();
 	});
 
-	it('shows only text content for inline text, without html', () => {
+	it('shows only text content for inline text (without html) when the editable type is text', () => {
 		const {queryByText} = renderPageContent({
 			fragmentEntryLinks: {
-				...fragmentEntryLinks,
+				...FRAGMENT_ENTRY_LINKS,
 				39685: {
-					editableTypes: {'element-text': 'rich-text'},
+					editableTypes: {'element-text': 'text'},
 					editableValues: {
 						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 							'element-text': {
-								defaultValue: '\n\tA paragraph\n',
-								en_US:
-									'<span style="color: rgb(0, 0, 0);">Lorem ipsum dolor sit amet</span><br>',
+								defaultValue: '\n\tHeading example\n',
+								en_US: 'This is a title&nbsp&nbsp&nbsp',
 							},
 						},
 					},
 					fragmentEntryLinkId: '39685',
-					name: 'Paragraph',
+					name: 'Heading',
 					segmentsExperienceId: '0',
 				},
 			},
 		});
 
-		expect(queryByText('Lorem ipsum dolor sit amet')).toBeInTheDocument();
+		expect(queryByText('This is a title')).toBeInTheDocument();
 	});
 });

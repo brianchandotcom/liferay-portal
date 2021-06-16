@@ -35,6 +35,448 @@ definition {
 		Translations.saveInvalidConfiguration(settingValue = "This is an invalid input");
 	}
 
+	@description = "This ensures that the web content content can be translated independently"
+	@priority = "5"
+	test CanTranslateContentFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateContentFieldIndependently";
+
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			description = "This is the description of a web article in English",
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Content");
+
+		Translations.viewTargetFields(
+			webContentContent = "これは英語のウェブ記事の内容です",
+			webContentDescription = "This is the description of a web article in English",
+			webContentTitle = "This is the title of a web article in English");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.viewTargetFields(
+			webContentContent = "これは英語のウェブ記事の内容です",
+			webContentDescription = "This is the description of a web article in English",
+			webContentTitle = "This is the title of a web article in English");
+	}
+
+	@description = "This ensures that the web content description can be translated independently"
+	@priority = "5"
+	test CanTranslateDescriptionFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateDescriptionFieldIndependently";
+
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			description = "This is the description of a web article in English",
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "es_ES",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Description");
+
+		Translations.viewTargetFields(
+			webContentContent = "This is the content of a web article in English",
+			webContentDescription = "Esta es la descripción de un artículo web en inglés",
+			webContentTitle = "This is the title of a web article in English");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "es_ES",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.viewTargetFields(
+			webContentContent = "This is the content of a web article in English",
+			webContentDescription = "Esta es la descripción de un artículo web en inglés",
+			webContentTitle = "This is the title of a web article in English");
+	}
+
+	@description = "This ensures that the numeric and decimal fields of a customized web content can be translated independently"
+	@priority = "5"
+	test CanTranslateNumericAndDecimalFieldsIndependently {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateNumericAndDecimalFieldsIndependently";
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Decimal",
+			fieldName = "Numeric",
+			numericType = "Decimal");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			numericType = "Decimal",
+			webContentNumeric = "1.0",
+			webContentNumericFieldLabel = "Decimal");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "10",
+			webContentTitle = "This is the title of a web article in English");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "es_ES",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Decimal");
+
+		Translations.viewTargetFields(
+			webContentDecimal = "1.0",
+			webContentNumber = "10");
+
+		Click(
+			key_fieldName = "Numeric",
+			locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
+			value1 = "10");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Numeric");
+
+		Translations.viewTargetFields(
+			webContentDecimal = "1.0",
+			webContentNumber = "10");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "es_ES",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.viewTargetFields(
+			webContentDecimal = "1,0",
+			webContentNumber = "10");
+	}
+
+	@description = "This ensures that the rich text field of a customized web content can be translated independently"
+	@priority = "5"
+	test CanTranslateRichTextFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateRichTextFieldIndependently";
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentRichText = "This is the content of the rich text field in English",
+			webContentTitle = "This is the title of a web article in English");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+
+		Translations.viewTargetFields(
+			webContentSourceHTML = "This is the content of the rich text field in English",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Rich Text");
+
+		Translations.viewTargetFields(
+			webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.viewTargetFields(
+			webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+	}
+
+	@description = "This ensures that the text box field of a customized web content can be translated independently"
+	@priority = "5"
+	test CanTranslateTextBoxFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextBoxFieldIndependently";
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text Box",
+			fieldName = "Text",
+			fieldType = "Multiple Lines");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldType = "Multiple Lines",
+			webContentText = "This is the content of the text box field in English",
+			webContentTextFieldLabel = "Text Box",
+			webContentTitle = "This is the title of a web article in English");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+
+		Translations.viewTargetFields(
+			webContentTextBox = "This is the content of the text box field in English",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Text Box");
+
+		Translations.viewTargetFields(
+			webContentTextBox = "これは、英語のテキスト ボックス フィールドの内容です",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.viewTargetFields(
+			webContentTextBox = "これは、英語のテキスト ボックス フィールドの内容です",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+	}
+
+	@description = "This ensures that the text field of a customized web content can be translated independently"
+	@priority = "5"
+	test CanTranslateTextFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextFieldIndependently";
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is the content of the text field in English",
+			webContentTitle = "This is the title of a web article in English");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+
+		Translations.viewTargetFields(
+			webContentText = "This is the content of the text field in English",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Text");
+
+		Translations.viewTargetFields(
+			webContentText = "これは英語のテキストフィールドの内容です",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.viewTargetFields(
+			webContentText = "これは英語のテキストフィールドの内容です",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+	}
+
+	@description = "This ensures that the web content title can be translated independently"
+	@priority = "5"
+	test CanTranslateTitleFieldIndependently {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTitleFieldIndependently";
+
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			description = "This is the description of a web article in English",
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
+
+		Translations.viewTargetFields(
+			webContentContent = "This is the content of a web article in English",
+			webContentDescription = "This is the description of a web article in English",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		PortletEntry.publish();
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "ja_JP",
+			webContentTitle = "This is the title of a web article in English");
+
+		Translations.viewTargetFields(
+			webContentContent = "This is the content of a web article in English",
+			webContentDescription = "This is the description of a web article in English",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+	}
+
 	@description = "This ensures that Google Translation can be used to auto-translate a Web Content into Japanese"
 	@priority = "5"
 	test CanTranslateWCToJapaneseWithGoogle {
@@ -132,6 +574,36 @@ definition {
 			webContentContent = "Este es el contenido de un artículo web en inglés.",
 			webContentDescription = "Esta es la descripción de un artículo web en inglés",
 			webContentTitle = "Este es el título de un artículo web en inglés.");
+	}
+
+	@description = "The Auto Translate button should be disabled when the fields are null."
+	@priority = "4"
+	test TranslateButtonIsDisabledWhenFieldIsNull {
+		property test.name.skip.portal.instance = "AutoTranslation#TranslateButtonIsDisabledWhenFieldIsNull";
+
+		JSONWebcontent.addWebContent(
+			content = "Content Translate Button is Disabled When Field is Null",
+			groupName = "Site Name",
+			title = "Title Translate Button is Disabled When Field is Null");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled",
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		Translations.openToTranslateEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			sourceLanguageId = "en_US",
+			targetLanguageId = "es_ES",
+			webContentTitle = "Title Translate Button is Disabled When Field is Null");
+
+		Translations.viewEnabledFieldTranslationButtons(fieldNameList = "Title,Content");
+
+		Translations.viewDisabledFieldTranslationButtons(fieldNameList = "Description");
 	}
 
 }

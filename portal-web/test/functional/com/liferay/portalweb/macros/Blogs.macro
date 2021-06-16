@@ -100,8 +100,6 @@ definition {
 			imageFileName = "${imageFileName}",
 			navTab = "Documents and Media");
 
-		Pause(locator1 = "1000");
-
 		Button.clickPublish();
 	}
 

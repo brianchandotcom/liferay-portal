@@ -14,10 +14,14 @@
 
 import React from 'react';
 
+import {BackButtonPortal} from '../../components/control-menu/ControlMenu';
 import DigitalSignatureForm from '../../components/digital-signature-form/DigitalSignatureForm';
 
 const EnvelopeForm = (props) => (
-	<DigitalSignatureForm {...props} showDocumentLibraryInput />
+	<>
+		<BackButtonPortal />
+		<DigitalSignatureForm {...props} showDocumentLibraryInput />
+	</>
 );
 
 export default EnvelopeForm;

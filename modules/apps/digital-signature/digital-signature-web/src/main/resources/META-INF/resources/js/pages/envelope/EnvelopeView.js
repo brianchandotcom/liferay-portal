@@ -20,6 +20,7 @@ import {createResourceURL, fetch, openToast} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext';
+import {BackButtonPortal} from '../../components/control-menu/ControlMenu';
 import DocumentPreviewer from '../../components/document-previewer/DocumentPreviewer';
 import EmptyState from '../../components/table/EmptyState';
 import {DOCUSIGN_STATUS} from '../../utils/contants';
@@ -140,6 +141,8 @@ function EnvelopeView({
 
 	return (
 		<div className="envelope-view">
+			<BackButtonPortal />
+
 			<EnvelopeHeader
 				docusignStatus={docusignStatus}
 				emailSubject={envelope.emailSubject}

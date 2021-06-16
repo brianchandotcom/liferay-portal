@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -318,6 +319,16 @@ public class Entity implements Comparable<Entity> {
 	public String getConstantName() {
 		return TextFormatter.format(
 			TextFormatter.format(_name, TextFormatter.H), TextFormatter.A);
+	}
+
+	public Set<String> getCTColumnNameTypes() {
+		Set<String> ctColumnNameTypes = new TreeSet<>();
+
+		for (EntityColumn entityColumn : getEntityColumns()) {
+			ctColumnNameTypes.add(entityColumn.getConflictTypeName());
+		}
+
+		return ctColumnNameTypes;
 	}
 
 	public List<EntityColumn> getDatabaseRegularEntityColumns() {

@@ -1994,7 +1994,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#if entity.isChangeTrackingEnabled()>
 		@Override
 		public Set<String> getCTColumnNames(CTColumnResolutionType ctColumnResolutionType) {
-			return _ctColumnNamesMap.get(ctColumnResolutionType);
+			return _ctColumnNamesMap.getOrDefault(ctColumnResolutionType, Collections.emptySet());
 		}
 
 		@Override
@@ -2022,28 +2022,25 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private static final List<String[]> _uniqueIndexColumnNames = new ArrayList<String[]>();
 
 		static {
-			Set<String> ctControlColumnNames = new HashSet<String>();
-			Set<String> ctIgnoreColumnNames = new HashSet<String>();
-			Set<String> ctMergeColumnNames = new HashSet<String>();
-			Set<String> ctStrictColumnNames = new HashSet<String>();
-
-			<#list entity.entityColumns as entityColumn>
-				<#if entityColumn.isChangeTrackingControl()>
-					ctControlColumnNames.add("${entityColumn.DBName}");
-				<#elseif entityColumn.isChangeTrackingIgnore()>
-					ctIgnoreColumnNames.add("${entityColumn.DBName}");
-				<#elseif entityColumn.isChangeTrackingMerge()>
-					ctMergeColumnNames.add("${entityColumn.DBName}");
-				<#elseif entityColumn.isChangeTrackingStrict()>
-					ctStrictColumnNames.add("${entityColumn.DBName}");
+			<#list entity.getCTColumnNameTypes() as ctColumnNameType>
+				<#if !stringUtil.equals(ctColumnNameType, "Pk")>
+					Set<String> ct${ctColumnNameType}ColumnNames = new HashSet<String>();
 				</#if>
 			</#list>
 
-			_ctColumnNamesMap.put(CTColumnResolutionType.CONTROL, ctControlColumnNames);
-			_ctColumnNamesMap.put(CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
-			_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
-			_ctColumnNamesMap.put(CTColumnResolutionType.PK, Collections.singleton("${entity.PKDBName}"));
-			_ctColumnNamesMap.put(CTColumnResolutionType.STRICT, ctStrictColumnNames);
+			<#list entity.entityColumns as entityColumn>
+				<#if !stringUtil.equals(entityColumn.conflictTypeName, "Pk")>
+					ct${entityColumn.getConflictTypeName()}ColumnNames.add("${entityColumn.DBName}");
+				</#if>
+			</#list>
+
+			<#list entity.getCTColumnNameTypes() as ctColumnNameType>
+				<#if stringUtil.equals(ctColumnNameType, "Pk")>
+					_ctColumnNamesMap.put(CTColumnResolutionType.${stringUtil.toUpperCase(ctColumnNameType)}, Collections.singleton("${entity.PKDBName}"));
+				<#else>
+					_ctColumnNamesMap.put(CTColumnResolutionType.${stringUtil.toUpperCase(ctColumnNameType)}, ct${ctColumnNameType}ColumnNames);
+				</#if>
+			</#list>
 
 			<#list entity.entityColumns as entityColumn>
 				<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>

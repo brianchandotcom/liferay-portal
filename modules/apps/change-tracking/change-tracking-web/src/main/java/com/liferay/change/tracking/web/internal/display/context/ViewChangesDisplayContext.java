@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.ui.UserPortraitTag;
@@ -966,38 +965,6 @@ public class ViewChangesDisplayContext {
 
 					modelInfo._jsonObject.put(
 						"groupId", groupedModel.getGroupId());
-				}
-
-				if (_ctCollection.getCtCollectionId() ==
-						_activeCTCollectionId) {
-
-					JSONArray dropdownItemsJSONArray =
-						JSONFactoryUtil.createJSONArray();
-
-					if (ctEntry.getChangeType() !=
-							CTConstants.CT_CHANGE_TYPE_DELETION) {
-
-						String editURL = _ctDisplayRendererRegistry.getEditURL(
-							_httpServletRequest, model, modelClassNameId);
-
-						if (Validator.isNotNull(editURL)) {
-							dropdownItemsJSONArray.put(
-								JSONUtil.put(
-									"href", editURL
-								).put(
-									"label",
-									_language.get(
-										_httpServletRequest, "edit-item")
-								).put(
-									"symbolLeft", "pencil"
-								));
-						}
-					}
-
-					if (dropdownItemsJSONArray.length() > 0) {
-						modelInfo._jsonObject.put(
-							"dropdownItems", dropdownItemsJSONArray);
-					}
 				}
 
 				modelInfo._site = _isSite(model);

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ResourceRequest;
@@ -190,6 +191,18 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassPK());
 
 			if (rightModel != null) {
+				boolean getURLs = ParamUtil.getBoolean(
+					resourceRequest, "getURLs");
+
+				if (getURLs) {
+					String editURL = ctDisplayRenderer.getEditURL(
+						httpServletRequest, rightModel);
+
+					if (Validator.isNotNull(editURL)) {
+						jsonObject.put("editURL", editURL);
+					}
+				}
+
 				rightRender = _getRender(
 					httpServletRequest, httpServletResponse,
 					rightCtCollectionId, ctDisplayRenderer, ctEntryId,

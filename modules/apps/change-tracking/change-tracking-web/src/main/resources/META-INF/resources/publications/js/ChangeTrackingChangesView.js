@@ -654,8 +654,6 @@ export default ({
 		}
 	}
 
-	const renderCache = useRef({});
-
 	const getModels = useCallback((nodes) => {
 		if (!nodes) {
 			return [];
@@ -966,6 +964,8 @@ export default ({
 
 	const basePath = useRef(pathname + '?' + params.toString());
 
+	const renderCache = useRef({});
+
 	const filterHideableNodes = (nodes, showHideable) => {
 		if (!nodes || showHideable) {
 			return nodes;
@@ -981,6 +981,100 @@ export default ({
 
 		return filterNodes;
 	};
+
+	const setParameter = useCallback(
+		(url, name, value) => {
+			return url + '&' + namespace + name + '=' + value;
+		},
+		[namespace]
+	);
+
+	const getDiscardURL = useCallback(
+		(node) => {
+			const url = setParameter(
+				discardURL,
+				'modelClassNameId',
+				node.modelClassNameId.toString()
+			);
+
+			return setParameter(
+				url,
+				'modelClassPK',
+				node.modelClassPK.toString()
+			);
+		},
+		[discardURL, setParameter]
+	);
+
+	const getDropdownItems = useCallback(
+		(node) => {
+			if (!activeCTCollection || !node.modelClassNameId) {
+				return null;
+			}
+
+			const dropdownItems = [];
+
+			const cache =
+				renderCache.current[
+					node.modelClassNameId.toString() +
+						'-' +
+						node.modelClassPK.toString()
+				];
+
+			if (cache && cache.editURL) {
+				dropdownItems.push({
+					href: cache.editURL,
+					label: Liferay.Language.get('edit'),
+					symbolLeft: 'pencil',
+				});
+			}
+
+			dropdownItems.push({
+				href: getDiscardURL(node),
+				label: Liferay.Language.get('discard'),
+				symbolLeft: 'times-circle',
+			});
+
+			for (let i = 0; i < dropdownItems.length; i++) {
+				const dropdownItem = dropdownItems[i];
+
+				const href = dropdownItem.href;
+
+				if (typeof href !== 'string') {
+					continue;
+				}
+
+				const index = href.indexOf('?');
+
+				if (index > 0) {
+					let redirectKey = null;
+
+					const params = new URLSearchParams(
+						href.substring(index + 1)
+					);
+
+					params.forEach((value, key) => {
+						if (key.endsWith('_redirect')) {
+							redirectKey = key;
+						}
+					});
+
+					if (redirectKey) {
+						params.set(
+							redirectKey,
+							window.location.pathname + window.location.search
+						);
+
+						dropdownItem.href =
+							href.substring(0, index) + '?' + params.toString();
+					}
+				}
+			}
+
+			return dropdownItems;
+		},
+		[activeCTCollection, getDiscardURL]
+	);
 
 	const getPath = useCallback(
 		(pathParam, showHideable) => {
@@ -1068,6 +1162,7 @@ export default ({
 			initialNode.children,
 			initialShowHideable
 		),
+		dropdownItems: getDropdownItems(initialNode),
 		filterClass: initialFilterClass,
 		id: initialNodeId,
 		node: initialNode,
@@ -1104,6 +1199,7 @@ export default ({
 			) {
 				setRenderState({
 					children: renderState.children,
+					dropdownItems: renderState.dropdownItems,
 					filterClass: renderState.filterClass,
 					id: renderState.id,
 					node: renderState.node,
@@ -1130,6 +1226,7 @@ export default ({
 
 			setRenderState({
 				children: filterHideableNodes(node.children, showHideable),
+				dropdownItems: getDropdownItems(node),
 				filterClass,
 				id: nodeId,
 				node,
@@ -1140,7 +1237,7 @@ export default ({
 
 			window.scrollTo(0, 0);
 		},
-		[VIEW_TYPE_CONTEXT, getNode, getPath, renderState]
+		[VIEW_TYPE_CONTEXT, getDropdownItems, getNode, getPath, renderState]
 	);
 
 	const handlePopState = useCallback(
@@ -1189,6 +1286,7 @@ export default ({
 			) {
 				setRenderState({
 					children: renderState.children,
+					dropdownItems: renderState.dropdownItems,
 					filterClass: renderState.filterClass,
 					id: renderState.id,
 					node: renderState.node,
@@ -1211,6 +1309,7 @@ export default ({
 
 			setRenderState({
 				children: filterHideableNodes(node.children, showHideable),
+				dropdownItems: getDropdownItems(node),
 				filterClass,
 				id: nodeId,
 				node,
@@ -1222,6 +1321,7 @@ export default ({
 		[
 			PARAM_PATH,
 			VIEW_TYPE_CONTEXT,
+			getDropdownItems,
 			getNode,
 			getPathState,
 			isWithinApp,
@@ -1643,25 +1743,21 @@ export default ({
 
 	const getDataURL = (node) => {
 		if (node.ctEntryId) {
-			return setParameter(
+			const url = setParameter(
 				dataURL,
 				'ctEntryId',
 				node.ctEntryId.toString()
 			);
+
+			if (activeCTCollection) {
+				return setParameter(url, 'getURLs', true.toString());
+			}
+
+			return url;
 		}
 
 		const url = setParameter(
 			dataURL,
-			'modelClassNameId',
-			node.modelClassNameId.toString()
-		);
-
-		return setParameter(url, 'modelClassPK', node.modelClassPK.toString());
-	};
-
-	const getDiscardURL = (node) => {
-		const url = setParameter(
-			discardURL,
 			'modelClassNameId',
 			node.modelClassNameId.toString()
 		);
@@ -1751,10 +1847,10 @@ export default ({
 		let currentTypeName = '';
 
 		for (let i = 0; i < nodes.length; i++) {
-			const item = nodes[i];
+			const node = nodes[i];
 
-			if (item.typeName !== currentTypeName) {
-				currentTypeName = item.typeName;
+			if (node.typeName !== currentTypeName) {
+				currentTypeName = node.typeName;
 
 				rows.push(
 					<ClayTable.Row divider>
@@ -1765,7 +1861,7 @@ export default ({
 									: 1
 							}
 						>
-							{item.typeName}
+							{node.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				);
@@ -1776,11 +1872,11 @@ export default ({
 			if (renderState.viewType === VIEW_TYPE_CONTEXT) {
 				cells.push(
 					<ClayTable.Cell>
-						<div className="publication-name">{item.title}</div>
+						<div className="publication-name">{node.title}</div>
 
-						{item.description && (
+						{node.description && (
 							<div className="publication-description">
-								{item.description}
+								{node.description}
 							</div>
 						)}
 					</ClayTable.Cell>
@@ -1790,31 +1886,31 @@ export default ({
 				cells.push(
 					<ClayTable.Cell>
 						<div
-							dangerouslySetInnerHTML={getUserPortraitHTML(item)}
+							dangerouslySetInnerHTML={getUserPortraitHTML(node)}
 							data-tooltip-align="top"
-							title={item.userName}
+							title={node.userName}
 						/>
 					</ClayTable.Cell>
 				);
 
-				cells.push(<ClayTable.Cell>{item.siteName}</ClayTable.Cell>);
+				cells.push(<ClayTable.Cell>{node.siteName}</ClayTable.Cell>);
 
 				cells.push(
 					<ClayTable.Cell className="publication-name table-cell-expand">
-						{item.title}
+						{node.title}
 					</ClayTable.Cell>
 				);
 
 				cells.push(
 					<ClayTable.Cell className="table-cell-expand-smallest">
-						{item.changeTypeLabel}
+						{node.changeTypeLabel}
 					</ClayTable.Cell>
 				);
 
 				cells.push(
 					<ClayTable.Cell className="table-cell-expand-smallest">
 						{format(Liferay.Language.get('x-ago'), [
-							item.timeDescription,
+							node.timeDescription,
 						])}
 					</ClayTable.Cell>
 				);
@@ -1825,7 +1921,7 @@ export default ({
 					className="cursor-pointer"
 					onClick={() =>
 						handleNavigationUpdate({
-							nodeId: item.nodeId,
+							nodeId: node.nodeId,
 						})
 					}
 				>
@@ -1983,6 +2079,7 @@ export default ({
 				renderState.node.children,
 				showHideable
 			),
+			dropdownItems: renderState.dropdownItems,
 			filterClass: renderState.filterClass,
 			id: renderState.id,
 			node: renderState.node,
@@ -1990,85 +2087,6 @@ export default ({
 			showHideable,
 			viewType: renderState.viewType,
 		});
-	};
-
-	const renderDropdown = () => {
-		if (!renderState.node.modelClassNameId) {
-			return '';
-		}
-
-		let dropdownItems = renderState.node.dropdownItems;
-
-		if (!dropdownItems) {
-			dropdownItems = [];
-		}
-		else {
-			dropdownItems = dropdownItems.slice(0);
-		}
-
-		if (activeCTCollection) {
-			dropdownItems.push({
-				href: getDiscardURL(renderState.node),
-				label: Liferay.Language.get('discard'),
-				symbolLeft: 'times-circle',
-			});
-		}
-
-		if (dropdownItems.length === 0) {
-			return '';
-		}
-
-		for (let i = 0; i < dropdownItems.length; i++) {
-			const dropdownItem = dropdownItems[i];
-
-			const href = dropdownItem.href;
-
-			if (typeof href !== 'string') {
-				continue;
-			}
-
-			const index = href.indexOf('?');
-
-			if (index > 0) {
-				let redirectKey = null;
-
-				const params = new URLSearchParams(href.substring(index + 1));
-
-				params.forEach((value, key) => {
-					if (key.endsWith('_redirect')) {
-						redirectKey = key;
-					}
-				});
-
-				if (redirectKey) {
-					params.set(
-						redirectKey,
-						window.location.pathname + window.location.search
-					);
-
-					dropdownItem.href =
-						href.substring(0, index) + '?' + params.toString();
-				}
-			}
-		}
-
-		return (
-			<div className="autofit-col">
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={dropdownItems}
-					spritemap={spritemap}
-					trigger={
-						<ClayButtonWithIcon
-							displayType="unstyled"
-							small
-							spritemap={spritemap}
-							symbol="ellipsis-v"
-						/>
-					}
-				/>
-			</div>
-		);
 	};
 
 	const renderEntry = () => {
@@ -2088,8 +2106,23 @@ export default ({
 								: renderState.node.typeName}
 						</div>
 					</div>
-
-					{renderDropdown()}
+					{renderState.dropdownItems && (
+						<div className="autofit-col">
+							<ClayDropDownWithItems
+								alignmentPosition={Align.BottomLeft}
+								items={renderState.dropdownItems}
+								spritemap={spritemap}
+								trigger={
+									<ClayButtonWithIcon
+										displayType="unstyled"
+										small
+										spritemap={spritemap}
+										symbol="ellipsis-v"
+									/>
+								}
+							/>
+						</div>
+					)}
 				</div>
 				<div className="sheet-section">
 					<ChangeTrackingRenderView
@@ -2109,6 +2142,19 @@ export default ({
 									'-' +
 									renderState.node.modelClassPK.toString()
 							] = data;
+
+							setRenderState({
+								children: renderState.children,
+								dropdownItems: getDropdownItems(
+									renderState.node
+								),
+								filterClass: renderState.filterClass,
+								id: renderState.id,
+								node: renderState.node,
+								page: renderState.page,
+								showHideable: renderState.showHideable,
+								viewType: renderState.viewType,
+							});
 						}}
 					/>
 				</div>
@@ -2259,6 +2305,7 @@ export default ({
 					setDeltaState(delta);
 					setRenderState({
 						children: renderState.children,
+						dropdownItems: renderState.dropdownItems,
 						filterClass: renderState.filterClass,
 						id: renderState.id,
 						node: renderState.node,
@@ -2270,6 +2317,7 @@ export default ({
 				onPageChange={(page) =>
 					setRenderState({
 						children: renderState.children,
+						dropdownItems: renderState.dropdownItems,
 						filterClass: renderState.filterClass,
 						id: renderState.id,
 						node: renderState.node,
@@ -2349,10 +2397,6 @@ export default ({
 				{renderPagination()}
 			</>
 		);
-	};
-
-	const setParameter = (url, name, value) => {
-		return url + '&' + namespace + name + '=' + value;
 	};
 
 	let content;

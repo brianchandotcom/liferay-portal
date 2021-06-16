@@ -2,11 +2,7 @@
 
 <Configuration>
 	<Appenders>
-		<RollingFile
-			fileName="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}liferay-connector-demo.log"
-			filePattern="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}liferay-connector-demo-%i.log"
-			name="file"
-		>
+		<RollingFile fileName="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}liferay-connector-demo.log" filePattern="${sys:mule.home}${sys:file.separator}logs${sys:file.separator}liferay-connector-demo-%i.log" name="file">
 			<PatternLayout pattern="%-5p %d [%t] [event: %X{correlationId}] %c: %m%n" />
 			<SizeBasedTriggeringPolicy size="10 MB" />
 			<DefaultRolloverStrategy max="10" />

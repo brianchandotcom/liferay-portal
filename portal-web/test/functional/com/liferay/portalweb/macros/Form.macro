@@ -78,6 +78,14 @@ definition {
 			value1 = "${localizedLanguage}");
 	}
 
+	macro assertFieldPositionAtFormsGroupOnPublishedForm {
+		AssertElementPresent(
+			key_formPageNumber = "${key_formPageNumber}",
+			key_rowNumber = "${key_rowNumber}",
+			key_text = "${key_text}",
+			locator1 = "Form#FIELD_SPECIFIC_POSITION_PUBLISHED_FORM");
+	}
+
 	macro assertFormWasPublished {
 		AssertVisible(locator1 = "Form#PUBLISH_URL_ICON");
 	}
@@ -573,6 +581,15 @@ definition {
 		Click(locator1 = "Form#PUBLISH_FORM_BUTTON");
 
 		Form.assertFormWasPublished();
+	}
+
+	macro reorderFieldsFromFieldsGroup {
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldName = "${key_fieldName}",
+			key_pageNumber = "${key_pageNumber}",
+			key_rowNumber = "${key_rowNumber}",
+			locator1 = "Form#PAGE_FIELD_LABEL",
+			locator2 = "Form#FIELDS_GROUP_TARGET_POSITON");
 	}
 
 	macro save {

@@ -109,14 +109,42 @@ definition {
 	}
 
 	@description = "Verify that fields within a Fields Group can be reordered"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FieldsCanBeReordered {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133877 FieldsCanBeReordered pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Text",
+			key_fieldName = "Numeric");
+
+		Form.reorderFieldsFromFieldsGroup(
+			key_fieldName = "Numeric",
+			key_pageNumber = "0",
+			key_rowNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.assertFieldPositionAtFormsGroupOnPublishedForm(
+			key_formPageNumber = "0",
+			key_rowNumber = "0",
+			key_text = "Numeric");
 	}
 
 	@description = "Verify that a Fields Group's Label can be edited"

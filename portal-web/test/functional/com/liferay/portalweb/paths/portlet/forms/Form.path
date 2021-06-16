@@ -348,6 +348,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>FIELDS_GROUP_TARGET_POSITON</td>
+    <td>//label[contains(text(),'Fields Group')]/..//div[@data-ddm-field-page='${key_pageNumber}' and @data-ddm-field-row='${key_rowNumber}']/div[@class='ddm-target']</td>
+    <td></td>
+</tr>
+<tr>
 	<td>FIELD_LABEL</td>
 	<td>//div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//label[contains(@class,'ddm-label')] | //div[contains(@class,'ddm-field-container')]//label[text()='${key_fieldName}'] | //div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//legend[contains(@class,'lfr-ddm-legend')] | //div[contains(@class,'ddm-field-container')]//legend[text()='${key_fieldName}']</td>
 	<td></td>
@@ -363,9 +368,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
+    <td>FIELD_SPECIFIC_POSITION_PUBLISHED_FORM</td>
+    <td>//label[contains(text(),'Fields Group')]/..//div[@data-ddm-field-page='${key_formPageNumber}' and @data-ddm-field-row='${key_rowNumber}']//label[contains(text(),'${key_text}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
 </tr>
 <!--SIDEBAR -->
 <tr>

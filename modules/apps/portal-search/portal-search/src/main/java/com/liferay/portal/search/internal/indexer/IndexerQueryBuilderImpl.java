@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.indexer.IndexerQueryBuilder;
@@ -124,6 +125,8 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			return;
 		}
 
+		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
+
 		contribute(
 			_modelKeywordQueryContributorsRegistry.
 				filterKeywordQueryContributors(
@@ -133,7 +136,24 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 					_getStrings(
 						"search.full.query.clause.contributors.includes",
 						searchContext)),
-			booleanQuery, searchContext);
+			keywordsBooleanQuery, searchContext);
+
+		try {
+			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
+
+			modelBooleanQuery.add(
+				new TermQueryImpl(
+					"entryClassName", _modelSearchSettings.getClassName()),
+				BooleanClauseOccur.MUST);
+
+			modelBooleanQuery.add(
+				keywordsBooleanQuery, BooleanClauseOccur.SHOULD);
+
+			booleanQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
+		}
+		catch (ParseException parseException) {
+			throw new SystemException(parseException);
+		}
 	}
 
 	protected void contribute(

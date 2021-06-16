@@ -35,6 +35,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -100,14 +101,6 @@ public class AssetCategoryLocalServiceTest {
 	public void testAddAssetCategoryWithMissingTranslationInSiteDefaultLocale()
 		throws PortalException {
 
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.FRANCE, "Qualification"
-		).build();
-
-		Map<Locale, String> descriptionMap = HashMapBuilder.put(
-			LocaleUtil.FRANCE, "La description"
-		).build();
-
 		expectedException.expect(AssetCategoryNameException.class);
 		expectedException.expectMessage(
 			"Category name cannot be null for category 0 and vocabulary " +
@@ -115,9 +108,10 @@ public class AssetCategoryLocalServiceTest {
 
 		_assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
-			descriptionMap, _assetVocabulary.getVocabularyId(), null,
-			new ServiceContext());
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			Collections.singletonMap(LocaleUtil.FRANCE, "Qualification"),
+			Collections.singletonMap(LocaleUtil.FRANCE, "La description"),
+			_assetVocabulary.getVocabularyId(), null, new ServiceContext());
 	}
 
 	@Test
@@ -159,25 +153,18 @@ public class AssetCategoryLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), "Título",
 			_assetVocabulary.getVocabularyId(), new ServiceContext());
 
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.FRANCE, "Qualification"
-		).build();
-
-		Map<Locale, String> descriptionMap = HashMapBuilder.put(
-			LocaleUtil.FRANCE, "La description"
-		).build();
-
-		String expectedExceptionMessage = StringBundler.concat(
-			"Category name cannot be null for category ",
-			assetCategory.getCategoryId(), " and vocabulary ",
-			assetCategory.getVocabularyId());
-
 		expectedException.expect(AssetCategoryNameException.class);
-		expectedException.expectMessage(expectedExceptionMessage);
+		expectedException.expectMessage(
+			StringBundler.concat(
+				"Category name cannot be null for category ",
+				assetCategory.getCategoryId(), " and vocabulary ",
+				assetCategory.getVocabularyId()));
 
 		_assetCategoryLocalService.updateCategory(
 			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
-			assetCategory.getParentCategoryId(), titleMap, descriptionMap,
+			assetCategory.getParentCategoryId(),
+			Collections.singletonMap(LocaleUtil.FRANCE, "Qualification"),
+			Collections.singletonMap(LocaleUtil.FRANCE, "La description"),
 			assetCategory.getVocabularyId(), null, new ServiceContext());
 	}
 

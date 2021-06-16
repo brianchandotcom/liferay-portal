@@ -18,6 +18,17 @@ import {A11y} from './A11y';
 
 import type {A11yCheckerOptions} from './A11yChecker';
 
+declare global {
+	var Liferay: {
+		Language: {
+			get(value: string): string;
+		};
+		Util: {
+			sub(...value: string[]): string;
+		};
+	};
+}
+
 const DEFAULT_CONTAINER_ID = 'a11yContainer';
 
 const getDefaultContainer = () => {

@@ -1,19 +1,34 @@
 definition {
 
+	macro _openToConfigInSiteSettings {
+		var baseURL = PropsUtil.get("portal.url");
+
+		if ("${portlet}" == "Ratings") {
+			var portletKey = "site-configuration-ratings";
+		}
+
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=${portletKey}");
+	}
+
 	macro configureRatingType {
-		if (isSet(siteName)) {
-			Site.openSiteSettingsAdmin(siteURLKey = "${siteName}");
+		if (isSet(siteURLKey)) {
+			Ratings._openToConfigInSiteSettings(
+				portlet = "${portlet}",
+				siteURLKey = "${siteURLKey}");
 		}
 		else {
-			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+			if (isSet(siteName)) {
+				Site.openSiteSettingsAdmin(siteURLKey = "${siteName}");
+			}
+			else {
+				Site.openSiteSettingsAdmin(siteURLKey = "guest");
+			}
+			Click(
+				key_itemName = "Community Tools",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Navigator.gotoNavTab(navTab = "Ratings");
 		}
-
-		Click(
-			key_itemName = "Community Tools",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Ratings");
-
 		Select(
 			key_applications = "${applications}",
 			locator1 = "Select#APPLICATIONS_RATING",
@@ -29,6 +44,16 @@ definition {
 			key_applications = "${applications}",
 			locator1 = "Select#APPLICATIONS_RATING",
 			value1 = "${ratingType}");
+	}
+
+	macro openToConfigInInstanceSettings {
+		var baseURL = PropsUtil.get("portal.url");
+
+		if ("${portlet}" == "Ratings") {
+			var portletKey = "social-ratings";
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_configurationScreenKey=${portletKey}");
 	}
 
 	macro rateLike {
@@ -163,6 +188,14 @@ definition {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
 		Click.clickNoMouseOver(locator1 = "Ratings#YOUR_RATING_STAR_DELETE");
+
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
+	}
+
+	macro viewDefault {
+		AssertTextEquals(
+			locator1 = "Ratings#AVERAGE_STAR_RESULT",
+			value1 = "0.0");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 	}

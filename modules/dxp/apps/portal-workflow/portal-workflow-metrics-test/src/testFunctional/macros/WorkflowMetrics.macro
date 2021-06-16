@@ -727,6 +727,14 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
 			value1 = "${key_slaDefinitionDescription}");
 
+		if (isSet(slaDefinitionPause)) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+			AssertClick(
+				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION",
+				value1 = "${key_slaDefinitionPause}");
+		}
+
 		if (isSet(slaDefinitionStart)) {
 			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
 

@@ -178,6 +178,16 @@
 	<td>xpath=(//li[@class='nav-item ml-2']//label)[2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_FILTER_TAB_NAME</td>
+	<td>//li[contains(@class,'tbar-item')]//*[contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_HEADER_TITLE</td>
+	<td>//div[contains(@id,'headerTitle') and contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

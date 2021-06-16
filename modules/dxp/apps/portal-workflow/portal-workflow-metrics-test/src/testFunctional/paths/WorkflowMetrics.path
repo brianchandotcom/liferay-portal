@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON</td>
+	<td>//div[contains(@class,'d-flex')]/a[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_TITLE</td>
 	<td>//div[@class='header'][span[contains(text(),'Total Completed')]]</td>
 	<td></td>

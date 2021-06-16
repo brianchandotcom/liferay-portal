@@ -11,7 +11,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		Navigator.openURL();
 
@@ -50,12 +50,93 @@ definition {
 	}
 
 	@description = "LPS-87571 - Verify that the users are able to click on the metric cards from the Completed Items card and be directed to the All Items page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ClickOnMetricCardsAndBeDirectedToAllItemsPage {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67893 ClickOnMetricCardsAndBeDirectedToAllItemsPage pending implementation
+		Navigator.gotoNavItem(navItem = "Performance");
 
+		Click(
+			key_index = "1",
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
+
+		AssertElementPresent(
+			key_value = "Single Approver: All Items",
+			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
+
+		AssertElementPresent(
+			key_value = "Completed",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		AssertElementPresent(
+			key_value = "Overdue",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		AssertElementPresent(
+			key_value = "Last 30 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		Click(locator1 = "Icon#BACK");
+
+		Click(
+			key_index = "2",
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
+
+		AssertElementPresent(
+			key_value = "Single Approver: All Items",
+			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
+
+		AssertElementPresent(
+			key_value = "Completed",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		AssertElementPresent(
+			key_value = "On Time",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		AssertElementPresent(
+			key_value = "Last 30 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		Click(locator1 = "Icon#BACK");
+
+		Click(
+			key_index = "3",
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
+
+		AssertElementPresent(
+			key_value = "Single Approver: All Items",
+			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
+
+		AssertElementPresent(
+			key_value = "Completed",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		AssertElementPresent(
+			key_value = "Untracked",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		AssertElementPresent(
+			key_value = "Last 30 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		Click(locator1 = "Icon#BACK");
+
+		Click(
+			key_index = "4",
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
+
+		AssertElementPresent(
+			key_value = "Single Approver: All Items",
+			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
+
+		AssertElementPresent(
+			key_value = "Completed",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
+
+		AssertElementPresent(
+			key_value = "Last 30 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_FILTER_TAB_NAME");
 	}
 
 	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"

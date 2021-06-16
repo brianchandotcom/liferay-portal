@@ -13,8 +13,8 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
-import {createPortal} from 'react-dom';
 import {Link as InternalLink} from 'react-router-dom';
 
 const ExternalLink = ({children, to, ...props}) => {
@@ -42,18 +42,19 @@ export const BackButtonPortal = ({backURL}) => {
 		return <></>;
 	}
 
-	return createPortal(
-		<li className="control-menu-nav-item">
-			<Link
-				className="control-menu-icon lfr-icon-item"
-				tabIndex={1}
-				to={backURL}
-			>
-				<span className="icon-monospaced">
-					<ClayIcon symbol="angle-left" />
-				</span>
-			</Link>
-		</li>,
-		container
+	return (
+		<ReactPortal container={container}>
+			<li className="control-menu-nav-item">
+				<Link
+					className="control-menu-icon lfr-icon-item"
+					tabIndex={1}
+					to={backURL}
+				>
+					<span className="icon-monospaced">
+						<ClayIcon symbol="angle-left" />
+					</span>
+				</Link>
+			</li>
+		</ReactPortal>
 	);
 };

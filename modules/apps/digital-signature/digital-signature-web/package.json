@@ -8,6 +8,7 @@
 		"@clayui/layout": "3.3.0",
 		"@clayui/pagination-bar": "3.29.0",
 		"@clayui/table": "3.29.0",
+		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",
 		"image-promise": "^5.0.1",

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFie
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.google.places.util.GooglePlacesUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,19 +28,15 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Stream;
-
-import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -91,40 +88,9 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
-
-		String defaultGooglePlacesAPIKey = companyPortletPreferences.getValue(
-			"googlePlacesAPIKey", null);
-
-		Group group = _getGroup(
-			httpServletRequest, themeDisplay.getScopeGroup());
-
-		if (group == null) {
-			return defaultGooglePlacesAPIKey;
-		}
-
-		return GetterUtil.getString(
-			group.getTypeSettingsProperty("googlePlacesAPIKey"),
-			defaultGooglePlacesAPIKey);
-	}
-
-	private Group _getGroup(
-		HttpServletRequest httpServletRequest, Group scopeGroup) {
-
-		Group group = (Group)httpServletRequest.getAttribute("site.liveGroup");
-
-		if (group != null) {
-			return group;
-		}
-
-		group = scopeGroup;
-
-		if (!group.isControlPanel()) {
-			return group;
-		}
-
-		return null;
+		return GooglePlacesUtil.getGooglePlacesAPIKey(
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			_groupLocalService);
 	}
 
 	private JSONObject _getLabelsJSONObject(
@@ -170,6 +136,9 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchLocationDDMFormFieldTemplateContextContributor.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

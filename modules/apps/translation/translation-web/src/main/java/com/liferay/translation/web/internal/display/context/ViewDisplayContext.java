@@ -240,7 +240,7 @@ public class ViewDisplayContext {
 		).setMVCRenderCommandName(
 			"/translation/translate"
 		).setRedirect(
-			_liferayPortletResponse.createRenderURL()
+			String.valueOf(_liferayPortletResponse.createRenderURL())
 		).setParameter(
 			"classNameId", translationEntry.getClassNameId()
 		).setParameter(

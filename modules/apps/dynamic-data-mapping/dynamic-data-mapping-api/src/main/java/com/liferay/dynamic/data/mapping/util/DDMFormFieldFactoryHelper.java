@@ -127,7 +127,9 @@ public class DDMFormFieldFactoryHelper {
 
 		Class<?> returnType = _getReturnType();
 
-		if (returnType.isAnnotationPresent(DDMForm.class)) {
+		if (returnType.isAnnotationPresent(DDMForm.class) ||
+			returnType.isAssignableFrom(void.class)) {
+
 			return StringPool.BLANK;
 		}
 

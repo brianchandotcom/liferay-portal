@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NO_SLA_RECORDS_MESSAGE</td>
+	<td>//div[contains(@class,'modal-body')]//span[contains(.,'No SLA records for this item.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_CREATED_FORM</td>
 	<td>//a[contains(text(),'${key_workflowSLAName}')]</td>
 	<td></td>

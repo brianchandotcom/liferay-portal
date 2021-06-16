@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERFORMANCE_COMPLETED_ITEMS_BY_STATUS</td>
+	<td>//div[@class='header'][span[contains(text(),'${key_status}')]]/following-sibling::div[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE</td>
 	<td>//div[@class='header'][span[contains(text(),'Total Completed')]]/following-sibling::div</td>
 	<td></td>

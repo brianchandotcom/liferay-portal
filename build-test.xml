@@ -11538,26 +11538,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 							todir="${app.server.websphere.java.ext.dir}"
 						/>
 
-						<if>
-							<available file="${app.server.portal.dir}/WEB-INF/ibm-web-ext.xml" />
-							<then>
-								<replace
-									file="${app.server.portal.dir}/WEB-INF/ibm-web-ext.xml"
-								>
-									<replacetoken><![CDATA[</web-ext>]]></replacetoken>
-									<replacevalue><![CDATA[  <jsp-attribute name="jdkSourceLevel" value="18" />
-</web-ext>]]></replacevalue>
-								</replace>
-
-								<replace
-									file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml"
-								>
-									<replacetoken><![CDATA[</web-ext>]]></replacetoken>
-									<replacevalue><![CDATA[  <jsp-attribute name="jdkSourceLevel" value="18" />
-</web-ext>]]></replacevalue>
-								</replace>
-							</then>
-						</if>
+						<copy
+							file="${app.server.portal.dir}/WEB-INF/ibm-web-ext.xml"
+							tofile="${app.server.websphere.instance.dir}/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml"
+						/>
 					</then>
 				</if>
 

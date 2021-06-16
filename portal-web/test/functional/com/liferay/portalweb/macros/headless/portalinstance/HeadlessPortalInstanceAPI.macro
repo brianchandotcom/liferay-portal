@@ -66,10 +66,6 @@ definition {
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJSON}","$.items..portalInstanceId");
 
-		// Format JSON Array into a Poshi List
-
-		var portalInstanceIds = StringUtil.regexReplaceAll("${portalInstanceIds}","[\[\]&quot;]","");
-
 		for (var portalInstanceId : list "${portalInstanceIds}") {
 			if ("${portalInstanceId}" != "liferay.com") {
 				HeadlessPortalInstanceAPI.deletePortalInstance(

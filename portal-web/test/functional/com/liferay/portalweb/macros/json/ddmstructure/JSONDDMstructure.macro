@@ -48,9 +48,6 @@ definition {
 		''';
 
 		var structureIds = JSONCurlUtil.post("${curl}", "$..structureId");
-		var structureIds = StringUtil.replace("${structureIds}", "[", "");
-		var structureIds = StringUtil.replace("${structureIds}", "]", "");
-		var structureIds = StringUtil.replace("${structureIds}", "&quot;", "");
 
 		return "${structureIds}";
 	}

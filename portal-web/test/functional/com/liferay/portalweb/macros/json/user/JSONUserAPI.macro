@@ -245,9 +245,6 @@ definition {
 		''';
 
 		var userIds = JSONCurlUtil.post("${curl}", "$..['userId']");
-		var userIds = StringUtil.replace("${userIds}", "[", "");
-		var userIds = StringUtil.replace("${userIds}", "]", "");
-		var userIds = StringUtil.replace("${userIds}", "&quot;", "");
 
 		return "${userIds}";
 	}

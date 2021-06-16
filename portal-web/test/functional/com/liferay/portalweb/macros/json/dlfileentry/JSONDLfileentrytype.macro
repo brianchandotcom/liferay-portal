@@ -34,9 +34,6 @@ definition {
 		''';
 
 		var fileEntryTypeIds = JSONCurlUtil.post("${curl}", "$..fileEntryTypeId");
-		var fileEntryTypeIds = StringUtil.replace("${fileEntryTypeIds}", "[", "");
-		var fileEntryTypeIds = StringUtil.replace("${fileEntryTypeIds}", "]", "");
-		var fileEntryTypeIds = StringUtil.replace("${fileEntryTypeIds}", "&quot;", "");
 
 		return "${fileEntryTypeIds}";
 	}

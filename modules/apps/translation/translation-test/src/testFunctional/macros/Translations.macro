@@ -299,6 +299,22 @@ definition {
 		}
 	}
 
+	macro viewDisabledFieldTranslationButtons {
+		for (var fieldName : list "${fieldNameList}") {
+			AssertVisible(
+				key_title = "Auto Translate ${fieldName} Field",
+				locator1 = "Button#ANY_TITLE_DISABLED");
+		}
+	}
+
+	macro viewEnabledFieldTranslationButtons {
+		for (var fieldName : list "${fieldNameList}") {
+			AssertVisible(
+				key_title = "Auto Translate ${fieldName} Field",
+				locator1 = "Button#ANY_TITLE");
+		}
+	}
+
 	macro viewTargetFields {
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(

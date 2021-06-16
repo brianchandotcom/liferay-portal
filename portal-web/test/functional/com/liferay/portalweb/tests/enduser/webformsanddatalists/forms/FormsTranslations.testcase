@@ -255,14 +255,46 @@ definition {
 	}
 
 	@description = "Verify that a translation can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBePreviewed {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133520 CanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Text ES");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormPortletConfiguration.viewTranslationLanguage(language = "en-US");
+
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormPortletConfiguration.changeLanguage(
+			currentLanguage = "en-US",
+			newLanguage = "español-España");
+
+		FormFields.viewLabel(
+			fieldLabel = "Text ES",
+			fieldName = "Text ES");
 	}
 
 	@description = "Verify that a translation can be published"

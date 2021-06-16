@@ -384,6 +384,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED</td>
+	<td>//div[@class='form-group' and contains(.,'${key_fieldName}')]//div[contains(@class,'form-feedback-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLTIP</td>
 	<td>//div[contains(@class,'tooltip') and contains(@class,'show')]</td>
 	<td></td>

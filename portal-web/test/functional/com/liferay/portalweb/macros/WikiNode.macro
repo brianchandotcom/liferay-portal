@@ -40,8 +40,6 @@ definition {
 		PortletEntry.clickMoveToRecycleBin();
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-		RecycleBin.emptyCP();
 	}
 
 	macro editCP {
@@ -75,15 +73,17 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Wiki");
 
-		while (IsElementPresent(locator1 = "Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2")) {
-			Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2");
+		if (IsElementPresent(locator1 = "Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2")) {
+			ManagementBar.clickSelectAllCheckbox();
 
-			PortletEntry.clickMoveToRecycleBin();
-
-			VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-			VerifyElementPresent(locator1 = "Message#SUCCESS");
+			Click(locator1 = "Icon#DELETE");
 		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
 	}

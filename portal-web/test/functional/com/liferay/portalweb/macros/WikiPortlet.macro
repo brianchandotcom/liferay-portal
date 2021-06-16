@@ -10,6 +10,32 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro configureEmailCP {
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(pageAddedEmail)) {
+			AssertClick(
+				locator1 = "Configuration#NAVIGATION_PAGE_ADDED_EMAIL",
+				value1 = "Page Added Email");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${bodyContent}");
+
+			SelectFrame(value1 = "relative=top");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.save();
+		}
 	}
 
 	macro configureSharingAllowUsersToAddWikiToAnyWebsite {
@@ -69,6 +95,8 @@ definition {
 		for (var isNotPresent : list "${isNotPresent}") {
 			AssertElementNotPresent(locator1 = "Configuration#${isNotPresent}");
 		}
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro viewConfigureSharingAllowUsersToAddWikiToAnyWebsite {
@@ -91,6 +119,26 @@ definition {
 
 		for (var SettingName : list "${uncheckedSetting}") {
 			AssertNotChecked(locator1 = "Checkbox#${SettingName}");
+		}
+	}
+
+	macro viewEmailCP {
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(pageAddedEmail)) {
+			AssertClick(
+				locator1 = "Configuration#NAVIGATION_PAGE_ADDED_EMAIL",
+				value1 = "Page Added Email");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CKEditor#BODY",
+				value1 = "${bodyContent}");
+
+			SelectFrame(value1 = "relative=top");
 		}
 	}
 

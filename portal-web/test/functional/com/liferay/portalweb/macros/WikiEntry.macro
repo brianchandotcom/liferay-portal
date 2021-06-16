@@ -6,6 +6,8 @@ definition {
 		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContent}");
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro addPageTitle {

@@ -21,7 +21,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_STATUS",
-			value1 = "${draftStatus}");
+			value1 = "${entryStatus}");
 	}
 
 	macro viewNoEntry {

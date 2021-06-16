@@ -4,7 +4,6 @@ dependencies {
 	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.sun.xml.bind", name: "jaxb-osgi", version: "2.3.4"
-	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
 	compileOnly group: "org.apache.aries.component-dsl", name: "org.apache.aries.component-dsl.component-dsl", version: "1.2.2"
 	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "2.0.0"
 	compileOnly group: "org.apache.commons", name: "commons-lang3", version: "3.9"
@@ -19,6 +18,11 @@ dependencies {
 	compileOnly group: "org.apache.cxf", name: "cxf-tools-common", version: "3.4.3"
 	compileOnly group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.4.3"
 	compileOnly group: "org.apache.geronimo.specs", name: "geronimo-jaxrs_2.1_spec", version: "1.1"
+	compileOnly group: "org.apache.geronimo.specs", name: "geronimo-json_1.1_spec", version: "1.5"
+	compileOnly group: "org.apache.geronimo.specs", name: "geronimo-jsonb_1.0_spec", version: "1.4"
+	compileOnly group: "org.apache.johnzon", name: "johnzon-core", version: "1.2.11"
+	compileOnly group: "org.apache.johnzon", name: "johnzon-jsonb", version: "1.2.11"
+	compileOnly group: "org.apache.johnzon", name: "johnzon-mapper", version: "1.2.11"
 	compileOnly group: "org.apache.velocity", name: "velocity-engine-core", version: "2.2"
 	compileOnly group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.2.5"
 	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
@@ -33,8 +37,10 @@ deployDependencies {
 	include "commons-*.jar"
 	include "cxf-*.jar"
 	include "geronimo-jaxrs_2.1_spec-*.jar"
-	include "javax.json-api-*.jar"
+	include "geronimo-jsonb_1.0_spec-*.jar"
 	include "jaxb-osgi-*.jar"
+	include "johnzon-jsonb-*.jar"
+	include "johnzon-mapper-*.jar"
 	include "org.apache.aries.component-dsl.*.jar"
 	include "org.apache.aries.jax.rs.whiteboard-*.jar"
 	include "org.osgi.service.jaxrs-*.jar"
@@ -42,4 +48,5 @@ deployDependencies {
 	include "xmlschema-core-*.jar"
 
 	rename(/geronimo-jaxrs_2\.1_spec-(.+)\.jar/, "geronimo-jaxrs_2.1_spec" + renameSuffix)
+	rename(/geronimo-jsonb_1\.0_spec-(.+)\.jar/, "geronimo-jsonb_1.0_spec" + renameSuffix)
 }

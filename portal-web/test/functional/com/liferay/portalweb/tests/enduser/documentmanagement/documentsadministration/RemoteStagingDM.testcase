@@ -129,7 +129,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test DocumentCanBeRepublishedAfterCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property test.name.skip.portal.instance = "RemoteStagingDM#DocumentCanBeRepublishedAfterCheckout";
 
 		Navigator.gotoSitePage(

@@ -532,6 +532,8 @@ public class JournalManagementToolbarDisplayContext
 								"folderId", _journalDisplayContext.getFolderId()
 							).setParameter(
 								"groupId", _themeDisplay.getScopeGroupId()
+							).setParameter(
+								"showSelectFolder", false
 							).build();
 
 						UnsafeConsumer<DropdownItem, Exception> unsafeConsumer =

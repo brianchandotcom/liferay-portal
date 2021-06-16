@@ -39,12 +39,6 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 	}
 
-	macro viewResults {
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsProcessListView#PAGINATION_RESULTS",
-			value1 = "${results}");
-	}
-
 	macro metricsWorkflowSearchClearAll {
 		var key_workflowSearchName = "${workflowSearchName}";
 
@@ -58,6 +52,12 @@ definition {
 		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
 
 		AssertElementNotPresent(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
+	}
+
+	macro viewResults {
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsProcessListView#PAGINATION_RESULTS",
+			value1 = "${results}");
 	}
 
 }

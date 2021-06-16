@@ -59,11 +59,6 @@
     <td></td>
 </tr>
 <tr>
-	<td>ANY_ARROW_ORDER</td>
-    <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
-    <td></td>
-</tr>
-<tr>
 	<td>CLEAR_SEARCH</td>
 	<td>//button[contains(text(),'Clear')]</td>
 	<td></td>

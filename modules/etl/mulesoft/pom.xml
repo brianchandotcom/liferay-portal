@@ -73,7 +73,7 @@
 					<fileName>demo/liferay-connector-demo/src/main/mule/liferay-connector-demo.xml</fileName>
 					<fileName>demo/liferay-connector-demo/src/main/resources/log4j2.xml</fileName>
 					<fileName>demo/liferay-connector-demo/src/test/resources/log4j2-test.xml</fileName>
-					<fileName>src/test/munit/batch-test-suite.xml</fileName>
+					<fileName>src/test/munit/batch-operations-test-suite.xml</fileName>
 					<fileName>src/test/munit/crud-operations-test-suite.xml</fileName>
 					<fileName>src/test/munit/oauth2-connectivity-test-suite.xml</fileName>
 				</configuration>
@@ -229,9 +229,9 @@
 		</repository>
 	</repositories>
 	<scm>
-		<connection>scm:git:git://github.com/matijapetanjek/liferay-etl-mulesoft</connection>
-		<developerConnection>scm:svn:https://github.com/matijapetanjek/liferay-etl-mulesoft/tree/master</developerConnection>
+		<connection>scm:git:git://github.com/liferay/liferay-etl-mulesoft</connection>
+		<developerConnection>scm:svn:https://github.com/liferay/liferay-etl-mulesoft/tree/master</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://github.com/matijapetanjek/liferay-etl-mulesoft/tree/master</url>
+		<url>https://github.com/liferay/liferay-etl-mulesoft/tree/master</url>
 	</scm>
 </project>

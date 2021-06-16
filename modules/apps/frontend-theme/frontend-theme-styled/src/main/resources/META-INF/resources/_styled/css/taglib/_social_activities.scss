@@ -1,3 +1,22 @@
-.taglib-social-activities .day-separator {
-	border-bottom-color: #ccc;
+.taglib-social-activities {
+	table {
+		width: 100%;
+	}
+
+	td {
+		padding: 5px;
+		vertical-align: top;
+	}
+
+	.day-separator {
+		border-bottom: 1px dotted transparent;
+		border-bottom-color: #ccc;
+		margin-bottom: 0;
+		margin-top: 10px;
+		padding-bottom: 2px;
+	}
+
+	.portlet-icon {
+		width: 16px;
+	}
 }

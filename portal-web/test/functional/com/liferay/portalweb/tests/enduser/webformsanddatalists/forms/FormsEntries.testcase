@@ -290,11 +290,7 @@ definition {
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
+		FormsAdminNavigator.closePublishedFormWindow();
 
 		FormsAdminNavigator.gotoViewEntries();
 

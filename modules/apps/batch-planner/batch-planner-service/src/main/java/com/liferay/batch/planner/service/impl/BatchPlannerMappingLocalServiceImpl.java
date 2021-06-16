@@ -16,7 +16,7 @@ package com.liferay.batch.planner.service.impl;
 
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
-import com.liferay.batch.planner.exception.RequiredBatchPlannerMappingException;
+import com.liferay.batch.planner.exception.RequiredBatchPlannerMappingFieldException;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.service.base.BatchPlannerMappingLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -111,7 +111,7 @@ public class BatchPlannerMappingLocalServiceImpl
 		throw new DuplicateBatchPlannerPlanException(
 			StringBundler.concat(
 				"Batch planner mapping with external field name \"",
-				externalName, "\" and internal field name \"", externalName,
+				externalName, "\" and internal field name \"", internalName,
 				"\" already exists for batch planner plan ",
 				batchPlannerPlanId));
 	}
@@ -120,7 +120,7 @@ public class BatchPlannerMappingLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(value)) {
-			throw new RequiredBatchPlannerMappingException(
+			throw new RequiredBatchPlannerMappingFieldException(
 				StringBundler.concat(
 					"Batch planner mapping field \"", name, "\" is null"));
 		}

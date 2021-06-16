@@ -14,7 +14,7 @@
 
 package com.liferay.batch.planner.service.impl;
 
-import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
+import com.liferay.batch.planner.exception.RequiredBatchPlannerLogFieldException;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -75,7 +75,7 @@ public class BatchPlannerLogLocalServiceImpl
 		batchPlannerLog.setUserId(userId);
 		batchPlannerLog.setBatchPlannerPlanId(batchPlannerPlanId);
 		batchPlannerLog.setBatchEngineExportTaskERC(batchEngineExportERC);
-		batchPlannerLog.setBatchEngineExportTaskERC(batchEngineImportERC);
+		batchPlannerLog.setBatchEngineImportTaskERC(batchEngineImportERC);
 		batchPlannerLog.setDispatchTriggerERC(dispatchTriggerERC);
 		batchPlannerLog.setSize(size);
 		batchPlannerLog.setStatus(status);
@@ -117,7 +117,7 @@ public class BatchPlannerLogLocalServiceImpl
 			return;
 		}
 
-		throw new BatchPlannerPlanNameException(
+		throw new RequiredBatchPlannerLogFieldException(
 			StringBundler.concat(
 				"Batch planner log field \"", name, "\" must be null if field ",
 				"\"export\" is ", export));
@@ -127,18 +127,18 @@ public class BatchPlannerLogLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(value)) {
-			throw new BatchPlannerPlanNameException(
+			throw new RequiredBatchPlannerLogFieldException(
 				StringBundler.concat(
-					"Batch planner mapping field \"", name, "\" is null"));
+					"Batch planner log field \"", name, "\" is null"));
 		}
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			BatchPlannerMapping.class.getName(), name);
 
 		if (value.length() > maxLength) {
-			throw new BatchPlannerPlanNameException(
+			throw new RequiredBatchPlannerLogFieldException(
 				StringBundler.concat(
-					"Batch planner mapping field \"", name,
+					"Batch planner log field \"", name,
 					"\" must not be longer than ", maxLength));
 		}
 	}

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>ANY_ARROW_ORDER</td>
+    <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKFLOW_SEARCH_BAR_BUTTON</td>
 	<td>//span[contains(@class,'input-group-inset-item')]//button[contains(@class,'btn')]</td>
 	<td></td>
@@ -53,7 +58,7 @@
     <td>//tr[${key_rowNumber}]//td[2]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
     <td>ANY_ARROW_ORDER</td>
     <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
     <td></td>

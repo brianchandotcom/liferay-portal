@@ -183,11 +183,56 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Total Pending"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderByTotalPendingItems {
 
-		// TODO LRQA-67512 CanOrderByTotalPendingItems pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WaitForElementPresent(
+			key_value = "down",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
+
+		Click(
+			key_assigneeName = "Total Pending",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		WaitForElementPresent(
+			key_value = "down",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
+
+		Click(
+			key_assigneeName = "Total Pending",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		WaitForElementPresent(
+			key_value = "up",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
+
 
 	}
 

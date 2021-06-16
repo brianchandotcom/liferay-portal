@@ -72,21 +72,16 @@ definition {
 	macro updateWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
-		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}", site = "${site}");
-
-		var serviceContext = JSONWikiSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}");
+		var resourcePrimKey = JSONWikiSetter.setResourcePrimKey(groupName = "${groupName}", title = "${wikiPageName}", name = "${wikiNodeName}", site = "${site}");
 
 		JSONWikiAPI._updateWikiPage(
+			assetCategoryIds = "${assetCategoryIds}",
 			content = "${wikiPageContent}",
-			description = "${description}",
 			encodingFormat = "${encodingFormat}",
 			headline = "${wikiPageName}",
-			minorEdit = "${minorEdit}",
-			nodeId = "${nodeId}",
-			serviceContext = "${serviceContext}",
-			version = "${version}");
+			resourcePrimKey = "${resourcePrimKey}",
+			tagName = "${tagName}",
+			viewableBy = "${viewableBy}");
 	}
 
 }

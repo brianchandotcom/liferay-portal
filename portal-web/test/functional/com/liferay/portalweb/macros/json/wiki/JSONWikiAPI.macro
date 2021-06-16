@@ -252,15 +252,15 @@ definition {
 
 	@summary = "Helper function to update the existing wiki page via JSON."
 	macro _updateWikiPage {
-		Variables.assertDefined(parameterList = "${content},${headline},${nodeId},${serviceContext}");
+		Variables.assertDefined(parameterList = "${resourcePrimKey}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(description)) {
-			var description = "${description}";
+		if (isSet(viewableBy)) {
+			var viewableBy = "${viewableBy}";
 		}
 		else {
-			var description = "";
+			var viewableBy = "Anyone";
 		}
 
 		if (isSet(encodingFormat)) {
@@ -270,36 +270,37 @@ definition {
 			var encodingFormat = "creole";
 		}
 
-		if (isSet(version)) {
-			var version = "${version}";
+		if (isSet(tagName)) {
+			var tagName = '''"${tagName}"''';
 		}
 		else {
-			var version = "1.0";
+			var tagName = "";
 		}
 
-		if (isSet(minorEdit)) {
-			var minorEdit = "${minorEdit}";
+		if (isSet(assetCategoryIds)) {
+			var assetCategoryIds = "${assetCategoryIds}";
 		}
 		else {
-			var minorEdit = "true";
+			var assetCategoryIds = "0";
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikipage/update-page \
-				-u test@liferay.com:test \
-				-d nodeId=${nodeId} \
-				-d title=${headline} \
-				-d version=${version} \
-				-d content=${content} \
-				-d summary=${description} \
-				-d minorEdit=${minorEdit} \
-				-d format=${encodingFormat} \
-				-d parentTitle= \
-				-d redirectTitle= \
-				-d serviceContext=${serviceContext}
+			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test' \
+			-d '{
+				"content": "${content}",
+				"creator": {},
+				"encodingFormat": "${encodingFormat}",
+				"headline": "${headline}",
+				"keywords": [${tagName}],
+				"taxonomyCategoryIds": [${assetCategoryIds}],
+				"viewableBy": "${viewableBy}",
+				"wikiNodeId": 0
+			}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.put("${curl}");
 	}
 
 }

@@ -140,12 +140,21 @@ definition {
 	}
 
 	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DefaultDateFormatIsMMDDYYYY {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67641 DefaultDateFormatIsMMDDYYYY pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN");
+
+		Click(
+			completedItemsDateRange = "Custom Range",
+			locator1 = "WorkflowMetricsCompletedItems#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dateFormat = "Default date format is MM/DD/YYYY.",
+			locator1 = "WorkflowMetricsCompletedItems#DEFAULT_DATE_FORMAT_MESSAGE");
 	}
 
 	@description = "LPS-98233 - Verify that the fields From and To are required"

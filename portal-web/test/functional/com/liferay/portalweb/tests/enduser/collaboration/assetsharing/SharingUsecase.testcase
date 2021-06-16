@@ -366,7 +366,7 @@ definition {
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 
 		Click.clickNoMouseOver(
-			key_order = "unstyled",
+			key_order = "list-up",
 			locator1 = "ManagementBar#ORDER_ICON_SPECIFIC");
 
 		AssertElementPresent(

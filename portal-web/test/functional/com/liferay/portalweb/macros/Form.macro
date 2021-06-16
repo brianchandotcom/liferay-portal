@@ -4,6 +4,14 @@ definition {
 	var formName = "Created Form Name";
 	var rowNumber = "1";
 
+	macro addFieldFromSidebarToFieldsGroup {
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			key_fieldLabel = "${key_fieldLabel}",
+			key_fieldName = "${key_fieldName}",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "FormFields#LABEL");
+	}
+
 	macro addPage {
 		var key_formAddNewPageNumber = "${formAddNewPageNumber}";
 

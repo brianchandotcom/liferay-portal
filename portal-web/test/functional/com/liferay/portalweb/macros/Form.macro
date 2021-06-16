@@ -804,6 +804,10 @@ definition {
 		AssertVisible(locator1 = "Form#PUBLISH_UNPUBLISH_ICON_CLOSE");
 	}
 
+	macro viewRequiredFieldIndicator {
+		AssertElementPresent(locator1 = "Form#FIELD_REQUIRED_INDICATOR");
+	}
+
 	macro viewSaveNotification {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Form#SAVE_NOTIFICATION",

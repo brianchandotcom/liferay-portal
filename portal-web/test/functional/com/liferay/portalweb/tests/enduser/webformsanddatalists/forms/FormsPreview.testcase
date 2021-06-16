@@ -186,14 +186,58 @@ definition {
 	}
 
 	@description = "Verify that a user cannot navigate to a new page without completing a required field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotNavigateToANewPageWithoutCompletingARequiredField {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133814 CannotNavigateToANewPageWithoutCompletingARequiredField pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormFields.enableSwitcher(fieldName = "Required");
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		Form.viewPageName(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.viewRequiredFieldIndicator();
+
+		FormPortlet.clickNextPage();
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "This field is required.");
+
+		FormPortlet.clickNextPage();
+
+		Form.viewPageName(
+			formPageName = "Page B",
+			formTitleNumber = "2");
 	}
 
 	@description = "Verify that a Color Field can be previewed"

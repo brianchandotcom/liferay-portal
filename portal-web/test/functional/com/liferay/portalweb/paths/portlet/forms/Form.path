@@ -358,9 +358,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_REQUIRED_INDICATOR</td>
+	<td>//p[contains(.,'Indicates Required Field')]</td>
 	<td></td>
-	<td></td>
-	<td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
 </tr>
 <!--SIDEBAR -->
 <tr>

@@ -112,6 +112,39 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134063. The template can be copied."
+	@priority = "5"
+	test CopyTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a template for Basic Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				structureName = "Basic Web Content",
+				templateFieldNames = "Content",
+				templateName = "WC Template Name");
+		}
+
+		task ("Make a copy of new template") {
+			WebContentTemplates.copyCP(
+				templateCopyName = "WC Template Name (Copy)",
+				templateName = "WC Template Name");
+		}
+
+		task ("View the copy of template shown in Templates admin") {
+			NavItem.viewActive(navItem = "Templates");
+
+			WebContentTemplates.viewCardsEntryCP(templateName = "WC Template Name (Copy)");
+		}
+
+		task ("View the original template shown in Templates admin") {
+			WebContentTemplates.viewCardsEntryCP(templateName = "WC Template Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-116515. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
 	@priority = "5"
 	test SaveChangesInExistingTemplateWhenDisableTemplateCreation {

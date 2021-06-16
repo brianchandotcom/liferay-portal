@@ -490,12 +490,21 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify the option for pause field is: On task: [task-name]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PauseFieldOptions {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67883 PauseFieldOptions pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		AssertElementPresent(
+			key_slaDefinitionPause = "On Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
+
+		AssertElementPresent(
+			key_slaDefinitionPause = "On Task: Update",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
 	}
 
 	@description = "LPS-89014 - Verify that the popover is displayed when hovering the pointer on the add button"

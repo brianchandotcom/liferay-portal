@@ -72,63 +72,32 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddCategory() throws PortalException {
-		String expectedCategoryName = "Título";
+	public void testAddAssetCategory() throws PortalException {
+		String expectedAssetCategoryTitle = "Título";
 
-		AssetCategory category = _assetCategoryLocalService.addCategory(
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			expectedCategoryName, _assetVocabulary.getVocabularyId(),
+			expectedAssetCategoryTitle, _assetVocabulary.getVocabularyId(),
 			new ServiceContext());
 
 		Assert.assertEquals(
-			"Expected name does not match", expectedCategoryName,
-			category.getName());
+			"Expected title does not match", expectedAssetCategoryTitle,
+			assetCategory.getTitle(LocaleUtil.SPAIN));
 
-		Map<Locale, String> titleMap = category.getTitleMap();
+		Map<Locale, String> titleMap = assetCategory.getTitleMap();
 
 		Assert.assertTrue(
 			"Title map does not contains site default locale",
 			titleMap.containsKey(LocaleUtil.SPAIN));
 		Assert.assertEquals(
-			"Expected title does not match", expectedCategoryName,
+			"Expected title does not match", expectedAssetCategoryTitle,
 			titleMap.get(LocaleUtil.SPAIN));
 		Assert.assertEquals(
-			"Expected title map lenght does not match", 1, titleMap.size());
+			"Expected title map length does not match", 1, titleMap.size());
 	}
 
 	@Test
-	public void testAddCategoryExistsTranslationInDefaultSiteLocale()
-		throws PortalException {
-
-		String expectedCategoryName = "Título";
-
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.FRANCE, "Qualification"
-		).put(
-			LocaleUtil.SPAIN, expectedCategoryName
-		).build();
-
-		AssetCategory category = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
-			HashMapBuilder.put(
-				LocaleUtil.FRANCE, "La description"
-			).put(
-				LocaleUtil.SPAIN, "Descripción"
-			).build(),
-			_assetVocabulary.getVocabularyId(), null, new ServiceContext());
-
-		Assert.assertEquals(
-			"Expected name does not match", expectedCategoryName,
-			category.getName());
-
-		Assert.assertEquals(
-			"Expected title map does not match", titleMap,
-			category.getTitleMap());
-	}
-
-	@Test
-	public void testAddCategoryMissingTranslationInDefaultSiteLocale()
+	public void testAddAssetCategoryWithMissingTranslationInSiteDefaultLocale()
 		throws PortalException {
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
@@ -152,46 +121,41 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateCategoryExistsTranslationInDefaultSiteLocale()
+	public void testAddAssetCategoryWithTranslationInSiteDefaultLocale()
 		throws PortalException {
 
-		AssetCategory category = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Título",
-			_assetVocabulary.getVocabularyId(), new ServiceContext());
-
-		String expectedCategoryName = "Título";
+		String expectedAssetCategoryTitle = "Título";
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.FRANCE, "Qualification"
 		).put(
-			LocaleUtil.SPAIN, expectedCategoryName
+			LocaleUtil.SPAIN, expectedAssetCategoryTitle
 		).build();
 
-		AssetCategory updatedCategory =
-			_assetCategoryLocalService.updateCategory(
-				TestPropsValues.getUserId(), category.getCategoryId(),
-				category.getParentCategoryId(), titleMap,
-				HashMapBuilder.put(
-					LocaleUtil.FRANCE, "La description"
-				).put(
-					LocaleUtil.SPAIN, "Descripción"
-				).build(),
-				category.getVocabularyId(), null, new ServiceContext());
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, "La description"
+			).put(
+				LocaleUtil.SPAIN, "Descripción"
+			).build(),
+			_assetVocabulary.getVocabularyId(), null, new ServiceContext());
 
 		Assert.assertEquals(
-			"Expected name does not match", expectedCategoryName,
-			updatedCategory.getName());
+			"Expected title does not match", expectedAssetCategoryTitle,
+			assetCategory.getTitle(LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
 			"Expected title map does not match", titleMap,
-			updatedCategory.getTitleMap());
+			assetCategory.getTitleMap());
 	}
 
 	@Test
-	public void testUpdateCategoryMissingTranslationInDefaultSiteLocale()
+	public void testUpdateAssetCategoryWithMissingTranslationInSiteDefaultLocale()
 		throws PortalException {
 
-		AssetCategory category = _assetCategoryLocalService.addCategory(
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), "Título",
 			_assetVocabulary.getVocabularyId(), new ServiceContext());
 
@@ -205,16 +169,51 @@ public class AssetCategoryLocalServiceTest {
 
 		String expectedExceptionMessage = StringBundler.concat(
 			"Category name cannot be null for category ",
-			category.getCategoryId(), " and vocabulary ",
-			category.getVocabularyId());
+			assetCategory.getCategoryId(), " and vocabulary ",
+			assetCategory.getVocabularyId());
 
 		expectedException.expect(AssetCategoryNameException.class);
 		expectedException.expectMessage(expectedExceptionMessage);
 
 		_assetCategoryLocalService.updateCategory(
-			TestPropsValues.getUserId(), category.getCategoryId(),
-			category.getParentCategoryId(), titleMap, descriptionMap,
-			category.getVocabularyId(), null, new ServiceContext());
+			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			assetCategory.getParentCategoryId(), titleMap, descriptionMap,
+			assetCategory.getVocabularyId(), null, new ServiceContext());
+	}
+
+	@Test
+	public void testUpdateAssetCategoryWithTranslationInSiteDefaultLocale()
+		throws PortalException {
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "Título",
+			_assetVocabulary.getVocabularyId(), new ServiceContext());
+
+		String expectedAssetCategoryTitle = "Título";
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.FRANCE, "Qualification"
+		).put(
+			LocaleUtil.SPAIN, expectedAssetCategoryTitle
+		).build();
+
+		assetCategory = _assetCategoryLocalService.updateCategory(
+			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			assetCategory.getParentCategoryId(), titleMap,
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, "La description"
+			).put(
+				LocaleUtil.SPAIN, "Descripción"
+			).build(),
+			assetCategory.getVocabularyId(), null, new ServiceContext());
+
+		Assert.assertEquals(
+			"Expected title does not match", expectedAssetCategoryTitle,
+			assetCategory.getTitle(LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"Expected title map does not match", titleMap,
+			assetCategory.getTitleMap());
 	}
 
 	@Rule

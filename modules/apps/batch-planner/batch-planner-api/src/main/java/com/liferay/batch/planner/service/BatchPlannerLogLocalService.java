@@ -75,6 +75,12 @@ public interface BatchPlannerLogLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public BatchPlannerLog addBatchPlannerLog(BatchPlannerLog batchPlannerLog);
 
+	public BatchPlannerLog addBatchPlannerLog(
+			long userId, long batchPlannerPlanId, String batchEngineExportERC,
+			String batchEngineImportERC, String dispatchTriggerERC, int size,
+			int status)
+		throws PortalException;
+
 	/**
 	 * Creates a new batch planner log with the primary key. Does not add the batch planner log to the database.
 	 *
@@ -268,5 +274,13 @@ public interface BatchPlannerLogLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public BatchPlannerLog updateBatchPlannerLog(
 		BatchPlannerLog batchPlannerLog);
+
+	public BatchPlannerLog updateBatchPlannerLogSize(
+			long batchPlannerLogId, int size)
+		throws PortalException;
+
+	public BatchPlannerLog updateBatchPlannerLogStatus(
+			long batchPlannerLogId, int status)
+		throws PortalException;
 
 }

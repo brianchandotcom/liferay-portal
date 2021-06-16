@@ -14,9 +14,15 @@
 
 package com.liferay.batch.planner.service.http;
 
+import com.liferay.batch.planner.service.BatchPlannerMappingServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.batch.planner.service.BatchPlannerMappingServiceUtil</code> service
+ * <code>BatchPlannerMappingServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,72 @@ package com.liferay.batch.planner.service.http;
  */
 @Deprecated
 public class BatchPlannerMappingServiceSoap {
+
+	public static com.liferay.batch.planner.model.BatchPlannerMappingSoap
+			addBatchPlannerMapping(
+				long batchPlannerPlanId, String externalFieldName,
+				String externalFieldType, String internalFieldName,
+				String internalFieldType, String script)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerMapping returnValue =
+				BatchPlannerMappingServiceUtil.addBatchPlannerMapping(
+					batchPlannerPlanId, externalFieldName, externalFieldType,
+					internalFieldName, internalFieldType, script);
+
+			return com.liferay.batch.planner.model.BatchPlannerMappingSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerMappingSoap
+			deleteBatchPlannerMapping(
+				long batchPlannerPlanId, String externalFieldName,
+				String internalFieldName)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerMapping returnValue =
+				BatchPlannerMappingServiceUtil.deleteBatchPlannerMapping(
+					batchPlannerPlanId, externalFieldName, internalFieldName);
+
+			return com.liferay.batch.planner.model.BatchPlannerMappingSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerMappingSoap[]
+			getBatchPlannerMappings(long batchPlannerPlanId)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.planner.model.BatchPlannerMapping>
+				returnValue =
+					BatchPlannerMappingServiceUtil.getBatchPlannerMappings(
+						batchPlannerPlanId);
+
+			return com.liferay.batch.planner.model.BatchPlannerMappingSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BatchPlannerMappingServiceSoap.class);
+
 }

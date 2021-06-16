@@ -64,13 +64,14 @@ import java.rmi.RemoteException;
 public class BatchPlannerPlanServiceSoap {
 
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
-			addBatchPlannerPlan(String externalType, String name)
+			addBatchPlannerPlan(
+				boolean export, String externalType, String name)
 		throws RemoteException {
 
 		try {
 			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
 				BatchPlannerPlanServiceUtil.addBatchPlannerPlan(
-					externalType, name);
+					export, externalType, name);
 
 			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
 				toSoapModel(returnValue);
@@ -89,6 +90,25 @@ public class BatchPlannerPlanServiceSoap {
 		try {
 			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
 				BatchPlannerPlanServiceUtil.deleteBatchPlannerPlan(
+					batchPlannerPlanId);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
+			getBatchPlannerPlan(long batchPlannerPlanId)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
+				BatchPlannerPlanServiceUtil.getBatchPlannerPlan(
 					batchPlannerPlanId);
 
 			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.

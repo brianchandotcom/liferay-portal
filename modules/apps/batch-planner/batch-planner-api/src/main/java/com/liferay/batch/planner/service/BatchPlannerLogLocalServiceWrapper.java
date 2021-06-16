@@ -50,6 +50,18 @@ public class BatchPlannerLogLocalServiceWrapper
 		return _batchPlannerLogLocalService.addBatchPlannerLog(batchPlannerLog);
 	}
 
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerLog addBatchPlannerLog(
+			long userId, long batchPlannerPlanId, String batchEngineExportERC,
+			String batchEngineImportERC, String dispatchTriggerERC, int size,
+			int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogLocalService.addBatchPlannerLog(
+			userId, batchPlannerPlanId, batchEngineExportERC,
+			batchEngineImportERC, dispatchTriggerERC, size, status);
+	}
+
 	/**
 	 * Creates a new batch planner log with the primary key. Does not add the batch planner log to the database.
 	 *
@@ -334,6 +346,24 @@ public class BatchPlannerLogLocalServiceWrapper
 
 		return _batchPlannerLogLocalService.updateBatchPlannerLog(
 			batchPlannerLog);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerLog
+			updateBatchPlannerLogSize(long batchPlannerLogId, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogLocalService.updateBatchPlannerLogSize(
+			batchPlannerLogId, size);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerLog
+			updateBatchPlannerLogStatus(long batchPlannerLogId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerLogLocalService.updateBatchPlannerLogStatus(
+			batchPlannerLogId, status);
 	}
 
 	@Override

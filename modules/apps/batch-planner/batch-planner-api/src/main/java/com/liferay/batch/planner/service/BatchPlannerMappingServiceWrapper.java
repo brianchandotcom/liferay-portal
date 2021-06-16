@@ -33,6 +33,39 @@ public class BatchPlannerMappingServiceWrapper
 		_batchPlannerMappingService = batchPlannerMappingService;
 	}
 
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerMapping
+			addBatchPlannerMapping(
+				long batchPlannerPlanId, String externalFieldName,
+				String externalFieldType, String internalFieldName,
+				String internalFieldType, String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerMappingService.addBatchPlannerMapping(
+			batchPlannerPlanId, externalFieldName, externalFieldType,
+			internalFieldName, internalFieldType, script);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerMapping
+			deleteBatchPlannerMapping(
+				long batchPlannerPlanId, String externalFieldName,
+				String internalFieldName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerMappingService.deleteBatchPlannerMapping(
+			batchPlannerPlanId, externalFieldName, internalFieldName);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerMapping>
+			getBatchPlannerMappings(long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerMappingService.getBatchPlannerMappings(
+			batchPlannerPlanId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

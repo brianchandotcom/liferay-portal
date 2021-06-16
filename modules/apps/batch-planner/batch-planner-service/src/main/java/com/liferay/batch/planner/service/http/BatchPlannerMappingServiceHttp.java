@@ -14,13 +14,21 @@
 
 package com.liferay.batch.planner.service.http;
 
+import com.liferay.batch.planner.service.BatchPlannerMappingServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.batch.planner.service.BatchPlannerMappingServiceUtil</code> service
+ * <code>BatchPlannerMappingServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,153 @@ package com.liferay.batch.planner.service.http;
  * @generated
  */
 public class BatchPlannerMappingServiceHttp {
+
+	public static com.liferay.batch.planner.model.BatchPlannerMapping
+			addBatchPlannerMapping(
+				HttpPrincipal httpPrincipal, long batchPlannerPlanId,
+				String externalFieldName, String externalFieldType,
+				String internalFieldName, String internalFieldType,
+				String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchPlannerMappingServiceUtil.class, "addBatchPlannerMapping",
+				_addBatchPlannerMappingParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, batchPlannerPlanId, externalFieldName,
+				externalFieldType, internalFieldName, internalFieldType,
+				script);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.planner.model.BatchPlannerMapping)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerMapping
+			deleteBatchPlannerMapping(
+				HttpPrincipal httpPrincipal, long batchPlannerPlanId,
+				String externalFieldName, String internalFieldName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchPlannerMappingServiceUtil.class,
+				"deleteBatchPlannerMapping",
+				_deleteBatchPlannerMappingParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, batchPlannerPlanId, externalFieldName,
+				internalFieldName);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.planner.model.BatchPlannerMapping)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.batch.planner.model.BatchPlannerMapping>
+				getBatchPlannerMappings(
+					HttpPrincipal httpPrincipal, long batchPlannerPlanId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchPlannerMappingServiceUtil.class, "getBatchPlannerMappings",
+				_getBatchPlannerMappingsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, batchPlannerPlanId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.batch.planner.model.BatchPlannerMapping>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BatchPlannerMappingServiceHttp.class);
+
+	private static final Class<?>[] _addBatchPlannerMappingParameterTypes0 =
+		new Class[] {
+			long.class, String.class, String.class, String.class, String.class,
+			String.class
+		};
+	private static final Class<?>[] _deleteBatchPlannerMappingParameterTypes1 =
+		new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[] _getBatchPlannerMappingsParameterTypes2 =
+		new Class[] {long.class};
+
 }

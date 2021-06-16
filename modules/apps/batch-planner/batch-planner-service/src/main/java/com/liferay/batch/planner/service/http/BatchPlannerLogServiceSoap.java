@@ -14,9 +14,15 @@
 
 package com.liferay.batch.planner.service.http;
 
+import com.liferay.batch.planner.service.BatchPlannerLogServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.batch.planner.service.BatchPlannerLogServiceUtil</code> service
+ * <code>BatchPlannerLogServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,69 @@ package com.liferay.batch.planner.service.http;
  */
 @Deprecated
 public class BatchPlannerLogServiceSoap {
+
+	public static com.liferay.batch.planner.model.BatchPlannerLogSoap
+			addBatchPlannerLog(
+				long batchPlannerPlanId, String batchEngineExportERC,
+				String batchEngineImportERC, String dispatchTriggerERC,
+				int size, int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerLog returnValue =
+				BatchPlannerLogServiceUtil.addBatchPlannerLog(
+					batchPlannerPlanId, batchEngineExportERC,
+					batchEngineImportERC, dispatchTriggerERC, size, status);
+
+			return com.liferay.batch.planner.model.BatchPlannerLogSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerLogSoap
+			deleteBatchPlannerLog(long batchPlannerLogId)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerLog returnValue =
+				BatchPlannerLogServiceUtil.deleteBatchPlannerLog(
+					batchPlannerLogId);
+
+			return com.liferay.batch.planner.model.BatchPlannerLogSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerLogSoap[]
+			getBatchPlannerLogs(long batchPlannerPlanId)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+				returnValue = BatchPlannerLogServiceUtil.getBatchPlannerLogs(
+					batchPlannerPlanId);
+
+			return com.liferay.batch.planner.model.BatchPlannerLogSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BatchPlannerLogServiceSoap.class);
+
 }

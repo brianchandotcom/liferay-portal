@@ -76,6 +76,12 @@ public interface BatchPlannerMappingLocalService
 	public BatchPlannerMapping addBatchPlannerMapping(
 		BatchPlannerMapping batchPlannerMapping);
 
+	public BatchPlannerMapping addBatchPlannerMapping(
+			long userId, long batchPlannerPlanId, String externalFieldName,
+			String externalFieldType, String internalFieldName,
+			String internalFieldType, String script)
+		throws PortalException;
+
 	/**
 	 * Creates a new batch planner mapping with the primary key. Does not add the batch planner mapping to the database.
 	 *
@@ -120,6 +126,11 @@ public interface BatchPlannerMappingLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public BatchPlannerMapping deleteBatchPlannerMapping(
 			long batchPlannerMappingId)
+		throws PortalException;
+
+	public BatchPlannerMapping deleteBatchPlannerMapping(
+			long batchPlannerPlanId, String externalFieldName,
+			String internalName)
 		throws PortalException;
 
 	/**
@@ -234,6 +245,10 @@ public interface BatchPlannerMappingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerMapping> getBatchPlannerMappings(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerMapping> getBatchPlannerMappings(
+		long batchPlannerPlanId);
 
 	/**
 	 * Returns the number of batch planner mappings.

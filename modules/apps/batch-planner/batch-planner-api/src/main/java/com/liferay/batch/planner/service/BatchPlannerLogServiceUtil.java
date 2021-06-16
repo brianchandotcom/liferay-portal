@@ -14,6 +14,11 @@
 
 package com.liferay.batch.planner.service;
 
+import com.liferay.batch.planner.model.BatchPlannerLog;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for BatchPlannerLog. This utility wraps
  * <code>com.liferay.batch.planner.service.impl.BatchPlannerLogServiceImpl</code> and is an
@@ -33,13 +38,36 @@ public class BatchPlannerLogServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerLogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static BatchPlannerLog addBatchPlannerLog(
+			long batchPlannerPlanId, String batchEngineExportERC,
+			String batchEngineImportERC, String dispatchTriggerERC, int size,
+			int status)
+		throws PortalException {
+
+		return getService().addBatchPlannerLog(
+			batchPlannerPlanId, batchEngineExportERC, batchEngineImportERC,
+			dispatchTriggerERC, size, status);
+	}
+
+	public static BatchPlannerLog deleteBatchPlannerLog(long batchPlannerLogId)
+		throws PortalException {
+
+		return getService().deleteBatchPlannerLog(batchPlannerLogId);
+	}
+
+	public static List<BatchPlannerLog> getBatchPlannerLogs(
+			long batchPlannerPlanId)
+		throws PortalException {
+
+		return getService().getBatchPlannerLogs(batchPlannerPlanId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

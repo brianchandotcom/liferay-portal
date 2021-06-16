@@ -61,6 +61,17 @@ public class BatchPlannerMappingLocalServiceUtil {
 		return getService().addBatchPlannerMapping(batchPlannerMapping);
 	}
 
+	public static BatchPlannerMapping addBatchPlannerMapping(
+			long userId, long batchPlannerPlanId, String externalFieldName,
+			String externalFieldType, String internalFieldName,
+			String internalFieldType, String script)
+		throws PortalException {
+
+		return getService().addBatchPlannerMapping(
+			userId, batchPlannerPlanId, externalFieldName, externalFieldType,
+			internalFieldName, internalFieldType, script);
+	}
+
 	/**
 	 * Creates a new batch planner mapping with the primary key. Does not add the batch planner mapping to the database.
 	 *
@@ -115,6 +126,15 @@ public class BatchPlannerMappingLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteBatchPlannerMapping(batchPlannerMappingId);
+	}
+
+	public static BatchPlannerMapping deleteBatchPlannerMapping(
+			long batchPlannerPlanId, String externalFieldName,
+			String internalName)
+		throws PortalException {
+
+		return getService().deleteBatchPlannerMapping(
+			batchPlannerPlanId, externalFieldName, internalName);
 	}
 
 	/**
@@ -253,6 +273,12 @@ public class BatchPlannerMappingLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getBatchPlannerMappings(start, end);
+	}
+
+	public static List<BatchPlannerMapping> getBatchPlannerMappings(
+		long batchPlannerPlanId) {
+
+		return getService().getBatchPlannerMappings(batchPlannerPlanId);
 	}
 
 	/**

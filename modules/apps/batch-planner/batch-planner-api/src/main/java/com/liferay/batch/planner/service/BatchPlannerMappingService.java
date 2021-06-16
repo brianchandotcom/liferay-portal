@@ -14,13 +14,17 @@
 
 package com.liferay.batch.planner.service;
 
+import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +51,21 @@ public interface BatchPlannerMappingService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerMappingServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the batch planner mapping remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BatchPlannerMappingServiceUtil} if injection and service tracking are not available.
 	 */
+	public BatchPlannerMapping addBatchPlannerMapping(
+			long batchPlannerPlanId, String externalFieldName,
+			String externalFieldType, String internalFieldName,
+			String internalFieldType, String script)
+		throws PortalException;
+
+	public BatchPlannerMapping deleteBatchPlannerMapping(
+			long batchPlannerPlanId, String externalFieldName,
+			String internalFieldName)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerMapping> getBatchPlannerMappings(
+			long batchPlannerPlanId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

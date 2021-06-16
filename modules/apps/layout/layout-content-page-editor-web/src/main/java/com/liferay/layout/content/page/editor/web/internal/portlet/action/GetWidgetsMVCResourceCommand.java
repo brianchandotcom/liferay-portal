@@ -16,6 +16,9 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,17 +32,15 @@ import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletItemLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,14 +51,9 @@ import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
@@ -95,14 +91,14 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, _getWidgets());
+			resourceRequest, resourceResponse, _getWidgetsJSONArray());
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
 		for (String portletId :
 				PortletCategoryUtil.getFirstChildPortletIds(portletCategory)) {
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				_themeDisplay.getCompanyId(), portletId);
 
 			if (portlet == null) {
@@ -132,130 +128,144 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		return LanguageUtil.get(_httpServletRequest, portletCategory.getName());
 	}
 
-	private List<Map<String, Object>> _getPortletItems(Portlet portlet) {
+	private JSONArray _getPortletItemsJSONArray(Portlet portlet) {
 		List<PortletItem> portletItems =
-			PortletItemLocalServiceUtil.getPortletItems(
+			_portletItemLocalService.getPortletItems(
 				_themeDisplay.getScopeGroupId(), portlet.getPortletId(),
 				PortletPreferences.class.getName());
 
 		if (ListUtil.isEmpty(portletItems)) {
-			return Collections.emptyList();
+			return JSONFactoryUtil.createJSONArray();
 		}
 
-		Stream<PortletItem> stream = portletItems.stream();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		return stream.map(
-			portletItem -> HashMapBuilder.<String, Object>put(
-				"instanceable", portlet.isInstanceable()
-			).put(
-				"portletId", portlet.getPortletId()
-			).put(
-				"portletItemId", portletItem.getPortletItemId()
-			).put(
-				"title", HtmlUtil.escape(portletItem.getName())
-			).put(
-				"used", _isUsed(portlet)
-			).build()
-		).collect(
-			Collectors.toList()
-		);
+		for (PortletItem portletItem : portletItems) {
+			jsonArray.put(
+				JSONUtil.put(
+					"instanceable", portlet.isInstanceable()
+				).put(
+					"portletId", portlet.getPortletId()
+				).put(
+					"portletItemId", portletItem.getPortletItemId()
+				).put(
+					"title", HtmlUtil.escape(portletItem.getName())
+				).put(
+					"used", _isUsed(portlet)
+				));
+		}
+
+		return jsonArray;
 	}
 
-	private List<Map<String, Object>> _getPortlets(
-		PortletCategory portletCategory) {
+	private List<Portlet> _getPortlets(PortletCategory portletCategory) {
+		List<Portlet> portlets = new ArrayList<>();
+
+		for (String portletId : portletCategory.getPortletIds()) {
+			Portlet portlet = _portletLocalService.getPortletById(
+				_themeDisplay.getCompanyId(), portletId);
+
+			if (portlet == null) {
+				continue;
+			}
+
+			if (ArrayUtil.contains(
+					_UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName())) {
+
+				continue;
+			}
+
+			try {
+				if (PortletPermissionUtil.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getLayout(), portlet,
+						ActionKeys.ADD_TO_PAGE)) {
+
+					portlets.add(portlet);
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to check portlet permissions for " +
+						portlet.getPortletId(),
+					portalException);
+			}
+		}
+
+		return portlets;
+	}
+
+	private JSONArray _getPortletsJSONArray(PortletCategory portletCategory) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		HttpSession httpSession = _httpServletRequest.getSession();
 
 		ServletContext servletContext = httpSession.getServletContext();
 
-		Set<String> portletIds = portletCategory.getPortletIds();
+		List<Portlet> portlets = _getPortlets(portletCategory);
 
-		Stream<String> stream = portletIds.stream();
-
-		return stream.map(
-			portletId -> PortletLocalServiceUtil.getPortletById(
-				_themeDisplay.getCompanyId(), portletId)
-		).filter(
-			portlet -> {
-				if (portlet == null) {
-					return false;
-				}
-
-				if (ArrayUtil.contains(
-						_UNSUPPORTED_PORTLETS_NAMES,
-						portlet.getPortletName())) {
-
-					return false;
-				}
-
-				try {
-					return PortletPermissionUtil.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getLayout(), portlet,
-						ActionKeys.ADD_TO_PAGE);
-				}
-				catch (PortalException portalException) {
-					_log.error(
-						"Unable to check portlet permissions for " +
-							portlet.getPortletId(),
-						portalException);
-
-					return false;
-				}
-			}
-		).sorted(
+		portlets = ListUtil.sort(
+			portlets,
 			new PortletTitleComparator(
-				servletContext, _themeDisplay.getLocale())
-		).map(
-			portlet -> HashMapBuilder.<String, Object>put(
-				"instanceable", portlet.isInstanceable()
-			).put(
-				"portletId", portlet.getPortletId()
-			).put(
-				"portletItems", _getPortletItems(portlet)
-			).put(
-				"title",
-				PortalUtil.getPortletTitle(
-					portlet, servletContext, _themeDisplay.getLocale())
-			).put(
-				"used", _isUsed(portlet)
-			).build()
-		).collect(
-			Collectors.toList()
-		);
+				servletContext, _themeDisplay.getLocale()));
+
+		for (Portlet portlet : portlets) {
+			jsonArray.put(
+				JSONUtil.put(
+					"instanceable", portlet.isInstanceable()
+				).put(
+					"portletId", portlet.getPortletId()
+				).put(
+					"portletItems", _getPortletItemsJSONArray(portlet)
+				).put(
+					"title",
+					_portal.getPortletTitle(
+						portlet, servletContext, _themeDisplay.getLocale())
+				).put(
+					"used", _isUsed(portlet)
+				));
+		}
+
+		return jsonArray;
 	}
 
-	private List<Map<String, Object>> _getWidgetCategories(
+	private JSONArray _getWidgetCategoriesJSONArray(
 		PortletCategory portletCategory) {
 
-		Collection<PortletCategory> portletCategories =
-			portletCategory.getCategories();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		Stream<PortletCategory> stream = portletCategories.stream();
+		List<PortletCategory> portletCategories = ListUtil.fromCollection(
+			portletCategory.getCategories());
 
-		return stream.sorted(
-			new PortletCategoryComparator(_themeDisplay.getLocale())
-		).filter(
-			currentPortletCategory -> !currentPortletCategory.isHidden()
-		).map(
-			currentPortletCategory -> HashMapBuilder.<String, Object>put(
-				"categories", _getWidgetCategories(currentPortletCategory)
-			).put(
-				"path",
-				StringUtil.replace(
-					currentPortletCategory.getPath(), new String[] {"/", "."},
-					new String[] {"-", "-"})
-			).put(
-				"portlets", _getPortlets(currentPortletCategory)
-			).put(
-				"title", _getPortletCategoryTitle(currentPortletCategory)
-			).build()
-		).collect(
-			Collectors.toList()
-		);
+		portletCategories = ListUtil.sort(
+			portletCategories,
+			new PortletCategoryComparator(_themeDisplay.getLocale()));
+
+		for (PortletCategory currentPortletCategory : portletCategories) {
+			if (currentPortletCategory.isHidden()) {
+				continue;
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"categories",
+					_getWidgetCategoriesJSONArray(currentPortletCategory)
+				).put(
+					"path",
+					StringUtil.replace(
+						currentPortletCategory.getPath(),
+						new String[] {"/", "."}, new String[] {"-", "-"})
+				).put(
+					"portlets", _getPortletsJSONArray(currentPortletCategory)
+				).put(
+					"title", _getPortletCategoryTitle(currentPortletCategory)
+				));
+		}
+
+		return jsonArray;
 	}
 
-	private List<Map<String, Object>> _getWidgets() throws Exception {
+	private JSONArray _getWidgetsJSONArray() throws Exception {
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 			_themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
@@ -264,7 +274,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			_themeDisplay.getLayout(), portletCategory,
 			_themeDisplay.getLayoutTypePortlet());
 
-		return _getWidgetCategories(portletCategory);
+		return _getWidgetCategoriesJSONArray(portletCategory);
 	}
 
 	private boolean _isUsed(Portlet portlet) {
@@ -272,10 +282,9 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			return false;
 		}
 
-		long count =
-			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _themeDisplay.getPlid(),
-				portlet.getPortletId());
+		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _themeDisplay.getPlid(),
+			portlet.getPortletId());
 
 		if (count > 0) {
 			return true;
@@ -295,6 +304,15 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletItemLocalService _portletItemLocalService;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	private ThemeDisplay _themeDisplay;
 

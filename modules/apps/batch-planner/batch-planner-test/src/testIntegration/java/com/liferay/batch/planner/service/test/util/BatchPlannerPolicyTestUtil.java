@@ -39,7 +39,7 @@ public class BatchPlannerPolicyTestUtil {
 		}
 
 		BatchPlannerPlan batchPlannerPlan =
-			BatchPlannerPlanTestUtil.addBatchPlannerPlan(300);
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(true, 300);
 
 		List<BatchPlannerPolicy> batchPlannerPolicies = new ArrayList<>();
 
@@ -55,11 +55,6 @@ public class BatchPlannerPolicyTestUtil {
 		}
 
 		return batchPlannerPolicies;
-	}
-
-	public static BatchPlannerPolicy randomBatchPlannerPolicy(int nameSalt) {
-		return randomBatchPlannerPolicy(
-			_randomName(nameSalt), _randomName(nameSalt));
 	}
 
 	public static BatchPlannerPolicy randomBatchPlannerPolicy(
@@ -81,16 +76,6 @@ public class BatchPlannerPolicyTestUtil {
 		batchPlannerPolicy.setValue(value);
 
 		return batchPlannerPolicy;
-	}
-
-	private static String _randomName(int nameSalt) {
-		if (nameSalt < 0) {
-			return null;
-		}
-
-		return String.format(
-			"TEST-PLAN-%06d-%s", nameSalt % 999999,
-			RandomTestUtil.randomString(RandomTestUtil.randomInt(20, 57)));
 	}
 
 }

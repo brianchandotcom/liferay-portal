@@ -31,7 +31,7 @@ public class BatchPlannerLogTestUtil {
 		throws PortalException {
 
 		BatchPlannerPlan batchPlannerPlan =
-			BatchPlannerPlanTestUtil.addBatchPlannerPlan(300);
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(export, 300);
 
 		BatchPlannerLog batchPlannerLog = _randomBatchPlannerLog(
 			export, status);

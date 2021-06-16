@@ -15,16 +15,21 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.planner.constants.BatchPlannerActionKeys;
+import com.liferay.batch.planner.constants.BatchPlannerConstants;
 import com.liferay.batch.planner.exception.NoSuchPlanException;
+import com.liferay.batch.planner.exception.RequiredBatchPlannerMappingFieldException;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.test.util.BatchPlannerMappingTestUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -55,12 +60,42 @@ public class BatchPlannerMappingServiceTest {
 
 	@Test
 	public void testBatchPlannerMappingExceptions() throws Exception {
-		/*
-		- dodaj service implementacije
-		- dodaj ovaj test
-		- vidi je li trebas sa required anotirati portlet model hints
-		- vidi je li trebas uvesti exceptione za Type polja (i validatore)
-		 */
+		Class<?> exceptionClass = Exception.class;
+
+		try {
+			BatchPlannerMappingTestUtil.addBatchPlannerMapping(
+				"external_field_1", null);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add batch planner mapping with no required field",
+			RequiredBatchPlannerMappingFieldException.class, exceptionClass);
+
+		try {
+			BatchPlannerMappingTestUtil.addBatchPlannerMapping(
+				null, "internal_field_1");
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add batch planner mapping with no required field",
+			RequiredBatchPlannerMappingFieldException.class, exceptionClass);
+
+		try {
+			BatchPlannerMappingTestUtil.addBatchPlannerMapping(null, null);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add batch planner mapping with no required field",
+			RequiredBatchPlannerMappingFieldException.class, exceptionClass);
 	}
 
 	@Test
@@ -87,6 +122,12 @@ public class BatchPlannerMappingServiceTest {
 			batchPlannerPlanBatchPlannerMappings.toString(),
 			batchPlannerMappingsSize1,
 			batchPlannerPlanBatchPlannerMappings.size());
+
+		RoleTestUtil.addResourcePermission(
+			"User", BatchPlannerConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			BatchPlannerActionKeys.ADD_BATCH_PLANNER_PLAN);
 
 		User user2 = UserTestUtil.addUser(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));

@@ -15,13 +15,18 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.planner.constants.BatchPlannerActionKeys;
+import com.liferay.batch.planner.constants.BatchPlannerConstants;
 import com.liferay.batch.planner.exception.NoSuchPlanException;
+import com.liferay.batch.planner.exception.RequiredBatchPlannerLogFieldException;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerLogService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.test.util.BatchPlannerLogTestUtil;
+import com.liferay.batch.planner.service.test.util.BatchPlannerPlanTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -29,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -60,12 +66,66 @@ public class BatchPlannerLogServiceTest {
 
 	@Test
 	public void testBatchPlannerLogExceptions() throws Exception {
-		/*
-		- dodaj service implementacije
-		- dodaj ovaj test
-		- vidi je li trebas sa required anotirati portlet model hints
-		- vidi je li trebas uvesti exceptione za Type polja (i validatore)
-		 */
+		Class<?> exceptionClass = Exception.class;
+
+		BatchPlannerPlan batchPlannerPlan =
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(true, 300);
+
+		try {
+			_batchPlannerLogService.addBatchPlannerLog(
+				batchPlannerPlan.getBatchPlannerPlanId(), null, null, null, 0,
+				0);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add batch planner mapping with no required field",
+			RequiredBatchPlannerLogFieldException.class, exceptionClass);
+
+		try {
+			_batchPlannerLogService.addBatchPlannerLog(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				"BATCH-ENGINE-EXPORT-TASK-ERC", "BATCH-ENGINE-IMPORT-TASK-ERC",
+				null, 0, 0);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add batch planner log with wrong required field",
+			RequiredBatchPlannerLogFieldException.class, exceptionClass);
+
+		batchPlannerPlan = BatchPlannerPlanTestUtil.addBatchPlannerPlan(
+			false, 300);
+
+		try {
+			_batchPlannerLogService.addBatchPlannerLog(
+				batchPlannerPlan.getBatchPlannerPlanId(), null, null, null, 0,
+				0);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add batch planner mapping with no required field",
+			RequiredBatchPlannerLogFieldException.class, exceptionClass);
+
+		try {
+			_batchPlannerLogService.addBatchPlannerLog(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				"BATCH-ENGINE-EXPORT-TASK-ERC", null, null, 0, 0);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add batch planner log with wrong required field",
+			RequiredBatchPlannerLogFieldException.class, exceptionClass);
 	}
 
 	@Test
@@ -78,6 +138,12 @@ public class BatchPlannerLogServiceTest {
 
 		Assert.assertEquals(
 			TestPropsValues.getCompanyId(), batchPlannerLog1.getCompanyId());
+
+		RoleTestUtil.addResourcePermission(
+			"User", BatchPlannerConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			BatchPlannerActionKeys.ADD_BATCH_PLANNER_PLAN);
 
 		User user2 = UserTestUtil.addUser(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
@@ -156,7 +222,9 @@ public class BatchPlannerLogServiceTest {
 		Assert.assertEquals(NoSuchPlanException.class, exceptionClass);
 	}
 
-	private void _assertBatchPlannerLogFields(BatchPlannerLog batchPlannerLog) {
+	private void _assertBatchPlannerLogFields(BatchPlannerLog batchPlannerLog)
+		throws Exception {
+
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.getBatchPlannerPlan(
 				batchPlannerLog.getBatchPlannerPlanId());

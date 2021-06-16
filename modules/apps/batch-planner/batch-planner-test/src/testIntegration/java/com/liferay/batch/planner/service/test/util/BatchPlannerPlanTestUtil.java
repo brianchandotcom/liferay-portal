@@ -27,22 +27,26 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
  */
 public class BatchPlannerPlanTestUtil {
 
-	public static BatchPlannerPlan addBatchPlannerPlan(int nameSeed)
+	public static BatchPlannerPlan addBatchPlannerPlan(
+			boolean export, int nameSeed)
 		throws PortalException {
 
 		BatchPlannerPlan batchPlannerPlan = randomBatchPlannerPlan(nameSeed);
 
 		return BatchPlannerPlanServiceUtil.addBatchPlannerPlan(
-			batchPlannerPlan.getExternalType(), batchPlannerPlan.getName());
+			export, batchPlannerPlan.getExternalType(),
+			batchPlannerPlan.getName());
 	}
 
-	public static BatchPlannerPlan addBatchPlannerPlan(String name)
+	public static BatchPlannerPlan addBatchPlannerPlan(
+			boolean export, String name)
 		throws PortalException {
 
 		BatchPlannerPlan batchPlannerPlan = randomBatchPlannerPlan(name);
 
 		return BatchPlannerPlanServiceUtil.addBatchPlannerPlan(
-			batchPlannerPlan.getExternalType(), batchPlannerPlan.getName());
+			export, batchPlannerPlan.getExternalType(),
+			batchPlannerPlan.getName());
 	}
 
 	public static BatchPlannerPlan randomBatchPlannerPlan(int nameSalt) {

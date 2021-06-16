@@ -41,11 +41,11 @@ public class BatchPlannerMappingTestUtil {
 		}
 
 		BatchPlannerPlan batchPlannerPlan =
-			BatchPlannerPlanTestUtil.addBatchPlannerPlan(300);
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(true, 300);
 
 		List<BatchPlannerMapping> batchPlannerMappings = new ArrayList<>();
 
-		for (int i = 0; i < mappings.length;) {
+		for (int i = 0; i < mappings.length; i = i + 2) {
 			BatchPlannerMapping batchPlannerMapping =
 				_randomBatchPlannerMapping(mappings[i], mappings[i + 1]);
 
@@ -63,7 +63,7 @@ public class BatchPlannerMappingTestUtil {
 	}
 
 	private static BatchPlannerMapping _randomBatchPlannerMapping(
-		String externalFieldName, String internaFieldName) {
+		String externalFieldName, String internalFieldName) {
 
 		BatchPlannerMappingPersistence batchPlannerMappingPersistence =
 			BatchPlannerMappingUtil.getPersistence();
@@ -77,7 +77,7 @@ public class BatchPlannerMappingTestUtil {
 
 		batchPlannerMapping.setExternalFieldType(fieldType);
 
-		batchPlannerMapping.setInternalFieldName(internaFieldName);
+		batchPlannerMapping.setInternalFieldName(internalFieldName);
 		batchPlannerMapping.setInternalFieldType(fieldType);
 
 		return batchPlannerMapping;

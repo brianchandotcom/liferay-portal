@@ -60,7 +60,7 @@ public class BatchPlannerPlanServiceTest {
 		Class<?> exceptionClass = Exception.class;
 
 		try {
-			BatchPlannerPlanTestUtil.addBatchPlannerPlan(null);
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(true, null);
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -74,7 +74,7 @@ public class BatchPlannerPlanServiceTest {
 			exceptionClass = Exception.class;
 
 			BatchPlannerPlanTestUtil.addBatchPlannerPlan(
-				RandomTestUtil.randomString(80));
+				true, RandomTestUtil.randomString(80));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -85,14 +85,14 @@ public class BatchPlannerPlanServiceTest {
 			BatchPlannerPlanNameException.class, exceptionClass);
 
 		BatchPlannerPlan batchPlannerPlan1 =
-			BatchPlannerPlanTestUtil.addBatchPlannerPlan(300);
+			BatchPlannerPlanTestUtil.addBatchPlannerPlan(true, 300);
 
 		Assert.assertEquals(
 			TestPropsValues.getCompanyId(), batchPlannerPlan1.getCompanyId());
 
 		try {
 			BatchPlannerPlanTestUtil.addBatchPlannerPlan(
-				batchPlannerPlan1.getName());
+				true, batchPlannerPlan1.getName());
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -116,7 +116,7 @@ public class BatchPlannerPlanServiceTest {
 
 		BatchPlannerPlan batchPlannerPlan2 =
 			BatchPlannerPlanTestUtil.addBatchPlannerPlan(
-				batchPlannerPlan1.getName());
+				true, batchPlannerPlan1.getName());
 
 		Assert.assertEquals(
 			user2.getCompanyId(), batchPlannerPlan2.getCompanyId());

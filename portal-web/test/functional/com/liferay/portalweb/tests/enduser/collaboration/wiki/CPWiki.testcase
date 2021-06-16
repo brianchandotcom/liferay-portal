@@ -24,36 +24,45 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-89884. It ensures that a DL image can be added to a wiki page via URL."
 	@priority = "5"
-	@refactorneeded
-	test AddFrontPage {
-		property portal.acceptance = "true";
+	@refactordone
+	test CanAddDMImageToWikiPageViaURL {
+		property test.name.skip.portal.instance = "CPWiki#CanAddDMImageToWikiPageViaURL";
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
+		WikiPage.addCP(
+			contentImageName = "Document_2.jpg",
+			groupName = "Guest",
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
+			siteURLKey = "guest",
+			wikiAdmin = "true",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
 
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
 
-		WikiPage.addFrontPageCP(
-			wikiFrontPageContent = "Wiki FrontPage Content",
-			wikiNodeName = "Main");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
-
-		WikiPage.viewFrontPageCP(
-			portletName = "Wiki",
-			wikiFrontPageContent = "Wiki FrontPage Content",
-			wikiNodeName = "Main");
+		WikiPage.viewCP(
+			contentImageName = "Document_2.jpg",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
 	}
 
+	@description = "This ensures that a wiki node can be added."
 	@priority = "4"
-	@refactorneeded
-	test AddNode {
+	@refactordone
+	@uitest
+	test CanAddNode {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
@@ -65,18 +74,14 @@ definition {
 			wikiNodeName = "Wiki Node Name");
 	}
 
+	@description = "This ensures that a wiki page can be added to a wiki node."
 	@priority = "5"
-	@refactorneeded
-	test AddPageToNode {
+	@refactordone
+	@uitest
+	test CanAddPageToNode {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
-		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
-
-		WikiNavigator.gotoAllPagesCP();
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
 		WikiPage.addCP(
 			wikiPageContent = "Wiki Page Content",
@@ -86,7 +91,7 @@ definition {
 
 		WikiNode.viewCP(
 			numberOfWikiPages = "2",
-			wikiNodeName = "Wiki Node Name");
+			wikiNodeName = "Main");
 
 		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
 
@@ -95,133 +100,25 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
-	@description = "This test covers LPS-89884. It ensures that a DL image can be added to a wiki page via URL."
-	@priority = "5"
-	@refactorneeded
-	test AddPageWithDMImageViaURL {
-		property test.name.skip.portal.instance = "CPWiki#AddPageWithDMImageViaURL";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		LexiconEntry.gotoAdd();
-
-		WikiEntry.addPageTitle(wikiPageTitle = "New Wiki Page Title");
-
-		ItemSelector.gotoItemSelectorViaCKEditor();
-
-		ItemSelector.addImageFromURL(
-			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
-			navTab = "URL",
-			wikiAdmin = "true");
-
-		CKEditor.viewEntryContentImage(contentImageName = "Document_2.jpg");
-
-		PortletEntry.publish();
-
-		WikiNavigator.gotoCP(wikiPageTitle = "New Wiki Page Title");
-
-		AssertElementPresent(
-			key_contentImageName = "Document_2.jpg",
-			locator1 = "Wiki#CONTENT_IMAGE_NAME");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test CKEditorSmoke {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPWiki#CKEditorSmoke";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Wiki",
-			configurationName = "Wiki Service",
-			configurationScope = "Site Scope");
-
-		PortalSettings.configureWikiService(
-			counter = "12",
-			editor = "ckeditor_creole");
-
-		PortalSettings.configureWikiService(
-			counter = "13",
-			editor = "creole");
-
-		PortletEntry.save();
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		LexiconEntry.gotoAdd();
-
-		WikiEntry.addPageTitle(wikiPageTitle = "CKEditor Wiki Page Title");
-
-		CKEditor.addContent(content = "CKEditor Wiki Page Content");
-
-		Button.clickPublish();
-
-		Alert.viewSuccessMessage();
-
-		WikiNavigator.gotoCP(wikiPageTitle = "CKEditor Wiki Page Title");
-
-		WikiPage.viewCP(
-			wikiPageContent = "CKEditor Wiki Page Content",
-			wikiPageTitle = "CKEditor Wiki Page Title");
-	}
-
+	@description = "This ensures that the wiki page versions can be compared."
 	@priority = "4"
-	@refactorneeded
-	test ComparePageVersions {
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoAllPagesCP();
-
-		WikiPage.addCP(
+	@refactordone
+	test CanComparePageVersions {
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoAllPagesCP();
+			wikiPageName = "Wiki Page Title");
 
 		WikiPage.editPageCP(
+			groupName = "Guest",
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageContentEdit = "Wiki Page Content Edit",
 			wikiPageTitle = "Wiki Page Title");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
-
-		WikiPage.viewCP(
-			wikiPageContent = "Wiki Page Content Edit",
-			wikiPageTitle = "Wiki Page Title");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoAllPagesCP();
-
 		WikiPage.compareVersionsCP(
+			siteURLKey = "guest",
 			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page Title",
 			wikiPageVersionDiff = "Edit",
@@ -229,90 +126,114 @@ definition {
 			wikiPageVersionOld = "1.0");
 	}
 
+	@description = "This ensures that the front page can be removed."
 	@priority = "5"
-	@refactorneeded
-	test DeleteFrontPage {
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+	@refactordone
+	test CanDeleteFrontPage {
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage");
 
 		WikiPage.addFrontPageCP(
 			wikiFrontPageContent = "Wiki FrontPage Content",
 			wikiNodeName = "Main");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
 
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
+		WikiPage.moveToRecycleBinCP(wikiPageTitle = "FrontPage");
 
-		WikiPage.moveToRecycleBinCP(
-			wikiNodeName = "Main",
-			wikiPageTitle = "FrontPage");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.deleteCP(
 			assetName = "FrontPage",
 			assetType = "Wiki Page");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
 		RecycleBin.viewDefaultCP(assetName = "FrontPage");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoCP(wikiPageTitle = "FrontPage");
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage");
 
 		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
 	}
 
+	@description = "This ensures that the wiki node can be deleted."
 	@priority = "5"
-	@refactorneeded
-	test DeleteNode {
+	@refactordone
+	test CanDeleteNode {
 		property portal.acceptance = "true";
 
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
-		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+		JSONWiki.addWikiNode(
+			groupName = "Guest",
+			wikiNodeDescription = "Wiki Node Description",
+			wikiNodeName = "Wiki Node Name");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.deleteCP(wikiNodeName = "Wiki Node Name");
 
-		Navigator.openURL();
+		WikiNode.viewNoCP(wikiNodeName = "Wiki Node Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.viewCP(
 			assetName = "Wiki Node Name",
 			assetType = "Wiki Node",
 			deleteUser = "Test Test");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		RecycleBin.deleteCP(
+			assetName = "Wiki Node Name",
+			assetType = "Wiki Node");
 
-		WikiNode.viewMainNode(wikiNodeName = "Main");
+		RecycleBin.viewDefaultCP(assetName = "Wiki Node Name");
 	}
 
+	@description = "This ensures that the default front page can be edited."
 	@priority = "5"
-	@refactorneeded
-	test EditNode {
+	@refactordone
+	test CanEditDefaultFrontPage {
+		property portal.acceptance = "true";
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main");
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage");
+
+		WikiPage.viewFrontPageCP(
+			portletName = "Wiki",
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiNodeName = "Main");
+	}
+
+	@description = "This ensures that the wiki node can be edited."
+	@priority = "5"
+	@refactordone
+	test CanEditNode {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		JSONWiki.addWikiNode(
+			groupName = "Guest",
+			wikiNodeDescription = "Wiki Node Description",
+			wikiNodeName = "Wiki Node Name");
 
-		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.editCP(
 			wikiNodeDescription = "Wiki Node Description",
@@ -323,28 +244,68 @@ definition {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "0",
+			numberOfWikiPages = "1",
 			wikiNodeName = "Wiki Node Name Edit");
 	}
 
+	@description = "This ensures that a wiki page can be moved to a new parent page."
 	@priority = "5"
-	@refactorneeded
-	test ImportLarAndViewPages {
+	@refactordone
+	test CanMovePageToNewParentPage {
+		for (var num : list "1,2") {
+			JSONWiki.addWikiPage(
+				groupName = "Guest",
+				wikiNodeName = "Main",
+				wikiPageContent = "Wiki Page Content ${num}",
+				wikiPageName = "Wiki Page Title ${num}");
+		}
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		WikiPage.changeParentWikipageCP(
+			newParentWikiPageTitle = "Wiki Page Title 1",
+			wikiPageTitle = "Wiki Page Title 2");
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		for (var num : list "1,2") {
+			WikiTable.viewEntry(
+				entryStatus = "APPROVED",
+				wikiPageTitle = "Wiki Page Title ${num}");
+		}
+
+		WikiPage.viewChildPageCP(
+			wikiChildPageContent = "Wiki Page Content 2",
+			wikiChildPageTitle = "Wiki Page Title 2",
+			wikiPageContent = "Wiki Page Content 1",
+			wikiPageTitle = "Wiki Page Title 1");
+	}
+
+	@description = "This ensures that the imported pages can be viewed."
+	@priority = "5"
+	@refactordone
+	test CanViewImportedPages {
 		property testray.component.names = "Training";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Wiki");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Wiki",
+			widgetName = "Wiki");
 
-		SitePages.addPublicPage(pageName = "Wiki");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 		LAR.importPortlet(
 			initializeLiferayEvent = "true",
@@ -354,8 +315,6 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Wiki",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Wiki");
 
 		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
 
@@ -372,140 +331,24 @@ definition {
 			wikiPageTitle = "Dr. Asmund Grey");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test MovePageUnderNewParentPage {
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiPage.addCP(
-			wikiPageContent = "Wiki Page Content 1",
-			wikiPageTitle = "Wiki Page 1");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiPage.addCP(
-			wikiPageContent = "Wiki Page Content 2",
-			wikiPageTitle = "Wiki Page 2");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoEntryMoveViaTable(wikiPageTitle = "Wiki Page 2");
-
-		WikiNavigator.gotoChangeParent();
-
-		WikiPage.selectNewParent(wikiParentName = "Wiki Page 1");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiTable.viewEntry(
-			draftStatus = "APPROVED",
-			wikiPageTitle = "Wiki Page 1");
-
-		WikiTable.viewEntry(
-			draftStatus = "APPROVED",
-			wikiPageTitle = "Wiki Page 2");
-
-		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1");
-
-		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
-
-		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki Page 2");
-
-		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 2");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test RestoreDeletedPage {
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiPage.addCP(
-			wikiPageContent = "Wiki Page Content 1",
-			wikiPageTitle = "Wiki Page 1 Original");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiTable.deleteEntry(wikiPageTitle = "Wiki Page 1 Original");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiPage.addCP(
-			wikiPageContent = "Wiki Page Content 1",
-			wikiPageTitle = "Wiki Page 1 Original");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
-		RecycleBin.viewCP(
-			assetName = "Wiki Page 1 Original",
-			assetType = "Wiki Page",
-			deleteUser = "Test Test");
-
-		RecycleBin.restoreRenameCP(
-			assetName = "Wiki Page 1 Original",
-			newName = "Wiki Page 1 Restored");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiTable.viewEntry(
-			draftStatus = "APPROVED",
-			wikiPageTitle = "Wiki Page 1 Restored");
-
-		WikiTable.viewEntry(
-			draftStatus = "APPROVED",
-			wikiPageTitle = "Wiki Page 1 Original");
-
-		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page 1 Restored");
-
-		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content 1");
-	}
-
+	@description = "This ensures that the wiki page RSS can be viewed."
 	@ignore = "true"
 	@priority = "4"
-	@refactorneeded
-	test ViewPageRSS {
-		Navigator.openURL();
+	@refactordone
+	test CanViewPageRSS {
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		// This test will re-work after POSHI-6
 
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiPage.addCP(
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page RSS");
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
 			wikiPageTitle = "Wiki Page RSS");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Main");
-
-		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "Wiki Page RSS");
-
-		WikiEntry.viewPageContentBody(wikiPageContent = "Wiki Page Content");
 
 		WikiPage.viewRSS(
 			site = "Guest",
@@ -513,6 +356,105 @@ definition {
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page RSS");
+	}
+
+	@description = "This ensures that the deleted front page can be restored."
+	@priority = "5"
+	@refactordone
+	test CanViewRestoredFrontPage {
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		JSONWiki.updateWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
+
+		JSONWiki.movePageToTrash(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageName = "FrontPage");
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage");
+
+		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.viewCP(
+			assetName = "FrontPage",
+			assetType = "Wiki Page",
+			deleteUser = "Test Test");
+
+		RecycleBin.restoreOverwriteCP(assetName = "FrontPage");
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage");
+
+		WikiPage.viewFrontPageCP(
+			wikiFrontPageContent = "Wiki FrontPage Content",
+			wikiFrontPageTitle = "FrontPage",
+			wikiNodeName = "Main");
+	}
+
+	@description = "This ensures that the restored and rename wiki page can be viewed."
+	@priority = "5"
+	@refactordone
+	test CanViewRestoredWikiPage {
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title1");
+
+		JSONWiki.movePageToTrash(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageName = "Wiki Page Title1");
+
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title1");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.viewCP(
+			assetName = "Wiki Page Title1",
+			assetType = "Wiki Page",
+			deleteUser = "Test Test");
+
+		RecycleBin.restoreRenameCP(
+			assetName = "Wiki Page Title1",
+			newName = "Wiki Page Title2");
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		for (var num : list "1,2") {
+			WikiTable.viewEntry(
+				entryStatus = "APPROVED",
+				wikiPageTitle = "Wiki Page Title${num}");
+		}
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title2");
+
+		WikiPage.viewCP(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title2");
 	}
 
 }

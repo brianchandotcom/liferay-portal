@@ -23,7 +23,8 @@ definition {
 	}
 
 	@priority = "4"
-	test ChangeBlogsRatingType {
+	@refactordone
+	test CanChangeBlogsRatingType {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -38,22 +39,277 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
+		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
 
-		PortalSettings.configureBlogsRatingType(ratingType = "Stars");
-
-		Navigator.openURL();
+		PortalSettings.configureRatingType(
+			configureBlogsRatingType = "true",
+			ratingType = "Stars");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		AssertTextEquals(
-			locator1 = "Ratings#AVERAGE_STAR_RESULT",
-			value1 = "0.0");
+		Ratings.viewDefault();
+	}
 
-		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
+	@description = "This test covers LPS-117741. It ensures that the rated stacked stars can be removed from the blog entry."
+	@refactordone
+	@priority = "4"
+	test CanRemoveRatedStackedStarsFromBlogsEntry {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.configureRatingType(
+			applications = "Blogs",
+			portlet = "Ratings",
+			ratingType = "Stacked Stars",
+			siteURLKey = "guest");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		Ratings.viewRateStackedStar(
+			averageStarCount = "3.0",
+			ratingStarCount = "3");
+
+		Ratings.revokeStackedStarsRating();
+
+		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
+	}
+
+	@description = "This ensures that the stars rating can be revoked."
+	@refactordone
+	@priority = "5"
+	test CanRevokeBlogsStarsRating {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		Ratings.configureRatingType(
+			applications = "Blogs",
+			portlet = "Ratings",
+			ratingType = "Stars",
+			siteURLKey = "guest");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Ratings.rateStar(
+			checkDeleteButton = "true",
+			ratingStarCount = "3");
+
+		Ratings.revokeStarsRating();
+
+		Ratings.rateStar(ratingStarCount = "4");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Ratings.rateStar(ratingStarCount = "5");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "4.5 (2 Votes)",
+			ratingStarCount = "5");
+	}
+
+	@priority = "3"
+	@refactordone
+	test CanViewKBArticleWithEditedStarRatings {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
+
+		PortalSettings.configureRatingType(
+			configureKBRatingType = "true",
+			ratingType = "Stars");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Ratings.rateStar(ratingStarCount = "2");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "2.0",
+			ratingStarCount = "2");
+
+		Ratings.rateStar(ratingStarCount = "5");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "5.0",
+			ratingStarCount = "5");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewKBArticleWithStarRatings {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Ratings.rateThumb(ratingResult = "Rate this as good");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = "1");
+
+		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
+
+		PortalSettings.configureRatingType(
+			configureKBRatingType = "true",
+			ratingType = "Stars");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "5.0",
+			ratingStarCount = "5");
+
+		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
+
+		PortalSettings.configureRatingType(
+			configureKBRatingType = "true",
+			ratingType = "Thumbs");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = "1");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewLikeCountForDocument {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Ratings.configureRatingType(
+			applications = "document",
+			portlet = "Ratings",
+			ratingType = "Like",
+			siteURLKey = "guest");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateLike();
+
+		Ratings.viewRateLike(ratingLikeCount = "1");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateLike();
+
+		Ratings.viewRateLike(ratingLikeCount = "2");
 	}
 
 	@description = "This is a use case for LPS-74621."
@@ -710,308 +966,6 @@ definition {
 		Ratings.viewRateStar(
 			averageRatingStarCount = "4.0",
 			ratingStarCount = "4");
-	}
-
-	@description = "This test covers LPS-117741. It ensures that the rated stacked stars can be removed from the blog entry."
-	@priority = "4"
-	test RemoveRatedStackedStarsFromBlogsEntry {
-		Ratings.configureRatingType(
-			applications = "Blogs",
-			ratingType = "Stacked Stars");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Ratings.rateStackedStars(ratingStarCount = "3");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Ratings.viewRateStackedStar(
-			averageStarCount = "3.0",
-			ratingStarCount = "3");
-
-		Ratings.revokeStackedStarsRating();
-
-		Ratings.viewNoRateStackedStar(averageStarCount = "0.0");
-	}
-
-	@description = "This ensures that the stars rating can be revoked."
-	@priority = "5"
-	test RevokeBlogsStarsRating {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Guest");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		User.openUsersAdmin();
-
-		User.assignRegularRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
-
-		Ratings.configureRatingType(
-			applications = "Blogs",
-			ratingType = "Stars");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Ratings.rateStar(
-			checkDeleteButton = "true",
-			ratingStarCount = "3");
-
-		Ratings.revokeStarsRating();
-
-		Ratings.rateStar(ratingStarCount = "4");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Ratings.rateStar(ratingStarCount = "5");
-
-		Ratings.viewRateStar(
-			averageRatingStarCount = "4.5 (2 Votes)",
-			ratingStarCount = "5");
-	}
-
-	@priority = "3"
-	test ViewKBArticleWithEditedStarRatings {
-		property test.name.skip.portal.instance = "Ratings#ViewKBArticleWithEditedStarRatings";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page",
-			widgetName = "Knowledge Base Display");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
-
-		Select(
-			locator1 = "Select#KNOWLEDGE_BASE_RATING",
-			value1 = "Stars");
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		Ratings.rateStar(ratingStarCount = "2");
-
-		Ratings.viewRateStar(
-			averageRatingStarCount = "2.0",
-			ratingStarCount = "2");
-
-		Ratings.rateStar(ratingStarCount = "5");
-
-		Ratings.viewRateStar(
-			averageRatingStarCount = "5.0",
-			ratingStarCount = "5");
-	}
-
-	@priority = "4"
-	test ViewKBArticleWithStarRatings {
-		property test.name.skip.portal.instance = "Ratings#ViewKBArticleWithStarRatings";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page",
-			widgetName = "Knowledge Base Display");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.viewViaKBDisplayPG(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		Ratings.rateThumb(ratingResult = "Rate this as good");
-
-		Ratings.viewRateThumb(
-			ratingResult = "You have rated this as good",
-			voteCount = "1");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
-
-		Select(
-			locator1 = "Select#KNOWLEDGE_BASE_RATING",
-			value1 = "Stars");
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		Ratings.viewRateStar(
-			averageRatingStarCount = "5.0",
-			ratingStarCount = "5");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Community Tools",
-			configurationName = "Ratings",
-			configurationScope = "Virtual Instance Scope");
-
-		Select(
-			locator1 = "Select#KNOWLEDGE_BASE_RATING",
-			value1 = "Thumbs");
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		Ratings.viewRateThumb(
-			ratingResult = "You have rated this as good",
-			voteCount = "1");
-	}
-
-	@priority = "4"
-	test ViewLikeCountForDocument {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Ratings.configureRatingType(
-			applications = "document",
-			ratingType = "Like");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Description",
-			dmDocumentTitle = "DM Title",
-			groupName = "Guest");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Title");
-
-		DMDocument.expandInfo();
-
-		Ratings.rateLike();
-
-		Ratings.viewRateLike(ratingLikeCount = "1");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Title");
-
-		DMDocument.expandInfo();
-
-		Ratings.rateLike();
-
-		Ratings.viewRateLike(ratingLikeCount = "2");
 	}
 
 }

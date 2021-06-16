@@ -432,12 +432,41 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields provide feedback when typing terms that doesn't exist"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test MultiSelectFieldsProvideFeedbackWhenTypingNotExistentTerms {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67871 MultiSelectFieldsProvideFeedbackWhenTypingNotExistentTerms pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_INPUT_START",
+			value1 = "Start SLA Counting");
+
+		AssertElementPresent(
+			key_slaDefinitionStart = "No results were found",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_INPUT_PAUSE",
+			value1 = "Pause SLA Counting");
+
+		AssertElementPresent(
+			key_slaDefinitionPause = "No results were found",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_INPUT_STOP",
+			value1 = "Stop SLA Counting");
+
+		AssertElementPresent(
+			key_slaDefinitionEnd = "No results were found",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION");
 	}
 
 	@description = "LPS-89015 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"

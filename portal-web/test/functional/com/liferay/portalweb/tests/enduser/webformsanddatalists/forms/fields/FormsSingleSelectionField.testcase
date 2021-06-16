@@ -403,7 +403,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132196 ChangesCanBeCanceled pending implementation
@@ -911,7 +911,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132195 TypeCanBeChanged pending implementation

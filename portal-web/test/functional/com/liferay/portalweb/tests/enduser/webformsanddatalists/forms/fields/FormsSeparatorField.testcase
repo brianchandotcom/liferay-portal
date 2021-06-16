@@ -35,7 +35,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133233 CanBeCreated pending implementation
@@ -46,7 +46,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133236 CanBeDuplicated pending implementation
@@ -57,7 +57,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133234 CanBeEdited pending implementation
@@ -68,7 +68,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133237 CanBeSetToRepeatable pending implementation
@@ -79,7 +79,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133244 CanBeSubmitted pending implementation
@@ -90,7 +90,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133239 ChangesCanBeCanceled pending implementation
@@ -101,7 +101,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133243 HelpTextCanBeAdded pending implementation
@@ -112,7 +112,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133241 LabelCanBeEdited pending implementation
@@ -123,7 +123,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133242 LabelCanBeHidden pending implementation
@@ -134,7 +134,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133240 ReferenceCanBeEdited pending implementation
@@ -145,7 +145,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133238 TypeCanBeChanged pending implementation

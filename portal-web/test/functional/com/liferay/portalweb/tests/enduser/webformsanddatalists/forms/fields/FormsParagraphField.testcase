@@ -274,7 +274,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanDeleteATableUsingBackspace {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131237 CanDeleteATableUsingBackspace pending implementation
@@ -285,7 +285,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanDeleteATableUsingRightClick {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133010 CanDeleteATableUsingRightClick pending implementation

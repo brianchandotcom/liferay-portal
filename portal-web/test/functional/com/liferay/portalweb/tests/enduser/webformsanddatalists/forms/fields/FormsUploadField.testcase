@@ -450,7 +450,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133218 ChangesCanBeCanceled pending implementation
@@ -596,7 +596,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133220 LabelCanBeHidden pending implementation
@@ -607,7 +607,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test MaximumRepetitionsCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133254 MaximumRepetitionsCanBeChanged pending implementation
@@ -660,7 +660,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test RegisteredUserCannotUploadFileWithInvalidSize {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133256 RegisteredUserCannotUploadFileWithInvalidSize pending implementation
@@ -726,7 +726,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133217 TypeCanBeChanged pending implementation

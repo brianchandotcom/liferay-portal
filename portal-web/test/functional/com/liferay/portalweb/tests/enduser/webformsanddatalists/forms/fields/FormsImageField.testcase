@@ -163,7 +163,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUploadFromDocumentsAndMedia {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133044 CanUploadFromDocumentsAndMedia pending implementation
@@ -174,7 +174,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133038 ChangesCanBeCanceled pending implementation
@@ -472,7 +472,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133037 TypeCanBeChanged pending implementation

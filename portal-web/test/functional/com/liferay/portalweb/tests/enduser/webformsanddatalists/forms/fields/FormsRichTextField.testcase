@@ -106,7 +106,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133113 CanBeDuplicated pending implementation
@@ -251,7 +251,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133121 CanBeSubmitted pending implementation
@@ -262,7 +262,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133116 ChangesCanBeCanceled pending implementation
@@ -273,7 +273,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133120 HelpTextCanBeAdded pending implementation
@@ -427,7 +427,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133115 TypeCanBeChanged pending implementation

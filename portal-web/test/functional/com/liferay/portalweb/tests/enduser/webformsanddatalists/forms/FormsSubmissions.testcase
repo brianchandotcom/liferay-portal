@@ -275,7 +275,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRedirectUserAfterFormSubmission {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131026 CanRedirectUserAfterFormSubmission pending implementation
@@ -345,7 +345,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test DefaultSuccessPageCanBeRestored {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131035 DefaultSuccessPageCanBeRestored pending implementation

@@ -370,7 +370,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132268 ChangesCanBeCanceled pending implementation
@@ -381,7 +381,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldReferencesOfOptionsCanBeEdited {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132276 FieldReferencesOfOptionsCanBeEdited pending implementation
@@ -794,7 +794,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-132267 TypeCanBeChanged pending implementation

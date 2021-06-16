@@ -235,7 +235,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133136 CanBeSetToRepeatable pending implementation
@@ -297,7 +297,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133138 ChangesCanBeCanceled pending implementation
@@ -495,7 +495,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133137 TypeCanBeChanged pending implementation

@@ -844,7 +844,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddASingleSelectionFieldToAForm {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133487 CanAddASingleSelectionFieldToAForm pending implementation
@@ -908,7 +908,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddAUploadFieldToAForm {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133496 CanAddAUploadFieldToAForm pending implementation
@@ -978,7 +978,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanBeAddedToAFormMultipleTimes {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133463 CanBeAddedToAFormMultipleTimes pending implementation
@@ -1067,7 +1067,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDeletedByUsersWithDeletePermissions {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133480 CanBeDeletedByUsersWithDeletePermissions pending implementation
@@ -1129,7 +1129,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEditedByUsersWithUpdatePermissions {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133478 CanBeEditedByUsersWithUpdatePermissions pending implementation
@@ -1140,7 +1140,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotBeEditedByUsersWithoutPermissions {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133482 CannotBeEditedByUsersWithoutPermissions pending implementation
@@ -1151,7 +1151,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotBeViewedByUsersWithoutPermissions {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133483 CannotBeViewedByUsersWithoutPermissions pending implementation
@@ -1236,7 +1236,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveTheAutoCompleteProperty {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133464 PreserveTheAutoCompleteProperty pending implementation
@@ -1306,7 +1306,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveTheHideLabelProperty {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133472 PreserveTheHideLabelProperty pending implementation
@@ -1317,7 +1317,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test PreserveTheInlineProperty {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133474 PreserveTheInlineProperty pending implementation
@@ -1407,7 +1407,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveThePlaceholderText {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133467 PreserveThePlaceholderText pending implementation
@@ -1418,7 +1418,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveThePredefinedValue {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133468 PreserveThePredefinedValue pending implementation
@@ -1568,7 +1568,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test PreserveTheShowAsSwitcherProperty {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133471 PreserveTheShowAsSwitcherProperty pending implementation

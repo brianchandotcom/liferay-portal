@@ -258,7 +258,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBePreviewed {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133520 CanBePreviewed pending implementation
@@ -990,7 +990,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test RichTextFieldCanBeTranslated {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133509 RichTextFieldCanBeTranslated pending implementation
@@ -1285,7 +1285,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TextFieldBasicPropertiesCanBeTranslated {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133481 TextFieldBasicPropertiesCanBeTranslated pending implementation
@@ -1296,7 +1296,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TextFieldPredefinedValueCanBeTranslated {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-133494 TextFieldPredefinedValueCanBeTranslated pending implementation

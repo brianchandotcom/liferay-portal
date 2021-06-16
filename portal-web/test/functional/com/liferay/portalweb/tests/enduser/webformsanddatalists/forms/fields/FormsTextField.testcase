@@ -500,7 +500,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test ChangesCanBeCanceled {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131335 ChangesCanBeCanceled pending implementation
@@ -872,7 +872,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test TypeCanBeChanged {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131334 TypeCanBeChanged pending implementation
@@ -883,7 +883,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ValidationIsResetAfterChangingFieldType {
-		property forms.functional = "true";
+		property forms.functional = "false";
 		property portal.acceptance = "false";
 
 		// TODO LPS-131352 ValidationIsResetAfterChangingFieldType pending implementation

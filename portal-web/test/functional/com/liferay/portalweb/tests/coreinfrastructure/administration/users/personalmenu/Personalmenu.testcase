@@ -421,6 +421,7 @@ definition {
 		UserBar.viewNoDropdownItem(dropdownItem = "My Profile");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ViewUserIconIsAccessibleViaKeyboard {
 		AssertAccessible();

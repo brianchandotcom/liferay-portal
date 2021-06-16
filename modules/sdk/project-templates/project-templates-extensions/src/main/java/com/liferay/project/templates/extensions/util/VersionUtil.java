@@ -26,19 +26,31 @@ public class VersionUtil {
 	public static int getMajorVersion(String targetPlatformVersion) {
 		Matcher matcher = _liferayVersionPattern.matcher(targetPlatformVersion);
 
-		return Integer.parseInt(matcher.group(1));
+		if (matcher.matches()) {
+			return Integer.parseInt(matcher.group(1));
+		}
+
+		return 0;
 	}
 
 	public static int getMicroVersion(String targetPlatformVersion) {
 		Matcher matcher = _liferayVersionPattern.matcher(targetPlatformVersion);
 
-		return Integer.parseInt(matcher.group(3));
+		if (matcher.matches()) {
+			return Integer.parseInt(matcher.group(3));
+		}
+
+		return 0;
 	}
 
 	public static int getMinorVersion(String targetPlatformVersion) {
 		Matcher matcher = _liferayVersionPattern.matcher(targetPlatformVersion);
 
-		return Integer.parseInt(matcher.group(2));
+		if (matcher.matches()) {
+			return Integer.parseInt(matcher.group(2));
+		}
+
+		return 0;
 	}
 
 	public static boolean isLiferayVersion(String targetPlatformVersion) {

@@ -25,11 +25,6 @@
 </tr>
 <!--TEMPLATE_CARDS-->
 <tr>
-	<td>TEMPLATE_CARDS_NAME</td>
-	<td>//div[contains(@class,'autofit-col')]/a[contains(., '${key_ddlTemplateName}')] | //div[contains(@class,'autofit-col')]/div[contains(., '${key_ddlTemplateName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEMPLATE_CARDS_SMALL_IMAGE</td>
 	<td>//div[contains(@class,'aspect-ratio')]/div/label//img</td>
 	<td></td>

@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "assign-display-page-templa
 					classPK="<%= 0 %>"
 					classTypeId="<%= 0 %>"
 					groupId="<%= scopeGroupId %>"
-					parentClassPK="<%= 0 %>"
+					parentClassPK='<%= ParamUtil.getLong(request, "parentCategoryId") %>'
 					showViewInContextLink="<%= true %>"
 				/>
 			</liferay-frontend:fieldset>

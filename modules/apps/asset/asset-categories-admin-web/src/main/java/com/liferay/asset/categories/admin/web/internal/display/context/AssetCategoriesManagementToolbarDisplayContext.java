@@ -80,6 +80,9 @@ public class AssetCategoriesManagementToolbarDisplayContext
 					).setRedirect(
 						currentURLObj.toString()
 					).setParameter(
+						"parentCategoryId",
+						_assetCategoriesDisplayContext.getCategoryId()
+					).setParameter(
 						"vocabularyId",
 						_assetCategoriesDisplayContext.getVocabularyId()
 					).build();

@@ -810,50 +810,26 @@ definition {
 
 			JSONFragment.addSection(
 					collectionName = "Collection Name",
+					fragmentStatus = "Approved",
 					groupName = "Test Site Name",
 					name = "Fragment Name");
 
 		}
 
 		task ("Create a new page template.") {
-			Pause(locator1 = "10000");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Page Template Collection",
+					layoutPageTemplateEntryName = "Page Template Name",
+					layoutPageTemplateStatus = "Draft",
+					layoutPageTemplateType = "Content Page Template");
 
 	  	}
 
-		task ("Add the test page fragment to the page template.") {
-			Pause(locator1 = "10000");
-
-		}
-
-	  	task ("Add 2 heading components after the test page fragment.") {
-			Pause(locator1 = "1");
-
-	  	}
-
-		task ("Save the template.") {
-			Pause(locator1 = "1");
-
-		}
-
-		task ("Export the template.") {
-			Pause(locator1 = "1");
-
-		}
-
-		task ("Delete the template.") {
-			Pause(locator1 = "1");
-
-		}
-
-		task ("Delete the test page fragment.") {
-			Pause(locator1 = "1");
-
-		}
-
-		task ("Import the exported page template.") {
-			Pause(locator1 = "1");
-
-		}
 	}
 
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."

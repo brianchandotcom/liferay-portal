@@ -127,11 +127,14 @@ public abstract class BaseClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		NewCookie newCookie = cookies.get(CookieKeys.JSESSIONID);
+		NewCookie jSessionIdCookie = cookies.get(CookieKeys.JSESSIONID);
+
+		NewCookie supportCookie = cookies.get(CookieKeys.COOKIE_SUPPORT);
 
 		invocationBuilder = getInvocationBuilder(hostname, getLoginWebTarget());
 
-		invocationBuilder.cookie(newCookie);
+		invocationBuilder.cookie(jSessionIdCookie);
+		invocationBuilder.cookie(supportCookie);
 
 		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
 
@@ -143,13 +146,13 @@ public abstract class BaseClientTestCase {
 
 		cookies = response.getCookies();
 
-		newCookie = cookies.get(CookieKeys.JSESSIONID);
+		jSessionIdCookie = cookies.get(CookieKeys.JSESSIONID);
 
-		if (newCookie == null) {
+		if (jSessionIdCookie == null) {
 			return null;
 		}
 
-		return newCookie.toCookie();
+		return jSessionIdCookie.toCookie();
 	}
 
 	protected Function<WebTarget, Invocation.Builder>

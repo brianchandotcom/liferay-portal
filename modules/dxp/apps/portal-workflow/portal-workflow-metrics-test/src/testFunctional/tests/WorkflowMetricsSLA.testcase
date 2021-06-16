@@ -296,12 +296,23 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test MultiSelectFieldsProvideFocusWhenFieldActive {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67875 MultiSelectFieldsProvideFocusWhenFieldActive pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
 	}
 
 	@description = "LPS-89015 - Verify the option for pause field is: On task: [task-name]"

@@ -724,6 +724,18 @@ definition {
 		AssertElementPresent(locator1 = "Form#ALT_PAGINATION_SUCCESS_PAGE");
 	}
 
+	macro viewCollapsedCollapseButton {
+		AssertElementPresent(
+			key_trueOrFalse = "false",
+			locator1 = "Form#COLLAPSE_BUTTON");
+	}
+
+	macro viewExpandedCollapseButton {
+		AssertElementPresent(
+			key_trueOrFalse = "true",
+			locator1 = "Form#COLLAPSE_BUTTON");
+	}
+
 	macro viewFieldReference {
 		key_fieldName = "${fieldName}";
 
@@ -748,6 +760,18 @@ definition {
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
 			value1 = "${key_fieldReference}");
+	}
+
+	macro viewFieldsGroupCollapsedField {
+		AssertElementNotPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Form#FIELDS_GROUP_FIELD_COLLAPSIBLE_IS_VISIBLE");
+	}
+
+	macro viewFieldsGroupNotCollapsedField {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Form#FIELDS_GROUP_FIELD_COLLAPSIBLE_IS_VISIBLE");
 	}
 
 	macro viewFormDescription {

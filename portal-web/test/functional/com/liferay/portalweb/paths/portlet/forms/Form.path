@@ -21,6 +21,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLAPSE_BUTTON</td>
+	<td>//button[contains(concat(' ',normalize-space(@class),' '),'collapse-icon')][@aria-expanded='${key_trueOrFalse}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_GROUP_FIELD_COLLAPSIBLE_IS_VISIBLE</td>
+	<td>//div[contains(concat(' ',normalize-space(@class),' '),'show')]//label[contains(text(),'${key_fieldLabel}')]/..//input[@type!="hidden"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_NOTIFICATION</td>
 	<td>//div[contains(@class,'autosave-bar')]//span</td>
 	<td></td>

@@ -32,14 +32,56 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be collapsed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCollapsed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133872 CanBeCollapsed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Text",
+			key_fieldName = "Numeric");
+
+		Form.closeSidebar();
+
+		Click(
+			key_fieldLabel = "Fields Group",
+			locator1 = "FormFields#LABEL");
+
+		FormFields.enableSwitcher(fieldName = "Collapsible");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.viewExpandedCollapseButton();
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupNotCollapsedField(fieldLabel = "Numeric");
+
+		Click(
+			key_trueOrFalse = "true",
+			locator1 = "Form#COLLAPSE_BUTTON");
+
+		Form.viewCollapsedCollapseButton();
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Text");
+
+		Form.viewFieldsGroupCollapsedField(fieldLabel = "Numeric");
 	}
 
 	@description = "Verify that a Fields Group can be created"

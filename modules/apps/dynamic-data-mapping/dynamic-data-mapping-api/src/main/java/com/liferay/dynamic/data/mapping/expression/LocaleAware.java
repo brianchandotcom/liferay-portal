@@ -19,8 +19,10 @@ import java.util.Locale;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  * @author Marcos Martins
  */
+@Deprecated
 @ProviderType
 public interface LocaleAware {
 

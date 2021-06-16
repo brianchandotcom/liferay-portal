@@ -17,14 +17,13 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
-import com.liferay.dynamic.data.mapping.expression.LocaleAware;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringPool;
-
-import java.util.Locale;
 
 /**
  * @author Marcos Martins
@@ -32,7 +31,7 @@ import java.util.Locale;
 public class GetOptionLabelFunction
 	implements DDMExpressionFieldAccessorAware,
 			   DDMExpressionFunction.Function2<String, String, Object>,
-			   LocaleAware {
+			   DDMExpressionParameterAccessorAware {
 
 	public static final String NAME = "getOptionLabel";
 
@@ -54,8 +53,9 @@ public class GetOptionLabelFunction
 		LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
 			optionName);
 
-		if (_locale != null) {
-			return localizedValue.getString(_locale);
+		if (_ddmExpressionParameterAccessor.getLocale() != null) {
+			return localizedValue.getString(
+				_ddmExpressionParameterAccessor.getLocale());
 		}
 
 		return localizedValue.getString(localizedValue.getDefaultLocale());
@@ -74,11 +74,13 @@ public class GetOptionLabelFunction
 	}
 
 	@Override
-	public void setLocale(Locale locale) {
-		_locale = locale;
+	public void setDDMExpressionParameterAccessor(
+		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
+
+		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
 	}
 
 	private DDMExpressionFieldAccessor _ddmExpressionFieldAccessor;
-	private Locale _locale;
+	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;
 
 }

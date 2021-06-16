@@ -74,7 +74,8 @@ public class GetOptionLabelFunctionTest extends PowerMockito {
 		_getOptionLabelFunction.setDDMExpressionFieldAccessor(
 			ddmExpressionFieldAccessor);
 
-		_getOptionLabelFunction.setLocale(LocaleUtil.BRAZIL);
+		_getOptionLabelFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
 
 		Assert.assertEquals(
 			"Opcao 1",
@@ -115,6 +116,14 @@ public class GetOptionLabelFunctionTest extends PowerMockito {
 
 		_getOptionLabelFunction.setDDMExpressionFieldAccessor(
 			ddmExpressionFieldAccessor);
+
+		DefaultDDMExpressionParameterAccessor ddmExpressionParameterAccessor =
+			new DefaultDDMExpressionParameterAccessor();
+
+		ddmExpressionParameterAccessor.setGetLocaleSupplier(() -> null);
+
+		_getOptionLabelFunction.setDDMExpressionParameterAccessor(
+			ddmExpressionParameterAccessor);
 
 		Assert.assertEquals(
 			"Option 1",

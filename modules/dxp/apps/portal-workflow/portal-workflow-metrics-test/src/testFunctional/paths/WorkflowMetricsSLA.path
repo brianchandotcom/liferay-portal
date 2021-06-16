@@ -215,6 +215,11 @@
 	<td>//div[contains(., 'One or more SLAs are being updated. There may be a delay before SLA changes are fully propagated.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SLA_MESSAGE_NEW_SLA</td>
+	<td>//span[contains(@data-restore-title, 'New SLA')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

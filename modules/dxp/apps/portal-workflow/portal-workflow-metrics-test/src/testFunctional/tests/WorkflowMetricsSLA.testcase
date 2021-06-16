@@ -470,12 +470,17 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the popover is displayed when hovering the pointer on the add button"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test PopoverIsDisplayedWhenHoveringAddButton {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67859 PopoverIsDisplayedWhenHoveringAddButton pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+
+		MouseOver(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		AssertVisible(locator1 = "WorkflowMetricsSLA#SLA_MESSAGE_NEW_SLA");
 	}
 
 	@description = "LPS-89416 - Verity the propagating info alert when updating a SLA"

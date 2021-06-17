@@ -114,13 +114,60 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6087. RemoveAChannelFilter"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveAChannelFilter {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAChannelFilter";
 
-		// TODO COMMERCE-6087 RemoveAChannelFilter
+		CommerceConfiguration.reindexAllSearchIndexes();
 
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+		Click(
+			key_name = "Channels",
+			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Check(
+			key_checkboxName = "Test Channel",
+			locator1 = "Checkbox#ENABLE_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Add");
+
+		Alert.viewSuccessMessage();
+
+		Button.click(button = "Delete");
+
+		Alert.viewSuccessMessage();
+
+		Click(
+			key_name = "Channels",
+			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
 	}
 
 }

@@ -13,7 +13,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
 import {
@@ -157,13 +157,20 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
 
+	const context = useContext(CollectionItemContext);
+	const {classNameId, classPK} = context.collectionItem || {};
+
 	const displayPagePreviewItemData = useDisplayPagePreviewItem()?.data ?? {};
+
+	const itemClassNameId =
+		classNameId || displayPagePreviewItemData.classNameId;
+	const itemClassPK = classPK || displayPagePreviewItemData.classPK;
 
 	useEffect(() => {
 		if (collectionConfig.collection) {
 			CollectionService.getCollectionField({
-				classNameId: displayPagePreviewItemData.classNameId,
-				classPK: displayPagePreviewItemData.classPK,
+				classNameId: itemClassNameId,
+				classPK: itemClassPK,
 				collection: collectionConfig.collection,
 				languageId,
 				listItemStyle: collectionConfig.listItemStyle || null,
@@ -186,8 +193,8 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				});
 		}
 	}, [
-		displayPagePreviewItemData.classNameId,
-		displayPagePreviewItemData.classPK,
+		itemClassNameId,
+		itemClassPK,
 		collectionConfig.collection,
 		collectionConfig.listItemStyle,
 		collectionConfig.listStyle,
@@ -215,5 +222,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		</div>
 	);
 });
+
+Collection.displayName = 'Collection';
 
 export default Collection;

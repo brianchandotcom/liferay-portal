@@ -74,6 +74,11 @@ public class SiteInitializerDependencyResolverImpl
 			_DEPENDENCIES_PATH + name);
 	}
 
+	@Override
+	public String getKey() {
+		return MiniumSiteInitializer.KEY;
+	}
+
 	private static final String _DEPENDENCIES_PATH =
 		"com/liferay/commerce/theme/minium/site/initializer/internal" +
 			"/dependencies/";

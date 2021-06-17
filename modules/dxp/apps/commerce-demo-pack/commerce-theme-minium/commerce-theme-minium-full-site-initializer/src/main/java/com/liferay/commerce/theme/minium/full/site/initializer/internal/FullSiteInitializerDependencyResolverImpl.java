@@ -85,6 +85,11 @@ public class FullSiteInitializerDependencyResolverImpl
 		return _miniumSiteInitializerDependencyResolver.getJSON(name);
 	}
 
+	@Override
+	public String getKey() {
+		return MiniumFullSiteInitializer.KEY;
+	}
+
 	private static final String _DEPENDENCIES_PATH =
 		"com/liferay/commerce/theme/minium/full/site/initializer/internal" +
 			"/dependencies/";

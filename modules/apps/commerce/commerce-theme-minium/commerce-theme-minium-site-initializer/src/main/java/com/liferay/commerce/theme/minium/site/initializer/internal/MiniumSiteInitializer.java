@@ -756,6 +756,22 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = _getJSONArray("products.json");
 
+		if (_siteInitializerDependencyResolver != null) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				String externalReferenceCode = jsonObject.getString(
+					"ExternalReferenceCode");
+
+				String newExternalReferenceCode =
+					externalReferenceCode +
+						_siteInitializerDependencyResolver.getKey();
+
+				jsonObject.put(
+					"ExternalReferenceCode", newExternalReferenceCode);
+			}
+		}
+
 		long[] commerceInventoryWarehouseIds = ListUtil.toLongArray(
 			commerceInventoryWarehouses,
 			CommerceInventoryWarehouse.

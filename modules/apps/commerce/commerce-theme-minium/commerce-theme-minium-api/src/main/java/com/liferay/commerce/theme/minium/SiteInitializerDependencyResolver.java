@@ -40,4 +40,6 @@ public interface SiteInitializerDependencyResolver {
 
 	public String getJSON(String name) throws IOException;
 
+	public String getKey();
+
 }

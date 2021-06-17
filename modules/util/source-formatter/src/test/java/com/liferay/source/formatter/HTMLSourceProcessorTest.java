@@ -14,21 +14,20 @@
 
 package com.liferay.source.formatter;
 
-import org.junit.Test;
-
 /**
  * @author Alan Huang
  */
 public class HTMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	@Test
-	public void testFormatSelfClosingTags() throws Exception {
-		test("FormatSelfClosingTags.testhtml");
-	}
-
-	@Test
-	public void testIncorrectEmptyLines() throws Exception {
-		test("IncorrectEmptyLines.testhtml");
-	}
+	//	@Test
+	//	public void testFormatSelfClosingTags() throws Exception {
+	//		test("FormatSelfClosingTags.testhtml");
+	//	}
+	//
+	//	@Test
+	//	public void testIncorrectEmptyLines() throws Exception {
+	//		test("IncorrectEmptyLines.testhtml");
+	//	}
+	//
 
 }

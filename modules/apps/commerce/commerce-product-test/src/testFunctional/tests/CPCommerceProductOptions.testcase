@@ -87,13 +87,105 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6019. EditAndRemoveAnOptionWithValues"
-	@ignore = "true"
 	@priority = "3"
 	test EditAndRemoveAnOptionWithValues {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductOptions#EditAndRemoveAnOptionWithValues";
 
-		// TODO COMMERCE-6019 EditAndRemoveAnOptionWithValues
+		// TODO Review
 
+		CommerceConfiguration.reindexAllSearchIndexes();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
+
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "Test Description",
+			optionFieldType = "Select from List",
+			optionName = "Color");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Use in Faceted Navigation",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Required",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "SKU Contributor",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		CPCommerceCatalog.addOptionValues(
+			optionEntryName = "Color",
+			optionValuesList = "Black:1");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Color",
+			title = "Add Option");
+
+		CommerceNavigator.gotoEntry(entryName = "Color");
+
+		CommerceNavigator.gotoEntry(entryName = "Black");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Red");
+
+		Type(
+			key_fieldLabel = "Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "red");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openURL();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		CommerceNavigator.gotoEntry(entryName = "Color");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertTextEquals(
+			key_entryName = "Red",
+			locator1 = "CommerceNavigation#ENTRY_NAME",
+			value1 = "Red");
+
+		Click(
+			key_value = "Red",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
 	}
 
 }

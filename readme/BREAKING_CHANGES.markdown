@@ -593,3 +593,55 @@ No immediate action is needed, but it's important to note the return type has ch
 This change was made in order to check if default groups, roles, and/or user groups were added to the given user, or if the user already had these associations.
 
 ---------------------------------------
+
+### frontend-css-web CSS module has been removed
+- **Date:** 2021-Aug-02
+- **JIRA Ticket:** [LPS-127085](https://issues.liferay.com/browse/LPS-127085)
+
+#### What changed?
+
+The frontend-css-web module has been removed and all its CSS files have been upgraded, detailed list here: https://docs.google.com/spreadsheets/d/1gWdQvLJe8KApcY70lxQb5fuvg6XKdwkfMEBLVPkigfU
+
+#### Who is affected?
+
+This change affects the following modules:
+
+- modules/apps/asset/asset-taglib/
+- modules/apps/asset/asset-tags-navigation-web/
+- modules/apps/captcha/captcha-taglib/
+- modules/apps/comment/comment-web/
+- modules/apps/commerce/commerce-product-content-web/
+- modules/apps/document-library/document-library-web/
+- modules/apps/dynamic-data-lists/dynamic-data-lists-web/
+- modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-web/
+- modules/apps/dynamic-data-mapping/dynamic-data-mapping-web/
+- modules/apps/flags/flags-taglib/
+- modules/apps/frontend-css/frontend-css-web/
+- modules/apps/frontend-editor/frontend-editor-ckeditor-web/
+- modules/apps/frontend-js/frontend-js-aui-web/
+- modules/apps/frontend-js/frontend-js-components-web/
+- modules/apps/frontend-taglib/frontend-taglib/
+- modules/apps/frontend-theme/frontend-theme-styled/
+- modules/apps/item-selector/item-selector-taglib/
+- modules/apps/knowledge-base/knowledge-base-web/
+- modules/apps/mobile-device-rules/mobile-device-rules-web/
+- modules/apps/polls/polls-web/
+- modules/apps/portal-settings/portal-settings-authentication-cas-web/
+- modules/apps/product-navigation/product-navigation-control-menu-web/
+- modules/apps/site-navigation/site-navigation-directory-web/
+- modules/apps/social/social-bookmarks-taglib/
+- modules/apps/staging/staging-taglib/
+- modules/apps/wiki/wiki-web/
+- modules/dxp/apps/portal-search-tuning/portal-search-tuning-rankings-web/
+- portal-kernel/
+- portal-web/
+
+#### How should I update my code?
+
+No manual updates are required.
+
+#### Why was this change made?
+
+This change was made to remove deprecated legacy code from Portal and improve the code consistency and performance
+
+---------------------------------------

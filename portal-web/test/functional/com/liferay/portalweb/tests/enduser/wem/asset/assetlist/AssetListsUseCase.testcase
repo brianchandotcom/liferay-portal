@@ -107,4 +107,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
+	@priority = "4"
+	test FilterCollectionItemsByGlobalCategory {
+		task ("Add a category in Global Topic, Audience and web content article with the Global categories") {
+			var n = "1";
+
+			for (var vocabularyName : list "Topic,Audience") {
+				var categoryId = JSONCategory.addCategory(
+					groupName = "Global",
+					title = "Category Name ${n}",
+					vocabularyName = "${vocabularyName}");
+
+				JSONWebcontent.addWebContent(
+					assetCategoryIds = "${categoryId}",
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Create filter rule for Categories") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category Name 1",
+				queryAndOperator = "Any",
+				queryContains = "Contains",
+				vocabularyName = "");
+		}
+
+		task ("Assert the selected web content article is viewable from the View collection items") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 1",
+				assetType = "Web Content Article");
+		}
+
+		task ("Remove the selected category and select the new category") {
+			AssetCategorization.removeCategories(categoryNameList = "Category Name 1");
+
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category Name 2",
+				vocabularyName = "");
+		}
+
+		task ("Assert the selected web content article is viewable from the View Content action") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 2",
+				assetType = "Web Content Article");
+		}
+
+		task ("Delete the global categories") {
+			var n = "1";
+
+			for (var vocabularyName : list "Topic,Audience") {
+				JSONCategory.deleteCategory(
+					categoryName = "Category Name ${n}",
+					groupName = "Global",
+					vocabularyName = "${vocabularyName}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 }

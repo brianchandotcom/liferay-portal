@@ -105,6 +105,7 @@ describe('Field LocalizableText', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
 		fetch.mockResponse(JSON.stringify({}));
+		Liferay.component = jest.fn();
 	});
 
 	it('is not readOnly', () => {

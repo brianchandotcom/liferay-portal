@@ -1217,6 +1217,25 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_ASSET_TIME_LEFT");
 	}
+	
+	macro validateDueDateBySLADetails {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "WorkflowAllItems#WORKFLOW_DIFFERENTS_INSTANCE_ID");
+
+		AssertElementPresent(
+			key_statusResult = "${statusResult}",
+			locator1 = "WorkflowMetricsSLA#DUE_DATE_SLA_STATUS_ICON");
+
+		AssertElementPresent(
+			key_slaDetail = "${slaName}",
+			locator1 = "WorkflowMetricsSLA#DUE_DATE_SLA_DETAILS",
+			value1 = "${slaName}");
+		AssertElementPresent(
+			key_slaDetail = "${resolutionStatus}",
+			locator1 = "WorkflowMetricsSLA#DUE_DATE_SLA_DETAILS",
+			value1 = "${resolutionStatus}");
+	}
 
 	macro validateInstanceDetails {
 		var key_instanceId = "${instanceId}";

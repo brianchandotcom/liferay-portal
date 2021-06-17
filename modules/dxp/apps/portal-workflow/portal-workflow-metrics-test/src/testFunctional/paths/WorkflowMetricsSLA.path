@@ -201,6 +201,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DUE_DATE_SLA_STATUS_ICON</td>
+	<td>//div[@class='modal-content']//*[contains(@class, 'text-${key_statusResult}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DUE_DATE_SLA_DETAILS</td>
+	<td>//div[@class='modal-content']//span[contains(text(), '${key_slaDetail}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_STEPS_START</td>
 	<td>//label[@for="slaTimeStart"]/following-sibling::div//span[@class='label-item label-item-expand']</td>
 	<td></td>

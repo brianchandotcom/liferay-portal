@@ -323,6 +323,11 @@
 <tr>
 	<td>METRICS_INSTANCE_ITEMS_POSITION</td>
 	<td>//tr[${key_rowNumber}]//td[${key_itemPosition}]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_DIFFERENTS_INSTANCE_ID</td>
+	<td>//tbody//tr[@class]//td[@title='${key_itemName}']//..//span[contains(@class,'link-text')]//strong </td>
 	<td></td>
 </tr>
 <tr>

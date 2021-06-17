@@ -13,21 +13,18 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import {useMutation} from 'graphql-hooks';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import QuestionsEditor from '../../components/QuestionsEditor';
-import TextLengthValidation from '../../components/TextLengthValidation.es';
+import DefaultQuestionsEditor from '../../components/DefaultQuestionsEditor.es';
 import {
 	client,
 	getMessageQuery,
 	updateMessageQuery,
 } from '../../utils/client.es';
-import {getContextLink, stripHTML} from '../../utils/utils.es';
+import {getContextLink} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -38,68 +35,46 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 
-		const [articleBody, setArticleBody] = useState('');
-
 		const [addUpdateMessage] = useMutation(updateMessageQuery);
 
 		const [data, setData] = useState();
+		const editor = useRef('');
+		const [isUpdateButtonDisabled, setIsUpdateButtonDisabled] = useState(
+			false
+		);
+
+		useEffect(() => {
+			editor.current.setContent(
+				data && data.messageBoardMessageByFriendlyUrlPath.articleBody
+			);
+		}, [data]);
 
 		return (
 			<section className="c-mt-5 questions-section questions-sections-answer">
 				<div className="questions-container row">
 					<div className="c-mx-auto col-xl-10">
 						<h1>{Liferay.Language.get('edit-answer')}</h1>
-
-						<ClayForm>
-							<ClayForm.Group className="c-mt-4">
-								<label htmlFor="basicInput">
-									{Liferay.Language.get('answer')}
-
-									<span className="c-ml-2 reference-mark">
-										<ClayIcon symbol="asterisk" />
-									</span>
-								</label>
-
-								<QuestionsEditor
-									contents={
-										data &&
-										data
-											.messageBoardMessageByFriendlyUrlPath
-											.articleBody
-									}
-									onChange={(event) =>
-										setArticleBody(event.editor.getData())
-									}
-									onInstanceReady={() => {
-										client
-											.request({
-												query: getMessageQuery,
-												variables: {
-													friendlyUrlPath: answerId,
-													siteKey: context.siteKey,
-												},
-											})
-											.then(({data}) => setData(data));
-									}}
-								/>
-
-								<ClayForm.FeedbackGroup>
-									<ClayForm.FeedbackItem>
-										<TextLengthValidation
-											text={articleBody}
-										/>
-									</ClayForm.FeedbackItem>
-								</ClayForm.FeedbackGroup>
-							</ClayForm.Group>
-						</ClayForm>
+						<DefaultQuestionsEditor
+							label={Liferay.Language.get('your-answer')}
+							onContentLengthValid={setIsUpdateButtonDisabled}
+							onInstanceReady={() => {
+								client
+									.request({
+										query: getMessageQuery,
+										variables: {
+											friendlyUrlPath: answerId,
+											siteKey: context.siteKey,
+										},
+									})
+									.then(({data}) => setData(data));
+							}}
+							ref={editor}
+						/>
 
 						<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 							<ClayButton
 								className="c-mt-4 c-mt-sm-0"
-								disabled={
-									!articleBody ||
-									stripHTML(articleBody).length < 15
-								}
+								disabled={isUpdateButtonDisabled}
 								displayType="primary"
 								onClick={() => {
 									addUpdateMessage({
@@ -107,13 +82,16 @@ export default withRouter(
 											`${sectionTitle}/${questionId}`
 										),
 										variables: {
-											articleBody,
+											articleBody: editor.current.getContent(),
 											messageBoardMessageId:
 												data
 													.messageBoardMessageByFriendlyUrlPath
 													.id,
 										},
-									}).then(() => history.goBack());
+									}).then(() => {
+										editor.current.clearContent();
+										history.goBack();
+									});
 								}}
 							>
 								{Liferay.Language.get('update-your-answer')}

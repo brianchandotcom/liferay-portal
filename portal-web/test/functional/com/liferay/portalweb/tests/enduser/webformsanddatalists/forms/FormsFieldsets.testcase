@@ -1103,17 +1103,6 @@ definition {
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
 	}
 
-	@description = "Verify that a user with delete permissions can delete another user's Fieldset"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanBeDeletedByUsersWithDeletePermissions {
-		property forms.functional = "false";
-		property portal.acceptance = "false";
-
-		// TODO LPS-133480 CanBeDeletedByUsersWithDeletePermissions pending implementation
-
-	}
-
 	@description = "Verify that a Fieldset can be edited"
 	@priority = "5"
 	test CanBeEdited {
@@ -1163,39 +1152,6 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Text Test");
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
-	}
-
-	@description = "Verify that a user with update permission can edit another user's Fieldset"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanBeEditedByUsersWithUpdatePermissions {
-		property forms.functional = "false";
-		property portal.acceptance = "false";
-
-		// TODO LPS-133478 CanBeEditedByUsersWithUpdatePermissions pending implementation
-
-	}
-
-	@description = "Verify that a user with Delete (but not Edit) permission cannot edit another user's Fieldset"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotBeEditedByUsersWithoutPermissions {
-		property forms.functional = "false";
-		property portal.acceptance = "false";
-
-		// TODO LPS-133482 CannotBeEditedByUsersWithoutPermissions pending implementation
-
-	}
-
-	@description = "Verify that a user with Delete (but not View) permission cannot view another user's Fieldset"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotBeViewedByUsersWithoutPermissions {
-		property forms.functional = "false";
-		property portal.acceptance = "false";
-
-		// TODO LPS-133483 CannotBeViewedByUsersWithoutPermissions pending implementation
-
 	}
 
 	@description = "Verify that Options persist after being added to a Form via Fieldset"

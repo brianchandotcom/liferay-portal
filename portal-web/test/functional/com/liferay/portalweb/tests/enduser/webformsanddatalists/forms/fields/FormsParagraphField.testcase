@@ -430,36 +430,6 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "The form was published successfully.");
 	}
 
-	@description = "Verify that a link to an Anchor in The Text can be added to the Body Text"
-	@ignore = "true"
-	@priority = "5"
-	test CanSupportALinkToAnAnchor {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131241 CanSupportALinkToAnAnchor pending implementation
-
-	}
-
-	@description = "Verify that a link to an Email can be added to the Body Text"
-	@ignore = "true"
-	@priority = "5"
-	test CanSupportALinkToAnEmail {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131242 CanSupportALinkToAnEmail pending implementation
-
-	}
-
-	@description = "Verify that a link to a Phone Number can be added to the Body Text"
-	@ignore = "true"
-	@priority = "5"
-	test CanSupportALinkToAPhoneNumber {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131243 CanSupportALinkToAPhoneNumber pending implementation
-
-	}
-
 	@description = "Verify that a link to a URL can be added to the Body Text"
 	@priority = "5"
 	test CanSupportALinkToAURL {
@@ -798,16 +768,6 @@ definition {
 			key_fieldName = "Paragraph",
 			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
 			value1 = "Test Body Text");
-	}
-
-	@description = "Verify that a link in a Paragraph Field can be unlinked"
-	@ignore = "true"
-	@priority = "5"
-	test CanUnlinkALink {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131244 CanUnlinkALink pending implementation
-
 	}
 
 	@description = "Verify that changes to a Field can be canceled"

@@ -603,17 +603,6 @@ definition {
 
 	}
 
-	@description = "Verify that the limit of Maximum Repetitions for Upload Fields can be changed in System Settings"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test MaximumRepetitionsCanBeChanged {
-		property forms.functional = "false";
-		property portal.acceptance = "false";
-
-		// TODO LPS-133254 MaximumRepetitionsCanBeChanged pending implementation
-
-	}
-
 	@description = "Verify that the Field Reference can be Edited"
 	@priority = "5"
 	test ReferenceCanBeEdited {
@@ -654,17 +643,6 @@ definition {
 			key_fieldName = "",
 			key_fieldValue = "Upload1234",
 			locator1 = "Translation#TARGET_LANGUAGE_FIELD");
-	}
-
-	@description = "Verify that a registered user cannot upload a file with an invalid size"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test RegisteredUserCannotUploadFileWithInvalidSize {
-		property forms.functional = "false";
-		property portal.acceptance = "false";
-
-		// TODO LPS-133256 RegisteredUserCannotUploadFileWithInvalidSize pending implementation
-
 	}
 
 	@description = "Verify that guest users cannot see files submitted by other users"

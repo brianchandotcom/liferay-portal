@@ -12,16 +12,12 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import React from 'react';
 
-const FileEntryList = ({
-	errors,
-	fileEntries = [],
-	setFieldValue,
-	showRemoveButton,
-}) => {
+const FileEntryList = ({errors, fileEntries = [], setFieldValue}) => {
 	const hasError = (fileEntryId) => {
 		if (errors) {
 			return !!errors.find((entry) => entry.fileEntryId === fileEntryId);
@@ -47,7 +43,7 @@ const FileEntryList = ({
 				{Liferay.Language.get('documents-added')}
 			</ClayList.Header>
 
-			{fileEntries.map(({fileEntryId, title, type}, index) => (
+			{fileEntries.map(({fileEntryId, title}, index) => (
 				<ClayList.Item
 					className={classNames({
 						'has-error': hasError(fileEntryId),
@@ -57,7 +53,6 @@ const FileEntryList = ({
 				>
 					<ClayList.ItemField expand>
 						<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
-						<ClayList.ItemText>{type}</ClayList.ItemText>
 						{hasError(fileEntryId) && (
 							<ClayList.ItemTitle className="text-error">
 								{Liferay.Language.get(
@@ -66,16 +61,14 @@ const FileEntryList = ({
 							</ClayList.ItemTitle>
 						)}
 					</ClayList.ItemField>
-					{showRemoveButton && (
-						<ClayList.ItemField>
-							<ClayList.QuickActionMenu>
-								<ClayList.QuickActionMenu.Item
-									onClick={() => onRemoveFileEntry(index)}
-									symbol="trash"
-								/>
-							</ClayList.QuickActionMenu>
-						</ClayList.ItemField>
-					)}
+					<ClayList.ItemField>
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							monospaced={false}
+							onClick={() => onRemoveFileEntry(index)}
+							symbol="trash"
+						/>
+					</ClayList.ItemField>
 				</ClayList.Item>
 			))}
 		</ClayList>

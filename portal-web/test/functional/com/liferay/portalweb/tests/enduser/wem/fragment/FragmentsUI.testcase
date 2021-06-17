@@ -34,9 +34,15 @@ definition {
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
 
+			FragmentsEditor.waitForAutoSave();
+
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
 
+			FragmentsEditor.waitForAutoSave();
+
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
+
+			FragmentsEditor.waitForAutoSave();
 		}
 	}
 

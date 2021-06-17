@@ -37,6 +37,16 @@ export const WidgetsContextProvider = ({children}) => {
 		WidgetService.getWidgets(segmentsExperienceId).then(setWidgets);
 	}, [fragmentEntryLinksIds, segmentsExperienceId]);
 
+	useEffect(() => {
+		const handler = Liferay.on('addPortletConfigurationTemplate', () => {
+			WidgetService.getWidgets(segmentsExperienceId).then(setWidgets);
+		});
+
+		return () => {
+			handler.detach();
+		};
+	}, [segmentsExperienceId]);
+
 	return (
 		<WidgetsContext.Provider value={widgets}>
 			{children}

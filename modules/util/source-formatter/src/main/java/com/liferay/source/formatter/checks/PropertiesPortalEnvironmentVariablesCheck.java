@@ -159,8 +159,8 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 		}
 
 		return _addEnvVariables(
-			content, commentBlockSB.toString(),
-			variablesContentSB.toString(), lineNumber);
+			content, commentBlockSB.toString(), variablesContentSB.toString(),
+			lineNumber);
 	}
 
 	private Set<String> _getEnvironmentVariables(String s) {

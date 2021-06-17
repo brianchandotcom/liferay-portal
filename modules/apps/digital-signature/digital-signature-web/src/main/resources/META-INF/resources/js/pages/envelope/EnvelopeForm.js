@@ -20,7 +20,7 @@ import DigitalSignatureForm from '../../components/digital-signature-form/Digita
 const EnvelopeForm = (props) => (
 	<>
 		<BackButtonPortal />
-		<DigitalSignatureForm {...props} showDocumentLibraryInput />
+		<DigitalSignatureForm {...props} />
 	</>
 );
 

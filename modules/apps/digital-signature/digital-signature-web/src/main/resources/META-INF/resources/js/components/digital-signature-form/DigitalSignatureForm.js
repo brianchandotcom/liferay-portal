@@ -40,11 +40,7 @@ const defaultRecipient = {
 	fullName: '',
 };
 
-const DigitalSignatureForm = ({
-	fileEntries = [],
-	history,
-	showDocumentLibraryInput,
-}) => {
+const DigitalSignatureForm = ({fileEntries = [], history}) => {
 	const {
 		allowedFileExtensions,
 		baseResourceURL,
@@ -196,7 +192,6 @@ const DigitalSignatureForm = ({
 							errors={errors}
 							handleChange={handleChange}
 							setFieldValue={setFieldValue}
-							showDocumentLibraryInput={showDocumentLibraryInput}
 							values={values}
 						/>
 

@@ -33,7 +33,6 @@ const DigitalSignatureFormBase = ({
 	errors,
 	handleChange,
 	setFieldValue,
-	showDocumentLibraryInput,
 	values,
 }) => {
 	const canAddMoreReceipt = values.recipients.length < MAX_LENGTH.RECEIPTS;
@@ -79,24 +78,17 @@ const DigitalSignatureFormBase = ({
 				required
 			/>
 
-			{showDocumentLibraryInput && (
-				<FileSelector
-					disabled={
-						values.fileEntries.length === MAX_LENGTH.ATTACHMENTS
-					}
-					onChange={(_, fileEntry) =>
-						onAddFileEntry(JSON.parse(fileEntry))
-					}
-				/>
-			)}
+			<FileSelector
+				disabled={values.fileEntries.length === MAX_LENGTH.ATTACHMENTS}
+				onChange={(_, fileEntry) =>
+					onAddFileEntry(JSON.parse(fileEntry))
+				}
+			/>
 
 			<FileEntryList
 				errors={errors.fileEntries}
 				fileEntries={values.fileEntries}
 				setFieldValue={setFieldValue}
-				showRemoveButton={
-					showDocumentLibraryInput || values.fileEntries.length > 1
-				}
 			/>
 
 			{values.recipients.map((recipient, index) => (

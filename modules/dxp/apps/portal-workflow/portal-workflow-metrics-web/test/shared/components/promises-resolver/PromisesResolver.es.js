@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render, waitForElement} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import PromisesResolver, {
@@ -65,10 +65,7 @@ describe('The PromisesResolver should', () => {
 			</PromisesResolver>
 		);
 
-		const promisesResolverSpan = await waitForElement(() =>
-			findByTestId('promisesResolverSpan')
-		);
-
+		const promisesResolverSpan = await findByTestId('promisesResolverSpan');
 		expect(promisesResolverSpan.innerHTML).toEqual(
 			'PromisesResolver rendered children'
 		);
@@ -90,10 +87,7 @@ describe('The PromisesResolver should not', () => {
 			</PromisesResolver>
 		);
 
-		const promisesResolverSpan = await waitForElement(() =>
-			findByTestId('promisesResolverSpan')
-		);
-
+		const promisesResolverSpan = await findByTestId('promisesResolverSpan');
 		expect(promisesResolverSpan.innerHTML).toEqual(
 			'PromisesResolver rendered children'
 		);

@@ -846,11 +846,6 @@ definition {
 					fragmentName = "Heading",
 					targetFragmentName = "Fragment Name");
 
-			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading",
-					targetFragmentName = "Heading");
-
 			PageEditor.clickPublish();
 
 		}
@@ -901,6 +896,24 @@ definition {
 
 			Alert.viewSuccessMessage();
 
+			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings");
+
+		}
+
+		task ("Assert Template has been imported without the deleted fragment.") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementNotPresent(
+					key_fragmentName = "Fragment Name",
+					locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertElementPresent(
+					key_fragmentName = "Heading",
+					locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 	}
 

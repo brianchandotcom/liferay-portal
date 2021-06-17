@@ -144,6 +144,10 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		return StringPool.BLANK;
 	}
 
+	private String _escapeBackslashes(String string) {
+		return string.replaceAll(StringPool.DOUBLE_BACK_SLASH, "\\\\\\\\");
+	}
+
 	private String _getPortletInstanceConfiguration(
 		RenderRequest renderRequest) {
 
@@ -172,11 +176,12 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 			}
 		}
 
-		return portletPreferencesJSONObject.toJSONString();
+		return _escapeBackslashes(portletPreferencesJSONObject.toJSONString());
 	}
 
 	private String _getSystemConfiguration() {
-		return _jsonFactory.looseSerializeDeep(_configuration.get());
+		return _escapeBackslashes(
+			_jsonFactory.looseSerializeDeep(_configuration.get()));
 	}
 
 	private static final String _TPL_HTML;

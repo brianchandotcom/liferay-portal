@@ -36,7 +36,7 @@ if (Validator.isNull(panelHeaderLinkCssClass)) {
 }
 %>
 
-<fieldset aria-labelledby="<%= id %>Title" class="<%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
+<fieldset class="<%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(label) %>">
 			<liferay-util:buffer

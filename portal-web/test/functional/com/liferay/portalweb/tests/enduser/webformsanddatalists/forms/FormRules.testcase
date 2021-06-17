@@ -35,6 +35,50 @@ definition {
 		}
 	}
 
+	@description = "Verify that the Action label of a Rule changes when the corresponding Field's Label is edited"
+	@ignore = "True"
+	@priority = "5"
+	test ActionIsUpdatedWhenFieldLabelIsEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134376 ActionIsUpdatedWhenFieldLabelIsEdited pending implementation
+
+	}
+
+	@description = "Verify that a Rule is autosaved when exiting the Form without saving the Rule"
+	@ignore = "True"
+	@priority = "5"
+	test AreSavedWhenExitingTheForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134377 AreSavedWhenExitingTheForm pending implementation
+
+	}
+
+	@description = "Verify that a Rule can be created"
+	@ignore = "True"
+	@priority = "5"
+	test CanBeCreated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134372 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that a Rule can be deleted"
+	@ignore = "True"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134373 CanBeDeleted pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-80771."
 	@ignore = "true"
 	@priority = "5"
@@ -177,6 +221,17 @@ definition {
 		FormsAdminNavigator.gotoRules();
 
 		FormRules.viewBrokenRule(ruleNumber = "1");
+	}
+
+	@description = "Verify that the Condition label of a Rule changes when the corresponding Field's Label is edited"
+	@ignore = "True"
+	@priority = "5"
+	test ConditionIsUpdatedWhenFieldLabelIsEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134375 ConditionIsUpdatedWhenFieldLabelIsEdited pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-70446."
@@ -890,6 +945,17 @@ definition {
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Manager",
 			fieldValue = "Admin Comments");
+	}
+
+	@description = "Verify that a Rule creation can be canceled"
+	@ignore = "True"
+	@priority = "5"
+	test CreationCanBeCanceled {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134374 CreationCanBeCanceled pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-119818."

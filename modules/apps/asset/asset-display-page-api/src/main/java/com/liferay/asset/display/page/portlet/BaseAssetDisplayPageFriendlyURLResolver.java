@@ -395,24 +395,26 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		Locale locale, String mappedFieldName,
 		Function<Locale, String> defaultValueFunction) {
 
-		if (layoutDisplayPageObjectProvider != null) {
-			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					portal.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()));
-
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValuesProvider.getInfoItemFieldValue(
-					layoutDisplayPageObjectProvider.getDisplayObject(),
-					mappedFieldName);
-
-			if (infoFieldValue != null) {
-				return String.valueOf(infoFieldValue.getValue(locale));
-			}
+		if (layoutDisplayPageObjectProvider == null) {
+			return defaultValueFunction.apply(locale);
 		}
 
-		return defaultValueFunction.apply(locale);
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				portal.getClassName(
+					layoutDisplayPageObjectProvider.getClassNameId()));
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoItemFieldValue(
+				layoutDisplayPageObjectProvider.getDisplayObject(),
+				mappedFieldName);
+
+		if (infoFieldValue == null) {
+			return defaultValueFunction.apply(locale);
+		}
+
+		return String.valueOf(infoFieldValue.getValue(locale));
 	}
 
 	private LayoutQueryStringComposite

@@ -25,7 +25,6 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -47,7 +46,6 @@ import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.translator.Translator;
-import com.liferay.translation.web.internal.configuration.FFAutoTranslateConfiguration;
 import com.liferay.translation.web.internal.display.context.TranslateDisplayContext;
 
 import java.util.Arrays;
@@ -55,7 +53,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,7 +62,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -76,7 +72,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Ambrín Chaudhary
  */
 @Component(
-	configurationPid = "com.liferay.translation.web.internal.configuration.FFAutoTranslateConfiguration",
 	property = {
 		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
 		"mvc.command.name=/translation/translate"
@@ -108,9 +103,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					TranslateDisplayContext.class.getName(),
 					new TranslateDisplayContext(
 						Collections.emptyList(), Collections.emptyList(),
-						() ->
-							_ffAutoTranslateConfiguration.enabled() &&
-							(_translator != null) && _translator.isEnabled(),
+						() -> (_translator != null) && _translator.isEnabled(),
 						className, classPK, null,
 						_portal.getLiferayPortletRequest(renderRequest),
 						_portal.getLiferayPortletResponse(renderResponse), null,
@@ -155,9 +148,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				TranslateDisplayContext.class.getName(),
 				new TranslateDisplayContext(
 					availableSourceLanguageIds, availableTargetLanguageIds,
-					() ->
-						_ffAutoTranslateConfiguration.enabled() &&
-						(_translator != null) && _translator.isEnabled(),
+					() -> (_translator != null) && _translator.isEnabled(),
 					className, classPK, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), object,
@@ -170,12 +161,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_ffAutoTranslateConfiguration = ConfigurableUtil.createConfigurable(
-			FFAutoTranslateConfiguration.class, properties);
 	}
 
 	private <T> List<String> _getAvailableTargetLanguageIds(
@@ -316,8 +301,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TranslateMVCRenderCommand.class);
-
-	private FFAutoTranslateConfiguration _ffAutoTranslateConfiguration;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

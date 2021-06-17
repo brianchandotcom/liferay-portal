@@ -101,7 +101,9 @@ AUI.add(
 						var template = instance._table.one('.' + CSS_TEMPLATE);
 
 						if (template) {
-							row = template.clone();
+							row = template.previous()
+								? template.previous().clone()
+								: template.clone();
 
 							var cells = row.all('> td');
 

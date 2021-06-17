@@ -19,6 +19,7 @@ import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public abstract class BaseCommerceDiscountCalculation
 
 	protected List<CommerceDiscount> getProductCommerceDiscountByHierarchy(
 			long companyId, CommerceAccount commerceAccount,
-			long commerceChannelId, long cpDefinitionId)
+			long commerceChannelId, CPInstance cpInstance)
 		throws PortalException {
 
 		long commerceAccountId = 0;
@@ -59,7 +60,7 @@ public abstract class BaseCommerceDiscountCalculation
 		}
 
 		return _getProductCommerceDiscountByHierarchy(
-			companyId, commerceAccountId, commerceChannelId, cpDefinitionId);
+			companyId, commerceAccountId, commerceChannelId, cpInstance);
 	}
 
 	@Reference
@@ -125,12 +126,13 @@ public abstract class BaseCommerceDiscountCalculation
 
 	private List<CommerceDiscount> _getProductCommerceDiscountByHierarchy(
 			long companyId, long commerceAccountId, long commerceChannelId,
-			long cpDefinitionId)
+			CPInstance cpInstance)
 		throws PortalException {
 
 		List<CommerceDiscount> commerceDiscounts =
 			commerceDiscountLocalService.getAccountAndChannelCommerceDiscounts(
-				commerceAccountId, commerceChannelId, cpDefinitionId);
+				commerceAccountId, commerceChannelId,
+				cpInstance.getCPDefinitionId(), cpInstance.getCPInstanceId());
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -138,7 +140,8 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getAccountCommerceDiscounts(
-				commerceAccountId, cpDefinitionId);
+				commerceAccountId, cpInstance.getCPDefinitionId(),
+				cpInstance.getCPInstanceId());
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -150,7 +153,9 @@ public abstract class BaseCommerceDiscountCalculation
 		commerceDiscounts =
 			commerceDiscountLocalService.
 				getAccountGroupAndChannelCommerceDiscount(
-					commerceAccountGroupIds, commerceChannelId, cpDefinitionId);
+					commerceAccountGroupIds, commerceChannelId,
+					cpInstance.getCPDefinitionId(),
+					cpInstance.getCPInstanceId());
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -158,7 +163,8 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getAccountGroupCommerceDiscount(
-				commerceAccountGroupIds, cpDefinitionId);
+				commerceAccountGroupIds, cpInstance.getCPDefinitionId(),
+				cpInstance.getCPInstanceId());
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
@@ -166,14 +172,16 @@ public abstract class BaseCommerceDiscountCalculation
 
 		commerceDiscounts =
 			commerceDiscountLocalService.getChannelCommerceDiscounts(
-				commerceChannelId, cpDefinitionId);
+				commerceChannelId, cpInstance.getCPDefinitionId(),
+				cpInstance.getCPInstanceId());
 
 		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
 			return commerceDiscounts;
 		}
 
 		return commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
-			companyId, cpDefinitionId);
+			companyId, cpInstance.getCPDefinitionId(),
+			cpInstance.getCPInstanceId());
 	}
 
 }

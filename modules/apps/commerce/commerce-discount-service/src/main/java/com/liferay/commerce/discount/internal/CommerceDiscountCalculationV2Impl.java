@@ -161,8 +161,7 @@ public class CommerceDiscountCalculationV2Impl
 		List<CommerceDiscount> commerceDiscounts =
 			getProductCommerceDiscountByHierarchy(
 				cpInstance.getCompanyId(), commerceContext.getCommerceAccount(),
-				commerceContext.getCommerceChannelId(),
-				cpInstance.getCPDefinitionId());
+				commerceContext.getCommerceChannelId(), cpInstance);
 
 		if (commerceDiscounts.isEmpty()) {
 			return null;

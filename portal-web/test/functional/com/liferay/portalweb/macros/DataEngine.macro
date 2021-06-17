@@ -896,12 +896,14 @@ definition {
 
 		Type(
 			key_fieldLabel = "Label",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			key_fieldName = "label",
+			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "${fieldFieldLabelEdit}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			key_fieldLabel = "Label",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			key_fieldName = "label",
+			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "${fieldFieldLabelEdit}");
 
 		AssertElementPresent(

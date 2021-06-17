@@ -393,7 +393,7 @@ definition {
 	@description = "Verify that an Upload Field can be set to repeatable"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

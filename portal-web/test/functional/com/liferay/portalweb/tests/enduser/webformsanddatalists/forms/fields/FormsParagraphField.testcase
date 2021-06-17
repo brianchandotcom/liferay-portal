@@ -295,7 +295,7 @@ definition {
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"
 	@priority = "4"
 	test CanEditFormattingStyle {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -463,7 +463,7 @@ definition {
 	@description = "Verify that a link to a URL can be added to the Body Text"
 	@priority = "5"
 	test CanSupportALinkToAURL {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -505,7 +505,7 @@ definition {
 	@description = "Verify that Bulleted Lists can be added to the Body Text"
 	@priority = "5"
 	test CanSupportBulletedLists {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -571,7 +571,7 @@ definition {
 	@description = "Verify that an Image can be uploaded to the Body Text"
 	@priority = "5"
 	test CanSupportImages {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -610,7 +610,7 @@ definition {
 	@description = "Verify that Numbered Lists can be added to the Body Text"
 	@priority = "5"
 	test CanSupportNumberedLists {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -666,7 +666,7 @@ definition {
 	@description = "Verify that a Table can be created in the Body Text"
 	@priority = "4"
 	test CanSupportTables {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -707,7 +707,7 @@ definition {
 	@description = "Verify that a Video can be uploaded to the Body Text"
 	@priority = "5"
 	test CanSupportVideos {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -758,7 +758,7 @@ definition {
 	@description = "Verify that inputs to the Body Text can be undone and redone"
 	@priority = "5"
 	test CanUndoAndRedo {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -858,7 +858,7 @@ definition {
 	@description = "Verify that text in the Body Text can be Bolded, Italicized and Underlined"
 	@priority = "5"
 	test TextCanBeBoldedItalicizedAndUnderlined {
-		property forms.functional = "true";
+		property forms.functional = "quarantine";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

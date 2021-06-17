@@ -156,7 +156,13 @@ export default withRouter(
 									).then(() => history.goBack());
 								}}
 							>
-								{Liferay.Language.get('update-your-question')}
+								{context.workflowEnabled
+									? Liferay.Language.get(
+											'submit-for-publication'
+									  )
+									: Liferay.Language.get(
+											'update-your-question'
+									  )}
 							</ClayButton>
 
 							<Link

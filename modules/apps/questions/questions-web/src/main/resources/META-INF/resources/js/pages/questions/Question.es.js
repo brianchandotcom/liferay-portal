@@ -418,9 +418,13 @@ export default withRouter(
 														});
 													}}
 												>
-													{Liferay.Language.get(
-														'post-answer'
-													)}
+													{context.workflowEnabled
+														? Liferay.Language.get(
+																'submit-for-publication'
+														  )
+														: Liferay.Language.get(
+																'post-answer'
+														  )}
 												</ClayButton>
 											)}
 										</div>

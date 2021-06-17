@@ -249,7 +249,13 @@ export default withRouter(
 									createQuestion();
 								}}
 							>
-								{Liferay.Language.get('post-your-question')}
+								{context.workflowEnabled
+									? Liferay.Language.get(
+											'submit-for-publication'
+									  )
+									: Liferay.Language.get(
+											'post-your-question'
+									  )}
 							</ClayButton>
 
 							<Link

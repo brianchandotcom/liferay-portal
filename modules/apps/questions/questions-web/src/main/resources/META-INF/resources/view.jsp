@@ -55,6 +55,8 @@
 				"userId", String.valueOf(themeDisplay.getUserId())
 			).put(
 				"useTopicNamesInURL", questionsConfiguration.useTopicNamesInURL()
+			).put(
+				"workflowEnabled", WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), "com.liferay.message.boards.model.MBMessage")
 			).build()
 		%>'
 	/>

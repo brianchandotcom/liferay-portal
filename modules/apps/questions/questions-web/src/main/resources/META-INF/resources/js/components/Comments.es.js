@@ -15,9 +15,10 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {useMutation} from 'graphql-hooks';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../AppContext.es';
 import {createCommentQuery} from '../utils/client.es';
 import {getContextLink} from '../utils/utils.es';
 import Comment from './Comment.es';
@@ -35,6 +36,8 @@ export default withRouter(
 		showNewComment,
 		showNewCommentChange,
 	}) => {
+		const context = useContext(AppContext);
+
 		const editor = useRef('');
 
 		const [isReplyButtonDisable, setIsReplyButtonDisable] = useState(false);
@@ -97,7 +100,11 @@ export default withRouter(
 										});
 									}}
 								>
-									{Liferay.Language.get('reply')}
+									{context.workflowEnabled
+										? Liferay.Language.get(
+												'submit-for-publication'
+										  )
+										: Liferay.Language.get('reply')}
 								</ClayButton>
 
 								<ClayButton

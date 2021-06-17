@@ -6,18 +6,6 @@ exports[`Translation renders 1`] = `
     class="autofit-row"
   >
     <div
-      class="autofit-col autofit-col-expand"
-    >
-      <h5>
-        languages-translated-into
-      </h5>
-      <span
-        class="text-secondary"
-      >
-        select-language-to-view-its-metrics
-      </span>
-    </div>
-    <div
       class="autofit-col"
     >
       <div

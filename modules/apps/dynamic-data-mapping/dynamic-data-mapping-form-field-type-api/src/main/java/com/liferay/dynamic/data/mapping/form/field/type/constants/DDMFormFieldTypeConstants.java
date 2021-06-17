@@ -60,6 +60,8 @@ public class DDMFormFieldTypeConstants {
 
 	public static final String RADIO = "radio";
 
+	public static final String REDIRECT_BUTTON = "redirect_button";
+
 	public static final String RICH_TEXT = "rich_text";
 
 	public static final String SEARCH_LOCATION = "search_location";

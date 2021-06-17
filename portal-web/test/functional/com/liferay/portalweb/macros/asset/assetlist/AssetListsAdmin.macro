@@ -1,5 +1,41 @@
 definition {
 
+	macro addCategoriesFilter {
+		Panel.expandPanel(panel = "Filter");
+
+		if (isSet(queryAndOperator)) {
+			Select(
+				locator1 = "APConfiguration#FILTER_QUERY_AND_OPERATOR",
+				value1 = "${queryAndOperator}");
+		}
+
+		if (isSet(queryContains)) {
+			Select(
+				locator1 = "APConfiguration#FILTER_QUERY_CONTAINS",
+				value1 = "${queryContains}");
+		}
+
+		Select(
+			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
+			value1 = "Categories");
+
+		Click(locator1 = "Button#SELECT_CATEGORIES");
+
+		AssetCategorization.gotoSelectCategory();
+
+		for (var categoryName : list "${categoryNames}") {
+			Portlet.selectTreeNode(nodeName = "${categoryName}");
+		}
+
+		SelectFrameTop();
+
+		AssertClick(
+			locator1 = "Button#DONE",
+			value1 = "Done");
+
+		PortletEntry.save();
+	}
+
 	macro addDynamicSelection {
 		if (isSet(depotName)) {
 			Click(locator1 = "Message#EMPTY_INFO_TAGLIB");

@@ -52,7 +52,11 @@ export default {
 		);
 	},
 
-	getWidgets() {
-		return serviceFetch(config.getWidgetsURL, {}, () => {});
+	getWidgets(segmentsExperienceId) {
+		return serviceFetch(
+			config.getWidgetsURL,
+			{body: {segmentsExperienceId}},
+			() => {}
+		);
 	},
 };

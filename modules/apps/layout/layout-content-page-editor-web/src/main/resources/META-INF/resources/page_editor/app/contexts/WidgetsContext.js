@@ -24,13 +24,17 @@ export const useWidgets = () => useContext(WidgetsContext);
 
 export const WidgetsContextProvider = ({children}) => {
 	const fragmentEntryLinksIds = useSelector((state) =>
-		Object.keys(state.fragmentEntryLinks).join(',')
+		Object.values(state.fragmentEntryLinks)
+			.filter(({portletId, removed}) => portletId && !removed)
+			.map(({fragmentEntryLinkId}) => fragmentEntryLinkId)
+			.join(',')
 	);
+
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [widgets, setWidgets] = useState([]);
 
 	useEffect(() => {
-		WidgetService.getWidgets().then(setWidgets);
+		WidgetService.getWidgets(segmentsExperienceId).then(setWidgets);
 	}, [fragmentEntryLinksIds, segmentsExperienceId]);
 
 	return (

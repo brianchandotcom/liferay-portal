@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -50,6 +53,8 @@ import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
 import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +87,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException {
 
 		_httpServletRequest = _portal.getOriginalServletRequest(
 			_portal.getHttpServletRequest(resourceRequest));
@@ -90,8 +95,24 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, _getWidgetsJSONArray());
+		_segmentsExperienceId = ParamUtil.getLong(
+			resourceRequest, "segmentsExperienceId");
+
+		try {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, _getWidgetsJSONArray());
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get widgets", exception);
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"error",
+					LanguageUtil.get(
+						_themeDisplay.getRequest(),
+						"an-unexpected-error-occurred")));
+		}
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
@@ -128,7 +149,9 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		return LanguageUtil.get(_httpServletRequest, portletCategory.getName());
 	}
 
-	private JSONArray _getPortletItemsJSONArray(Portlet portlet) {
+	private JSONArray _getPortletItemsJSONArray(Portlet portlet)
+		throws Exception {
+
 		List<PortletItem> portletItems =
 			_portletItemLocalService.getPortletItems(
 				_themeDisplay.getScopeGroupId(), portlet.getPortletId(),
@@ -195,7 +218,9 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		return portlets;
 	}
 
-	private JSONArray _getPortletsJSONArray(PortletCategory portletCategory) {
+	private JSONArray _getPortletsJSONArray(PortletCategory portletCategory)
+		throws Exception {
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		HttpSession httpSession = _httpServletRequest.getSession();
@@ -230,7 +255,8 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONArray _getWidgetCategoriesJSONArray(
-		PortletCategory portletCategory) {
+			PortletCategory portletCategory)
+		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -277,7 +303,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		return _getWidgetCategoriesJSONArray(portletCategory);
 	}
 
-	private boolean _isUsed(Portlet portlet) {
+	private boolean _isUsed(Portlet portlet) throws Exception {
 		if (portlet.isInstanceable()) {
 			return false;
 		}
@@ -286,7 +312,13 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _themeDisplay.getPlid(),
 			portlet.getPortletId());
 
-		if (count > 0) {
+		Layout layout = _themeDisplay.getLayout();
+
+		if ((count > 0) &&
+			!LayoutStructureUtil.isPortletMarkedForDeletion(
+				layout.getGroupId(), layout.getPlid(), portlet.getPortletId(),
+				_segmentsExperienceId)) {
+
 			return true;
 		}
 
@@ -314,6 +346,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
+	private long _segmentsExperienceId;
 	private ThemeDisplay _themeDisplay;
 
 }

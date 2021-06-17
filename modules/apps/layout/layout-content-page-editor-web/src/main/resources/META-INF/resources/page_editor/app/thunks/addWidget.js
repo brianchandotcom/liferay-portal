@@ -36,7 +36,7 @@ export default function addWidget({
 			dispatch(
 				addFragmentEntryLinks({
 					addedItemId,
-					fragmentEntryLinks: [fragmentEntryLink],
+					fragmentEntryLinks: [{...fragmentEntryLink, portletId}],
 					layoutData,
 				})
 			);

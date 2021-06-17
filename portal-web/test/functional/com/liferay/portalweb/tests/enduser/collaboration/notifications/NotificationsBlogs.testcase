@@ -15,17 +15,15 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
 
-		SitePages.addPublicPage(
-			pageName = "Blogs Page",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -38,14 +36,9 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 	}
 
 	tearDown {
@@ -55,8 +48,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Blogs.tearDownSubscribePG();
-
 			Blogs.tearDownCP();
 
 			NotificationsPortlet.tearDownUserDeliveries();
@@ -68,31 +59,31 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test DeleteNotifications {
+	@refactordone
+	test CanDeleteNotifications {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		for (var entryCount : list "1,2") {
-			Blogs.addEntry(
+			BlogsNavigator.openToAddEntry(
+				layoutName = "Blogs Page",
+				siteURLKey = "guest");
+
+			BlogsEntry.addEntryContent(
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title");
+
+			PortletEntry.publish();
 		}
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
@@ -100,19 +91,16 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewContent(
-			assetType = "Blogs Entry",
-			contentBody = "Blogs Entry1 Title",
-			user = "userfn userln");
+		for (var entryCount : list "1,2") {
+			Notifications.viewNewContent(
+				assetType = "Blogs Entry",
+				contentBody = "Blogs Entry${entryCount} Title",
+				user = "userfn userln");
+		}
 
-		Notifications.viewNewContent(
-			assetType = "Blogs Entry",
-			contentBody = "Blogs Entry2 Title",
-			user = "userfn userln");
-
-		Notifications.deleteNotification(contentBody = "Blogs Entry1 Title");
-
-		Notifications.deleteNotification(contentBody = "Blogs Entry2 Title");
+		for (var entryCount : list "1,2") {
+			Notifications.deleteNotification(contentBody = "Blogs Entry${entryCount} Title");
+		}
 
 		Notifications.viewDefaultContent();
 
@@ -120,35 +108,35 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test MarkAllNotificationsAsRead {
+	@refactordone
+	test CanMarkAllNotificationsAsRead {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		for (var entryCount : list "1,2,3") {
-			Blogs.addEntry(
+			BlogsNavigator.openToAddEntry(
+				layoutName = "Blogs Page",
+				siteURLKey = "guest");
+
+			BlogsEntry.addEntryContent(
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title");
+
+			PortletEntry.publish();
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
@@ -162,46 +150,39 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewMultipleNotifications {
+	@refactordone
+	test CanViewMultipleNotifications {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();
 
-		Notifications.viewNoNotifications(activePanel = "Profile");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		for (var entryCount : list "1,2,3") {
-			Blogs.addEntry(
+			BlogsNavigator.openToAddEntry(
+				layoutName = "Blogs Page",
+				siteURLKey = "guest");
+
+			BlogsEntry.addEntryContent(
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title");
+
+			PortletEntry.publish();
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
 			notificationCount = "3");
 
 		Notifications.gotoNotifications();
-
-		Notifications.viewNewContent(
-			assetType = "Blogs Entry",
-			contentBody = "Blogs Entry1 Title",
-			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry1 Title");
 
@@ -215,11 +196,6 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewContent(
-			assetType = "Blogs Entry",
-			contentBody = "Blogs Entry2 Title",
-			user = "userfn userln");
-
 		Notifications.navigateToContent(contentBody = "Blogs Entry2 Title");
 
 		BlogsEntry.viewPG(
@@ -231,11 +207,6 @@ definition {
 			notificationCount = "1");
 
 		Notifications.gotoNotifications();
-
-		Notifications.viewNewContent(
-			assetType = "Blogs Entry",
-			contentBody = "Blogs Entry3 Title",
-			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry3 Title");
 
@@ -249,11 +220,9 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewNoWebsiteNotificationForNewBlogsEntry {
+	@refactordone
+	test CanViewNoWebsiteNotificationForNewBlogsEntry {
 		NotificationsPortlet.gotoNotificationDelivery();
-
-		AssertElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		IFrame.selectConfigurationFrame();
 
@@ -266,34 +235,32 @@ definition {
 
 		Blogs.subscribePG();
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.logoutPG();
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
+		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
+		PortletEntry.publish();
+
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewNoWebsiteNotificationForUpdatedBlogsEntry {
+	@refactordone
+	test CanViewNoWebsiteNotificationForUpdatedBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();
@@ -302,63 +269,48 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Blogs.editEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryContentEdit = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title",
-			entryTitleEdit = "Blogs Entry Title Edit");
+			entryTitleEdit = "Blogs Entry Title Edit",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit");
 	}
 
 	@description = "This test covers LPS-103502. It ensures that notifications are displayed correctly after being mentioned."
 	@priority = "3"
-	@refactorneeded
-	test ViewWebsiteNotificationdForMention {
+	@refactordone
+	test CanViewWebsiteNotificationForMention {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Mentions.addMentionViaComments(
 			entryComment = "Comment mentioning",
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -370,85 +322,63 @@ definition {
 			mentioned = "true",
 			user = "Test Test");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Mentions.addMentionViaComments(
 			entryComment = "Reply comment mentioning",
 			mentionsUserFullName = "test test",
 			mentionsUserScreenName = "test");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "2");
 
 		Notifications.gotoNotifications();
 
-		AssertTextEquals(
-			key_notificationsTitle = "userfn userln added a new comment to Blogs Entry Title",
-			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
-			value1 = "userfn userln added a new comment to Blogs Entry Title.");
+		Notifications.viewSpecificNotificationDetails(
+			contentBody = "Reply comment mentioning @test",
+			notificationsTitle = "userfn userln added a new comment to Blogs Entry Title");
 
-		AssertTextEquals(
-			key_notificationsTitle = "userfn userln added a new comment to Blogs Entry Title",
-			locator1 = "Notifications#NOTIFICATIONS_CONTENT_SPECIFIC",
-			value1 = "Reply comment mentioning @test");
-
-		AssertTextEquals(
-			key_notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry",
-			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
-			value1 = "userfn userln mentioned you in a comment in a blogs entry.");
-
-		AssertTextEquals(
-			key_notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry",
-			locator1 = "Notifications#NOTIFICATIONS_CONTENT_SPECIFIC",
-			value1 = "Reply comment mentioning @test");
+		Notifications.viewSpecificNotificationDetails(
+			contentBody = "Reply comment mentioning @test",
+			notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry");
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewWebsiteNotificationForNewBlogsEntry {
+	@refactordone
+	test CanViewWebsiteNotificationForNewBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.logoutPG();
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
+		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
+		PortletEntry.publish();
+
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
 		Notifications.gotoNotifications();
-
-		Notifications.viewNewContent(
-			assetType = "blogs entry",
-			contentBody = "Blogs Entry Title",
-			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry Title");
 
@@ -460,53 +390,39 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewWebsiteNotificationForNewCommentViaBlogs {
+	@refactordone
+	test CanViewWebsiteNotificationForNewCommentViaBlogs {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.subscribePG();
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
 		Notifications.gotoNotifications();
-
-		Notifications.viewNewComment(
-			assetType = "comment",
-			content = "Blogs Entry Title",
-			contentBody = "Blogs Entry Comment",
-			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry Comment");
 

@@ -422,6 +422,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
+	<td>//div[@class='header']//span[contains(text(),'${newLanguageCardName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEBAB_BUTTON_DISABLED</td>
 	<td>//button[contains(@class,'dropdown-toggle component-action') and @disabled]</td>
 	<td></td>

@@ -238,6 +238,13 @@ definition {
 			value1 = "${fieldHelpText}");
 	}
 
+	macro editHelpTextFieldAtMultipleSelection {
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#DATE_FIELD",
+			value1 = "${fieldValue}");
+	}
+
 	macro editOptionsRow {
 		var key_rowNumber = "${rowNumber}";
 

@@ -268,14 +268,56 @@ definition {
 	}
 
 	@description = "Verify that a Multiple Selection Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test MultipleSelectionFieldCanBePreviewed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133785 MultipleSelectionFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editHelpTextFieldAtMultipleSelection(
+			fieldName = "tip",
+			fieldValue = "Test Help Text");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewLabel(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		for (var label : list "Option 1,Option 2") {
+			FormFields.viewCheckboxLabel(
+				fieldLabel = "${label}",
+				fieldName = "${label}");
+		}
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Multiple Selection");
+
+		FormFields.enableCheckbox(fieldName = "Option 1");
+
+		FormFields.viewCheckboxChecked(fieldName = "Option 1");
 	}
 
 	@description = "Verify that a Numeric Field can be previewed"

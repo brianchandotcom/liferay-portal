@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.AUIUtil;
@@ -117,8 +117,9 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		if (_vocabularyIds == null) {
 			_vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					_themeDisplay.getScopeGroupId()),
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						_themeDisplay.getScopeGroupId()),
 				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 
 			return _vocabularies;

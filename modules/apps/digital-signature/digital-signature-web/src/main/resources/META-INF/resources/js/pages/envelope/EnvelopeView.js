@@ -16,7 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {createResourceURL, fetch, openToast} from 'frontend-js-web';
+import {
+	createActionURL,
+	createResourceURL,
+	fetch,
+	openToast,
+} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext';
@@ -164,6 +169,16 @@ function EnvelopeView({
 					totalPages={fileEntry.previewFileCount}
 				/>
 			)}
+
+			<input
+				type="hidden"
+				value={createActionURL(baseResourceURL, {
+					dsEnvelopeId: envelopeId,
+					'javax.portlet.action':
+						'/digital_signature/delete_ds_envelope',
+					p_auth: Liferay.authToken,
+				})}
+			/>
 
 			<EnvelopeDetail envelope={envelope} envelopeId={envelopeId} />
 		</div>

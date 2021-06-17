@@ -191,6 +191,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_TITLE_FOCUS</td>
+	<td>//section[contains(@class,'portlet open')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_UPDATE_MESSAGE</td>
 	<td>//div[contains(., 'One or more SLAs are being updated. There may be a delay before SLA changes are fully propagated.')]</td>
 	<td></td>

@@ -12,7 +12,6 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		User.firstLoginPG();
-
 		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
@@ -206,12 +205,29 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the field Name should be in focus at the SLA page when the user selects to edit or to create a new SLA"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test FieldNameInFocusAtSLAPage {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67867 FieldNameInFocusAtSLAPage pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_TITLE_FOCUS");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "Test",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToEditSLA(slaName = "Test");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_TITLE_FOCUS");
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to hit enter key to select an option from the dropdown list"

@@ -10,13 +10,8 @@
 <tbody>
 <tr>
 	<td>METRICS_WORKFLOW_SEARCH_BAR</td>
-	<td>//input[@placeholder='${key_fieldLabel}']</td>
+	<td>//input[@placeholder='Search for']</td>
 	<td></td>
-</tr>
-<tr>
-    <td>ANY_ARROW_ORDER</td>
-    <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
-    <td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_SEARCH_BAR_BUTTON</td>

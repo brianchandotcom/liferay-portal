@@ -43,7 +43,6 @@ definition {
 		var key_workflowSearchName = "${workflowSearchName}";
 
 		Type(
-			key_fieldLabel = "Search for",
 			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
 			value1 = "${workflowSearchName}");
 

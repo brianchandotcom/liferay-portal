@@ -19,7 +19,9 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.item.InfoItemReference;
@@ -47,6 +49,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -55,6 +59,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -73,7 +78,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -172,6 +179,43 @@ public class ContentUtil {
 
 			if (editURL != null) {
 				jsonObject.put("editURL", editURL);
+			}
+
+			if (Objects.equals(
+					layoutClassedModelUsage.getClassName(),
+					FileEntry.class.getName())) {
+
+				FileEntry fileEntry =
+					(FileEntry)
+						layoutDisplayPageObjectProvider.getDisplayObject();
+
+				PortletResponse portletResponse =
+					(PortletResponse)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+				LiferayPortletResponse liferayPortletResponse =
+					PortalUtil.getLiferayPortletResponse(portletResponse);
+
+				LiferayPortletURL portletURL =
+					liferayPortletResponse.createActionURL(
+						DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+				portletURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/document_library/edit_file_entry_image_editor");
+
+				jsonObject.put(
+					"editImage",
+					JSONUtil.put(
+						"editImageURL", portletURL.toString()
+					).put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).put(
+						"previewURL",
+						DLURLHelperUtil.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), themeDisplay,
+							StringPool.BLANK)
+					));
 			}
 		}
 

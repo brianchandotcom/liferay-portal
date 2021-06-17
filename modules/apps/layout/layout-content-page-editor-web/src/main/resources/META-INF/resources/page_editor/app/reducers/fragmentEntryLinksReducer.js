@@ -254,12 +254,12 @@ export default function fragmentEntryLinksReducer(
 			const fragmentEntryLink =
 				fragmentEntryLinks[action.fragmentEntryLinkId];
 
-			let collectionContent = fragmentEntryLink.collectionContent || [];
+			let collectionContent = fragmentEntryLink.collectionContent || {};
 
-			if (action.collectionItemIndex != null) {
-				collectionContent = [...collectionContent];
+			if (action.collectionContentId != null) {
+				collectionContent = {...collectionContent};
 
-				collectionContent[action.collectionItemIndex] = action.content;
+				collectionContent[action.collectionContentId] = action.content;
 			}
 
 			return {

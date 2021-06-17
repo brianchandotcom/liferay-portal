@@ -29,6 +29,7 @@ const defaultToControlsId = (controlId) => controlId;
 
 export const INITIAL_STATE = {
 	collectionConfig: null,
+	collectionId: null,
 	collectionItem: null,
 	collectionItemIndex: null,
 	fromControlsId: defaultFromControlsId,
@@ -69,8 +70,12 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 	const dispatch = useDispatch();
 
 	const {className, classPK} = context.collectionItem || {};
+	const toControlsId = useToControlsId();
 
 	const fieldSets = fragmentEntryLink.configuration?.fieldSets;
+	const collectionContentId = toControlsId(
+		fragmentEntryLink.fragmentEntryLinkId
+	);
 
 	useEffect(() => {
 		const hasLocalizable =
@@ -89,7 +94,7 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			}).then(({content}) => {
 				dispatch(
 					updateFragmentEntryLinkContent({
-						collectionItemIndex: context.collectionItemIndex,
+						collectionContentId,
 						content,
 						fragmentEntryLinkId:
 							fragmentEntryLink.fragmentEntryLinkId,
@@ -99,6 +104,7 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		}
 	}, [
 		className,
+		collectionContentId,
 		classPK,
 		context.collectionItemIndex,
 		dispatch,
@@ -110,11 +116,10 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 	]);
 
 	if (context.collectionItemIndex != null) {
-		const collectionContent = fragmentEntryLink.collectionContent || [];
+		const collectionContent = fragmentEntryLink.collectionContent || {};
 
 		return (
-			collectionContent[context.collectionItemIndex] ||
-			fragmentEntryLink.content
+			collectionContent[collectionContentId] || fragmentEntryLink.content
 		);
 	}
 

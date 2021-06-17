@@ -104,6 +104,8 @@ public class OpenAPIResourceImpl {
 
 			add(DiscountRuleResourceImpl.class);
 
+			add(DiscountSkuResourceImpl.class);
+
 			add(PriceEntryResourceImpl.class);
 
 			add(PriceListResourceImpl.class);

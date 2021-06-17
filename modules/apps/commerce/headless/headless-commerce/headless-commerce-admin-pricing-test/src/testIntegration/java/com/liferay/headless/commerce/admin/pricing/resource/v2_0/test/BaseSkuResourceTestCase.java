@@ -195,6 +195,62 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountSkuSku() throws Exception {
+		Sku postSku = testGetDiscountSkuSku_addSku();
+
+		Sku getSku = skuResource.getDiscountSkuSku(null);
+
+		assertEquals(postSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Sku testGetDiscountSkuSku_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDiscountSkuSku() throws Exception {
+		Sku sku = testGraphQLSku_addSku();
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"discountSkuSku",
+								new HashMap<String, Object>() {
+									{
+										put("discountSkuId", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/discountSkuSku"))));
+	}
+
+	@Test
+	public void testGraphQLGetDiscountSkuSkuNotFound() throws Exception {
+		Long irrelevantDiscountSkuId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"discountSkuSku",
+						new HashMap<String, Object>() {
+							{
+								put("discountSkuId", irrelevantDiscountSkuId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetPriceEntryIdSku() throws Exception {
 		Sku postSku = testGetPriceEntryIdSku_addSku();
 

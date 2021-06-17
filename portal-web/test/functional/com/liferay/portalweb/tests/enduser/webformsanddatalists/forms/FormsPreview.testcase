@@ -105,7 +105,7 @@ definition {
 	@description = "Verify that a Color Field can be previewed"
 	@priority = "5"
 	test ColorFieldCanBePreviewed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -544,7 +544,7 @@ definition {
 	@description = "Verify that an Upload Field can be previewed"
 	@priority = "5"
 	test UploadFieldCanBePreviewed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -570,6 +570,10 @@ definition {
 		FormFields.viewLabel(
 			fieldLabel = "Upload",
 			fieldName = "Upload");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Test Help Text");
 
 		ItemSelector.gotoItemSelectorViaSelectButton();
 

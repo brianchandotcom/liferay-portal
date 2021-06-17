@@ -1,0 +1,181 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Navigator.gotoNavItem(navItem = "Data Providers");
+
+			FormsAdmin.teardownDataProviders();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Rule Condition can be deleted"
+	@ignore = "True"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134381 CanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that a Rule Condition can be edited"
+	@ignore = "True"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134380 CanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Contains' condition can be created"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAContainsRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134384 CanCreateAContainsRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Does not contains' condition can be created"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateADoesNotContainRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134385 CanCreateADoesNotContainRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Is empty' condition can be created"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnIsEmptyRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134386 CanCreateAnIsEmptyRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Is Equal to' condition can be created"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnIsEqualToRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134382 CanCreateAnIsEqualToRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Is greater than or equal to' condition is working fine on the numeric field"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnIsGreaterThanOrEqualToRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134391 CanCreateAnIsGreaterThanOrEqualToRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Is greater than' condition is working fine on the numeric field"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnIsGreaterThanRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134390 CanCreateAnIsGreaterThanRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Is less than or equal to' condition is working fine on the numeric field"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnIsLessThanOrEqualToRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134393 CanCreateAnIsLessThanOrEqualToRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Is less than' condition is working fine on the numeric field"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnIsLessThanRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134392 CanCreateAnIsLessThanRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Is not Equal to' condition can be created"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnIsNotEqualToRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134383 CanCreateAnIsNotEqualToRule pending implementation
+
+	}
+
+	@description = "Verify that the OR operator on Condition is working as expected"
+	@ignore = "True"
+	@priority = "5"
+	test CanCreateMultipleConditionsUsingOR {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134387 CanCreateMultipleConditionsUsingOR pending implementation
+
+	}
+
+	@description = "Verify that the OR operator on Condition is disabled by default"
+	@ignore = "True"
+	@priority = "5"
+	test OrOperatorisDisabledByDefault {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134388 OrOperatorisDisabledByDefault pending implementation
+
+	}
+
+}

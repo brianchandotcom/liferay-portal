@@ -66,7 +66,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Publish the fragment") {
-			Button.clickPublish();
+			PortletEntry.publish();
 		}
 
 		task ("Assert the fragment appears in Fragments Admin") {

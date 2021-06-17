@@ -568,12 +568,86 @@ definition {
 	}
 
 	@description = "LPS-89416 - Verify that updating a SLA will recalculate time for all instances In Progress"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test UpdatingSLARecalculateTimeInProgressInstances {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67872 UpdatingSLARecalculateTimeInProgressInstances pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "Test Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "Test",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Pause(locator1 = "50000");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		WorkflowMetrics.validateDueDateBySLA(
+			daysLeft = "0",
+			hoursLeft = "00",
+			minutesLeft = "00");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToEditSLA(slaName = "Test");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "Test Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "01:00",
+			slaDefinitionName = "Test",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickUpdate();
+
+		Pause(locator1 = "35000");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		WorkflowMetrics.validateDueDateBySLA(
+			daysLeft = "0",
+			hoursLeft = "00",
+			minutesLeft = "58");
 	}
 
 }

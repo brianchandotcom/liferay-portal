@@ -1073,6 +1073,14 @@ definition {
 		}
 	}
 
+	macro validateDueDateBySLA {
+		var key_days = "${daysLeft}";
+		var key_hours = "${hoursLeft}";
+		var key_mins = "${minutesLeft}";
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_ASSET_TIME_LEFT");
+	}
+
 	macro validateInstanceDetails {
 		var key_instanceId = "${instanceId}";
 		var key_slaMessage = "${slaMessage}";

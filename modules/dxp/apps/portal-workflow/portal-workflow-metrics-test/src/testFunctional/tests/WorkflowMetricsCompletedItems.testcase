@@ -37,16 +37,16 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		Click(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
+			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS",
 			value1 = "Last 30 Days");
 
 		Click(
 			completedItemsDateRange = "Last 7 Days",
-			locator1 = "WorkflowMetricsCompletedItems#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION");
+			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
 
 		AssertElementNotPresent(
 			completedItemsDateRange = "Last 30 Days",
-			locator1 = "WorkflowMetricsCompletedItems#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION");
+			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
 	}
 
 	@description = "LPS-87571 - Verify that the users are able to click on the metric cards from the Completed Items card and be directed to the All Items page"
@@ -146,11 +146,11 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN");
+		Click(locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
 
 		Click(
 			completedItemsDateRange = "Custom Range",
-			locator1 = "WorkflowMetricsCompletedItems#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION");
+			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
 
 		AssertElementPresent(
 			key_dateFormat = "Default date format is MM/DD/YYYY.",

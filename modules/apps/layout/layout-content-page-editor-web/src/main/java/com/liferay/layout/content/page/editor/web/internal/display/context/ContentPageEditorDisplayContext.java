@@ -528,6 +528,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"redirectURL", _getRedirect()
 			).put(
+				"relatedItemCollectionProvidersEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					relatedItemCollectionProvidersEnabled()
+			).put(
 				"renderFragmentEntryURL",
 				getResourceURL(
 					"/layout_content_page_editor/get_fragment_entry_link")

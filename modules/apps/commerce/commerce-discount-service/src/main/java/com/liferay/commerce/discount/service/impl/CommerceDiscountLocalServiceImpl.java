@@ -28,12 +28,24 @@ import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountExceptio
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.internal.search.CommerceDiscountIndexer;
 import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.model.CommerceDiscountAccountRelTable;
+import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRelTable;
+import com.liferay.commerce.discount.model.CommerceDiscountRelTable;
+import com.liferay.commerce.discount.model.CommerceDiscountTable;
 import com.liferay.commerce.discount.service.base.CommerceDiscountLocalServiceBaseImpl;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.util.comparator.CommerceDiscountCreateDateComparator;
+import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannelRelTable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -70,6 +82,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -643,6 +656,11 @@ public class CommerceDiscountLocalServiceImpl
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getAccountAndChannelCommerceDiscounts(long, long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
 		long commerceAccountId, long commerceChannelId, long cpDefinitionId) {
@@ -656,6 +674,19 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
+		long commerceAccountId, long commerceChannelId, long cpDefinitionId,
+		long cpInstanceId) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountTable.INSTANCE),
+				null, commerceAccountId, null, commerceChannelId,
+				cpDefinitionId, cpInstanceId));
+	}
+
+	@Override
+	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
 		long commerceAccountId, long commerceChannelId,
 		String commerceDiscountTargetType) {
 
@@ -663,6 +694,11 @@ public class CommerceDiscountLocalServiceImpl
 			commerceAccountId, commerceChannelId, commerceDiscountTargetType);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getAccountAndChannelCommerceDiscounts(long, long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceDiscount> getAccountCommerceDiscounts(
 		long commerceAccountId, long cpDefinitionId) {
@@ -676,12 +712,29 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Override
 	public List<CommerceDiscount> getAccountCommerceDiscounts(
+		long commerceAccountId, long cpDefinitionId, long cpInstanceId) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountTable.INSTANCE),
+				null, commerceAccountId, null, null, cpDefinitionId,
+				cpInstanceId));
+	}
+
+	@Override
+	public List<CommerceDiscount> getAccountCommerceDiscounts(
 		long commerceAccountId, String commerceDiscountTargetType) {
 
 		return commerceDiscountFinder.findByA_C_C_Order(
 			commerceAccountId, commerceDiscountTargetType);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getAccountGroupAndChannelCommerceDiscount(long[], long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
 		long[] commerceAccountGroupIds, long commerceChannelId,
@@ -697,6 +750,26 @@ public class CommerceDiscountLocalServiceImpl
 	@Override
 	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
 		long[] commerceAccountGroupIds, long commerceChannelId,
+		long cpDefinitionId, long cpInstanceId) {
+
+		LongStream longStream = Arrays.stream(commerceAccountGroupIds);
+
+		Long[] commerceAccountGroupIdObjs = longStream.boxed(
+		).toArray(
+			Long[]::new
+		);
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountTable.INSTANCE),
+				null, null, commerceAccountGroupIdObjs, commerceChannelId,
+				cpDefinitionId, cpInstanceId));
+	}
+
+	@Override
+	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
+		long[] commerceAccountGroupIds, long commerceChannelId,
 		String commerceDiscountTargetType) {
 
 		return commerceDiscountFinder.findByAG_C_C_C_Order(
@@ -704,6 +777,11 @@ public class CommerceDiscountLocalServiceImpl
 			commerceDiscountTargetType);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getAccountGroupCommerceDiscount(long[], long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
 		long[] commerceAccountGroupIds, long cpDefinitionId) {
@@ -713,6 +791,26 @@ public class CommerceDiscountLocalServiceImpl
 			_getAssetCategoryIds(cpDefinitionId),
 			_commercePricingClassLocalService.
 				getCommercePricingClassByCPDefinition(cpDefinitionId));
+	}
+
+	@Override
+	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
+		long[] commerceAccountGroupIds, long cpDefinitionId,
+		long cpInstanceId) {
+
+		LongStream longStream = Arrays.stream(commerceAccountGroupIds);
+
+		Long[] commerceAccountGroupIdObjs = longStream.boxed(
+		).toArray(
+			Long[]::new
+		);
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountTable.INSTANCE),
+				null, null, commerceAccountGroupIdObjs, null, cpDefinitionId,
+				cpInstanceId));
 	}
 
 	@Override
@@ -740,6 +838,11 @@ public class CommerceDiscountLocalServiceImpl
 			companyId, couponCode, active);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getChannelCommerceDiscounts(long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceDiscount> getChannelCommerceDiscounts(
 		long commerceChannelId, long cpDefinitionId) {
@@ -749,6 +852,18 @@ public class CommerceDiscountLocalServiceImpl
 			_getAssetCategoryIds(cpDefinitionId),
 			_commercePricingClassLocalService.
 				getCommercePricingClassByCPDefinition(cpDefinitionId));
+	}
+
+	@Override
+	public List<CommerceDiscount> getChannelCommerceDiscounts(
+		long commerceChannelId, long cpDefinitionId, long cpInstanceId) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountTable.INSTANCE),
+				null, null, null, commerceChannelId, cpDefinitionId,
+				cpInstanceId));
 	}
 
 	@Override
@@ -798,6 +913,11 @@ public class CommerceDiscountLocalServiceImpl
 				getCommercePricingClassByCPDefinition(cpDefinitionId));
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getUnqualifiedCommerceDiscounts(long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
 		long companyId, long cpDefinitionId) {
@@ -806,6 +926,17 @@ public class CommerceDiscountLocalServiceImpl
 			companyId, cpDefinitionId, _getAssetCategoryIds(cpDefinitionId),
 			_commercePricingClassLocalService.
 				getCommercePricingClassByCPDefinition(cpDefinitionId));
+	}
+
+	@Override
+	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
+		long companyId, long cpDefinitionId, long cpInstanceId) {
+
+		return dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceDiscountTable.INSTANCE),
+				companyId, null, null, null, cpDefinitionId, cpInstanceId));
 	}
 
 	@Override
@@ -1460,6 +1591,80 @@ public class CommerceDiscountLocalServiceImpl
 		}
 	}
 
+	private Predicate _buildCommerceDiscountTargetPredicate(
+		long cpDefinitionId, long cpInstanceId) {
+
+		Predicate predicate = CommerceDiscountTable.INSTANCE.target.eq(
+			CommerceDiscountConstants.TARGET_PRODUCTS
+		).and(
+			CommerceDiscountRelTable.INSTANCE.classPK.eq(cpDefinitionId)
+		).and(
+			CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+				classNameLocalService.getClassNameId(
+					CPDefinition.class.getName()))
+		);
+
+		predicate = predicate.or(
+			CommerceDiscountTable.INSTANCE.target.eq(
+				CommerceDiscountConstants.TARGET_SKUS
+			).and(
+				CommerceDiscountRelTable.INSTANCE.classPK.eq(cpInstanceId)
+			).and(
+				CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+					classNameLocalService.getClassNameId(
+						CPInstance.class.getName()))
+			));
+
+		LongStream assetCategoryIdsLongStream = Arrays.stream(
+			_getAssetCategoryIds(cpDefinitionId));
+
+		Long[] assetCategoryIds = assetCategoryIdsLongStream.boxed(
+		).toArray(
+			Long[]::new
+		);
+
+		if ((assetCategoryIds != null) && (assetCategoryIds.length > 0)) {
+			predicate = predicate.or(
+				CommerceDiscountTable.INSTANCE.target.eq(
+					CommerceDiscountConstants.TARGET_CATEGORIES
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classPK.in(
+						assetCategoryIds)
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+						classNameLocalService.getClassNameId(
+							AssetCategory.class.getName()))
+				));
+		}
+
+		LongStream commercePricingClassesLongStream = Arrays.stream(
+			_commercePricingClassLocalService.
+				getCommercePricingClassByCPDefinition(cpDefinitionId));
+
+		Long[] commercePricingClasses = commercePricingClassesLongStream.boxed(
+		).toArray(
+			Long[]::new
+		);
+
+		if ((commercePricingClasses != null) &&
+			(commercePricingClasses.length > 0)) {
+
+			predicate = predicate.or(
+				CommerceDiscountTable.INSTANCE.target.eq(
+					CommerceDiscountConstants.TARGET_PRODUCT_GROUPS
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classPK.in(
+						commercePricingClasses)
+				).and(
+					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+						classNameLocalService.getClassNameId(
+							CommercePricingClass.class.getName()))
+				));
+		}
+
+		return predicate.withParentheses();
+	}
+
 	private long[] _getAssetCategoryIds(long cpDefinitionId) {
 		try {
 			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
@@ -1484,6 +1689,107 @@ public class CommerceDiscountLocalServiceImpl
 		}
 
 		return new long[0];
+	}
+
+	private GroupByStep _getGroupByStep(
+		FromStep fromStep, Long companyId, Long commerceAccountId,
+		Long[] commerceAccountGroupIds, Long commerceChannelId,
+		Long cpDefinitionId, Long cpInstanceId) {
+
+		JoinStep joinStep = fromStep.from(CommerceDiscountTable.INSTANCE);
+
+		Predicate predicate = CommerceDiscountTable.INSTANCE.active.eq(true);
+
+		if (companyId != null) {
+			predicate = predicate.and(
+				CommerceDiscountTable.INSTANCE.companyId.eq(companyId));
+		}
+
+		if (commerceAccountId != null) {
+			joinStep = joinStep.innerJoinON(
+				CommerceDiscountAccountRelTable.INSTANCE,
+				CommerceDiscountAccountRelTable.INSTANCE.commerceDiscountId.eq(
+					CommerceDiscountTable.INSTANCE.commerceDiscountId));
+
+			predicate = predicate.and(
+				CommerceDiscountAccountRelTable.INSTANCE.commerceAccountId.eq(
+					commerceAccountId));
+		}
+		else {
+			joinStep = joinStep.leftJoinOn(
+				CommerceDiscountAccountRelTable.INSTANCE,
+				CommerceDiscountAccountRelTable.INSTANCE.commerceDiscountId.eq(
+					CommerceDiscountTable.INSTANCE.commerceDiscountId));
+
+			predicate = predicate.and(
+				CommerceDiscountAccountRelTable.INSTANCE.commerceAccountId.
+					isNull());
+		}
+
+		if ((commerceAccountGroupIds != null) &&
+			(commerceAccountGroupIds.length > 0)) {
+
+			joinStep = joinStep.innerJoinON(
+				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE,
+				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE.
+					commerceDiscountId.eq(
+						CommerceDiscountTable.INSTANCE.commerceDiscountId));
+
+			predicate = predicate.and(
+				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE.
+					commerceAccountGroupId.in(commerceAccountGroupIds));
+		}
+		else {
+			joinStep = joinStep.leftJoinOn(
+				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE,
+				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE.
+					commerceDiscountId.eq(
+						CommerceDiscountTable.INSTANCE.commerceDiscountId));
+
+			predicate = predicate.and(
+				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE.
+					commerceAccountGroupId.isNull());
+		}
+
+		if (commerceChannelId != null) {
+			joinStep = joinStep.innerJoinON(
+				CommerceChannelRelTable.INSTANCE,
+				CommerceChannelRelTable.INSTANCE.classPK.eq(
+					CommerceDiscountTable.INSTANCE.commerceDiscountId
+				).and(
+					CommerceChannelRelTable.INSTANCE.classNameId.eq(
+						classNameLocalService.getClassNameId(
+							CommerceDiscount.class.getName()))
+				));
+
+			predicate = predicate.and(
+				CommerceChannelRelTable.INSTANCE.commerceChannelId.eq(
+					commerceChannelId));
+		}
+		else {
+			joinStep = joinStep.leftJoinOn(
+				CommerceChannelRelTable.INSTANCE,
+				CommerceChannelRelTable.INSTANCE.classPK.eq(
+					CommerceDiscountTable.INSTANCE.commerceDiscountId
+				).and(
+					CommerceChannelRelTable.INSTANCE.classNameId.eq(
+						classNameLocalService.getClassNameId(
+							CommerceDiscount.class.getName()))
+				));
+
+			predicate = predicate.and(
+				CommerceChannelRelTable.INSTANCE.commerceChannelId.isNull());
+		}
+
+		joinStep = joinStep.innerJoinON(
+			CommerceDiscountRelTable.INSTANCE,
+			CommerceDiscountRelTable.INSTANCE.commerceDiscountId.eq(
+				CommerceDiscountTable.INSTANCE.commerceDiscountId));
+
+		return joinStep.where(
+			predicate.and(
+				_buildCommerceDiscountTargetPredicate(
+					cpDefinitionId, cpInstanceId)));
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

@@ -220,6 +220,22 @@ public class CommerceDiscountRelLocalServiceImpl
 			commerceDiscountId, name, languageId);
 	}
 
+	@Override
+	public List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku, int start, int end) {
+
+		return commerceDiscountRelFinder.findCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, start, end);
+	}
+
+	@Override
+	public int getCPInstancesByCommerceDiscountIdCount(
+		long commerceDiscountId, String sku) {
+
+		return commerceDiscountRelFinder.countCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku);
+	}
+
 	protected void reindexCommerceDiscount(long commerceDiscountId)
 		throws PortalException {
 

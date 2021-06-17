@@ -195,6 +195,22 @@ public class CommerceDiscountRelServiceImpl
 			commerceDiscountId, name, languageId, true);
 	}
 
+	@Override
+	public List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku, int start, int end) {
+
+		return commerceDiscountRelFinder.findCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, start, end, true);
+	}
+
+	@Override
+	public int getCPInstancesByCommerceDiscountIdCount(
+		long commerceDiscountId, String sku) {
+
+		return commerceDiscountRelFinder.countCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, true);
+	}
+
 	private static volatile ModelResourcePermission<CommerceDiscount>
 		_commerceDiscountResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

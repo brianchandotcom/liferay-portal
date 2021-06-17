@@ -21,6 +21,7 @@ import com.liferay.commerce.discount.model.impl.CommerceDiscountRelImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -53,6 +54,10 @@ public class CommerceDiscountRelFinderImpl
 		CommerceDiscountRelFinder.class.getName() +
 			".countCPDefinitionsByCommerceDiscountId";
 
+	public static final String COUNT_CP_INSTANCES_BY_COMMERCE_DISCOUNT_ID =
+		CommerceDiscountRelFinder.class.getName() +
+			".countCPInstancesByCommerceDiscountId";
+
 	public static final String COUNT_PRICING_CLASSES_BY_COMMERCE_DISCOUNT_ID =
 		CommerceDiscountRelFinder.class.getName() +
 			".countPricingClassesByCommerceDiscountId";
@@ -64,6 +69,10 @@ public class CommerceDiscountRelFinderImpl
 	public static final String FIND_CP_DEFINITIONS_BY_COMMERCE_DISCOUNT_ID =
 		CommerceDiscountRelFinder.class.getName() +
 			".findCPDefinitionsByCommerceDiscountId";
+
+	public static final String FIND_CP_INSTANCES_BY_COMMERCE_DISCOUNT_ID =
+		CommerceDiscountRelFinder.class.getName() +
+			".findCPInstancesByCommerceDiscountId";
 
 	public static final String FIND_PRICING_CLASSES_BY_COMMERCE_DISCOUNT_ID =
 		CommerceDiscountRelFinder.class.getName() +
@@ -200,6 +209,81 @@ public class CommerceDiscountRelFinderImpl
 				PortalUtil.getClassNameId(CPDefinition.class.getName()));
 
 			if (Validator.isNotNull(name)) {
+				queryPos.add(keywords, 2);
+			}
+
+			Iterator<Long> iterator = sqlQuery.iterate();
+
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku) {
+
+		return countCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, false);
+	}
+
+	@Override
+	public int countCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku, boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), COUNT_CP_INSTANCES_BY_COMMERCE_DISCOUNT_ID);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, CommerceDiscount.class.getName(),
+					"CommerceDiscount.commerceDiscountId", null, null,
+					new long[] {0}, null);
+			}
+
+			String[] keywords = _customSQL.keywords(sku, true);
+
+			if (Validator.isNotNull(sku)) {
+				sql = _customSQL.replaceKeywords(
+					sql, "(LOWER(CPInstance.sku)", StringPool.LIKE, true,
+					keywords);
+				sql = _customSQL.replaceAndOperator(sql, false);
+			}
+			else {
+				sql = StringUtil.removeSubstring(
+					sql,
+					" AND (LOWER(CPInstance.sku) LIKE ? " +
+						"[$AND_OR_NULL_CHECK$])");
+			}
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(commerceDiscountId);
+			queryPos.add(PortalUtil.getClassNameId(CPInstance.class.getName()));
+
+			if (Validator.isNotNull(sku)) {
 				queryPos.add(keywords, 2);
 			}
 
@@ -428,6 +512,75 @@ public class CommerceDiscountRelFinderImpl
 				PortalUtil.getClassNameId(CPDefinition.class.getName()));
 
 			if (Validator.isNotNull(name)) {
+				queryPos.add(keywords, 2);
+			}
+
+			return (List<CommerceDiscountRel>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<CommerceDiscountRel> findCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku, int start, int end) {
+
+		return findCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, start, end, false);
+	}
+
+	@Override
+	public List<CommerceDiscountRel> findCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku, int start, int end,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String[] keywords = _customSQL.keywords(sku, true);
+
+			String sql = _customSQL.get(
+				getClass(), FIND_CP_INSTANCES_BY_COMMERCE_DISCOUNT_ID);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, CommerceDiscount.class.getName(),
+					"CommerceDiscount.commerceDiscountId", null, null,
+					new long[] {0}, null);
+			}
+
+			if (Validator.isNotNull(sku)) {
+				sql = _customSQL.replaceKeywords(
+					sql, "(LOWER(CPInstance.sku)", StringPool.LIKE, true,
+					keywords);
+				sql = _customSQL.replaceAndOperator(sql, false);
+			}
+			else {
+				sql = StringUtil.removeSubstring(
+					sql,
+					" AND (LOWER(CPInstance.sku) LIKE ? " +
+						"[$AND_OR_NULL_CHECK$])");
+			}
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addEntity(
+				CommerceDiscountRelImpl.TABLE_NAME,
+				CommerceDiscountRelImpl.class);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(commerceDiscountId);
+			queryPos.add(PortalUtil.getClassNameId(CPInstance.class.getName()));
+
+			if (Validator.isNotNull(sku)) {
 				queryPos.add(keywords, 2);
 			}
 

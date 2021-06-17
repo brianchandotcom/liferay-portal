@@ -241,8 +241,6 @@ public class OrganizationIndexerIndexedFieldsTest {
 		).put(
 			Field.USER_ID, String.valueOf(organization.getUserId())
 		).put(
-			Field.USER_NAME, StringUtil.toLowerCase(organization.getUserName())
-		).put(
 			"country", _organizationFixture.getCountryNames(organization)
 		).put(
 			"nameTreePath", organization.getName()

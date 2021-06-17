@@ -141,6 +141,8 @@ definition {
 	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Process Name"
 	@priority = "3"
 	test CanOrderByProcessName {
+		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#CanOrderByProcessName";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -262,7 +264,7 @@ definition {
 	@description = "LPS-86638 - Verify that pagination follows in asc/desc sequence"
 	@priority = "3"
 	test PaginationFollowsAscDescSequence {
-		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationFollowsAscDescSequence";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -357,6 +359,8 @@ definition {
 	@description = "LPS-88573 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
 	@priority = "3"
 	test SavedOrderOptionStaysInMetricsContext {
+		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#SavedOrderOptionStaysInMetricsContext";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver A");
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver B");
@@ -481,6 +485,8 @@ definition {
 	@description = "LPS-88573 - Verify that the table entries are ordered by Overdue, from biggest to the smaller value, by default"
 	@priority = "3"
 	test TableIsOrderedByOverdueDesc {
+		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#TableIsOrderedByOverdueDesc";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Test Workflow");
 
 		ApplicationsMenu.gotoPortlet(

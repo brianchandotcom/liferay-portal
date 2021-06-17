@@ -74,6 +74,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -392,10 +394,12 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	private String _getMappedField(
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-		Locale locale, String mappedFieldName,
+		Locale locale, String template,
 		Function<Locale, String> defaultValueFunction) {
 
-		if (layoutDisplayPageObjectProvider == null) {
+		if ((layoutDisplayPageObjectProvider == null) ||
+			Validator.isNull(template)) {
+
 			return defaultValueFunction.apply(locale);
 		}
 
@@ -405,16 +409,33 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				portal.getClassName(
 					layoutDisplayPageObjectProvider.getClassNameId()));
 
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(
-				layoutDisplayPageObjectProvider.getDisplayObject(),
-				mappedFieldName);
+		StringBuffer sb = new StringBuffer();
 
-		if (infoFieldValue == null) {
-			return defaultValueFunction.apply(locale);
+		Matcher matcher = _pattern.matcher(template);
+
+		while (matcher.find()) {
+			String variableName = matcher.group(1);
+
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValuesProvider.getInfoItemFieldValue(
+					layoutDisplayPageObjectProvider.getDisplayObject(),
+					variableName);
+
+			if (infoFieldValue != null) {
+				matcher.appendReplacement(
+					sb,
+					Matcher.quoteReplacement(
+						String.valueOf(infoFieldValue.getValue(locale))));
+			}
+			else {
+				matcher.appendReplacement(
+					sb, Matcher.quoteReplacement(variableName));
+			}
 		}
 
-		return String.valueOf(infoFieldValue.getValue(locale));
+		matcher.appendTail(sb);
+
+		return sb.toString();
 	}
 
 	private LayoutQueryStringComposite
@@ -590,5 +611,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAssetDisplayPageFriendlyURLResolver.class);
+
+	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]+)\\}");
 
 }

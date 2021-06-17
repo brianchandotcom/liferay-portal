@@ -13,6 +13,7 @@
  */
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {config} from '../../config/index';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: [
@@ -24,6 +25,7 @@ const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	],
 	[LAYOUT_DATA_ITEM_TYPES.collection]: [],
 	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: [
+		LAYOUT_DATA_ITEM_TYPES.collection,
 		LAYOUT_DATA_ITEM_TYPES.container,
 		LAYOUT_DATA_ITEM_TYPES.row,
 		LAYOUT_DATA_ITEM_TYPES.fragment,
@@ -74,6 +76,7 @@ export default function checkAllowedChild(child, parent, layoutDataRef) {
 	})(parent);
 
 	if (
+		!config.relatedItemCollectionProvidersEnabled &&
 		parentIsInsideCollection &&
 		child.type === LAYOUT_DATA_ITEM_TYPES.collection
 	) {

@@ -1645,9 +1645,7 @@ definition {
 				configurationName = "Page Fragments",
 				configurationScope = "Virtual Instance Scope");
 
-			Check.checkNotVisible(
-				checkboxName = "Propagate Fragment Changes Automatically",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			FormFields.enableCheckbox(fieldName = "Propagate Fragment Changes Automatically");
 
 			SystemSettings.saveConfiguration();
 		}

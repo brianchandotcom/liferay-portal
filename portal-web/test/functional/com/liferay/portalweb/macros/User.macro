@@ -1937,9 +1937,18 @@ definition {
 
 		User.answerPasswordReminder();
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
+		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.firstLoginUI(
+				idpName = "${idpName}",
+				password = "${password}",
+				rememberMeChecked = "${rememberMeChecked}",
+				specificURL = "${virtualHostsURL}",
+				userEmailAddress = "${userEmailAddress}",
+				userScreenName = "${userScreenName}");
+		}
+		else {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+		}
 	}
 
 	@summary = "Log into Liferay using the UI"
@@ -2098,9 +2107,18 @@ definition {
 
 		User.answerPasswordReminder();
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
+		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.firstLoginUI(
+				idpName = "${idpName}",
+				password = "${password}",
+				rememberMeChecked = "${rememberMeChecked}",
+				specificURL = "${virtualHostsURL}",
+				userEmailAddress = "${userEmailAddress}",
+				userScreenName = "${userScreenName}");
+		}
+		else {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+		}
 	}
 
 	macro loginUserInvalidPG {

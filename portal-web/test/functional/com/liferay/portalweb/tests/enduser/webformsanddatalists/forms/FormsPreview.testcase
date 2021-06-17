@@ -834,14 +834,44 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test RichTextFieldCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133790 RichTextFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "tip");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewTextLabel(fieldLabel = "Rich Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Test Help Text");
+
+		FormFields.editFrameField(
+			fieldLabel = "Rich Text",
+			fielName = "Test");
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewRichTextValue(fieldValue = "Test");
 	}
 
 	@description = "Verify that a Select From List Field can be previewed"

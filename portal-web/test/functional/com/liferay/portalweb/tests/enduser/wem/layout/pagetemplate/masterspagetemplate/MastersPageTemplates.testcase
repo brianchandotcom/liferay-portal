@@ -543,6 +543,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-131982. Change master of content page with HTML title."
+	@priority = "3"
+	test ChangeMasterOfContentPageWithHTMLTitle {
+		task ("Add a page based on custom master") {
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			Button.click(button = "Publish Master");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+		}
+
+		task ("Verify Custom Masters Page Template is selected") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			AssertElementPresent(
+				key_card = "Custom Masters Page Template",
+				locator1 = "Card#CARD_SELECTED");
+		}
+
+		task ("Configure the HTML Title field") {
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "SEO");
+
+			PortletEntry.inputText(
+				fieldLabel = "HTML Title",
+				text = "Page HTML Title");
+
+			PortletEntry.save();
+		}
+
+		task ("Verify Custom Masters Page Template remains selected") {
+			Navigator.gotoBack();
+
+			ContentPages.clickPencil();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			AssertElementPresent(
+				key_card = "Custom Masters Page Template",
+				locator1 = "Card#CARD_SELECTED");
+		}
+	}
+
 	@description = "This is for LPS-102200. Can change master of a display page template among any existing masters."
 	@priority = "5"
 	test ChangeMasterOfDisplayPageTemplateAmongExistingMasters {

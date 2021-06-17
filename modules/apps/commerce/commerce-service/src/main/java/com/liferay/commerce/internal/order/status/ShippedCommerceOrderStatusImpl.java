@@ -101,8 +101,9 @@ public class ShippedCommerceOrderStatusImpl implements CommerceOrderStatus {
 		for (CommerceOrderItem shippedCommerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			if (shippedCommerceOrderItem.getShippedQuantity() <
-					shippedCommerceOrderItem.getQuantity()) {
+			if ((shippedCommerceOrderItem.getShippedQuantity() <
+					shippedCommerceOrderItem.getQuantity()) &&
+				shippedCommerceOrderItem.isShippable()) {
 
 				allOrderItemsShipped = false;
 			}
@@ -112,8 +113,7 @@ public class ShippedCommerceOrderStatusImpl implements CommerceOrderStatus {
 				CommerceOrderConstants.ORDER_STATUS_PROCESSING) ||
 			 (commerceOrder.getOrderStatus() ==
 				 CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED)) &&
-			(allOrderItemsShipped ||
-			 !_commerceShippingHelper.isShippable(commerceOrder))) {
+			allOrderItemsShipped) {
 
 			return true;
 		}

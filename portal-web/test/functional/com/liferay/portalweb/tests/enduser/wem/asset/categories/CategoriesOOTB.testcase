@@ -96,12 +96,12 @@ definition {
 
 		task ("Assert if Vocabulary is for internal use only") {
 			AssertElementPresent(
-				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE",
-				key_vocabularyName = "Audience");
+				key_vocabularyName = "Audience",
+				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE");
 
 			AssertElementPresent(
-				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE",
-				key_vocabularyName = "Stage");
+				key_vocabularyName = "Stage",
+				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE");
 		}
 
 		task ("Assert if Vocabulary allow multiple categories") {
@@ -127,7 +127,7 @@ definition {
 
 	@description = "When the user clicks on the link to documentation, the documentation link is opened"
 	@priority = "3"
-	test OpenLiferayLearnCategoriesVocabulariesPage{
+	test OpenLiferayLearnCategoriesVocabulariesPage {
 		task ("Click on the Documentation link") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 

@@ -429,6 +429,25 @@ public class CommerceDiscountRelLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+			getCPInstancesByCommerceDiscountId(
+				long commerceDiscountId, String sku, int start, int end) {
+
+		return _commerceDiscountRelLocalService.
+			getCPInstancesByCommerceDiscountId(
+				commerceDiscountId, sku, start, end);
+	}
+
+	@Override
+	public int getCPInstancesByCommerceDiscountIdCount(
+		long commerceDiscountId, String sku) {
+
+		return _commerceDiscountRelLocalService.
+			getCPInstancesByCommerceDiscountIdCount(commerceDiscountId, sku);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

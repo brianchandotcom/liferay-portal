@@ -171,6 +171,24 @@ public class CommerceDiscountRelServiceWrapper
 				commerceDiscountId, name, languageId);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+			getCPInstancesByCommerceDiscountId(
+				long commerceDiscountId, String sku, int start, int end) {
+
+		return _commerceDiscountRelService.getCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, start, end);
+	}
+
+	@Override
+	public int getCPInstancesByCommerceDiscountIdCount(
+		long commerceDiscountId, String sku) {
+
+		return _commerceDiscountRelService.
+			getCPInstancesByCommerceDiscountIdCount(commerceDiscountId, sku);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

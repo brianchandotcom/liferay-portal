@@ -609,6 +609,77 @@ public class CommerceDiscountRelServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+			getCPInstancesByCommerceDiscountId(
+				HttpPrincipal httpPrincipal, long commerceDiscountId,
+				String sku, int start, int end) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceDiscountRelServiceUtil.class,
+				"getCPInstancesByCommerceDiscountId",
+				_getCPInstancesByCommerceDiscountIdParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceDiscountId, sku, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.discount.model.CommerceDiscountRel>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCPInstancesByCommerceDiscountIdCount(
+		HttpPrincipal httpPrincipal, long commerceDiscountId, String sku) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceDiscountRelServiceUtil.class,
+				"getCPInstancesByCommerceDiscountIdCount",
+				_getCPInstancesByCommerceDiscountIdCountParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceDiscountId, sku);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountRelServiceHttp.class);
 
@@ -658,5 +729,13 @@ public class CommerceDiscountRelServiceHttp {
 	private static final Class<?>[]
 		_getCPDefinitionsByCommerceDiscountIdCountParameterTypes13 =
 			new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[]
+		_getCPInstancesByCommerceDiscountIdParameterTypes14 = new Class[] {
+			long.class, String.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getCPInstancesByCommerceDiscountIdCountParameterTypes15 = new Class[] {
+			long.class, String.class
+		};
 
 }

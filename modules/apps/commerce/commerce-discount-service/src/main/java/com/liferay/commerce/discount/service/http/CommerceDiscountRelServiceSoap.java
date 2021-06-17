@@ -348,6 +348,48 @@ public class CommerceDiscountRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.discount.model.CommerceDiscountRelSoap[]
+			getCPInstancesByCommerceDiscountId(
+				long commerceDiscountId, String sku, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.discount.model.CommerceDiscountRel>
+					returnValue =
+						CommerceDiscountRelServiceUtil.
+							getCPInstancesByCommerceDiscountId(
+								commerceDiscountId, sku, start, end);
+
+			return com.liferay.commerce.discount.model.CommerceDiscountRelSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCPInstancesByCommerceDiscountIdCount(
+			long commerceDiscountId, String sku)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceDiscountRelServiceUtil.
+					getCPInstancesByCommerceDiscountIdCount(
+						commerceDiscountId, sku);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountRelServiceSoap.class);
 

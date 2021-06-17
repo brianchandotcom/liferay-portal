@@ -421,23 +421,47 @@ public interface CommerceDiscountLocalService
 	public CommerceDiscount fetchCommerceDiscountByUuidAndCompanyId(
 		String uuid, long companyId);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountAndChannelCommerceDiscounts(long, long, long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
 		long commerceAccountId, long commerceChannelId, long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
+		long commerceAccountId, long commerceChannelId, long cpDefinitionId,
+		long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
 		long commerceAccountId, long commerceChannelId,
 		String commerceDiscountTargetType);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountAndChannelCommerceDiscounts(long, long, long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountCommerceDiscounts(
 		long commerceAccountId, long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountCommerceDiscounts(
+		long commerceAccountId, long cpDefinitionId, long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getAccountCommerceDiscounts(
 		long commerceAccountId, String commerceDiscountTargetType);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountGroupAndChannelCommerceDiscount(long[], long, long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
 		long[] commerceAccountGroupIds, long commerceChannelId,
@@ -446,11 +470,25 @@ public interface CommerceDiscountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
 		long[] commerceAccountGroupIds, long commerceChannelId,
+		long cpDefinitionId, long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
+		long[] commerceAccountGroupIds, long commerceChannelId,
 		String commerceDiscountTargetType);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountGroupCommerceDiscount(long[], long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
 		long[] commerceAccountGroupIds, long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
+		long[] commerceAccountGroupIds, long cpDefinitionId, long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
@@ -468,9 +506,18 @@ public interface CommerceDiscountLocalService
 	public int getActiveCommerceDiscountsCount(
 		long companyId, String couponCode, boolean active);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getChannelCommerceDiscounts(long, long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getChannelCommerceDiscounts(
 		long commerceChannelId, long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getChannelCommerceDiscounts(
+		long commerceChannelId, long cpDefinitionId, long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getChannelCommerceDiscounts(
@@ -580,9 +627,18 @@ public interface CommerceDiscountLocalService
 	public List<CommerceDiscount> getPriceListCommerceDiscounts(
 		long[] commerceDiscountIds, long cpDefinitionId);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getUnqualifiedCommerceDiscounts(long, long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
 		long companyId, long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
+		long companyId, long cpDefinitionId, long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(

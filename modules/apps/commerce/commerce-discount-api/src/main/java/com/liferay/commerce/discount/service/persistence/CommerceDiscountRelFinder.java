@@ -36,6 +36,12 @@ public interface CommerceDiscountRelFinder {
 		long commerceDiscountId, String name, String languageId,
 		boolean inlineSQLHelper);
 
+	public int countCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku);
+
+	public int countCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku, boolean inlineSQLHelper);
+
 	public int countPricingClassesByCommerceDiscountId(
 		long commerceDiscountId, String title);
 
@@ -64,6 +70,17 @@ public interface CommerceDiscountRelFinder {
 			findCPDefinitionsByCommerceDiscountId(
 				long commerceDiscountId, String name, String languageId,
 				int start, int end, boolean inlineSQLHelper);
+
+	public java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+			findCPInstancesByCommerceDiscountId(
+				long commerceDiscountId, String sku, int start, int end);
+
+	public java.util.List
+		<com.liferay.commerce.discount.model.CommerceDiscountRel>
+			findCPInstancesByCommerceDiscountId(
+				long commerceDiscountId, String sku, int start, int end,
+				boolean inlineSQLHelper);
 
 	public java.util.List
 		<com.liferay.commerce.discount.model.CommerceDiscountRel>

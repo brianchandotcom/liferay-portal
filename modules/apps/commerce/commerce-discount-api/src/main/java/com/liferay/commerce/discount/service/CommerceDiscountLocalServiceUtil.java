@@ -549,11 +549,24 @@ public class CommerceDiscountLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountAndChannelCommerceDiscounts(long, long, long, long)}
+	 */
+	@Deprecated
 	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
 		long commerceAccountId, long commerceChannelId, long cpDefinitionId) {
 
 		return getService().getAccountAndChannelCommerceDiscounts(
 			commerceAccountId, commerceChannelId, cpDefinitionId);
+	}
+
+	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
+		long commerceAccountId, long commerceChannelId, long cpDefinitionId,
+		long cpInstanceId) {
+
+		return getService().getAccountAndChannelCommerceDiscounts(
+			commerceAccountId, commerceChannelId, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
@@ -564,11 +577,23 @@ public class CommerceDiscountLocalServiceUtil {
 			commerceAccountId, commerceChannelId, commerceDiscountTargetType);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountAndChannelCommerceDiscounts(long, long, long, long)}
+	 */
+	@Deprecated
 	public static List<CommerceDiscount> getAccountCommerceDiscounts(
 		long commerceAccountId, long cpDefinitionId) {
 
 		return getService().getAccountCommerceDiscounts(
 			commerceAccountId, cpDefinitionId);
+	}
+
+	public static List<CommerceDiscount> getAccountCommerceDiscounts(
+		long commerceAccountId, long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getAccountCommerceDiscounts(
+			commerceAccountId, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getAccountCommerceDiscounts(
@@ -578,6 +603,11 @@ public class CommerceDiscountLocalServiceUtil {
 			commerceAccountId, commerceDiscountTargetType);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountGroupAndChannelCommerceDiscount(long[], long, long, long)}
+	 */
+	@Deprecated
 	public static List<CommerceDiscount>
 		getAccountGroupAndChannelCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
@@ -590,6 +620,16 @@ public class CommerceDiscountLocalServiceUtil {
 	public static List<CommerceDiscount>
 		getAccountGroupAndChannelCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
+			long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getAccountGroupAndChannelCommerceDiscount(
+			commerceAccountGroupIds, commerceChannelId, cpDefinitionId,
+			cpInstanceId);
+	}
+
+	public static List<CommerceDiscount>
+		getAccountGroupAndChannelCommerceDiscount(
+			long[] commerceAccountGroupIds, long commerceChannelId,
 			String commerceDiscountTargetType) {
 
 		return getService().getAccountGroupAndChannelCommerceDiscount(
@@ -597,11 +637,24 @@ public class CommerceDiscountLocalServiceUtil {
 			commerceDiscountTargetType);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getAccountGroupCommerceDiscount(long[], long, long)}
+	 */
+	@Deprecated
 	public static List<CommerceDiscount> getAccountGroupCommerceDiscount(
 		long[] commerceAccountGroupIds, long cpDefinitionId) {
 
 		return getService().getAccountGroupCommerceDiscount(
 			commerceAccountGroupIds, cpDefinitionId);
+	}
+
+	public static List<CommerceDiscount> getAccountGroupCommerceDiscount(
+		long[] commerceAccountGroupIds, long cpDefinitionId,
+		long cpInstanceId) {
+
+		return getService().getAccountGroupCommerceDiscount(
+			commerceAccountGroupIds, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getAccountGroupCommerceDiscount(
@@ -632,11 +685,23 @@ public class CommerceDiscountLocalServiceUtil {
 			companyId, couponCode, active);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getChannelCommerceDiscounts(long, long, long)}
+	 */
+	@Deprecated
 	public static List<CommerceDiscount> getChannelCommerceDiscounts(
 		long commerceChannelId, long cpDefinitionId) {
 
 		return getService().getChannelCommerceDiscounts(
 			commerceChannelId, cpDefinitionId);
+	}
+
+	public static List<CommerceDiscount> getChannelCommerceDiscounts(
+		long commerceChannelId, long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getChannelCommerceDiscounts(
+			commerceChannelId, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getChannelCommerceDiscounts(
@@ -784,11 +849,23 @@ public class CommerceDiscountLocalServiceUtil {
 			commerceDiscountIds, cpDefinitionId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getUnqualifiedCommerceDiscounts(long, long, long)}
+	 */
+	@Deprecated
 	public static List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
 		long companyId, long cpDefinitionId) {
 
 		return getService().getUnqualifiedCommerceDiscounts(
 			companyId, cpDefinitionId);
+	}
+
+	public static List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
+		long companyId, long cpDefinitionId, long cpInstanceId) {
+
+		return getService().getUnqualifiedCommerceDiscounts(
+			companyId, cpDefinitionId, cpInstanceId);
 	}
 
 	public static List<CommerceDiscount> getUnqualifiedCommerceDiscounts(

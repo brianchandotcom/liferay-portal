@@ -144,6 +144,20 @@ public class CommerceDiscountRelServiceUtil {
 			commerceDiscountId, name, languageId);
 	}
 
+	public static List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
+		long commerceDiscountId, String sku, int start, int end) {
+
+		return getService().getCPInstancesByCommerceDiscountId(
+			commerceDiscountId, sku, start, end);
+	}
+
+	public static int getCPInstancesByCommerceDiscountIdCount(
+		long commerceDiscountId, String sku) {
+
+		return getService().getCPInstancesByCommerceDiscountIdCount(
+			commerceDiscountId, sku);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

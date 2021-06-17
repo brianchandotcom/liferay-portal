@@ -30,12 +30,32 @@ definition {
 	}
 
 	@description = "LPS-86642 - Verify that, when the workflow has pending items, the columns are populated with numbers"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ColumnsWithNumbersWhenWorkflowHasPendingItems {
+		property portal.acceptance = "true";
 
-		// TODO LRQA-67555 ColumnsWithNumbersWhenWorkflowHasPendingItems pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.checkPendingWorkflowValues(
+			key_ontime = "0",
+			key_overdue = "0",
+			key_pending = "1",
+			key_untracked = "1");
 	}
 
 	@description = "LPS-86642 - Verify that, when the workflow has no pending items, the columns are populated with 0"

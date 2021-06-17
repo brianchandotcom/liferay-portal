@@ -16,7 +16,11 @@ import ClayLayout from '@clayui/layout';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
-import {CollectionItemContextProvider} from '../../contexts/CollectionItemContext';
+import {
+	CollectionItemContext,
+	CollectionItemContextProvider,
+	useToControlsId,
+} from '../../contexts/CollectionItemContext';
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -33,13 +37,15 @@ function getCollectionPrefix(collectionId, index) {
 	return `collection-${collectionId}-${index}${COLLECTION_ID_DIVIDER}`;
 }
 
-export function getToControlsId(collectionId, index) {
+export function getToControlsId(collectionId, index, toControlsId) {
 	return (itemId) => {
 		if (!itemId) {
 			return null;
 		}
 
-		return `${getCollectionPrefix(collectionId, index)}${itemId}`;
+		return toControlsId(
+			`${getCollectionPrefix(collectionId, index)}${itemId}`
+		);
 	};
 }
 
@@ -48,7 +54,9 @@ export function fromControlsId(controlsItemId) {
 		return null;
 	}
 
-	const [, itemId] = controlsItemId.split(COLLECTION_ID_DIVIDER);
+	const splits = controlsItemId.split(COLLECTION_ID_DIVIDER);
+
+	const itemId = splits.pop();
 
 	return itemId || controlsItemId;
 }
@@ -115,16 +123,17 @@ const ColumnContext = ({
 	collectionItem,
 	index,
 }) => {
+	const toControlsId = useToControlsId();
+
 	const contextValue = useMemo(
 		() => ({
 			collectionConfig,
 			collectionItem,
 			collectionItemIndex: index,
-			fromControlsId: index === 0 ? null : fromControlsId,
-			toControlsId:
-				index === 0 ? null : getToControlsId(collectionId, index),
+			fromControlsId,
+			toControlsId: getToControlsId(collectionId, index, toControlsId),
 		}),
-		[collectionConfig, collectionId, collectionItem, index]
+		[collectionConfig, collectionId, collectionItem, index, toControlsId]
 	);
 
 	return (

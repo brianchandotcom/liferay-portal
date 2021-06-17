@@ -41,12 +41,6 @@ const CollectionItemContext = React.createContext(INITIAL_STATE);
 
 const CollectionItemContextProvider = CollectionItemContext.Provider;
 
-const useFromControlsId = () => {
-	const context = useContext(CollectionItemContext);
-
-	return context.fromControlsId || defaultFromControlsId;
-};
-
 const useCollectionItemIndex = () => {
 	const context = useContext(CollectionItemContext);
 
@@ -222,7 +216,6 @@ export {
 	useGetContent,
 	useCollectionConfig,
 	useCollectionItemIndex,
-	useFromControlsId,
 	useToControlsId,
 	useGetFieldValue,
 };

@@ -22,7 +22,6 @@ import getDropTargetPosition from './getDropTargetPosition';
 import getTargetData from './getTargetData';
 import getTargetPositions from './getTargetPositions';
 import itemIsAncestor from './itemIsAncestor';
-import toControlsId from './toControlsId';
 import {initialDragDrop} from './useDragAndDrop';
 
 const ELEVATION_BORDER_SIZE = 15;
@@ -37,6 +36,7 @@ export default function defaultComputeHover({
 	sourceItem,
 	targetItem,
 	targetRefs,
+	toControlsId,
 }) {
 
 	// Not dragging over direct child
@@ -64,7 +64,8 @@ export default function defaultComputeHover({
 		siblingItem || targetItem,
 		monitor,
 		layoutDataRef,
-		targetRefs
+		targetRefs,
+		toControlsId
 	);
 
 	const [
@@ -76,7 +77,8 @@ export default function defaultComputeHover({
 		monitor,
 		layoutDataRef,
 		targetRefs,
-		orientation
+		orientation,
+		toControlsId
 	);
 
 	// Drop inside target
@@ -149,6 +151,7 @@ export default function defaultComputeHover({
 				? {
 						...layoutDataRef.current.items[sibling.parentId],
 						collectionItemIndex: sibling.collectionItemIndex,
+						toControlsId: sibling.toControlsId,
 				  }
 				: null;
 
@@ -158,7 +161,8 @@ export default function defaultComputeHover({
 					monitor,
 					layoutDataRef,
 					targetRefs,
-					orientation
+					orientation,
+					toControlsId
 				);
 
 				const [parentPositionWithMiddle] = getItemPosition(
@@ -166,7 +170,8 @@ export default function defaultComputeHover({
 					monitor,
 					layoutDataRef,
 					targetRefs,
-					orientation
+					orientation,
+					toControlsId
 				);
 
 				if (
@@ -210,13 +215,20 @@ export default function defaultComputeHover({
 				sourceItem,
 				targetItem: elevatedTargetItem,
 				targetRefs,
+				toControlsId,
 			});
 		}
 	}
 }
 
-function getOrientation(item, monitor, layoutDataRef, targetRefs) {
-	const targetRef = targetRefs.get(toControlsId(layoutDataRef, item));
+function getOrientation(
+	item,
+	monitor,
+	layoutDataRef,
+	targetRefs,
+	toControlsId
+) {
+	const targetRef = targetRefs.get(toControlsId(item.itemId));
 	const targetRect = targetRef.current.getBoundingClientRect();
 	const hoverMiddle = targetRect.left + targetRect.width / 2;
 	const clientOffsetX = monitor.getClientOffset().x;
@@ -241,9 +253,10 @@ function getItemPosition(
 	monitor,
 	layoutDataRef,
 	targetRefs,
-	orientation
+	orientation,
+	toControlsId
 ) {
-	const targetRef = targetRefs.get(toControlsId(layoutDataRef, item));
+	const targetRef = targetRefs.get(toControlsId(item.itemId));
 
 	if (!targetRef || !targetRef.current) {
 		return [null, null, 0];

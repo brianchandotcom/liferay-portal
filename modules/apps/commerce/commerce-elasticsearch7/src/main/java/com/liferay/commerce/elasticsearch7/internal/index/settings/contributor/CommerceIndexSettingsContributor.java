@@ -35,7 +35,7 @@ public class CommerceIndexSettingsContributor
 		String indexName, TypeMappingsHelper typeMappingsHelper) {
 
 		String typeMappings = StringUtil.read(
-			getClass(), "dependencies/AdditionalTypeMappings.json");
+			getClass(), "dependencies/additional-type-mappings.json");
 
 		typeMappingsHelper.addTypeMappings(indexName, typeMappings);
 	}

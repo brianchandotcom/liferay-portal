@@ -35,7 +35,7 @@ public class RedirectIndexSettingsContributor
 		typeMappingsHelper.addTypeMappings(
 			indexName,
 			StringUtil.read(
-				getClass(), "dependencies/AdditionalTypeMappings.json"));
+				getClass(), "dependencies/additional-type-mappings.json"));
 	}
 
 	@Override

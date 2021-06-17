@@ -101,6 +101,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_DROPDOWN_PAUSE</td>
+	<td>//ul[contains(@id,'dropDownListpause')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DROPDOWN_START</td>
+	<td>//ul[contains(@id,'dropDownListstart')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DROPDOWN_STOP</td>
+	<td>//ul[contains(@id,'dropDownListstop')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_DROPDOWN_PAUSE_OPTION</td>
 	<td>//ul[@id="dropDownListpause"]//span[contains(text(),'${key_slaDefinitionPause}')]</td>
 	<td></td>

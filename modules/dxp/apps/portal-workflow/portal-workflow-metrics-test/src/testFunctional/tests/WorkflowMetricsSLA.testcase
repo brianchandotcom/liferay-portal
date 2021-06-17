@@ -224,12 +224,41 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to navigate from the input field to the dropdown list vertically by using up/down keys"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test MultiSelectFieldsAllowNavigationByUpDownKeys {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67876 MultiSelectFieldsAllowNavigationByUpDownKeys pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		KeyPress.keyDown(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START",
+			value1 = "\COMMAND");
+
+		KeyPress.keyUp(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START",
+			value1 = "\COMMAND");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		KeyPress.keyDown(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE",
+			value1 = "\COMMAND");
+
+		KeyPress.keyUp(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE",
+			value1 = "\COMMAND");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+
+		KeyPress.keyDown(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP",
+			value1 = "\COMMAND");
+
+		KeyPress.keyUp(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP",
+			value1 = "\COMMAND");
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields filter the dropdown list according to search terms"

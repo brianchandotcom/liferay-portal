@@ -150,7 +150,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		portal.setPageDescription(
 			HtmlUtil.unescape(
 				HtmlUtil.stripHtml(
-					_getMappedField(
+					_processMappedFieldTemplate(
 						layoutDisplayPageObjectProvider, locale,
 						layout.getTypeSettingsProperty("mapped-description"),
 						layoutDisplayPageObjectProvider::getDescription))),
@@ -160,7 +160,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			layoutDisplayPageObjectProvider.getKeywords(locale),
 			httpServletRequest);
 		portal.setPageTitle(
-			_getMappedField(
+			_processMappedFieldTemplate(
 				layoutDisplayPageObjectProvider, locale,
 				layout.getTypeSettingsProperty("mapped-title"),
 				layoutDisplayPageObjectProvider::getTitle),
@@ -392,7 +392,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return layoutDisplayPageProvider;
 	}
 
-	private String _getMappedField(
+	private String _processMappedFieldTemplate(
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 		Locale locale, String template,
 		Function<Locale, String> defaultValueFunction) {

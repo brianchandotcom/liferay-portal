@@ -604,19 +604,14 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		task ("Add a web content template for new structure") {
 			NavItem.gotoTemplates();
 
-			LexiconEntry.gotoAdd();
-
-			WebContentTemplates.inputTemplateAddScreenFields(
-				structureName = "WC Structure Name",
-				templateName = "WC Template Name");
-
 			var instanceId = StringUtil.randomString("12");
 
 			var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_journal_content_web_portlet_JournalContentPortlet" instanceId="${instanceId}" />''';
 
-			WebContentTemplates.inputScript(templateScript = "${templateScript}");
-
-			PortletEntry.save();
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name",
+				templateScript = "${templateScript}");
 		}
 
 		task ("Add a web content based on new structure") {

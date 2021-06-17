@@ -70,8 +70,9 @@ public class ConfigurationEnvBuilder {
 						"configuration.override.", fullyQualifiedName,
 						StringPool.UNDERLINE, matcher.group(1));
 
-					sb.append("\n    # ");
+					sb.append("\n    #");
 					sb.append(configurationKey);
+					sb.append(StringPool.EQUAL);
 				}
 			}
 		}

@@ -1,0 +1,159 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Navigator.gotoNavItem(navItem = "Element Sets");
+
+			FormsAdmin.teardownElementSets();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that the backspace function can delete all entries in the Calculator"
+	@ignore = "True"
+	@priority = "5"
+	test BackspaceCanDeleteAllEntriesInCalculator {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134405 BackspaceCanDeleteAllEntriesInCalculator pending implementation
+
+	}
+
+	@description = "Verify that a Rule Action can be deleted"
+	@ignore = "True"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134397 CanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that a Rule Action can be edited"
+	@ignore = "True"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134396 CanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Jump to page' action can be created"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAJumpToPageRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134406 CanCreateAJumpToPageRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Enable' action can be created"
+	@ignore = "True"
+	@priority = "4"
+	test CanCreateAnEnableRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134400 CanCreateAnEnableRule pending implementation
+
+	}
+
+	@description = "Verify that a Rule with more than one Action can be created"
+	@ignore = "True"
+	@priority = "5"
+	test CanCreateARuleWithMoreThanOneAction {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134398 CanCreateARuleWithMoreThanOneAction pending implementation
+
+	}
+
+	@description = "Verify that a Rule with 'Show' action can be created"
+	@ignore = "True"
+	@priority = "5"
+	test CanCreateAShowRule {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134399 CanCreateAShowRule pending implementation
+
+	}
+
+	@description = "Verify that a Calculate Rule can be created using the decimal point"
+	@ignore = "True"
+	@priority = "5"
+	test CanIncludeDecimalPointInCalculations {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134403 CanIncludeDecimalPointInCalculations pending implementation
+
+	}
+
+	@description = "Verify that a Calculate Rule can be created using Numeric Fields in the calculation"
+	@ignore = "True"
+	@priority = "5"
+	test CanIncludeNumericFieldsInCalculations {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134401 CanIncludeNumericFieldsInCalculations pending implementation
+
+	}
+
+	@description = "Verify that a Calculate Rule can be created using all operators (+, -, *, /)"
+	@ignore = "True"
+	@priority = "5"
+	test CanIncludeOperatorsInCalculations {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134402 CanIncludeOperatorsInCalculations pending implementation
+
+	}
+
+	@description = "Verify that a Calculate Rule can be created using the parenthesis"
+	@ignore = "True"
+	@priority = "5"
+	test CanIncludeParenthesisInCalculations {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-134404 CanIncludeParenthesisInCalculations pending implementation
+
+	}
+
+}

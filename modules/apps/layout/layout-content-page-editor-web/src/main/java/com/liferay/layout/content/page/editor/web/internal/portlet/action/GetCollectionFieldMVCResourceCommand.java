@@ -297,6 +297,9 @@ public class GetCollectionFieldMVCResourceCommand
 			displayObjectJSONObject.put(
 				"className", infoItemReference.getClassName()
 			).put(
+				"classNameId",
+				_portal.getClassNameId(infoItemReference.getClassName())
+			).put(
 				"classPK", infoItemReference.getClassPK()
 			);
 		}

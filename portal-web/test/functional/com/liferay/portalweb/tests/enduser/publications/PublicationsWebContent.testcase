@@ -29,6 +29,111 @@ definition {
 		}
 	}
 
+	@description = "Manage Conflicting Web Content Folder changes and discard the changes."
+	@priority = "4"
+	test ManageConflictingWebContentFolderchanges {
+		property test.assert.warning.exceptions = "true";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Site Name");
+
+		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.moveToFolderCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentFolder.gotoEditCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name");
+
+		PortletEntry.inputName(name = "WC Folder Name Edited");
+
+		PortletEntry.save();
+
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Web Content Folder",
+			changeSite = "Site Name",
+			changeTitle = "WC Folder Name Edited",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentFolder.moveToRecycleBinCP(
+			assetType = "Web Content Folder",
+			folderName = "WC Folder Name");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.deleteCP(
+			assetName = "WC Folder Name",
+			assetType = "Web Content Folder");
+
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Web Content Folder",
+			changeSite = "Site Name",
+			changeTitle = "WC Folder Name",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertTextNotPresent(
+			locator1 = "WC#ENTRY_LIST_TITLE",
+			value1 = "Web Content Folder");
+
+		Publications.gotoPublish(publicationName = "Publication 1 Name");
+
+		Publications.discardChanges(
+			changeCategory = "WC Folder Name",
+			changeTitle = "WC Folder Name Edited",
+			conflictingChanges = "true",
+			entryTitle = "WC Folder Name Edited");
+
+		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertTextNotPresent(
+			locator1 = "WC#ENTRY_LIST_TITLE",
+			value1 = "Web Content Folder");
+	}
+
 	@priority = "4"
 	test PublishExpiredWebContentViaWCD {
 		JSONPublications.addPublication(publicationName = "Publication Name");

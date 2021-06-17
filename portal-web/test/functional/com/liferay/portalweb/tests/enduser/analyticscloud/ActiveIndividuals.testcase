@@ -32,7 +32,6 @@ definition {
 	@description = "Set custom range filter with data for individual activity"
 	@priority = "5"
 	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
-		ACUtils.addSiteAndPage();
 		ACUtils.createDMAndAddToPage();
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

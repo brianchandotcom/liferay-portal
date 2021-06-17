@@ -52,8 +52,17 @@ public class PortalFixpackReleasePortalTopLevelBuild
 				"Invalid portal version: " + portalVersion);
 		}
 
-		return JenkinsResultsParserUtil.combine(
+		String branchName = JenkinsResultsParserUtil.combine(
 			matcher.group("major"), ".", matcher.group("minor"), ".x");
+
+		if (branchName.equals("6.1.x")) {
+			return "ee-6.1.30";
+		}
+		else if (branchName.equals("6.2.x")) {
+			return "ee-6.2.10";
+		}
+
+		return branchName;
 	}
 
 	@Override

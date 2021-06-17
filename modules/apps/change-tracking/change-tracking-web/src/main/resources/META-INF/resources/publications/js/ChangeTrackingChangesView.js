@@ -1745,15 +1745,11 @@ export default ({
 		if (node.ctEntryId) {
 			const url = setParameter(
 				dataURL,
-				'ctEntryId',
-				node.ctEntryId.toString()
+				'activeCTCollection',
+				activeCTCollection.toString()
 			);
 
-			if (activeCTCollection) {
-				return setParameter(url, 'getURLs', true.toString());
-			}
-
-			return url;
+			return setParameter(url, 'ctEntryId', node.ctEntryId.toString());
 		}
 
 		const url = setParameter(

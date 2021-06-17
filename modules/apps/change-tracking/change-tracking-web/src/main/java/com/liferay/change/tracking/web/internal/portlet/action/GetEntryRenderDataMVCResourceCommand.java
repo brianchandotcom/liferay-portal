@@ -191,10 +191,10 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassPK());
 
 			if (rightModel != null) {
-				boolean getURLs = ParamUtil.getBoolean(
-					resourceRequest, "getURLs");
+				boolean activeCTCollection = ParamUtil.getBoolean(
+					resourceRequest, "activeCTCollection");
 
-				if (getURLs) {
+				if (activeCTCollection) {
 					String editURL = ctDisplayRenderer.getEditURL(
 						httpServletRequest, rightModel);
 

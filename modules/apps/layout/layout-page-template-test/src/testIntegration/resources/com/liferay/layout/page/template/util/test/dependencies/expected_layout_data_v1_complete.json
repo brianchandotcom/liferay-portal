@@ -28,29 +28,10 @@
 						"title": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938",
 						"url": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938"
 					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
 					"paddingBottom": 4,
 					"paddingLeft": 4,
 					"paddingRight": 4,
-					"paddingTop": 4,
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
+					"paddingTop": 4
 				},
 				"tablet": {
 					"styles": {
@@ -84,31 +65,10 @@
 				},
 				"styles": {
 					"backgroundColor": "#287D3C",
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
 					"paddingBottom": 3,
 					"paddingLeft": 3,
 					"paddingRight": 3,
-					"paddingTop": 3,
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
+					"paddingTop": 3
 				},
 				"tablet": {
 					"styles": {
@@ -147,29 +107,10 @@
 						"title": "pexels-photo-255379.jpeg",
 						"url": "/documents/20118/0/pexels-photo-255379.jpeg/cfbc6f74-db17-9786-6102-d94835d8ef23?version=1.0&t=1573045173699&download=true"
 					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
 					"paddingBottom": 3,
 					"paddingLeft": 3,
 					"paddingRight": 3,
-					"paddingTop": 3,
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
+					"paddingTop": 3
 				},
 				"tablet": {
 					"styles": {
@@ -210,29 +151,10 @@
 						"classPK": "38526",
 						"fieldId": "smallImage"
 					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
 					"paddingBottom": 3,
 					"paddingLeft": 3,
 					"paddingRight": 3,
-					"paddingTop": 3,
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
+					"paddingTop": 3
 				},
 				"tablet": {
 					"styles": {
@@ -258,31 +180,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -307,31 +204,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -356,31 +228,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -405,31 +252,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -454,31 +276,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -503,31 +300,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -552,31 +324,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -601,31 +348,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -650,31 +372,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -740,31 +437,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -816,31 +488,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -877,31 +524,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -938,31 +560,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {

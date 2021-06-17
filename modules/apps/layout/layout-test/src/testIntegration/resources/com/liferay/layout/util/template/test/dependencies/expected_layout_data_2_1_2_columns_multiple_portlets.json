@@ -30,31 +30,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -85,37 +60,11 @@
 				},
 				"reverseOrder": false,
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
 					}
-				},
-				"verticalAlignment": "top"
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0",
 			"parentId": "ROOT-CONTAINER0",
@@ -153,31 +102,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -202,31 +126,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -269,31 +168,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -318,31 +192,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -371,37 +220,11 @@
 				},
 				"reverseOrder": false,
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
 					}
-				},
-				"verticalAlignment": "top"
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW1",
 			"parentId": "ROOT-CONTAINER0",
@@ -439,31 +262,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -488,31 +286,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -542,37 +315,11 @@
 				},
 				"reverseOrder": false,
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
 					}
-				},
-				"verticalAlignment": "top"
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW2",
 			"parentId": "ROOT-CONTAINER0",
@@ -610,31 +357,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -659,31 +381,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -726,31 +423,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {
@@ -775,31 +447,6 @@
 					}
 				},
 				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
 				},
 				"tablet": {
 					"styles": {

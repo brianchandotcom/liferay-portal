@@ -15,31 +15,6 @@
 	},
 	"reverseOrder": false,
 	"styles": {
-		"backgroundImage": {
-		},
-		"borderRadius": "",
-		"borderWidth": 0,
-		"fontFamily": "",
-		"fontSize": "",
-		"fontWeight": "",
-		"height": "",
-		"marginBottom": "",
-		"marginLeft": "",
-		"marginRight": "",
-		"marginTop": "",
-		"maxHeight": "",
-		"maxWidth": "",
-		"minHeight": "",
-		"minWidth": "",
-		"opacity": 100,
-		"overflow": "",
-		"paddingBottom": "",
-		"paddingLeft": "",
-		"paddingRight": "",
-		"paddingTop": "",
-		"shadow": "",
-		"textAlign": "",
-		"width": ""
 	},
 	"tablet": {
 		"modulesPerRow": 2,
@@ -47,6 +22,5 @@
 		"styles": {
 		},
 		"verticalAlignment": "middle"
-	},
-	"verticalAlignment": "top"
+	}
 }

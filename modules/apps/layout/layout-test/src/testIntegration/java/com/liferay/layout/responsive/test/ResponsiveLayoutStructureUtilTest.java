@@ -190,12 +190,6 @@ public class ResponsiveLayoutStructureUtilTest {
 				continue;
 			}
 
-			String alignClassName =
-				"align-items" + viewportSize.getCssClassPrefix();
-
-			Assert.assertThat(
-				content, CoreMatchers.containsString(alignClassName));
-
 			String flexClassName =
 				"flex" + viewportSize.getCssClassPrefix() + "row";
 

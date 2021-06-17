@@ -618,7 +618,7 @@ definition {
 	@priority = "4"
 	test KeepInfomationOfDeleteVocabularyInSegment {
 		property test.name.skip.portal.instance = "ContentDashboardAuditGraph#KeepInfomationOfDeleteVocabularyInSegment";
-		
+
 		task ("Set Session Property Vocabulary") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",

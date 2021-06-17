@@ -729,7 +729,15 @@ definition {
 			locator1 = "TextInput#PIWIK",
 			value1 = "${piwik}");
 
-		PortletEntry.save();
+		Button.click(button = "Save");
+
+		if (isSet(confirmationText)) {
+			AssertConfirm(value1 = "${confirmationText}");
+		}
+
+		Alert.viewSuccessMessage();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro getSiteId {

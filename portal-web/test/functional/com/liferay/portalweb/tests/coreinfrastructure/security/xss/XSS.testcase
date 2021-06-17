@@ -239,14 +239,18 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
-	@description = "This is a use case for LPS-123822 and LPS-127611."
+	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261."
 	@priority = "3"
 	test ViewPiwik {
+		property test.name.skip.portal.instance = "XSS#ViewPiwik";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
-		Site.editPiwikCP(piwik = '''<script>alert(123);</script>''');
+		Site.editPiwikCP(
+			confirmationText = "123",
+			piwik = '''<script>alert(123);</script>''');
 
 		Open.openNoError(locator1 = "${portalURL}");
 

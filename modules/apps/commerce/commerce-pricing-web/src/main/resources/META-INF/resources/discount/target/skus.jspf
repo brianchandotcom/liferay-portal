@@ -53,8 +53,7 @@
 				}
 
 				itemFinder.default('itemFinder', 'item-finder-root', {
-					apiUrl:
-						'/o/headless-commerce-admin-catalog/v1.0/skus?nestedFields=catalog',
+					apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus?nestedFields=catalog',
 					getSelectedItems: getSelectedItems,
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-sku") %>',
 					itemCreation: false,

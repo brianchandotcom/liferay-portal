@@ -18,6 +18,7 @@ export {default as discountAccountGroupAPI} from './DiscountAccountGroup';
 export {default as discountCategoryAPI} from './DiscountCategory';
 export {default as discountChannelAPI} from './DiscountChannel';
 export {default as discountProductAPI} from './DiscountProduct';
+export {default as discountSkuAPI} from './DiscountSku';
 export {default as discountProductGroupAPI} from './DiscountProductGroup';
 export {default as discountRuleAPI} from './DiscountRule';
 export {default as priceEntryAPI} from './PriceEntry';

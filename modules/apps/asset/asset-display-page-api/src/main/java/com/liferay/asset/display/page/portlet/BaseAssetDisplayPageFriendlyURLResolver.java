@@ -392,52 +392,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return layoutDisplayPageProvider;
 	}
 
-	private String _processMappedFieldTemplate(
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-		Locale locale, String template,
-		Function<Locale, String> defaultValueFunction) {
-
-		if ((layoutDisplayPageObjectProvider == null) ||
-			Validator.isNull(template)) {
-
-			return defaultValueFunction.apply(locale);
-		}
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				portal.getClassName(
-					layoutDisplayPageObjectProvider.getClassNameId()));
-
-		StringBuffer sb = new StringBuffer();
-
-		Matcher matcher = _pattern.matcher(template);
-
-		while (matcher.find()) {
-			String variableName = matcher.group(1);
-
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValuesProvider.getInfoItemFieldValue(
-					layoutDisplayPageObjectProvider.getDisplayObject(),
-					variableName);
-
-			if (infoFieldValue != null) {
-				matcher.appendReplacement(
-					sb,
-					Matcher.quoteReplacement(
-						String.valueOf(infoFieldValue.getValue(locale))));
-			}
-			else {
-				matcher.appendReplacement(
-					sb, Matcher.quoteReplacement(variableName));
-			}
-		}
-
-		matcher.appendTail(sb);
-
-		return sb.toString();
-	}
-
 	private LayoutQueryStringComposite
 		_getPortletFriendlyURLMapperLayoutQueryStringComposite(
 			String url, Map<String, String[]> params,
@@ -607,6 +561,52 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		return GetterUtil.getLong(versions[0]);
+	}
+
+	private String _processMappedFieldTemplate(
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		Locale locale, String template,
+		Function<Locale, String> defaultValueFunction) {
+
+		if ((layoutDisplayPageObjectProvider == null) ||
+			Validator.isNull(template)) {
+
+			return defaultValueFunction.apply(locale);
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				portal.getClassName(
+					layoutDisplayPageObjectProvider.getClassNameId()));
+
+		StringBuffer sb = new StringBuffer();
+
+		Matcher matcher = _pattern.matcher(template);
+
+		while (matcher.find()) {
+			String variableName = matcher.group(1);
+
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValuesProvider.getInfoItemFieldValue(
+					layoutDisplayPageObjectProvider.getDisplayObject(),
+					variableName);
+
+			if (infoFieldValue != null) {
+				matcher.appendReplacement(
+					sb,
+					Matcher.quoteReplacement(
+						String.valueOf(infoFieldValue.getValue(locale))));
+			}
+			else {
+				matcher.appendReplacement(
+					sb, Matcher.quoteReplacement(variableName));
+			}
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -177,6 +177,10 @@ definition {
 			key_itemName = "Blogs Entry: Second Blogs Entry Title",
 			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
 
+		AssertElementNotPresent(
+			key_itemName = "Blogs Entry: First Blogs Entry Title",
+			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
+
 		Click(locator1 = "WorkflowReassignModal#CLEAR_SEARCH_MODAL_BUTTON");
 
 		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
@@ -189,6 +193,10 @@ definition {
 
 		AssertElementPresent(
 			key_itemName = "Blogs Entry: First Blogs Entry Title",
+			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
+
+		AssertElementNotPresent(
+			key_itemName = "Blogs Entry: Second Blogs Entry Title",
 			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
 	}
 

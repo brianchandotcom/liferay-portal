@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -92,20 +92,21 @@ const CheckboxMultiple = ({
 
 	return (
 		<div className="lfr-ddm-checkbox-multiple">
-			{options.map((option) => (
+			{options.map((option, index) => (
 				<Toggle
 					checked={displayValues.includes(option.value)}
 					disabled={disabled}
 					inline={inline}
 					key={option.value}
 					label={option.label}
-					name={name}
+					name={`${name}_${index}`}
 					onBlur={onBlur}
 					onChange={handleChange}
 					onFocus={onFocus}
 					value={option.value}
 				/>
 			))}
+			<ClayInput name={name} type="hidden" value={value} />
 		</div>
 	);
 };

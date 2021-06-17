@@ -584,10 +584,10 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
-	@description = "This is a test for LPS-129944. Should be configure WCD when selected web content based on template with embedded widget."
+	@description = "This is a test for LPS-129944. The user could configure WCD when selected web content based on template with embedded widget."
 	@priority = "4"
 	test ConfigureWCDWhenSelectedWebContentBasedOnTemplateWithEmbeddedWidget {
-		task ("Add Web Content Structure") {
+		task ("Add a web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
@@ -601,7 +601,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			WebContentStructures.saveCP();
 		}
 
-		task ("Add Web Content Template based on the Structure") {
+		task ("Add a web content template for new structure") {
 			NavItem.gotoTemplates();
 
 			LexiconEntry.gotoAdd();
@@ -619,7 +619,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			PortletEntry.save();
 		}
 
-		task ("Add Web Content based on the Structure") {
+		task ("Add a web content based on new structure") {
 			NavItem.gotoWebContent();
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
@@ -637,7 +637,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				layoutName = "Test Page Name");
 		}
 
-		task ("Add the web content via Content tab of Add panel") {
+		task ("Add the web content to page via Content tab of Add panel") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -647,7 +647,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				pageName = "Test Page Name");
 		}
 
-		task ("Configure the WCD to Related Assets") {
+		task ("Enable the Related Assets in WCD") {
 			Portlet.gotoPortletOptions(
 				portletName = "Web Content Display",
 				portletOption = "Configuration");
@@ -659,7 +659,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			IFrame.closeFrame();
 		}
 
-		task ("View Web Content Title on WCD") {
+		task ("View the web content shown on WCD") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCD#WEB_CONTENT_TITLE",
 				value1 = "WC WebContent Title");

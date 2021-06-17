@@ -85,14 +85,40 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133869 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Text",
+			key_fieldName = "Numeric");
+
+		FormFields.viewLabel(
+			fieldLabel = "Fields Group",
+			fieldName = "Fields Group");
+
+		Form.assertFieldPositionAtFormsGroupOnPublishedForm(
+			key_formPageNumber = "0",
+			key_rowNumber = "0",
+			key_text = "Text");
+
+		Form.assertFieldPositionAtFormsGroupOnPublishedForm(
+			key_formPageNumber = "0",
+			key_rowNumber = "1",
+			key_text = "Numeric");
 	}
 
 	@description = "Verify that a Fields Group can be created from an existing Field"

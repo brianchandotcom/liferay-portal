@@ -400,6 +400,19 @@ public class PropsUtil {
 
 		SystemProperties.set(PropsKeys.LIFERAY_LIB_PORTAL_DIR, portalLibDir);
 
+		// Portal shielded container lib directory
+
+		String portalShieldedContainerLibDirProperty = System.getProperty(
+			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR);
+
+		if (portalShieldedContainerLibDirProperty == null) {
+			portalShieldedContainerLibDirProperty = portalLibDir;
+		}
+
+		SystemProperties.set(
+			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
+			portalShieldedContainerLibDirProperty);
+
 		// Portal web directory
 
 		String portalWebDir = WebDirDetector.getRootDir(portalLibDir);

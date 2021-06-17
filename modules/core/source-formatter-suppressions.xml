@@ -8,5 +8,6 @@
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="portal-bootstrap/system.packages.extra.bnd" />
 		<suppress checks="JavaDiamondOperatorCheck" files="registry-impl/src/main/java/com/liferay/registry/internal/RegistryImpl\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="portal-jsp-engine/src/main/java/com/liferay/portal/jsp/engine/internal/delegate/JspConfigDescriptorServletContextDelegate\.java" />
 	</source-check>
 </suppressions>

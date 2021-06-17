@@ -1639,7 +1639,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
 
 			Path staticJarPath = Paths.get(
-				PropsValues.LIFERAY_LIB_PORTAL_DIR, staticJarFileName);
+				PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
+				staticJarFileName);
 
 			if (Files.exists(staticJarPath)) {
 				jarPaths.add(staticJarPath);

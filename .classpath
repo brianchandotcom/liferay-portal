@@ -78,6 +78,8 @@
 	<classpathentry kind="lib" path="lib/development/jserrorcollector.jar"/>
 	<classpathentry kind="lib" path="lib/development/jsonassert.jar"/>
 	<classpathentry kind="lib" path="lib/development/jsp-api.jar"/>
+	<classpathentry kind="lib" path="lib/development/jstl-api.jar"/>
+	<classpathentry kind="lib" path="lib/development/jstl-impl.jar"/>
 	<classpathentry kind="lib" path="lib/development/junit.jar"/>
 	<classpathentry kind="lib" path="lib/development/mail.jar"/>
 	<classpathentry kind="lib" path="lib/development/mariadb.jar"/>
@@ -219,8 +221,6 @@
 	<classpathentry kind="lib" path="lib/portal/jrcs-diff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/json-java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jsr107cache.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jstl-api.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jstl-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/juh.jar"/>
 	<classpathentry kind="lib" path="lib/portal/juniversalchardet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jurt.jar"/>

@@ -1790,6 +1790,9 @@ public interface PropsKeys {
 	public static final String LIFERAY_LIB_PORTAL_DIR =
 		"liferay.lib.portal.dir";
 
+	public static final String LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR =
+		"liferay.shielded.container.lib.portal.dir";
+
 	public static final String LIFERAY_WEB_PORTAL_DIR =
 		"liferay.web.portal.dir";
 

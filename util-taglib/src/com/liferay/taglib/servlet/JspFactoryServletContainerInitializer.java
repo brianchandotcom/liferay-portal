@@ -25,7 +25,9 @@ import javax.servlet.ServletException;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class JspFactoryServletContainerInitializer
 	implements ServletContainerInitializer {
 

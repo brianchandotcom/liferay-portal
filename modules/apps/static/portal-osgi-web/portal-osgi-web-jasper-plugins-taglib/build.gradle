@@ -20,3 +20,7 @@ deployAppServerPortalFile {
 	from "src/main/resources/WEB-INF/tagPlugins.xml"
 	into new File(liferay.appServerPortalDir, "WEB-INF")
 }
+
+liferay {
+	deployDir = file("${liferay.appServerPortalDir}/WEB-INF/shielded-container-lib")
+}

@@ -37,6 +37,8 @@
 /development/jserrorcollector.jar
 /development/jsonassert.jar
 /development/jsp-api.jar
+/development/jstl-api.jar
+/development/jstl-impl.jar
 /development/junit.jar
 /development/mail.jar
 /development/mariadb.jar
@@ -186,8 +188,6 @@
 /portal/json-java.jar
 /portal/jrcs-diff.jar
 /portal/jsr107cache.jar
-/portal/jstl-api.jar
-/portal/jstl-impl.jar
 /portal/juh.jar
 /portal/juniversalchardet.jar
 /portal/jurt.jar

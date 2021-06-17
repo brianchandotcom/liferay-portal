@@ -5274,6 +5274,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/jstl-api.jar</file-name>
+				<version>1.2.2</version>
+				<project-name>JSTL</project-name>
+				<project-url>https://jstl.dev.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/jstl-impl.jar</file-name>
+				<version>1.2.3</version>
+				<project-name>JSTL</project-name>
+				<project-url>https://jstl.dev.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/junit.jar</file-name>
 				<version>4.13.1</version>
 				<project-name>JUnit</project-name>
@@ -6998,30 +7022,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jstl-api.jar</file-name>
-				<version>1.2.2</version>
-				<project-name>JSTL</project-name>
-				<project-url>https://jstl.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jstl-impl.jar</file-name>
-				<version>1.2.3</version>
-				<project-name>JSTL</project-name>
-				<project-url>https://jstl.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>http://web.archive.org/web/20090305064954/http://www.sun.com/cddl/cddl.html</license-url>
 					</license>
 				</licenses>
 			</library>

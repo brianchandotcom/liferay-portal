@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -48,10 +49,12 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -749,6 +752,24 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchByUserName() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_organizationLocalService.addOrganization(
+			user.getUserId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
+
+		BaseModelSearchResult<Organization> baseModelSearchResult =
+			OrganizationLocalServiceUtil.searchOrganizations(
+				TestPropsValues.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				user.getFullName(), new LinkedHashMap<>(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(0, baseModelSearchResult.getLength());
+	}
+
+	@Test
 	public void testSearchOrganizationsAndUsers() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
@@ -1017,6 +1038,9 @@ public class OrganizationLocalServiceTest {
 			organization.getComments(), false, null, organizationGroup.isSite(),
 			null);
 	}
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

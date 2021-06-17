@@ -29,6 +29,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>METADATA_SETS_NAME</td>
+    <td>//td[contains(.,'${key_metadataSetName}')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>SIDEBAR_ACTIVE_BASIC_TAB</td>
     <td>//li[contains(@class,'nav-item')]/button[contains(@class,'active') and contains(.,'Basic')]</td>
     <td></td>

@@ -2504,7 +2504,7 @@ definition {
 
 		AssertTextEquals(
 			key_metadataSetName = "Document Metadata Set Name",
-			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME",
+			locator1 = "DocumentsAndMediaDocumentTypes#METADATA_SETS_NAME",
 			value1 = "Document Metadata Set Name");
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");

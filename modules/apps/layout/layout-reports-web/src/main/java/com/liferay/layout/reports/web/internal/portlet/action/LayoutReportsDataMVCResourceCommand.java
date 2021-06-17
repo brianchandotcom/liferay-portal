@@ -211,9 +211,8 @@ public class LayoutReportsDataMVCResourceCommand
 						portletRequest,
 						_groupLocalService.getGroup(
 							themeDisplay.getScopeGroupId()),
-						"com_liferay_site_admin_web_portlet_" +
-							"SiteSettingsPortlet",
-						0, 0, PortletRequest.RENDER_PHASE)
+						ConfigurationAdminPortletKeys.SITE_SETTINGS, 0, 0,
+						PortletRequest.RENDER_PHASE)
 				).buildString();
 			}
 			catch (PortalException portalException) {

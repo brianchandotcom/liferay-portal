@@ -1,14 +1,46 @@
 .taglib-asset-metadata {
+	clear: both;
+	overflow: hidden;
+	padding: 10px;
+
+	span {
+		display: inline-block;
+	}
+
+	.asset-metadata-panel {
+		clear: both;
+	}
+
 	.metadata-entry-label {
 		font-weight: normal;
 	}
 
 	.metadata-author {
 		font-weight: bold;
+		overflow: hidden;
+		padding: 10px;
+
+		.asset-avatar {
+			float: left;
+			padding-right: 10px;
+
+			.avatar {
+				width: 45px;
+			}
+		}
+
+		.asset-user-info {
+			margin-top: 5px;
+
+			.user-info {
+				display: block;
+			}
+		}
 	}
 
 	.metadata-entry {
 		color: #999;
+		margin-right: 2em;
 	}
 
 	.metadata-author .asset-user-info {

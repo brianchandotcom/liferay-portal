@@ -23,10 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "audit")
 @Meta.OCD(
-	id = "com.liferay.portal.security.audit.wiring.internal.configuration.FullAuditConfiguration",
-	localization = "content/Language", name = "full-audit-configuration-name"
+	id = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration",
+	localization = "content/Language",
+	name = "audit-log-context-configuration-name"
 )
-public interface FullAuditConfiguration {
+public interface AuditLogContextConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();

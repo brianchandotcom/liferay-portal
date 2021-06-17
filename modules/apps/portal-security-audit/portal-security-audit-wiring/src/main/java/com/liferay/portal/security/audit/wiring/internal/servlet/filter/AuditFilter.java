@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.security.audit.wiring.internal.configuration.FullAuditConfiguration;
+import com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Arthur Chan
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.audit.wiring.internal.configuration.FullAuditConfiguration",
+	configurationPid = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration",
 	enabled = false, immediate = true,
 	property = {
 		"after-filter=Session Max Allowed Filter", "servlet-context-name=",
@@ -105,13 +105,13 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			httpServletRequest.getServerPort());
 		auditRequestThreadLocal.setSessionID(session.getId());
 
-		if (!_fullAuditConfiguration.enabled()) {
+		if (!_auditLogContextConfiguration.enabled()) {
 			return null;
 		}
 
 		String xRequestId = null;
 
-		if (_fullAuditConfiguration.xRequestIdHeaderEnabled()) {
+		if (_auditLogContextConfiguration.xRequestIdHeaderEnabled()) {
 			xRequestId = httpServletRequest.getHeader("X-Request-Id");
 		}
 
@@ -119,7 +119,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			xRequestId = PortalUUIDUtil.generate();
 		}
 
-		_auditFilterLogContext.setContext(
+		_auditLogContext.setContext(
 			remoteAddr, _portal.getCompanyId(httpServletRequest),
 			session.getId(), httpServletRequest.getServerName(), userId,
 			xRequestId);
@@ -131,13 +131,13 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_auditFilterLogContext = new AuditFilterLogContext();
+		_auditLogContext = new AuditLogContext();
 
 		_serviceRegistration = bundleContext.registerService(
-			LogContext.class, _auditFilterLogContext, new HashMapDictionary());
+			LogContext.class, _auditLogContext, new HashMapDictionary());
 
-		_fullAuditConfiguration = ConfigurableUtil.createConfigurable(
-			FullAuditConfiguration.class, properties);
+		_auditLogContextConfiguration = ConfigurableUtil.createConfigurable(
+			AuditLogContextConfiguration.class, properties);
 	}
 
 	@Deactivate
@@ -181,12 +181,11 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(AuditFilter.class);
 
-	private AuditFilterLogContext _auditFilterLogContext;
+	private AuditLogContext _auditLogContext;
+	private AuditLogContextConfiguration _auditLogContextConfiguration;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	private FullAuditConfiguration _fullAuditConfiguration;
 
 	@Reference
 	private Portal _portal;
@@ -196,11 +195,11 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 	@Reference
 	private UserLocalService _userLocalService;
 
-	private class AuditFilterLogContext implements LogContext {
+	private class AuditLogContext implements LogContext {
 
-		public AuditFilterLogContext() {
+		public AuditLogContext() {
 			_contextThreadLocal = new CentralizedThreadLocal<>(
-				AuditFilterLogContext.class + ".context",
+				AuditLogContext.class + ".context",
 				HashMap<String, String>::new);
 		}
 
@@ -211,7 +210,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		@Override
 		public String getName() {
-			return AuditFilterLogContext.class.getSimpleName();
+			return AuditLogContext.class.getSimpleName();
 		}
 
 		public void setContext(

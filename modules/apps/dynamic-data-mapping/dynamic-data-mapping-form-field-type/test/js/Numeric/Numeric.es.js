@@ -256,23 +256,18 @@ describe('Field Numeric', () => {
 			expect(input.value).toBe('+12 (345) 6789-0123');
 		});
 
-		/**
-		 * Ignoring test due to String.prototype.replaceAll is not implemented
-		 * in Node.js older than 15.0.0
-		 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll#browser_compatibility
-		 */
-		xit('ignores optional digits whenever input is less than mandatory', () => {
+		it('ignores optional digits whenever input is less than mandatory', () => {
 			const {container} = render(
 				<Numeric
 					inputMask={true}
-					inputMaskFormat="+99 (099) 9999-9999"
+					inputMaskFormat="+09 (099) 9999-9999"
 					value="12345"
 				/>
 			);
 
 			const input = container.querySelector('input');
 
-			expect(input.value).toBe('+12 (34) 5');
+			expect(input.value).toBe('+1 (23) 45');
 		});
 
 		it('sends unmasked value though onChange event', () => {

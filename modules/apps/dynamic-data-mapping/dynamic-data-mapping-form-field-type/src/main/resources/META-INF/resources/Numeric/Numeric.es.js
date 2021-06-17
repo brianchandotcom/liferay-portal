@@ -30,7 +30,7 @@ const adaptiveMask = (rawValue, inputMaskFormat) => {
 		const inputNumbers = rawValue.match(/\d/g)?.length ?? 0;
 		const mandatorySize = mask.match(/9/g)?.length ?? 0;
 		if (inputNumbers <= mandatorySize) {
-			return mask.replaceAll('0', '');
+			return mask.replace(/0/g, '');
 		}
 
 		return generateMask(mask.replace('0', '9'));

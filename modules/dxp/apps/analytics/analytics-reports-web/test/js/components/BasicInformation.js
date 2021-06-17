@@ -28,18 +28,30 @@ describe('BasicInformation', () => {
 			},
 			canonicalURL:
 				'http://localhost:8080/en/web/guest/-/basic-web-content',
+			onSelectedLanguageClick: () => {},
 			publishDate: 'Thu Feb 17 08:17:57 GMT 2020',
 			title: 'A testing page',
+			viewURLs: [
+				{
+					default: true,
+					languageId: 'en-US',
+					languageLabel: 'English (United States)',
+					selected: true,
+					viewURL:
+						'http://localhost:8080/en/web/guest/-/basic-web-content',
+				},
+				{
+					default: false,
+					languageId: 'es-ES',
+					languageLabel: 'Spanish (Spain)',
+					selected: false,
+					viewURL:
+						'http://localhost:8080/es/web/guest/-/contenido-web-basico',
+				},
+			],
 		};
 
-		const {getByText} = render(
-			<BasicInformation
-				author={testProps.author}
-				canonicalURL={testProps.canonicalURL}
-				publishDate={testProps.publishDate}
-				title={testProps.title}
-			/>
-		);
+		const {getByText} = render(<BasicInformation {...testProps} />);
 
 		expect(getByText(testProps.title)).toBeInTheDocument();
 

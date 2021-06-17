@@ -89,11 +89,6 @@ describe('Translation', () => {
 			</ChartStateContextProvider>
 		);
 
-		expect(getByText('languages-translated-into')).toBeInTheDocument();
-		expect(
-			getByText('select-language-to-view-its-metrics')
-		).toBeInTheDocument();
-
 		expect(getByText('en-US')).toBeInTheDocument();
 		expect(getByText('English (United States)')).toBeInTheDocument();
 		expect(getByText('default')).toBeInTheDocument();

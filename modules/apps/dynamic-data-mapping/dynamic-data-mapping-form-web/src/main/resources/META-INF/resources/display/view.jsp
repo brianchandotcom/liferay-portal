@@ -176,13 +176,21 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							</clay:container-fluid>
 						</div>
 
+						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/validate_csrf_token" var="validateCSRFTokenURL" />
+
 						<clay:container-fluid
 							cssClass="ddm-form-builder-app ddm-form-builder-app-not-ready"
 							id="<%= ddmFormDisplayContext.getContainerId() %>"
 						>
 							<react:component
 								module="admin/js/FormView.link.es"
-								props="<%= ddmFormDisplayContext.getDDMFormContext() %>"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"validateCSRFTokenURL", validateCSRFTokenURL.toString()
+									).putAll(
+										ddmFormDisplayContext.getDDMFormContext()
+									).build()
+								%>'
 							/>
 						</clay:container-fluid>
 

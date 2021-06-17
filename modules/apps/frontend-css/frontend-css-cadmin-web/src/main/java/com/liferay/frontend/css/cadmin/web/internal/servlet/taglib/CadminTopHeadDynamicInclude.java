@@ -65,8 +65,7 @@ public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 				_bundleContext.getBundle(), _FILE_NAME
 			).build());
 
-		printWriter.println(
-			"\" id=\"liferayCadminCSS\" rel=\"stylesheet\"");
+		printWriter.println("\" id=\"liferayCadminCSS\" rel=\"stylesheet\"");
 		printWriter.println(" type=\"text/css\" />");
 	}
 
@@ -101,6 +100,6 @@ public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 
 }

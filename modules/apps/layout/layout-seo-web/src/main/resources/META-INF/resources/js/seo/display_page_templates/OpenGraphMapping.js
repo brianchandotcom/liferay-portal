@@ -45,6 +45,7 @@ export default function OpenGraphMapping({
 					label: Liferay.Language.get('title'),
 					name: `${portletNamespace}TypeSettingsProperties--mapped-openGraphTitle--`,
 					selectedFieldKey: openGraphTitle,
+					value: openGraphTitle,
 				},
 				{
 					fieldType: 'text',
@@ -58,6 +59,7 @@ export default function OpenGraphMapping({
 					label: Liferay.Language.get('description'),
 					name: `${portletNamespace}TypeSettingsProperties--mapped-openGraphDescription--`,
 					selectedFieldKey: openGraphDescription,
+					value: openGraphDescription,
 				},
 				{
 					fieldType: 'image',
@@ -86,6 +88,7 @@ export default function OpenGraphMapping({
 					),
 					name: `${portletNamespace}TypeSettingsProperties--mapped-openGraphImageAlt--`,
 					selectedFieldKey: openGraphImageAlt,
+					value: openGraphImageAlt,
 				},
 			]}
 			selectedSource={selectedSource}

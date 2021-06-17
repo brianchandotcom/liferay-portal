@@ -43,6 +43,7 @@ export default function SeoMapping({
 					label: Liferay.Language.get('html-title'),
 					name: `${portletNamespace}TypeSettingsProperties--mapped-title--`,
 					selectedFieldKey: title,
+					value: title,
 				},
 				{
 					fieldType: 'text',
@@ -56,6 +57,7 @@ export default function SeoMapping({
 					label: Liferay.Language.get('description'),
 					name: `${portletNamespace}TypeSettingsProperties--mapped-description--`,
 					selectedFieldKey: description,
+					value: description,
 				},
 			]}
 			selectedSource={selectedSource}

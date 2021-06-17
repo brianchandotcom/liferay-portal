@@ -235,7 +235,7 @@ ${oversize.files.jsp}</fail>
 		</path>
 
 		<antcall inheritrefs="true" target="compile-common-jsp">
-			<param name="arg.line" value="-d ${basedir}/${jspc.classes.dir} -webapp ${basedir}/${jsp.precompile.dir}" />
+			<param name="arg.line" value="-d ${basedir}/${jspc.classes.dir} -poolingEnabled false -webapp ${basedir}/${jsp.precompile.dir}" />
 		</antcall>
 	</target>
 

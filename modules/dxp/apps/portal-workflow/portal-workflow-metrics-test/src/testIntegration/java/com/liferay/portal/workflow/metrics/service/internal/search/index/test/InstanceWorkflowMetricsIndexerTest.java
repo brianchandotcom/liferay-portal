@@ -48,7 +48,7 @@ public class InstanceWorkflowMetricsIndexerTest
 	public void testAddInstance() throws Exception {
 		KaleoInstance kaleoInstance = addKaleoInstance();
 
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "className",
@@ -63,7 +63,7 @@ public class InstanceWorkflowMetricsIndexerTest
 	public void testCompleteInstance() throws Exception {
 		KaleoInstance kaleoInstance = addKaleoInstance();
 
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "className",
@@ -82,7 +82,7 @@ public class InstanceWorkflowMetricsIndexerTest
 		Duration duration = Duration.between(
 			createDate.toInstant(), completionDate.toInstant());
 
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "className",
@@ -99,7 +99,7 @@ public class InstanceWorkflowMetricsIndexerTest
 
 		deleteKaleoInstance(kaleoInstance);
 
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "className",

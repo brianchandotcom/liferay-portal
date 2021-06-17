@@ -394,7 +394,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		String[] indexNames = ArrayUtil.toStringArray(indexNamesMap.keySet());
 
 		for (int i = 0; i < indexNames.length; i++) {
-			retryAssertCount(
+			assertCount(
 				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
 				ArrayUtil.append(new Object[] {"deleted", false}, parameters));
 		}

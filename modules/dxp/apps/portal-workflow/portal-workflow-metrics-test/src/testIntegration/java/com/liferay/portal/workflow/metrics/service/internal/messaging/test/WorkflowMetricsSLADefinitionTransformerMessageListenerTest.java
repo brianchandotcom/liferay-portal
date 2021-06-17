@@ -44,14 +44,14 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 
 	@Test
 	public void testTransform1() throws Exception {
-		retryAssertCount(
+		assertCount(
 			4,
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "active", true, "companyId",
@@ -69,13 +69,13 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 
 		updateWorkflowDefinition();
 
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "active", true, "companyId",
 			workflowDefinition.getCompanyId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
-		retryAssertCount(
+		assertCount(
 			4,
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
@@ -107,14 +107,14 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 
 	@Test
 	public void testTransform2() throws Exception {
-		retryAssertCount(
+		assertCount(
 			4,
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "active", true, "companyId",
@@ -136,13 +136,13 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 			WorkflowDefinitionUtil.getBytes(
 				"single-approver-definition-updated.xml"));
 
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "active", true, "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
-		retryAssertCount(
+		assertCount(
 			4,
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),

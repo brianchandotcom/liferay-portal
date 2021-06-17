@@ -41,7 +41,7 @@ public class TaskWorkflowMetricsIndexerTest
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken("review");
 
-		retryAssertCount(
+		assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "companyId",
@@ -57,7 +57,7 @@ public class TaskWorkflowMetricsIndexerTest
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken("review");
 
-		retryAssertCount(
+		assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "companyId",
@@ -70,7 +70,7 @@ public class TaskWorkflowMetricsIndexerTest
 		kaleoTaskInstanceToken = assignKaleoTaskInstanceToken(
 			kaleoTaskInstanceToken);
 
-		retryAssertCount(
+		assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "assigneeIds",
@@ -86,7 +86,7 @@ public class TaskWorkflowMetricsIndexerTest
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken("review");
 
-		retryAssertCount(
+		assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "companyId",
@@ -106,7 +106,7 @@ public class TaskWorkflowMetricsIndexerTest
 		Duration duration = Duration.between(
 			createDate.toInstant(), completionDate.toInstant());
 
-		retryAssertCount(
+		assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "assigneeIds",
@@ -125,7 +125,7 @@ public class TaskWorkflowMetricsIndexerTest
 
 		deleteKaleoTaskInstanceToken(kaleoTaskInstanceToken);
 
-		retryAssertCount(
+		assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "companyId",

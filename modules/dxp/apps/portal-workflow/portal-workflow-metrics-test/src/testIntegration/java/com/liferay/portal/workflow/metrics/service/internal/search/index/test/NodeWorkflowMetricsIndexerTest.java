@@ -50,7 +50,7 @@ public class NodeWorkflowMetricsIndexerTest
 
 		KaleoNode kaleoNode = addKaleoNode(startState);
 
-		retryAssertCount(
+		assertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
@@ -62,7 +62,7 @@ public class NodeWorkflowMetricsIndexerTest
 
 		kaleoNode = addKaleoNode(new State("end", StringPool.BLANK, false));
 
-		retryAssertCount(
+		assertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
@@ -81,7 +81,7 @@ public class NodeWorkflowMetricsIndexerTest
 
 		KaleoTask kaleoTask = addKaleoTask(reviewTask);
 
-		retryAssertCount(
+		assertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
@@ -90,7 +90,7 @@ public class NodeWorkflowMetricsIndexerTest
 			"processId", workflowDefinition.getWorkflowDefinitionId(),
 			"terminal", false, "type", NodeType.TASK.toString(), "version",
 			"1.0");
-		retryAssertCount(
+		assertCount(
 			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsSLATaskResultType", "companyId",
@@ -98,7 +98,7 @@ public class NodeWorkflowMetricsIndexerTest
 			0, "processId", workflowDefinition.getWorkflowDefinitionId(),
 			"slaDefinitionId", 0, "nodeId", kaleoTask.getKaleoTaskId(),
 			"taskName", "review");
-		retryAssertCount(
+		assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "companyId",
@@ -114,7 +114,7 @@ public class NodeWorkflowMetricsIndexerTest
 		KaleoNode kaleoNode = addKaleoNode(
 			new State("end", StringPool.BLANK, false));
 
-		retryAssertCount(
+		assertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
@@ -126,7 +126,7 @@ public class NodeWorkflowMetricsIndexerTest
 
 		deleteKaleoNode(kaleoNode);
 
-		retryAssertCount(
+		assertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
@@ -147,7 +147,7 @@ public class NodeWorkflowMetricsIndexerTest
 
 		deleteKaleoTask(kaleoTask);
 
-		retryAssertCount(
+		assertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",

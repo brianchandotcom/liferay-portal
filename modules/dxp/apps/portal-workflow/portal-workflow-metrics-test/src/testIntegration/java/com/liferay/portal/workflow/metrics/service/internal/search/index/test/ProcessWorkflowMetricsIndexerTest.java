@@ -40,19 +40,19 @@ public class ProcessWorkflowMetricsIndexerTest
 
 	@Test
 	public void testAddProcess() throws Exception {
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "instanceId", 0);
-		retryAssertCount(
+		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsSLAInstanceResultType", "companyId",
@@ -68,7 +68,7 @@ public class ProcessWorkflowMetricsIndexerTest
 
 		undeployWorkflowDefinition();
 
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
 			"WorkflowMetricsProcessType", "companyId", companyId, "deleted",
 			true, "processId", workflowDefinitionId, "version", "1.0");
@@ -95,7 +95,7 @@ public class ProcessWorkflowMetricsIndexerTest
 
 	@Test
 	public void testUpdateProcess() throws Exception {
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "companyId",
@@ -104,7 +104,7 @@ public class ProcessWorkflowMetricsIndexerTest
 
 		updateWorkflowDefinition();
 
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "companyId",

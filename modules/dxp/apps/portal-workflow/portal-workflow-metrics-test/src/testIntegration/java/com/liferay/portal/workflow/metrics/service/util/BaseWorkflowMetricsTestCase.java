@@ -128,6 +128,56 @@ public abstract class BaseWorkflowMetricsTestCase {
 			expectedCount, countSearchResponse.getCount());
 	}
 
+	protected void assertCount(
+			long expectedCount, String indexName, String indexType,
+			Object... parameters)
+		throws Exception {
+
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		if (parameters == null) {
+			return;
+		}
+
+		if ((parameters.length % 2) != 0) {
+			throw new IllegalArgumentException(
+				"Parameters length is not an even number");
+		}
+
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
+
+		countSearchRequest.setIndexNames(indexName);
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		for (int i = 0; i < parameters.length; i = i + 2) {
+			booleanQuery.addMustQueryClauses(
+				queries.term(String.valueOf(parameters[i]), parameters[i + 1]));
+		}
+
+		countSearchRequest.setQuery(booleanQuery);
+
+		countSearchRequest.setTypes(indexType);
+
+		CountSearchResponse countSearchResponse = searchEngineAdapter.execute(
+			countSearchRequest);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				indexName, " ", indexType, " ",
+				countSearchResponse.getSearchRequestString()),
+			expectedCount, countSearchResponse.getCount());
+	}
+
+	protected void assertCount(
+			String indexName, String indexType, Object... parameters)
+		throws Exception {
+
+		assertCount(1, indexName, indexType, parameters);
+	}
+
 	protected String getInitialNodeKey(WorkflowDefinition workflowDefinition)
 		throws Exception {
 
@@ -223,56 +273,6 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 				return null;
 			});
-	}
-
-	protected void retryAssertCount(
-			long expectedCount, String indexName, String indexType,
-			Object... parameters)
-		throws Exception {
-
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (parameters == null) {
-			return;
-		}
-
-		if ((parameters.length % 2) != 0) {
-			throw new IllegalArgumentException(
-				"Parameters length is not an even number");
-		}
-
-		CountSearchRequest countSearchRequest = new CountSearchRequest();
-
-		countSearchRequest.setIndexNames(indexName);
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		for (int i = 0; i < parameters.length; i = i + 2) {
-			booleanQuery.addMustQueryClauses(
-				queries.term(String.valueOf(parameters[i]), parameters[i + 1]));
-		}
-
-		countSearchRequest.setQuery(booleanQuery);
-
-		countSearchRequest.setTypes(indexType);
-
-		CountSearchResponse countSearchResponse = searchEngineAdapter.execute(
-			countSearchRequest);
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				indexName, " ", indexType, " ",
-				countSearchResponse.getSearchRequestString()),
-			expectedCount, countSearchResponse.getCount());
-	}
-
-	protected void retryAssertCount(
-			String indexName, String indexType, Object... parameters)
-		throws Exception {
-
-		retryAssertCount(1, indexName, indexType, parameters);
 	}
 
 	protected void undeployWorkflowDefinition() throws Exception {

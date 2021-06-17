@@ -47,14 +47,14 @@ public class SLAInstanceResultWorkflowMetricsIndexerTest
 
 	@Test
 	public void testReindex() throws Exception {
-		retryAssertCount(
+		assertCount(
 			4,
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "companyId",
@@ -110,7 +110,7 @@ public class SLAInstanceResultWorkflowMetricsIndexerTest
 
 			completeKaleoInstance(kaleoInstance);
 
-			retryAssertCount(
+			assertCount(
 				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 					workflowDefinition.getCompanyId()),
 				"WorkflowMetricsInstanceType", "className",

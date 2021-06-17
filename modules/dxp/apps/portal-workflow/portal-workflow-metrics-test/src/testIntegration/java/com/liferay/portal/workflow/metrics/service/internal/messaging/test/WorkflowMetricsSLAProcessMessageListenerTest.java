@@ -40,14 +40,14 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 
 	@Test
 	public void testProcess() throws Exception {
-		retryAssertCount(
+		assertCount(
 			4,
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
 			workflowDefinition.getCompanyId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
-		retryAssertCount(
+		assertCount(
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "companyId",
@@ -69,7 +69,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 					getWorkflowMetricsSLADefinitionId(),
 				ServiceContextTestUtil.getServiceContext());
 
-		retryAssertCount(
+		assertCount(
 			0,
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
@@ -84,7 +84,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 
 		completeKaleoInstance(kaleoInstance);
 
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "className",
@@ -92,7 +92,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			"companyId", kaleoInstance.getCompanyId(), "completed", true,
 			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "className",
@@ -100,7 +100,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			"companyId", kaleoInstance.getCompanyId(), "completed", true,
 			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
-		retryAssertCount(
+		assertCount(
 			0,
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
@@ -112,7 +112,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 
 		_workflowMetricsSLAProcessMessageListener.receive(new Message());
 
-		retryAssertCount(
+		assertCount(
 			0,
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
@@ -132,7 +132,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 
 		kaleoInstance = getKaleoInstance(addBlogsEntry());
 
-		retryAssertCount(
+		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsInstanceType", "className",
@@ -143,7 +143,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 
 		_workflowMetricsSLAProcessMessageListener.receive(new Message());
 
-		retryAssertCount(
+		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsSLAInstanceResultType", "companyId",
@@ -151,14 +151,14 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			workflowDefinition.getWorkflowDefinitionId(), "slaDefinitionId",
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),
 			"status", "RUNNING");
-		retryAssertCount(
+		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsSLAInstanceResultType", "companyId",
 			workflowDefinition.getCompanyId(), "instanceId",
 			kaleoInstance.getKaleoInstanceId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
-		retryAssertCount(
+		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsSLAInstanceResultType", "companyId",
@@ -169,7 +169,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 
 		_workflowMetricsSLAProcessMessageListener.receive(new Message());
 
-		retryAssertCount(
+		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsSLAInstanceResultType", "companyId",

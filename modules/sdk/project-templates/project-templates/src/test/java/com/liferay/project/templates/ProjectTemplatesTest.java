@@ -94,19 +94,11 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildTemplateWithGradle(
 			"mvc-portlet", "test", "--liferay-version", "7.0test");
 	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateLiferayVersionInvalidTest()
-		throws Exception {
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateLiferayVersionInvalidTest() throws Exception {
 		_buildTemplateWithGradle(
 			"mvc-portlet", "test", "--liferay-version", "test.test");
-	}
-
-	@Test
-	public void testBuildTemplateLiferayVersionValid80() throws Exception {
-		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferay-version", "8.0.0");
 	}
 
 	@Test
@@ -120,6 +112,12 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildTemplateWithMaven(
 			"mvc-portlet", "test", "-DliferayVersion=7.0.6", "-DclassName=Foo",
 			"-Dpackage=foo.portlet");
+	}
+
+	@Test
+	public void testBuildTemplateLiferayVersionValid80() throws Exception {
+		_buildTemplateWithGradle(
+			"mvc-portlet", "test", "--liferay-version", "8.0.0");
 	}
 
 	@Test

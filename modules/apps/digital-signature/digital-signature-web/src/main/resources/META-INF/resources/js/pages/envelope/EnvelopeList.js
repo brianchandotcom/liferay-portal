@@ -145,7 +145,7 @@ const EnvelopeList = ({history}) => {
 								'_blank'
 							);
 						},
-						name: Liferay.Language.get('download-files'),
+						name: Liferay.Language.get('download'),
 					},
 				]}
 				addButton={() => (

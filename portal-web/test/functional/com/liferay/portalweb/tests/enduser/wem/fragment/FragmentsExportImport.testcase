@@ -1658,7 +1658,7 @@ definition {
 				name = "Collection Name");
 		}
 
-		task ("Copy Tabs fragment to created collection") {
+		task ("Copy the Tabs fragment to new collection") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
@@ -1670,7 +1670,7 @@ definition {
 			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
 		}
 
-		task ("Export the fragment collection") {
+		task ("Export the new collection") {
 			FragmentsAdmin.exportCollection(collectionName = "Collection Name");
 		}
 
@@ -1681,7 +1681,7 @@ definition {
 				type = "content");
 		}
 
-		task ("Navigate to the content page in the Test Site") {
+		task ("Navigate to the content page at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -1693,14 +1693,14 @@ definition {
 				fragmentName = "Container");
 		}
 
-		task ("Add a Grid element to Container") {
+		task ("Add a Grid element into Container") {
 			PageEditor.addElementToContainer(
 				collectionName = "Layout Elements",
 				fragmentName = "Grid",
 				navTab = "Fragments");
 		}
 
-		task ("Add two Tabs fragment to second module of Grid") {
+		task ("Add two copied Tabs fragments into the second module of Grid") {
 			for (var fragmentName : list "Tabs (Copy),Tabs (Copy)") {
 				PageEditor.addElementToColumn(
 					collectionName = "Collection Name",
@@ -1710,7 +1710,7 @@ definition {
 			}
 		}
 
-		task ("Increase number of tabs to the first Tabs") {
+		task ("Increase number of tabs to 5 in the first copied Tabs") {
 			PageEditor.gotoConfiguration(fragmentName = "Tabs (Copy)");
 
 			PageEditor.configureFragment(numberOfTabs = "5");

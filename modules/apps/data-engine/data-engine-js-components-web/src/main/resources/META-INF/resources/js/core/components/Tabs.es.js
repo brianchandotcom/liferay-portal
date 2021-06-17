@@ -14,13 +14,28 @@
 
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import React from 'react';
+import React, {useMemo} from 'react';
 
+import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {useForm} from '../hooks/useForm.es';
 
 export const Tabs = ({activePage, pages}) => {
 	const dispatch = useForm();
+
+	const isAutocompleteVisible = useMemo(() => {
+		let hasVisibleFields = true;
+
+		const visitor = new PagesVisitor(pages);
+
+		visitor.mapFields((field) => {
+			if (field.fieldName === 'autocomplete' && !field.visible) {
+				hasVisibleFields = false;
+			}
+		});
+
+		return hasVisibleFields;
+	}, [pages]);
 
 	return (
 		<nav className="component-tbar ddm-form-tabs mb-3 tbar">
@@ -29,6 +44,9 @@ export const Tabs = ({activePage, pages}) => {
 					{pages.map((page, index) => (
 						<ClayTabs.Item
 							active={index === activePage}
+							className={
+								!isAutocompleteVisible && index === 2 && 'hide'
+							}
 							disabled={!page.enabled}
 							key={index}
 							onClick={() =>

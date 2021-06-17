@@ -21,11 +21,11 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 %>
 
 <c:if test="<%= captchaEnabled %>">
-	<div class="taglib-captcha">
-		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="text-to-identify" />" class="captcha" id="<portlet:namespace />captcha" src="<%= HtmlUtil.escapeAttribute(HttpUtil.addParameter(url, "t", String.valueOf(System.currentTimeMillis()))) %>" />
+	<div class="my-3 taglib-captcha">
+		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="text-to-identify" />" class="captcha d-inline-block mb-2" id="<portlet:namespace />captcha" src="<%= HtmlUtil.escapeAttribute(HttpUtil.addParameter(url, "t", String.valueOf(System.currentTimeMillis()))) %>" />
 
 		<liferay-ui:icon
-			cssClass="refresh"
+			cssClass="align-top d-inline-block refresh"
 			icon="reload"
 			id="refreshCaptcha"
 			label="<%= false %>"

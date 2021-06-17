@@ -37,14 +37,6 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 
 	return (
 		<ClayLayout.ContentRow>
-			<ClayLayout.ContentCol expand>
-				<h5>{Liferay.Language.get('languages-translated-into')}</h5>
-				<span className="text-secondary">
-					{Liferay.Language.get(
-						'select-language-to-view-its-metrics'
-					)}
-				</span>
-			</ClayLayout.ContentCol>
 			<ClayLayout.ContentCol>
 				<ClayDropDown
 					active={active}

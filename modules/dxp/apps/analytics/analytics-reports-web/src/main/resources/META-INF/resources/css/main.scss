@@ -1,20 +1,23 @@
+@import 'atlas-variables';
+
 .lfr-analytics-reports-panel {
 	&.open-admin-panel.sidenav-menu-slider {
 		visibility: visible;
 		width: 330px;
 	}
 
-	.sidebar-header,
-	.sidebar-header .sidenav-close {
-		color: #d5d6e1;
+	.sidebar {
+		border-left: 1px solid $gray-300;
+		box-shadow: none;
 	}
 
 	.sidebar-header {
-		background-color: #272833;
+		height: 64px;
 		line-height: 32px;
-		padding-bottom: 8px;
-		padding-right: 9px;
-		padding-top: 8px;
+
+		.lexicon-icon {
+			font-size: 14px;
+		}
 	}
 
 	@media only screen and (min-width: 576px) {
@@ -29,7 +32,7 @@
 		left: 0;
 		position: absolute;
 		right: 0;
-		top: 56px;
+		top: 64px;
 
 		.chart-loading-indicator {
 			position: absolute;

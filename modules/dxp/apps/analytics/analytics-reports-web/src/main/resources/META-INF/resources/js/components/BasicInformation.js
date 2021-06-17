@@ -17,10 +17,11 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {StoreStateContext} from '../context/StoreContext';
+import Translation from './Translation';
 
 function Author({author: {authorId, name, url}}) {
 	return (
-		<div className="c-mt-3 text-secondary">
+		<div className="text-secondary">
 			<ClaySticker
 				className={classnames('c-mr-2 sticker-user-icon', {
 					[`user-icon-color-${parseInt(authorId, 10) % 10}`]: !url,
@@ -39,7 +40,14 @@ function Author({author: {authorId, name, url}}) {
 	);
 }
 
-function BasicInformation({author, canonicalURL, publishDate, title}) {
+function BasicInformation({
+	author,
+	canonicalURL,
+	onSelectedLanguageClick,
+	publishDate,
+	title,
+	viewURLs,
+}) {
 	const {languageTag} = useContext(StoreStateContext);
 
 	const formattedPublishDate = Intl.DateTimeFormat(languageTag, {
@@ -50,27 +58,47 @@ function BasicInformation({author, canonicalURL, publishDate, title}) {
 
 	return (
 		<div className="sidebar-section">
-			<ClayLayout.ContentRow>
-				<span
-					className="component-title text-truncate-inline"
-					data-tooltip-align="bottom"
-					title={title}
-				>
-					<span className="text-truncate">{title}</span>
-				</span>
+			<ClayLayout.ContentRow className="mb-2" verticalAlign="center">
+				<ClayLayout.ContentCol>
+					<div className="inline-item-before">
+						<ClayLayout.ContentRow>
+							<ClayLayout.ContentCol>
+								<Translation
+									onSelectedLanguageClick={
+										onSelectedLanguageClick
+									}
+									viewURLs={viewURLs}
+								/>
+							</ClayLayout.ContentCol>
+						</ClayLayout.ContentRow>
+					</div>
+				</ClayLayout.ContentCol>
+				<ClayLayout.ContentCol expand>
+					<ClayLayout.ContentRow>
+						<span className="font-weight-semi-bold text-truncate-inline">
+							<span
+								className="text-truncate"
+								data-tooltip-align="bottom"
+								title={title}
+							>
+								{title}
+							</span>
+						</span>
+					</ClayLayout.ContentRow>
+
+					<ClayLayout.ContentRow>
+						<span
+							className="text-truncate text-truncate-reverse"
+							data-tooltip-align="bottom"
+							title={canonicalURL}
+						>
+							<bdi className="text-secondary">{canonicalURL}</bdi>
+						</span>
+					</ClayLayout.ContentRow>
+				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			<ClayLayout.ContentRow>
-				<span
-					className="c-mb-2 c-mt-1 text-truncate text-truncate-reverse"
-					data-tooltip-align="bottom"
-					title={canonicalURL}
-				>
-					<bdi className="text-secondary">{canonicalURL}</bdi>
-				</span>
-			</ClayLayout.ContentRow>
-
-			<ClayLayout.ContentRow>
+			<ClayLayout.ContentRow className="mb-2">
 				<ClayLayout.ContentCol expand>
 					<span className="text-secondary">
 						{Liferay.Util.sub(
@@ -99,8 +127,17 @@ Author.propTypes = {
 BasicInformation.propTypes = {
 	author: PropTypes.object,
 	canonicalURL: PropTypes.string.isRequired,
+	onSelectedLanguageClick: PropTypes.func.isRequired,
 	publishDate: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
+	viewURLs: PropTypes.arrayOf(
+		PropTypes.shape({
+			default: PropTypes.bool.isRequired,
+			languageId: PropTypes.string.isRequired,
+			selected: PropTypes.bool.isRequired,
+			viewURL: PropTypes.string.isRequired,
+		})
+	).isRequired,
 };
 
 export default BasicInformation;

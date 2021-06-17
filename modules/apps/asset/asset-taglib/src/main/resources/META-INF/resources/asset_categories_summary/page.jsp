@@ -90,7 +90,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 								portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
 							%>
 
-								<a class="asset-category text-uppercase" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
+								<a class="asset-category mb-1 mr-1 pr-2 text-uppercase" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
 
 							<%
 							}
@@ -103,7 +103,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 							for (AssetCategory category : curCategories) {
 							%>
 
-								<span class="asset-category text-uppercase">
+								<span class="asset-category mb-1 mr-1 pr-2 text-uppercase">
 									<%= _buildCategoryPath(category, themeDisplay) %>
 								</span>
 

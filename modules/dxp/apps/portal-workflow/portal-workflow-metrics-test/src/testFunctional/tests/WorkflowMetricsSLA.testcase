@@ -341,12 +341,45 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the same task can't be selected in Start or Stop and Pause fields simultaneously"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SameTaskCantBeSelectedInStartStopPauseFields {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67881 SameTaskCantBeSelectedInStartStopPauseFields pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "Test",
+			slaDefinitionStart = "Enters Task: Update");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		AssertElementNotPresent(
+			key_slaDefinitionPause = "On Task: Update",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
+
+		AssertElementPresent(
+			key_slaDefinitionPause = "On Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "Test",
+			slaDefinitionStart = "Enters Task: Review");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+		AssertElementNotPresent(
+			key_slaDefinitionPause = "On Task: Update",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
+
+		AssertElementNotPresent(
+			key_slaDefinitionPause = "On Task: Review",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
 	}
 
 	@description = "LPS-89014 - Verify that the SLA infos are correctly displayed on the table view"

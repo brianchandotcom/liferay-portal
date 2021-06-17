@@ -232,6 +232,18 @@ definition {
 			value1 = "${requestsTitle}");
 	}
 
+	macro viewSpecificNotificationDetails {
+		AssertTextEquals(
+			key_notificationsTitle = "${notificationsTitle}",
+			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
+			value1 = "${notificationsTitle}.");
+
+		AssertTextEquals(
+			key_notificationsTitle = "${notificationsTitle}",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT_SPECIFIC",
+			value1 = "${contentBody}");
+	}
+
 	macro viewSuccessfulPublication {
 		var key_contentBody = "${contentBody}";
 		var key_portletName = "${portletName}";

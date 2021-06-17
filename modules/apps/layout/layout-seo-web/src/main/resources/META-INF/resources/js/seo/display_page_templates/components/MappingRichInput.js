@@ -32,23 +32,16 @@ function MappingInput({
 	initialFields,
 	label,
 	name,
-	selectedFieldKey,
 	selectedSource,
+	value: initialValue,
 }) {
-	const initialSelectedField = initialFields.find(
-		({key}) => key === selectedFieldKey
-	);
 	const fields = [
 		UNMAPPED_OPTION,
 		...initialFields.filter(({type}) => type === fieldType),
 	];
 	const [source, setSource] = useState(selectedSource);
-	const [field, setField] = useState(initialSelectedField || UNMAPPED_OPTION);
-	const [value, setValue] = useState(
-		initialSelectedField
-			? FIELD_TEMPLATE(initialSelectedField.key).trim()
-			: ''
-	);
+	const [field, setField] = useState(UNMAPPED_OPTION);
+	const [value, setValue] = useState(initialValue || '');
 	const inputEl = useRef(null);
 	const isMounted = useIsMounted();
 
@@ -129,11 +122,11 @@ function MappingInput({
 MappingInput.propTypes = {
 	helpMessage: PropTypes.string,
 	name: PropTypes.string.isRequired,
-	selectedFieldKey: PropTypes.string,
 	selectedSource: PropTypes.shape({
 		classNameLabel: PropTypes.string,
 		classTypeLabel: PropTypes.string,
 	}).isRequired,
+	value: PropTypes.string,
 };
 
 export default MappingInput;

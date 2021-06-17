@@ -802,33 +802,30 @@ definition {
 	@description = "This is a use case for LPS-129107 Unable to import a page template that includes a deleted fragment."
 	@priority = "4"
 	test ImportContentPageTemplateThatIncludesDeletedFragment {
-
 		task ("Create a new test fragment.") {
 			JSONFragment.addFragmentCollection(
-					groupName = "Test Site Name",
-					name = "Collection Name");
+				groupName = "Test Site Name",
+				name = "Collection Name");
 
 			JSONFragment.addSection(
-					collectionName = "Collection Name",
-					fragmentStatus = "Approved",
-					groupName = "Test Site Name",
-					name = "Fragment Name");
-
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
 		}
 
 		task ("Create a new page template.") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-					groupName = "Test Site Name",
-					layoutPageTemplateCollectionName = "Page Template Collection");
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-					groupName = "Test Site Name",
-					layoutPageTemplateCollectionName = "Page Template Collection",
-					layoutPageTemplateEntryName = "Page Template Name",
-					layoutPageTemplateStatus = "Draft",
-					layoutPageTemplateType = "Content Page Template");
-
-	  	}
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
 
 		task ("Add the test page fragment and 2 heading to the page template.") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
@@ -838,16 +835,15 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
 			PageEditor.addFragment(
-					collectionName = "Collection Name",
-					fragmentName = "Fragment Name");
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading",
-					targetFragmentName = "Fragment Name");
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Fragment Name");
 
 			PageEditor.clickPublish();
-
 		}
 
 		task ("Export the template.") {
@@ -856,25 +852,22 @@ definition {
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-					item = "Export",
-					pageTemplateName = "Page Template Name");
+				item = "Export",
+				pageTemplateName = "Page Template Name");
 
 			DownloadTempFile();
-
 		}
 
 		task ("Delete the template.") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 			PageTemplatesAdmin.deletePageTemplate(pageTemplateName = "Page Template Name");
-
 		}
 
 		task ("Delete the test page fragment.") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 			FragmentsAdmin.deleteEntry(entry = "Fragment Name");
-
 		}
 
 		task ("Import the exported page template.") {
@@ -889,15 +882,14 @@ definition {
 			var pageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "page-template-*.zip");
 
 			UploadTempFile(
-					locator1 = "TextInput#FILE",
-					value1 = "${pageTemplateZipFileName}");
+				locator1 = "TextInput#FILE",
+				value1 = "${pageTemplateZipFileName}");
 
 			Button.clickImport();
 
 			Alert.viewSuccessMessage();
 
 			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings");
-
 		}
 
 		task ("Assert Template has been imported without the deleted fragment.") {
@@ -908,12 +900,12 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			AssertElementNotPresent(
-					key_fragmentName = "Fragment Name",
-					locator1 = "Fragment#FRAGMENT_HEADER");
+				key_fragmentName = "Fragment Name",
+				locator1 = "Fragment#FRAGMENT_HEADER");
 
 			AssertElementPresent(
-					key_fragmentName = "Heading",
-					locator1 = "Fragment#FRAGMENT_HEADER");
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 	}
 

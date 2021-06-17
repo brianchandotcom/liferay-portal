@@ -93,7 +93,25 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 			return false;
 		}
 
-		return _isEnabled(group.getCompanyId());
+		return isEnabled(group.getCompanyId());
+	}
+
+	public boolean isEnabled(long companyId) throws ConfigurationException {
+		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
+			return false;
+		}
+
+		LayoutReportsGooglePageSpeedCompanyConfiguration
+			layoutReportsGooglePageSpeedCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
+					companyId);
+
+		if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Activate
@@ -112,24 +130,6 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 					companyId);
 
 		return layoutReportsGooglePageSpeedCompanyConfiguration.apiKey();
-	}
-
-	private boolean _isEnabled(long companyId) throws ConfigurationException {
-		if (!_layoutReportsGooglePageSpeedConfiguration.enabled()) {
-			return false;
-		}
-
-		LayoutReportsGooglePageSpeedCompanyConfiguration
-			layoutReportsGooglePageSpeedCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-					companyId);
-
-		if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference

@@ -17,6 +17,11 @@ package com.liferay.layout.reports.web.internal.configuration.admin.display;
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.io.Serializable;
 
@@ -28,7 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "configuration.pid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration",
+	property = {
+		"configuration.pid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration",
+		"configuration.pid=com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedGroupConfiguration"
+	},
 	service = ConfigurationVisibilityController.class
 )
 public class LayoutReportsGooglePageSpeedConfigurationVisibilityController
@@ -38,8 +46,26 @@ public class LayoutReportsGooglePageSpeedConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
+		if (ExtendedObjectClassDefinition.Scope.GROUP.equals(scope)) {
+			try {
+				Group group = _groupLocalService.getGroup((long)scopePK);
+
+				return _layoutReportsGooglePageSpeedConfigurationProvider.
+					isEnabled(group.getCompanyId());
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+			}
+		}
+
 		return _layoutReportsGooglePageSpeedConfigurationProvider.isEnabled();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutReportsGooglePageSpeedConfigurationVisibilityController.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutReportsGooglePageSpeedConfigurationProvider

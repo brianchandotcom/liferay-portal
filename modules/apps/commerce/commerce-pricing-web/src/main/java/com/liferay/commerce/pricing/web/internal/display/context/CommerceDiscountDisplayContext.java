@@ -307,6 +307,34 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			false);
 	}
 
+	public String getDiscountCPInstanceApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
+			getCommerceDiscountId() + "/discount-skus?nestedFields=sku";
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountCPInstanceClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		return getClayHeadlessDataSetActionTemplates(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, CPDefinition.class.getName(),
+					PortletProvider.Action.MANAGE)
+			).setMVCRenderCommandName(
+				"/cp_definitions/edit_cp_instance"
+			).setRedirect(
+				commercePricingRequestHelper.getCurrentURL()
+			).setParameter(
+				"cpDefinitionId", "{productId}"
+			).setParameter(
+				"cpInstanceId", "{sku.id}"
+			).setParameter(
+				"screenNavigationCategoryKey", "details"
+			).buildString(),
+			false);
+	}
+
 	public CreationMenu getDiscountCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 

@@ -74,6 +74,15 @@ public class BatchPlannerPlanModelResourcePermission
 			return true;
 		}
 
+		if (permissionChecker.hasOwnerPermission(
+				batchPlannerPlan.getCompanyId(),
+				BatchPlannerPlan.class.getName(),
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				batchPlannerPlan.getUserId(), actionId)) {
+
+			return true;
+		}
+
 		return permissionChecker.hasPermission(
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			BatchPlannerPlan.class.getName(),

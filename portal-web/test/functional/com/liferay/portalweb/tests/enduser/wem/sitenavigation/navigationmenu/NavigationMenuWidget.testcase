@@ -289,16 +289,17 @@ definition {
 			JSONSitenavigation.addSiteNavigationMenu(
 				groupName = "Test Site Name",
 				siteNavigationMenuName = "Test Navigation Menu Name");
-
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 		}
 
 		task ("Add the first page and second page to the navigation menu") {
-			NavigationMenusAdmin.addItem(
-				item = "Page",
-				pageNames = "Test Page Name 1,Test Page Name 2");
+			for (var layoutName : list "Test Page Name 1,Test Page Name 2") {
+				JSONSitenavigation.addSiteNavigationMenuItem(
+					groupName = "Test Site Name",
+					privateLayout = "false",
+					siteNavigationMenuItemName = "${layoutName}",
+					siteNavigationMenuName = "Test Navigation Menu Name",
+					type = "layout");
+			}
 		}
 
 		task ("Navigate to navigation menus admin") {
@@ -404,43 +405,47 @@ definition {
 		}
 
 		task ("Add a page type item") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				privateLayout = "false",
+				siteNavigationMenuItemName = "Test Page Name",
+				siteNavigationMenuName = "Test Navigation Menu Name",
+				type = "layout");
+		}
+
+		task ("Add a submenu type item") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Submenu Name",
+				siteNavigationMenuName = "Test Navigation Menu Name",
+				type = "node");
+		}
+
+		task ("Add a URL type item") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Test Navigation Menu Name",
+				type = "url",
+				url = "https://www.liferay.com",
+				useNewTab = "false");
+		}
+
+		task ("Type content in custom field of navigation menu items") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 
-			NavigationMenusAdmin.addItem(
-				item = "Page",
-				pageNames = "Test Page Name");
-		}
-
-		task ("Type content in custom field") {
 			NavigationMenusAdmin.editItem(
 				customField = "Subtitle",
 				fieldValue = "Page",
 				itemName = "Test Page Name");
-		}
 
-		task ("Add a submenu type item") {
-			NavigationMenusAdmin.addItem(
-				item = "Submenu",
-				submenuName = "Submenu Name");
-		}
-
-		task ("Type content in custom field") {
 			NavigationMenusAdmin.editItem(
 				customField = "Subtitle",
 				fieldValue = "Submenu",
 				itemName = "Submenu Name");
-		}
 
-		task ("Add a URL type item") {
-			NavigationMenusAdmin.addItem(
-				item = "URL",
-				url = "https://www.liferay.com",
-				urlName = "Liferay");
-		}
-
-		task ("Type content in custom field") {
 			NavigationMenusAdmin.editItem(
 				customField = "Subtitle",
 				fieldValue = "URL",

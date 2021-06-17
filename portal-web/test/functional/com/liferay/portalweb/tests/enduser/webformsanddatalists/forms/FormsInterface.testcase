@@ -69,14 +69,36 @@ definition {
 	}
 
 	@description = "Verify that fields can be resized"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsCanBeResized {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134242 FieldsCanBeResized pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		FormFields.viewFieldSize(
+			fieldName = "Text",
+			size = "12");
+
+		FormFields.resizeField(
+			fieldName = "Text",
+			moveForce = "-200");
+
+		FormFields.viewFieldSize(
+			fieldName = "Text",
+			size = "8");
+
+		FormFields.viewFieldSizeNotEquals(
+			fieldName = "Text",
+			size = "12");
 	}
 
 	@description = "Verify that after resizing, the field does not lose any functionality (edit, duplicate, etc...)"

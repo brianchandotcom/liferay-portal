@@ -674,6 +674,14 @@ definition {
 			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
 	}
 
+	macro resizeField {
+		Form.gotoFieldContainer(fieldName = "${fieldName}");
+
+		DragAndDrop.dragAndDrop(
+			locator1 = "FormFields#FIELD_HANDLE_RIGHT",
+			value1 = "${moveForce},0");
+	}
+
 	macro selectAutoCompleteOption {
 		var key_autocompleteOption = "${autocompleteOption}";
 
@@ -1167,6 +1175,20 @@ definition {
 				key_duplicatedIndex = "${number}",
 				locator1 = "FormFields#FIELD_REPEATABLE_BUTTON_BY_INDEX");
 		}
+	}
+
+	macro viewFieldSize {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_size = "${size}",
+			locator1 = "FormFields#FIELD_SIZE");
+	}
+
+	macro viewFieldSizeNotEquals {
+		AssertElementNotPresent(
+			key_fieldName = "${fieldName}",
+			key_size = "${size}",
+			locator1 = "FormFields#FIELD_SIZE");
 	}
 
 	macro viewFieldValidationErrorMessage {

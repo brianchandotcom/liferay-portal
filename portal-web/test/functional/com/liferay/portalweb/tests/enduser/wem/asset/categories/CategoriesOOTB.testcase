@@ -87,6 +87,60 @@ definition {
 		}
 	}
 
+	@description = "When Edit the Audience or Stage, default values are For internal use only ON , Allow user to select multiple categories ON, will be associated with web content, won't be required"
+	@priority = "5"
+	test CheckAudienceStageDefaultSettings {
+		task ("Go to Global Vocabularies") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+		}
+
+		task ("Assert if Vocabulary is for internal use only") {
+			AssertElementPresent(
+				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE",
+				key_vocabularyName = "Audience");
+
+			AssertElementPresent(
+				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE",
+				key_vocabularyName = "Stage");
+		}
+
+		task ("Assert if Vocabulary allow multiple categories") {
+			Vocabulary.viewVocabularyAllowMultipleCAtegories(
+				label = "Allow Multiple Categories",
+				vocabularyName = "Audience");
+
+			Vocabulary.viewVocabularyAllowMultipleCAtegories(
+				label = "Allow Multiple Categories",
+				vocabularyName = "Stage");
+		}
+
+		task ("Assert if Vocabulary allow multiple categories") {
+			Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
+				label = "Required",
+				vocabularyName = "Audience");
+
+			Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
+				label = "Required",
+				vocabularyName = "Stage");
+		}
+	}
+
+	@description = "When the user clicks on the link to documentation, the documentation link is opened"
+	@priority = "3"
+	test OpenLiferayLearnCategoriesVocabulariesPage{
+		task ("Click on the Documentation link") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			Click(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+		}
+
+		task ("Assert user is taken to the the Liferay Learn page") {
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation(value1 = "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html");
+		}
+	}
+
 	@description = "When a change in Global Vocabularies is made, the Global vocabularies section in a site's Categories administration application updates accordingly"
 	@priority = "5"
 	test PropagateChangesOfGlobalCategoryToNormalSite {

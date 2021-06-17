@@ -281,6 +281,28 @@ definition {
 		}
 	}
 
+	macro viewVocabularyAllowMultipleCAtegories {
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "Categories#VOCABULARY_EDIT_CHECKBOX");
+
+		Button.clickCancel();
+	}
+	
+	macro viewVocabularyAssociatedAssetTypesRequirement {
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		Panel.expandPanel(panel = "Associated Asset Types");
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Categories#VOCABULARY_EDIT_CHECKBOX");
+
+		Button.clickCancel();
+	}
+	
 	macro viewVocabularyPermissionsCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 

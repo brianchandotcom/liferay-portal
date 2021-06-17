@@ -122,7 +122,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 					_layoutReportsGooglePageSpeedConfigurationProvider.
 						getApiKey(group),
 					_layoutReportsGooglePageSpeedConfigurationProvider.
-						getStrategy(themeDisplay.getCompany()));
+						getStrategy(group));
 
 			String url = ParamUtil.getString(resourceRequest, "url");
 

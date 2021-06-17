@@ -16,13 +16,11 @@ package com.liferay.layout.reports.web.internal.configuration.provider;
 
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
+import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedGroupConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -42,24 +40,40 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutReportsGooglePageSpeedConfigurationProvider {
 
 	public String getApiKey(Group group) throws ConfigurationException {
-		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+		LayoutReportsGooglePageSpeedGroupConfiguration
+			layoutReportsGooglePageSpeedGroupConfiguration =
+				_configurationProvider.getGroupConfiguration(
+					LayoutReportsGooglePageSpeedGroupConfiguration.class,
+					group.getGroupId());
 
-		String googlePageSpeedApikey = unicodeProperties.getProperty(
-			"googlePageSpeedApiKey");
+		String apiKey = layoutReportsGooglePageSpeedGroupConfiguration.apiKey();
 
-		if (Validator.isNotNull(googlePageSpeedApikey)) {
-			return googlePageSpeedApikey;
+		if (Validator.isNotNull(apiKey)) {
+			return apiKey;
 		}
 
 		return _getApiKey(group.getCompanyId());
 	}
 
-	public String getStrategy(Company company) throws ConfigurationException {
+	public String getStrategy(Group group) throws ConfigurationException {
+		LayoutReportsGooglePageSpeedGroupConfiguration
+			layoutReportsGooglePageSpeedGroupConfiguration =
+				_configurationProvider.getGroupConfiguration(
+					LayoutReportsGooglePageSpeedGroupConfiguration.class,
+					group.getGroupId());
+
+		String strategy =
+			layoutReportsGooglePageSpeedGroupConfiguration.strategy();
+
+		if (Validator.isNotNull(strategy)) {
+			return strategy;
+		}
+
 		LayoutReportsGooglePageSpeedCompanyConfiguration
 			layoutReportsGooglePageSpeedCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-					company.getCompanyId());
+					group.getCompanyId());
 
 		return layoutReportsGooglePageSpeedCompanyConfiguration.strategy();
 	}
@@ -69,11 +83,17 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 	}
 
 	public boolean isEnabled(Group group) throws ConfigurationException {
-		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+		LayoutReportsGooglePageSpeedGroupConfiguration
+			layoutReportsGooglePageSpeedGroupConfiguration =
+				_configurationProvider.getGroupConfiguration(
+					LayoutReportsGooglePageSpeedGroupConfiguration.class,
+					group.getGroupId());
 
-		return GetterUtil.getBoolean(
-			unicodeProperties.getProperty("googlePageSpeedEnabled"),
-			_isEnabled(group.getCompanyId()));
+		if (!layoutReportsGooglePageSpeedGroupConfiguration.enabled()) {
+			return false;
+		}
+
+		return _isEnabled(group.getCompanyId());
 	}
 
 	@Activate

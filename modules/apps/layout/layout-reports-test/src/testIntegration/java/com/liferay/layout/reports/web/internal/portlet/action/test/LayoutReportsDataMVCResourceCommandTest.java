@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -173,22 +172,12 @@ public class LayoutReportsDataMVCResourceCommandTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedCompanyConfiguration",
+						"LayoutReportsGooglePageSpeedGroupConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
-						"apiKey", StringPool.BLANK
+						"apiKey", RandomTestUtil.randomString()
 					).put(
 						"enabled", true
 					).build())) {
-
-			UnicodeProperties unicodeProperties =
-				_group.getTypeSettingsProperties();
-
-			unicodeProperties.setProperty(
-				"googlePageSpeedApiKey", RandomTestUtil.randomString());
-			unicodeProperties.setProperty(
-				"googlePageSpeedEnabled", Boolean.TRUE.toString());
-
-			_groupLocalService.updateGroup(_group);
 
 			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
 

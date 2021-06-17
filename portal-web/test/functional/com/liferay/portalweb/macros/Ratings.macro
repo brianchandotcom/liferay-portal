@@ -151,8 +151,6 @@ definition {
 		}
 
 		else if (isSet(blogRating)) {
-			Pause(locator1 = "2000");
-
 			Click.javaScriptClick(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#THUMB");

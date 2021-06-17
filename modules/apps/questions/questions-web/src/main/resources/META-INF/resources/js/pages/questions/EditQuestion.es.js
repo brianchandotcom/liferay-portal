@@ -16,16 +16,15 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useMutation, useQuery} from 'graphql-hooks';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import DefaultQuestionsEditor from '../../components/DefaultQuestionsEditor.es';
 import Link from '../../components/Link.es';
-import QuestionsEditor from '../../components/QuestionsEditor';
 import TagSelector from '../../components/TagSelector.es';
-import TextLengthValidation from '../../components/TextLengthValidation.es';
 import {getThreadContentQuery, updateThreadQuery} from '../../utils/client.es';
-import {getContextLink, stripHTML} from '../../utils/utils.es';
+import {getContextLink} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -36,7 +35,9 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 
-		const [articleBody, setArticleBody] = useState('');
+		const editor = useRef('');
+		const [hasEnoughContent, setHasEnoughContent] = useState(false);
+
 		const [headline, setHeadline] = useState('');
 		const [id, setId] = useState('');
 		const [tags, setTags] = useState([]);
@@ -51,7 +52,7 @@ export default withRouter(
 
 		useEffect(() => {
 			if (data.messageBoardThreadByFriendlyUrlPath) {
-				setArticleBody(
+				editor.current.setContent(
 					data.messageBoardThreadByFriendlyUrlPath.articleBody
 				);
 				setHeadline(data.messageBoardThreadByFriendlyUrlPath.headline);
@@ -110,35 +111,14 @@ export default withRouter(
 								</ClayForm.FeedbackGroup>
 							</ClayForm.Group>
 
-							<ClayForm.Group className="c-mt-4">
-								<label htmlFor="basicInput">
-									{Liferay.Language.get('body')}
-
-									<span className="c-ml-2 reference-mark">
-										<ClayIcon symbol="asterisk" />
-									</span>
-								</label>
-
-								<QuestionsEditor
-									contents={articleBody}
-									onChange={(event) => {
-										setArticleBody(event.editor.getData());
-									}}
-								/>
-
-								<ClayForm.FeedbackGroup>
-									<ClayForm.FeedbackItem>
-										<span className="small text-secondary">
-											{Liferay.Language.get(
-												'include-all-the-information-someone-would-need-to-answer-your-question'
-											)}
-										</span>
-										<TextLengthValidation
-											text={articleBody}
-										/>
-									</ClayForm.FeedbackItem>
-								</ClayForm.FeedbackGroup>
-							</ClayForm.Group>
+							<DefaultQuestionsEditor
+								additionalInformation={Liferay.Language.get(
+									'include-all-the-information-someone-would-need-to-answer-your-question'
+								)}
+								label={Liferay.Language.get('body')}
+								onContentLengthValid={setHasEnoughContent}
+								ref={editor}
+							/>
 
 							<ClayForm.Group className="c-mt-4">
 								<TagSelector
@@ -153,17 +133,14 @@ export default withRouter(
 							<ClayButton
 								className="c-mt-4 c-mt-sm-0"
 								disabled={
-									!articleBody ||
-									!headline ||
-									!tagsLoaded ||
-									stripHTML(articleBody).length < 15
+									hasEnoughContent || !headline || !tagsLoaded
 								}
 								displayType="primary"
 								onClick={() => {
 									updateThread(
 										{
 											variables: {
-												articleBody,
+												articleBody: editor.current.getContent(),
 												headline,
 												keywords: tags.map(
 													(tag) => tag.value

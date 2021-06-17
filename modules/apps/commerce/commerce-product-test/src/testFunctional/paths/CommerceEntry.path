@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIRTUAL_SELECT_BY_PANEL</td>
+	<td>//div[contains(@class,'panel-heading')]//a[contains(.,'${key_panel}')]//../../..//span[@class='lfr-btn-label']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEVER_EXPIRE_CHECKBOX</td>
 	<td>//input[contains(@name,'neverExpire') and (@type='checkbox')]</td>
 	<td></td>

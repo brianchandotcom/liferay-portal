@@ -348,13 +348,93 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6751. ConfigureVirtualProduct"
-	@ignore = "true"
 	@priority = "3"
 	test ConfigureVirtualProduct {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#ConfigureVirtualProduct";
 
-		// TODO COMMERCE-6751 ConfigureVirtualProduct
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Virtual T-Shirt",
+			productType = "Virtual");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+		Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+		SelectFrameTop();
+
+		SelectFrame(
+			key_frameTitle = "Select File",
+			locator1 = "CommerceEntry#ANY_IFRAME");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "Commerce_Black.jpg");
+
+		Click(
+			key_FilterOption = "Add",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		Click(
+			key_contentType = "Base Information",
+			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+
+		Type(
+			key_fieldLabel = "Max Number of Downloads",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10");
+
+		Click(
+			key_contentType = "Sample",
+			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Enable Sample",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Click(
+			key_panel = "Sample",
+			locator1 = "CommerceEntry#VIRTUAL_SELECT_BY_PANEL");
+
+		SelectFrame.selectFrameNoLoading(
+			key_frameTitle = "Select File",
+			locator1 = "CommerceEntry#ANY_IFRAME");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "Commerce_Black.jpg");
+
+		Click(
+			key_FilterOption = "Add",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		AssertElementPresent(
+			key_index = "Commerce_Black",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementPresent(
+			key_index = "Commerce_Black (1)",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertTextEquals(
+			key_fieldLabel = "Max Number of Downloads",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10");
 	}
 
 	test CreateProductBundleWithPriceTypeDynamic {

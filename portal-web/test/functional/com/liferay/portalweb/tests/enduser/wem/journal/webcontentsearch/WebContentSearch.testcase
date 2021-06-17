@@ -250,6 +250,34 @@ definition {
 		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;Name1&quot;");
 	}
 
+	@description = "This is a test for LPS-132425. Search web content folder on page"
+	@priority = "4"
+	test SearchWebContentFolder {
+		task ("Add a Web Content Folder") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Guest");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+		}
+
+		task ("Search the web content folder on page") {
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "WC Folder Name");
+		}
+
+		task ("View the web content folder shown in search results") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "WC Folder Name",
+				searchAssetType = "Web Content Folder",
+				searchTerm = "WC Folder Name");
+		}
+	}
+
 	@priority = "3"
 	test SearchWebContentQuotes {
 		property testray.component.names = "Web Content Search";

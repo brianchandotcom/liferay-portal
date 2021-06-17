@@ -96,7 +96,12 @@ export const PANELS = {
 	},
 };
 
-export const selectPanels = (activeItemId, activeItemType, state) => {
+export const selectPanels = (
+	activeItemId,
+	activeItemType,
+	state,
+	toControlsId
+) => {
 	let activeItem = null;
 	let panelsIds = {};
 
@@ -112,7 +117,7 @@ export const selectPanels = (activeItemId, activeItemType, state) => {
 					item.config.fragmentEntryLinkId === fragmentEntryLinkId
 			) || {};
 
-		activeItem = state.editables[itemId]?.[activeItemId];
+		activeItem = state.editables[toControlsId(itemId)]?.[activeItemId];
 	}
 
 	if (!activeItem) {

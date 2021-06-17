@@ -89,12 +89,63 @@ definition {
 	}
 
 	@description = "LPS-106219 - Verify that when all items are selected to be reassigned in a filtered All Items page, the bulk modal is considering the filter results"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test BulkReassignConsiderFilteredResultsFromAllItemsPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67830 BulkReassignConsiderFilteredResultsFromAllItemsPage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		var count = "0";
+		var blogTitle = "1";
+
+		while ("${count}" != "3") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry",
+				entryTitle = "Blogs Entry ${blogTitle}");
+			var count = ${count} + 1;
+			var blogTitle = ${blogTitle} + 1;
+		}
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+
+		WorkflowMetrics.goToReassignSelectTask();
+
+		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
+
+		Pause(locator1 = "1000");
+
+		Refresh();
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#REJECT_DROPDOWN");
+
+		Button.clickDone();
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Step",
+			assigneeName = "Review");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+
+		Click(
+			locator1 = "WorkflowAllItems#REASSIGN_ICON",
+			task = "1");
+
+		AssertElementNotPresent(
+			key_workflowInstanceName = "Blogs Entry 1",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
 	}
 
 	@description = "LPS-106219 - Verify that the user is able to select multiple filter options and combine filter queries"
@@ -424,12 +475,46 @@ definition {
 	}
 
 	@description = "LPS-102664 - Verify that the Bulk Reassign is letting the user reassign only pending tasks"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test UserCanReassignOnlyPendingTasks {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67834 UserCanReassignOnlyPendingTasks pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 1",
+			entryTitle = "Blogs Entry 1");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+
+		WorkflowMetrics.goToReassignSelectTask();
+
+		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
+
+		Pause(locator1 = "1000");
+
+		Refresh();
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#APPROVE_DROPDOWN");
+
+		Button.clickDone();
+
+		WorkflowMetrics.clearAllFilter();
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
 	}
 
 	@description = "LPS-102664 - Verify that the Bulk Reassign is letting the user reassign only pending tasks assigned to the user's role"

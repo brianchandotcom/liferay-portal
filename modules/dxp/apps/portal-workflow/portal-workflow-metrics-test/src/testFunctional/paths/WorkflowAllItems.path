@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REJECT_DROPDOWN</td>
+	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Reject')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECT_ROW</td>
 	<td>//tr['${key_rowNumber}']//label</td>
 	<td></td>

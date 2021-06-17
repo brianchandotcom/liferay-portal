@@ -253,12 +253,40 @@ definition {
 	}
 
 	@description = "LPS-102664 - Verify that tasks within a single instance with concurrent pending tasks can be reassigned using the bulk reassign task modal"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test InstanceWithPendingTasksCanBeReassignedUsingBulkReassignModal {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67832 InstanceWithPendingTasksCanBeReassignedUsingBulkReassignModal pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		Alert.viewSuccessMessage();
+
+		WorkflowMetrics.assertAllItemsCurrentAssignee(
+			workflowInstanceAssignee = "Test Test",
+			workflowInstanceName = "Blogs Entry: Blogs Entry Title");
 	}
 
 	@description = "LPS-102664 - Verify that when the user clicks on Next in Select Tasks to Reassign, a loading state with Retrieving all possible assignees message is displayed"

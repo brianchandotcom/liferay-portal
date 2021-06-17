@@ -247,12 +247,69 @@ definition {
 	}
 
 	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the filter query should only be applied after the user moves the cursor out of the dropdown card"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test FilterQueryIsAppliedAfterMouseMovesOutTheCard {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67869 FilterQueryIsAppliedAfterMouseMovesOutTheCard pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		AssertElementNotPresent(
+			key_workflowFilter = "Review",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Review");
+
+		AssertElementNotPresent(
+			key_workflowFilter = "Test Test",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Test Test");
+
+		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueProcessStep(workflowStep = "Review");
+
+		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueAssignee(workflowAssignee = "Test Test");
+
+		AssertElementPresent(
+			key_workflowFilter = "Review",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Review");
+
+		AssertElementPresent(
+			key_workflowFilter = "Test Test",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Test Test");
 	}
 
 	@description = "LPS-102664 - Verify that, in Select New Assignee table, there is a tooltip next to New Assignee title that says Possible assignees must have permissions to be assigned to the corresponding step"

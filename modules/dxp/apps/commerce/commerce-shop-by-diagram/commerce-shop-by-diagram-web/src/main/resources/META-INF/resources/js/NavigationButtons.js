@@ -9,51 +9,37 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ClayIcon from '@clayui/icon'
 
 const NavigationButtons = ({
-	moveDown,
-	moveLeft,
-	moveRight,
-	moveUp,
-	spritemap,
+	moveController,
+	position,
 }) => {
-	const navigationButtonStyle = {
-		bottom: '15px',
-		left: '',
-		right: '50px',
-		top: '',
-	};
-
 	return (
-		<div id="move-controller" style={navigationButtonStyle}>
-			<div className="box top" onClick={moveUp}>
+		<div className="move-controller" style={{ bottom: position.bottom, left: position.left, right: position.right, top: position.top }}>
+			<div className="box top" onClick={() => moveController('up')}>
 				<ClayIcon
 					className="icon"
-					spritemap={spritemap}
 					symbol="angle-left"
 				/>
 			</div>
-			<div className="box right" onClick={moveRight}>
+			<div className="box right" onClick={() => moveController('right')}>
 				<ClayIcon
 					className="icon"
-					spritemap={spritemap}
 					symbol="angle-up"
 				/>
 			</div>
-			<div className="box left" onClick={moveLeft}>
+			<div className="box left" onClick={() => moveController('left')}>
 				<ClayIcon
 					className="icon"
-					spritemap={spritemap}
 					symbol="angle-down"
 				/>
 			</div>
-			<div className="bottom box" onClick={moveDown}>
+			<div className="bottom box" onClick={() => moveController('bottom')}>
 				<ClayIcon
 					className="icon"
-					spritemap={spritemap}
 					symbol="angle-down"
 				/>
 			</div>
@@ -64,15 +50,5 @@ const NavigationButtons = ({
 export default NavigationButtons;
 
 NavigationButtons.propTypes = {
-	moveBottom: PropTypes.func,
-	moveLeft: PropTypes.func,
-	moveRight: PropTypes.func,
-	moveUp: PropTypes.func,
-	position: PropTypes.shape({
-		bottom: PropTypes.string,
-		left: PropTypes.string,
-		right: PropTypes.string,
-		top: PropTypes.string,
-	}),
-	spritemap: PropTypes.string,
+	moveController: PropTypes.func,
 };

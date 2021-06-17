@@ -9,24 +9,20 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ClayIcon from '@clayui/icon'
 
-const ZoomController = ({position, spritemap, zoomIn, zoomOut}) => {
-	const zoomButtonStyle = {
-		bottom: position.bottom,
-		left: position.left,
-		right: position.right,
-		top: position.top,
-	};
-
+const ZoomController = ({position, zoomIn, zoomOut}) => {
 	return (
-		<div id="zoom-controller" style={zoomButtonStyle}>
+		<div className="zoom-controller" style={{
+			bottom: position.bottom,
+			left: position.left,
+			right: position.right,
+			top: position.top}}>
 			<div className="box plus" data-testid="zoomIn" onClick={zoomIn}>
 				<ClayIcon
 					className="icon"
-					spritemap={spritemap}
 					symbol="plus"
 				/>
 			</div>
@@ -35,7 +31,6 @@ const ZoomController = ({position, spritemap, zoomIn, zoomOut}) => {
 				<ClayIcon
 					className="icon"
 					data-testid="zoomOut"
-					spritemap={spritemap}
 					symbol="hr"
 				/>
 			</div>
@@ -52,7 +47,6 @@ ZoomController.propTypes = {
 		right: PropTypes.string,
 		top: PropTypes.string,
 	}),
-	spritemap: PropTypes.string,
 	zoomIn: PropTypes.func,
 	zoomOut: PropTypes.func,
 };

@@ -11,8 +11,10 @@
 
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+import ClayIcon, { ClayIconSpriteContext } from '@clayui/icon';
 
-import '../style/diagram.scss';
+
+import '../css/diagram.scss';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
 import ImagePins from './ImagePins';
@@ -20,8 +22,9 @@ import ImagePins from './ImagePins';
 const Diagram = ({
 	enablePanZoom,
 	enableResetZoom,
-	image,
+	imageURL,
 	imageSettings,
+	namespace,
 	navigationController,
 	spritemap,
 	zoomController,
@@ -34,41 +37,45 @@ const Diagram = ({
 	const [selectedOption, setSelectedOption] = useState(1);
 
 	return (
+		
 		<div className="diagram mx-auto">
-			<DiagramHeader setSelectedOption={setSelectedOption} />
+			<ClayIconSpriteContext.Provider value={spritemap}>
+				<DiagramHeader />
 
-			<ImagePins
-				changedScale={changedScale}
-				enablePanZoom={enablePanZoom}
-				enableResetZoom={enableResetZoom}
-				image={image}
-				imageSettings={imageSettings}
-				navigationController={navigationController}
-				resetZoom={resetZoom}
-				scale={scale}
-				selectedOption={selectedOption}
-				setChangedScale={setChangedScale}
-				setResetZoom={setResetZoom}
-				setScale={setScale}
-				setSelectedOption={setSelectedOption}
-				setZoomInHandler={setZoomInHandler}
-				setZoomOutHandler={setZoomOutHandler}
-				zoomController={zoomController}
-				zoomInHandler={zoomInHandler}
-				zoomOutHandler={zoomOutHandler}
-			/>
+				<ImagePins
+					changedScale={changedScale}
+					enablePanZoom={enablePanZoom}
+					enableResetZoom={enableResetZoom}
+					imageURL={imageURL}
+					imageSettings={imageSettings}
+					navigationController={navigationController}
+					namespace={namespace}
+					resetZoom={resetZoom}
+					scale={scale}
+					selectedOption={selectedOption}
+					setChangedScale={setChangedScale}
+					setResetZoom={setResetZoom}
+					setScale={setScale}
+					setSelectedOption={setSelectedOption}
+					setZoomInHandler={setZoomInHandler}
+					setZoomOutHandler={setZoomOutHandler}
+					zoomController={zoomController}
+					zoomInHandler={zoomInHandler}
+					zoomOutHandler={zoomOutHandler}
+				/>
 
-			<DiagramFooter
-				changedScale={changedScale}
-				enableResetZoom={enableResetZoom}
-				selectedOption={selectedOption}
-				setChangedScale={setChangedScale}
-				setResetZoom={setResetZoom}
-				setSelectedOption={setSelectedOption}
-				setZoomInHandler={setZoomInHandler}
-				setZoomOutHandler={setZoomOutHandler}
-				spritemap={spritemap}
-			/>
+				<DiagramFooter
+					changedScale={changedScale}
+					enableResetZoom={enableResetZoom}
+					selectedOption={selectedOption}
+					setChangedScale={setChangedScale}
+					setResetZoom={setResetZoom}
+					setSelectedOption={setSelectedOption}
+					setZoomInHandler={setZoomInHandler}
+					setZoomOutHandler={setZoomOutHandler}
+				/>
+			</ClayIconSpriteContext.Provider>
+
 		</div>
 	);
 };
@@ -76,8 +83,6 @@ const Diagram = ({
 Diagram.defaultProps = {
 	enablePanZoom: true,
 	enableResetZoom: true,
-	image:
-		'https://i0.wp.com/detoxicrecenze.com/wp-content/uploads/2018/05/straight-6-engine-diagram-460-ford-engine-diagram-wiring-info-e280a2-of-straight-6-engine-diagram.jpg',
 	imageSettings: {
 		height: '300px',
 		width: '100%',
@@ -94,7 +99,6 @@ Diagram.defaultProps = {
 		},
 	},
 	pins: [],
-	spritemap: './assets/clay/icons.svg',
 	zoomController: {
 		enable: true,
 		position: {
@@ -109,10 +113,12 @@ Diagram.defaultProps = {
 Diagram.propTypes = {
 	enablePanZoom: PropTypes.bool,
 	enableResetZoom: PropTypes.bool,
+	imageURL: PropTypes.string.isRequired,
 	imageSettings: PropTypes.shape({
 		height: PropTypes.string,
 		width: PropTypes.string,
 	}),
+	namespace: PropTypes.string.isRequired,
 	navigationController: PropTypes.shape({
 		dragStep: PropTypes.number,
 		enable: PropTypes.bool,
@@ -124,7 +130,6 @@ Diagram.propTypes = {
 			top: PropTypes.string,
 		}),
 	}),
-	spritemap: PropTypes.string,
 	zoomController: PropTypes.shape({
 		enable: PropTypes.bool,
 		position: PropTypes.shape({

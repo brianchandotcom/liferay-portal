@@ -12,13 +12,10 @@
 import {event, select, zoom, zoomIdentity, zoomTransform} from 'd3';
 import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef} from 'react';
-
 import NavigationButtons from './NavigationButtons';
 import {
-	moveDown,
-	moveLeft,
-	moveRight,
-	moveUp,
+	moveController,
+	namespace,
 	zoomIn,
 	zoomOut,
 } from './NavigationsUtils';
@@ -28,7 +25,7 @@ const ImagePins = ({
 	changedScale,
 	enablePanZoom,
 	execZoomIn,
-	image,
+	imageURL,
 	imageSettings,
 	navigationController,
 	resetZoom,
@@ -38,38 +35,37 @@ const ImagePins = ({
 	setSelectedOption,
 	setZoomInHandler,
 	setZoomOutHandler,
-	spritemap,
 	zoomController,
 	zoomInHandler,
 	zoomOutHandler,
 }) => {
 	const handlers = useRef();
-	const container = useRef();
-	const panZoom = useRef();
+	const containerRef = useRef();
+	const panZoomRef = useRef();
 
-	const svg = useRef(null);
+	const svgRef = useRef(null);
 
 	useLayoutEffect(() => {
-		container.current = select('g#container');
-		panZoom.current = zoom()
+		containerRef.current = select(`#${namespace}container`);
+		panZoomRef.current = zoom()
 			.scaleExtent([0.5, 40])
 			.on('zoom', () => {
-				container.current.attr('transform', event.transform);
+				containerRef.current.attr('transform', event.transform);
 			});
 
 		if (enablePanZoom) {
-			container.current.call(panZoom.current);
+			containerRef.current.call(panZoomRef.current);
 		}
 
 		if (resetZoom) {
 			setResetZoom(false);
-			container.current
+			containerRef.current
 				.transition()
 				.duration(700)
 				.call(
-					panZoom.current.transform,
+					panZoomRef.current.transform,
 					zoomIdentity,
-					zoomTransform(container.current.node()).invert([
+					zoomTransform(containerRef.current.node()).invert([
 						imageSettings.width,
 						imageSettings.height,
 					])
@@ -80,8 +76,8 @@ const ImagePins = ({
 
 		if (changedScale) {
 			setChangedScale(false);
-			const imageInfos = container.current.node().getBBox();
-			container.current
+			const imageInfos = containerRef.current.node().getBBox();
+			containerRef.current
 				.transition()
 				.duration(700)
 				.attr(
@@ -100,21 +96,18 @@ const ImagePins = ({
 
 		if (zoomOutHandler) {
 			setZoomOutHandler(false);
-			zoomOut(container.current, panZoom.current);
+			zoomOut(containerRef.current, panZoomRef.current);
 		}
 
 		if (zoomInHandler) {
 			setZoomInHandler(false);
-			zoomIn(container.current, panZoom.current);
+			zoomIn(containerRef.current, panZoomRef.current);
 		}
 
 		handlers.current = {
-			moveDown: () => moveDown(container.current, navigationController),
-			moveLeft: () => moveLeft(container.current, navigationController),
-			moveRight: () => moveRight(container.current, navigationController),
-			moveUp: () => moveUp(container.current, navigationController),
-			zoomIn: () => zoomIn(container.current, panZoom.current),
-			zoomOut: () => zoomOut(container.current, panZoom.current),
+			moveController: (where) => moveController(containerRef.current, navigationController, where),
+			zoomIn: () => zoomIn(containerRef.current, panZoomRef.current),
+			zoomOut: () => zoomOut(containerRef.current, panZoomRef.current),
 		};
 	}, [
 		resetZoom,
@@ -142,26 +135,22 @@ const ImagePins = ({
 		<div className="diagram-pins-container" style={diagramStyle}>
 			<svg
 				height={imageSettings.height}
-				ref={svg}
+				ref={svgRef}
 				width={imageSettings.width}
 			>
 				<g
-					data-testid="container"
-					id="container"
+					data-testid={namespace + "container"}
+					id={namespace + "container"}
 					transform="translate(0,0) scale(1)"
 				>
-					<image height={imageSettings.height} href={image}></image>
+					<image height={imageSettings.height} href={imageURL}></image>
 				</g>
 			</svg>
 
 			{navigationController.enable && (
 				<NavigationButtons
-					moveDown={() => handlers.current?.moveDown()}
-					moveLeft={() => handlers.current?.moveLeft()}
-					moveRight={() => handlers.current?.moveRight()}
-					moveUp={() => handlers.current?.moveUp()}
+					moveController={(where) => handlers.current?.moveController(where)}
 					position={navigationController.position}
-					spritemap={spritemap}
 				/>
 			)}
 

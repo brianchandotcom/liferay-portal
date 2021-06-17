@@ -16,7 +16,7 @@
 	}
 }
 
-#move-controller {
+.move-controller {
 	display: grid;
 	grid-auto-flow: row;
 	grid-gap: 0;
@@ -66,7 +66,7 @@
 	}
 }
 
-#zoom-controller {
+.zoom-controller {
 	display: grid;
 	grid-auto-flow: row;
 	grid-gap: 0;

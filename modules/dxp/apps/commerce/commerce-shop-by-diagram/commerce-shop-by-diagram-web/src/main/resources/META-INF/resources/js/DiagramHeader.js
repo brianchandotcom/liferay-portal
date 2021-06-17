@@ -12,7 +12,22 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-const DiagramHeader = () => {
+const INITIAL_RADIUS_CHOICE = [
+	{
+		label: 'Small',
+		value: 10,
+	},
+	{
+		label: 'Medium',
+		value: 20,
+	},
+	{
+		label: 'Large',
+		value: 30,
+	},
+];
+
+const DiagramHeader = (radiusChoice = INITIAL_RADIUS_CHOICE) => {
 	return (
 		<div className="d-flex diagram diagram-header justify-content-between">
 			<ClayButton
@@ -23,23 +38,6 @@ const DiagramHeader = () => {
 			</ClayButton>
 		</div>
 	);
-};
-
-DiagramHeader.defaultProps = {
-	radiusChoice: [
-		{
-			label: 'Small',
-			value: 10,
-		},
-		{
-			label: 'Medium',
-			value: 20,
-		},
-		{
-			label: 'Large',
-			value: 30,
-		},
-	],
 };
 
 export default DiagramHeader;

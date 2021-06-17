@@ -9,57 +9,42 @@
  * distribution rights of the Software.
  */
 
-export const moveRight = (container, navigationController) => {
+export const moveController = (container, navigationController, where) => {
 	const getPosition = container.attr('transform');
+	// this regex takes a string value from inline html to make the image zoom/translations working
 	const scale = getPosition.match(/(-?[0-9]+[.,-\s]*)+/g);
 	const coordinates = scale[0].split(',').map((x) => parseInt(x, 10));
-	const newPosition = {
-		k: parseFloat(scale[1]),
-		x: coordinates[0] + navigationController.dragStep,
-		y: coordinates[1],
-	};
-	container.attr(
-		'transform',
-		`translate(${newPosition.x},${newPosition.y}) scale(${newPosition.k})`
-	);
-};
-export const moveLeft = (container, navigationController) => {
-	const getPosition = container.attr('transform');
-	const scale = getPosition.match(/(-?[0-9]+[.,-\s]*)+/g);
-	const coordinates = scale[0].split(',').map((x) => parseInt(x, 10));
-	const newPosition = {
-		k: parseFloat(scale[1]),
-		x: coordinates[0] - navigationController.dragStep,
-		y: coordinates[1],
-	};
-	container.attr(
-		'transform',
-		`translate(${newPosition.x},${newPosition.y}) scale(${newPosition.k})`
-	);
-};
-export const moveUp = (container, navigationController) => {
-	const getPosition = container.attr('transform');
-	const scale = getPosition.match(/(-?[0-9]+[.,-\s]*)+/g);
-	const coordinates = scale[0].split(',').map((x) => parseInt(x, 10));
-	const newPosition = {
-		k: parseFloat(scale[1]),
-		x: coordinates[0],
-		y: coordinates[1] - navigationController.dragStep,
-	};
-	container.attr(
-		'transform',
-		`translate(${newPosition.x},${newPosition.y}) scale(${newPosition.k})`
-	);
-};
-export const moveDown = (container, navigationController) => {
-	const getPosition = container.attr('transform');
-	const scale = getPosition.match(/(-?[0-9]+[.,-\s]*)+/g);
-	const coordinates = scale[0].split(',').map((x) => parseInt(x, 10));
-	const newPosition = {
-		k: parseFloat(scale[1]),
-		x: coordinates[0],
-		y: coordinates[1] + navigationController.dragStep,
-	};
+	let newPosition
+	
+	if (where === 'right') {
+		newPosition = {
+			k: parseFloat(scale[1]),
+			x: coordinates[0] + navigationController.dragStep,
+			y: coordinates[1],
+		};
+	}
+	if (where === 'left') {
+		newPosition = {
+			k: parseFloat(scale[1]),
+			x: coordinates[0] - navigationController.dragStep,
+			y: coordinates[1],
+		};
+	}
+	if (where === 'up') {
+		newPosition = {
+			k: parseFloat(scale[1]),
+			x: coordinates[0],
+			y: coordinates[1] - navigationController.dragStep,
+		};
+	}
+	if (where === 'bottom') {
+		newPosition = {
+			k: parseFloat(scale[1]),
+			x: coordinates[0],
+			y: coordinates[1] + navigationController.dragStep,
+		};
+	}
+
 	container.attr(
 		'transform',
 		`translate(${newPosition.x},${newPosition.y}) scale(${newPosition.k})`

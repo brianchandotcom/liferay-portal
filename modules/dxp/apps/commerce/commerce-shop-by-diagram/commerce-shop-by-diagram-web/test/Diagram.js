@@ -17,8 +17,7 @@ import Diagram from '../src/main/resources/META-INF/resources/js/Diagram';
 
 describe('Diagram 1 of 5 features', () => {
 	const initialProps = {
-		image:
-			'https://i0.wp.com/detoxicrecenze.com/wp-content/uploads/2018/05/straight-6-engine-diagram-460-ford-engine-diagram-wiring-info-e280a2-of-straight-6-engine-diagram.jpg',
+		imageURL: './assets/lfr-diagrm-engine.png',
 	};
 
 	beforeEach(() => {
@@ -51,7 +50,7 @@ describe('Diagram 1 of 5 features', () => {
 			/>
 		);
 
-		const controller = container.querySelector('#zoom-controller');
+		const controller = container.querySelector('.zoom-controller');
 
 		expect(controller).toBeTruthy();
 	});
@@ -61,7 +60,7 @@ describe('Diagram 1 of 5 features', () => {
 			<Diagram {...initialProps} zoomController={{enable: false}} />
 		);
 
-		const controller = container.querySelector('#zoom-controller');
+		const controller = container.querySelector('.zoom-controller');
 
 		expect(controller).toBeFalsy();
 	});
@@ -84,7 +83,7 @@ describe('Diagram 1 of 5 features', () => {
 			/>
 		);
 
-		const controller = container.querySelector('#move-controller');
+		const controller = container.querySelector('.move-controller');
 
 		expect(controller).toBeTruthy();
 	});
@@ -94,7 +93,7 @@ describe('Diagram 1 of 5 features', () => {
 			<Diagram {...initialProps} navigationController={{enable: false}} />
 		);
 
-		const controller = container.querySelector('#move-controller');
+		const controller = container.querySelector('.move-controller');
 
 		expect(controller).toBeFalsy();
 	});

@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"@clayui/autocomplete": "3.28.0",
+		"@clayui/autocomplete": "3.29.0",
 		"@clayui/button": "3.6.0",
-		"@clayui/color-picker": "3.28.0",
-		"@clayui/data-provider": "3.28.0",
-		"@clayui/drop-down": "3.28.0",
-		"@clayui/form": "3.28.0",
+		"@clayui/color-picker": "3.29.0",
+		"@clayui/data-provider": "3.29.0",
+		"@clayui/drop-down": "3.29.0",
+		"@clayui/form": "3.29.0",
 		"@clayui/icon": "3.1.0",
-		"@clayui/modal": "3.28.0",
+		"@clayui/modal": "3.29.0",
 		"@clayui/slider": "3.25.1",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.2.6",
@@ -16,14 +16,8 @@
 		"prop-types": "15.7.2"
 	},
 	"jest": {
-		"collectCoverageFrom": [
-			"!<rootDir>/node_modules/",
-			"<rootDir>/src/**/components/**/*.js",
-			"<rootDir>/src/**/utilities/**/*.js"
-		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/dev/",
-			"<rootDir>/test/utils/"
+			"<rootDir>/test/dev/"
 		]
 	},
 	"name": "@liferay/commerce-shop-by-diagram-web",

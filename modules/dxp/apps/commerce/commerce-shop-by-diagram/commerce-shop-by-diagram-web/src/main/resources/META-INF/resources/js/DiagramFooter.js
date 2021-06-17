@@ -11,8 +11,10 @@
 
 import ClayButton from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import ClayIcon from '@clayui/icon'
 import React from 'react';
+
+const OPTIONS = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
 
 const DiagramFooter = ({
 	enableResetZoom,
@@ -22,31 +24,26 @@ const DiagramFooter = ({
 	setSelectedOption,
 	setZoomInHandler,
 	setZoomOutHandler,
-	spritemap,
 }) => {
 	const handleZoomChange = (event) => {
 		setSelectedOption(event.target.value);
 		setChangedScale(true);
 	};
 
-	const options = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
 
 	return (
 		<div className="d-flex diagram-footer justify-content-end mt-3">
 			<ClayButton className="mr-3">
 				<span className="inline-item inline-item-before">
-					<ClayIcon spritemap={spritemap} symbol="expand" />
+					<ClayIcon symbol="expand" />
 				</span>
-				Expand
+				{Liferay.Language.get('expand')}
 			</ClayButton>
 
 			<div className="d-flex">
 				<ClayButton
-					className=""
 					displayType="secondary"
-					onClick={() => {
-						setZoomOutHandler(true);
-					}}
+					onClick={() => {setZoomOutHandler(true)}}
 				>
 					-
 				</ClayButton>
@@ -54,11 +51,10 @@ const DiagramFooter = ({
 				<ClaySelect
 					aria-label="Select Label"
 					className="ml-3 mr-3"
-					id="mySelectId"
 					onChange={handleZoomChange}
 					value={selectedOption}
 				>
-					{options.map((value) => (
+					{OPTIONS.map((value) => (
 						<ClaySelect.Option
 							key={value}
 							label={`${value * 100}%`}
@@ -82,10 +78,9 @@ const DiagramFooter = ({
 				<ClayButton
 					className="ml-3 reset-zoom"
 					displayType="secondary"
-					id="reset"
 					onClick={() => setResetZoom(true)}
 				>
-					Reset Zoom
+					{Liferay.Language.get('reset-zoom')}
 				</ClayButton>
 			)}
 		</div>

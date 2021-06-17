@@ -32,8 +32,6 @@ definition {
 	@description = "Manage Conflicting Web Content Folder changes and discard the changes."
 	@priority = "4"
 	test ManageConflictingWebContentFolderchanges {
-		property test.assert.warning.exceptions = "true";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONWebcontent.addFolder(

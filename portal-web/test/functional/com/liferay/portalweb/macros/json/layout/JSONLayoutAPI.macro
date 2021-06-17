@@ -133,6 +133,28 @@ definition {
 		return "${typeSettings}";
 	}
 
+	@summary = "Get the uuid from a layout by groupId and layoutName"
+	macro _getUuidByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+
+		var uuid = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['uuid']");
+
+		if ("${uuid}" == "") {
+			fail("FAIL. Cannot find layout.");
+		}
+
+		return "${uuid}";
+	}
+
 	@summary = "Publish the layout by the plid"
 	macro _publishLayoutByPlid {
 		Variables.assertDefined(parameterList = "${plid}");

@@ -21,6 +21,8 @@ JSONObject samlSloContextJSONObject = (JSONObject)request.getAttribute("SAML_SLO
 
 JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("samlSloRequestInfos");
 
+String finishSLOResourceCommand = PortalUtil.getRelativeHomeURL(request) + SamlCommandQueryConstants.FINISH_SLO;
+
 String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCommandQueryConstants.SLO_LOGOUT;
 %>
 
@@ -65,7 +67,7 @@ String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCom
 		<liferay-ui:message arguments="<%= 5 %>" key="all-service-providers-are-processed.-continuing-sign-out-automatically-in-x-seconds" />
 	</div>
 
-	<a href="<%= sloLogoutRenderCommand %>&cmd=finish" id="samlCompleteSignOutLink"><liferay-ui:message key="complete-sign-out" /></a>
+	<a href="<%= finishSLOResourceCommand %>&cmd=finish" id="samlCompleteSignOutLink"><liferay-ui:message key="complete-sign-out" /></a>
 </div>
 
 <noscript>
@@ -89,7 +91,7 @@ String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCom
 	%>
 
 	<div>
-		<a href="<%= sloLogoutRenderCommand %>&cmd=finish">
+		<a href="<%= finishSLOResourceCommand %>&cmd=finish">
 			<liferay-ui:message key="complete-sign-out" />
 		</a>
 	</div>
@@ -256,7 +258,7 @@ String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCom
 		finishLogout: function() {
 			detachHandlers();
 
-			location.href = '<%= sloLogoutRenderCommand %>&cmd=finish';
+			location.href = '<%= finishSLOResourceCommand %>&cmd=finish';
 		},
 
 		retryLogout: function(entityId) {

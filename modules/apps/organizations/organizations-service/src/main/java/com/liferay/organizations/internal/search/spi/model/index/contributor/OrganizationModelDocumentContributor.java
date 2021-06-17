@@ -69,6 +69,7 @@ public class OrganizationModelDocumentContributor
 				"nameTreePath", _buildNameTreePath(organization));
 			document.addKeyword(
 				"parentOrganizationId", organization.getParentOrganizationId());
+			document.remove(Field.USER_NAME);
 
 			_populateAddresses(
 				document, organization.getAddresses(),

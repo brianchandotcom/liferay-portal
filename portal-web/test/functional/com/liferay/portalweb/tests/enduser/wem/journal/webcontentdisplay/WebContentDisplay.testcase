@@ -653,9 +653,11 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("View the web content shown on WCD") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "WCD#WEB_CONTENT_TITLE",
-				value1 = "WC WebContent Title");
+			Portlet.viewTitle(portletName = "WC WebContent Title");
+
+			Portlet.viewTitle(portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.viewDefaultMessage();
 		}
 	}
 

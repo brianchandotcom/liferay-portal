@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -69,6 +69,7 @@ import org.junit.runner.RunWith;
  * @author Jorge Ferrer
  * @author Sergio González
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class OrganizationLocalServiceTest {
 
@@ -1042,13 +1043,9 @@ public class OrganizationLocalServiceTest {
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
-	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
-
 	private PermissionChecker _originalPermissionChecker;
 	private final List<String> _pids = new ArrayList<>();
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

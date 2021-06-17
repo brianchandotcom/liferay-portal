@@ -244,7 +244,7 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ADD_FIELD_SPECIFIC_POSITION</td>
+	<td>ADD_FIELD_SPECIFIC_POSITION</td>
     <td>//div[(@data-ddm-field-page='${key_formPageNumber}' and @data-ddm-field-column='${key_fieldColumnNumber}') and (@data-ddm-field-row = '${key_fieldRowNumber}') and contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
     <td></td>
 </tr>

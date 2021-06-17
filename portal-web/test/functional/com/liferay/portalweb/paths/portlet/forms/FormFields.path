@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_ON_ROW</td>
+	<td>//div[(@data-ddm-field-row = '${key_fieldRowNumber}')]/div[contains(@data-field-name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_REMOVE</td>
 	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldName}')][not(contains(@class,'container'))])[${key_index}]//button[contains(@class,'ddm-form-field-repeatable-delete-button')]</td>
 	<td></td>

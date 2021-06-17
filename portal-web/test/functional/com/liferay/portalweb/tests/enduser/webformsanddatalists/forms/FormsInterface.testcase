@@ -146,14 +146,52 @@ definition {
 	}
 
 	@description = "Verify that a second field can be added to the same row as a resized field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test MultipleFieldsCanBeAddedToARow {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134243 MultipleFieldsCanBeAddedToARow pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		FormFields.resizeField(
+			fieldName = "Text",
+			moveForce = "-300");
+
+		Form.closeSidebar();
+
+		Form.addFieldSameRow(
+			fieldColumnNumber = "1",
+			fieldType = "Numeric");
+
+		FormFields.viewFieldsSameRow(
+			fieldNames = "Text,Numeric",
+			fieldRowNumber = "0");
+
+		FormFields.viewFieldSize(
+			fieldName = "Text",
+			size = "6");
+
+		FormFields.viewFieldSize(
+			fieldName = "Numeric",
+			size = "6");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewFieldsSameRow(
+			fieldNames = "Text,Numeric",
+			fieldRowNumber = "0");
 	}
 
 	@description = "Verify that a second Fields Group can be added to the same row as a resized Fields Group"

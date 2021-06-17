@@ -48,6 +48,7 @@ export default function OpenGraphMapping({
 					value: openGraphTitle,
 				},
 				{
+					component: 'textarea',
 					fieldType: 'text',
 					helpMessage: lang.sub(
 						Liferay.Language.get(
@@ -75,6 +76,7 @@ export default function OpenGraphMapping({
 					selectedFieldKey: openGraphImage,
 				},
 				{
+					component: 'textarea',
 					fieldType: 'text',
 					helpMessage: lang.sub(
 						Liferay.Language.get(

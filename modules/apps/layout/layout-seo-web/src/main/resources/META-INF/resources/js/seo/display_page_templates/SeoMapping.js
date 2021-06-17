@@ -46,6 +46,7 @@ export default function SeoMapping({
 					value: title,
 				},
 				{
+					component: 'textarea',
 					fieldType: 'text',
 					helpMessage: lang.sub(
 						Liferay.Language.get(

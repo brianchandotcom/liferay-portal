@@ -27,6 +27,7 @@ const UNMAPPED_OPTION = {
 const FIELD_TEMPLATE = (key) => ` $\{${key}} `;
 
 function MappingInput({
+	component,
 	fieldType,
 	helpMessage,
 	initialFields,
@@ -90,7 +91,7 @@ function MappingInput({
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayInput
-						component="textarea"
+						component={component}
 						id={name}
 						name={name}
 						onChange={(event) => {
@@ -120,6 +121,7 @@ function MappingInput({
 }
 
 MappingInput.propTypes = {
+	component: PropTypes.string,
 	helpMessage: PropTypes.string,
 	name: PropTypes.string.isRequired,
 	selectedSource: PropTypes.shape({

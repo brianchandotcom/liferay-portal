@@ -17,7 +17,7 @@ import {
 	useConfig,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {useCallback, useEffect, useRef} from 'react';
+import {useCallback} from 'react';
 
 const getSerializedSettingsContextPages = (pages, defaultLanguageId) => {
 	const visitor = new PagesVisitor(pages);
@@ -98,18 +98,6 @@ export const useStateSync = () => {
 		successPageSettings,
 	} = useFormState();
 
-	const settingsDDMFormRef = useRef(null);
-
-	useEffect(() => {
-		const getAsync = async () => {
-			settingsDDMFormRef.current = await Liferay.componentReady(
-				'settingsDDMForm'
-			);
-		};
-
-		getAsync();
-	}, [settingsDDMFormRef]);
-
 	return useCallback(() => {
 		const state = {
 			availableLanguageIds,
@@ -132,16 +120,6 @@ export const useStateSync = () => {
 				state.description[key]
 			);
 		});
-
-		if (settingsDDMFormRef.current?.reactComponentRef.current) {
-			document.querySelector(
-				`#${portletNamespace}serializedSettingsContext`
-			).value = JSON.stringify({
-				pages: settingsDDMFormRef.current.reactComponentRef.current.get(
-					'pages'
-				),
-			});
-		}
 
 		document.querySelector(
 			`#${portletNamespace}name`

@@ -78,6 +78,7 @@ export const ManagementToolbar = ({
 	onPreviewClick,
 	onPublishClick,
 	onSaveClick,
+	onSettingsClick,
 	onShareClick,
 	portletNamespace,
 	variant = 'builder',
@@ -148,6 +149,13 @@ export const ManagementToolbar = ({
 		onShareClick,
 		true,
 		document.querySelector('.lfr-ddm-share-url-button')
+	);
+
+	useEventListener(
+		'click',
+		onSettingsClick,
+		true,
+		document.querySelector('.lfr-ddm-settings-button')
 	);
 
 	return null;

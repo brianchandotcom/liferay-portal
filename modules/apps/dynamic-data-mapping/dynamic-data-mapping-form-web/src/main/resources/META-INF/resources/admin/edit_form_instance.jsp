@@ -70,16 +70,11 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 			<ul class="navbar-nav toolbar-group-field">
 				<li class="nav-item pr-3">
-					<clay:button
-						borderless="<%= true %>"
-						cssClass="lfr-ddm-button"
-						displayType="secondary"
-						icon="cog"
-						id='<%= liferayPortletResponse.getNamespace() + "ddmFormInstanceSettingsIcon" %>'
-						onClick="javascript:Liferay.DDM.openSettings()"
-						small="<%= true %>"
-						title='<%= LanguageUtil.get(request, "settings") %>'
-					/>
+					<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm lfr-ddm-button lfr-ddm-settings-button" title="<%= LanguageUtil.get(request, "settings") %>">
+						<svg class="lexicon-icon">
+							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>cog" />
+						</svg>
+					</button>
 				</li>
 				<li class="nav-item pr-2">
 					<c:choose>
@@ -173,6 +168,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"formInstanceId", formInstanceId
 					).put(
+						"formSettingsContext", ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext)
+					).put(
 						"functionsMetadata", functionsMetadataJSONObject
 					).put(
 						"functionsURL", functionsURL
@@ -211,16 +208,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			/>
 		</div>
 	</aui:form>
-
-	<clay:container-fluid
-		cssClass="ddm-form-instance-settings hide"
-		id='<%= liferayPortletResponse.getNamespace() + "settings" %>'
-	>
-		<react:component
-			module="admin/js/FormView.link.es"
-			props="<%= ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext) %>"
-		/>
-	</clay:container-fluid>
 </div>
 
 <liferay-portlet:runtime
@@ -229,18 +216,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 />
 
 <aui:script>
-	Liferay.namespace('DDM').FormSettings = {
-		autosaveInterval: <%= ddmFormAdminDisplayContext.getAutosaveInterval() %>,
-		autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',
-		portletNamespace: '<portlet:namespace />',
-		publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
-		restrictedFormURL:
-			'<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
-		sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
-		showPagination: true,
-		spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
-	};
-
 	var clearPortletHandlers = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			var translationManager = Liferay.component(
@@ -256,75 +231,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 				return destroy;
 			});
-
-			Liferay.detach('destroyPortlet', clearPortletHandlers);
-		}
-	};
-
-	Liferay.on('destroyPortlet', clearPortletHandlers);
-</aui:script>
-
-<aui:script use="aui-base">
-	Liferay.namespace('FormPortlet').destroySettings = function () {
-		var settingsNode = A.one('#<portlet:namespace />settingsModal');
-
-		if (settingsNode) {
-			Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
-		}
-	};
-
-	Liferay.namespace('DDM').openSettings = function () {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					cssClass: 'ddm-form-settings-modal modal-full-screen',
-					height: 600,
-					resizable: false,
-					'toolbars.footer': [
-						{
-							cssClass: 'btn-secondary mr-3',
-							label: '<liferay-ui:message key="cancel" />',
-							on: {
-								click: function () {
-									Liferay.Util.getWindow(
-										'<portlet:namespace />settingsModal'
-									).hide();
-								},
-							},
-						},
-						{
-							cssClass: 'btn-primary',
-							label: '<liferay-ui:message key="done" />',
-							on: {
-								click: function () {
-									Liferay.Util.getWindow(
-										'<portlet:namespace />settingsModal'
-									).hide();
-								},
-							},
-						},
-					],
-					width: 600,
-				},
-				id: '<portlet:namespace />settingsModal',
-				stack: false,
-				title: '<liferay-ui:message key="settings" />',
-			},
-			(dialogWindow) => {
-				var bodyNode = dialogWindow.bodyNode;
-
-				var settingsNode = A.one('#<portlet:namespace />settings');
-
-				settingsNode.show();
-
-				bodyNode.append(settingsNode);
-			}
-		);
-	};
-
-	var clearPortletHandlers = function (event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			Liferay.namespace('FormPortlet').destroySettings();
 
 			Liferay.detach('destroyPortlet', clearPortletHandlers);
 		}

@@ -35,6 +35,7 @@ import React, {
 import {FormInfo} from '../components/FormInfo.es';
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
 import {TranslationManager} from '../components/TranslationManager.es';
+import FormSettings from '../components/form-settings/FormSettings';
 import {ShareFormModalBody} from '../components/share-form/ShareFormModalBody.es';
 import {useAutoSave} from '../hooks/useAutoSave.es';
 import {useToast} from '../hooks/useToast.es';
@@ -60,6 +61,7 @@ export const FormBuilder = () => {
 	const {
 		activePage,
 		focusedField,
+		formSettingsContext,
 		localizedName,
 		pages,
 		rules,
@@ -70,6 +72,7 @@ export const FormBuilder = () => {
 		sidebarOpen: true,
 		sidebarPanelId: 'fields',
 	});
+	const [visibleFormSettings, setVisibleFormSettings] = useState(false);
 
 	const dispatch = useForm();
 
@@ -301,6 +304,7 @@ export const FormBuilder = () => {
 				onPreviewClick={onPreviewClick}
 				onPublishClick={onPublishClick}
 				onSaveClick={onSaveClick}
+				onSettingsClick={() => setVisibleFormSettings(true)}
 				onShareClick={onShareClick}
 				portletNamespace={portletNamespace}
 			/>
@@ -391,6 +395,12 @@ export const FormBuilder = () => {
 					</div>
 				</div>
 			)}
+
+			<FormSettings
+				{...formSettingsContext}
+				onCloseFormSettings={() => setVisibleFormSettings(false)}
+				visibleFormSettings={visibleFormSettings}
+			/>
 		</>
 	);
 };

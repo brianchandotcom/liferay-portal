@@ -81,13 +81,13 @@ const getMaskedValue = ({
 		value = String(value).replace('.', decimalSymbol);
 	}
 
-	const {conformedValue} = conformToMask(value, mask, {
+	const {conformedValue: masked} = conformToMask(value, mask, {
 		guide: false,
 		keepCharPositions: false,
 		placeholderChar: '\u2000',
 	});
 
-	return conformedValue;
+	return {masked, raw: inputMask ? masked.replace(/\D/g, '') : masked};
 };
 
 const Numeric = ({
@@ -110,7 +110,7 @@ const Numeric = ({
 }) => {
 	const {editingLanguageId} = useFormState();
 
-	const formattedValue = useMemo(() => {
+	const inputValue = useMemo(() => {
 		const newValue =
 			(localizedValue?.[editingLanguageId] ||
 				localizedValue?.[defaultLanguageId] ||
@@ -138,21 +138,15 @@ const Numeric = ({
 	]);
 
 	const handleChange = ({target: {value}}) => {
-		const maskedValue = getMaskedValue({
+		const newValue = getMaskedValue({
 			dataType,
 			decimalSymbol,
 			inputMask,
 			inputMaskFormat,
 			value,
 		});
-		if (maskedValue !== formattedValue) {
-			onChange({
-				target: {
-					value: inputMask
-						? maskedValue.replace(/\D/g, '')
-						: maskedValue,
-				},
-			});
+		if (newValue.masked !== inputValue.masked) {
+			onChange({target: {value: newValue.raw}});
 		}
 	};
 
@@ -178,9 +172,11 @@ const Numeric = ({
 					(inputMask ? inputMaskFormat?.replace(/\d/g, '_') : null)
 				}
 				type="text"
-				value={formattedValue}
+				value={inputValue.masked}
 			/>
-			{inputMask && <input name={name} type="hidden" value={value} />}
+			{inputMask && (
+				<input name={name} type="hidden" value={inputValue.raw} />
+			)}
 		</FieldBase>
 	);
 };

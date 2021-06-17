@@ -293,5 +293,20 @@ describe('Field Numeric', () => {
 
 			expect(output).toBe('558121216000');
 		});
+
+		it('limits predefined value size according to the mask', () => {
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="99-99"
+					name="LPS-134259"
+					predefinedValue="12345"
+				/>
+			);
+
+			const input = container.querySelector('input[name="LPS-134259"]');
+
+			expect(input.value).toBe('1234');
+		});
 	});
 });

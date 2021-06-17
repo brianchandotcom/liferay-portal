@@ -60,6 +60,6 @@ public class VersionUtil {
 	}
 
 	private static final Pattern _liferayVersionPattern = Pattern.compile(
-		"^([0-9])\\.([0-9])\\.(\\d+)(-\\d+|(\\.((e|f)p)?[0-9]+(-[0-9]+)?))?$");
+		"^(\\d+)\\.(\\d+)\\.(\\d+)(-\\d+|(\\.((e|f)p)?[0-9]+(-[0-9]+)?))?$");
 
 }

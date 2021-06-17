@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountProduct
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountProductResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountRuleResource;
+import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountSkuResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceEntryResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListAccountGroupResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListAccountResource;
@@ -79,6 +80,8 @@ public class ServletDataImpl implements ServletData {
 			_discountProductGroupResourceComponentServiceObjects);
 		Mutation.setDiscountRuleResourceComponentServiceObjects(
 			_discountRuleResourceComponentServiceObjects);
+		Mutation.setDiscountSkuResourceComponentServiceObjects(
+			_discountSkuResourceComponentServiceObjects);
 		Mutation.setPriceEntryResourceComponentServiceObjects(
 			_priceEntryResourceComponentServiceObjects);
 		Mutation.setPriceListResourceComponentServiceObjects(
@@ -126,6 +129,8 @@ public class ServletDataImpl implements ServletData {
 			_discountProductGroupResourceComponentServiceObjects);
 		Query.setDiscountRuleResourceComponentServiceObjects(
 			_discountRuleResourceComponentServiceObjects);
+		Query.setDiscountSkuResourceComponentServiceObjects(
+			_discountSkuResourceComponentServiceObjects);
 		Query.setPriceEntryResourceComponentServiceObjects(
 			_priceEntryResourceComponentServiceObjects);
 		Query.setPriceListResourceComponentServiceObjects(
@@ -202,6 +207,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DiscountRuleResource>
 		_discountRuleResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DiscountSkuResource>
+		_discountSkuResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PriceEntryResource>

@@ -303,5 +303,28 @@ describe('Field Numeric', () => {
 
 			expect(input.value).toBe('1234');
 		});
+
+		/**
+		 * This test was skipped due to an issue on userEvent.type() that not
+		 * allows simulate backspace key pressing (with the current
+		 * @testing-library/use-event)
+		 */
+		xit('it allows to delete non numeric characters from mask', () => {
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="99-99"
+					onChange={() => {}}
+					predefinedValue="12"
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			userEvent.click(input);
+			userEvent.type(input, '{backspace}');
+
+			expect(input.value).toBe('1');
+		});
 	});
 });

@@ -138,6 +138,14 @@ const Numeric = ({
 	]);
 
 	const handleChange = ({target: {value}}) => {
+		const rawValue = value.replace(/\D/g, '');
+		if (
+			(inputValue.masked?.length ?? 0) - value.length === 1 &&
+			(inputValue.raw?.length ?? 0) === rawValue.length
+		) {
+			value = inputValue.raw.slice(0, -1);
+		}
+
 		const newValue = getMaskedValue({
 			dataType,
 			decimalSymbol,

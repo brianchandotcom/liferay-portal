@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {config} from '../../app/config/index';
+import {useCustomCollectionSelectorURL} from '../../app/contexts/CollectionItemContext';
 import itemSelectorValueToCollection from '../../app/utils/item-selector-value/itemSelectorValueToCollection';
 import ItemSelector from './ItemSelector';
 
@@ -27,10 +28,17 @@ export default function CollectionSelector({
 }) {
 	const eventName = `${config.portletNamespace}selectInfoList`;
 
+	const customCollectionSelectorURL = useCustomCollectionSelectorURL();
+
 	return (
 		<ItemSelector
 			eventName={eventName}
-			itemSelectorURL={itemSelectorURL || config.infoListSelectorURL}
+			itemSelectorURL={
+				(config.relatedItemCollectionProvidersEnabled &&
+					customCollectionSelectorURL) ||
+				itemSelectorURL ||
+				config.infoListSelectorURL
+			}
 			label={label}
 			onItemSelect={onCollectionSelect}
 			quickMappedInfoItems={config.selectedMappingTypes?.linkedCollection}

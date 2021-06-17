@@ -73,6 +73,7 @@ const Grid = ({
 	collectionConfig,
 	collectionId,
 	collectionLength,
+	customCollectionSelectorURL,
 }) => {
 	const maxNumberOfItems = Math.min(
 		collectionLength,
@@ -103,6 +104,9 @@ const Grid = ({
 									collectionConfig={collectionConfig}
 									collectionId={collectionId}
 									collectionItem={collection[index]}
+									customCollectionSelectorURL={
+										customCollectionSelectorURL
+									}
 									index={index}
 								>
 									{React.cloneElement(child)}
@@ -121,6 +125,7 @@ const ColumnContext = ({
 	collectionConfig,
 	collectionId,
 	collectionItem,
+	customCollectionSelectorURL,
 	index,
 }) => {
 	const toControlsId = useToControlsId();
@@ -130,10 +135,18 @@ const ColumnContext = ({
 			collectionConfig,
 			collectionItem,
 			collectionItemIndex: index,
+			customCollectionSelectorURL,
 			fromControlsId,
 			toControlsId: getToControlsId(collectionId, index, toControlsId),
 		}),
-		[collectionConfig, collectionId, collectionItem, index, toControlsId]
+		[
+			collectionConfig,
+			collectionId,
+			collectionItem,
+			index,
+			toControlsId,
+			customCollectionSelectorURL,
+		]
 	);
 
 	return (
@@ -217,6 +230,9 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 					collectionConfig={collectionConfig}
 					collectionId={item.itemId}
 					collectionLength={collection.items.length}
+					customCollectionSelectorURL={
+						collection.customCollectionSelectorURL
+					}
 				/>
 			)}
 		</div>

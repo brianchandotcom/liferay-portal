@@ -32,6 +32,7 @@ export const INITIAL_STATE = {
 	collectionId: null,
 	collectionItem: null,
 	collectionItemIndex: null,
+	customCollectionSelectorURL: null,
 	fromControlsId: defaultFromControlsId,
 	setCollectionItemContent: () => null,
 	toControlsId: defaultToControlsId,
@@ -45,6 +46,12 @@ const useCollectionItemIndex = () => {
 	const context = useContext(CollectionItemContext);
 
 	return context.collectionItemIndex;
+};
+
+const useCustomCollectionSelectorURL = () => {
+	const context = useContext(CollectionItemContext);
+
+	return context.customCollectionSelectorURL;
 };
 
 const useToControlsId = () => {
@@ -216,6 +223,7 @@ export {
 	useGetContent,
 	useCollectionConfig,
 	useCollectionItemIndex,
+	useCustomCollectionSelectorURL,
 	useToControlsId,
 	useGetFieldValue,
 };

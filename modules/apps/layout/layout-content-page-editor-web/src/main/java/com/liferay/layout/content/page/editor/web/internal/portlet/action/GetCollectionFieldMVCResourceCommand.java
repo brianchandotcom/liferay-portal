@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -77,7 +76,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -129,7 +127,8 @@ public class GetCollectionFieldMVCResourceCommand
 				_portal.getHttpServletRequest(resourceRequest),
 				_portal.getHttpServletResponse(resourceResponse), languageId,
 				layoutObjectReference, listStyle, listItemStyle,
-				themeDisplay.getPlid(), templateKey, size);
+				resourceResponse.getNamespace(), themeDisplay.getPlid(), size,
+				templateKey);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get collection field", exception);
@@ -148,7 +147,8 @@ public class GetCollectionFieldMVCResourceCommand
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String languageId,
 			String layoutObjectReference, String listStyle,
-			String listItemStyle, long plid, String templateKey, int size)
+			String listItemStyle, String namespace, long plid, int size,
+			String templateKey)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -253,7 +253,7 @@ public class GetCollectionFieldMVCResourceCommand
 				jsonObject.put(
 					"customCollectionSelectorURL",
 					_getCustomCollectionSelectorURL(
-						httpServletRequest, itemType, plid)
+						httpServletRequest, itemType, namespace, plid)
 				).put(
 					"items", jsonArray
 				).put(
@@ -268,7 +268,8 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private String _getCustomCollectionSelectorURL(
-		HttpServletRequest httpServletRequest, String itemType, long plid) {
+		HttpServletRequest httpServletRequest, String itemType,
+		String namespace, long plid) {
 
 		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
 			new InfoListItemSelectorCriterion();
@@ -311,14 +312,9 @@ public class GetCollectionFieldMVCResourceCommand
 		infoItemRelatedListProviderItemSelectorCriterion.setSourceItemTypes(
 			sourceItemTypes);
 
-		PortletResponse portletResponse =
-			(PortletResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		PortletURL infoListSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			portletResponse.getNamespace() + "selectInfoList",
-			infoListItemSelectorCriterion,
+			namespace + "selectInfoList", infoListItemSelectorCriterion,
 			infoListProviderItemSelectorCriterion,
 			infoItemRelatedListProviderItemSelectorCriterion);
 

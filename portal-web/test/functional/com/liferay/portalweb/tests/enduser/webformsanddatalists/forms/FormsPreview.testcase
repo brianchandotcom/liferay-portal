@@ -182,7 +182,7 @@ definition {
 	@description = "Verify that a Grid Field can be previewed"
 	@priority = "5"
 	test GridFieldCanBePreviewed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -224,8 +224,6 @@ definition {
 		FormsAdminNavigator.gotoPreviewForm();
 
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Grid");
 
 		FormFields.viewLabel(
 			fieldLabel = "Grid",

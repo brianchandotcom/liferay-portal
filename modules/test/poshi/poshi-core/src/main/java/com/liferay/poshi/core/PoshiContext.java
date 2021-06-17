@@ -306,7 +306,7 @@ public class PoshiContext {
 	}
 
 	public static List<String> getPoshiPropertyNames() {
-		List<String> poshiPropertyNames = new ArrayList<>(_poshiPropertyNames);
+		Set<String> poshiPropertyNames = new HashSet<>(_poshiPropertyNames);
 
 		poshiPropertyNames.add("ignored");
 		poshiPropertyNames.add("known-issues");
@@ -315,7 +315,25 @@ public class PoshiContext {
 		poshiPropertyNames.add("test.class.name");
 		poshiPropertyNames.add("test.run.environment");
 
-		return poshiPropertyNames;
+		String testCaseAvailablePropertyNames =
+			PropsValues.TEST_CASE_AVAILABLE_PROPERTY_NAMES;
+
+		if (Validator.isNotNull(testCaseAvailablePropertyNames)) {
+			Collections.addAll(
+				poshiPropertyNames,
+				StringUtil.split(testCaseAvailablePropertyNames));
+		}
+
+		String testCaseRequiredPropertyNames =
+			PropsValues.TEST_CASE_REQUIRED_PROPERTY_NAMES;
+
+		if (Validator.isNotNull(testCaseRequiredPropertyNames)) {
+			Collections.addAll(
+				poshiPropertyNames,
+				StringUtil.split(testCaseRequiredPropertyNames));
+		}
+
+		return new ArrayList<>(poshiPropertyNames);
 	}
 
 	public static List<String> getRequiredPoshiPropertyNames() {

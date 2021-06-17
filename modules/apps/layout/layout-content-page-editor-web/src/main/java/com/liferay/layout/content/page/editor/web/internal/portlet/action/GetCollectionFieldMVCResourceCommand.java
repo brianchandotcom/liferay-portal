@@ -15,6 +15,9 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.exception.NoSuchInfoItemException;
@@ -26,12 +29,20 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.list.provider.item.selector.criterion.InfoItemRelatedListProviderItemSelectorCriterion;
+import com.liferay.info.list.provider.item.selector.criterion.InfoItemRelatedListProviderItemSelectorReturnType;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.type.WebImage;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -39,6 +50,7 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -48,20 +60,25 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -111,8 +128,8 @@ public class GetCollectionFieldMVCResourceCommand
 			jsonObject = _getCollectionFieldsJSONObject(
 				_portal.getHttpServletRequest(resourceRequest),
 				_portal.getHttpServletResponse(resourceResponse), languageId,
-				layoutObjectReference, listStyle, listItemStyle, templateKey,
-				size);
+				layoutObjectReference, listStyle, listItemStyle,
+				themeDisplay.getPlid(), templateKey, size);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get collection field", exception);
@@ -131,7 +148,7 @@ public class GetCollectionFieldMVCResourceCommand
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String languageId,
 			String layoutObjectReference, String listStyle,
-			String listItemStyle, String templateKey, int size)
+			String listItemStyle, long plid, String templateKey, int size)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -234,6 +251,10 @@ public class GetCollectionFieldMVCResourceCommand
 				}
 
 				jsonObject.put(
+					"customCollectionSelectorURL",
+					_getCustomCollectionSelectorURL(
+						httpServletRequest, itemType, plid)
+				).put(
 					"items", jsonArray
 				).put(
 					"length",
@@ -244,6 +265,68 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		return jsonObject;
+	}
+
+	private String _getCustomCollectionSelectorURL(
+		HttpServletRequest httpServletRequest, String itemType, long plid) {
+
+		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
+			new InfoListItemSelectorCriterion();
+
+		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoListItemSelectorReturnType());
+		infoListItemSelectorCriterion.setItemTypes(
+			_getInfoItemFormProviderClassNames());
+
+		InfoListProviderItemSelectorCriterion
+			infoListProviderItemSelectorCriterion =
+				new InfoListProviderItemSelectorCriterion();
+
+		infoListProviderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoListProviderItemSelectorReturnType());
+		infoListProviderItemSelectorCriterion.setItemTypes(
+			_getInfoItemFormProviderClassNames());
+		infoListProviderItemSelectorCriterion.setPlid(plid);
+
+		InfoItemRelatedListProviderItemSelectorCriterion
+			infoItemRelatedListProviderItemSelectorCriterion =
+				new InfoItemRelatedListProviderItemSelectorCriterion();
+
+		infoItemRelatedListProviderItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				new InfoItemRelatedListProviderItemSelectorReturnType());
+
+		List<String> sourceItemTypes = new ArrayList<>();
+
+		sourceItemTypes.add(itemType);
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				itemType);
+
+		if (assetRendererFactory != null) {
+			sourceItemTypes.add(AssetEntry.class.getName());
+		}
+
+		infoItemRelatedListProviderItemSelectorCriterion.setSourceItemTypes(
+			sourceItemTypes);
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL infoListSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			portletResponse.getNamespace() + "selectInfoList",
+			infoListItemSelectorCriterion,
+			infoListProviderItemSelectorCriterion,
+			infoItemRelatedListProviderItemSelectorCriterion);
+
+		if (infoListSelectorURL == null) {
+			return StringPool.BLANK;
+		}
+
+		return infoListSelectorURL.toString();
 	}
 
 	private JSONObject _getDisplayObjectJSONObject(
@@ -366,6 +449,19 @@ public class GetCollectionFieldMVCResourceCommand
 		return null;
 	}
 
+	private List<String> _getInfoItemFormProviderClassNames() {
+		List<String> infoItemClassNames =
+			_infoItemServiceTracker.getInfoItemClassNames(
+				InfoItemFormProvider.class);
+
+		if (infoItemClassNames.contains(FileEntry.class.getName())) {
+			infoItemClassNames.add(DLFileEntryConstants.getClassName());
+			infoItemClassNames.remove(FileEntry.class.getName());
+		}
+
+		return infoItemClassNames;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetCollectionFieldMVCResourceCommand.class);
 
@@ -377,6 +473,9 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private InfoListRendererTracker _infoListRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;

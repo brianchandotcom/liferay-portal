@@ -46,9 +46,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETTINGS_FORM_BUTTON</td>
-	<td>//button[contains(@id,'ddmFormInstanceSettingsIcon')]</td>
-	<td></td>
+    <td>SETTINGS_FORM_BUTTON</td>
+    <td>//button[contains(@class,'lfr-ddm-settings-button')]</td>
+    <td></td>
 </tr>
 <tr>
 	<td>NAME_FIELD</td>

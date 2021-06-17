@@ -235,19 +235,39 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			(entityField, instance1, instance2) -> {
 				String entityFieldName = entityField.getName();
 
-				if (StringUtil.equals("userName", entityFieldName)) {
+				if (StringUtil.equals("assigneeName", entityFieldName)) {
+					instance1.setAssignees(
+						() -> {
+							User user = _addUser("aaa");
+
+							return new Assignee[] {
+								new Assignee() {
+									{
+										id = user.getUserId();
+										name = user.getFullName();
+									}
+								}
+							};
+						});
+
+					instance2.setAssignees(
+						() -> {
+							User user = _addUser("bbb");
+
+							return new Assignee[] {
+								new Assignee() {
+									{
+										id = user.getUserId();
+										name = user.getFullName();
+									}
+								}
+							};
+						});
+				}
+				else if (StringUtil.equals("userName", entityFieldName)) {
 					instance1.setCreator(
 						() -> {
-							User user = UserTestUtil.addUser(
-								RandomTestUtil.randomString(
-									NumericStringRandomizerBumper.INSTANCE,
-									UniqueStringRandomizerBumper.INSTANCE),
-								LocaleUtil.getDefault(),
-								"aaa".concat(
-									StringUtil.toLowerCase(
-										RandomTestUtil.randomString())),
-								RandomTestUtil.randomString(),
-								new long[] {TestPropsValues.getGroupId()});
+							User user = _addUser("aaa");
 
 							return new Creator() {
 								{
@@ -259,16 +279,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 					instance2.setCreator(
 						() -> {
-							User user = UserTestUtil.addUser(
-								RandomTestUtil.randomString(
-									NumericStringRandomizerBumper.INSTANCE,
-									UniqueStringRandomizerBumper.INSTANCE),
-								LocaleUtil.getDefault(),
-								"bbb".concat(
-									StringUtil.toLowerCase(
-										RandomTestUtil.randomString())),
-								RandomTestUtil.randomString(),
-								new long[] {TestPropsValues.getGroupId()});
+							User user = _addUser("bbb");
 
 							return new Creator() {
 								{
@@ -442,6 +453,18 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		return testGetProcessInstancesPage_addInstance(
 			_process.getId(), instance);
+	}
+
+	private User _addUser(String firstName) throws Exception {
+		return UserTestUtil.addUser(
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(),
+			firstName.concat(
+				StringUtil.toLowerCase(RandomTestUtil.randomString())),
+			RandomTestUtil.randomString(),
+			new long[] {TestPropsValues.getGroupId()});
 	}
 
 	private void _deleteInstances() throws Exception {

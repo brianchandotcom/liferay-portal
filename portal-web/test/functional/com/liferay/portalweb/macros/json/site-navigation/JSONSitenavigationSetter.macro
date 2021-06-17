@@ -40,4 +40,27 @@ definition {
 		return "${siteNavigationMenuItemId}";
 	}
 
+	macro setTypeSettings {
+		Variables.assertDefined(parameterList = "${siteNavigationMenuItemName},${type}");
+
+		if ("${type}" == "layout") {
+			var layoutUuid = JSONLayoutAPI._getUuidByName(
+				groupId = "${groupId}",
+				layoutName = "${siteNavigationMenuItemName}",
+				privateLayout = "${privateLayout}");
+
+			var typeSettings = '''groupId=${groupId}%0AlayoutUuid=${layoutUuid}%0AprivateLayout=${privateLayout}%0Atitle=${siteNavigationMenuItemName}%0A''';
+		}
+
+		if ("${type}" == "node") {
+			var typeSettings = '''defaultLanguageId=en_US%0Aname_en_US=${siteNavigationMenuItemName}%0A''';
+		}
+
+		if ("${type}" == "url") {
+			var typeSettings = '''defaultLanguageId=en_US%0Aname_en_US=${siteNavigationMenuItemName}%0Aurl=${url}%0AuseNewTab=${useNewTab}%0A''';
+		}
+
+		return "${typeSettings}";
+	}
+
 }

@@ -18,6 +18,25 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Helper function to add a site navigation menu item via JSON"
+	macro _addSiteNavigationMenuItem {
+		Variables.assertDefined(parameterList = "${groupId},${parentSiteNavigationMenuItemId},${siteNavigationMenuId},${type},${typeSettings}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d siteNavigationMenuId=${siteNavigationMenuId} \
+				-d parentSiteNavigationMenuItemId=${parentSiteNavigationMenuItemId} \
+				-d type=${type} \
+				-d typeSettings=${typeSettings}
+			''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Helper function to delete a site navigation menu via JSON"
 	macro _deleteSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuId}");

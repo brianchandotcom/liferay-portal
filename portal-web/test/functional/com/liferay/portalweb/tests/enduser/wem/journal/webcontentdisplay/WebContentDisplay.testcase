@@ -619,9 +619,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			WebContent.addWithStructureCP(
-				structureName = "WC Structure Name",
-				webContentTitle = "WC WebContent Title");
+			WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
 			PortletEntry.publish();
 		}

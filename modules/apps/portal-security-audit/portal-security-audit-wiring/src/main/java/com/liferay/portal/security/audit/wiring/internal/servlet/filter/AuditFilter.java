@@ -15,6 +15,7 @@
 package com.liferay.portal.security.audit.wiring.internal.servlet.filter;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContext;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.audit.wiring.internal.configuration.FullAuditConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Arthur Chan
  */
 @Component(
+	configurationPid = "com.liferay.portal.security.audit.wiring.internal.configuration.FullAuditConfiguration",
 	enabled = false, immediate = true,
 	property = {
 		"after-filter=Session Max Allowed Filter", "servlet-context-name=",
@@ -100,6 +103,10 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			httpServletRequest.getServerPort());
 		auditRequestThreadLocal.setSessionID(session.getId());
 
+		if (!_fullAuditConfiguration.enabled()) {
+			return null;
+		}
+
 		String xRequestIdHeader = "placeHolder";
 
 		_auditFilterLogContext.setContext(
@@ -111,11 +118,16 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_auditFilterLogContext = new AuditFilterLogContext();
 
 		_serviceRegistration = bundleContext.registerService(
 			LogContext.class, _auditFilterLogContext, new HashMapDictionary());
+
+		_fullAuditConfiguration = ConfigurableUtil.createConfigurable(
+			FullAuditConfiguration.class, properties);
 	}
 
 	@Deactivate
@@ -149,6 +161,8 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private FullAuditConfiguration _fullAuditConfiguration;
 
 	@Reference
 	private Portal _portal;

@@ -110,7 +110,7 @@ definition {
 	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
 	@priority = "4"
 	test FilterCollectionItemsByGlobalCategory {
-		task ("Add a category in Global Topic, Audience and web content article with the Global categories") {
+		task ("Add two web contents with different global category") {
 			var n = "1";
 
 			for (var vocabularyName : list "Topic,Audience") {
@@ -136,7 +136,7 @@ definition {
 				title = "Dynamic Collection");
 		}
 
-		task ("Create filter rule for Categories") {
+		task ("Add a category filter rule") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
@@ -144,11 +144,10 @@ definition {
 			AssetListsAdmin.addCategoriesFilter(
 				categoryNameList = "Category Name 1",
 				queryAndOperator = "Any",
-				queryContains = "Contains",
-				vocabularyName = "");
+				queryContains = "Contains");
 		}
 
-		task ("Assert the selected web content article is viewable from the View collection items") {
+		task ("View only the first web content shown in collection items") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.viewContent(
@@ -157,15 +156,15 @@ definition {
 				assetType = "Web Content Article");
 		}
 
-		task ("Remove the selected category and select the new category") {
+		task ("Remove the selected category") {
 			AssetCategorization.removeCategories(categoryNameList = "Category Name 1");
-
-			AssetListsAdmin.addCategoriesFilter(
-				categoryNameList = "Category Name 2",
-				vocabularyName = "");
 		}
 
-		task ("Assert the selected web content article is viewable from the View Content action") {
+		task ("Add a new category filter rule") {
+			AssetListsAdmin.addCategoriesFilter(categoryNameList = "Category Name 2");
+		}
+
+		task ("View only the second web content shown in collection items") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.viewContent(

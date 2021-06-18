@@ -48,6 +48,8 @@ public class BNDImportsCheck extends BaseFileCheck {
 		_checkWildcardImports(
 			fileName, absolutePath, content, "Export-Package", _exportsPattern);
 
+		content = _checkImportPackageVersionRanges(content);
+
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 
 		content = importsFormatter.format(content, _conditionalPackagePattern);
@@ -58,6 +60,25 @@ public class BNDImportsCheck extends BaseFileCheck {
 
 		if (!absolutePath.contains("-test/")) {
 			content = _removeInternalPrivatePackages(content);
+		}
+
+		return content;
+	}
+
+	private String _checkImportPackageVersionRanges(String content) {
+		Matcher matcher = _importsPattern.matcher(content);
+
+		if (matcher.find()) {
+			String imports = matcher.group();
+
+			String newImports = imports.replaceAll(
+				"(com\\.liferay\\..*?version=\"[\\(\\[].*?,)(?!99\\.0\\.0).*?" +
+					"([\\)\\]]\")",
+				"$199.0.0$2");
+
+			if (!imports.equals(newImports)) {
+				return StringUtil.replaceFirst(content, imports, newImports);
+			}
 		}
 
 		return content;

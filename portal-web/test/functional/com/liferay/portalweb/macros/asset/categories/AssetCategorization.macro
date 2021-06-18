@@ -75,9 +75,9 @@ definition {
 				locator1 = "AssetCategorization#CATEGORY",
 				value1 = "${categoryName}");
 
-			var key_tagName = "${categoryName}";
-
-			Click(locator1 = "AssetCategorization#TAG_REMOVE");
+			Click(
+				key_itemName = "${categoryName}",
+				locator1 = "AssetCategorization#ITEM_REMOVE");
 
 			AssertElementNotPresent(locator1 = "AssetCategorization#CATEGORY");
 		}
@@ -90,7 +90,9 @@ definition {
 			locator1 = "AssetCategorization#TAG",
 			value1 = "${tagName}");
 
-		Click(locator1 = "AssetCategorization#TAG_REMOVE");
+		Click(
+			key_itemName = "${tagName}",
+			locator1 = "AssetCategorization#ITEM_REMOVE");
 
 		AssertElementNotPresent(locator1 = "AssetCategorization#TAG");
 	}

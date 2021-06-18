@@ -528,6 +528,17 @@ definition {
 			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 	}
 
+	macro switchTab {
+		AssertClick(
+			key_navTab = "${navTab}",
+			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+			value1 = "${navTab}");
+
+		AssertElementPresent(
+			key_tab = "${navTab}",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+	}
+
 	macro uploadFile {
 		var key_navTab = "${navTab}";
 		var key_uploadFileName = "${uploadFileName}";

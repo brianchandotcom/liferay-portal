@@ -38,6 +38,16 @@
 	<td>//strong[contains(text(), '${key_workflowFilter}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>METRICS_ALL_ITEMS_LIST_ORDER</td>
+	<td>//tbody//tr[@class][${key_order}]//td[@title='${key_title}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_REASSIGN_LIST_ORDER</td>
+	<td>//div[contains(@class, 'modal-content')]//tbody//tr[@class][${key_order}]//td[text()='${key_title}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

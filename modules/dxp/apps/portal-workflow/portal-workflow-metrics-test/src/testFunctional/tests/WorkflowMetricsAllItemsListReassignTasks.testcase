@@ -271,12 +271,49 @@ definition {
 	}
 
 	@description = "LPS-102664 - Verify that in Select Tasks to Reassign, the tasks are displayed in the same order rule displayed in All Items page"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test TasksAreDisplayedInSameOrderRuleInAllItemsPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67829 TasksAreDisplayedInSameOrderRuleInAllItemsPage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		for (var orderNumber : list "1,2") {
+			key_order = "${orderNumber}";
+
+			key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
+
+			AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_ALL_ITEMS_LIST_ORDER");
+		}
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		for (var orderNumber : list "1,2") {
+			key_order = "${orderNumber}";
+
+			key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
+
+			AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_LIST_ORDER");
+		}
 	}
 
 	@description = "LPS-102664 - Verify that the user is able to filter the info inside Select Tasks to Reassign by Step and Assignee, search for any of the available field values and the table is updated accordingly"

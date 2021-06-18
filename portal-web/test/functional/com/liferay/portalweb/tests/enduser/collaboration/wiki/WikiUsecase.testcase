@@ -159,7 +159,7 @@ definition {
 			wikiPageTitle = "Wiki FrontPage Child Page Title");
 	}
 
-	@description = "This ensures that the front page can be searched out by attachment name."
+	@description = "This ensures that the Wiki tabs can be viewed in the Breadcrumb widget."
 	@priority = "4"
 	@refactordone
 	test CanViewBreadcrumbViaBreadcrumbWidgetAfterChangingWikiTab {

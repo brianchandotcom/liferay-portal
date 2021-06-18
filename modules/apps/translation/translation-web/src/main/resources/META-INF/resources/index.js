@@ -12,4 +12,4 @@
  * details.
  */
 
-export {default as ExportTranslation} from './js/export_translation/ExportTranslation.es';
+export {default as ExportTranslation} from './js/export_translation/ExportTranslation';

@@ -143,7 +143,7 @@ else {
 
 	<div>
 		<react:component
-			module="js/ExportTranslationBridge.es"
+			module="js/JournalExportTranslation"
 			props="<%= journalDisplayContext.getExportTranslationData() %>"
 		/>
 	</div>

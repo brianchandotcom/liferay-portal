@@ -16,8 +16,8 @@ import {useModal} from '@clayui/modal';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
-import ExportTranslationContext from './ExportTranslationContext.es';
-import ExportTranslationModal from './ExportTranslationModal.es';
+import ExportTranslationContext from './ExportTranslationContext';
+import ExportTranslationModal from './ExportTranslationModal';
 
 function ExportTranslation(props) {
 	const [keys, setKeys] = useState();

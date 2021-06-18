@@ -107,6 +107,7 @@ definition {
 				Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
 					label = "Required",
 					vocabularyName = "${vocabularyName}");
+			}
 		}
 	}
 

@@ -96,36 +96,36 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 			updateByQueryRequest.setScript(script);
 		}
 		else if (updateByQueryDocumentRequest.getScriptJSONObject() != null) {
-			ScriptBuilder builder = _scripts.builder();
+			ScriptBuilder scriptBuilder = _scripts.builder();
 
 			JSONObject scriptJSONObject =
 				updateByQueryDocumentRequest.getScriptJSONObject();
 
 			if (scriptJSONObject.has("idOrCode")) {
-				builder.idOrCode(scriptJSONObject.getString("idOrCode"));
+				scriptBuilder.idOrCode(scriptJSONObject.getString("idOrCode"));
 			}
 
 			if (scriptJSONObject.has("language")) {
-				builder.language(scriptJSONObject.getString("language"));
+				scriptBuilder.language(scriptJSONObject.getString("language"));
 			}
 
 			if (scriptJSONObject.has("optionsMap")) {
-				builder.options(
+				scriptBuilder.options(
 					(Map<String, String>)scriptJSONObject.get("optionsMap"));
 			}
 
 			if (scriptJSONObject.has("parametersMap")) {
-				builder.parameters(
+				scriptBuilder.parameters(
 					(Map<String, Object>)scriptJSONObject.get("parametersMap"));
 			}
 
 			if (scriptJSONObject.has("scriptType")) {
-				builder.scriptType(
+				scriptBuilder.scriptType(
 					(ScriptType)scriptJSONObject.get("scriptType"));
 			}
 
 			updateByQueryRequest.setScript(
-				_scriptTranslator.translate(builder.build()));
+				_scriptTranslator.translate(scriptBuilder.build()));
 		}
 
 		return updateByQueryRequest;

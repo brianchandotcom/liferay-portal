@@ -132,7 +132,7 @@ public class TaskWorkflowMetricsIndexerImpl
 					return;
 				}
 
-				ScriptBuilder builder = scripts.builder();
+				ScriptBuilder scriptBuilder = scripts.builder();
 
 				UpdateDocumentRequest updateDocumentRequest =
 					new UpdateDocumentRequest(
@@ -140,7 +140,7 @@ public class TaskWorkflowMetricsIndexerImpl
 						WorkflowMetricsIndexerUtil.digest(
 							_instanceWorkflowMetricsIndex.getIndexType(),
 							companyId, instanceId),
-						builder.idOrCode(
+						scriptBuilder.idOrCode(
 							StringUtil.read(
 								getClass(),
 								"dependencies/workflow-metrics-add-task-" +
@@ -323,9 +323,9 @@ public class TaskWorkflowMetricsIndexerImpl
 					).build(),
 					booleanQuery);
 
-				ScriptBuilder builder = scripts.builder();
+				ScriptBuilder scriptBuilder = scripts.builder();
 
-				builder.idOrCode(
+				scriptBuilder.idOrCode(
 					StringUtil.read(
 						getClass(),
 						"dependencies/workflow-metrics-update-task-" +
@@ -341,10 +341,11 @@ public class TaskWorkflowMetricsIndexerImpl
 
 					User user = _userLocalService.fetchUser(assigneeIds[0]);
 
-					builder.putParameter("assigneeName", user.getFullName());
+					scriptBuilder.putParameter(
+						"assigneeName", user.getFullName());
 				}
 
-				builder.putParameter(
+				scriptBuilder.putParameter(
 					"assigneeType", assigneeType
 				).putParameter(
 					"taskId", taskId
@@ -356,7 +357,7 @@ public class TaskWorkflowMetricsIndexerImpl
 					new UpdateByQueryDocumentRequest(
 						queries.nested(
 							"tasks", queries.term("tasks.taskId", taskId)),
-						builder.build(),
+						scriptBuilder.build(),
 						_instanceWorkflowMetricsIndex.getIndexName(companyId)));
 			});
 
@@ -364,12 +365,12 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	private void _deleteTask(long companyId, long taskId) {
-		ScriptBuilder builder = scripts.builder();
+		ScriptBuilder scriptBuilder = scripts.builder();
 
 		searchEngineAdapter.execute(
 			new UpdateByQueryDocumentRequest(
 				queries.nested("tasks", queries.term("tasks.taskId", taskId)),
-				builder.idOrCode(
+				scriptBuilder.idOrCode(
 					StringUtil.read(
 						getClass(),
 						"dependencies/workflow-metrics-delete-task-" +

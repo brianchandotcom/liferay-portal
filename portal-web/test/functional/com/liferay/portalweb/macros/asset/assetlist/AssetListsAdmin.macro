@@ -23,15 +23,13 @@ definition {
 
 		AssetCategorization.gotoSelectCategory();
 
-		for (var categoryName : list "${categoryNames}") {
+		for (var categoryName : list "${categoryNameList}") {
 			Portlet.selectTreeNode(nodeName = "${categoryName}");
 		}
 
 		SelectFrameTop();
 
-		AssertClick(
-			locator1 = "Button#DONE",
-			value1 = "Done");
+		Click(locator1 = "Button#DONE");
 
 		PortletEntry.save();
 	}

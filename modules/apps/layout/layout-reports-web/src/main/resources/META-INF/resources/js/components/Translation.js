@@ -62,6 +62,9 @@ export default function Translation({
 			hasLeftSymbols
 			menuElementAttrs={{
 				className: 'dropdown-menu__languages',
+				containerProps: {
+					className: 'cadmin',
+				},
 			}}
 			onActiveChange={setActive}
 			trigger={

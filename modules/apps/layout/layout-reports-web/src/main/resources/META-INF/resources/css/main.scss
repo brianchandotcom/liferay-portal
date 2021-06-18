@@ -1,80 +1,84 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 $header-height: 64px;
 
-.lfr-layout-reports-panel {
-	&.open-admin-panel.sidenav-menu-slider {
-		visibility: visible;
-		width: 320px;
-	}
+html#{$cadmin-selector} {
+	.cadmin {
+		&.lfr-layout-reports-panel {
+			&.open-admin-panel.sidenav-menu-slider {
+				visibility: visible;
+				width: 320px;
+			}
 
-	.dropdown-menu__languages {
-		max-height: 295px;
-	}
+			.dropdown-menu__languages {
+				max-height: 295px;
+			}
 
-	.failing-element {
-		&:not(:first-child) {
-			margin-top: 8px;
+			.failing-element {
+				&:not(:first-child) {
+					margin-top: 8px;
+				}
+
+				&:not(:last-child) {
+					border-width: 0 0 1px;
+				}
+
+				border-width: 0;
+			}
+
+			.issue {
+				cursor: pointer;
+			}
+
+			.list-group {
+				margin-bottom: 8px;
+			}
+
+			.section-label {
+				user-select: none;
+			}
+
+			.sidebar {
+				border-left: 1px solid $cadmin-gray-300;
+				box-shadow: none;
+			}
+
+			.sidebar-header {
+				height: $header-height;
+				line-height: 32px;
+			}
+
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				.sidebar-header {
+					padding-bottom: 12px;
+					padding-top: 12px;
+				}
+			}
+
+			.sidebar-body {
+				bottom: 0;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: $header-height;
+
+				.chart-loading-indicator {
+					position: absolute;
+					transform: translate(80%, 100%);
+					z-index: 1;
+				}
+
+				.loading-animation {
+					left: 0;
+					position: absolute;
+					right: 0;
+					top: 40%;
+				}
+			}
+
+			.text-truncate-reverse {
+				direction: rtl;
+			}
 		}
-
-		&:not(:last-child) {
-			border-width: 0 0 1px;
-		}
-
-		border-width: 0;
-	}
-
-	.issue {
-		cursor: pointer;
-	}
-
-	.list-group {
-		margin-bottom: 0.5rem;
-	}
-
-	.section-label {
-		user-select: none;
-	}
-
-	.sidebar {
-		border-left: 1px solid $gray-300;
-		box-shadow: none;
-	}
-
-	.sidebar-header {
-		height: $header-height;
-		line-height: 32px;
-	}
-
-	@media only screen and (min-width: 576px) {
-		.sidebar-header {
-			padding-bottom: 12px;
-			padding-top: 12px;
-		}
-	}
-
-	.sidebar-body {
-		bottom: 0;
-		left: 0;
-		position: absolute;
-		right: 0;
-		top: $header-height;
-
-		.chart-loading-indicator {
-			position: absolute;
-			transform: translate(80%, 100%);
-			z-index: 1;
-		}
-
-		.loading-animation {
-			left: 0;
-			position: absolute;
-			right: 0;
-			top: 40%;
-		}
-	}
-
-	.text-truncate-reverse {
-		direction: rtl;
 	}
 }

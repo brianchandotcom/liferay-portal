@@ -635,21 +635,25 @@ definition {
 		property testray.component.names = "Site Pages Administration";
 
 		for (var n : list "1,2") {
-			var plid = JSONLayout.addPublicLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Content Page Name ${n}",
 				type = "content");
 
-			JSONLayout.publishLayout(plid = "${plid}");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name ${n}");
 		}
 
-		var plid = JSONLayout.addPublicLayout(
+		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Child Content Page Name 1",
 			parentLayoutName = "Test Content Page Name 1",
 			type = "content");
 
-		JSONLayout.publishLayout(plid = "${plid}");
+		JSONLayout.publishLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Content Page Name 1");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -738,12 +742,14 @@ definition {
 		}
 
 		task ("Add a content page in the same level with Test Page Name 1") {
-			var plid = JSONLayout.addPublicLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name 2",
 				type = "content");
 
-			JSONLayout.publishLayout(plid = "${plid}");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2");
 		}
 
 		task ("Move Test Page Name 2 and Child Child Page Name 1 to the same level with Child Page Name 1") {
@@ -789,12 +795,14 @@ definition {
 					layoutName = "Test Page Name ${n}");
 			}
 
-			var plid = JSONLayout.addPublicLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name 3",
 				type = "content");
 
-			JSONLayout.publishLayout(plid = "${plid}");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 3");
 		}
 
 		task ("Assert pages order") {
@@ -838,12 +846,14 @@ definition {
 					layoutName = "Test Page Name ${n}");
 			}
 
-			var plid = JSONLayout.addPublicLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name 3",
 				type = "content");
 
-			JSONLayout.publishLayout(plid = "${plid}");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 3");
 		}
 
 		task ("Move Test Page Name 1 and 2 to child level of Test Page Name 3") {
@@ -881,12 +891,14 @@ definition {
 		property testray.component.names = "Site Pages Administration";
 
 		for (var n : list "1,2") {
-			var plid = JSONLayout.addPublicLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Content Page Name ${n}",
 				type = "content");
 
-			JSONLayout.publishLayout(plid = "${plid}");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name ${n}");
 		}
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -912,21 +924,25 @@ definition {
 		property testray.component.names = "Site Pages Administration";
 
 		for (var n : list "1,2") {
-			var plid = JSONLayout.addPublicLayout(
+			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Content Page Name ${n}",
 				type = "content");
 
-			JSONLayout.publishLayout(plid = "${plid}");
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name ${n}");
 		}
 
-		var plid = JSONLayout.addPublicLayout(
+		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Child Content Page Name 1",
 			parentLayoutName = "Test Content Page Name 1",
 			type = "content");
 
-		JSONLayout.publishLayout(plid = "${plid}");
+		JSONLayout.publishLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Content Page Name 1");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -1033,20 +1049,24 @@ definition {
 	test SelectNonRootPageAndViewPage {
 		property testray.component.names = "Site Pages Administration";
 
-		var plid = JSONLayout.addPublicLayout(
+		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		JSONLayout.publishLayout(plid = "${plid}");
+		JSONLayout.publishLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name");
 
-		var plid = JSONLayout.addPublicLayout(
+		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Child Content Page Name",
 			parentLayoutName = "Test Content Page Name",
 			type = "content");
 
-		JSONLayout.publishLayout(plid = "${plid}");
+		JSONLayout.publishLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Content Page Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

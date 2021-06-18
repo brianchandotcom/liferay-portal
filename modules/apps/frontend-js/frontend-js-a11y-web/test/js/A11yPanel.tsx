@@ -17,11 +17,11 @@ import {cleanup, fireEvent, getByText, render} from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
 import React from 'react';
 
-import {A11yPanel} from '../../src/main/resources/META-INF/resources/A11yPanel';
+import {Panel} from '../../src/main/resources/META-INF/resources/Panel';
 import violationsMock from './__fixtures__/violationsMock';
 
 const renderA11yToolSidebar = () => {
-	return render(<A11yPanel violations={violationsMock} />);
+	return render(<Panel violations={violationsMock} />);
 };
 
 describe('A11yPanel', () => {

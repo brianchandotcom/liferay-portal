@@ -50,11 +50,11 @@ function sortByImpact(violations: Array<Result>) {
 	});
 }
 
-type A11yPanelProps = {
+type PanelProps = {
 	violations: Array<Result>;
 };
 
-export function A11yPanel({violations}: A11yPanelProps) {
+export function Panel({violations}: PanelProps) {
 	const [
 		{filteredViolations, selectedCategories, selectedImpact},
 		dispatch,

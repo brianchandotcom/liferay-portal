@@ -99,7 +99,7 @@ definition {
 				AssertElementPresent(
 					key_vocabularyName = "${vocabularyName}",
 					locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE");
-			
+
 				Vocabulary.viewVocabularyAllowMultipleCAtegories(
 					label = "Allow Multiple Categories",
 					vocabularyName = "${vocabularyName}");

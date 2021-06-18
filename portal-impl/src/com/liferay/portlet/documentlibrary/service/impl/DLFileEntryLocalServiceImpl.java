@@ -2721,7 +2721,29 @@ public class DLFileEntryLocalServiceImpl
 
 	private String _buildEntryURL(DLFileVersion fileVersion)
 		throws PortalException {
-		return "entryURL";
+
+		String portletId = PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.EDIT);
+
+		String entryURL = PortalUtil.getControlPanelFullURL(
+			fileVersion.getGroupId(), portletId, null);
+
+		entryURL = HttpUtil.addParameter(
+			entryURL,
+			PortalUtil.getPortletNamespace(portletId) + "mvcRenderCommandName",
+			"/document_library/view_file_entry");
+
+		String namespace = PortalUtil.getPortletNamespace(portletId);
+
+		entryURL = HttpUtil.addParameter(
+			entryURL, namespace + "groupId", fileVersion.getGroupId());
+		entryURL = HttpUtil.addParameter(
+			entryURL, namespace + "folderId", fileVersion.getFolderId());
+		entryURL = HttpUtil.addParameter(
+			entryURL, namespace + "fileEntryId",
+			String.valueOf(fileVersion.getFileEntryId()));
+
+		return entryURL;
 	}
 
 	private void _checkFileEntriesByReviewDate(Date reviewDate)
@@ -2969,12 +2991,9 @@ public class DLFileEntryLocalServiceImpl
 		DLGroupServiceSettings dlGroupServiceSettings =
 			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
-		boolean commandUpdate = false;
+		if (!emailType.equals("review") ||
+			!dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) {
 
-		if (emailType.equals("review") &&
-			dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) {
-		}
-		else {
 			return;
 		}
 
@@ -2995,7 +3014,7 @@ public class DLFileEntryLocalServiceImpl
 			bodyLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryReviewBody();
 		}
-		else if (commandUpdate) {
+		else if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
@@ -3058,6 +3077,7 @@ public class DLFileEntryLocalServiceImpl
 		subscriptionSender.setLocalizedContextAttribute(
 			"[$DOCUMENT_TYPE$]",
 			new EscapableLocalizableFunction(dlFileEntryType::getName));
+
 		subscriptionSender.setLocalizedSubjectMap(
 			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 		subscriptionSender.setMailId(

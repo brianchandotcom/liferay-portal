@@ -272,7 +272,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 					classTypeFieldsList.add(
 						HashMapBuilder.<String, Object>put(
-							"label", HtmlUtil.escapeJS(classTypeField.getLabel())
+							"label", HtmlUtil.escape(classTypeField.getLabel())
 						).put(
 							"selectedOrderByColumn1", selectedOrderByColumn1
 						).put(

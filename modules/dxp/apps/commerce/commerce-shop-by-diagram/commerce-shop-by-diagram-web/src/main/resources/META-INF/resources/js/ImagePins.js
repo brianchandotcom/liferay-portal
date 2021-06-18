@@ -12,21 +12,17 @@
 import {event, select, zoom, zoomIdentity, zoomTransform} from 'd3';
 import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef} from 'react';
+
 import NavigationButtons from './NavigationButtons';
-import {
-	moveController,
-	namespace,
-	zoomIn,
-	zoomOut,
-} from './NavigationsUtils';
+import {moveController, namespace, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
 
 const ImagePins = ({
 	changedScale,
 	enablePanZoom,
 	execZoomIn,
-	imageURL,
 	imageSettings,
+	imageURL,
 	navigationController,
 	resetZoom,
 	selectedOption,
@@ -105,7 +101,12 @@ const ImagePins = ({
 		}
 
 		handlers.current = {
-			moveController: (where) => moveController(containerRef.current, navigationController, where),
+			moveController: (where) =>
+				moveController(
+					containerRef.current,
+					navigationController,
+					where
+				),
 			zoomIn: () => zoomIn(containerRef.current, panZoomRef.current),
 			zoomOut: () => zoomOut(containerRef.current, panZoomRef.current),
 		};
@@ -139,17 +140,22 @@ const ImagePins = ({
 				width={imageSettings.width}
 			>
 				<g
-					data-testid={namespace + "container"}
-					id={namespace + "container"}
+					data-testid={namespace + 'container'}
+					id={namespace + 'container'}
 					transform="translate(0,0) scale(1)"
 				>
-					<image height={imageSettings.height} href={imageURL}></image>
+					<image
+						height={imageSettings.height}
+						href={imageURL}
+					></image>
 				</g>
 			</svg>
 
 			{navigationController.enable && (
 				<NavigationButtons
-					moveController={(where) => handlers.current?.moveController(where)}
+					moveController={(where) =>
+						handlers.current?.moveController(where)
+					}
 					position={navigationController.position}
 				/>
 			)}

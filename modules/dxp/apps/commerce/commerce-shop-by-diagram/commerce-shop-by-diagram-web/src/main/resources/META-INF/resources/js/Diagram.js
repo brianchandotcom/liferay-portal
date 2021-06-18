@@ -9,21 +9,21 @@
  * distribution rights of the Software.
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import ClayIcon, { ClayIconSpriteContext } from '@clayui/icon';
 
-
-import '../css/diagram.scss';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
 import ImagePins from './ImagePins';
 
+import '../css/diagram.scss';
+
 const Diagram = ({
 	enablePanZoom,
 	enableResetZoom,
-	imageURL,
 	imageSettings,
+	imageURL,
 	namespace,
 	navigationController,
 	spritemap,
@@ -37,7 +37,6 @@ const Diagram = ({
 	const [selectedOption, setSelectedOption] = useState(1);
 
 	return (
-		
 		<div className="diagram mx-auto">
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<DiagramHeader />
@@ -46,10 +45,10 @@ const Diagram = ({
 					changedScale={changedScale}
 					enablePanZoom={enablePanZoom}
 					enableResetZoom={enableResetZoom}
-					imageURL={imageURL}
 					imageSettings={imageSettings}
-					navigationController={navigationController}
+					imageURL={imageURL}
 					namespace={namespace}
+					navigationController={navigationController}
 					resetZoom={resetZoom}
 					scale={scale}
 					selectedOption={selectedOption}
@@ -75,7 +74,6 @@ const Diagram = ({
 					setZoomOutHandler={setZoomOutHandler}
 				/>
 			</ClayIconSpriteContext.Provider>
-
 		</div>
 	);
 };
@@ -113,11 +111,11 @@ Diagram.defaultProps = {
 Diagram.propTypes = {
 	enablePanZoom: PropTypes.bool,
 	enableResetZoom: PropTypes.bool,
-	imageURL: PropTypes.string.isRequired,
 	imageSettings: PropTypes.shape({
 		height: PropTypes.string,
 		width: PropTypes.string,
 	}),
+	imageURL: PropTypes.string.isRequired,
 	namespace: PropTypes.string.isRequired,
 	navigationController: PropTypes.shape({
 		dragStep: PropTypes.number,

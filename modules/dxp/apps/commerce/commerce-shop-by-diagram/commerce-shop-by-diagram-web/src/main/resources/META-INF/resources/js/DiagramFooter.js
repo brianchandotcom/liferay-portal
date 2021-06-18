@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
-import ClayIcon from '@clayui/icon'
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 const OPTIONS = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
@@ -30,7 +30,6 @@ const DiagramFooter = ({
 		setChangedScale(true);
 	};
 
-
 	return (
 		<div className="d-flex diagram-footer justify-content-end mt-3">
 			<ClayButton className="mr-3">
@@ -43,7 +42,9 @@ const DiagramFooter = ({
 			<div className="d-flex">
 				<ClayButton
 					displayType="secondary"
-					onClick={() => {setZoomOutHandler(true)}}
+					onClick={() => {
+						setZoomOutHandler(true);
+					}}
 				>
 					-
 				</ClayButton>

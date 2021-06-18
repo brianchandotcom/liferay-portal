@@ -11,11 +11,13 @@
 
 export const moveController = (container, navigationController, where) => {
 	const getPosition = container.attr('transform');
+
 	// this regex takes a string value from inline html to make the image zoom/translations working
+
 	const scale = getPosition.match(/(-?[0-9]+[.,-\s]*)+/g);
 	const coordinates = scale[0].split(',').map((x) => parseInt(x, 10));
-	let newPosition
-	
+	let newPosition;
+
 	if (where === 'right') {
 		newPosition = {
 			k: parseFloat(scale[1]),

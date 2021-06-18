@@ -9,30 +9,27 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ClayIcon from '@clayui/icon'
 
 const ZoomController = ({position, zoomIn, zoomOut}) => {
 	return (
-		<div className="zoom-controller" style={{
-			bottom: position.bottom,
-			left: position.left,
-			right: position.right,
-			top: position.top}}>
+		<div
+			className="zoom-controller"
+			style={{
+				bottom: position.bottom,
+				left: position.left,
+				right: position.right,
+				top: position.top,
+			}}
+		>
 			<div className="box plus" data-testid="zoomIn" onClick={zoomIn}>
-				<ClayIcon
-					className="icon"
-					symbol="plus"
-				/>
+				<ClayIcon className="icon" symbol="plus" />
 			</div>
 
 			<div className="box hr" onClick={zoomOut}>
-				<ClayIcon
-					className="icon"
-					data-testid="zoomOut"
-					symbol="hr"
-				/>
+				<ClayIcon className="icon" data-testid="zoomOut" symbol="hr" />
 			</div>
 		</div>
 	);

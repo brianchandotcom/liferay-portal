@@ -18,6 +18,7 @@ import Diagram from '../src/main/resources/META-INF/resources/js/Diagram';
 describe('Diagram 1 of 5 features', () => {
 	const initialProps = {
 		imageURL: './assets/lfr-diagrm-engine.png',
+		namespace: 'portlet_shop_by_diagram_namespace_',
 	};
 
 	beforeEach(() => {

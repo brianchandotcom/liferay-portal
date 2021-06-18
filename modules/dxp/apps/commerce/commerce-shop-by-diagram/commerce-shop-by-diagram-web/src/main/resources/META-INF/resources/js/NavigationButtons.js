@@ -9,39 +9,35 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ClayIcon from '@clayui/icon'
 
-const NavigationButtons = ({
-	moveController,
-	position,
-}) => {
+const NavigationButtons = ({moveController, position}) => {
 	return (
-		<div className="move-controller" style={{ bottom: position.bottom, left: position.left, right: position.right, top: position.top }}>
+		<div
+			className="move-controller"
+			style={{
+				bottom: position.bottom,
+				left: position.left,
+				right: position.right,
+				top: position.top,
+			}}
+		>
 			<div className="box top" onClick={() => moveController('up')}>
-				<ClayIcon
-					className="icon"
-					symbol="angle-left"
-				/>
+				<ClayIcon className="icon" symbol="angle-left" />
 			</div>
 			<div className="box right" onClick={() => moveController('right')}>
-				<ClayIcon
-					className="icon"
-					symbol="angle-up"
-				/>
+				<ClayIcon className="icon" symbol="angle-up" />
 			</div>
 			<div className="box left" onClick={() => moveController('left')}>
-				<ClayIcon
-					className="icon"
-					symbol="angle-down"
-				/>
+				<ClayIcon className="icon" symbol="angle-down" />
 			</div>
-			<div className="bottom box" onClick={() => moveController('bottom')}>
-				<ClayIcon
-					className="icon"
-					symbol="angle-down"
-				/>
+			<div
+				className="bottom box"
+				onClick={() => moveController('bottom')}
+			>
+				<ClayIcon className="icon" symbol="angle-down" />
 			</div>
 		</div>
 	);

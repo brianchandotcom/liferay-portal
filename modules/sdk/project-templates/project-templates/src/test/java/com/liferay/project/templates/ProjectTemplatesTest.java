@@ -81,26 +81,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"--dependency-management-enabled");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateLiferayVersionInvalid62() throws Exception {
-		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferay-version", "6.2");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateLiferayVersionInvalid70test()
-		throws Exception {
-
-		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferay-version", "7.0test");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateLiferayVersionInvalidTest() throws Exception {
-		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferay-version", "test.test");
-	}
-
 	@Test
 	public void testBuildTemplateLiferayVersionValid70() throws Exception {
 		_buildTemplateWithGradle(
@@ -154,6 +134,14 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildTemplateWithMaven(
 			"mvc-portlet", "test", "-DliferayVersion=7.3.10", "-DclassName=Foo",
 			"-Dpackage=foo.portlet");
+	}
+
+	@Test
+	public void testBuildTemplateLiferayVersionValidLiferay10()
+		throws Exception {
+
+		_buildTemplateWithGradle(
+			"mvc-portlet", "test", "--liferay-version", "10.0.0");
 	}
 
 	@Test(expected = IllegalArgumentException.class)

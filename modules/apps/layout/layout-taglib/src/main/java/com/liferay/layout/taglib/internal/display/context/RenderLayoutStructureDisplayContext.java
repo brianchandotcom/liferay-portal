@@ -89,6 +89,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -168,7 +169,12 @@ public class RenderLayoutStructureDisplayContext {
 			new DefaultLayoutListRetrieverContext();
 
 		defaultLayoutListRetrieverContext.setContextObject(
-			_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
+			Optional.ofNullable(
+				_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT)
+			).orElse(
+				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
+			));
 		defaultLayoutListRetrieverContext.setHttpServletRequest(
 			_httpServletRequest);
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(

@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <p class="font-weight-bold mb-1">
-	<%= collectionAssetCategoryFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>
+	<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>
 </p>
 
 <c:choose>
-	<c:when test="<%= collectionAssetCategoryFilterFragmentRendererDisplayContext.isMultipleSelection() %>">
+	<c:when test="<%= collectionFilterFragmentRendererDisplayContext.isMultipleSelection() %>">
 		<div>
 			<clay:button
 				cssClass="dropdown-toggle form-control-select form-control-sm text-left w-100"
@@ -33,7 +33,7 @@
 
 			<react:component
 				module="js/MultiSelectCategory.es"
-				props="<%= collectionAssetCategoryFilterFragmentRendererDisplayContext.getProps() %>"
+				props="<%= collectionFilterFragmentRendererDisplayContext.getProps() %>"
 			/>
 		</div>
 	</c:when>
@@ -41,9 +41,9 @@
 		<clay:dropdown-menu
 			cssClass="form-control form-control-select form-control-sm text-left w-100"
 			displayType="secondary"
-			dropdownItems="<%= collectionAssetCategoryFilterFragmentRendererDisplayContext.getDropdownItems() %>"
-			label="<%= collectionAssetCategoryFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
-			title="<%= collectionAssetCategoryFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
+			dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
+			label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
+			title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
 		/>
 	</c:otherwise>
 </c:choose>

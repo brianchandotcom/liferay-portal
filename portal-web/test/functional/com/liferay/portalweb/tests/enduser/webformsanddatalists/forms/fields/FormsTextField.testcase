@@ -239,7 +239,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Text",
-			fieldValue = "Test");
+			fieldValue = "Text");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
 
@@ -249,7 +249,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Text",
-			fieldValue = "Text");
+			fieldValue = "Test");
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 

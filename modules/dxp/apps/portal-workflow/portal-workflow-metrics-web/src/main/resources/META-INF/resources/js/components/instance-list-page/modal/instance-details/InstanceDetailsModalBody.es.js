@@ -10,6 +10,7 @@
  * distribution rights of the Software.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
@@ -181,12 +182,18 @@ function Body({
 					/>
 				)}
 
-				<a
-					className="btn btn-secondary btn-sm font-weight-medium mb-1 mt-3"
+				<ClayButton
+					className="mb-1 mt-3"
 					data-tooltip-align="bottom"
 					data-tooltip-delay="0"
-					href={`/group/control_panel/manage/-/workflow_instance/view/${id}`}
-					target="_blank"
+					displayType="secondary"
+					onClick={() =>
+						window.open(
+							`/group/control_panel/manage/-/workflow_instance/view/${id}`,
+							'_blank'
+						)
+					}
+					small
 					title={Liferay.Language.get('open-page-in-a-new-tab')}
 				>
 					{Liferay.Language.get('go-to-submission-page')}
@@ -194,7 +201,7 @@ function Body({
 					<span className="inline-item inline-item-after">
 						<ClayIcon symbol="shortcut" />
 					</span>
-				</a>
+				</ClayButton>
 			</ContentView>
 		</ClayModal.Body>
 	);

@@ -187,7 +187,7 @@ const FailingElement = ({element}) => {
 							className="mb-2 text-nowrap text-truncate"
 							key={index}
 						>
-							<span className="mr-1 text-secondary">{`${section.label}:`}</span>
+							<span className="mr-1 section-label text-secondary">{`${section.label}:`}</span>
 							<span
 								className="font-weight-semi-bold"
 								data-tooltip-align="bottom"

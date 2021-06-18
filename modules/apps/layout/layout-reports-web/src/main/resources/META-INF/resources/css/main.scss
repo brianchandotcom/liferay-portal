@@ -32,6 +32,10 @@ $header-height: 64px;
 		margin-bottom: 0.5rem;
 	}
 
+	.section-label {
+		user-select: none;
+	}
+
 	.sidebar {
 		border-left: 1px solid $gray-300;
 		box-shadow: none;

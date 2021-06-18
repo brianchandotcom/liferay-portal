@@ -475,7 +475,7 @@ public class Sidecar {
 					"logger.deprecation.name=org.elasticsearch.deprecation",
 					"logger.deprecation.level=error", getLogProperties(),
 					ResourceUtil.getResourceAsString(
-						Sidecar.class, "/log4j2.properties")));
+						Sidecar.class, "/log4j2-sidecar.properties")));
 		}
 		catch (IOException ioException) {
 			_log.error(

@@ -531,15 +531,15 @@ definition {
 				value1 = "${assetTitle}");
 		}
 
-		SelectFrameTop();
-
-		Click(locator1 = "Icon#CLOSE");
+		IFrame.closeFrame();
 	}
 
 	macro viewContent {
 		Click(
 			key_title = "${assetListTitle}",
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 
@@ -559,15 +559,15 @@ definition {
 			locator1 = "AssetLists#ASSET_TYPE_ROW",
 			value1 = "${assetType}");
 
-		SelectFrameTop();
-
-		Click(locator1 = "Icon#CLOSE");
+		IFrame.closeFrame();
 	}
 
 	macro viewNoContent {
 		Click(
 			key_title = "${assetListTitle}",
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 
@@ -583,9 +583,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "AssetLists#ASSET_TYPE_ROW");
 
-		SelectFrameTop();
-
-		Click(locator1 = "Icon#CLOSE");
+		IFrame.closeFrame();
 	}
 
 	macro viewUsages {

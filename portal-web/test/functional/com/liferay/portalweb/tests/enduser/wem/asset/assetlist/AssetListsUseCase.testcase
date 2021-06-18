@@ -154,6 +154,13 @@ definition {
 				assetListTitle = "Dynamic Collection",
 				assetTitle = "Web Content Title 1",
 				assetType = "Web Content Article");
+
+			Navigator.gotoBack();
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 2",
+				assetType = "Web Content Article");
 		}
 
 		task ("Remove the selected category") {
@@ -170,6 +177,13 @@ definition {
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Dynamic Collection",
 				assetTitle = "Web Content Title 2",
+				assetType = "Web Content Article");
+
+			Navigator.gotoBack();
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 1",
 				assetType = "Web Content Article");
 		}
 

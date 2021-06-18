@@ -142,13 +142,19 @@ export default function defaultComputeHover({
 
 	if (elevationDepth) {
 		const getElevatedTargetItem = (sibling, maximumDepth) => {
-			const parent = layoutDataRef.current.items[sibling.parentId]
-				? {
-						...layoutDataRef.current.items[sibling.parentId],
-						collectionItemIndex: sibling.collectionItemIndex,
-						toControlsId: sibling.toControlsId,
-				  }
-				: null;
+			let parent = layoutDataRef.current.items[sibling.parentId];
+
+			if (parent) {
+				parent = {
+					...parent,
+					collectionItemIndex: sibling.collectionItemIndex,
+					parentToControlsId: sibling.parentToControlsId,
+					toControlsId:
+						parent.type === LAYOUT_DATA_ITEM_TYPES.collection
+							? sibling.parentToControlsId
+							: sibling.toControlsId,
+				};
+			}
 
 			if (parent) {
 				const [siblingPositionWithMiddle] = getItemPosition(

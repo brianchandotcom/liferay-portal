@@ -90,10 +90,10 @@ public class JournalEditArticleDisplayContextTest {
 				_httpServletRequest, _liferayPortletResponse, null);
 
 		Assert.assertEquals(
-			_UNEXPECTED_FOLDER_NAME, expectedResult,
+			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
 		Assert.assertEquals(
-			_UNEXPECTED_FOLDER_NAME, expectedResult,
+			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
 
 		Mockito.verify(
@@ -118,7 +118,7 @@ public class JournalEditArticleDisplayContextTest {
 				_httpServletRequest, _liferayPortletResponse, null);
 
 		Assert.assertEquals(
-			_UNEXPECTED_FOLDER_NAME, expectedResult,
+			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
 
 		Mockito.verify(
@@ -165,7 +165,7 @@ public class JournalEditArticleDisplayContextTest {
 				_httpServletRequest, _liferayPortletResponse, null);
 
 		Assert.assertEquals(
-			_UNEXPECTED_FOLDER_NAME, expectedResult,
+			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
 
 		Mockito.verify(
@@ -204,7 +204,7 @@ public class JournalEditArticleDisplayContextTest {
 				_httpServletRequest, _liferayPortletResponse, null);
 
 		Assert.assertEquals(
-			_UNEXPECTED_FOLDER_NAME, expectedResult,
+			_UNEXPECTED_FOLDER_NAME_MESSAGE, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
 
 		Mockito.verify(
@@ -326,7 +326,7 @@ public class JournalEditArticleDisplayContextTest {
 		);
 	}
 
-	private static final String _UNEXPECTED_FOLDER_NAME =
+	private static final String _UNEXPECTED_FOLDER_NAME_MESSAGE =
 		"Unexpected folder name";
 
 	@Mock

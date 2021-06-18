@@ -272,12 +272,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-76658. A user can edit the existing page items in a navigation menu."
+	@description = "This is a test for LPS-76658. A user can rename the page items in a navigation menu."
 	@priority = "5"
-	test EditNavigationMenuPageItemName {
+	test RenameNavigationMenuPageItem {
 		property portal.acceptance = "true";
 
-		task ("Add two pages to the site") {
+		task ("Add two pages") {
 			for (var index : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -302,7 +302,7 @@ definition {
 			}
 		}
 
-		task ("Navigate to navigation menus admin") {
+		task ("Navigate to the Navigation Menus admin") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 		}
 
@@ -312,28 +312,24 @@ definition {
 				navigationMenu = "Test Navigation Menu Name");
 		}
 
-		task ("Navigate to edit the navigation menu") {
+		task ("Rename the second page item in navigation menu") {
 			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
-		}
 
-		task ("Change the name of the second page in the navigation menu") {
 			NavigationMenusAdmin.editItem(
 				item = "Page",
 				itemName = "Test Page Name 2",
 				name = "Test Page Name 3");
 		}
 
-		task ("Assert the name of the second page was successfully changed") {
+		task ("View the name of the second page item was successfully changed") {
 			NavigationMenusAdmin.viewItem(itemName = "Test Page Name 3");
 		}
 
-		task ("Navigate to the Navigation Menu widget") {
+		task ("Select the Primary Navigation in the Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name 1",
 				siteName = "Test Site Name");
-		}
 
-		task ("Configure the Navigation Menu widget to use Primary Navigation") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
 			NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
@@ -343,7 +339,7 @@ definition {
 			Portlet.saveAndCloseConfig();
 		}
 
-		task ("Assert the name of the second page was changed and clicking on the new page name navigates to the second page") {
+		task ("Navigate to the second page via Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name 3",
 				siteName = "Test Site Name");
@@ -469,13 +465,11 @@ definition {
 				templateScript = "${templateScript}");
 		}
 
-		task ("Navigate to the widget page") {
+		task ("Select the navigation menu in the Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
-		}
 
-		task ("Configure the Navigation Menu widget") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
 			NavigationMenusWidget.chooseMenu(menuName = "Test Navigation Menu Name");
@@ -489,7 +483,7 @@ definition {
 			Portlet.saveAndCloseConfig();
 		}
 
-		task ("Assert the custom fields are shown in Navigation Menu widget") {
+		task ("View the custom fields are shown in Navigation Menu widget") {
 			for (var fieldValue : list "Page,Submenu,URL") {
 				AssertTextEquals.assertPartialText(
 					key_portletName = "Navigation Menu",

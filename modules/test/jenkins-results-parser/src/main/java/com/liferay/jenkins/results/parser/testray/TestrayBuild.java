@@ -95,19 +95,6 @@ public class TestrayBuild {
 		return _jsonObject.getString("name");
 	}
 
-	public Long getTopLevelActiveBuildDuration() {
-		Long topLevelBuildDuration = getTopLevelBuildDuration();
-		Long topLevelPassiveBuildDuration = _getTopLevelPassiveBuildDuration();
-
-		if ((topLevelBuildDuration == null) ||
-			(topLevelPassiveBuildDuration == null)) {
-
-			return null;
-		}
-
-		return topLevelBuildDuration - topLevelPassiveBuildDuration;
-	}
-
 	public String getResult() {
 		if (_result != null) {
 			return _result;
@@ -181,6 +168,19 @@ public class TestrayBuild {
 
 	public TestrayServer getTestrayServer() {
 		return _testrayServer;
+	}
+
+	public Long getTopLevelActiveBuildDuration() {
+		Long topLevelBuildDuration = getTopLevelBuildDuration();
+		Long topLevelPassiveBuildDuration = _getTopLevelPassiveBuildDuration();
+
+		if ((topLevelBuildDuration == null) ||
+			(topLevelPassiveBuildDuration == null)) {
+
+			return null;
+		}
+
+		return topLevelBuildDuration - topLevelPassiveBuildDuration;
 	}
 
 	public Long getTopLevelBuildDuration() {

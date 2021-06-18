@@ -192,49 +192,6 @@ public class CISystemStatusReportUtil {
 		return datesDurationsJSONObject;
 	}
 
-	private static JSONObject _getTopLevelActiveBuildDurationJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		JSONArray datesJSONArray = new JSONArray();
-		JSONArray durationsJSONArray = new JSONArray();
-
-		List<LocalDate> dates = new ArrayList<>(_recentTestrayBuilds.keySet());
-
-		Collections.sort(dates);
-
-		for (LocalDate date : dates) {
-			List<Long> durations = new ArrayList<>();
-
-			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(date)) {
-				durations.add(testrayBuild.getTopLevelActiveBuildDuration());
-			}
-
-			durations.removeAll(Collections.singleton(null));
-
-			if (durations.isEmpty()) {
-				datesJSONArray.put(date.toString());
-			}
-			else {
-				String meanDuration = JenkinsResultsParserUtil.combine(
-					"mean: ",
-					JenkinsResultsParserUtil.toDurationString(
-						JenkinsResultsParserUtil.getAverage(durations)));
-
-				datesJSONArray.put(
-					new String[] {date.toString(), meanDuration});
-			}
-
-			Collections.sort(durations);
-
-			durationsJSONArray.put(durations);
-		}
-
-		jsonObject.put("dates", datesJSONArray);
-		jsonObject.put("durations", durationsJSONArray);
-
-		return jsonObject;
-	}
-
 	private static JSONObject _getRelevantSuiteBuildDataJSONObject() {
 		JSONObject relevantSuiteBuildDataJSONObject = new JSONObject();
 
@@ -410,6 +367,49 @@ public class CISystemStatusReportUtil {
 		successRateJSONArray.put(totalBuilds);
 
 		return successRateJSONArray;
+	}
+
+	private static JSONObject _getTopLevelActiveBuildDurationJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		JSONArray datesJSONArray = new JSONArray();
+		JSONArray durationsJSONArray = new JSONArray();
+
+		List<LocalDate> dates = new ArrayList<>(_recentTestrayBuilds.keySet());
+
+		Collections.sort(dates);
+
+		for (LocalDate date : dates) {
+			List<Long> durations = new ArrayList<>();
+
+			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(date)) {
+				durations.add(testrayBuild.getTopLevelActiveBuildDuration());
+			}
+
+			durations.removeAll(Collections.singleton(null));
+
+			if (durations.isEmpty()) {
+				datesJSONArray.put(date.toString());
+			}
+			else {
+				String meanDuration = JenkinsResultsParserUtil.combine(
+					"mean: ",
+					JenkinsResultsParserUtil.toDurationString(
+						JenkinsResultsParserUtil.getAverage(durations)));
+
+				datesJSONArray.put(
+					new String[] {date.toString(), meanDuration});
+			}
+
+			Collections.sort(durations);
+
+			durationsJSONArray.put(durations);
+		}
+
+		jsonObject.put("dates", datesJSONArray);
+		jsonObject.put("durations", durationsJSONArray);
+
+		return jsonObject;
 	}
 
 	private static JSONObject _getTopLevelTotalBuildDurationJSONObject() {

@@ -286,12 +286,20 @@ definition {
 
 		FormFields.selectSelectOption(
 			fieldName = "If Input",
-			selectOption = "Does not match");
+			selectOption = "Matches");
 
-		FormFields.editValidation(
-			validationArgument = "Does not match",
-			validationErrorMessage = "Test Error",
-			validationInput = "^Test\s?\w+");
+		FormFields.editText(
+			fieldName = "parameter",
+			fieldValue = "Test");
+
+		FormFields.editText(
+			fieldName = "errorMessage",
+			fieldValue = "Test Error");
+
+		//FormFields.editValidation(
+		//	validationArgument = "Matches",
+		//	validationErrorMessage = "Test Error",
+		//	validationInput = "^Test\s?\w+");
 
 		Click(locator1 = "Button#SAVE");
 
@@ -303,6 +311,12 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Liferay");
 
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
 
 		FormFields.editText(
@@ -310,12 +324,6 @@ definition {
 			fieldValue = "Test");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
-
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "Test Text");
-
-		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
 		Button.clickSubmitButton();
 

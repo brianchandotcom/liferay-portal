@@ -79,6 +79,8 @@ definition {
 				fragmentName = "button");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert custom masters as an option when add a new page") {
@@ -173,6 +175,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a content page based on custom master") {
@@ -257,6 +261,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a content page based on Blank") {
@@ -396,6 +402,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a page template collection") {
@@ -551,6 +559,8 @@ definition {
 
 			Button.click(button = "Publish Master");
 
+			Alert.viewSuccessMessage();
+
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
@@ -612,6 +622,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a display page template based on Blank") {
@@ -757,6 +769,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a widget page") {
@@ -897,6 +911,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a page template collection") {
@@ -1300,6 +1316,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a content page based on custom master") {
@@ -1373,6 +1391,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a widget page and Add an Asset Publisher and Web Content Display portlet to page ") {
@@ -1552,6 +1572,8 @@ definition {
 
 		Button.click(button = "Publish Master");
 
+		Alert.viewSuccessMessage();
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(
@@ -1600,6 +1622,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert elements inherited from custom masters are changeless") {
@@ -1652,6 +1676,8 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

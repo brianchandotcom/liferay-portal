@@ -58,6 +58,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a content page based on Blank") {

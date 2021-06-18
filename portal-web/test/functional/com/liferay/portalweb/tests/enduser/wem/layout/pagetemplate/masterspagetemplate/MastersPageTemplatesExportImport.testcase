@@ -115,6 +115,8 @@ definition {
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Export custom master") {
@@ -219,6 +221,8 @@ definition {
 				textColor = "danger");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Export custom master") {
@@ -303,6 +307,8 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Export custom master") {
@@ -424,6 +430,8 @@ definition {
 				imageFileName = "Document_1.png");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Export custom master") {
@@ -535,6 +543,8 @@ definition {
 			Click(locator1 = "Icon#CLOSE");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Export custom master") {
@@ -599,6 +609,8 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Change thumbnail of custom master") {
@@ -653,6 +665,8 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Change thumbnail of custom master") {

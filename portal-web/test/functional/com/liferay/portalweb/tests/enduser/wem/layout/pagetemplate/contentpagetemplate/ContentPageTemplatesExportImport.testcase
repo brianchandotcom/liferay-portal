@@ -181,6 +181,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Add a content page template based on custom master") {
@@ -247,6 +249,8 @@ definition {
 				scope = "Master");
 
 			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Import content page template in new site") {

@@ -307,7 +307,9 @@ class Analytics {
 			);
 		}
 
-		const hashedIdentity = {emailAddressHashed: hash(identity.email)};
+		const hashedIdentity = {
+			emailAddressHashed: hash(identity.email.toLowerCase()),
+		};
 
 		this.config.identity = hashedIdentity;
 

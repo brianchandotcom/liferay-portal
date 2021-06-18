@@ -94,34 +94,19 @@ definition {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 		}
 
-		task ("Assert if Vocabulary is for internal use only") {
-			AssertElementPresent(
-				key_vocabularyName = "Audience",
-				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE");
+		task ("Assert configurations for vocabularies") {
+			for (var vocabularyName : list "Audience,Stage") {
+				AssertElementPresent(
+					key_vocabularyName = "${vocabularyName}",
+					locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE");
+			
+				Vocabulary.viewVocabularyAllowMultipleCAtegories(
+					label = "Allow Multiple Categories",
+					vocabularyName = "${vocabularyName}");
 
-			AssertElementPresent(
-				key_vocabularyName = "Stage",
-				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE");
-		}
-
-		task ("Assert if Vocabulary allow multiple categories") {
-			Vocabulary.viewVocabularyAllowMultipleCAtegories(
-				label = "Allow Multiple Categories",
-				vocabularyName = "Audience");
-
-			Vocabulary.viewVocabularyAllowMultipleCAtegories(
-				label = "Allow Multiple Categories",
-				vocabularyName = "Stage");
-		}
-
-		task ("Assert if Vocabulary allow multiple categories") {
-			Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
-				label = "Required",
-				vocabularyName = "Audience");
-
-			Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
-				label = "Required",
-				vocabularyName = "Stage");
+				Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
+					label = "Required",
+					vocabularyName = "${vocabularyName}");
 		}
 	}
 

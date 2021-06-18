@@ -26,7 +26,8 @@
 		<liferay:get config-ref="Liferay_Config_Catalog" doc:id="39bbd01c-1e6a-4f4a-9c9b-b2aa2e4ed204" doc:name="Get Records" endpoint="/v1.0/products" />
 		<ee:transform doc:id="f3d54874-f1d6-4ba3-be5b-ff1f4a30c7f8" doc:name="Transform Message">
 			<ee:message>
-				<ee:set-payload> <![CDATA[%dw 2.0
+				<ee:set-payload>
+					<![CDATA[%dw 2.0
 						output application/json
 						---
 						{
@@ -34,7 +35,9 @@
 							catalogId: payload.items[0].catalogId,
 							name: "en_US": "NEW PRODUCT",
 							productType: payload.items[0].productType
-						}]]> </ee:set-payload>
+						}
+					]]>
+				</ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<liferay:post config-ref="Liferay_Config_Catalog" doc:id="858b005d-b421-4b2f-ade2-0dc8364351e3" doc:name="Create Record" endpoint="/v1.0/products" />
@@ -82,11 +85,15 @@
 		<file:read config-ref="File_Config" doc:id="2fb3d273-7369-48fb-9d0d-e846ff6a4237" doc:name="Read" path="products.json" />
 		<ee:transform doc:id="a34ce8c8-482b-41c3-842e-1bb0fba29f47" doc:name="Transform Message">
 			<ee:message>
-				<ee:set-payload><![CDATA[%dw 2.0
-import * from dw::util::Values
-output application/json
----
-payload update "catalogId" with p("liferay.catalogId")]]></ee:set-payload>
+				<ee:set-payload>
+					<![CDATA[
+						%dw 2.0
+						import * from dw::util::Values
+						output application/json
+						---
+						payload update "catalogId" with p("liferay.catalogId")
+					]]>
+				</ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<liferay:execute-import-create-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config_Catalog" doc:id="5cfcf3e7-417d-41ff-877e-c88d34657328" doc:name="Batch - Import Records - Create" />

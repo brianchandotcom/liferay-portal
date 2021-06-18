@@ -13,12 +13,15 @@
 		<file:read path="products.json" config-ref="File_Config"/>
 		<ee:transform>
 			<ee:message>
-				<ee:set-payload> <![CDATA[
+				<ee:set-payload>
+					<![CDATA[
 						%dw 2.0
 						import * from dw::util::Values
 						output application/json
 						---
-						payload update "catalogId" with p("liferay.catalogId")]]> </ee:set-payload>
+						payload update "catalogId" with p("liferay.catalogId")
+					]]>
+				</ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<liferay:execute-import-create-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config"/>
@@ -29,19 +32,23 @@
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert>
-				<munit-tools:that> <![CDATA[#[
+				<munit-tools:that>
+					<![CDATA[#[
 						import * from dw::test::Asserts
  						---
 						payload must [notBeNull(),beArray(), haveSize(80)]
-					]]]> </munit-tools:that>
+					]]]>
+				</munit-tools:that>
 			</munit-tools:assert>
 			<foreach collection="#[payload]">
 				<munit-tools:assert>
-					<munit-tools:that> <![CDATA[#[
+					<munit-tools:that>
+						<![CDATA[#[
 							import * from dw::test::Asserts
  							---
 							payload must [haveKey("active"), haveKey("catalogId"), haveKey("name"), haveKey("productType")]
-						]]]> </munit-tools:that>
+						]]]>
+					</munit-tools:that>
 				</munit-tools:assert>
 			</foreach>
 		</munit:validation>
@@ -54,11 +61,13 @@
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert>
-				<munit-tools:that> <![CDATA[#[
+				<munit-tools:that>
+					<![CDATA[#[
 						import * from dw::test::Asserts
  						---
 						payload.totalCount must equalTo(0)]
-					]]> </munit-tools:that>
+					]]>
+				</munit-tools:that>
 			</munit-tools:assert>
 		</munit:validation>
 	</munit:test>
@@ -67,11 +76,12 @@
 			<liferay:execute-export-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config" siteId="${liferay.siteId}" fieldNames="active,catalogId,id,name,productId,productType"/>
 			<ee:transform>
 				<ee:message>
-					<ee:set-payload> <![CDATA[
+					<ee:set-payload>
+						<![CDATA[
 							%dw 2.0
 							output application/json
 							---
-							payload map ( payload01 , indexOfPayload01 ) -> {
+							payload map (payload01 , indexOfPayload01) -> {
 								active: payload01.active,
 								catalogId: payload01.catalogId,
 								description: {
@@ -80,7 +90,8 @@
 								id: payload01.id,
 								productId: payload01.productId,
 								productType: payload01.productType
-						}]]> </ee:set-payload>
+						}]]>
+					</ee:set-payload>
 				</ee:message>
 			</ee:transform>
 			<liferay:execute-import-update-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config"/>
@@ -88,19 +99,23 @@
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert>
-				<munit-tools:that> <![CDATA[#[
+				<munit-tools:that>
+					<![CDATA[#[
 						import * from dw::test::Asserts
  						---
 						payload must [notBeNull(),beArray(), haveSize(80)]
-					]]]> </munit-tools:that>
+					]]]>
+				</munit-tools:that>
 			</munit-tools:assert>
 			<foreach>
 				<munit-tools:assert>
-					<munit-tools:that> <![CDATA[#[
+					<munit-tools:that>
+						<![CDATA[#[
 							import * from dw::test::Asserts
  							---
 							payload.description.en_US must equalTo("This is my updated description!")]
-						]]> </munit-tools:that>
+						]]>
+					</munit-tools:that>
 				</munit-tools:assert>
 			</foreach>
 		</munit:validation>

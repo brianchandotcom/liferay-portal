@@ -13,12 +13,15 @@
 		<file:read config-ref="File_Config_2" path="products.json"/>
 		<ee:transform>
 			<ee:message>
-				<ee:set-payload> <![CDATA[
+				<ee:set-payload>
+					<![CDATA[
 						%dw 2.0
 						import * from dw::util::Values
 						output application/json
 						---
-						payload update "catalogId" with p("liferay.catalogId")]]> </ee:set-payload>
+						payload update "catalogId" with p("liferay.catalogId")
+					]]>
+				</ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<liferay:execute-import-create-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config_2"/>
@@ -34,19 +37,23 @@
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert>
-				<munit-tools:that> <![CDATA[#[
+				<munit-tools:that>
+					<![CDATA[#[
 						import * from dw::test::Asserts
  						---
 						payload must [notBeNull(), payload.pageSize==100, payload.totalCount==80]
-					]]]> </munit-tools:that>
+					]]]>
+				</munit-tools:that>
 			</munit-tools:assert>
 			<foreach collection="#[payload.items]">
 				<munit-tools:assert>
-					<munit-tools:that> <![CDATA[#[
+					<munit-tools:that>
+						<![CDATA[#[
 							import * from dw::test::Asserts
  							---
 							payload must [haveKey("active"), haveKey("catalogId"), haveKey("name"), haveKey("productType")]
-						]]]> </munit-tools:that>
+						]]]>
+					</munit-tools:that>
 				</munit-tools:assert>
 			</foreach>
 		</munit:validation>
@@ -69,11 +76,13 @@
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert>
-				<munit-tools:that> <![CDATA[#[
+				<munit-tools:that>
+					<![CDATA[#[
 						import * from dw::test::Asserts
  						---
 						payload must [notBeNull(), payload.totalCount == 0]
-					]]]> </munit-tools:that>
+					]]]>
+				</munit-tools:that>
 			</munit-tools:assert>
 		</munit:validation>
 	</munit:test>
@@ -81,22 +90,28 @@
 		<munit:execution>
 			<liferay:get endpoint="/v1.0/products" config-ref="Liferay_Config_2"/>
 			<liferay:post config-ref="Liferay_Config_2" endpoint="/v1.0/products">
-				<liferay:input-stream> <![CDATA[#[{
-						active: true,
-						catalogId: payload.items[0].catalogId,
-						description: {en_US:"My new product description"},
-						name: {en_US:"My New Product"},
-						productType: "simple"
-					}]]]> </liferay:input-stream>
+				<liferay:input-stream>
+					<![CDATA[#[
+						{
+							active: true,
+							catalogId: payload.items[0].catalogId,
+							description: {en_US:"My new product description"},
+							name: {en_US:"My New Product"},
+							productType: "simple"
+						}
+					]]]>
+				</liferay:input-stream>
 			</liferay:post>
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert>
-				<munit-tools:that> <![CDATA[#[
+				<munit-tools:that>
+					<![CDATA[#[
 						import * from dw::test::Asserts
 						 ---
 						payload must [notBeNull(), payload.name.en_US == "My New Product", payload.description.en_US =="My new product description"]
-					]]]> </munit-tools:that>
+					]]]>
+				</munit-tools:that>
 			</munit-tools:assert>
 		</munit:validation>
 	</munit:test>
@@ -105,13 +120,17 @@
 			<liferay:get endpoint="/v1.0/products" config-ref="Liferay_Config_2"/>
 			<set-variable value="#[payload.items[0].productId]" variableName="updatedProductId"/>
 			<liferay:patch config-ref="Liferay_Config_2" endpoint="/v1.0/products/{id}">
-				<liferay:input-stream> <![CDATA[#[{
-						active: true,
-						catalogId: payload.items[0].catalogId,
-						description: {en_US:"My updated product description"},
-						name: {en_US:"My Updated Product"},
-						productType: "simple"
-					}]]]> </liferay:input-stream>
+				<liferay:input-stream>
+					<![CDATA[#[
+						{
+							active: true,
+							catalogId: payload.items[0].catalogId,
+							description: {en_US:"My updated product description"},
+							name: {en_US:"My Updated Product"},
+							productType: "simple"
+						}
+					]]]>
+				</liferay:input-stream>
 				<liferay:path-params>
 					<liferay:path-param key="id" value="#[payload.items[0].productId]"/>
 				</liferay:path-params>
@@ -124,11 +143,13 @@
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert>
-				<munit-tools:that> <![CDATA[#[
+				<munit-tools:that>
+					<![CDATA[#[
 						import * from dw::test::Asserts
 						 ---
 						payload must [notBeNull(), payload.name.en_US == "My Updated Product", payload.description.en_US =="My updated product description"]
-					]]]> </munit-tools:that>
+					]]]>
+				</munit-tools:that>
 			</munit-tools:assert>
 		</munit:validation>
 	</munit:test>

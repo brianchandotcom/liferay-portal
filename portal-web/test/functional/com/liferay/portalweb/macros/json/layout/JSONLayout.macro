@@ -168,7 +168,12 @@ definition {
 
 	@summary = "Publish the draft layout"
 	macro publishLayout {
-		Variables.assertDefined(parameterList = "${plid}");
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var plid = JSONLayout.getPlid(
+			groupName = "${groupName}",
+			layoutName = "${layoutName}",
+			privateLayout = "${privateLayout}");
 
 		JSONLayoutAPI._publishLayoutByPlid(plid = "${plid}");
 	}

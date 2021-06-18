@@ -49,7 +49,7 @@ DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureC
 		}
 		%>
 
-		<aui:input checked="<%= digitalSignatureEnabled %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "enabled") %>' labelCssClass="simple-toggle-switch" name="enabled" type="toggle-switch" value="<%= digitalSignatureEnabled %>" />
+		<aui:input checked="<%= digitalSignatureEnabled %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "enabled") %>' labelCssClass="simple-toggle-switch" name="enabled" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeDigitalSignatureEnabled(event);" %>' type="toggle-switch" value="<%= digitalSignatureEnabled %>" />
 	</div>
 </div>
 
@@ -87,3 +87,21 @@ DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureC
 		</div>
 	</div>
 </div>
+
+<script>
+	function <portlet:namespace />onChangeDigitalSignatureEnabled(event) {
+		var digitalSignatureEnabledElement = document.getElementById(
+			'<portlet:namespace />enabled'
+		);
+
+		if (!digitalSignatureEnabledElement.checked) {
+			if (
+				!confirm(
+					'<%= HtmlUtil.escapeJS(LanguageUtil.get(resourceBundle, "disabling-the-digital-signature-will-prevent-users-from-seeing-any-digital-signature-data-and-requests")) %>'
+				)
+			) {
+				digitalSignatureEnabledElement.checked = true;
+			}
+		}
+	}
+</script>

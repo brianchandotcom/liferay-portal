@@ -59,8 +59,9 @@ public class VersionUtil {
 		return matcher.matches();
 	}
 
+
 	private static final Pattern _liferayVersionPattern = Pattern.compile(
-		"^([7-9]|[1-9]\\d{2})\\.(\\d+)((\\.\\d+)(-\\d+|(\\.((e|f)p)?[0-9]+" +
-			"(-[0-9]+)?))?$)?");
+		"^([7-9]|[1-9]\\d{1}|[1-9]\\d{2})\\.(\\d+)((\\.)(\\d+|\\d+-[1-9])" +
+			"(-\\d+|(\\.((e|f)p)?[0-9]+(-[0-9]+)?))?)?$");
 
 }

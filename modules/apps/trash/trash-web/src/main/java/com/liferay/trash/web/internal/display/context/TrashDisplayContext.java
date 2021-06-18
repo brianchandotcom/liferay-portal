@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
@@ -259,10 +260,21 @@ public class TrashDisplayContext {
 
 		List<TrashEntry> trashEntries = null;
 
-		if (Validator.isNotNull(searchTerms.getKeywords())) {
-			Sort sort = SortFactoryUtil.getSort(
-				TrashEntry.class, entrySearch.getOrderByCol(),
-				entrySearch.getOrderByType());
+		if (isSearch()) {
+			Sort sort = new Sort();
+
+			if (Objects.equals(entrySearch.getOrderByCol(), "removed-date")) {
+				sort.setFieldName(Field.REMOVED_DATE);
+				sort.setType(Sort.LONG_TYPE);
+			}
+			else {
+				sort.setFieldName(null);
+				sort.setType(Sort.SCORE_TYPE);
+			}
+
+			sort.setReverse(
+				!StringUtil.equalsIgnoreCase(
+					entrySearch.getOrderByType(), "asc"));
 
 			BaseModelSearchResult<TrashEntry> baseModelSearchResult =
 				TrashEntryLocalServiceUtil.searchTrashEntries(
@@ -352,7 +364,8 @@ public class TrashDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "removed-date");
+			_httpServletRequest, "orderByCol",
+			isSearch() ? "relevance" : "removed-date");
 
 		return _orderByCol;
 	}
@@ -617,6 +630,14 @@ public class TrashDisplayContext {
 
 	public boolean isListView() {
 		if (Objects.equals(getDisplayStyle(), "list")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
 

@@ -28,6 +28,16 @@
 	<td>//p[@class='small' and contains(.,'There is no data at the moment.')]</td>
 	<td></td>
 </tr>
+<tr>	
+	<td>METRICS_UPDATE_DUE_DATE_CARD_FILTER_PROCESS_STEP</td>
+	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), 'Process Step')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_UPDATE_DUE_DATE_CARD_FILTER_OPTION_PROCESS_STEP</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//*[text()='${key_workflowStep}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>METRICS_UPDATE_DUE_DATE_LIST_ORDER</td>
 	<td>//div[contains(@class, 'modal-content')]//tbody//tr[@class]//td[text()='${key_title}']</td>
@@ -36,4 +46,4 @@
 </tbody>
 </table>
 </body>
-</html>
+</html> 

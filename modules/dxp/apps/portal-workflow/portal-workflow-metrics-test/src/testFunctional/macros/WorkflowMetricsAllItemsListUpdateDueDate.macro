@@ -9,5 +9,15 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_CARD_FILTER_ASSIGNEE");
 	}
+	
+	macro selectUpdateDueDateCardFilterValueProcessStep {
+		var key_workflowStep = "${workflowStep}";
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_CARD_FILTER_PROCESS_STEP");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_CARD_FILTER_OPTION_PROCESS_STEP");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_CARD_FILTER_PROCESS_STEP");
+	}
 
 }

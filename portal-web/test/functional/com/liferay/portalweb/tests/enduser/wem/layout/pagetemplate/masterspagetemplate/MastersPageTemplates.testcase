@@ -568,7 +568,7 @@ definition {
 				pageName = "Test Page Name");
 		}
 
-		task ("Verify Custom Masters Page Template is selected") {
+		task ("View the Custom Masters Page Template is selected") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			AssertElementPresent(
@@ -576,7 +576,7 @@ definition {
 				locator1 = "Card#CARD_SELECTED");
 		}
 
-		task ("Configure the HTML Title field") {
+		task ("Type content in the HTML Title field") {
 			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
 			Navigator.gotoNavTab(navTab = "SEO");
@@ -588,7 +588,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Verify Custom Masters Page Template remains selected") {
+		task ("View the Custom Masters Page Template is still selected") {
 			Navigator.gotoBack();
 
 			ContentPages.clickPencil();

@@ -106,7 +106,7 @@ public class JournalEditArticleDisplayContextTest {
 	}
 
 	@Test
-	public void testGetFolderNameSpecificFolderId() throws Exception {
+	public void testGetFolderNameSpecificFolderId() {
 		long folderId = 42;
 
 		Mockito.when(
@@ -156,9 +156,7 @@ public class JournalEditArticleDisplayContextTest {
 	}
 
 	@Test
-	public void testGetFolderNameSpecificFolderIdFolderNotFound()
-		throws Exception {
-
+	public void testGetFolderNameSpecificFolderIdFolderNotFound() {
 		String expectedResult = "Home translation";
 
 		Mockito.when(

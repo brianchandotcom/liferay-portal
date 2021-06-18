@@ -137,6 +137,7 @@ const ColumnContext = ({
 			collectionItemIndex: index,
 			customCollectionSelectorURL,
 			fromControlsId,
+			parentToControlsId: toControlsId,
 			toControlsId: getToControlsId(collectionId, index, toControlsId),
 		}),
 		[

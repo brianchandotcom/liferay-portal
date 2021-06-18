@@ -27,6 +27,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
 	useCollectionItemIndex,
+	useParentToControlsId,
 	useToControlsId,
 } from '../../contexts/CollectionItemContext';
 import {useSelectItem} from '../../contexts/ControlsContext';
@@ -191,6 +192,8 @@ export function useDropClear() {
 export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const collectionItemIndex = useCollectionItemIndex();
 	const toControlsId = useToControlsId();
+	const parentToControlsId = useParentToControlsId();
+
 	const {dispatch, layoutDataRef, state, targetRefs} = useContext(
 		DragAndDropContext
 	);
@@ -200,9 +203,10 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 		() => ({
 			..._targetItem,
 			collectionItemIndex,
+			parentToControlsId,
 			toControlsId,
 		}),
-		[_targetItem, collectionItemIndex, toControlsId]
+		[_targetItem, collectionItemIndex, toControlsId, parentToControlsId]
 	);
 
 	const isOverTarget =

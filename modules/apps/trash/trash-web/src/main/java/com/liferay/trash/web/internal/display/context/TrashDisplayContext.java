@@ -268,7 +268,6 @@ public class TrashDisplayContext {
 				sort.setType(Sort.LONG_TYPE);
 			}
 			else {
-				sort.setFieldName(null);
 				sort.setType(Sort.SCORE_TYPE);
 			}
 

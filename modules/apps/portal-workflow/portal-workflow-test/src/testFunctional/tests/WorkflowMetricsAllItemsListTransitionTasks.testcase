@@ -38,11 +38,54 @@ definition {
 	}
 
 	@description = "LPS-108138 - Verify that users can bulk-transition pending tasks assigned to themselves from more than 1 instance via Workflow Metrics"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanBulkTransitionPendingTasksFromMultipleInstances {
 
-		// TODO LRQA-67806 CanBulkTransitionPendingTasksFromMultipleInstances pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+            entryContent = "Blogs Entry Content",
+            entryTitle = "Blogs Entry Title 1");
+                  
+        JSONBlog.addEntry(
+            entryContent = "Blogs Entry Content",
+            entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		MenuItem.click(menuItem = "Reject");
+
+		Button.clickDone();
+
+		WorkflowMetrics.viewProcessStepDisplaysUpdateStatus();
+
+
+
 
 	}
 

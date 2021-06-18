@@ -337,6 +337,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS</td>
+	<td>//tr/td[contains(@class,'bounded-column') and contains(text(),'Update')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKFLOW_PROCESS_NAME</td>
 	<td>//td//span[contains(text(),'${key_workflowProcessName}')] | //a[contains(text(),'${key_workflowProcessName}')]</td>
 	<td></td>

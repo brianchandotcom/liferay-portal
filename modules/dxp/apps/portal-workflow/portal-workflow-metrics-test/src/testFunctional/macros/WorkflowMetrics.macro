@@ -1384,6 +1384,19 @@ definition {
 		}
 	}
 
+	macro viewProcessStepDisplaysUpdateStatus {
+		Refresh();
+
+		while (IsElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS")) {
+			AssertTextEquals(
+				locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS");
+		}
+
+
+
+
+	}
+
 	macro viewSLAErrorMessage {
 		var key_errorMessage = "${errorMessage}";
 

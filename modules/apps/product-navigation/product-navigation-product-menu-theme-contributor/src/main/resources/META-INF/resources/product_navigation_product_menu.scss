@@ -108,8 +108,12 @@ html#{$cadmin-selector} {
 					color: $product-menu-nav-link-color;
 				}
 
-				&:focus:before {
-					box-shadow: $product-menu-focus-box-shadow;
+				&:focus {
+					box-shadow: none;
+
+					&:before {
+						box-shadow: $product-menu-focus-box-shadow;
+					}
 				}
 
 				&:before {

@@ -8,8 +8,7 @@ html#{$cadmin-selector} {
 	}
 
 	body.open-admin-panel {
-		#wrapper,
-		.cadmin.control-menu-container {
+		#wrapper {
 			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
 				padding-right: $admin-panel-width;
 			}

@@ -207,8 +207,18 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 				}
 			}
 		}
-		else if ("${itemType}" == "Blogs Entry") {
-			var itemType = JSONClassname._getClassNameId(value = "com.liferay.blogs.model.BlogsEntry");
+		else if ("${itemType}" == "Blogs Entry" || "${itemType}" == "Documents Folder" || "${itemType}" == "Web Content Folder") {
+			if ("${itemType}" == "Blogs Entry") {
+				var itemType = JSONClassname._getClassNameId(value = "com.liferay.blogs.model.BlogsEntry");
+			}
+
+			if ("${itemType}" == "Documents Folder") {
+				var itemType = JSONClassname._getClassNameId(value = "com.liferay.document.library.kernel.model.DLFolder");
+			}
+
+			if ("${itemType}" == "Web Content Folder") {
+				var itemType = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalFolder");
+			}
 
 			if ("${selectionType}" == "dynamic") {
 				var typeSettings = '''

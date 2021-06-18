@@ -74,6 +74,11 @@ const ContentOptions = ({onChangeSelect}) => {
 
 			<ClayDropDown
 				active={active}
+				menuElementAttrs={{
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton

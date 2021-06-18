@@ -1,65 +1,67 @@
-.lfr-simulation-device {
-	background-color: rgba(255, 255, 255, 0.95);
+html#{$cadmin-selector} {
+	.lfr-simulation-device {
+		background-color: rgba(255, 255, 255, 0.95);
 
-	.lfr-device-size-status-content {
-		border-radius: 3px;
-		box-shadow: 0 0 1px #fff;
-		opacity: 0.9;
+		.lfr-device-size-status-content {
+			border-radius: 3px;
+			box-shadow: 0 0 1px #fff;
+			opacity: 0.9;
+		}
+
+		.lfr-device {
+			&:after,
+			&:before {
+				box-shadow: #111 0 1px 0;
+			}
+
+			&:after {
+				border-radius: 15px;
+			}
+
+			&.rotated {
+				&:after,
+				&:before {
+					box-shadow: #111 -1px 1px 0;
+				}
+			}
+
+			&.smartphone,
+			&.tablet {
+				border-radius: 25px;
+			}
+
+			&.tablet {
+				&:before {
+					border-radius: 5px;
+				}
+			}
+		}
+
+		.modal-dialog {
+			max-width: none;
+
+			.modal-content {
+				border-radius: 0;
+			}
+		}
 	}
 
 	.lfr-device {
+		.lfr-device-size-status {
+			.lfr-device-size-status-content {
+				background-color: #000;
+				color: #fff;
+			}
+		}
+
 		&:after,
 		&:before {
-			box-shadow: #111 0 1px 0;
-		}
-
-		&:after {
-			border-radius: 15px;
-		}
-
-		&.rotated {
-			&:after,
-			&:before {
-				box-shadow: #111 -1px 1px 0;
-			}
+			background: #666;
 		}
 
 		&.smartphone,
 		&.tablet {
-			border-radius: 25px;
+			background: #333;
 		}
-
-		&.tablet {
-			&:before {
-				border-radius: 5px;
-			}
-		}
-	}
-
-	.modal-dialog {
-		max-width: none;
-
-		.modal-content {
-			border-radius: 0;
-		}
-	}
-}
-
-.lfr-device {
-	.lfr-device-size-status {
-		.lfr-device-size-status-content {
-			background-color: #000;
-			color: #fff;
-		}
-	}
-
-	&:after,
-	&:before {
-		background: #666;
-	}
-
-	&.smartphone,
-	&.tablet {
-		background: #333;
 	}
 }

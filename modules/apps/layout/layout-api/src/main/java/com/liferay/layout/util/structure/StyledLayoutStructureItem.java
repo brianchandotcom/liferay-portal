@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -94,8 +95,8 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return GetterUtil.getString(_getStyleProperty("borderRadius"));
 	}
 
-	public int getBorderWidth() {
-		return GetterUtil.getInteger(_getStyleProperty("borderWidth"));
+	public String getBorderWidth() {
+		return _getStringStyleProperty("borderWidth");
 	}
 
 	public String getContentDisplay() {
@@ -152,20 +153,20 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return GetterUtil.getString(_getStyleProperty("justify"));
 	}
 
-	public int getMarginBottom() {
-		return GetterUtil.getInteger(_getStyleProperty("marginBottom"), -1);
+	public String getMarginBottom() {
+		return _getStringStyleProperty("marginBottom");
 	}
 
-	public int getMarginLeft() {
-		return GetterUtil.getInteger(_getStyleProperty("marginLeft"), -1);
+	public String getMarginLeft() {
+		return _getStringStyleProperty("marginLeft");
 	}
 
-	public int getMarginRight() {
-		return GetterUtil.getInteger(_getStyleProperty("marginRight"), -1);
+	public String getMarginRight() {
+		return _getStringStyleProperty("marginRight");
 	}
 
-	public int getMarginTop() {
-		return GetterUtil.getInteger(_getStyleProperty("marginTop"), -1);
+	public String getMarginTop() {
+		return _getStringStyleProperty("marginTop");
 	}
 
 	public String getMaxHeight() {
@@ -184,28 +185,28 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return GetterUtil.getString(_getStyleProperty("minWidth"));
 	}
 
-	public int getOpacity() {
-		return GetterUtil.getInteger(_getStyleProperty("opacity"), -1);
+	public String getOpacity() {
+		return _getStringStyleProperty("opacity");
 	}
 
 	public String getOverflow() {
 		return GetterUtil.getString(_getStyleProperty("overflow"));
 	}
 
-	public int getPaddingBottom() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingBottom"), -1);
+	public String getPaddingBottom() {
+		return _getStringStyleProperty("paddingBottom");
 	}
 
-	public int getPaddingLeft() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingLeft"), -1);
+	public String getPaddingLeft() {
+		return _getStringStyleProperty("paddingLeft");
 	}
 
-	public int getPaddingRight() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingRight"), -1);
+	public String getPaddingRight() {
+		return _getStringStyleProperty("paddingRight");
 	}
 
-	public int getPaddingTop() {
-		return GetterUtil.getInteger(_getStyleProperty("paddingTop"), -1);
+	public String getPaddingTop() {
+		return _getStringStyleProperty("paddingTop");
 	}
 
 	public String getShadow() {
@@ -353,6 +354,16 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return styleColorJSONObject.getString(
 			"cssClass",
 			styleColorJSONObject.getString("color", StringPool.BLANK));
+	}
+
+	private String _getStringStyleProperty(String propertyKey) {
+		Object object = _getStyleProperty(propertyKey);
+
+		if (Validator.isNull(object)) {
+			return StringPool.BLANK;
+		}
+
+		return String.valueOf(object);
 	}
 
 	private Object _getStyleProperty(String propertyKey) {

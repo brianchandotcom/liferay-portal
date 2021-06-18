@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.util;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -24,28 +25,30 @@ import java.util.Set;
  */
 public class PaddingConverter {
 
-	public static final Map<Integer, Integer> externalToInternalValuesMap =
+	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			0, 0
+			"0", "0"
 		).put(
-			1, 3
+			"1", "3"
 		).put(
-			2, 4
+			"2", "4"
 		).put(
-			4, 5
+			"4", "5"
 		).put(
-			6, 6
+			"6", "6"
 		).put(
-			8, 7
+			"8", "7"
 		).put(
-			10, 8
+			"10", "8"
 		).build();
 
-	public static Integer convertToExternalValue(Integer value) {
-		Set<Integer> externalValues = externalToInternalValuesMap.keySet();
+	public static String convertToExternalValue(String value) {
+		Set<String> externalValues = externalToInternalValuesMap.keySet();
 
-		for (Integer externalValue : externalValues) {
-			if (value.equals(externalToInternalValuesMap.get(externalValue))) {
+		for (String externalValue : externalValues) {
+			if (Objects.equals(
+					value, externalToInternalValuesMap.get(externalValue))) {
+
 				return externalValue;
 			}
 		}
@@ -53,7 +56,7 @@ public class PaddingConverter {
 		return null;
 	}
 
-	public static Integer convertToInternalValue(Integer label) {
+	public static String convertToInternalValue(String label) {
 		return externalToInternalValuesMap.get(label);
 	}
 

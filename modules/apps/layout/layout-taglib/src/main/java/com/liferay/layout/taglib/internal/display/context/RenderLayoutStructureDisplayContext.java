@@ -475,44 +475,48 @@ public class RenderLayoutStructureDisplayContext {
 			}
 		}
 
-		if (styledLayoutStructureItem.getMarginBottom() != -1) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getMarginBottom())) {
 			cssClassSB.append(" mb-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getMarginBottom());
 		}
 
 		if (addHorizontalMargin) {
-			if (styledLayoutStructureItem.getMarginLeft() != -1) {
+			if (Validator.isNotNull(
+					styledLayoutStructureItem.getMarginLeft())) {
+
 				cssClassSB.append(" ml-lg-");
 				cssClassSB.append(styledLayoutStructureItem.getMarginLeft());
 			}
 
-			if (styledLayoutStructureItem.getMarginRight() != -1) {
+			if (Validator.isNotNull(
+					styledLayoutStructureItem.getMarginRight())) {
+
 				cssClassSB.append(" mr-lg-");
 				cssClassSB.append(styledLayoutStructureItem.getMarginRight());
 			}
 		}
 
-		if (styledLayoutStructureItem.getMarginTop() != -1) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getMarginTop())) {
 			cssClassSB.append(" mt-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getMarginTop());
 		}
 
-		if (styledLayoutStructureItem.getPaddingBottom() != -1) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getPaddingBottom())) {
 			cssClassSB.append(" pb-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingBottom());
 		}
 
-		if (styledLayoutStructureItem.getPaddingLeft() != -1) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getPaddingLeft())) {
 			cssClassSB.append(" pl-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingLeft());
 		}
 
-		if (styledLayoutStructureItem.getPaddingRight() != -1) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getPaddingRight())) {
 			cssClassSB.append(" pr-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingRight());
 		}
 
-		if (styledLayoutStructureItem.getPaddingTop() != -1) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getPaddingTop())) {
 			cssClassSB.append(" pt-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getPaddingTop());
 		}
@@ -707,7 +711,7 @@ public class RenderLayoutStructureDisplayContext {
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
-		if (styledLayoutStructureItem.getBorderWidth() != 0) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getBorderWidth())) {
 			styleSB.append("border-style: solid; border-width: ");
 			styleSB.append(styledLayoutStructureItem.getBorderWidth());
 			styleSB.append("px;");
@@ -783,9 +787,12 @@ public class RenderLayoutStructureDisplayContext {
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
-		if (styledLayoutStructureItem.getOpacity() != -1) {
+		if (Validator.isNotNull(styledLayoutStructureItem.getOpacity())) {
+			int opacity = GetterUtil.getInteger(
+				styledLayoutStructureItem.getOpacity(), 100);
+
 			styleSB.append("opacity: ");
-			styleSB.append(styledLayoutStructureItem.getOpacity() / 100.0);
+			styleSB.append(opacity / 100.0);
 			styleSB.append(StringPool.SEMICOLON);
 		}
 

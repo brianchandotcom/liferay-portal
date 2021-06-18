@@ -484,17 +484,17 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"paddingOptions",
 				() -> {
-					Set<Map.Entry<Integer, Integer>> entrySet =
+					Set<Map.Entry<String, String>> entrySet =
 						PaddingConverter.externalToInternalValuesMap.entrySet();
 
 					List<Map<String, String>> list = new ArrayList<>();
 
-					for (Map.Entry<Integer, Integer> entry : entrySet) {
+					for (Map.Entry<String, String> entry : entrySet) {
 						list.add(
 							HashMapBuilder.put(
-								"label", String.valueOf(entry.getKey())
+								"label", entry.getKey()
 							).put(
-								"value", String.valueOf(entry.getValue())
+								"value", entry.getValue()
 							).build());
 					}
 

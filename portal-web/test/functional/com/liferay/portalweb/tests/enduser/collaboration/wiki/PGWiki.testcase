@@ -964,7 +964,7 @@ definition {
 	@description = "This ensures that the edited front page can revert to previous version."
 	@priority = "4"
 	@refactordone
-	test CanRevertEditFrontPage {
+	test CanRevertEditInFrontPage {
 		JSONWiki.updateWikiPage(
 			groupName = "Guest",
 			wikiNodeName = "Main",

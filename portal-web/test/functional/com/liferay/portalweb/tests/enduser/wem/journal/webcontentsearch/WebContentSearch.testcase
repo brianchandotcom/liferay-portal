@@ -257,11 +257,6 @@ definition {
 			JSONWebcontent.addFolder(
 				folderName = "WC Folder Name",
 				groupName = "Guest");
-
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Guest",
-				title = "WC WebContent Title");
 		}
 
 		task ("Search the web content folder on page") {

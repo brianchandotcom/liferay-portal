@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React, {useState} from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -141,10 +141,14 @@ describe('The InstanceDetailsModal component should', () => {
 		});
 
 		test('Render Go to Submission Page button with correct link', () => {
+			window.open = jest.fn();
 			const submissionPageButton = getByText('go-to-submission-page');
 
-			expect(submissionPageButton.getAttribute('href')).toContain(
-				'37634'
+			act(() => fireEvent.click(submissionPageButton));
+
+			expect(window.open).toHaveBeenCalledWith(
+				'/group/control_panel/manage/-/workflow_instance/view/37634',
+				'_blank'
 			);
 		});
 	});

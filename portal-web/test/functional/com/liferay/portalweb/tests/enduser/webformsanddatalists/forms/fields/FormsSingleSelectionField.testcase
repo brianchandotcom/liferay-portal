@@ -91,6 +91,8 @@ definition {
 			fieldType = "Numeric",
 			formPageNumber = "0");
 
+		FormViewBuilder.closeSidebar();
+
 		FormsAdminNavigator.gotoDeleteField(fieldName = "Single Selection");
 
 		Form.save();

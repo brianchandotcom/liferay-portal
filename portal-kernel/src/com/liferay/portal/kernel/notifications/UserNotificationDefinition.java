@@ -32,6 +32,8 @@ public class UserNotificationDefinition {
 
 	public static final int NOTIFICATION_TYPE_ADD_ENTRY = 0;
 
+	public static final int NOTIFICATION_TYPE_REVIEW_ENTRY = 2;
+
 	public static final int NOTIFICATION_TYPE_UPDATE_ENTRY = 1;
 
 	public UserNotificationDefinition(

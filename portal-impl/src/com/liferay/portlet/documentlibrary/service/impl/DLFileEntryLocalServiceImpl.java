@@ -2991,9 +2991,9 @@ public class DLFileEntryLocalServiceImpl
 
 		if (emailType.equals("review")) {
 			subjectLocalizedValuesMap =
-				dlGroupServiceSettings.getEmailFileEntryAddedSubject();
+				dlGroupServiceSettings.getEmailFileEntryReviewSubject();
 			bodyLocalizedValuesMap =
-				dlGroupServiceSettings.getEmailFileEntryAddedBody();
+				dlGroupServiceSettings.getEmailFileEntryReviewBody();
 		}
 		else if (commandUpdate) {
 			subjectLocalizedValuesMap =
@@ -3064,7 +3064,7 @@ public class DLFileEntryLocalServiceImpl
 			"file_entry", fileVersion.getFileEntryId());
 
 		int notificationType =
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
 
 		subscriptionSender.setNotificationType(notificationType);
 

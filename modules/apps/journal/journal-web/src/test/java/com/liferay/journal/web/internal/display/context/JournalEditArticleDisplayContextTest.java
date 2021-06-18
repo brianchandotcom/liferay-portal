@@ -76,7 +76,7 @@ public class JournalEditArticleDisplayContextTest {
 	}
 
 	@Test
-	public void testGetFolderNameDefaultFolderId() {
+	public void testFolderNameValueIsCached() {
 		String expectedResult = "Home translation";
 
 		Mockito.when(
@@ -92,6 +92,31 @@ public class JournalEditArticleDisplayContextTest {
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
+		Assert.assertEquals(
+			_UNEXPECTED_FOLDER_NAME, expectedResult,
+			_journalEditArticleDisplayContext.getFolderName());
+
+		Mockito.verify(
+			_language, Mockito.times(1)
+		).get(
+			_httpServletRequest, "home"
+		);
+	}
+
+	@Test
+	public void testGetFolderNameDefaultFolderId() {
+		String expectedResult = "Home translation";
+
+		Mockito.when(
+			_language.get(_httpServletRequest, "home")
+		).thenReturn(
+			expectedResult
+		);
+
+		_journalEditArticleDisplayContext =
+			new JournalEditArticleDisplayContext(
+				_httpServletRequest, _liferayPortletResponse, null);
+
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
@@ -142,9 +167,6 @@ public class JournalEditArticleDisplayContextTest {
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
-		Assert.assertEquals(
-			_UNEXPECTED_FOLDER_NAME, expectedResult,
-			_journalEditArticleDisplayContext.getFolderName());
 
 		Mockito.verify(
 			_journalFolderLocalService
@@ -184,9 +206,6 @@ public class JournalEditArticleDisplayContextTest {
 		Assert.assertEquals(
 			_UNEXPECTED_FOLDER_NAME, expectedResult,
 			_journalEditArticleDisplayContext.getFolderName());
-		Assert.assertEquals(
-			_UNEXPECTED_FOLDER_NAME, expectedResult,
-			_journalEditArticleDisplayContext.getFolderName());
 
 		Mockito.verify(
 			_journalFolderLocalService
@@ -215,8 +234,6 @@ public class JournalEditArticleDisplayContextTest {
 
 		Assert.assertFalse(
 			_journalEditArticleDisplayContext.isShowSelectFolder());
-		Assert.assertFalse(
-			_journalEditArticleDisplayContext.isShowSelectFolder());
 
 		Mockito.verify(
 			_httpServletRequest
@@ -237,8 +254,6 @@ public class JournalEditArticleDisplayContextTest {
 			null
 		);
 
-		Assert.assertTrue(
-			_journalEditArticleDisplayContext.isShowSelectFolder());
 		Assert.assertTrue(
 			_journalEditArticleDisplayContext.isShowSelectFolder());
 
@@ -263,8 +278,6 @@ public class JournalEditArticleDisplayContextTest {
 
 		Assert.assertTrue(
 			_journalEditArticleDisplayContext.isShowSelectFolder());
-		Assert.assertTrue(
-			_journalEditArticleDisplayContext.isShowSelectFolder());
 
 		Mockito.verify(
 			_httpServletRequest
@@ -281,11 +294,33 @@ public class JournalEditArticleDisplayContextTest {
 
 		Assert.assertFalse(
 			_journalEditArticleDisplayContext.isShowSelectFolder());
-		Assert.assertFalse(
-			_journalEditArticleDisplayContext.isShowSelectFolder());
 
 		Mockito.verify(
 			_httpServletRequest, Mockito.never()
+		).getParameter(
+			"showSelectFolder"
+		);
+	}
+
+	@Test
+	public void testShowSelectFolderValueIsCached() {
+		_journalEditArticleDisplayContext =
+			new JournalEditArticleDisplayContext(
+				_httpServletRequest, _liferayPortletResponse, null);
+
+		Mockito.when(
+			_httpServletRequest.getParameter("showSelectFolder")
+		).thenReturn(
+			"true"
+		);
+
+		Assert.assertTrue(
+			_journalEditArticleDisplayContext.isShowSelectFolder());
+		Assert.assertTrue(
+			_journalEditArticleDisplayContext.isShowSelectFolder());
+
+		Mockito.verify(
+			_httpServletRequest, Mockito.times(1)
 		).getParameter(
 			"showSelectFolder"
 		);

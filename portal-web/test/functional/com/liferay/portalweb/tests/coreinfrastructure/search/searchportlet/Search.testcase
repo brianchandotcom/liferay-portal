@@ -152,7 +152,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+		Search.openSearchPage();
 
 		for (var portletName : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = "${portletName}");
@@ -360,9 +360,7 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+		Search.openSearchPage();
 
 		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
 
@@ -1285,9 +1283,8 @@ definition {
 			entryTitle = "Potato Blog");
 
 		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
-		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+		Search.openSearchPage();
 
 		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
 
@@ -1609,9 +1606,7 @@ definition {
 			version = "1.0",
 			webContentTitle = "WebContent Title 1");
 
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+		Search.openSearchPage();
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 

@@ -173,9 +173,7 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+		Search.openSearchPage();
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
 

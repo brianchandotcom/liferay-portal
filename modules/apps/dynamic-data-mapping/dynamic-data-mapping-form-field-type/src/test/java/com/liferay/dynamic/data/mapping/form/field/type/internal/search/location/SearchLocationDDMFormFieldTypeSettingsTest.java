@@ -14,19 +14,20 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.search.location;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.searchLocation.SearchLocationDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.Locale;
@@ -84,6 +85,22 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
 		Assert.assertEquals("text", placeholderDDMFormField.getType());
 
+		DDMFormField redirectButtonDDMFormField = ddmFormFieldsMap.get(
+			"redirectButton");
+
+		Assert.assertNotNull(redirectButtonDDMFormField);
+		Assert.assertEquals(
+			"redirect_button", redirectButtonDDMFormField.getType());
+		Assert.assertEquals(
+			"/configuration_admin/view_configuration_screen",
+			redirectButtonDDMFormField.getProperty("mvcRenderCommandName"));
+		Assert.assertEquals(
+			"[configurationScreenKey=third-party-applications-places]",
+			redirectButtonDDMFormField.getProperty("parameters"));
+		Assert.assertEquals(
+			ConfigurationAdminPortletKeys.SITE_SETTINGS,
+			redirectButtonDDMFormField.getProperty("portletId"));
+
 		DDMFormField visibleFieldsDDMFormField = ddmFormFieldsMap.get(
 			"visibleFields");
 
@@ -104,20 +121,40 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 
 		List<String> actions = ddmFormRule.getActions();
 
-		Assert.assertEquals(actions.toString(), 3, actions.size());
-		Assert.assertEquals("setVisible('dataType', false)", actions.get(0));
+		Assert.assertEquals(actions.toString(), 9, actions.size());
+		Assert.assertEquals(
+			"setVisible('fieldReference', hasGooglePlacesAPIKey())",
+			actions.get(0));
+		Assert.assertEquals(
+			"setVisible('label', hasGooglePlacesAPIKey())", actions.get(1));
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("setVisible('layout', contains(getValue('visibleFields'), ");
-		sb.append("\"city\") OR contains(getValue('visibleFields'), \"country");
-		sb.append("\") OR contains(getValue('visibleFields'), \"postal-code\"");
-		sb.append(") OR contains(getValue('visibleFields'), \"state\"))");
+		sb.append("setVisible('layout', hasGooglePlacesAPIKey() AND (contains");
+		sb.append("(getValue('visibleFields'), \"city\") OR contains(getValue");
+		sb.append("('visibleFields'), \"country\") OR contains(getValue('");
+		sb.append("visibleFields'), \"postal-code\") OR contains(getValue('");
+		sb.append("visibleFields'), \"state\")))");
 
-		Assert.assertEquals(sb.toString(), actions.get(1));
+		Assert.assertEquals(sb.toString(), actions.get(2));
 
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', false)", actions.get(2));
+			"setVisible('placeholder', hasGooglePlacesAPIKey())",
+			actions.get(3));
+		Assert.assertEquals(
+			"setVisible('redirectButton', NOT(hasGooglePlacesAPIKey()))",
+			actions.get(4));
+		Assert.assertEquals(
+			"setVisible('required', hasGooglePlacesAPIKey())", actions.get(5));
+		Assert.assertEquals(
+			"setVisible('requiredErrorMessage', hasGooglePlacesAPIKey() AND " +
+				"false)",
+			actions.get(6));
+		Assert.assertEquals(
+			"setVisible('tip', hasGooglePlacesAPIKey())", actions.get(7));
+		Assert.assertEquals(
+			"setVisible('visibleFields', hasGooglePlacesAPIKey())",
+			actions.get(8));
 	}
 
 	@Override

@@ -30,11 +30,13 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.google.places.util.GooglePlacesUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -57,15 +59,22 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormFieldTemplateContextFactoryTest {
+@PrepareForTest(GooglePlacesUtil.class)
+@RunWith(PowerMockRunner.class)
+public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 
 	@ClassRule
 	@Rule
@@ -75,6 +84,7 @@ public class DDMFormFieldTemplateContextFactoryTest {
 	@Before
 	public void setUp() {
 		setUpDDMFormTemplateContextFactoryUtil();
+		setUpGooglePlacesUtil();
 		setUpLanguageUtil();
 	}
 
@@ -329,7 +339,8 @@ public class DDMFormFieldTemplateContextFactoryTest {
 				ddmForm.getDDMFormFieldsMap(true), ddmFormFieldsPropertyChanges,
 				ddmFormFieldValues, ddmFormRenderingContext,
 				_ddmStructureLayoutLocalService, _ddmStructureLocalService,
-				new JSONFactoryImpl(), true, new DDMFormLayout());
+				_groupLocalService, new JSONFactoryImpl(), true,
+				new DDMFormLayout());
 
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
 			mockDDMFormFieldTypeServicesTracker(
@@ -420,6 +431,18 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		);
 	}
 
+	protected void setUpGooglePlacesUtil() {
+		mockStatic(GooglePlacesUtil.class);
+
+		when(
+			GooglePlacesUtil.getGooglePlacesAPIKey(
+				Matchers.anyLong(), Matchers.anyLong(),
+				Matchers.any(GroupLocalService.class))
+		).thenReturn(
+			StringPool.BLANK
+		);
+	}
+
 	protected void setUpLanguageUtil() {
 		Language language = Mockito.mock(Language.class);
 
@@ -456,6 +479,9 @@ public class DDMFormFieldTemplateContextFactoryTest {
 
 	@Mock
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Mock
+	private GroupLocalService _groupLocalService;
 
 	private HttpServletRequest _httpServletRequest;
 

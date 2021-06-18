@@ -84,6 +84,8 @@ definition {
 			fieldPositionNumber = "1",
 			fieldType = "Numeric");
 
+		FormViewBuilder.closeSidebar();
+
 		FormsAdminNavigator.gotoDeleteField(fieldName = "Multiple Selection");
 
 		FormFields.viewDeletedFieldLabel(fieldName = "Multiple Selection");

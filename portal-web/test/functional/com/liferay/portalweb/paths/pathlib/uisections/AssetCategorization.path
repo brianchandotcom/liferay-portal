@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_REMOVE</td>
+	<td>//span[(contains(@class,'label-dismissible'))][contains(.,'${key_itemName}')]//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VOCABULARY</td>
 	<td>//span[@class='field-content']/label</td>
 	<td></td>
@@ -41,11 +46,6 @@
 <tr>
 	<td>TAG</td>
 	<td>//div[contains(@id,'assetTagsSelector')]//span[(contains(@class,'label-dismissible'))][contains(.,'${key_tagName}')] | //div[contains(@class,'tags-selector')]//span[(contains(@class,'label-dismissible'))][contains(.,'${key_tagName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAG_REMOVE</td>
-	<td>//span[(contains(@class,'label-dismissible'))][contains(.,'${key_tagName}')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,33 @@
+{
+	"1MultipleSelection": {
+		"totalEntries": 1,
+		"type": "checkbox_multiple",
+		"values": {
+			"2Option": 1,
+			"3Option": 1
+		}
+	},
+	"1SelectFromList": {
+		"totalEntries": 1,
+		"type": "select",
+		"values": {
+			"3Option": 1
+		}
+	},
+	"1SingleSelection": {
+		"type": "radio",
+		"values": {
+			"1Option": 1
+		}
+	},
+	"1Text": {
+		"totalEntries": 1,
+		"type": "text",
+		"values": [
+			{
+				"value": "Test"
+			}
+		]
+	},
+	"totalItems": 1
+}

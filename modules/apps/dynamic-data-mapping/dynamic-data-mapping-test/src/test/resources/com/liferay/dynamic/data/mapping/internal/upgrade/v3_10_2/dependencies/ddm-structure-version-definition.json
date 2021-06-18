@@ -1,0 +1,171 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldReference": "1SelectFromList",
+			"label": {
+				"en_US": "1Select From List"
+			},
+			"localizable": true,
+			"multiple": true,
+			"name": "1SelectFromList",
+			"options": [
+				{
+					"label": {
+						"en_US": "1Option"
+					},
+					"reference": "1Option",
+					"value": "1Option"
+				},
+				{
+					"label": {
+						"en_US": "2Option"
+					},
+					"reference": "2Option",
+					"value": "2Option"
+				},
+				{
+					"label": {
+						"en_US": "3Option"
+					},
+					"reference": "3Option",
+					"value": "3Option"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[\"1Option\",\"2Option\"]"
+			},
+			"type": "select"
+		},
+		{
+			"dataType": "string",
+			"fieldReference": "1RadioReference",
+			"label": {
+				"en_US": "1Radio"
+			},
+			"localizable": true,
+			"name": "1Radio",
+			"options": [
+				{
+					"label": {
+						"en_US": "1Option"
+					},
+					"reference": "1Option",
+					"value": "1Option"
+				},
+				{
+					"label": {
+						"en_US": "2Option"
+					},
+					"reference": "2Option",
+					"value": "2Option"
+				},
+				{
+					"label": {
+						"en_US": "3Option"
+					},
+					"reference": "3Option",
+					"value": "3Option"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[\"3Option\"]"
+			},
+			"type": "radio"
+		},
+		{
+			"dataType": "string",
+			"fieldReference": "1TextField",
+			"label": {
+				"en_US": "1Text Field"
+			},
+			"localizable": true,
+			"name": "1TextField",
+			"predefinedValue": {
+				"en_US": "Test"
+			},
+			"type": "text",
+			"validation": {
+				"errorMessage": {
+					"en_US": "Error Message"
+				},
+				"expression": {
+					"name": "contains",
+					"value": "contains(1TextField, \"{parameter}\")"
+				},
+				"parameter": {
+					"en_US": "test"
+				}
+			}
+		},
+		{
+			"fieldReference": "Field89498921",
+			"label": {
+				"en_US": "Fields Group"
+			},
+			"name": "Field89498921",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"displayStyle": "singleline",
+					"fieldReference": "1Text",
+					"label": {
+						"en_US": "1Text Field"
+					},
+					"localizable": true,
+					"name": "1Text",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"displayStyle": "singleline",
+					"fieldReference": "2TextField",
+					"label": {
+						"en_US": "2Text Field"
+					},
+					"localizable": true,
+					"name": "2TextField",
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+			},
+			"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"1Text\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"2TextField\"]}]}]",
+			"showLabel": false,
+			"tip": {
+			},
+			"type": "fieldset"
+		}
+	],
+	"rules": [
+		{
+			"actions": [
+				"setVisible('1Text', true)"
+			],
+			"condition": "equals(getValue('1Radio'), \"3Option\")",
+			"enabled": true,
+			"name": {
+			}
+		},
+		{
+			"actions": [
+				"setVisible('1SelectFromList', true)"
+			],
+			"condition": "equals(getValue('1TextField'), '1Option') OR equals(getValue('1Text'), 'Test')",
+			"enabled": true,
+			"name": {
+			}
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

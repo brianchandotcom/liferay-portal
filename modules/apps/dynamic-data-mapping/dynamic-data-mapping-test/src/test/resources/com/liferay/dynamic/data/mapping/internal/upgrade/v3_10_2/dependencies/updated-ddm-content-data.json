@@ -1,0 +1,55 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"fieldReference": "_1SelectFromList",
+			"instanceId": "leet",
+			"name": "_1SelectFromList",
+			"value": {
+				"en_US": "[\"_2Option\",\"_3Option\"]"
+			}
+		},
+		{
+			"fieldReference": "_1Radio",
+			"instanceId": "sdf",
+			"name": "_1Radio",
+			"value": {
+				"en_US": "_3Option"
+			}
+		},
+		{
+			"fieldReference": "_1TextField",
+			"instanceId": "qqweq",
+			"name": "_1TextField",
+			"value": {
+				"en_US": "test"
+			}
+		},
+		{
+			"fieldReference": "Field89498921",
+			"instanceId": "lrrt",
+			"name": "Field89498921",
+			"nestedFieldValues": [
+				{
+					"fieldReference": "_1Text",
+					"instanceId": "hgga",
+					"name": "_1Text",
+					"value": {
+						"en_US": "test"
+					}
+				},
+				{
+					"fieldReference": "_2TextField",
+					"instanceId": "jqbu",
+					"name": "_2TextField",
+					"value": {
+						"en_US": "test"
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,42 @@
+{
+	"defaultLanguageId": "en_US",
+	"pages": [
+		{
+			"description": {
+				"en_US": ""
+			},
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"_1TextField"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"_2TextField"
+							],
+							"size": 6
+						},
+						{
+							"fieldNames": [
+								"_1Radio"
+							],
+							"size": 6
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": ""
+			}
+		}
+	],
+	"paginationMode": "wizard"
+}

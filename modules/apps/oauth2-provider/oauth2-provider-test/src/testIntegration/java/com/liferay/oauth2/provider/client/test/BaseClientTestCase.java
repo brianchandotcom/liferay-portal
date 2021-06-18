@@ -127,7 +127,8 @@ public abstract class BaseClientTestCase {
 
 		Map<String, NewCookie> newCookies = response.getCookies();
 
-		NewCookie cookieSupportNewCookie = newCookies.get(CookieKeys.COOKIE_SUPPORT);
+		NewCookie cookieSupportNewCookie = newCookies.get(
+			CookieKeys.COOKIE_SUPPORT);
 		NewCookie jSessionIdNewCookie = newCookies.get(CookieKeys.JSESSIONID);
 
 		invocationBuilder = getInvocationBuilder(hostname, getLoginWebTarget());

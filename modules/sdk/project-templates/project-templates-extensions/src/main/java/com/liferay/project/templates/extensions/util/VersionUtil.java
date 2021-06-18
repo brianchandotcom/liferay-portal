@@ -16,6 +16,7 @@ package com.liferay.project.templates.extensions.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 /**
  * @author Gregory Amerson
@@ -37,8 +38,11 @@ public class VersionUtil {
 		String normalizedLiferayVersionString = normalizeLiferayVersion(
 			liferayVersion);
 
+		Matcher matcher = _liferayVersionPattern.matcher(
+			normalizedLiferayVersionString);
+
 		if (matcher.matches()) {
-			return Integer.parseInt(matcher.group(3));
+			return Integer.parseInt(matcher.group(5));
 		}
 
 		return 0;
@@ -60,6 +64,24 @@ public class VersionUtil {
 		return matcher.matches();
 	}
 
+	public static String normalizeLiferayVersion(String liferayVersion)
+		throws Exception {
+
+		String normalizedVersion = liferayVersion.replaceAll("-", ".");
+
+		IntStream intStream = normalizedVersion.chars();
+
+		long componentCount = intStream.filter(
+			components -> components == '.'
+		).count();
+
+		if (componentCount > 3) {
+			normalizedVersion = normalizedVersion.substring(
+				0, normalizedVersion.lastIndexOf("."));
+		}
+
+		return normalizedVersion;
+	}
 
 	private static final Pattern _liferayVersionPattern = Pattern.compile(
 		"^([7-9]|[1-9]\\d{1}|[1-9]\\d{2})\\.(\\d+)((\\.)(\\d+|\\d+-[1-9])" +

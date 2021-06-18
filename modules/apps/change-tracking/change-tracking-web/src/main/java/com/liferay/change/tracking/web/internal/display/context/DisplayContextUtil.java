@@ -19,9 +19,12 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -72,9 +75,22 @@ public class DisplayContextUtil {
 			));
 
 		for (User user : users) {
+			String portraitURL = StringPool.BLANK;
+
+			if (user.getPortraitId() > 0) {
+				try {
+					portraitURL = user.getPortraitURL(themeDisplay);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+				}
+			}
+
 			userInfoJSONObject.put(
 				String.valueOf(user.getUserId()),
 				JSONUtil.put(
+					"portraitURL", portraitURL
+				).put(
 					"userName", user.getFullName()
 				).put(
 					"userPortraitHTML",
@@ -88,5 +104,8 @@ public class DisplayContextUtil {
 
 	private DisplayContextUtil() {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayContextUtil.class);
 
 }

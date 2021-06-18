@@ -335,7 +335,6 @@ public class ViewChangesDisplayContext {
 				deleteCTCommentURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(_ctCollection.getCtCollectionId()));
-				deleteCTCommentURL.setParameter("ctEntryId", "0");
 				deleteCTCommentURL.setResourceID(
 					"/change_tracking/delete_ct_comment");
 
@@ -368,7 +367,6 @@ public class ViewChangesDisplayContext {
 				getCTCommentsURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(_ctCollection.getCtCollectionId()));
-				getCTCommentsURL.setParameter("ctEntryId", "0");
 				getCTCommentsURL.setResourceID(
 					"/change_tracking/get_ct_comments");
 
@@ -476,7 +474,6 @@ public class ViewChangesDisplayContext {
 				updateCTCommentURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(_ctCollection.getCtCollectionId()));
-				updateCTCommentURL.setParameter("ctEntryId", "0");
 				updateCTCommentURL.setResourceID(
 					"/change_tracking/update_ct_comment");
 

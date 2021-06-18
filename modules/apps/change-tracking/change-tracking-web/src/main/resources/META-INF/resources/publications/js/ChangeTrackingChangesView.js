@@ -25,6 +25,7 @@ import ClayForm, {
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -46,118 +47,104 @@ const CTEditComment = ({handleCancel, handleSave, initialValue}) => {
 					value={value}
 				/>
 			</ClayForm.Group>
-			<ClayForm.Group>
-				<div className="btn-group">
-					<div className="btn-group-item">
-						<button
-							className={`btn btn-primary${
-								value ? '' : ' disabled'
-							}`}
-							onClick={() => handleSave(value)}
-							type="button"
-						>
-							{Liferay.Language.get('save')}
-						</button>
-					</div>
-					<div className="btn-group-item">
-						<button
-							className="btn btn-secondary"
-							onClick={() => handleCancel()}
-							type="button"
-						>
-							{Liferay.Language.get('cancel')}
-						</button>
-					</div>
+			<div className="btn-group">
+				<div className="btn-group-item">
+					<button
+						className={`btn btn-primary${value ? '' : ' disabled'}`}
+						onClick={() => handleSave(value)}
+						type="button"
+					>
+						{Liferay.Language.get('save')}
+					</button>
 				</div>
-			</ClayForm.Group>
+				<div className="btn-group-item">
+					<button
+						className="btn btn-secondary"
+						onClick={() => handleCancel()}
+						type="button"
+					>
+						{Liferay.Language.get('cancel')}
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 };
 
 const CTComments = ({
+	ctEntryId,
 	currentUser,
 	deleteCommentURL,
+	getCache,
 	getCommentsURL,
+	setShowComments,
 	spritemap,
+	updateCache,
 	updateCommentURL,
 }) => {
-	const [deltaState, setDeltaState] = useState(20);
+	const [deleting, setDeleting] = useState(0);
 	const [editing, setEditing] = useState(0);
 	const [fetchData, setFetchData] = useState(null);
-	const [initialized, setInitialized] = useState(false);
+	const [inputValue, setInputValue] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [pageState, setPageState] = useState(1);
-	const [value, setValue] = useState('');
 
 	useEffect(() => {
-		if (initialized) {
+		setDeleting(0);
+		setEditing(0);
+		setInputValue('');
+
+		const data = getCache();
+
+		if (data && data.comments) {
+			setFetchData(data);
+
 			return;
 		}
 
-		setInitialized(true);
 		setLoading(true);
 
-		fetch(getCommentsURL)
-			.then((response) => response.json())
-			.then((json) => {
-				if (!json.comments) {
+		AUI().use('liferay-portlet-url', () => {
+			const portletURL = Liferay.PortletURL.createURL(getCommentsURL);
+
+			portletURL.setParameter('ctEntryId', ctEntryId.toString());
+
+			fetch(portletURL.toString())
+				.then((response) => response.json())
+				.then((json) => {
+					if (!json.comments) {
+						setFetchData({
+							errorMessage: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						});
+						setLoading(false);
+
+						return;
+					}
+
+					setFetchData(json);
+					setLoading(false);
+
+					updateCache(json);
+				})
+				.catch(() => {
 					setFetchData({
 						errorMessage: Liferay.Language.get(
 							'an-unexpected-error-occurred'
 						),
 					});
+
 					setLoading(false);
-
-					return;
-				}
-
-				setFetchData(json);
-				setLoading(false);
-			})
-			.catch(() => {
-				setFetchData({
-					errorMessage: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
 				});
-
-				setLoading(false);
-			});
-	}, [getCommentsURL, initialized]);
-
-	const clone = (json) => {
-		const clonedJSON = {};
-
-		if (typeof json !== 'object') {
-			return null;
-		}
-
-		const keys = Object.keys(json);
-
-		for (let i = 0; i < keys.length; i++) {
-			clonedJSON[keys[i]] = json[keys[i]];
-		}
-
-		return clonedJSON;
-	};
-
-	const getUserName = (userId) => {
-		return fetchData.userInfo[userId.toString()].userName;
-	};
+		});
+	}, [ctEntryId, getCache, getCommentsURL, updateCache]);
 
 	const handleDelete = (ctCommentId) => {
-		if (
-			!confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			return;
-		}
-
 		AUI().use('liferay-portlet-url', () => {
 			const portletURL = Liferay.PortletURL.createURL(deleteCommentURL);
 
 			portletURL.setParameter('ctCommentId', ctCommentId.toString());
+			portletURL.setParameter('ctEntryId', ctEntryId.toString());
 
 			fetch(portletURL.toString())
 				.then((response) => response.json())
@@ -173,6 +160,8 @@ const CTComments = ({
 					}
 
 					setFetchData(json);
+
+					updateCache(json);
 				})
 				.catch(() => {
 					setFetchData({
@@ -184,44 +173,19 @@ const CTComments = ({
 		});
 	};
 
-	const handleDeltaChange = (delta) => {
-		setDeltaState(delta);
-		setEditing(0);
-		setPageState(1);
-
-		if (fetchData.updatedCommentId) {
-			const newFetchData = clone(fetchData);
-
-			newFetchData.updatedCommentId = 0;
-
-			setFetchData(newFetchData);
-		}
-	};
-
-	const handlePageChange = (page) => {
-		setEditing(0);
-		setPageState(page);
-
-		if (fetchData.updatedCommentId) {
-			const newFetchData = clone(fetchData);
-
-			newFetchData.updatedCommentId = 0;
-
-			setFetchData(newFetchData);
-		}
-	};
-
 	const handleReply = () => {
 		AUI().use('liferay-portlet-url', () => {
 			setLoading(true);
 
 			const portletURL = Liferay.PortletURL.createURL(updateCommentURL);
 
-			portletURL.setParameter('value', value);
+			portletURL.setParameter('ctEntryId', ctEntryId.toString());
+			portletURL.setParameter('value', inputValue);
 
 			fetch(portletURL.toString())
 				.then((response) => response.json())
 				.then((json) => {
+					setDeleting(0);
 					setEditing(0);
 
 					if (!json.comments) {
@@ -236,10 +200,13 @@ const CTComments = ({
 					}
 
 					setFetchData(json);
+					setInputValue('');
 					setLoading(false);
-					setValue('');
+
+					updateCache(json);
 				})
 				.catch(() => {
+					setDeleting(0);
 					setEditing(0);
 					setFetchData({
 						errorMessage: Liferay.Language.get(
@@ -256,11 +223,13 @@ const CTComments = ({
 			const portletURL = Liferay.PortletURL.createURL(updateCommentURL);
 
 			portletURL.setParameter('ctCommentId', ctCommentId);
+			portletURL.setParameter('ctEntryId', ctEntryId.toString());
 			portletURL.setParameter('value', newValue);
 
 			fetch(portletURL.toString())
 				.then((response) => response.json())
 				.then((json) => {
+					setDeleting(0);
 					setEditing(0);
 
 					if (!json.comments) {
@@ -274,8 +243,10 @@ const CTComments = ({
 					}
 
 					setFetchData(json);
+					updateCache(json);
 				})
 				.catch(() => {
+					setDeleting(0);
 					setEditing(0);
 					setFetchData({
 						errorMessage: Liferay.Language.get(
@@ -287,15 +258,25 @@ const CTComments = ({
 	};
 
 	const renderUserPortrait = (userId) => {
+		const user = fetchData.userInfo[userId.toString()];
+
 		return (
-			<div
-				dangerouslySetInnerHTML={{
-					__html:
-						fetchData.userInfo[userId.toString()].userPortraitHTML,
-				}}
+			<ClaySticker
+				className={`sticker-user-icon ${
+					user.portraitURL ? '' : 'user-icon-color-' + (userId % 10)
+				}`}
 				data-tooltip-align="top"
-				title={getUserName(userId)}
-			/>
+				size="lg"
+				title={user.userName}
+			>
+				{user.portraitURL ? (
+					<div className="sticker-overlay">
+						<img className="sticker-img" src={user.portraitURL} />
+					</div>
+				) : (
+					<ClayIcon symbol="user" />
+				)}
+			</ClaySticker>
 		);
 	};
 
@@ -304,36 +285,36 @@ const CTComments = ({
 			return <span aria-hidden="true" className="loading-animation" />;
 		}
 		else if (!fetchData.comments || fetchData.comments.length === 0) {
-			return '';
+			return (
+				<div className="taglib-empty-result-message">
+					<div className="taglib-empty-result-message-header" />
+					<div className="sheet-text text-center">
+						{Liferay.Language.get('no-comments-yet')}
+					</div>
+				</div>
+			);
 		}
 
 		const items = [];
 
-		let filteredComments = fetchData.comments.slice(0);
+		const filteredComments = fetchData.comments.slice(0);
 
 		filteredComments.sort((a, b) => {
 			if (a.createTime < b.createTime) {
-				return 1;
+				return -1;
 			}
 
 			if (a.createTime > b.createTime) {
-				return -1;
+				return 1;
 			}
 
 			return 0;
 		});
 
-		if (filteredComments.length > 5) {
-			filteredComments = filteredComments.slice(
-				deltaState * (pageState - 1),
-				deltaState * pageState
-			);
-		}
-
 		for (let i = 0; i < filteredComments.length; i++) {
 			const comment = filteredComments[i];
 
-			let title = getUserName(comment.userId);
+			let title = fetchData.userInfo[comment.userId.toString()].userName;
 
 			if (currentUser.userId.toString() === comment.userId.toString()) {
 				title = title + ' (' + Liferay.Language.get('you') + ')';
@@ -342,12 +323,18 @@ const CTComments = ({
 			const dropdownItems = [
 				{
 					label: Liferay.Language.get('edit'),
-					onClick: () => setEditing(comment.ctCommentId),
+					onClick: () => {
+						setDeleting(0);
+						setEditing(comment.ctCommentId);
+					},
 					symbolLeft: 'pencil',
 				},
 				{
 					label: Liferay.Language.get('delete'),
-					onClick: () => handleDelete(comment.ctCommentId),
+					onClick: () => {
+						setDeleting(comment.ctCommentId);
+						setEditing(0);
+					},
 					symbolLeft: 'times-circle',
 				},
 			];
@@ -368,8 +355,12 @@ const CTComments = ({
 
 			items.push(
 				<div
-					className={`autofit-padded-no-gutters-x autofit-row${
-						!loading &&
+					className={`${
+						deleting === comment.ctCommentId
+							? ' comment-deleting'
+							: ''
+					}${
+						fetchData &&
 						fetchData.updatedCommentId &&
 						fetchData.updatedCommentId.toString() ===
 							comment.ctCommentId.toString()
@@ -377,38 +368,85 @@ const CTComments = ({
 							: ''
 					}`}
 				>
-					<div className="autofit-col">
-						{renderUserPortrait(comment.userId)}
-					</div>
-					<div className="autofit-col autofit-col-expand">
-						<div className="autofit-row">
-							<div className="autofit-col autofit-col-expand">
-								<h5 className="component-title">{title}</h5>
-								<div
-									className="text-secondary"
-									data-tooltip-align="top"
-									title={comment.createDate}
-								>
-									{comment.timeDescription}
+					{deleting === comment.ctCommentId && (
+						<div className="comment-deleting-overlay">
+							<div className="comment-deleting-title">
+								{Liferay.Language.get(
+									'are-you-sure-you-want-to-delete-this-comment'
+								)}
+							</div>
+							<div>
+								<div className="btn-group">
+									<div className="btn-group-item">
+										<button
+											className="btn btn-primary btn-sm"
+											onClick={() =>
+												handleDelete(
+													comment.ctCommentId
+												)
+											}
+											type="button"
+										>
+											{Liferay.Language.get('delete')}
+										</button>
+									</div>
+									<div className="btn-group-item">
+										<button
+											className="btn btn-secondary btn-sm"
+											onClick={() => setDeleting(0)}
+											type="button"
+										>
+											{Liferay.Language.get('cancel')}
+										</button>
+									</div>
 								</div>
 							</div>
-							{editing !== comment.ctCommentId && (
-								<div className="autofit-col">
-									<ClayDropDownWithItems
-										alignmentPosition={Align.BottomLeft}
-										items={dropdownItems}
-										spritemap={spritemap}
-										trigger={
-											<ClayButtonWithIcon
-												displayType="unstyled"
-												small
+						</div>
+					)}
+					<div className="comment-row">
+						<div className="autofit-padded-no-gutters-x autofit-row">
+							<div className="autofit-col">
+								{renderUserPortrait(comment.userId)}
+							</div>
+							<div className="autofit-col autofit-col-expand">
+								<div className="autofit-row">
+									<div className="autofit-col autofit-col-expand">
+										<div className="comment-title">
+											{title}
+										</div>
+										<div
+											className="text-secondary"
+											data-tooltip-align="top"
+											title={comment.createDate}
+										>
+											{comment.timeDescription}
+										</div>
+									</div>
+									{editing !== comment.ctCommentId && (
+										<div className="autofit-col">
+											<ClayDropDownWithItems
+												alignmentPosition={
+													Align.BottomLeft
+												}
+												items={dropdownItems}
 												spritemap={spritemap}
-												symbol="ellipsis-v"
+												trigger={
+													<ClayButtonWithIcon
+														disabled={
+															deleting ===
+															comment.ctCommentId
+														}
+														displayType="unstyled"
+														small
+														spritemap={spritemap}
+														symbol="ellipsis-v"
+													/>
+												}
 											/>
-										}
-									/>
+										</div>
+									)}
 								</div>
-							)}
+							</div>
 						</div>
 						<div className="autofit-row">{commentBody}</div>
 					</div>
@@ -419,98 +457,79 @@ const CTComments = ({
 		return <>{items}</>;
 	};
 
-	const renderPagination = () => {
-		if (
-			!fetchData ||
-			!fetchData.comments ||
-			fetchData.comments.length <= 5
-		) {
-			return '';
-		}
+	let count = 0;
 
-		return (
-			<ClayPaginationBarWithBasicItems
-				activeDelta={deltaState}
-				activePage={pageState}
-				deltas={[4, 8, 20, 40, 60].map((size) => ({
-					label: size,
-				}))}
-				ellipsisBuffer={3}
-				onDeltaChange={(delta) => handleDeltaChange(delta)}
-				onPageChange={(page) => handlePageChange(page)}
-				totalItems={fetchData.comments.length}
-			/>
-		);
-	};
+	if (fetchData && fetchData.comments) {
+		count = fetchData.comments.length;
+	}
 
 	return (
-		<div className="container-fluid container-fluid-max-xl">
-			<div className="card publications-comments">
-				<div className="card-body">
-					<div className="autofit-float autofit-padded-no-gutters-x autofit-row">
-						<div className="autofit-col autofit-col-expand">
-							<h4 className="component-title">
-								{Liferay.Language.get('comments')}
-							</h4>
-						</div>
-					</div>
-					<div className="autofit-padded-no-gutters-x autofit-row">
-						<div className="autofit-col">
-							<div
-								dangerouslySetInnerHTML={{
-									__html: currentUser.userPortraitHTML,
+		<div className="publications-comments">
+			<nav className="component-tbar tbar">
+				<div className="container-fluid">
+					<ul className="tbar-nav">
+						<li className="tbar-item tbar-item-expand">
+							{Liferay.Util.sub(
+								count === 1
+									? Liferay.Language.get('x-comment')
+									: Liferay.Language.get('x-comments'),
+								count.toString()
+							)}
+						</li>
+						<li className="tbar-item">
+							<ClayButtonWithIcon
+								displayType="unstyled"
+								onClick={() => {
+									setShowComments(false);
 								}}
-								data-tooltip-align="top"
-								title={currentUser.userName}
-							/>
-						</div>
-						<div
-							className={`autofit-col autofit-col-expand${
-								fetchData && loading
-									? ' publications-loading'
-									: ''
-							}`}
-						>
-							<ClayForm.Group>
-								<ClayInput
-									aria-label={Liferay.Language.get('comment')}
-									component="textarea"
-									onChange={(event) =>
-										setValue(event.target.value)
-									}
-									placeholder={Liferay.Language.get(
-										'type-your-comment-here'
-									)}
-									type="text"
-									value={value}
-								/>
-							</ClayForm.Group>
-							<ClayForm.Group>
-								<button
-									className={`btn btn-primary${
-										loading || value ? '' : ' disabled'
-									}`}
-									onClick={() => handleReply()}
-									type="button"
-								>
-									{Liferay.Language.get('reply')}
-								</button>
-							</ClayForm.Group>
-						</div>
-					</div>
-					{fetchData && fetchData.errorMessage && (
-						<div className="autofit-padded-no-gutters-x autofit-row">
-							<ClayAlert
-								displayType="danger"
 								spritemap={spritemap}
-								title={Liferay.Language.get('error')}
-							>
-								{fetchData.errorMessage}
-							</ClayAlert>
-						</div>
-					)}
-					{renderComments()}
-					{renderPagination()}
+								symbol="times"
+							/>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div
+				className={`sidebar-body${
+					fetchData && loading ? ' publications-loading' : ''
+				}`}
+			>
+				{fetchData && fetchData.errorMessage && (
+					<div className="autofit-padded-no-gutters-x autofit-row">
+						<ClayAlert
+							displayType="danger"
+							spritemap={spritemap}
+							title={Liferay.Language.get('error')}
+						>
+							{fetchData.errorMessage}
+						</ClayAlert>
+					</div>
+				)}
+				{renderComments()}
+			</div>
+			<div className="sidebar-footer">
+				<ClayForm.Group>
+					<ClayInput
+						aria-label={Liferay.Language.get('comment')}
+						component="textarea"
+						onChange={(event) => setInputValue(event.target.value)}
+						placeholder={Liferay.Language.get(
+							'type-your-comment-here'
+						)}
+						type="text"
+						value={inputValue}
+					/>
+				</ClayForm.Group>
+				<div>
+					<button
+						className={`btn btn-primary${
+							loading || inputValue ? '' : ' disabled'
+						}`}
+						onClick={() => handleReply()}
+						type="button"
+					>
+						{Liferay.Language.get('reply')}
+					</button>
 				</div>
 			</div>
 		</div>
@@ -964,6 +983,7 @@ export default ({
 
 	const basePath = useRef(pathname + '?' + params.toString());
 
+	const commentsCache = useRef({});
 	const renderCache = useRef({});
 
 	const filterHideableNodes = (nodes, showHideable) => {
@@ -1170,6 +1190,7 @@ export default ({
 		showHideable: initialShowHideable,
 		viewType: initialViewType,
 	});
+	const [showComments, setShowComments] = useState(false);
 
 	const handleNavigationUpdate = useCallback(
 		(json) => {
@@ -2122,7 +2143,7 @@ export default ({
 				</div>
 				<div className="sheet-section">
 					<ChangeTrackingRenderView
-						ctEntry={renderState.node.ctEntryId ? true : false}
+						ctEntry={!!renderState.node.ctEntryId}
 						dataURL={getDataURL(renderState.node)}
 						getCache={() =>
 							renderCache.current[
@@ -2279,6 +2300,21 @@ export default ({
 					</ClayManagementToolbar.Item>
 
 					{getViewTypes()}
+
+					<ClayManagementToolbar.Item
+						data-tooltip-align="top"
+						title={Liferay.Language.get('comments')}
+					>
+						<ClayButton
+							className={`nav-link nav-link-monospaced${
+								showComments ? ' active' : ''
+							}`}
+							displayType="unstyled"
+							onClick={() => setShowComments(!showComments)}
+						>
+							<ClayIcon spritemap={spritemap} symbol="comments" />
+						</ClayButton>
+					</ClayManagementToolbar.Item>
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
 		);
@@ -2478,14 +2514,87 @@ export default ({
 	return (
 		<>
 			{renderManagementToolbar()}
-			{content}
-			<CTComments
-				currentUser={currentUser}
-				deleteCommentURL={deleteCTCommentURL}
-				getCommentsURL={getCTCommentsURL}
-				spritemap={spritemap}
-				updateCommentURL={updateCTCommentURL}
-			/>
+			<div
+				className={`sidenav-container sidenav-right ${
+					showComments ? 'open' : 'closed'
+				}`}
+			>
+				<div
+					className="info-panel sidenav-menu-slider"
+					style={
+						showComments
+							? {
+									height: '100%',
+									'min-height': '485px',
+									width: '320px',
+							  }
+							: {}
+					}
+				>
+					<div
+						className="sidebar sidebar-light sidenav-menu"
+						style={
+							showComments
+								? {
+										height: '100%',
+										'min-height': '485px',
+										width: '320px',
+								  }
+								: {}
+						}
+					>
+						<CTComments
+							ctEntryId={
+								renderState.node.ctEntryId
+									? renderState.node.ctEntryId
+									: 0
+							}
+							currentUser={currentUser}
+							deleteCommentURL={deleteCTCommentURL}
+							getCache={() => {
+								if (renderState.node.ctEntryId) {
+									return commentsCache.current[
+										renderState.node.ctEntryId.toString()
+									];
+								}
+
+								return commentsCache.current['0'];
+							}}
+							getCommentsURL={getCTCommentsURL}
+							setShowComments={setShowComments}
+							spritemap={spritemap}
+							updateCache={(data) => {
+								const cacheData = JSON.parse(
+									JSON.stringify(data)
+								);
+
+								cacheData.updatedCommentId = null;
+
+								if (renderState.node.ctEntryId) {
+									commentsCache.current[
+										renderState.node.ctEntryId.toString()
+									] = cacheData;
+
+									return;
+								}
+
+								commentsCache.current['0'] = cacheData;
+							}}
+							updateCommentURL={updateCTCommentURL}
+						/>
+					</div>
+				</div>
+				<div
+					className="sidenav-content"
+					style={
+						showComments
+							? {'min-height': '485px', 'padding-right': '320px'}
+							: {}
+					}
+				>
+					{content}
+				</div>
+			</div>
 		</>
 	);
 };

@@ -196,14 +196,62 @@ definition {
 	}
 
 	@description = "Verify that after resizing, the labels, text fields, help text, properties, etc. remain the same"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsDoNotLosePropertiesAfterResizing {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134246 FieldsDoNotLosePropertiesAfterResizing pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		var fieldTextField1 = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Edited");
+
+		FormFields.viewLabel(
+			fieldLabel = "Text edited",
+			fieldName = "${fieldTextField1}");
+
+		FormFields.editHelpTextField(fieldHelpText = "Text Tip");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Text Tip",
+			fieldName = "${fieldTextField1}");
+
+		FormFields.editPlaceholderField(fieldValue = "Placeholder Text Test");
+
+		FormFields.viewFieldPlaceholderText(
+			fieldName = "${fieldTextField1}",
+			placeHolder = "Placeholder Text Test");
+
+		FormFields.resizeField(
+			fieldName = "${fieldTextField1}",
+			moveForce = "-300");
+
+		FormFields.viewFieldSize(
+			fieldName = "${fieldTextField1}",
+			size = "6");
+
+		Form.save();
+
+		FormFields.viewLabel(
+			fieldLabel = "Text edited",
+			fieldName = "${fieldTextField1}");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Text Tip",
+			fieldName = "${fieldTextField1}");
+
+		FormFields.viewFieldPlaceholderText(
+			fieldName = "${fieldTextField1}",
+			placeHolder = "Placeholder Text Test");
 	}
 
 	@description = "Verify that Fields Groups can be reordered by DND"

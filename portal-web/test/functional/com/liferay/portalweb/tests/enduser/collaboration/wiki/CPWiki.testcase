@@ -198,7 +198,7 @@ definition {
 	@description = "This ensures that the default front page can be edited."
 	@priority = "5"
 	@refactordone
-	test CanEditDefaultFrontPage {
+	test CanEditFrontPage {
 		property portal.acceptance = "true";
 
 		WikiNavigator.openToWikiPage(

@@ -89,7 +89,7 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
-	@description = "This ensures that a front page can be added multiple child pages."
+	@description = "This ensures that multople child pages can be added to the front page."
 	@priority = "5"
 	@refactordone
 	test CanAddChildPagesToFrontPage {
@@ -182,7 +182,7 @@ definition {
 	@description = "This ensures that a child page can be added to a new wiki page."
 	@priority = "5"
 	@refactordone
-	test CanAddPageWithChildPage {
+	test CanAddChildPage {
 		property portal.acceptance = "true";
 
 		WikiNavigator.gotoWidgetSpecificTabByURL(
@@ -354,7 +354,7 @@ definition {
 	@description = "This ensures that a wiki page can be canceled when adding a wiki page."
 	@priority = "5"
 	@refactordone
-	test CanCancelAddPage {
+	test CanCancelAddingAPage {
 		WikiNavigator.openToAddPage(
 			groupName = "Guest",
 			layoutURLKey = "wiki-test-page",
@@ -375,7 +375,7 @@ definition {
 	@description = "This ensures that a wiki page can be canceled when editing a wiki page."
 	@priority = "5"
 	@refactordone
-	test CanCancelEditPage {
+	test CanCancelEditingAPage {
 		JSONWiki.addWikiPage(
 			groupName = "Guest",
 			wikiNodeName = "Main",

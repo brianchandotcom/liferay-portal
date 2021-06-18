@@ -92,7 +92,7 @@ AUI.add(
 					instance._parentContainer[action]();
 				},
 
-				addRow(array, id) {
+				addRow(array, id, columnsCssClasses) {
 					var instance = this;
 
 					var row;
@@ -114,6 +114,12 @@ AUI.add(
 
 								if (cell) {
 									cell.html(item);
+									if (
+										columnsCssClasses &&
+										columnsCssClasses[index]
+									) {
+										cell.addClass(columnsCssClasses[index]);
+									}
 								}
 							});
 

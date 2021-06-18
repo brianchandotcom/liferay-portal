@@ -11,3 +11,13 @@
 #taglib-diff-results del {
 	background: #ffe6e6;
 }
+
+.taglib-diff-table {
+	border-collapse: separate;
+	border-spacing: 5pt;
+	table-layout: fixed;
+
+	td {
+		word-wrap: break-word;
+	}
+}

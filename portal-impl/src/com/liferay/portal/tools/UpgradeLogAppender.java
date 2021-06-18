@@ -15,6 +15,8 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeReport;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.Serializable;
 
@@ -26,6 +28,7 @@ import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.ErrorHandler;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.message.Message;
 
 /**
  * @author Sam Ziemer
@@ -37,17 +40,21 @@ public class UpgradeLogAppender implements Appender {
 
 	@Override
 	public void append(LogEvent event) {
+		String loggerName = event.getLoggerName();
+
+		Message message = event.getMessage();
+
+		String formattedMessage = message.getFormattedMessage();
+
 		if (event.getLevel() == Level.ERROR) {
-			_errorLogEvents.add(event);
+			_upgradeReport.addError(loggerName, formattedMessage);
 		}
 		else if (event.getLevel() == Level.WARN) {
-			_warningLogEvents.add(event);
+			_upgradeReport.addWarning(loggerName, formattedMessage);
 		}
 		else if (event.getLevel() == Level.INFO) {
-			String loggerName = event.getLoggerName();
-
 			if (loggerName.equals(UpgradeProcess.class.getName())) {
-				_reportEvents.add(event);
+				_upgradeReport.addEvent(loggerName, formattedMessage);
 			}
 		}
 	}
@@ -116,6 +123,11 @@ public class UpgradeLogAppender implements Appender {
 	public void stop() {
 		_started = false;
 	}
+
+	private static volatile UpgradeReport _upgradeReport =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			UpgradeReport.class, UpgradeLogAppender.class, "_upgradeReport",
+			false);
 
 	private final List<LogEvent> _errorLogEvents = new ArrayList<>();
 	private final List<LogEvent> _reportEvents = new ArrayList<>();

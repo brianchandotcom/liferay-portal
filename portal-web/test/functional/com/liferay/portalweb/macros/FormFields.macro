@@ -1177,7 +1177,6 @@ definition {
 		}
 	}
 
-
 	macro viewFieldsSameRow {
 		for (var fieldName : list "${fieldNames}") {
 			AssertElementPresent(

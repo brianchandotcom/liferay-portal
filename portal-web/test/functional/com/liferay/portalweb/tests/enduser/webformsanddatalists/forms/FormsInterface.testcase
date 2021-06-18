@@ -102,14 +102,60 @@ definition {
 	}
 
 	@description = "Verify that after resizing, the field does not lose any functionality (edit, duplicate, etc...)"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsDoNotLoseFunctionalityAfterResizing {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134245 FieldsDoNotLoseFunctionalityAfterResizing pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		var fieldTextField1 = FormFields.getFieldName();
+
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "${fieldTextField1}");
+
+		FormFields.viewFieldSize(
+			fieldName = "${fieldTextField1}",
+			size = "12");
+
+		FormFields.resizeField(
+			fieldName = "${fieldTextField1}",
+			moveForce = "-300");
+
+		FormFields.viewFieldSize(
+			fieldName = "${fieldTextField1}",
+			size = "6");
+
+		Form.editFieldLabelMetal(fieldValue = "Text edited");
+
+		FormFields.viewLabel(
+			fieldLabel = "Text edited",
+			fieldName = "${fieldTextField1}");
+
+		FormFields.duplicateField();
+
+		var fieldTextField2 = FormFields.getFieldName();
+
+		FormFields.viewField(fieldName = "${fieldTextField1}");
+
+		FormFields.viewField(fieldName = "${fieldTextField2}");
+
+		FormFields.viewLabel(
+			fieldLabel = "Copy of Text edited",
+			fieldName = "${fieldTextField2}");
+
+		FormFields.viewFieldSize(
+			fieldName = "${fieldTextField2}",
+			size = "12");
 	}
 
 	@description = "Verify that after resizing, the labels, text fields, help text, properties, etc. remain the same"

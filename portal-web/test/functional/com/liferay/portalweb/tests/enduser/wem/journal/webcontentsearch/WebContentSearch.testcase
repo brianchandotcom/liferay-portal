@@ -250,10 +250,10 @@ definition {
 		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "&quot;Name1&quot;");
 	}
 
-	@description = "This is a test for LPS-132425. Search web content folder on page"
+	@description = "This is a test for LPS-132425. The user could search web content folder on page."
 	@priority = "4"
 	test SearchWebContentFolder {
-		task ("Add a Web Content Folder") {
+		task ("Add a web content folder") {
 			JSONWebcontent.addFolder(
 				folderName = "WC Folder Name",
 				groupName = "Guest");

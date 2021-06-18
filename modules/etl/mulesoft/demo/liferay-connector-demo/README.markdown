@@ -23,27 +23,28 @@ your Liferay instance
 
 4. There are 8 flows you can trigger to observe basic functionality of the
 	Liferay connector
-	* get-flow: trigger with **curl 0.0.0.0:8081/get** (or paste the
-	address into web browser address bar) to see how to fetch list of (Product)
-	entities from your Liferay instance
-
-	* create-flow: trigger with **curl 0.0.0.0:8081/create** to see
-	how to create a new (Product) entity
-
-	* delete-flow: trigger with **curl 0.0.0.0:8081/delete** to see how
-	to delete a (Product) entity
-
-	* error-flow: trigger with **curl 0.0.0.0:8081/error** to
-	check how to use error handlers with Liferay connector
-
-	* batch-export-flow: trigger with **curl 0.0.0.0:8081/batch-export**
-	to export all entities (Products) from Liferay instance
 
 	* batch-delete-flow: trigger with **curl 0.0.0.0:8081/batch-delete** to
-	delete all entities (Products) from Liferay instance
-
-	* batch-import-flow: trigger with **curl 0.0.0.0:8081/batch-import** to
-	see how to import new entities (Products) into Liferay instance
+		delete all entities (Products) from Liferay instance
 
 	* batch-error-flow: trigger with **curl 0.0.0.0:8081/batch-error** to check
-	how to handle failed batch job
+		how to handle failed batch job
+
+	* batch-export-flow: trigger with **curl 0.0.0.0:8081/batch-export**
+		to export all entities (Products) from Liferay instance
+
+	* batch-import-flow: trigger with **curl 0.0.0.0:8081/batch-import** to
+		see how to import new entities (Products) into Liferay instance
+
+	* create-flow: trigger with **curl 0.0.0.0:8081/create** to see
+    	how to create a new (Product) entity
+
+	* delete-flow: trigger with **curl 0.0.0.0:8081/delete** to see how
+    	to delete a (Product) entity
+
+	* error-flow: trigger with **curl 0.0.0.0:8081/error** to
+    	check how to use error handlers with Liferay connector
+
+	* get-flow: trigger with **curl 0.0.0.0:8081/get** (or paste the
+		address into web browser address bar) to see how to fetch list of
+		(Product) entities from your Liferay instance

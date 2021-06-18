@@ -18,70 +18,13 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayPopover from '@clayui/popover';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import useA11y from './hooks/useA11y';
+import {useObserveRect} from './hooks/useObserveRect';
 
 import type {A11yCheckerOptions} from './A11yChecker';
 import type {Violation as TViolation} from './hooks/useA11y';
-
-const rectAttrs: Array<keyof DOMRect> = [
-	'bottom',
-	'height',
-	'left',
-	'right',
-	'top',
-	'width',
-];
-
-interface IRectState {
-	rect: DOMRect | undefined;
-	hasRectChanged: boolean;
-}
-
-const DOMRectStub = {} as DOMRect;
-
-const rectChanged = (a: DOMRect, b: DOMRect = DOMRectStub) =>
-	rectAttrs.some((prop) => a[prop] !== b[prop]);
-
-const useObserveRect = (
-	callback: (rect: DOMRect | undefined) => void,
-	node: Element | null
-) => {
-	const rafIdRef = useRef<number>();
-
-	const run = useCallback(
-		(node: Element, state: IRectState) => {
-			const newRect = node.getBoundingClientRect();
-
-			if (rectChanged(newRect, state.rect)) {
-				state.rect = newRect;
-
-				callback(state.rect);
-			}
-
-			rafIdRef.current = window.requestAnimationFrame(() =>
-				run(node, state)
-			);
-		},
-		[callback]
-	);
-
-	useEffect(() => {
-		if (node) {
-			run(node, {
-				hasRectChanged: false,
-				rect: undefined,
-			});
-
-			return () => {
-				if (rafIdRef.current) {
-					cancelAnimationFrame(rafIdRef.current);
-				}
-			};
-		}
-	}, [node, run]);
-};
 
 const Overlay = React.forwardRef<
 	HTMLDivElement,

@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.audit.wiring.internal.configuration.FullAuditConfiguration;
 
 import java.util.HashMap;
@@ -107,12 +109,16 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			return null;
 		}
 
-		String xRequestIdHeader = "placeHolder";
+		String xRequestId = null;
+
+		if (!validateXRequestId(xRequestId)) {
+			xRequestId = PortalUUIDUtil.generate();
+		}
 
 		_auditFilterLogContext.setContext(
 			remoteAddr, _portal.getCompanyId(httpServletRequest),
 			session.getId(), httpServletRequest.getServerName(), userId,
-			xRequestIdHeader);
+			xRequestId);
 
 		return null;
 	}
@@ -151,6 +157,20 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		}
 
 		return httpServletRequest.getRemoteAddr();
+	}
+
+	protected boolean validateXRequestId(String xRequestId) {
+		if (Validator.isBlank(xRequestId)) {
+			return false;
+		}
+
+		int length = xRequestId.length();
+
+		if ((length >= 20) && (length <= 200)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _MESSAGE_DIGEST_ALGORITHM = "SHA-256";
@@ -192,7 +212,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		public void setContext(
 			String clientIP, long companyId, String sessionId,
-			String serverName, Long userId, String xRequestIdHeader) {
+			String serverName, Long userId, String xRequestId) {
 
 			_contextThreadLocal.set(
 				HashMapBuilder.put(
@@ -234,7 +254,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 						return "";
 					}
 				).put(
-					"xRequestIdHeader", xRequestIdHeader
+					"xRequestId", xRequestId
 				).build());
 		}
 

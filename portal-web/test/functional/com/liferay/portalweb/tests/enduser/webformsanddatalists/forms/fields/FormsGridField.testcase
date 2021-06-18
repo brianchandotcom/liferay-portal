@@ -267,13 +267,13 @@ definition {
 
 		FormFields.selectGridRadioOptionWithoutCategory(
 			fieldName = "",
-			optionNumber1 = "1",
-			optionNumber2 = "3");
+			optionRowNumber = "1",
+			optionColumnNumber = "3");
 
 		FormFields.selectGridRadioOptionWithoutCategory(
 			fieldName = "",
-			optionNumber1 = "2",
-			optionNumber2 = "4");
+			optionRowNumber = "2",
+			optionColumnNumber = "4");
 
 		FormPortlet.submitSuccessfully();
 	}

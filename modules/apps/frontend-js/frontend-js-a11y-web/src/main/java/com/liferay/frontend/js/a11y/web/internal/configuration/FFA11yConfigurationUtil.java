@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.frontend.js.a11y.web.internal.servlet.taglib.helper;
+package com.liferay.frontend.js.a11y.web.internal.configuration;
 
-import com.liferay.frontend.js.a11y.web.internal.configuration.FlagA11yConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
@@ -27,22 +26,22 @@ import org.osgi.service.component.annotations.Modified;
  * @author Matuzalem Teles
  */
 @Component(
-	configurationPid = "com.liferay.frontend.js.a11y.web.internal.configuration.FlagA11yConfiguration",
-	immediate = true, service = FlagA11yHelper.class
+	configurationPid = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration",
+	immediate = true, service = FFA11yConfigurationUtil.class
 )
-public class FlagA11yHelper {
+public class FFA11yConfigurationUtil {
 
-	public boolean getEnable() {
-		return _flagA11yConfiguration.enable();
+	public static boolean getEnable() {
+		return _ffA11yConfiguration.enable();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_flagA11yConfiguration = ConfigurableUtil.createConfigurable(
-			FlagA11yConfiguration.class, properties);
+		_ffA11yConfiguration = ConfigurableUtil.createConfigurable(
+			FFA11yConfiguration.class, properties);
 	}
 
-	private volatile FlagA11yConfiguration _flagA11yConfiguration;
+	private static volatile FFA11yConfiguration _ffA11yConfiguration;
 
 }

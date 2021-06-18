@@ -15,7 +15,7 @@
 package com.liferay.frontend.js.a11y.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration;
-import com.liferay.frontend.js.a11y.web.internal.servlet.taglib.helper.FlagA11yHelper;
+import com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfigurationUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -147,7 +147,7 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 	public void register(
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
-		if (_flagA11yHelper.getEnable()) {
+		if (FFA11yConfigurationUtil.getEnable()) {
 			dynamicIncludeRegistry.register(
 				"/html/common/themes/top_head.jsp#post");
 		}
@@ -161,9 +161,6 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 	}
 
 	private volatile A11yConfiguration _a11yConfiguration;
-
-	@Reference
-	private volatile FlagA11yHelper _flagA11yHelper;
 
 	@Reference
 	private NPMResolver _npmResolver;

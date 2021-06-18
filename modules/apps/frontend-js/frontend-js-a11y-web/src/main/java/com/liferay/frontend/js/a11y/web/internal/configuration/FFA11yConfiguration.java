@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.frontend.js.a11y.web.internal.configuration.FlagA11yConfiguration"
+	id = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration"
 )
-public @interface FlagA11yConfiguration {
+public @interface FFA11yConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enable();

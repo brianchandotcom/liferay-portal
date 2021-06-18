@@ -40,14 +40,14 @@ const Liferay = {
 		window.removeEventListener(name, fn);
 	},
 	fire: (name, payload) => {
-		var e = document.createEvent('CustomEvent');
-		e.initCustomEvent(name);
+		var event = document.createEvent('CustomEvent');
+		event.initCustomEvent(name);
 		if (payload) {
 			Object.keys(payload).forEach((key) => {
-				e[key] = payload[key];
+				event[key] = payload[key];
 			});
 		}
-		window.dispatchEvent(e);
+		window.dispatchEvent(event);
 	},
 	on: (name, fn) => {
 		window.addEventListener(name, fn);

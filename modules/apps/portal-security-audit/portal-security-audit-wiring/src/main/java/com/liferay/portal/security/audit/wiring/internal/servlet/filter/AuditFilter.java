@@ -111,6 +111,10 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		String xRequestId = null;
 
+		if (_fullAuditConfiguration.xRequestIdHeaderEnabled()) {
+			xRequestId = httpServletRequest.getHeader("X-Request-Id");
+		}
+
 		if (!validateXRequestId(xRequestId)) {
 			xRequestId = PortalUUIDUtil.generate();
 		}

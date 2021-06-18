@@ -31,4 +31,11 @@ public interface FullAuditConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "x-request-id-header-enabled-description",
+		name = "x-request-id-header-enabled", required = false
+	)
+	public boolean xRequestIdHeaderEnabled();
+
 }

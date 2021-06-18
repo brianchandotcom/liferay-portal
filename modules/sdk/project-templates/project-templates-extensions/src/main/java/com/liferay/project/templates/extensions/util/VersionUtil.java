@@ -23,8 +23,8 @@ import java.util.regex.Pattern;
  */
 public class VersionUtil {
 
-	public static int getMajorVersion(String targetPlatformVersion) {
-		Matcher matcher = _liferayVersionPattern.matcher(targetPlatformVersion);
+	public static int getMajorVersion(String liferayVersion) {
+		Matcher matcher = _liferayVersionPattern.matcher(liferayVersion);
 
 		if (matcher.matches()) {
 			return Integer.parseInt(matcher.group(1));
@@ -33,8 +33,9 @@ public class VersionUtil {
 		return 0;
 	}
 
-	public static int getMicroVersion(String targetPlatformVersion) {
-		Matcher matcher = _liferayVersionPattern.matcher(targetPlatformVersion);
+	public static int getMicroVersion(String liferayVersion) throws Exception {
+		String normalizedLiferayVersionString = normalizeLiferayVersion(
+			liferayVersion);
 
 		if (matcher.matches()) {
 			return Integer.parseInt(matcher.group(3));
@@ -43,8 +44,8 @@ public class VersionUtil {
 		return 0;
 	}
 
-	public static int getMinorVersion(String targetPlatformVersion) {
-		Matcher matcher = _liferayVersionPattern.matcher(targetPlatformVersion);
+	public static int getMinorVersion(String liferayVersion) {
+		Matcher matcher = _liferayVersionPattern.matcher(liferayVersion);
 
 		if (matcher.matches()) {
 			return Integer.parseInt(matcher.group(2));
@@ -53,8 +54,8 @@ public class VersionUtil {
 		return 0;
 	}
 
-	public static boolean isLiferayVersion(String targetPlatformVersion) {
-		Matcher matcher = _liferayVersionPattern.matcher(targetPlatformVersion);
+	public static boolean isLiferayVersion(String liferayVersion) {
+		Matcher matcher = _liferayVersionPattern.matcher(liferayVersion);
 
 		return matcher.matches();
 	}

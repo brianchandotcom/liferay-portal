@@ -69,9 +69,9 @@ describe('NotConfigured', () => {
 				"check-issues-that-impact-on-your-page's-accessibility-and-seo"
 			)
 		).toBeInTheDocument();
+		expect(getByText('configure')).toBeInTheDocument();
 		expect(
-			getByText('connect-to-google-pagespeed-to-run-a-page-audit')
+			getByText('configure-google-pagespeed-to-run-a-page-audit')
 		).toBeInTheDocument();
-		expect(getByText('connect-to-google-pagespeed')).toBeInTheDocument();
 	});
 });

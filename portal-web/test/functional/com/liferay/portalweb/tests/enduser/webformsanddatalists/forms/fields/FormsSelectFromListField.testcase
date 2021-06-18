@@ -642,12 +642,14 @@ definition {
 
 		FormsAdminNavigator.gotoPreviewForm();
 
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
 		Form.viewSelectFromListOptionOnPreview(
-			fieldName = "Option 2",
+			optionValue = "Option 2",
 			rowPosition = "1");
 
 		Form.viewSelectFromListOptionOnPreview(
-			fieldName = "Option 1",
+			optionValue = "Option 1",
 			rowPosition = "2");
 	}
 

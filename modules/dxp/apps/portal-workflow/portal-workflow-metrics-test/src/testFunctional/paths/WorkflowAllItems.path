@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REASSIGN_CHECKBOX_DISABLED</td>
+	<td>//div[contains(@class,'custom-control')]//input[@type='checkbox' and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REASSIGN_ICON</td>
 	<td>xpath=(//div[@class="quick-action-menu"]//button[1])[${task}]</td>
 	<td></td>

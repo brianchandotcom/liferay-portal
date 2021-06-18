@@ -910,10 +910,17 @@ definition {
 			}
 
 			Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE_SPECIFIC");
+			if (isSet(nameOfAssignee)) {
+				Click(
+					key_nameOfAssignee = "${nameOfAssignee}",
+					locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+			}
 
-			Click(
-				key_nameOfAssignee = "Test Test",
-				locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+			else {
+				Click(
+					key_nameOfAssignee = "Test Test",
+					locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+			}
 		}
 
 		Button.click(button = "Reassign");

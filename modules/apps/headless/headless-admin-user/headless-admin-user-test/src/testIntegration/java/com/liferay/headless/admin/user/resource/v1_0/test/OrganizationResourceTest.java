@@ -104,7 +104,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		List<User> removeUsers = users.subList(0, 2);
 
 		organizationResource.deleteUserAccountsByEmailAddress(
-			organization.getId(), _toUserEmailAddresses(removeUsers));
+			organization.getId(), _toEmailAddresses(removeUsers));
 
 		for (User user : removeUsers) {
 			Assert.assertFalse(
@@ -194,7 +194,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		}
 
 		organizationResource.postUserAccountsByEmailAddress(
-			organization.getId(), _toUserEmailAddresses(users));
+			organization.getId(), _toEmailAddresses(users));
 
 		for (User user : users) {
 			Assert.assertTrue(
@@ -307,6 +307,11 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return parentOrganization;
 	}
 
+	private String[] _toEmailAddresses(List<User> users) {
+		return TransformUtil.transformToArray(
+			users, User::getEmailAddress, String.class);
+	}
+
 	private Organization _toOrganization(
 		com.liferay.portal.kernel.model.Organization organization) {
 
@@ -318,11 +323,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				name = organization.getName();
 			}
 		};
-	}
-
-	private String[] _toUserEmailAddresses(List<User> users) {
-		return TransformUtil.transformToArray(
-			users, User::getEmailAddress, String.class);
 	}
 
 	@Inject

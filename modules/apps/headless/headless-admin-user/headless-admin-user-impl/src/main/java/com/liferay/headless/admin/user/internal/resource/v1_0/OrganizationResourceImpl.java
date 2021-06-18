@@ -111,10 +111,10 @@ public class OrganizationResourceImpl
 
 	@Override
 	public void deleteUserAccountsByEmailAddress(
-			String organizationId, String[] userEmailAddresses)
+			String organizationId, String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : userEmailAddresses) {
+		for (String emailAddress : emailAddresses) {
 			deleteUserAccountByEmailAddress(organizationId, emailAddress);
 		}
 	}
@@ -208,10 +208,10 @@ public class OrganizationResourceImpl
 
 	@Override
 	public void postUserAccountsByEmailAddress(
-			String organizationId, String[] userEmailAddresses)
+			String organizationId, String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : userEmailAddresses) {
+		for (String emailAddress : emailAddresses) {
 			postUserAccountByEmailAddress(organizationId, emailAddress);
 		}
 	}

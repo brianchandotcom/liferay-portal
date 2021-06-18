@@ -157,7 +157,6 @@ definition {
 	@uitest
 	test CanAddFrontPageWithHTMLFormat {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -327,8 +326,6 @@ definition {
 	@refactordone
 	@uitest
 	test CanAddWikiPages {
-		property testray.component.names = "Training";
-
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiNavigator.gotoAllPagesPG();

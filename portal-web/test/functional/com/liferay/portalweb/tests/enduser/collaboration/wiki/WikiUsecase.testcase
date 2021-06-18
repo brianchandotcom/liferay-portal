@@ -61,8 +61,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanNavigateToOtherPageByEditorLink {
-		property testray.component.names = "Training";
-
 		JSONLayout.addPrivateLayout(
 			groupName = "Guest",
 			layoutName = "Research Projects");

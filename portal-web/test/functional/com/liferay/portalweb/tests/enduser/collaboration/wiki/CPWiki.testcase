@@ -226,7 +226,6 @@ definition {
 	@refactordone
 	test CanEditNode {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		JSONWiki.addWikiNode(
 			groupName = "Guest",
@@ -291,8 +290,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanViewImportedPages {
-		property testray.component.names = "Training";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

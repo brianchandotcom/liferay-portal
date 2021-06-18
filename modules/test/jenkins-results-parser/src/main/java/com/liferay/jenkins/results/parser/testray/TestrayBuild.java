@@ -95,17 +95,17 @@ public class TestrayBuild {
 		return _jsonObject.getString("name");
 	}
 
-	public Long getNonDownstreamBuildDuration() {
+	public Long getTopLevelActiveBuildDuration() {
 		Long topLevelBuildDuration = getTopLevelBuildDuration();
-		Long downstreamBuildDuration = _getWaitForDownstreamBuildDuration();
+		Long topLevelPassiveBuildDuration = _getTopLevelPassiveBuildDuration();
 
 		if ((topLevelBuildDuration == null) ||
-			(downstreamBuildDuration == null)) {
+			(topLevelPassiveBuildDuration == null)) {
 
 			return null;
 		}
 
-		return topLevelBuildDuration - downstreamBuildDuration;
+		return topLevelBuildDuration - topLevelPassiveBuildDuration;
 	}
 
 	public String getResult() {
@@ -362,7 +362,7 @@ public class TestrayBuild {
 		return _stopWatchRecordsGroup;
 	}
 
-	private Long _getWaitForDownstreamBuildDuration() {
+	private Long _getTopLevelPassiveBuildDuration() {
 		StopWatchRecordsGroup stopWatchRecordsGroup =
 			_getStopWatchRecordsGroup();
 
@@ -378,19 +378,19 @@ public class TestrayBuild {
 		if ((waitForInvokedJobsStopWatchRecord != null) ||
 			(waitForInvokedSmokeJobsStopWatchRecord != null)) {
 
-			long downstreamBuildDuration = 0L;
+			long topLevelPassiveBuildDuration = 0L;
 
 			if (waitForInvokedJobsStopWatchRecord != null) {
-				downstreamBuildDuration +=
+				topLevelPassiveBuildDuration +=
 					waitForInvokedJobsStopWatchRecord.getDuration();
 			}
 
 			if (waitForInvokedSmokeJobsStopWatchRecord != null) {
-				downstreamBuildDuration +=
+				topLevelPassiveBuildDuration +=
 					waitForInvokedSmokeJobsStopWatchRecord.getDuration();
 			}
 
-			return downstreamBuildDuration;
+			return topLevelPassiveBuildDuration;
 		}
 
 		StopWatchRecord invokeDownstreamBuildsStopWatchRecord =

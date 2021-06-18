@@ -92,32 +92,28 @@ public class CISystemStatusReportUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("var relevantSuiteBuildData = ");
-
 		JSONObject relevantSuiteBuildDataJSONObject =
 			_getRelevantSuiteBuildDataJSONObject();
 
+		sb.append("var relevantSuiteBuildData = ");
 		sb.append(relevantSuiteBuildDataJSONObject.toString());
 
-		sb.append("\nvar topLevelBuildDurationData = ");
+		JSONObject topLevelTotalBuildDurationJSONObject =
+			_getTopLevelTotalBuildDurationJSONObject();
 
-		JSONObject topLevelBuildDurationJSONObject =
-			_getTopLevelBuildDurationJSONObject();
+		sb.append("\nvar topLevelTotalBuildDurationData = ");
+		sb.append(topLevelTotalBuildDurationJSONObject.toString());
 
-		sb.append(topLevelBuildDurationJSONObject.toString());
+		JSONObject topLevelActiveBuildDurationJSONObject =
+			_getTopLevelActiveBuildDurationJSONObject();
 
-		sb.append("\nvar nonDownstreamBuildDurationData = ");
-
-		JSONObject nonDownstreamBuildDurationJSONObject =
-			_getNonDownstreamBuildDurationJSONObject();
-
-		sb.append(nonDownstreamBuildDurationJSONObject.toString());
-
-		sb.append("\nvar downstreamBuildDurationData = ");
+		sb.append("\nvar topLevelActiveBuildDurationData = ");
+		sb.append(topLevelActiveBuildDurationJSONObject.toString());
 
 		JSONObject downstreamBuildDurationJSONObject =
 			_getDownstreamBuildDurationJSONObject();
 
+		sb.append("\nvar downstreamBuildDurationData = ");
 		sb.append(downstreamBuildDurationJSONObject.toString());
 
 		sb.append("\nvar testrayDataGeneratedDate = new Date(");
@@ -196,8 +192,8 @@ public class CISystemStatusReportUtil {
 		return datesDurationsJSONObject;
 	}
 
-	private static JSONObject _getNonDownstreamBuildDurationJSONObject() {
-		JSONObject datesDurationsJSONObject = new JSONObject();
+	private static JSONObject _getTopLevelActiveBuildDurationJSONObject() {
+		JSONObject jsonObject = new JSONObject();
 
 		JSONArray datesJSONArray = new JSONArray();
 		JSONArray durationsJSONArray = new JSONArray();
@@ -210,7 +206,7 @@ public class CISystemStatusReportUtil {
 			List<Long> durations = new ArrayList<>();
 
 			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(date)) {
-				durations.add(testrayBuild.getNonDownstreamBuildDuration());
+				durations.add(testrayBuild.getTopLevelActiveBuildDuration());
 			}
 
 			durations.removeAll(Collections.singleton(null));
@@ -233,10 +229,10 @@ public class CISystemStatusReportUtil {
 			durationsJSONArray.put(durations);
 		}
 
-		datesDurationsJSONObject.put("dates", datesJSONArray);
-		datesDurationsJSONObject.put("durations", durationsJSONArray);
+		jsonObject.put("dates", datesJSONArray);
+		jsonObject.put("durations", durationsJSONArray);
 
-		return datesDurationsJSONObject;
+		return jsonObject;
 	}
 
 	private static JSONObject _getRelevantSuiteBuildDataJSONObject() {
@@ -416,8 +412,8 @@ public class CISystemStatusReportUtil {
 		return successRateJSONArray;
 	}
 
-	private static JSONObject _getTopLevelBuildDurationJSONObject() {
-		JSONObject datesDurationsJSONObject = new JSONObject();
+	private static JSONObject _getTopLevelTotalBuildDurationJSONObject() {
+		JSONObject jsonObject = new JSONObject();
 
 		JSONArray datesJSONArray = new JSONArray();
 		JSONArray durationsJSONArray = new JSONArray();
@@ -453,10 +449,10 @@ public class CISystemStatusReportUtil {
 			durationsJSONArray.put(durations);
 		}
 
-		datesDurationsJSONObject.put("dates", datesJSONArray);
-		datesDurationsJSONObject.put("durations", durationsJSONArray);
+		jsonObject.put("dates", datesJSONArray);
+		jsonObject.put("durations", durationsJSONArray);
 
-		return datesDurationsJSONObject;
+		return jsonObject;
 	}
 
 	private static final int _DAYS_PER_WEEK = 7;

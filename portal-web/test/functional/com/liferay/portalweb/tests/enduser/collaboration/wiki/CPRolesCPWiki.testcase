@@ -79,57 +79,6 @@ definition {
 		WikiNode.viewNoCP(wikiNodeName = "Wiki Node Name");
 	}
 
-	@description = "This ensures that a regular role with permissions can edit a wiki node."
-	@priority = "4"
-	@refactordone
-	test CanEditWikiNodeWithPermissions {
-		Permissions.setUpRegRoleLoginUserCP(
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_wiki_web_portlet_WikiAdminPortlet",
-			roleTitle = "Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_NODE",
-			resourceName = "com.liferay.wiki",
-			roleTitle = "Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "UPDATE",
-			resourceName = "com.liferay.wiki.model.WikiNode",
-			roleTitle = "Regrole Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
-
-		WikiNode.editCP(
-			wikiNodeDescriptionEdit = "Wiki Node Description Edit",
-			wikiNodeName = "Wiki Node Name",
-			wikiNodeNameEdit = "Wiki Node Name Edit");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
-
-		WikiNode.viewCP(
-			numberOfWikiPages = "0",
-			wikiNodeName = "Wiki Node Name Edit");
-	}
-
 	@description = "This ensures that a regular role with permissions can delete a wiki page."
 	@priority = "4"
 	@refactordone
@@ -198,6 +147,57 @@ definition {
 		WikiPage.deleteCP(wikiPageTitle = "Wiki Page Title");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Wiki Page Title");
+	}
+
+	@description = "This ensures that a regular role with permissions can edit a wiki node."
+	@priority = "4"
+	@refactordone
+	test CanEditWikiNodeWithPermissions {
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_wiki_web_portlet_WikiAdminPortlet",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_NODE",
+			resourceName = "com.liferay.wiki",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.wiki.model.WikiNode",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		WikiNode.editCP(
+			wikiNodeDescriptionEdit = "Wiki Node Description Edit",
+			wikiNodeName = "Wiki Node Name",
+			wikiNodeNameEdit = "Wiki Node Name Edit");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNode.viewCP(
+			numberOfWikiPages = "0",
+			wikiNodeName = "Wiki Node Name Edit");
 	}
 
 	@description = "This ensures that a regular role with permissions can edit a wiki page."
@@ -280,7 +280,7 @@ definition {
 	@description = "This ensures that user can not add wiki assets with a regular role without permissions."
 	@priority = "4"
 	@refactordone
-	test CannotAddWikiAssetsWhenRegularRoleWithoutPermissions {
+	test CannotAddWikiAssetsWithRegularRoleWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(
@@ -312,7 +312,7 @@ definition {
 	@description = "This ensures that user can not add wiki assets with a regular role without permissions."
 	@priority = "4"
 	@refactordone
-	test CannotAddWikiAssetsWhenSiteRoleWithoutPermissions {
+	test CannotAddWikiAssetsWithSiteRoleWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(

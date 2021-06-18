@@ -89,6 +89,45 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
+	@description = "This ensures that a child page can be added to a new wiki page."
+	@priority = "5"
+	@refactordone
+	test CanAddChildPage {
+		property portal.acceptance = "true";
+
+		WikiNavigator.gotoWidgetSpecificTabByURL(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			tabURLKey = "all_pages",
+			wikiNodeName = "Main");
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.addChildPagePG(
+			wikiChildPageContent = "Wiki Child Page Content",
+			wikiChildPageTitle = "Wiki Child Page Title");
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki Child Page Title");
+
+		WikiPage.viewChildPagePG(
+			wikiChildPageContent = "Wiki Child Page Content",
+			wikiChildPageTitle = "Wiki Child Page Title");
+	}
+
 	@description = "This ensures that multople child pages can be added to the front page."
 	@priority = "5"
 	@refactordone
@@ -177,45 +216,6 @@ definition {
 			wikiPageRevision = "1.1",
 			wikiPageTitle = "FrontPage",
 			wikiPageUsername = "Test Test");
-	}
-
-	@description = "This ensures that a child page can be added to a new wiki page."
-	@priority = "5"
-	@refactordone
-	test CanAddChildPage {
-		property portal.acceptance = "true";
-
-		WikiNavigator.gotoWidgetSpecificTabByURL(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			tabURLKey = "all_pages",
-			wikiNodeName = "Main");
-
-		WikiPage.addPG(
-			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
-
-		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			wikiNodeName = "Main",
-			wikiPageTitle = "Wiki Page Title");
-
-		WikiPage.addChildPagePG(
-			wikiChildPageContent = "Wiki Child Page Content",
-			wikiChildPageTitle = "Wiki Child Page Title");
-
-		WikiNavigator.openToWikiPage(
-			layoutURLKey = "wiki-test-page",
-			siteURLKey = "guest",
-			wikiNodeName = "Main",
-			wikiPageTitle = "Wiki Page Title");
-
-		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki Child Page Title");
-
-		WikiPage.viewChildPagePG(
-			wikiChildPageContent = "Wiki Child Page Content",
-			wikiChildPageTitle = "Wiki Child Page Title");
 	}
 
 	@description = "This ensures that a user can add wiki page with HTML format via wiki widget."

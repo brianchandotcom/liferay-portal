@@ -7,11 +7,15 @@
 		</Console>
 	</Appenders>
 	<Loggers>
+
 		<!-- HTTP Logger shows wire traffic on DEBUG -->
+
 		<!--<AsyncLogger name="org.mule.service.http.impl.service.HttpMessageLogger" level="DEBUG" />-->
 		<AsyncLogger level="WARN" name="org.mule.service.http" />
 		<AsyncLogger level="WARN" name="org.mule.extension.http" />
+
 		<!-- Mule logger -->
+
 		<AsyncLogger name="org.mule.runtime.core.internal.processor.LoggerMessageProcessor" level="INFO" />
 		<AsyncRoot level="INFO">
 			<AppenderRef ref="Console" />

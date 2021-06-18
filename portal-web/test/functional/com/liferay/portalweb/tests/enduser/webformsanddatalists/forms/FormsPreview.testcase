@@ -58,14 +58,54 @@ definition {
 	}
 
 	@description = "Verify that a user can navigate to different pages of a preview"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanNavigateToDifferentPages {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133796 CanNavigateToDifferentPages pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		AssertElementPresent(
+			key_formPageName = "Page A",
+			locator1 = "FormPortlet#FORM_PAGE_ACTIVE");
+
+		FormPortlet.nextPage(
+			formPageCurrent = "Page A",
+			formPageNext = "Page B");
+
+		AssertElementPresent(
+			key_formPageName = "Page B",
+			locator1 = "FormPortlet#FORM_PAGE_ACTIVE");
+
+		FormPortlet.previousPage();
+
+		AssertElementPresent(
+			key_formPageName = "Page A",
+			locator1 = "FormPortlet#FORM_PAGE_ACTIVE");
 	}
 
 	@description = "Verify that it is not possible to submit a preview of a Form"

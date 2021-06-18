@@ -27,4 +27,6 @@ public class QuestionsWebKeys {
 
 	public static final String TAG_SELECTOR_URL = "TAG_SELECTOR_URL";
 
+	public static final String TRUSTED_USER = "TRUSTED_USER";
+
 }

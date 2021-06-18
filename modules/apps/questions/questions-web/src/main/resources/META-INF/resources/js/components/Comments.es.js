@@ -100,11 +100,11 @@ export default withRouter(
 										});
 									}}
 								>
-									{context.workflowEnabled
-										? Liferay.Language.get(
+									{context.trustedUser
+										? Liferay.Language.get('reply')
+										: Liferay.Language.get(
 												'submit-for-publication'
-										  )
-										: Liferay.Language.get('reply')}
+										  )}
 								</ClayButton>
 
 								<ClayButton

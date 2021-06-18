@@ -52,11 +52,11 @@
 			).put(
 				"tagSelectorURL", renderRequest.getAttribute(QuestionsWebKeys.TAG_SELECTOR_URL)
 			).put(
+				"trustedUser", renderRequest.getAttribute(QuestionsWebKeys.TRUSTED_USER)
+			).put(
 				"userId", String.valueOf(themeDisplay.getUserId())
 			).put(
 				"useTopicNamesInURL", questionsConfiguration.useTopicNamesInURL()
-			).put(
-				"workflowEnabled", WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), "com.liferay.message.boards.model.MBMessage")
 			).build()
 		%>'
 	/>

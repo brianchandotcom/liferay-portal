@@ -418,12 +418,12 @@ export default withRouter(
 														});
 													}}
 												>
-													{context.workflowEnabled
+													{context.trustedUser
 														? Liferay.Language.get(
-																'submit-for-publication'
+																'post-answer'
 														  )
 														: Liferay.Language.get(
-																'post-answer'
+																'submit-for-publication'
 														  )}
 												</ClayButton>
 											)}

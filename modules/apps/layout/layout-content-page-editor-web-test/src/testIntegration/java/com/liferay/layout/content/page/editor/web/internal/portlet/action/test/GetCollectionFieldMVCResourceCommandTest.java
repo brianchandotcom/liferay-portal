@@ -140,12 +140,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class,
 				String.class, String.class, String.class, String.class,
-				String.class, int.class
+				String.class, long.class, int.class, String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(),
 			LocaleUtil.toLanguageId(LocaleUtil.US),
 			layoutObjectReferenceJSONObject.toString(), StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, 1);
+			StringPool.BLANK, StringPool.BLANK, 0, 1, StringPool.BLANK);
 
 		Assert.assertEquals(1, jsonObject.getInt("length"));
 
@@ -187,12 +187,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class,
 				String.class, String.class, String.class, String.class,
-				String.class, int.class
+				String.class, long.class, int.class, String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(),
 			LocaleUtil.toLanguageId(LocaleUtil.US),
 			layoutObjectReferenceJSONObject.toString(), StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, 2);
+			StringPool.BLANK, StringPool.BLANK, 0, 2, StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 
@@ -241,12 +241,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class,
 				String.class, String.class, String.class, String.class,
-				String.class, int.class
+				String.class, long.class, int.class, String.class
 			},
 			new MockHttpServletRequest(), new MockHttpServletResponse(),
 			LocaleUtil.toLanguageId(LocaleUtil.US),
 			layoutObjectReferenceJSONObject.toString(), StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, 1);
+			StringPool.BLANK, StringPool.BLANK, 0, 1, StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 

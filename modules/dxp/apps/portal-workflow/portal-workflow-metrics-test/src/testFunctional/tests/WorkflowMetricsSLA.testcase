@@ -84,12 +84,65 @@ definition {
 	}
 
 	@description = "LPS-89082 - Verify and click (if possible) the error messages (at metrics, SLA list, and SLA defintion page) when SLA is blocked due to workflow changes"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ErrorMessagesAreDisplayedAndClickableWhenSLABlocked {
+		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorMessagesAreDisplayedAndClickableWhenSLABlocked";
 
-		// TODO LRQA-67856 ErrorMessagesAreDisplayedAndClickableWhenSLABlocked pending implementation
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Leaves Task: Update",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Test content",
+			entryTitle = "Test blog");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "update");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Button.click(button = "Update");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.assertWarningBlockedSlaPresent(warningMessage = "1 SLA is blocked. Fix the SLA configuration to resume accurate reporting.");
+
+		Click(
+			key_slaWarning = "Set Up SLAs",
+			locator1 = "WorkflowMetricsSLA#SLA_SETUP_WARNING_BUTTON");
+
+		WorkflowMetrics.assertErrorSlaPresent(errorMessage = "Fix blocked SLAs to resume accurate reporting.");
+
+		Click(
+			key_slaTitle = "SLA Name",
+			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
+
+		WorkflowMetrics.assertErrorSlaPresent(errorMessage = "The time frame options changed in the workflow definition. Please select new time frames.");
 	}
 
 	@description = "LPS-89014 - Verify that the field Name should be in focus at the SLA page when the user selects to edit or to create a new SLA"

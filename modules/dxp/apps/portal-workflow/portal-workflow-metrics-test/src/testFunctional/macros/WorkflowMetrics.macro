@@ -168,6 +168,15 @@ definition {
 			value1 = "inst / day");
 	}
 
+	macro assertErrorSlaPresent {
+		AssertElementPresent(locator1 = "Message#ERROR");
+
+		AssertTextEquals.assertPartialText(
+			key_errorMessage = "${errorMessage}",
+			locator1 = "Message#ERROR",
+			value1 = "${errorMessage}");
+	}
+
 	macro assertMetricsIndexes {
 		AssertElementPresent(
 			key_index = "liferay-${companyId}-workflow-metrics-instances",
@@ -272,6 +281,20 @@ definition {
 	macro assertTransitionTaskPresent {
 		var key_taskName = "${taskName}";
 		AssertElementPresent(locator1 = "WorkflowTransitionModal#TASK_PANEL");
+	}
+
+	macro assertWarningBlockedSlaPresent {
+		while (IsElementNotPresent(
+				key_warningMessage = "${warningMessage}",
+				locator1 = "Message#WARNING_SPECIFIC")) {
+			Pause(locator1 = "10000");
+			Refresh();
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_warningMessage = "${warningMessage}",
+			locator1 = "Message#WARNING_SPECIFIC",
+			value1 = "${warningMessage}");
 	}
 
 	macro assertWorkflowProcessPresent {

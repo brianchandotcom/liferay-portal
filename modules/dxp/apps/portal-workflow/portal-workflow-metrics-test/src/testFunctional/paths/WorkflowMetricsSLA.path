@@ -107,12 +107,12 @@
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_START_OPTION</td>
-	<td>//span[contains(text(),'${key_slaDefinitionStart}')]</td>
+	<td>//ul[@id='dropDownListstart']//span[contains(text(),'${key_slaDefinitionStart}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_STOP_OPTION</td>
-	<td>//span[contains(text(),'${key_slaDefinitionEnd}')]</td>
+	<td>//ul[@id='dropDownListstop']//span[contains(text(),'${key_slaDefinitionEnd}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,6 +153,11 @@
 <tr>
 	<td>SLA_SAVE_BUTTON</td>
 	<td>//button[contains(@class, 'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_SETUP_WARNING_BUTTON</td>
+	<td>//div[contains(@role, 'alert')]//a[contains(text(),'${key_slaWarning}')]</td>
 	<td></td>
 </tr>
 <tr>

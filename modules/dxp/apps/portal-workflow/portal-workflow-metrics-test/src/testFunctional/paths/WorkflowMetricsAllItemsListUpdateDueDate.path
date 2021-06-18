@@ -43,6 +43,16 @@
 	<td>//div[contains(@class, 'modal-content')]//tbody//tr[@class]//td[text()='${key_title}']</td>
 	<td></td>
 </tr>
+<tr>
+    <td>DUE_DATE_BUTTON_ALL_ITEMS_LIST</td>
+    <td>//button[contains(@class,'component-action quick-action-item')][2]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DUE_DATE_MODAL_ALL_ITEMS_LIST</td>
+    <td>//div[contains(@class, 'modal-content')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

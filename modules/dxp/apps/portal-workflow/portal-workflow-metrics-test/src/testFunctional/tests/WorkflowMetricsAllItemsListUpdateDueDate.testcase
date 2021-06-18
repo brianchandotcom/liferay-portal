@@ -30,12 +30,38 @@ definition {
 	}
 
 	@description = "LPS-105498 - Verify that when the user selects an instance with more than 1 pending task, the bulk update due date modal is triggered"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected {
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Multi Task Process");
 
-		// TODO LRQA-67822 BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected pending implementation
+		Navigator.gotoBack();
 
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Multi Task Process");
+
+		MouseOver(
+			key_workflowInstanceName = "Blogs Entry Title",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		MouseOver(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#DUE_DATE_BUTTON_ALL_ITEMS_LIST");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#DUE_DATE_BUTTON_ALL_ITEMS_LIST");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#DUE_DATE_BUTTON_ALL_ITEMS_LIST");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#DUE_DATE_MODAL_ALL_ITEMS_LIST");
 	}
 
 	@description = "LPS-105498 - Verify that the user can filter the tasks by Assignee on Select Tasks to Update step"

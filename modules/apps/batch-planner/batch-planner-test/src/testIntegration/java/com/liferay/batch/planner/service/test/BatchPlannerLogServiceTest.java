@@ -25,11 +25,14 @@ import com.liferay.batch.planner.service.BatchPlannerLogService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.test.util.BatchPlannerLogTestUtil;
 import com.liferay.batch.planner.service.test.util.BatchPlannerPlanTestUtil;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -148,6 +151,8 @@ public class BatchPlannerLogServiceTest {
 		User user2 = UserTestUtil.addUser(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
+		_addResourcePermission(TestPropsValues.getCompanyId());
+
 		UserTestUtil.setUser(user2);
 
 		Class<?> exceptionClass = Exception.class;
@@ -220,6 +225,26 @@ public class BatchPlannerLogServiceTest {
 		}
 
 		Assert.assertEquals(NoSuchPlanException.class, exceptionClass);
+	}
+
+	private ResourcePermission _addResourcePermission(long companyId) {
+		long resourcePermissionId = CounterLocalServiceUtil.increment(
+			ResourcePermission.class.getName());
+
+		ResourcePermission resourcePermission =
+			ResourcePermissionLocalServiceUtil.createResourcePermission(
+				resourcePermissionId);
+
+		resourcePermission.setCompanyId(companyId);
+		resourcePermission.setName(BatchPlannerConstants.RESOURCE_NAME);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setPrimKey(BatchPlannerConstants.RESOURCE_NAME);
+		resourcePermission.setRoleId(RandomTestUtil.randomInt());
+		resourcePermission.setActionIds(RandomTestUtil.randomInt());
+		resourcePermission.setViewActionId(true);
+
+		return ResourcePermissionLocalServiceUtil.addResourcePermission(
+			resourcePermission);
 	}
 
 	private void _assertBatchPlannerLogFields(BatchPlannerLog batchPlannerLog)

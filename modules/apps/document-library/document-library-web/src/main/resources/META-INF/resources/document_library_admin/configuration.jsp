@@ -37,7 +37,7 @@ DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServic
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
-			names="email-from,document-added-email,document-updated-email"
+			names="email-from,document-added-email,document-updated-email,document-needs-review-email"
 			refresh="<%= false %>"
 		>
 			<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
@@ -107,6 +107,18 @@ DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServic
 						emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled() %>"
 						emailParam="emailFileEntryUpdated"
 						emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedSubjectXml() %>"
+					/>
+				</liferay-frontend:fieldset-group>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<liferay-frontend:fieldset-group>
+					<liferay-frontend:email-notification-settings
+						emailBody="<%= dlGroupServiceSettings.getEmailFileEntryReviewBodyXml() %>"
+						emailDefinitionTerms="<%= emailDefinitionTerms %>"
+						emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryReviewEnabled() %>"
+						emailParam="emailFileEntryReview"
+						emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryReviewSubjectXml() %>"
 					/>
 				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>

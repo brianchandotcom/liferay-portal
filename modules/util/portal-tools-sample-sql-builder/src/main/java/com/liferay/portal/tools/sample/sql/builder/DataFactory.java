@@ -16,7 +16,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
-import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountEntryUserRelModel;
 import com.liferay.account.model.impl.AccountEntryModelImpl;
 import com.liferay.account.model.impl.AccountEntryUserRelModelImpl;
@@ -46,7 +45,6 @@ import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemM
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseModelImpl;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceAddressModel;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderModel;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -2799,7 +2797,7 @@ public class DataFactory {
 
 		cpOptionModel.setName(
 			StringBundler.concat(
-				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root",
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ",
 				"available-locales=\"en_US\" default-locale=\"en_US\">",
 				"<Name language-id=\"en_US\">Option Name ", index,
 				"</Name></root>"));
@@ -2808,7 +2806,7 @@ public class DataFactory {
 		cpOptionModel.setFacetable(true);
 		cpOptionModel.setRequired(true);
 		cpOptionModel.setSkuContributor(true);
-		cpOptionModel.setKey("key" + index);
+		cpOptionModel.setKey("option-name-" + index);
 
 		return cpOptionModel;
 	}
@@ -2843,7 +2841,7 @@ public class DataFactory {
 				"locales=\"en_US\" default-locale=\"en_US\"><Name language-id",
 				"=\"en_US\">Option Value Name ", index, "</Name></root>"));
 		cpOptionValueModel.setPriority(index - 1);
-		cpOptionValueModel.setKey("key" + index);
+		cpOptionValueModel.setKey("option-value-" + index);
 
 		return cpOptionValueModel;
 	}
@@ -2930,7 +2928,7 @@ public class DataFactory {
 			"Description for specification option with ID " +
 				cpSpecificationOptionId);
 		cpSpecificationOptionModel.setFacetable(false);
-		cpSpecificationOptionModel.setKey("key" + index);
+		cpSpecificationOptionModel.setKey("specification-option-" + index);
 		cpSpecificationOptionModel.setLastPublishDate(null);
 
 		return cpSpecificationOptionModel;

@@ -327,8 +327,8 @@ definition {
 
 		FormFields.selectGridRadioOptionWithoutCategory(
 			fieldName = "",
-			optionNumber1 = "1",
-			optionNumber2 = "3");
+			optionRowNumber = "1",
+			optionColumnNumber = "3");
 
 		FormPortlet.submitSuccessfully();
 

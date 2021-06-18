@@ -1,0 +1,13 @@
+definition {
+
+	macro selectUpdateDueDateTasksCardFilterValueAssignee {
+		var key_workflowAssignee = "${workflowAssignee}";
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_CARD_FILTER_ASSIGNEE");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUA_DATE_CARD_FILTER_OPTION_ASSIGNEE");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_CARD_FILTER_ASSIGNEE");
+	}
+
+}

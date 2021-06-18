@@ -39,12 +39,49 @@ definition {
 	}
 
 	@description = "LPS-105498 - Verify that the user can filter the tasks by Assignee on Select Tasks to Update step"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterTasksByAssignee {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67828 CanFilterTasksByAssignee pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.goToUpdateDueDateTasks();
+
+		WorkflowMetricsAllItemsListUpdateDueDate.selectUpdateDueDateTasksCardFilterValueAssignee(workflowAssignee = "Test Test");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_NO_RESULTS_MESSAGE");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#FILTER_CLEAR_ALL");
+
+		WorkflowMetricsAllItemsListUpdateDueDate.selectUpdateDueDateTasksCardFilterValueAssignee(workflowAssignee = "Unassigned");
+
+		AssertElementPresent(
+			key_title = "Blogs Entry: Blogs Entry Title 1",
+			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_LIST_ORDER");
+
+		AssertElementPresent(
+			key_title = "Blogs Entry: Blogs Entry Title 2",
+			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_LIST_ORDER");
 	}
 
 	@description = "LPS-105498 - Verify that the user can filter the tasks by Step on Select Tasks to Update step"

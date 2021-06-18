@@ -153,4 +153,132 @@ definition {
 			value1 = '''<div class="fragment_1">Fragment Name</div>''');
 	}
 
+	@description = "This is a test case for LPS-129852. View the changes of fragment on content page still persist in staging and live site after overwrite the fragment."
+	@priority = "4"
+	test ViewChangesOfFragmentOnContentPagePersistInStagingAndLiveSiteAfterOverwriteTheFragment {
+		property test.name.skip.portal.instance = "FragmentsWithStaging#ViewChangesOfFragmentOnContentPagePersistInStagingAndLiveSiteAfterOverwriteTheFragment";
+
+		task ("Enable Propagate Fragment Changes Automatically in System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Page Fragments",
+				configurationName = "Page Fragments",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.enableCheckbox(fieldName = "Propagate Fragment Changes Automatically");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add a fragment collection to the staging site via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupKey = "Test Site Name-staging",
+				name = "Collection Name",
+				site = "false");
+		}
+
+		task ("Copy the Tabs fragment to new collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Tabs",
+				item = "Copy To");
+
+			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
+		}
+
+		task ("Export the new collection") {
+			FragmentsAdmin.exportCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a content page to the staging site via JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Navigate to the content page at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Add a Tabs (Copy) to page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Tabs (Copy)");
+		}
+
+		task ("Edit inline text of each tab") {
+			for (var n : list "1,2,3,4") {
+				PageEditor.editFragmentText(
+					fragmentName = "Tabs (Copy)",
+					id = "title${n}",
+					text = "Test ${n}");
+			}
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Publish to Live via page") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View edited inline text of tabs at view mode in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var n : list "1,2,3,4") {
+				AssertVisible(
+					id = "title${n}",
+					key_position = "1",
+					key_text = "Test ${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+			}
+		}
+
+		task ("Import the fragment collection") {
+			Navigator.gotoStagedView();
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Publish to Live via Staging admin") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("View edited inline text of tabs at view mode in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var n : list "1,2,3,4") {
+				AssertVisible(
+					id = "title${n}",
+					key_position = "1",
+					key_text = "Test ${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+			}
+		}
+	}
+
 }

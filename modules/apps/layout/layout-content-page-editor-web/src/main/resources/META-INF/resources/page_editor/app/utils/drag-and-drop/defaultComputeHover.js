@@ -36,7 +36,6 @@ export default function defaultComputeHover({
 	sourceItem,
 	targetItem,
 	targetRefs,
-	toControlsId,
 }) {
 
 	// Not dragging over direct child
@@ -63,9 +62,7 @@ export default function defaultComputeHover({
 	const orientation = getOrientation(
 		siblingItem || targetItem,
 		monitor,
-		layoutDataRef,
-		targetRefs,
-		toControlsId
+		targetRefs
 	);
 
 	const [
@@ -75,10 +72,8 @@ export default function defaultComputeHover({
 	] = getItemPosition(
 		siblingItem || targetItem,
 		monitor,
-		layoutDataRef,
 		targetRefs,
-		orientation,
-		toControlsId
+		orientation
 	);
 
 	// Drop inside target
@@ -159,19 +154,15 @@ export default function defaultComputeHover({
 				const [siblingPositionWithMiddle] = getItemPosition(
 					sibling,
 					monitor,
-					layoutDataRef,
 					targetRefs,
-					orientation,
-					toControlsId
+					orientation
 				);
 
 				const [parentPositionWithMiddle] = getItemPosition(
 					parent,
 					monitor,
-					layoutDataRef,
 					targetRefs,
-					orientation,
-					toControlsId
+					orientation
 				);
 
 				if (
@@ -215,20 +206,13 @@ export default function defaultComputeHover({
 				sourceItem,
 				targetItem: elevatedTargetItem,
 				targetRefs,
-				toControlsId,
 			});
 		}
 	}
 }
 
-function getOrientation(
-	item,
-	monitor,
-	layoutDataRef,
-	targetRefs,
-	toControlsId
-) {
-	const targetRef = targetRefs.get(toControlsId(item.itemId));
+function getOrientation(item, monitor, targetRefs) {
+	const targetRef = targetRefs.get(item.toControlsId(item.itemId));
 	const targetRect = targetRef.current.getBoundingClientRect();
 	const hoverMiddle = targetRect.left + targetRect.width / 2;
 	const clientOffsetX = monitor.getClientOffset().x;
@@ -248,15 +232,8 @@ function getOrientation(
 		: ORIENTATIONS.vertical;
 }
 
-function getItemPosition(
-	item,
-	monitor,
-	layoutDataRef,
-	targetRefs,
-	orientation,
-	toControlsId
-) {
-	const targetRef = targetRefs.get(toControlsId(item.itemId));
+function getItemPosition(item, monitor, targetRefs, orientation) {
+	const targetRef = targetRefs.get(item.toControlsId(item.itemId));
 
 	if (!targetRef || !targetRef.current) {
 		return [null, null, 0];

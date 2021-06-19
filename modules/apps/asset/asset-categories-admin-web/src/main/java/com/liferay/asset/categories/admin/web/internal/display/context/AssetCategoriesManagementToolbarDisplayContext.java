@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -112,17 +112,21 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	public String getAvailableActions(AssetCategory category)
 		throws PortalException {
 
+		List<String> availableActionsList = new ArrayList<>();
+
 		if (_assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.UPDATE)) {
 
-			return StringUtil.merge(
-				Arrays.asList(
-					"setCategoryDisplayPageTemplate",
-					"deleteSelectedCategories"),
-				StringPool.COMMA);
+			availableActionsList.add("setCategoryDisplayPageTemplate");
 		}
 
-		return StringPool.BLANK;
+		if (_assetCategoriesDisplayContext.hasPermission(
+				category, ActionKeys.DELETE)) {
+
+			availableActionsList.add("deleteSelectedCategories");
+		}
+
+		return StringUtil.merge(availableActionsList, StringPool.COMMA);
 	}
 
 	@Override

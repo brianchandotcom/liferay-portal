@@ -22,6 +22,7 @@ import com.liferay.asset.category.property.exception.CategoryPropertyValueExcept
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
@@ -41,7 +42,6 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -366,8 +366,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			AssetCategoriesAdminWebKeys.ASSET_CATEGORIES_ADMIN_CONFIGURATION,
 			_assetCategoriesAdminWebConfiguration);
 		renderRequest.setAttribute(
-			AssetCategoriesAdminWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER,
-			_layoutDisplayPageProviderTracker);
+			AssetCategoriesAdminWebKeys.
+				ASSET_DISPLAY_PAGE_FRIENDLY_URL_PROVIDER,
+			_assetDisplayPageFriendlyURLProvider);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -527,10 +528,11 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		_assetDisplayPageEntryFormProcessor;
 
 	@Reference
-	private AssetVocabularyService _assetVocabularyService;
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private AssetVocabularyService _assetVocabularyService;
 
 	@Reference
 	private Portal _portal;

@@ -16,6 +16,8 @@ package com.liferay.asset.categories.admin.web.internal.exportimport.data.handle
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -169,6 +171,8 @@ public class AssetCategoryStagedModelDataHandler
 
 		categoryElement.addAttribute("path", categoryPath);
 
+		_exportAssetDisplayPage(portletDataContext, category);
+
 		portletDataContext.addReferenceElement(
 			category, categoryElement, category,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
@@ -286,6 +290,8 @@ public class AssetCategoryStagedModelDataHandler
 		portletDataContext.importPermissions(
 			AssetCategory.class, category.getCategoryId(),
 			importedCategory.getCategoryId());
+
+		_importAssetDisplayPage(portletDataContext, category, importedCategory);
 	}
 
 	protected String getCategoryName(
@@ -339,12 +345,84 @@ public class AssetCategoryStagedModelDataHandler
 		return false;
 	}
 
+	private void _exportAssetDisplayPage(
+			PortletDataContext portletDataContext, AssetCategory category)
+		throws Exception {
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				category.getGroupId(),
+				_portal.getClassNameId(AssetCategory.class),
+				category.getCategoryId());
+
+		if (assetDisplayPageEntry != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, category, assetDisplayPageEntry,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	private void _importAssetDisplayPage(
+			PortletDataContext portletDataContext, AssetCategory category,
+			AssetCategory importedCategory)
+		throws Exception {
+
+		List<Element> assetDisplayPageEntryElements =
+			portletDataContext.getReferenceDataElements(
+				category, AssetDisplayPageEntry.class);
+
+		Map<Long, Long> categoryNewPrimaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				AssetCategory.class);
+
+		categoryNewPrimaryKeys.put(
+			category.getCategoryId(), importedCategory.getCategoryId());
+
+		for (Element assetDisplayPageEntryElement :
+				assetDisplayPageEntryElements) {
+
+			String path = assetDisplayPageEntryElement.attributeValue("path");
+
+			AssetDisplayPageEntry assetDisplayPageEntry =
+				(AssetDisplayPageEntry)portletDataContext.getZipEntryAsObject(
+					path);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, assetDisplayPageEntryElement);
+
+			Map<Long, Long> assetDisplayPageEntries =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					AssetDisplayPageEntry.class);
+
+			long assetDisplayPageEntryId = MapUtil.getLong(
+				assetDisplayPageEntries,
+				assetDisplayPageEntry.getAssetDisplayPageEntryId(),
+				assetDisplayPageEntry.getAssetDisplayPageEntryId());
+
+			AssetDisplayPageEntry existingAssetDisplayPageEntry =
+				_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+					assetDisplayPageEntryId);
+
+			if (existingAssetDisplayPageEntry != null) {
+				existingAssetDisplayPageEntry.setClassPK(
+					importedCategory.getCategoryId());
+
+				_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
+					existingAssetDisplayPageEntry);
+			}
+		}
+	}
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetCategoryPropertyLocalService
 		_assetCategoryPropertyLocalService;
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

@@ -39,9 +39,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -139,32 +136,17 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 				}
 			}
 
-			Role role = _roleLocalService.fetchRole(
-				companyId, CTConstants.ROLE_NAME_PUBLICATIONS_USER);
+			Role role = _roleLocalService.getRole(
+				companyId, RoleConstants.PUBLICATIONS_USER);
 
-			if (role == null) {
-				role = _roleLocalService.addRole(
-					_userLocalService.getDefaultUserId(companyId), null, 0,
-					CTConstants.ROLE_NAME_PUBLICATIONS_USER,
-					HashMapBuilder.put(
-						LocaleUtil.getDefault(),
-						CTConstants.ROLE_NAME_PUBLICATIONS_USER
-					).build(),
-					null, RoleConstants.TYPE_REGULAR, null, null);
-
-				_resourcePermissionLocalService.addResourcePermission(
-					companyId, PortletKeys.PORTAL,
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId(), ActionKeys.VIEW_CONTROL_PANEL);
-				_resourcePermissionLocalService.addResourcePermission(
-					companyId, CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
-				_resourcePermissionLocalService.addResourcePermission(
-					companyId, CTPortletKeys.PUBLICATIONS,
-					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-					role.getRoleId(), ActionKeys.VIEW);
-			}
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, CTPortletKeys.PUBLICATIONS,
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, CTPortletKeys.PUBLICATIONS,
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId(), ActionKeys.VIEW);
 
 			return _ctPreferencesLocalService.getCTPreferences(companyId, 0);
 		}

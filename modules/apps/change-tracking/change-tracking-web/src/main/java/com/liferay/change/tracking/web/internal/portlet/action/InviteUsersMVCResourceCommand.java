@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -158,21 +157,8 @@ public class InviteUsersMVCResourceCommand
 			resourceRequest, "publicationsUserRoleUserIds");
 
 		if (publicationsUserRoleUserIds.length > 0) {
-			Role publicationsUserRole = _roleLocalService.fetchRole(
-				themeDisplay.getCompanyId(),
-				CTConstants.ROLE_NAME_PUBLICATIONS_USER);
-
-			if (publicationsUserRole == null) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
-					JSONUtil.put(
-						"errorMessage",
-						_language.get(
-							_portal.getHttpServletRequest(resourceRequest),
-							"an-unexpected-error-occurred")));
-
-				return;
-			}
+			Role publicationsUserRole = _roleLocalService.getRole(
+				themeDisplay.getCompanyId(), RoleConstants.PUBLICATIONS_USER);
 
 			_userLocalService.addRoleUsers(
 				publicationsUserRole.getRoleId(), publicationsUserRoleUserIds);
@@ -245,7 +231,7 @@ public class InviteUsersMVCResourceCommand
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), name
 				).build(),
-				null, RoleConstants.TYPE_PUBLICATION, null, null);
+				null, RoleConstants.TYPE_PUBLICATIONS, null, null);
 
 			for (String actionId :
 					PublicationRoleConstants.getModelResourceActions(

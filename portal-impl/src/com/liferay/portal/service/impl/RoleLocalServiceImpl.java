@@ -1930,6 +1930,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			if (name.equals(RoleConstants.ANALYTICS_ADMINISTRATOR)) {
 				initAnalyticsAdministratorViewPermissions(role);
 			}
+			else if (name.equals(RoleConstants.PUBLICATIONS_USER)) {
+				initPublicationsUserViewPermissions(role);
+			}
 			else if (name.equals(RoleConstants.USER)) {
 				initPersonalControlPanelPortletsPermissions(role);
 			}
@@ -2032,6 +2035,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				role, portletId,
 				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
 		}
+	}
+
+	protected void initPublicationsUserViewPermissions(Role role)
+		throws PortalException {
+
+		resourcePermissionLocalService.addResourcePermission(
+			role.getCompanyId(), PortletKeys.PORTAL,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(role.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW_CONTROL_PANEL);
 	}
 
 	protected void reindex(long userId) throws SearchException {

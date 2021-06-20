@@ -51,6 +51,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 
 /**
  * @author Javier Gamarra
@@ -80,7 +82,16 @@ public class QuestionsConfigurationModelListener
 			Dictionary<String, Object> configurationProperties =
 				configuration.getProperties();
 
-			if (!Objects.equals("", properties.get("historyRouterBasePath"))) {
+			ComponentDescriptionDTO componentDescriptionDTO =
+				_serviceComponentRuntime.getComponentDescriptionDTO(
+					_bundleContext.getBundle(),
+					QuestionsLayoutSEOLinkManagerImpl.class.getName());
+
+			if (!Objects.equals(
+					GetterUtil.getString(
+						properties.get("historyRouterBasePath")),
+					"")) {
+
 				if (configurationProperties == null) {
 					configurationProperties = new HashMapDictionary<>();
 				}
@@ -90,9 +101,15 @@ public class QuestionsConfigurationModelListener
 					"(component.name=" +
 						QuestionsLayoutSEOLinkManagerImpl.class.getName() +
 							")");
+
+				_serviceComponentRuntime.enableComponent(
+					componentDescriptionDTO);
 			}
 			else if (configurationProperties != null) {
 				configurationProperties.remove("_layoutSEOLinkManager.target");
+
+				_serviceComponentRuntime.disableComponent(
+					componentDescriptionDTO);
 			}
 
 			configuration.update(configurationProperties);
@@ -110,6 +127,21 @@ public class QuestionsConfigurationModelListener
 		_bundleContext = bundleContext;
 
 		_enableAssetRenderer(properties);
+
+		ComponentDescriptionDTO componentDescriptionDTO =
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				_bundleContext.getBundle(),
+				QuestionsLayoutSEOLinkManagerImpl.class.getName());
+
+		if (!Objects.equals(
+				GetterUtil.getString(properties.get("historyRouterBasePath")),
+				"")) {
+
+			_serviceComponentRuntime.enableComponent(componentDescriptionDTO);
+		}
+		else {
+			_serviceComponentRuntime.disableComponent(componentDescriptionDTO);
+		}
 	}
 
 	@Deactivate
@@ -198,6 +230,9 @@ public class QuestionsConfigurationModelListener
 	)
 	private ModelResourcePermission<MBMessage>
 		_mbMessageModelResourcePermission;
+
+	@Reference
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 	private List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();

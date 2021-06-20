@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
-	property = "service.ranking:Integer=100",
+	enabled = false, property = "service.ranking:Integer=100",
 	service = LayoutSEOLinkManager.class
 )
 public class QuestionsLayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {

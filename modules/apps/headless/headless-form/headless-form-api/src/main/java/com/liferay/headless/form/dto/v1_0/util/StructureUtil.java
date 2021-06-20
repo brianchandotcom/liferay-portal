@@ -186,12 +186,17 @@ public class StructureUtil {
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
 				name = ddmFormField.getName();
+				placeholder = _toString(
+					locale,
+					(LocalizedValue)ddmFormField.getProperty("placeholder"));
 				predefinedValue = _toString(locale, predefinedLocalizedValue);
 				predefinedValue_i18n = LocalizedMapUtil.getI18nMap(
 					acceptAllLanguages, predefinedLocalizedValue.getValues());
 				repeatable = ddmFormField.isRepeatable();
 				required = ddmFormField.isRequired();
 				showLabel = ddmFormField.isShowLabel();
+				tooltip = _toString(
+					locale, (LocalizedValue)ddmFormField.getProperty("tip"));
 
 				setDataType(
 					() -> {

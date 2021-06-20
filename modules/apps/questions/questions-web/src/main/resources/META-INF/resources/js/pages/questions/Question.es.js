@@ -16,7 +16,6 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
 import {useMutation} from 'graphql-hooks';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
@@ -39,7 +38,6 @@ import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
 import TextLengthValidation from '../../components/TextLengthValidation.es';
-import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	createAnswerQuery,
 	getMessages,
@@ -58,7 +56,6 @@ import {
 
 export default withRouter(
 	({
-		location,
 		match: {
 			params: {questionId, sectionTitle},
 			url,
@@ -67,10 +64,6 @@ export default withRouter(
 		const context = useContext(AppContext);
 
 		const [error, setError] = useState(null);
-
-		const queryParams = useQueryParams(location);
-
-		const sort = queryParams.get('sort') || 'active';
 
 		const [articleBody, setArticleBody] = useState();
 		const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
@@ -84,53 +77,13 @@ export default withRouter(
 
 		const fetchMessages = useCallback(() => {
 			if (question && question.id) {
-				getMessages(question.id, sort, page, pageSize).then(
+				getMessages(question.id, page, pageSize).then(
 					({data: {messageBoardThreadMessageBoardMessages}}) => {
-						if (
-							messageBoardThreadMessageBoardMessages?.totalCount
-						) {
-							if (sort !== 'votes') {
-								setAnswers({
-									...messageBoardThreadMessageBoardMessages,
-								});
-							}
-							else {
-								const items = [
-									...[
-										...messageBoardThreadMessageBoardMessages.items,
-									].sort((answer1, answer2) => {
-										if (answer2.showAsAnswer) {
-											return 1;
-										}
-										if (answer1.showAsAnswer) {
-											return -1;
-										}
-
-										const ratingValue1 =
-											(answer1.aggregateRating &&
-												answer1.aggregateRating
-													.ratingValue) ||
-											0;
-										const ratingValue2 =
-											(answer2.aggregateRating &&
-												answer2.aggregateRating
-													.ratingValue) ||
-											0;
-
-										return ratingValue2 - ratingValue1;
-									}),
-								];
-
-								setAnswers({
-									...messageBoardThreadMessageBoardMessages,
-									items,
-								});
-							}
-						}
+						setAnswers(messageBoardThreadMessageBoardMessages);
 					}
 				);
 			}
-		}, [question, page, pageSize, sort]);
+		}, [question, page, pageSize]);
 
 		useEffect(() => {
 			getThread(questionId, context.siteKey)
@@ -397,51 +350,6 @@ export default withRouter(
 									{answers.totalCount}{' '}
 									{Liferay.Language.get('answers')}
 								</h3>
-
-								{!!answers.totalCount && (
-									<div className="border-bottom c-mt-3">
-										<ClayNavigationBar triggerLabel="Active">
-											<ClayNavigationBar.Item
-												active={sort === 'active'}
-											>
-												<Link
-													className="link-unstyled nav-link"
-													to={`${url}?sort=active`}
-												>
-													{Liferay.Language.get(
-														'active'
-													)}
-												</Link>
-											</ClayNavigationBar.Item>
-
-											<ClayNavigationBar.Item
-												active={sort === 'oldest'}
-											>
-												<Link
-													className="link-unstyled nav-link"
-													to={`${url}?sort=oldest`}
-												>
-													{Liferay.Language.get(
-														'oldest'
-													)}
-												</Link>
-											</ClayNavigationBar.Item>
-
-											<ClayNavigationBar.Item
-												active={sort === 'votes'}
-											>
-												<Link
-													className="link-unstyled nav-link"
-													to={`${url}?sort=votes`}
-												>
-													{Liferay.Language.get(
-														'votes'
-													)}
-												</Link>
-											</ClayNavigationBar.Item>
-										</ClayNavigationBar>
-									</div>
-								)}
 
 								<div className="c-mt-3">
 									<PaginatedList

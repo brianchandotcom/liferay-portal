@@ -727,17 +727,14 @@ export const getThread = (friendlyUrlPath, siteKey) =>
 		},
 	});
 
-export const getMessages = (messageBoardThreadId, sort, page, pageSize) =>
+export const getMessages = (messageBoardThreadId, page, pageSize) =>
 	clientNestedFields.request({
 		query: getMessagesQuery,
 		variables: {
 			messageBoardThreadId,
-			page: sort === 'votes' ? 1 : page,
-			pageSize: sort === 'votes' ? 100 : pageSize,
-			sort:
-				sort === 'votes' || sort === 'active'
-					? 'dateModified:desc'
-					: 'dateCreated:desc',
+			page,
+			pageSize,
+			sort: 'dateCreated:asc',
 		},
 	});
 

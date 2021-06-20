@@ -1,0 +1,7 @@
+apiDir: "../object-admin-rest-api/src/main/java"
+apiPackagePath: "com.liferay.object.admin.rest"
+application:
+    baseURI: "/object-admin"
+    className: "ObjectAdminApplication"
+    name: "Liferay.Object.Admin"
+author: "Javier Gamarra"

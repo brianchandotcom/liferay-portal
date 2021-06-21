@@ -378,6 +378,11 @@
 	<td></td>
 </tr>
 <tr>
+	 <td>FIELD_ROW_TARGET</td>
+    <td>//div[contains(concat(' ',normalize-space(@class),' '),'ddm-form-page')]/div/following-sibling::div/div[@class='placeholder row'][${key_index}]//div[@class='ddm-target']</td>
+    <td></td>
+</tr>
+<tr>
     <td>FIELD_SPECIFIC_POSITION_PUBLISHED_FORM</td>
     <td>//label[contains(text(),'Fields Group')]/..//div[@data-ddm-field-page='${key_formPageNumber}' and @data-ddm-field-row='${key_rowNumber}']//label[contains(text(),'${key_text}')]</td>
     <td></td>

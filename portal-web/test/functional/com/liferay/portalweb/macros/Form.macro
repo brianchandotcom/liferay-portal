@@ -12,6 +12,14 @@ definition {
 			locator2 = "FormFields#LABEL");
 	}
 
+	macro addFieldOutsideOfFieldsGroup {
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			key_fieldName = "${fieldName}",
+			key_index = "${index}",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "Form#FIELD_ROW_TARGET");
+	}
+
 	macro addPage {
 		var key_formAddNewPageNumber = "${formAddNewPageNumber}";
 

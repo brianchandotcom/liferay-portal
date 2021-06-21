@@ -8,31 +8,13 @@
 		}
 	}
 
-	.table {
-		.text-bottom {
-			vertical-align: bottom;
-		}
+	.touch & {
+		-webkit-overflow-scrolling: touch;
 
-		.text-middle {
-			vertical-align: middle;
-		}
-
-		.text-top {
-			vertical-align: top;
+		.searchcontainer-content .table {
+			max-width: none;
 		}
 	}
-}
-
-.touch .lfr-search-container {
-	-webkit-overflow-scrolling: touch;
-
-	.searchcontainer-content .table {
-		max-width: none;
-	}
-}
-
-.taglib-search-iterator-page-iterator-top {
-	margin-bottom: 15px;
 }
 
 .taglib-page-iterator {
@@ -54,7 +36,6 @@
 
 			> li {
 				display: inline-block;
-				float: left;
 				width: 50%;
 
 				&.first,

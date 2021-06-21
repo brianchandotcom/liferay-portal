@@ -59,9 +59,7 @@ else if (collapsible) {
 				</c:when>
 				<c:otherwise>
 					<legend class="fieldset-legend">
-						<span class="legend">
-							<h3 class="sheet-subtitle"><%= header %></h3>
-						</span>
+						<h3 class="legend sheet-subtitle"><%= header %></h3>
 					</legend>
 				</c:otherwise>
 			</c:choose>

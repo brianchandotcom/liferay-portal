@@ -23,7 +23,7 @@ const UNMAPPED_OPTION = {
 	label: `-- ${Liferay.Language.get('unmapped')} --`,
 };
 
-function MappingInput({
+function MappingSelector({
 	fieldType,
 	helpMessage,
 	initialFields,
@@ -92,7 +92,7 @@ function MappingInput({
 	);
 }
 
-MappingInput.propTypes = {
+MappingSelector.propTypes = {
 	helpMessage: PropTypes.string,
 	name: PropTypes.string.isRequired,
 	selectedFieldKey: PropTypes.string,
@@ -102,4 +102,4 @@ MappingInput.propTypes = {
 	}).isRequired,
 };
 
-export default MappingInput;
+export default MappingSelector;

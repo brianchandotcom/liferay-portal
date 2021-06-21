@@ -16,8 +16,8 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import MappingContext from './MappingContext';
-import MappingInput from './MappingInput';
 import MappingRichInput from './MappingRichInput';
+import MappingSelector from './MappingSelector';
 
 function MappingFields({
 	ffSEOInlineFieldMappingEnabled,
@@ -36,7 +36,7 @@ function MappingFields({
 						{...props}
 					/>
 				) : (
-					<MappingInput
+					<MappingSelector
 						initialFields={fields}
 						key={props.name}
 						selectedSource={selectedSource}

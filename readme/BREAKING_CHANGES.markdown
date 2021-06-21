@@ -71,34 +71,27 @@ This change aligns with [Adobe dropping support for Flash](https://www.adobe.com
 
 ---------------------------------------
 
-### The /portal/flash path is no longer available
+### Removed the /portal/flash Path
 - **Date:** 2020-Oct-13
 - **JIRA Ticket:** [LPS-121733](https://issues.liferay.com/browse/LPS-121733)
 
 #### What changed?
 
-The public path `/portal/flash` that could be used to play an Adobe Flash movie
-passing the movie URL as a parameter has been removed.
+Previously you could play an Adobe Flash movie by passing a movie URL as a parameter to the `/portal/flash` public path. The `/portal/flash path` path has been removed.
 
-Additionally, the property and accessors have been removed from `ThemeDisplay`
-and are no longer accesible.
+Additionally, the property and accessors have been removed from `ThemeDisplay` and are no longer available.
 
 #### Who is affected?
 
-This affects people that were using the path `/c/portal/flash` directly to show
-pages with Adobe Flash content.
+This affects you if you are using the `/c/portal/flash` path directly to show pages with Adobe Flash content.
 
 #### How should I update my code?
 
-A direct code update is not possible. One possible solution would be to create
-a custom page simulating to simulate the old behaviour and read the different
-movie parameters from the URL and then instantiate it using the common means
-for Adobe Flash reproduction.
+A direct code update is impossible. However, you can create a custom page that simulates the old behavior. The page could parse movie parameters from the URL and instantiate the movie using the common means for Adobe Flash reproduction.
 
 #### Why was this change made?
 
-This change was made to align with [Adobe dropping support for Flash](https://www.adobe.com/products/flashplayer/end-of-life.html)
-in December 31, 2020 and browsers removing Flash support in upcoming versions.
+This change aligns with [Adobe dropping support for Flash](https://www.adobe.com/products/flashplayer/end-of-life.html) in December 31, 2020 and with upcoming versions browsers removing Flash support.
 
 ---------------------------------------
 

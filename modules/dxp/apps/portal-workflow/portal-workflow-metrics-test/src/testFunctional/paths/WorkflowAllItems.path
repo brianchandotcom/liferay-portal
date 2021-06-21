@@ -465,6 +465,11 @@
 	<td>//span[contains(@class,'bg-muted')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_ASSERT_ITEM</td>
+	<td>//span[contains(text(),'${key_columnName}')]/../../../../..//tr[contains(.,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -3010,6 +3010,9 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_TRANSACTIONS_DISABLED));
 
+	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
+
 	public static boolean USER_GROUPS_NAME_ALLOW_NUMERIC =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USER_GROUPS_NAME_ALLOW_NUMERIC));

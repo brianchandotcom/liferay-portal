@@ -127,11 +127,13 @@ public class DBUpgrader {
 			try (SafeCloseable safeCloseable =
 					ProxyModeThreadLocal.setWithSafeCloseable(false)) {
 
-				UpgradeLogAppender appender = new UpgradeLogAppender();
+				if (PropsValues.UPGRADE_REPORT_ENABLED) {
+					UpgradeLogAppender appender = new UpgradeLogAppender();
 
-				appender.start();
+					appender.start();
 
-				_rootLogger.addAppender(appender);
+					_rootLogger.addAppender(appender);
+				}
 
 				upgrade();
 			}
@@ -152,7 +154,9 @@ public class DBUpgrader {
 			System.exit(1);
 		}
 		finally {
-			UpgradeLogAppender.close();
+			if (PropsValues.UPGRADE_REPORT_ENABLED) {
+				UpgradeLogAppender.close();
+			}
 		}
 	}
 

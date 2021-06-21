@@ -3,20 +3,6 @@
 		margin-bottom: 24px;
 	}
 
-	&.taglib-empty-result-message-compact {
-		min-height: auto;
-
-		.taglib-empty-result-message-header {
-			background: none;
-			padding-top: 0;
-		}
-
-		.taglib-empty-search-result-message-header {
-			background: none;
-			padding-top: 0;
-		}
-	}
-
 	.taglib-empty-result-message-description {
 		color: $gray-600;
 		margin-top: 8px;

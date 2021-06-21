@@ -85,7 +85,7 @@ export default function CustomTimeRangeForm({
 
 	return (
 		<div className="custom-range-wrapper" ref={wrapperRef}>
-			<form className="custom-range-form">
+			<ClayForm className="custom-range-form">
 				<h4 className="mb-2">{Liferay.Language.get('custom-range')}</h4>
 
 				<span className="form-text mb-3 text-semi-bold">
@@ -127,7 +127,7 @@ export default function CustomTimeRangeForm({
 						/>
 					</FormGroupItem>
 				</ClayForm.Group>
-			</form>
+			</ClayForm>
 			<div className="dropdown-divider" />
 			<div className="custom-range-footer">
 				<ClayButton displayType="secondary" onMouseDown={onCancel}>

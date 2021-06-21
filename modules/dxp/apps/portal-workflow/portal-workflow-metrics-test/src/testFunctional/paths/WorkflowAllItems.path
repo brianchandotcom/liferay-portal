@@ -221,6 +221,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PROCESS_STEP_TABLE_ROW</td>
+	<td>//tr[${key_rowNumber}]//td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLTIP_MESSAGE</td>
+	<td>//div[contains(@class,'tooltip-inner') and contains(.,'${key_processStep}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_BY</td>
 	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), '${key_allItemsFilterName}')]</td>
 	<td></td>

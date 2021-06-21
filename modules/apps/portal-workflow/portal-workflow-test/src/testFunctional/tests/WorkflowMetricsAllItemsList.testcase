@@ -827,12 +827,39 @@ definition {
 	}
 
 	@description = "LPS-86652 - Verify that hovering the cursor on the process step, when it contains more than 1 option, the toolip will display a bullet list"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test TooltipDisplaysBulletListWhenMultipleItems {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#TooltipDisplaysBulletListWhenMultipleItems";
 
-		// TODO LRQA-67732 TooltipDisplaysBulletListWhenMultipleItems pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "multi_task_process.xml",
+			workflowDefinitionTitle = "Multi Task Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+		MouseOver(
+			key_rowNumber = "1",
+			locator1 = "WorkflowAllItems#METRICS_PROCESS_STEP_TABLE_ROW");
+
+		AssertElementPresent(
+			key_processStep = "task1, task2, task3",
+			locator1 = "WorkflowAllItems#TOOLTIP_MESSAGE");
 	}
 
 	@description = "LPS-92053 - Verify that the Go to submission page button, on hover, displays a tooltip saying Open page in new tab"

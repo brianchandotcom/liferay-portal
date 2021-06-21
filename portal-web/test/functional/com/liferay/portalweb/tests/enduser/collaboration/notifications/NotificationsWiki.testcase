@@ -15,17 +15,15 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Test Page");
 
-		SitePages.addPublicPage(
-			pageName = "Wiki Test Page",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		Portlet.addPG(portletName = "Wiki");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			widgetName = "Wiki");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -38,14 +36,9 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 	}
 
 	tearDown {
@@ -55,10 +48,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			WikiPortlet.tearDownCP();
-
-			WikiPage.tearDownCP();
-
 			WikiNode.tearDownCP();
 
 			Page.tearDownCP();
@@ -68,39 +57,29 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewWebsiteNotificationForNewWikiPage {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+	@refactordone
+	test CanViewWebsiteNotificationForNewWikiPage {
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiPortlet.subscribeToNodeCP(wikiNodeName = "Main");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoAllPagesPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		WikiPage.addPG(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -121,48 +100,36 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewWebsiteNotificationForUpdatedWikiPage {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoAllPagesPG();
-
-		WikiPage.addPG(
+	@refactordone
+	test CanViewWebsiteNotificationForUpdatedWikiPage {
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
+			wikiPageName = "Wiki Page Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Wiki");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiPortlet.subscribeToNodeCP(wikiNodeName = "Main");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoAllPagesPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		WikiPage.editPagePG(
+			groupName = "Guest",
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageContentEdit = "Wiki Page Content Edit",
 			wikiPageTitle = "Wiki Page Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 

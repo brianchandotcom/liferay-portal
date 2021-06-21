@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayButton from '@clayui/button';
 import React from 'react';
 
 export default class ReloadButton extends React.Component {
@@ -18,12 +19,13 @@ export default class ReloadButton extends React.Component {
 
 	render() {
 		return (
-			<button
-				className="btn btn-link btn-sm"
+			<ClayButton
+				displayType="link"
 				onClick={this.reloadPage.bind(this)}
+				small
 			>
 				{Liferay.Language.get('reload-page')}
-			</button>
+			</ClayButton>
 		);
 	}
 }

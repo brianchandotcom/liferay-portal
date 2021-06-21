@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import React from 'react';
@@ -57,22 +58,26 @@ const ToolbarWithSelection = ({
 						</ClayManagementToolbar.Item>
 
 						<ClayManagementToolbar.Item>
-							<button
-								className="btn btn-sm btn-unstyled font-weight-bold nav-link"
+							<ClayButton
+								className="font-weight-bold nav-link"
+								displayType="unstyled"
 								onClick={handleClear}
+								small
 							>
 								{Liferay.Language.get('clear')}
-							</button>
+							</ClayButton>
 						</ClayManagementToolbar.Item>
 
 						{!selectAll && checked && (
 							<ClayManagementToolbar.Item>
-								<button
-									className="btn btn-sm btn-unstyled font-weight-bold nav-link"
+								<ClayButton
+									className="font-weight-bold nav-link"
+									displayType="unstyled"
 									onClick={handleSelectAll}
+									small
 								>
 									{Liferay.Language.get('select-all')}
-								</button>
+								</ClayButton>
 							</ClayManagementToolbar.Item>
 						)}
 					</>

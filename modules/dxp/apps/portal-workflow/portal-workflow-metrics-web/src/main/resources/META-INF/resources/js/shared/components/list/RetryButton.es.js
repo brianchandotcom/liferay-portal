@@ -9,13 +9,14 @@
  * distribution rights of the Software.
  */
 
+import ClayButton from '@clayui/button';
 import React from 'react';
 
 const RetryButton = (props) => {
 	return (
-		<button className="btn btn-link btn-sm" {...props}>
+		<ClayButton displayType="link" small {...props}>
 			{Liferay.Language.get('retry')}
-		</button>
+		</ClayButton>
 	);
 };
 

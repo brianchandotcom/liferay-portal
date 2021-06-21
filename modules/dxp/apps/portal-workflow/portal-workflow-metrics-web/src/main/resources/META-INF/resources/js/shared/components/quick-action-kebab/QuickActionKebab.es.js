@@ -16,15 +16,14 @@ import React from 'react';
 
 const IconItem = ({icon, onClick}) => {
 	return (
-		<>
-			<button
-				className="component-action quick-action-item"
-				onClick={onClick}
-				role="button"
-			>
-				<ClayIcon symbol={icon} />
-			</button>
-		</>
+		<ClayButton
+			className="component-action quick-action-item"
+			displayType="unstyled"
+			onClick={onClick}
+			role="button"
+		>
+			<ClayIcon symbol={icon} />
+		</ClayButton>
 	);
 };
 

@@ -96,9 +96,9 @@ public abstract class Base${schemaName}ResourceImpl
 	implements ${schemaName}Resource
 
 	<#assign
-		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)
+		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 
-		generateBatch = configYAML.generateBatch && javaDataType??
+		generateBatch = configYAML.generateBatch && javaDataType?has_content
 	/>
 
 	<#if generateBatch>

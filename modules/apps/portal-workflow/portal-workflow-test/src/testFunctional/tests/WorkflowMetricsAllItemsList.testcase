@@ -445,12 +445,33 @@ definition {
 	}
 
 	@description = "LPS-86652 - Verify that hovering the cursor on a ellipsis text will display a tooltip that contains the rest of the text"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test HoveringCursorDisplayTooltip {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
 
-		// TODO LRQA-67731 HoveringCursorDisplayTooltip pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry  Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		MouseOver(
+			key_workflowInstanceName = "Blogs Entry Title",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#TOOLTIP",
+			value1 = "Blogs Entry: Blogs Entry Title");
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed, the icon on modal title will keep informing the SLA status - On Time, Overdue, No SLA -, but styled in grey color"

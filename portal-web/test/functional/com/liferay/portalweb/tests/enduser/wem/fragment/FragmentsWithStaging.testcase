@@ -229,9 +229,9 @@ definition {
 		}
 
 		task ("Publish to Live via page") {
-			Navigator.gotoStagedSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = "Test Site Name Staging");
 
 			Staging.gotoPublishToLive();
 

@@ -9,6 +9,12 @@
 </thead>
 <tbody>
 <tr>
+	<td>DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS</td>
+	<td>//div[@class='header'][span[contains(text(),'${key_statusName}')]]/following-sibling::div[1]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON</td>
 	<td>//div[contains(@class,'d-flex')]/a[${key_index}]</td>
 	<td></td>

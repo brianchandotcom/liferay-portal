@@ -22,6 +22,12 @@ definition {
 		AssertNotVisible(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
 	}
 
+	macro cancel {
+		AssertClick(
+			locator1 = "FormRules#RULE_BUILDER_CANCEL_BUTTON",
+			value1 = "Cancel");
+	}
+
 	macro chooseCalculateOperator {
 		var key_calculateOperator = "${calculateOperator}";
 

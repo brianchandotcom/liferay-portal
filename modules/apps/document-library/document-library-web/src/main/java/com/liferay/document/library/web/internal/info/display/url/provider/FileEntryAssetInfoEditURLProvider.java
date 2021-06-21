@@ -73,7 +73,7 @@ public class FileEntryAssetInfoEditURLProvider
 
 		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
-		if (Validator.isNotNull(redirect)) {
+		if (Validator.isNull(redirect)) {
 			Layout layout = themeDisplay.getLayout();
 
 			if (layout.isTypeAssetDisplay()) {

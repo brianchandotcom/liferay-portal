@@ -84,6 +84,14 @@ definition {
 		}
 	}
 
+	macro gotoDelete {
+		var key_ruleNumber = "${ruleNumber}";
+
+		Click.waitForMenuToggleJSClick(locator1 = "FormRules#RULE_BUILDER_ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+	}
+
 	macro gotoEdit {
 		var key_ruleNumber = "${ruleNumber}";
 

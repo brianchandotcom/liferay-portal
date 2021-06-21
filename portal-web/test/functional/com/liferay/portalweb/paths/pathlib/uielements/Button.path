@@ -96,8 +96,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_WITH_SPAN</td>
+	<td>//button/span[contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_DISABLED</td>
 	<td>//button[@disabled][contains(@class,'btn')][normalize-space()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRASH_DISABLED</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-trash')]][@disabled='']</td>
 	<td></td>
 </tr>
 <tr>

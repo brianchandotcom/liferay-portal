@@ -89,18 +89,22 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {
 
-		_httpServletRequest = _portal.getOriginalServletRequest(
-			_portal.getHttpServletRequest(resourceRequest));
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(resourceRequest));
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		_segmentsExperienceId = ParamUtil.getLong(
+		long segmentsExperienceId = ParamUtil.getLong(
 			resourceRequest, "segmentsExperienceId");
 
 		try {
 			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse, _getWidgetsJSONArray());
+				resourceRequest, resourceResponse,
+				_getWidgetsJSONArray(
+					httpServletRequest, segmentsExperienceId, themeDisplay));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get widgets", exception);
@@ -110,17 +114,20 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 				JSONUtil.put(
 					"error",
 					LanguageUtil.get(
-						_themeDisplay.getRequest(),
+						themeDisplay.getRequest(),
 						"an-unexpected-error-occurred")));
 		}
 	}
 
-	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
+	private String _getPortletCategoryTitle(
+		HttpServletRequest httpServletRequest, PortletCategory portletCategory,
+		ThemeDisplay themeDisplay) {
+
 		for (String portletId :
 				PortletCategoryUtil.getFirstChildPortletIds(portletCategory)) {
 
 			Portlet portlet = _portletLocalService.getPortletById(
-				_themeDisplay.getCompanyId(), portletId);
+				themeDisplay.getCompanyId(), portletId);
 
 			if (portlet == null) {
 				continue;
@@ -133,10 +140,10 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 
 			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-				portlet, _httpServletRequest.getServletContext());
+				portlet, httpServletRequest.getServletContext());
 
 			ResourceBundle portletResourceBundle =
-				portletConfig.getResourceBundle(_themeDisplay.getLocale());
+				portletConfig.getResourceBundle(themeDisplay.getLocale());
 
 			String title = ResourceBundleUtil.getString(
 				portletResourceBundle, portletCategory.getName());
@@ -146,15 +153,17 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 		}
 
-		return LanguageUtil.get(_httpServletRequest, portletCategory.getName());
+		return LanguageUtil.get(httpServletRequest, portletCategory.getName());
 	}
 
-	private JSONArray _getPortletItemsJSONArray(Portlet portlet)
+	private JSONArray _getPortletItemsJSONArray(
+			Portlet portlet, long segmentsExperienceId,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		List<PortletItem> portletItems =
 			_portletItemLocalService.getPortletItems(
-				_themeDisplay.getScopeGroupId(), portlet.getPortletId(),
+				themeDisplay.getScopeGroupId(), portlet.getPortletId(),
 				PortletPreferences.class.getName());
 
 		if (ListUtil.isEmpty(portletItems)) {
@@ -174,19 +183,21 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"title", HtmlUtil.escape(portletItem.getName())
 				).put(
-					"used", _isUsed(portlet)
+					"used", _isUsed(portlet, segmentsExperienceId, themeDisplay)
 				));
 		}
 
 		return jsonArray;
 	}
 
-	private List<Portlet> _getPortlets(PortletCategory portletCategory) {
+	private List<Portlet> _getPortlets(
+		PortletCategory portletCategory, ThemeDisplay themeDisplay) {
+
 		List<Portlet> portlets = new ArrayList<>();
 
 		for (String portletId : portletCategory.getPortletIds()) {
 			Portlet portlet = _portletLocalService.getPortletById(
-				_themeDisplay.getCompanyId(), portletId);
+				themeDisplay.getCompanyId(), portletId);
 
 			if (portlet == null) {
 				continue;
@@ -200,8 +211,8 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 
 			try {
 				if (PortletPermissionUtil.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getLayout(), portlet,
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getLayout(), portlet,
 						ActionKeys.ADD_TO_PAGE)) {
 
 					portlets.add(portlet);
@@ -218,21 +229,24 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 		return portlets;
 	}
 
-	private JSONArray _getPortletsJSONArray(PortletCategory portletCategory)
+	private JSONArray _getPortletsJSONArray(
+			HttpServletRequest httpServletRequest,
+			PortletCategory portletCategory, long segmentsExperienceId,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		HttpSession httpSession = _httpServletRequest.getSession();
+		HttpSession httpSession = httpServletRequest.getSession();
 
 		ServletContext servletContext = httpSession.getServletContext();
 
-		List<Portlet> portlets = _getPortlets(portletCategory);
+		List<Portlet> portlets = _getPortlets(portletCategory, themeDisplay);
 
 		portlets = ListUtil.sort(
 			portlets,
 			new PortletTitleComparator(
-				servletContext, _themeDisplay.getLocale()));
+				servletContext, themeDisplay.getLocale()));
 
 		for (Portlet portlet : portlets) {
 			jsonArray.put(
@@ -241,13 +255,15 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"portletId", portlet.getPortletId()
 				).put(
-					"portletItems", _getPortletItemsJSONArray(portlet)
+					"portletItems",
+					_getPortletItemsJSONArray(
+						portlet, segmentsExperienceId, themeDisplay)
 				).put(
 					"title",
 					_portal.getPortletTitle(
-						portlet, servletContext, _themeDisplay.getLocale())
+						portlet, servletContext, themeDisplay.getLocale())
 				).put(
-					"used", _isUsed(portlet)
+					"used", _isUsed(portlet, segmentsExperienceId, themeDisplay)
 				));
 		}
 
@@ -255,7 +271,9 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONArray _getWidgetCategoriesJSONArray(
-			PortletCategory portletCategory)
+			HttpServletRequest httpServletRequest,
+			PortletCategory portletCategory, long segmentsExperienceId,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -265,7 +283,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		portletCategories = ListUtil.sort(
 			portletCategories,
-			new PortletCategoryComparator(_themeDisplay.getLocale()));
+			new PortletCategoryComparator(themeDisplay.getLocale()));
 
 		for (PortletCategory currentPortletCategory : portletCategories) {
 			if (currentPortletCategory.isHidden()) {
@@ -275,49 +293,67 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			jsonArray.put(
 				JSONUtil.put(
 					"categories",
-					_getWidgetCategoriesJSONArray(currentPortletCategory)
+					_getWidgetCategoriesJSONArray(
+						httpServletRequest, currentPortletCategory,
+						segmentsExperienceId, themeDisplay)
 				).put(
 					"path",
 					StringUtil.replace(
 						currentPortletCategory.getPath(),
 						new String[] {"/", "."}, new String[] {"-", "-"})
 				).put(
-					"portlets", _getPortletsJSONArray(currentPortletCategory)
+					"portlets",
+					_getPortletsJSONArray(
+						httpServletRequest, currentPortletCategory,
+						segmentsExperienceId, themeDisplay)
 				).put(
-					"title", _getPortletCategoryTitle(currentPortletCategory)
+					"title",
+					_getPortletCategoryTitle(
+						httpServletRequest, currentPortletCategory,
+						themeDisplay)
 				));
 		}
 
 		return jsonArray;
 	}
 
-	private JSONArray _getWidgetsJSONArray() throws Exception {
+	private JSONArray _getWidgetsJSONArray(
+			HttpServletRequest httpServletRequest, long segmentsExperienceId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
-			_themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 		portletCategory = PortletCategoryUtil.getRelevantPortletCategory(
-			_themeDisplay.getPermissionChecker(), _themeDisplay.getCompanyId(),
-			_themeDisplay.getLayout(), portletCategory,
-			_themeDisplay.getLayoutTypePortlet());
+			themeDisplay.getPermissionChecker(), themeDisplay.getCompanyId(),
+			themeDisplay.getLayout(), portletCategory,
+			themeDisplay.getLayoutTypePortlet());
 
-		return _getWidgetCategoriesJSONArray(portletCategory);
+		return _getWidgetCategoriesJSONArray(
+			httpServletRequest, portletCategory, segmentsExperienceId,
+			themeDisplay);
 	}
 
-	private boolean _isUsed(Portlet portlet) throws Exception {
+	private boolean _isUsed(
+			Portlet portlet, long segmentsExperienceId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
 		if (portlet.isInstanceable()) {
 			return false;
 		}
 
 		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _themeDisplay.getPlid(),
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 			portlet.getPortletId());
 
-		Layout layout = _themeDisplay.getLayout();
+		Layout layout = themeDisplay.getLayout();
 
 		if ((count > 0) &&
 			!LayoutStructureUtil.isPortletMarkedForDeletion(
 				layout.getGroupId(), layout.getPlid(), portlet.getPortletId(),
-				_segmentsExperienceId)) {
+				segmentsExperienceId)) {
 
 			return true;
 		}
@@ -332,8 +368,6 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetWidgetsMVCResourceCommand.class);
 
-	private HttpServletRequest _httpServletRequest;
-
 	@Reference
 	private Portal _portal;
 
@@ -345,8 +379,5 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	private long _segmentsExperienceId;
-	private ThemeDisplay _themeDisplay;
 
 }

@@ -545,6 +545,11 @@
 	<td>//a[contains(text(),'${key_index}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WARNING_SLA_BLOCKED</td>
+	<td>//div[contains(text(),'1 SLA is blocked. Fix the SLA configuration to resume accurate reporting')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

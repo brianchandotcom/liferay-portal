@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -526,6 +527,13 @@ public class JournalArticleActionDropdownItemsProvider {
 					"/translation/import_translation"
 				).setRedirect(
 					_getRedirect()
+				).setPortletResource(
+					() -> {
+						PortletDisplay portletDisplay =
+							_themeDisplay.getPortletDisplay();
+
+						return portletDisplay.getId();
+					}
 				).setParameter(
 					"classNameId",
 					PortalUtil.getClassNameId(JournalArticle.class)
@@ -533,8 +541,6 @@ public class JournalArticleActionDropdownItemsProvider {
 					"classPK", _article.getResourcePrimKey()
 				).setParameter(
 					"groupId", _article.getGroupId()
-				).setParameter(
-					"referringPortletResource", _getReferringPortletResource()
 				).build());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "import-translation"));

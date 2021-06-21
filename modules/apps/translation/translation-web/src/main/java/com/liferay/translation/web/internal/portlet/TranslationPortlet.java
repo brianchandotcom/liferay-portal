@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=Translation",
+		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.mvc-command-names-default-views=/translation/view",
 		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
 		"javax.portlet.resource-bundle=content.Language",

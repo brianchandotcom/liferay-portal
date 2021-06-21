@@ -110,7 +110,6 @@ page import="com.liferay.journal.web.internal.asset.model.JournalArticleAssetRen
 page import="com.liferay.journal.web.internal.configuration.JournalWebConfiguration" %><%@
 page import="com.liferay.journal.web.internal.constants.JournalWebConstants" %><%@
 page import="com.liferay.journal.web.internal.dao.search.JournalResultRowSplitter" %><%@
-page import="com.liferay.journal.web.internal.display.context.ImportTranslationDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalArticleCommentsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalArticleVersionsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMStructuresDisplayContext" %><%@
@@ -202,8 +201,7 @@ page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.util.CustomAttributesUtil" %><%@
-page import="com.liferay.translation.exception.XLIFFFileException" %>
+page import="com.liferay.taglib.util.CustomAttributesUtil" %>
 
 <%@ page import="java.text.Format" %>
 

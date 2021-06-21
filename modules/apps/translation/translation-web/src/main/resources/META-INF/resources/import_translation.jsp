@@ -28,6 +28,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 <div class="translation">
 	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= importTranslationDisplayContext.getRedirect() %>" />
+		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 		<nav class="component-tbar subnav-tbar-light tbar">

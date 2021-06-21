@@ -88,6 +88,7 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
+		<reference entity="Address" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="CommerceAddressRestriction" remote-service="true">
 

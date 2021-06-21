@@ -59,11 +59,6 @@ horizontal rule):
 ---------------------------------------
 
 ```
-**80 Columns Rule:** Text should not exceed 80 columns. Keeping text within 80
-columns makes it easier to see the changes made between different versions of
-the document. Titles, links, and tables are exempt from this rule. Code samples
-must follow the column rules specified in Liferay's
-[Development Style](http://www.liferay.com/community/wiki/-/wiki/Main/Liferay+development+style).
 
 The remaining content of this document consists of the breaking changes listed
 in ascending chronological order.

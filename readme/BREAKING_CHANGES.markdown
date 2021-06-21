@@ -193,46 +193,41 @@ This change makes the display page logic more consistent with the overall displa
 
 ---------------------------------------
 
-### Previously unused and deprecated JSP tags are no longer available
+### Removed Deprecated and Unused JSP Tags
 - **Date:** 2020-Nov-24
 - **JIRA Ticket:** [LPS-112476](https://issues.liferay.com/browse/LPS-112476)
 
 #### What changed?
 
-A series of deprecated and unused JSP tags have been removed and are no longer
-available. This list includes:
+A series of deprecated and unused JSP tags have been removed and are no longer available. These tags are included:
 
-- clay:table
-- liferay-ui:alert
-- liferay-ui:input-scheduler
-- liferay-ui:organization-search-container-results
-- liferay-ui:organization-search-form
-- liferay-ui:ratings
-- liferay-ui:search-speed
-- liferay-ui:table-iterator
-- liferay-ui:toggle-area
-- liferay-ui:toggle
-- liferay-ui:user-search-container-results
-- liferay-ui:user-search-
+- `clay:table`
+- `liferay-ui:alert`
+- `liferay-ui:input-scheduler`
+- `liferay-ui:organization-search-container-results`
+- `liferay-ui:organization-search-form`
+- `liferay-ui:ratings`
+- `liferay-ui:search-speed`
+- `liferay-ui:table-iterator`
+- `liferay-ui:toggle-area`
+- `liferay-ui:toggle`
+- `liferay-ui:user-search-container-results`
+- `liferay-ui:user-search-form`
 
 #### Who is affected?
 
-Everyone still using one of the removed tags
+This affects you if you are using any of the removed tags.
 
 #### How should I update my code?
 
-Use the new tags for those where replacements were previously avaialable. In
-many cases, there's no direct replacement for these tags, so if you still need
-to use them, you could make a copy of the old implementation and serve it
-directly from your project.
+See the 7.3 [`liferay-ui.tld`](https://github.com/liferay/liferay-portal/blob/7.3.x/util-taglib/src/META-INF/liferay-ui.tld) for removed tags that have replacements. However, many of the tags have no direct replacement. If you still need to use a tag that does not have a direct replacement, you can copy the old implementation and serve it directly from your project.
 
 #### Why was this change made?
 
-This change was made to remove legacy code that was previously signaled for
-removal in an attempt to clarify the default JSP component offering and focus
-on providing a smaller but higher quality set of compoentns.
+These tags were removed in an attempt to clarify the default JSP component offering and to focus on providing a smaller but higher quality component set.
 
 ---------------------------------------
+
 ### The CSS class .container-fluid-1280 has been replaced with .container-fluid.container-fluid-max-xl
 - **Date:** 2020-Nov-24
 - **JIRA Ticket:** [LPS-123894](https://issues.liferay.com/browse/LPS-123894)

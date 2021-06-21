@@ -396,6 +396,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_ROLE</td>
+	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), 'Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTIONS</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//li[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME</td>
 	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'assignee-name')]//span[contains(text(),'${key_assigneeName}')]</td>
 	<td></td>

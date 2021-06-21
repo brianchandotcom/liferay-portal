@@ -170,13 +170,19 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			return false;
 		}
 
-		int length = xRequestId.length();
-
-		if ((length >= 20) && (length <= 200)) {
-			return true;
+		if ((xRequestId.length() < 20) || (xRequestId.length() > 200)) {
+			return false;
 		}
 
-		return false;
+		// non-printable characters should not be accepted
+
+		for (int i = 0; i < xRequestId.length(); ++i) {
+			if ((xRequestId.charAt(i) < 32) || (xRequestId.charAt(i) > 126)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private static final String _MESSAGE_DIGEST_ALGORITHM = "SHA-256";

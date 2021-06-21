@@ -47,7 +47,7 @@ export default function NotConfigured() {
 				<>
 					<div className="mb-3 text-secondary">
 						{Liferay.Language.get(
-							'connect-to-google-pagespeed-to-run-a-page-audit'
+							'configure-google-pagespeed-to-run-a-page-audit'
 						)}
 					</div>
 
@@ -55,7 +55,7 @@ export default function NotConfigured() {
 						className="btn btn-secondary"
 						href={configureGooglePageSpeedURL}
 					>
-						{Liferay.Language.get('connect-to-google-pagespeed')}
+						{Liferay.Language.get('configure')}
 					</ClayLink>
 				</>
 			) : (

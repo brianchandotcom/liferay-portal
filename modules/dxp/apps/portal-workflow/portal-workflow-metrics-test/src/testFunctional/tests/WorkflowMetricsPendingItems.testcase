@@ -120,8 +120,6 @@ definition {
 	@description = "LPS-93410 - Verify that the sum for items Overdue + On Time + Untracked is equal to the Total Pending"
 	@priority = "3"
 	test SumOfOverdueOnTimeUntrackedIsEqualToTotalPending {
-		
-		
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
@@ -132,32 +130,30 @@ definition {
 
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
-			slaDefinitionHours = "0001",
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0001",
 			slaDefinitionName = "SLAName",
 			slaDefinitionStart = "Process Begins");
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
 
 		Click(
-			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION",
-			key_slaDefinitionPause = "On Task: Update");
-	
+			key_slaDefinitionPause = "On Task: Update",
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
 
 		Button.clickSave();
 
 		ApplicationsMenu.gotoPortlet(
-            category = "Workflow",
-            panel = "Applications",
-            portlet = "Process Builder");
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-        Navigator.gotoNavItem(navItem = "Configuration");
+		Navigator.gotoNavItem(navItem = "Configuration");
 
-        Workflow.configureWorkflow(
-            workflowDefinition = "Single Approver",
-            workflowResourceValue = "Blogs Entry");
-
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
 		JSONBlog.addEntry(
 			entryContent = "Test Content 1",
@@ -166,22 +162,21 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Test Content 2",
 			entryTitle = "Test Blog 2");
-		
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Test Blog 2",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
-		
+			workflowAssetTitle = "Test Blog 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
 		Workflow.rejectTaskByDetails(
 			workflowAssetContent = "Test Content 2",
 			workflowAssetTitle = "Test Blog 2",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
-		
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS", value1 = "1") && (maxIterations = "24")) {
 			echo("Waiting 5 seconds to recheck");
@@ -192,22 +187,19 @@ definition {
 		}
 
 		var overdueItems = selenium.getText(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE");
-		
+
 		var onTimeItems = selenium.getText(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE");
 
 		var untrackedItems = selenium.getText(locator = "WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_VALUE");
-	
 
-		
 		var expectedResult = MathUtil.sum("${overdueItems}", "${onTimeItems}");
 
 		var expectedResultTotal = MathUtil.sum("${expectedResult}", "${untrackedItems}");
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS",
 			key_statusName = "Total Pending",
+			locator1 = "WorkflowMetrics#DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS",
 			value1 = "${expectedResultTotal}");
-		
 	}
 
 	@description = "LPS-93410 - Verify that, for numbers greater than 3 digits, use abbreviation standards considering localization specifications"

@@ -785,6 +785,13 @@ definition {
 			locator1 = "Form#PAGE_EMPTY_FORM_FIELD_BY_NUMBER");
 	}
 
+	macro viewPageName {
+		AssertElementPresent(
+			key_pageName = "${formTitleNumber}",
+			locator1 = "Form#PAGE_NAME",
+			pageName = "${formPageName}");
+	}
+
 	macro viewPageTitleDefault {
 		AssertElementPresent(
 			key_pageNumber = "${pageIndex}",

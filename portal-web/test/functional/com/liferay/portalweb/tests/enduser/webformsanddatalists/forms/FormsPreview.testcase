@@ -361,14 +361,74 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Jump to Page) action can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test JumpToPageRuleCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133813 JumpToPageRuleCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		Form.addPage(formAddNewPageNumber = "2");
+
+		Form.editPageTitle(
+			formPageName = "Page C",
+			formTitleNumber = "3");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Contains",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Jump to Page",
+			actionRowNumber = "1",
+			actionTarget = "3 Page C");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		Form.viewPageName(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		Button.clickNext();
+
+		Form.viewPageName(
+			formPageName = "Page C",
+			formTitleNumber = "3");
 	}
 
 	@description = "Verify that a Multiple Selection Field can be previewed"

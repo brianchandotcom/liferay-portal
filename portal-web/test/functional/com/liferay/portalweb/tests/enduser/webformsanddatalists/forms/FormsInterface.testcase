@@ -283,14 +283,54 @@ definition {
 	}
 
 	@description = "Verify that Fields Groups can be reordered by DND"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsGroupsCanBeReorderedViaDND {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134247 FieldsGroupsCanBeReorderedViaDND pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Text",
+			key_fieldName = "Numeric");
+
+		Form.gotoFieldContainer(fieldName = "Fields Group");
+
+		FormFields.viewField(fieldName = "FieldsGroup");
+
+		FormFields.duplicateField();
+
+		Form.gotoFieldContainer(fieldName = "Copy of Fields Group");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Fields Group",
+			fieldPositionNumber = "0");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Copy of Fields Group",
+			fieldPositionNumber = "1");
+
+		Form.moveFieldToRow(
+			fieldLabel = "Copy of Fields Group",
+			fieldNameTarget = "FieldsGroup");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Fields Group",
+			fieldPositionNumber = "1");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Copy of Fields Group",
+			fieldPositionNumber = "0");
 	}
 
 	@description = "Verify that Fields Groups can be resized"

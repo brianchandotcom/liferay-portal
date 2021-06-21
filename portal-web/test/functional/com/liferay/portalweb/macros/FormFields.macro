@@ -1144,6 +1144,26 @@ definition {
 			locator1 = "FormFields#TEXT_FIELD_PLACEHOLDER");
 	}
 
+	macro viewFieldPosition {
+		if (isSet(formPageNumber)) {
+			key_formPageNumber = "${formPageNumber}";
+		}
+		else {
+			key_formPageNumber = "0";
+		}
+
+		if (isSet(fieldPositionNumber)) {
+			key_fieldPositionNumber = "${fieldPositionNumber}";
+		}
+		else {
+			key_fieldPositionNumber = "0";
+		}
+
+		key_fieldName = "${fieldLabel}";
+
+		AssertElementPresent(locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");
+	}
+
 	macro viewFieldPredefinedValue {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",

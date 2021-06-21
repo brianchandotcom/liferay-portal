@@ -616,6 +616,28 @@ definition {
 		Pause(locator1 = "1000");
 	}
 
+	macro moveFieldToRow {
+		if (isSet(formPageNumber)) {
+			key_formPageNumber = "${formPageNumber}";
+		}
+		else {
+			key_formPageNumber = "0";
+		}
+
+		if (isSet(fieldPositionNumber)) {
+			key_fieldPositionNumber = "${fieldPositionNumber}";
+		}
+		else {
+			key_fieldPositionNumber = "0";
+		}
+
+		DragAndDrop.javaScriptDragAndDropToUp(
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldNameTarget}",
+			locator1 = "FormFields#LABEL",
+			locator2 = "Form#ADD_FIELD_POSITION");
+	}
+
 	macro pageReset {
 		Click(
 			key_formPageNumber = "${pageIndex}",

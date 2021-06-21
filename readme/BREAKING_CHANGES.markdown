@@ -447,35 +447,25 @@ The configurable CSS compatibility layer simplified migrating from Liferay 7.0 t
 
 ---------------------------------------
 
-### item-selector-taglib no longer fires coverImage-related events
+### item-selector-taglib No Longer fires coverImage-related Events
 - **Date:** 2021-Apr-15
 - **JIRA Ticket:** [LPS-130359](https://issues.liferay.com/browse/LPS-130359)
 
 #### What changed?
 
-The `ImageSelector` JS module no longer fires the `coverImageDeleted`,
-`coverImageSelected`, and `coverImageUploaded` events using the `Liferay.fire()`
-API. These events were used for internal communication between the
-`item-selector-taglib` and the `blogs-web` module, but now state is synchronized
-between the two modules via the `Liferay.State` mechanism instead, using
-`imageSelectorCoverImageAtom`.
+The `ImageSelector` JavaScript module no longer fires the `coverImageDeleted`, `coverImageSelected`, and `coverImageUploaded` events using the `Liferay.fire()` API. These events facilitated communication between the `item-selector-taglib` module and `blogs-web` module. Now `Liferay.State` synchronizes the communication using `imageSelectorCoverImageAtom`.
 
 #### Who is affected?
 
-Anybody listening for the removed events with `Liferay.on()` or similar
-functions.
+This affects you if you are listening for the removed events with `Liferay.on()` or similar functions.
 
 #### How should I update my code?
 
-In practice, you should not be observing the interaction between these two
-modules, but if you must, you could instead use the `Liferay.State.subscribe()`
-API to subscribe to `imageSelectorCoverImageAtom`.
+In practice, you should not observe interaction between these two modules, but if you must, you could subscribe to `imageSelectorCoverImageAtom` using the `Liferay.State.subscribe()` API.
 
 #### Why was this change made?
 
-`Liferay.fire()` and `Liferay.on()` publish globally visible events on a shared
-channel. The `Liferay.State` API is a better fit for modules that wish to
-coordinate at a distance in this way, and it does so in a type-safe manner.
+`Liferay.fire()` and `Liferay.on()` publish globally visible events on a shared channel. The `Liferay.State` API is a better fit for modules that wish to coordinate at a distance in this way, and it does so in a type-safe manner.
 
 ---------------------------------------
 

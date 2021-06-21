@@ -13,7 +13,7 @@
  */
 
 export default function ({namespace}) {
-	const [form] = document.getElementsByName(`${namespace}fm`);
+	const form = document.getElementById(`${namespace}fm`);
 
 	const handleSubmit = () =>
 		Liferay.Util.getOpener()?.Liferay.fire(

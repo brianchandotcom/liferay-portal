@@ -79,6 +79,9 @@ public class CommercePricingClassUpgradeProcess
 			}
 		}
 
+		dropIndex(CommercePricingClassImpl.TABLE_NAME, "IX_34C73E9");
+		dropIndex(CommercePricingClassImpl.TABLE_NAME, "IX_8A3D0197");
+
 		dropColumn(CommercePricingClassImpl.TABLE_NAME, "groupId");
 	}
 

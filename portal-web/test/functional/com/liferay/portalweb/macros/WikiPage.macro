@@ -450,7 +450,16 @@ definition {
 	}
 
 	macro addPG {
-		WikiNavigator.gotoAddPageViaPG();
+		if (isSet(siteURLKey)) {
+			WikiNavigator.openToAddPage(
+				groupName = "${groupName}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
+				wikiNodeName = "${wikiNodeName}");
+		}
+		else {
+			WikiNavigator.gotoAddPageViaPG();
+		}
 
 		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
 
@@ -883,9 +892,19 @@ definition {
 	macro editPagePG {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
+		if (isSet(siteURLKey)) {
+			WikiNavigator.openToEditPage(
+				groupName = "${groupName}",
+				layoutURLKey = "${layoutURLKey}",
+				siteURLKey = "${siteURLKey}",
+				wikiNodeName = "${wikiNodeName}",
+				wikiPageTitle = "${wikiPageTitle}");
+		}
+		else {
+			Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Edit");
+			MenuItem.click(menuItem = "Edit");
+		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

@@ -175,14 +175,54 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be moved between pages"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeMovedBetweenPages {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133876 CanBeMovedBetweenPages pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Text",
+			key_fieldName = "Numeric");
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		Form.closeSidebar();
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldLabel = "Fields Group",
+			key_fieldPositionNumber = "0",
+			key_formPageNumber = "1",
+			locator1 = "FormFields#LABEL",
+			locator2 = "Form#ADD_FIELD_POSITION",
+			value1 = "");
+
+		FormFields.viewPaginationField(
+			key_currentPage = "2",
+			key_lastPage = "2");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		Form.viewPageEmptyField(pageIndex = "0");
 	}
 
 	@description = "Verify that a Fields Group can be repeatable"

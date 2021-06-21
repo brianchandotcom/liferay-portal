@@ -30,6 +30,13 @@ definition {
 			value1 = "${optionName}");
 	}
 
+	macro assertFieldsGroup {
+		AssertVisible(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldsGroupLabel = "${fieldGroupLabel}",
+			locator1 = "FormFields#FIELD_GROUP");
+	}
+
 	macro assertFieldsNotVisibleInFieldGroup {
 		for (var fieldFieldLabel : list "${fieldGroupLabelList}") {
 			AssertNotVisible(

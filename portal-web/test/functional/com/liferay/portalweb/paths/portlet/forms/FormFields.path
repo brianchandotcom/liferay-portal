@@ -31,6 +31,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_GROUP</td>
+	<td>//div[@class='ddm-field-types-fieldset__nested']//label[text()='Fields Group']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_REPEATABLE_FIELD_GROUP</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_REPEATABLE_FIELD_IN_FIELD_GROUP</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}]//div[@class='ddm-field' and contains(@data-field-name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_ADD</td>
 	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>

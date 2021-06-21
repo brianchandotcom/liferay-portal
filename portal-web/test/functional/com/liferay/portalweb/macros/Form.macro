@@ -512,6 +512,7 @@ definition {
 				locator1 = "Form#SIDEBAR_ELEMENTS_TAB_LOCALE",
 				value1 = "${key_localeElements}");
 		}
+
 		else {
 			AssertClick(
 				locator1 = "Form#SIDEBAR_ELEMENTS_TAB",

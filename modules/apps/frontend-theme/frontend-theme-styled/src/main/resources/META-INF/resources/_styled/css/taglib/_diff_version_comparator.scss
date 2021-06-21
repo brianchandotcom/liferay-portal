@@ -2,19 +2,44 @@
 	.taglib-diff-html {
 		.diff-html-changed {
 			background-image: none;
-			border-bottom-color: #009ae5;
+			border-bottom: 2px dotted #009ae5;
 
 			img {
 				border-color: #009ae5;
+				max-width: 100%;
 			}
+		}
+
+		.diff-added-image,
+		.diff-removed-image {
+			display: none;
+		}
+	}
+
+	.diff-container-column {
+		.diff-container {
+			min-height: 400px;
+		}
+
+		.legend-item {
+			margin-right: 15px;
 		}
 	}
 
 	.diff-target-selector {
-		border-left-color: #e5e5e5;
+		border-left: 1px solid #e5e5e5;
+		padding-left: 30px;
 	}
 
 	.diff-version-filter {
 		background-color: #f9f9f9;
+	}
+
+	.divider {
+		margin-bottom: 20px;
+	}
+
+	.list-group-item {
+		cursor: pointer;
 	}
 }

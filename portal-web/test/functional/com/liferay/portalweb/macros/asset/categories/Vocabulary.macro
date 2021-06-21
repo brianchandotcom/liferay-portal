@@ -290,7 +290,7 @@ definition {
 
 		Button.clickCancel();
 	}
-	
+
 	macro viewVocabularyAssociatedAssetTypesRequirement {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
@@ -302,7 +302,7 @@ definition {
 
 		Button.clickCancel();
 	}
-	
+
 	macro viewVocabularyPermissionsCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 

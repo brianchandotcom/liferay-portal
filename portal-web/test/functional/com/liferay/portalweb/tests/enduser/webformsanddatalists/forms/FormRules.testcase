@@ -224,14 +224,68 @@ definition {
 	}
 
 	@description = "Verify that the Condition label of a Rule changes when the corresponding Field's Label is edited"
-	@ignore = "True"
 	@priority = "5"
 	test ConditionIsUpdatedWhenFieldLabelIsEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134375 ConditionIsUpdatedWhenFieldLabelIsEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text",
+			formPageNumber = "0");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text",
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = "Text Test");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.viewConditionFieldSummary(
+			conditionField = "Text Test",
+			ruleNumber = "1");
+
+		FormRules.viewConditionOperatorSummary(
+			conditionOperator = "Is empty",
+			ruleNumber = "1");
 	}
 
 	@description = "This is a use case for LPS-70446."

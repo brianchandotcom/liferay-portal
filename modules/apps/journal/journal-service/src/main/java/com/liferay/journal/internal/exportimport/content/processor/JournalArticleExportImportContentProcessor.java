@@ -111,7 +111,11 @@ public class JournalArticleExportImportContentProcessor
 		String processedContent = _journalArticleExportImportCache.get(
 			sb.toString());
 
-		if (Validator.isNotNull(processedContent)) {
+		String path = ExportImportPathUtil.getModelPath(stagedModel);
+
+		if (Validator.isNotNull(processedContent) &&
+			portletDataContext.hasPrimaryKey(String.class, path)) {
+
 			Element entityElement = portletDataContext.getExportDataElement(
 				stagedModel);
 

@@ -165,33 +165,31 @@ It is a followup step to the [Liferay AssetEntries_AssetCategories Is No Longer 
 
 ---------------------------------------
 
-### The way we register display pages for entities has changed
+### Changed Entity Display Page Registration Tracking Logic
 - **Date:** 2020-Oct-27
 - **JIRA Ticket:** [LPS-122275](https://issues.liferay.com/browse/LPS-122275)
 
 #### What changed?
 
-The way default display pages are handled has changed. From Liferay Portal 7.1
-through Liferay Portal 7.3 the entities that had a default display page were
-persisted in the database while those that don't have display pages associated
-to them were ommited. This behaviour has been switched, so that the default
-display pages are not persisted and those entities that don't have a display
-page associated to them are tracked.
+The persisting (tracking) of entity associations with display pages has changed. In Liferay DXP/Portal versions 7.1 through 7.3, only entity associations with default display pages were persisted; entities with no display page associations and entity associations with specific, non-default display pages were not persisted. This change switches the behavior.
+
+Here is the new behavior:
+
+- Entities linked to a default display page are not persisted.
+- Entities that do not have a display page are persisted.
+- Entities that have a specific, non-default display page are persisted.
 
 #### Who is affected?
 
-Everyone with custom entities for which display pages can be created
+This affects you if you have custom entities for which display pages can be created.
 
 #### How should I update my code?
 
-If you have custom entities with display pages, we have created a base upgrade
-process (`BaseUpgradeAssetDisplayPageEntries`) that receives a table, primary
-key column name and a className, that will handle the swap logic.
+If you have custom entities with display pages, swap the display page logic by adding the `BaseUpgradeAssetDisplayPageEntries` upgrade process to your application. The process receives a table, primary key column name, and a class name.
 
 #### Why was this change made?
 
-This change was made to make the logic for display pages more consistent with
-the overall concept of display pages.
+This change makes the display page logic more consistent with the overall display page concept.
 
 ---------------------------------------
 

@@ -837,7 +837,9 @@ definition {
 		}
 
 		task ("View all web contents are selected in Asset Publisher") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(
+				key_title = "Asset Publisher",
+				locator1 = "IFrame#MODAL_ANY");
 
 			for (var n : list "1,2,3") {
 				AssertTextEquals(

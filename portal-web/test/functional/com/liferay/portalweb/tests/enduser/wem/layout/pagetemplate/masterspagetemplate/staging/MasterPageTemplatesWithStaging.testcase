@@ -267,4 +267,56 @@ definition {
 			locator1 = "Icon#ANY_DISABLED");
 	}
 
+	@description = "This is a test for LPS-124104. The page editor of content page based on custom master should be available in staging site."
+	@priority = "4"
+	test ViewPageEditorOfContentPageBasedOnCustomMasterInStagingSite {
+		task ("Add a Heading fragment to custom master") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Heading",
+				scope = "Master");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Add a content page based on custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name Staging");
+
+			PageEditor.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Navigate to the content page at edit mode in staging site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("View the Heading fragment is shown on header") {
+			AssertVisible(
+				key_fragmentName = "heading",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Add a Button fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("View the Button fragment on the page") {
+			AssertVisible(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+		}
+	}
+
 }

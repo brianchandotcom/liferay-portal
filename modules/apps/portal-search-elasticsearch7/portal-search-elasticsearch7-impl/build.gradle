@@ -41,7 +41,7 @@ dependencies {
 	compileInclude group: "log4j", name: "log4j", version: "1.2.17"
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.19"
 	compileInclude group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.4"
-	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.10"
+	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.12"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore-nio", version: "4.4.12"
 	compileInclude group: "org.apache.logging.log4j", name: "log4j-api", version: "2.13.3"

@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
@@ -219,7 +220,20 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 					operation.setTags(newTags);
 				}
 
-				operation.setOperationId(null);
+				String operationId = operation.getOperationId();
+
+				for (Map.Entry<String, String> entry :
+						schemaMappings.entrySet()) {
+
+					operationId = StringUtil.replace(
+						operationId, TextFormatter.formatPlural(entry.getKey()),
+						TextFormatter.formatPlural(entry.getValue()));
+
+					operationId = StringUtil.replace(
+						operationId, entry.getKey(), entry.getValue());
+				}
+
+				operation.setOperationId(operationId);
 
 				return super.filterOperation(
 					operation, apiDescription, params, cookies, headers);

@@ -94,26 +94,40 @@ definition {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 		}
 
-		task ("Assert configurations for vocabularies") {
-			for (var vocabularyName : list "Audience,Stage") {
-				AssertElementPresent(
-					key_vocabularyName = "${vocabularyName}",
-					locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE");
+		task ("Assert if Vocabulary is for internal use only") {
+			AssertElementPresent(
+				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE",
+				key_vocabularyName = "Audience");
 
-				Vocabulary.viewVocabularyAllowMultipleCAtegories(
-					label = "Allow Multiple Categories",
-					vocabularyName = "${vocabularyName}");
+			AssertElementPresent(
+				locator1 = "Categories#VOCABULARY_ICON_INTERNAL_USE",
+				key_vocabularyName = "Stage");
+		}
 
-				Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
-					label = "Required",
-					vocabularyName = "${vocabularyName}");
-			}
+		task ("Assert if Vocabulary allow multiple categories") {
+			Vocabulary.viewVocabularyAllowMultipleCAtegories(
+				label = "Allow Multiple Categories",
+				vocabularyName = "Audience");
+
+			Vocabulary.viewVocabularyAllowMultipleCAtegories(
+				label = "Allow Multiple Categories",
+				vocabularyName = "Stage");
+		}
+
+		task ("Assert if Asset Type is not requried") {
+			Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
+				label = "Required",
+				vocabularyName = "Audience");
+
+			Vocabulary.viewVocabularyAssociatedAssetTypesRequirement(
+				label = "Required",
+				vocabularyName = "Stage");
 		}
 	}
 
 	@description = "When the user clicks on the link to documentation, the documentation link is opened"
 	@priority = "3"
-	test OpenLiferayLearnCategoriesVocabulariesPage {
+	test OpenLiferayLearnCategoriesVocabulariesPage{
 		task ("Click on the Documentation link") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 

@@ -35,24 +35,9 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "user2@liferay.com");
 
-			User.logoutPG();
-
-			User.firstLoginPG(
-				password = "test",
-				userEmailAddress = "user2@liferay.com");
-
-			User.logoutPG();
-
-			User.loginPG();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.assignRegularRoleCP(
+			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
-				userScreenName = "user2");
+				userEmailAddress = "user2@liferay.com");
 		}
 	}
 
@@ -64,40 +49,43 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 
 	@description = "This case ensures that the user is notified when someone comments on their content page fragment."
 	@priority = "5"
-	@refactorneeded
-	test ViewComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewComment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addComment(
 			fragmentComment = "Comment by User 2",
 			fragmentName = "Title");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
@@ -119,11 +107,16 @@ definition {
 
 	@description = "This test covers LPS-101493. It ensures that a user who replies to a comment will receive further reply notifications."
 	@priority = "4"
-	@refactorneeded
-	test ViewCommentFurtherReply {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewCommentFurtherReply {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -133,51 +126,39 @@ definition {
 			fragmentComment = "Comment By User 1",
 			fragmentName = "Title");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentName = "Title");
 
 		PageEditor.replyToComment(commentReply = "Reply from User 2");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentName = "Title");
 
 		PageEditor.replyToComment(commentReply = "Reply from User Test");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
@@ -199,11 +180,16 @@ definition {
 
 	@description = "This case ensures that a user is notified when a reply is added to their comment."
 	@priority = "5"
-	@refactorneeded
-	test ViewCommentReply {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewCommentReply {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -213,30 +199,24 @@ definition {
 			fragmentComment = "Comment By User 1",
 			fragmentName = "Title");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentName = "Title");
 
 		PageEditor.replyToComment(commentReply = "Reply from User 2");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
@@ -258,19 +238,28 @@ definition {
 
 	@description = "This case ensures a user who is mentioned in a comment will receive notifications."
 	@priority = "4"
-	@refactorneeded
-	test ViewMentionFromComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewMentionFromComment {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-		ContentPages.clickPencil();
 
 		PageEditor.addComment(
 			fragmentComment = "Comment by Test",
@@ -278,11 +267,9 @@ definition {
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "user2");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",

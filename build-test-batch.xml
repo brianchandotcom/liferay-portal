@@ -4407,7 +4407,7 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-smoke-bundle-jboss72-mysql57-jdk8">
-		<antcall target="functional-bundle-jboss72-mysql57-jdk8">
+		<antcall target="functional-bundle-jboss72-mysql57-jdk8" />
 	</target>
 
 	<target name="functional-smoke-bundle-jboss73-mysql57-jdk8">

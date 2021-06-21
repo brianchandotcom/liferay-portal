@@ -435,16 +435,13 @@ definition {
 	}
 
 	macro chooseTransitionPerStep {
-
 		var key_taskName = "${taskName}";
-
 
 		Select(
 			locator1 = "WorkflowTransitionModal#TRANSITION_TO_BUTTON",
 			value1 = "${transitionOption}");
 
 		if (isSet(comment)) {
-
 			Click(locator1 = "WorkflowAllItems#ADD_COMMENT_BUTTON");
 
 			Type(

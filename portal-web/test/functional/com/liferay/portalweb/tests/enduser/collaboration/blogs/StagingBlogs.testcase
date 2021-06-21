@@ -228,12 +228,6 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Click(
-			key_listEntry = "Blogs Entry Title",
-			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
-
 		AssertElementNotPresent(
 			key_menuItem = "Share",
 			locator1 = "MenuItem#ANY_MENU_ITEM");

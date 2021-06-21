@@ -104,6 +104,22 @@ public class CPOptionFacetsPortlet
 			SearchContext searchContext =
 				portletSharedSearchSettings.getSearchContext();
 
+			SerializableFacet serializableFacet = new SerializableFacet(
+				CPField.OPTION_NAMES, searchContext);
+
+			Optional<String[]> parameterValuesOptional =
+				portletSharedSearchSettings.getParameterValues71(
+					CPField.OPTION_NAMES);
+
+			if (parameterValuesOptional.isPresent()) {
+				serializableFacet.select(parameterValuesOptional.get());
+
+				searchContext.setAttribute(
+					CPField.OPTION_NAMES, parameterValuesOptional.get());
+			}
+
+			portletSharedSearchSettings.addFacet(serializableFacet);
+
 			List<Facet> facets = getFacets(renderRequest);
 
 			for (Facet facet : facets) {
@@ -111,11 +127,11 @@ public class CPOptionFacetsPortlet
 					CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(
 						facet.getFieldName());
 
-				Optional<String[]> parameterValuesOptional =
+				parameterValuesOptional =
 					portletSharedSearchSettings.getParameterValues71(
 						cpOptionKey);
 
-				SerializableFacet serializableFacet = new SerializableFacet(
+				serializableFacet = new SerializableFacet(
 					facet.getFieldName(), searchContext);
 
 				if (parameterValuesOptional.isPresent()) {
@@ -176,13 +192,29 @@ public class CPOptionFacetsPortlet
 			portletSharedSearchRequest.search(renderRequest);
 
 		try {
-			List<Facet> facets = getFacets(renderRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			List<Facet> filledFacets = new ArrayList<>(facets.size());
+			List<Facet> filledFacets = new ArrayList<>();
 
-			for (Facet facet : facets) {
-				filledFacets.add(
-					portletSharedSearchResponse.getFacet(facet.getFieldName()));
+			Facet facet = portletSharedSearchResponse.getFacet(
+				CPField.OPTION_NAMES);
+
+			FacetCollector facetCollector = facet.getFacetCollector();
+
+			for (TermCollector termCollector :
+					facetCollector.getTermCollectors()) {
+
+				CPOption cpOption = _cpOptionLocalService.getCPOption(
+					themeDisplay.getCompanyId(), termCollector.getTerm());
+
+				if (cpOption.isFacetable()) {
+					filledFacets.add(
+						portletSharedSearchResponse.getFacet(
+							CPOptionFacetsUtil.getIndexFieldName(
+								termCollector.getTerm(),
+								themeDisplay.getLanguageId())));
+				}
 			}
 
 			CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext =

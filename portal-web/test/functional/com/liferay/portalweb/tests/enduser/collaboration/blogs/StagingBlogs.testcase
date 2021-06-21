@@ -62,15 +62,14 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanPublishEntryViaSAP {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site name-staging");
+
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");
-
-		// Need to check if we can add blog entry directly to staging via JSON
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
@@ -216,13 +215,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		BlogsNavigator.openToStagingCP(
-			groupName = "Site Name",
-			siteURLKey = "site-name-staging");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site name-staging");
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
@@ -319,13 +315,10 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test StagingLocalLiveLockAndEditBlogsEntry {
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name-staging");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",

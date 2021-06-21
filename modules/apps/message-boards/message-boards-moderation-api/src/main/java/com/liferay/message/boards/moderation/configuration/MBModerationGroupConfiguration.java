@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.moderation.internal.configuration;
+package com.liferay.message.boards.moderation.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration",
+	id = "com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration",
 	localization = "content/Language",
 	name = "message-boards-moderation-workflow-group-configuration-name"
 )

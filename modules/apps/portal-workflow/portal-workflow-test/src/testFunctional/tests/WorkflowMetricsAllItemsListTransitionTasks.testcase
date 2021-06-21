@@ -158,7 +158,6 @@ definition {
 	@description = "LPS-108138 - Verify that the message -Select a transition- and -All steps require a transition to be selected to complete this action.- are displayed when the user clicks on Done without selecting all transitions"
 	@priority = "3"
 	test MessageIsDisplayedWhenSomeTransitionIsNotSelected {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -198,13 +197,9 @@ definition {
 
 		Button.clickDone();
 
-
 		AssertElementPresent(
 			key_errorMessage = "All steps require a transition to be selected to complete this action.",
 			locator1 = "WorkflowTransitionModal#TRANSITION_ERROR_MESSAGE");
-
-
-
 	}
 
 	@description = "LPS-108138 - Verify that, in -Choose Transition Per Step- modal, the user can add comments when transitioning tasks"

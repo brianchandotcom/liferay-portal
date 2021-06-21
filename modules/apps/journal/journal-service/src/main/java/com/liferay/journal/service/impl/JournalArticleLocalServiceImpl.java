@@ -1072,11 +1072,6 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setStatusByUserName(user.getFullName());
 		newArticle.setStatusDate(modifiedDate);
 
-		ExpandoBridgeUtil.copyExpandoBridgeAttributes(
-			oldArticle.getExpandoBridge(), newArticle.getExpandoBridge());
-
-		// Article localization
-
 		int uniqueUrlTitleCount = _getUniqueUrlTitleCount(
 			groupId, newArticleId,
 			JournalUtil.getUrlTitle(id, oldArticle.getUrlTitle()));
@@ -1114,7 +1109,12 @@ public class JournalArticleLocalServiceImpl
 
 		newArticle.setUrlTitle(newURLTitle);
 
+		ExpandoBridgeUtil.copyExpandoBridgeAttributes(
+			oldArticle.getExpandoBridge(), newArticle.getExpandoBridge());
+
 		newArticle = journalArticlePersistence.update(newArticle);
+
+		// Article localization
 
 		Map<Locale, String> friendlyURLMap = _checkFriendlyURLMap(
 			locale, new HashMap(), newTitleMap);

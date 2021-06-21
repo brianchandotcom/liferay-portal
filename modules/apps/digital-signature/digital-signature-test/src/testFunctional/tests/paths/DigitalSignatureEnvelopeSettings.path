@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>DigitalSignatureEnvelopeSettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DigitalSignatureEnvelopeSettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL</td>
+	<td>//*//div[contains(@class,'card card-interactive')]//*[contains(text(),'${dmDocumentTitle}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

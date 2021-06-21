@@ -1124,14 +1124,45 @@ definition {
 	}
 
 	@description = "Verify that a Rule creation can be canceled"
-	@ignore = "True"
 	@priority = "5"
 	test CreationCanBeCanceled {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134374 CreationCanBeCanceled pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text",
+			formPageNumber = "0");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.cancel();
+
+		AssertElementPresent(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
+
+		FormRules.viewNoRules();
 	}
 
 	@description = "This is a use case for LPS-119818."

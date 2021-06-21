@@ -40,7 +40,7 @@ public class IsURLDDMValidation implements DDMValidation {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"is-url");
+			"is-a-url");
 	}
 
 	@Override

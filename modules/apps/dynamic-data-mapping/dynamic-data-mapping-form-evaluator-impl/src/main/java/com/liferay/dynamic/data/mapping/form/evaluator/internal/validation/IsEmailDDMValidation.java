@@ -40,7 +40,7 @@ public class IsEmailDDMValidation implements DDMValidation {
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"is-email");
+			"is-an-email");
 	}
 
 	@Override

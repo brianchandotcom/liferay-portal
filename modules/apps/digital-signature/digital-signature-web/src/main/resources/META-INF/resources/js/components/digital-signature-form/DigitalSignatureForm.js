@@ -197,7 +197,9 @@ const DigitalSignatureForm = ({fileEntries = [], history}) => {
 
 						<ClayButton
 							disabled={
-								!isValid || isSubmitting || !values.envelopeName
+								!isValid ||
+								isSubmitting ||
+								!values.fileEntries.length
 							}
 							type="submit"
 						>

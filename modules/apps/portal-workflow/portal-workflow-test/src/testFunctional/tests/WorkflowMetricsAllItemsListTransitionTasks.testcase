@@ -205,7 +205,6 @@ definition {
 	@description = "LPS-108138 - Verify that, in -Choose Transition Per Step- modal, the user can add comments when transitioning tasks"
 	@priority = "4"
 	test OnChooseTransitionPerStepCanAddCommentToATransitionTask {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -259,7 +258,6 @@ definition {
 		Workflow._viewActivities(
 			workflowActivityComment = "Test",
 			workflowAssetTitle = "Blogs Entry Title 2");
-
 	}
 
 	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by assignees"

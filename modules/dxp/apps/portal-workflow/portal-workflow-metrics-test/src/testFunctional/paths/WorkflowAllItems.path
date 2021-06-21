@@ -156,6 +156,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAIL_PAGE_GO_TO_SUBMISSION_PAGE</td>
+	<td>//button[contains(text(),'Go to Submission Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_GO_TO_SUBMISSION_PAGE_TOOLTIP</td>
+	<td>//button[contains(@title,'Open Page in a New Tab') and contains (@data-tooltip-align,'bottom')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAIL_PAGE_PROCESS_STATUS</td>
 	<td>//h4[contains(.,'Process Details')]//following-sibling::p[1][contains(.,'Process Status')]//following-sibling::span[1]</td>
 	<td></td>

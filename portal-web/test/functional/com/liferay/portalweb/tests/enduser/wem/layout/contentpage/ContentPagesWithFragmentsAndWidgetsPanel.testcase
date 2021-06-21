@@ -62,10 +62,6 @@ definition {
 			AssertVisible(
 				key_displayStyle = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
-
-			MouseOver(
-				key_sidebarButton = "Fragments and Widgets",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 		}
 
 		task ("View the tooltip when hover on the display style button") {
@@ -86,10 +82,6 @@ definition {
 			AssertVisible(
 				key_displayStyle = "list",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
-
-			MouseOver(
-				key_sidebarButton = "Fragments and Widgets",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 		}
 
 		task ("View the tooltip when hover on the display style button") {
@@ -114,10 +106,6 @@ definition {
 			AssertVisible(
 				key_displayStyle = "card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
-
-			MouseOver(
-				key_sidebarButton = "Fragments and Widgets",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 		}
 
 		task ("View the tooltip when hover on the display style button") {

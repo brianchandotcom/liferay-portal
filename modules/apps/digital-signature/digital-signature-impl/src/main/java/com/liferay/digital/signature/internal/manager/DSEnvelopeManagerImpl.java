@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -85,7 +88,15 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public void deleteDSEnvelopes(
-		long companyId, long groupId, String... dsEnvelopeIds) {
+			long companyId, long groupId, String... dsEnvelopeIds)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
 
 		_dsHttp.put(
 			companyId, groupId, "folders/recyclebin",

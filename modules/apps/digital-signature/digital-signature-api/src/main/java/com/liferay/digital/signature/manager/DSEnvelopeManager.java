@@ -30,7 +30,8 @@ public interface DSEnvelopeManager {
 		long companyId, long groupId, DSEnvelope dsEnvelope);
 
 	public void deleteDSEnvelopes(
-		long companyId, long groupId, String... dsEnvelopeIds);
+			long companyId, long groupId, String... dsEnvelopeIds)
+		throws Exception;
 
 	public DSEnvelope getDSEnvelope(
 		long companyId, long groupId, String dsEnvelopeId);

@@ -18,9 +18,6 @@ import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -51,17 +48,6 @@ public class DeleteDSEnvelopeMVCActionCommand extends BaseMVCActionCommand {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
-			SessionErrors.add(actionRequest, PrincipalException.class);
-
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
-
-			return;
-		}
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),

@@ -1,7 +1,37 @@
+$dark-color: #272833;
+$light-color: #e7e7ed;
+
 .taglib-discussion {
+	$discussion-indent: 1rem;
+	$discussion-indent-sm: 3.5rem;
+	$discussion-margin-button: 1.5rem;
+
+	font-size: 0.875rem;
+	margin-top: 1rem;
+
+	.actions-menu .component-action {
+		display: inline-flex;
+	}
+
+	.button-holder {
+		margin: 1rem 0;
+	}
+
+	.comment-container {
+		margin-bottom: $discussion-margin-button;
+	}
+
 	.lfr-discussion {
 		.lfr-discussion-form-edit .alloy-editor-placeholder {
 			border-left-color: #dbdde1;
+		}
+	}
+
+	.lfr-discussion-body {
+		font-size: 1rem;
+
+		@include media-breakpoint-up(sm) {
+			padding-left: $discussion-indent-sm;
 		}
 	}
 
@@ -26,26 +56,91 @@
 		}
 	}
 
-	.lfr-discussion-actions li a {
-		&,
-		span {
-			text-decoration: none;
+	.lfr-discussion-container {
+		border-bottom: 1px solid $light-color;
+		margin-bottom: $discussion-margin-button;
+
+		&:first-of-type {
+			border-top: 1px solid $light-color;
+			padding-top: 1.5rem;
 		}
 
-		&:hover,
-		&:focus {
-			span {
-				text-decoration: underline;
+		&:last-of-type {
+			border-bottom: 0;
+		}
+
+		.lfr-discussion {
+			padding-left: $discussion-indent;
+
+			// limit the level of nesting
+
+			.lfr-discussion .lfr-discussion .lfr-discussion {
+				padding-left: 0;
+			}
+
+			@include media-breakpoint-up(sm) {
+				padding-left: $discussion-indent-sm;
 			}
 		}
 	}
 
-	.lfr-discussion-form-container .lfr-discussion-form {
-		background: #ddd;
-		border-radius: 4px;
+	.lfr-discussion-parent-link {
+		color: #67678c;
+		font-weight: 600;
+		margin-left: 1em;
 
-		.taglib-user-display .user-profile-image .avatar {
-			background-size: 40px;
+		@include media-breakpoint-down(sm) {
+			display: block;
+			margin-left: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
+	}
+
+	.lfr-discussion-controls
+		.autofit-col:first-of-type
+		> .btn-outline-borderless {
+		margin-left: -0.75rem;
+	}
+
+	.lfr-discussion-more-comments {
+		border-top: 1px solid $light-color;
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		text-align: center;
+	}
+
+	.username {
+		color: $dark-color;
+		font-weight: 600;
+	}
+
+	.taglib-workflow-status {
+		margin-left: 0.5rem;
+	}
+
+	.workflow-value {
+		text-transform: uppercase;
+	}
+
+	@include media-breakpoint-up(sm) {
+		.actions-menu {
+			display: none;
+		}
+
+		.comment-container:hover .actions-menu,
+		.actions-menu:focus,
+		.actions-menu.open {
+			display: inline-block;
+		}
+	}
+}
+
+.lfr-discussion-reply-popover {
+	width: 25rem;
+
+	@include media-breakpoint-up(sm) {
+		max-width: 25rem;
 	}
 }

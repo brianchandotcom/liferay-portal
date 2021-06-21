@@ -141,35 +141,27 @@ This change supports container environments better and unifies the API to do OSG
 
 ---------------------------------------
 
-### The AssetEntries_AssetCategories table and its corresponding code have been removed from the portal
+### Removed the AssetEntries_AssetCategories Table and Corresponding Code
 - **Date:** 2020-Oct-16
 - **JIRA Ticket:** [LPS-89065](https://issues.liferay.com/browse/LPS-89065)
 
 #### What changed?
 
-AssetEntries_AssetCategories and its corresponding code have been removed from
-the portal. In 7.2, this mapping table and the corresponding interface were
-replaced by the table AssetEntryAssetCategoryRel and the service
-AssetEntryAssetCategoryRelLocalService.
+The `AssetEntries_AssetCategories` mapping table and its corresponding code have been removed.
 
 #### Who is affected?
 
-This affects any content or code that relies on calling the old interfaces for
-the AssetEntries_AssetCategories relationship, through the
-AssetEntryLocalService and AssetCategoryLocalService.
+This affects you if you use `AssetEntryLocalService` and `AssetCategoryLocalService` to operate on relationships between asset entries and asset categories.
 
 #### How should I update my code?
 
-Use the new methods in AssetEntryAssetCategoryRelLocalService to retrieve the
-same data as before. The method signatures haven't changed; they have just been
-relocated to a different service.
+Use the new methods in `AssetEntryAssetCategoryRelLocalService`. Note, that the method signatures are the same as they were in `AssetEntryAssetCategoryRelLocalService`.
 
 #### Why was this change made?
 
-This change was made due to changes resulting from [LPS-76488](https://issues.liferay.com/browse/LPS-76488),
-which let developers control the order of a list of assets for a given category.
-The breaking changes regarding the service replacement were notified on
-2019-Sep-11, this would be the final step to removing the table.
+This change removes an unnecessary table and corresponding code.
+
+It is a followup step to the [Liferay AssetEntries_AssetCategories Is No Longer Used](https://learn.liferay.com/dxp/latest/en/liferay-internals/reference/7-2-breaking-changes.html#liferay-assetentries-assetcategories-is-no-longer-used) 7.2 breaking change where the table was replaced by the `AssetEntryAssetCategoryRel` table and the corresponding interfaces in `AssetEntryLocalService` and `AssetCategoryLocalService` were moved into `AssetEntryAssetCategoryRelLocalService`.
 
 ---------------------------------------
 

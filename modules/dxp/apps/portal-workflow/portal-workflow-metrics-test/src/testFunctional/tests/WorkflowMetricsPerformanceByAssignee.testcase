@@ -324,12 +324,19 @@ definition {
 	}
 
 	@description = "LPS-99441 - Verify that when there are no completed items, the table inside Performance by Assignee page is displaying the specific empty state"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PageDisplaysSpecificEmptyStateWhenThereAreNoCompletedItems {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67717 PageDisplaysSpecificEmptyStateWhenThereAreNoCompletedItems pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		WorkflowMetrics.checkCompletedWorkflowValues(
+			key_completed = "0",
+			key_ontime = "0",
+			key_overdue = "0",
+			key_untracked = "0");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByAssignee#METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS");
 	}
 
 	@description = "LPS-99441 - Verify that when there is an unexpected error in Performance by Assignee page, the table displays the specific error state"

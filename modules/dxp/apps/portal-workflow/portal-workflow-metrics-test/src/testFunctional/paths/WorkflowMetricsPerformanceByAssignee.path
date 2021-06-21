@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>WorkflowMetricsPerformanceByAssignee</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowMetricsPerformanceByAssignee</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS</td>
+    <td>//p[contains(text(),'There is no data at the moment.')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

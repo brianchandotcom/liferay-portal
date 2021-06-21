@@ -47,28 +47,20 @@ else if (collapsible) {
 						<%= header %>
 					</legend>
 
-					<div class="panel-heading" id="<%= id %>Header" role="presentation">
-						<div id="<%= id %>Title">
-							<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon <%= collapsed ? "collapsed" : StringPool.BLANK %> sheet-subtitle" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">
-								<span aria-hidden="true">
-									<%= header %>
-								</span>
+					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon <%= collapsed ? "collapsed" : StringPool.BLANK %> sheet-subtitle" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">
+						<span aria-hidden="true">
+							<%= header %>
+						</span>
 
-								<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 
-								<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-							</a>
-						</div>
-					</div>
+						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+					</a>
 				</c:when>
 				<c:otherwise>
 					<legend class="fieldset-legend">
 						<span class="legend">
-							<div class="panel-heading" id="<%= id %>Header" role="presentation">
-								<div id="<%= id %>Title">
-									<h3 class="sheet-subtitle"><%= header %></h3>
-								</div>
-							</div>
+							<h3 class="sheet-subtitle"><%= header %></h3>
 						</span>
 					</legend>
 				</c:otherwise>

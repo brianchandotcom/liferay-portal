@@ -425,6 +425,11 @@
 	<td>//th[contains(text(),'${key_columnName}')]/../../../../..//td[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BUTTON_GO_TO_SUBMISSION_PAGE</td>
+	<td>//button[@title="Open Page in a New Tab"]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

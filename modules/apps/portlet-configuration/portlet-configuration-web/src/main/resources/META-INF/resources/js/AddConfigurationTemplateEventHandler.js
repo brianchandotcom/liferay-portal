@@ -16,8 +16,10 @@ export default function ({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	const handleSubmit = () =>
-		Liferay.Util.getOpener()?.Liferay.fire(
-			'addPortletConfigurationTemplate'
+		Liferay.once('destroyPortlet', () =>
+			Liferay.Util.getOpener()?.Liferay.fire(
+				'addPortletConfigurationTemplate'
+			)
 		);
 
 	form?.addEventListener('submit', handleSubmit);

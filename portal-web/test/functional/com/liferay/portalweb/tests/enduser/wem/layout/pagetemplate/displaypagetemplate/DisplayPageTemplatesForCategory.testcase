@@ -717,7 +717,7 @@ definition {
 			AssertVisible(
 				id = "03-link",
 				key_position = "1",
-				key_text = "/web/test-site-name/v/${categoryId}",
+				key_text = "/en/web/test-site-name/v/${categoryId}",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(

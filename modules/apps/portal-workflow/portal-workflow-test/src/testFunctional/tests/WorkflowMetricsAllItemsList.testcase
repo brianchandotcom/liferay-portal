@@ -112,12 +112,60 @@ definition {
 	}
 
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ClickOnProcessIdColumnToSeeItemDetailsPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67736 ClickOnProcessIdColumnToSeeItemDetailsPage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_ASSET_TITLE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_ASSET_TYPE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATED_BY");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATION_DATE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_PROCESS_STATUS");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_MESSAGE");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_TITLE");
 	}
 
 	@description = "LPS-86652 - Verify that every column displays the correct info for a item"

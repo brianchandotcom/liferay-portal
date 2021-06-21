@@ -357,24 +357,21 @@ SPI was removed by [LPS-110758](https://issues.liferay.com/browse/LPS-110758).
 
 ---------------------------------------
 
-### Deprecated attributes have been removed from the frontend-taglib-clay tags
+### Removed Deprecated Attributes From the frontend-taglib-clay Tags
 - **Date:** 2021-Jan-26
 - **JIRA Ticket:** [LPS-125256](https://issues.liferay.com/browse/LPS-125256)
 
 #### What changed?
 
-The deprecated attributes have been removed from the `frontend-taglib-clay`
-taglib.
+The deprecated attributes have been removed from the `frontend-taglib-clay` TagLib.
 
 #### Who is affected?
 
-Anyone using deprecated attributes for `<clay:*>` tags.
+This affects you if you use deprecated attributes in `<clay:*>` tags.
 
 #### Why was this change made?
 
-The `frontend-taglib-clay` module is now using components from
-[`Clay v3`](https://github.com/liferay/clay), which doesn't support the
-previous attributes.
+The `frontend-taglib-clay` module is now using components from [`Clay v3`](https://github.com/liferay/clay), which does not support the removed attributes.
 
 ---------------------------------------
 

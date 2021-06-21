@@ -144,15 +144,15 @@ describe('Field Numeric', () => {
 		expect(output).toBe('30');
 	});
 
-	it('check field value is rounded when fieldType is integer but it receives a double', () => {
+	it('check field value is the same without decimal symbol when fieldType is integer but it receives a double', () => {
 		const {container} = render(<Numeric value="3.8" />);
 
 		const input = container.querySelector('input');
 
-		expect(input.value).toBe('4');
+		expect(input.value).toBe('38');
 	});
 
-	it('round up value when changing from decimal to integer when symbol of language is comma', () => {
+	it('remove decimal symbol from value when changing from decimal to integer when symbol of language is comma', () => {
 		const {container} = render(
 			<Numeric
 				dataType="integer"
@@ -161,7 +161,7 @@ describe('Field Numeric', () => {
 			/>
 		);
 
-		expect(container.querySelector('input').value).toBe('23');
+		expect(container.querySelector('input').value).toBe('2282');
 	});
 
 	describe('Confirmation Field', () => {
@@ -182,7 +182,7 @@ describe('Field Numeric', () => {
 			expect(confirmationField.value).toBe('22.82');
 		});
 
-		it('rounds the confirmation value if the data type is Integer', () => {
+		it('remove decimal symbol of the confirmation value if the data type is Integer', () => {
 			render(
 				<Numeric
 					confirmationValue="22.82"
@@ -196,7 +196,7 @@ describe('Field Numeric', () => {
 				'numericFieldconfirmationField'
 			);
 
-			expect(confirmationField.value).toBe('23');
+			expect(confirmationField.value).toBe('2282');
 		});
 	});
 

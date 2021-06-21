@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_STOP_OPTION</td>
-	<td>//ul[@id='dropDownListstop']//span[text() = '${key_slaDefinitionEnd}']</td>
+	<td>//ul[contains(@id,'dropDownListstop')]//span[contains(text(),'${key_slaDefinitionEnd}')]</td>
 	<td></td>
 </tr>
 <tr>

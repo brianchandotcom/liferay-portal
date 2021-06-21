@@ -168,14 +168,34 @@ definition {
 	}
 
 	@description = "Verify that the OR operator on Condition is disabled by default"
-	@ignore = "True"
 	@priority = "5"
 	test OrOperatorisDisabledByDefault {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134388 OrOperatorisDisabledByDefault pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.viewRuleConditionDropdownDisabled();
 	}
 
 }

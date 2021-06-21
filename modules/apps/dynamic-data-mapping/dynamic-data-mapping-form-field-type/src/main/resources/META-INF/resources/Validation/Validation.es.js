@@ -18,7 +18,7 @@ import {useFormState} from 'data-engine-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import Checkbox from '../Checkbox/Checkbox.es';
-import Numeric from '../Numeric/Numeric.es';
+import Numeric from '../Numeric/Numeric';
 import Select from '../Select/Select.es';
 import Text from '../Text/Text.es';
 import {subWords} from '../util/strings.es';

@@ -48,7 +48,7 @@ public class NumericDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/Numeric/Numeric.es";
+		return "dynamic-data-mapping-form-field-type/Numeric/Numeric";
 	}
 
 	@Override

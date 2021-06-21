@@ -24,7 +24,7 @@ import Date from 'dynamic-data-mapping-form-field-type/DatePicker/DatePicker.es'
 import DocumentLibrary from 'dynamic-data-mapping-form-field-type/DocumentLibrary/DocumentLibrary.es';
 import Grid from 'dynamic-data-mapping-form-field-type/Grid/Grid.es';
 import Image from 'dynamic-data-mapping-form-field-type/ImagePicker/ImagePicker.es';
-import Numeric from 'dynamic-data-mapping-form-field-type/Numeric/Numeric.es';
+import Numeric from 'dynamic-data-mapping-form-field-type/Numeric/Numeric';
 import RichText from 'dynamic-data-mapping-form-field-type/RichText/RichText.es';
 import Select from 'dynamic-data-mapping-form-field-type/Select/Select.es';
 import Text from 'dynamic-data-mapping-form-field-type/Text/Text.es';

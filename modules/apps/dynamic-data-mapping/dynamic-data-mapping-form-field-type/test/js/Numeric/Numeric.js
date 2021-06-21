@@ -16,7 +16,7 @@ import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric.es';
+import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric';
 
 const globalLanguageDirection = Liferay.Language.direction;
 

@@ -4114,7 +4114,7 @@
 		"displayOrder": 7,
 		"group": "basic",
 		"icon": "integer",
-		"javaScriptModule": "dynamic-data-mapping-form-field-type@6.0.23/Numeric/Numeric.es",
+		"javaScriptModule": "dynamic-data-mapping-form-field-type@6.0.23/Numeric/Numeric",
 		"label": "Numeric",
 		"name": "numeric",
 		"scope": "document-library,forms,journal",

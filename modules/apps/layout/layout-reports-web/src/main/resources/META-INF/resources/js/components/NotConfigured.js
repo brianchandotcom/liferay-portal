@@ -25,7 +25,7 @@ export default function NotConfigured() {
 	const defaultIllustration = `${imagesPath}/issues_default.svg`;
 
 	return (
-		<div className="p-3 text-center">
+		<div className="pb-3 px-3 text-center">
 			<img
 				alt={Liferay.Language.get(
 					'default-page-audit-image-alt-description'

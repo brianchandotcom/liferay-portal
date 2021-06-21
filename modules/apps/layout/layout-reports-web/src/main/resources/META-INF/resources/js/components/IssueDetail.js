@@ -27,7 +27,7 @@ export default function IssueDetail() {
 	const {selectedIssue} = useContext(StoreStateContext);
 
 	return (
-		<div className="p-3">
+		<div className="pb-3 px-3">
 			<ClayPanel.Group className="panel-group-flush panel-group-sm">
 				<HtmlPanel
 					content={selectedIssue.description}

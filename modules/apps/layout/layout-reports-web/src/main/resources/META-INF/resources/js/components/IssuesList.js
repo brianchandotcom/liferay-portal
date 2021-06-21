@@ -53,7 +53,7 @@ export default function IssuesList() {
 	const successImage = `${imagesPath}/issues_success.gif`;
 
 	return (
-		<div className="p-3">
+		<div className="pb-3 px-3">
 			<BasicInformation
 				defaultLanguageId={defaultLanguageId}
 				pageURLs={pageURLs}

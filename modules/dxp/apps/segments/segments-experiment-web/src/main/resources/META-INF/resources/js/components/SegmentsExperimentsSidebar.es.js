@@ -87,7 +87,7 @@ function SegmentsExperimentsSidebar({
 	return page.type === 'content' ? (
 		<DispatchContext.Provider value={dispatch}>
 			<StateContext.Provider value={state}>
-				<div className="p-3">
+				<div className="pb-3 px-3">
 					<SegmentsExperiments
 						onCreateSegmentsExperiment={
 							_handleCreateSegmentsExperiment

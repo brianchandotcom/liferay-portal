@@ -32,7 +32,7 @@ export default function Main({
 	viewURLs,
 }) {
 	return (
-		<div className="c-p-3">
+		<div className="pb-3 px-3">
 			<BasicInformation
 				author={author}
 				canonicalURL={canonicalURL}

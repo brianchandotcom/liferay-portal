@@ -34,4 +34,62 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro createEnvelope {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "${dmDocumentFile}",
+			dmDocumentTitle = "DM Document Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		LexiconEntry.gotoAdd();
+
+		Type(
+			key_text = "Envelope Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${envelopeName}");
+		
+		Type(
+			key_text = "Recipient Full Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${recipientFullName}");
+		
+		Type(
+			key_text = "Email Subject",
+			locator1 = "TextInput#ANY",
+			value1 = "${emailSubject}");
+
+		Type(
+			key_text = "Recipient Email",
+			locator1 = "TextInput#ANY",
+			value1 = "${recipientEmail}");
+
+		Type(
+			key_text = "emailMessage",
+			locator1 = "TextArea#ANY",
+			value1 = "${emailMessage}");
+
+		Click(
+			key_text = "Add Document",
+			locator1 = "Button#ANY_WITH_SPAN");
+
+		while (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME")) {
+			Pause(locator1 = "1000");
+		}
+
+		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
+
+		Click(
+			dmDocumentTitle = "DM Document Title",
+			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
+
+		Button.click(button = "Send");
+	}
+
 }

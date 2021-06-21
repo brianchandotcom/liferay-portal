@@ -62,6 +62,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -163,7 +165,12 @@ public class DLReferencesExportImportContentProcessor
 
 			if (Objects.equals(pathArray[2], "portlet_file_entry")) {
 				map.put("groupId", new String[] {pathArray[3]});
-				map.put("title", new String[] {_http.decodeURL(pathArray[4])});
+				map.put(
+					"title",
+					new String[] {
+						StringUtils.substringBefore(
+							_http.decodeURL(pathArray[4]), StringPool.POUND)
+					});
 			}
 			else {
 				map.put("groupId", new String[] {pathArray[2]});
@@ -171,7 +178,11 @@ public class DLReferencesExportImportContentProcessor
 				if (pathArray.length == 5) {
 					map.put("folderId", new String[] {pathArray[3]});
 					map.put(
-						"title", new String[] {_http.decodeURL(pathArray[4])});
+						"title",
+						new String[] {
+							StringUtils.substringBefore(
+								_http.decodeURL(pathArray[4]), StringPool.POUND)
+						});
 				}
 			}
 

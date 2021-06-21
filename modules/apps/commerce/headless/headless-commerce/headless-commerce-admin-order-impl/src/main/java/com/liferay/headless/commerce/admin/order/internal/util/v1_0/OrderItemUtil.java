@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -60,6 +61,10 @@ public class OrderItemUtil {
 			cpInstance = cpInstanceService.fetchByExternalReferenceCode(
 				orderItem.getSkuExternalReferenceCode(),
 				serviceContext.getCompanyId());
+		}
+
+		if (cpInstance == null) {
+			throw new CPInstanceSkuException();
 		}
 
 		CommerceOrderItem commerceOrderItem =

@@ -79,7 +79,7 @@ public class ConfigurationEnvBuilderTest {
 			});
 
 		Assert.assertEquals(
-			"Run \"ant generate-config-env\" to regenerate " +
+			"Run \"ant generate-configuration-env\" to regenerate " +
 				"modules/configuration-env.txt.",
 			ConfigurationEnvBuilder.buildContent(
 				configurationJavaFileNames.toArray(new String[0])),

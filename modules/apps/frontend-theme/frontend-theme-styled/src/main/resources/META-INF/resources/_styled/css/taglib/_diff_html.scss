@@ -10,7 +10,11 @@
 
 		&.diff-removed-image,
 		&.diff-added-image {
+			height: 300px;
+			margin: 2px;
 			opacity: 0.55;
+			position: absolute;
+			width: 200px;
 		}
 	}
 
@@ -20,7 +24,7 @@
 			font-size: 1em;
 
 			img {
-				border-color: #cfc;
+				border: 2px solid #cfc;
 			}
 		}
 
@@ -28,7 +32,7 @@
 			background: url(../images/diff/underline.png) bottom repeat-x;
 
 			img {
-				border-color: #009;
+				border: 2px dotted #009;
 			}
 		}
 
@@ -38,7 +42,7 @@
 			text-decoration: line-through;
 
 			img {
-				border-color: #fdc6c6;
+				border: 2px solid #fdc6c6;
 			}
 		}
 	}

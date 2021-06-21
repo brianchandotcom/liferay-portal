@@ -25,6 +25,16 @@
 	<td>//h4[text()='${key_taskName}']/parent::div/following-sibling::div[1]//select//option[@value='${key_transitionOption}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TRANSITION_MODAL_CHECKBOX_ITEM</td>
+	<td>//tbody/tr[@class][${key_task}]/td/div[contains(@class, 'custom-control custom-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSITION_MODAL_ASSERT_REVIEW</td>
+	<td>//div[contains(@class, 'autofit-col autofit-col-expand')]//p[text()='${key_tilte}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

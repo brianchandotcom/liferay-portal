@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -65,31 +64,28 @@ public class UserOrganizationSegmentsCriteriaContributor
 
 		criteria.addCriterion(getKey(), getType(), filterString, conjunction);
 
-		long companyId = CompanyThreadLocal.getCompanyId();
 		String newFilterString = null;
 
 		try {
 			List<Organization> organizations = _oDataRetriever.getResults(
-				companyId, filterString, LocaleUtil.getDefault(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			StringBundler sb = new StringBundler();
-
-			sb.append("organizationIds in (");
-
-			for (Organization organization : organizations) {
-				sb.append("'");
-				sb.append(organization.getOrganizationId());
-				sb.append("', ");
-			}
+				CompanyThreadLocal.getCompanyId(), filterString,
+				LocaleUtil.getDefault(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			if (!organizations.isEmpty()) {
-				sb.setStringAt("'", sb.index() - 1);
+				StringBundler sb = new StringBundler(
+					(2 * organizations.size()) + 1);
+
+				sb.append("organizationIds in ('");
+
+				for (Organization organization : organizations) {
+					sb.append(organization.getOrganizationId());
+					sb.append("', '");
+				}
+
+				sb.setStringAt("')", sb.index() - 1);
+
+				newFilterString = sb.toString();
 			}
-
-			sb.append(")");
-
-			newFilterString = sb.toString();
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -99,7 +95,7 @@ public class UserOrganizationSegmentsCriteriaContributor
 				portalException);
 		}
 
-		if (Validator.isNull(newFilterString)) {
+		if (newFilterString == null) {
 			newFilterString = "(userId eq '0')";
 		}
 

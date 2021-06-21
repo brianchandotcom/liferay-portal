@@ -117,40 +117,27 @@ This change aligns with [Adobe dropping support for Flash](https://www.adobe.com
 
 ---------------------------------------
 
-### Refactor Clamd integration to use Clamd remote service and remove portal
-properties configuration for AntivirusScanner selection and hook support for
-AntivirusScanner registration in favor of AntivirusScanner OSGi integration.
-
+### Refactored AntivirusScanner Support and Clamd Integration
 - **Date:** 2020-Oct-21
 - **JIRA Ticket:** [LPS-122280](https://issues.liferay.com/browse/LPS-122280)
 
 #### What changed?
 
-The portal impl version of Clamd integration has been pulled out as an OSGi
-service to use Clamd remote service.
-The portal properties configuration for AntivirusScanner implementation
-selection and hook support for AntivirusScanner implementation registration has
-been removed in favor of the AntivirusScanner OSGi integration.
+The portal's Clamd integration implementation has been replaced by an OSGi service that uses a Clamd remote service. The AntivirusScanner OSGi integration has replaced the AntivirusScanner implementation selection portal properties and AntivirusScanner implementation hook registration portal properties.
 
 #### Who is affected?
 
-This affects people that were using the portal impl version of Clamd integration
-and people that were providing their own AntivirusScanner implementation by hook.
+This affects you if you are using the portal's Clamd integration implementation or if you are providing your own AntivirusScanner implementation via a hook.
 
 #### How should I update my code?
 
-If you were using the portal impl version of Clamd integration, you need to go
-to Control Panel -> System Settings -> Security -> category.antivirus to
-configure the new Clamd remote service.
+Enable the new Clamd integration and AntivirusScanner support. See [Enabling Antivirus Scanning for Uploaded Files](https://learn.liferay.com/dxp/latest/en/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files.html).
 
-If you were providing your own AntivirusScanner implementation by hook, you need
-to update your implementation as an OSGi service with a service ranking higher
-than Clamd remote service AntivirusScanner implementation which is default to 0.
+If you are providing your own AntivirusScanner implementation via a hook, convert it to an OSGi service that has a service ranking higher greater than zero. The Clamd remote service AntivirusScanner implementation service ranking is zero.
 
 #### Why was this change made?
 
-This change was made to better support container environment and unify the api
-to do OSGi integration.
+This change supports container environments better and unifies the API to do OSGi integration.
 
 ---------------------------------------
 

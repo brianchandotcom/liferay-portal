@@ -16,7 +16,6 @@ import NavigationButtons from './NavigationButtons';
 import {moveController, namespace, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
 import AdminTooltip from './AdminTooltip';
-import NavigationButtons from './NavigationButtons';
 
 const ImagePins = ({
 	addNewPinState,
@@ -25,6 +24,7 @@ const ImagePins = ({
 	changedScale,
 	enablePanZoom,
 	execZoomIn,
+	handleAddPin,
 	imageSettings,
 	imageURL,
 	navigationController,
@@ -313,8 +313,7 @@ const ImagePins = ({
 		setChangedScale, 
 		setSelectedOption, 
 		setZoomInHandler, 
-		setZoomOutHandler, 
-		width, 
+		setZoomOutHandler,
 		handleAddPin, 
 		setShowTooltip, 
 		setCpins, 
@@ -323,13 +322,11 @@ const ImagePins = ({
 		setAddPinHandler
 	]);
 
-	const diagramStyle = {
-		height: `${imageSettings.height}`,
-		width: `${imageSettings.width}`,
-	};
-
 	return (
-		<div className="diagram-pins-container" style={diagramStyle}>
+		<div className="diagram-pins-container" style={{
+			height: `${imageSettings.height}`,
+			width: `${imageSettings.width}`,
+		}}>
 			<svg
 				height={imageSettings.height}
 				ref={svgRef}

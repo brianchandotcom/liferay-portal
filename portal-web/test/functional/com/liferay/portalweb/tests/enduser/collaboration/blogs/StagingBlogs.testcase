@@ -159,7 +159,8 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToStagingCP(
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");
 
@@ -228,11 +229,7 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoLiveSite();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 

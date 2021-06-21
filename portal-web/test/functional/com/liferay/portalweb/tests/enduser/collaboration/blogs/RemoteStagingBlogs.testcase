@@ -48,11 +48,7 @@ definition {
 			groupName = "Site Name",
 			remotePort = "9080");
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name-staging");

@@ -862,8 +862,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
-
 		BlogsEntry.scheduleBlogEntry();
 
 		PortletEntry.publish();

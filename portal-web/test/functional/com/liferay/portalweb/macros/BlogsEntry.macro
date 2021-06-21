@@ -141,6 +141,8 @@ definition {
 	}
 
 	macro addSmallImage {
+		Panel.expandPanel(panel = "Configuration");
+
 		if (isSet(browseImage)) {
 			Click(locator1 = "BlogsEntry#SMALL_IMAGE_BROWSE_IMAGE");
 		}
@@ -513,6 +515,8 @@ definition {
 	}
 
 	macro removeSmallImage {
+		Panel.expandPanel(panel = "Configuration");
+
 		if (isSet(images)) {
 			Click(locator1 = "Button#REMOVE_IMAGE_LAST");
 		}
@@ -555,6 +559,8 @@ definition {
 	}
 
 	macro scheduleBlogEntry {
+		Panel.expandPanel(panel = "Configuration");
+
 		var displayDateDay = selenium.getElementValue("TextInput#DISPLAY_DATE_DAY");
 		var displayDateMonth = selenium.getElementValue("TextInput#DISPLAY_DATE_MONTH");
 		var displayDateMonth = ${displayDateMonth} + 1;

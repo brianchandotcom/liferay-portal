@@ -108,8 +108,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
-
 		BlogsEntry.addSmallImage(
 			navTab = "Blog Images",
 			uploadFileName = "Document_3.jpg");
@@ -147,8 +145,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
-
 		BlogsEntry.addSmallImage(
 			navTab = "Blog Images",
 			uploadFileName = "Document_3.jpg");
@@ -166,10 +162,6 @@ definition {
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");
-
-		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.removeSmallImage(uploadFileName = "Document_3.jpg");
 
@@ -275,8 +267,6 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.scheduleBlogEntry();
 

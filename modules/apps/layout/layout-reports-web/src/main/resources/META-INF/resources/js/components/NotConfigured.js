@@ -22,7 +22,7 @@ export default function NotConfigured() {
 
 	const {configureGooglePageSpeedURL, imagesPath} = data;
 
-	const defaultIllustration = `${imagesPath}/issues_default.svg`;
+	const defaultIllustration = `${imagesPath}/issues_configure.svg`;
 
 	return (
 		<div className="pb-3 px-3 text-center">

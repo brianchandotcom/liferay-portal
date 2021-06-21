@@ -741,6 +741,8 @@ public class DataLayoutTaglibUtil {
 				ddmForm = _getDDMForm();
 			}
 
+			_defaultLocale = ddmForm.getDefaultLocale();
+
 			Map<String, Object> ddmFormTemplateContext =
 				_ddmFormTemplateContextFactory.create(
 					ddmForm, _getDDMFormLayout(),
@@ -748,13 +750,14 @@ public class DataLayoutTaglibUtil {
 						{
 							setHttpServletRequest(_httpServletRequest);
 							setHttpServletResponse(_httpServletResponse);
-							setLocale(_httpServletRequest.getLocale());
+							setLocale(_defaultLocale);
 							setPortletNamespace(StringPool.BLANK);
 						}
 					});
 
 			_populateDDMFormFieldSettingsContext(
-				ddmForm.getDDMFormFieldsMap(true), ddmFormTemplateContext);
+				ddmForm.getDDMFormFieldsMap(true), ddmFormTemplateContext,
+				_defaultLocale);
 
 			ddmFormTemplateContext.put("rules", _getDataRulesJSONArray());
 
@@ -763,7 +766,7 @@ public class DataLayoutTaglibUtil {
 		}
 
 		private Map<String, Object> _createDDMFormFieldSettingContext(
-				DDMFormField ddmFormField)
+				DDMFormField ddmFormField, Locale defaultLocale)
 			throws Exception {
 
 			DDMFormFieldType ddmFormFieldType =
@@ -785,7 +788,7 @@ public class DataLayoutTaglibUtil {
 								ddmFormField, ddmForm));
 						setHttpServletRequest(_httpServletRequest);
 						setHttpServletResponse(_httpServletResponse);
-						setLocale(_httpServletRequest.getLocale());
+						setLocale(defaultLocale);
 						setPortletNamespace(StringPool.BLANK);
 					}
 				});
@@ -1065,7 +1068,8 @@ public class DataLayoutTaglibUtil {
 
 		private void _populateDDMFormFieldSettingsContext(
 				Map<String, DDMFormField> ddmFormFieldsMap,
-				Map<String, Object> ddmFormTemplateContext)
+				Map<String, Object> ddmFormTemplateContext,
+				Locale defaultLocale)
 			throws Exception {
 
 			UnsafeConsumer<Map<String, Object>, Exception> unsafeConsumer =
@@ -1079,7 +1083,8 @@ public class DataLayoutTaglibUtil {
 
 					field.put(
 						"settingsContext",
-						_createDDMFormFieldSettingContext(ddmFormField));
+						_createDDMFormFieldSettingContext(
+							ddmFormField, defaultLocale));
 				};
 
 			List<Map<String, Object>> pages =
@@ -1116,6 +1121,7 @@ public class DataLayoutTaglibUtil {
 
 		private final Set<Locale> _availableLocales;
 		private final DataLayout _dataLayout;
+		private Locale _defaultLocale;
 		private final HttpServletRequest _httpServletRequest;
 		private final HttpServletResponse _httpServletResponse;
 

@@ -224,26 +224,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureRatingType {
-		if ("${configureBlogsRatingType}" == "true") {
-			Select(
-				locator1 = "Select#BLOGS_RATING",
-				value1 = "${ratingType}");
-		}
-
-		if ("${configureKBRatingType}" == "true") {
-			Select(
-				locator1 = "Select#KNOWLEDGE_BASE_RATING",
-				value1 = "${ratingType}");
-		}
-
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
-	}
-
 	macro configureTimeZone {
 		Select(
 			locator1 = "Select#TIME_ZONE",

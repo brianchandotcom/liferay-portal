@@ -250,32 +250,25 @@ The change removes deprecated legacy code and improves code consistency and perf
 
 ---------------------------------------
 
-### Runtime minification of CSS and JS resources is now disabled by default
+### Disabled Runtime Minification of CSS and JavaScript Resources by Default
 - **Date:** 2020-Nov-27
 - **JIRA Ticket:** [LPS-123550](https://issues.liferay.com/browse/LPS-123550)
 
 #### What changed?
 
-The `minifier.enable` setting in `portal.properties` now defaults to
-`false`. Instead of performing run-time minification of CSS and JS
-resources, we prepare pre-minified resources at build-time. There should
-be no user-visible changes in page styles or logic.
+The `minifier.enable` portal property now defaults to `false`. Instead of performing minification of CSS and JS resources at run time, we prepare pre-minified resources at build time. There should be no user-visible changes in page styles or logic.
 
 #### Who is affected?
 
-Anybody who relies on specific implementation details of the run-time minifier
-(usually the Google Closure Compiler).
+This affects you if your implementations depend on the runtime minifier (usually the Google Closure Compiler).
 
 #### How should I update my code?
 
-If you wish to maintain the run-time minification behavior, you can set
-`minifier.enable` back to `true` in `portal.properties`.
+If you want to maintain the former runtime minification behavior, set the `minifier.enable` portal property to `true`.
 
 #### Why was this change made?
 
-By moving minification of frontend resources from run-time to build-time
-we reduce server load and gain access to the latest minification
-technologies available within the frontend ecosystem.
+Moving frontend resource minification from run time to build time reduces server load and facilitates using the latest minification technologies available within the frontend ecosystem.
 
 ---------------------------------------
 

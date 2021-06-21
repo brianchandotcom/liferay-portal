@@ -469,31 +469,27 @@ In practice, you should not observe interaction between these two modules, but i
 
 ---------------------------------------
 
-### OAuth 2 Token Instrospection feature identifier has changed
+### Changed the OAuth 2.0 Token Instrospection Feature Identifier
 - **Date:** 2021-May-04
 - **JIRA Ticket:** [LPS-131573](https://issues.liferay.com/browse/LPS-131573)
 
 #### What changed?
 
-The feature identifier for Token Introspection at OAuth2 has changed from
-`token_introspection` to `token.introspection` due to standarization of
-OAuth 2 constants.
+The OAuth 2.0 Token Instrospection Feature Identifier was changed from `token_introspection` to `token.introspection`.
 
 #### Who is affected?
 
-This affects any development that uses the Token Introspection feature
-identifier. For example where an OAuth2Application is added programatically
-with this specific feature enabled, or when inspecting an OAuth2Application to
-see if the feature is enabled.
+This affects you if you are using the Token Introspection feature identifier. Here are a couple use cases:
+
+- Adding an OAuth 2.0 application programatically with Token Introspection feature identifier enabled.
+- Checking if Token Introspection feature identifier is enabled for an OAuth 2.0 application.
 
 #### How should I update my code?
 
-If you are using the Token Introspection feature identifier, you should
-manually change it from `token_introspection` to `token.introspection`.
+Change the token from `token_introspection` to `token.introspection`.
 
 #### Why was this change made?
 
-This change was made to align and standarize all OAuth 2 constants in our code.
-We recommend that feature identifiers use a dot to separate words.
+This change was made to align and standarize all OAuth 2.0 constants in our code. We recommend using a dot to separate words in feature identifiers.
 
 ---------------------------------------

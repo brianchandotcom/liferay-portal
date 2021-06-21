@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.moderation.internal.settings.definition;
 
-import com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration;
+import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

@@ -15,7 +15,7 @@
 package com.liferay.message.boards.moderation.internal.configuration.persistence.listener;
 
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration;
+import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.moderation.internal.constants.MBModerationConstants;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration",
+	property = "model.class.name=com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration",
 	service = ConfigurationModelListener.class
 )
 public class MBModerationGroupConfigurationModelListener

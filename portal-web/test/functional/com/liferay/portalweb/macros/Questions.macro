@@ -541,7 +541,7 @@ definition {
 		var baseURL = PropsUtil.get("portal.url");
 
 		if ("${portlet}" == "Message Boards Moderation Workflow") {
-			var portletId = "com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration";
+			var portletId = "com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration";
 		}
 
 		if ("${portlet}" == "Questions") {

@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.moderation.internal.kaleo.runtime.condition;
 
-import com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration;
+import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;

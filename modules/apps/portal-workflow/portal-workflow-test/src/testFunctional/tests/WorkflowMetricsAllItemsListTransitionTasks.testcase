@@ -147,11 +147,63 @@ definition {
 	}
 
 	@description = "LPS-108138 - Verify that the message -The selected steps have transitioned successfully- is displayed when several steps are transitioned at once"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
 
-		// TODO LRQA-67820 MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var blogNumber : list "1,2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${blogNumber} Content",
+				entryTitle = "Blogs Entry Title ${blogNumber}");
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		for (var InstanceNameNumber : list "1,2") {
+			Workflow.assignTaskToUser(
+				assetTitle = "Blogs Entry Title ${InstanceNameNumber}",
+				assetType = "Blogs Entry",
+				assigneeName = "Test Test",
+				workflowTask = "Review");
+		}
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+
+		Pause(locator1 = "1000");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+
+		Click(
+			locator1 = "WorkflowAllItems#REASSIGN_ICON",
+			task = "1");
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		WorkflowMetrics.selectTransition(
+			taskName = "Review",
+			transitionOption = "Approve");
+
+		WorkflowMetrics.selectTransition(
+			taskName = "Review",
+			transitionOption = "Approve");
+
+		Button.clickDone();
+
+		Alert.viewSuccessMessage();
 
 	}
 

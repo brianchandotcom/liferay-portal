@@ -2302,6 +2302,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 									"/util-taglib.jar");
 
 							if (!file.exists()) {
+								file = new File(
+									utilTaglibDependencyDir,
+									"WEB-INF/lib/util-taglib.jar");
+							}
+
+							if (!file.exists()) {
 								throw new GradleException(
 									"Unable to find " + file);
 							}

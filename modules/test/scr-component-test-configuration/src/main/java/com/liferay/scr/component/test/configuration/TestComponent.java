@@ -21,7 +21,6 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -31,8 +30,8 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.scr.component.test.configuration.FirstConfiguration",
 		"com.liferay.scr.component.test.configuration.SecondConfiguration"
 	},
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = TestComponent.class
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
+	immediate = true, service = TestComponent.class
 )
 public class TestComponent {
 
@@ -45,7 +44,6 @@ public class TestComponent {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_firstConfiguration = ConfigurableUtil.createConfigurable(
 			FirstConfiguration.class, properties);
@@ -53,7 +51,7 @@ public class TestComponent {
 			SecondConfiguration.class, properties);
 	}
 
-	private volatile FirstConfiguration _firstConfiguration;
-	private volatile SecondConfiguration _secondConfiguration;
+	private FirstConfiguration _firstConfiguration;
+	private SecondConfiguration _secondConfiguration;
 
 }

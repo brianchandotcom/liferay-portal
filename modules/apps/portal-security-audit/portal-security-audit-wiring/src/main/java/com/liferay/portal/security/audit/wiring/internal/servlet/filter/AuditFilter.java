@@ -167,10 +167,20 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 	protected boolean validateXRequestId(String xRequestId) {
 		if (Validator.isBlank(xRequestId)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Incoming X-Request-Id is empty");
+			}
+
 			return false;
 		}
 
 		if ((xRequestId.length() < 20) || (xRequestId.length() > 200)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Incoming X-Request-Id has an invalid length: " +
+						xRequestId.length());
+			}
+
 			return false;
 		}
 
@@ -178,6 +188,11 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		for (int i = 0; i < xRequestId.length(); ++i) {
 			if ((xRequestId.charAt(i) < 32) || (xRequestId.charAt(i) > 126)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Incoming X-Request-Id contains invalid characters");
+				}
+
 				return false;
 			}
 		}

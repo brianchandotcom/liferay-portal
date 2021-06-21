@@ -375,46 +375,53 @@ The `frontend-taglib-clay` module is now using components from [`Clay v3`](https
 
 ---------------------------------------
 
-### Handling HTML boolean attributes in tags
+### Changed Handling of HTML Tag Boolean Attributes
 - **Date:** 2021-Feb-18
 - **JIRA Ticket:** [LPS-127832](https://issues.liferay.com/browse/LPS-127832)
 
 #### What changed?
 
-Boolean HTML attributes will only be rendered if passed a value of `true`.
-The value for such attributes will be their canonical name.
+Boolean HTML attributes will only be rendered if passed a value of `true`. The value for such attributes will be their canonical name.
 
-Previously, a value such as `false` for a `disabled` attribute
-would be rendered into the DOM as `disabled="false"`; now, it is simply
-omitted. Likewise, a `true` value for a `disabled` attribute was
-formerly rendered into the DOM as `disabled="true"`; now it is rendered
-as `disabled="disabled"`.
+Previously, a value such as `false` for a `disabled` attribute would be rendered into the DOM as `disabled="false"`; now, it the attribute is omitted. Likewise, a `true` value for a `disabled` attribute was formerly rendered into the DOM as `disabled="true"`; now it is rendered as `disabled="disabled"`.
 
 #### Who is affected?
 
-Anyone passing the following boolean attributes to tag libraries:
+This affects you if you are passing the following boolean attributes to tag libraries:
 
-"allowfullscreen", "allowpaymentrequest", "async", "autofocus", "autoplay",
-"checked", "controls", "default", "disabled", "formnovalidate", "hidden",
-"ismap", "itemscope", "loop", "multiple", "muted", "nomodule", "novalidate",
-"open", "playsinline", "readonly", "required", "reversed", "selected",
-and "truespeed".
+- `"allowfullscreen"`
+- `"allowpaymentrequest"`
+- `"async"`
+- `"autofocus"`
+- `"autoplay"`
+- `"checked"`
+- `"controls"`
+- `"default"`
+- `"disabled"`
+- `"formnovalidate"`
+- `"hidden"`
+- `"ismap"`
+- `"itemscope"`
+- `"loop"`
+- `"multiple"`
+- `"muted"`
+- `"nomodule"`
+- `"novalidate"`
+- `"open"`
+- `"playsinline"`
+- `"readonly"`
+- `"required"`
+- `"reversed"`
+- `"selected"`
+- `"truespeed"`
 
 #### How should I update my code?
 
-Ensure that you pass `true` when you want a boolean attribute to be
-present in the DOM. If you have any CSS selectors targeting a `true`
-value (e.g., `[disabled="true"]`) update them to instead target presence
-of the attribute (e.g., `[disabled]`) or its canonical name (e.g.,
-`[disabled="disabled"]`).
+Make sure to pass a `true` value to boolean attributes you want present in the DOM. Update CSS selectors that target a `true` value (e.g., `[disabled="true"]`) to target presence of the attribute (e.g., `[disabled]`) or its canonical name (e.g., `[disabled="disabled"]`).
 
 #### Why was this change made?
 
-This change is being made for better compliance with [the HTML Standard](https://html.spec.whatwg.org/#boolean-attribute),
-which says that "The presence of a boolean attribute on an element represents
-the true value, and the absence of the attribute represents the false value. If
-the attribute is present, its value must either be the empty string or a value
-that is an ASCII case-insensitive match for the attribute's canonical name."
+This change was made for better compliance with [the HTML Standard](https://html.spec.whatwg.org/#boolean-attribute), which says that "The presence of a boolean attribute on an element represents the true value, and the absence of the attribute represents the false value. If the attribute is present, its value must either be the empty string or a value that is an ASCII case-insensitive match for the attribute's canonical name."
 
 ---------------------------------------
 

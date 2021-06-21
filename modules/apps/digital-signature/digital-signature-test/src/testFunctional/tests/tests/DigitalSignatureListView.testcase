@@ -119,5 +119,20 @@ definition {
 
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 	}
+	@description = "This is a test for LPS-XXX. Verify if its possible create a new envelope"
+	@priority = "5"
+	test CanCreateNewEnvelope {
+		DigitalSignature.enableDigitalSignature();
+
+		Navigator.openURL();
+
+		DigitalSignature.createEnvelope(
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			envelopeName = "Test Envelope Name",
+			recipientFullName= "Recipient Full Name",
+			emailSubject = "Email Subject",
+			recipientEmail = "test@liferay.com",
+			emailMessage = "Email Message");
+	}
 
 }

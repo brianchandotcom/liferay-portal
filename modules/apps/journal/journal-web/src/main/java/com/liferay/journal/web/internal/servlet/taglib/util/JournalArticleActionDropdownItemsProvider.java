@@ -65,6 +65,7 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.translation.constants.TranslationActionKeys;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 import com.liferay.trash.TrashHelper;
@@ -520,9 +521,9 @@ public class JournalArticleActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
+					_liferayPortletResponse, TranslationPortletKeys.TRANSLATION
 				).setMVCRenderCommandName(
-					"/journal/import_translation"
+					"/translation/import_translation"
 				).setRedirect(
 					_getRedirect()
 				).setParameter(

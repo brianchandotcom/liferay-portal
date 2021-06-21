@@ -52,7 +52,7 @@ public class ImportTranslationDisplayContext {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
-			"/journal/import_translation"
+			"/translation/import_translation"
 		).setParameter(
 			"classNameId", _classNameId
 		).setParameter(

@@ -70,7 +70,7 @@ const getMaskedValue = ({
 
 		if (typeof value === 'string') {
 			if (!value) {
-				return '';
+				return {masked: '', raw: ''};
 			}
 			value = value.replace(decimalSymbol, '.');
 			if (dataType == 'integer' && value.includes('.')) {
@@ -112,9 +112,9 @@ const Numeric = ({
 
 	const inputValue = useMemo(() => {
 		const newValue =
-			(localizedValue?.[editingLanguageId] ||
-				localizedValue?.[defaultLanguageId] ||
-				value) ??
+			localizedValue?.[editingLanguageId] ??
+			localizedValue?.[defaultLanguageId] ??
+			value ??
 			predefinedValue ??
 			'';
 

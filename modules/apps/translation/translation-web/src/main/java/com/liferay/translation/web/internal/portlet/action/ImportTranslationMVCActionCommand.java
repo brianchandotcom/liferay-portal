@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.portlet.action;
+package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.item.InfoItemFieldValues;

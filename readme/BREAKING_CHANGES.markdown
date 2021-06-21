@@ -335,25 +335,25 @@ A further exploration and analysis of the different front-end options available 
 
 ---------------------------------------
 
-### The spi.id property in log4j xml definition file has been removed
+### Removed the spi.id Property From the Log4j XML Definition File
 - **Date:** 2021-Jan-19
 - **JIRA Ticket:** [LPS-125998](https://issues.liferay.com/browse/LPS-125998)
 
 #### What changed?
 
-The `spi.id` property in log4j xml definition file has been removed.
+The `spi.id` property in the Log4j XML definition file has been removed.
 
 #### Who is affected?
 
-Anyone is using `@spi.id@` in its custom log4j xml definition file.
+This affects you if you are using `@spi.id@` in its custom Log4j XML definition file.
 
 #### How should I update my code?
 
-Remove `@spi.id@` from log4j xml definition file.
+Remove `@spi.id@` from your Log4j XML definition file.
 
 #### Why was this change made?
 
-The support of SPI has been removed by LPS-110758.
+SPI was removed by [LPS-110758](https://issues.liferay.com/browse/LPS-110758).
 
 ---------------------------------------
 

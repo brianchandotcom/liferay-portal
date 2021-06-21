@@ -434,6 +434,10 @@ definition {
 		}
 
 		task ("Add content to FrontPage") {
+			Navigator.gotoSitePage(
+				pageName = "ADT Test Page",
+				siteName = "Test Site Name");
+
 			JSONWiki.updateWikiPage(
 				groupName = "Test Site Name",
 				wikiNodeName = "Main",

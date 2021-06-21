@@ -562,6 +562,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 			conflictingColumnNames.addAll(
 				ctPersistence.getCTColumnNames(CTColumnResolutionType.MAX));
+
+			conflictingColumnNames.addAll(
+				ctPersistence.getCTColumnNames(CTColumnResolutionType.MIN));
 		}
 		else {
 			sql += " and ctEntry.modelMvccVersion != production.mvccVersion";
@@ -701,6 +704,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Set<String> maxColumnNames = ctPersistence.getCTColumnNames(
 			CTColumnResolutionType.MAX);
 
+		Set<String> minColumnNames = ctPersistence.getCTColumnNames(
+			CTColumnResolutionType.MIN);
+
 		for (String name : tableColumnsMap.keySet()) {
 			if (name.equals("ctCollectionId")) {
 				sb.append(_sourceCTCollectionId);
@@ -715,13 +721,18 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			else if (maxColumnNames.contains(name)) {
 				sb.append("max(composite.");
 			}
+			else if (minColumnNames.contains(name)) {
+				sb.append("min(composite.");
+			}
 			else {
 				sb.append("publication.");
 			}
 
 			sb.append(name);
 
-			if (maxColumnNames.contains(name)) {
+			if (maxColumnNames.contains(name) ||
+				minColumnNames.contains(name)) {
+
 				sb.append(")");
 			}
 
@@ -730,7 +741,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		sb.setStringAt(" from ", sb.index() - 1);
 
-		if (!maxColumnNames.isEmpty()) {
+		if (!maxColumnNames.isEmpty() || !minColumnNames.isEmpty()) {
 			sb.append(ctPersistence.getTableName());
 			sb.append(" production inner join ");
 			sb.append(ctPersistence.getTableName());
@@ -748,7 +759,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			sb.append(_targetCTCollectionId);
 			sb.append(", ");
 			sb.append(tempCTCollectionId);
-			sb.append(") ");
+			sb.append(")");
 		}
 		else {
 			sb.append(ctPersistence.getTableName());
@@ -764,6 +775,11 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(tempCTCollectionId);
 		sb.append(" and production.ctCollectionId = ");
 		sb.append(_targetCTCollectionId);
+
+		if (!maxColumnNames.isEmpty() || !minColumnNames.isEmpty()) {
+			sb.append(" group by ");
+			sb.append(primaryKeyName);
+		}
 
 		try {
 			CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());

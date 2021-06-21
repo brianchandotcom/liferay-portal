@@ -33,10 +33,9 @@ public interface AuditLogContextConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false",
-		description = "x-request-id-header-enabled-description",
-		name = "x-request-id-header-enabled", required = false
+		deflt = "false", description = "use-incoming-x-request-id-description",
+		name = "use-incoming-x-request-id", required = false
 	)
-	public boolean xRequestIdHeaderEnabled();
+	public boolean useIncomingXRequestId();
 
 }

@@ -198,55 +198,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro searchWebContent {
-		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertClick(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select");
-
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
-
-		var searchTerm = "${webContentTitle}";
-
-		if (isSet(webContentSearchValue)) {
-			var searchTerm = "${webContentSearchValue}";
-		}
-
-		Search.searchCP(searchTerm = "${searchTerm}");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_webContentTitle = "${webContentTitle}";
-
-		AssertTextEquals(
-			key_listEntry = "${webContentTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_TITLE",
-			value1 = "${webContentTitle}");
-
-		if ("${addSearchedContent}" == "true") {
-			AssertClick(
-				locator1 = "Button#WEB_CONTENT_CHOOSE",
-				value1 = "Choose");
-
-			SelectFrame(value1 = "relative=top");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				locator1 = "Message#INFO_ARTICLE",
-				value1 = "${webContentTitle} (Modified)");
-
-			PortletEntry.save();
-		}
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro searchForNoWebContent {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
@@ -295,6 +246,55 @@ definition {
 			AssertElementNotPresent(
 				key_listEntry = "${webContentTitle}",
 				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+		}
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro searchWebContent {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
+			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
+			value1 = "Select");
+
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+
+		var searchTerm = "${webContentTitle}";
+
+		if (isSet(webContentSearchValue)) {
+			var searchTerm = "${webContentSearchValue}";
+		}
+
+		Search.searchCP(searchTerm = "${searchTerm}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_webContentTitle = "${webContentTitle}";
+
+		AssertTextEquals(
+			key_listEntry = "${webContentTitle}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE",
+			value1 = "${webContentTitle}");
+
+		if ("${addSearchedContent}" == "true") {
+			AssertClick(
+				locator1 = "Button#WEB_CONTENT_CHOOSE",
+				value1 = "Choose");
+
+			SelectFrame(value1 = "relative=top");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				locator1 = "Message#INFO_ARTICLE",
+				value1 = "${webContentTitle} (Modified)");
+
+			PortletEntry.save();
 		}
 
 		SelectFrame(value1 = "relative=top");

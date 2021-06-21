@@ -302,7 +302,7 @@ definition {
 
 		Blogs.viewNoEntryCP();
 
-		Pause(locator1 = "180000");
+		Pause(locator1 = "60000");
 
 		Refresh();
 

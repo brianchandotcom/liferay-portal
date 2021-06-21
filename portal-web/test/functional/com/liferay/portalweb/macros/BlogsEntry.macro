@@ -573,7 +573,7 @@ definition {
 		}
 
 		var displayDateMinute = selenium.getElementValue("TextInput#DISPLAY_DATE_MINUTE");
-		var displayDateMinuteFuture = ${displayDateMinute} + 3;
+		var displayDateMinuteFuture = ${displayDateMinute} + 1;
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 
 		if ("${displayDateMinuteFutureLength}" == "1") {

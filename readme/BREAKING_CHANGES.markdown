@@ -425,7 +425,7 @@ This change was made for better compliance with [the HTML Standard](https://html
 
 ---------------------------------------
 
-### Remove CSS Compatibility Layer
+### Removed CSS Compatibility Layer
 - **Date:** 2021-Jan-2
 - **JIRA Ticket:** [LPS-123359](https://issues.liferay.com/browse/LPS-123359)
 
@@ -435,16 +435,15 @@ The support for Boostrap 3 markup has been deleted and is no longer available.
 
 #### Who is affected?
 
-This affects any development that uses the old Boostrap 3 markup and was not correctly migrated to Boostrap 4 markup.
+This affects you if you are using Boostrap 3 markup or if you have not correctly migrated to Boostrap 4 markup.
 
 #### How should I update my code?
 
-If you are using Clay markup you can update it by following the last [Clay components](https://clayui.com/docs/components/index.html) version.
-If your markup is based on Boostrap 3, you can update it with new Boostrap 4 markup following [migrating guidelines](https://getbootstrap.com/docs/4.4/migration/).
+If you are using Clay markup you can update it by following the last [Clay components](https://clayui.com/docs/components/index.html) version. If your markup is based on Boostrap 3, you can update the markup with Boostrap 4 markup following the [Bootstrap migration guidelines](https://getbootstrap.com/docs/4.4/migration/).
 
 #### Why was this change made?
 
-We included a "small" configurable CSS compatibility layer to simplify the migration from Liferay 7.0 to 7.1. Now it has been removed in order to fix conflicts with new styles and improve general CSS weight.
+The configurable CSS compatibility layer simplified migrating from Liferay 7.0 to 7.1 but removing the layer resolves conflicts with new styles and improves general CSS weight.
 
 ---------------------------------------
 

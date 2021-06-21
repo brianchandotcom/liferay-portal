@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
@@ -38,6 +38,7 @@ import {
 	useSelectorCallback,
 } from '../../../../../app/contexts/StoreContext';
 import {selectPageContentDropdownItems} from '../../../../../app/selectors/selectPageContentDropdownItems';
+import ImageEditorModal from './ImageEditorModal';
 
 export default function PageContent({
 	classNameId,
@@ -62,7 +63,12 @@ export default function PageContent({
 	] = useState(null);
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
+	const [showModal, setShowModal] = useState(false);
 	const toControlsId = useToControlsId();
+
+	const editImageURLRef = useRef(null);
+	const fileEntryIdRef = useRef(null);
+	const previewURLsRef = useRef(null);
 
 	const isBeingEdited = useMemo(
 		() => toControlsId(editableId) === editableProcessorUniqueId,
@@ -151,6 +157,28 @@ export default function PageContent({
 		setEditableNextProcessorUniqueId(toControlsId(editableId));
 	};
 
+	const menuItems = dropdownItems?.map((item) => {
+		if (item.label === Liferay.Language.get('edit-image')) {
+			return {
+				...item,
+				onClick: () => {
+					editImageURLRef.current = item.editImageURL;
+					fileEntryIdRef.current = item.fileEntryId;
+
+					if (!previewURLsRef.current) {
+						previewURLsRef.current = {
+							[item.fileEntryId]: item.previewURL,
+						};
+					}
+
+					setShowModal(true);
+				},
+			};
+		}
+
+		return item;
+	});
+
 	return (
 		<li
 			className={classNames('page-editor__page-contents__page-content', {
@@ -183,9 +211,9 @@ export default function PageContent({
 					)}
 				</ClayLayout.ContentCol>
 
-				{dropdownItems ? (
+				{menuItems ? (
 					<ClayDropDownWithItems
-						items={dropdownItems}
+						items={menuItems}
 						trigger={
 							<ClayButton
 								className="btn-monospaced btn-sm text-secondary"
@@ -214,6 +242,16 @@ export default function PageContent({
 					</ClayButton>
 				)}
 			</div>
+
+			{showModal && (
+				<ImageEditorModal
+					editImageURL={editImageURLRef.current}
+					fileEntryId={fileEntryIdRef.current}
+					fragmentEntryLinks={fragmentEntryLinks}
+					onCloseModal={() => setShowModal(false)}
+					previewURLsRef={previewURLsRef}
+				/>
+			)}
 		</li>
 	);
 }

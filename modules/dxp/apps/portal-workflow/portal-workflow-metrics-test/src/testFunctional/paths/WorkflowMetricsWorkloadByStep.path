@@ -18,8 +18,17 @@
     <td>//td[contains(text(),'${key_stepName}')]</td>
     <td></td>
 </tr>
+<tr>
+    <td>METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_OVERDUE_VALUE</td>
+    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[1]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_TOTAL_PENDING_VALUE</td>
+    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[3]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>
 </html>
-

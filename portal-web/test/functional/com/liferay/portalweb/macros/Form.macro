@@ -227,6 +227,20 @@ definition {
 			rowEntry = "${formName}");
 	}
 
+	macro duplicateFieldsGroup {
+		while (IsElementNotPresent(locator1 = "Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD")) {
+			Click(
+				key_fieldName = "${fieldName}",
+				locator1 = "Form#FIELD_LABEL");
+		}
+
+		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
+
+		AssertClick(
+			locator1 = "Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD",
+			value1 = "Duplicate");
+	}
+
 	macro editDescription {
 		WaitForElementPresent(locator1 = "Form#DESCRIPTION_FIELD");
 

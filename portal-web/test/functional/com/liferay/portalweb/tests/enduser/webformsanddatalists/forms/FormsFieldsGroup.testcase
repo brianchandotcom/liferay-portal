@@ -144,14 +144,34 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133870 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.addFieldFromSidebarToFieldsGroup(
+			key_fieldLabel = "Text",
+			key_fieldName = "Numeric");
+
+		Form.duplicateFieldsGroup(fieldName = "Fields Group");
+
+		for (var label : list "Fields Group,Copy of Fields Group,Text,Copy of Text,Numeric,Copy of Numeric") {
+			FormFields.viewLabel(
+				fieldLabel = "${label}",
+				fieldName = "${label}");
+		}
 	}
 
 	@description = "Verify that a Fields Group can be moved between pages"

@@ -5,8 +5,6 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Comments");
 
-		Pause(locator1 = "3000");
-
 		if (IsElementNotPresent(key_fragmentName = "${fragmentName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			Click(
 				key_fragmentName = "${fragmentName}",
@@ -2708,8 +2706,6 @@ definition {
 		}
 
 		Click(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
-
-		Pause(locator1 = "3000");
 
 		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			Click(

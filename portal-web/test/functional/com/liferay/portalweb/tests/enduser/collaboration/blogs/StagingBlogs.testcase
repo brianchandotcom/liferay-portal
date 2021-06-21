@@ -60,7 +60,7 @@ definition {
 
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanPublishEntryViaSAP {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -96,6 +96,52 @@ definition {
 			contentBody = "Publication Process Finished Successfully",
 			portletName = "Blogs Portlet",
 			publicationType = "Local");
+	}
+
+	@priority = "3"
+	@refactorneeded
+	test CanPublishScheduledEntry {
+		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
+
+		// Can still explore how to schedule a Blog entry through JSON. This would involve using DateUtil.java
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.scheduleBlogEntry();
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Blogs",
+			checkPageName = "Staging Blogs Page");
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Blogs.viewNoEntryCP();
+
+		Pause(locator1 = "60000");
+
+		Refresh();
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a use case for LPS-122140. It ensures that a small image can be published."
@@ -193,8 +239,8 @@ definition {
 
 	@description = "This test covers LPS-99265. It ensures that a staged blogs entry cannot be shared unless it is first published to Live."
 	@priority = "4"
-	@refactorneeded
-	test ShareBlogsEntryOnLiveSite {
+	@refactordone
+	test CanShareBlogsEntryOnLiveSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -252,50 +298,6 @@ definition {
 			contentSharingPermission = "viewing",
 			contentTitle = "Blogs Entry Title",
 			ownerName = "Test Test");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test StagingBlogsWithScheduledPublishing {
-		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
-
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
-
-		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.scheduleBlogEntry();
-
-		PortletEntry.publish();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Navigator.gotoNavItem(navItem = "Not Published (1)");
-
-		Staging.gotoPublishToLive();
-
-		Staging.configurePublishToLive(
-			checkContentNameList = "Blogs",
-			checkPageName = "Staging Blogs Page");
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Blogs.viewNoEntryCP();
-
-		Pause(locator1 = "60000");
-
-		Refresh();
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a use case for LPS-72949."

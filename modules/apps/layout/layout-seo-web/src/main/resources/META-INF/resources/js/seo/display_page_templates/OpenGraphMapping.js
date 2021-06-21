@@ -15,7 +15,7 @@
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
-import MappingInputs from './components/MappingInputs';
+import MappingFields from './components/MappingFields';
 import lang from './utils/lang';
 
 export default function OpenGraphMapping({
@@ -29,7 +29,7 @@ export default function OpenGraphMapping({
 	selectedSource,
 }) {
 	return (
-		<MappingInputs
+		<MappingFields
 			ffSEOInlineFieldMappingEnabled={ffSEOInlineFieldMappingEnabled}
 			fields={fields}
 			inputs={[

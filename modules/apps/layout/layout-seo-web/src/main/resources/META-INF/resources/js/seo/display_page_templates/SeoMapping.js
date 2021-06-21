@@ -15,7 +15,7 @@
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
-import MappingInputs from './components/MappingInputs';
+import MappingFields from './components/MappingFields';
 import lang from './utils/lang';
 
 export default function SeoMapping({
@@ -27,7 +27,7 @@ export default function SeoMapping({
 	title,
 }) {
 	return (
-		<MappingInputs
+		<MappingFields
 			ffSEOInlineFieldMappingEnabled={ffSEOInlineFieldMappingEnabled}
 			fields={fields}
 			inputs={[

@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import MappingInputs from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingInputs';
+import MappingFields from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingFields';
 
 const baseProps = {
 	fields: [
@@ -47,9 +47,9 @@ const baseProps = {
 };
 
 const renderComponent = (props) =>
-	render(<MappingInputs {...baseProps} {...props} />);
+	render(<MappingFields {...baseProps} {...props} />);
 
-describe('MappingInputs', () => {
+describe('MappingFields', () => {
 	afterEach(cleanup);
 
 	describe('when rendered', () => {

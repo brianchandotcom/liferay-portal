@@ -19,7 +19,7 @@ import MappingContext from './MappingContext';
 import MappingInput from './MappingInput';
 import MappingRichInput from './MappingRichInput';
 
-function MappingInputs({
+function MappingFields({
 	ffSEOInlineFieldMappingEnabled,
 	fields,
 	inputs,
@@ -48,7 +48,7 @@ function MappingInputs({
 	);
 }
 
-MappingInputs.propTypes = {
+MappingFields.propTypes = {
 	fields: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,
@@ -64,4 +64,4 @@ MappingInputs.propTypes = {
 	).isRequired,
 };
 
-export default MappingInputs;
+export default MappingFields;

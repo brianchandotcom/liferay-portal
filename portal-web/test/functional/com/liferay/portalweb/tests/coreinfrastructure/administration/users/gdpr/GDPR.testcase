@@ -225,6 +225,69 @@ definition {
 			value1 = "Anonymous Anonymous");
 	}
 
+	@description = "This test anonymizes all entries from an application"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeAllEntriesFromAnApplication {
+
+		// TODO LRQA-50727 Anonymize all entries from an Application
+
+	}
+
+	@description = "This test anonymizes entries from an application that has hierarachy"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeEntriesFromAnApplicationWithHierarchy {
+
+		// TODO LRQA-50731 Data Erasure - Anonymize entries from an Application that has a hierarchy
+
+	}
+
+	@description = "LPS-77748"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeMultipleEntriesFromAnApplication {
+
+		// TODO LRQA-50730 Anonymize multiple entries from an Application
+
+	}
+
+	@description = "This test anonymizes only one entry from an application via the Info panel"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanAnonymizeViaInfoPanel {
+
+		// TODO LRQA-50729 Anonymize a single entry from an Application via the info panel
+
+	}
+
+	@description = "This test deletes export process"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteAnExportProcess {
+
+		// TODO LRQA-50743 Delete Export
+
+	}
+
+	@description = "This test deletes entries from an application that has hierarchy"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteEntriesFromAnApplicationWithHierarchy {
+
+		// TODO LRQA-50724 Data Erasure - Delete entries from an Application that has a hierarchy
+
+	}
+
+	@description = "LPS-77748"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteMultipleEntriesFromAnApplication {
+
+		// TODO LRQA-50723 Data Erasure - Delete multiple entries from an Application (LPS-77748)
+
+	}
+
 	@priority = "5"
 	test DeleteEntryFromApplication {
 		User.logoutPG();

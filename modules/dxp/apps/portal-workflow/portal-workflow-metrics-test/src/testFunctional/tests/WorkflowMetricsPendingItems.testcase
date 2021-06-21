@@ -29,24 +29,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-93410 - Verify that the card displays the unexpected error state"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test CardsDisplayErrorState {
-
-		// TODO LRQA-67551 CardsDisplayErrorState pending implementation
-
-	}
-
-	@description = "LPS-93410 - Verify that info icon hover state and tooltip message"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test InfoIconDisplaysMessageOnHover {
-
-		// TODO LRQA-67546 InfoIconDisplaysMessageOnHover pending implementation
-
-	}
-
 	@description = "LPS-93410 - Verify that when there is no SLA defined for the process, all items will be displayed as Untracked"
 	@priority = "4"
 	test ItemsWithNoSlaAreDisplayedUntracked {
@@ -107,15 +89,6 @@ definition {
 	test SumOfOverdueOnTimeUntrackedIsEqualToTotalPending {
 
 		// TODO LRQA-67548 SumOfOverdueOnTimeUntrackedIsEqualToTotalPending pending implementation
-
-	}
-
-	@description = "LPS-93410 - Verify that, for numbers greater than 3 digits, use abbreviation standards considering localization specifications"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test UseAbreviationForGreaterThan3DigitsNumber {
-
-		// TODO LRQA-67549 UseAbreviationForGreaterThan3DigitsNumber pending implementation
 
 	}
 

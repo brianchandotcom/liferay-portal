@@ -47,15 +47,6 @@ definition {
 
 	}
 
-	@description = "LPS-86642 - Verify that the empty state appears when there is no data to populate the chart"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test EmptyStateIsDisplayedWhenThereIsNoData {
-
-		// TODO LRQA-67559 EmptyStateIsDisplayedWhenThereIsNoData pending implementation
-
-	}
-
 	@description = "LPS-86642 - Verify that info icon hover state and tooltip message"
 	@ignore = "Test Stub"
 	@priority = "2"
@@ -98,15 +89,6 @@ definition {
 	test SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches {
 
 		// TODO LRQA-67561 SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches pending implementation
-
-	}
-
-	@description = "LPS-86642 - Verify that the unexpected error state appear when unexpected error happen"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test UnexpectedErrorState {
-
-		// TODO LRQA-67560 UnexpectedErrorState pending implementation
 
 	}
 

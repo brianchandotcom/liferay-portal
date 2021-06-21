@@ -47,30 +47,12 @@ definition {
 
 	}
 
-	@description = "LPS-97669 - Verify the user can search for a step using the search bar"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanSearchForStep {
-
-		// TODO LRQA-67575 CanSearchForStep pending implementation
-
-	}
-
 	@description = "LPS-97669 - Verify the user can search for a step with name containing non-ASCII chars (eg: japanese chars) using the search bar"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSearchNonAsciiChars {
 
 		// TODO LRQA-67576 CanSearchNonAsciiChars pending implementation
-
-	}
-
-	@description = "LPS-97669 - Verify the card (Workload by Assignee) is sorted by number, in descending order"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CardIsSortedByNumberInDescOrder {
-
-		// TODO LRQA-67627 CardIsSortedByNumberInDescOrder pending implementation
 
 	}
 
@@ -89,15 +71,6 @@ definition {
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
 
 		// TODO LRQA-67624 CardIsUpdatedWhenUserWithPendingInstanceIsDeleted pending implementation
-
-	}
-
-	@description = "LPS-97669 - Verify the card is showing instances assigned to users only, and not roles"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CardShowsItemsAssignedToUserNotRole {
-
-		// TODO LRQA-67619 CardShowsItemsAssignedToUserNotRole pending implementation
 
 	}
 
@@ -134,42 +107,6 @@ definition {
 	test LongUsernameIsPlacedInMoreThanOneLine {
 
 		// TODO LRQA-67609 LongUsernameIsPlacedInMoreThanOneLine pending implementation
-
-	}
-
-	@description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by Assignee Name column"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test OrderTableByAssigneeNameColumn {
-
-		// TODO LRQA-67613 OrderTableByAssigneeNameColumn pending implementation
-
-	}
-
-	@description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by On Time column"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test OrderTableByOnTimeColumn {
-
-		// TODO LRQA-67630 OrderTableByOnTimeColumn pending implementation
-
-	}
-
-	@description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by Overdue column"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test OrderTableByOverdueColumn {
-
-		// TODO LRQA-67623 OrderTableByOverdueColumn pending implementation
-
-	}
-
-	@description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by Total Pending column"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test OrderTableByTotalPendingColumn {
-
-		// TODO LRQA-67622 OrderTableByTotalPendingColumn pending implementation
 
 	}
 
@@ -251,15 +188,6 @@ definition {
 	test ThereIsNoPercentageIndicationOnTotalTab {
 
 		// TODO LRQA-67628 ThereIsNoPercentageIndicationOnTotalTab pending implementation
-
-	}
-
-	@description = "LPS-98518 - Verify that when there is an unexpected error in (Workload by Assignee) page, the table displays the specific error state"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test UnexpectedErrorState {
-
-		// TODO LRQA-67620 UnexpectedErrorState pending implementation
 
 	}
 

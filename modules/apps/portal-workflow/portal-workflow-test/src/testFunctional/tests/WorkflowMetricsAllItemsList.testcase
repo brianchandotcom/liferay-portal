@@ -146,24 +146,6 @@ definition {
 
 	}
 
-	@description = "LPS-86652 - Verify that, when there is an unexpected error, it displays the specific error state"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test ErrorStateCanBeDisplayed {
-
-		// TODO LRQA-67765 ErrorStateCanBeDisplayed pending implementation
-
-	}
-
-	@description = "LPS-87571 - Verify that the filter query only be applied after user moves the cursor out of the dropdown card"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test FilterIsAppliedAfterCursorMovesOut {
-
-		// TODO LRQA-67773 FilterIsAppliedAfterCursorMovesOut pending implementation
-
-	}
-
 	@description = "LPS-94146 - Verify that user can close the filters shown as tags clicking on x and the result is applied on items list"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -290,30 +272,12 @@ definition {
 
 	}
 
-	@description = "LPS-87571 - Verify that the page provides loading feedback when the table is being updated according to filter options"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test PageProvidesLoadingFeedbackOnFilterApplication {
-
-		// TODO LRQA-67774 PageProvidesLoadingFeedbackOnFilterApplication pending implementation
-
-	}
-
 	@description = "LPS-130217 - Verify that the page provides loading feedback when the table is being updated according to order options"
 	@ignore = "Test Stub"
 	@priority = "2"
 	test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
 
 		// TODO LRQA-67722 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
-
-	}
-
-	@description = "LPS-86652 - Verify that the page title is Workflow name: All Items"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test PageTitleIsDisplayed {
-
-		// TODO LRQA-67725 PageTitleIsDisplayed pending implementation
 
 	}
 
@@ -368,15 +332,6 @@ definition {
 	test SectionIsRemovedWhenItHasNoEntries {
 
 		// TODO LRQA-67754 SectionIsRemovedWhenItHasNoEntries pending implementation
-
-	}
-
-	@description = "LPS-87571 - Validate that the selected filters are presented as tags in the Results bar"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test SelectedFiltersAreDisplayedAsTagsInResultsBar {
-
-		// TODO LRQA-67775 SelectedFiltersAreDisplayedAsTagsInResultsBar pending implementation
 
 	}
 

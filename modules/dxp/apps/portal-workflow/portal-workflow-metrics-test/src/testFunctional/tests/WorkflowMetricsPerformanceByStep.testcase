@@ -28,15 +28,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-97667 - Verify that the column Avg. Completion Time is displaying the time taken for N tasks to complete from start to end divided by the number of completed tasks during the selected period"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CalculateAvgCompletionTimeColumnData {
-
-		// TODO LRQA-67682 CalculateAvgCompletionTimeColumnData pending implementation
-
-	}
-
 	@description = "LPS-100674 - Verify that the user can not insert a future date"
 	@ignore = "Test Stub"
 	@priority = "2"
@@ -55,24 +46,6 @@ definition {
 
 	}
 
-	@description = "LPS-100674 - Verify that an unexpected error state is displayed in Performance by Step card"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test CardsDisplayErrorState {
-
-		// TODO LRQA-67680 CardsDisplayErrorState pending implementation
-
-	}
-
-	@description = "LPS-100674 - Verify that the card will update the step name if it is changed in Process Builder"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CardUpdatesStepNameWhenStepNameIsChangedInProcessBuilder {
-
-		// TODO LRQA-67676 CardUpdatesStepNameWhenStepNameIsChangedInProcessBuilder pending implementation
-
-	}
-
 	@description = "LPS-100674 - Verify that the card Performance by Steps works as designed when the portal is set to a non-en-US locale"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -88,15 +61,6 @@ definition {
 	test DefaultDateFormatIsMMDDYYYY {
 
 		// TODO LRQA-67691 DefaultDateFormatIsMMDDYYYY pending implementation
-
-	}
-
-	@description = "LPS-100674 - Verify that the no completed item state is displaying in Performance by Step card empty card"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test EmptyStateIsDisplayedWhenThereIsNoCompletedItem {
-
-		// TODO LRQA-67688 EmptyStateIsDisplayedWhenThereIsNoCompletedItem pending implementation
 
 	}
 

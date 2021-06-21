@@ -317,22 +317,4 @@ definition {
 
 	}
 
-	@description = "LPS-89016 - Verify that the warning alert will be displayed again when user enters the metrics page again after closing it"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test WarningAlertIsDisplayedAgainWhenClosed {
-
-		// TODO LRQA-67853 SWarningAlertIsDisplayedAgainWhenClosed pending implementation
-
-	}
-
-	@description = "LPS-89016 - Verify and click on the warning alert when there is no SLA"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test WarningAlertIsDisplayedAndClickableWhenNoSLA {
-
-		// TODO LRQA-67850 WarningAlertIsDisplayedAndClickableWhenNoSLA pending implementation
-
-	}
-
 }

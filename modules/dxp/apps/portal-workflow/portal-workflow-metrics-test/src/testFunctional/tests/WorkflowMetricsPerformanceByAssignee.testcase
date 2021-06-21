@@ -29,15 +29,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-97666 - Verify that the column Assignee Names from Performance by Assignee card retrieves the portal user first and last names, even after changing them"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test AssigneeNameColumnRetrievesUserFirstAndLastName {
-
-		// TODO LRQA-67708 AssigneeNameColumnRetrievesUserFirstAndLastName pending implementation
-
-	}
-
 	@description = "LPS-97666 - Verify that the names inside the steps filter component from Performance by Assignee card are breaking into another line when the component width exceeds 240px"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -53,15 +44,6 @@ definition {
 	test CardConsideresInactiveUser {
 
 		// TODO LRQA-67706 CardConsideresInactiveUser pending implementation
-
-	}
-
-	@description = "LPS-97666 - Verify that, when there are no completed items, the Performance by Assignee card displays the specific empty state"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CardDisplaysSpecificEmptyStateWhenThereAreNoCompletedItems {
-
-		// TODO LRQA-67712 CardDisplaysSpecificEmptyStateWhenThereAreNoCompletedItems pending implementation
 
 	}
 
@@ -92,30 +74,12 @@ definition {
 
 	}
 
-	@description = "LPS-99441 - Verify that there is an image besides the assignee name that is retrieved from the global user profile picture add, delete, update"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test ImageIsRetrievedFromGlobalUserProfilePicture {
-
-		// TODO LRQA-67698 ImageIsRetrievedFromGlobalUserProfilePicture pending implementation
-
-	}
-
 	@description = "LPS-97666 - Verify that, when hovering the info icon next to the card title, there is a tooltip"
 	@ignore = "Test Stub"
 	@priority = "2"
 	test InfoIconDisplaysMessageOnHover {
 
 		// TODO LRQA-67693 InfoIconDisplaysMessageOnHover pending implementation
-
-	}
-
-	@description = "LPS-99441 - Verify that the pagination of Performance by Assignee is working correctly"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test PageDisplaysPagination {
-
-		// TODO LRQA-67715 PageDisplaysPagination pending implementation
 
 	}
 
@@ -137,15 +101,6 @@ definition {
 
 	}
 
-	@description = "LPS-99441 - Verify that the Performance by Assignee page is providing the loading feedback when the table is being updated"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
-
-		// TODO LRQA-67703 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
-
-	}
-
 	@description = "LPS-97666 - Verify that the steps filter inside the card Performance by Assignee has All Steps as the first option from the dropdown menu"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -161,51 +116,6 @@ definition {
 	test StepsFilterIsOrderedAlphabetivally {
 
 		// TODO LRQA-67702 StepsFilterIsOrderedAlphabetivally pending implementation
-
-	}
-
-	@description = "LPS-99441 - Verify that the table inside Performance by Assignee page can be ordered by column Avg Completion Time"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test TableCanBeReorderedByAvgCompletionTime {
-
-		// TODO LRQA-67709 TableCanBeReorderedByAvgCompletionTime pending implementation
-
-	}
-
-	@description = "LPS-99441 - Verify that the table inside Performance by Assignee page can be ordered by column Completed Tasks"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test TableCanBeReorderedByCompletedTasks {
-
-		// TODO LRQA-67707 TableCanBeReorderedByCompletedTasks pending implementation
-
-	}
-
-	@description = "LPS-97666 - Verify that the card Performance by Assignee has no more than 10 entries ordered by biggest average completion time"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TableDisplaysUpTo10EntriesDescOrder {
-
-		// TODO LRQA-67701 TableDisplaysUpTo10EntriesDescOrder pending implementation
-
-	}
-
-	@description = "LPS-97666 - Verify that the card Performance by Assignee does not provide a scroll if there are 5 entries or less"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TableDoesNotProvideVerticalScrollWhenThereAre5EntriesOrLess {
-
-		// TODO LRQA-67694 TableDoesNotProvideVerticalScrollWhenThereAre5EntriesOrLess pending implementation
-
-	}
-
-	@description = "LPS-99441 - Verify that the default order of the table inside Performance by Assignee page is from biggest to smallest number from Avg Completion Time"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TableIsDefaultSortedInDescOrderByAvgCompletionTime {
-
-		// TODO LRQA-67705 TableIsDefaultSortedInDescOrderByAvgCompletionTime pending implementation
 
 	}
 
@@ -233,15 +143,6 @@ definition {
 	test UserCanSearchNamesContainingNoAsciiChars {
 
 		// TODO LRQA-67696 UserCanSearchNamesContainingNoAsciiChars pending implementation
-
-	}
-
-	@description = "LPS-97666 - Verify that the user images from Performance by Assignee card are retrieved from the global user profile picture even after changing/deleting it"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test UserImagsAreRetrievedFromGlobalUser {
-
-		// TODO LRQA-67700 UserImagsAreRetrievedFromGlobalUser pending implementation
 
 	}
 

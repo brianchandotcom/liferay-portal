@@ -318,7 +318,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String newContent = content;
 
-		if (ListUtil.isEmpty(_sourceFormatterArgs.getCheckNames())) {
+		List<String> checkCategoryNames =
+			_sourceFormatterArgs.getCheckCategoryNames();
+
+		if (checkCategoryNames.contains("Styling") ||
+			(checkCategoryNames.isEmpty() &&
+			 ListUtil.isEmpty(_sourceFormatterArgs.getCheckNames()))) {
+
 			_checkUTF8(file, fileName);
 
 			newContent = StringUtil.replace(

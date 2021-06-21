@@ -156,6 +156,51 @@ definition {
 			workflowTask = "${workflowTask}");
 	}
 
+	macro assertInfoItem {
+		var taskId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+		var creationDate = selenium.getText("//td[contains(text(),' AM')]|//td[contains(text(),' PM')]");
+		var key_dueDate = "${key_dueDate}";
+		var key_itemSubject = "${key_itemSubject}";
+		var key_processStep = "${key_processStep}";
+		var key_assignee = "${key_assignee}";
+		var key_createdBy = "${key_createdBy}";
+
+		AssertElementPresent(
+			key_columnName = "ID",
+			key_fieldName = "${taskId}",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_TH");
+
+		AssertElementPresent(
+			key_columnName = "Due Date",
+			key_fieldName = "${key_dueDate}",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
+
+		AssertElementPresent(
+			key_columnName = "Item Subject",
+			key_fieldName = "${key_processStep}",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
+
+		AssertElementPresent(
+			key_columnName = "Process Step",
+			key_fieldName = "${key_processStep}",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_TH");
+
+		AssertElementPresent(
+			key_columnName = "Assignee",
+			key_fieldName = "${key_assignee}",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_TH");
+
+		AssertElementPresent(
+			key_columnName = "Created By",
+			key_fieldName = "${key_createdBy}",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
+
+		AssertElementPresent(
+			key_columnName = "Creation Date",
+			key_fieldName = "${creationDate}",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
+	}
+
 	macro assignBlogEntriesToUsers {
 		var iterator = "1";
 		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");

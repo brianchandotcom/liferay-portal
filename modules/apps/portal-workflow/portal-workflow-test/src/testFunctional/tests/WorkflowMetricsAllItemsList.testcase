@@ -121,12 +121,33 @@ definition {
 	}
 
 	@description = "LPS-86652 - Verify that every column displays the correct info for a item"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ColumnsDiplayCorrectInfo {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67926 ColumnsDiplayCorrectInfo pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Content",
+			entryTitle = "Blogs Title 1");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+
+		Workflow.assertInfoItem(
+			key_assignee = "Unassigned",
+			key_createdBy = "Test Test",
+			key_dueDate = "-",
+			key_itemSubject = "Blogs Entry: Blogs Title 1",
+			key_processStep = "Review");
 	}
 
 	@description = "LPS-86652 - Validate that the correct number of entries is showed when user chooses 4, 8, 20, 40, 60"

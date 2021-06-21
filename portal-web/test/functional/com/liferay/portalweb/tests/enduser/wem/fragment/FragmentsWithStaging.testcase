@@ -153,7 +153,7 @@ definition {
 			value1 = '''<div class="fragment_1">Fragment Name</div>''');
 	}
 
-	@description = "This is a test case for LPS-129852. View the changes of fragment on content page still persist in staging and live site after overwrite the fragment."
+	@description = "This is a test for LPS-129852. View the changes of fragment on content page still persist in staging and live site after overwrite the fragment."
 	@priority = "4"
 	test ViewChangesOfFragmentOnContentPagePersistInStagingAndLiveSiteAfterOverwriteTheFragment {
 		property test.name.skip.portal.instance = "FragmentsWithStaging#ViewChangesOfFragmentOnContentPagePersistInStagingAndLiveSiteAfterOverwriteTheFragment";

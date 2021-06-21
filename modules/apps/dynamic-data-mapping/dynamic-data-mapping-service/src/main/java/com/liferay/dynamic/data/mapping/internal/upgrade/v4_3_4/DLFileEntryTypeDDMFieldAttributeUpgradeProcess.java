@@ -162,12 +162,17 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 
 							String valueString = resultSet2.getString(3);
 
-							Number number = numberFormat.parse(valueString);
+							if (Validator.isNull(valueString)) {
+								preparedStatement3.setString(1, null);
+							}
+							else {
+								Number number = numberFormat.parse(valueString);
 
-							numberFormat.setGroupingUsed(false);
+								numberFormat.setGroupingUsed(false);
 
-							preparedStatement3.setString(
-								1, numberFormat.format(number));
+								preparedStatement3.setString(
+									1, numberFormat.format(number));
+							}
 
 							preparedStatement3.setLong(
 								2, resultSet2.getLong(1));

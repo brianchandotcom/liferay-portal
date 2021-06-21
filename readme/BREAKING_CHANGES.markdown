@@ -1,9 +1,6 @@
 # What are the Breaking Changes for Liferay 7.4?
 
-This document presents a chronological list of changes that break existing
-functionality, APIs, or contracts with third party Liferay developers or users.
-We try our best to minimize these disruptions, but sometimes they are
-unavoidable.
+This document presents a chronological list of changes that break existing functionality, APIs, or contracts with third party Liferay developers or users. We try our best to minimize these disruptions, but sometimes they are unavoidable.
 
 Here are some of the types of changes documented in this file:
 
@@ -11,37 +8,25 @@ Here are some of the types of changes documented in this file:
 * API incompatibilities: Changes to public Java or JavaScript APIs
 * Changes to context variables available to templates
 * Changes in CSS classes available to Liferay themes and portlets
-* Configuration changes: Changes in configuration files, like
-  `portal.properties`, `system.properties`, etc.
+* Configuration changes: Changes in configuration files, like `portal.properties`, `system.properties`, etc.
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
-* Deprecations or end of support: For example, warning that a certain
-  feature or API will be dropped in an upcoming version.
+* Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
 *This document has been reviewed through commit `4334fc6cc349`.*
 
 ## Breaking Changes Contribution Guidelines
 
-Each change must have a brief descriptive title and contain the following
-information:
+Each change must have a brief descriptive title and contain the following information:
 
-* **[Title]** Provide a brief descriptive title. Use past tense and follow
-  the capitalization rules from
-  <http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
-* **Date:** Specify the date you submitted the change. Format the date as
-  *YYYY-MMM-DD* (e.g., 2014-Feb-25).
-* **JIRA Ticket:** Reference the related JIRA ticket (e.g., LPS-12345)
-  (Optional).
-* **What changed?** Identify the affected component and the type of change that
-  was made.
-* **Who is affected?** Are end-users affected? Are developers affected? If the
-  only affected people are those using a certain feature or API, say so.
+* **[Title]** Provide a brief descriptive title. Use past tense and follow the capitalization rules from <http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
+* **Date:** Specify the date you submitted the change. Format the date as *YYYY-MMM-DD* (e.g., 2014-Feb-25).
+* **JIRA Ticket:** Reference the related JIRA ticket (e.g., LPS-12345) (Optional).
+* **What changed?** Identify the affected component and the type of change that was made.
+* **Who is affected?** Are end-users affected? Are developers affected? If the only affected people are those using a certain feature or API, say so.
 * **How should I update my code?** Explain any client code changes required.
-* **Why was this change made?** Explain the reason for the change. If
-  applicable, justify why the breaking change was made instead of following a
-  deprecation process.
+* **Why was this change made?** Explain the reason for the change. If applicable, justify why the breaking change was made instead of following a deprecation process.
 
-Here's the template to use for each breaking change (note how it ends with a
-horizontal rule):
+Here is the template to use for each breaking change (note how it ends with a horizontal rule):
 
 ```
 ### Title
@@ -60,8 +45,7 @@ horizontal rule):
 
 ```
 
-The remaining content of this document consists of the breaking changes listed
-in ascending chronological order.
+The remaining content of this document consists of the breaking changes listed in ascending chronological order.
 
 ## Breaking Changes List
 

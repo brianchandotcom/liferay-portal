@@ -32,7 +32,7 @@ definition {
 	@description = "Sync Liferay Data Source Contacts"
 	@priority = "5"
 	test CanSyncAllContactsFromDXPToAC {
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.closeAllSessions();
 

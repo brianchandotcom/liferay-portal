@@ -36,14 +36,60 @@ definition {
 	}
 
 	@description = "Verify if individual fields can be moved to different positions after being added via element set"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsAddedViaElementSetCanBeReordered {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134252 FieldsAddedViaElementSetCanBeReordered pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Text",
+			fieldPositionNumber = "0");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Numeric",
+			fieldPositionNumber = "1");
+
+		Form.moveFieldToRow(
+			fieldLabel = "Numeric",
+			fieldNameTarget = "Text");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Numeric",
+			fieldPositionNumber = "0");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Text",
+			fieldPositionNumber = "1");
 	}
 
 	@description = "Verify that fields can be moved between pages"

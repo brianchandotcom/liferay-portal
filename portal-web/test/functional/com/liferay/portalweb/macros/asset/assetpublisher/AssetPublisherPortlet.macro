@@ -527,9 +527,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		else {
-			SelectFrameTop();
-		}
+		SelectFrameTop();
 	}
 
 	macro configurePaginationPG {

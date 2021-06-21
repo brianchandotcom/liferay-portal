@@ -111,7 +111,7 @@ export function GlobalContextFrame({children, useIframe}) {
 			'page-editor__global-context-iframe--loading'
 		);
 	}
-	else if (!useIframe) {
+	else if (!useIframe || !iframeContext) {
 		content = <>{children}</>;
 		context = localContext;
 

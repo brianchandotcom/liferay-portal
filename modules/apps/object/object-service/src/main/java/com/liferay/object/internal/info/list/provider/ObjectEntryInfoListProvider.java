@@ -38,7 +38,7 @@ public class ObjectEntryInfoListProvider
 	public List<ObjectEntry> getInfoList(
 		InfoListProviderContext infoListProviderContext) {
 
-		return getInfoList(infoListProviderContext, Pagination.of(0, 20), null);
+		return getInfoList(infoListProviderContext, Pagination.of(20, 0), null);
 	}
 
 	@Override

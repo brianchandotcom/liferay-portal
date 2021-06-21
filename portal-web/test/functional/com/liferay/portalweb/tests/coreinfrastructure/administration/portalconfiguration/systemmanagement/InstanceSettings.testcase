@@ -296,6 +296,40 @@ definition {
 	}
 
 	@priority = "4"
+	test FactoryConfigurationCanBeEdited {
+		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationCanBeEdited";
+
+		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
+		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID Connect Provider",
+			configurationScope = "Virtual Instance Scope");
+
+		OpenIDConnect.addProvider(
+			openIDConnectClientID = "${openIDConnectClientID}",
+			openIDConnectClientSecret = "${openIDConnectClientSecret}",
+			providerName = "Google");
+
+		LexiconEntry.viewEntryName(rowEntry = "Google");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Google");
+
+		FormFields.editTextMultiline(
+			fieldName = "providerName",
+			fieldValue = "Edit Google");
+
+		PortletEntry.update();
+
+		LexiconEntry.viewNoEntry(rowEntry = "Google");
+
+		LexiconEntry.viewEntryName(rowEntry = "Edit Google");
+	}
+
+	@priority = "4"
 	test ViewContentSharingDisabledAcrossSitesViaAP {
 		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingDisabledAcrossSitesViaAP";
 

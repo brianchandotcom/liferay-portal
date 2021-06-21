@@ -1032,6 +1032,9 @@ public class JournalArticleLocalServiceImpl
 		if (serviceContext != null) {
 			modifiedDate = serviceContext.getModifiedDate(modifiedDate);
 		}
+		else {
+			serviceContext = new ServiceContext();
+		}
 
 		newArticle.setModifiedDate(modifiedDate);
 

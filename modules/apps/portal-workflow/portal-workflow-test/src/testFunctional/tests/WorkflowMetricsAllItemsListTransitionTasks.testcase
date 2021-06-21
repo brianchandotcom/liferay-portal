@@ -29,11 +29,49 @@ definition {
 	}
 
 	@description = "LPS-105495 - Verify that the user can transition tasks adding a comment to it"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddCommentToATransitionTask {
 
-		// TODO LRQA-67809 CanAddCommentToATransitionTask pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		WorkflowMetrics.chooseTransitionPerStep(
+			taskName = "Review",
+			transitionOption = "Approve",
+			comment = "Test Comment");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow._viewActivities(
+			workflowActivityComment = "Test Comment",
+			workflowAssetTitle = "Blogs Entry Title");
+
+
 
 	}
 

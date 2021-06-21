@@ -16,6 +16,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_COMMENT_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Add Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_COMMENT_TEXTBOX</td>
+	<td>//textarea[@placeholder='Comment']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECT_ALL</td>
 	<td>//li[@class='nav-item ml-2']//label</td>
 	<td></td>

@@ -434,6 +434,29 @@ definition {
 			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
 	}
 
+	macro chooseTransitionPerStep {
+
+		var key_taskName = "${taskName}";
+
+
+		Select(
+			locator1 = "WorkflowTransitionModal#TRANSITION_TO_BUTTON",
+			value1 = "${transitionOption}");
+
+		if (isSet(comment)) {
+
+			Click(locator1 = "WorkflowAllItems#ADD_COMMENT_BUTTON");
+
+			Type(
+				locator1 = "WorkflowAllItems#ADD_COMMENT_TEXTBOX",
+				value1 = "${comment}");
+		}
+
+		Button.clickDone();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro clearAllFilter {
 		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
 	}

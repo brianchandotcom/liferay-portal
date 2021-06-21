@@ -183,6 +183,27 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "${errorMessage}");
 	}
+	
+	macro assertFilterOrder {
+		var taskPosition = "${start}";
+
+		for (var taskName : list "${taskList}") {
+			var key_taskName = "${taskName}";
+
+			ScrollWebElementIntoView(
+				key_taskName = "${taskName}",
+				key_taskPosition = "${taskPosition}",
+				locator1 = "WorkflowMetrics#METRICS_DROPDOWN_FILTER_ACTIVATED");
+
+			AssertTextEquals(
+				key_taskName = "${taskName}",
+				key_taskPosition = "${taskPosition}",
+				locator1 = "WorkflowMetrics#METRICS_DROPDOWN_FILTER_ACTIVATED",
+				value1 = "${taskName}");
+
+			var taskPosition = ${taskPosition} + 1;
+		}
+	}
 
 	macro assertMetricsIndexes {
 		AssertElementPresent(

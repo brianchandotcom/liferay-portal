@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 
 import java.util.Map;
@@ -78,6 +79,25 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 		}
 
 		return false;
+	}
+
+	public static long toAddressTypeId(int commerceAddressType) {
+		if (CommerceAddressConstants.ADDRESS_TYPE_BILLING ==
+				commerceAddressType) {
+
+			return _getAddressTypeId(
+				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING);
+		}
+		else if (CommerceAddressConstants.ADDRESS_TYPE_SHIPPING ==
+					commerceAddressType) {
+
+			return _getAddressTypeId(
+				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING);
+		}
+
+		return _getAddressTypeId(
+			AccountListTypeConstants.
+				ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING);
 	}
 
 	public static boolean toCommerceAccountDefaultBilling(Address address) {
@@ -204,6 +224,13 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 		}
 
 		return false;
+	}
+
+	private static long _getAddressTypeId(String name) {
+		ListType listType = ListTypeLocalServiceUtil.getListType(
+			name, AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+
+		return listType.getListTypeId();
 	}
 
 }

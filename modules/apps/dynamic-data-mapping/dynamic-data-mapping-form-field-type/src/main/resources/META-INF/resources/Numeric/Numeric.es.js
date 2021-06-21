@@ -74,8 +74,7 @@ const getMaskedValue = ({
 			}
 			value = value.replace(decimalSymbol, '.');
 			if (dataType == 'integer' && value.includes('.')) {
-				value = Number(value);
-				value = Math.round(value);
+				value = value.replace(decimalSymbol, '');
 			}
 		}
 		value = String(value).replace('.', decimalSymbol);

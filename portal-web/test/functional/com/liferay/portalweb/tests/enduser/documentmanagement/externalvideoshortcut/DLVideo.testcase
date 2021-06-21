@@ -399,6 +399,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewFromDisconnectedSite {
+		property test.name.skip.portal.instance = "DLVideo#ViewFromDisconnectedSite";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSITION_ERROR_MESSAGE</td>
+	<td>//div[contains(@role,'alert') and contains(., '${key_errorMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRANSITION_TO_BUTTON</td>
 	<td>//h4[text()='${key_taskName}']/parent::div/following-sibling::div[1]//select</td>
 	<td></td>

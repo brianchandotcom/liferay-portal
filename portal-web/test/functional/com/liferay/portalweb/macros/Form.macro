@@ -6,6 +6,7 @@ definition {
 
 	macro addFieldFromSidebarToFieldsGroup {
 		DragAndDrop.javaScriptDragAndDropToBottom(
+
 			key_fieldLabel = "${key_fieldLabel}",
 			key_fieldName = "${key_fieldName}",
 			locator1 = "Sidebar#ADD_FIELD_NAME",
@@ -226,7 +227,7 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
+		
 		Alert.viewSuccessMessage();
 
 		LexiconEntry.viewNoEntry(rowEntry = "${formName}");

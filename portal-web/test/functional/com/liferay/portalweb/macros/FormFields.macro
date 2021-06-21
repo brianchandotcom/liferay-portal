@@ -682,6 +682,15 @@ definition {
 			value1 = "${moveForce},0");
 	}
 
+	macro resizeFieldGroup {
+		Form.gotoFieldContainer(fieldName = "${fieldName}");
+
+		DragAndDrop.dragAndDrop(
+			locator1 = "FormFields#FIELD_GROUP_HANDLE_RIGHT",
+			value1 = "${moveForce},0");
+	}
+
+
 	macro selectAutoCompleteOption {
 		var key_autocompleteOption = "${autocompleteOption}";
 

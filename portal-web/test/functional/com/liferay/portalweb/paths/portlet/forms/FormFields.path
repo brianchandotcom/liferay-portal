@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_GROUP_HANDLE_RIGHT</td>
+	<td>//div[contains(@class,'resize-handle-right') and not(contains(@class,'hide'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_ON_ROW</td>
 	<td>//div[(@data-ddm-field-row = '${key_fieldRowNumber}')]/div[contains(@data-field-name,'${key_fieldName}')]</td>
 	<td></td>

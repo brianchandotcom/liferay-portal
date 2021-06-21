@@ -53,8 +53,62 @@ definition {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134380 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text",
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			ruleNumber = "1");
+
+		FormRules.gotoEdit(ruleNumber = "1");
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Does not contain",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text",
+			conditionField = "Text",
+			conditionFieldConstant = "Test",
+			conditionOperator = "Does not contain",
+			ruleNumber = "1");
 	}
 
 	@description = "Verify that a Rule with 'Contains' condition can be created"

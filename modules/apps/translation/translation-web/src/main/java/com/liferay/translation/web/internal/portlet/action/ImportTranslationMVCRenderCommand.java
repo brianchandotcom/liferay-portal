@@ -19,14 +19,14 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemWorkflowProvider;
-import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.web.internal.display.context.ImportTranslationDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.translation.constants.TranslationPortletKeys;
+import com.liferay.translation.web.internal.display.context.ImportTranslationDisplayContext;
 
 import java.util.Locale;
 
@@ -42,8 +42,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/import_translation"
+		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
+		"mvc.command.name=/translation/import_translation"
 	},
 	service = MVCRenderCommand.class
 )

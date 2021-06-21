@@ -28,7 +28,7 @@ else if (collapsible) {
 }
 %>
 
-<fieldset aria-labelledby="<%= id %>Title" class="<%= collapsible ? "panel" : StringPool.BLANK %> <%= cssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> <%= Validator.isNotNull(id) ? "id=\"" + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
+<fieldset class="<%= collapsible ? "panel" : StringPool.BLANK %> <%= cssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> <%= Validator.isNotNull(id) ? "id=\"" + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(label) %>">
 			<liferay-util:buffer

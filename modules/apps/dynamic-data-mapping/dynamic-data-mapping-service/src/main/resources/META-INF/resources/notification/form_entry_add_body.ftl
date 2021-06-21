@@ -27,7 +27,6 @@
 		.field-value {
 			font-size: 16px;
 			margin: 0;
-			white-space: pre-line;
 		}
 
 		h1,
@@ -115,7 +114,7 @@
 									<#if field??>
 										<p class="field-label">${field.label}</p>
 
-										<p class="field-value">${field.value}</p>
+										<p class="field-value"><pre>${field.value}</pre></p>
 									</#if>
 								</#foreach>
 							</div>

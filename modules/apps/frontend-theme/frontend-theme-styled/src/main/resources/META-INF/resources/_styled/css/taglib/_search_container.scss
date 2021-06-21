@@ -1,3 +1,11 @@
+.lfr-search-container .entry-action {
+	width: 1px;
+
+	.taglib-icon {
+		white-space: nowrap;
+	}
+}
+
 .lfr-search-container-wrapper {
 	&.lfr-search-container-fixed-first-column {
 		position: relative;
@@ -63,6 +71,14 @@
 
 	a:not(.component-action) {
 		color: $dark;
+	}
+
+	.dropdown-action .dropdown-toggle {
+		color: $secondary;
+
+		&:hover {
+			color: $dark;
+		}
 	}
 
 	.lfr-icon-menu > .dropdown-toggle {
@@ -217,5 +233,46 @@
 
 	.checkbox-container .form-group {
 		margin-bottom: 0;
+	}
+}
+
+.user-info {
+	display: flex;
+
+	.sticker {
+		align-self: center;
+	}
+
+	.user-details {
+		margin-left: 1rem;
+	}
+
+	.user-name {
+		color: $dark;
+		font-weight: 600;
+	}
+
+	.date-info {
+		color: $secondary;
+	}
+}
+
+.user-status-tooltip {
+	.user-status-avatar {
+		float: left;
+		margin-right: 5px;
+
+		.user-status-avatar-image {
+			width: 27px;
+		}
+	}
+
+	.user-status-info {
+		display: inline-block;
+		overflow: hidden;
+
+		.user-status-date {
+			font-size: 11px;
+		}
 	}
 }

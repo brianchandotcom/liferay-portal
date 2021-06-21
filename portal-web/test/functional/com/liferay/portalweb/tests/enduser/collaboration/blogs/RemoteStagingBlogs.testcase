@@ -54,7 +54,8 @@ definition {
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name-staging");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",

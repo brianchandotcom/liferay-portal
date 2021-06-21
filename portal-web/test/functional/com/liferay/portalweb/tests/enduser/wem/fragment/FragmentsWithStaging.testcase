@@ -253,8 +253,6 @@ definition {
 		}
 
 		task ("Import the fragment collection") {
-			Navigator.gotoStagedView();
-
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
 
 			FragmentsAdmin.importCollectionFromTempFolder();

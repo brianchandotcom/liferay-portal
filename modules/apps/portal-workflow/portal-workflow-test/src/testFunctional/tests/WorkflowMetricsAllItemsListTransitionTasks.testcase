@@ -203,11 +203,62 @@ definition {
 	}
 
 	@description = "LPS-108138 - Verify that, in -Choose Transition Per Step- modal, the user can add comments when transitioning tasks"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test OnChooseTransitionPerStepCanAddCommentToATransitionTask {
 
-		// TODO LRQA-67812 OnChooseTransitionPerStepCanAddCommentToATransitionTask pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		WorkflowMetrics.chooseTransitionPerStep(
+			comment = "Test",
+			taskName = "Review",
+			transitionOption = "Approve");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow._viewActivities(
+			workflowActivityComment = "Test",
+			workflowAssetTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow._viewActivities(
+			workflowActivityComment = "Test",
+			workflowAssetTitle = "Blogs Entry Title 2");
 
 	}
 

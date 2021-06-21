@@ -25,10 +25,6 @@ portletDisplay.setURLBack(importTranslationDisplayContext.getRedirect());
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/translation-web/css/main.css") %>" rel="stylesheet" />
-</liferay-util:html-top>
-
 <div class="translation">
 	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= importTranslationDisplayContext.getRedirect() %>" />

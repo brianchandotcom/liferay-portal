@@ -394,6 +394,12 @@ export const updateField = (
 			),
 		};
 	}
+	else if (propertyName === 'numericInputMask') {
+		field = {
+			...field,
+			...propertyValue,
+		};
+	}
 	else if (propertyName === 'options') {
 		field = {
 			...field,

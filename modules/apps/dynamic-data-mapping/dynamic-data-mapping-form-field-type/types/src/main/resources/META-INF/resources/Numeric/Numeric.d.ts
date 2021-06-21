@@ -13,11 +13,14 @@
  */
 
 import React, {FocusEventHandler} from 'react';
+import {ISymbols} from '../NumericInputMask/NumericInputMask';
 declare const Numeric: React.FC<IProps>;
 export {Numeric};
 declare const _default: any;
 export default _default;
 interface IProps {
+	append: string;
+	appendType: 'prefix' | 'suffix';
 	dataType: NumericDataType;
 	defaultLanguageId: string;
 	id: string;
@@ -37,10 +40,8 @@ interface IProps {
 	placeholder?: string;
 	predefinedValue?: string;
 	readOnly: boolean;
-	symbols: {
-		decimalSymbol: string;
-		thousandSymbol?: string;
-	};
+	symbols: ISymbols;
+	thousandsSeparator?: [',' | '.' | ' ' | "'" | 'none'];
 	value?: string;
 }
 declare type NumericDataType = 'integer' | 'double';

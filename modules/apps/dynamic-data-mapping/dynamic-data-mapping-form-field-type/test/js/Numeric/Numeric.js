@@ -186,7 +186,6 @@ describe('Field Numeric', () => {
 			render(
 				<Numeric
 					confirmationValue="22.82"
-					dataType="integer"
 					name="numericField"
 					requireConfirmation={true}
 				/>
@@ -200,7 +199,7 @@ describe('Field Numeric', () => {
 		});
 	});
 
-	describe('Input Mask toggle', () => {
+	describe('Integer Input Mask toggle', () => {
 		it('has an inputMaskFormat', () => {
 			const {container} = render(
 				<Numeric

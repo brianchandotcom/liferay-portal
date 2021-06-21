@@ -27,6 +27,7 @@ import {conformToMask} from 'vanilla-text-mask';
 // @ts-ignore
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import {ISymbols} from '../NumericInputMask/NumericInputMask';
 
 // @ts-ignore
 
@@ -53,22 +54,42 @@ const adaptiveMask = (rawValue: string, inputMaskFormat: string) => {
 };
 
 const getMaskedValue = ({
+	append,
+	appendType,
 	dataType,
-	decimalSymbol,
 	inputMask,
 	inputMaskFormat,
+	symbols,
 	value,
 }: {
+	append: string;
+	appendType?: 'prefix' | 'suffix';
 	dataType: NumericDataType;
-	decimalSymbol: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;
+	symbols: ISymbols;
 	value: string;
 }): IMaskedNumber => {
 	let mask;
 
 	if (inputMask) {
-		mask = adaptiveMask(value, inputMaskFormat as string);
+		if (dataType === 'double') {
+			const config: INumberMaskConfig = {
+				allowDecimal: true,
+				allowLeadingZeroes: true,
+				allowNegative: true,
+				decimalSymbol: symbols.decimalSymbol,
+				includeThousandsSeparator: Boolean(symbols.thousandsSeparator),
+				prefix: appendType === 'prefix' ? append : '',
+				suffix: appendType === 'suffix' ? append : '',
+				thousandsSeparatorSymbol: symbols.thousandsSeparator,
+			};
+
+			mask = createNumberMask(config);
+		}
+		else {
+			mask = adaptiveMask(value, inputMaskFormat as string);
+		}
 	}
 	else {
 		const config: INumberMaskConfig = {
@@ -81,7 +102,7 @@ const getMaskedValue = ({
 		if (dataType === 'double') {
 			config.allowDecimal = true;
 			config.decimalLimit = null;
-			config.decimalSymbol = decimalSymbol;
+			config.decimalSymbol = symbols.decimalSymbol;
 		}
 		mask = createNumberMask(config);
 
@@ -89,12 +110,12 @@ const getMaskedValue = ({
 			if (!value) {
 				return {masked: '', raw: ''};
 			}
-			value = value.replace(decimalSymbol, '.');
+			value = value.replace(symbols.decimalSymbol, '.');
 			if (dataType == 'integer' && value.includes('.')) {
-				value = value.replace(decimalSymbol, '');
+				value = value.replace(symbols.decimalSymbol, '');
 			}
 		}
-		value = value.replace('.', decimalSymbol);
+		value = value.replace('.', symbols.decimalSymbol);
 	}
 
 	const {conformedValue: masked} = conformToMask(value, mask, {
@@ -102,11 +123,14 @@ const getMaskedValue = ({
 		keepCharPositions: false,
 		placeholderChar: '\u2000',
 	});
+	const regex = new RegExp(`[^${symbols.decimalSymbol}|\\d]`, 'g');
 
-	return {masked, raw: inputMask ? masked.replace(/\D/g, '') : masked};
+	return {masked, raw: inputMask ? masked.replace(regex, '') : masked};
 };
 
 const Numeric: React.FC<IProps> = ({
+	append,
+	appendType,
 	dataType = 'integer',
 	defaultLanguageId,
 	id,
@@ -120,11 +144,22 @@ const Numeric: React.FC<IProps> = ({
 	placeholder,
 	predefinedValue,
 	readOnly,
-	symbols: {decimalSymbol} = {decimalSymbol: '.'},
+	symbols: symbolsProp = {decimalSymbol: '.'},
 	value,
 	...otherProps
 }) => {
 	const {editingLanguageId} = useFormState();
+	const symbols = useMemo<ISymbols>(() => {
+		return inputMask
+			? {
+					decimalSymbol: symbolsProp.decimalSymbol,
+					thousandsSeparator:
+						symbolsProp.thousandsSeparator == 'none'
+							? null
+							: symbolsProp.thousandsSeparator,
+			  }
+			: symbolsProp;
+	}, [inputMask, symbolsProp]);
 
 	const inputValue = useMemo<IMaskedNumber>(() => {
 		const newValue =
@@ -135,15 +170,19 @@ const Numeric: React.FC<IProps> = ({
 			'';
 
 		return getMaskedValue({
+			append,
+			appendType,
 			dataType,
-			decimalSymbol,
 			inputMask,
 			inputMaskFormat,
+			symbols,
 			value: newValue,
 		});
 	}, [
+		append,
+		appendType,
 		dataType,
-		decimalSymbol,
+		symbols,
 		defaultLanguageId,
 		editingLanguageId,
 		inputMask,
@@ -165,10 +204,12 @@ const Numeric: React.FC<IProps> = ({
 		}
 
 		const newValue = getMaskedValue({
+			append,
+			appendType,
 			dataType,
-			decimalSymbol,
 			inputMask,
 			inputMaskFormat,
+			symbols,
 			value,
 		});
 		if (newValue.masked !== inputValue.masked) {
@@ -221,15 +262,19 @@ interface IMaskedNumber {
 }
 
 interface INumberMaskConfig {
+	allowDecimal?: boolean;
 	allowLeadingZeroes: boolean;
 	allowNegative: boolean;
-	includeThousandsSeparator: boolean;
-	prefix: string;
-	allowDecimal?: boolean;
 	decimalLimit?: number | null;
 	decimalSymbol?: string;
+	includeThousandsSeparator: boolean;
+	prefix: string;
+	suffix?: string;
+	thousandsSeparatorSymbol?: string | null;
 }
 interface IProps {
+	append: string;
+	appendType: 'prefix' | 'suffix';
 	dataType: NumericDataType;
 	defaultLanguageId: string;
 	id: string;
@@ -243,7 +288,8 @@ interface IProps {
 	placeholder?: string;
 	predefinedValue?: string;
 	readOnly: boolean;
-	symbols: {decimalSymbol: string; thousandSymbol?: string};
+	symbols: ISymbols;
+	thousandsSeparator?: [',' | '.' | ' ' | "'" | 'none'];
 	value?: string;
 }
 

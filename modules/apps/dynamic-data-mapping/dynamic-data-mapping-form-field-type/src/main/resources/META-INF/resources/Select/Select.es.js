@@ -208,6 +208,7 @@ const DropdownItem = ({
 		<ClayDropDown.Item
 			active={expand && currentValue === option.label}
 			data-testid={`dropdownItem-${index}`}
+			disabled={option.disabled}
 			label={option.label}
 			onClick={(event) => {
 				event.preventDefault();

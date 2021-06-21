@@ -242,7 +242,6 @@ definition {
 	@description = "LPS-108138 - Verify that only the tasks selected on -Select Steps to Transition- are being considered to be transitioned in the -Choose Transition Per Step- step"
 	@priority = "4"
 	test OnlySelectedTasksAreConsideredToBeTransitioned {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -253,14 +252,14 @@ definition {
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
-		
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title 2");	
+			entryTitle = "Blogs Entry Title 2");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -272,35 +271,28 @@ definition {
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title 2",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");	
+			workflowTask = "Review");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",
 			workflowMetricsTab = "DASHBOARD",
-			workflowProcess = "Single Approver");	
+			workflowProcess = "Single Approver");
 
 		WorkflowMetrics.goToTransitionTasks();
 
 		Click(
-			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_CHECKBOX_ITEM",
-			key_task = "1");
+			key_task = "1",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_CHECKBOX_ITEM");
 
 		Click(locator1 = "Button#NEXT");
 
 		AssertElementPresent(
-			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW",
-			key_tilte = "Blogs Entry: Blogs Entry Title 1");
+			key_tilte = "Blogs Entry: Blogs Entry Title 1",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW");
 
 		AssertElementNotPresent(
-			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW",
-			key_tilte = "Blogs Entry: Blogs Entry Title 2");
-
-
-
-
-
-
-
+			key_tilte = "Blogs Entry: Blogs Entry Title 2",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW");
 	}
 
 	@description = "LPS-108138 - Verify that when there are 11 or more instances to be transitioned with the same step, only the first 10 instances are displayed with the -Show All/Show Less- buttons available to be selected"

@@ -755,15 +755,6 @@ definition {
 		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
 	}
 
-	macro goToUpdateDueDateTasks {
-		Pause(locator1 = "2000");
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = "1");
-		MenuItem.clickNoError(menuItem = "Update Tasks Due Dates");
-	}
-
 	macro goToTransitionTasks {
 		Pause(locator1 = "2000");
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
@@ -771,6 +762,15 @@ definition {
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
 			task = "1");
 		MenuItem.clickNoError(menuItem = "Transition");
+	}
+
+	macro goToUpdateDueDateTasks {
+		Pause(locator1 = "2000");
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+		MenuItem.clickNoError(menuItem = "Update Tasks Due Dates");
 	}
 
 	macro goToWorkflowAllItems {

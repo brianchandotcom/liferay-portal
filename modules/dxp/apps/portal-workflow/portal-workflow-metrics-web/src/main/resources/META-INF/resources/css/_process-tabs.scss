@@ -145,10 +145,6 @@ $c: '.workflow-process-tabs';
 		font-size: 0.875rem;
 		text-transform: lowercase;
 	}
-
-	.workload-by-step-link {
-		color: #272833;
-	}
 }
 
 .custom-range-wrapper {
@@ -213,5 +209,13 @@ $c: '.workflow-process-tabs';
 
 	.workload-by-assignee-link {
 		color: #000;
+	}
+}
+
+.workload-by-step-link {
+	color: #272833;
+
+	&:hover {
+		color: #272833;
 	}
 }

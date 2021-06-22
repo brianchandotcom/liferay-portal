@@ -381,11 +381,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GENERAL_BUTTON_MODAL_FOOTER</td>
-	<td>//div[contains(@class, 'modal-footer')]//button[contains(@class,'btn-primary')][contains(text(),'${key_name}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_FILTER_APPLY</td>
 	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(.,'Apply')]</td>
 	<td></td>

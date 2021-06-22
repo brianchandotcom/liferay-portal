@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * @author Yi-Chen Tsai
  */
-public class ServiceBuilderBatchTestClassGroup
+public class ServiceBuilderModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
 	@Override
@@ -62,20 +62,20 @@ public class ServiceBuilderBatchTestClassGroup
 
 	}
 
-	public static class ServiceBuilderBatchTestClass
+	public static class ServiceBuilderModulesBatchTestClass
 		extends ModulesBatchTestClass {
 
-		protected static ServiceBuilderBatchTestClass getInstance(
+		protected static ServiceBuilderModulesBatchTestClass getInstance(
 			File moduleBaseDir, File modulesDir,
 			List<File> modulesProjectDirs) {
 
-			return new ServiceBuilderBatchTestClass(
+			return new ServiceBuilderModulesBatchTestClass(
 				new File(
 					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
 				modulesDir, modulesProjectDirs);
 		}
 
-		protected ServiceBuilderBatchTestClass(
+		protected ServiceBuilderModulesBatchTestClass(
 			File testClassFile, File modulesDir,
 			List<File> modulesProjectDirs) {
 
@@ -147,7 +147,7 @@ public class ServiceBuilderBatchTestClassGroup
 		return modulesProjectDirs;
 	}
 
-	protected ServiceBuilderBatchTestClassGroup(
+	protected ServiceBuilderModulesBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -237,7 +237,7 @@ public class ServiceBuilderBatchTestClassGroup
 
 			if (!modulesProjectDirs.isEmpty()) {
 				testClasses.add(
-					ServiceBuilderBatchTestClass.getInstance(
+					ServiceBuilderModulesBatchTestClass.getInstance(
 						moduleDir, portalModulesBaseDir, modulesProjectDirs));
 			}
 		}

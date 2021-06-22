@@ -142,7 +142,7 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-compile-")) {
-				batchTestClassGroup = new ModulesCompileBatchTestClassGroup(
+				batchTestClassGroup = new CompileModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if ((batchName.startsWith("modules-integration-") &&
@@ -163,7 +163,7 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-semantic-versioning-")) {
-				batchTestClassGroup = new ModulesSemVerBatchTestClassGroup(
+				batchTestClassGroup = new SemVerModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("plugins-compile-")) {
@@ -192,12 +192,13 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("rest-builder-")) {
-				batchTestClassGroup = new RESTBuilderBatchTestClassGroup(
+				batchTestClassGroup = new RESTBuilderModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("service-builder-")) {
-				batchTestClassGroup = new ServiceBuilderBatchTestClassGroup(
-					batchName, portalTestClassJob);
+				batchTestClassGroup =
+					new ServiceBuilderModulesBatchTestClassGroup(
+						batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("tck-")) {
 				batchTestClassGroup = new TCKJunitBatchTestClassGroup(

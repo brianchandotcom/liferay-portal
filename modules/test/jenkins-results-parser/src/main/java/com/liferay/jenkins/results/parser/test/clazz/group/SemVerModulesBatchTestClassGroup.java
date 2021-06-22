@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * @author Leslie Wong
  */
-public class ModulesSemVerBatchTestClassGroup
+public class SemVerModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
 	@Override
@@ -46,20 +46,20 @@ public class ModulesSemVerBatchTestClassGroup
 		return super.getAxisCount();
 	}
 
-	public static class ModulesSemVerBatchTestClass
+	public static class SemVerModulesBatchTestClass
 		extends ModulesBatchTestClass {
 
-		protected static ModulesSemVerBatchTestClass getInstance(
+		protected static SemVerModulesBatchTestClass getInstance(
 			File moduleBaseDir, File modulesDir,
 			List<File> modulesProjectDirs) {
 
-			return new ModulesSemVerBatchTestClass(
+			return new SemVerModulesBatchTestClass(
 				new File(
 					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
 				modulesDir, modulesProjectDirs);
 		}
 
-		protected ModulesSemVerBatchTestClass(
+		protected SemVerModulesBatchTestClass(
 			File moduleBaseDir, File modulesDir,
 			List<File> modulesProjectDirs) {
 
@@ -129,7 +129,7 @@ public class ModulesSemVerBatchTestClassGroup
 		return modulesProjectDirs;
 	}
 
-	protected ModulesSemVerBatchTestClassGroup(
+	protected SemVerModulesBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -169,7 +169,7 @@ public class ModulesSemVerBatchTestClassGroup
 
 			if (!modulesProjectDirs.isEmpty()) {
 				testClasses.add(
-					ModulesSemVerBatchTestClass.getInstance(
+					SemVerModulesBatchTestClass.getInstance(
 						new File(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								moduleDir)),

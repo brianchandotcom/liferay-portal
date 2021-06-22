@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * @author Leslie Wong
  */
-public class ModulesCompileBatchTestClassGroup
+public class CompileModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
 	@Override
@@ -46,19 +46,19 @@ public class ModulesCompileBatchTestClassGroup
 		return super.getAxisCount();
 	}
 
-	public static class ModulesCompileBatchTestClass
+	public static class CompileModulesBatchTestClass
 		extends ModulesBatchTestClass {
 
-		protected static ModulesCompileBatchTestClass getInstance(
+		protected static CompileModulesBatchTestClass getInstance(
 			File moduleBaseDir, File modulesDir) {
 
-			return new ModulesCompileBatchTestClass(
+			return new CompileModulesBatchTestClass(
 				new File(
 					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
 				modulesDir);
 		}
 
-		protected ModulesCompileBatchTestClass(
+		protected CompileModulesBatchTestClass(
 			File moduleBaseDir, File modulesDir) {
 
 			super(moduleBaseDir);
@@ -145,7 +145,7 @@ public class ModulesCompileBatchTestClassGroup
 
 	}
 
-	protected ModulesCompileBatchTestClassGroup(
+	protected CompileModulesBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -184,7 +184,7 @@ public class ModulesCompileBatchTestClassGroup
 
 		for (File moduleDir : moduleDirsList) {
 			testClasses.add(
-				ModulesCompileBatchTestClass.getInstance(
+				CompileModulesBatchTestClass.getInstance(
 					new File(
 						JenkinsResultsParserUtil.getCanonicalPath(moduleDir)),
 					portalModulesBaseDir));

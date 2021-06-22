@@ -34,7 +34,8 @@ import java.util.List;
 /**
  * @author Yi-Chen Tsai
  */
-public class RESTBuilderBatchTestClassGroup extends ModulesBatchTestClassGroup {
+public class RESTBuilderModulesBatchTestClassGroup
+	extends ModulesBatchTestClassGroup {
 
 	@Override
 	public int getAxisCount() {
@@ -59,20 +60,20 @@ public class RESTBuilderBatchTestClassGroup extends ModulesBatchTestClassGroup {
 
 	}
 
-	public static class RESTBuilderBatchTestClass
+	public static class RESTBuilderModulesBatchTestClass
 		extends ModulesBatchTestClass {
 
-		protected static RESTBuilderBatchTestClass getInstance(
+		protected static RESTBuilderModulesBatchTestClass getInstance(
 			File moduleBaseDir, File modulesDir,
 			List<File> modulesProjectDirs) {
 
-			return new RESTBuilderBatchTestClass(
+			return new RESTBuilderModulesBatchTestClass(
 				new File(
 					JenkinsResultsParserUtil.getCanonicalPath(moduleBaseDir)),
 				modulesDir, modulesProjectDirs);
 		}
 
-		protected RESTBuilderBatchTestClass(
+		protected RESTBuilderModulesBatchTestClass(
 			File testClassFile, File modulesDir,
 			List<File> modulesProjectDirs) {
 
@@ -129,7 +130,7 @@ public class RESTBuilderBatchTestClassGroup extends ModulesBatchTestClassGroup {
 		return modulesProjectDirs;
 	}
 
-	protected RESTBuilderBatchTestClassGroup(
+	protected RESTBuilderModulesBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -194,7 +195,7 @@ public class RESTBuilderBatchTestClassGroup extends ModulesBatchTestClassGroup {
 
 			if (!modulesProjectDirs.isEmpty()) {
 				testClasses.add(
-					RESTBuilderBatchTestClass.getInstance(
+					RESTBuilderModulesBatchTestClass.getInstance(
 						moduleDir, portalModulesBaseDir, modulesProjectDirs));
 			}
 		}

@@ -2750,13 +2750,33 @@ public class DLFileEntryLocalServiceImpl
 
 	private void _checkFileEntriesByExpirationDate(Date expirationDate)
 		throws PortalException {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Expiring file entries with expiration date between ",
-					_previousCheckDate, " and ", expirationDate));
+					"Expiring file entries with expiration date previous to ",
+					expirationDate));
 		}
 
+		List<DLFileEntry> fileEntries = _getFileEntriesByExpirationDate(
+			expirationDate);
+
+		for (DLFileEntry fileEntry : fileEntries) {
+
+			if (fileEntry.getStatus() == WorkflowConstants.STATUS_EXPIRED){
+				continue;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Expiring file entry ", fileEntry.getFileEntryId()
+						, " with expiration date ",
+						fileEntry.getExpirationDate()));
+			}
+
+			//updateStatus()
+		}
 
 	}
 
@@ -2950,6 +2970,21 @@ public class DLFileEntryLocalServiceImpl
 
 		return versioningStrategy.computeDLVersionNumberIncrease(
 			previousDLFileVersion, nextDLFileVersion);
+	}
+
+	private List<DLFileEntry> _getFileEntriesByExpirationDate(
+		Date expirationDate) {
+
+		return dlFileEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				DLFileEntryTable.INSTANCE
+			).from(
+				DLFileEntryTable.INSTANCE
+			).where(
+				DLFileEntryTable.INSTANCE.expirationDate.lte(
+					expirationDate
+				)
+			));
 	}
 
 	private List<DLFileEntry> _getFileEntriesByReviewDate(

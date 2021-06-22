@@ -68,7 +68,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemTypeConfiguration",
 	immediate = true,
-	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.DISPLAY_PAGE,
+	property = {
+		"service.ranking:Integer=300",
+		"site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.DISPLAY_PAGE
+	},
 	service = SiteNavigationMenuItemType.class
 )
 public class DisplayPageSiteNavigationMenuItemType

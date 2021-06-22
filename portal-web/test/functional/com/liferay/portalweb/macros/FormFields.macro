@@ -1175,6 +1175,18 @@ definition {
 		}
 	}
 
+	macro viewFieldNotRequired {
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "${fieldLabel}",
+			locator1 = "FormFields#FIELD_REQUIRED");
+	}
+
+	macro viewFieldNotVisible {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#FIELD_HIDDEN");
+	}
+
 	macro viewFieldPlaceholderText {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",
@@ -1243,6 +1255,12 @@ definition {
 		}
 	}
 
+	macro viewFieldRequired {
+		AssertElementPresent(
+			key_fieldFieldLabel = "${fieldLabel}",
+			locator1 = "FormFields#FIELD_REQUIRED");
+	}
+
 	macro viewFieldSize {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",
@@ -1276,6 +1294,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED",
 			value1 = "${fieldValidationErrorMessage}");
+	}
+
+	macro viewFieldVisible {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#FIELD_VISIBLE");
 	}
 
 	macro viewGridOptionNotPresent {
@@ -1602,12 +1626,6 @@ definition {
 
 	macro viewRequiredAsteriskDataField {
 		AssertElementPresent.assertVisible(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "Icon#ASTERISK_DATE_FIELD");
-	}
-
-	macro viewRequiredAsteriskDataFieldNotPresent {
-		AssertElementNotPresent(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
 			locator1 = "Icon#ASTERISK_DATE_FIELD");
 	}

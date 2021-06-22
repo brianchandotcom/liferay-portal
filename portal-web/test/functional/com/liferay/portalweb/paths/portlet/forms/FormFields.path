@@ -136,6 +136,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_VISIBLE</td>
+	<td>//div[@class='form-group' and contains(@data-field-name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREDEFINED_VALUE_INPUT</td>
 	<td>//input[contains(@name,'predefinedValue')]/..//input[@type!="hidden"]</td>
 	<td></td>

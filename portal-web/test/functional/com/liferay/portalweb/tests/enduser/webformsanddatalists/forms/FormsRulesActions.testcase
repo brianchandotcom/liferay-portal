@@ -162,14 +162,89 @@ definition {
 	}
 
 	@description = "Verify that a Rule with more than one Action can be created"
-	@ignore = "True"
 	@priority = "5"
 	test CanCreateARuleWithMoreThanOneAction {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134398 CanCreateARuleWithMoreThanOneAction pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Paragraph");
+
+		FormFields.editParagraphBody(content = "Test");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Numeric");
+
+		FormRules.addAction();
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "2",
+			actionTarget = "Paragraph");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewField(fieldName = "Numeric");
+
+		FormFields.viewFieldNotRequired(fieldLabel = "Numeric");
+
+		FormFields.viewFieldNotVisible(fieldName = "Paragraph");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormFields.viewFieldVisible(fieldName = "Paragraph");
+
+		FormFields.viewFieldRequired(fieldLabel = "Numeric");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that a Rule with 'Show' action can be created"

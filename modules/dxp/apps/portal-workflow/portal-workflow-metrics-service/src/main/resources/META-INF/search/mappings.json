@@ -1096,6 +1096,10 @@
 			"version": {
 				"store": true,
 				"type": "keyword"
+			},
+			"versions": {
+				"store": true,
+				"type": "keyword"
 			}
 		}
 	},

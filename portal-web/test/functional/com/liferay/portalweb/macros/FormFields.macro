@@ -600,6 +600,14 @@ definition {
 			value1 = "");
 	}
 
+	macro notViewOptionRowName {
+		AssertElementNotPresent(
+			key_fieldName = "${fieldTitle}",
+			key_optionName = "${optionName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
+	}
+
 	macro removeSelectOption {
 		var key_fieldName = "${fieldName}";
 		var key_selectOption = "${selectOption}";
@@ -1183,14 +1191,6 @@ definition {
 
 	macro viewOptionRowName {
 		AssertElementPresent(
-			key_fieldName = "${fieldTitle}",
-			key_optionName = "${optionName}",
-			key_rowNumber = "${rowNumber}",
-			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
-	}
-
-	macro notViewOptionRowName {
-		AssertElementNotPresent(
 			key_fieldName = "${fieldTitle}",
 			key_optionName = "${optionName}",
 			key_rowNumber = "${rowNumber}",

@@ -103,7 +103,7 @@ definition {
 	@description = "Verify that a Grid can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -215,7 +215,7 @@ definition {
 	@description = "Verify that a Grid can be required"
 	@priority = "5"
 	test CanBeRequired {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -281,7 +281,7 @@ definition {
 	@description = "Verify that a Form can be submitted with the Grid Field"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -593,7 +593,7 @@ definition {
 	@description = "Verify that option can be deleted"
 	@priority = "5"
 	test OptionsCanBeDeleted {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

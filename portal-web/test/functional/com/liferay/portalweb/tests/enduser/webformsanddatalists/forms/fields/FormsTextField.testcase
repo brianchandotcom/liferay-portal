@@ -200,7 +200,7 @@ definition {
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheContainsOption {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

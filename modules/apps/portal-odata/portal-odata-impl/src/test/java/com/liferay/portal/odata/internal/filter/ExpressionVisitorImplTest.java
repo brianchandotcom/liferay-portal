@@ -45,7 +45,7 @@ import com.liferay.portal.odata.internal.filter.expression.LambdaVariableExpress
 import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
-import com.liferay.portal.search.internal.query.util.NestedFieldQueryHelperImpl;
+import com.liferay.portal.search.internal.query.NestedFieldQueryHelperImpl;
 import com.liferay.portal.search.query.NestedFieldQueryHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 

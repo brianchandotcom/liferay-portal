@@ -288,8 +288,6 @@ definition {
 				pageName = "Test Page Name Staging");
 
 			PageEditor.clickPublish();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Navigate to the content page at edit mode in staging site") {

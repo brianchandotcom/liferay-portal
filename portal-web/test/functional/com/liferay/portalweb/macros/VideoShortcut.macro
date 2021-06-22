@@ -1,7 +1,9 @@
 definition {
 
 	macro addCP {
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "External Video Shortcut");
+		if (!(isSet(skipNavigation))) {
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "External Video Shortcut");
+		}
 
 		Type(
 			key_text = "Video URL",

@@ -39,9 +39,10 @@ import org.osgi.service.component.annotations.Component;
 public class RollingRestartSampleEntryLocalServiceImpl
 	extends RollingRestartSampleEntryLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.portal.rolling.restart.sample.service.RollingRestartSampleEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.rolling.restart.sample.service.RollingRestartSampleEntryLocalServiceUtil</code>.
 	 */
+
 }

@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portal.rolling.restart.sample.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchRollingRestartSampleEntryException extends NoSuchModelException {
+public class NoSuchRollingRestartSampleEntryException
+	extends NoSuchModelException {
 
 	public NoSuchRollingRestartSampleEntryException() {
 	}
@@ -27,7 +29,9 @@ public class NoSuchRollingRestartSampleEntryException extends NoSuchModelExcepti
 		super(msg);
 	}
 
-	public NoSuchRollingRestartSampleEntryException(String msg, Throwable throwable) {
+	public NoSuchRollingRestartSampleEntryException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

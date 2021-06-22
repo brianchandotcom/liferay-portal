@@ -26,7 +26,7 @@ package com.liferay.portal.rolling.restart.sample.model.impl;
 public class RollingRestartSampleEntryImpl
 	extends RollingRestartSampleEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a rolling restart sample entry model instance should use the {@link com.liferay.portal.rolling.restart.sample.model.RollingRestartSampleEntry} interface instead.

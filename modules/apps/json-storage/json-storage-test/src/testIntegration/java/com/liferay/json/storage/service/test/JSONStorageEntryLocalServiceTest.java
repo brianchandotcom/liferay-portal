@@ -36,6 +36,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Preston Crary
  */
@@ -66,9 +68,10 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 
@@ -77,9 +80,10 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 3);
 
@@ -88,9 +92,10 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 	}
@@ -102,20 +107,22 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 
-		json = "{\"root\":{\"key\":\"value\"}}";
+		json = "{\"root\": {\"key\": \"value\"}}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 2);
 
@@ -124,9 +131,10 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 	}
@@ -135,16 +143,16 @@ public class JSONStorageEntryLocalServiceTest {
 	public void testGetClassPKsCount() {
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1,
-			"{\"object\":{\"array\":[1,2],\"key 1\":\"value 1 a\",\"key 2\":" +
-				"\"value 2\"}}");
+			"{\"object\": {\"array\": [1, 2],\"key 1\": \"value 1 a\", \"key " +
+				"2\": \"value 2\"}}");
 
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_2, "[2,3,4]");
 
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_3,
-			"{\"object\":{\"array\":[],\"key 1\":\"value 1 b\",\"key 2\":" +
-				"\"value 2\"}}");
+			"{\"object\": {\"array\": [], \"key 1\": \"value 1 b\", \"key " +
+				"2\": \"value 2\"}}");
 
 		_assertClassPKs(
 			Collections.emptyList(), new Object[] {"object"}, "value 1 a");
@@ -205,7 +213,7 @@ public class JSONStorageEntryLocalServiceTest {
 
 	@Test
 	public void testNullValue() {
-		String json = "{\"key\":null}";
+		String json = "{\"key\": null}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
@@ -220,9 +228,10 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		JSONArray jsonArray = _jsonStorageEntryLocalService.getJSONArray(
 			_CLASS_NAME_ID, _CLASS_PK_1);
@@ -234,199 +243,222 @@ public class JSONStorageEntryLocalServiceTest {
 
 	@Test
 	public void testReplaceArraysWithObjects() {
-		String json = "[[],[1,2]]";
+		String json = "[[], [1, 2]]";
 
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
-		Assert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		json = "{\"a\":{},\"b\":{\"c\":1}}";
+		json = "{\"a\": {}, \"b\": {\"c\": 1}}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
-		Assert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 	}
 
 	@Test
 	public void testReplaceObjectsWithArrays() {
-		String json = "{\"a\":{},\"b\":{\"c\":1}}";
+		String json = "{\"a\": {}, \"b\": {\"c\": 1}}";
 
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
-		Assert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		json = "[[],[1,2]]";
+		json = "[[], [1, 2]]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
-		Assert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 	}
 
 	@Test
 	public void testUpdateArray() {
-		String json = "[1,2]";
+		String json = "[1, 2]";
 
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		json = "[\"a\",\"b\",\"c\"]";
+		json = "[\"a\", \"b\", \"c\"]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		json = "[true,false]";
+		json = "[true, false]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
 		json = "[3.14]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 	}
 
 	@Test
 	public void testUpdateArrayObjects() {
-		String json = "[[{\"a\":\"1\",\"b\":\"2\"},{\"c\":\"3\"}]]";
+		String json = "[[{\"a\": \"1\", \"b\": \"2\"}, {\"c\": \"3\"}]]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		json = "[[{\"a\":\"one\"},{\"b\":\"two\",\"c\":\"three\"}]]";
+		json = "[[{\"a\": \"one\"}, {\"b\": \"two\", \"c\": \"three\"}]]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 	}
 
 	@Test
 	public void testUpdateObject() {
-		String json = "{\"a\":1,\"b\":2}";
+		String json = "{\"a\": 1, \"b\": 2}";
 
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		json = "{\"b\":true,\"c\":false}";
+		json = "{\"b\": true, \"c\": false}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		json = "{\"pi\":3.14}";
+		json = "{\"pi\": 3.14}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 	}
 
 	@Test
 	public void testUpdateObjectArrays() {
-		String json = "{\"a\":{\"b\":[1,2]}}";
+		String json = "{\"a\": {\"b\": [1, 2]}}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
 
-		json = "{\"a\":{\"b\":[2,3]}}";
+		json = "{\"a\": {\"b\": [2, 3]}}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)));
+					_CLASS_NAME_ID, _CLASS_PK_1)),
+			true);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
+			true);
 	}
 
 	private void _assertClassPKs(

@@ -41,6 +41,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Preston Crary
  */
@@ -98,16 +100,17 @@ public class JSONStorageUpgradeStepFactoryTest {
 				dbInspector.hasColumn("JSONStorageUpgrade", "jsonString"));
 		}
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			_JSON_STRING,
 			_jsonStorageEntryLocalService.getJSON(
-				_className.getClassNameId(), _CLASS_PK));
+				_className.getClassNameId(), _CLASS_PK),
+			true);
 	}
 
 	private static final long _CLASS_PK = 1;
 
 	private static final String _JSON_STRING =
-		"{\"array\":[1,2],\"object\":{\"key\":\"value\"}}";
+		"{\"array\": [1, 2], \"object\": {\"key\": \"value\"}}";
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;

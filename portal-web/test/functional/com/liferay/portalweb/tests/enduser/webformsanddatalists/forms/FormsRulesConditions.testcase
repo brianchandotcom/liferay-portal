@@ -146,14 +146,61 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Is not Equal to' condition can be created"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateAnIsNotEqualToRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134383 CanCreateAnIsNotEqualToRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Is not equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text",
+			conditionField = "Text",
+			conditionOperator = "Is not equal to",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormFields.viewRequiredAsteriskDataFieldNotPresent(fieldFieldLabel = "Text");
 	}
 
 	@description = "Verify that the OR operator on Condition is working as expected"

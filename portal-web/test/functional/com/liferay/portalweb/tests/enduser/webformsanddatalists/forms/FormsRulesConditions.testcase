@@ -460,14 +460,111 @@ definition {
 	}
 
 	@description = "Verify that the OR operator on Condition is working as expected"
-	@ignore = "True"
 	@priority = "5"
 	test CanCreateMultipleConditionsUsingOR {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134387 CanCreateMultipleConditionsUsingOR pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		for (var fieldAndNumber : list "Text-0,Numeric-1,Paragraph-2") {
+			var field = StringUtil.extractFirst("${fieldAndNumber}","-");
+			var rowNumber = StringUtil.extractLast("${fieldAndNumber}","-");
+
+			Form.gotoAddField(
+				fieldPositionNumber = "${rowNumber}",
+				fieldType = "${field}",
+				formPageNumber = "0");
+
+			if ("${field}" == "Paragraph") {
+				FormFields.editParagraphBody(content = "Test.");
+			}
+
+			Form.closeSidebar();
+		}
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		for (var fieldAndNumber : list "Text-1,Numeric-2") {
+			var field = StringUtil.extractFirst("${fieldAndNumber}","-");
+			var rowNumber = StringUtil.extractLast("${fieldAndNumber}","-");
+
+			FormRules.configureConditionOptions(
+				conditionField = "${field}",
+				conditionOperator = "Is not empty",
+				conditionRowNumber = "${rowNumber}");
+
+			if ("${field}" == "Text") {
+				FormRules.addCondition();
+			}
+		}
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Paragraph");
+
+		FormRules.save();
+
+		for (var field : list "Text,Numeric") {
+			FormRules.viewConditionFieldSummary(
+				conditionField = "${field}",
+				ruleNumber = "1");
+
+			FormRules.viewConditionOperatorSummary(
+				conditionOperator = "Is not empty",
+				ruleNumber = "1");
+		}
+
+		FormRules.viewActionSummary(
+			action = "Show",
+			ruleNumber = "1");
+
+		FormRules.viewActionTargetSummary(
+			action = "Show",
+			actionTarget = "Paragraph",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewParagraphFieldNotPresent(fieldTitle = "Paragraph");
+
+		var count = "0";
+
+		while ("${count}" != "3") {
+			if ("${count}" == "0" || "${count}" == "2") {
+				FormFields.editText(
+					fieldName = "Text",
+					fieldValue = "Test");
+			}
+			else {
+				FormFields.editText(
+					fieldName = "Numeric",
+					fieldValue = "1");
+			}
+
+			FormFields.viewParagraphField(
+				fieldTitle = "Paragraph",
+				fieldValue = "Test.");
+
+			if ("${count}" == "0") {
+				FormFields.editTextWithBackspace(fieldName = "Text");
+			}
+
+			var count = ${count} + 1;
+		}
 	}
 
 	@description = "Verify that the OR operator on Condition is disabled by default"

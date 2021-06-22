@@ -141,7 +141,7 @@
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON_ENABLED</td>
-	<td>//div[@class='asset-subtype']//span[contains(@id,'AssetRendererFactoryOptions') and @class='asset-subtypefields'] //button[@class='btn btn-secondary']</td>
+	<td>//div[@class='asset-subtype']//span[contains(@id,'AssetRendererFactoryOptions') and @class='asset-subtypefields']/span/button[not(@disabled)]</td>
 	<td></td>
 </tr>
 <tr>

@@ -59,22 +59,6 @@ public class KBFolderLocalServiceUtil {
 		return getService().addKBFolder(kbFolder);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addKBFolder(String, long, long, long, long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static KBFolder addKBFolder(
-			long userId, long groupId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addKBFolder(
-			userId, groupId, parentResourceClassNameId, parentResourcePrimKey,
-			name, description, serviceContext);
-	}
-
 	public static KBFolder addKBFolder(
 			String externalReferenceCode, long userId, long groupId,
 			long parentResourceClassNameId, long parentResourcePrimKey,

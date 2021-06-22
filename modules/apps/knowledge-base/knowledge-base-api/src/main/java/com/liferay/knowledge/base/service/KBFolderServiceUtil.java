@@ -39,23 +39,6 @@ public class KBFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addKBFolder(String, long, long, long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static KBFolder addKBFolder(
-			long groupId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addKBFolder(
-			groupId, parentResourceClassNameId, parentResourcePrimKey, name,
-			description, serviceContext);
-	}
-
 	public static KBFolder addKBFolder(
 			String externalReferenceCode, long groupId,
 			long parentResourceClassNameId, long parentResourcePrimKey,

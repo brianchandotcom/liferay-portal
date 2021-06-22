@@ -42,27 +42,6 @@ public class KBArticleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBArticleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addKBArticle(String, String, long, long, String, String, String, String,
-	 String, String[], String[], ServiceContext)}
-	 */
-	@Deprecated
-	public static KBArticle addKBArticle(
-			String portletId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String title, String urlTitle,
-			String content, String description, String sourceURL,
-			String[] sections, String[] selectedFileNames,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addKBArticle(
-			portletId, parentResourceClassNameId, parentResourcePrimKey, title,
-			urlTitle, content, description, sourceURL, sections,
-			selectedFileNames, serviceContext);
-	}
-
 	public static KBArticle addKBArticle(
 			String externalReferenceCode, String portletId,
 			long parentResourceClassNameId, long parentResourcePrimKey,
@@ -148,16 +127,6 @@ public class KBArticleServiceUtil {
 		return getService().fetchLatestKBArticle(resourcePrimKey, status);
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article, or <code>null</code> if no
-	 matching kb article could be found
-	 * @throws PortalException if a portal exception occurred
-	 */
 	public static KBArticle fetchLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException {
@@ -303,15 +272,6 @@ public class KBArticleServiceUtil {
 		return getService().getLatestKBArticle(resourcePrimKey, status);
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article
-	 * @throws PortalException if a portal exception occurred
-	 */
 	public static KBArticle getLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException {

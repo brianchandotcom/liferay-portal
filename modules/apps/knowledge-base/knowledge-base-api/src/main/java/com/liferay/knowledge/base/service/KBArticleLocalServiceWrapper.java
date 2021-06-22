@@ -59,27 +59,6 @@ public class KBArticleLocalServiceWrapper
 		return _kbArticleLocalService.addKBArticle(kbArticle);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addKBArticle(String, long, long, long, String, String, String, String,
-	 String, String[], String[], ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.knowledge.base.model.KBArticle addKBArticle(
-			long userId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String title, String urlTitle,
-			String content, String description, String sourceURL,
-			String[] sections, String[] selectedFileNames,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kbArticleLocalService.addKBArticle(
-			userId, parentResourceClassNameId, parentResourcePrimKey, title,
-			urlTitle, content, description, sourceURL, sections,
-			selectedFileNames, serviceContext);
-	}
-
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle addKBArticle(
 			String externalReferenceCode, long userId,
@@ -424,15 +403,6 @@ public class KBArticleLocalServiceWrapper
 			resourcePrimKey, groupId);
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article, or <code>null</code> if no
-	 matching kb article could be found
-	 */
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle
 		fetchLatestKBArticleByExternalReferenceCode(
@@ -735,15 +705,6 @@ public class KBArticleLocalServiceWrapper
 			resourcePrimKey, status);
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle
 			getLatestKBArticleByExternalReferenceCode(

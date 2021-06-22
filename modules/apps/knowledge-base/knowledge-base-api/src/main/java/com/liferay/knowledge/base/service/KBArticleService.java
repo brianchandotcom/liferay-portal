@@ -59,21 +59,6 @@ public interface KBArticleService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBArticleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kb article remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KBArticleServiceUtil} if injection and service tracking are not available.
 	 */
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addKBArticle(String, String, long, long, String, String, String, String,
-	 String, String[], String[], ServiceContext)}
-	 */
-	@Deprecated
-	public KBArticle addKBArticle(
-			String portletId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String title, String urlTitle,
-			String content, String description, String sourceURL,
-			String[] sections, String[] selectedFileNames,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public KBArticle addKBArticle(
 			String externalReferenceCode, String portletId,
 			long parentResourceClassNameId, long parentResourcePrimKey,
@@ -121,16 +106,6 @@ public interface KBArticleService extends BaseService {
 	public KBArticle fetchLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException;
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article, or <code>null</code> if no
-	 matching kb article could be found
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
@@ -221,15 +196,6 @@ public interface KBArticleService extends BaseService {
 	public KBArticle getLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException;
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)

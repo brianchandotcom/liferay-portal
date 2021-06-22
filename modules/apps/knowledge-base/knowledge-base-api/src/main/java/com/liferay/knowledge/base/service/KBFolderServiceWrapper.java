@@ -30,23 +30,6 @@ public class KBFolderServiceWrapper
 		_kbFolderService = kbFolderService;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addKBFolder(String, long, long, long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder addKBFolder(
-			long groupId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kbFolderService.addKBFolder(
-			groupId, parentResourceClassNameId, parentResourcePrimKey, name,
-			description, serviceContext);
-	}
-
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder addKBFolder(
 			String externalReferenceCode, long groupId,

@@ -78,17 +78,6 @@ public interface KBFolderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KBFolder addKBFolder(KBFolder kbFolder);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addKBFolder(String, long, long, long, long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public KBFolder addKBFolder(
-			long userId, long groupId, long parentResourceClassNameId,
-			long parentResourcePrimKey, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public KBFolder addKBFolder(
 			String externalReferenceCode, long userId, long groupId,
 			long parentResourceClassNameId, long parentResourcePrimKey,

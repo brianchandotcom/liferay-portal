@@ -2,11 +2,13 @@
 <head>
 <title>CommerceEntry</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">CommerceEntry</td></tr>
 </thead>
+
 <tbody>
 	<tr>
 	<td>ANY_MENU_ITEM</td>
@@ -19,14 +21,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>PRODUCT_CARD_COMPARE_CHECKBOX</td>
-    <td>//p[@title='${key_productName}']//../..//input[contains(@aria-label,'Compare')]</td>
-    <td></td>
+	<td>PRODUCT_CARD_COMPARE_CHECKBOX</td>
+	<td>//p[@title='${key_productName}']//../..//input[contains(@aria-label,'Compare')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MINI_COMPARE_ITEM_ACTIVE</td>
-    <td>//div[@class="mini-compare-item active"]//div[@class="mini-compare-thumbnail"]</td>
-    <td></td>
+	<td>MINI_COMPARE_ITEM_ACTIVE</td>
+	<td>//div[@class="mini-compare-item active"]//div[@class="mini-compare-thumbnail"]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CHANNEL_CHECKBOX</td>
@@ -249,9 +251,9 @@
 	<td></td>
 </tr>
 <tr>
-  <td>PRODUCT_SKU_CONFIGURATION_AVAILABLE_QUANTITY</td>
-  <td>//div[contains(@class,'dnd-table fixed table-style-stacked')]//descendant::div[16][contains(text(),'${key_productQuantity}')]</td>
-  <td></td>
+<td>PRODUCT_SKU_CONFIGURATION_AVAILABLE_QUANTITY</td>
+<td>//div[contains(@class,'dnd-table fixed table-style-stacked')]//descendant::div[16][contains(text(),'${key_productQuantity}')]</td>
+<td></td>
 </tr>
 <tr>
 	<td>RADIO_BUTTON</td>
@@ -466,7 +468,7 @@
 <tr>
 	<td>ROW_VERTICAL_ELLIPSIS</td>
 	<td>//td//span[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
-    <td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ENTRY_NAME</td>
@@ -506,9 +508,9 @@
 </tr>
 <!--CHANNEL-->
 <tr>
-    <td>PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS</td>
-    <td>//div[contains(@class,'side-panel')]//li[a[contains(text(),'${navItem}')]]</td>
-    <td></td>
+	<td>PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS</td>
+	<td>//div[contains(@class,'side-panel')]//li[a[contains(text(),'${navItem}')]]</td>
+	<td></td>
 </tr>
 <!--OPTION-->
 <tr>
@@ -614,12 +616,12 @@
 <tr>
 	<td>SEARCH_ORDER_ID_RESULT</td>
 	<td>//p[@class='table-list-title' and contains(.,'${key_entryName}')]/a</td>
-	<td></td>    
+	<td></td>
 </tr>
 <tr>
 	<td>ORDER_ID_FIRST_RESULT</td>
 	<td>(//*[contains(@class, 'table-list-title')])[1]/a</td>
-	<td></td>    
+	<td></td>
 </tr>
 <!--CHANNELS-->
 <tr>
@@ -702,7 +704,7 @@
 <tr>
 	<td>HEALTH_CHECK_ICON_CHECK_N</td>
 	<td>//div[contains(@class,'commerce-health-status-check-row-icon-check${key_value}')][not(contains(@class,'hide'))]</td>
-	<td></td> 
+	<td></td>
 </tr>
 <tr>
 	<td>MODAL_BUTTON_CLOSE</td>
@@ -720,9 +722,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>VALUE_PRODUCT_RELATIONS</td>
-    <td>//a[contains(text(),'${key_productName}')]/../../..//div[contains(@class,'dnd-td') and contains(text(),'${key_Value}')]</td>
-    <td></td>
+	<td>VALUE_PRODUCT_RELATIONS</td>
+	<td>//a[contains(text(),'${key_productName}')]/../../..//div[contains(@class,'dnd-td') and contains(text(),'${key_Value}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_SUBSCRIPTIONS</td>
@@ -733,7 +735,7 @@
 	<td>WAREHOUSE_GEOLOCATION</td>
 	<td>//div[contains(@id,'geolocationTitle')]</td>
 	<td></td>
-</tr>  
+</tr>
 <tr>
 	<td>INVENTORY_INPUT</td>
 	<td>//table//tr[contains(.,'${key_inventoryName}')]//input</td>
@@ -766,9 +768,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SPECIFIC_MENU_ITEM</td>
-    <td>//a[contains(text(),'${key_itemName}')]//..//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
-    <td></td>
+	<td>SPECIFIC_MENU_ITEM</td>
+	<td>//a[contains(text(),'${key_itemName}')]//..//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

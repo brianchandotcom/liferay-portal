@@ -2,11 +2,13 @@
 <head>
 <title>CommerceAccelerators</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">CommerceAccelerators</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON</td>
@@ -483,9 +485,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>PRODUCT_CARD_VIEW_ALL_VARIANTS</td>
+	<td>PRODUCT_CARD_VIEW_ALL_VARIANTS</td>
 	<td>//div[contains(@class,'add-to-cart d-flex my-2 pt-5')]//a[contains(@href,'${key_productName}')]</td>
-    <td></td>
+	<td></td>
 </tr>
 <!--COMPARE-->
 <tr>

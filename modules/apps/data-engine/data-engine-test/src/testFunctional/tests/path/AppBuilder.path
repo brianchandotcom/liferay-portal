@@ -2,11 +2,13 @@
 <head>
 <title>AppBuilder</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">AppBuilder</td></tr>
 </thead>
+
 <tbody>
 
 <!-- CUSTOM_OBJECTS_LISTING_SCREEN -->
@@ -124,9 +126,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SAVE_BUTTON_DISABLED</td>
-    <td>//button[@disabled='' and contains(@class,'btn-primary') and contains(text(),'Save')]</td>
-    <td></td>
+	<td>SAVE_BUTTON_DISABLED</td>
+	<td>//button[@disabled='' and contains(@class,'btn-primary') and contains(text(),'Save')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FORM_VIEW_TAB</td>
@@ -333,9 +335,9 @@
 	<td></td>
 </tr>
 <tr>
- 	<td>ENTRY_SUCCESS_MESSAGE</td>
- 	<td>//div[contains(text(),'An entry was added.')]</td>
- 	<td></td>
+	<td>ENTRY_SUCCESS_MESSAGE</td>
+	<td>//div[contains(text(),'An entry was added.')]</td>
+	<td></td>
 </tr>
 
 <!-- CONFIGURATION_PERMISSIONS -->

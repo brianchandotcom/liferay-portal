@@ -2,17 +2,19 @@
 <head>
 <title>Header</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Header</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>H1_TITLE</td>
 	<td>//h1[contains(.,'${key_title}')]</td>
 	<td></td>
-</tr>	
+</tr>
 <tr>
 	<td>H2_TITLE</td>
 	<td>//h2[contains(.,'${key_title}')]</td>

@@ -2,11 +2,13 @@
 <head>
 <title>CommerceFrontStore</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">CommerceFrontStore</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>FS_PRODUCT_SKU</td>
@@ -63,27 +65,27 @@
 	<td>//div[@class="add-to-cart-wrapper align-items-center d-flex"]//input[contains(@max, '${key_value}')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>PRODUCT_DETAILS_QUANTITY_INPUT</td>
 	<td>//header//h2[text()="${key_productName}"]//..//following-sibling::div[4]//input</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>PRODUCT_DETAILS_PRICE_VALUE_INACTIVE</td>
 	<td>//p[@title='${key_productName}']/following-sibling::p//span[contains(@class, 'price-value price-value-inactive')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>PRODUCT_DETAILS_QUANTITY_OPTION</td>
 	<td>//header//h2[text()='${key_productName}']//..//following-sibling::div[4]//option[@value='${key_optionValue}']</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>PRODUCT_DETAILS_PRICE_VALUE_FINAL</td>
 	<td>//p[@title='${key_productName}']/following-sibling::p//span[contains(@class, 'price-value price-value-final')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>PRODUCT_DETAILS_PACKAGE_QUANTITY</td>
 	<td>//label[text()='Package Quantity']//..//div[contains(@class,'form-control')]</td>
 	<td></td>
@@ -97,7 +99,7 @@
 	<td>MINI_COMPARE_ITEM_CUSTOM_IMAGE</td>
 	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productName}')]</td>
 	<td></td>
-</tr>	
+</tr>
 <tr>
 	<td>FS_PRODUCT_VALUE_PROMO_PRICE</td>
 	<td>//p[@title='${key_productName}']//following-sibling::p[@class='card-text']//span[@class='price-value price-value-promo']</td>

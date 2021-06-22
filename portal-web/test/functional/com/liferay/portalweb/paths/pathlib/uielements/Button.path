@@ -2,11 +2,13 @@
 <head>
 <title>Button</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Button</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ADD_ACTION</td>
@@ -899,9 +901,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>BUTTON_PLUS_PRODUCT_VISIBILITY</td>
-    <td>//li[contains(@class,'nav-item')]//button[contains(@title,'${key_webContentTitle}')]</td>
-    <td></td>
+	<td>BUTTON_PLUS_PRODUCT_VISIBILITY</td>
+	<td>//li[contains(@class,'nav-item')]//button[contains(@title,'${key_webContentTitle}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

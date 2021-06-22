@@ -2,11 +2,13 @@
 <head>
 <title>Experience</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Experience</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>BANNER_CENTER_TITLE_EXAMPLE_PORTLET</td>

@@ -2,17 +2,19 @@
 <head>
 <title>ACLogin</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACLogin</td></tr>
 </thead>
+
 <tbody>
-<!-- LOGIN SCREEN FIELDS  -->
+<!-- LOGIN SCREEN FIELDS -->
 <tr>
-    <td>EMAIL_LOGIN_FIELD</td>
-    <td>//input[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_login')]</td>
-    <td></td>
+	<td>EMAIL_LOGIN_FIELD</td>
+	<td>//input[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_login')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>LOGIN_BUTTON</td>

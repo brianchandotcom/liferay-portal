@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowMetricsPerformanceByStep</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetricsPerformanceByStep</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>DATE_RANGE_DROPDOWN</td>
@@ -20,36 +22,35 @@
 </tr>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS</td>
-    <td>//a//span[contains(text(), 'View All Steps (${key_stepsNumber})')]</td>
+	<td>//a//span[contains(text(), 'View All Steps (${key_stepsNumber})')]</td>
 	<td></td>
 </tr>
 <tr>
-    <td>METRICS_PERFORMANCE_BY_STEP_PAGE_INPUT_FIELD</td>
-    <td>//input[contains(@placeholder, 'Search for Step Name')]</td>
-    <td></td>
+	<td>METRICS_PERFORMANCE_BY_STEP_PAGE_INPUT_FIELD</td>
+	<td>//input[contains(@placeholder, 'Search for Step Name')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>METRICS_PERFORMANCE_BY_STEP_PAGE_NO_RESULTS_FOUND</td>
-    <td>//p[contains(text(),'No results were found.')]</td>
-    <td></td>
+	<td>METRICS_PERFORMANCE_BY_STEP_PAGE_NO_RESULTS_FOUND</td>
+	<td>//p[contains(text(),'No results were found.')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_AVG_COMPLETION_TIME_VALUE</td>
-    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[2]</td>
-    <td></td>
+	<td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_AVG_COMPLETION_TIME_VALUE</td>
+	<td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[2]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_SLA_BREACHED_VALUE</td>
-    <td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[1]</td>
-    <td></td>
+	<td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_SLA_BREACHED_VALUE</td>
+	<td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[1]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME</td>
-    <td>//td[contains(text(),'${key_stepName}')]</td>
-    <td></td>
+	<td>METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME</td>
+	<td>//td[contains(text(),'${key_stepName}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>
 </body>
 </html>
-

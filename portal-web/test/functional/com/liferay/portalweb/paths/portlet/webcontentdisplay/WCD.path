@@ -2,11 +2,13 @@
 <head>
 <title>WCD</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WCD</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ARTICLE_ELLIPSIS_ICON</td>
@@ -115,10 +117,10 @@
 	<td>//a[contains(.,'${key_locale}')]</td>
 	<td></td>
 </tr>
-<tr>  
+<tr>
 	<td>WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH</td>
-    <td>//div[contains(@class, 'input-localized-palette')]//li//span[contains(@id,'qfkd')]</td>
-    <td></td>
+	<td>//div[contains(@class, 'input-localized-palette')]//li//span[contains(@id,'qfkd')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

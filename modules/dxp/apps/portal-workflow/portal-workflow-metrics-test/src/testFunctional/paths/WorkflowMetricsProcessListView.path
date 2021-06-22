@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowMetricsProcessListView</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetricsProcessListView</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>METRICS_WORKFLOW_SEARCH_BAR</td>
@@ -49,14 +51,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>METRICS_OVERDUE_ITEMS_TABLE_ROW</td>
-    <td>//tr[${key_rowNumber}]//td[2]</td>
+	<td>METRICS_OVERDUE_ITEMS_TABLE_ROW</td>
+	<td>//tr[${key_rowNumber}]//td[2]</td>
 	<td></td>
 </tr>
 <tr>
-    <td>ANY_ARROW_ORDER</td>
-    <td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
-    <td></td>
+	<td>ANY_ARROW_ORDER</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order-arrow-${key_value}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CLEAR_SEARCH</td>
@@ -74,14 +76,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ASSERT_PERCENTAGE_CARDS</td>
-    <td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
-    <td></td>
+	<td>ASSERT_PERCENTAGE_CARDS</td>
+	<td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ENTER_PROCESS_METRICS</td>
-    <td>//td[contains(@class,'table-title')]//a[contains(text(),'${key_processName}')]</td>
-    <td></td>
+	<td>ENTER_PROCESS_METRICS</td>
+	<td>//td[contains(@class,'table-title')]//a[contains(text(),'${key_processName}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

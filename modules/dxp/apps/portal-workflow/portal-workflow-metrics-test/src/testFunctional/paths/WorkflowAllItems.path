@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowAllItems</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowAllItems</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECT_ALL</td>
@@ -114,14 +116,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>METRICS_ALL_ITEMS_TABLE_ROW</td>
-    <td>//tr[${key_rowNumber}]//td[4]</td>
-    <td></td>
+	<td>METRICS_ALL_ITEMS_TABLE_ROW</td>
+	<td>//tr[${key_rowNumber}]//td[4]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>METRICS_PROCESS_NAME_TABLE_ROW</td>
-    <td>//tr[${key_rowNumber}]//td[1]</td>
-    <td></td>
+	<td>METRICS_PROCESS_NAME_TABLE_ROW</td>
+	<td>//tr[${key_rowNumber}]//td[1]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_BY</td>

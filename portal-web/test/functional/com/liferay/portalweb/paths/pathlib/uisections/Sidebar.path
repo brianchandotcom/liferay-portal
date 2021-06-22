@@ -2,56 +2,58 @@
 <head>
 <title>Sidebar</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Sidebar</td></tr>
 </thead>
+
 <tbody>
 <tr>
-    <td>ADD_FIELD_TARGET</td>
-    <td>//div[contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
-    <td></td>
+	<td>ADD_FIELD_TARGET</td>
+	<td>//div[contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ADD_FIELD_NESTED_TARGET</td>
-    <td>//div[contains(@class,'ddm-drag')]//div[@data-field-name='${key_fieldName}']</td>
-    <td></td>
+	<td>ADD_FIELD_NESTED_TARGET</td>
+	<td>//div[contains(@class,'ddm-drag')]//div[@data-field-name='${key_fieldName}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ADD_FIELD_NAME</td>
-    <td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldName}']</td>
-    <td></td>
+	<td>ADD_FIELD_NAME</td>
+	<td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldName}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ADD_FIELD_POSITION</td>
-    <td>xpath=(//div[contains(@class,'col-empty')]/div[contains(@class,'target')])[${key_fieldLocation}]</td>
-    <td></td>
+	<td>ADD_FIELD_POSITION</td>
+	<td>xpath=(//div[contains(@class,'col-empty')]/div[contains(@class,'target')])[${key_fieldLocation}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BACK</td>
-    <td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
-    <td></td>
+	<td>BACK</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DDM_ANY</td>
-    <td>//div[contains(@class,'sidebar')]//label[contains(.,'${key_text}')]//following-sibling::input</td>
-    <td></td>
+	<td>DDM_ANY</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'${key_text}')]//following-sibling::input</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DDM_LABEL</td>
-    <td>//div[contains(@class,'sidebar')]//label[contains(.,'Label')]//following-sibling::input</td>
-    <td></td>
+	<td>DDM_LABEL</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Label')]//following-sibling::input</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DDM_HELP_TEXT</td>
-    <td>//div[contains(@class,'sidebar')]//label[contains(.,'Help Text')]//following-sibling::input</td>
-    <td></td>
+	<td>DDM_HELP_TEXT</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Help Text')]//following-sibling::input</td>
+	<td></td>
 </tr>
 <tr>
-    <td>FIELDSET_ITEM_ELLIPSIS</td>
-    <td>//div[contains(@class, 'sidebar-body')]//div[contains(@class, 'field-type')][contains(.,'${key_fieldsetName}')]//button[contains(@class, 'dropdown-toggle')]</td>
-    <td></td>
+	<td>FIELDSET_ITEM_ELLIPSIS</td>
+	<td>//div[contains(@class, 'sidebar-body')]//div[contains(@class, 'field-type')][contains(.,'${key_fieldsetName}')]//button[contains(@class, 'dropdown-toggle')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FORM_BUILDER</td>
@@ -64,34 +66,34 @@
 	<td></td>
 </tr>
 <tr>
-    <td>TEXT_INPUT</td>
-    <td>//div[contains(@data-field-name,'${key_fieldName}')]//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::input[@type='text']</td>
-    <td></td>
+	<td>TEXT_INPUT</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::input[@type='text']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SUBTITLE</td>
-    <td>//div[contains(@class,'sheet-subtitle')][normalize-space(text())='${key_text}']</td>
-    <td></td>
+	<td>SUBTITLE</td>
+	<td>//div[contains(@class,'sheet-subtitle')][normalize-space(text())='${key_text}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>OPTION_INPUT</td>
-    <td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')])[${index}]</td>
-    <td></td>
+	<td>OPTION_INPUT</td>
+	<td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')])[${index}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>OPTION_INPUT_WITHOUT_LABEL</td>
-    <td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')])[${index}]</td>
-    <td></td>
+	<td>OPTION_INPUT_WITHOUT_LABEL</td>
+	<td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')])[${index}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>OPTION_FIELD_REFERENCE_INPUT</td>
-    <td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[${index}]</td>
-    <td></td>
+	<td>OPTION_FIELD_REFERENCE_INPUT</td>
+	<td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[${index}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT</td>
-    <td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[${index}]</td>
-    <td></td>
+	<td>OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT</td>
+	<td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[${index}]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TAB</td>
@@ -99,9 +101,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>DDM_FIELD_REFERENCE</td>
-    <td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input</td>
-    <td></td>
+	<td>DDM_FIELD_REFERENCE</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

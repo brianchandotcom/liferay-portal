@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowReassignModal</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowReassignModal</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>BULK_REASSIGN_MODAL</td>
@@ -113,7 +115,6 @@
 	<td>//button[contains(text(),'Select All')]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>ITEM_CHECKBOX_CHECKED</td>
 	<td>//div[@class='modal-body']//td[contains(text(),"${key_itemName}")]//parent::tr//input[@type='checkbox' and @checked]</td>

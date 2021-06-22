@@ -2,36 +2,38 @@
 <head>
 <title>WorkflowMetricsCompletedItems</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetricsCompletedItems</td></tr>
 </thead>
+
 <tbody>
 <tr>
-    <td>DATE_RANGE_DROPDOWN_COMPLETED_ITEMS</td>
-    <td>//button[contains(@class, 'filter-dropdown-button')]</td>
-    <td></td>
+	<td>DATE_RANGE_DROPDOWN_COMPLETED_ITEMS</td>
+	<td>//button[contains(@class, 'filter-dropdown-button')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS</td>
-    <td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_dateRange}')]</td>
-    <td></td>
+	<td>DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_dateRange}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DESCRIPTION_DROPDOWN_COMPLETED_ITEMS</td>
-    <td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_dateRange}')]/..//div[contains(@class, 'description')]</td>
-    <td></td>
+	<td>DESCRIPTION_DROPDOWN_COMPLETED_ITEMS</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_dateRange}')]/..//div[contains(@class, 'description')]</td>
+	<td></td>
 </tr>
-<tr>   
+<tr>
 	<td>DEFAULT_DATE_FORMAT_MESSAGE</td>
 	<td>//span[contains(text(),'${key_dateFormat}')]</td>
 	<td></td>
 </tr>
 <tr>
-    <td>PERCENTAGE_CARDS</td>
-    <td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
-    <td></td>
+	<td>PERCENTAGE_CARDS</td>
+	<td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowMetricsIndex</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetricsIndex</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>METRICS_MENU_INDEX</td>
@@ -32,4 +34,3 @@
 </table>
 </body>
 </html>
-

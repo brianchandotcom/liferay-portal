@@ -2,31 +2,33 @@
 <head>
 <title>DocumentsAndMediaMetadataSets</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">DocumentsAndMediaMetadataSets</td></tr>
 </thead>
+
 <tbody>
 <tr>
-    <td>ADD_FIELD_TYPE</td>
-    <td>//div[contains(@class,'field-type')]//span[contains(text(),'${key_fieldType}')]</td>
-    <td></td>
+	<td>ADD_FIELD_TYPE</td>
+	<td>//div[contains(@class,'field-type')]//span[contains(text(),'${key_fieldType}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ADD_FIELD_TARGET</td>
-    <td>//div[contains(@class,'col-empty')]/div</td>
-    <td></td>
+	<td>ADD_FIELD_TARGET</td>
+	<td>//div[contains(@class,'col-empty')]/div</td>
+	<td></td>
 </tr>
 <tr>
-    <td>FIELD_BOTTOM_DROP_TARGET</td>
-    <td>//div[contains(@class,'placeholder row')]/div[@data-ddm-field-row='${key_rowNum}']/div[contains(@class,'ddm-target')]</td>
-    <td></td>
+	<td>FIELD_BOTTOM_DROP_TARGET</td>
+	<td>//div[contains(@class,'placeholder row')]/div[@data-ddm-field-row='${key_rowNum}']/div[contains(@class,'ddm-target')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>FIELD_LABEL</td>
-    <td>xpath=(//div[contains(@class,'ddm-drag')]//div/p[contains(@class,'ddm-label')])[last()]</td>
-    <td></td>
+	<td>FIELD_LABEL</td>
+	<td>xpath=(//div[contains(@class,'ddm-drag')]//div/p[contains(@class,'ddm-label')])[last()]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>METADATA_SETS_NAME</td>
@@ -39,19 +41,19 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SIDEBAR_BASIC_TAB</td>
-    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Basic')]</td>
-    <td></td>
+	<td>SIDEBAR_BASIC_TAB</td>
+	<td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Basic')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SIDEBAR_ACTIVE_BASIC_TAB</td>
-    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'active') and contains(.,'Basic')]</td>
-    <td></td>
+	<td>SIDEBAR_ACTIVE_BASIC_TAB</td>
+	<td>//li[contains(@class,'nav-item')]/button[contains(@class,'active') and contains(.,'Basic')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SIDEBAR_ADVANCED_TAB</td>
-    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Advanced')]</td>
-    <td></td>
+	<td>SIDEBAR_ADVANCED_TAB</td>
+	<td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Advanced')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SIDEBAR_BACK</td>
@@ -59,9 +61,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SIDEBAR_FIELDS_TAB</td>
-    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Fields')]</td>
-    <td></td>
+	<td>SIDEBAR_FIELDS_TAB</td>
+	<td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Fields')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

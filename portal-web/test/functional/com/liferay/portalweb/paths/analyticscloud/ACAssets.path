@@ -2,13 +2,15 @@
 <head>
 <title>ACAssets</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACAssets</td></tr>
 </thead>
+
 <tbody>
-<!-- ASSETS PAGE  -->
+<!-- ASSETS PAGE -->
 <tr>
 	<td>ASSETS_TITLE_NAME</td>
 	<td>//a[@class='text-truncate'and text()='${key_titleName}']</td>

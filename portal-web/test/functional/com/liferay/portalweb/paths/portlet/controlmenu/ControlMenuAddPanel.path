@@ -2,11 +2,13 @@
 <head>
 <title>ControlMenuAddPanel</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ControlMenuAddPanel</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ADD_NEW_DROPDOWN</td>
@@ -19,9 +21,9 @@
 	<td></td>
 </tr>
 <tr>
-  <td>SIDEBAR_HEADER</td>
-  <td>//div[contains(@class,'sidebar-header')]/*[normalize-space(text())='Add']</td>
-  <td></td>
+<td>SIDEBAR_HEADER</td>
+<td>//div[contains(@class,'sidebar-header')]/*[normalize-space(text())='Add']</td>
+<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -30,9 +32,9 @@
 </tr>
 <!--APPLICATIONS-->
 <tr>
-  <td>ADD_PORTLET_LINK</td>
-  <td>//div[contains(@class,'item-body')]//*[normalize-space(text())='${key_portletName}']/../../..//button[contains(@class,'item-add')]</td>
-  <td></td>
+<td>ADD_PORTLET_LINK</td>
+<td>//div[contains(@class,'item-body')]//*[normalize-space(text())='${key_portletName}']/../../..//button[contains(@class,'item-add')]</td>
+<td></td>
 </tr>
 <tr>
 	<td>ASSET_ITEM</td>
@@ -41,9 +43,9 @@
 </tr>
 <!--CONTENT-->
 <tr>
-  <td>ASSET_ENTRY</td>
-  <td>//div[contains(@class,'item-body') and contains(.,'${key_entryTitle}')]</td>
-  <td></td>
+<td>ASSET_ENTRY</td>
+<td>//div[contains(@class,'item-body') and contains(.,'${key_entryTitle}')]</td>
+<td></td>
 </tr>
 </tbody>
 </table>

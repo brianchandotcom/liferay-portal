@@ -2,11 +2,13 @@
 <head>
 <title>CommerceNavigation</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">CommerceNavigation</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>CPOPTIONS_STATUS</td>
@@ -64,9 +66,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SORT_FIELD</td>
-    <td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
-    <td></td>
+	<td>SORT_FIELD</td>
+	<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATIONS_TABLE_CHECKBOX</td>

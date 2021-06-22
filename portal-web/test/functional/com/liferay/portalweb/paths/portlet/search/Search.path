@@ -2,11 +2,13 @@
 <head>
 <title>Search</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Search</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ADD_PORTLET_LINK</td>
@@ -96,12 +98,12 @@
 </tr>
 <tr>
 	<td>SEARCH_BAR_WIDGET_CONTENT</td>
-	<td>//input[contains(@class,'after')]|nput[contains(@value,'${key_contentName}')]</td>	
+	<td>//input[contains(@class,'after')]|nput[contains(@value,'${key_contentName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULT_WIDGET</td>
-	<td>//div//a[contains(text(), '${key_contentName}')]/../../div//strong[text()='${key_contentType}']</td>	
+	<td>//div//a[contains(text(), '${key_contentName}')]/../../div//strong[text()='${key_contentType}']</td>
 	<td></td>
 </tr>
 <tr>

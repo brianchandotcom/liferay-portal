@@ -2,13 +2,15 @@
 <head>
 <title>ACIndividualsDashboard</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACIndividualsDashboard</td></tr>
 </thead>
+
 <tbody>
-<!-- INDIVIDUALS DASHBOARD  -->
+<!-- INDIVIDUALS DASHBOARD -->
 <tr>
 	<td>HEADER_TITLE</td>
 	<td>//header//h1</td>
@@ -20,54 +22,54 @@
 	<td></td>
 </tr>
 <tr>
-    <td>BREAKDOWN_NAME_FIELD</td>
-    <td>//*[text()='Breakdown Name']/ancestor::label/following-sibling::input[@type='text']</td>
-    <td></td>
+	<td>BREAKDOWN_NAME_FIELD</td>
+	<td>//*[text()='Breakdown Name']/ancestor::label/following-sibling::input[@type='text']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SAVE_BREAKDOWN_BUTTON</td>
-    <td>//div[@class='form-navigation']/button[text()='Save']</td>
-    <td></td>
+	<td>SAVE_BREAKDOWN_BUTTON</td>
+	<td>//div[@class='form-navigation']/button[text()='Save']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DELETE_BREAKDOWN_BUTTON</td>
-    <td>//div[@class='tab-title active']/button</td>
-    <td></td>
+	<td>DELETE_BREAKDOWN_BUTTON</td>
+	<td>//div[@class='tab-title active']/button</td>
+	<td></td>
 </tr>
 <tr>
-    <td>BREAKDOWN_TAB</td>
-    <td>//div[@class='card card-root distribution-card-root']//li/button[text()='${key_breakdownTabName}']</td>
-    <td></td>
+	<td>BREAKDOWN_TAB</td>
+	<td>//div[@class='card card-root distribution-card-root']//li/button[text()='${key_breakdownTabName}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>INDIVIDUALS_TAB</td>
-    <td>//ul[@class='nav-root']//li[contains(@class,'nav-item') and contains(.,'${key_tabName}')]</td>
-    <td></td>
+	<td>INDIVIDUALS_TAB</td>
+	<td>//ul[@class='nav-root']//li[contains(@class,'nav-item') and contains(.,'${key_tabName}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>KNOWN_INDIVIDUAL_ATTRIBUTE</td>
-    <td>//div[contains(@class,'table-responsive')]//td[contains(@class,'table-cell-expand') and contains(.,'${key_individualAttribute}')]</td>
-    <td></td>
+	<td>KNOWN_INDIVIDUAL_ATTRIBUTE</td>
+	<td>//div[contains(@class,'table-responsive')]//td[contains(@class,'table-cell-expand') and contains(.,'${key_individualAttribute}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>KNOWN_INDIVIDUALS_LIST_ITEMS</td>
-    <td>//div[contains(@class,'table-title') and contains(.,'${key_individualName}')]</td>
-    <td></td>
+	<td>KNOWN_INDIVIDUALS_LIST_ITEMS</td>
+	<td>//div[contains(@class,'table-title') and contains(.,'${key_individualName}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>INDIVIDUALS_ACTIVITIES_TIME_RANGE</td>
-    <td>//div[contains(@class,'activities-date') and contains(.,'${key_timeRange}')]</td>
-    <td></td>
+	<td>INDIVIDUALS_ACTIVITIES_TIME_RANGE</td>
+	<td>//div[contains(@class,'activities-date') and contains(.,'${key_timeRange}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ACTIVE_INDIVIDUAL_CHART</td>
-    <td>//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[contains(@fill-opacity,'1')]</td>
-    <td></td>
+	<td>ACTIVE_INDIVIDUAL_CHART</td>
+	<td>//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[contains(@fill-opacity,'1')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>TOTAL_INDIVIDUALS</td>
-    <td>//h5[text()='Total Individuals']/parent::div/following-sibling::div/div[@class='total']</td>
-    <td></td>
+	<td>TOTAL_INDIVIDUALS</td>
+	<td>//h5[text()='Total Individuals']/parent::div/following-sibling::div/div[@class='total']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

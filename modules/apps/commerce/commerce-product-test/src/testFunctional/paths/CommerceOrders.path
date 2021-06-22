@@ -2,101 +2,103 @@
 <head>
 <title>CommerceOrders</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">CommerceOrders</td></tr>
 </thead>
+
 <tbody>
 <tr>
-    <td>ORDER_DETAILS_BILLING_ADDRESS</td>
-    <td>//h5[contains(.,'Billing Address')]/../../div</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_PAYMENT_METHOD_NAME</td>
-    <td>//span[contains(@class,'payment-name')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_PRODUCT_DISCOUNT</td>
-    <td>//div[@class='dnd-td' and contains(.,'${key_productDiscount}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_PRODUCT_NAME</td>
-    <td>//div[@class='dnd-td' and contains(.,'${key_productName}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_TOTAL_PRICE</td>
-    <td>//div[@class='dnd-td' and contains(.,'${key_productTotalPrice}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_PRODUCT_QUANTITY</td>
-    <td>//div[@class='dnd-td' and contains(.,'${key_productQuantity}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_PRODUCT_SKU</td>
-    <td>//div[@class='dnd-td' and contains(.,'${key_productSKU}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_PRODUCT_LIST_PRICE</td>
-    <td>//div[@class='dnd-td' and contains(.,'${key_productListPrice}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_DETAILS_SHIPPING_ADDRESS</td>
-    <td>//h5[contains(.,'Shipping Address')]/../../div[contains(.,'${key_addressInfo}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_ITEMS_PRODUCT_DETAILS</td>
-    <td>//tbody//td[2][contains(.,'${key_productSKU}')]/..//div[@class='table-list-title']/button</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_WAREHOUSE_BY_NAME</td>
-    <td>//div[contains(text(),'${key_warehouseName}')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_ELLIPSIS_BY_STATUS</td>
-    <td>//strong[contains(text(), '${key_orderStatus}')]//../../../../div//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE</td>
-    <td>//div[contains(text(),'${key_warehouseName}')]//following-sibling::div[@class = 'dnd-td']//following-sibling::div[@class = 'dnd-td']//input[contains(@class, 'form-control')]</td>
-     <td></td>
-</tr>
-<tr>  
-    <td>PENDING_ORDERS_ORDER_ID</td>
-    <td>//dt[contains(text(),'Order ID')]/..//dd</td>
-    <td></td>
-</tr>
-<tr>  
-    <td>ORDER_PRICES_SEPARETED</td>
-    <td>//dt[contains(text(), '${key_priceName}')]//../following-sibling::dd[1]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON</td>
-    <td>//h5[contains(text(), "${key_titleName}")]//following-sibling::a[contains(text(), "${key_buttonName}")]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ORDER_GENERAL_DETAILS_DESCRIPTION</td>
-    <td>//h5[contains(text(), "${key_titleName}")]//..//following-sibling::div[@class="description"]</td>
+	<td>ORDER_DETAILS_BILLING_ADDRESS</td>
+	<td>//h5[contains(.,'Billing Address')]/../../div</td>
 	<td></td>
 </tr>
 <tr>
-    <td>ASSERT_FIRST_SHIPMENT_STATUS</td>
-    <td>//div[contains(@class,'dnd-td')]/following-sibling::div//span[@class="label label-warning"]//span</td>
-    <td></td>
+	<td>ORDER_DETAILS_PAYMENT_METHOD_NAME</td>
+	<td>//span[contains(@class,'payment-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_PRODUCT_DISCOUNT</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_productDiscount}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_PRODUCT_NAME</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_TOTAL_PRICE</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_productTotalPrice}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_PRODUCT_QUANTITY</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_productQuantity}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_PRODUCT_SKU</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_productSKU}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_PRODUCT_LIST_PRICE</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_productListPrice}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_SHIPPING_ADDRESS</td>
+	<td>//h5[contains(.,'Shipping Address')]/../../div[contains(.,'${key_addressInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_ITEMS_PRODUCT_DETAILS</td>
+	<td>//tbody//td[2][contains(.,'${key_productSKU}')]/..//div[@class='table-list-title']/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_WAREHOUSE_BY_NAME</td>
+	<td>//div[contains(text(),'${key_warehouseName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_ELLIPSIS_BY_STATUS</td>
+	<td>//strong[contains(text(), '${key_orderStatus}')]//../../../../div//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE</td>
+	<td>//div[contains(text(),'${key_warehouseName}')]//following-sibling::div[@class = 'dnd-td']//following-sibling::div[@class = 'dnd-td']//input[contains(@class, 'form-control')]</td>
+	 <td></td>
+</tr>
+<tr>
+	<td>PENDING_ORDERS_ORDER_ID</td>
+	<td>//dt[contains(text(),'Order ID')]/..//dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_PRICES_SEPARETED</td>
+	<td>//dt[contains(text(), '${key_priceName}')]//../following-sibling::dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON</td>
+	<td>//h5[contains(text(), "${key_titleName}")]//following-sibling::a[contains(text(), "${key_buttonName}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_GENERAL_DETAILS_DESCRIPTION</td>
+	<td>//h5[contains(text(), "${key_titleName}")]//..//following-sibling::div[@class="description"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSERT_FIRST_SHIPMENT_STATUS</td>
+	<td>//div[contains(@class,'dnd-td')]/following-sibling::div//span[@class="label label-warning"]//span</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

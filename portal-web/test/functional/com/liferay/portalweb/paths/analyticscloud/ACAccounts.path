@@ -2,40 +2,42 @@
 <head>
 <title>ACAccounts</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACAccounts</td></tr>
 </thead>
+
 <tbody>
 <!-- NAVIGATION -->
 <tr>
-    <td>ACCOUNTS_HEADER_TAB_BUTTON</td>
-    <td>//header//ul//li//a//span[text()='${key_tabName}']</td>
-    <td></td>
+	<td>ACCOUNTS_HEADER_TAB_BUTTON</td>
+	<td>//header//ul//li//a//span[text()='${key_tabName}']</td>
+	<td></td>
 </tr>
 <!-- ACCOUNTS TABLE ROW -->
 <tr>
-    <td>ACCOUNTS_TABLE_ROW</td>
-    <td>//table//tbody//div[@class='content-container']//a[text()='${key_accountName}']</td>
-    <td></td>
+	<td>ACCOUNTS_TABLE_ROW</td>
+	<td>//table//tbody//div[@class='content-container']//a[text()='${key_accountName}']</td>
+	<td></td>
 </tr>
 <!-- ACCOUNT DETAILS -->
 <tr>
-    <td>ACCOUNT_DETAIL_PROPERTY</td>
-    <td>//table//*[@class='property-cell table-cell-expand']//div[text()='${key_propertyName}']/following-sibling::div</td>
-    <td></td>
+	<td>ACCOUNT_DETAIL_PROPERTY</td>
+	<td>//table//*[@class='property-cell table-cell-expand']//div[text()='${key_propertyName}']/following-sibling::div</td>
+	<td></td>
 </tr>
 <!-- ACCOUNT REPORT GRAPHS & TABLES -->
 <tr>
-    <td>ACCOUNT_ACTIVITY_BAR_GRAPH</td>
-    <td>//*[@class="recharts-layer recharts-bar-rectangle"][${key_expectedBarCount}]</td>
-    <td></td>
+	<td>ACCOUNT_ACTIVITY_BAR_GRAPH</td>
+	<td>//*[@class="recharts-layer recharts-bar-rectangle"][${key_expectedBarCount}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ACCOUNT_OVERVIEW_CARD_HEADER</td>
-    <td>//div[@class="card-header"]/*[text()='${key_cardTitle}']</td>
-    <td></td>
+	<td>ACCOUNT_OVERVIEW_CARD_HEADER</td>
+	<td>//div[@class="card-header"]/*[text()='${key_cardTitle}']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

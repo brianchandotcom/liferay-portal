@@ -2,11 +2,13 @@
 <head>
 <title>TextArea</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">TextArea</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ACE_EDITOR</td>

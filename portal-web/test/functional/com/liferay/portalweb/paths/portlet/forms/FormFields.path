@@ -2,11 +2,13 @@
 <head>
 <title>FormFields</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">FormFields</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ANY_CHECKBOX_CHECKED</td>
@@ -198,9 +200,9 @@
 </tr>
 <!--DOCUMENT_LIBRARY-->
 <tr>
-    <td>UPLOAD_FIELD_CLEAR_BUTTON</td>
-    <td>//button[text()='Clear']</td>
-    <td></td>
+	<td>UPLOAD_FIELD_CLEAR_BUTTON</td>
+	<td>//button[text()='Clear']</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

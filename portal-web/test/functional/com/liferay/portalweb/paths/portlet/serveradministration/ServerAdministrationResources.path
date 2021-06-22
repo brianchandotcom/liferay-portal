@@ -2,11 +2,13 @@
 <head>
 <title>ServerAdministrationResources</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ServerAdministrationResources</td></tr>
 </thead>
+
 <tbody>
 <!--ACTIONS_TABLE-->
 <tr>

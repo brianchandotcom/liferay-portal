@@ -2,23 +2,25 @@
 <head>
 <title>ACUtils</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACUtils</td></tr>
 </thead>
+
 <tbody>
 <!-- CLOSE MODAL -->
 <tr>
-    <td>MODAL_CLOSE_BUTTON</td>
-    <td>//button[contains(@class, 'close')]</td>
-    <td></td>
+	<td>MODAL_CLOSE_BUTTON</td>
+	<td>//button[contains(@class, 'close')]</td>
+	<td></td>
 </tr>
 <!-- SEARCH_BAR -->
 <tr>
-    <td>CLEAR_SEARCH_BAR_BUTTON</td>
-    <td>//div[contains(@class, 'input-group-item')]//button[contains(@class, 'button-root')]</td>
-    <td></td>
+	<td>CLEAR_SEARCH_BAR_BUTTON</td>
+	<td>//div[contains(@class, 'input-group-item')]//button[contains(@class, 'button-root')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

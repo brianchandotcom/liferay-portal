@@ -2,299 +2,301 @@
 <head>
 <title>ACSegments</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACSegments</td></tr>
 </thead>
+
 <tbody>
-<!-- Segments  -->
+<!-- Segments -->
 <tr>
-    <td>ACTIVE_PAGE</td>
-    <td>//li[@class='page-item active']/button</td>
-    <td></td>
+	<td>ACTIVE_PAGE</td>
+	<td>//li[@class='page-item active']/button</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ANONYMOUS_LABEL</td>
-    <td>//div[@class='card-header']/div/span[@class='label-item' and text()='Include Anonymous']</td>
-    <td></td>
+	<td>ANONYMOUS_LABEL</td>
+	<td>//div[@class='card-header']/div/span[@class='label-item' and text()='Include Anonymous']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>CANCEL_SEGMENT</td>
-    <td>//a[contains(@href,'segment') and contains(@class,'secondary')]</td>
-    <td></td>
+	<td>CANCEL_SEGMENT</td>
+	<td>//a[contains(@href,'segment') and contains(@class,'secondary')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>CONFIRM_DELETION</td>
-    <td>//button[contains(@class,'warning')]</td>
-    <td></td>
+	<td>CONFIRM_DELETION</td>
+	<td>//button[contains(@class,'warning')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>CREATE_SEGMENT_BUTTON</td>
-    <td>//button[contains(@class,'btn-primary')]</td>
-    <td></td>
+	<td>CREATE_SEGMENT_BUTTON</td>
+	<td>//button[contains(@class,'btn-primary')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>CRITERION_TYPE_DROPDOWN</td>
-    <td>//div[@class='dropdown dropdown-root']/button</td>
-    <td></td>
+	<td>CRITERION_TYPE_DROPDOWN</td>
+	<td>//div[@class='dropdown dropdown-root']/button</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DELETE_SEGMENT</td>
-    <td>//div[contains(@class,'dropdown')]/button[contains(@class,'item')]</td>
-    <td></td>
+	<td>DELETE_SEGMENT</td>
+	<td>//div[contains(@class,'dropdown')]/button[contains(@class,'item')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DELETED_CRITERIA</td>
-    <td>//div[@class='criteria-message']</td>
-    <td></td>
+	<td>DELETED_CRITERIA</td>
+	<td>//div[@class='criteria-message']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DUPLICATED_CRITERIA</td>
-    <td>(//div[@class='criteria-statement']//div[text()='${criteriaName}'])[${totalCriteriaCount}]</td>
-    <td></td>
+	<td>DUPLICATED_CRITERIA</td>
+	<td>(//div[@class='criteria-statement']//div[text()='${criteriaName}'])[${totalCriteriaCount}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>EDITOR_LABEL</td>
-    <td>//div[contains(@class,'label-root')]</td>
-    <td></td>
+	<td>EDITOR_LABEL</td>
+	<td>//div[contains(@class,'label-root')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>EDIT_SEGMENT</td>
-    <td>//div[contains(@class,'dropdown')]/a[contains(@href,'edit')]</td>
-    <td></td>
+	<td>EDIT_SEGMENT</td>
+	<td>//div[contains(@class,'dropdown')]/a[contains(@href,'edit')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>EDIT_NAME_BUTTON</td>
-    <td>//div[contains(@class,'editor')]</td>
-    <td></td>
+	<td>EDIT_NAME_BUTTON</td>
+	<td>//div[contains(@class,'editor')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>TABLE_CHECKBOX</td>
-    <td>//div[text()='${key_TableMember}']/ancestor::tr</td>
-    <td></td>
+	<td>TABLE_CHECKBOX</td>
+	<td>//div[text()='${key_TableMember}']/ancestor::tr</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NAME_FIELD</td>
-    <td>//input[@name='name']</td>
-    <td></td>
+	<td>NAME_FIELD</td>
+	<td>//input[@name='name']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>OCCURENCE_SELECT</td>
-    <td>xpath=(//div[(@class='criterion')])[${key_indexField}]//select[@class='form-control operator-input']</td>
-    <td></td>
+	<td>OCCURENCE_SELECT</td>
+	<td>xpath=(//div[(@class='criterion')])[${key_indexField}]//select[@class='form-control operator-input']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SAVE_SEGMENT</td>
-    <td>//button[@type='submit']</td>
-    <td></td>
+	<td>SAVE_SEGMENT</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEARCH_SEGMENT</td>
-    <td>//input[@type='text' and @placeholder = 'Search' and not(@disabled)]</td>
-    <td></td>
+	<td>SEARCH_SEGMENT</td>
+	<td>//input[@type='text' and @placeholder = 'Search' and not(@disabled)]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_COMPOSITION_COUNT</td>
-    <td>//span[text()='${individualsType}']/parent::div/following-sibling::div</td>
-    <td></td>
+	<td>SEGMENT_COMPOSITION_COUNT</td>
+	<td>//span[text()='${individualsType}']/parent::div/following-sibling::div</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CREATION_PAGE</td>
-    <td>//h1/following-sibling::div</td>
-    <td></td>
+	<td>SEGMENT_CREATION_PAGE</td>
+	<td>//h1/following-sibling::div</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CRITERIA_ATTRIBUTE_VALUE</td>
-    <td>//div[@class='criteria-row']</td>
-    <td></td>
+	<td>SEGMENT_CRITERIA_ATTRIBUTE_VALUE</td>
+	<td>//div[@class='criteria-row']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CRITERIA_CRITERIA_NAME</td>
-    <td>//div[@class='criteria-row']//self::b</td>
-    <td></td>
+	<td>SEGMENT_CRITERIA_CRITERIA_NAME</td>
+	<td>//div[@class='criteria-row']//self::b</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CRITERIA_CRITERIA_DETAIL</td>
-    <td>//div[@class='criteria-row']//self::b//following-sibling::span</td>
-    <td></td>
+	<td>SEGMENT_CRITERIA_CRITERIA_DETAIL</td>
+	<td>//div[@class='criteria-row']//self::b//following-sibling::span</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CRITERIA_CRITERIA_VALUE</td>
-    <td>//div[@class='criteria-row']//self::b//following-sibling::span//following-sibling::b</td>
-    <td></td>
+	<td>SEGMENT_CRITERIA_CRITERIA_VALUE</td>
+	<td>//div[@class='criteria-row']//self::b//following-sibling::span//following-sibling::b</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN</td>
-    <td>//div[@class='criteria-row']//span[${key_index}]</td>
-    <td></td>
+	<td>SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN</td>
+	<td>//div[@class='criteria-row']//span[${key_index}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CRITERIA_WEB_BEHAVIOR_B</td>
-    <td>//div[@class='criteria-row']//b[${key_index}]</td>
-    <td></td>
+	<td>SEGMENT_CRITERIA_WEB_BEHAVIOR_B</td>
+	<td>//div[@class='criteria-row']//b[${key_index}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_MEMBERSHIP_CARD</td>
-    <td>//div[@class='criteria-row']</td>
-    <td></td>
+	<td>SEGMENT_MEMBERSHIP_CARD</td>
+	<td>//div[@class='criteria-row']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_TOP_INTERESTS_CARD</td>
-    <td>//div[contains(@class,'interests-card')]//*[@class='card-header']</td>
-    <td></td>
+	<td>SEGMENT_TOP_INTERESTS_CARD</td>
+	<td>//div[contains(@class,'interests-card')]//*[@class='card-header']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_BREAKDOWN_CARD</td>
-    <td>//div[contains(@class,'distribution-card')]//*[@class='description']/h4</td>
-    <td></td>
+	<td>SEGMENT_BREAKDOWN_CARD</td>
+	<td>//div[contains(@class,'distribution-card')]//*[@class='description']/h4</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_LABEL</td>
-    <td>//h1/following-sibling::div/span</td>
-    <td></td>
+	<td>SEGMENT_LABEL</td>
+	<td>//h1/following-sibling::div/span</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_ELLIPSES</td>
-    <td>//div[contains(@class,'dropdown')]/button[contains(@class,'component')]</td>
-    <td></td>
+	<td>SEGMENT_ELLIPSES</td>
+	<td>//div[contains(@class,'dropdown')]/button[contains(@class,'component')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SELECT_BUTTON</td>
-    <td>//div[@class='criterion'][${key_indexField}]//div[contains(@class,'input-group-append')]</td>
-    <td></td>
+	<td>SELECT_BUTTON</td>
+	<td>//div[@class='criterion'][${key_indexField}]//div[contains(@class,'input-group-append')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SELECT_CRITERION_TYPE</td>
-    <td>//div[@class='dropdown-menu show']/button[text()='${key_Criterion}']</td>
-    <td></td>
+	<td>SELECT_CRITERION_TYPE</td>
+	<td>//div[@class='dropdown-menu show']/button[text()='${key_Criterion}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SELECT_SEGMENT_TYPE</td>
-    <td>//a[contains(@href, '${key_SegmentType}')]</td>
-    <td></td>
+	<td>SELECT_SEGMENT_TYPE</td>
+	<td>//a[contains(@href, '${key_SegmentType}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SELECT_SEGMENT</td>
-    <td>//a[@class='text-truncate'and text()='${key_segmentName}']</td>
-    <td></td>
+	<td>SELECT_SEGMENT</td>
+	<td>//a[@class='text-truncate'and text()='${key_segmentName}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_MEMBERS</td>
-    <td>//tbody//a[@class='text-truncate'and text()='${key_userName}']</td>
-    <td></td>
+	<td>SEGMENT_MEMBERS</td>
+	<td>//tbody//a[@class='text-truncate'and text()='${key_userName}']</td>
+	<td></td>
 </tr>
-<!-- Dynamic Segments  -->
+<!-- Dynamic Segments -->
 <tr>
-    <td>ANONYMOUS_SWITCH</td>
-    <td>//input[contains(@id,'includeAnonymous')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>CALENDAR_INPUT</td>
-    <td>//div[@class='input-group-item']/input[contains(@placeholder,'YYYY-MM-DD')]</td>
-    <td></td>
+	<td>ANONYMOUS_SWITCH</td>
+	<td>//input[contains(@id,'includeAnonymous')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MONTH_AND_YEAR_CALENDAR</td>
-    <td>//select[contains(@class,'date-picker-select-root')][${key_indexCalendar}]</td>
-    <td></td>
+	<td>CALENDAR_INPUT</td>
+	<td>//div[@class='input-group-item']/input[contains(@placeholder,'YYYY-MM-DD')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MONTH_CALENDAR_OPTION</td>
-    <td>//option[text()='${key_month}']</td>
-    <td></td>
+	<td>MONTH_AND_YEAR_CALENDAR</td>
+	<td>//select[contains(@class,'date-picker-select-root')][${key_indexCalendar}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>YEAR_CALENDAR_OPTION</td>
-    <td>//option[text()='${key_year}']</td>
-    <td></td>
+	<td>MONTH_CALENDAR_OPTION</td>
+	<td>//option[text()='${key_month}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DAY_CALENDAR_OPTION</td>
-    <td>//button[text()='${key_day}']</td>
-    <td></td>
+	<td>YEAR_CALENDAR_OPTION</td>
+	<td>//option[text()='${key_year}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DUPLICATE_SEGMENT_CRITERION</td>
-    <td>//button[@aria-label='Duplicate']</td>
-    <td></td>
+	<td>DAY_CALENDAR_OPTION</td>
+	<td>//button[text()='${key_day}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DELETE_SEGMENT_CRITERION</td>
-    <td>//button[@aria-label='Delete']</td>
-    <td></td>
+	<td>DUPLICATE_SEGMENT_CRITERION</td>
+	<td>//button[@aria-label='Duplicate']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_CRITERION_ITEM</td>
-    <td>//div[@class='sidebar-collapse']//li[text()='${segmentField}']</td>
-    <td></td>
+	<td>DELETE_SEGMENT_CRITERION</td>
+	<td>//button[@aria-label='Delete']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_DROP_AREA</td>
-    <td>//div[@class='drop-zone-target p-5']</td>
-    <td></td>
+	<td>SEGMENT_CRITERION_ITEM</td>
+	<td>//div[@class='sidebar-collapse']//li[text()='${segmentField}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_MEMBERSHIP_BUTTON</td>
-    <td>//div[@class='total-members']/following-sibling::button</td>
-    <td></td>
+	<td>SEGMENT_DROP_AREA</td>
+	<td>//div[@class='drop-zone-target p-5']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>TEXT_INPUT</td>
-    <td>//div[@class='criteria-statement']//div[@class='input-group-item']/input</td>
-    <td></td>
+	<td>SEGMENT_MEMBERSHIP_BUTTON</td>
+	<td>//div[@class='total-members']/following-sibling::button</td>
+	<td></td>
 </tr>
 <tr>
-    <td>OCCURENCE_INPUT</td>
-    <td>//input[@data-testid='occurence-count-input']</td>
-    <td></td>
+	<td>TEXT_INPUT</td>
+	<td>//div[@class='criteria-statement']//div[@class='input-group-item']/input</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NO_MEMBER_TITLE</td>
-    <td>//h4[@class='no-results-title']</td>
-    <td></td>
+	<td>OCCURENCE_INPUT</td>
+	<td>//input[@data-testid='occurence-count-input']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>FORM_CONTROL_CRITERION</td>
-    <td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]</td>
-    <td></td>
+	<td>NO_MEMBER_TITLE</td>
+	<td>//h4[@class='no-results-title']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>FORM_CONTROL_CRITERION_OPTION</td>
-    <td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]//option[text()='${key_option}']</td>
-    <td></td>
+	<td>FORM_CONTROL_CRITERION</td>
+	<td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ACTIVITIES_CRITERION</td>
-    <td>xpath=(//select[contains(@class,'criterion-input')])[${key_indexField}]</td>
-    <td></td>
+	<td>FORM_CONTROL_CRITERION_OPTION</td>
+	<td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]//option[text()='${key_option}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>TIME_INPUT_CRITERION_CONJUNCTION</td>
-    <td>xpath=(//select[@data-testid='conjunction-input'])[${key_indexField}]</td>
-    <td></td>
+	<td>ACTIVITIES_CRITERION</td>
+	<td>xpath=(//select[contains(@class,'criterion-input')])[${key_indexField}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>TIME_INPUT_CRITERION</td>
-    <td>xpath=(//select[@data-testid='clay-select'])[${key_indexField}]</td>
-    <td></td>
+	<td>TIME_INPUT_CRITERION_CONJUNCTION</td>
+	<td>xpath=(//select[@data-testid='conjunction-input'])[${key_indexField}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SEGMENT_MEMBERSHIP_LEGEND</td>
-    <td>//span[contains(@class,'recharts-legend-item-text')]//span[text()='${key_memberType}']//b</td>
-    <td></td>
-</tr>
-<!-- Static Segments  -->
-<tr>
-    <td>ADD_BUTTON</td>
-    <td>//div[@class='modal-footer']/button[contains(@class,'btn-primary')]</td>
-    <td></td>
+	<td>TIME_INPUT_CRITERION</td>
+	<td>xpath=(//select[@data-testid='clay-select'])[${key_indexField}]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ADD_MEMBERS_BUTTON</td>
-    <td>//ul/li/button[contains(@class,'btn-primary')]</td>
-    <td></td>
+	<td>SEGMENT_MEMBERSHIP_LEGEND</td>
+	<td>//span[contains(@class,'recharts-legend-item-text')]//span[text()='${key_memberType}']//b</td>
+	<td></td>
+</tr>
+<!-- Static Segments -->
+<tr>
+	<td>ADD_BUTTON</td>
+	<td>//div[@class='modal-footer']/button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MEMBERS_BUTTON</td>
+	<td>//ul/li/button[contains(@class,'btn-primary')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

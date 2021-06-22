@@ -2,17 +2,19 @@
 <head>
 <title>BlogsEntry</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">BlogsEntry</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ENTRY_COVER_IMAGE_CAPTION</td>
 	<td>//div[contains(@class,'cover-image-caption')]</td>
 	<td></td>
-</tr>	
+</tr>
 <tr>
 	<td>ENTRY_COVER_IMAGE</td>
 	<td>//div[contains(@class,'cover-image') and contains(@style,'${key_uploadFileName}')] | //div[contains(@class,'cover-image')]//img</td>

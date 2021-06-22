@@ -2,11 +2,13 @@
 <head>
 <title>Checkbox</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Checkbox</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ACTIVE</td>
@@ -68,7 +70,7 @@
 	<td>//label[contains(.,'${checkboxName}')]/input[@type='checkbox' and not(@checked)]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>ADD_SHIPMENT_ITEMS_CHECKBOX</td>
 	<td>//div[contains(text(), '${key_productSKU}')]/preceding-sibling::div[@class='dnd-td item-selector']//input[@type='checkbox']</td>
 	<td></td>
@@ -134,9 +136,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ENABLE_CHECKBOX</td>
-    <td>//tr[contains(@data-name,'${key_checkboxName}')]//input[contains(@type,'checkbox')]</td>
-    <td></td>
+	<td>ENABLE_CHECKBOX</td>
+	<td>//tr[contains(@data-name,'${key_checkboxName}')]//input[contains(@type,'checkbox')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS</td>

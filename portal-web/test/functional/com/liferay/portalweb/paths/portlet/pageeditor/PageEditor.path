@@ -2,11 +2,13 @@
 <head>
 <title>PageEditor</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">PageEditor</td></tr>
 </thead>
+
 <tbody>
 <!--BASED_ON_CUSTOM_MASTERS-->
 <tr>
@@ -386,10 +388,10 @@
 	<td>//strong[contains(@class,'text-dark') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
-<tr>	
-	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_SECONDARY_TEXT</td>	
-	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_commentCount}')]</td>	
-	<td></td>	
+<tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_SECONDARY_TEXT</td>
+	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_commentCount}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE</td>
@@ -571,9 +573,9 @@
 	<td></td>
 </tr>
 <tr>
-  <td>CONTAINER_CONTAINER_EMPTY</td>
-  <td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'empty')]</td>
-  <td></td>
+<td>CONTAINER_CONTAINER_EMPTY</td>
+<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'empty')]</td>
+<td></td>
 </tr>
 <tr>
 	<td>CONTAINER_CONTAINER_NESTED_ELEMENT</td>
@@ -586,9 +588,9 @@
 	<td></td>
 </tr>
 <tr>
-  <td>GRID_COLUMN_EMPTY</td>
-  <td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]//div[contains(@class,'page-editor__row')][contains(@class,'empty')]</td>
-  <td></td>
+<td>GRID_COLUMN_EMPTY</td>
+<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Grid')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]//div[contains(@class,'page-editor__row')][contains(@class,'empty')]</td>
+<td></td>
 </tr>
 <tr>
 	<td>GRID_COLUMN_NESTED_ELEMENT</td>

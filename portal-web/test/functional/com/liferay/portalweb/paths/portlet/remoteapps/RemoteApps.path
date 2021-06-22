@@ -2,11 +2,13 @@
 <head>
 <title>RemoteApps</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">RemoteApps</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>EMPTY_REMOTE_TABLE_MESSAGE</td>

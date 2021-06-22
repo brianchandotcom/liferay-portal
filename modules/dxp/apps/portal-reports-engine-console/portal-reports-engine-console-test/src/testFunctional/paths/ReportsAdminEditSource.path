@@ -2,11 +2,13 @@
 <head>
 <title>ReportsAdminEditSource</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ReportsAdminEditSource</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>DATA_SOURCE_NAME_FIELD</td>

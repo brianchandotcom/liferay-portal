@@ -2,11 +2,13 @@
 <head>
 <title>ClickToChatConfiguration</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ClickToChatConfiguration</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>CHAT_PROVIDER_ACCOUNT_ID</td>

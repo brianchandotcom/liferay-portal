@@ -2,28 +2,30 @@
 <head>
 <title>ACDefinitions</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACDefinitions</td></tr>
 </thead>
+
 <tbody>
 <!-- DEFINITIONS -->
 <tr>
-    <td>DEFINITION_TYPE</td>
-    <td>//div[contains(@class, 'card card-root')]//a[text()='${key_definitionType}']</td>
-    <td></td>
+	<td>DEFINITION_TYPE</td>
+	<td>//div[contains(@class, 'card card-root')]//a[text()='${key_definitionType}']</td>
+	<td></td>
 </tr>
 <!-- INDIVIDUAL ATTRIBUTES -->
 <tr>
-    <td>ATTRIBUTE_NAME</td>
-    <td>//div[contains(@class, 'card card-root')]//button[text()='${key_attributeName}']</td>
-    <td></td>
+	<td>ATTRIBUTE_NAME</td>
+	<td>//div[contains(@class, 'card card-root')]//button[text()='${key_attributeName}']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SOURCE_NAME</td>
-    <td>//div[contains(@class, 'table-root')]//td[text()='${key_dataSourceName}']</td>
-    <td></td>
+	<td>SOURCE_NAME</td>
+	<td>//div[contains(@class, 'table-root')]//td[text()='${key_dataSourceName}']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

@@ -2,11 +2,13 @@
 <head>
 <title>Questions</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Questions</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ANSWER_BODY</td>
@@ -168,10 +170,10 @@
 	<td>//div[contains(@class,'question-locked-text') and contains(.,'This question is closed. New answers and comments are disabled.')]</td>
 	<td></td>
 </tr>
-<tr>	
-	<td>QUESTIONS_RESPONSE_DATE_LABEL</td>	
-	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_label}')]</td>	
-	<td></td>	
+<tr>
+	<td>QUESTIONS_RESPONSE_DATE_LABEL</td>
+	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_label}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>QUESTIONS_SUBSCRIBE</td>
@@ -384,5 +386,3 @@
 </table>
 </body>
 </html>
-
-

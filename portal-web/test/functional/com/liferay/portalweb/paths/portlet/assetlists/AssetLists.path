@@ -2,17 +2,19 @@
 <head>
 <title>AssetLists</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">AssetLists</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ASSET_LIST_ELLIPSIS</td>
 	<td>//div[contains(@class,'dropdown')]//a[span/*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]</td>
 	<td></td>
-</tr>	
+</tr>
 <tr>
 	<td>ASSET_LIST_ENTRY_TITLE</td>
 	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_title}')] | //li[contains(@class,'list-group-item')]//p[contains(.,'${key_title}')]</td>

@@ -2,11 +2,13 @@
 <head>
 <title>DocumentsAndMediaEditDocument</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">DocumentsAndMediaEditDocument</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>UNIQUE_DOCUMENT_ERROR_MESSAGE</td>

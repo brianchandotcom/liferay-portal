@@ -2,11 +2,13 @@
 <head>
 <title>MenuBar</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">MenuBar</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ACTIVE_NAV_LINK</td>

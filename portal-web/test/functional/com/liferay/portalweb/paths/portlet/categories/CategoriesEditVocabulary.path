@@ -2,11 +2,13 @@
 <head>
 <title>CategoriesEditVocabulary</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">CategoriesEditVocabulary</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH</td>

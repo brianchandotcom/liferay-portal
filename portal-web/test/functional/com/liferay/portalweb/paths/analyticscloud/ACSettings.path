@@ -2,122 +2,124 @@
 <head>
 <title>ACSettings</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ACSettings</td></tr>
 </thead>
+
 <tbody>
-<!-- SETTINGS NAVIGATION  -->
+<!-- SETTINGS NAVIGATION -->
 <tr>
-    <td>SETTINGS_NAVIGATION</td>
-    <td>//*[contains(@class, 'btn-link') and contains(@href,'${key_SettingsNavigation}')]</td>
-    <td></td>
+	<td>SETTINGS_NAVIGATION</td>
+	<td>//*[contains(@class, 'btn-link') and contains(@href,'${key_SettingsNavigation}')]</td>
+	<td></td>
 </tr>
 <!-- SETTINGS TOOLBAR -->
 <tr>
-    <td>DELETE_FROM_TOOLBAR</td>
-    <td>//*[contains(@class,'nav-btn')]</td>
-    <td></td>
+	<td>DELETE_FROM_TOOLBAR</td>
+	<td>//*[contains(@class,'nav-btn')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>CONTINUE_BUTTON</td>
-    <td>//button[contains(.,'Continue') and not (contains(@class,'disabled'))]</td>
-    <td></td>
+	<td>CONTINUE_BUTTON</td>
+	<td>//button[contains(.,'Continue') and not (contains(@class,'disabled'))]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SELECT_ALL_CHECKBOX</td>
-    <td>//input[contains(@data-testid, 'select-all')]</td>
-    <td></td>
+	<td>SELECT_ALL_CHECKBOX</td>
+	<td>//input[contains(@data-testid, 'select-all')]</td>
+	<td></td>
 </tr>
 <!-- INTEREST KEYWORD -->
 <tr>
-    <td>KEYWORD_BUTTON</td>
-    <td>//*[contains(@class,'btn-primary')]</td>
-    <td></td>
+	<td>KEYWORD_BUTTON</td>
+	<td>//*[contains(@class,'btn-primary')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>KEYWORD_DELETE_CHECKBOX</td>
-    <td>//h4[text()='${key_KeywordName}']/parent::td/preceding-sibling::td/input</td>
-    <td></td>
+	<td>KEYWORD_DELETE_CHECKBOX</td>
+	<td>//h4[text()='${key_KeywordName}']/parent::td/preceding-sibling::td/input</td>
+	<td></td>
 </tr>
 <tr>
-    <td>KEYWORD_DELETE_ICON</td>
-    <td>//h4[text()='${key_KeywordName}']/parent::td/following-sibling::td[contains(@class,'row-inline-actions')]/span/button</td>
-    <td></td>
+	<td>KEYWORD_DELETE_ICON</td>
+	<td>//h4[text()='${key_KeywordName}']/parent::td/following-sibling::td[contains(@class,'row-inline-actions')]/span/button</td>
+	<td></td>
 </tr>
 <tr>
-    <td>KEYWORD_NAME</td>
-    <td>//*[contains(@class,'table-title') and (text()='${key_KeywordName}')]</td>
-    <td></td>
-</tr>	
+	<td>KEYWORD_NAME</td>
+	<td>//*[contains(@class,'table-title') and (text()='${key_KeywordName}')]</td>
+	<td></td>
+</tr>
 <tr>
-    <td>KEYWORD_SEND_BUTTON</td>
-    <td>//*[contains(@class,'btn-primary')]</td>
-    <td></td>
-</tr>	
+	<td>KEYWORD_SEND_BUTTON</td>
+	<td>//*[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
 <tr>
-    <td>KEYWORD_TEXTFIELD</td>
-    <td>//*[@class='form-control-inset']</td>
-    <td></td>
+	<td>KEYWORD_TEXTFIELD</td>
+	<td>//*[@class='form-control-inset']</td>
+	<td></td>
 </tr>
 <!-- ADD DATA SOURCE SCREEN -->
 <tr>
-    <td>DXP_DATA_SOURCE_OPTION</td>
-    <td>//button[contains(@class,'data-source-item')]</td>
-    <td></td>
+	<td>DXP_DATA_SOURCE_OPTION</td>
+	<td>//button[contains(@class,'data-source-item')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>TOKEN_INPUT_FIELD</td>
-    <td>//input</td>
-    <td></td>
+	<td>TOKEN_INPUT_FIELD</td>
+	<td>//input</td>
+	<td></td>
 </tr>
 <!-- PROPERTIES -->
 <tr>
-    <td>SEARCH_BAR</td>
-    <td>//div[@class='input-group-item']/input</td>
-    <td></td>
+	<td>SEARCH_BAR</td>
+	<td>//div[@class='input-group-item']/input</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ITEM_ON_LIST</td>
-    <td>//*[contains(@class,'text-truncate') and contains(text(),'${itemName}')]</td>
-    <td></td>
+	<td>ITEM_ON_LIST</td>
+	<td>//*[contains(@class,'text-truncate') and contains(text(),'${itemName}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>GENERIC_DELETE_BUTTON</td>
-    <td>//button[contains(@class,'btn-secondary') and contains(text(),'Delete')]</td>
-    <td></td>
+	<td>GENERIC_DELETE_BUTTON</td>
+	<td>//button[contains(@class,'btn-secondary') and contains(text(),'Delete')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DELETE_CONFIRMATION_MESSAGE</td>
-    <td>//span[contains(@class,'text-secondary')]</td>
-    <td></td>
+	<td>DELETE_CONFIRMATION_MESSAGE</td>
+	<td>//span[contains(@class,'text-secondary')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DELETE_CONFIRMATION_INPUT</td>
-    <td>//input[@data-testid='delete-confirmation-input']</td>
-    <td></td>
+	<td>DELETE_CONFIRMATION_INPUT</td>
+	<td>//input[@data-testid='delete-confirmation-input']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DELETE_CONFIRMATION_BUTTON</td>
-    <td>//button[contains(@class,'btn-warning')]</td>
-    <td></td>
+	<td>DELETE_CONFIRMATION_BUTTON</td>
+	<td>//button[contains(@class,'btn-warning')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>EXIT_SETTINGS_BUTTON</td>
-    <td>//a[@class='back-arrow']</td>
-    <td></td>
+	<td>EXIT_SETTINGS_BUTTON</td>
+	<td>//a[@class='back-arrow']</td>
+	<td></td>
 </tr>
 <!-- USAGE -->
 <tr>
-    <td>INDIVIDUALS_USAGE_METRIC</td>
-    <td>//*[contains(@class,'metric-name') and contains(.,'Individuals')]/..//span[contains(@class,'metric-current')]</td>
-    <td></td>
+	<td>INDIVIDUALS_USAGE_METRIC</td>
+	<td>//*[contains(@class,'metric-name') and contains(.,'Individuals')]/..//span[contains(@class,'metric-current')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>PAGE_VIEWS_USAGE_METRIC</td>
-    <td>//*[contains(@class,'metric-name') and contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
-    <td></td>
+	<td>PAGE_VIEWS_USAGE_METRIC</td>
+	<td>//*[contains(@class,'metric-name') and contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

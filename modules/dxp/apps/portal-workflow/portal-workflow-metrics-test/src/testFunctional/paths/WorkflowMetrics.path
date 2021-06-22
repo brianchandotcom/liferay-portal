@@ -2,18 +2,19 @@
 <head>
 <title>WorkflowMetrics</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetrics</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS</td>
 	<td>//div[@class='header'][span[contains(text(),'${key_statusName}')]]/following-sibling::div[1]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON</td>
 	<td>//div[contains(@class,'d-flex')]/a[${key_index}]</td>
@@ -439,4 +440,3 @@
 </table>
 </body>
 </html>
-

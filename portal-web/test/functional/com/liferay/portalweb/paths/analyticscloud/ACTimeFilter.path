@@ -1,65 +1,67 @@
 <html>
 <head>
-  <title>ACTimeFilter</title>
+<title>ACTimeFilter</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
-  <thead>
-  <tr><td rowspan="1" colspan="3">ACTimeFilter</td></tr>
-  </thead>
-  <tbody>
-  <!-- TIME FILTER ELEMENTS  -->
-  <tr>
-    <td>TIME_FILTER_DROPDOWN</td>
-    <td>//div[contains(@class,'dropdown-range-key-root')]/button</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>CARD_TIME_FILTER_DROPDOWN</td>
-    <td>(//h5[contains(@class,'card-title') and text()='${key_cardName}']/following::div[contains(@class,'dropdown dropdown-range-key-root')]/button)[1]</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>TIME_FILTER_DROPDOWN_OPTION</td>
-    <td>//div[contains(@class,'dropdown-range-key-menu-root') and contains(@class,'show')]//button[contains(.,'${key_dropdownOption}')]</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>TIME_FILTER_DROPDOWN_MENU</td>
-    <td>//div[contains(@class,'dropdown-range-key-menu-root') and contains(@class,'show')]</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>DATE_PICKER</td>
-    <td>//div[contains(@class,'date-picker-root')]</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>DATE_PICKER_MONTH_DROPDOWN</td>
-    <td>//select[contains(@class,'date-picker-select-root')][1]</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>DATE_PICKER_YEAR_DROPDOWN</td>
-    <td>//select[contains(@class,'date-picker-select-root')][2]</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>DATE_PICKER_MONTH_DROPDOWN_OPTION</td>
-    <td>//select[contains(@class,'date-picker-select-root')][1]/option[@value='${key_month}']</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>DATE_PICKER_YEAR_DROPDOWN_OPTION</td>
-    <td>//select[contains(@class,'date-picker-select-root')][2]/option[@value='${key_year}']</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>DATE_PICKER_DAY</td>
-    <td>//table[@class='calendar-root']//button[contains(@class,'day-root') and text()='${key_day}' and not(@disabled)]</td>
-    <td></td>
-  </tr>
-  </tbody>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACTimeFilter</td></tr>
+</thead>
+
+<tbody>
+<!-- TIME FILTER ELEMENTS -->
+<tr>
+	<td>TIME_FILTER_DROPDOWN</td>
+	<td>//div[contains(@class,'dropdown-range-key-root')]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_TIME_FILTER_DROPDOWN</td>
+	<td>(//h5[contains(@class,'card-title') and text()='${key_cardName}']/following::div[contains(@class,'dropdown dropdown-range-key-root')]/button)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIME_FILTER_DROPDOWN_OPTION</td>
+	<td>//div[contains(@class,'dropdown-range-key-menu-root') and contains(@class,'show')]//button[contains(.,'${key_dropdownOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIME_FILTER_DROPDOWN_MENU</td>
+	<td>//div[contains(@class,'dropdown-range-key-menu-root') and contains(@class,'show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_PICKER</td>
+	<td>//div[contains(@class,'date-picker-root')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_PICKER_MONTH_DROPDOWN</td>
+	<td>//select[contains(@class,'date-picker-select-root')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_PICKER_YEAR_DROPDOWN</td>
+	<td>//select[contains(@class,'date-picker-select-root')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_PICKER_MONTH_DROPDOWN_OPTION</td>
+	<td>//select[contains(@class,'date-picker-select-root')][1]/option[@value='${key_month}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_PICKER_YEAR_DROPDOWN_OPTION</td>
+	<td>//select[contains(@class,'date-picker-select-root')][2]/option[@value='${key_year}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_PICKER_DAY</td>
+	<td>//table[@class='calendar-root']//button[contains(@class,'day-root') and text()='${key_day}' and not(@disabled)]</td>
+	<td></td>
+</tr>
+</tbody>
 </table>
 </body>
 </html>

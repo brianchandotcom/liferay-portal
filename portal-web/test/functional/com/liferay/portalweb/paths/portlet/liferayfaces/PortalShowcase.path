@@ -2,11 +2,13 @@
 <head>
 <title>PortalShowcase</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">PortalShowcase</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>RENDERED_CHECKBOX</td>
@@ -34,39 +36,39 @@
 	<td></td>
 </tr>
 <tr>
-    <td>WRITEABLE_FIELD</td>
-    <td>//div[contains(@id,':comments')]//iframe</td>
-    <td></td>
+	<td>WRITEABLE_FIELD</td>
+	<td>//div[contains(@id,':comments')]//iframe</td>
+	<td></td>
 </tr>
 <tr>
-    <td>WRITEABLE_FIELD_2</td>
-    <td>xpath=(//div[contains(@id,':comments')]//iframe)[2]</td>
-    <td></td>
+	<td>WRITEABLE_FIELD_2</td>
+	<td>xpath=(//div[contains(@id,':comments')]//iframe)[2]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SUBMIT_BUTTON</td>
-    <td>//input[@value='Submit']</td>
-    <td></td>
+	<td>SUBMIT_BUTTON</td>
+	<td>//input[@value='Submit']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>SUBMIT_BUTTON_2</td>
-    <td>xpath=(//input[@value='Submit'])[2]</td>
-    <td></td>
+	<td>SUBMIT_BUTTON_2</td>
+	<td>xpath=(//input[@value='Submit'])[2]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MODAL_VALUE</td>
-    <td>//span[@id='_1_WAR_comliferayfacesdemoportalshowcaseportlet_:modelValue']</td>
-    <td></td>
+	<td>MODAL_VALUE</td>
+	<td>//span[@id='_1_WAR_comliferayfacesdemoportalshowcaseportlet_:modelValue']</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MODAL_VALUE_TITLE</td>
-    <td>//label[contains(text(),'Model Value')]</td>
-    <td></td>
+	<td>MODAL_VALUE_TITLE</td>
+	<td>//label[contains(text(),'Model Value')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>TEXT_FEEDBACK</td>
-    <td>//div[contains(@id,':feedback')]</td>
-    <td></td>
+	<td>TEXT_FEEDBACK</td>
+	<td>//div[contains(@id,':feedback')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

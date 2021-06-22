@@ -198,6 +198,14 @@ definition {
 		Alert.viewRequiredField();
 	}
 
+	macro assertLearnHowLink {
+		Click(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AssertLocation(value1 = "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html");
+	}
+
 	macro deleteByIconCP {
 		var key_categoryName = "${categoryName}";
 
@@ -377,6 +385,32 @@ definition {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/categories_admin/");
+	}
+
+	macro removeLinkToDocumentationURL {
+		ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Categorization",
+			configurationScope = "Virtual Instance Scope");
+		
+		Type(
+			key_text = "linkToDocumentation",
+			locator1 = "TextArea#ANY",
+			value1 = " ");
+		
+		if (IsElementPresent(key_text = "Save",locator1 = "Button#ANY")) {
+			Button.clickSave();
+		}
+		else {
+			Button.clickUpdate();
+		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro searchCP {

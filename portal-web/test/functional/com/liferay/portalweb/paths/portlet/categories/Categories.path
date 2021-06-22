@@ -136,7 +136,6 @@
 	<td>//div[contains(@id,'assetCategories')]//td[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
-<<<<<<< HEAD
 <!--VOCABULARY-->
 <tr>
 	<td>VOCABULARY_EDIT_CHECKBOX</td>
@@ -148,8 +147,6 @@
 	<td>//span[contains(text(), '${key_vocabularyName}')]/..//span[contains(@title, 'For Internal Use Only')]</td>
 	<td></td>
 </tr>
-=======
->>>>>>> 698be39 (LPS-134466 Test Autom Documentation Link)
 <tr>
 	<td>VOCABULARY_LINK_DOCUMENTATION</td>
 	<td>//a[contains(text(), 'Learn how')]</td>

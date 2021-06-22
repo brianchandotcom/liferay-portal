@@ -125,36 +125,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in web content editor"
-	@priority = "3"
-	test CheckLearnHowLinkNotDisplayedWCEditor {
-		task ("Remove default link to Documentation") {
-			Category.removeLinkToDocumentationURL();
-		}
-
-		task ("Assert if Learn How is not displayed") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			AssertElementNotPresent(locator1 = "VOCABULARY_LINK_DOCUMENTATION");
-		}
-	}
-
-	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Vocabularies Management"
-	@priority = "3"
-	test CheckLearnHowLinkNotDisplayedVocabularies {
-		task ("Remove default link to Documentation") {
-			Category.removeLinkToDocumentationURL();
-		}
-
-		task ("Assert if Learn How is not displayed") {
-			Category.openCategoriesAdmin(siteURLKey = "global");
-
-			AssertElementNotPresent(locator1 = "VOCABULARY_LINK_DOCUMENTATION");
-		}
-	}
-
 	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Content Dashboard"
 	@priority = "3"
 	test CheckLearnHowLinkNotDisplayedContentDashboard {
@@ -168,7 +138,37 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			AssertElementNotPresent(locator1 = "VOCABULARY_LINK_DOCUMENTATION");
+			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+		}
+	}
+
+	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Vocabularies Management"
+	@priority = "3"
+	test CheckLearnHowLinkNotDisplayedVocabularies {
+		task ("Remove default link to Documentation") {
+			Category.removeLinkToDocumentationURL();
+		}
+
+		task ("Assert if Learn How is not displayed") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+		}
+	}
+
+	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in web content editor"
+	@priority = "3"
+	test CheckLearnHowLinkNotDisplayedWCEditor {
+		task ("Remove default link to Documentation") {
+			Category.removeLinkToDocumentationURL();
+		}
+
+		task ("Assert if Learn How is not displayed") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
 		}
 	}
 
@@ -190,13 +190,12 @@ definition {
 
 	@description = "LPS-134466 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
 	@priority = "3"
-	test OpenLiferayLearnCategoriesVocabulariesPageFromWCEditor {
-		task ("Go to web content editor") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-			
-			Panel.expandPanel(panel = "Categorization");
+	test OpenLiferayLearnCategoriesVocabulariesPageFromContentDashboard {
+		task ("Go to content dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
 		}
 
 		task ("Click on Learn How and Assert if user is taken to the the Liferay Learn page") {
@@ -206,12 +205,13 @@ definition {
 
 	@description = "LPS-134466 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
 	@priority = "3"
-	test OpenLiferayLearnCategoriesVocabulariesPageFromContentDashboard {
-		task ("Go to content dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+	test OpenLiferayLearnCategoriesVocabulariesPageFromWCEditor {
+		task ("Go to web content editor") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			Panel.expandPanel(panel = "Categorization");
 		}
 
 		task ("Click on Learn How and Assert if user is taken to the the Liferay Learn page") {
@@ -278,7 +278,7 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 		}
 
-		task ("Assert URL to Documentation"){
+		task ("Assert URL to Documentation") {
 			AssertTextEquals(
 				key_text = "linkToDocumentation",
 				locator1 = "TextArea#ANY",

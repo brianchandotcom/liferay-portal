@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayTable from '@clayui/table';
 import React from 'react';
 
 import ListHeadItem from '../../../shared/components/list/ListHeadItem.es';
@@ -21,52 +22,46 @@ function Table({items, processId}) {
 	const totalPendingTitle = Liferay.Language.get('total-pending');
 
 	return (
-		<div className="table-responsive">
-			<table className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list">
-				<thead>
-					<tr>
-						<th className="table-cell-expand table-head-title">
-							{stepNameTitle}
-						</th>
+		<ClayTable headingNoWrap>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell expanded headingCell>
+						{stepNameTitle}
+					</ClayTable.Cell>
 
-						<th className="table-head-title text-right">
-							<ListHeadItem
-								iconColor="danger"
-								iconName="exclamation-circle"
-								name="overdueInstanceCount"
-								title={overdueTitle}
-							/>
-						</th>
-
-						<th className="table-head-title text-right">
-							<ListHeadItem
-								iconColor="success"
-								iconName="check-circle"
-								name="onTimeInstanceCount"
-								title={onTimeTitle}
-							/>
-						</th>
-
-						<th className="table-head-title text-right">
-							<ListHeadItem
-								name="instanceCount"
-								title={totalPendingTitle}
-							/>
-						</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{items.map((step, index) => (
-						<Table.Item
-							{...step}
-							key={index}
-							processId={processId}
+					<ClayTable.Cell className="text-right" headingCell>
+						<ListHeadItem
+							iconColor="danger"
+							iconName="exclamation-circle"
+							name="overdueInstanceCount"
+							title={overdueTitle}
 						/>
-					))}
-				</tbody>
-			</table>
-		</div>
+					</ClayTable.Cell>
+
+					<ClayTable.Cell className="text-right" headingCell>
+						<ListHeadItem
+							iconColor="success"
+							iconName="check-circle"
+							name="onTimeInstanceCount"
+							title={onTimeTitle}
+						/>
+					</ClayTable.Cell>
+
+					<ClayTable.Cell className="text-right" headingCell>
+						<ListHeadItem
+							name="instanceCount"
+							title={totalPendingTitle}
+						/>
+					</ClayTable.Cell>
+				</ClayTable.Row>
+			</ClayTable.Head>
+
+			<ClayTable.Body>
+				{items.map((step, index) => (
+					<Table.Item {...step} key={index} processId={processId} />
+				))}
+			</ClayTable.Body>
+		</ClayTable>
 	);
 }
 

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayTable from '@clayui/table';
 import React from 'react';
 
 import {formatDuration} from '../../../shared/util/duration.es';
@@ -30,48 +31,56 @@ function Item({
 	);
 
 	return (
-		<tr>
-			<td className="table-cell-expand">{label}</td>
+		<ClayTable.Row>
+			<ClayTable.Cell expanded>{label}</ClayTable.Cell>
 
-			<td className="text-right">
+			<ClayTable.Cell className="text-right">
 				{isValidNumber(breachedInstanceCount)
 					? breachedInstanceCount
 					: 0}{' '}
 				({formattedPercentage})
-			</td>
+			</ClayTable.Cell>
 
-			<td className="text-right">{formattedDuration}</td>
-		</tr>
+			<ClayTable.Cell className="text-right">
+				{formattedDuration}
+			</ClayTable.Cell>
+		</ClayTable.Row>
 	);
 }
 
 function Table({items = []}) {
 	return (
-		<div className="mb-3 table-responsive table-scrollable">
-			<table className="table table-autofit table-heading-nowrap table-hover table-list">
-				<thead>
-					<tr>
-						<th style={{width: '60%'}}>
-							{Liferay.Language.get('step-name')}
-						</th>
+		<ClayTable className="mb-3 table-scrollable" headingNoWrap>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell headingCell style={{width: '60%'}}>
+						{Liferay.Language.get('step-name')}
+					</ClayTable.Cell>
 
-						<th className="text-right" style={{width: '20%'}}>
-							{Liferay.Language.get('sla-breached-percent')}
-						</th>
+					<ClayTable.Cell
+						className="text-right"
+						headingCell
+						style={{width: '20%'}}
+					>
+						{Liferay.Language.get('sla-breached-percent')}
+					</ClayTable.Cell>
 
-						<th className="text-right" style={{width: '20%'}}>
-							{Liferay.Language.get('average-completion-time')}
-						</th>
-					</tr>
-				</thead>
+					<ClayTable.Cell
+						className="text-right"
+						headingCell
+						style={{width: '20%'}}
+					>
+						{Liferay.Language.get('average-completion-time')}
+					</ClayTable.Cell>
+				</ClayTable.Row>
+			</ClayTable.Head>
 
-				<tbody>
-					{items.map((item, index) => (
-						<Table.Item {...item} key={index} />
-					))}
-				</tbody>
-			</table>
-		</div>
+			<ClayTable.Body>
+				{items.map((item, index) => (
+					<Table.Item {...item} key={index} />
+				))}
+			</ClayTable.Body>
+		</ClayTable>
 	);
 }
 

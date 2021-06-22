@@ -151,7 +151,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		var portalVersionCurl = '''
-			-H 'Authorization: Bearer ${accessToken}' ${portalURL}/api/jsonws/portal/get-version
+			${portalURL}/api/jsonws/portal/get-version -H 'Authorization: Bearer ${accessToken}'
 		''';
 
 		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
@@ -227,7 +227,7 @@ definition {
 			grantFlow = "clientCredentials");
 
 		var buildNumberCurl = '''
-			-H 'Authorization: Bearer ${accessToken}' ${portalURL}/api/jsonws/portal/get-build-number
+			 ${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
 		''';
 
 		var buildNumberOutput = JSONCurlUtil.post("${buildNumberCurl}");
@@ -391,7 +391,7 @@ definition {
 		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
 
 		var deleteCurl = '''
-			-H 'Authorization: Bearer ${accessToken}' ${portalURL}/api/jsonws/journal.journalarticle/delete-article \
+			${portalURL}/api/jsonws/journal.journalarticle/delete-article -H 'Authorization: Bearer ${accessToken}' \
 				-d groupId=${liferaySiteId} \
 				-d articleId=${articleId} \
 				-d articleURL='wc-title'

@@ -91,14 +91,75 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Is Equal to' condition can be created"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateAnIsEqualToRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134382 CanCreateAnIsEqualToRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Is equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Numeric");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Numeric",
+			conditionField = "Text",
+			conditionOperator = "Is equal to",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		Form.validateNoFieldLabel(fieldLabel = "Numeric");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Text");
+
+		Form.validateNoFieldLabel(fieldLabel = "Numeric");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormFields.viewFieldLabel(
+			fieldName = "Numeric",
+			fieldValue = "");
 	}
 
 	@description = "Verify that a Rule with 'Is greater than or equal to' condition is working fine on the numeric field"

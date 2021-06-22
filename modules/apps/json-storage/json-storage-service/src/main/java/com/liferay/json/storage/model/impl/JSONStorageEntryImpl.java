@@ -14,23 +14,52 @@
 
 package com.liferay.json.storage.model.impl;
 
+import com.liferay.json.storage.constants.JSONStorageEntryConstants;
+import com.liferay.petra.string.StringPool;
+
 /**
- * The extended model implementation for the JSONStorageEntry service. Represents a row in the &quot;JSONStorageEntry&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.json.storage.model.JSONStorageEntry</code> interface.
- * </p>
- *
  * @author Preston Crary
  */
 public class JSONStorageEntryImpl extends JSONStorageEntryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a json storage entry model instance should use the {@link com.liferay.json.storage.model.JSONStorageEntry} interface instead.
-	 */
-	public JSONStorageEntryImpl() {
+	@Override
+	public Object getValue() {
+		int type = getType();
+
+		if (type == JSONStorageEntryConstants.TYPE_VALUE_LONG) {
+			return getValueLong();
+		}
+
+		if (type == JSONStorageEntryConstants.TYPE_VALUE_LONG_QUOTED) {
+			return String.valueOf(getValueLong());
+		}
+
+		if (type == JSONStorageEntryConstants.TYPE_VALUE_STRING) {
+			return getValueString();
+		}
+
+		return null;
+	}
+
+	@Override
+	public void setValue(Object value) {
+		int type = getType();
+
+		if ((type == JSONStorageEntryConstants.TYPE_VALUE_LONG) ||
+			(type == JSONStorageEntryConstants.TYPE_VALUE_LONG_QUOTED)) {
+
+			setValueLong((Long)value);
+		}
+		else {
+			setValueLong(0);
+		}
+
+		if (type == JSONStorageEntryConstants.TYPE_VALUE_STRING) {
+			setValueString((String)value);
+		}
+		else {
+			setValueString(StringPool.BLANK);
+		}
 	}
 
 }

@@ -86,6 +86,20 @@ export const FormBuilder = () => {
 
 	const addToast = useToast();
 
+	useEffect(() => {
+		const sessionLength = Liferay.Session
+			? Liferay.Session.get('sessionLength')
+			: 60000;
+
+		const interval = setInterval(() => {
+			if (Liferay.Session) {
+				Liferay.Session.extend();
+			}
+		}, sessionLength / 2);
+
+		return () => clearInterval(interval);
+	}, []);
+
 	/**
 	 * Opens the sidebar whenever a field is focused
 	 */

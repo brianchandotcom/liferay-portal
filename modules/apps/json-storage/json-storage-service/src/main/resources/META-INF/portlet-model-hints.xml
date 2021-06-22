@@ -10,9 +10,13 @@
 		<field name="classPK" type="long" />
 		<field name="parentJSONStorageEntryId" type="long" />
 		<field name="index" type="int" />
-		<field name="key" type="String" />
+		<field name="key" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="type" type="int" />
 		<field name="valueLong" type="long" />
-		<field name="valueString" type="String" />
+		<field name="valueString" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

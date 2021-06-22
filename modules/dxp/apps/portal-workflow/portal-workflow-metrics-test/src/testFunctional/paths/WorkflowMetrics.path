@@ -393,7 +393,7 @@
 </tr>
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME</td>
-	<td>//td[contains(@class,'table-title')]//span[contains(text(),'${key_assigneeName}')]</td>
+	<td>//td//a[contains(@class, 'workload-by-step-link')]//span[contains(text(),'${key_assigneeName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -403,22 +403,22 @@
 </tr>
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_TASKCOUNT</td>
-	<td>//td[contains(@class,'table-title')]//span[contains(text(),'${key_assigneeName}')]/../../following-sibling::td[3]//a[contains(text(),'${key_taskCount}')]</td>
+	<td>//span[contains(text(),'${key_assigneeName}')]/../../following-sibling::td[3]//a[contains(text(),'${key_taskCount}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_ON_TIME</td>
-	<td>xpath=(//span[contains(text(),'${assigneeName}')]/ancestor::td[contains(@class,'table-title')]/following-sibling::td//a)[2]</td>
+	<td>xpath=(//td//a[contains(@class, 'workload-by-step-link')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_OVERDUE</td>
-	<td>xpath=(//span[contains(text(),'${assigneeName}')]/ancestor::td[contains(@class,'table-title')]/following-sibling::td//a)[1]</td>
+	<td>xpath=(//td//a[contains(@class, 'workload-by-step-link')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_TOTAL_PENDING</td>
-	<td>xpath=(//span[contains(text(),'${assigneeName}')]/ancestor::td[contains(@class,'table-title')]/following-sibling::td//a)[3]</td>
+	<td>xpath=(//td//a[contains(@class, 'workload-by-step-link')])[4]</td>
 	<td></td>
 </tr>
 <tr>

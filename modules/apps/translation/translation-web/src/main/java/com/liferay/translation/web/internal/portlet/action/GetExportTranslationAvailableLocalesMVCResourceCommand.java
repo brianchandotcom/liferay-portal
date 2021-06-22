@@ -17,8 +17,6 @@ package com.liferay.translation.web.internal.portlet.action;
 import com.liferay.info.item.GroupKeyInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.web.internal.util.ExportTranslationUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -28,7 +26,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
+import com.liferay.translation.web.internal.util.ExportTranslationUtil;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -46,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/get_export_translation_available_locales"
+		"javax.portlet.name=" + TranslationPortletKeys.TRANSLATION,
+		"mvc.command.name=/translation/get_export_translation_available_locales"
 	},
 	service = MVCResourceCommand.class
 )

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.util;
+package com.liferay.translation.web.internal.util;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

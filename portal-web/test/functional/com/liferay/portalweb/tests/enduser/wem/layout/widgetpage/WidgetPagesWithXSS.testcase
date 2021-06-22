@@ -1,0 +1,72 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "View the XSS is escaped when store it in widget page name."
+	@priority = "4"
+	@uitest
+	test ViewWidgetPage {
+		var pageName = '''<script>alert(123);</script>''';
+
+		task ("Add a widget page with XSS page name") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(pageName = "${pageName}");
+		}
+
+		task ("Navigate to the widget page") {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
+
+		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+
+		task ("View the XSS is escaped") {
+			var actualScript = '''<script>alert(123);</script>''';
+
+			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		}
+
+		task ("Navigate to the Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+
+		task ("View the XSS is escaped") {
+			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		}
+	}
+
+}

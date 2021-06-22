@@ -39,61 +39,6 @@ definition {
 	}
 
 	@priority = "3"
-	test AddSitePageXSS {
-		property testray.component.names = "Site Pages Administration,XSS";
-
-		var sitePage3Name = '''<script>alert(123);</script>''';
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page 1");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page 2");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page 2",
-			widgetName = "Web Content Display");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
-
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		SitePages.addPublicPage(pageName = "${sitePage3Name}");
-
-		Navigator.gotoPage(pageName = "Site Page 2");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		IFrame.closeFrame();
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		Navigator.gotoPage(pageName = "${sitePage3Name}");
-
-		var key_pageName = "${sitePage3Name}";
-
-		AssertTextEquals(
-			locator1 = "Home#PAGE",
-			value1 = "${sitePage3Name}");
-
-		AssertAlertNotPresent();
-
-		var actualScript = '''<script>alert(123);</script>''';
-
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
-
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
-	}
-
-	@priority = "3"
 	test CannotDeleteLastPublicPageOnLiferay {
 		property testray.component.names = "Site Pages Administration";
 

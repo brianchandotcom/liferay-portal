@@ -15,4 +15,3 @@
 import {ExportTranslation} from 'translation-web';
 
 export default ExportTranslation;
-

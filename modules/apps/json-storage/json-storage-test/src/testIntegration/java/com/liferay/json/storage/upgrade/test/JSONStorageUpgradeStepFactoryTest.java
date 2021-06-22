@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.json.JSONDeserializer;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -40,8 +42,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Preston Crary
@@ -100,11 +100,20 @@ public class JSONStorageUpgradeStepFactoryTest {
 				dbInspector.hasColumn("JSONStorageUpgrade", "jsonString"));
 		}
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			_JSON_STRING,
 			_jsonStorageEntryLocalService.getJSON(
-				_className.getClassNameId(), _CLASS_PK),
-			true);
+				_className.getClassNameId(), _CLASS_PK));
+	}
+
+	private void _assertJSONEquals(String expected, String actual) {
+		JSONDeserializer<?> jsonDeserializer =
+			_jsonFactory.createJSONDeserializer();
+
+		Object expectedObject = jsonDeserializer.deserialize(expected);
+		Object actualObject = jsonDeserializer.deserialize(actual);
+
+		Assert.assertEquals(expectedObject.toString(), actualObject.toString());
 	}
 
 	private static final long _CLASS_PK = 1;
@@ -114,6 +123,9 @@ public class JSONStorageUpgradeStepFactoryTest {
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private static JSONFactory _jsonFactory;
 
 	@Inject
 	private static JSONStorageEntryLocalService _jsonStorageEntryLocalService;

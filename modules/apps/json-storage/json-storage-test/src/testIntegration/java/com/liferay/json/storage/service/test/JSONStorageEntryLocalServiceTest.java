@@ -20,6 +20,8 @@ import com.liferay.json.storage.service.JSONStorageEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -35,8 +37,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Preston Crary
@@ -68,10 +68,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 
@@ -80,10 +79,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 3);
 
@@ -92,10 +90,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 	}
@@ -107,10 +104,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 
@@ -119,10 +115,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 2);
 
@@ -131,10 +126,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		_assertJSONStoreEntryCount(_CLASS_PK_1, 1);
 	}
@@ -228,10 +222,9 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		JSONArray jsonArray = _jsonStorageEntryLocalService.getJSONArray(
 			_CLASS_NAME_ID, _CLASS_PK_1);
@@ -248,32 +241,28 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
-		JSONAssert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)));
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "{\"a\": {}, \"b\": {\"c\": 1}}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
-		JSONAssert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)));
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 	}
 
 	@Test
@@ -283,32 +272,28 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
-		JSONAssert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)));
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "[[], [1, 2]]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
-		JSONAssert.assertEquals(
+					_CLASS_NAME_ID, _CLASS_PK_1)));
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 	}
 
 	@Test
@@ -318,40 +303,36 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "[\"a\", \"b\", \"c\"]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "[true, false]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "[3.14]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 	}
 
 	@Test
@@ -361,34 +342,30 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
+					_CLASS_NAME_ID, _CLASS_PK_1)));
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "[[{\"a\": \"one\"}, {\"b\": \"two\", \"c\": \"three\"}]]";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
+					_CLASS_NAME_ID, _CLASS_PK_1)));
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 	}
 
 	@Test
@@ -398,30 +375,27 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "{\"b\": true, \"c\": false}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
 		json = "{\"pi\": 3.14}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 	}
 
 	@Test
@@ -431,34 +405,30 @@ public class JSONStorageEntryLocalServiceTest {
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
+					_CLASS_NAME_ID, _CLASS_PK_1)));
 
 		json = "{\"a\": {\"b\": [2, 3]}}";
 
 		_jsonStorageEntryLocalService.updateJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1, json);
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
-					_CLASS_NAME_ID, _CLASS_PK_1)),
-			true);
+					_CLASS_NAME_ID, _CLASS_PK_1)));
 
-		JSONAssert.assertEquals(
+		_assertJSONEquals(
 			json,
-			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1),
-			true);
+			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
 	}
 
 	private void _assertClassPKs(
@@ -474,6 +444,16 @@ public class JSONStorageEntryLocalServiceTest {
 			expectedValues.size(),
 			_jsonStorageEntryLocalService.getClassPKsCount(
 				_COMPANY_ID, _CLASS_NAME_ID, pathParts, value));
+	}
+
+	private void _assertJSONEquals(String expected, String actual) {
+		JSONDeserializer<?> jsonDeserializer =
+			_jsonFactory.createJSONDeserializer();
+
+		Object expectedObject = jsonDeserializer.deserialize(expected);
+		Object actualObject = jsonDeserializer.deserialize(actual);
+
+		Assert.assertEquals(expectedObject.toString(), actualObject.toString());
 	}
 
 	private void _assertJSONStoreEntryCount(long classPK, int expectedCount) {
@@ -501,6 +481,9 @@ public class JSONStorageEntryLocalServiceTest {
 	private static final long _CLASS_PK_3 = 3;
 
 	private static final long _COMPANY_ID = 0;
+
+	@Inject
+	private static JSONFactory _jsonFactory;
 
 	@Inject
 	private static JSONStorageEntryLocalService _jsonStorageEntryLocalService;

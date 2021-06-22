@@ -1110,6 +1110,12 @@ definition {
 			locator1 = "FormFields#FIELD_LABEL_BY_INDEX");
 	}
 
+	macro viewFieldDisabled {
+		AssertNotEditable(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_FIELD");
+	}
+
 	macro viewFieldDropdownItem {
 		WaitForElementPresent(
 			key_itemName = "${itemName}",

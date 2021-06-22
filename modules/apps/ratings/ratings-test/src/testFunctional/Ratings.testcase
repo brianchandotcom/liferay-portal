@@ -41,11 +41,9 @@ definition {
 
 		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
 
-		Ratings.configureType(
-			application = "Blogs",
-			portlet = "Ratings",
-			ratingType = "Stars",
-			siteURLKey = "guest");
+		PortalSettings.configureRatingType(
+			configureBlogsRatingType = "true",
+			ratingType = "Stars");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -512,8 +510,8 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Ratings.configureType(
-			application = "Blogs",
+		Ratings.configureRatingType(
+			applications = "Blogs",
 			portlet = "Ratings",
 			ratingType = "Stacked Stars",
 			siteURLKey = "guest");
@@ -567,8 +565,8 @@ definition {
 			roleTitle = "Administrator",
 			userEmailAddress = "userea@liferay.com");
 
-		Ratings.configureType(
-			application = "Blogs",
+		Ratings.configureRatingType(
+			applications = "Blogs",
 			portlet = "Ratings",
 			ratingType = "Stars",
 			siteURLKey = "guest");
@@ -616,11 +614,9 @@ definition {
 
 		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
 
-		PortalSettings.configureType(
-			application = "Knowledge Base",
-			portlet = "Ratings",
-			ratingType = "Stars",
-			siteURLKey = "guest");
+		PortalSettings.configureRatingType(
+			configureKBRatingType = "true",
+			ratingType = "Stars");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -663,11 +659,11 @@ definition {
 			ratingResult = "You have rated this as good",
 			voteCount = "1");
 
-		Ratings.configureType(
-			application = "Knowledge Base",
-			portlet = "Ratings",
-			ratingType = "Stacked Stars",
-			siteURLKey = "guest");
+		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
+
+		PortalSettings.configureRatingType(
+			configureKBRatingType = "true",
+			ratingType = "Stars");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -675,11 +671,11 @@ definition {
 			averageRatingStarCount = "5.0",
 			ratingStarCount = "5");
 
-		Ratings.configureType(
-			application = "Knowledge Base",
-			portlet = "Ratings",
-			ratingType = "Thumbs",
-			siteURLKey = "guest");
+		Ratings.openToConfigInInstanceSettings(portlet = "Ratings");
+
+		PortalSettings.configureRatingType(
+			configureKBRatingType = "true",
+			ratingType = "Thumbs");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -693,8 +689,8 @@ definition {
 	test CanViewLikeCountForDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Ratings.configureType(
-			application = "document",
+		Ratings.configureRatingType(
+			applications = "document",
 			portlet = "Ratings",
 			ratingType = "Like",
 			siteURLKey = "guest");

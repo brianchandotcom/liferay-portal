@@ -140,7 +140,6 @@ const Diagram = ({
 					setZoomOutHandler={setZoomOutHandler}
 				/>
 			</ClayIconSpriteContext.Provider>
-
 		</div>
 	);
 };

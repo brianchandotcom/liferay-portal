@@ -11,11 +11,12 @@
 
 import {drag, event, select, zoom, zoomIdentity, zoomTransform} from 'd3';
 import PropTypes from 'prop-types';
-import React, { useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
+
+import AdminTooltip from './AdminTooltip';
 import NavigationButtons from './NavigationButtons';
 import {moveController, namespace, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
-import AdminTooltip from './AdminTooltip';
 
 const ImagePins = ({
 	addNewPinState,
@@ -191,10 +192,13 @@ const ImagePins = ({
 			});
 			const newState = cPins.map((element) => {
 				if (element.id === updatedPin.id) {
-					if (Math.abs(element.cx - updatedPin.cx) < 15 && Math.abs(element.cy - updatedPin.cy) < 15) {
-						clickAction(updatedPin)
+					if (
+						Math.abs(element.cx - updatedPin.cx) < 15 &&
+						Math.abs(element.cy - updatedPin.cy) < 15
+					) {
+						clickAction(updatedPin);
 					}
- 
+
 					return updatedPin;
 				}
 				else {
@@ -207,6 +211,7 @@ const ImagePins = ({
 			// 	'transform',
 			// 	'translate(' + (d.cx = event.x) + ',' + (d.cy = event.y) + ')'
 			// );
+
 		}
 
 		const dragHandler = drag()
@@ -255,7 +260,6 @@ const ImagePins = ({
 				console.log(err);
 			}
 
-
 			const cont = containerRef.current
 				.selectAll('g')
 				.data(cPins)
@@ -295,38 +299,40 @@ const ImagePins = ({
 		}
 
 		select('#newPin').on('click', handleAddPin);
-
 	}, [
 		addPinHandler,
 		removePinHandler,
-		changedScale, 
-		cPins, 
+		changedScale,
+		cPins,
 		execZoomIn,
-		resetZoom, 
-		selectedOption, 
-		setResetZoom, 
+		resetZoom,
+		selectedOption,
+		setResetZoom,
 		zoomOutHandler,
-		zoomInHandler, 
-		enablePanZoom, 
-		imageSettings, 
-		navigationController, 
-		setChangedScale, 
-		setSelectedOption, 
-		setZoomInHandler, 
+		zoomInHandler,
+		enablePanZoom,
+		imageSettings,
+		navigationController,
+		setChangedScale,
+		setSelectedOption,
+		setZoomInHandler,
 		setZoomOutHandler,
-		handleAddPin, 
-		setShowTooltip, 
-		setCpins, 
-		addNewPinState, 
-		setRemovePinHandler, 
-		setAddPinHandler
+		handleAddPin,
+		setShowTooltip,
+		setCpins,
+		addNewPinState,
+		setRemovePinHandler,
+		setAddPinHandler,
 	]);
 
 	return (
-		<div className="diagram-pins-container" style={{
-			height: `${imageSettings.height}`,
-			width: `${imageSettings.width}`,
-		}}>
+		<div
+			className="diagram-pins-container"
+			style={{
+				height: `${imageSettings.height}`,
+				width: `${imageSettings.width}`,
+			}}
+		>
 			<svg
 				height={imageSettings.height}
 				ref={svgRef}

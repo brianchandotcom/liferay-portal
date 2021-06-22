@@ -31,24 +31,11 @@ const DiagramHeader = ({
 		newPinSettings.colorPicker.selectedColor
 	);
 
-	// useEffect(() => {
-
-	//     setAddNewPinState({
-	//         color: addNewPinState.color,
-	//         radius: addNewPinState.radius
-	//     })
-
-	// }, [color, addNewPinState])
-
-	// useEffect(() => {
-	//     setCustoms(newPinSettings.colorPicker.defaultColors)
-	// }, [newPinSettings.colorPicker.defaultColors])
-
 	return (
 		<div className="d-flex diagram diagram-header justify-content-between">
 			<div className="d-flex text-align-center">
 				<label className="align-middle my-auto">
-					{Liferay.Language.get('diagram\'s-pin:')}
+					{Liferay.Language.get('diagram-pin:')}
 				</label>
 
 				<ClayDropDown
@@ -62,7 +49,6 @@ const DiagramHeader = ({
 							displayType="secondary"
 						>
 							{Liferay.Language.get('default-diameter')}
-
 						</ClayButton>
 					}
 				>

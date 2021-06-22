@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-import ClayButton, { ClayButtonWithIcon } from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const OPTIONS = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
 

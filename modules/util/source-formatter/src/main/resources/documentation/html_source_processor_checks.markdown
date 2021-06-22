@@ -1,4 +1,4 @@
-# Checks for .html
+# Checks for .html or .path
 
 Check | Category | Description
 ----- | -------- | -----------

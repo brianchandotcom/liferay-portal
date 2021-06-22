@@ -6,14 +6,6 @@ create unique index IX_34D62DF1 on CPDefinitionInventory (CPDefinitionId);
 create index IX_51AED1D6 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_274DD5D8 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_15EA4714 on CommerceAddress (classNameId, classPK);
-create index IX_6D0EADB7 on CommerceAddress (companyId, classNameId, classPK, type_);
-create index IX_4E616A54 on CommerceAddress (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_C1D89762 on CommerceAddress (countryId);
-create index IX_EEACF18E on CommerceAddress (groupId, classNameId, classPK, defaultBilling);
-create index IX_333246DF on CommerceAddress (groupId, classNameId, classPK, defaultShipping);
-create index IX_9AB009A2 on CommerceAddress (regionId);
-
 create unique index IX_9DD3ABD3 on CommerceAddressRestriction (classNameId, classPK, countryId);
 create index IX_AE21488 on CommerceAddressRestriction (countryId);
 

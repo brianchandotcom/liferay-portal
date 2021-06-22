@@ -9,10 +9,9 @@
  * distribution rights of the Software.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 const OPTIONS = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
@@ -31,7 +30,6 @@ const DiagramFooter = ({
 		setSelectedOption(event.target.value);
 		setChangedScale(true);
 	};
-	const options = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
 
 	return (
 		<div className="d-flex diagram-footer justify-content-end mt-3">

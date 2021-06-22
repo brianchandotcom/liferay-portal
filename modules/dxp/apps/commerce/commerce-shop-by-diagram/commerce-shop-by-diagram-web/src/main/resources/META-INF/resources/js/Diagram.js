@@ -84,6 +84,7 @@ const Diagram = ({
 			});
 			setCpins(myNewState);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showTooltip, setShowTooltip]);
 
 	return (

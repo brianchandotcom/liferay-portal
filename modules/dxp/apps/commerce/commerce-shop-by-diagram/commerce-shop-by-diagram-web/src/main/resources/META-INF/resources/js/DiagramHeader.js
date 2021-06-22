@@ -35,7 +35,7 @@ const DiagramHeader = ({
 		<div className="d-flex diagram diagram-header justify-content-between">
 			<div className="d-flex text-align-center">
 				<label className="align-middle my-auto">
-					{Liferay.Language.get('diagram-pin:')}
+					{Liferay.Language.get('diagram-pin')}
 				</label>
 
 				<ClayDropDown

@@ -11,12 +11,25 @@
 
 import {drag, event, select, zoom, zoomIdentity, zoomTransform} from 'd3';
 import PropTypes from 'prop-types';
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 
 import AdminTooltip from './AdminTooltip';
 import NavigationButtons from './NavigationButtons';
 import {moveController, namespace, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
+
+const PIN_ATTRIBUTES = [
+	'cx',
+	'cy',
+	'draggable',
+	'fill',
+	'id',
+	'label',
+	'linked_to_sku',
+	'quantity',
+	'r',
+	'sku',
+];
 
 const ImagePins = ({
 	addNewPinState,
@@ -147,45 +160,39 @@ const ImagePins = ({
 			);
 		}
 
-		function dragended(d) {
+		function dragended() {
 			const current = select(this);
 			const newPos = current._groups[0][0].attributes;
 			const beSure = [...newPos];
 			const updatedPin = {};
-			const arr = [
-				'cx',
-				'cy',
-				'draggable',
-				'fill',
-				'id',
-				'label',
-				'linked_to_sku',
-				'quantity',
-				'r',
-				'sku',
-			];
+
 			select(this).classed('active', false);
-			arr.map((el) => {
-				beSure.filter((d) => {
-					if (d.name === el) {
-						if (el === 'cx') {
-							updatedPin[`${d.name}`] = parseFloat(event.x);
+			PIN_ATTRIBUTES.map((element) => {
+				beSure.filter((attr) => {
+					if (attr.name === element) {
+						if (element === 'cx') {
+							updatedPin[`${attr.name}`] = parseFloat(event.x);
 						}
-						else if (el === 'cy') {
-							updatedPin[`${d.name}`] = parseFloat(event.y);
+						else if (element === 'cy') {
+							updatedPin[`${attr.name}`] = parseFloat(event.y);
 						}
 						else if (
-							el === 'quantity' ||
-							el === 'r' ||
-							el === 'id'
+							element === 'quantity' ||
+							element === 'r' ||
+							element === 'id'
 						) {
-							updatedPin[`${d.name}`] = parseInt(d.value, 10);
+							updatedPin[`${attr.name}`] = parseInt(
+								attr.value,
+								10
+							);
 						}
-						else if (el === 'draggable') {
-							updatedPin[`${d.name}`] = d.value ? true : false;
+						else if (element === 'draggable') {
+							updatedPin[`${attr.name}`] = attr.value
+								? true
+								: false;
 						}
 						else {
-							updatedPin[`${d.name}`] = d.value;
+							updatedPin[`${attr.name}`] = attr.value;
 						}
 					}
 				});
@@ -206,12 +213,6 @@ const ImagePins = ({
 				}
 			});
 			setCpins(newState);
-
-			// current.attr(
-			// 	'transform',
-			// 	'translate(' + (d.cx = event.x) + ',' + (d.cy = event.y) + ')'
-			// );
-
 		}
 
 		const dragHandler = drag()
@@ -237,7 +238,7 @@ const ImagePins = ({
 		};
 
 		const removePin = (id) => {
-			setCpins(cPins.filter((el) => el.id !== id));
+			setCpins(cPins.filter((element) => element.id !== id));
 		};
 
 		if (removePinHandler.handler) {
@@ -256,8 +257,8 @@ const ImagePins = ({
 			try {
 				containerRef.current.selectAll('.circle_pin').remove();
 			}
-			catch (err) {
-				console.log(err);
+			catch (error) {
+				return;
 			}
 
 			const cont = containerRef.current
@@ -267,32 +268,32 @@ const ImagePins = ({
 				.append('g')
 				.attr(
 					'transform',
-					(d) => 'translate(' + d.cx + ',' + d.cy + ')'
+					(attr) => 'translate(' + attr.cx + ',' + attr.cy + ')'
 				)
-				.attr('cx', (d) => d.cx)
-				.attr('cy', (d) => d.cy)
-				.attr('id', (d) => d.id)
-				.attr('label', (d) => d.label)
-				.attr('fill', (d) => d.fill)
-				.attr('linked_to_sku', (d) => d.linked_to_sku)
-				.attr('quantity', (d) => d.quantity)
-				.attr('r', (d) => d.r)
-				.attr('sku', (d) => d.sku)
-				.attr('id', (d) => d.id)
+				.attr('cx', (attr) => attr.cx)
+				.attr('cy', (attr) => attr.cy)
+				.attr('id', (attr) => attr.id)
+				.attr('label', (attr) => attr.label)
+				.attr('fill', (attr) => attr.fill)
+				.attr('linked_to_sku', (attr) => attr.linked_to_sku)
+				.attr('quantity', (attr) => attr.quantity)
+				.attr('r', (attr) => attr.r)
+				.attr('sku', (attr) => attr.sku)
+				.attr('id', (attr) => attr.id)
 				.attr('class', 'circle_pin')
-				.attr('draggable', (d) => (d.draggable ? true : false))
+				.attr('draggable', (attr) => (attr.draggable ? true : false))
 				.call(dragHandler);
 
 			cont.append('circle')
-				.attr('r', (d) => d.r)
-				.attr('fill', (d) => '#ffffff')
-				.attr('r', (d) => d.r)
-				.attr('stroke', (d) => d.fill)
+				.attr('r', (attr) => attr.r)
+				.attr('fill', () => '#ffffff')
+				.attr('r', (attr) => attr.r)
+				.attr('stroke', (attr) => attr.fill)
 				.attr('stroke-width', 2);
 
 			cont.append('text')
-				.text((d) => d.label)
-				.attr('font-size', (d) => d.r)
+				.text((attr) => attr.label)
+				.attr('font-size', (attr) => attr.r)
 				.attr('text-anchor', 'middle')
 				.attr('fill', '#000000')
 				.attr('alignment-baseline', 'central');

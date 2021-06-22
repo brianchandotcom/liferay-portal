@@ -37,7 +37,9 @@ definition {
 		}
 
 		task ("Navigate to the widget page") {
-			Navigator.gotoPage(pageName = "${pageName}");
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Test Site Name");
 		}
 
 		task ("View the alert not shown") {

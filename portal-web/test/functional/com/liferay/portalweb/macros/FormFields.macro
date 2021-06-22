@@ -1197,6 +1197,13 @@ definition {
 			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
 	}
 
+	macro viewOptionSingleSelection {
+		AssertElementPresent(
+			key_bodyText = "${bodyText}",
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+	}
+
 	macro viewOptionsPositionHorizontal {
 		AssertElementPresent(
 			key_text = "${key_text1}",

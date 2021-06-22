@@ -141,43 +141,29 @@ definition {
 			key_selectOption = "Duplicate",
 			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
 
-		AssertElementPresent(
-			key_name = "Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL");
+		FormFields.viewOptionSingleSelection(
+			bodyText = "Option 1",
+			fieldName = "Single Selection");
 
-		AssertElementPresent(
-			key_name = "Copy of Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL");
+		FormFields.viewOptionSingleSelection(
+			bodyText = "Option 2",
+			fieldName = "Single Selection");
 
-		AssertElementPresent(
-			key_bodyText = "Option 1",
-			key_fieldName = "Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+		FormFields.viewOptionSingleSelection(
+			bodyText = "Option 1",
+			fieldName = "Copy of Single Selection");
 
-		AssertElementPresent(
-			key_bodyText = "Option 2",
-			key_fieldName = "Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+		FormFields.viewOptionSingleSelection(
+			bodyText = "Option 2",
+			fieldName = "Copy of Single Selection");
 
-		AssertElementPresent(
-			key_bodyText = "Option 1",
-			key_fieldName = "Copy of Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Single Selection",
+			fieldValue = "Help Text Test");
 
-		AssertElementPresent(
-			key_bodyText = "Option 2",
-			key_fieldName = "Copy of Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
-
-		AssertElementPresent(
-			key_bodyText = "Help Text Test",
-			key_fieldName = "Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_TEXT");
-
-		AssertElementPresent(
-			key_bodyText = "Help Text Test",
-			key_fieldName = "Copy of Single Selection",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_TEXT");
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Copy of Single Selection",
+			fieldValue = "Help Text Test");
 	}
 
 	@description = "Verify that a Single Selection Field can be edited"

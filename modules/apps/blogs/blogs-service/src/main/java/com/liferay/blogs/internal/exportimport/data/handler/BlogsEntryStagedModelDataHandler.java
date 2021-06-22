@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -169,6 +170,9 @@ public class BlogsEntryStagedModelDataHandler
 					entry.setSmallImageId(0);
 				}
 			}
+		}
+		else if (Validator.isNotNull(entry.getSmallImageURL())) {
+			entry.setSmallImage(true);
 		}
 
 		if (entry.getCoverImageFileEntryId() != 0) {
@@ -321,7 +325,11 @@ public class BlogsEntryStagedModelDataHandler
 
 			importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
 
-			if (smallImageFileEntryId == 0) {
+			importedEntry.setSmallImageURL(entry.getSmallImageURL());
+
+			if ((smallImageFileEntryId == 0) &&
+				Validator.isNull(importedEntry.getSmallImageURL())) {
+
 				importedEntry.setSmallImage(false);
 			}
 			else {

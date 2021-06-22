@@ -1038,6 +1038,7 @@ paths:
             tags: ["AccountUser"]
     "/accounts/{accountId}/account-users/by-email-address/{emailAddress}":
         delete:
+            # @review
             description:
                 Removes a user from an account by their email address
             operationId: deleteAccountUserByEmailAddress
@@ -1062,6 +1063,7 @@ paths:
                         ""
             tags: ["AccountUser"]
         post:
+            # @review
             description:
                 Assigns a user to an account by their email address
             operationId: postAccountUserByEmailAddress
@@ -1115,6 +1117,7 @@ paths:
                                 format: int64
                                 type: integer
                             type: array
+                # @review
                 description:
                     An array of accountIds to move from the source organization to the target organization
             responses:
@@ -1153,6 +1156,7 @@ paths:
                             items:
                                 type: string
                             type: array
+                # @review
                 description:
                     An array of account external reference codes to move from the source organization to the target
                     organization
@@ -1188,6 +1192,7 @@ paths:
                                 format: int64
                                 type: integer
                             type: array
+                # @review
                 description:
                     An array of accountIds to remove from an organization
             responses:
@@ -1221,6 +1226,7 @@ paths:
                                 format: int64
                                 type: integer
                             type: array
+                # @review
                 description:
                     An array of accountIds to add to an organization
             responses:
@@ -1253,6 +1259,7 @@ paths:
                             items:
                                 type: string
                             type: array
+                # @review
                 description:
                     An array of account external reference codes to remove from an organization
             responses:
@@ -1284,6 +1291,7 @@ paths:
                             items:
                                 type: string
                             type: array
+                # @review
                 description:
                     An array of account external reference codes to add to an organization
             responses:

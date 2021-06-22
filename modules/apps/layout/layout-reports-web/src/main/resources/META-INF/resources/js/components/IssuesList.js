@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
@@ -56,24 +57,36 @@ export default function IssuesList() {
 	const successImage = `${imagesPath}/issues_success.gif`;
 
 	return (
-		<div className="pb-3 px-3">
-			<BasicInformation
-				defaultLanguageId={defaultLanguageId}
-				pageURLs={pageURLs}
-				selectedLanguageId={languageId}
-			/>
-
-			{loading ? (
-				<LoadingProgressBar percentage={percentage} />
-			) : localizedIssues ? (
-				<Issues
-					layoutReportsIssues={localizedIssues.issues}
-					successImage={successImage}
-				/>
-			) : (
-				<NoIssuesLoaded />
+		<>
+			{localizedIssues && !loading && (
+				<ClayAlert className="mb-4" displayType="info" variant="stripe">
+					{Liferay.Util.sub(
+						Liferay.Language.get(
+							'showing-data-from-x-relaunch-to-update-data'
+						),
+						localizedIssues.date
+					)}
+				</ClayAlert>
 			)}
-		</div>
+			<div className="pb-3 px-3">
+				<BasicInformation
+					defaultLanguageId={defaultLanguageId}
+					pageURLs={pageURLs}
+					selectedLanguageId={languageId}
+				/>
+
+				{loading ? (
+					<LoadingProgressBar percentage={percentage} />
+				) : localizedIssues ? (
+					<Issues
+						layoutReportsIssues={localizedIssues.issues}
+						successImage={successImage}
+					/>
+				) : (
+					<NoIssuesLoaded />
+				)}
+			</div>
+		</>
 	);
 }
 

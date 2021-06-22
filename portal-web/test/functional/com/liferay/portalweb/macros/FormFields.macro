@@ -1612,6 +1612,12 @@ definition {
 			locator1 = "Icon#ASTERISK_DATE_FIELD");
 	}
 
+	macro viewRequiredAsteriskDataFieldNotPresent {
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
+	}
+
 	macro viewRequiredAsteriskNotPresent {
 		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
 	}

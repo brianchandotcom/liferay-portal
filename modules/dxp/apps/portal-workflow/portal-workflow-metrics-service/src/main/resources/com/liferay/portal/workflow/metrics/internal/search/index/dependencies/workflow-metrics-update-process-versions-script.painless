@@ -1,0 +1,15 @@
+if (ctx._source.versions instanceof String) {
+	if (!params.version.equals(ctx._source.versions)) {
+		ctx._source.versions = new String[] {
+			ctx._source.versions, params.version
+		};
+	}
+}
+else {
+	def version = ctx._source.versions.find(
+		version -> version.equals(params.version));
+
+	if (version == null) {
+		ctx._source.versions.add(params.version);
+	}
+}

@@ -89,6 +89,10 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 	}
 
 	private Optional<AssetEntry> _getAssetEntryOptional(Object contextObject) {
+		if (contextObject instanceof AssetEntry) {
+			return Optional.of((AssetEntry)contextObject);
+		}
+
 		if (!(contextObject instanceof ClassedModel)) {
 			return Optional.empty();
 		}

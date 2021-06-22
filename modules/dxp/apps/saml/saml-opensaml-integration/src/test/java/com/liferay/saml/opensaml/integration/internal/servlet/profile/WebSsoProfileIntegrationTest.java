@@ -14,10 +14,10 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
@@ -943,7 +943,11 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		_webSsoProfileImpl.verifyDestination(
 			messageContext,
-			"http://www.fail.com/web/guest" + SamlCommandQueryConstants.ACS);
+			StringBundler.concat(
+				"http://www.fail.com/web/guest?p_p_id=com_liferay_saml_web",
+				"_internal_portlet_SamlPortlet&p_p_lifecycle=1&_com_liferay_sa",
+				"ml_web_internal_portlet_SamlPortlet_javax.portlet.action=",
+				"/saml/assertion_consumer_service"));
 	}
 
 	@Test

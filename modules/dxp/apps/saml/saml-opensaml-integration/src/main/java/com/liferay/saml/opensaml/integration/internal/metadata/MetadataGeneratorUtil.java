@@ -14,9 +14,9 @@
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.runtime.exception.CredentialException;
 import com.liferay.saml.runtime.exception.EntityIdException;
@@ -140,7 +140,10 @@ public class MetadataGeneratorUtil {
 
 		singleSignOnService = OpenSamlUtil.buildSingleSignOnService(
 			SAMLConstants.SAML2_POST_BINDING_URI,
-			portalURL + relativeHomeURL + SamlCommandQueryConstants.WEB_SSO);
+			StringBundler.concat(
+				portalURL, relativeHomeURL, "?p_p_id=com_liferay_saml_web_inte",
+				"rnal_portlet_SamlPortlet&p_p_lifecycle=2&p_p_resource_id=",
+				"/saml/web_sso"));
 
 		singleSignOnServices.add(singleSignOnService);
 
@@ -150,7 +153,10 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_POST_BINDING_URI,
-				portalURL + relativeHomeURL + SamlCommandQueryConstants.SLO);
+				StringBundler.concat(
+					portalURL, relativeHomeURL, "?p_p_id=com_liferay_saml_web_",
+					"internal_portlet_SamlPortlet&p_p_lifecycle=2&p_p_resourc",
+					"e_id=/saml/slo"));
 
 		singleLogoutServices.add(postSingleLogoutService);
 
@@ -221,7 +227,11 @@ public class MetadataGeneratorUtil {
 		AssertionConsumerService assertionConsumerService =
 			OpenSamlUtil.buildAssertionConsumerService(
 				SAMLConstants.SAML2_POST_BINDING_URI, 1, true,
-				portalURL + relativeHomeURL + SamlCommandQueryConstants.ACS);
+				StringBundler.concat(
+					portalURL, relativeHomeURL, "?p_p_id=com_liferay_saml_web_",
+					"internal_portlet_SamlPortlet&p_p_lifecycle=1&_com_liferay",
+					"_saml_web_internal_portlet_SamlPortlet_javax.portlet.acti",
+					"on=/saml/assertion_consumer_service"));
 
 		assertionConsumerServices.add(assertionConsumerService);
 
@@ -244,7 +254,10 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService postSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_POST_BINDING_URI,
-				portalURL + relativeHomeURL + SamlCommandQueryConstants.SLO);
+				StringBundler.concat(
+					portalURL, relativeHomeURL, "?p_p_id=com_liferay_saml_web_",
+					"internal_portlet_SamlPortlet&p_p_lifecycle=2&p_p_resourc",
+					"e_id=/saml/slo"));
 
 		singleLogoutServices.add(postSingleLogoutService);
 
@@ -259,8 +272,10 @@ public class MetadataGeneratorUtil {
 		SingleLogoutService soapSingleLogoutService =
 			OpenSamlUtil.buildSingleLogoutService(
 				SAMLConstants.SAML2_SOAP11_BINDING_URI,
-				portalURL + relativeHomeURL +
-					SamlCommandQueryConstants.SLO_SOAP);
+				StringBundler.concat(
+					portalURL, relativeHomeURL, "?p_p_id=com_liferay_saml_web_",
+					"internal_portlet_SamlPortlet&p_p_lifecycle=2&p_p_resourc",
+					"e_id=/saml/slo_soap"));
 
 		singleLogoutServices.add(soapSingleLogoutService);
 

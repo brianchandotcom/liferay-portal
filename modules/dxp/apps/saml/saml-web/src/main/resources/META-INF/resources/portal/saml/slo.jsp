@@ -21,9 +21,9 @@ JSONObject samlSloContextJSONObject = (JSONObject)request.getAttribute("SAML_SLO
 
 JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("samlSloRequestInfos");
 
-String finishSLOResourceCommand = PortalUtil.getRelativeHomeURL(request) + SamlCommandQueryConstants.FINISH_SLO;
+String finishSLOResourceCommand = PortalUtil.getRelativeHomeURL(request) + "?p_p_id=com_liferay_saml_web_internal_portlet_SamlPortlet&p_p_lifecycle=2&p_p_resource_id=/saml/finish_slo";
 
-String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCommandQueryConstants.SLO_LOGOUT;
+String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + "?p_p_id=com_liferay_saml_web_internal_portlet_SamlPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_saml_web_internal_portlet_SamlPortlet_mvcRenderCommandName=/saml/slo_logout";
 %>
 
 <style type="text/css">
@@ -220,7 +220,7 @@ String sloLogoutRenderCommand = PortalUtil.getRelativeHomeURL(request) + SamlCom
 			var instance = this;
 
 			A.io.request(
-				'<%= PortalUtil.getRelativeHomeURL(request) + SamlCommandQueryConstants.SEND_SAML_SLO_REQUEST_INFOS %>&cmd=status',
+				'<%= PortalUtil.getRelativeHomeURL(request) %>?p_p_id=com_liferay_saml_web_internal_portlet_SamlPortlet&p_p_lifecycle=2&p_p_resource_id=/saml/send_saml_slo_request_infos&cmd=status',
 				{
 					dataType: 'JSON',
 					method: 'POST',

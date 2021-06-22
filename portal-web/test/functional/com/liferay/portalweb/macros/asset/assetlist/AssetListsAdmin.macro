@@ -191,8 +191,6 @@ definition {
 
 		Click(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON");
 
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check(
@@ -210,8 +208,6 @@ definition {
 		}
 
 		if (isSet(itemSubtype)) {
-			WaitForElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT");
-
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = "${itemSubtype}");
@@ -232,8 +228,6 @@ definition {
 		}
 
 		if (isSet(itemSubtype)) {
-			WaitForElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT");
-
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = "${itemSubtype}");
@@ -393,7 +387,6 @@ definition {
 
 		Click(locator1 = "AssetLists#ASSET_TYPE_DROPDOWN_ITEM");
 
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {

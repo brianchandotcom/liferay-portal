@@ -303,6 +303,9 @@ definition {
 				key_fragmentName = "heading",
 				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
 
+		}
+
+		task ("View the page editor sidebar shown") {
 			PageEditor.assertFragmentSidebarLoaded();
 		}
 

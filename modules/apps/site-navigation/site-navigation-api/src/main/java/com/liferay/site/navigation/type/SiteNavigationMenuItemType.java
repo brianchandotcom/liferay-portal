@@ -59,6 +59,12 @@ public interface SiteNavigationMenuItemType {
 		return "magic";
 	}
 
+	public default String getItemSelectorURL(
+		HttpServletRequest httpServletRequest) {
+
+		return null;
+	}
+
 	public String getLabel(Locale locale);
 
 	public default Layout getLayout(
@@ -173,6 +179,10 @@ public interface SiteNavigationMenuItemType {
 			Layout curLayout)
 		throws PortalException {
 
+		return false;
+	}
+
+	public default boolean isItemSelector() {
 		return false;
 	}
 

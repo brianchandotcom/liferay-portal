@@ -608,6 +608,34 @@ definition {
 		return "${fieldName}";
 	}
 
+	macro moveFieldToPosition {
+		if (isSet(formPageNumber)) {
+			key_formPageNumber = "${formPageNumber}";
+		}
+		else {
+			key_formPageNumber = "0";
+		}
+
+		if (isSet(fieldColumnNumber)) {
+			key_fieldColumnNumber = "${fieldColumnNumber}";
+		}
+		else {
+			key_fieldColumnNumber = "0";
+		}
+
+		if (isSet(fieldRowNumber)) {
+			key_fieldRowNumber = "${fieldRowNumber}";
+		}
+		else {
+			key_fieldRowNumber = "0";
+		}
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "FormFields#LABEL",
+			locator2 = "Form#ADD_FIELD_SPECIFIC_POSITION");
+	}
+
 	macro moveGridOptionsRow {
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_gridField = "${gridField}",
@@ -689,7 +717,6 @@ definition {
 			locator1 = "FormFields#FIELD_GROUP_HANDLE_RIGHT",
 			value1 = "${moveForce},0");
 	}
-
 
 	macro selectAutoCompleteOption {
 		var key_autocompleteOption = "${autocompleteOption}";

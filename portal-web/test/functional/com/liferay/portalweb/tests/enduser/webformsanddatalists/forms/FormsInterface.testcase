@@ -491,14 +491,80 @@ definition {
 	}
 
 	@description = "Verify that when there is more than one Fields Group per row and one of the Fields Groups is resized, the non-resized Fields Group adapts its width as well"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test MultipleFieldsGroupsInARowCanBeResized {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134251 MultipleFieldsGroupsInARowCanBeResized pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.addFieldToFieldsGroup(
+			fieldLabel = "Text",
+			fieldName = "Numeric");
+
+		FormFields.viewField(fieldName = "FieldsGroup");
+
+		Form.gotoFieldContainer(fieldName = "Fields Group");
+
+		FormFields.duplicateField();
+
+		var copyFieldGroup = FormFields.getFieldName();
+
+		FormFields.viewField(fieldName = "${copyFieldGroup}");
+
+		FormFields.viewTextLabel(fieldLabel = "Copy of Fields Group");
+
+		FormFields.resizeFieldGroup(
+			fieldName = "Fields Group",
+			moveForce = "-300");
+
+		Form.gotoFieldContainer(fieldName = "Copy of Fields Group");
+
+		FormFields.moveFieldToPosition(
+			fieldColumnNumber = "1",
+			fieldLabel = "Copy of Fields Group");
+
+		FormFields.viewFieldSize(
+			fieldName = "FieldsGroup",
+			size = "6");
+
+		FormFields.viewFieldSize(
+			fieldName = "${copyFieldGroup}",
+			size = "6");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Fields Group",
+			fieldPositionNumber = "0");
+
+		FormFields.viewFieldPosition(
+			fieldLabel = "Copy of Fields Group",
+			fieldPositionNumber = "0");
+
+		FormFields.resizeFieldGroup(
+			fieldName = "Fields Group",
+			moveForce = "50");
+
+		FormFields.viewFieldSize(
+			fieldName = "FieldsGroup",
+			size = "7");
+
+		FormFields.viewFieldSize(
+			fieldName = "${copyFieldGroup}",
+			size = "5");
 	}
 
 	@description = "Verify that when there is more than one field per row and one of those fields is resized, the non-resized field adapts its width as well"

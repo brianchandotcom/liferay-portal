@@ -59,6 +59,14 @@ definition {
 			value1 = "${fieldType}");
 	}
 
+	macro addFieldToFieldsGroup {
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}",
+			locator1 = "Form#PAGE_FIELD_LABEL",
+			locator2 = "FormFields#LABEL");
+	}
+
 	macro addPage {
 		var key_formAddNewPageNumber = "${formAddNewPageNumber}";
 

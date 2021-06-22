@@ -98,6 +98,17 @@ public class ProcessWorkflowMetricsIndexerImpl
 		Date modifiedDate, String name, long processId, String title,
 		Map<Locale, String> titleMap, String version) {
 
+		return addProcess(
+			active, companyId, createDate, description, modifiedDate, name,
+			processId, title, titleMap, version, new String[] {version});
+	}
+
+	@Override
+	public Document addProcess(
+		boolean active, long companyId, Date createDate, String description,
+		Date modifiedDate, String name, long processId, String title,
+		Map<Locale, String> titleMap, String version, String[] versions) {
+
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
 		documentBuilder.setValue(
@@ -122,6 +133,8 @@ public class ProcessWorkflowMetricsIndexerImpl
 			"uid", digest(companyId, processId)
 		).setString(
 			"version", version
+		).setStrings(
+			"versions", versions
 		);
 
 		setLocalizedField(documentBuilder, "title", titleMap);

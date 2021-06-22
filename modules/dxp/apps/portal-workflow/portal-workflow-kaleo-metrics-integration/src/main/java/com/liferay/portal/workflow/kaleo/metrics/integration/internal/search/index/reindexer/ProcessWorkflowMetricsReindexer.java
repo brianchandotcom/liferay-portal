@@ -22,12 +22,16 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,7 +79,18 @@ public class ProcessWorkflowMetricsReindexer
 					kaleoDefinition.getTitle(defaultLanguageId),
 					kaleoDefinition.getTitleMap(),
 					StringBundler.concat(
-						kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
+						kaleoDefinition.getVersion(), CharPool.PERIOD, 0),
+					Stream.of(
+						_kaleoDefinitionVersionLocalService.
+							getKaleoDefinitionVersions(
+								companyId, kaleoDefinition.getName())
+					).flatMap(
+						List::stream
+					).map(
+						KaleoDefinitionVersion::getVersion
+					).toArray(
+						String[]::new
+					));
 
 				_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
 					atomicCounter.incrementAndGet(), total, "process");
@@ -86,6 +101,10 @@ public class ProcessWorkflowMetricsReindexer
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;

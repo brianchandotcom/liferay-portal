@@ -364,6 +364,8 @@ public class DLFileEntryLocalServiceImpl
 				date.getTime() - (checkInterval * Time.MINUTE));
 		}
 
+		_checkFileEntriesByExpirationDate(date);
+
 		_checkFileEntriesByReviewDate(date);
 
 		_previousCheckDate = date;
@@ -2744,6 +2746,18 @@ public class DLFileEntryLocalServiceImpl
 			String.valueOf(fileVersion.getFileEntryId()));
 
 		return entryURL;
+	}
+
+	private void _checkFileEntriesByExpirationDate(Date expirationDate)
+		throws PortalException {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Expiring file entries with expiration date between ",
+					_previousCheckDate, " and ", expirationDate));
+		}
+
+
 	}
 
 	private void _checkFileEntriesByReviewDate(Date reviewDate)

@@ -860,20 +860,20 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
-	public boolean isShowSelectDisplayPage() {
-		if (_showSelectDisplayPage != null) {
-			return _showSelectDisplayPage;
+	public boolean isShowSelectAssetDisplayPage() {
+		if (_showSelectAssetDisplayPage != null) {
+			return _showSelectAssetDisplayPage;
 		}
 
-		_showSelectDisplayPage = true;
+		_showSelectAssetDisplayPage = true;
 
 		Group group = _themeDisplay.getScopeGroup();
 
 		if (group.isCompany() || group.isDepot()) {
-			_showSelectDisplayPage = false;
+			_showSelectAssetDisplayPage = false;
 		}
 
-		return _showSelectDisplayPage;
+		return _showSelectAssetDisplayPage;
 	}
 
 	private long _getDefaultVocabularyId() throws PortalException {
@@ -973,7 +973,7 @@ public class AssetCategoriesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private String _selectCategoryURL;
-	private Boolean _showSelectDisplayPage;
+	private Boolean _showSelectAssetDisplayPage;
 	private final ThemeDisplay _themeDisplay;
 	private List<AssetVocabulary> _vocabularies;
 	private SearchContainer<AssetVocabulary> _vocabulariesSearchContainer;

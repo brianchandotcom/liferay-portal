@@ -156,7 +156,7 @@ renderResponse.setTitle(title);
 				</c:choose>
 			</liferay-frontend:fieldset>
 
-			<c:if test="<%= assetCategoriesDisplayContext.isShowSelectDisplayPage() %>">
+			<c:if test="<%= assetCategoriesDisplayContext.isShowSelectAssetDisplayPage() %>">
 				<liferay-frontend:fieldset
 					collapsed="<%= true %>"
 					collapsible="<%= true %>"

@@ -44,7 +44,8 @@ public class DDMDataProviderTracker {
 					"ddm.data.provider.instance.id");
 		}
 
-		return _ddmDataProviderInstanceIdServiceTrackerMap.getService(instanceId);
+		return _ddmDataProviderInstanceIdServiceTrackerMap.getService(
+			instanceId);
 	}
 
 	public Set<String> getDDMDataProviderTypes() {

@@ -347,7 +347,7 @@ definition {
 		Click(locator1 = "ContentDashboard#PAGINATION_MOVE_TO_PAGE");
 	}
 
-	macro MoveVocabularyDisplayConfiguration {
+	macro moveVocabularyDisplayConfiguration {
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -370,10 +370,12 @@ definition {
 		AssertClick(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
+		
+		if (!(isSet(notCloseFrame))) {
+			Alert.viewSuccessMessage();
 
-		Alert.viewSuccessMessage();
-
-		IFrame.closeFrame();
+			IFrame.closeFrame();
+		}
 	}
 
 	macro openAuditGraphConfiguration {
@@ -478,6 +480,38 @@ definition {
 
 	macro uncheckCheckbox {
 		ClickNoError(locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX");
+	}
+
+	macro setVocabularyInUseTopPosition {
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_UP_ARROW_BUTTON");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		IFrame.closeFrame();
+	}
+
+	macro setVocabularyInUseSecondPosition {
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_DOWN_ARROW_BUTTON");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		IFrame.closeFrame();
 	}
 
 }

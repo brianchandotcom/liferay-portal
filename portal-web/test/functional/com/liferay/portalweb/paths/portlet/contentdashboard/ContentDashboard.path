@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_DOWN_ARROW_BUTTON</td>
+	<td>//button[contains(@class, 'reorder-down')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUDIT_GRAPH_FIRST_BAR</td>
 	<td>//*[contains(@class, 'recharts-rectangle') and @fill='#4B9FFF']</td>
 	<td></td>

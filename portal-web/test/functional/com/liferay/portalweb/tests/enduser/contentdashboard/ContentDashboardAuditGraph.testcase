@@ -614,6 +614,104 @@ definition {
 		}
 	}
 
+	@description = "When there's a vocabulary in the "In use" box is in the top position of the list and user clicks on Save, the graph will feature that vocabulary in the X axis"
+	@priority = "5"
+	test CheckTopPositionVocabularyXAxis {
+		task ("Create a Web Content with Audience and Stage categories") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addWithCategoryCP(
+				categoryName = "Audience 1",
+				vocabularyName = "Audience",
+				webContentContent = "Web Content Content",
+				webContentTitle = "WC Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+			WebContent.selectCategory(
+				categoryName = "Stage 1",
+				vocabularyName = "Stage");
+
+			PortletEntry.publish();
+		}
+
+		task ("Go to Content Dashboard > Audic Graph configuration") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Check which vocabulary is displayed in x-axis") {
+			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Stage 1");
+
+			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Audience");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Audience 1");
+		}
+	}
+
+	@description = "When there's a vocabulary in the "In use" box is in the second position of the list and user clicks on Save, the graph will feature that vocabulary in the checkbox legend above"
+	@priority = "5"
+	test CheckSecondPositionVocabularyCheckbox {
+		task ("Create a Web Content with Audience and Stage categories") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addWithCategoryCP(
+				categoryName = "Audience 1",
+				vocabularyName = "Audience",
+				webContentContent = "Web Content Content",
+				webContentTitle = "WC Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+			WebContent.selectCategory(
+				categoryName = "Stage 1",
+				vocabularyName = "Stage");
+
+			PortletEntry.publish();
+		}
+
+		task ("Go to Content Dashboard > Audic Graph configuration") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Check which vocabulary is displayed in x-axis") {
+			ContentDashboard.setVocabularyInUseSecondPosition(vocabularyName = "Stage");
+
+			AssertTextPresent(
+				auditGraphCheckboxName = "Stage 1",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
+				value1 = "WC Title");
+
+			ContentDashboard.setVocabularyInUseSecondPosition(vocabularyName = "Audience");
+
+			AssertTextPresent(
+				auditGraphCheckboxName = "Audience 1",
+				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
+				value1 = "WC Title");
+		}
+	}
+
 	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
 	@priority = "4"
 	test KeepInfomationOfDeleteVocabularyInSegment {
@@ -674,11 +772,52 @@ definition {
 		}
 
 		task ("Move vocabulary from in use to available") {
-			ContentDashboard.MoveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
 		}
 
 		task ("Move vocabulary from available to in use") {
-			ContentDashboard.MoveVocabularyDisplayConfiguration(vocabularyName = "Topic");
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Topic");
+		}
+	}
+
+	@description = "When the user has removed all vocabularies from the In Use box and clicks on Save , a warning message will show: Select at least one vocabulary to show on the chart "
+	@priority = "3"
+	test ShowWarningMessageNoVocabulariesInUse {
+		task ("Create a Web Content with Audience and Stage categories") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addWithCategoryCP(
+				categoryName = "Audience 1",
+				vocabularyName = "Audience",
+				webContentContent = "Web Content Content",
+				webContentTitle = "WC Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+			WebContent.selectCategory(
+				categoryName = "Stage 1",
+				vocabularyName = "Stage");
+
+			PortletEntry.publish();
+		}
+
+		task ("Go to Content Dashboard > Audic Graph configuration") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Move all vocabularies from In Use and check warning message") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage", notCloseFrame = "true");
+		
+			Alert.viewWarningSpecific(warningMessage = "You have not selected any vocabularies");
 		}
 	}
 

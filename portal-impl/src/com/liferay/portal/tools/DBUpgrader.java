@@ -113,6 +113,8 @@ public class DBUpgrader {
 	}
 
 	public static void main(String[] args) {
+		UpgradeLogAppender upgradeLogAppender = new UpgradeLogAppender();
+
 		try {
 			StopWatch stopWatch = new StopWatch();
 
@@ -128,11 +130,9 @@ public class DBUpgrader {
 					ProxyModeThreadLocal.setWithSafeCloseable(false)) {
 
 				if (PropsValues.UPGRADE_REPORT_ENABLED) {
-					UpgradeLogAppender appender = new UpgradeLogAppender();
+					upgradeLogAppender.start();
 
-					appender.start();
-
-					_rootLogger.addAppender(appender);
+					_rootLogger.addAppender(upgradeLogAppender);
 				}
 
 				upgrade();
@@ -154,9 +154,7 @@ public class DBUpgrader {
 			System.exit(1);
 		}
 		finally {
-			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				UpgradeLogAppender.close();
-			}
+			upgradeLogAppender.stop();
 		}
 	}
 

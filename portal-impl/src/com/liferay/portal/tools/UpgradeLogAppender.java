@@ -35,9 +35,6 @@ import org.apache.logging.log4j.message.Message;
  */
 public class UpgradeLogAppender implements Appender {
 
-	public static void close() {
-	}
-
 	@Override
 	public void append(LogEvent event) {
 		String loggerName = event.getLoggerName();
@@ -121,7 +118,14 @@ public class UpgradeLogAppender implements Appender {
 
 	@Override
 	public void stop() {
-		_started = false;
+		try {
+			if (_started) {
+				_upgradeReport.generateReport();
+			}
+		}
+		finally {
+			_started = false;
+		}
 	}
 
 	private static volatile UpgradeReport _upgradeReport =

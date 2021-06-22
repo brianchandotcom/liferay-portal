@@ -77,6 +77,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-129360. The user could change the display style of Documents and Media in display page template."
+	@priority = "4"
+	test ChangeDisplayStyleOfDocumentsAndMediaInDisplayPageTemplate {
+		task ("Add an documents and media widget to the display page template") {
+			PageEditor.addWidget(portletName = "Documents and Media");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a document entry") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document JPG",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_4.jpg");
+		}
+
+		task ("Mark the display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Navigate to display page template at view mode") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Webcontent Title",
+				menuItem = "View Content");
+		}
+
+		task ("View document entry displayed as Cards style") {
+			DMDocument.viewCardTitle(dmDocumentTitle = "DM Document JPG");
+
+			AssertElementPresent(
+				key_displayStyle = "cards",
+				locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
+		}
+
+		task ("Change to List display style") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		}
+
+		task ("View document entry displayed as List style") {
+			LexiconList.viewListEntryTitle(listEntry = "DM Document JPG");
+
+			AssertElementPresent(
+				key_displayStyle = "list",
+				locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
+		}
+	}
+
 	@description = "This is for LPS-106813. Can set permissions for widgets in display page template."
 	@priority = "5"
 	test ConfigurePermissionsOfAssetPublisher {

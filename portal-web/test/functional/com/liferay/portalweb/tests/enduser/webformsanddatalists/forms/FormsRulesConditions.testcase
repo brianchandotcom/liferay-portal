@@ -182,14 +182,77 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Does not contains' condition can be created"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateADoesNotContainRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134385 CanCreateADoesNotContainRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		for (var fieldAndPosition : list "Text-0,Numeric-1") {
+			var field = StringUtil.extractFirst("${fieldAndPosition}","-");
+			var position = StringUtil.extractLast("${fieldAndPosition}","-");
+
+			Form.gotoAddField(
+				fieldPositionNumber = "${position}",
+				fieldType = "${field}",
+				formPageNumber = "0");
+
+			Form.closeSidebar();
+		}
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Does not contain",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Numeric");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Numeric",
+			conditionField = "Text",
+			conditionFieldConstant = "Test",
+			conditionOperator = "Does not contain",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Numeric");
+
+		for (var value : list "Test,Text") {
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "${value}");
+
+			if ("${value}" == "Test") {
+				FormFields.viewRequiredAsteriskDataFieldNotPresent(fieldFieldLabel = "Numeric");
+			}
+			else {
+				FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Numeric");
+			}
+		}
 	}
 
 	@description = "Verify that a Rule with 'Is empty' condition can be created"

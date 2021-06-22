@@ -20,7 +20,7 @@
 String elementClasses = (String)request.getAttribute("liferay-flags:flags:elementClasses");
 %>
 
-<div class="taglib-flags <%= Validator.isNotNull(elementClasses) ? elementClasses : "" %>" id="<%= StringUtil.randomId() + "_id" %>">
+<div class="d-inline-block taglib-flags <%= Validator.isNotNull(elementClasses) ? elementClasses : "" %>" id="<%= StringUtil.randomId() + "_id" %>">
 	<c:choose>
 		<c:when test='<%= GetterUtil.getBoolean(request.getAttribute("liferay-flags:flags:onlyIcon")) %>'>
 			<clay:button

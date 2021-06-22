@@ -109,4 +109,49 @@ definition {
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 	}
 
+	@description = "Assert an Individual's Segments"
+	@priority = "5"
+	test CanAssertIndividualSegment {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+		ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "userfn userln");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToIndividuals();
+
+		ACNavigation.switchTab(tabName = "Known Individuals");
+
+		ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
+
+		ACNavigation.switchTab(tabName = "Segments");
+
+		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Static Segment Test");
+
+	}
+
 }

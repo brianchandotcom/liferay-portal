@@ -129,8 +129,8 @@ public class MBModerationTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					"com.liferay.message.boards.moderation.internal." +
-						"configuration.MBModerationGroupConfiguration",
+					"com.liferay.message.boards.moderation.configuration." +
+						"MBModerationGroupConfiguration",
 					dictionary)) {
 
 			unsafeRunnable.run();

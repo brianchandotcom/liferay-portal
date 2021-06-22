@@ -55,6 +55,7 @@ const DefaultSidebarHeader = () => {
 
 							loadIssues({
 								dispatch,
+								languageId,
 								portletNamespace,
 								url,
 							});

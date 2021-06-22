@@ -148,8 +148,6 @@ definition {
 			locator1 = "Dropdown#ANY_DISABLED");
 
 		PortletEntry.save();
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro addTagsFilter {

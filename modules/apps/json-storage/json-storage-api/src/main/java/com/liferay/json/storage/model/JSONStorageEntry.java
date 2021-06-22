@@ -60,4 +60,8 @@ public interface JSONStorageEntry
 
 			};
 
+	public Object getValue();
+
+	public void setValue(Object value);
+
 }

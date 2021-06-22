@@ -256,6 +256,11 @@ public class JSONStorageEntryWrapper
 		return model.getType();
 	}
 
+	@Override
+	public Object getValue() {
+		return model.getValue();
+	}
+
 	/**
 	 * Returns the value long of this json storage entry.
 	 *
@@ -394,6 +399,11 @@ public class JSONStorageEntryWrapper
 	@Override
 	public void setType(int type) {
 		model.setType(type);
+	}
+
+	@Override
+	public void setValue(Object value) {
+		model.setValue(value);
 	}
 
 	/**

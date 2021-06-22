@@ -144,7 +144,9 @@ public class JSONStorageEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -165,7 +167,7 @@ public class JSONStorageEntryCacheModel
 		type = objectInput.readInt();
 
 		valueLong = objectInput.readLong();
-		valueString = objectInput.readUTF();
+		valueString = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -198,10 +200,10 @@ public class JSONStorageEntryCacheModel
 		objectOutput.writeLong(valueLong);
 
 		if (valueString == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(valueString);
+			objectOutput.writeObject(valueString);
 		}
 	}
 

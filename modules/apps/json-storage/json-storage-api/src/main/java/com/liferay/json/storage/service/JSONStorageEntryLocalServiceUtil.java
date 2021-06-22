@@ -44,6 +44,12 @@ public class JSONStorageEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.json.storage.service.impl.JSONStorageEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addJSONStorageEntries(
+		long companyId, long classNameId, long classPK, String json) {
+
+		getService().addJSONStorageEntries(
+			companyId, classNameId, classPK, json);
+	}
 
 	/**
 	 * Adds the json storage entry to the database. Also notifies the appropriate model listeners.
@@ -81,6 +87,12 @@ public class JSONStorageEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteJSONStorageEntries(
+		long classNameId, long classPK) {
+
+		getService().deleteJSONStorageEntries(classNameId, classPK);
 	}
 
 	/**
@@ -224,11 +236,48 @@ public class JSONStorageEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<Long> getClassPKs(
+		long companyId, long classNameId, Object[] pathParts, Object value,
+		int start, int end) {
+
+		return getService().getClassPKs(
+			companyId, classNameId, pathParts, value, start, end);
+	}
+
+	public static int getClassPKsCount(
+		long companyId, long classNameId, Object[] pathParts, Object value) {
+
+		return getService().getClassPKsCount(
+			companyId, classNameId, pathParts, value);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static String getJSON(long classNameId, long classPK) {
+		return getService().getJSON(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getJSONArray(
+		long classNameId, long classPK) {
+
+		return getService().getJSONArray(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject getJSONObject(
+		long classNameId, long classPK) {
+
+		return getService().getJSONObject(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONSerializable
+		getJSONSerializable(long classNameId, long classPK) {
+
+		return getService().getJSONSerializable(classNameId, classPK);
 	}
 
 	/**
@@ -286,6 +335,13 @@ public class JSONStorageEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void updateJSONStorageEntries(
+		long companyId, long classNameId, long classPK, String json) {
+
+		getService().updateJSONStorageEntries(
+			companyId, classNameId, classPK, json);
 	}
 
 	/**

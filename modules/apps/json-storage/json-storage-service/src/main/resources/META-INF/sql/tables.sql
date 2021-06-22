@@ -7,9 +7,9 @@ create table JSONStorageEntry (
 	classPK LONG,
 	parentJSONStorageEntryId LONG,
 	index_ INTEGER,
-	key_ VARCHAR(75) null,
+	key_ VARCHAR(255) null,
 	type_ INTEGER,
 	valueLong LONG,
-	valueString VARCHAR(75) null,
+	valueString TEXT null,
 	primary key (jsonStorageEntryId, ctCollectionId)
 );

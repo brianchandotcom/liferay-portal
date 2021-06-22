@@ -36,6 +36,14 @@ public class JSONStorageEntryLocalServiceWrapper
 		_jsonStorageEntryLocalService = jsonStorageEntryLocalService;
 	}
 
+	@Override
+	public void addJSONStorageEntries(
+		long companyId, long classNameId, long classPK, String json) {
+
+		_jsonStorageEntryLocalService.addJSONStorageEntries(
+			companyId, classNameId, classPK, json);
+	}
+
 	/**
 	 * Adds the json storage entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -76,6 +84,12 @@ public class JSONStorageEntryLocalServiceWrapper
 
 		return _jsonStorageEntryLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteJSONStorageEntries(long classNameId, long classPK) {
+		_jsonStorageEntryLocalService.deleteJSONStorageEntries(
+			classNameId, classPK);
 	}
 
 	/**
@@ -244,11 +258,56 @@ public class JSONStorageEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Long> getClassPKs(
+		long companyId, long classNameId, Object[] pathParts, Object value,
+		int start, int end) {
+
+		return _jsonStorageEntryLocalService.getClassPKs(
+			companyId, classNameId, pathParts, value, start, end);
+	}
+
+	@Override
+	public int getClassPKsCount(
+		long companyId, long classNameId, Object[] pathParts, Object value) {
+
+		return _jsonStorageEntryLocalService.getClassPKsCount(
+			companyId, classNameId, pathParts, value);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
 		return _jsonStorageEntryLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public String getJSON(long classNameId, long classPK) {
+		return _jsonStorageEntryLocalService.getJSON(classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray getJSONArray(
+		long classNameId, long classPK) {
+
+		return _jsonStorageEntryLocalService.getJSONArray(classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getJSONObject(
+		long classNameId, long classPK) {
+
+		return _jsonStorageEntryLocalService.getJSONObject(
+			classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONSerializable getJSONSerializable(
+		long classNameId, long classPK) {
+
+		return _jsonStorageEntryLocalService.getJSONSerializable(
+			classNameId, classPK);
 	}
 
 	/**
@@ -313,6 +372,14 @@ public class JSONStorageEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _jsonStorageEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void updateJSONStorageEntries(
+		long companyId, long classNameId, long classPK, String json) {
+
+		_jsonStorageEntryLocalService.updateJSONStorageEntries(
+			companyId, classNameId, classPK, json);
 	}
 
 	/**

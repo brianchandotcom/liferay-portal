@@ -255,7 +255,7 @@ public class JSONStorageEntryPersistenceTest {
 			"JSONStorageEntry", "mvccVersion", true, "ctCollectionId", true,
 			"jsonStorageEntryId", true, "companyId", true, "classNameId", true,
 			"classPK", true, "parentJSONStorageEntryId", true, "index", true,
-			"key", true, "type", true, "valueLong", true, "valueString", true);
+			"key", true, "type", true, "valueLong", true);
 	}
 
 	@Test

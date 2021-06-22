@@ -17,6 +17,7 @@ package com.liferay.json.storage.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -58,9 +59,8 @@ public class JSONStorageEntryTable extends BaseTable<JSONStorageEntryTable> {
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<JSONStorageEntryTable, Long> valueLong = createColumn(
 		"valueLong", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<JSONStorageEntryTable, String> valueString =
-		createColumn(
-			"valueString", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<JSONStorageEntryTable, Clob> valueString = createColumn(
+		"valueString", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private JSONStorageEntryTable() {
 		super("JSONStorageEntry", JSONStorageEntryTable::new);

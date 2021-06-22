@@ -382,6 +382,22 @@ public class AddressLocalServiceUtil {
 			companyId, className, classPK, start, end, orderByComparator);
 	}
 
+	public static List<Address> getAddressesByTypeIds(
+		long companyId, String className, long classPK, long[] typeIds) {
+
+		return getService().getAddressesByTypeIds(
+			companyId, className, classPK, typeIds);
+	}
+
+	public static List<Address> getAddressesByTypeIds(
+		long companyId, String className, long classPK, long[] typeIds,
+		int start, int end, OrderByComparator<Address> orderByComparator) {
+
+		return getService().getAddressesByTypeIds(
+			companyId, className, classPK, typeIds, start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * Returns the number of addresses.
 	 *

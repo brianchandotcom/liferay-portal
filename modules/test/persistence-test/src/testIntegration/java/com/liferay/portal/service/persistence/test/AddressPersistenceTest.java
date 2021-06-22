@@ -320,6 +320,23 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C_T() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_C_C_T(0L, 0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_C_C_TArrayable() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 

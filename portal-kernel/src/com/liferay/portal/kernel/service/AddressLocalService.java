@@ -335,6 +335,15 @@ public interface AddressLocalService
 		long companyId, String className, long classPK, int start, int end,
 		OrderByComparator<Address> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Address> getAddressesByTypeIds(
+		long companyId, String className, long classPK, long[] typeIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Address> getAddressesByTypeIds(
+		long companyId, String className, long classPK, long[] typeIds,
+		int start, int end, OrderByComparator<Address> orderByComparator);
+
 	/**
 	 * Returns the number of addresses.
 	 *

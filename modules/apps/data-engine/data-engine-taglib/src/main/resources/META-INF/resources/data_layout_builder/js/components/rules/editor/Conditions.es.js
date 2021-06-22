@@ -177,6 +177,18 @@ function FieldRight({fields, left, right, roles, ...otherProps}) {
 					};
 				}
 
+				if (
+					left.field?.type === 'checkbox_multiple' ||
+					left.field?.type === 'radio' ||
+					left.field?.type === 'select'
+				) {
+					return {
+						options: left.field?.options ?? [],
+						placeholder: Liferay.Language.get('choose-an-option'),
+						value: [right.value],
+					};
+				}
+
 				return {
 					value: right.value,
 				};

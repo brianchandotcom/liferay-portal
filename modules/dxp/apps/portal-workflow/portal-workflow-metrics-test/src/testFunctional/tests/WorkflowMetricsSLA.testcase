@@ -604,10 +604,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Blogs.addWithWorkflow(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
-			entryTitle = "Blogs Entry Title");
+		JSONBlog.addEntry( entryContent = "Blogs Entry Content", entryTitle = "Blogs Entry Title"); 
 
 		Pause(locator1 = "50000");
 

@@ -140,25 +140,25 @@ definition {
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Copy of Grid");
 
-		AssertElementPresent(
-			key_bodyText = "Option 1",
-			key_fieldName = "Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			optionName = "Option 1",
+			rowNumber = "1");
 
-		AssertElementPresent(
-			key_bodyText = "Option 2",
-			key_fieldName = "Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Grid",
+			optionName = "Option 2",
+			rowNumber = "1");
 
-		AssertElementPresent(
-			key_bodyText = "Option 1",
-			key_fieldName = "Copy of Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+		FormFields.viewOptionRowName(
+			fieldTitle = "Copy of Grid",
+			optionName = "Option 1",
+			rowNumber = "1");
 
-		AssertElementPresent(
-			key_bodyText = "Option 2",
-			key_fieldName = "Copy of Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Copy of Grid",
+			optionName = "Option 2",
+			rowNumber = "1");
 
 		FormViewBuilder.assertHelpTextPresent(
 			fieldName = "Grid",
@@ -627,18 +627,13 @@ definition {
 			gridField = "Rows",
 			rowNumber = "1");
 
-		FormFields.viewOptionRowName(
-			fieldTitle = "Grid",
-			optionName = "Option 1",
-			rowNumber = "1");
-
 		Form.save();
 
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewOptionRowName(
+		FormFields.notViewOptionRowName(
 			fieldTitle = "Grid",
 			optionName = "Option 1",
 			rowNumber = "1");
@@ -648,7 +643,7 @@ definition {
 			optionName = "Option 2",
 			rowNumber = "1");
 
-		FormFields.viewOptionRowName(
+		FormFields.viewOptionColumnsName(
 			fieldTitle = "Grid",
 			optionName = "Option A",
 			rowNumber = "1");

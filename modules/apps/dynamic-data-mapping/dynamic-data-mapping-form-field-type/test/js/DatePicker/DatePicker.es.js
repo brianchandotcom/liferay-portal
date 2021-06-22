@@ -190,7 +190,7 @@ describe('DatePicker', () => {
 			jest.runAllTimers();
 		});
 
-		const date = moment().format('MM/DD/YYYY');
+		const date = moment().format('YYYY-MM-DD');
 
 		await wait(() => expect(getAllByDisplayValue(date)).toBeTruthy());
 

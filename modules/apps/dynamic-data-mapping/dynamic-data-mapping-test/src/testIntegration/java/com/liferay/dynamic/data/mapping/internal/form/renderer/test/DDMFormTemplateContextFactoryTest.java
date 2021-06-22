@@ -357,9 +357,16 @@ public class DDMFormTemplateContextFactoryTest {
 			(HashMap<String, Object>)ddmFormTemplateContext.get("validations");
 
 		Assert.assertEquals(
-			actualValidationsMap.toString(), 2, actualValidationsMap.size());
+			actualValidationsMap.toString(), 3, actualValidationsMap.size());
+		Assert.assertTrue(actualValidationsMap.containsKey("date"));
 		Assert.assertTrue(actualValidationsMap.containsKey("numeric"));
 		Assert.assertTrue(actualValidationsMap.containsKey("string"));
+
+		_assertValidations(
+			actualValidationsMap, "date",
+			HashMapBuilder.put(
+				"futureDates", "futureDates({name}, \"{parameter}\")"
+			).build());
 
 		_assertValidations(
 			actualValidationsMap, "numeric",

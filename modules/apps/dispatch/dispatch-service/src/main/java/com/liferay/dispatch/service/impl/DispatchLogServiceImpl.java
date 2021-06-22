@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -75,6 +76,19 @@ public class DispatchLogServiceImpl extends DispatchLogServiceBaseImpl {
 
 		return dispatchLogLocalService.getDispatchLogs(
 			dispatchTriggerId, start, end);
+	}
+
+	@Override
+	public List<DispatchLog> getDispatchLogs(
+			long dispatchTriggerId, int start, int end,
+			OrderByComparator<DispatchLog> orderByComparator)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.VIEW);
+
+		return dispatchLogPersistence.findByDispatchTriggerId(
+			dispatchTriggerId, start, end, orderByComparator);
 	}
 
 	@Override

@@ -11,14 +11,14 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 
-import Diagram from '../../src/main/resources/META-INF/resources/js/Diagram';
+import Diagram from '../src/main/resources/META-INF/resources/js/Diagram';
 
-import '../../src/main/resources/META-INF/resources/css/diagram.scss';
+import '../src/main/resources/META-INF/resources/css/diagram.scss';
 
 render(
 	Diagram,
 	{
-		imageURL: './assets/lfr-diagram-engine.png',
+		imageURL: './assets/lfr_diagram_engine.png',
 		namespace: 'portlet_shop_by_diagram_namespace_',
 		spritemap: './assets/clay/icons.svg',
 	},

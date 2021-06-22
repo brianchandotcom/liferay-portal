@@ -17,7 +17,7 @@
 	},
 	"jest": {
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/dev/"
+			"<rootDir>/dev/"
 		]
 	},
 	"name": "@liferay/commerce-shop-by-diagram-web",

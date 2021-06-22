@@ -18,7 +18,7 @@ const outputPath = path.resolve(__dirname, './dev/public');
 module.exports = {
 	devServer: {
 		compress: false,
-		contentBase: './test/dev/public',
+		contentBase: './dev/public',
 		open: true,
 		openPage: 'index.html',
 		port: 9000,
@@ -33,7 +33,7 @@ module.exports = {
 		publicPath: '/',
 	},
 	devtool: 'inline-source-map',
-	entry: path.resolve(__dirname, 'test/dev/entry.js'),
+	entry: path.resolve(__dirname, 'dev/entry.js'),
 
 	mode: 'development',
 	module: {
@@ -84,7 +84,7 @@ module.exports = {
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new HtmlWebpackPlugin({
 			inject: false,
-			template: path.resolve(__dirname, './test/dev/public/index.html'),
+			template: path.resolve(__dirname, './dev/public/index.html'),
 		}),
 	],
 	resolve: {

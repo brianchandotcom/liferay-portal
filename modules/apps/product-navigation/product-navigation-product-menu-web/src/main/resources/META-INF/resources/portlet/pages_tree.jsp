@@ -168,6 +168,13 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		treeId="pagesTree"
 	/>
 
+	<div>
+		<react:component
+			module="js/NavigationMenuItemsTree.es"
+			servletContext="<%= application %>"
+		/>
+	</div>
+
 	<c:if test="<%= layoutsTreeDisplayContext.hasAdministrationPortletPermission() %>">
 		<div class="pages-administration-link">
 			<aui:a cssClass="ml-2" href="<%= layoutsTreeDisplayContext.getAdministrationPortletURL() %>"><%= LanguageUtil.get(request, "go-to-pages-administration") %></aui:a>

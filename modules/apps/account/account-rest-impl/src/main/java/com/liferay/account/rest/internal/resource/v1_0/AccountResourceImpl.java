@@ -68,6 +68,29 @@ public class AccountResourceImpl
 				externalReferenceCode));
 	}
 
+	public void deleteOrganizationAccounts(
+			Long organizationId, Long[] accountIds)
+		throws Exception {
+
+		for (Long accountId : accountIds) {
+			_accountEntryOrganizationRelLocalService.
+				deleteAccountEntryOrganizationRel(accountId, organizationId);
+		}
+	}
+
+	public void deleteOrganizationAccountsByExternalReferenceCode(
+			Long organizationId, String[] externalReferenceCodes)
+		throws Exception {
+
+		for (String externalReferenceCode : externalReferenceCodes) {
+			_accountEntryOrganizationRelLocalService.
+				deleteAccountEntryOrganizationRel(
+					_accountResourceDTOConverter.getAccountEntryId(
+						externalReferenceCode),
+					organizationId);
+		}
+	}
+
 	@Override
 	public Account getAccount(Long accountId) throws Exception {
 		return _toAccount(_accountEntryLocalService.getAccountEntry(accountId));
@@ -118,6 +141,26 @@ public class AccountResourceImpl
 		return _entityModel;
 	}
 
+	public void patchOrganizationMoveAccounts(
+			Long sourceOrganizationId, Long targetOrganizationId,
+			Long[] accountIds)
+		throws Exception {
+
+		deleteOrganizationAccounts(sourceOrganizationId, accountIds);
+		postOrganizationAccounts(targetOrganizationId, accountIds);
+	}
+
+	public void patchOrganizationMoveAccountsByExternalReferenceCode(
+			Long sourceOrganizationId, Long targetOrganizationId,
+			String[] externalReferenceCodes)
+		throws Exception {
+
+		deleteOrganizationAccountsByExternalReferenceCode(
+			sourceOrganizationId, externalReferenceCodes);
+		postOrganizationAccountsByExternalReferenceCode(
+			targetOrganizationId, externalReferenceCodes);
+	}
+
 	@Override
 	public Account postAccount(Account account) throws Exception {
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
@@ -139,6 +182,28 @@ public class AccountResourceImpl
 				accountEntry.getAccountEntryId(), _getOrganizationIds(account));
 
 		return _toAccount(accountEntry);
+	}
+
+	public void postOrganizationAccounts(Long organizationId, Long[] accountIds)
+		throws Exception {
+
+		for (Long accountId : accountIds) {
+			_accountEntryOrganizationRelLocalService.
+				addAccountEntryOrganizationRel(accountId, organizationId);
+		}
+	}
+
+	public void postOrganizationAccountsByExternalReferenceCode(
+			Long organizationId, String[] externalReferenceCodes)
+		throws Exception {
+
+		for (String externalReferenceCode : externalReferenceCodes) {
+			_accountEntryOrganizationRelLocalService.
+				addAccountEntryOrganizationRel(
+					_accountResourceDTOConverter.getAccountEntryId(
+						externalReferenceCode),
+					organizationId);
+		}
 	}
 
 	@Override

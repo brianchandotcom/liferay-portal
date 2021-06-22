@@ -220,6 +220,12 @@ public class CommerceAddressLocalServiceImpl
 				companyId, externalReferenceCode));
 	}
 
+	@Override
+	public CommerceAddress fetchCommerceAddress(long commerceAddressId) {
+		return CommerceAddressImpl.fromAddress(
+			addressLocalService.fetchAddress(commerceAddressId));
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceAddress geolocateCommerceAddress(long commerceAddressId)
@@ -309,6 +315,14 @@ public class CommerceAddressLocalServiceImpl
 				-1, -1, null);
 
 		return addressBaseModelSearchResult.getLength();
+	}
+
+	@Override
+	public CommerceAddress getCommerceAddress(long commerceAddressId)
+		throws PortalException {
+
+		return CommerceAddressImpl.fromAddress(
+			addressLocalService.getAddress(commerceAddressId));
 	}
 
 	/**

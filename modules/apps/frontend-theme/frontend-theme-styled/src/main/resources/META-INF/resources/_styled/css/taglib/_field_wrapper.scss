@@ -6,3 +6,15 @@
 	display: inline-block;
 	vertical-align: bottom;
 }
+
+.field-wrapper.form-inline .control-label {
+	display: inline-block;
+}
+
+.field-wrapper-html {
+	position: relative;
+
+	.input-localized .input-group-item {
+		flex-wrap: nowrap;
+	}
+}

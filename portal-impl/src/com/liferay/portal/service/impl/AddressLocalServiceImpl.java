@@ -231,6 +231,25 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Address> getAddressesByTypeIds(
+		long companyId, String className, long classPK, long[] typeIds) {
+
+		return addressPersistence.findByC_C_C_T(
+			companyId, classNameLocalService.getClassNameId(className), classPK,
+			typeIds);
+	}
+
+	@Override
+	public List<Address> getAddressesByTypeIds(
+		long companyId, String className, long classPK, long[] typeIds,
+		int start, int end, OrderByComparator<Address> orderByComparator) {
+
+		return addressPersistence.findByC_C_C_T(
+			companyId, classNameLocalService.getClassNameId(className), classPK,
+			typeIds, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAddressesCount(
 		long companyId, String className, long classPK) {
 

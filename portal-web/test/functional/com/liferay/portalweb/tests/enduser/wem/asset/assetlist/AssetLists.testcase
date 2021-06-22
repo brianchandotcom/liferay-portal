@@ -151,18 +151,19 @@ definition {
 		}
 
 		task ("Create a manual asset list") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+		}
+
+		task ("Select the Web Content Article as item type and Basic Web Content as item subtype") {
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Manual Asset List Test");
+				itemType = "Web Content Article");
 		}
 
 		task ("Select the created web content article to be linked to the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Asset List Test",
 				assetName = "WC WebContent Title",
 				assetType = "Basic Web Content");
 		}

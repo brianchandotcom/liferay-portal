@@ -345,6 +345,14 @@ definition {
 	}
 
 	macro openToEditEntryInSite {
+		if (isSet(folderName)) {
+			Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+				name = "${folderName}",
+				groupName = "${groupName}");
+		}
+
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",

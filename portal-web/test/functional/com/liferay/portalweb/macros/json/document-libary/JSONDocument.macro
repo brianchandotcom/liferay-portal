@@ -234,4 +234,34 @@ definition {
 		echo("## * File Entry ID: ${fileEntryId}");
 	}
 
+	@summary = "This calls the JSON WS API to subscribe folder"
+	macro subscribeFolder {
+		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+			name = "${dmFolderName}",
+			groupName = "${groupName}");
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(portalURL = "${portalURL}", groupName = "${groupName}", site = "${site}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/subscribe-folder \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d folderId=${folderId} \
+		''';
+
+		echo("## * groupId: ${groupId}");
+
+		echo("## * folderId: ${folderId}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 }

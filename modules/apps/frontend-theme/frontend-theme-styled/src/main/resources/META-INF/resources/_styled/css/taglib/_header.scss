@@ -1,9 +1,28 @@
 .taglib-header {
-	border-bottom-color: #c8c9ca;
+	border-bottom: 1px solid #c8c9ca;
 	color: #555;
+	margin-bottom: 1em;
+	padding-bottom: 10px;
 
-	.header-back-to a {
-		font-weight: bold;
-		text-decoration: none;
+	.header-title {
+		display: inline-block;
+		margin: 0.1em;
+		max-width: 100%;
+		text-overflow: ellipsis;
+		vertical-align: middle;
+		white-space: nowrap;
+		word-wrap: normal;
+	}
+
+	.header-back-to {
+		display: inline-block;
+		vertical-align: middle;
+
+		a {
+			display: block;
+			font-weight: bold;
+			padding: 0 0.3em 0 0;
+			text-decoration: none;
+		}
 	}
 }

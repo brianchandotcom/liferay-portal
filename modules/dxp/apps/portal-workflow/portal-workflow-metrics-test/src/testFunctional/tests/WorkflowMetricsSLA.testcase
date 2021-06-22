@@ -127,9 +127,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -204,9 +203,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -283,9 +281,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
@@ -1141,9 +1138,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -1230,7 +1226,9 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		JSONBlog.addEntry( entryContent = "Blogs Entry Content", entryTitle = "Blogs Entry Title"); 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		Pause(locator1 = "50000");
 

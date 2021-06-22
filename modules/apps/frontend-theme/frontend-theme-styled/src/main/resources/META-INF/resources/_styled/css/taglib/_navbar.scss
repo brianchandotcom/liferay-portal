@@ -1,9 +1,50 @@
 .navbar {
-	.navbar-search {
-		background-color: #f3f3f3;
+	.navbar-collapse {
+		max-height: none;
 
-		@include media-breakpoint-up(sm) {
-			background-color: transparent;
+		&:after,
+		&:before {
+			display: inline;
+		}
+	}
+
+	.navbar-search {
+		@include media-breakpoint-down(sm) {
+			background-color: #f3f3f3;
+			border-top-width: 0;
+			width: 100%;
+		}
+
+		.form-search {
+			margin: 8px 0;
+
+			@include media-breakpoint-up(md) {
+				float: right;
+				max-width: 275px;
+			}
+
+			.input-group {
+				@include media-breakpoint-down(sm) {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		.container,
+		.container-fluid {
+			.navbar-btn {
+				margin-bottom: 5px;
+				width: 45px;
+			}
+
+			.navbar-collapse.open {
+				border-width: 0;
+				display: block;
+				height: auto;
+				overflow: visible;
+			}
 		}
 	}
 }

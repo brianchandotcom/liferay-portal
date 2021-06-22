@@ -307,6 +307,7 @@ definition {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = "${assetListTitle}",
 			item = "Edit");
+
 		WaitForPageLoad();
 	}
 

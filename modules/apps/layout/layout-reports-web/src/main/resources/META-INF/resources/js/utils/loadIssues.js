@@ -12,10 +12,15 @@
  * details.
  */
 
-import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
+import {LOAD_DATA, SET_ERROR, SET_ISSUES} from '../constants/actionTypes';
 import APIService from './APIService';
 
-export default function loadIssues({dispatch, portletNamespace, url}) {
+export default function loadIssues({
+	dispatch,
+	languageId,
+	portletNamespace,
+	url,
+}) {
 	if (url) {
 		dispatch({type: LOAD_DATA});
 
@@ -25,10 +30,9 @@ export default function loadIssues({dispatch, portletNamespace, url}) {
 		)
 			.then(({layoutReportsIssues}) => {
 				dispatch({
-					data: {
-						layoutReportsIssues,
-					},
-					type: SET_DATA,
+					languageId,
+					layoutReportsIssues,
+					type: SET_ISSUES,
 				});
 			})
 			.catch(() => {

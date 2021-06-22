@@ -49,6 +49,7 @@ export default function Translation({
 
 		loadIssues({
 			dispatch,
+			languageId,
 			portletNamespace,
 			url,
 		});

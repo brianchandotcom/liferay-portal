@@ -73,6 +73,8 @@ export default function LayoutReports({eventTriggered}) {
 
 							loadIssues({
 								dispatch: safeDispatch,
+								languageId:
+									languageId || data.defaultLanguageId,
 								portletNamespace,
 								url,
 							});
@@ -111,6 +113,7 @@ export default function LayoutReports({eventTriggered}) {
 
 		loadIssues({
 			dispatch: safeDispatch,
+			languageId,
 			portletNamespace,
 			url,
 		});

@@ -18,6 +18,7 @@ import {
 	LOAD_DATA,
 	SET_DATA,
 	SET_ERROR,
+	SET_ISSUES,
 	SET_LANGUAGE_ID,
 	SET_SELECTED_ISSUE,
 } from '../constants/actionTypes';
@@ -57,13 +58,24 @@ function reducer(state = INITIAL_STATE, action) {
 
 		case SET_DATA:
 			nextState = {
-				data: {
-					...state.data,
-					...action.data,
-				},
+				data: action.data,
 				error: action.data?.error,
 				languageId: state.languageId || action.data?.defaultLanguageId,
 				loading: action.loading || false,
+			};
+			break;
+
+		case SET_ISSUES:
+			nextState = {
+				...state,
+				data: {
+					...state.data,
+					layoutReportsIssues: {
+						...state.data.layoutReportsIssues,
+						[action.languageId]: action.layoutReportsIssues,
+					},
+				},
+				loading: false,
 			};
 			break;
 

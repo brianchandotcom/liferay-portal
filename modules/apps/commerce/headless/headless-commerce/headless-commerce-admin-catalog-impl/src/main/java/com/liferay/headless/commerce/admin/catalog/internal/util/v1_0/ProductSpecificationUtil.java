@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.*;
 
 /**
  * @author Alessio Antonio Rendina
@@ -67,6 +68,9 @@ public class ProductSpecificationUtil {
 			ProductSpecification productSpecification, long companyId,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		String specificationKey = FriendlyURLNormalizerUtil.normalize(
+				productSpecification.getSpecificationKey());
 
 		CPSpecificationOption cpSpecificationOption =
 			cpSpecificationOptionService.fetchCPSpecificationOption(

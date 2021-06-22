@@ -12,6 +12,12 @@
 					"label": "single-selection",
 					"name": "singleSelection",
 					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "show-label",
+					"name": "showLabel",
+					"type": "checkbox"
 				}
 			]
 		}

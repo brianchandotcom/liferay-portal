@@ -127,6 +127,15 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		boolean showLabel = GetterUtil.getBoolean(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(), themeDisplay.getLocale(),
+				"showLabel"));
+
+		httpServletRequest.setAttribute(
+			CollectionFilterFragmentRendererWebKeys.SHOW_LABEL, showLabel);
+
 		boolean singleSelection = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getConfiguration(),

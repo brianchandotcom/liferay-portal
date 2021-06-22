@@ -200,6 +200,12 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		return LanguageUtil.get(_httpServletRequest, "select");
 	}
 
+	public boolean isShowLabel() {
+		return GetterUtil.getBoolean(
+			_httpServletRequest.getAttribute(
+				CollectionFilterFragmentRendererWebKeys.SHOW_LABEL));
+	}
+
 	public boolean isSingleSelection() {
 		return GetterUtil.getBoolean(
 			_httpServletRequest.getAttribute(

@@ -1443,7 +1443,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>translateLabel</name>
+			<name>translated</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

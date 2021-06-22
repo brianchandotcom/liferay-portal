@@ -25,6 +25,7 @@ import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import getPageSpeedProgress from '../utils/getPageSpeedProgress';
 import BasicInformation from './BasicInformation';
+import NoIssuesLoaded from './NoIssuesLoaded';
 
 export default function IssuesList() {
 	const {data, error, languageId, loading} = useContext(StoreStateContext);
@@ -64,13 +65,13 @@ export default function IssuesList() {
 
 			{loading ? (
 				<LoadingProgressBar percentage={percentage} />
+			) : localizedIssues ? (
+				<Issues
+					layoutReportsIssues={localizedIssues.issues}
+					successImage={successImage}
+				/>
 			) : (
-				localizedIssues && (
-					<Issues
-						layoutReportsIssues={localizedIssues.issues}
-						successImage={successImage}
-					/>
-				)
+				<NoIssuesLoaded />
 			)}
 		</div>
 	);

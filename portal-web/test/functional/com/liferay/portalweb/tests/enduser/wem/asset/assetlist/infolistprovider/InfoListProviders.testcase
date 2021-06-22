@@ -138,7 +138,7 @@ definition {
 
 			WaitForElementNotPresent(
 				key_text = "Save",
-				locator1 = "Dropdown#ANY_DISABLED");
+				locator1 = "Button#ANY_DISABLED");
 
 			PortletEntry.save();
 

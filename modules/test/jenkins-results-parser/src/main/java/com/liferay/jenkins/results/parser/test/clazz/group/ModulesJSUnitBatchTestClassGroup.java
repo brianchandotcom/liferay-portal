@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -147,7 +148,7 @@ public class ModulesJSUnitBatchTestClassGroup
 
 							return FileVisitResult.SKIP_SUBTREE;
 						}
-						catch (IOException ioException) {
+						catch (IOException | JSONException exception) {
 							return FileVisitResult.CONTINUE;
 						}
 					}

@@ -133,6 +133,10 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new JUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
+			else if (batchName.startsWith("js-unit-")) {
+				batchTestClassGroup = new ModulesJSUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
 			else if (batchName.startsWith("unit-")) {
 				batchTestClassGroup = new UnitJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);

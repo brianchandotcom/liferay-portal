@@ -31,7 +31,7 @@ public class HttpRequestUtilTest extends PoshiRunnerTestCase {
 	}
 
 	@Test
-	public void testAssertStatusCode() throws Exception {
+	public void testAssertStatusCode() throws Throwable {
 		runPoshiTest("HttpRequestTest#testAssertStatusCode");
 	}
 

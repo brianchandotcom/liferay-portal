@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.data.guard.connector.client.DataGuardClient;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiStackTraceUtil;
@@ -154,7 +155,15 @@ public class PoshiRunner {
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Throwable {
+		if (PropsValues.LIFERAY_DATA_GUARD_ENABLED) {
+			_dataGuardClient = new DataGuardClient();
+
+			_dataGuardClient.connect();
+
+			_dataGuardId = _dataGuardClient.startCapture();
+		}
+
 		System.out.println();
 		System.out.println("###");
 		System.out.println("### " + _testNamespacedClassCommandName);
@@ -194,7 +203,7 @@ public class PoshiRunner {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() throws Throwable {
 		LiferaySeleniumUtil.writePoshiWarnings();
 
 		SummaryLogger.createSummaryReport();
@@ -219,6 +228,18 @@ public class PoshiRunner {
 			_poshiLogger.createPoshiReport();
 
 			SeleniumUtil.stopSelenium();
+		}
+
+		if (!PropsValues.LIFERAY_DATA_GUARD_ENABLED) {
+			return;
+		}
+
+		try {
+			_dataGuardClient.endCapture(
+				_dataGuardId, _testNamespacedClassCommandName);
+		}
+		finally {
+			_dataGuardClient.close();
 		}
 	}
 
@@ -300,6 +321,8 @@ public class PoshiRunner {
 		_runNamespacedClassCommandName(_testNamespacedClassName + "#tear-down");
 	}
 
+	private static DataGuardClient _dataGuardClient;
+	private static long _dataGuardId;
 	private static int _jvmRetryCount;
 	private static final Map<String, List<String>> _testResults =
 		new HashMap<>();

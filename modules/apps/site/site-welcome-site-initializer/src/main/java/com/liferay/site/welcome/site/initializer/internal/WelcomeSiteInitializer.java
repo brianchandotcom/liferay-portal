@@ -306,7 +306,7 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 			String pageElementJSON = StringUtil.replace(
 				StringUtil.read(
 					clazz.getClassLoader(), _PATH + "page-element.json"),
-				"${", "}",
+				"[$", "$]",
 				HashMapBuilder.put(
 					"RELEASE_INFO", releaseInfo + "."
 				).put(

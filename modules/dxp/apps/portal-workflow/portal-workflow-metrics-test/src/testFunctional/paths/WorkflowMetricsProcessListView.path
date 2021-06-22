@@ -72,6 +72,8 @@
 	<td>SEARCH_BUTTON</td>
 	<td>//*[contains(@class,'lexicon-icon-search')]</td>
 	<td></td>
+</tr>
+<tr>
     <td>ASSERT_PERCENTAGE_CARDS</td>
     <td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
     <td></td>

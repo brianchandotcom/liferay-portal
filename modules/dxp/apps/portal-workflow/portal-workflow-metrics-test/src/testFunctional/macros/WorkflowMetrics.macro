@@ -606,14 +606,6 @@ definition {
 				value1 = "${key_slaDefinitionStart}");
 		}
 
-		if (isSet(slaDefinitionPause)) {
-			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
-
-			AssertClick(
-				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION",
-				value1 = "${key_slaDefinitionPause}");
-		}
-
 		if (isSet(slaDefinitionEnd)) {
 			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
 
@@ -621,6 +613,13 @@ definition {
 				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION",
 				value1 = "${key_slaDefinitionEnd}");
 		}
+
+		if (isSet(slaDefinitionPause)) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
+
+			Click(locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
+		}
+
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
 			value1 = "${key_slaDefinitionDays}");

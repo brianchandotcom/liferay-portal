@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import javax.servlet.Filter;
@@ -71,18 +70,20 @@ public class SamlRedirectFilter extends BaseFilter {
 				return;
 			}
 
-			sb = new StringBundler(4);
+			sb = new StringBundler(5);
 
 			sb.append(_portal.getRelativeHomeURL(httpServletRequest));
 
-			sb.append(SamlCommandQueryConstants.WEB_SSO);
+			sb.append("?p_p_id=com_liferay_saml_web_internal_portlet_SamlPort");
+			sb.append("let&p_p_lifecycle=2&p_p_resource_id=/saml/web_sso");
 		}
 		else {
 			sb = new StringBundler(4);
 
 			sb.append(_portal.getRelativeHomeURL(httpServletRequest));
 
-			sb.append(SamlCommandQueryConstants.SLO);
+			sb.append("?p_p_id=com_liferay_saml_web_internal_portlet_SamlPort");
+			sb.append("let&p_p_lifecycle=2&p_p_resource_id=/saml/slo");
 		}
 
 		sb.append('&');

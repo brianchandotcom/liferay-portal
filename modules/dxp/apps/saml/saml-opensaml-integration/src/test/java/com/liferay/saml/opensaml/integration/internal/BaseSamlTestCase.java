@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.HttpPostBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.HttpRedirectBinding;
@@ -653,9 +653,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		);
 	}
 
-	protected static final String ACS_URL =
-		"http://localhost:8080" + BaseSamlTestCase.RELATIVE_HOME_URL +
-			SamlCommandQueryConstants.ACS;
+	protected static final String ACS_URL = StringBundler.concat(
+		"http://localhost:8080", BaseSamlTestCase.RELATIVE_HOME_URL, "?p_p_id",
+		"=com_liferay_saml_web_internal_portlet_SamlPortlet&p_p_lifecycle=1&_c",
+		"om_liferay_saml_web_internal_portlet_SamlPortlet_javax.portlet.action",
+		"=/saml/assertion_consumer_service");
 
 	protected static final long COMPANY_ID = 1;
 
@@ -679,9 +681,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 	protected static final long SESSION_ID = 2;
 
-	protected static final String SLO_LOGOUT_URL =
-		"http://localhost:8080" + RELATIVE_HOME_URL +
-			SamlCommandQueryConstants.SLO_LOGOUT;
+	protected static final String SLO_LOGOUT_URL = StringBundler.concat(
+		"http://localhost:8080", RELATIVE_HOME_URL, "?p_p_id=com_liferay_saml_",
+		"web_internal_portlet_SamlPortlet&p_p_lifecycle=0&p_p_state=maximized&",
+		"_com_liferay_saml_web_internal_portlet_SamlPortlet_mvcRenderCommandNa",
+		"me=/saml/slo_logout");
 
 	protected static final String SP_ENTITY_ID = "testsp";
 

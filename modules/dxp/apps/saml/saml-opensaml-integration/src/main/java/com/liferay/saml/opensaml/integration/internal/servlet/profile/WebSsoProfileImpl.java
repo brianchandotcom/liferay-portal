@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
@@ -1009,11 +1008,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_portal.getRelativeHomeURL(httpServletRequest));
-		sb.append(SamlCommandQueryConstants.AUTH_REDIRECT);
-		sb.append("&redirect=");
+		sb.append("?p_p_id=com_liferay_saml_web_internal_portlet_SamlPortlet&");
+		sb.append("p_p_lifecycle=1&_com_liferay_saml_web_internal_portlet_Sam");
+		sb.append("lPortlet_javax.portlet.action=/saml/auth_redirect&redirect");
+		sb.append("=");
 
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
@@ -1393,10 +1394,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append("/portal/login?redirect=");
 
-		StringBundler redirectSB = new StringBundler(4);
+		StringBundler redirectSB = new StringBundler(6);
 
 		redirectSB.append(_portal.getRelativeHomeURL(httpServletRequest));
-		redirectSB.append(SamlCommandQueryConstants.WEB_SSO);
+		redirectSB.append("?p_p_id=com_liferay_saml_web_internal_portlet_Saml");
+		redirectSB.append("Portlet&p_p_lifecycle=&p_p_lifecycle=2&p_p_resourc");
+		redirectSB.append("e_id=/saml/web_sso");
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			samlMessageContext.getSubcontext(SAMLPeerEntityContext.class);

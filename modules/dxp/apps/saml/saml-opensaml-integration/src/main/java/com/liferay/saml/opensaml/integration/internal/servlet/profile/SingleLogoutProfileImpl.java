@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
@@ -130,8 +129,12 @@ public class SingleLogoutProfileImpl
 
 		if (hasSamlSloContext(httpServletRequest, null)) {
 			httpServletResponse.sendRedirect(
-				_portal.getRelativeHomeURL(httpServletRequest) +
-					SamlCommandQueryConstants.SLO_LOGOUT);
+				StringBundler.concat(
+					_portal.getRelativeHomeURL(httpServletRequest),
+					"?p_p_id=com_liferay_saml_web_internal_portlet_SamlPortlet",
+					"&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_saml_we",
+					"b_internal_portlet_SamlPortlet_mvcRenderCommandName=/saml",
+					"/slo_logout"));
 		}
 		else {
 			redirectToLogout(httpServletRequest, httpServletResponse);

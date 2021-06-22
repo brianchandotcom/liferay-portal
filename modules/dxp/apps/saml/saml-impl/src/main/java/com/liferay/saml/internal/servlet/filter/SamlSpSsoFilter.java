@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -158,8 +157,12 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 			if (enabledSamlSpIdpConnections.size() > 1) {
 				httpServletResponse.sendRedirect(
-					_portal.getRelativeHomeURL(httpServletRequest) +
-						SamlCommandQueryConstants.SELECT_IDP);
+					StringBundler.concat(
+						_portal.getRelativeHomeURL(httpServletRequest),
+						"?p_p_id=com_liferay_saml_web_internal_portlet_SamlPor",
+						"tlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay",
+						"_saml_web_internal_portlet_SamlPortlet_mvcRenderComma",
+						"ndName=/saml/select_idp"));
 
 				return;
 			}

@@ -156,7 +156,6 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
-		
 	}
 
 	@description = "This is a test for COMMERCE-6232. Discount Rules lifecycle"
@@ -302,13 +301,111 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6229. Discount coupon code validators"
-	@ignore = "true"
 	@priority = "3"
 	test ViewCouponCodeNotAppliedToNotQualifiedAccount {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceDiscounts#ViewCouponCodeNotAppliedToNotQualifiedAccount";
 
-		// TODO COMMERCE-6229 ViewCouponCodeNotAppliedToNotQualifiedAccount Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "account1",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "account2",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			discountAmount = "10",
+			discountName = "Test Discount",
+			discountTarget = "Total",
+			discountType = "Percentage");
+
+		Click(
+			key_toggleSwitch = "Coupon Code",
+			locator1 = "ToggleSwitch#ENABLE_TOGGLE_SWITCH_VIA_SPAN");
+
+		Pause(locator1 = "1000");
+
+		Type(
+			key_fieldLabel = "Coupon Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "TEST");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		Click(
+			key_radioOption = "Specific Accounts",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Type(
+			key_fieldLabel = "Add Accounts",
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "account1");
+
+		Button.clickSelect();
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
+
+		Click(
+			key_accountName = "account2",
+			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		Click(locator1 = "Icon#PLUS");
+
+		Type(
+			key_text = "Search",
+			locator1 = "TextInput#ANY",
+			value1 = "Coupon Code Entry");
+
+		Click(
+			categoryName = "Coupon Code Entry",
+			locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_titleName = "Coupon Code",
+			locator1 = "TextInput#INPUT_CONTAINS_TITLE",
+			value1 = "TEST");
+
+		Button.click(button = "Apply");
+
+		Pause(locator1 = "1000");
+
+		AssertElementPresent(
+			key_titleName = "Coupon Code",
+			locator1 = "TextInput#INPUT_CONTAINS_TITLE",
+			value1 = "TEST");
 	}
 
 	@description = "This is a test for COMMERCE-6233. Discount expiration"

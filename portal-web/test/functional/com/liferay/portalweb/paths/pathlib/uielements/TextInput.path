@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INPUT_CONTAINS_TITLE</td>
+	<td>//input[contains(@title,'${key_titleName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE</td>
 	<td>//input[contains(@id,'displayDate')]</td>
 	<td></td>

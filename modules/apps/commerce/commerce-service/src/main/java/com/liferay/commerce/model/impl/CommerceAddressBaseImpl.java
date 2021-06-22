@@ -15,7 +15,6 @@
 package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 
 /**
  * The extended model base implementation for the CommerceAddress service. Represents a row in the &quot;CommerceAddress&quot; database table, with each column mapped to a property of this class.
@@ -37,14 +36,5 @@ public abstract class CommerceAddressBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce address model instance should use the <code>CommerceAddress</code> interface instead.
 	 */
-	@Override
-	public void persist() {
-		if (this.isNew()) {
-			CommerceAddressLocalServiceUtil.addCommerceAddress(this);
-		}
-		else {
-			CommerceAddressLocalServiceUtil.updateCommerceAddress(this);
-		}
-	}
 
 }

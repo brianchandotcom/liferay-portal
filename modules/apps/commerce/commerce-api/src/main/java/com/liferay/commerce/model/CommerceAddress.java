@@ -15,7 +15,6 @@
 package com.liferay.commerce.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -29,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ImplementationClassName("com.liferay.commerce.model.impl.CommerceAddressImpl")
 @ProviderType
-public interface CommerceAddress extends CommerceAddressModel, PersistedModel {
+public interface CommerceAddress extends CommerceAddressModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

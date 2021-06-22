@@ -554,11 +554,6 @@ public class CommerceAddressWrapper
 		return model.isSameAddress(commerceAddress);
 	}
 
-	@Override
-	public void persist() {
-		model.persist();
-	}
-
 	/**
 	 * Sets the city of this commerce address.
 	 *

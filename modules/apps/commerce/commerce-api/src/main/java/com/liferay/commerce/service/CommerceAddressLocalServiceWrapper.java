@@ -34,23 +34,6 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	/**
-	 * Adds the commerce address to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAddressLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAddress the commerce address
-	 * @return the commerce address that was added
-	 */
-	@Override
-	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-		com.liferay.commerce.model.CommerceAddress commerceAddress) {
-
-		return _commerceAddressLocalService.addCommerceAddress(commerceAddress);
-	}
-
-	/**
 	 * @deprecated As of Mueller (7.2.x), defaultBilling/Shipping exist on Account Entity. Pass type.
 	 */
 	@Deprecated
@@ -108,42 +91,6 @@ public class CommerceAddressLocalServiceWrapper
 			commerceAddressId, className, classPK, serviceContext);
 	}
 
-	/**
-	 * Creates a new commerce address with the primary key. Does not add the commerce address to the database.
-	 *
-	 * @param commerceAddressId the primary key for the new commerce address
-	 * @return the new commerce address
-	 */
-	@Override
-	public com.liferay.commerce.model.CommerceAddress createCommerceAddress(
-		long commerceAddressId) {
-
-		return _commerceAddressLocalService.createCommerceAddress(
-			commerceAddressId);
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
-			java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceAddressLocalService.createPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	 * Deletes the commerce address from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAddressLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAddress the commerce address
-	 * @return the commerce address that was removed
-	 * @throws PortalException
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceAddress deleteCommerceAddress(
 			com.liferay.commerce.model.CommerceAddress commerceAddress)
@@ -153,17 +100,6 @@ public class CommerceAddressLocalServiceWrapper
 			commerceAddress);
 	}
 
-	/**
-	 * Deletes the commerce address with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAddressLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAddressId the primary key of the commerce address
-	 * @return the commerce address that was removed
-	 * @throws PortalException if a commerce address with the primary key could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceAddress deleteCommerceAddress(
 			long commerceAddressId)
@@ -188,126 +124,11 @@ public class CommerceAddressLocalServiceWrapper
 		_commerceAddressLocalService.deleteCountryCommerceAddresses(countryId);
 	}
 
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-			com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceAddressLocalService.deletePersistedModel(
-			persistedModel);
-	}
-
 	@Override
 	public void deleteRegionCommerceAddresses(long regionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commerceAddressLocalService.deleteRegionCommerceAddresses(regionId);
-	}
-
-	@Override
-	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-		return _commerceAddressLocalService.dslQuery(dslQuery);
-	}
-
-	@Override
-	public int dslQueryCount(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
-		return _commerceAddressLocalService.dslQueryCount(dslQuery);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _commerceAddressLocalService.dynamicQuery();
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
-		return _commerceAddressLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceAddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-
-		return _commerceAddressLocalService.dynamicQuery(
-			dynamicQuery, start, end);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceAddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-
-		return _commerceAddressLocalService.dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
-		return _commerceAddressLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-
-		return _commerceAddressLocalService.dynamicQueryCount(
-			dynamicQuery, projection);
 	}
 
 	@Override
@@ -327,36 +148,6 @@ public class CommerceAddressLocalServiceWrapper
 			commerceAddressId);
 	}
 
-	/**
-	 * Returns the commerce address with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce address's external reference code
-	 * @return the matching commerce address, or <code>null</code> if a matching commerce address could not be found
-	 */
-	@Override
-	public com.liferay.commerce.model.CommerceAddress
-		fetchCommerceAddressByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _commerceAddressLocalService.
-			fetchCommerceAddressByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAddressByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceAddress
-		fetchCommerceAddressByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _commerceAddressLocalService.fetchCommerceAddressByReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
 	@Override
 	public com.liferay.commerce.model.CommerceAddress geolocateCommerceAddress(
 			long commerceAddressId)
@@ -364,13 +155,6 @@ public class CommerceAddressLocalServiceWrapper
 
 		return _commerceAddressLocalService.geolocateCommerceAddress(
 			commerceAddressId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
-
-		return _commerceAddressLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
@@ -413,13 +197,6 @@ public class CommerceAddressLocalServiceWrapper
 			companyId, className, classPK, keywords);
 	}
 
-	/**
-	 * Returns the commerce address with the primary key.
-	 *
-	 * @param commerceAddressId the primary key of the commerce address
-	 * @return the commerce address
-	 * @throws PortalException if a commerce address with the primary key could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceAddress getCommerceAddress(
 			long commerceAddressId)
@@ -427,43 +204,6 @@ public class CommerceAddressLocalServiceWrapper
 
 		return _commerceAddressLocalService.getCommerceAddress(
 			commerceAddressId);
-	}
-
-	/**
-	 * Returns the commerce address with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce address's external reference code
-	 * @return the matching commerce address
-	 * @throws PortalException if a matching commerce address could not be found
-	 */
-	@Override
-	public com.liferay.commerce.model.CommerceAddress
-			getCommerceAddressByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceAddressLocalService.
-			getCommerceAddressByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns a range of all the commerce addresses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceAddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce addresses
-	 * @param end the upper bound of the range of commerce addresses (not inclusive)
-	 * @return the range of commerce addresses
-	 */
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceAddress>
-		getCommerceAddresses(int start, int end) {
-
-		return _commerceAddressLocalService.getCommerceAddresses(start, end);
 	}
 
 	/**
@@ -528,16 +268,6 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the number of commerce addresses.
-	 *
-	 * @return the number of commerce addresses
-	 */
-	@Override
-	public int getCommerceAddressesCount() {
-		return _commerceAddressLocalService.getCommerceAddressesCount();
-	}
-
-	/**
 	 * @deprecated As of Mueller (7.2.x), commerceAddress is scoped to Company use *ByCompanyId
 	 */
 	@Deprecated
@@ -563,14 +293,6 @@ public class CommerceAddressLocalServiceWrapper
 			getCommerceAddressesCountByCompanyId(companyId, className, classPK);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _commerceAddressLocalService.
-			getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -579,17 +301,6 @@ public class CommerceAddressLocalServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _commerceAddressLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-			java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceAddressLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
@@ -647,24 +358,6 @@ public class CommerceAddressLocalServiceWrapper
 
 		return _commerceAddressLocalService.searchCommerceAddresses(
 			companyId, className, classPK, keywords, start, end, sort);
-	}
-
-	/**
-	 * Updates the commerce address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAddressLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAddress the commerce address
-	 * @return the commerce address that was updated
-	 */
-	@Override
-	public com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
-		com.liferay.commerce.model.CommerceAddress commerceAddress) {
-
-		return _commerceAddressLocalService.updateCommerceAddress(
-			commerceAddress);
 	}
 
 	/**

@@ -127,15 +127,15 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		boolean multipleSelection = GetterUtil.getBoolean(
+		boolean singleSelection = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(), themeDisplay.getLocale(),
-				"multipleSelection"));
+				"singleSelection"));
 
 		httpServletRequest.setAttribute(
-			CollectionFilterFragmentRendererWebKeys.MULTIPLE_SELECTION,
-			multipleSelection);
+			CollectionFilterFragmentRendererWebKeys.SINGLE_SELECTION,
+			singleSelection);
 
 		Object sourceObject = _fragmentEntryConfigurationParser.getFieldValue(
 			getConfiguration(fragmentRendererContext),

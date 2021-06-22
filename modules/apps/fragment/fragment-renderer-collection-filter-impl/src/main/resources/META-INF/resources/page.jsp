@@ -21,7 +21,16 @@
 </p>
 
 <c:choose>
-	<c:when test="<%= collectionFilterFragmentRendererDisplayContext.isMultipleSelection() %>">
+	<c:when test="<%= collectionFilterFragmentRendererDisplayContext.isSingleSelection() %>">
+		<clay:dropdown-menu
+			cssClass="form-control form-control-select form-control-sm text-left w-100"
+			displayType="secondary"
+			dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
+			label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
+			title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
+		/>
+	</c:when>
+	<c:otherwise>
 		<div>
 			<clay:button
 				cssClass="dropdown-toggle form-control-select form-control-sm text-left w-100"
@@ -36,14 +45,5 @@
 				props="<%= collectionFilterFragmentRendererDisplayContext.getProps() %>"
 			/>
 		</div>
-	</c:when>
-	<c:otherwise>
-		<clay:dropdown-menu
-			cssClass="form-control form-control-select form-control-sm text-left w-100"
-			displayType="secondary"
-			dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
-			label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
-			title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
-		/>
 	</c:otherwise>
 </c:choose>

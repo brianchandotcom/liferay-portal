@@ -200,10 +200,10 @@ public class CollectionFilterFragmentRendererDisplayContext {
 		return LanguageUtil.get(_httpServletRequest, "select");
 	}
 
-	public boolean isMultipleSelection() {
+	public boolean isSingleSelection() {
 		return GetterUtil.getBoolean(
 			_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.MULTIPLE_SELECTION));
+				CollectionFilterFragmentRendererWebKeys.SINGLE_SELECTION));
 	}
 
 	private String _getParameterName() {

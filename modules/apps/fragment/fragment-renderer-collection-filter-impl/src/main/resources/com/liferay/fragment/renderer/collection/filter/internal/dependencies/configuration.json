@@ -9,8 +9,8 @@
 				},
 				{
 					"defaultValue": false,
-					"label": "multiple-selection",
-					"name": "multipleSelection",
+					"label": "single-selection",
+					"name": "singleSelection",
 					"type": "checkbox"
 				}
 			]

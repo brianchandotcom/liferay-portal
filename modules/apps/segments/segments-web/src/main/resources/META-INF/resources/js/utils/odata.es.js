@@ -120,7 +120,7 @@ function valueParser(value, type) {
 		case PROPERTY_TYPES.COLLECTION:
 		case PROPERTY_TYPES.STRING:
 		default:
-			parsedValue = `'${value}'`;
+			parsedValue = `'${value.replace("'", "''")}'`;
 			break;
 	}
 

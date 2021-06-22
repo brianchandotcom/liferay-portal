@@ -12,7 +12,7 @@ definition {
 
 	macro assertIndividualAttribute {
 		var key_individualAttribute = "${individualAttribute}";
-		Click(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
+		AssertElementPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
 	macro assertIndividualsActivitiesTimeRange {

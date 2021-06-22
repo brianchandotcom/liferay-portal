@@ -252,6 +252,11 @@ public class TestClassGroupFactory {
 
 			return new JUnitSegmentTestClassGroup(batchTestClassGroup);
 		}
+		else if (batchTestClassGroup instanceof
+					ModulesJSUnitBatchTestClassGroup) {
+
+			return new ModulesJSUnitSegmentTestClassGroup(batchTestClassGroup);
+		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			return new PluginsSegmentTestClassGroup(
 				(PluginsBatchTestClassGroup)batchTestClassGroup);

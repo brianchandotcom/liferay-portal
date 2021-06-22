@@ -34,6 +34,120 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-127548. The changes of web content won't be shown in Content Display in live site until publish to live."
+	@priority = "4"
+	test PublishEditedWebContentToLive {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+		}
+
+		task ("Add a content page based on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Publish to Live via page in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View the displayed content at view mode in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+		}
+
+		task ("Edit the Web Content in staging site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit",
+				webContentTitleEdit = "Web Content Title Edit");
+		}
+
+		task ("View the edited Web Content is shown in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test site Name Staging");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content Edit");
+		}
+
+		task ("View the old version of the Web Content is shown in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test site Name");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+		}
+
+		task ("Publish to Live via page in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View the edited Web Content is shown in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test site Name");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content Edit");
+		}
+	}
+
 	@description = "This is a test for LPS-101248. Can select a custom web content template as a "Template" for web content selected in Content Display when enable live."
 	@priority = "2"
 	test SelectCustomWebContentTemplateInContentDisplay {

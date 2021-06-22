@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.json.storage.model.JSONStorageEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="jsonStorageEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="parentJSONStorageEntryId" type="long" />
+		<field name="index" type="int" />
+		<field name="key" type="String" />
+		<field name="type" type="int" />
+		<field name="valueLong" type="long" />
+		<field name="valueString" type="String" />
+	</model>
+</model-hints>

@@ -204,6 +204,8 @@ public interface WebKeys {
 
 	public static final String HTTPS_INITIAL = "HTTPS_INITIAL";
 
+	public static final String I18N_ERROR_PATH = "I18N_ERROR_PATH";
+
 	public static final String I18N_LANGUAGE_CODE = "I18N_LANGUAGE_CODE";
 
 	public static final String I18N_LANGUAGE_ID = "I18N_LANGUAGE_ID";

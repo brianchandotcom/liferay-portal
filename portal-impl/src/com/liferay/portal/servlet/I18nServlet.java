@@ -162,6 +162,10 @@ public class I18nServlet extends HttpServlet {
 
 		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
 
+		Locale i18nLocale = LocaleUtil.fromLanguageId(i18nLanguageId);
+
+		String i18nPath = StringPool.SLASH + i18nLocale.toLanguageTag();
+
 		if (Validator.isNull(path)) {
 			path = "/";
 		}
@@ -178,6 +182,9 @@ public class I18nServlet extends HttpServlet {
 					friendlyURL);
 
 				if (siteGroup == null) {
+					httpServletRequest.setAttribute(
+						WebKeys.I18N_ERROR_PATH, i18nPath);
+
 					return null;
 				}
 
@@ -185,10 +192,6 @@ public class I18nServlet extends HttpServlet {
 					siteGroup.getGroupId(), i18nLanguageCode);
 			}
 		}
-
-		Locale i18nLocale = LocaleUtil.fromLanguageId(i18nLanguageId);
-
-		String i18nPath = StringPool.SLASH + i18nLocale.toLanguageTag();
 
 		if (siteDefaultLocale == null) {
 			if (PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE) {

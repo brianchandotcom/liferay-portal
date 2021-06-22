@@ -1,0 +1,14 @@
+{
+	"mail": {
+		"en_US": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/dxp/latest/en/installation-and-upgrades/setting-up-liferay/configuring-mail/connecting-to-a-mail-server.html"
+		}
+	},
+	"script-console": {
+		"en_US": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/using-the-script-engine/using-the-script-engine.html"
+		}
+	}
+}

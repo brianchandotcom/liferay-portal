@@ -1,0 +1,14 @@
+{
+	"download-app": {
+		"en_US": {
+			"message": "How can I download an app?",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/installing-apps/downloading-apps.html"
+		}
+	},
+	"purchase-app": {
+		"en_US": {
+			"message": "How can I purchase an app?",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/getting-started/using-marketplace.html"
+		}
+	}
+}

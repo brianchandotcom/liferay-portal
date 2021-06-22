@@ -1,0 +1,8 @@
+{
+	"permissions": {
+		"en_US": {
+			"message": "How can I configure permissions?",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/managing-apps/configuring-portlets-themes-and-layout-templates.html"
+		}
+	}
+}

@@ -338,6 +338,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				_addOrUpdateCommerceOrderItem(
 					cartItem, commerceOrder, commerceContext, serviceContext);
 			}
+
+			commerceOrder = _commerceOrderService.recalculatePrice(
+				commerceOrder.getCommerceOrderId(), commerceContext);
 		}
 
 		commerceOrder.setBillingAddressId(

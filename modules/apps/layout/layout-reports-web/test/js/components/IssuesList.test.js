@@ -132,9 +132,12 @@ const renderIssuesList = ({layoutReportsIssues, loading = false}) => {
 				data: {
 					defaultLanguageId,
 					imagesPath: 'imagesPath',
-					layoutReportsIssues,
+					layoutReportsIssues: {
+						[defaultLanguageId]: {issues: layoutReportsIssues},
+					},
 					pageURLs: mockPageURLs,
 				},
+				languageId: defaultLanguageId,
 				loading,
 			}}
 		>

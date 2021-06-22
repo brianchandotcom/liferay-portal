@@ -80,6 +80,7 @@ export default (state, action, config) => {
 			const props = {
 				availableLanguageIds,
 				defaultLanguageId,
+				editingLanguageId,
 				fieldNameGenerator,
 				generateFieldNameUsingFieldLabel,
 			};

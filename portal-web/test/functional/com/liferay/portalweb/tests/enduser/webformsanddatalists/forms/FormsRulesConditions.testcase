@@ -135,14 +135,89 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Is less than' condition is working fine on the numeric field"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateAnIsLessThanRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134392 CanCreateAnIsLessThanRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Paragraph",
+			formPageNumber = "0");
+
+		FormFields.editParagraphBody(content = "Test");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric",
+			conditionFieldValue = "5",
+			conditionOperator = "Is less than",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Paragraph");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Paragraph",
+			conditionField = "Numeric",
+			conditionOperator = "Is less than",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewLabel(
+			fieldLabel = "Paragraph",
+			fieldName = "Paragraph");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "5");
+
+		Form.validateNoFieldLabel(fieldLabel = "Paragraph");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "4");
+
+		FormFields.viewLabel(
+			fieldLabel = "Paragraph",
+			fieldName = "Paragraph");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "6");
+
+		Form.validateNoFieldLabel(fieldLabel = "Paragraph");
 	}
 
 	@description = "Verify that a Rule with 'Is not Equal to' condition can be created"

@@ -594,6 +594,8 @@ public class ProductResourceImpl
 			ServiceContext serviceContext)
 		throws Exception {
 
+		serviceContext.setExpandoBridgeAttributes(null);
+
 		// Product configuration
 
 		ProductConfiguration productConfiguration = product.getConfiguration();
@@ -640,56 +642,6 @@ public class ProductResourceImpl
 					_cpDefinitionService, productTaxConfiguration,
 					cpDefinition);
 		}
-
-		// Images
-
-		Attachment[] images = product.getImages();
-
-		if (images != null) {
-			for (Attachment attachment : images) {
-				Map<String, Serializable> expandoBridgeAttributes =
-						_getExpandoBridgeAttributes(attachment);
-
-				if (expandoBridgeAttributes != null) {
-					serviceContext.setExpandoBridgeAttributes(
-							expandoBridgeAttributes);
-				}
-
-				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
-					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
-					_uniqueFileNameProvider, attachment,
-					_classNameLocalService.getClassNameId(
-						cpDefinition.getModelClassName()),
-					cpDefinition.getCPDefinitionId(),
-					CPAttachmentFileEntryConstants.TYPE_IMAGE, serviceContext);
-			}
-		}
-
-		// Attachments
-
-		Attachment[] attachments = product.getAttachments();
-
-		if (attachments != null) {
-			for (Attachment attachment : attachments) {
-				Map<String, Serializable> expandoBridgeAttributes =
-						_getExpandoBridgeAttributes(attachment);
-
-				if (expandoBridgeAttributes != null) {
-					serviceContext.setExpandoBridgeAttributes(
-							expandoBridgeAttributes);
-				}
-
-				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
-					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
-					_uniqueFileNameProvider, attachment,
-					_classNameLocalService.getClassNameId(
-						cpDefinition.getModelClassName()),
-					cpDefinition.getCPDefinitionId(),
-					CPAttachmentFileEntryConstants.TYPE_OTHER, serviceContext);
-			}
-		}
-
-		serviceContext.setExpandoBridgeAttributes(null);
 
 		// Product specifications
 
@@ -777,6 +729,54 @@ public class ProductResourceImpl
 
 			// TODO addOrUpdate categories
 
+		}
+
+		// Images
+
+		Attachment[] images = product.getImages();
+
+		if (images != null) {
+			for (Attachment attachment : images) {
+				Map<String, Serializable> expandoBridgeAttributes =
+					_getExpandoBridgeAttributes(attachment);
+
+				if (expandoBridgeAttributes != null) {
+					serviceContext.setExpandoBridgeAttributes(
+						expandoBridgeAttributes);
+				}
+
+				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
+					_uniqueFileNameProvider, attachment,
+					_classNameLocalService.getClassNameId(
+						cpDefinition.getModelClassName()),
+					cpDefinition.getCPDefinitionId(),
+					CPAttachmentFileEntryConstants.TYPE_IMAGE, serviceContext);
+			}
+		}
+
+		// Attachments
+
+		Attachment[] attachments = product.getAttachments();
+
+		if (attachments != null) {
+			for (Attachment attachment : attachments) {
+				Map<String, Serializable> expandoBridgeAttributes =
+					_getExpandoBridgeAttributes(attachment);
+
+				if (expandoBridgeAttributes != null) {
+					serviceContext.setExpandoBridgeAttributes(
+						expandoBridgeAttributes);
+				}
+
+				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
+					_uniqueFileNameProvider, attachment,
+					_classNameLocalService.getClassNameId(
+						cpDefinition.getModelClassName()),
+					cpDefinition.getCPDefinitionId(),
+					CPAttachmentFileEntryConstants.TYPE_OTHER, serviceContext);
+			}
 		}
 
 		// Channels visibility

@@ -15,11 +15,13 @@
 package com.liferay.portal.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -265,6 +267,45 @@ public class I18nServletTest extends I18nServlet {
 
 		_testIsNotDefaultOrFirstLocale(_group, LocaleUtil.US);
 		_testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.US, LocaleUtil.UK);
+	}
+
+	@Test
+	public void testResponseIsForwardedToLocalized404PageIfGroupNotFound()
+		throws Exception {
+
+		String layoutFriendlyUrlPageNotFound = "/web/guest/page-404";
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND",
+			layoutFriendlyUrlPageNotFound);
+
+		String expectedI18nErrorPath =
+			StringPool.SLASH + LocaleUtil.SPAIN.getLanguage();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setServletPath(expectedI18nErrorPath);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, _group.getCompanyId());
+
+		mockHttpServletRequest.setPathInfo(
+			StringBundler.concat(
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING,
+				"/nonexistingfriendlyurl", RandomTestUtil.randomString()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			expectedI18nErrorPath + layoutFriendlyUrlPageNotFound,
+			mockHttpServletResponse.getForwardedUrl());
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
 	}
 
 	@Test

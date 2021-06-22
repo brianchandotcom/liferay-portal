@@ -1,0 +1,8 @@
+{
+	"portal-bundle-blacklist-impl-help": {
+		"en_US": {
+			"message": "Help me blacklist a bundle.",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps.html"
+		}
+	}
+}

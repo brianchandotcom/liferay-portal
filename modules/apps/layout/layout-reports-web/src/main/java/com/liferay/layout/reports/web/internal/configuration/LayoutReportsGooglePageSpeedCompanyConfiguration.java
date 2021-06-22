@@ -16,7 +16,6 @@ package com.liferay.layout.reports.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -35,20 +34,5 @@ public interface LayoutReportsGooglePageSpeedCompanyConfiguration {
 
 	@Meta.AD(deflt = "true", name = "enable-google-pagespeed", required = false)
 	public boolean enabled();
-
-	@ExtendedAttributeDefinition(
-		descriptionArguments = "https://developers.google.com/speed/docs/insights/v5/get-started"
-	)
-	@Meta.AD(
-		description = "api-key-description", name = "api-key", required = false
-	)
-	public String apiKey();
-
-	@Meta.AD(
-		deflt = "MOBILE", description = "strategy-description",
-		name = "strategy", optionLabels = {"mobile", "desktop"},
-		optionValues = {"MOBILE", "DESKTOP"}, required = false
-	)
-	public String strategy();
 
 }

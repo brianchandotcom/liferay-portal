@@ -19,7 +19,6 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedGroupConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
@@ -181,49 +180,50 @@ public class LayoutReportsDataMVCResourceCommand
 		}
 	}
 
+	private String _getConfigurationAdminPortletId(ThemeDisplay themeDisplay) {
+		if (_isOmniAdmin()) {
+			return ConfigurationAdminPortletKeys.SYSTEM_SETTINGS;
+		}
+
+		if (_isCompanyAdmin()) {
+			return ConfigurationAdminPortletKeys.INSTANCE_SETTINGS;
+		}
+
+		if (_isSiteAdmin(themeDisplay.getScopeGroupId())) {
+			return ConfigurationAdminPortletKeys.SITE_SETTINGS;
+		}
+
+		return null;
+	}
+
 	private String _getConfigureGooglePageSpeedURL(
 		PortletRequest portletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_isCompanyAdmin()) {
-			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest,
-					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/configuration_admin/edit_configuration"
-			).setRedirect(
-				_getCompleteURL(portletRequest)
-			).setParameter(
-				"factoryPid",
-				LayoutReportsGooglePageSpeedCompanyConfiguration.class.getName()
-			).setParameter(
-				"pid",
-				LayoutReportsGooglePageSpeedCompanyConfiguration.class.getName()
-			).buildString();
-		}
-		else if (_isSiteAdmin(themeDisplay.getScopeGroupId())) {
-			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest, ConfigurationAdminPortletKeys.SITE_SETTINGS,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/configuration_admin/edit_configuration"
-			).setRedirect(
-				_getCompleteURL(portletRequest)
-			).setParameter(
-				"factoryPid",
-				LayoutReportsGooglePageSpeedGroupConfiguration.class.getName()
-			).setParameter(
-				"pid",
-				LayoutReportsGooglePageSpeedGroupConfiguration.class.getName()
-			).buildString();
+		String configurationAdminPortletId = _getConfigurationAdminPortletId(
+			themeDisplay);
+
+		if (Validator.isNull(configurationAdminPortletId)) {
+			return null;
 		}
 
-		return null;
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, configurationAdminPortletId,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/configuration_admin/edit_configuration"
+		).setRedirect(
+			_getCompleteURL(portletRequest)
+		).setParameter(
+			"factoryPid",
+			LayoutReportsGooglePageSpeedGroupConfiguration.class.getName()
+		).setParameter(
+			"pid",
+			LayoutReportsGooglePageSpeedGroupConfiguration.class.getName()
+		).buildString();
 	}
 
 	private Locale _getDefaultLocale(Layout layout) {
@@ -374,6 +374,13 @@ public class LayoutReportsDataMVCResourceCommand
 			PermissionThreadLocal.getPermissionChecker();
 
 		return permissionChecker.isCompanyAdmin();
+	}
+
+	private boolean _isOmniAdmin() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.isOmniadmin();
 	}
 
 	private boolean _isSiteAdmin(long groupId) {

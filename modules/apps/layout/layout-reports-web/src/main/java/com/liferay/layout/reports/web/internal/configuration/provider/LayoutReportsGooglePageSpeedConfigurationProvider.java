@@ -21,7 +21,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -46,13 +45,7 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 					LayoutReportsGooglePageSpeedGroupConfiguration.class,
 					group.getGroupId());
 
-		String apiKey = layoutReportsGooglePageSpeedGroupConfiguration.apiKey();
-
-		if (Validator.isNotNull(apiKey)) {
-			return apiKey;
-		}
-
-		return _getApiKey(group.getCompanyId());
+		return layoutReportsGooglePageSpeedGroupConfiguration.apiKey();
 	}
 
 	public String getStrategy(Group group) throws ConfigurationException {
@@ -62,20 +55,7 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 					LayoutReportsGooglePageSpeedGroupConfiguration.class,
 					group.getGroupId());
 
-		String strategy =
-			layoutReportsGooglePageSpeedGroupConfiguration.strategy();
-
-		if (Validator.isNotNull(strategy)) {
-			return strategy;
-		}
-
-		LayoutReportsGooglePageSpeedCompanyConfiguration
-			layoutReportsGooglePageSpeedCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-					group.getCompanyId());
-
-		return layoutReportsGooglePageSpeedCompanyConfiguration.strategy();
+		return layoutReportsGooglePageSpeedGroupConfiguration.strategy();
 	}
 
 	public boolean isEnabled() {
@@ -83,17 +63,17 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 	}
 
 	public boolean isEnabled(Group group) throws ConfigurationException {
+		if (!isEnabled(group.getCompanyId())) {
+			return false;
+		}
+
 		LayoutReportsGooglePageSpeedGroupConfiguration
 			layoutReportsGooglePageSpeedGroupConfiguration =
 				_configurationProvider.getGroupConfiguration(
 					LayoutReportsGooglePageSpeedGroupConfiguration.class,
 					group.getGroupId());
 
-		if (!layoutReportsGooglePageSpeedGroupConfiguration.enabled()) {
-			return false;
-		}
-
-		return isEnabled(group.getCompanyId());
+		return layoutReportsGooglePageSpeedGroupConfiguration.enabled();
 	}
 
 	public boolean isEnabled(long companyId) throws ConfigurationException {
@@ -120,16 +100,6 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 		_layoutReportsGooglePageSpeedConfiguration =
 			ConfigurableUtil.createConfigurable(
 				LayoutReportsGooglePageSpeedConfiguration.class, properties);
-	}
-
-	private String _getApiKey(long companyId) throws ConfigurationException {
-		LayoutReportsGooglePageSpeedCompanyConfiguration
-			layoutReportsGooglePageSpeedCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
-					companyId);
-
-		return layoutReportsGooglePageSpeedCompanyConfiguration.apiKey();
 	}
 
 	@Reference

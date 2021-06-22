@@ -249,14 +249,14 @@ const ImagePins = ({
 
 		if (!removePinHandler.handler && !addPinHandler) {
 			try {
-				container.current.selectAll('.circle_pin').remove();
+				containerRef.current.selectAll('.circle_pin').remove();
 			}
 			catch (err) {
 				console.log(err);
 			}
 
 
-			const cont = container.current
+			const cont = containerRef.current
 				.selectAll('g')
 				.data(cPins)
 				.enter()

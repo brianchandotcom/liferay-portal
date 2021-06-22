@@ -37,7 +37,7 @@ const DiagramFooter = ({
 		<div className="d-flex diagram-footer justify-content-end mt-3">
 			<ClayButton className="mr-3" onClick={() => setAddPinHandler(true)}>
 				<span className="inline-item inline-item-before">
-					<ClayIcon spritemap={spritemap} symbol="pin" />
+					<ClayIcon symbol="pin" />
 				</span>
 				{Liferay.Language.get('add-pin')}
 			</ClayButton>

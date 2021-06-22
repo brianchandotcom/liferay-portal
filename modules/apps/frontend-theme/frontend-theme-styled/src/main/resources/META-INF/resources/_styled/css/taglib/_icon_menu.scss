@@ -2,17 +2,11 @@
 	max-width: none;
 }
 
-.lfr-menu-list-overflow {
-	overflow: auto;
-	overflow-x: hidden;
-}
-
 .lfr-menu-list {
 	float: none;
 	overflow-y: auto;
 	position: relative;
 
-	&.direction-left,
 	&.direction-right {
 		margin: 0 2px;
 	}

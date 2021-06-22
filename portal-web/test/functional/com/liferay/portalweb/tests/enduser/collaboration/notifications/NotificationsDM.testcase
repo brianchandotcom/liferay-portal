@@ -14,23 +14,19 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
 
-		SitePages.addPublicPage(
-			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -43,14 +39,9 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 	}
 
 	tearDown {
@@ -71,10 +62,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewNoWebsiteNotificationForNewDocumentInFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
+	@refactordone
+	test CanViewNoWebsiteNotificationForNewDocumentInFolder {
 		Navigator.gotoNotifications();
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
@@ -86,54 +75,43 @@ definition {
 			contentType = "Documents and Media",
 			notificationType = "Website");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		JSONDocument.subscribeFolder(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		DMFolder.subscribePG();
-
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
+		DMNavigator.openToAddEntry(
 			folderName = "DM Folder Name",
 			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Document_1.docx");
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title");
+
+		Button.clickPublish();
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewNoWebsiteNotificationForUpdatedDocumentInFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
+	@refactordone
+	test CanViewNoWebsiteNotificationForUpdatedDocumentInFolder {
 		Navigator.gotoNotifications();
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
@@ -145,93 +123,74 @@ definition {
 			contentType = "Documents and Media",
 			notificationType = "Website");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		JSONDocument.subscribeFolder(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMFolder.subscribePG();
-
-		DMDocument.addPG(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.docx",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		DMDocument.editPG(
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewWebsiteNotificationForNewDocumentInFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+	@refactordone
+	test CanViewWebsiteNotificationForNewDocumentInFolder {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		JSONDocument.subscribeFolder(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		DMFolder.subscribePG();
+		DMNavigator.openToAddEntry(
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addPG(
+		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.docx",
 			dmDocumentTitle = "DM Document Title");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Button.clickPublish();
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -250,50 +209,39 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewWebsiteNotificationForUpdatedDocumentInFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+	@refactordone
+	test CanViewWebsiteNotificationForUpdatedDocumentInFolder {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		JSONDocument.subscribeFolder(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMFolder.subscribePG();
-
-		DMDocument.addPG(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.docx",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		DMDocument.editPG(
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 

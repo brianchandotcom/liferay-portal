@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -55,11 +56,12 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,6 +97,14 @@ public class SiteNavigationAdminDisplayContext {
 			new DefaultSiteNavigationMenuItemTypeContext(
 				themeDisplay.getScopeGroup());
 
+		RenderRequest renderRequest =
+			(RenderRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		RenderResponse renderResponse =
+			(RenderResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		return new DropdownItemList() {
 			{
 				for (SiteNavigationMenuItemType siteNavigationMenuItemType :
@@ -110,9 +120,33 @@ public class SiteNavigationAdminDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setData(
-								Collections.singletonMap(
+								HashMapBuilder.<String, Object>put(
+									"addItemURL",
+									() -> {
+										if (!siteNavigationMenuItemType.
+												isItemSelector()) {
+
+											return null;
+										}
+
+										PortletURL addURL =
+											siteNavigationMenuItemType.
+												getAddURL(
+													renderRequest,
+													renderResponse);
+
+										return addURL.toString();
+									}
+								).put(
 									"href",
-									_getAddURL(siteNavigationMenuItemType)));
+									_getAddURL(siteNavigationMenuItemType)
+								).put(
+									"itemSelector",
+									siteNavigationMenuItemType.isItemSelector()
+								).put(
+									"siteNavigationMenuId",
+									getSiteNavigationMenuId()
+								).build());
 							dropdownItem.setLabel(
 								siteNavigationMenuItemType.getLabel(
 									themeDisplay.getLocale()));
@@ -393,6 +427,16 @@ public class SiteNavigationAdminDisplayContext {
 
 	private String _getAddURL(
 		SiteNavigationMenuItemType siteNavigationMenuItemType) {
+
+		if (siteNavigationMenuItemType.isItemSelector()) {
+			String itemSelectorURL =
+				siteNavigationMenuItemType.getItemSelectorURL(
+					_httpServletRequest);
+
+			if (Validator.isNotNull(itemSelectorURL)) {
+				return itemSelectorURL;
+			}
+		}
 
 		PortletURL addURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse

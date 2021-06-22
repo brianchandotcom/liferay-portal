@@ -13,6 +13,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -35,14 +36,77 @@ export const AddItemDropDown = ({trigger}) => {
 						<ClayDropDown.Item
 							key={label}
 							onClick={() => {
-								Liferay.Util.openWindow({
-									dialog: {
-										destroyOnHide: true,
-									},
-									id: `${portletNamespace}addMenuItem`,
-									title: label,
-									uri: data.href,
-								});
+								if (data.itemSelector) {
+									Liferay.Util.openSelectionModal({
+										onSelect: (selectedItem) => {
+											if (!selectedItem) {
+												return;
+											}
+
+											let infoItem = {
+												...selectedItem,
+											};
+
+											let value;
+
+											if (
+												typeof selectedItem.value ===
+												'string'
+											) {
+												try {
+													value = JSON.parse(
+														selectedItem.value
+													);
+												}
+												catch (error) {}
+											}
+											else if (
+												selectedItem.value &&
+												typeof selectedItem.value ===
+													'object'
+											) {
+												value = selectedItem.value;
+											}
+
+											if (value) {
+												delete infoItem.value;
+												infoItem = {...value};
+											}
+
+											infoItem.siteNavigationMenuId =
+												data.siteNavigationMenuId;
+
+											const namespacedInfoItem = Liferay.Util.ns(
+												portletNamespace,
+												infoItem
+											);
+
+											fetch(data.addItemURL, {
+												body: objectToFormData(
+													namespacedInfoItem
+												),
+												method: 'POST',
+											}).then(() => {
+												window.location.reload();
+											});
+										},
+										selectEventName: `${portletNamespace}selectItem`,
+										title: Liferay.Language.get(
+											'select-item'
+										),
+										url: data.href,
+									});
+								}
+								else {
+									Liferay.Util.openWindow({
+										dialog: {
+											destroyOnHide: true,
+										},
+										id: `${portletNamespace}addMenuItem`,
+										title: label,
+										uri: data.href,
+									});
+								}
 							}}
 						>
 							{label}

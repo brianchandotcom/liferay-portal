@@ -95,12 +95,12 @@
 </tr>
 <tr>
 	<td>ANY_DISABLED</td>
-	<td>//*[contains(@class,'btn')][normalize-space(text())='${key_text}'][@disabled='']</td>
+	<td>//button[@disabled][contains(@class,'btn')][normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANY_ENABLED</td>
-	<td>//*[contains(@class,'btn')][normalize-space(text())='${key_text}'][not(@disabled='')]</td>
+	<td>//button[not(@disabled)][contains(@class,'btn')][normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

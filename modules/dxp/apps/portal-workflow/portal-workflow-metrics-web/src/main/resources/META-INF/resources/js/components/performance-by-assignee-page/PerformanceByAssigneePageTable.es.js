@@ -27,14 +27,12 @@ function Item({assignee: {image, name}, durationTaskAvg, id, taskCount}) {
 				<span>{name || id}</span>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell>
-				<span className="task-count-value text-right">{taskCount}</span>
+			<ClayTable.Cell className="text-right">
+				<span>{taskCount}</span>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell>
-				<span className="task-count-value text-right">
-					{formattedDuration}
-				</span>
+			<ClayTable.Cell className="text-right">
+				<span>{formattedDuration}</span>
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);
@@ -49,14 +47,22 @@ function Table({items}) {
 						{Liferay.Language.get('assignee-name')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '20%'}}>
+					<ClayTable.Cell
+						className="text-right"
+						headingCell
+						style={{width: '20%'}}
+					>
 						<ListHeadItem
 							name="taskCount"
 							title={Liferay.Language.get('completed-tasks')}
 						/>
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '20%'}}>
+					<ClayTable.Cell
+						className="text-right"
+						headingCell
+						style={{width: '20%'}}
+					>
 						<ListHeadItem
 							name="durationTaskAvg"
 							title={Liferay.Language.get(

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Rolling Restart Sample Web
+Bundle-SymbolicName: com.liferay.portal.rolling.restart.sample.web
+Bundle-Version: 1.0.0

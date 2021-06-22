@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Rolling Restart Sample API
+Bundle-SymbolicName: com.liferay.portal.rolling.restart.sample.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.rolling.restart.sample.exception,\
+	com.liferay.portal.rolling.restart.sample.model,\
+	com.liferay.portal.rolling.restart.sample.service,\
+	com.liferay.portal.rolling.restart.sample.service.persistence

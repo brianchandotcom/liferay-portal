@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Test Portlet API
-Bundle-SymbolicName: com.liferay.test.portlet.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.test.portlet.exception,\
-	com.liferay.test.portlet.model,\
-	com.liferay.test.portlet.service,\
-	com.liferay.test.portlet.service.persistence

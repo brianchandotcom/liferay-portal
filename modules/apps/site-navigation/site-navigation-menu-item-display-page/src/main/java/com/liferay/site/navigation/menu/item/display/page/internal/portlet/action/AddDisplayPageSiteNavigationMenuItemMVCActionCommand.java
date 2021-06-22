@@ -59,15 +59,15 @@ public class AddDisplayPageSiteNavigationMenuItemMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		if ((classNameId > 0) && (classPK > 0)) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 

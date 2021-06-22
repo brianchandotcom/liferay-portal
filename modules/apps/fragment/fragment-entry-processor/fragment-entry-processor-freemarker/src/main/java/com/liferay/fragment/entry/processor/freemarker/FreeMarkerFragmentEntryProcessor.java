@@ -22,6 +22,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -125,12 +126,26 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getLocale());
 
+		String fragmentEntryLinkNamespace = _getFragmentEntryLinkNamespace(
+			fragmentEntryLink);
+
 		template.putAll(
 			HashMapBuilder.<String, Object>put(
 				"configuration", configurationValuesJSONObject
 			).put(
-				"fragmentEntryLinkNamespace",
-				_getFragmentEntryLinkNamespace(fragmentEntryLink)
+				"fragmentElementId",
+				() -> {
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("fragment-");
+					sb.append(fragmentEntryLink.getFragmentEntryId());
+					sb.append("-");
+					sb.append(fragmentEntryLinkNamespace);
+
+					return sb.toString();
+				}
+			).put(
+				"fragmentEntryLinkNamespace", fragmentEntryLinkNamespace
 			).putAll(
 				_fragmentEntryConfigurationParser.getContextObjects(
 					configurationValuesJSONObject,
@@ -199,6 +214,8 @@ public class FreeMarkerFragmentEntryProcessor
 				template.putAll(
 					HashMapBuilder.<String, Object>put(
 						"configuration", configurationDefaultValuesJSONObject
+					).put(
+						"fragmentElementId", StringPool.BLANK
 					).put(
 						"fragmentEntryLinkNamespace", StringPool.BLANK
 					).putAll(

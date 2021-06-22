@@ -40,6 +40,16 @@
 	<td>//button[contains(@type, 'button') and contains(., 'Download')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_ELLIPSIS_BUTTON</td>
+	<td>//tr[contains(@class, '') and contains(., '${envelopeName}')]//button[contains(@class, 'dropdown')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_DOWNLOAD_BY_LIST</td>
+	<td>//button[contains(., 'Download')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

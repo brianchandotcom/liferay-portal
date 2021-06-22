@@ -38,10 +38,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-131712. Verify if its possible collect Digital Signature By button"
+	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By button"
 	@priority = "5"
 	test CanCollectDigitalSignatureByButton {
-		DigitalSignature.enableDigitalSignature();
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -63,10 +63,10 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 	}
 
-	@description = "This is a test for LPS-131712. Verify if its possible collect Digital Signature By vertical ellipsis"
+	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By vertical ellipsis"
 	@priority = "5"
 	test CanCollectDigitalSignatureByVerticalEllipsis {
-		DigitalSignature.enableDigitalSignature();
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -86,6 +86,31 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
+	}
+
+	@description = "This is a test for LPS-133993. Verify if not supported file disable the Digital Signature collect icon"
+	@priority = "5"
+	test CanUnsupportedFileDisableCollectIcon {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.mp3",
+			dmDocumentTitle = "Document_2.mp3");
+
+		var dmDocumentTitle = "Document_2.mp3";
+
+		Click(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+
+		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON_DISABLED");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.mp3");
 	}
 
 }

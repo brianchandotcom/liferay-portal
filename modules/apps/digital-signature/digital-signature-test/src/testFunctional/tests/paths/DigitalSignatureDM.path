@@ -25,6 +25,11 @@
 	<td>//li[contains(@data-title, '${dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_COLLECT_BUTTON_DISABLED</td>
+	<td>//button[contains(@class, 'nav-link') and contains(@disabled, 'disabled')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

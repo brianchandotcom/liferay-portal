@@ -1,39 +1,5 @@
 definition {
 
-	macro enableDigitalSignature {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
-
-		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
-		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
-		var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
-		var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
-		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.pivate.key");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
-			value1 = "${digitalSignatureApiUsername}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID",
-			value1 = "${digitalSignatureApiAccountId}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI",
-			value1 = "${digitalSignatureAccountBaseUri}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY",
-			value1 = "${digitalSignatureIntegrationKey}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY",
-			value1 = "${digitalSignatureRsaPrivateKey}");
-
-		SystemSettings.saveConfiguration();
-	}
-
 	macro createEnvelope {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -54,12 +20,12 @@ definition {
 			key_text = "Envelope Name",
 			locator1 = "TextInput#ANY",
 			value1 = "${envelopeName}");
-		
+
 		Type(
 			key_text = "Recipient Full Name",
 			locator1 = "TextInput#ANY",
 			value1 = "${recipientFullName}");
-		
+
 		Type(
 			key_text = "Email Subject",
 			locator1 = "TextInput#ANY",
@@ -90,6 +56,40 @@ definition {
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
 
 		Button.click(button = "Send");
+	}
+
+	macro enableDigitalSignature {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "${siteStrategy}");
+
+		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
+		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
+		var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
+		var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
+		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
+			value1 = "${digitalSignatureApiUsername}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID",
+			value1 = "${digitalSignatureApiAccountId}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI",
+			value1 = "${digitalSignatureAccountBaseUri}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY",
+			value1 = "${digitalSignatureIntegrationKey}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY",
+			value1 = "${digitalSignatureRsaPrivateKey}");
+
+		SystemSettings.saveConfiguration();
 	}
 
 }

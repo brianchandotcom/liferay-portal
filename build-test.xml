@@ -9815,10 +9815,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="digital.signature.rsa.pivate.key" />
+			<isset property="digital.signature.rsa.private.key" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					digital.signature.rsa.pivate.key=${digital.signature.rsa.pivate.key}
+					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
 				</echo>
 			</then>
 		</if>
@@ -10589,10 +10589,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="digital.signature.rsa.pivate.key" />
+			<isset property="digital.signature.rsa.private.key" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					digital.signature.rsa.pivate.key=${digital.signature.rsa.pivate.key}
+					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
 				</echo>
 			</then>
 		</if>

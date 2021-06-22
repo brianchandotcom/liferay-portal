@@ -34,68 +34,24 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-XXX. Verify if Envelope Name field is required"
-	@priority = "4"
-	test EnvelopeNameIsRequired {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-        LexiconEntry.gotoAdd();
-
-        AssertElementPresent(fieldLabel="Envelope Name", locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-    }
-
-	@description = "This is a test for LPS-XXX. Verify if Recipient Full Name field is required"
-	@priority = "4"
-    test RecipentNameIsRequired {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-        LexiconEntry.gotoAdd();
-
-        AssertElementPresent(fieldLabel="Recipient Full Name", locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-    }
-
-	@description = "This is a test for LPS-XXX. Verify if Recipient Email field is required"
-	@priority = "4"
-    test RecipentEmailIsRequired {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-        LexiconEntry.gotoAdd();
-
-        AssertElementPresent(fieldLabel="Recipient Email", locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-    }
-
-	@description = "This is a test for LPS-XXX. Verify if Email Subject field is required"
-	@priority = "4"
-    test EmailSubjectIsRequired {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-        LexiconEntry.gotoAdd();
-
-        AssertElementPresent(fieldLabel="Email Subject", locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-    }
-
-	@description = "This is a test for LPS-XXX. Verify if its possible only maximum of 10 recipients can be added"
+	@description = "This is a test for LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
 	@priority = "4"
 	test CanAddOnly10Recipients {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Digital Signature");
 
-        LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAdd();
 
 		for (var i : list "1,2,3,4,5,6,7,8,9") {
 			AssertClick(
-			key_text = "Add Recipient",
-			locator1 = "Button#ANY_WITH_SPAN",
-			value1 = "Add Recipient");
+				key_text = "Add Recipient",
+				locator1 = "Button#ANY_WITH_SPAN",
+				value1 = "Add Recipient");
 		}
 
 		AssertElementNotPresent(
@@ -103,14 +59,18 @@ definition {
 			locator1 = "Button#ANY_WITH_SPAN");
 	}
 
-	@description = "This is a test for LPS-XXX. Verify if its possible delete any additional recipients"
+	@description = "This is a test for LPS-131425. Verify if its possible delete any additional recipients"
 	@priority = "4"
 	test CanDeleteRecipients {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Digital Signature");
 
-        LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAdd();
 
 		AssertClick(
 			key_text = "Add Recipient",
@@ -119,36 +79,128 @@ definition {
 
 		Click(locator1 = "Button#REMOVE_IMAGE_LAST");
 
-		AssertElementPresent(
-			locator1 = "Button#TRASH_DISABLED");
+		AssertElementPresent(locator1 = "Button#TRASH_DISABLED");
 	}
 
-	@description = "This is a test for LPS-XXX. Verify if Success Message appear"
-	@priority = "3"
-	test CanViewSuccessMessage {
-		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			envelopeName = "Test Envelope Name",
-			recipientFullName= "Recipient Full Name",
-			emailSubject = "Email Subject",
-			recipientEmail = "test@liferay.com",
-			emailMessage = "Email Message");
-
-		Alert.viewSuccessMessageText(successMessage="Your envelope was created successfully.");
-	}
-
-	@description = "This is a test for LPS-XXX. Verify if Error message appear"
-	@priority = "3"
+	@description = "This is a test for LPS-131425. Verify if Error message appear"
+	@ignore = "true"
+	@priority = "4"
 	test CanViewErrorMessage {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
 		DigitalSignature.createEnvelope(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			envelopeName = "Test Envelope Name",
-			recipientFullName= "Recipient Full Name",
+			emailMessage = "Email Message",
 			emailSubject = "Email Subject",
+			envelopeName = "Test Envelope Name",
 			recipientEmail = "test@liferay",
-			emailMessage = "Email Message");
+			recipientFullName = "Recipient Full Name");
 
-		Alert.viewErrorMessage(errorMessage = "Error Message here");
+		Alert.viewErrorMessage(errorMessage = "There was an error in processing your request.  Please try again later.");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.emptyCP();
+	}
+
+	@description = "This is a test for LPS-131425. Verify if Success Message appear"
+	@priority = "4"
+	test CanViewSuccessMessage {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DigitalSignature.createEnvelope(
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			emailMessage = "Email Message",
+			emailSubject = "Email Subject",
+			envelopeName = "Test Envelope Name",
+			recipientEmail = "test@liferay.com",
+			recipientFullName = "Recipient Full Name");
+
+		Alert.viewSuccessMessageText(successMessage = "Your envelope was successfully sent!");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.emptyCP();
+	}
+
+	@description = "This is a test for LPS-131425. Verify if Email Subject field is required"
+	@priority = "4"
+	test EmailSubjectIsRequired {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			fieldLabel = "Email Subject",
+			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+	}
+
+	@description = "This is a test for LPS-131425. Verify if Envelope Name field is required"
+	@priority = "4"
+	test EnvelopeNameIsRequired {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			fieldLabel = "Envelope Name",
+			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+	}
+
+	@description = "This is a test for LPS-131425. Verify if Recipient Email field is required"
+	@priority = "4"
+	test RecipentEmailIsRequired {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			fieldLabel = "Recipient Email",
+			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+	}
+
+	@description = "This is a test for LPS-131425. Verify if Recipient Full Name field is required"
+	@priority = "4"
+	test RecipentNameIsRequired {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			fieldLabel = "Recipient Full Name",
+			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
 	}
 
 }

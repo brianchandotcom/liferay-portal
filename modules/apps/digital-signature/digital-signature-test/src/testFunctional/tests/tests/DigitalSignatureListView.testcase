@@ -34,10 +34,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-131712. Verify if its possible download envelopes"
+	@description = "This is a test for LPS-131206. Verify if its possible download envelopes by Envelope Description "
 	@priority = "3"
-	test CanDownloadEnvelope {
-		DigitalSignature.enableDigitalSignature();
+	test CanDownloadEnvelopeByEnvelopeDescription {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		Navigator.openURL();
 
@@ -54,10 +54,30 @@ definition {
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_DOWNLOAD_BUTTON");
 	}
 
-	@description = "This is a test for LPS-131712. Verify if is possible navigate between pages"
+	@description = "This is a test for LPS-131206. Verify if its possible download envelopes by Envelope List"
+	@priority = "3"
+	test CanDownloadEnvelopeByEnvelopeList {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		var envelopeName = "test";
+
+		Click(
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ELLIPSIS_BUTTON",
+			value1 = "${envelopeName}");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_DOWNLOAD_BY_LIST");
+	}
+
+	@description = "This is a test for LPS-131206. Verify if is possible navigate between pages"
 	@priority = "3"
 	test CanNavigateBetweenPages {
-		DigitalSignature.enableDigitalSignature();
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		Navigator.openURL();
 
@@ -68,10 +88,10 @@ definition {
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
 	}
 
-	@description = "This is a test for LPS-131712. Verify if its possible view envelope details"
+	@description = "This is a test for LPS-131206. Verify if its possible view envelope details"
 	@priority = "4"
 	test CanViewEnvelopeDetails {
-		DigitalSignature.enableDigitalSignature();
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		Navigator.openURL();
 
@@ -88,10 +108,10 @@ definition {
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_ID");
 	}
 
-	@description = "This is a test for LPS-131712. Verify if Digital Signature can be enabled"
+	@description = "This is a test for LPS-131206. Verify if Digital Signature can be enabled"
 	@priority = "5"
 	test DigitalSignatureCanBeEnabled {
-		DigitalSignature.enableDigitalSignature();
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		Navigator.openURL();
 
@@ -106,10 +126,10 @@ definition {
 			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
 	}
 
-	@description = "This is a test for LPS-131712. Verify if have more recipients than one"
+	@description = "This is a test for LPS-131206. Verify if have more recipients than one"
 	@priority = "3"
 	test HaveMoreRecipientsThanOne {
-		DigitalSignature.enableDigitalSignature();
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
 		Navigator.openURL();
 
@@ -118,21 +138,6 @@ definition {
 			portlet = "Digital Signature");
 
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
-	}
-	@description = "This is a test for LPS-XXX. Verify if its possible create a new envelope"
-	@priority = "5"
-	test CanCreateNewEnvelope {
-		DigitalSignature.enableDigitalSignature();
-
-		Navigator.openURL();
-
-		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			envelopeName = "Test Envelope Name",
-			recipientFullName= "Recipient Full Name",
-			emailSubject = "Email Subject",
-			recipientEmail = "test@liferay.com",
-			emailMessage = "Email Message");
 	}
 
 }

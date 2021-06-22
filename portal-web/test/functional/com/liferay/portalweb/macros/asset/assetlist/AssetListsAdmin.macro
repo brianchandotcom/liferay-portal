@@ -59,9 +59,7 @@ definition {
 			fieldLabel = "Title",
 			text = "${assetListTitle}");
 
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.save();
 	}
 
 	macro addKeywordsFilter {
@@ -123,9 +121,7 @@ definition {
 			fieldLabel = "Title",
 			text = "${assetListTitle}");
 
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
+		PortletEntry.save();
 	}
 
 	macro addSelection {

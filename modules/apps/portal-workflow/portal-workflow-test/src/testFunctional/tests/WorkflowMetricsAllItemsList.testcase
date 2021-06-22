@@ -645,12 +645,69 @@ definition {
 	}
 
 	@description = "LPS-130167 - Verify that the user is able to reorder entries by clicking the Due Date column title"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ReorderEntriesClickingDueDateColumn {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
 
-		// TODO LRQA-67734 ReorderEntriesClickingDueDateColumn pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry  Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		Pause(locator1 = "60000");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry  Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Blogs Entry Title 1",
+			keyCompare = "Blogs Entry: Blogs Entry Title 2",
+			rowNumber = "1");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Blogs Entry Title 2",
+			keyCompare = "Blogs Entry: Blogs Entry Title 1",
+			rowNumber = "2");
+
+		Click(
+			key_orderBy = "Due Date",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Blogs Entry Title 2",
+			keyCompare = "Blogs Entry: Blogs Entry Title 1",
+			rowNumber = "1");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Blogs Entry Title 1",
+			keyCompare = "Blogs Entry: Blogs Entry Title 2",
+			rowNumber = "2");
 	}
 
 	@description = "LPS-98517 - Verify that if Assignee dropdown menu is higher than 496px a search bar is added on it as specified on Figma"

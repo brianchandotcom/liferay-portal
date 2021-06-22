@@ -256,6 +256,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_ORDER_BY</td>
+	<td>//tr//span[@data-title="${key_orderBy}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE</td>
 	<td>//div[@class='table-responsive']//table//th[contains(.,'Current Assignee')]</td>
 	<td></td>

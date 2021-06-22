@@ -36,13 +36,13 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class ModulesJSUnitBatchTestClassGroup
+public class JSUnitModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
-	public static class ModulesJSUnitBatchTestClass
+	public static class JSUnitModulesBatchTestClass
 		extends ModulesBatchTestClass {
 
-		protected ModulesJSUnitBatchTestClass(
+		protected JSUnitModulesBatchTestClass(
 			File projectDir, File modulesDir) {
 
 			super(projectDir);
@@ -58,7 +58,7 @@ public class ModulesJSUnitBatchTestClassGroup
 
 	}
 
-	protected ModulesJSUnitBatchTestClassGroup(
+	protected JSUnitModulesBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -157,7 +157,7 @@ public class ModulesJSUnitBatchTestClassGroup
 
 		for (File projectDir : projectDirs) {
 			testClasses.add(
-				new ModulesJSUnitBatchTestClass(projectDir, modulesDir));
+				new JSUnitModulesBatchTestClass(projectDir, modulesDir));
 		}
 
 		Collections.sort(testClasses);

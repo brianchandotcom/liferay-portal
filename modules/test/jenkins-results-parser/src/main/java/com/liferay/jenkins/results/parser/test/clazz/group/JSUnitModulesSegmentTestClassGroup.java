@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * @author Michael Hashimoto
  */
-public class ModulesJSUnitSegmentTestClassGroup extends SegmentTestClassGroup {
+public class JSUnitModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 
-	public ModulesJSUnitSegmentTestClassGroup(
+	public JSUnitModulesSegmentTestClassGroup(
 		BatchTestClassGroup parentBatchTestClassGroup) {
 
 		super(parentBatchTestClassGroup);

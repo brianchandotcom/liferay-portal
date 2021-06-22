@@ -134,7 +134,7 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("js-unit-")) {
-				batchTestClassGroup = new ModulesJSUnitBatchTestClassGroup(
+				batchTestClassGroup = new JSUnitModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("unit-")) {
@@ -253,9 +253,9 @@ public class TestClassGroupFactory {
 			return new JUnitSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof
-					ModulesJSUnitBatchTestClassGroup) {
+					JSUnitModulesBatchTestClassGroup) {
 
-			return new ModulesJSUnitSegmentTestClassGroup(batchTestClassGroup);
+			return new JSUnitModulesSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			return new PluginsSegmentTestClassGroup(

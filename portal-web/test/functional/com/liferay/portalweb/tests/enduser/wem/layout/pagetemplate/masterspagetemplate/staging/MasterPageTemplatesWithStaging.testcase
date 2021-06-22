@@ -302,7 +302,6 @@ definition {
 			AssertVisible(
 				key_fragmentName = "heading",
 				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
-
 		}
 
 		task ("View the page editor sidebar shown") {
@@ -316,9 +315,10 @@ definition {
 		}
 
 		task ("View the Button fragment on the page") {
-			AssertVisible(
-				key_fragmentName = "button",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+			PageEditor.viewFragmentEditableText(
+				editableText = "Go Somewhere",
+				fragmentName = "Button",
+				id = "link");
 		}
 	}
 

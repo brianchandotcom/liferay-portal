@@ -427,8 +427,9 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _toKnowledgeBaseArticle(
 			_kbArticleService.addKBArticle(
-				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY, parentResourceClassNameId,
-				parentResourcePrimaryKey, knowledgeBaseArticle.getTitle(),
+				null, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
+				parentResourceClassNameId, parentResourcePrimaryKey,
+				knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, null,

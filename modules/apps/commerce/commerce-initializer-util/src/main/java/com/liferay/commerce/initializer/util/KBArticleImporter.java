@@ -108,7 +108,7 @@ public class KBArticleImporter {
 			KBFolderConstants.getClassName());
 
 		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
-			userId, folderClassNameId,
+			null, userId, folderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, null, content,
 			StringPool.BLANK, null, sections, selectedFileNames,
 			serviceContext);

@@ -763,7 +763,7 @@ public class KBFolderLocalServiceTest {
 		throws Exception {
 
 		return KBArticleLocalServiceUtil.addKBArticle(
-			_user.getUserId(),
+			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBArticleConstants.getClassName()),
 			kbArticle.getResourcePrimKey(), title, title,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
@@ -784,7 +784,7 @@ public class KBFolderLocalServiceTest {
 		serviceContext.setModifiedDate(createDate);
 
 		return KBArticleLocalServiceUtil.addKBArticle(
-			_user.getUserId(),
+			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, new String[0], new String[0],
@@ -795,7 +795,7 @@ public class KBFolderLocalServiceTest {
 		throws Exception {
 
 		return KBArticleLocalServiceUtil.addKBArticle(
-			_user.getUserId(),
+			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, new String[0], new String[0],
@@ -807,7 +807,7 @@ public class KBFolderLocalServiceTest {
 		throws PortalException {
 
 		return KBFolderLocalServiceUtil.addKBFolder(
-			_user.getUserId(), _group.getGroupId(),
+			null, _user.getUserId(), _group.getGroupId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentResourcePrimKey, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),

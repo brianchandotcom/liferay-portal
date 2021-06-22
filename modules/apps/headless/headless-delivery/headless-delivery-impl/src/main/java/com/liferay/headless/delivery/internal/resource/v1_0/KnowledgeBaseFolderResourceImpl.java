@@ -136,7 +136,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				parentKBFolder.getGroupId(), _getClassNameId(),
+				null, parentKBFolder.getGroupId(), _getClassNameId(),
 				parentKnowledgeBaseFolderId, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextRequestUtil.createServiceContext(
@@ -152,7 +152,8 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				siteId, _getClassNameId(), 0, knowledgeBaseFolder.getName(),
+				null, siteId, _getClassNameId(), 0,
+				knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextRequestUtil.createServiceContext(
 					_getExpandoBridgeAttributes(knowledgeBaseFolder), siteId,

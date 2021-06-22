@@ -358,7 +358,7 @@ public class AdminPortlet extends BaseKBPortlet {
 					KBWebKeys.THEME_DISPLAY);
 
 			kbFolderService.addKBFolder(
-				themeDisplay.getScopeGroupId(), parentResourceClassNameId,
+				null, themeDisplay.getScopeGroupId(), parentResourceClassNameId,
 				parentResourcePrimKey, name, description, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {

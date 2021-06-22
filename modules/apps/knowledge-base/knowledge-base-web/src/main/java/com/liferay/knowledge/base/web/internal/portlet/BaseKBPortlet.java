@@ -434,9 +434,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
 
 			kbArticle = kbArticleService.addKBArticle(
-				portal.getPortletId(actionRequest), parentResourceClassNameId,
-				parentResourcePrimKey, title, urlTitle, content, description,
-				sourceURL, sections, selectedFileNames, serviceContext);
+				null, portal.getPortletId(actionRequest),
+				parentResourceClassNameId, parentResourcePrimKey, title,
+				urlTitle, content, description, sourceURL, sections,
+				selectedFileNames, serviceContext);
 		}
 		else if (cmd.equals(Constants.REVERT)) {
 			int version = ParamUtil.getInteger(

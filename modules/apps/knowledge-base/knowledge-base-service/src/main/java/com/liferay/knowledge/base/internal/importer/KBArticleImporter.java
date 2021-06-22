@@ -113,7 +113,8 @@ public class KBArticleImporter {
 					WorkflowConstants.ACTION_SAVE_DRAFT);
 
 				kbArticle = _kbArticleLocalService.addKBArticle(
-					userId, parentResourceClassNameId, parentResourcePrimaryKey,
+					null, userId, parentResourceClassNameId,
+					parentResourcePrimaryKey,
 					kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
 					null, kbArticleMarkdownConverter.getSourceURL(), null, null,
 					serviceContext);

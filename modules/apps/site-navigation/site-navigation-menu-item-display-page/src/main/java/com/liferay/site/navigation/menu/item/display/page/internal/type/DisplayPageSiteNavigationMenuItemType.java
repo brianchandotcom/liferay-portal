@@ -37,10 +37,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
+import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemTypeConfiguration;
 import com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.io.IOException;
 
@@ -64,6 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
+	configurationPid = "com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemTypeConfiguration",
 	immediate = true,
 	property = "site.navigation.menu.item.type=" + SiteNavigationMenuItemTypeConstants.DISPLAY_PAGE,
 	service = SiteNavigationMenuItemType.class
@@ -204,6 +207,13 @@ public class DisplayPageSiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean isAvailable(
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
+
+		return _ffDisplayPageSiteNavigationMenuItemTypeConfiguration.enabled();
+	}
+
+	@Override
 	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
 		return true;
 	}
@@ -284,6 +294,9 @@ public class DisplayPageSiteNavigationMenuItemType
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	private volatile FFDisplayPageSiteNavigationMenuItemTypeConfiguration
+		_ffDisplayPageSiteNavigationMenuItemTypeConfiguration;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

@@ -247,7 +247,8 @@
 													"text": {
 														"value": {
 															"title": "Welcome to Liferay Portal"
-														}
+														},
+														"value_i18n": "[£WELCOME_TO_LIFERAY_I18N_JSON_VALUE£]"
 													}
 												}
 											}

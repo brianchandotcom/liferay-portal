@@ -22,6 +22,9 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -46,6 +49,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,8 +66,10 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -289,6 +295,31 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 				layoutPageTemplateStructure.getData(
 					SegmentsExperienceConstants.ID_DEFAULT));
 
+			Class<?> clazz = getClass();
+
+			String pageElementJSON = StringUtil.replace(
+				StringUtil.read(
+					clazz.getClassLoader(), _PATH + "page-element.json"),
+				"\"[£", "£]\"",
+				HashMapBuilder.put(
+					"WELCOME_TO_LIFERAY_I18N_JSON_VALUE",
+					() -> {
+						JSONObject jsonObject =
+							JSONFactoryUtil.createJSONObject();
+
+						Set<Locale> locales = new HashSet<>(
+							LanguageUtil.getAvailableLocales());
+
+						for (Locale locale : locales) {
+							jsonObject.put(
+								LocaleUtil.toLanguageId(locale),
+								LanguageUtil.get(locale, "welcome-to-liferay"));
+						}
+
+						return jsonObject.toJSONString();
+					}
+				).build());
+
 			String releaseInfo = StringPool.BLANK;
 
 			if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
@@ -301,12 +332,8 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 			releaseInfo = StringUtil.replace(
 				releaseInfo, CharPool.OPEN_PARENTHESIS, "<br>(");
 
-			Class<?> clazz = getClass();
-
-			String pageElementJSON = StringUtil.replace(
-				StringUtil.read(
-					clazz.getClassLoader(), _PATH + "page-element.json"),
-				"[$", "$]",
+			pageElementJSON = StringUtil.replace(
+				pageElementJSON, "[$", "$]",
 				HashMapBuilder.put(
 					"RELEASE_INFO", releaseInfo + "."
 				).put(

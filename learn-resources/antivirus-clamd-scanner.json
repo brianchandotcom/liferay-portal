@@ -1,0 +1,8 @@
+{
+	"antivirus-clamd-scanner-help": {
+		"en_US": {
+			"message": "Help me configure the Antivirus Clamd Scanner.",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files.html"
+		}
+	}
+}

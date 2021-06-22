@@ -78,7 +78,7 @@ if (Validator.isNull(panelHeaderLinkCssClass)) {
 		</c:when>
 		<c:otherwise>
 			<legend class="sr-only">
-				<%= portletDisplay.getTitle() %>
+				<%= HtmlUtil.escape(portletDisplay.getTitle()) %>
 			</legend>
 		</c:otherwise>
 	</c:choose>

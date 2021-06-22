@@ -268,6 +268,9 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 						</div>
 
 						<div class="lfr-blogs-small-image-selector">
+							<c:if test="<%= entry != null %>">
+								<aui:input name="smallImageURL" type="hidden" value="<%= entry.getSmallImageURL() %>" />
+							</c:if>
 
 							<%
 							String smallImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "smallImageSelectedItem";

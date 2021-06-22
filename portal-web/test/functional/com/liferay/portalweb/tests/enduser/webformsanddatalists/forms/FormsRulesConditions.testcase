@@ -215,14 +215,82 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Is greater than or equal to' condition is working fine on the numeric field"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateAnIsGreaterThanOrEqualToRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134391 CanCreateAnIsGreaterThanOrEqualToRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Paragraph",
+			formPageNumber = "0");
+
+		FormFields.editParagraphBody(content = "Test.");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric",
+			conditionFieldValue = "5",
+			conditionOperator = "Is greater than or equal to",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Paragraph");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Paragraph",
+			conditionField = "Numeric",
+			conditionFieldConstant = "5",
+			conditionOperator = "Is greater than or equal to",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		for (var value : list "2,5,6") {
+			FormFields.editText(
+				fieldName = "Numeric",
+				fieldValue = "${value}");
+
+			if ("${value}" == "2") {
+				FormFields.viewParagraphFieldNotPresent(fieldTitle = "Paragraph");
+			}
+			else {
+				FormFields.viewParagraphField(
+					fieldTitle = "Paragraph",
+					fieldValue = "Test.");
+			}
+			if ("${value}" != "6") {
+				FormFields.editTextWithBackspace(fieldName = "Numeric");
+			}
+		}
 	}
 
 	@description = "Verify that a Rule with 'Is greater than' condition is working fine on the numeric field"

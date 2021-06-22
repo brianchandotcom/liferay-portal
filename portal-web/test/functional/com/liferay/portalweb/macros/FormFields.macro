@@ -1442,6 +1442,12 @@ definition {
 		}
 	}
 
+	macro viewParagraphFieldNotPresent {
+		key_fieldName = "${fieldTitle}";
+
+		AssertElementNotPresent(locator1 = "FormFields#PARAGRAPH_TITLE");
+	}
+
 	macro viewPredefinedValueDropdownContent {
 		AssertElementPresent(
 			key_textContent = "${key_textContent}",

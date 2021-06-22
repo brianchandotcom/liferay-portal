@@ -614,55 +614,6 @@ definition {
 		}
 	}
 
-	@description = "When there's a vocabulary in the "In use" box is in the top position of the list and user clicks on Save, the graph will feature that vocabulary in the X axis"
-	@priority = "5"
-	test CheckTopPositionVocabularyXAxis {
-		task ("Create a Web Content with Audience and Stage categories") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithCategoryCP(
-				categoryName = "Audience 1",
-				vocabularyName = "Audience",
-				webContentContent = "Web Content Content",
-				webContentTitle = "WC Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
-
-			WebContent.selectCategory(
-				categoryName = "Stage 1",
-				vocabularyName = "Stage");
-
-			PortletEntry.publish();
-		}
-
-		task ("Go to Content Dashboard > Audic Graph configuration") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Check which vocabulary is displayed in x-axis") {
-			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
-				xAxisCategoryName = "Stage 1");
-
-			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Audience");
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
-				xAxisCategoryName = "Audience 1");
-		}
-	}
-
 	@description = "When there's a vocabulary in the "In use" box is in the second position of the list and user clicks on Save, the graph will feature that vocabulary in the checkbox legend above"
 	@priority = "5"
 	test CheckSecondPositionVocabularyCheckbox {
@@ -709,6 +660,55 @@ definition {
 				auditGraphCheckboxName = "Audience 1",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
 				value1 = "WC Title");
+		}
+	}
+
+	@description = "When there's a vocabulary in the "In use" box is in the top position of the list and user clicks on Save, the graph will feature that vocabulary in the X axis"
+	@priority = "5"
+	test CheckTopPositionVocabularyXAxis {
+		task ("Create a Web Content with Audience and Stage categories") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addWithCategoryCP(
+				categoryName = "Audience 1",
+				vocabularyName = "Audience",
+				webContentContent = "Web Content Content",
+				webContentTitle = "WC Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+			WebContent.selectCategory(
+				categoryName = "Stage 1",
+				vocabularyName = "Stage");
+
+			PortletEntry.publish();
+		}
+
+		task ("Go to Content Dashboard > Audic Graph configuration") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Check which vocabulary is displayed in x-axis") {
+			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Stage");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Stage 1");
+
+			ContentDashboard.setVocabularyInUseTopPosition(vocabularyName = "Audience");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "WC Title",
+				xAxisCategoryName = "Audience 1");
 		}
 	}
 
@@ -815,8 +815,10 @@ definition {
 		task ("Move all vocabularies from In Use and check warning message") {
 			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
 
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage", notCloseFrame = "true");
-		
+			ContentDashboard.moveVocabularyDisplayConfiguration(
+				notCloseFrame = "true",
+				vocabularyName = "Stage");
+
 			Alert.viewWarningSpecific(warningMessage = "You have not selected any vocabularies");
 		}
 	}

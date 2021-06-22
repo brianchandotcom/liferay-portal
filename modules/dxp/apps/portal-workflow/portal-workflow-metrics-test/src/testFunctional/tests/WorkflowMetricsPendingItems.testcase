@@ -98,23 +98,21 @@ definition {
 	@description = "LPS-93410 - Verify that the percentage is displayed in Overdue, On Time and Untracked cards"
 	@priority = "3"
 	test PercentageIsDisplayedInCards {
-
-		Click(locator1 = "WorkflowMetricsProcessListView#ENTER_PROCESS_METRICS",
-			key_processName = "Single Approver");
-
-		AssertElementPresent(
-			locator1 = "WorkflowMetricsProcessListView#ASSERT_PERCENTAGE_CARDS",
-			key_cardName = "Overdue");
-		
-		AssertElementPresent(
-			locator1 = "WorkflowMetricsProcessListView#ASSERT_PERCENTAGE_CARDS",
-			key_cardName = "On Time");
+		Click(
+			key_processName = "Single Approver",
+			locator1 = "WorkflowMetricsProcessListView#ENTER_PROCESS_METRICS");
 
 		AssertElementPresent(
-			locator1 = "WorkflowMetricsProcessListView#ASSERT_PERCENTAGE_CARDS",
-			key_cardName = "Untracked");
+			key_cardName = "Overdue",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_PERCENTAGE_CARDS");
 
+		AssertElementPresent(
+			key_cardName = "On Time",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_PERCENTAGE_CARDS");
 
+		AssertElementPresent(
+			key_cardName = "Untracked",
+			locator1 = "WorkflowMetricsProcessListView#ASSERT_PERCENTAGE_CARDS");
 	}
 
 	@description = "LPS-93410 - Verify that the sum for items Overdue + On Time + Untracked is equal to the Total Pending"

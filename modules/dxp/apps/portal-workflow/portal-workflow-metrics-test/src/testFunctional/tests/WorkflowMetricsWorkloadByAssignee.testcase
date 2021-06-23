@@ -577,12 +577,44 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that the card (Workload by Assignee) has no more than 10 users"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test WorkloadByAssigneeCardDisplaysUpTo10Users {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#WorkloadByAssigneeCardDisplaysUpTo10Users";
 
-		// TODO LRQA-67616 WorkloadByAssigneeCardDisplaysUpTo10Users pending implementation
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "11",
+			numberOfUsers = "11",
+			site = "${siteName}");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(
+			key_assigneeName = "Test Test",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
+
+		for (var userNumber : list "2,3,4,5,6,7,8,9,10") {
+			AssertElementPresent(
+				key_assigneeName = "${userNumber}user user${userNumber}",
+				locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
+		}
+
+		AssertElementNotPresent(
+			key_assigneeName = "11user user11",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
 	}
 
 }

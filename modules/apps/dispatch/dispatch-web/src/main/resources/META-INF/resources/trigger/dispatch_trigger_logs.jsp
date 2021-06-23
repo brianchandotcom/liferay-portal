@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+
 DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 DispatchTrigger dispatchTrigger = dispatchLogDisplayContext.getDispatchTrigger();
@@ -30,9 +32,9 @@ PortletURL portletURL = PortletURLBuilder.create(
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<liferay-util:include page="/dispatch_log_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="dispatchLogs" />
-</liferay-util:include>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new ViewDispatchLogManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dispatchLogSearchContainer) %>"
+/>
 
 <div id="<portlet:namespace />triggerLogsContainer">
 	<div class="closed container-fluid container-fluid-max-xl" id="<portlet:namespace />infoPanelId">
@@ -44,7 +46,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="trigger-lists-container" id="<portlet:namespace />entriesContainer">
 				<liferay-ui:search-container
 					id="dispatchLogs"
-					searchContainer="<%= dispatchLogDisplayContext.getSearchContainer() %>"
+					searchContainer="<%= dispatchLogSearchContainer %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.dispatch.model.DispatchLog"

@@ -3,7 +3,7 @@
   <compatibility>
     <version>7.4.0+</version>
   </compatibility>
-  <theme id="frontend-theme-solutions" name="Frontend Theme Solutions">
+  <theme id="solutions" name="Solutions">
     <template-extension>ftl</template-extension>
     <settings>
       <setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,gray-dark,secondary,light,lighter,white"/>

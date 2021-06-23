@@ -38,6 +38,33 @@ definition {
 
 	}
 
+	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanOrderByAssignee {
+
+		// TODO LRQA-68170 CanOrderByAssignee pending implementation
+
+	}
+
+	@description = "LPS-130218 - Verify that the user is able to click on the table header Created by to choose the items order (A-Z / Z-A)."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanOrderByCreatedBy {
+
+		// TODO LRQA-68168 CanOrderByCreatedBy pending implementation
+
+	}
+
+	@description = "LPS-130216 - Verify that user is able to click on the table header title to choose to order items by Item Subject: A-z / Z-a."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanOrderByItemSubject {
+
+		// TODO LRQA-68165 CanOrderByItemSubject pending implementation
+
+	}
+
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -62,6 +89,15 @@ definition {
 	test CorrectNumberOfEntriesDisplayedWhenPaginationEdited {
 
 		// TODO LRQA-67727 CorrectNumberOfEntriesDisplayedWhenPaginationEdited pending implementation
+
+	}
+
+	@description = "LPS-130218 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CreatedBySortIsPreservedWhenChangesPagination {
+
+		// TODO LRQA-68169 CreatedBySortIsPreservedWhenChangesPagination pending implementation
 
 	}
 
@@ -227,6 +263,15 @@ definition {
 
 	}
 
+	@description = "LPS-130216 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ItemOrdetationIsPreservedWhenChangesPagination {
+
+		// TODO LRQA-68167 ItemOrdetationIsPreservedWhenChangesPagination pending implementation
+
+	}
+
 	@description = "LPS-86652 - Verify that long texts will display ellipsis"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -332,6 +377,24 @@ definition {
 	test SectionIsRemovedWhenItHasNoEntries {
 
 		// TODO LRQA-67754 SectionIsRemovedWhenItHasNoEntries pending implementation
+
+	}
+
+	@description = "LPS-92052 - Verify that when the task has multiple assignees, the sort considers the first one displayed on the row"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SortConsidersOnlyTheFirstAssignee {
+
+		// TODO LRQA-68171 SortConsidersOnlyTheFirstAssignee pending implementation
+
+	}
+
+	@description = "LPS-130216 - Verify that the Item Subject sort will only use the Asset Type information for sorting."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SortOnlyUseAssetTypeInformation {
+
+		// TODO LRQA-68166 SortOnlyUseAssetTypeInformation pending implementation
 
 	}
 

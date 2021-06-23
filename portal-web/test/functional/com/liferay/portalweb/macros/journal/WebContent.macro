@@ -1727,6 +1727,23 @@ definition {
 			vocabularyName = "${vocabularyName}");
 	}
 
+	macro selectFolder {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(locator1 = "Button#PARENT_FOLDER_SELECT");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals.assertValue(
+			key_value = "folderName",
+			locator1 = "TextInput#ANY_ID",
+			value1 = "${folderName}");
+	}
+
 	macro selectRepositoryWC {
 		var key_contentName = "${contentName}";
 

@@ -171,15 +171,15 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return _comparator;
 	}
 
-	public String getConflictTypeName() {
+	public CTColumnResolutionType getCTColumnResolutionType() {
+		return _ctColumnResolutionType;
+	}
+
+	public String getCTColumnResolutionTypeName() {
 		String name = StringUtil.toLowerCase(
 			_ctColumnResolutionType.toString());
 
 		return StringUtil.upperCaseFirstLetter(name);
-	}
-
-	public CTColumnResolutionType getCTColumnResolutionType() {
-		return _ctColumnResolutionType;
 	}
 
 	public String getDBName() {

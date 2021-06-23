@@ -321,14 +321,15 @@ public class Entity implements Comparable<Entity> {
 			TextFormatter.format(_name, TextFormatter.H), TextFormatter.A);
 	}
 
-	public Set<String> getCTColumnNameTypes() {
-		Set<String> ctColumnNameTypes = new TreeSet<>();
+	public Set<String> getCTColumnResolutionTypeNames() {
+		Set<String> ctColumnResolutionTypeNames = new TreeSet<>();
 
 		for (EntityColumn entityColumn : getEntityColumns()) {
-			ctColumnNameTypes.add(entityColumn.getConflictTypeName());
+			ctColumnResolutionTypeNames.add(
+				entityColumn.getCTColumnResolutionTypeName());
 		}
 
-		return ctColumnNameTypes;
+		return ctColumnResolutionTypeNames;
 	}
 
 	public List<EntityColumn> getDatabaseRegularEntityColumns() {

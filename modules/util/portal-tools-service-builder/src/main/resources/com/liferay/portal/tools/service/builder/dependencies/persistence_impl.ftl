@@ -2022,23 +2022,23 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private static final List<String[]> _uniqueIndexColumnNames = new ArrayList<String[]>();
 
 		static {
-			<#list entity.getCTColumnNameTypes() as ctColumnNameType>
-				<#if !stringUtil.equals(ctColumnNameType, "Pk")>
-					Set<String> ct${ctColumnNameType}ColumnNames = new HashSet<String>();
+			<#list entity.getCTColumnResolutionTypeNames() as ctColumnResolutionTypeName>
+				<#if !stringUtil.equals(ctColumnResolutionTypeName, "Pk")>
+					Set<String> ct${ctColumnResolutionTypeName}ColumnNames = new HashSet<String>();
 				</#if>
 			</#list>
 
 			<#list entity.entityColumns as entityColumn>
-				<#if !stringUtil.equals(entityColumn.conflictTypeName, "Pk")>
-					ct${entityColumn.getConflictTypeName()}ColumnNames.add("${entityColumn.DBName}");
+				<#if !stringUtil.equals(entityColumn.getCTColumnResolutionTypeName(), "Pk")>
+					ct${entityColumn.getCTColumnResolutionTypeName()}ColumnNames.add("${entityColumn.DBName}");
 				</#if>
 			</#list>
 
-			<#list entity.getCTColumnNameTypes() as ctColumnNameType>
-				<#if stringUtil.equals(ctColumnNameType, "Pk")>
-					_ctColumnNamesMap.put(CTColumnResolutionType.${stringUtil.toUpperCase(ctColumnNameType)}, Collections.singleton("${entity.PKDBName}"));
+			<#list entity.getCTColumnResolutionTypeNames() as ctColumnResolutionTypeName>
+				<#if stringUtil.equals(ctColumnResolutionTypeName, "Pk")>
+					_ctColumnNamesMap.put(CTColumnResolutionType.${stringUtil.toUpperCase(ctColumnResolutionTypeName)}, Collections.singleton("${entity.PKDBName}"));
 				<#else>
-					_ctColumnNamesMap.put(CTColumnResolutionType.${stringUtil.toUpperCase(ctColumnNameType)}, ct${ctColumnNameType}ColumnNames);
+					_ctColumnNamesMap.put(CTColumnResolutionType.${stringUtil.toUpperCase(ctColumnResolutionTypeName)}, ct${ctColumnResolutionTypeName}ColumnNames);
 				</#if>
 			</#list>
 

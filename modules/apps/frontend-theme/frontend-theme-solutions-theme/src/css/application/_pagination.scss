@@ -1,0 +1,54 @@
+.paginator-link {
+	background: #eee no-repeat scroll 50% 1px;
+	border: 1px solid #f0f1f2;
+	border-color: #f0f1f2 #b2b2b2 #949494 #f0f1f1;
+	color: #1f1e1e;
+	display: inline-block;
+	height: 20px;
+	padding: 0;
+	text-indent: -9999px;
+	width: 20px;
+}
+
+.paginator-page-link {
+	height: auto;
+	text-indent: 0;
+}
+
+.paginator-current-page {
+	background: #0083bd url(../images/application/paginator_link_current_bg.png)
+		0 0 repeat-x;
+	border-color: #38b6ef #006d9e #006d9e #46b4e6;
+	color: #fff;
+	text-shadow: -1px -1px #003c57;
+}
+
+.paginator-first-link {
+	background-image: url(../images/arrows/paging_first.png);
+}
+
+.paginator-prev-link {
+	background-image: url(../images/arrows/paging_previous.png);
+}
+
+.paginator-last-link {
+	background-image: url(../images/arrows/paging_last.png);
+}
+
+.paginator-next-link {
+	background-image: url(../images/arrows/paging_next.png);
+}
+
+.paginator-current-page-report,
+.paginator-total {
+	color: #555;
+	font-size: 0.9em;
+}
+
+.paginator-current-page-report {
+	margin-left: 2em;
+}
+
+.taglib-page-iterator .search-pages .page-links {
+	padding: 0;
+}

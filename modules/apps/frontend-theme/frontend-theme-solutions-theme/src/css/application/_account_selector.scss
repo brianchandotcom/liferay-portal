@@ -1,0 +1,26 @@
+.btn-account-selector {
+	align-items: center;
+	display: grid;
+	gap: 12px;
+	grid-template-columns: auto min-content;
+	height: 70px;
+	width: 300px;
+
+	&.account-selected {
+		grid-template-columns: min-content minmax(0, 1fr) min-content;
+	}
+
+	.current-info-container {
+		text-align: left;
+	}
+
+	.no-account-selected-placeholder {
+		margin: 0;
+		text-align: left;
+	}
+}
+
+.dropdown-menu.account-selector-dropdown-menu {
+	max-width: 300px;
+	min-width: 300px;
+}

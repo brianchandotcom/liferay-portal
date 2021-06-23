@@ -1,0 +1,54 @@
+.definition-of-terms dt {
+	color: #333;
+	font-weight: normal;
+	width: 100%;
+	word-break: break-word;
+
+	@include media-breakpoint-up(sm) {
+		width: auto;
+	}
+}
+
+.lfr-code {
+	background: #fff;
+	border-color: #777;
+	font-family: monospace;
+
+	tr td.line-numbers {
+		background: #fafafa;
+
+		&:before {
+			color: #aaa;
+			text-shadow: 1px 1px #fff;
+		}
+	}
+}
+
+.popup-alert-notice .countdown-timer {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.lfr-token {
+	background-color: #b3daef;
+	border-color: #5fa8ff;
+	color: #444;
+	text-decoration: none;
+
+	&:hover {
+		background-color: #d1e5ef;
+	}
+}
+
+.lfr-token-primary {
+	font-weight: bold;
+
+	&,
+	&:hover {
+		background-color: #b3daef;
+	}
+}
+
+.lfr-token-close:hover {
+	text-decoration: none;
+}

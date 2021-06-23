@@ -1,0 +1,137 @@
+// Menubar Vertical MD
+
+$menubar-vertical-transparent-md: () !default;
+$menubar-vertical-transparent-md: map-deep-merge(
+	(
+		mobile: (
+			background-color: $white,
+		),
+		link: (
+			border-radius: 0.375rem,
+			transition: #{color 0.15s ease-in-out,
+			background-color 0.15s ease-in-out,
+			border-color 0.15s ease-in-out,
+			box-shadow 0.15s ease-in-out},
+			hover: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			focus: (
+				background-color: rgba($gray-900, 0.03),
+				box-shadow:
+					clay-enable-shadows($component-focus-inset-box-shadow),
+				color: $gray-900,
+				outline: 0,
+			),
+			active-class: (
+				background-color: $primary-l3,
+				color: $primary,
+				font-weight: $font-weight-semi-bold,
+			),
+			disabled: (
+				box-shadow: clay-enable-shadows(none),
+			),
+			show: (
+				background-color: $c-unset,
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+			),
+		),
+		link-mobile: (
+			focus: (
+				background-color: lighten($component-active-bg, 44.9),
+			),
+			active: (
+				background-color: $c-unset,
+				color: $c-unset,
+			),
+			active-class: (
+				background-color: $primary-l3,
+				color: $primary,
+			),
+		),
+		toggler-mobile: (
+			color: $gray-900,
+			font-size: 0.875rem,
+			font-weight: $font-weight-semi-bold,
+			transition: box-shadow 0.15s ease-in-out,
+			focus: (
+				box-shadow: clay-enable-shadows($component-focus-box-shadow),
+				outline: 0,
+			),
+			disabled: (
+				box-shadow: clay-enable-shadows(none),
+			),
+		),
+	),
+	$menubar-vertical-transparent-md
+);
+
+// Menubar Vertical LG
+
+$menubar-vertical-transparent-lg: () !default;
+$menubar-vertical-transparent-lg: map-deep-merge(
+	(
+		mobile: (
+			background-color: $white,
+		),
+		link: (
+			border-radius: 0.375rem,
+			transition: #{color 0.15s ease-in-out,
+			background-color 0.15s ease-in-out,
+			border-color 0.15s ease-in-out,
+			box-shadow 0.15s ease-in-out},
+			hover: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			focus: (
+				background-color: rgba($gray-900, 0.03),
+				box-shadow:
+					clay-enable-shadows($component-focus-inset-box-shadow),
+				color: $gray-900,
+				outline: 0,
+			),
+			active-class: (
+				background-color: $primary-l3,
+				color: $primary,
+				font-weight: $font-weight-semi-bold,
+			),
+			disabled: (
+				box-shadow: clay-enable-shadows(none),
+			),
+			show: (
+				background-color: $c-unset,
+				color: $gray-900,
+				font-weight: $font-weight-semi-bold,
+			),
+		),
+		link-mobile: (
+			focus: (
+				background-color: lighten($component-active-bg, 44.9),
+			),
+			active: (
+				background-color: $c-unset,
+				color: $c-unset,
+			),
+			active-class: (
+				background-color: $primary-l3,
+				color: $primary,
+			),
+		),
+		toggler-mobile: (
+			color: $gray-900,
+			font-size: 0.875rem,
+			font-weight: $font-weight-semi-bold,
+			transition: box-shadow 0.15s ease-in-out,
+			focus: (
+				box-shadow: clay-enable-shadows($component-focus-box-shadow),
+				outline: 0,
+			),
+			disabled: (
+				box-shadow: clay-enable-shadows(none),
+			),
+		),
+	),
+	$menubar-vertical-transparent-lg
+);

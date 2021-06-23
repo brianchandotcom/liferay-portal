@@ -1,0 +1,63 @@
+.portal-popup:not(.article-preview) {
+	#main-content,
+	#wrapper {
+		bottom: 0;
+		left: 0;
+		overflow: auto;
+		padding: $dialog-iframe-padding;
+		position: absolute;
+		right: 0;
+		top: 0;
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
+.modal {
+	display: block;
+	margin: 0;
+	overflow: hidden;
+	position: fixed;
+}
+
+.modal-body {
+	overflow: auto;
+
+	&.dialog-iframe-bd {
+		overflow: hidden;
+		padding: 0;
+	}
+}
+
+.modal-dialog {
+	&:not(.dialog-iframe-modal):not(.modal-full-screen) {
+		position: relative;
+	}
+
+	&.dialog-iframe-modal {
+		max-width: none;
+	}
+
+	&.modal-dialog-sm {
+		max-width: $modal-md;
+	}
+
+	.yui3-resize-handles-wrapper {
+		pointer-events: all;
+	}
+}
+
+.modal-hidden {
+	display: none;
+}
+
+.portal-popup {
+	.columns-max > .portlet-layout.row {
+		margin-left: 0;
+		margin-right: 0;
+
+		> .portlet-column {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}

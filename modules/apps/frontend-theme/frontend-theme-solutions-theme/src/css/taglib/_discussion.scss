@@ -1,0 +1,55 @@
+.taglib-discussion {
+	.lfr-discussion {
+		.lfr-discussion-form-edit .alloy-editor-placeholder {
+			border-left-color: #dbdde1;
+		}
+	}
+
+	.lfr-discussion-details {
+		.taglib-user-display {
+			@include media-breakpoint-up(sm) {
+				word-wrap: break-word;
+			}
+
+			.user-details .user-name {
+				font-weight: bold;
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			.user-profile-image .avatar {
+				background-size: 50px;
+			}
+		}
+	}
+
+	.lfr-discussion-actions li a {
+		&,
+		span {
+			text-decoration: none;
+		}
+
+		&:hover,
+		&:focus {
+			span {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.lfr-discussion-form-container .lfr-discussion-form {
+		background: #ddd;
+		border-radius: 4px;
+
+		.taglib-user-display .user-profile-image .avatar {
+			background-size: 40px;
+		}
+	}
+}
+
+.lfr-discussion-reply.popover .lfr-discussion-reply-user-name {
+	font-weight: bold;
+}

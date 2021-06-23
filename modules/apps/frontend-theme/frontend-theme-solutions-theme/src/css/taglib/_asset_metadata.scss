@@ -1,0 +1,26 @@
+.taglib-asset-metadata {
+	.metadata-entry-label {
+		font-weight: normal;
+	}
+
+	.metadata-author {
+		font-weight: bold;
+	}
+
+	.metadata-entry {
+		color: #999;
+	}
+
+	.metadata-author .asset-user-info {
+		.user-info {
+			color: #009ae5;
+			font-size: 14px;
+			line-height: 14px;
+		}
+
+		.date-info {
+			color: #8c8c8c;
+			font-size: 13px;
+		}
+	}
+}

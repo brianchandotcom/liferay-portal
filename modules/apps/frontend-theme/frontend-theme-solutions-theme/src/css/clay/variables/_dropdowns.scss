@@ -1,0 +1,411 @@
+$dropdown-bg: $white !default;
+$dropdown-border-color: rgba($black, 0.15) !default;
+$dropdown-border-style: solid !default;
+$dropdown-border-width: $border-width !default;
+
+$dropdown-border-radius: $border-radius !default;
+$dropdown-inner-border-radius: $dropdown-border-radius -$dropdown-border-width !default;
+
+$dropdown-box-shadow: 0 0.5rem 1rem rgba($black, 0.175) !default;
+$dropdown-color: $body-color !default;
+$dropdown-font-size: $font-size-base !default;
+$dropdown-max-height: 500px !default;
+$dropdown-max-width: 260px !default;
+$dropdown-min-height: null !default;
+$dropdown-min-width: 10rem !default;
+$dropdown-padding-y: 0.5rem !default;
+
+$dropdown-max-height-mobile: 295px !default;
+$dropdown-max-width-mobile: 230px !default;
+
+$dropdown-spacer: 0.125rem !default;
+
+$dropdown-divider-bg: $gray-200 !default;
+$dropdown-divider-margin-y: $spacer / 2 !default;
+
+$dropdown-full-wide-header-spacer-y: 20px !default;
+
+$dropdown-wide-width: 500px !default;
+
+$dropdown-font-size: null !default;
+$dropdown-font-size-mobile: null !default;
+
+// Dropdown Item
+
+$dropdown-item-padding-x: 1.5rem !default;
+$dropdown-item-padding-y: 0.25rem !default;
+
+$dropdown-item-disabled-cursor: $disabled-cursor !default;
+
+$dropdown-item-indicator-size: 1rem !default;
+$dropdown-item-indicator-spacer-x: 1rem !default;
+
+// Dropdown Link
+
+$dropdown-link-color: $gray-900 !default;
+$dropdown-link-font-weight: null !default;
+
+$dropdown-link-hover-bg: $gray-100 !default;
+$dropdown-link-hover-color: darken($gray-900, 5%) !default;
+
+$dropdown-link-active-bg: $component-active-bg !default;
+$dropdown-link-active-color: $component-active-color !default;
+$dropdown-link-active-font-weight: null !default;
+
+$dropdown-link-disabled-color: $gray-600 !default;
+
+// Dropdown Header
+
+$dropdown-header-color: $gray-600 !default;
+$dropdown-header-font-size: null !default;
+$dropdown-header-margin-bottom: null !default;
+$dropdown-header-margin-top: null !default;
+$dropdown-header-padding-x: $dropdown-item-padding-x !default;
+$dropdown-header-padding-y: $dropdown-padding-y !default;
+$dropdown-header-text-transform: null !default;
+
+$dropdown-header-font-size-mobile: null !default;
+
+// Dropdown Subheader
+
+$dropdown-subheader-color: $dropdown-header-color !default;
+$dropdown-subheader-font-size: 0.75rem !default; // 12px
+$dropdown-subheader-font-weight: $font-weight-semi-bold !default;
+$dropdown-subheader-margin-bottom: null !default;
+$dropdown-subheader-margin-top: null !default;
+$dropdown-subheader-padding-x: $dropdown-header-padding-x !default;
+$dropdown-subheader-padding-y: $dropdown-header-padding-y !default;
+$dropdown-subheader-text-transform: uppercase !default;
+
+$dropdown-caption-color: $dropdown-header-color !default;
+$dropdown-caption-font-size: 0.875rem !default; // 14px
+$dropdown-caption-font-weight: null !default;
+
+// Dropdown Inline Scroller
+
+$dropdown-inline-scroller-max-height: 200px !default;
+$dropdown-inline-scroller-max-height-mobile: none !default;
+
+// Dropdown Item
+
+$dropdown-item-disabled-cursor: $disabled-cursor !default;
+
+// `background-color`, `border-width`, `text-align` for `<button>`s
+
+$dropdown-item-base: () !default;
+$dropdown-item-base: map-deep-merge(
+	(
+		background-color: transparent,
+		border-radius: 0,
+		border-width: 0,
+		clear: both,
+		color: $dropdown-link-color,
+		display: block,
+		font-weight: $font-weight-normal,
+		overflow: hidden,
+		padding-bottom: $dropdown-item-padding-y,
+		padding-left: $dropdown-item-padding-x,
+		padding-right: $dropdown-item-padding-x,
+		padding-top: $dropdown-item-padding-y,
+		position: relative,
+		text-align: inherit,
+		transition: none,
+		white-space: normal,
+		width: 100%,
+		word-wrap: break-word,
+		hover-text-decoration: none,
+		hover: (
+			background-color: $dropdown-link-hover-bg,
+			color: $dropdown-link-hover-color,
+		),
+		focus: (
+			background-color: $dropdown-link-hover-bg,
+			color: $dropdown-link-hover-color,
+			text-decoration: none,
+		),
+		active-color: $dropdown-link-active-color,
+		active: (
+			background-color: $dropdown-link-active-bg,
+			text-decoration: none,
+		),
+		active-class-font-weight: $dropdown-link-active-font-weight,
+		disabled-color: $dropdown-link-disabled-color,
+		disabled-cursor: $dropdown-item-disabled-cursor,
+		disabled-opacity: 1,
+		disabled-outline: 0,
+		disabled: (
+			background-color: transparent,
+		),
+		disabled-active-pointer-events: none,
+		disabled-c-kbd-inline: (
+			color: $dropdown-link-disabled-color,
+		),
+		c-kbd-inline: (
+			line-height: $dropdown-font-size * $line-height-base,
+		),
+	),
+	$dropdown-item-base
+);
+
+// Dropdown Item Indicator
+
+$dropdown-item-indicator-size: 1rem !default;
+$dropdown-item-indicator-spacer-x: 1rem !default;
+
+$dropdown-item-indicator-start: () !default;
+$dropdown-item-indicator-start: map-deep-merge(
+	(
+		align-items: center,
+		color: inherit,
+		display: inline-flex,
+		height: $dropdown-item-indicator-size,
+		justify-content: center,
+		left: $dropdown-item-padding-x,
+		position: absolute,
+		right: auto,
+		top:
+			calc(
+				#{$dropdown-item-padding-y} - ((
+								#{$dropdown-item-indicator-size} - (1em * #{$line-height-base})
+							) / 2)
+			),
+		width: $dropdown-item-indicator-size,
+		lexicon-icon: (
+			margin-top: 0,
+		),
+	),
+	$dropdown-item-indicator-start
+);
+
+$dropdown-item-indicator-text-start: () !default;
+$dropdown-item-indicator-text-start: map-deep-merge(
+	(
+		color: inherit,
+		display: block,
+		padding-left: $dropdown-item-indicator-size +
+			$dropdown-item-indicator-spacer-x,
+		text-decoration: inherit,
+		width: 100%,
+		hover: (
+			color: inherit,
+			text-decoration: inherit,
+		),
+		focus: (
+			color: inherit,
+			text-decoration: inherit,
+		),
+	),
+	$dropdown-item-indicator-text-start
+);
+
+$dropdown-item-indicator-end: () !default;
+$dropdown-item-indicator-end: map-deep-merge(
+	(
+		align-items: center,
+		color: inherit,
+		display: inline-flex,
+		height: $dropdown-item-indicator-size,
+		justify-content: center,
+		left: auto,
+		position: absolute,
+		right: $dropdown-item-padding-x,
+		top:
+			calc(
+				#{$dropdown-item-padding-y} - ((
+								#{$dropdown-item-indicator-size} - (1em * #{$line-height-base})
+							) / 2)
+			),
+		width: $dropdown-item-indicator-size,
+		lexicon-icon: (
+			margin-top: 0,
+		),
+	),
+	$dropdown-item-indicator-end
+);
+
+$dropdown-item-indicator-text-end: () !default;
+$dropdown-item-indicator-text-end: map-deep-merge(
+	(
+		color: inherit,
+		display: block,
+		padding-right: $dropdown-item-indicator-size +
+			$dropdown-item-indicator-spacer-x,
+		text-decoration: inherit,
+		width: 100%,
+		hover: (
+			color: inherit,
+			text-decoration: inherit,
+		),
+		focus: (
+			color: inherit,
+			text-decoration: inherit,
+		),
+	),
+	$dropdown-item-indicator-text-end
+);
+
+// Dropdown Item
+
+$dropdown-item-base: () !default;
+$dropdown-item-base: map-deep-merge(
+	(
+		background-color: transparent,
+		border-radius: 0,
+		border-width: 0,
+		clear: both,
+		color: $dropdown-link-color,
+		cursor: $link-cursor,
+		display: block,
+		font-weight: $font-weight-normal,
+		overflow: hidden,
+		padding-bottom: $dropdown-item-padding-y,
+		padding-left: $dropdown-item-padding-x,
+		padding-right: $dropdown-item-padding-x,
+		padding-top: $dropdown-item-padding-y,
+		position: relative,
+		text-align: inherit,
+		transition: none,
+		white-space: normal,
+		width: 100%,
+		word-wrap: break-word,
+		hover: (
+			background-color: $dropdown-link-hover-bg,
+			color: $dropdown-link-hover-color,
+			text-decoration: none,
+		),
+		focus: (
+			background-color: $dropdown-link-hover-bg,
+			color: $dropdown-link-hover-color,
+			text-decoration: none,
+		),
+		active: (
+			background-color: $dropdown-link-active-bg,
+			color: $dropdown-link-active-color,
+			text-decoration: none,
+		),
+		active-class: (
+			font-weight: $dropdown-link-active-font-weight,
+			pointer-events: none,
+		),
+		disabled: (
+			background-color: transparent,
+			color: $dropdown-link-disabled-color,
+			cursor: $dropdown-item-disabled-cursor,
+			opacity: 1,
+			outline: 0,
+		),
+		disabled-active: (
+			pointer-events: none,
+		),
+		disabled-c-kbd-inline: (
+			color: $dropdown-link-disabled-color,
+		),
+		c-kbd-inline: (
+			line-height: $dropdown-font-size * $line-height-base,
+		),
+	),
+	$dropdown-item-base
+);
+
+// Dropdown Section
+
+$dropdown-section-custom-control: () !default;
+$dropdown-section-custom-control: map-deep-merge(
+	(
+		margin-bottom: 0,
+	),
+	$dropdown-section-custom-control
+);
+
+$dropdown-section-custom-control-label: () !default;
+
+$dropdown-section-custom-control-label-text: () !default;
+
+$dropdown-section-active-custom-control-label: () !default;
+
+// Dropdown Footer
+
+$dropdown-footer: () !default;
+$dropdown-footer: map-merge(
+	(
+		box-shadow: -1px -2px 3px -3px rgba(0, 0, 0, 0.5),
+		padding: 0.5rem $dropdown-item-padding-x 0,
+		position: relative,
+	),
+	$dropdown-footer
+);
+
+// Dropdown Menu Width
+
+$dropdown-menu-width-full: () !default;
+$dropdown-menu-width-full: map-merge(
+	(
+		left: 12px !important,
+		right: 12px !important,
+		max-width: none,
+		min-width: 0,
+		width: calc(100% - 24px),
+	),
+	$dropdown-menu-width-full
+);
+
+$dropdown-menu-width-sm: () !default;
+$dropdown-menu-width-sm: map-merge(
+	(
+		max-width: none,
+		min-width: 0,
+		width: 500px,
+	),
+	$dropdown-menu-width-sm
+);
+
+$dropdown-menu-width-sm-sm-down: () !default;
+$dropdown-menu-width-sm-sm-down: map-merge(
+	(
+		left: 12px !important,
+		right: 12px !important,
+		width: calc(100% - 24px),
+	),
+	$dropdown-menu-width-sm-sm-down
+);
+
+// Dropdown Menu Height
+
+$dropdown-menu-height-auto: () !default;
+$dropdown-menu-height-auto: map-merge(
+	(
+		height: auto,
+		max-height: none,
+		min-height: 0,
+	),
+	$dropdown-menu-height-auto
+);
+
+// Autocomplete Dropdown Menu
+
+$autocomplete-dropdown-menu: () !default;
+$autocomplete-dropdown-menu: map-deep-merge(
+	(
+		max-height: calc(9rem + 2px),
+		max-width: none,
+		width: 100%,
+	),
+	$autocomplete-dropdown-menu
+);
+
+// Dropdown Action
+
+$dropdown-action-toggle-border-radius: $border-radius !default;
+$dropdown-action-toggle-font-size: null !default;
+$dropdown-action-toggle-size: $btn-monospaced-size-sm !default;
+
+$dropdown-action-toggle-disabled-cursor: $disabled-cursor !default;
+$dropdown-action-toggle-disabled-opacity: 0.65 !default;
+
+// Alert inside Dropdowns
+
+$dropdown-alert-font-size: null !default;
+$dropdown-alert-line-height: normal !default;
+$dropdown-alert-margin: ($spacer / 2) !default;
+$dropdown-alert-padding-x: $dropdown-header-padding-x !default;
+$dropdown-alert-padding-y: $dropdown-header-padding-y !default;

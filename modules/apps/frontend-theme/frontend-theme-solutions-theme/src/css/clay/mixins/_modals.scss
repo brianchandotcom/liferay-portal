@@ -1,0 +1,132 @@
+////
+/// @group modals
+////
+
+/// A mixin to create a Modal color variant. This is used in `.modal-danger`, `.modal-info`, `.modal-success`, and `.modal-warning`.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// header: {Map | Null}, // See Mixin `clay-css` for available keys
+/// header-close: {Map | Null}, // See Mixin `clay-close` for available keys
+/// body: {Map | Null}, // See Mixin `clay-css` for available keys
+/// footer: {Map | Null}, // See Mixin `clay-css` for available keys
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// header-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// header-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// header-color: {Color | String | Null}, // deprecated after 3.9.0
+/// header-close-color: {Color | String}, // deprecated in v2.0.0-rc.12
+/// body-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// body-color: {Color | String | Null}, // deprecated after 3.9.0
+/// footer-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// footer-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+
+@mixin clay-modal-variant($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$header: setter(map-get($map, header), ());
+	$header: map-merge(
+		$header,
+		(
+			background-color:
+				setter(
+					map-get($map, header-bg),
+					map-get($header, background-color)
+				),
+			border-color:
+				setter(
+					map-get($map, header-border-color),
+					map-get($header, border-color)
+				),
+			color: setter(map-get($map, header-color), map-get($header, color)),
+		)
+	);
+
+	$header-close: setter(map-get($map, header-close), ());
+	$header-close: map-merge(
+		$header-close,
+		(
+			color:
+				setter(
+					map-get($map, header-close-color),
+					map-get($header-close, color)
+				),
+		)
+	);
+
+	$header-close-btn-focus: setter(map-get($header-close, btn-focus), ());
+	$header-close-btn-focus: map-merge(
+		$header-close-btn-focus,
+		(
+			box-shadow:
+				setter(
+					map-get($header-close, btn-focus-box-shadow),
+					map-get($header-close-btn-focus, box-shadow)
+				),
+			outline:
+				setter(
+					map-get($header-close, btn-focus-outline),
+					map-get($header-close-btn-focus, outline)
+				),
+		)
+	);
+
+	$body: setter(map-get($map, body), ());
+	$body: map-merge(
+		$body,
+		(
+			background-color:
+				setter(map-get($map, body-bg), map-get($body, background-color)),
+			color: setter(map-get($map, body-color), map-get($body, color)),
+		)
+	);
+
+	$footer: setter(map-get($map, footer), ());
+	$footer: map-merge(
+		$footer,
+		(
+			background-color:
+				setter(
+					map-get($map, footer-bg),
+					map-get($footer, background-color)
+				),
+			border-color:
+				setter(
+					map-get($map, footer-border-color),
+					map-get($footer, border-color)
+				),
+		)
+	);
+
+	@if ($enabled) {
+		@include clay-css($map);
+
+		// Modal specific btn-monospaced is deprecated in v2.0.0-rc.12
+
+		.btn-monospaced {
+			color: map-get($header-close, color);
+		}
+
+		.close {
+			@include clay-close($header-close);
+		}
+
+		button.close {
+			&:focus {
+				box-shadow: map-get($header-close-btn-focus, box-shadow);
+				outline: map-get($header-close-btn-focus, outline);
+			}
+		}
+
+		.modal-header {
+			@include clay-css($header);
+		}
+
+		.modal-body {
+			@include clay-css($body);
+		}
+
+		.modal-footer {
+			@include clay-css($footer);
+		}
+	}
+}

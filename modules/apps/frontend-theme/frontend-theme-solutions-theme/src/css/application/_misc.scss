@@ -1,0 +1,64 @@
+.app-view-drop-active {
+	background-color: #00a2ea;
+	font-weight: bold;
+
+	.category-portlets & {
+		background-color: #00a2ea;
+		color: #fff;
+	}
+}
+
+.basecelleditor [class~='form-validator-message'] {
+	clip: rect(auto auto auto auto);
+	width: auto;
+}
+
+.document-library-file-entry-cell-editor-hidden {
+	display: none;
+}
+
+.previous-level {
+	display: inline-block;
+	font-size: 21px;
+	line-height: 21px;
+	margin-right: 5px;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+.has-control-menu .lfr-asset-anchor {
+	height: 74px;
+	margin-top: -74px;
+}
+
+.lfr-asset-anchor {
+	display: block;
+	height: 10px;
+	margin-top: -10px;
+	position: relative;
+	z-index: -1;
+}
+
+.lfr-url-error {
+	display: inline-block;
+	white-space: normal;
+
+	@include overflow-wrap(break-all);
+}
+
+.lfr-page-layouts {
+	padding: 0;
+
+	input[type='radio'] {
+		opacity: 0;
+		position: absolute;
+
+		&:checked + .card-horizontal {
+			@include clay-card-variant($lfr-page-layouts-card-checked);
+		}
+	}
+
+	.card-horizontal {
+		@include clay-card-variant($lfr-page-layouts-card);
+	}
+}

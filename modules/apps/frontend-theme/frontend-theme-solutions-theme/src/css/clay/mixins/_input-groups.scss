@@ -1,0 +1,119 @@
+////
+/// @group inputGroups
+////
+
+/// A mixin that stacks an `.input-group` that uses an `.input-group-item` at a specific `max-width` breakpoint. This sets the `.input-group-item` width to 100% and `.input-group-item-shrink` width to auto at the `max-width` breakpoint.
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// breakpoint: {String | Null}, // This uses Bootstrap 4's breakpoint up to calculate breakpoint down. Use `breakpoint-down` instead. // Default: md
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// item: {Map | Null}, // See Mixin `clay-css` for available keys
+/// item-shrink: {Map | Null}, // See Mixin `clay-css` for available keys
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// breakpoint-down: {String, Null}, // The Bootstrap 4 Breakpoint {xs | sm | md | lg | xl}
+/// item-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// item-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// item-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// item-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// shrink-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+
+@mixin clay-input-group-stacked($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$breakpoint: setter(map-get($map, breakpoint), md);
+	$breakpoint-down: clay-breakpoint-prev($breakpoint);
+
+	$item: setter(map-get($map, item), ());
+	$item: map-merge(
+		$item,
+		(
+			margin-bottom:
+				setter(
+					map-get($map, item-margin-bottom),
+					map-get($item, margin-bottom)
+				),
+			margin-left:
+				setter(
+					map-get($map, item-margin-left),
+					map-get($item, margin-left)
+				),
+			margin-right:
+				setter(
+					map-get($map, item-margin-right),
+					map-get($item, margin-right)
+				),
+			margin-top:
+				setter(
+					map-get($map, item-margin-top),
+					map-get($item, margin-top)
+				),
+			width: setter(map-get($item, width), 100%),
+		)
+	);
+
+	$item-shrink: setter(map-get($map, item-shrink), ());
+	$item-shrink: map-merge(
+		$item-shrink,
+		(
+			margin-bottom:
+				setter(
+					map-get($map, shrink-margin-bottom),
+					map-get($item-shrink, margin-bottom)
+				),
+			margin-left:
+				setter(
+					map-get($map, shrink-margin-left),
+					map-get($item-shrink, margin-left)
+				),
+			margin-right:
+				setter(
+					map-get($map, shrink-margin-right),
+					map-get($item-shrink, margin-right)
+				),
+			margin-top:
+				setter(
+					map-get($map, shrink-margin-top),
+					map-get($item-shrink, margin-top)
+				),
+			width: setter(map-get($item-shrink, width), auto),
+		)
+	);
+
+	@if ($enabled) {
+		@include media-breakpoint-down($breakpoint-down) {
+			@include clay-css($map);
+
+			> .input-group-item {
+				@include clay-css($item);
+			}
+
+			> .input-group-item-shrink {
+				@include clay-css($item-shrink);
+			}
+		}
+	}
+}
+
+/// A mixin for customizing or creating variants of `input-group-text`.
+/// @deprecated use `clay-container` instead
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+
+@mixin clay-input-group-text-variant($map) {
+	$base: map-merge(
+		$map,
+		(
+			background-color:
+				setter(map-get($map, bg), map-get($map, background-color)),
+		)
+	);
+
+	@include clay-css($base);
+}

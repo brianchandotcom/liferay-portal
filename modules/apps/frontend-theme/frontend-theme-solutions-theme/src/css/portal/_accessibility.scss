@@ -1,0 +1,22 @@
+.cke_toolbar {
+	&.cke_toolbar__a11yhelpbtn {
+		.cke_toolgroup,
+		.cke_toolgroup:hover {
+			background: transparent;
+		}
+
+		.cke_button {
+			&:hover {
+				background: transparent;
+			}
+
+			.cke_button_label {
+				&:after {
+					border-color: #a6a6a6;
+					font-family: 'Courier New', Courier,
+						'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+				}
+			}
+		}
+	}
+}

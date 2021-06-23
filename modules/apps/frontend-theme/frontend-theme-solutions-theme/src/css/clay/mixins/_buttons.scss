@@ -1,0 +1,612 @@
+////
+/// @group buttons
+////
+
+/// A mixin that helps create custom button sizes
+/// @deprecated use the mixin `clay-button-variant` instead
+/// @param {Map} $map - A map of `key: value` pairs.
+
+@mixin clay-button-size($map) {
+	@include clay-button-variant($map);
+}
+
+/// A mixin to create button variants, use this instead of `clay-button-size()`. You can base your variant off Bootstrap's `.btn` class or create your own base class (e.g., `<button class="btn my-custom-btn-primary"></button>` or `<button class="my-custom-btn my-custom-btn-primary"></button>`).
+/// @param {Map} $map - A map of `key: value` pairs. The keys and value types are listed below:
+/// @example
+/// enabled: {Bool}, // Set to false to prevent mixin styles from being output. Default: true
+/// breakpoint-down: {String, Null}, // The Bootstrap 4 Breakpoint {xs | sm | md | lg | xl}
+/// See Mixin `clay-css` for available keys to pass into the base selector
+/// hover: {Map | Null}, // See Mixin `clay-css` for available keys
+/// focus: {Map | Null}, // See Mixin `clay-css` for available keys
+/// disabled: {Map | Null}, // See Mixin `clay-css` for available keys
+/// active: {Map | Null}, // See Mixin `clay-css` for available keys
+/// active-class: {Map | Null}, // See Mixin `clay-css` for available keys
+/// active-focus: {Map | Null}, // See Mixin `clay-css` for available keys
+/// lexicon-icon: {Map | Null}, // See Mixin `clay-css` for available keys
+/// inline-item: {Map | Null}, // See Mixin `clay-css` for available keys
+/// section: {Map | Null}, // See Mixin `clay-css` for available keys
+/// mobile: {Map | Null}, // See Mixin `clay-css` for available keys
+/// loading-animation: {String | Null}, // The placeholder name 'loading-animation' or 'loading-animation-light'
+/// c-inner: {Map | Null}, // Pass parameters to `clay-css` mixin
+/// -=-=-=-=-=- Deprecated -=-=-=-=-=-
+/// bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// hover-color: {Color | String | Null}, // deprecated after 3.9.0
+/// hover-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// hover-text-decoration: {String | Null}, // deprecated after 3.9.0
+/// hover-z-index: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// focus-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// focus-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// focus-color: {Color | String | Null}, // deprecated after 3.9.0
+/// focus-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-outline: {Number | String | Null}, // deprecated after 3.9.0
+/// focus-z-index: {Number | String | Null}, // deprecated after 3.9.0
+/// disabled-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// disabled-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// disabled-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// disabled-color: {Color | String | Null}, // deprecated after 3.9.0
+/// disabled-cursor: {String | Null}, // deprecated after 3.9.0
+/// disabled-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// disabled-z-index: {Number | String | Null}, // deprecated after 3.9.0
+/// active-bg: {Color | String | Null}, // deprecated after 3.9.0
+/// active-border-color: {Color | String | List | Null}, // deprecated after 3.9.0
+/// active-box-shadow: {String | List | Null}, // deprecated after 3.9.0
+/// active-color: {Color | String | Null}, // deprecated after 3.9.0
+/// active-opacity: {Number | String | Null}, // deprecated after 3.9.0
+/// active-z-index: {Number | String | Null}, // deprecated after 3.9.0
+/// active-focus-box-shadow: {String | List}, // deprecated after 3.9.0, Default: $focus-box-shadow
+/// lexicon-icon-font-size: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-bottom: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-right: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-left: {Number | String | Null}, // deprecated after 3.9.0
+/// lexicon-icon-margin-top: {Number | String | Null}, // deprecated after 3.9.0
+/// inline-item-font-size: {Number | String | Null}, // deprecated after 3.9.0
+/// section-font-size: {Number | String | Null}, // deprecated after 3.9.0
+/// section-font-weight: {Number | String | Null}, // deprecated after 3.9.0
+/// section-line-height: {Number | String | Null}, // deprecated after 3.9.0
+/// font-size-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// height-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// padding-bottom-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// padding-left-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// padding-right-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// padding-top-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// width-mobile: {Number | String | Null}, // deprecated after 3.9.0
+/// @todo
+/// - Add @example
+/// - Add @link to documentation
+
+@mixin clay-button-variant($map) {
+	$enabled: setter(map-get($map, enabled), true);
+
+	$breakpoint-down: map-get($map, breakpoint-down);
+
+	$base: map-merge(
+		$map,
+		(
+			background-color:
+				setter(map-get($map, bg), map-get($map, background-color)),
+		)
+	);
+
+	$hover: setter(map-get($map, hover), ());
+	$hover: map-merge(
+		$hover,
+		(
+			background-color:
+				setter(
+					map-get($map, hover-bg),
+					map-get($hover, background-color)
+				),
+			border-color:
+				setter(
+					map-get($map, hover-border-color),
+					map-get($hover, border-color)
+				),
+			color: setter(map-get($map, hover-color), map-get($hover, color)),
+			opacity:
+				setter(map-get($map, hover-opacity), map-get($hover, opacity)),
+			text-decoration:
+				setter(
+					map-get($map, hover-text-decoration),
+					map-get($hover, text-decoration)
+				),
+			z-index:
+				setter(map-get($map, hover-z-index), map-get($hover, z-index)),
+		)
+	);
+
+	$focus: setter(map-get($map, focus), ());
+	$focus: map-merge(
+		$focus,
+		(
+			background-color:
+				setter(
+					map-get($map, focus-bg),
+					map-get($focus, background-color)
+				),
+			border-color:
+				setter(
+					map-get($map, focus-border-color),
+					map-get($focus, border-color)
+				),
+			box-shadow:
+				setter(
+					map-get($map, focus-box-shadow),
+					map-get($focus, box-shadow)
+				),
+			color: setter(map-get($map, focus-color), map-get($focus, color)),
+			opacity:
+				setter(map-get($map, focus-opacity), map-get($focus, opacity)),
+			outline:
+				setter(map-get($map, focus-outline), map-get($focus, outline)),
+			z-index:
+				setter(map-get($map, focus-z-index), map-get($focus, z-index)),
+		)
+	);
+
+	$active: setter(map-get($map, active), ());
+	$active: map-merge(
+		$active,
+		(
+			background-color:
+				setter(
+					map-get($map, active-bg),
+					map-get($active, background-color)
+				),
+			border-color:
+				setter(
+					map-get($map, active-border-color),
+					map-get($active, border-color)
+				),
+			box-shadow:
+				setter(
+					map-get($map, active-box-shadow),
+					map-get($active, box-shadow)
+				),
+			color: setter(map-get($map, active-color), map-get($active, color)),
+			opacity:
+				setter(map-get($map, active-opacity), map-get($active, opacity)),
+			z-index:
+				setter(map-get($map, active-z-index), map-get($active, z-index)),
+		)
+	);
+
+	$active-class: setter(map-get($map, active-class), ());
+	$active-class: map-merge($active, $active-class);
+
+	$active-class-after: setter(map-get($map, active-class-after), ());
+
+	$active-focus: setter(map-get($map, active-focus), ());
+	$active-focus: map-merge(
+		$active-focus,
+		(
+			box-shadow:
+				setter(
+					map-get($map, active-focus-box-shadow),
+					setter(
+						map-get($active-focus, box-shadow),
+						map-get($focus, box-shadow)
+					)
+				),
+		)
+	);
+
+	$disabled: setter(map-get($map, disabled), ());
+	$disabled: map-merge(
+		$disabled,
+		(
+			background-color:
+				setter(
+					map-get($map, disabled-bg),
+					map-get($disabled, background-color)
+				),
+			border-color:
+				setter(
+					map-get($map, disabled-border-color),
+					map-get($disabled, border-color)
+				),
+			box-shadow:
+				setter(
+					map-get($map, disabled-box-shadow),
+					map-get($disabled, box-shadow)
+				),
+			color:
+				setter(map-get($map, disabled-color), map-get($disabled, color)),
+			cursor:
+				setter(
+					map-get($map, disabled-cursor),
+					map-get($disabled, cursor)
+				),
+			opacity:
+				setter(
+					map-get($map, disabled-opacity),
+					map-get($disabled, opacity)
+				),
+			z-index:
+				setter(
+					map-get($map, disabled-z-index),
+					map-get($disabled, z-index)
+				),
+		)
+	);
+
+	$disabled-active: setter(map-get($map, disabled-active), ());
+
+	$lexicon-icon: setter(map-get($map, lexicon-icon), ());
+	$lexicon-icon: map-merge(
+		$lexicon-icon,
+		(
+			font-size:
+				setter(
+					map-get($map, lexicon-icon-font-size),
+					map-get($lexicon-icon, font-size)
+				),
+			margin-bottom:
+				setter(
+					map-get($map, lexicon-icon-margin-bottom),
+					map-get($lexicon-icon, margin-bottom)
+				),
+			margin-right:
+				setter(
+					map-get($map, lexicon-icon-margin-right),
+					map-get($lexicon-icon, margin-right)
+				),
+			margin-left:
+				setter(
+					map-get($map, lexicon-icon-margin-left),
+					map-get($lexicon-icon, margin-left)
+				),
+			margin-top:
+				setter(
+					map-get($map, lexicon-icon-margin-top),
+					map-get($lexicon-icon, margin-top)
+				),
+		)
+	);
+
+	$inline-item: setter(map-get($map, inline-item), ());
+	$inline-item: map-merge(
+		$inline-item,
+		(
+			font-size:
+				setter(
+					map-get($map, inline-item-font-size),
+					map-get($inline-item, font-size)
+				),
+		)
+	);
+
+	$section: setter(map-get($map, section), ());
+	$section: map-merge(
+		$section,
+		(
+			font-size:
+				setter(
+					map-get($map, section-font-size),
+					map-get($section, font-size)
+				),
+			font-weight:
+				setter(
+					map-get($map, section-font-weight),
+					map-get($section, font-weight)
+				),
+			line-height:
+				setter(
+					map-get($map, section-line-height),
+					map-get($section, line-height)
+				),
+		)
+	);
+
+	$mobile: setter(map-get($map, mobile), ());
+	$mobile: map-merge(
+		$mobile,
+		(
+			font-size:
+				setter(
+					map-get($map, font-size-mobile),
+					map-get($mobile, font-size)
+				),
+			height:
+				setter(map-get($map, height-mobile), map-get($mobile, height)),
+			padding-bottom:
+				setter(
+					map-get($map, padding-bottom-mobile),
+					map-get($mobile, padding-bottom)
+				),
+			padding-left:
+				setter(
+					map-get($map, padding-left-mobile),
+					map-get($mobile, padding-left)
+				),
+			padding-right:
+				setter(
+					map-get($map, padding-right-mobile),
+					map-get($mobile, padding-right)
+				),
+			padding-top:
+				setter(
+					map-get($map, padding-top-mobile),
+					map-get($mobile, padding-top)
+				),
+			width: setter(map-get($map, width-mobile), map-get($mobile, width)),
+		)
+	);
+
+	$unset: setter(
+		if(
+			variable-exists(clay-unset-placeholder),
+			$clay-unset-placeholder,
+			$cadmin-clay-unset-placeholder
+		),
+		clay-unset-placeholder
+	);
+
+	$loading-animation: setter(map-get($map, loading-animation), $unset);
+
+	$c-inner: setter(map-get($map, c-inner), ());
+	$c-inner: map-merge(
+		(
+			enabled:
+				setter(
+					if(
+						variable-exists(enable-c-inner),
+						$enable-c-inner,
+						$cadmin-enable-c-inner
+					),
+					true
+				),
+			margin-bottom: math-sign(map-get($map, padding-bottom)),
+			margin-left: math-sign(map-get($map, padding-left)),
+			margin-right: math-sign(map-get($map, padding-right)),
+			margin-top: math-sign(map-get($map, padding-top)),
+		),
+		$c-inner
+	);
+
+	@if ($enabled) {
+		@include clay-css($base);
+
+		@at-root {
+			a#{&},
+			button#{&} {
+				cursor: map-get($map, cursor);
+			}
+		}
+
+		@if ($breakpoint-down) {
+			@include media-breakpoint-down($breakpoint-down) {
+				@include clay-css($mobile);
+			}
+		}
+
+		&:hover {
+			@include clay-css($hover);
+		}
+
+		&:focus,
+		&.focus {
+			@include clay-css($focus);
+		}
+
+		&:active {
+			@include clay-css($active);
+
+			&:focus {
+				@include clay-css($active-focus);
+			}
+		}
+
+		&[aria-expanded='true'],
+		&.active,
+		&.show,
+		.show > &.dropdown-toggle {
+			@include clay-css($active-class);
+
+			&::after {
+				@include clay-css($active-class-after);
+			}
+		}
+
+		&:disabled,
+		&.disabled {
+			@include clay-css($disabled);
+
+			&:active {
+				@include clay-css($disabled-active);
+			}
+		}
+
+		@if (map-get($c-inner, enabled)) {
+			.c-inner {
+				@include clay-css($c-inner);
+			}
+		}
+
+		.lexicon-icon {
+			@include clay-css($lexicon-icon);
+		}
+
+		.inline-item {
+			@include clay-css($inline-item);
+		}
+
+		.btn-section {
+			@include clay-css($section);
+		}
+
+		.loading-animation {
+			@extend %#{$loading-animation} !optional;
+		}
+	}
+}
+
+/// Bootstrap 4's Button Variant Mixin. This is deprecated use the mixin `clay-button-variant` instead.
+/// @deprecated use the mixin `clay-button-variant` instead
+/// @param {Color} $background
+/// @param {Color} $border
+/// @param {Color} $hover-background[darken($background, 7.5%)]
+/// @param {Color} $hover-border[darken($border, 10%)]
+/// @param {Color} $active-background[darken($background, 10%)]
+/// @param {Color} $active-border[darken($border, 12.5%)]
+
+@mixin button-variant(
+	$background,
+	$border,
+	$hover-background: darken($background, 7.5%),
+	$hover-border: darken($border, 10%),
+	$active-background: darken($background, 10%),
+	$active-border: darken($border, 12.5%)
+) {
+	@include gradient-bg($background);
+
+	@include box-shadow($btn-box-shadow);
+
+	border-color: $border;
+	color: color-yiq($background);
+
+	&:hover {
+		@include gradient-bg($hover-background);
+
+		border-color: $hover-border;
+		color: color-yiq($hover-background);
+	}
+
+	&:focus,
+	&.focus {
+		@include gradient-bg($hover-background);
+
+		border-color: $hover-border;
+		color: color-yiq($hover-background);
+
+		@if $enable-shadows {
+			box-shadow: $btn-box-shadow,
+				0
+					0
+					0
+					$btn-focus-width
+					rgba(mix(color-yiq($background), $border, 15%), 0.5);
+		} @else {
+			box-shadow: 0
+				0
+				0
+				$btn-focus-width
+				rgba(mix(color-yiq($background), $border, 15%), 0.5);
+		}
+	}
+
+	&.disabled,
+	&:disabled {
+		background-color: $background;
+		border-color: $border;
+		color: color-yiq($background);
+
+		@if $enable-gradients {
+			background-image: none;
+		}
+	}
+
+	&:not(:disabled):not(.disabled):active,
+	&:not(:disabled):not(.disabled).active,
+	.show > &.dropdown-toggle {
+		background-color: $active-background;
+		color: color-yiq($active-background);
+		border-color: $active-border;
+
+		@if $enable-gradients {
+			background-image: none;
+		}
+
+		&:focus {
+			@if $enable-shadows and $btn-active-box-shadow != none {
+				box-shadow: $btn-active-box-shadow,
+					0
+						0
+						0
+						$btn-focus-width
+						rgba(mix(color-yiq($background), $border, 15%), 0.5);
+			} @else {
+				box-shadow: 0
+					0
+					0
+					$btn-focus-width
+					rgba(mix(color-yiq($background), $border, 15%), 0.5);
+			}
+		}
+	}
+}
+
+/// Bootstrap 4's Button Outline Variant Mixin. This is deprecated use the mixin `clay-button-variant` instead.
+/// @deprecated use the mixin `clay-button-variant` instead
+/// @param {Color} $color
+/// @param {Color} $color-hover[color-yiq($color)]
+/// @param {Color} $active-background[$color]
+/// @param {Color} $active-border[$color]
+
+@mixin button-outline-variant(
+	$color,
+	$color-hover: color-yiq($color),
+	$active-background: $color,
+	$active-border: $color
+) {
+	border-color: $color;
+	color: $color;
+
+	&:hover {
+		background-color: $active-background;
+		border-color: $active-border;
+		color: $color-hover;
+	}
+
+	&:focus,
+	&.focus {
+		box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
+	}
+
+	&.disabled,
+	&:disabled {
+		background-color: transparent;
+		color: $color;
+	}
+
+	&:not(:disabled):not(.disabled):active,
+	&:not(:disabled):not(.disabled).active,
+	.show > &.dropdown-toggle {
+		background-color: $active-background;
+		border-color: $active-border;
+		color: color-yiq($active-background);
+
+		&:focus {
+			@if $enable-shadows and $btn-active-box-shadow != none {
+				box-shadow: $btn-active-box-shadow,
+					0 0 0 $btn-focus-width rgba($color, 0.5);
+			} @else {
+				box-shadow: 0 0 0 $btn-focus-width rgba($color, 0.5);
+			}
+		}
+	}
+}
+
+/// This is Bootstrap 4's Button Size Mixin. This is deprecated use the mixin `clay-button-variant` instead.
+/// @deprecated use the mixin `clay-button-variant` instead
+/// @param {Number} $padding-y
+/// @param {Number} $padding-x
+/// @param {Number} $font-size
+/// @param {Number} $line-height
+/// @param {Number} $border-radius
+
+@mixin button-size(
+	$padding-y,
+	$padding-x,
+	$font-size,
+	$line-height,
+	$border-radius
+) {
+	@include border-radius($border-radius, 0);
+
+	font-size: $font-size;
+	line-height: $line-height;
+	padding: $padding-y $padding-x;
+}

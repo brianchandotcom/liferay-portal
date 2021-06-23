@@ -116,9 +116,7 @@ definition {
 		task ("View the document entry displayed as Cards style") {
 			DMDocument.viewCardTitle(dmDocumentTitle = "DM Document JPG");
 
-			AssertElementPresent(
-				key_displayStyle = "cards",
-				locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
+			LexiconEntry.viewActiveDisplayStyle(displayStyle = "cards");
 		}
 
 		task ("Change to List display style") {
@@ -128,9 +126,7 @@ definition {
 		task ("View the document entry displayed as List style") {
 			LexiconList.viewListEntryTitle(listEntry = "DM Document JPG");
 
-			AssertElementPresent(
-				key_displayStyle = "list",
-				locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
+			LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
 		}
 	}
 

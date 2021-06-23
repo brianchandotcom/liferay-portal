@@ -30,11 +30,9 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test MarkNotificationAsReadAndAcceptRequest {
+	@refactordone
+	test CanMarkNotificationAsReadAndAcceptRequest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -67,11 +65,11 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Invite Members Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Invite Members Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Invite Members");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Test Site Name",
+			layoutName = "Invite Members Page",
+			widgetName = "Invite Members");
 
 		Navigator.gotoSitePage(
 			pageName = "Invite Members Page",
@@ -79,31 +77,31 @@ definition {
 
 		InviteMembers.inviteMembers(inviteUserFullName = "userfn userln");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
 
-		JSONBlog.addEntry(
+		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		User.logoutPG();
+		PortletEntry.publish();
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(notificationCount = "2");
 
@@ -123,18 +121,12 @@ definition {
 		Notifications.viewNoRequest();
 
 		Notifications.viewNoNotifications();
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 	}
 
 	@description = "This test covers LPS-102749. It views a notification of the edited Web Content Article when staging is turned on."
 	@priority = "4"
-	@refactorneeded
-	test StagingViewEditedArticleNotification {
+	@refactordone
+	test CanViewEditedArticleNotificationStaging {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONGroup.addGroup(groupName = "Subscribe Site");
@@ -143,13 +135,7 @@ definition {
 			groupName = "Subscribe Site",
 			layoutName = "Staging Test Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "Subscribe Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
-
-		Staging.activateStagingCP(siteName = "Subscribe Site");
+		JSONStaging.enableLocalStaging(groupName = "Subscribe Site");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -162,44 +148,26 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openSiteURL(siteName = "Subscribe Site");
-
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "subscribe-site");
 
 		WebContent.subscribeToCurrentFolderCP();
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.openSiteURL(siteName = "Subscribe Site");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Subscribe Site (Staging)",
+			siteURLKey = "subscribe-site",
+			staging = "true");
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
@@ -209,15 +177,12 @@ definition {
 
 		Staging.publishToLiveNowViaPortletCP();
 
-		Navigator.openSiteURL(siteName = "Subscribe Site");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Subscribe Site (Staging)",
+			site = "false",
+			siteURLKey = "subscribe-site",
+			staging = "true",
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.editCP(
 			webContentTitle = "WC WebContent Title",
@@ -249,8 +214,8 @@ definition {
 
 	@description = "This test covers LPS-104398. It views a notification of a web content article created in a folder."
 	@priority = "4"
-	@refactorneeded
-	test ViewFolderArticleNotification {
+	@refactordone
+	test CanViewFolderArticleNotification {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -270,14 +235,9 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "usersn");
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -287,23 +247,18 @@ definition {
 
 		WebContent.subscribeToCurrentFolderCP();
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
 			groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentFolder.gotoCP(
+		WebContentNavigator.openToAddBasicArticle(
 			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name");
-
-		WebContentNavigator.gotoAddCP();
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name");
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
@@ -329,20 +284,10 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test ViewNoNotification {
-		Notifications.viewNoNotifications(activePanel = "Profile");
-
-		Notifications.viewNoRequest();
-
-		Notifications.viewNoNotificationEntry();
-	}
-
 	@description = "This test covers LPS-126145. This ensures that the notification can be viewed after restoring the entry from recycle bin."
 	@priority = "4"
-	@refactorneeded
-	test ViewNotificationAfterRestoring {
+	@refactordone
+	test CanViewNotificationAfterRestoring {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -407,24 +352,13 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		var resourcePrimKey = JSONWebcontent.getResourcePrimKeyByURLTitle(
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
-		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewComment(
-			assetType = "comment",
-			content = "WC WebContent Title",
-			contentBody = "WC WebContent Content Comment",
-			user = "userfn userln",
-			viewEllipsisIcon = "true");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
-
-		RecycleBin.restoreCP(
-			assetName = "WC WebContent Title",
-			assetType = "Web Content Article");
+		JSONWebcontent.moveWebContentToTrash(
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
 		Notifications.gotoNotifications();
 
@@ -434,6 +368,28 @@ definition {
 			contentBody = "WC WebContent Content Comment",
 			user = "userfn userln",
 			viewEllipsisIcon = "true");
+
+		JSONWebcontent.restoreWebContentFromTrashViaResourcePrimKey(resourcePrimKey = "${resourcePrimKey}");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			assetType = "comment",
+			content = "WC WebContent Title",
+			contentBody = "WC WebContent Content Comment",
+			user = "userfn userln",
+			viewEllipsisIcon = "true");
+	}
+
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanViewNotificationDefault {
+		Notifications.viewNoNotifications(activePanel = "Profile");
+
+		Notifications.viewNoRequest();
+
+		Notifications.viewNoNotificationEntry();
 	}
 
 }

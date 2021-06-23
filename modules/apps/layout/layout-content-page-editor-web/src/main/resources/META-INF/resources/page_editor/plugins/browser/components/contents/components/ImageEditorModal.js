@@ -35,7 +35,7 @@ export default function ImageEditorModal({
 	fileEntryId,
 	fragmentEntryLinks,
 	onCloseModal,
-	previewURLsRef,
+	previewURLsRef
 }) {
 	const dispatch = useDispatch();
 

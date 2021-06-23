@@ -63,11 +63,9 @@ export default function PageContent({
 	] = useState(null);
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const [showModal, setShowModal] = useState(false);
+	const [imageEditorParams, setImageEditorParams] = useState(null);
 	const toControlsId = useToControlsId();
 
-	const editImageURLRef = useRef(null);
-	const fileEntryIdRef = useRef(null);
 	const previewURLsRef = useRef(null);
 
 	const isBeingEdited = useMemo(
@@ -162,16 +160,16 @@ export default function PageContent({
 			return {
 				...item,
 				onClick: () => {
-					editImageURLRef.current = item.editImageURL;
-					fileEntryIdRef.current = item.fileEntryId;
+					setImageEditorParams({
+						editImageURL: item.editImageURL,
+						fileEntryId: item.fileEntryId
+					})
 
 					if (!previewURLsRef.current) {
 						previewURLsRef.current = {
 							[item.fileEntryId]: item.previewURL,
 						};
 					}
-
-					setShowModal(true);
 				},
 			};
 		}
@@ -243,12 +241,12 @@ export default function PageContent({
 				)}
 			</div>
 
-			{showModal && (
+			{imageEditorParams && (
 				<ImageEditorModal
-					editImageURL={editImageURLRef.current}
-					fileEntryId={fileEntryIdRef.current}
+					editImageURL={imageEditorParams.editImageURL}
+					fileEntryId={imageEditorParams.fileEntryId}
 					fragmentEntryLinks={fragmentEntryLinks}
-					onCloseModal={() => setShowModal(false)}
+					onCloseModal={() => setImageEditorParams(null)}
 					previewURLsRef={previewURLsRef}
 				/>
 			)}

@@ -1,0 +1,86 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that users can not upload files that exceed the storage quota through the multiple upload."
+	@priority = "5"
+	@refactorneeded
+	test ExceedStorageQuotaMultipleUpload {
+		property custom.properties = "data.limit.dl.storage.max.size=1048576";
+
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document_1");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_2.txt,high_resolution_photo.jpg",
+			storageQuota = "1 MB",
+			validateStorageQuota = "true");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document_2");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "high_resolution_photo",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+	}
+
+	@description = "This ensures that users can not upload a file that exceed the storage quota through the single upload."
+	@priority = "5"
+	@refactorneeded
+	test ExceedStorageQuotaSingleUpload {
+		property custom.properties = "data.limit.dl.storage.max.size=1048576";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "DM Document Title2",
+			storageQuota = "1 MB",
+			validateStorageQuota = "true");
+	}
+
+}

@@ -23,7 +23,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -59,12 +58,10 @@ public class SelectLayoutCollectionDisplayContext {
 
 	public SelectLayoutCollectionDisplayContext(
 		InfoItemServiceTracker infoItemServiceTracker,
-		InfoListProviderTracker infoListProviderTracker,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_infoItemServiceTracker = infoItemServiceTracker;
-		_infoListProviderTracker = infoListProviderTracker;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -244,7 +241,9 @@ public class SelectLayoutCollectionDisplayContext {
 
 	private List<InfoListProvider<?>> _getInfoListProviders() {
 		List<InfoListProvider<?>> infoListProviders =
-			_infoListProviderTracker.getInfoListProviders();
+			(List<InfoListProvider<?>>)
+				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+					InfoListProvider.class);
 
 		DefaultInfoListProviderContext defaultInfoListProviderContext =
 			new DefaultInfoListProviderContext(
@@ -348,7 +347,6 @@ public class SelectLayoutCollectionDisplayContext {
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
-	private final InfoListProviderTracker _infoListProviderTracker;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

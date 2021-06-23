@@ -47,9 +47,9 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
@@ -148,7 +148,7 @@ public class AssetPublisherDisplayContext {
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
 			AssetPublisherWebHelper assetPublisherWebHelper,
-			InfoListProviderTracker infoListProviderTracker,
+			InfoItemServiceTracker infoItemServiceTracker,
 			ItemSelector itemSelector, PortletRequest portletRequest,
 			PortletResponse portletResponse,
 			PortletPreferences portletPreferences,
@@ -163,7 +163,7 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherHelper = assetPublisherHelper;
 		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
 		_assetPublisherWebHelper = assetPublisherWebHelper;
-		_infoListProviderTracker = infoListProviderTracker;
+		_infoItemServiceTracker = infoItemServiceTracker;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
@@ -343,8 +343,8 @@ public class AssetPublisherDisplayContext {
 
 				InfoListProvider<AssetEntry> infoListProvider =
 					(InfoListProvider<AssetEntry>)
-						_infoListProviderTracker.getInfoListProvider(
-							infoListProviderKey);
+						_infoItemServiceTracker.getInfoItemService(
+							InfoListProvider.class, infoListProviderKey);
 
 				if (infoListProvider == null) {
 					return Collections.emptyList();
@@ -408,8 +408,9 @@ public class AssetPublisherDisplayContext {
 
 	public List<InfoListProvider<?>> getAssetEntryInfoListProviders() {
 		List<InfoListProvider<?>> infoListProviders =
-			_infoListProviderTracker.getInfoListProviders(
-				AssetEntry.class.getName());
+			(List<InfoListProvider<?>>)
+				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+					InfoListProvider.class, AssetEntry.class.getName());
 
 		return ListUtil.filter(
 			infoListProviders,
@@ -2254,7 +2255,7 @@ public class AssetPublisherDisplayContext {
 	private String[] _extensions;
 	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoListProviderTracker _infoListProviderTracker;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final ItemSelector _itemSelector;
 	private Boolean _mergeURLTags;
 	private String[] _metadataFields;

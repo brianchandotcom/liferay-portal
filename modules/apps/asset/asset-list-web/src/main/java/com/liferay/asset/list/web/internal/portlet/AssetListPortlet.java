@@ -32,7 +32,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -104,8 +103,7 @@ public class AssetListPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetListWebKeys.INFO_LIST_PROVIDER_DISPLAY_CONTEXT,
 			new InfoListProviderDisplayContext(
-				_infoItemServiceTracker, _infoListProviderTracker,
-				renderRequest, renderResponse));
+				_infoItemServiceTracker, renderRequest, renderResponse));
 		renderRequest.setAttribute(
 			AssetListWebKeys.INFO_LIST_PROVIDER_ITEMS_DISPLAY_CONTEXT,
 			new InfoListProviderItemsDisplayContext(
@@ -176,9 +174,6 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private InfoListProviderTracker _infoListProviderTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

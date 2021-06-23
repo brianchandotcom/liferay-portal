@@ -19,10 +19,10 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
-import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -94,7 +94,8 @@ public class AssetInfoListProviderTest {
 
 		InfoListProvider<AssetEntry> infoListProvider =
 			(InfoListProvider<AssetEntry>)
-				_infoListProviderTracker.getInfoListProvider(
+				_infoItemServiceTracker.getInfoItemService(
+					InfoListProvider.class,
 					"com.liferay.asset.internal.info.list.provider." +
 						"HighestRatedAssetsInfoListProvider");
 
@@ -148,7 +149,8 @@ public class AssetInfoListProviderTest {
 
 		InfoListProvider<AssetEntry> infoListProvider =
 			(InfoListProvider<AssetEntry>)
-				_infoListProviderTracker.getInfoListProvider(
+				_infoItemServiceTracker.getInfoItemService(
+					InfoListProvider.class,
 					"com.liferay.asset.internal.info.list.provider." +
 						"MostViewedAssetsInfoListProvider");
 
@@ -192,7 +194,8 @@ public class AssetInfoListProviderTest {
 
 		InfoListProvider<AssetEntry> infoListProvider =
 			(InfoListProvider<AssetEntry>)
-				_infoListProviderTracker.getInfoListProvider(
+				_infoItemServiceTracker.getInfoItemService(
+					InfoListProvider.class,
 					"com.liferay.asset.internal.info.list.provider." +
 						"RecentContentInfoListProvider");
 
@@ -262,7 +265,8 @@ public class AssetInfoListProviderTest {
 
 		InfoListProvider<AssetEntry> infoListProvider =
 			(InfoListProvider<AssetEntry>)
-				_infoListProviderTracker.getInfoListProvider(
+				_infoItemServiceTracker.getInfoItemService(
+					InfoListProvider.class,
 					"com.liferay.asset.internal.info.list.provider." +
 						"RelatedAssetsInfoListProvider");
 
@@ -323,10 +327,10 @@ public class AssetInfoListProviderTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private InfoListProviderContext _infoListProviderContext;
-
 	@Inject
-	private InfoListProviderTracker _infoListProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	private InfoListProviderContext _infoListProviderContext;
 
 	@Inject
 	private RatingsEntryLocalService _ratingsEntryLocalService;

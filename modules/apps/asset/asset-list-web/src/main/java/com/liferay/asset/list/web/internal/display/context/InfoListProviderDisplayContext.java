@@ -16,7 +16,6 @@ package com.liferay.asset.list.web.internal.display.context;
 
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
@@ -48,11 +47,9 @@ public class InfoListProviderDisplayContext {
 
 	public InfoListProviderDisplayContext(
 		InfoItemServiceTracker infoItemServiceTracker,
-		InfoListProviderTracker infoListProviderTracker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_infoItemServiceTracker = infoItemServiceTracker;
-		_infoListProviderTracker = infoListProviderTracker;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -70,7 +67,9 @@ public class InfoListProviderDisplayContext {
 					_httpServletRequest, "there-are-no-collection-providers"));
 
 		List<InfoListProvider<?>> infoListProviders =
-			_infoListProviderTracker.getInfoListProviders();
+			(List<InfoListProvider<?>>)
+				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+					InfoListProvider.class);
 
 		searchContainer.setResults(
 			ListUtil.subList(
@@ -121,7 +120,6 @@ public class InfoListProviderDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
-	private final InfoListProviderTracker _infoListProviderTracker;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

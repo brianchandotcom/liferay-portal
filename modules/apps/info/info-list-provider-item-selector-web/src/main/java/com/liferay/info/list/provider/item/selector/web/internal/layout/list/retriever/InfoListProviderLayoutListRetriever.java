@@ -22,7 +22,6 @@ import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.FilteredInfoListProvider;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
-import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
@@ -61,8 +60,8 @@ public class InfoListProviderLayoutListRetriever
 
 		InfoListProvider<Object> infoListProvider =
 			(InfoListProvider<Object>)
-				_infoListProviderTracker.getInfoListProvider(
-					keyListObjectReference.getKey());
+				_infoItemServiceTracker.getInfoItemService(
+					InfoListProvider.class, keyListObjectReference.getKey());
 
 		if (infoListProvider == null) {
 			return Collections.emptyList();
@@ -109,8 +108,8 @@ public class InfoListProviderLayoutListRetriever
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
 		InfoListProvider<?> infoListProvider =
-			_infoListProviderTracker.getInfoListProvider(
-				keyListObjectReference.getKey());
+			_infoItemServiceTracker.getInfoItemService(
+				InfoListProvider.class, keyListObjectReference.getKey());
 
 		if (infoListProvider == null) {
 			return 0;
@@ -174,9 +173,6 @@ public class InfoListProviderLayoutListRetriever
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private InfoListProviderTracker _infoListProviderTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -14,9 +14,9 @@
 
 package com.liferay.info.list.provider.item.selector.web.internal;
 
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -112,7 +112,7 @@ public class InfoListProviderItemSelectorView
 			new InfoListProviderItemSelectorReturnType());
 
 	@Reference
-	private InfoListProviderTracker _infoListProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer
@@ -231,13 +231,17 @@ public class InfoListProviderItemSelectorView
 			if (ListUtil.isNotEmpty(itemTypes)) {
 				for (String itemType : itemTypes) {
 					infoListProviders.addAll(
-						_infoListProviderTracker.getInfoListProviders(
-							itemType));
+						(List<InfoListProvider<?>>)
+							(List<?>)
+								_infoItemServiceTracker.getAllInfoItemServices(
+									InfoListProvider.class, itemType));
 				}
 			}
 			else {
 				infoListProviders =
-					_infoListProviderTracker.getInfoListProviders();
+					(List<InfoListProvider<?>>)
+						(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+							InfoListProvider.class);
 			}
 
 			Layout layout = _layoutLocalService.fetchLayout(

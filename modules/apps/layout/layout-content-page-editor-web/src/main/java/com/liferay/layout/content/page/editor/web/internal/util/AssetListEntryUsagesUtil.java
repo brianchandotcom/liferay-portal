@@ -32,7 +32,6 @@ import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceTrackerUtil;
-import com.liferay.layout.content.page.editor.web.internal.info.list.provider.InfoListProviderTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -441,9 +440,12 @@ public class AssetListEntryUsagesUtil {
 				assetListEntryUsage.getClassName(),
 				InfoListProvider.class.getName())) {
 
+			InfoItemServiceTracker infoItemServiceTracker =
+				InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
+
 			InfoListProvider<?> infoListProvider =
-				InfoListProviderTrackerUtil.getInfoListProvider(
-					assetListEntryUsage.getKey());
+				infoItemServiceTracker.getInfoItemService(
+					InfoListProvider.class, assetListEntryUsage.getKey());
 
 			if (infoListProvider != null) {
 				mappedContentJSONObject.put(
@@ -460,9 +462,6 @@ public class AssetListEntryUsagesUtil {
 				);
 			}
 			else {
-				InfoItemServiceTracker infoItemServiceTracker =
-					InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
-
 				InfoItemRelatedListProvider infoItemRelatedListProvider =
 					infoItemServiceTracker.getInfoItemService(
 						InfoItemRelatedListProvider.class,

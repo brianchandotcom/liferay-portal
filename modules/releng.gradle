@@ -246,6 +246,9 @@ deployReleng {
 				else if (_exists(file(project.properties["app.server." + "${project.'app.server.type'}" + ".portal.dir"] + "/WEB-INF/lib/"), jarFileName)) {
 					deployDir = file(project.properties["app.server." + "${project.'app.server.type'}" + ".portal.dir"] + "/WEB-INF/lib/")
 				}
+				else if (_exists(file(project.properties["app.server." + "${project.'app.server.type'}" + ".portal.dir"] + "/WEB-INF/shielded-container-lib/"), jarFileName)) {
+					deployDir = file(project.properties["app.server." + "${project.'app.server.type'}" + ".portal.dir"] + "/WEB-INF/shielded-container-lib/")
+				}
 
 				FileUtil.get(project, artifactURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], new File(deployDir, jarFileName), false, true)
 			}

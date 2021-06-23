@@ -176,6 +176,12 @@ public class LiferayExtension {
 		return _appServers;
 	}
 
+	public File getAppServerShieldedContainerLibPortalDir() {
+		AppServer appServer = getAppServer();
+
+		return appServer.getShieldedContainerLibPortalDir();
+	}
+
 	public String getAppServerType() {
 		return GradleUtil.toString(_appServerType);
 	}

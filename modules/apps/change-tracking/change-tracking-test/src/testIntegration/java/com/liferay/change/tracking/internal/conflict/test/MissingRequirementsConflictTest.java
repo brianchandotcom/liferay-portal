@@ -110,6 +110,8 @@ public class MissingRequirementsConflictTest {
 		Assert.assertEquals(
 			childFolder.getFolderId(), conflictInfo.getSourcePrimaryKey());
 
+		Assert.assertFalse(conflictInfo.isResolved());
+
 		Assert.assertTrue(conflictsMap.toString(), conflictsMap.isEmpty());
 	}
 

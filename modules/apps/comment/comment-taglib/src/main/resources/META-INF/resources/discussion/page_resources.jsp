@@ -58,30 +58,19 @@ DiscussionCommentIterator discussionCommentIterator = (rootDiscussionComment == 
 
 </c:if>
 
-<script>
-	var indexInput = document.getElementById(
-		'<%= originalNamespace + randomNamespace %>index'
-	);
-
-	if (indexInput) {
-		indexInput.value = '<%= String.valueOf(index) %>';
-	}
-
-	var rootIndexPageInput = document.getElementById(
-		'<%= originalNamespace + randomNamespace %>rootIndexPage'
-	);
-
-	if (rootIndexPageInput) {
-		rootIndexPageInput.value = '<%= String.valueOf(rootIndexPage) %>';
-	}
-
-	<c:if test="<%= (rootDiscussionComment != null) && (discussion.getDiscussionCommentsCount() <= index) %>">
-		var moreCommentsContainer = document.getElementById(
-			'<%= HtmlUtil.escape(originalNamespace) %>moreCommentsContainer'
-		);
-
-		if (moreCommentsContainer) {
-			moreCommentsContainer.classList.add('hide');
-		}
-	</c:if>
-</script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"hideMoreComments", (rootDiscussionComment != null) && (discussion.getDiscussionCommentsCount() <= index)
+		).put(
+			"index", index
+		).put(
+			"originalNamespace", originalNamespace
+		).put(
+			"randomNamespace", randomNamespace
+		).put(
+			"rootIndexPage", rootIndexPage
+		).build()
+	%>'
+	module="discussion/js/PageResources"
+/>

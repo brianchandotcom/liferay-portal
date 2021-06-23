@@ -30,6 +30,7 @@ page import="com.liferay.portal.kernel.comment.display.context.CommentSectionDis
 page import="com.liferay.portal.kernel.comment.display.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContextFunction" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.staging.StagingGroupHelperUtil" %>
 

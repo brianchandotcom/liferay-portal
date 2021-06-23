@@ -65,7 +65,7 @@
 					<else>
 						<delete failonerror="false">
 							<fileset
-								dir="${app.server.lib.portal.dir}"
+								dir="${app.server.shielded-container-lib.portal.dir}"
 								excludes="${jdbc.drivers}"
 							/>
 						</delete>
@@ -416,7 +416,7 @@ message.
 
 	<target name="deploy-additional-jars">
 		<copy
-			todir="${app.server.lib.portal.dir}"
+			todir="${app.server.shielded-container-lib.portal.dir}"
 		>
 			<fileset
 				dir="lib/development"
@@ -428,7 +428,7 @@ message.
 			<isset property="jdbc.drivers.optional.dir" />
 			<then>
 				<copy
-					todir="${app.server.lib.portal.dir}"
+					todir="${app.server.shielded-container-lib.portal.dir}"
 				>
 					<fileset
 						dir="${jdbc.drivers.optional.dir}"
@@ -439,7 +439,7 @@ message.
 		</if>
 
 		<copy
-			todir="${app.server.lib.portal.dir}"
+			todir="${app.server.shielded-container-lib.portal.dir}"
 		>
 			<fileset
 				dir="lib/portal"
@@ -461,7 +461,7 @@ message.
 				</if>
 
 				<copy
-					todir="${app.server.lib.portal.dir}"
+					todir="${app.server.shielded-container-lib.portal.dir}"
 				>
 					<fileset
 						dir="lib/development"
@@ -474,7 +474,7 @@ message.
 					<then>
 						<delete>
 							<fileset
-								dir="${app.server.lib.portal.dir}"
+								dir="${app.server.shielded-container-lib.portal.dir}"
 								includes="tomcat-juli.jar"
 							/>
 						</delete>
@@ -996,7 +996,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target depends="setup-jrebel-init" name="setup-jrebel-properties" unless="liferay.lib.portal.dir.isset">
-		<echo append="true" file="portal-impl/src/system-ext.properties" message="liferay.lib.portal.dir=${app.server.lib.portal.dir}" />
+		<echo append="true" file="portal-impl/src/system-ext.properties" message="liferay.lib.portal.dir=${app.server.shielded-container-lib.portal.dir}" />
 
 		<copy
 			file="portal-impl/src/system-ext.properties"

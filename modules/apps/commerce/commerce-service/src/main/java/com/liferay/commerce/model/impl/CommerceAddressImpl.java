@@ -19,6 +19,8 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
@@ -185,6 +187,12 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 	@Override
 	public Country getCountry() throws PortalException {
 		return CountryLocalServiceUtil.getCountry(getCountryId());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Address.class.getName(), getPrimaryKey());
 	}
 
 	@Override

@@ -68,12 +68,23 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DefaultDateFormatIsMMDDYYYY {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67691 DefaultDateFormatIsMMDDYYYY pending implementation
+		Navigator.gotoNavItem(navItem = "Performance");
 
+		Click(
+			key_title = "Performance by Step",
+			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
+
+		Click(
+			completionVelocityDateRange = "Custom Range",
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dateFormat = "Default date format is MM/DD/YYYY.",
+			locator1 = "WorkflowMetricsCompletionVelocity#DEFAULT_DATE_FORMAT_MESSAGE");
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last 7 Days time period, the result and filter options displayed in accordance with reference"

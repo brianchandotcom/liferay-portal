@@ -912,6 +912,95 @@ definition {
 		}
 	}
 
+	macro editAndDeleteBlogEntry {
+		if (isSet(video)) {
+			Navigator.gotoPage(pageName = "Blogs");
+
+			BlogsEntry.moveToRecycleBinPG(
+				assetType = "Blogs Entry",
+				entryContent = "video",
+				entryTitle = "Blogs Entry Title With Video");
+		}
+
+		Navigator.gotoPage(pageName = "Blogs");
+
+		Blogs.editEntryPG(
+			embedVideo = "https://www.youtube.com/watch?v=HOdbzGCI5MEU",
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Edit",
+			uploadFileName = "Document_2.jpg");
+
+		Navigator.gotoPage(pageName = "Blogs");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Edit");
+	}
+
+	macro editAndDeleteKBArticle {
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		KBArticle.editPGViaKBDisplay(
+			kbArticleContentEdit = "Knowledge Base Video Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		KBArticle.deletePG();
+
+		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Title Edit");
+	}
+
+	macro editAndDeleteMessageBoard {
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards",
+			siteURLKey = "guest",
+			threadSubject = "Message Boards Subject");
+
+		MessageboardsThread.editPG(
+			threadBodyEdit = "Message Boards Body Edit",
+			threadSubject = "Message Boards Subject",
+			threadSubjectEdit = "Message Boards Subject Edit");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body Edit",
+			threadSubject = "Message Boards Subject Edit",
+			userName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Message Boards");
+
+		MessageboardsThread.deletePG(threadSubject = "Message Boards Subject Edit");
+	}
+
+	macro editAndDeleteWiki {
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiPage.editFrontPagePG(wikiPageContentEdit = "Wiki FrontPage Content Edit");
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki FrontPage Content Edit",
+			wikiPageRevision = "1.2",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test");
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki FrontPage Content Edit",
+			wikiPageTitle = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.deletePG(wikiPageTitle = "FrontPage");
+	}
+
 	macro editAnnDeleteDocuments {
 		Navigator.gotoPage(pageName = "Documents");
 
@@ -1223,6 +1312,134 @@ definition {
 		BlogsEntry.viewEntryAsWorkflowAsset(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "New Blog After Upgrade");
+	}
+
+	macro viewAndAddBlogEntry {
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1.jpg");
+
+		if (isSet(video)) {
+			BlogsNavigator.openToBlogEntry(
+				entryTitle = "Blogs Entry Title With Video",
+				layoutName = "Blogs",
+				siteURLKey = "guest");
+
+			BlogsEntry.viewEntryPG(
+				embedVideo = "true",
+				entryContent = "video",
+				entryTitle = "Blogs Entry Title With Video");
+		}
+
+		Navigator.gotoPage(pageName = "Blogs");
+
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as good",
+			voteCount = "0");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as bad",
+			voteCount = "1");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry After Upgrade Content",
+			entrySubtitle = "Blogs Entry After Upgrade Subtitle",
+			entryTitle = "Blogs Entry After Upgrade Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry After Upgrade Content",
+			entryTitle = "Blogs Entry After Upgrade Title");
+	}
+
+	macro viewAndAddKBArticle {
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		KBArticle.viewPG(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = "1");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content After Upgrade",
+			kbArticleTitle = "Knowledge Base Article Title After Upgrade");
+
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title After Upgrade");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content After Upgrade",
+			kbArticleTitle = "Knowledge Base Article Title After Upgrade");
+	}
+
+	macro viewAndAddMessageBoard {
+		Navigator.gotoPage(pageName = "Message Boards");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = "1");
+
+		Navigator.gotoPage(pageName = "Message Boards");
+
+		MessageboardsThread.addPG(
+			threadBody = "Message Boards Body After Upgrade",
+			threadSubject = "Message Boards Subject After Upgrade");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body After Upgrade",
+			threadSubject = "Message Boards Subject After Upgrade");
+	}
+
+	macro viewAndAddWiki {
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiNavigator.gotoFrontPagePG();
+
+		WikiPage.viewFrontPagePG(
+			wikiPageContent = "Wiki Front Page Content",
+			wikiPageTitle = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "4.0",
+			ratingStarCount = "4");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content After Upgrade",
+			wikiPageTitle = "Wiki Page Title After Upgrade");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title After Upgrade");
+
+		WikiPage.viewPagePG(
+			wikiPageContent = "Wiki Page Content After Upgrade",
+			wikiPageTitle = "Wiki Page Title After Upgrade");
 	}
 
 	macro viewAndDeleteAutoTaggedBlogsEntry {

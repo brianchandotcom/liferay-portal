@@ -277,11 +277,7 @@ const DatePicker = ({
 							true
 						).isValid()
 					) {
-						onChange(
-							moment(value, getLocaleDateFormat(locale)).format(
-								'L'
-							)
-						);
+						onChange(getValueForHidden(value, locale));
 					}
 				}}
 				ref={inputRef}

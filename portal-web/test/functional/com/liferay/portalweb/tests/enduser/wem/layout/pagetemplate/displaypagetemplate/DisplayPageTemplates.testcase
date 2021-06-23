@@ -86,16 +86,16 @@ definition {
 			PageEditor.clickPublish();
 		}
 
+		task ("Mark the display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
 		task ("Add a document entry") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "DM Document JPG",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_4.jpg");
-		}
-
-		task ("Mark the display page template as default") {
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content") {

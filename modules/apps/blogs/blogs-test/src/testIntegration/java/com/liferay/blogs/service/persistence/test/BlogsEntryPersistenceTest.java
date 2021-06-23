@@ -128,6 +128,8 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setUuid(RandomTestUtil.randomString());
 
+		newBlogsEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newBlogsEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newBlogsEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -192,6 +194,9 @@ public class BlogsEntryPersistenceTest {
 			newBlogsEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingBlogsEntry.getUuid(), newBlogsEntry.getUuid());
+		Assert.assertEquals(
+			existingBlogsEntry.getExternalReferenceCode(),
+			newBlogsEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingBlogsEntry.getEntryId(), newBlogsEntry.getEntryId());
 		Assert.assertEquals(
@@ -505,6 +510,15 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 
@@ -535,12 +549,13 @@ public class BlogsEntryPersistenceTest {
 
 	protected OrderByComparator<BlogsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BlogsEntry", "mvccVersion", true, "uuid", true, "entryId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "title", true,
-			"subtitle", true, "urlTitle", true, "description", true,
-			"displayDate", true, "allowPingbacks", true, "allowTrackbacks",
-			true, "coverImageCaption", true, "coverImageFileEntryId", true,
+			"BlogsEntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "entryId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "title", true, "subtitle", true,
+			"urlTitle", true, "description", true, "displayDate", true,
+			"allowPingbacks", true, "allowTrackbacks", true,
+			"coverImageCaption", true, "coverImageFileEntryId", true,
 			"coverImageURL", true, "smallImage", true, "smallImageFileEntryId",
 			true, "smallImageId", true, "smallImageURL", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
@@ -822,6 +837,17 @@ public class BlogsEntryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				blogsEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "urlTitle"));
+
+		Assert.assertEquals(
+			Long.valueOf(blogsEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				blogsEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			blogsEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				blogsEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {
@@ -832,6 +858,8 @@ public class BlogsEntryPersistenceTest {
 		blogsEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		blogsEntry.setUuid(RandomTestUtil.randomString());
+
+		blogsEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		blogsEntry.setGroupId(RandomTestUtil.nextLong());
 

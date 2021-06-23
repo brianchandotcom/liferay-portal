@@ -82,15 +82,15 @@ public class BlogsEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"entryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
-		{"subtitle", Types.VARCHAR}, {"urlTitle", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"content", Types.CLOB},
-		{"displayDate", Types.TIMESTAMP}, {"allowPingbacks", Types.BOOLEAN},
-		{"allowTrackbacks", Types.BOOLEAN}, {"trackbacks", Types.CLOB},
-		{"coverImageCaption", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR}, {"entryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"title", Types.VARCHAR}, {"subtitle", Types.VARCHAR},
+		{"urlTitle", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"content", Types.CLOB}, {"displayDate", Types.TIMESTAMP},
+		{"allowPingbacks", Types.BOOLEAN}, {"allowTrackbacks", Types.BOOLEAN},
+		{"trackbacks", Types.CLOB}, {"coverImageCaption", Types.VARCHAR},
 		{"coverImageFileEntryId", Types.BIGINT},
 		{"coverImageURL", Types.VARCHAR}, {"smallImage", Types.BOOLEAN},
 		{"smallImageFileEntryId", Types.BIGINT}, {"smallImageId", Types.BIGINT},
@@ -105,6 +105,7 @@ public class BlogsEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -136,7 +137,7 @@ public class BlogsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BlogsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(255) null,subtitle STRING null,urlTitle VARCHAR(255) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table BlogsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(255) null,subtitle STRING null,urlTitle VARCHAR(255) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BlogsEntry";
 
@@ -168,38 +169,44 @@ public class BlogsEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long URLTITLE_COLUMN_BITMASK = 16L;
+	public static final long STATUS_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 32L;
+	public static final long URLTITLE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long USERID_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -232,6 +239,7 @@ public class BlogsEntryModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -416,6 +424,12 @@ public class BlogsEntryModelImpl
 		attributeGetterFunctions.put("uuid", BlogsEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", BlogsEntry::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<BlogsEntry, String>)
+				BlogsEntry::setExternalReferenceCode);
 		attributeGetterFunctions.put("entryId", BlogsEntry::getEntryId);
 		attributeSetterBiConsumers.put(
 			"entryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setEntryId);
@@ -583,6 +597,35 @@ public class BlogsEntryModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1461,6 +1504,7 @@ public class BlogsEntryModelImpl
 
 		blogsEntryImpl.setMvccVersion(getMvccVersion());
 		blogsEntryImpl.setUuid(getUuid());
+		blogsEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		blogsEntryImpl.setEntryId(getEntryId());
 		blogsEntryImpl.setGroupId(getGroupId());
 		blogsEntryImpl.setCompanyId(getCompanyId());
@@ -1585,6 +1629,17 @@ public class BlogsEntryModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			blogsEntryCacheModel.uuid = null;
+		}
+
+		blogsEntryCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode =
+			blogsEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			blogsEntryCacheModel.externalReferenceCode = null;
 		}
 
 		blogsEntryCacheModel.entryId = getEntryId();
@@ -1819,6 +1874,7 @@ public class BlogsEntryModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _entryId;
 	private long _groupId;
 	private long _companyId;
@@ -1880,6 +1936,8 @@ public class BlogsEntryModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("entryId", _entryId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1937,61 +1995,63 @@ public class BlogsEntryModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("entryId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("entryId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("title", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("subtitle", 1024L);
+		columnBitmasks.put("title", 1024L);
 
-		columnBitmasks.put("urlTitle", 2048L);
+		columnBitmasks.put("subtitle", 2048L);
 
-		columnBitmasks.put("description", 4096L);
+		columnBitmasks.put("urlTitle", 4096L);
 
-		columnBitmasks.put("content", 8192L);
+		columnBitmasks.put("description", 8192L);
 
-		columnBitmasks.put("displayDate", 16384L);
+		columnBitmasks.put("content", 16384L);
 
-		columnBitmasks.put("allowPingbacks", 32768L);
+		columnBitmasks.put("displayDate", 32768L);
 
-		columnBitmasks.put("allowTrackbacks", 65536L);
+		columnBitmasks.put("allowPingbacks", 65536L);
 
-		columnBitmasks.put("trackbacks", 131072L);
+		columnBitmasks.put("allowTrackbacks", 131072L);
 
-		columnBitmasks.put("coverImageCaption", 262144L);
+		columnBitmasks.put("trackbacks", 262144L);
 
-		columnBitmasks.put("coverImageFileEntryId", 524288L);
+		columnBitmasks.put("coverImageCaption", 524288L);
 
-		columnBitmasks.put("coverImageURL", 1048576L);
+		columnBitmasks.put("coverImageFileEntryId", 1048576L);
 
-		columnBitmasks.put("smallImage", 2097152L);
+		columnBitmasks.put("coverImageURL", 2097152L);
 
-		columnBitmasks.put("smallImageFileEntryId", 4194304L);
+		columnBitmasks.put("smallImage", 4194304L);
 
-		columnBitmasks.put("smallImageId", 8388608L);
+		columnBitmasks.put("smallImageFileEntryId", 8388608L);
 
-		columnBitmasks.put("smallImageURL", 16777216L);
+		columnBitmasks.put("smallImageId", 16777216L);
 
-		columnBitmasks.put("lastPublishDate", 33554432L);
+		columnBitmasks.put("smallImageURL", 33554432L);
 
-		columnBitmasks.put("status", 67108864L);
+		columnBitmasks.put("lastPublishDate", 67108864L);
 
-		columnBitmasks.put("statusByUserId", 134217728L);
+		columnBitmasks.put("status", 134217728L);
 
-		columnBitmasks.put("statusByUserName", 268435456L);
+		columnBitmasks.put("statusByUserId", 268435456L);
 
-		columnBitmasks.put("statusDate", 536870912L);
+		columnBitmasks.put("statusByUserName", 536870912L);
+
+		columnBitmasks.put("statusDate", 1073741824L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -114,11 +114,12 @@ public class BlogsEntryServiceSoap {
 	}
 
 	public static com.liferay.blogs.model.BlogsEntrySoap addEntry(
-			String title, String subtitle, String urlTitle, String description,
-			String content, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, String coverImageCaption,
+			String externalReferenceCode, String title, String subtitle,
+			String urlTitle, String description, String content,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
 				coverImageImageSelector,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
@@ -129,12 +130,12 @@ public class BlogsEntryServiceSoap {
 		try {
 			com.liferay.blogs.model.BlogsEntry returnValue =
 				BlogsEntryServiceUtil.addEntry(
-					title, subtitle, urlTitle, description, content,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, allowPingbacks,
-					allowTrackbacks, trackbacks, coverImageCaption,
-					coverImageImageSelector, smallImageImageSelector,
-					serviceContext);
+					externalReferenceCode, title, subtitle, urlTitle,
+					description, content, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					allowPingbacks, allowTrackbacks, trackbacks,
+					coverImageCaption, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
 
 			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModel(
 				returnValue);

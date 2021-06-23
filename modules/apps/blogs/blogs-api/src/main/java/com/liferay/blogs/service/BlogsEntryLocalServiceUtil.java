@@ -143,29 +143,9 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	public static BlogsEntry addEntry(
-			long userId, String title, String subtitle, String urlTitle,
-			String description, String content, java.util.Date displayDate,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, String coverImageCaption,
-			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
-				coverImageImageSelector,
-			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
-				smallImageImageSelector,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addEntry(
-			userId, title, subtitle, urlTitle, description, content,
-			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
-			serviceContext);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, String title, String subtitle, String urlTitle,
-			String description, String content, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean allowPingbacks,
+			String externalReferenceCode, long userId, String title,
+			String subtitle, String urlTitle, String description,
+			String content, java.util.Date displayDate, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks,
 			String coverImageCaption,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
@@ -176,11 +156,32 @@ public class BlogsEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addEntry(
-			userId, title, subtitle, urlTitle, description, content,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
-			serviceContext);
+			externalReferenceCode, userId, title, subtitle, urlTitle,
+			description, content, displayDate, allowPingbacks, allowTrackbacks,
+			trackbacks, coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
+	}
+
+	public static BlogsEntry addEntry(
+			String externalReferenceCode, long userId, String title,
+			String subtitle, String urlTitle, String description,
+			String content, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				coverImageImageSelector,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector
+				smallImageImageSelector,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addEntry(
+			externalReferenceCode, userId, title, subtitle, urlTitle,
+			description, content, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
+			allowTrackbacks, trackbacks, coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
 	public static void addEntryResources(
@@ -413,6 +414,31 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the blogs entry with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the blogs entry's external reference code
+	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	 */
+	public static BlogsEntry fetchBlogsEntryByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchBlogsEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBlogsEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static BlogsEntry fetchBlogsEntryByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchBlogsEntryByReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the blogs entry matching the UUID and group.
 	 *
 	 * @param uuid the blogs entry's UUID
@@ -501,6 +527,22 @@ public class BlogsEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getBlogsEntry(entryId);
+	}
+
+	/**
+	 * Returns the blogs entry with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the blogs entry's external reference code
+	 * @return the matching blogs entry
+	 * @throws PortalException if a matching blogs entry could not be found
+	 */
+	public static BlogsEntry getBlogsEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getBlogsEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

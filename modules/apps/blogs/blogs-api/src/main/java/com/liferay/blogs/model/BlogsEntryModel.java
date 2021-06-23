@@ -97,6 +97,21 @@ public interface BlogsEntryModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this blogs entry.
+	 *
+	 * @return the external reference code of this blogs entry
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this blogs entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this blogs entry
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the entry ID of this blogs entry.
 	 *
 	 * @return the entry ID of this blogs entry

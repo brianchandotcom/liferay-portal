@@ -6420,6 +6420,74 @@ public class BlogsEntryUtil {
 	}
 
 	/**
+	 * Returns the blogs entry where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching blogs entry
+	 * @throws NoSuchEntryException if a matching blogs entry could not be found
+	 */
+	public static BlogsEntry findByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.blogs.exception.NoSuchEntryException {
+
+		return getPersistence().findByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the blogs entry where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	 */
+	public static BlogsEntry fetchByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().fetchByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the blogs entry where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	 */
+	public static BlogsEntry fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_ERC(
+			groupId, externalReferenceCode, useFinderCache);
+	}
+
+	/**
+	 * Removes the blogs entry where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the blogs entry that was removed
+	 */
+	public static BlogsEntry removeByG_ERC(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.blogs.exception.NoSuchEntryException {
+
+		return getPersistence().removeByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of blogs entries where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching blogs entries
+	 */
+	public static int countByG_ERC(long groupId, String externalReferenceCode) {
+		return getPersistence().countByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Caches the blogs entry in the entity cache if it is enabled.
 	 *
 	 * @param blogsEntry the blogs entry

@@ -216,6 +216,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ASSIGNEE_DROPDOWN_SEARCHBAR</td>
+	<td>//div//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ASSIGNEE_DROPDOWN_SEARCHBAR_OPTION</td>
+	<td>//div[@class='dropdown-menu show']//span[text()='${key_userName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE</td>
 	<td>//span[contains(@class, 'dropdown-item')]//span[contains(@class, 'custom-control-label-text')][contains(text(), '${assigneeName}')]</td>
 	<td></td>

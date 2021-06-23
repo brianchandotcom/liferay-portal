@@ -450,12 +450,41 @@ definition {
 	}
 
 	@description = "LPS-98517 - Verify that if Assignee dropdown menu is higher than 496px a search bar is added on it as specified on Figma"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-67764 SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "13",
+			numberOfUsers = "13",
+			site = "${siteName}");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+
+		Click(
+			key_allItemsFilterName = "Assignee",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ASSIGNEE_DROPDOWN_SEARCHBAR");
+
+		Type(
+			locator1 = "WorkflowAllItems#WORKFLOW_ASSIGNEE_DROPDOWN_SEARCHBAR",
+			value1 = "5user user5");
+
+		AssertElementPresent(
+			key_userName = "5user user5",
+			locator1 = "WorkflowAllItems#WORKFLOW_ASSIGNEE_DROPDOWN_SEARCHBAR_OPTION");
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, when one of the sections has no entries, the section title is completely removed"

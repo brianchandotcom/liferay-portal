@@ -30,12 +30,60 @@ definition {
 	}
 
 	@description = "LPS-97666 - Verify that the names inside the steps filter component from Performance by Assignee card are breaking into another line when the component width exceeds 240px"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AssigneeNamesBreaksIntoAnotherLine {
+		property portal.acceptance = "true";
 
-		// TODO LRQA-67704 AssigneeNamesBreaksIntoAnotherLine pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "single_approver_task.xml",
+			workflowDefinitionTitle = "Single Approver Task");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver Task",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "reviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreview");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "reviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreview");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Task");
+
+		Navigator.gotoNavItem(navItem = "Performance");
+
+		Click(
+			key_text = "All Steps",
+			locator1 = "Button#ANY");
+
+		AssertCssValue(
+			key_workflowStep = "reviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreview",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION",
+			locator2 = "height",
+			value1 = "168px");
+
+		AssertCssValue(
+			key_workflowStep = "updateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdateupdate",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION",
+			locator2 = "height",
+			value1 = "147px");
 	}
 
 	@description = "LPS-97666 - Verify that the Performance by Assignee card are also considering inactive users"

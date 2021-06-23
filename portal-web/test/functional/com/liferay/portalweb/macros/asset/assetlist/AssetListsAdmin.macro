@@ -124,6 +124,21 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addPersonalizedVariation {
+		Click(
+			key_text = "New Personalized Variation",
+			locator1 = "Button#ANY");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_tableEntry = "${segmentName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+			value1 = "${segmentName}");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addSelection {
 		Click(locator1 = "Button#NEW");
 

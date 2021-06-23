@@ -1,0 +1,196 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-128810. View collection items on content page when select segment."
+	@priority = "4"
+	test ViewCollectionItemsOnContentPageWhenSelectSegment {
+		task ("Add a segment with a Regular Role field") {
+			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Regular Role",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "New Segment",
+				text = "${roleId}");
+		}
+
+		task ("Add a web content without tag") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title 1");
+		}
+
+		task ("Add a web content with tag") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag name",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title 2");
+		}
+
+		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a new personalized variation with new segment") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "New Segment");
+		}
+
+		task ("Select Web Content Article and Basic Web Content for Personalized Variation") {
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add a tag filter for Personalized Variation") {
+			AssetListsAdmin.addTagsFilter(tagNameList = "tag name");
+		}
+
+		task ("View both web contents shown in collection items when select Anyone personalized variation") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewCollectionItems(
+				assetListTitle = "Dynamic Collection",
+				assetTitleList = "Web Content Title 1,Web Content Title 2");
+		}
+
+		task ("View only the web content with tag is shown and without tag is not shown in collection items when select New Segment personalized variation") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 2",
+				assetType = "Web Content Article",
+				personalizedVariation = "New Segment");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.viewNoContent(
+				assetListTitle = "Dynamic Collection",
+				assetTitle = "Web Content Title 1",
+				assetType = "Web Content Article",
+				personalizedVariation = "New Segment");
+		}
+
+		task ("Add a Collection Display fragment to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Heading fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title 2",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field of Heading") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View both web contents shown in Simulation modal by default") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG();
+
+			var n = "1";
+
+			for (var title : list "Web Content Title 2,Web Content Title 1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${title}",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+				var n = ${n} + 1;
+			}
+
+			SelectFrameTop();
+		}
+
+		task ("Select the Segment on Simulation Panel") {
+			Check.checkNotVisible(
+				checkboxName = "New Segment",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("View only the web content with tag shown and without tag is not shown in Simulation modal when select segment") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Web Content Title 2",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_entryContent = "Web Content Title 1",
+				key_rowPosition = "2",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+		}
+	}
+
+}

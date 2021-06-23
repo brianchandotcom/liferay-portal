@@ -207,23 +207,323 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6259. Add tax rates to the newly activated engine (ByAddress)"
-	@ignore = "true"
 	@priority = "3"
 	test AddTaxRateToByAddressTaxEngine {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceTaxEngine#AddTaxRateToByAddressTaxEngine";
 
-		// TODO COMMERCE-6259 AddTaxRateToByAddressTaxEngine Pending Implementation
+		// TODO Review
 
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Tax Categories");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test 2",
+			keyReferenceCode = "Test Reference");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site");
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "By Address",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rate Settings");
+
+		WaitForElementPresent(locator1 = "Button#PLUS");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Select(
+			key_fieldLabel = "Tax Category",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Test");
+
+		Type(
+			key_fieldLabel = "Amount",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "7");
+
+		Select(
+			key_fieldLabel = "Country",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Italy");
+
+		Select(
+			key_fieldLabel = "Region",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Roma");
+
+		Type(
+			key_fieldLabel = "Zip",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "0100");
+
+		Button.click(button = "Submit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
+
+		Refresh();
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "By Address",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rate Settings");
+
+		AssertElementPresent(
+			key_errorMessage = "7",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		AssertElementPresent(
+			key_errorMessage = "Italy",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		AssertElementPresent(
+			key_errorMessage = "Roma",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		AssertElementPresent(
+			key_errorMessage = "0100",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		Click(
+			key_value = "Test",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = "Amount",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10");
+
+		Select(
+			key_fieldLabel = "Country",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Brazil");
+
+		Select(
+			key_fieldLabel = "Region",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Alagoas");
+
+		Type(
+			key_fieldLabel = "Zip",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "0111");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "By Address",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rate Settings");
+
+		AssertElementPresent(
+			key_errorMessage = "10",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		AssertElementPresent(
+			key_errorMessage = "Brazil",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		AssertElementPresent(
+			key_errorMessage = "Alagoas",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		AssertElementPresent(
+			key_errorMessage = "0111",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 	}
 
 	@description = "This is a test for COMMERCE-6259. Add tax rates to the newly activated engine (Fixed)"
-	@ignore = "true"
 	@priority = "3"
 	test AddTaxRateToFixedTaxEngine {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceTaxEngine#AddTaxRateToFixedTaxEngine";
 
-		// TODO COMMERCE-6259 AddTaxRateToFixedTaxEngine Pending Implementation
+		// TODO Review
 
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Tax Categories");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test 2",
+			keyReferenceCode = "Test Reference");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site");
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "Fixed Tax Rate",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rates");
+
+		WaitForElementPresent(locator1 = "Button#PLUS");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Select(
+			key_fieldLabel = "Tax Category",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Test");
+
+		Type(
+			key_fieldLabel = "Amount",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "7");
+
+		Button.click(button = "Submit");
+
+		Refresh();
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "Fixed Tax Rate",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rates");
+
+		AssertElementPresent(
+			key_errorMessage = "$ 7.00",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		Click(
+			key_value = "Test",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = "Amount",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "10");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "Fixed Tax Rate",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rates");
+
+		AssertElementPresent(
+			key_errorMessage = "$ 10.00",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 	}
 
 	@description = "This is a test for COMMERCE-6262. Test address restriction on tax calculation"

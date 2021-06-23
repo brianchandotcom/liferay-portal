@@ -467,6 +467,12 @@ gradle.beforeProject {
 				}
 			}
 
+			if (FileUtil.exists(project, ".lfrbuild-app-server-lib") && !project.name.startsWith("shielded-container-")) {
+				liferay {
+					deployDir = liferay.appServerShieldedContainerLibPortalDir
+				}
+			}
+
 			if (bndPrintJarFiles != null) {
 				jar {
 					doLast {

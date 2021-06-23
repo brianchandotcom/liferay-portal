@@ -304,12 +304,33 @@ definition {
 	}
 
 	@description = "LPS-100677 - Verify that searching steps containing non-ascii chars is possible"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test UserCanSearchNonAsciiChars {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#UserCanSearchNonAsciiChars";
 
-		// TODO LRQA-67675 UserCanSearchNonAsciiChars pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "11_transitions_update.xml",
+			workflowDefinitionTitle = "11 Transitions Update");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "11 Transitions Update");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		Click(
+			key_stepsNumber = "11",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		WorkflowMetricsPerformanceByStep.searchForStep(stepName = "新");
+
+		AssertElementPresent(
+			key_stepName = "更新",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Step, when it has 6 or more entries, the table should provide a vertical scroll"

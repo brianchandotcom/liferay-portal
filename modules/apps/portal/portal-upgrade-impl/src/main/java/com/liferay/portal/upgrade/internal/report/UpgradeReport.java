@@ -14,22 +14,15 @@
 
 package com.liferay.portal.upgrade.internal.report;
 
-import com.liferay.portal.kernel.upgrade.UpgradeReport;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Sam Ziemer
  */
-@Component(
-	immediate = true, service = {UpgradeReport.class, UpgradeReportImpl.class}
-)
-public class UpgradeReportImpl implements UpgradeReport {
+public class UpgradeReport {
 
 	public void addError(String loggerName, String message) {
 		List<String> errors = _errors.computeIfAbsent(
@@ -52,7 +45,6 @@ public class UpgradeReportImpl implements UpgradeReport {
 		warnings.add(message);
 	}
 
-	@Override
 	public void generateReport() {
 	}
 

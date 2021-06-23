@@ -34,9 +34,9 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.log.UpgradeLogAppender;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.transaction.TransactionsUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
@@ -57,8 +57,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.apache.commons.lang.time.StopWatch;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.Appender;
 
 import org.springframework.context.ApplicationContext;
 
@@ -114,8 +113,6 @@ public class DBUpgrader {
 	}
 
 	public static void main(String[] args) {
-		UpgradeLogAppender upgradeLogAppender = new UpgradeLogAppender();
-
 		try {
 			StopWatch stopWatch = new StopWatch();
 
@@ -129,12 +126,6 @@ public class DBUpgrader {
 
 			try (SafeCloseable safeCloseable =
 					ProxyModeThreadLocal.setWithSafeCloseable(false)) {
-
-				if (PropsValues.UPGRADE_REPORT_ENABLED) {
-					upgradeLogAppender.start();
-
-					_rootLogger.addAppender(upgradeLogAppender);
-				}
 
 				upgrade();
 			}
@@ -155,7 +146,7 @@ public class DBUpgrader {
 			System.exit(1);
 		}
 		finally {
-			upgradeLogAppender.stop();
+			_upgradeLogAppender.stop();
 		}
 	}
 
@@ -391,7 +382,8 @@ public class DBUpgrader {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
 
-	private static final Logger _rootLogger =
-		(Logger)LogManager.getRootLogger();
+	private static volatile Appender _upgradeLogAppender =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Appender.class, DBUpgrader.class, "_upgradeLogAppender", false);
 
 }

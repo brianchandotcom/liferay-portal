@@ -200,8 +200,6 @@ definition {
 	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
 	@priority = "4"
 	test SelectDifferentTypePagesInLinkToPageField {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

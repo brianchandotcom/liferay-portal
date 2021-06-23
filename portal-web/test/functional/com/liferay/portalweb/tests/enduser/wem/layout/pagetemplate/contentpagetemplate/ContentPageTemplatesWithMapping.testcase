@@ -38,8 +38,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map manual URL to image fragment."
 	@priority = "4"
 	test MapManualURLToImageFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add an Image fragment to content page template") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -114,7 +112,6 @@ definition {
 	@description = "This is a test for LPS-98031."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
@@ -151,8 +148,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map manual URL to text fragment."
 	@priority = "4"
 	test MapManualURLToTextFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a Heading fragment to content page template") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -222,8 +217,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
 	@priority = "2"
 	test MapWebContentFieldWithURLToImageFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -322,8 +315,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
 	@priority = "2"
 	test MapWebContentFieldWithURLToLinkFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -422,8 +413,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
 	@priority = "2"
 	test MapWebContentFieldWithURLToTextFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

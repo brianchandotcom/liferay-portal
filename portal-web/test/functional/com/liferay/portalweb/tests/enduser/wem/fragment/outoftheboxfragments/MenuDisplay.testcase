@@ -394,8 +394,6 @@ definition {
 	@description = "This is a test for LPS-120091. Can navigate via Menu Display in Staging and Live site."
 	@priority = "4"
 	test NavigateViaMenuDisplayInStagingAndLiveSite {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
 				auto = "true",

@@ -38,8 +38,6 @@ definition {
 	@description = "This is a test for LPS-130453. Display video from Documents and Media in External Video fragment."
 	@priority = "5"
 	test DisplayVideoFromDocumentsAndMediaInExternalVideo {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add an external video shortcut") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -113,8 +111,6 @@ definition {
 	@description = "This is a test for LPS-130453. Display video from URL in External Video fragment."
 	@priority = "5"
 	test DisplayVideoFromURLInExternalVideo {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add an External Video fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",

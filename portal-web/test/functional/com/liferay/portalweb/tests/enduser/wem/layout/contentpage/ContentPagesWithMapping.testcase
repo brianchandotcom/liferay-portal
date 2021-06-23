@@ -400,7 +400,6 @@ definition {
 	@description = "This is a test for LPS-120094. Map manual URL to Image fragment."
 	@priority = "5"
 	test MapManualURLToImageFragment {
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Add a Image fragment to page") {
@@ -455,7 +454,6 @@ definition {
 	@description = "This is a test for LPS-98031 and LPS-120348. Map Manual URL to Link fragment and select blank as target."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Add a Banner Center fragment to page") {
@@ -515,7 +513,6 @@ definition {
 	@description = "This is a test for LPS-117818. Map manual URL to text fragment."
 	@priority = "5"
 	test MapManualURLToTextFragment {
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment to page") {
@@ -1049,8 +1046,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
 	@priority = "4"
 	test MapWebContentFieldWithURLToImageFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1127,8 +1122,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
 	@priority = "4"
 	test MapWebContentFieldWithURLToLinkFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1205,8 +1198,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
 	@priority = "4"
 	test MapWebContentFieldWithURLToTextFragment {
-		property dummy.socket.proxy.disabled = "true";
-
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

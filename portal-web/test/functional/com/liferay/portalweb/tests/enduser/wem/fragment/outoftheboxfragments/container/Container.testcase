@@ -678,7 +678,6 @@ definition {
 	@description = "This is a test for LPS-119817. Map manual URL to Container element."
 	@priority = "5"
 	test MapManualURLToContainerElement {
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Add a Container element to page") {

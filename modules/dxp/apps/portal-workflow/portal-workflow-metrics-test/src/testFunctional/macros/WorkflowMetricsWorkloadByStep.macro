@@ -10,4 +10,24 @@ definition {
 			value1 = "${ontimeValue}");
 	}
 
+	macro viewWorkloadByStepOverdueValue {
+		var key_stepName = "${stepName}";
+
+		AssertElementPresent(locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		AssertElementPresent(
+			locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_OVERDUE_VALUE",
+			value1 = "${overdueValue}");
+	}
+
+	macro viewWorkloadByStepTotalPendingValue {
+		var key_stepName = "${stepName}";
+
+		AssertElementPresent(locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_STEP_NAME");
+
+		AssertElementPresent(
+			locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_TOTAL_PENDING_VALUE",
+			value1 = "${totalPendingValue}");
+	}
+
 }

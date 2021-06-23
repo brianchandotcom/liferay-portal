@@ -614,9 +614,11 @@ definition {
 		}
 	}
 
-	@description = "When there's a vocabulary in the "In use" box is in the second position of the list and user clicks on Save, the graph will feature that vocabulary in the checkbox legend above"
+	@description = "LPS-134606 When there's a vocabulary in the "In use" box is in the second position of the list and user clicks on Save, the graph will feature that vocabulary in the checkbox legend above"
 	@priority = "5"
 	test CheckSecondPositionVocabularyCheckbox {
+		property portal.acceptance = "true";
+
 		task ("Create a Web Content with Audience and Stage categories") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -663,9 +665,11 @@ definition {
 		}
 	}
 
-	@description = "When there's a vocabulary in the "In use" box is in the top position of the list and user clicks on Save, the graph will feature that vocabulary in the X axis"
+	@description = "LPS-134606 When there's a vocabulary in the "In use" box is in the top position of the list and user clicks on Save, the graph will feature that vocabulary in the X axis"
 	@priority = "5"
 	test CheckTopPositionVocabularyXAxis {
+		property portal.acceptance = "true";
+		
 		task ("Create a Web Content with Audience and Stage categories") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -780,7 +784,7 @@ definition {
 		}
 	}
 
-	@description = "When the user has removed all vocabularies from the In Use box and clicks on Save , a warning message will show: Select at least one vocabulary to show on the chart "
+	@description = "LPS-134606 When the user has removed all vocabularies from the In Use box and clicks on Save , a warning message will show: Select at least one vocabulary to show on the chart "
 	@priority = "3"
 	test ShowWarningMessageNoVocabulariesInUse {
 		task ("Create a Web Content with Audience and Stage categories") {

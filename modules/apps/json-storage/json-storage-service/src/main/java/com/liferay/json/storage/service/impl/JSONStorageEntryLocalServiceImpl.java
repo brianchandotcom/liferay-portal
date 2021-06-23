@@ -98,9 +98,7 @@ public class JSONStorageEntryLocalServiceImpl
 				JSONStorageEntryTable.INSTANCE.classPK),
 			companyId, classNameId, pathParts, value);
 
-		Long count = jsonStorageEntryPersistence.dslQuery(orderByStep);
-
-		return count.intValue();
+		return jsonStorageEntryPersistence.dslQueryCount(orderByStep);
 	}
 
 	@Override

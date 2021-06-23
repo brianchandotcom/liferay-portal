@@ -105,6 +105,13 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 		margin-top: -$management-bar-margin-bottom;
 	}
 
+	&:first-child {
+		.secondary-bar-open & {
+			position: absolute;
+			visibility: hidden;
+		}
+	}
+
 	.add-menu {
 		z-index: inherit;
 
@@ -149,6 +156,28 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 
 	.btn-link {
 		color: $nav-link-color;
+	}
+}
+
+.management-bar-container {
+	position: relative;
+
+	.management-bar {
+		padding: 0;
+
+		> .container-fluid {
+			> .management-bar-header-right {
+				margin-left: -15px;
+			}
+		}
+
+		.form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.management-bar-header > .checkbox {
+		padding-left: 0;
 	}
 }
 
@@ -661,5 +690,16 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 .management-bar-secondary-bar {
 	background-color: #f0f5ff;
 	border-bottom: 1px solid $primary;
+	left: 0;
+	min-height: 0;
+	overflow: hidden;
 	position: absolute;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+
+	.secondary-bar-open & {
+		position: relative;
+		visibility: visible;
+	}
 }

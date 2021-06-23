@@ -83,4 +83,59 @@ definition {
 		ACSegments.deleteSegment(searchTerm = "Static Segment Test 2");
 	}
 
+	@description = "Search for specific segment"
+	@priority = "5"
+	test CanShowSegmentList {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Andre DXP 7.4");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+		ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "userfn userln");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+		ACSegments.addSegmentField(segmentField = "email");
+
+		ACSegments.editTextCriterion(textInput = "userea@liferay.com");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.assertSegmentPresent(segmentName = "Static Segment Test");
+
+		ACSegments.assertSegmentPresent(segmentName = "Dynamic Segment Test");
+
+	}
+
 }

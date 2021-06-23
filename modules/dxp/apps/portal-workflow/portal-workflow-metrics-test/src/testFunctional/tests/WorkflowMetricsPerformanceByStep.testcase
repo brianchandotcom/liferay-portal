@@ -59,12 +59,51 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Steps works as designed when the portal is set to a non-en-US locale"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CardWorksAsDesignedWhenPortalIsSetToNonEnUsLocale {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67673 CardWorksAsDesignedWhenPortalIsSetToNonEnUsLocale pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			avgCompletionTime = "0min",
+			rowName = "Review",
+			slaBreachedValue = "0 (0%)");
+
+		User.openUsersAdmin();
+
+		User.editDisplaySettingsCP(
+			languageName = "español (España)",
+			userScreenName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Flujo de trabajo",
+			panel = "Aplicaciones",
+			portlet = "Métricas");
+
+		Click(
+			key_workflowProcessName = "Aprobador único",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
+
+		Navigator.gotoNavItem(navItem = "Eficiencia");
+
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			avgCompletionTime = "0min",
+			rowName = "Revisión",
+			slaBreachedValue = "0 (0%)");
+
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			avgCompletionTime = "0min",
+			rowName = "Modificar",
+			slaBreachedValue = "0 (0%)");
+
+		Click(
+			key_viewStepsNumber = "Ver todos los pasos (2)",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS_TRANSLATION");
+
+		AssertElementPresent(
+			key_value = "Aprobador único: Rendimiento por paso",
+			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
 	}
 
 	@description = "LPS-100674 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"

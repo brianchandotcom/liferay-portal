@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS_TRANSLATION</td>
+    <td>//a//span[contains(text(), '${key_viewStepsNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_PAGE_INPUT_FIELD</td>
 	<td>//input[contains(@placeholder, 'Search for Step Name')]</td>
 	<td></td>

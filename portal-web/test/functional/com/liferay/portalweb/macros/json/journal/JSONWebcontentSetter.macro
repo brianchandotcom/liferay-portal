@@ -3,12 +3,15 @@ definition {
 	macro setArticleId {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONWebcontentSetter.setGroupId(
+			site = "${site}",
+			groupName = "${groupName}");
 
 		var urlTitle = StringUtil.replace("${title}", " ", "-");
 		var urlTitle = StringUtil.lowerCase("${urlTitle}");
 
 		var articleId = JSONWebcontentAPI._getArticleIdByURLTitle(
+			site = "${site}",
 			groupName = "${groupName}",
 			urlTitle = "${urlTitle}");
 

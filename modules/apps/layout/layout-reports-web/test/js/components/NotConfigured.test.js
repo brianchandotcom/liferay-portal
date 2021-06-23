@@ -74,4 +74,23 @@ describe('NotConfigured', () => {
 			getByText('configure-google-pagespeed-to-run-a-page-audit')
 		).toBeInTheDocument();
 	});
+
+	it('renders the proper image', () => {
+		const {getByAltText} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						configureGooglePageSpeedURL: 'validURL',
+						imagesPath: 'imagesPath',
+					},
+				}}
+			>
+				<NotConfigured />
+			</StoreContextProvider>
+		);
+
+		const image = getByAltText('default-page-audit-image-alt-description');
+
+		expect(image.src).toContain('issues_configure');
+	});
 });

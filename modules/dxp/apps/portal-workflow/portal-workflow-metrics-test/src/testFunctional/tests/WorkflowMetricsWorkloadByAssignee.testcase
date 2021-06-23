@@ -255,12 +255,68 @@ definition {
 	}
 
 	@description = "LPS-98518 - Verify that the filters values inside (Workload by Assignee) are alphabetically sorted"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test FiltersAreAlphabeticallySorted {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67606 FiltersAreAlphabeticallySorted pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(
+			key_assigneesNumber = "1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		Click(
+			key_text = "Role",
+			locator1 = "Button#ANY");
+
+		AssertTextEquals(
+			key_index = "1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
+			value1 = "Administrator");
+
+		AssertTextEquals(
+			key_index = "2",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
+			value1 = "Power User");
+
+		AssertTextEquals(
+			key_index = "3",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
+			value1 = "User");
+
+		Click(
+			key_text = "Process Step",
+			locator1 = "Button#ANY");
+
+		AssertTextEquals(
+			key_index = "1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
+			value1 = "Review");
+
+		AssertTextEquals(
+			key_index = "2",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
+			value1 = "Update");
 	}
 
 	@description = "LPS-98518 - Verify that the filters inside (Workload by Assignee) are applied only after the user moves the cursor out of the dropdown card"

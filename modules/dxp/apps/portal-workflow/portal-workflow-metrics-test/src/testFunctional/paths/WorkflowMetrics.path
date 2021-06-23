@@ -431,6 +431,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//li[contains(@aria-selected,'false')][${key_index}]//span[contains(@class,'text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME</td>
 	<td>//td//a[contains(@class, 'workload-by-step-link')]//span[contains(text(),'${key_assigneeName}')]</td>
 	<td></td>
@@ -468,6 +473,11 @@
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_STEPS</td>
 	<td>//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK</td>
+	<td>//a//span[contains(text(), 'View All Assignees (${key_assigneesNumber})')]</td>
 	<td></td>
 </tr>
 <tr>

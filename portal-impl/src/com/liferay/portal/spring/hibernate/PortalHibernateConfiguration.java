@@ -18,8 +18,6 @@ import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.asm.ASMWrapperUtil;
-import com.liferay.portal.change.tracking.registry.CTModelRegistration;
-import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.dao.orm.hibernate.event.MVCCSynchronizerPostUpdateEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.ResetOriginalValuesLoadEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.ResetOriginalValuesPostLoadEventListener;
@@ -28,9 +26,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -38,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
@@ -54,9 +50,10 @@ import java.util.regex.Pattern;
 
 import javassist.util.proxy.ProxyFactory;
 
-import org.hibernate.EntityMode;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -65,10 +62,8 @@ import org.hibernate.event.EventListeners;
 import org.hibernate.event.LoadEventListener;
 import org.hibernate.event.PostLoadEventListener;
 import org.hibernate.event.PostUpdateEventListener;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.persister.entity.OuterJoinLoadable;
 
-import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 /**
  * @author Brian Wing Shun Chan
@@ -87,75 +82,22 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	}
 
 	@Override
-	public SessionFactory buildSessionFactory() throws Exception {
-		setBeanClassLoader(getConfigurationClassLoader());
+	public void afterPropertiesSet() throws IOException {
+		BootstrapServiceRegistryBuilder bootstrapServiceRegistryBuilder =
+			new BootstrapServiceRegistryBuilder();
 
-		SessionFactoryImplementor sessionFactoryImplementor =
-			(SessionFactoryImplementor)super.buildSessionFactory();
+		bootstrapServiceRegistryBuilder.applyClassLoader(
+			getConfigurationClassLoader());
 
-		if (!_mvccEnabled) {
-			return sessionFactoryImplementor;
+		if (_mvccEnabled) {
+			bootstrapServiceRegistryBuilder.applyIntegrator(
+				new CTModelIntegrator());
 		}
 
-		boolean containCTModel = false;
+		setMetadataSources(
+			new MetadataSources(bootstrapServiceRegistryBuilder.build()));
 
-		Map<String, ClassMetadata> classMetadatas =
-			sessionFactoryImplementor.getAllClassMetadata();
-
-		for (ClassMetadata classMetadata : classMetadatas.values()) {
-			Class<?> mappedClass = classMetadata.getMappedClass(
-				EntityMode.POJO);
-
-			if (!CTModel.class.isAssignableFrom(mappedClass)) {
-				continue;
-			}
-
-			Class<?> modelClass = _findCTModelClass(
-				classMetadata, mappedClass.getSuperclass());
-
-			if (modelClass == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find CT model class for " + mappedClass);
-				}
-			}
-			else {
-				containCTModel = true;
-			}
-		}
-
-		CTSQLInterceptor ctSQLInterceptor =
-			(CTSQLInterceptor)sessionFactoryImplementor.getInterceptor();
-
-		ctSQLInterceptor.setEnabled(containCTModel);
-
-		return sessionFactoryImplementor;
-	}
-
-	@Override
-	public void destroy() throws HibernateException {
-		SessionFactory sessionFactory = getSessionFactory();
-
-		Map<String, ClassMetadata> classMetadatas =
-			sessionFactory.getAllClassMetadata();
-
-		for (ClassMetadata classMetadata : classMetadatas.values()) {
-			Class<?> mappedClass = classMetadata.getMappedClass(
-				EntityMode.POJO);
-
-			if (!CTModel.class.isAssignableFrom(mappedClass)) {
-				continue;
-			}
-
-			OuterJoinLoadable outerJoinLoadable =
-				(OuterJoinLoadable)classMetadata;
-
-			CTModelRegistry.unregisterCTModel(outerJoinLoadable.getTableName());
-		}
-
-		setBeanClassLoader(null);
-
-		super.destroy();
+		super.afterPropertiesSet();
 	}
 
 	public void setMvccEnabled(boolean mvccEnabled) {
@@ -360,34 +302,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 			readResource(configuration, inputStream);
 		}
-	}
-
-	private Class<?> _findCTModelClass(
-		ClassMetadata classMetadata, Class<?> modelClass) {
-
-		while (BaseModelImpl.class != modelClass) {
-			for (Class<?> interfaceClazz : modelClass.getInterfaces()) {
-				if (BaseModel.class.isAssignableFrom(interfaceClazz)) {
-					OuterJoinLoadable outerJoinLoadable =
-						(OuterJoinLoadable)classMetadata;
-
-					String[] identifierColumnNames =
-						outerJoinLoadable.getPropertyColumnNames(
-							outerJoinLoadable.getIdentifierPropertyName());
-
-					CTModelRegistry.registerCTModel(
-						new CTModelRegistration(
-							interfaceClazz, outerJoinLoadable.getTableName(),
-							identifierColumnNames[0]));
-
-					return interfaceClazz;
-				}
-			}
-
-			modelClass = modelClass.getSuperclass();
-		}
-
-		return null;
 	}
 
 	private SessionFactoryImplementor _wrapSessionFactoryImplementor(

@@ -1450,6 +1450,16 @@ definition {
 			locator1 = "KnowledgeBase#DISPLAY_CONTENT",
 			value1 = "${kbArticleContent}");
 
+		if (isSet(embedVideo)) {
+			AssertElementPresent(
+				key_service = "youtube",
+				locator1 = "BlogsEntry#CONTENT_VIDEO");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
+
+			AssertElementPresent(locator1 = "CKEditor#VIDEO_BUTTON_PLAY");
+		}
+
 		if (isSet(customFieldName)) {
 			AssertTextEquals(
 				locator1 = "KnowledgeBaseArticle#CUSTOM_FIELD_NAME",

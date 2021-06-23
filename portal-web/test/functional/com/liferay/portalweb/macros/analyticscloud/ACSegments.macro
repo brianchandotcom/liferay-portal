@@ -24,6 +24,12 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro assertSegmentPresent {
+		var key_segmentName = "${segmentName}";
+
+		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
+	}
+
 	macro cancelSegment {
 		Click(locator1 = "ACSegments#CANCEL_SEGMENT");
 	}

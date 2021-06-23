@@ -38,6 +38,7 @@ import {
 	useSelectorCallback,
 } from '../../../../../app/contexts/StoreContext';
 import {selectPageContentDropdownItems} from '../../../../../app/selectors/selectPageContentDropdownItems';
+import ImageService from '../../../../../app/services/ImageService';
 import ImageEditorModal from './ImageEditorModal';
 
 export default function PageContent({
@@ -162,14 +163,14 @@ export default function PageContent({
 				onClick: () => {
 					setImageEditorParams({
 						editImageURL: item.editImageURL,
-						fileEntryId: item.fileEntryId
-					})
+						fileEntryId: item.fileEntryId,
+					});
 
-					if (!previewURLsRef.current) {
-						previewURLsRef.current = {
-							[item.fileEntryId]: item.previewURL,
-						};
-					}
+					ImageService.getFileEntry({
+						fileEntryId: item.fileEntryId,
+					}).then(({fileEntryURL}) => {
+						previewURLsRef.current = fileEntryURL;
+					});
 				},
 			};
 		}
@@ -247,7 +248,7 @@ export default function PageContent({
 					fileEntryId={imageEditorParams.fileEntryId}
 					fragmentEntryLinks={fragmentEntryLinks}
 					onCloseModal={() => setImageEditorParams(null)}
-					previewURLsRef={previewURLsRef}
+					previewURL={previewURLsRef.current}
 				/>
 			)}
 		</li>

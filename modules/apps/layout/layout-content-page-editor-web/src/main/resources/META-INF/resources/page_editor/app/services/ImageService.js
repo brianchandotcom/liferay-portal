@@ -34,4 +34,16 @@ export default {
 			onNetworkStatus
 		);
 	},
+
+	getFileEntry({fileEntryId, onNetworkStatus}) {
+		return serviceFetch(
+			config.getFileEntryURL,
+			{
+				body: {
+					fileEntryId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
 };

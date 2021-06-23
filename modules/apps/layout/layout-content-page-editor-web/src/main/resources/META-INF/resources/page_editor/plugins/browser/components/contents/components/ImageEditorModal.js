@@ -22,20 +22,12 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/const
 import {useDispatch} from '../../../../../app/contexts/StoreContext';
 import FragmentService from '../../../../../app/services/FragmentService';
 
-const getUpdatedImage = (content) => {
-	const div = document.createElement('div');
-
-	div.innerHTML = content;
-
-	return div.getElementsByTagName('img')[0].src;
-};
-
 export default function ImageEditorModal({
 	editImageURL,
 	fileEntryId,
 	fragmentEntryLinks,
 	onCloseModal,
-	previewURLsRef
+	previewURL
 }) {
 	const dispatch = useDispatch();
 
@@ -69,11 +61,6 @@ export default function ImageEditorModal({
 							fragmentEntryLinkId,
 						})
 					);
-
-					previewURLsRef.current = {
-						...previewURLsRef.current,
-						[fileEntryId]: getUpdatedImage(content),
-					};
 				});
 			});
 		}
@@ -90,10 +77,10 @@ export default function ImageEditorModal({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{previewURLsRef.current && (
+				{previewURL && (
 					<ImageEditor
 						imageId={fileEntryId}
-						imageSrc={previewURLsRef.current[fileEntryId]}
+						imageSrc={previewURL}
 						onCancel={onClose}
 						onSave={onSave}
 						saveURL={editImageURL}
@@ -109,5 +96,5 @@ ImageEditorModal.propTypes = {
 	fileEntryId: PropTypes.string,
 	fragmentEntryLinks: PropTypes.object,
 	onCloseModal: PropTypes.func,
-	previewURLsRef: PropTypes.object,
+	previewURLsRef: PropTypes.string,
 };

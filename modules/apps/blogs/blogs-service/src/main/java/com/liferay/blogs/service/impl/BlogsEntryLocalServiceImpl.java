@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -1688,10 +1688,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			long groupId)
 		throws PortalException {
 
-		return ConfigurationProviderUtil.getConfiguration(
+		return _configurationProvider.getConfiguration(
 			BlogsGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
-				groupId, BlogsConstants.SERVICE_NAME));
+				groupId, BlogsConstants.SERVICE_NAME,
+				BlogsGroupServiceConfiguration.class.getName()));
 	}
 
 	private String _getEntryURL(BlogsEntry entry, ServiceContext serviceContext)
@@ -2376,6 +2377,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

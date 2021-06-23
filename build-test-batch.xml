@@ -4302,7 +4302,7 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
-	<target name="functional-bundle-wildfly14-mysql57-jdk8">
+	<target name="functional-bundle-wildfly140-mysql57-jdk8">
 		<set-app-server-version-number app.server.type="wildfly" app.server.version="14.0.0" />
 
 		<run-functional-test
@@ -4327,7 +4327,32 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
-	<target name="functional-bundle-wildfly22-mysql57-jdk8">
+	<target name="functional-bundle-wildfly170-mysql57-jdk8">
+		<set-app-server-version-number app.server.type="wildfly" app.server.version="17.0.0" />
+
+		<run-functional-test
+			app.server.type="wildfly"
+			app.server.version="17.0.0"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.portal.log.assert="true"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-wildfly220-mysql57-jdk8">
 		<set-app-server-version-number app.server.type="wildfly" app.server.version="22.0.0" />
 
 		<run-functional-test
@@ -4534,12 +4559,16 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
-	<target name="functional-smoke-bundle-wildfly14-mysql57-jdk8">
-		<antcall target="functional-bundle-wildfly14-mysql57-jdk8" />
+	<target name="functional-smoke-bundle-wildfly140-mysql57-jdk8">
+		<antcall target="functional-bundle-wildfly140-mysql57-jdk8" />
 	</target>
 
-	<target name="functional-smoke-bundle-wildfly22-mysql57-jdk8">
-		<antcall target="functional-smoke-bundle-wildfly22-mysql57-jdk8" />
+	<target name="functional-smoke-bundle-wildfly170-mysql57-jdk8">
+		<antcall target="functional-bundle-wildfly170-mysql57-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-wildfly220-mysql57-jdk8">
+		<antcall target="functional-bundle-wildfly220-mysql57-jdk8" />
 	</target>
 
 	<target name="functional-smoke-jboss72-mysql57-jdk8">

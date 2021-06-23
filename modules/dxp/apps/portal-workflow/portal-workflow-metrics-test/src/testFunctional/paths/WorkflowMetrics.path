@@ -90,6 +90,15 @@
 	<td>//div[@class='header'][span[contains(text(),'${key_status}')]]/following-sibling::div[1]</td>
 	<td></td>
 </tr>
+	<td>GENERIC_TABLE_HEADER</td>
+	<td>//tr//th[text()='${key_columnName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERIC_TABLE_HEADER_WITH_ORDER_OPTION</td>
+	<td>//tr//span[text()='${key_columnName}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE</td>
 	<td>//div[@class='header'][span[contains(text(),'Total Completed')]]/following-sibling::div</td>
@@ -302,6 +311,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK_NEW_LANGUAGE</td>
+	<td>//a//span[contains(text(), '${key_newLangText} (${key_assigneesNumber})')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_NO_RESULTS</td>
 	<td>//span[contains(text(),'Performance by Assignee')]/ancestor::div[contains(@class, 'panel-header')]/following-sibling::div//p[contains(.,'No results were found.')]</td>
 	<td></td>
@@ -429,6 +443,11 @@
 <tr>
 	<td>NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
 	<td>//div[@class='header']//span[contains(text(),'${newLanguageCardName}')]</td>
+		<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME_NEW_LANGUAGE</td>
+	<td>//input[@placeholder='${key_newLangText}']</td>
 	<td></td>
 </tr>
 <tr>

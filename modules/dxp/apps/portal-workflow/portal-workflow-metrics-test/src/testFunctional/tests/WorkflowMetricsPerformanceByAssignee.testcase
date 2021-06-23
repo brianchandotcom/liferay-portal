@@ -66,12 +66,94 @@ definition {
 	}
 
 	@description = "LPS-99441 - Verify that the Performance by Assignee page functionalities are working when the portal is set to a non-en_US locale"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test FunctionalitiesWorksProperlyWhenThePortalIsSetToANonEnUsLocale {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67710 FunctionalitiesWorksProperlyWhenThePortalIsSetToANonEnUsLocale pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0000",
+			slaDefinitionName = "SLAName",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content 1",
+			entryTitle = "Test Blog 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Test Blog 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Test Blog 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		MyAccount.changeUserLanguage(
+			languageName = "português (Brasil)",
+			saveButton = "Save");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Fluxo de trabalho",
+			panel = "Aplicativos",
+			portlet = "Métricas");
+
+		Click(
+			key_workflowProcessName = "Aprovador Único",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
+
+		Navigator.gotoNavItem(navItem = "Desempenho");
+
+		Click(
+			key_assigneesNumber = "1",
+			key_newLangText = "Ver Todos Destinatários",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK_NEW_LANGUAGE");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Papel",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Etapa de processo",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertElementPresent(
+			key_newLangText = "Buscar por nome de Responsável",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME_NEW_LANGUAGE");
+
+		AssertElementPresent(
+			key_columnName = "Nome do cessionário",
+			locator1 = "WorkflowMetrics#GENERIC_TABLE_HEADER");
+
+		AssertElementPresent(
+			key_columnName = "Tempo Médio de Conclusão",
+			locator1 = "WorkflowMetrics#GENERIC_TABLE_HEADER_WITH_ORDER_OPTION");
+
+		AssertElementPresent(
+			key_columnName = "Tarefas concluídas",
+			locator1 = "WorkflowMetrics#GENERIC_TABLE_HEADER_WITH_ORDER_OPTION");
 	}
 
 	@description = "LPS-97666 - Verify that, when hovering the info icon next to the card title, there is a tooltip"

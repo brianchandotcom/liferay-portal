@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
 import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.blogs.exception.DuplicateEntryExternalReferenceCodeException;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntryCoverImageCropException;
 import com.liferay.blogs.exception.EntryDisplayDateException;
@@ -281,6 +282,51 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return blogsEntryLocalService.addEntry(
+			null, userId, title, subtitle, urlTitle, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Override
+	public BlogsEntry addEntry(
+			long userId, String title, String subtitle, String urlTitle,
+			String description, String content, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		Date displayDate = _portal.getDate(
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, user.getTimeZone(),
+			EntryDisplayDateException.class);
+
+		return blogsEntryLocalService.addEntry(
+			userId, title, subtitle, urlTitle, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public BlogsEntry addEntry(
+			String externalReferenceCode, long userId, String title,
+			String subtitle, String urlTitle, String description,
+			String content, Date displayDate, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Entry
 
 		User user = userLocalService.getUser(userId);
@@ -292,6 +338,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		long entryId = counterLocalService.increment();
 
+		if (Validator.isNull(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(entryId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		if (Validator.isNotNull(urlTitle)) {
 			urlTitle = _validateURLTitle(groupId, urlTitle, serviceContext);
 		}
@@ -299,6 +351,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
 		entry.setUuid(serviceContext.getUuid());
+		entry.setExternalReferenceCode(externalReferenceCode);
 		entry.setGroupId(groupId);
 		entry.setCompanyId(user.getCompanyId());
 		entry.setUserId(user.getUserId());
@@ -424,12 +477,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public BlogsEntry addEntry(
-			long userId, String title, String subtitle, String urlTitle,
-			String description, String content, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks,
-			String coverImageCaption, ImageSelector coverImageImageSelector,
+			String externalReferenceCode, long userId, String title,
+			String subtitle, String urlTitle, String description,
+			String content, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
 			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -442,10 +496,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			EntryDisplayDateException.class);
 
 		return blogsEntryLocalService.addEntry(
-			userId, title, subtitle, urlTitle, description, content,
-			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
-			serviceContext);
+			externalReferenceCode, userId, title, subtitle, urlTitle,
+			description, content, displayDate, allowPingbacks, allowTrackbacks,
+			trackbacks, coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
 	}
 
 	@Override
@@ -2330,6 +2384,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (content.length() > contentMaxLength) {
 			throw new EntryContentException(
 				"Content has more than " + contentMaxLength + " characters");
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		BlogsEntry blogsEntry = blogsEntryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (blogsEntry != null) {
+			throw new DuplicateEntryExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate BlogsEntry external reference code ",
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

@@ -69,10 +69,12 @@ definition {
 			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_TASK");
 		}
 
-		for (var isAssigneeNotPresent : list "${isNotPresent}") {
-			var key_assigneeName = "${isAssigneeNotPresent}";
+		if (isSet(isNotPresent)) {
+			for (var isAssigneeNotPresent : list "${isNotPresent}") {
+				var key_assigneeName = "${isAssigneeNotPresent}";
 
-			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
+				AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
+			}
 		}
 	}
 
@@ -1461,6 +1463,12 @@ definition {
 		AssertElementPresent(
 			key_value = "${position}",
 			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
+	}
+
+	macro verifyFiltersFromDashboardNotPresent {
+		for (var key_workflowFilterValue : list "${isNotPresent}") {
+			AssertElementNotPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
+		}
 	}
 
 	macro viewDateRangeErrorMessage {

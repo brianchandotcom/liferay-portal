@@ -304,12 +304,57 @@ definition {
 	}
 
 	@description = "LPS-94146 - Verify that user can close the filters shown as tags clicking on x and the result is applied on items list"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FiltersCanBeClosedAndResultAppliedOnList {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67772 FiltersCanBeClosedAndResultAppliedOnList pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Process Status",
+			assigneeName = "Unassigned",
+			filterValueName = "Pending",
+			isNotPresent = "Blogs Entry Title 1,N/A",
+			isPresent = "Blogs Entry Title 2",
+			taskName = "Review");
+
+		WorkflowMetrics.clearAllFilter();
+
+		WorkflowMetrics.verifyFiltersFromDashboardNotPresent(isNotPresent = "Pending");
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "N/A",
+			isPresent = "Blogs Entry Title 1",
+			taskName = "Completed");
 	}
 
 	@description = "LPS-87571 - Verify that when user reaches the page through Dashboard tab, the filter options are: SLA Status, Process Status, Process Step and Assignee"

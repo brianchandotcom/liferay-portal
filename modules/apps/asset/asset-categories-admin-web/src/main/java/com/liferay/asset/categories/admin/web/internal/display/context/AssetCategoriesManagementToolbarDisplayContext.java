@@ -78,7 +78,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 					).setMVCPath(
 						"/set_category_display_page_template.jsp"
 					).setRedirect(
-						currentURLObj.toString()
+						currentURLObj
 					).setParameter(
 						"parentCategoryId",
 						_assetCategoriesDisplayContext.getCategoryId()

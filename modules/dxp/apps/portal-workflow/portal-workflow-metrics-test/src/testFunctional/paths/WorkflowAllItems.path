@@ -350,6 +350,41 @@
 	<td>//span[contains(@class,'bg-muted')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_ID</td>
+	<td>//thead//th[2][contains(text(), "ID")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_DUE_DATE</td>
+	<td>//thead//th[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_ITEM_SUBJECT</td>
+	<td>//thead//th[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_PROCESS_STEP</td>
+	<td>//thead//th[5][contains(text(), "Process Step")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_ASSIGNEE</td>
+	<td>//thead//th[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_CREATE_BY</td>
+	<td>//thead//th[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_CREATION_DATE</td>
+	<td>//thead//th[8]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

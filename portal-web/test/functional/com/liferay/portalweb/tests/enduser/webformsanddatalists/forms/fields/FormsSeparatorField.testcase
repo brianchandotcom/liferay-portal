@@ -181,11 +181,7 @@ definition {
 
 		FormFields.viewPublishedFormFieldSeparatorByIndex(index = "2");
 
-		FormPortlet.submit();
-
-		FormPortlet.viewSuccessPage(
-			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-			successPageTitle = "Thank you.");
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Form can be submitted with the Separator Field"
@@ -212,11 +208,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormPortlet.submitSuccessfully();
-
-		FormPortlet.viewSuccessPage(
-			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-			successPageTitle = "Thank you.");
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
 		Navigator.openURL();
 
@@ -276,11 +268,7 @@ definition {
 			fieldName = "Separator Help Text",
 			fieldValue = "Separator Help Text");
 
-		FormPortlet.submitSuccessfully();
-
-		FormPortlet.viewSuccessPage(
-			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-			successPageTitle = "Thank you.");
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that the Field Label can be changed"

@@ -73,7 +73,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Publish to Live via page in staging site") {
+		task ("View the displayed content at view mode in staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
@@ -81,7 +81,9 @@ definition {
 			AssertTextEquals(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
+		}
 
+		task ("Publish to Live via page") {
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();
@@ -97,7 +99,7 @@ definition {
 				value1 = "Web Content Content");
 		}
 
-		task ("Edit the Web Content in staging site") {
+		task ("Edit the web content in staging site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
@@ -107,7 +109,7 @@ definition {
 				webContentTitleEdit = "Web Content Title Edit");
 		}
 
-		task ("View the edited Web Content is shown in staging site") {
+		task ("View the edited web content is shown at view mode in staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test site Name Staging");
@@ -117,7 +119,7 @@ definition {
 				value1 = "Web Content Content Edit");
 		}
 
-		task ("View the old version of the Web Content is shown in live site") {
+		task ("View the original web content is still shown at view mode in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test site Name");
@@ -127,7 +129,7 @@ definition {
 				value1 = "Web Content Content");
 		}
 
-		task ("Publish to Live via page in staging site") {
+		task ("Publish to Live via page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
@@ -137,7 +139,7 @@ definition {
 			Staging.publishToLive();
 		}
 
-		task ("View the edited Web Content is shown in live site") {
+		task ("View the edited web content is shown at view mode in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test site Name");

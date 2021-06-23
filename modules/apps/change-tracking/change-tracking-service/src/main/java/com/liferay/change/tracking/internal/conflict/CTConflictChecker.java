@@ -708,6 +708,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			CTColumnResolutionType.MIN);
 
 		for (String name : tableColumnsMap.keySet()) {
+			boolean composite = false;
+
 			if (name.equals("ctCollectionId")) {
 				sb.append(_sourceCTCollectionId);
 				sb.append(" as ");
@@ -720,9 +722,13 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			}
 			else if (maxColumnNames.contains(name)) {
 				sb.append("max(composite.");
+
+				composite = true;
 			}
 			else if (minColumnNames.contains(name)) {
 				sb.append("min(composite.");
+
+				composite = true;
 			}
 			else {
 				sb.append("publication.");
@@ -730,9 +736,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 			sb.append(name);
 
-			if (maxColumnNames.contains(name) ||
-				minColumnNames.contains(name)) {
-
+			if (composite) {
 				sb.append(")");
 			}
 
@@ -741,14 +745,18 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		sb.setStringAt(" from ", sb.index() - 1);
 
-		if (!maxColumnNames.isEmpty() || !minColumnNames.isEmpty()) {
-			sb.append(ctPersistence.getTableName());
-			sb.append(" production inner join ");
-			sb.append(ctPersistence.getTableName());
-			sb.append(" publication on production.");
-			sb.append(primaryKeyName);
-			sb.append(" = publication.");
-			sb.append(primaryKeyName);
+		sb.append(ctPersistence.getTableName());
+		sb.append(" production inner join ");
+		sb.append(ctPersistence.getTableName());
+		sb.append(" publication on production.");
+		sb.append(primaryKeyName);
+		sb.append(" = publication.");
+		sb.append(primaryKeyName);
+
+		if (maxColumnNames.isEmpty() && minColumnNames.isEmpty()) {
+			sb.append(" where ");
+		}
+		else {
 			sb.append(" inner join ");
 			sb.append(ctPersistence.getTableName());
 			sb.append(" composite on composite.");
@@ -759,19 +767,10 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			sb.append(_targetCTCollectionId);
 			sb.append(", ");
 			sb.append(tempCTCollectionId);
-			sb.append(")");
-		}
-		else {
-			sb.append(ctPersistence.getTableName());
-			sb.append(" publication, ");
-			sb.append(ctPersistence.getTableName());
-			sb.append(" production where publication.");
-			sb.append(primaryKeyName);
-			sb.append(" = production.");
-			sb.append(primaryKeyName);
+			sb.append(") and ");
 		}
 
-		sb.append(" and publication.ctCollectionId = ");
+		sb.append("publication.ctCollectionId = ");
 		sb.append(tempCTCollectionId);
 		sb.append(" and production.ctCollectionId = ");
 		sb.append(_targetCTCollectionId);

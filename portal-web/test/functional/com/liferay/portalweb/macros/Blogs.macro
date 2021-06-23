@@ -427,6 +427,7 @@ definition {
 		BlogsNavigator.gotoEditPG(entryTitle = "${entryTitle}");
 
 		BlogsEntry.editEntryContent(
+			embedVideo = "${embedVideo}",
 			entryContent = "${entryContent}",
 			entryContentEdit = "${entryContentEdit}",
 			entrySubtitle = "${entrySubtitle}",
@@ -460,6 +461,14 @@ definition {
 			entrySubtitleEdit = "${entrySubtitleEdit}",
 			entryTitle = "${entryTitle}",
 			entryTitleEdit = "${entryTitleEdit}");
+
+		if (isSet(uploadFileName)) {
+			BlogsNavigator.gotoBrowseImage();
+
+			ItemSelector.uploadFile(
+				navTab = "${navTab}",
+				uploadFileName = "${uploadFileName}");
+		}
 
 		if ("${sendEmailEntryUpdated}" == "true") {
 			Panel.expandPanel(panel = "Configuration");

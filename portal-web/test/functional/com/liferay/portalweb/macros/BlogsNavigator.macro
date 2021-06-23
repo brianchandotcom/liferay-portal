@@ -91,7 +91,9 @@ definition {
 				item = "Edit");
 		}
 
-		AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");
+		AssertVisible(
+			key_text = "Title",
+			locator1 = "TextArea#ANY");
 	}
 
 	macro gotoEntryCP {

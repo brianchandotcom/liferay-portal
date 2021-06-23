@@ -257,6 +257,18 @@ definition {
 			value1 = "${entryContent}");
 
 		AlloyEditor.addContent(content = "${entryContentEdit}");
+
+		if (isSet(embedVideo)) {
+			AlloyEditor.clickContentField();
+
+			Click(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
+
+			Click(locator1 = "AlloyEditor#CONTENT_ADD_MENUBAR_VIDEO");
+
+			ItemSelector.addVideoFromURL(
+				navTab = "URL",
+				videoSourceURL = "${embedVideo}");
+		}
 	}
 
 	macro editContentViaCardViewPG {
@@ -316,6 +328,7 @@ definition {
 		}
 
 		BlogsEntry.editContent(
+			embedVideo = "${embedVideo}",
 			entryContent = "${entryContent}",
 			entryContentEdit = "${entryContentEdit}");
 	}

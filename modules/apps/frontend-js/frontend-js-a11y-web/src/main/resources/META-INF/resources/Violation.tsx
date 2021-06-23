@@ -92,7 +92,7 @@ function Violation({
 						<ClayList className="list-group-flush">
 							{nodes.map((_occurrence, index) => {
 								const occurrenceName = `${Liferay.Language.get(
-									'occurrence-x'
+									'occurrence'
 								)} ${String(index + 1)}`;
 
 								return (

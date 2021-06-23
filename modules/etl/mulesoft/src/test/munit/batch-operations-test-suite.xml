@@ -85,7 +85,7 @@
 								active: payload01.active,
 								catalogId: payload01.catalogId,
 								description: {
-									"en_US": "This is my updated description!"
+									"en_US": "This is my updated description."
 								},
 								id: payload01.id,
 								productId: payload01.productId,
@@ -113,7 +113,7 @@
 						<![CDATA[#[
 							import * from dw::test::Asserts
  							---
-							payload.description.en_US must equalTo("This is my updated description!")]
+							payload.description.en_US must equalTo("This is my updated description.")]
 						]]>
 					</munit-tools:that>
 				</munit-tools:assert>

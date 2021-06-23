@@ -12,6 +12,7 @@
  * details.
  */
 
+import HandleSectionAdded from '../js/components/LayoutProvider/handlers/sectionAddedHandler.es';
 import FormBuilderWithLayoutProvider from './components/FormBuilder/FormBuilderWithLayoutProvider.es';
 import RulesSupport from './components/RuleBuilder/RulesSupport.es';
 import * as FieldSupport from './util/fieldSupport.es';
@@ -23,4 +24,4 @@ export * as SettingsContext from '../js/components/LayoutProvider/util/settingsC
 export * as RulesUtil from '../js/components/LayoutProvider/util/rules.es';
 export * as FieldUtil from '../js/components/LayoutProvider/util/fields.es';
 export * as FieldSetUtil from '../js/components/LayoutProvider/util/fieldset.es';
-export {FieldSupport, RulesSupport};
+export {FieldSupport, RulesSupport, HandleSectionAdded};

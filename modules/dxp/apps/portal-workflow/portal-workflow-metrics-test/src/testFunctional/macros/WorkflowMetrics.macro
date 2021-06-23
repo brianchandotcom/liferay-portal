@@ -335,7 +335,7 @@ definition {
 			locator1 = "WorkflowAllItems#METRICS_ALL_ITEMS_TABLE_ROW",
 			value1 = "${keyCompare}");
 	}
-	
+
 	macro assertSLAProcessingDate {
 		while (IsElementNotPresent(
 				key_warningMessage = "${warningMessage}",
@@ -1640,6 +1640,55 @@ definition {
 
 	macro viewSLASuccessMessage {
 		WaitForElementPresent(locator1 = "WorkflowMetricsSLA#SLA_SUCCESS_MESSAGE");
+	}
+
+	macro viewTaskFilterOnReassignTasks {
+		var key_processStep = "${processStep}";
+		var key_assigneeName = "${assigneeName}";
+
+		if (isSet(processStep)) {
+			Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+
+			for (var processStep : list "${processStep}") {
+				Click(
+					key_processName = "${processStep}",
+					locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
+			}
+
+			Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+
+			for (var processStep : list "${processStep}") {
+				AssertElementPresent(
+					key_itemName = "${processStep}",
+					locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
+			}
+		}
+
+		if (isSet(assigneeName)) {
+			Click(locator1 = "WorkflowReassignModal#ASSIGNEE_DROPDOWN");
+
+			for (var assigneeName : list "${assigneeName}") {
+				Click(
+					key_processName = "${processStep}",
+					locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
+			}
+
+			Click(locator1 = "WorkflowReassignModal#ASSIGNEE_DROPDOWN");
+
+			for (var assigneeName : list "${assigneeName}") {
+				AssertElementPresent(
+					key_itemName = "${assigneeName}",
+					locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
+			}
+		}
+	}
+
+	macro viewTooltipCompletionVelocity {
+		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_TOOLTIP");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#TOOLTIP",
+			value1 = "Completion velocity tracks the number of completed workflow instances over the selected time period.");
 	}
 
 	macro viewUserWorkloadByStepOnAllItems {

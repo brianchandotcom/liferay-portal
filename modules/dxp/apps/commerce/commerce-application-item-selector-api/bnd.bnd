@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Commerce Application Item Selector API
-Bundle-SymbolicName: com.liferay.commerce.application.item.selector.api
-Bundle-Version: 5.0.1
-Export-Package: com.liferay.commerce.application.item.selector.criterion
-Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Commerce Application Item Selector Web
-Bundle-SymbolicName: com.liferay.commerce.application.item.selector.web
-Bundle-Version: 5.0.2
-Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
-Web-ContextPath: /commerce-application-item-selector-web

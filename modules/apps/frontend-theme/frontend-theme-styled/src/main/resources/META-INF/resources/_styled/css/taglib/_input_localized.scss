@@ -1,33 +1,84 @@
 .input-localized {
+	&.input-localized-editor .form-control {
+		border-width: 0;
+		height: 100%;
+		padding: 0;
+	}
+
+	.input-group-item {
+		flex-direction: column;
+	}
+
+	.input-localized-content {
+		margin-left: 6px;
+	}
+
+	.lfr-input-localized .lfr-input-localized-state {
+		background-color: #ddd;
+
+		&.lfr-input-localized-state-error {
+			background-color: #ff0047;
+		}
+	}
+
+	.lfr-input-localized-default a {
+		margin-right: 14px;
+	}
+
+	.lfr-input-localized-state {
+		height: 4px;
+		margin: 3px 5px;
+		width: 4px;
+	}
+
 	.palette-item-inner .lfr-input-localized-flag {
 		font-size: 16px;
 		opacity: 0.5;
 	}
 
-	&.input-localized-focused .palette-item-inner .lfr-input-localized-flag {
-		opacity: 1;
-	}
-
-	.palette-item-inner {
-		border-color: #666;
-	}
-
 	.palette-item,
-	.palette-item-inner,
 	.palette-item-hover,
 	.palette-item-hover .palette-item-inner {
 		border-color: transparent;
 	}
 
-	.lfr-input-localized .lfr-input-localized-state {
-		background: #ddd;
-
-		&.lfr-input-localized-state-error {
-			background: #ff0047;
-		}
+	.palette-item-inner {
+		border-color: #666;
+		display: block;
+		height: 16px;
+		width: 16px;
 	}
 
 	.palette-item-selected .lfr-input-localized-state {
 		background: #27c1f2;
+	}
+}
+
+.input-localized-palette-container {
+	.palette-items-container {
+		font-size: 0;
+		margin: 0;
+		white-space: normal;
+	}
+
+	.palette-item {
+		border-width: 0;
+		padding: 0.5rem 1.25rem;
+	}
+
+	.palette-item-inner {
+		border: 1px solid;
+		margin-right: 4px;
+		width: 16px;
+
+		img {
+			display: block;
+		}
+	}
+}
+
+.input-group {
+	.input-localized .input-localized-content {
+		margin-top: 3px;
 	}
 }

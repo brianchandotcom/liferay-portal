@@ -180,6 +180,8 @@ definition {
 		}
 
 		Alert.viewSuccessMessage();
+
+		Alert.closeMessage(messageType = "SUCCESS");
 	}
 
 	macro deleteCP {

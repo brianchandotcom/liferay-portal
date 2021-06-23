@@ -80,7 +80,7 @@ definition {
 	@description = "This is a test for LPS-129360. The user could change the display style of Documents and Media in display page template."
 	@priority = "4"
 	test ChangeDisplayStyleOfDocumentsAndMediaInDisplayPageTemplate {
-		task ("Add an documents and media widget to the display page template") {
+		task ("Add a Documents and Media widget to the display page template") {
 			PageEditor.addWidget(portletName = "Documents and Media");
 
 			PageEditor.clickPublish();
@@ -113,7 +113,7 @@ definition {
 				menuItem = "View Content");
 		}
 
-		task ("View document entry displayed as Cards style") {
+		task ("View the document entry displayed as Cards style") {
 			DMDocument.viewCardTitle(dmDocumentTitle = "DM Document JPG");
 
 			AssertElementPresent(
@@ -125,7 +125,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 		}
 
-		task ("View document entry displayed as List style") {
+		task ("View the document entry displayed as List style") {
 			LexiconList.viewListEntryTitle(listEntry = "DM Document JPG");
 
 			AssertElementPresent(

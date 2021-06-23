@@ -1,11 +1,11 @@
 {
-	"marketplace-store-web-help-purchased": {
+	"marketplace-store-web-help-download-apps": {
 		"en_US": {
 			"message": "Help me download apps.",
 			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/installing-apps/downloading-apps.html"
 		}
 	},
-	"marketplace-store-web-help-store": {
+	"marketplace-store-web-help-purchase-apps": {
 		"en_US": {
 			"message": "Help me purchase apps.",
 			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/getting-started/using-marketplace.html"

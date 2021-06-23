@@ -229,6 +229,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "SFCommerceOrders#ReorderFromPlacedOrdersDetailsPage";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -344,6 +346,8 @@ definition {
 	test SearchOrderInPlacedOrdersPage {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "SFCommerceOrders#SearchOrderInPlacedOrdersPage";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -463,6 +467,8 @@ definition {
 	test ViewListOfShipmentsInPlacedOrdersDetailsPage {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "SFCommerceOrders#ViewListOfShipmentsInPlacedOrdersDetailsPage";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

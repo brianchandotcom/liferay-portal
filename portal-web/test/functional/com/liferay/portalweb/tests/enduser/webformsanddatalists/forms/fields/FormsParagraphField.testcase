@@ -529,13 +529,42 @@ definition {
 	}
 
 	@description = "Verify that the Body Text supports HTML"
-	@ignore = "true"
 	@priority = "5"
 	test CanSupportHTML {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131247 CanSupportHTML pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		CKEditor.addSourceContent(content = "<h1>Paragraph Test</h1>");
+
+		FormFields.viewSourceElement(
+			elementName = "h1",
+			value = "Paragraph Test");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewParagraphField(
+			fieldTitle = "Paragraph",
+			fieldValue = "Paragraph Test");
+
+		FormFields.viewParagraphContentNotEquals(fieldValue = "<h1>Paragraph Test</h1>");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that an Image can be uploaded to the Body Text"

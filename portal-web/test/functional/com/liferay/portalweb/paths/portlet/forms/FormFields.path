@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_SOURCE_ELEMENT</td>
+	<td>//${key_elementName}[contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_ANY_LABEL</td>
 	<td>//p[contains(@title,'${key_type}')]//span[contains(text(),'${key_value}')]</td>
 	<td></td>

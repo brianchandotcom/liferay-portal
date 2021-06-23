@@ -1257,6 +1257,13 @@ definition {
 			locator1 = "FormFields#PARAGRAPH_SPECIFIC_FIELD_BY_BODY");
 	}
 
+	macro viewParagraphContentNotEquals {
+		AssertTextNotEquals(
+			key_fieldName = "Paragraph",
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
+			value1 = "${fieldValue}");
+	}
+
 	macro viewParagraphField {
 		if (!(isSet(fieldName))) {
 			var key_fieldName = "${fieldTitle}";
@@ -1514,6 +1521,13 @@ definition {
 			key_optionLabel = "${optionLabel}",
 			key_position = "${optionPosition}",
 			locator1 = "FormFields#SELECT_ASSERT_RADIO_OPTION_ORDER");
+	}
+
+	macro viewSourceElement {
+		key_value = "${value}";
+		key_elementName = "${elementName}";
+
+		AssertElementPresent(locator1 = "FormFields#ANY_SOURCE_ELEMENT");
 	}
 
 	macro viewSwitcher {

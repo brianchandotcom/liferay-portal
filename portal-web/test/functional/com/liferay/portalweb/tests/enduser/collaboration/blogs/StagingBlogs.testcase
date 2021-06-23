@@ -208,7 +208,8 @@ definition {
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name",
+			groupName = "Site Name (Staging)",
+			site = "false",
 			siteURLKey = "site-name-staging");
 
 		BlogsEntry.removeSmallImage(uploadFileName = "Document_3.jpg");

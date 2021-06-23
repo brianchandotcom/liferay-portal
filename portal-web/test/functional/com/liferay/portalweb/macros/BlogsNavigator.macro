@@ -224,7 +224,8 @@ definition {
 		var entryId = JSONBlog.getBlogEntryId(
 			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
-			groupName = "${groupName}");
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var baseURL = "${baseURL}";
 

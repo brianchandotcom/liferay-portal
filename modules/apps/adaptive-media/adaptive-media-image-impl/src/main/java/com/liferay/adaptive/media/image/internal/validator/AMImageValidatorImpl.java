@@ -20,6 +20,7 @@ import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -34,9 +35,11 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -141,15 +144,33 @@ public class AMImageValidatorImpl implements AMImageValidator {
 					}
 				}
 			}
-			catch (PortalException portalException) {
+			catch (DDMFormFieldValueValidationException
+						ddmFormFieldValueValidationException) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Could not validate DDMFormvalues for " +
+							fileVersion.getFileVersionId());
+				}
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(
+						ddmFormFieldValueValidationException,
+						ddmFormFieldValueValidationException);
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
 						StringBundler.concat(
 							"DDMFormValues not found for ",
 							String.valueOf(fileVersion.getFileVersionId()),
 							" in the structure ",
-							ddmStructure.getStructureKey()),
-						portalException);
+							ddmStructure.getStructureKey()));
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -158,8 +179,9 @@ public class AMImageValidatorImpl implements AMImageValidator {
 	}
 
 	private boolean _isValidDimension(
-		List<DDMFormFieldValue> ddmFormFieldValues,
-		long imageToolImageMaxValue) {
+			List<DDMFormFieldValue> ddmFormFieldValues,
+			long imageToolImageMaxValue)
+		throws DDMFormFieldValueValidationException {
 
 		if (imageToolImageMaxValue <= 0) {
 			return true;
@@ -169,10 +191,23 @@ public class AMImageValidatorImpl implements AMImageValidator {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		Long dimension = Long.valueOf(
-			value.getString(value.getDefaultLocale()));
+		String valueString = value.getString(value.getDefaultLocale());
 
-		if (dimension >= imageToolImageMaxValue) {
+		if (Validator.isNull(valueString)) {
+			for (Locale availableLocale : value.getAvailableLocales()) {
+				valueString = value.getString(availableLocale);
+
+				if (Validator.isNotNull(valueString)) {
+					break;
+				}
+			}
+		}
+
+		if (Validator.isNull(valueString)) {
+			throw new DDMFormFieldValueValidationException();
+		}
+
+		if (Long.valueOf(valueString) >= imageToolImageMaxValue) {
 			return false;
 		}
 

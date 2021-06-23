@@ -892,7 +892,7 @@ definition {
 
 		BlogsEntry.viewNoEntryViaBlogsAggregatorPG();
 
-		Pause(locator1 = "180000");
+		Pause(locator1 = "120000");
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
 

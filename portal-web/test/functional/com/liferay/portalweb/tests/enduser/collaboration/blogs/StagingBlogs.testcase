@@ -136,7 +136,7 @@ definition {
 
 		Blogs.viewNoEntryCP();
 
-		Pause(locator1 = "60000");
+		Pause(locator1 = "120000");
 
 		Refresh();
 

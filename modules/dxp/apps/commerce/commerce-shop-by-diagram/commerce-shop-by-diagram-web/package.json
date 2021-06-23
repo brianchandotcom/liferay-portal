@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/autocomplete": "3.29.0",
+		"@clayui/autocomplete": "3.30.0",
 		"@clayui/button": "3.6.0",
-		"@clayui/color-picker": "3.29.0",
+		"@clayui/color-picker": "3.30.0",
 		"@clayui/data-provider": "3.29.0",
-		"@clayui/drop-down": "3.29.0",
+		"@clayui/drop-down": "3.30.0",
 		"@clayui/form": "3.29.0",
 		"@clayui/icon": "3.1.0",
 		"@clayui/modal": "3.29.0",

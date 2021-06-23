@@ -124,7 +124,9 @@ definition {
 
 		Navigator.openURL(baseURL = "${analyticsCloudURL}");
 
-		ACLogin.loginAs();
+		if(IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
+			ACLogin.loginAs();
+		}
 
 		ACWorkspace.openWorkspace();
 	}

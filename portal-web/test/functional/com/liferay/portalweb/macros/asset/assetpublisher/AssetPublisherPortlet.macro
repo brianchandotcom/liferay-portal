@@ -509,7 +509,10 @@ definition {
 			}
 
 			if (isSet(searchTerm)) {
-				Search.searchCP(searchTerm = "${searchTerm}");
+				Search.searchPG(
+					modal = "true",
+					portletName = "",
+					searchTerm = "${searchTerm}");
 
 				AssertTextEquals(
 					locator1 = "Search#SEARCH_INFO",

@@ -74,9 +74,6 @@ import com.liferay.segments.service.SegmentsEntryServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.staging.StagingGroupHelper;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -412,24 +409,6 @@ public class ContentPageLayoutEditorDisplayContext
 		return availableSegmentsEntries;
 	}
 
-	private String _getClassName(InfoListProvider<?> infoListProvider) {
-		Class<?> clazz = infoListProvider.getClass();
-
-		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
-
-		for (Type genericInterfaceType : genericInterfaceTypes) {
-			ParameterizedType parameterizedType =
-				(ParameterizedType)genericInterfaceType;
-
-			Class<?> typeClazz =
-				(Class<?>)parameterizedType.getActualTypeArguments()[0];
-
-			return typeClazz.getName();
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private String _getEditSegmentsEntryURL() throws Exception {
 		if (_editSegmentsEntryURL != null) {
 			return _editSegmentsEntryURL;
@@ -474,7 +453,7 @@ public class ContentPageLayoutEditorDisplayContext
 	private String _getInfoListProviderItemTypeLabel(
 		InfoListProvider<?> infoListProvider) {
 
-		String className = _getClassName(infoListProvider);
+		String className = GenericUtil.getGenericClassName(infoListProvider);
 
 		if (Objects.equals(className, AssetEntry.class.getName())) {
 			return LanguageUtil.get(httpServletRequest, "multiple-item-types");

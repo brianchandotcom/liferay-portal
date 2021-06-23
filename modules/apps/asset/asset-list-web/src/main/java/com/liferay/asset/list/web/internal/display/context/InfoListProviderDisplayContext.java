@@ -18,6 +18,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,9 +31,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import java.util.List;
 
@@ -84,7 +82,7 @@ public class InfoListProviderDisplayContext {
 	}
 
 	public String getSubtitle(InfoListProvider<?> infoListProvider) {
-		String className = _getClassName(infoListProvider);
+		String className = GenericUtil.getGenericClassName(infoListProvider);
 
 		if (Validator.isNotNull(className)) {
 			return ResourceActionsUtil.getModelResource(
@@ -96,24 +94,6 @@ public class InfoListProviderDisplayContext {
 
 	public String getTitle(InfoListProvider<?> infoListProvider) {
 		return infoListProvider.getLabel(_themeDisplay.getLocale());
-	}
-
-	private String _getClassName(InfoListProvider<?> infoListProvider) {
-		Class<?> clazz = infoListProvider.getClass();
-
-		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
-
-		for (Type genericInterfaceType : genericInterfaceTypes) {
-			ParameterizedType parameterizedType =
-				(ParameterizedType)genericInterfaceType;
-
-			Class<?> typeClazz =
-				(Class<?>)parameterizedType.getActualTypeArguments()[0];
-
-			return typeClazz.getName();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private PortletURL _getPortletURL() {

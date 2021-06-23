@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,9 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -170,7 +168,8 @@ public class InfoListProviderItemSelectorView
 							WebKeys.THEME_DISPLAY);
 
 					return JSONUtil.put(
-						"itemType", _getClassName(infoListProvider)
+						"itemType",
+						GenericUtil.getGenericClassName(infoListProvider)
 					).put(
 						"key", infoListProvider.getKey()
 					).put(
@@ -181,7 +180,8 @@ public class InfoListProviderItemSelectorView
 
 				@Override
 				public String getSubtitle(Locale locale) {
-					String className = _getClassName(infoListProvider);
+					String className = GenericUtil.getGenericClassName(
+						infoListProvider);
 
 					if (Validator.isNotNull(className)) {
 						return ResourceActionsUtil.getModelResource(
@@ -288,24 +288,6 @@ public class InfoListProviderItemSelectorView
 		@Override
 		public boolean isShowBreadcrumb() {
 			return false;
-		}
-
-		private String _getClassName(InfoListProvider<?> infoListProvider) {
-			Class<?> clazz = infoListProvider.getClass();
-
-			Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
-
-			for (Type genericInterfaceType : genericInterfaceTypes) {
-				ParameterizedType parameterizedType =
-					(ParameterizedType)genericInterfaceType;
-
-				Class<?> typeClazz =
-					(Class<?>)parameterizedType.getActualTypeArguments()[0];
-
-				return typeClazz.getName();
-			}
-
-			return StringPool.BLANK;
 		}
 
 		private final HttpServletRequest _httpServletRequest;

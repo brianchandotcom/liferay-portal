@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,9 +26,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -114,7 +112,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		String className = _getClassName(_infoListProvider);
+		String className = GenericUtil.getGenericClassName(_infoListProvider);
 
 		if (Validator.isNotNull(className)) {
 			return ResourceActionsUtil.getModelResource(
@@ -132,24 +130,6 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 	@Override
 	public Boolean isFlushHorizontal() {
 		return true;
-	}
-
-	private String _getClassName(InfoListProvider<?> infoListProvider) {
-		Class<?> clazz = infoListProvider.getClass();
-
-		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
-
-		for (Type genericInterfaceType : genericInterfaceTypes) {
-			ParameterizedType parameterizedType =
-				(ParameterizedType)genericInterfaceType;
-
-			Class<?> typeClazz =
-				(Class<?>)parameterizedType.getActualTypeArguments()[0];
-
-			return typeClazz.getName();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

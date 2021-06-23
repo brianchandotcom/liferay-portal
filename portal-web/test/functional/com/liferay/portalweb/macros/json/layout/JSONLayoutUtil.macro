@@ -70,6 +70,9 @@ definition {
 		else if ("${widgetName}" == "IFrame") {
 			var portletId = "com_liferay_iframe_web_portlet_IFramePortlet";
 		}
+		else if ("${widgetName}" == "Invite Members") {
+			var portletId = "com_liferay_invitation_invite_members_web_portlet_InviteMembersPortlet";
+		}
 		else if ("${widgetName}" == "Knowledge Base Article") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_ArticlePortlet";
 		}

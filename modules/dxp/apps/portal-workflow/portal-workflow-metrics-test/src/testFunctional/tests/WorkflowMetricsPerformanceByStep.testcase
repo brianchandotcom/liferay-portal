@@ -133,12 +133,17 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Today time period the result and filter options are displayed in accordance with reference"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FilterItemsFromToday {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67689 FilterItemsFromToday pending implementation
+		Navigator.gotoNavItem(navItem = "Performance");
 
+		key_dateRange = "Today";
+
+		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
 	}
 
 	@description = "LPS-100679 - Verify that users are able to filter the Performance by Step page by period: Today, Yesterday, Last 7 Days, Last 30 Days, Last 90 Days, Last 180 Days, Last Year, Custom Range"

@@ -178,7 +178,7 @@ public class ActionRequestPortletContainerTest
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				SecurityPortletContainerWrapper.class.getName(),
-				LoggerTestUtil.WARN)) {
+				LoggerTestUtil.DEBUG)) {
 
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(url);
@@ -191,10 +191,9 @@ public class ActionRequestPortletContainerTest
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"User 0 is not allowed to access URL ",
-					url.substring(0, url.indexOf('?')), " and portlet ",
-					TEST_PORTLET_ID, ": User 0 did not provide a valid CSRF ",
-					"token for ",
+					"com.liferay.portal.kernel.security.auth.",
+					"PrincipalException$MustHaveSessionCSRFToken: User 0 ",
+					"session does not have a CSRF token for ",
 					"com.liferay.portlet.SecurityPortletContainerWrapper"),
 				logEntry.getMessage());
 

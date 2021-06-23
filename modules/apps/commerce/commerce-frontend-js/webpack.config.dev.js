@@ -16,8 +16,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
-const components = require('./test/dev/components/index');
-const {defineServerResponses} = require('./test/dev/fakeServerUtilities');
+const components = require('./dev/components/index');
+const {defineServerResponses} = require('./dev/fakeServerUtilities');
 
 const outputPath = path.resolve(__dirname, './dev/public');
 
@@ -32,7 +32,7 @@ module.exports = {
 			defineServerResponses(app);
 		},
 		compress: false,
-		contentBase: './test/dev/public',
+		contentBase: './dev/public',
 		open: true,
 		openPage: 'index.html',
 		port: 9000,
@@ -106,7 +106,7 @@ module.exports = {
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new HtmlWebpackPlugin({
 			inject: false,
-			template: path.resolve(__dirname, './test/dev/public/index.html'),
+			template: path.resolve(__dirname, './dev/public/index.html'),
 		}),
 	],
 	resolve: {

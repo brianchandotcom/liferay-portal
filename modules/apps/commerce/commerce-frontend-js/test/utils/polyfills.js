@@ -12,7 +12,7 @@
  * details.
  */
 
-import '../dev/public/js/static-env-utils';
+import '../../dev/public/js/static-env-utils';
 
 (function setupIntersectionObserverMock({
 	root = null,

@@ -25,7 +25,7 @@ const ExternalLink = ({children, to, ...props}) => {
 	);
 };
 
-export const BackButtonPortal = ({backURL}) => {
+export const BackButtonPortal = ({backURL = '/'}) => {
 	const [container, setContainer] = useState(null);
 	const Link =
 		backURL && backURL.startsWith('http') ? ExternalLink : InternalLink;

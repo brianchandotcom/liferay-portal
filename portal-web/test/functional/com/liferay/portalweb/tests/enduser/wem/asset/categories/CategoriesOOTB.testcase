@@ -139,6 +139,7 @@ definition {
 				portlet = "Content Dashboard");
 
 			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+			
 		}
 	}
 
@@ -153,6 +154,7 @@ definition {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+
 		}
 	}
 
@@ -169,6 +171,7 @@ definition {
 			WebContentNavigator.gotoAddCP();
 
 			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+			
 		}
 	}
 

@@ -333,12 +333,31 @@ definition {
 	}
 
 	@description = "LPS-100677 - Verify that the search is an approximate match aka LIKE search type or character by character comparison"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SearchIsAnApproximateMatch {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67672 SearchIsAnApproximateMatch pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		Click(
+			key_stepsNumber = "2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		WorkflowMetricsPerformanceByStep.searchForStep(stepName = "view");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+			avgCompletionTimeValue = "0min",
+			isNotPresent = "Update",
+			slaBreachedValue = "0 (0%)",
+			stepName = "Review");
+
+		WorkflowMetricsPerformanceByStep.searchForStep(stepName = "date");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
+			avgCompletionTimeValue = "0min",
+			isNotPresent = "Review",
+			slaBreachedValue = "0 (0%)",
+			stepName = "Update");
 	}
 
 	@description = "LPS-97667 - Verify that when there are tasks with average time smaller than 1 minute the average completion time is displayed"

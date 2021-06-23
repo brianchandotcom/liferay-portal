@@ -276,6 +276,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_BUTTON_CREATION_DATE</td>
+	<td>//thead//tr//th[8]//a[contains(@class, "inline-item text-truncate-inline")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_ORDER</td>
+	<td>//tbody//tr[${key_order}]//td[5][@title="${key_processStep}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_INSTANCE_ID</td>
 	<td>//td[contains(@class,'table-title')]//strong | //span[contains(@class,'link-text')]//strong</td>
 	<td></td>

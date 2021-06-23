@@ -497,12 +497,72 @@ definition {
 	}
 
 	@description = "LPS-130217 - Verify that user is able to click on the table header title to order items by Creation Date: old-new / new-old"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ReorderEntriesClickingCreationDateColumn {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67726 ReorderEntriesClickingCreationDateColumn pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.clearAllFilter();
+
+		AssertElementPresent(
+			key_order = "1",
+			key_processStep = "Completed",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+
+		AssertElementPresent(
+			key_order = "2",
+			key_processStep = "Review",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BUTTON_CREATION_DATE");
+
+		AssertElementPresent(
+			key_order = "1",
+			key_processStep = "Review",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+
+		AssertElementPresent(
+			key_order = "2",
+			key_processStep = "Completed",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
 	}
 
 	@description = "LPS-130167 - Verify that the user is able to reorder entries by clicking the Due Date column title"

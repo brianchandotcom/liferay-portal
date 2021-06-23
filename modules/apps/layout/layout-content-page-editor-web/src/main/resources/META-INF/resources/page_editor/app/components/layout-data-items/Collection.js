@@ -67,6 +67,12 @@ const NotCollectionSelectedMessage = () => (
 	</div>
 );
 
+const EmptyCollectionMessage = () => (
+	<div className="page-editor__collection__not-collection-selected-message">
+		{Liferay.Language.get('there-are-no-items-to-display')}
+	</div>
+);
+
 const Grid = ({
 	child,
 	collection,
@@ -158,6 +164,7 @@ const ColumnContext = ({
 };
 
 const DEFAULT_COLLECTION = {
+	fakeCollection: true,
 	items: [{}],
 	length: 1,
 };
@@ -218,10 +225,15 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		languageId,
 	]);
 
+	const showEmptyMessage =
+		collectionConfig.listStyle !== '' && collection.fakeCollection;
+
 	return (
 		<div className="page-editor__collection" ref={ref}>
 			{!collectionIsMapped(collectionConfig) ? (
 				<NotCollectionSelectedMessage />
+			) : showEmptyMessage ? (
+				<EmptyCollectionMessage />
 			) : collection.content ? (
 				<UnsafeHTML markup={collection.content} />
 			) : (

@@ -92,7 +92,7 @@ definition {
 
 		task ("Add a document entry") {
 			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "DM Document JPG",
+				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_4.jpg");
@@ -114,7 +114,7 @@ definition {
 		}
 
 		task ("View the document entry displayed as Cards style") {
-			DMDocument.viewCardTitle(dmDocumentTitle = "DM Document JPG");
+			DMDocument.viewCardTitle(dmDocumentTitle = "Document Title");
 
 			LexiconEntry.viewActiveDisplayStyle(displayStyle = "cards");
 		}
@@ -124,7 +124,7 @@ definition {
 		}
 
 		task ("View the document entry displayed as List style") {
-			LexiconList.viewListEntryTitle(listEntry = "DM Document JPG");
+			LexiconList.viewListEntryTitle(listEntry = "Document Title");
 
 			LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
 		}

@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
@@ -45,7 +46,8 @@ public class ProcessWorkflowMetricsIndexerTest
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "companyId",
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
-			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0");
+			workflowDefinition.getWorkflowDefinitionId(), "version", "1.0",
+			"versions", "1.0");
 		assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
@@ -105,6 +107,14 @@ public class ProcessWorkflowMetricsIndexerTest
 		updateWorkflowDefinition();
 
 		assertCount(
+			booleanQuery -> {
+				TermsQuery termsQuery = queries.terms("versions");
+
+				termsQuery.addValues("1.0", "2.0");
+
+				booleanQuery.addMustQueryClauses(termsQuery);
+			},
+			1,
 			_processWorkflowMetricsIndexNameBuilder.getIndexName(
 				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsProcessType", "companyId",

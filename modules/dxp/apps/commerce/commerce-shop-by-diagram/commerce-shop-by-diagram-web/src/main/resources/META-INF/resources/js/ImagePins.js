@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef} from 'react';
 
 import NavigationButtons from './NavigationButtons';
-import {moveController, namespace, zoomIn, zoomOut} from './NavigationsUtils';
+import {moveController, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
 
 const ImagePins = ({
@@ -23,6 +23,7 @@ const ImagePins = ({
 	execZoomIn,
 	imageSettings,
 	imageURL,
+	namespace,
 	navigationController,
 	resetZoom,
 	selectedOption,
@@ -110,6 +111,67 @@ const ImagePins = ({
 			zoomIn: () => zoomIn(containerRef.current, panZoomRef.current),
 			zoomOut: () => zoomOut(containerRef.current, panZoomRef.current),
 		};
+
+		if (removePinHandler.handler) {
+			removePin(removePinHandler.pin);
+			setRemovePinHandler({
+				handler: false,
+				pin: null,
+			});
+		}
+		if (addPinHandler) {
+			setAddPinHandler(false);
+			addPin();
+		}
+
+		if (!removePinHandler.handler && !addPinHandler) {
+			try {
+				containerRef.current.selectAll('.circle_pin').remove();
+			}
+			catch (error) {
+				return;
+			}
+
+			const cont = containerRef.current
+				.selectAll('g')
+				.data(cPins)
+				.enter()
+				.append('g')
+				.attr(
+					'transform',
+					(attr) => 'translate(' + attr.cx + ',' + attr.cy + ')'
+				)
+				.attr('cx', (attr) => attr.cx)
+				.attr('cy', (attr) => attr.cy)
+				.attr('id', (attr) => attr.id)
+				.attr('label', (attr) => attr.label)
+				.attr('fill', (attr) => attr.fill)
+				.attr('linked_to_sku', (attr) => attr.linked_to_sku)
+				.attr('quantity', (attr) => attr.quantity)
+				.attr('r', (attr) => attr.r)
+				.attr('sku', (attr) => attr.sku)
+				.attr('id', (attr) => attr.id)
+				.attr('class', 'circle_pin')
+				.attr('draggable', (attr) => (attr.draggable ? true : false))
+				.call(dragHandler);
+
+			cont.append('circle')
+				.attr('r', (attr) => attr.r)
+				.attr('fill', () => '#ffffff')
+				.attr('r', (attr) => attr.r)
+				.attr('stroke', (attr) => attr.fill)
+				.attr('stroke-width', 2);
+
+			cont.append('text')
+				.text((attr) => attr.label)
+				.attr('font-size', (attr) => attr.r)
+				.attr('text-anchor', 'middle')
+				.attr('fill', '#000000')
+				.attr('alignment-baseline', 'central');
+		}
+
+		select('#newPin').on('click', handleAddPin);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		resetZoom,
 		selectedOption,
@@ -180,6 +242,14 @@ ImagePins.default = {
 ImagePins.propTypes = {
 	enableResetZoom: PropTypes.bool,
 	execResetZoom: PropTypes.bool,
+	handleZoomIn: PropTypes.func,
+	handleZoomOut: PropTypes.func,
+	image: PropTypes.string,
+	imageSettings: PropTypes.shape({
+		height: PropTypes.string,
+		width: PropTypes.string,
+	}),
+	namespace: PropTypes.string.isRequired,
 	navigationController: PropTypes.shape({
 		dragStep: PropTypes.number,
 		enable: PropTypes.bool,

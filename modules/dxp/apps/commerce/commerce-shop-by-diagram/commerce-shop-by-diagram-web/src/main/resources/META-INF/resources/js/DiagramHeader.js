@@ -10,11 +10,121 @@
  */
 
 import ClayButton from '@clayui/button';
-import React from 'react';
+import ClayColorPicker from '@clayui/color-picker';
+import ClayDropDown from '@clayui/drop-down';
+import ClaySlider from '@clayui/slider';
+import PropTypes from 'prop-types';
+import React, {useState} from 'react';
+
+const DiagramHeader = ({
+	addNewPinState,
+	namespace,
+	newPinSettings,
+	radiusChoice,
+	setAddNewPinState,
+	setAddPinHandler,
+}) => {
+	const [active, setActive] = useState(false);
+	const [customColors, setCustoms] = useState(
+		newPinSettings.colorPicker.defaultColors
+	);
+	const [color, setColor] = useState(
+		newPinSettings.colorPicker.selectedColor
+	);
 
 const DiagramHeader = () => {
 	return (
 		<div className="d-flex diagram diagram-header justify-content-between">
+			<div className="d-flex text-align-center">
+				<label className="align-middle my-auto">
+					{Liferay.Language.get('diagram-pin')}
+				</label>
+
+				<ClayDropDown
+					active={active}
+					className="my-auto"
+					onActiveChange={setActive}
+					trigger={
+						<ClayButton
+							alt="Click-to-select-custom-diameter"
+							className="ml-3 select-diameter"
+							displayType="secondary"
+						>
+							{Liferay.Language.get('default-diameter')}
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList className="diagram-header-picker">
+						<ClayDropDown.Group header="SELECT COLOR">
+							<ClayColorPicker
+								colors={customColors}
+								label="Custom Colors"
+								max={100}
+								name="diagram-color-picker"
+								onColorsChange={setCustoms}
+								onValueChange={(item) => {
+									setColor(item.replace('#', ''));
+									setAddNewPinState({
+										color: item.replace('#', ''),
+										radius: addNewPinState.radius,
+									});
+								}}
+								showHex={true}
+								step={1}
+								useNative={newPinSettings.colorPicker.useNative}
+								value={addNewPinState.fill}
+							/>
+						</ClayDropDown.Group>
+					</ClayDropDown.ItemList>
+
+					<ClayDropDown.Divider />
+
+					<ClayDropDown.ItemList>
+						<ClayDropDown.Group header="STANDARD">
+							{radiusChoice.map((item, i) => (
+								<ClayDropDown.Item
+									key={i}
+									onClick={() => {
+										setAddNewPinState({
+											fill: addNewPinState.fill,
+											radius: item.value,
+										});
+									}}
+								>
+									{item.label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.Group>
+					</ClayDropDown.ItemList>
+
+					<ClayDropDown.Divider />
+					<ClayDropDown.Caption>
+						<div className="form-group">
+							<label htmlFor="slider">
+								{Liferay.get.language('custom-radius')}
+							</label>
+							<ClaySlider
+								id={namespace + 'custom-radius'}
+								onValueChange={(item) =>
+									setAddNewPinState({
+										color,
+										radius: item,
+									})
+								}
+								value={addNewPinState.radius}
+							/>
+						</div>
+						<ClayButton
+							block="true"
+							displayType="primary"
+							onClick={() => setAddPinHandler(true)}
+						>
+							{Liferay.Language.get('add-pin')}
+						</ClayButton>
+					</ClayDropDown.Caption>
+				</ClayDropDown>
+			</div>
+
 			<ClayButton
 				className="auto-mapping my-auto pull-right"
 				displayType="secondary"

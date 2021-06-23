@@ -39,7 +39,14 @@ const Diagram = ({
 	return (
 		<div className="diagram mx-auto">
 			<ClayIconSpriteContext.Provider value={spritemap}>
-				<DiagramHeader />
+				<DiagramHeader
+					addNewPinState={addNewPinState}
+					namespace={namespace}
+					newPinSettings={newPinSettings}
+					setAddNewPinState={setAddNewPinState}
+					setAddPinHandler={setAddPinHandler}
+					setSelectedOption={setSelectedOption}
+				/>
 
 				<ImagePins
 					changedScale={changedScale}

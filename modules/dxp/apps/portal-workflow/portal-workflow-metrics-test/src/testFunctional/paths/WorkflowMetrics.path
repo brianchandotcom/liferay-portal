@@ -501,6 +501,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_ICON</td>
+	<td>//div[contains(@class, "p-0 col-md-3")]//span[contains(@class, "workflow-tooltip")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_ICON_MESSAGE</td>
+	<td>//div[contains(@class, "flex-row autofit-row")]//span[contains(@data-restore-title, "Monitor the workload and performance of users assigned to the process's pending items.")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEBAB_BUTTON_DISABLED</td>
 	<td>//button[contains(@class,'dropdown-toggle component-action') and @disabled]</td>
 	<td></td>

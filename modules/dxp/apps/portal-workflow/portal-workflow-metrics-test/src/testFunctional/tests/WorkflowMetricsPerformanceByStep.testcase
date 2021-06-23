@@ -95,12 +95,17 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last 180 Days time period the result and filter options are displayed in accordance with reference"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test FilterItemsFromLast180Days {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67684 FilterItemsFromLast180Days pending implementation
+		Navigator.gotoNavItem(navItem = "Performance");
 
+		key_dateRange = "Last 180 Days";
+
+		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last Year time period the result and filter options displayed in accordance with reference"

@@ -163,8 +163,6 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 										).put(
 											"url", Collections.singletonMap("defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURLMap())
 										).build()
-									).put(
-										"titleSuffix", layoutsSEODisplayContext.getPageTitleSuffix()
 									).build()
 								%>'
 								servletContext="<%= application %>"

@@ -486,6 +486,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PERCENTAGE</td>
+	<td>//span[contains(@class, "task-count-percentage")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
 	<td>//div[@class='header']//span[contains(text(),'${newLanguageCardName}')]</td>
 	<td></td>

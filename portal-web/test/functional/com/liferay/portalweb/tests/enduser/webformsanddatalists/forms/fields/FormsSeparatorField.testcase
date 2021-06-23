@@ -60,6 +60,17 @@ definition {
 			locator1 = "FormFields#LABEL");
 	}
 
+	@description = "Verify that a Separator Field can be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "false";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133235 CanBeDeleted pending implementation
+
+	}
+
 	@description = "Verify that a Separator Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {

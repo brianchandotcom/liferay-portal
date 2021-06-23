@@ -199,13 +199,7 @@ definition {
 				key_fragmentName = "paragraph",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
 
-			PageEditor.gotoTab(tabName = "Selection");
-
-			var key_navItem = "Mapping";
-
-			AssertClick(
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Mapping");
+			Navigator.gotoNavTab(navTab = "Mapping");
 
 			AssertVisible(
 				key_fieldLabel = "Item",

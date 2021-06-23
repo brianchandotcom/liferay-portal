@@ -2520,12 +2520,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2598,12 +2593,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -5442,12 +5432,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -5561,12 +5546,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

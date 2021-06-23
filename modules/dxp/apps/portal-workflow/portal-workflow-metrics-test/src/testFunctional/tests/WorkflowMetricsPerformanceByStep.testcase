@@ -52,12 +52,26 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Step has no more than 10 entries displayed"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CardDoesNotDisplayMoreThan10Entries {
+		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#CardDoesNotDisplayMoreThan10Entries";
 
-		// TODO LRQA-67674 CardDoesNotDisplayMoreThan10Entries pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "11_transitions_definition.xml",
+			workflowDefinitionTitle = "11 Transitions Definition");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "11 Transitions Definition");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		AssertElementNotPresent(
+			key_rowNumber = "11",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ROW");
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Steps works as designed when the portal is set to a non-en-US locale"

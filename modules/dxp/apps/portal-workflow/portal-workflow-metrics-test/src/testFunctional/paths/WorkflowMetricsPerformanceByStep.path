@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ROW</td>
+	<td>//div//span[text()='Performance by Step']/../../../following-sibling::div//tbody//tr[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS</td>
 	<td>//a//span[contains(text(), 'View All Steps (${key_stepsNumber})')]</td>
 	<td></td>

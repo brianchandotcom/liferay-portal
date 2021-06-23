@@ -187,6 +187,16 @@ public class JobFactory {
 			return _jobs.get(jobKey);
 		}
 
+		if (jobName.equals("test-fixpack-builder-pullrequest")) {
+			FixPackBuilderGitRepositoryJob fixPackBuilderGitRepositoryJob =
+				new FixPackBuilderGitRepositoryJob(
+					jobName, buildProfile, testSuiteName, branchName);
+
+			_jobs.put(jobKey, fixPackBuilderGitRepositoryJob);
+
+			return fixPackBuilderGitRepositoryJob;
+		}
+
 		if (jobName.startsWith("test-plugins-acceptance-pullrequest(")) {
 			PluginsAcceptancePullRequestJob pluginsAcceptancePullRequestJob =
 				new PluginsAcceptancePullRequestJob(

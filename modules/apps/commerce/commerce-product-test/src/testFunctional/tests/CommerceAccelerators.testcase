@@ -130,7 +130,9 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Submit");
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",

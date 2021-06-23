@@ -684,10 +684,8 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "1",
 			slaDefinitionDescription = "SLA Description",
-			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "0000",
-			slaDefinitionName = "SLAName",
-			slaDefinitionStart = "Process Begins");
+			slaDefinitionName = "SLAName");
 
 		Button.clickUpdate();
 
@@ -704,7 +702,7 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "SLA Description",
-			slaDefinitionEnd = "Process Begins",
+			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:03",
 			slaDefinitionName = "SLA Name",
 			slaDefinitionStart = "Process Begins");
@@ -952,10 +950,8 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "SLA Description",
-			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
-			slaDefinitionName = "SLA Name 2",
-			slaDefinitionStart = "Process Begins");
+			slaDefinitionName = "SLA Name 2");
 
 		Button.clickSave();
 
@@ -968,10 +964,8 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "SLA Description Updated",
-			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:02",
-			slaDefinitionName = "SLA Name 1",
-			slaDefinitionStart = "Process Begins");
+			slaDefinitionName = "SLA Name 1");
 
 		Button.clickUpdate();
 
@@ -1171,10 +1165,8 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "Test Description",
-			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "0001",
-			slaDefinitionName = "Test",
-			slaDefinitionStart = "Process Begins");
+			slaDefinitionName = "Test");
 
 		Button.clickUpdate();
 

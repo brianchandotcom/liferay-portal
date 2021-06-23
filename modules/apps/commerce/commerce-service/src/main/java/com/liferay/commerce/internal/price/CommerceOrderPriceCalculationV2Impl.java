@@ -210,6 +210,30 @@ public class CommerceOrderPriceCalculationV2Impl
 				shippingDiscountedWithTaxAmount =
 					shippingDiscountedWithTaxAmount.subtract(
 						discountAmountCommerceMoney.getPrice());
+
+				CommerceDiscountValue
+					orderShippingWithoutTaxCommerceDiscountValue =
+						_commerceDiscountCalculation.
+							getOrderShippingCommerceDiscountValue(
+								commerceOrder, shippingAmount, commerceContext);
+
+				if (orderShippingWithoutTaxCommerceDiscountValue != null) {
+					CommerceMoney discountWithoutTaxAmountCommerceMoney =
+						orderShippingWithoutTaxCommerceDiscountValue.
+							getDiscountAmount();
+
+					BigDecimal discountWithoutTax =
+						discountWithoutTaxAmountCommerceMoney.getPrice();
+
+					BigDecimal discountWithTax =
+						discountAmountCommerceMoney.getPrice();
+
+					BigDecimal shippingTaxValueDifference =
+						discountWithTax.subtract(discountWithoutTax);
+
+					totalTaxValue = totalTaxValue.subtract(
+						shippingTaxValueDifference);
+				}
 			}
 
 			totalDiscountedWithTaxAmount = totalWithTaxAmount;

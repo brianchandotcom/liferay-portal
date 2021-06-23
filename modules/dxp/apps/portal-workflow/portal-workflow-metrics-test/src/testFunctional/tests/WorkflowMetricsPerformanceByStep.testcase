@@ -197,12 +197,68 @@ definition {
 	}
 
 	@description = "LPS-100679 - Verify that users are able to filter the Performance by Step page by period: Today, Yesterday, Last 7 Days, Last 30 Days, Last 90 Days, Last 180 Days, Last Year, Custom Range"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test FilterPerformanceByStepPagePerTimeRange {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67667 FilterPerformanceByStepPagePerTimeRange pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		Click(
+			key_stepsNumber = "2",
+			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
+
+		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Today");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Today",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Yesterday");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Yesterday",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Last 7 Days");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Last 7 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Last 30 Days");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Last 30 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Last 90 Days");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Last 90 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Last 180 Days");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Last 180 Days",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Last Year");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Last Year",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		WorkflowMetrics.selectDateRange(
+			completionVelocityDateRange = "Custom Range",
+			dateRange = "Last Year",
+			endDateRange = "06/15/2021",
+			startDateRange = "06/14/2021",
+			title = "");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Jun 14, 2021 - Jun 15, 2021",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
 	}
 
 	@description = "LPS-100674 - Verify that the fields From and To are required"

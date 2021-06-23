@@ -242,7 +242,7 @@
 						%>
 
 						<clay:row
-							cssClass="weekdays"
+							cssClass="clearfix pt-3 weekdays"
 						>
 
 							<%

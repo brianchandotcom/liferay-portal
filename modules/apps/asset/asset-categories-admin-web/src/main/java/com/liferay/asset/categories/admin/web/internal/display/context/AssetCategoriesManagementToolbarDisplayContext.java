@@ -28,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -69,8 +70,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
-			FFAssetCategoriesAdminWebConfigurationUtil::
-				setDisplayPageTemplateEnabled,
+			this::_isSetDisplayPageTemplateEnabled,
 			dropdownItem -> {
 				PortletURL setCategoryDisplayPageTemplateURL =
 					PortletURLBuilder.createRenderURL(
@@ -337,6 +337,31 @@ public class AssetCategoriesManagementToolbarDisplayContext
 		return false;
 	}
 
+	private boolean _isSetDisplayPageTemplateEnabled() {
+		if (_setDisplayPageTemplateEnabled != null) {
+			return _setDisplayPageTemplateEnabled;
+		}
+
+		boolean setDisplayPageTemplateEnabled =
+			FFAssetCategoriesAdminWebConfigurationUtil.
+				setDisplayPageTemplateEnabled();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isCompany() || group.isDepot()) {
+			setDisplayPageTemplateEnabled = false;
+		}
+
+		_setDisplayPageTemplateEnabled = setDisplayPageTemplateEnabled;
+
+		return _setDisplayPageTemplateEnabled;
+	}
+
 	private final AssetCategoriesDisplayContext _assetCategoriesDisplayContext;
+	private Boolean _setDisplayPageTemplateEnabled;
 
 }

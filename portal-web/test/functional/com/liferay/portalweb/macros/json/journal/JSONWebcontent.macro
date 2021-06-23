@@ -118,6 +118,50 @@ definition {
 		return "${folderId}";
 	}
 
+	@summary = "Get the 'resourcePrimKey' via JSON"
+	macro getResourcePrimKeyByURLTitle {
+		Variables.assertDefined(parameterList = "${groupName},${title}");
+
+		var urlTitle = StringUtil.replace("${title}", " ", "-");
+		var urlTitle = StringUtil.lowerCase("${urlTitle}");
+
+		var resourcePrimKey = JSONWebcontentAPI._getResourcePrimKeyByURLTitle(
+			groupName = "${groupName}",
+			urlTitle = "${urlTitle}");
+
+		return "${resourcePrimKey}";
+	}
+
+	@summary = "Move a WC Article to trash under an existing site"
+	macro moveWebContentToTrash {
+		Variables.assertDefined(parameterList = "${groupName},${title}");
+
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+
+		var articleId = JSONWebcontentSetter.setArticleId(
+			groupName = "${groupName}",
+			title = "${title}");
+
+		JSONWebcontentAPI._moveWebContentToTrash(
+			articleId = "${articleId}",
+			groupId = "${groupId}");
+	}
+
+	@summary = "Restore a WC Article from the trash via 'resourcePrimKey' by JSON"
+	macro restoreWebContentFromTrashViaResourcePrimKey {
+		var resourcePrimKey = "${resourcePrimKey}";
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/restore-article-from-trash \
+				-u test@liferay.com:test \
+				-d resourcePrimKey=${resourcePrimKey}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Update status of a WC Article under an existing site via article title"
 	macro updateStatus {
 		Variables.assertDefined(parameterList = "${groupName},${statusKey},${title}");

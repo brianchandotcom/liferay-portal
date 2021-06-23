@@ -35,7 +35,36 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
+	test ViewMessageBoardsArchive71105 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.1.10.5";
+
+		Upgrade.viewAndAddMessageBoard();
+
+		Upgrade.editAndDeleteMessageBoard();
+	}
+
+	@priority = "5"
+	test ViewMessageBoardsArchive72104 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.2.10.4";
+
+		Upgrade.viewAndAddMessageBoard();
+
+		Upgrade.editAndDeleteMessageBoard();
+	}
+
+	@priority = "5"
+	test ViewMessageBoardsArchive73101 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewAndAddMessageBoard();
+
+		Upgrade.editAndDeleteMessageBoard();
+	}
+
+	@priority = "5"
 	test ViewMessageBoardsArchive621015 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.15";
@@ -46,7 +75,6 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
 	test ViewMessageBoardsArchive621021 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.21";
@@ -54,6 +82,16 @@ definition {
 		Upgrade.addMessageBoards();
 
 		Upgrade.viewMessageBoards();
+	}
+
+	@priority = "5"
+	test ViewMessageBoardsArchive701015 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.0.10.15";
+
+		Upgrade.viewAndAddMessageBoard();
+
+		Upgrade.editAndDeleteMessageBoard();
 	}
 
 }

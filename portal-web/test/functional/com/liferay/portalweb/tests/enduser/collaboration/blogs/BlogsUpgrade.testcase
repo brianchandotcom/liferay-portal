@@ -1,0 +1,65 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Documents Management";
+	property testray.main.component.name = "Upgrades Collaboration";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@priority = "5"
+	test ViewBlogsArchive71105 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.1.10.5";
+
+		Upgrade.viewAndAddBlogEntry(video = "true");
+
+		Upgrade.editAndDeleteBlogEntry(video = "true");
+	}
+
+	@priority = "5"
+	test ViewBlogsArchive72104 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.2.10.4";
+
+		Upgrade.viewAndAddBlogEntry(video = "true");
+
+		Upgrade.editAndDeleteBlogEntry(video = "true");
+	}
+
+	@priority = "5"
+	test ViewBlogsArchive73101 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewAndAddBlogEntry(video = "true");
+
+		Upgrade.editAndDeleteBlogEntry(video = "true");
+	}
+
+	@priority = "5"
+	test ViewBlogsArchive701015 {
+		property data.archive.type = "data-archive-collaboration";
+		property portal.version = "7.0.10.15";
+
+		Upgrade.viewAndAddBlogEntry();
+
+		Upgrade.editAndDeleteBlogEntry();
+	}
+
+}

@@ -72,6 +72,9 @@ public class DispatchLogSearchContainerFactory {
 				dispatchLogSearchContainer.getEnd(),
 				_getOrderByComparator(orderByCol, _isAscending(orderByType))));
 
+		dispatchLogSearchContainer.setTotal(
+			DispatchLogServiceUtil.getDispatchLogsCount(dispatchTriggerId));
+
 		return dispatchLogSearchContainer;
 	}
 

@@ -408,12 +408,59 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab Overdue is selected"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PercentageIndicationOnOverdueTab {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67621 PercentageIndicationOnOverdueTab pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0001",
+			slaDefinitionName = "SLA1",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Content 1",
+			entrySubtitle = "Subtitle 1",
+			entryTitle = "Blog 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.viewWorkloadByAssigneeCard(
+			assigneeName = "Test Test",
+			tabName = "Overdue",
+			taskCount = "0");
 	}
 
 	@description = "LPS-103365 - Verify that when the filters inside (Workload by Assignee) page are higher than 496px, a search bar on it should be included"

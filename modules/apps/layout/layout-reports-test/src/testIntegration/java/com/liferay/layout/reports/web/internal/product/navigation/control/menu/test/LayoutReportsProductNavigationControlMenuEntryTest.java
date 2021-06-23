@@ -15,23 +15,21 @@
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -72,31 +70,12 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 	@Test
 	public void testIsShow() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
-
-			try (CompanyConfigurationTemporarySwapper
-					companyConfigurationTemporarySwapper =
-						new CompanyConfigurationTemporarySwapper(
-							_group.getCompanyId(),
-							"com.liferay.layout.reports.web.internal." +
-								"configuration.LayoutReportsGooglePageSpeed" +
-									"CompanyConfiguration",
-							HashMapDictionaryBuilder.<String, Object>put(
-								"enabled", true
-							).build(),
-							_settingsFactory)) {
-
-				Assert.assertTrue(
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				StringPool.BLANK, true, _group.getGroupId(),
+				() -> Assert.assertTrue(
 					_productNavigationControlMenuEntry.isShow(
-						_getHttpServletRequest()));
-			}
-		}
+						_getHttpServletRequest())));
 	}
 
 	@Test
@@ -105,36 +84,31 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"apiKey", RandomTestUtil.randomString()
-					).put(
-						"enabled", true
-					).build())) {
-
-			Assert.assertTrue(
-				_productNavigationControlMenuEntry.isShow(
-					_getHttpServletRequest()));
-		}
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), true, _group.getGroupId(),
+				() -> Assert.assertTrue(
+					_productNavigationControlMenuEntry.isShow(
+						_getHttpServletRequest())));
 	}
 
 	@Test
-	public void testIsShowWithoutEnableConfiguration() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", false
-					).build())) {
+	public void testIsShowWithoutEnableCompanyConfiguration() throws Exception {
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedCompanyConfiguration(
+				_group.getCompanyId(), false,
+				() -> Assert.assertFalse(
+					_productNavigationControlMenuEntry.isShow(
+						_getHttpServletRequest())));
+	}
 
-			Assert.assertFalse(
+	@Test
+	public void testIsShowWithoutEnableSystemConfiguration() throws Exception {
+		LayoutReportsTestUtil.withLayoutReportsGooglePageSpeedConfiguration(
+			false,
+			() -> Assert.assertFalse(
 				_productNavigationControlMenuEntry.isShow(
-					_getHttpServletRequest()));
-		}
+					_getHttpServletRequest())));
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws PortalException {
@@ -173,8 +147,5 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	)
 	private ProductNavigationControlMenuEntry
 		_productNavigationControlMenuEntry;
-
-	@Inject
-	private SettingsFactory _settingsFactory;
 
 }

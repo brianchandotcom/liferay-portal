@@ -23,9 +23,9 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -48,7 +47,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -94,231 +92,197 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 	@Test
 	public void testGetData() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), true, _group.getGroupId(),
+				() -> {
+					Layout layout = LayoutTestUtil.addLayout(
+						_group.getGroupId());
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedCompanyConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"apiKey", RandomTestUtil.randomString()
-					).put(
-						"enabled", true
-					).build())) {
+					GroupTestUtil.updateDisplaySettings(
+						_group.getGroupId(),
+						Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
+						LocaleUtil.SPAIN);
 
-			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+					JSONObject jsonObject = _serveResource(layout);
 
-			GroupTestUtil.updateDisplaySettings(
-				_group.getGroupId(),
-				Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
-				LocaleUtil.SPAIN);
+					JSONArray pageURLsJSONArray = jsonObject.getJSONArray(
+						"pageURLs");
 
-			JSONObject jsonObject = _serveResource(layout);
+					Assert.assertEquals(
+						String.valueOf(pageURLsJSONArray), 2,
+						pageURLsJSONArray.length());
 
-			JSONArray pageURLsJSONArray = jsonObject.getJSONArray("pageURLs");
+					JSONObject pageURLJSONObject1 =
+						pageURLsJSONArray.getJSONObject(0);
 
-			Assert.assertEquals(
-				String.valueOf(pageURLsJSONArray), 2,
-				pageURLsJSONArray.length());
+					String imagesPath = jsonObject.getString("imagesPath");
 
-			JSONObject pageURLJSONObject1 = pageURLsJSONArray.getJSONObject(0);
+					Assert.assertTrue(imagesPath.contains("images"));
 
-			String imagesPath = jsonObject.getString("imagesPath");
+					Assert.assertEquals(
+						LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+						pageURLJSONObject1.getString("languageId"));
+					Assert.assertEquals(
+						layout.getName(LocaleUtil.SPAIN),
+						pageURLJSONObject1.getString("title"));
 
-			Assert.assertTrue(imagesPath.contains("images"));
+					JSONObject pageURLJSONObject2 =
+						pageURLsJSONArray.getJSONObject(1);
 
-			Assert.assertEquals(
-				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				pageURLJSONObject1.getString("languageId"));
-			Assert.assertEquals(
-				layout.getName(LocaleUtil.SPAIN),
-				pageURLJSONObject1.getString("title"));
+					Assert.assertEquals(
+						LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
+						pageURLJSONObject2.getString("languageId"));
 
-			JSONObject pageURLJSONObject2 = pageURLsJSONArray.getJSONObject(1);
+					Assert.assertEquals(
+						layout.getName(LocaleUtil.BRAZIL),
+						pageURLJSONObject1.getString("title"));
 
-			Assert.assertEquals(
-				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
-				pageURLJSONObject2.getString("languageId"));
+					String configureGooglePageSpeedURL = jsonObject.getString(
+						"configureGooglePageSpeedURL");
 
-			Assert.assertEquals(
-				layout.getName(LocaleUtil.BRAZIL),
-				pageURLJSONObject1.getString("title"));
+					Assert.assertTrue(
+						configureGooglePageSpeedURL.contains(
+							"configuration_admin"));
 
-			String configureGooglePageSpeedURL = jsonObject.getString(
-				"configureGooglePageSpeedURL");
+					Assert.assertEquals(
+						LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+						jsonObject.getString("defaultLanguageId"));
 
-			Assert.assertTrue(
-				configureGooglePageSpeedURL.contains("configuration_admin"));
-
-			Assert.assertEquals(
-				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				jsonObject.getString("defaultLanguageId"));
-
-			Assert.assertTrue(jsonObject.getBoolean("validConnection"));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-		}
+					Assert.assertTrue(jsonObject.getBoolean("validConnection"));
+				});
 	}
 
 	@Test
 	public void testGetDataWithApiKeyInSiteConfiguration() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), true, _group.getGroupId(),
+				() -> {
+					Layout layout = LayoutTestUtil.addLayout(
+						_group.getGroupId());
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedGroupConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"apiKey", RandomTestUtil.randomString()
-					).put(
-						"enabled", true
-					).build())) {
+					JSONObject jsonObject = _serveResource(layout);
 
-			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
-
-			JSONObject jsonObject = _serveResource(layout);
-
-			Assert.assertTrue(jsonObject.getBoolean("validConnection"));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-		}
+					Assert.assertTrue(jsonObject.getBoolean("validConnection"));
+				});
 	}
 
 	@Test
 	public void testGetDataWithLayoutTypeAssetDisplay() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), true, _group.getGroupId(),
+				() -> {
+					Bundle bundle = FrameworkUtil.getBundle(
+						LayoutReportsDataMVCResourceCommandTest.class);
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			LayoutReportsDataMVCResourceCommandTest.class);
+					BundleContext bundleContext = bundle.getBundleContext();
 
-		BundleContext bundleContext = bundle.getBundleContext();
+					ServiceRegistration<InfoItemFieldValuesProvider<?>>
+						infoItemFieldValuesProviderServiceRegistration =
+							bundleContext.registerService(
+								(Class<InfoItemFieldValuesProvider<?>>)
+									(Class<?>)InfoItemFieldValuesProvider.class,
+								new MockInfoItemFieldValuesProvider(),
+								new HashMapDictionary<>());
 
-		ServiceRegistration<InfoItemFieldValuesProvider<?>>
-			infoItemFieldValuesProviderServiceRegistration =
-				bundleContext.registerService(
-					(Class<InfoItemFieldValuesProvider<?>>)
-						(Class<?>)InfoItemFieldValuesProvider.class,
-					new MockInfoItemFieldValuesProvider(),
-					new HashMapDictionary<>());
+					try {
+						Layout layout = LayoutTestUtil.addLayout(_group);
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedCompanyConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"apiKey", RandomTestUtil.randomString()
-					).put(
-						"enabled", true
-					).build())) {
+						layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
-			Layout layout = LayoutTestUtil.addLayout(_group);
+						layout = _layoutLocalService.updateLayout(layout);
 
-			layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
+						GroupTestUtil.updateDisplaySettings(
+							_group.getGroupId(),
+							Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
+							LocaleUtil.SPAIN);
 
-			layout = _layoutLocalService.updateLayout(layout);
+						InfoItemClassDetails infoItemClassDetails =
+							new InfoItemClassDetails(
+								MockObject.class.getName());
 
-			GroupTestUtil.updateDisplaySettings(
-				_group.getGroupId(),
-				Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
-				LocaleUtil.SPAIN);
+						InfoItemDetails infoItemDetails = new InfoItemDetails(
+							infoItemClassDetails, null);
 
-			InfoItemClassDetails infoItemClassDetails =
-				new InfoItemClassDetails(MockObject.class.getName());
+						JSONObject jsonObject = _serveResource(
+							layout,
+							new ObjectValuePair[] {
+								new ObjectValuePair<>(
+									InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+									infoItemDetails),
+								new ObjectValuePair<>(
+									InfoDisplayWebKeys.INFO_ITEM,
+									new MockObject())
+							});
 
-			InfoItemDetails infoItemDetails = new InfoItemDetails(
-				infoItemClassDetails, null);
+						JSONArray pageURLsJSONArray = jsonObject.getJSONArray(
+							"pageURLs");
 
-			JSONObject jsonObject = _serveResource(
-				layout,
-				new ObjectValuePair[] {
-					new ObjectValuePair<>(
-						InfoDisplayWebKeys.INFO_ITEM_DETAILS, infoItemDetails),
-					new ObjectValuePair<>(
-						InfoDisplayWebKeys.INFO_ITEM, new MockObject())
+						Assert.assertEquals(
+							String.valueOf(pageURLsJSONArray), 2,
+							pageURLsJSONArray.length());
+
+						JSONObject pageURLJSONObject1 =
+							pageURLsJSONArray.getJSONObject(0);
+
+						Assert.assertEquals(
+							LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+							pageURLJSONObject1.get("languageId"));
+						Assert.assertEquals(
+							"defaultMappedTitle",
+							pageURLJSONObject1.get("title"));
+
+						JSONObject pageURLJSONObject2 =
+							pageURLsJSONArray.getJSONObject(1);
+
+						String imagesPath = jsonObject.getString("imagesPath");
+
+						Assert.assertTrue(imagesPath.contains("images"));
+
+						Assert.assertEquals(
+							LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
+							pageURLJSONObject2.getString("languageId"));
+						Assert.assertEquals(
+							"defaultMappedTitle",
+							pageURLJSONObject2.getString("title"));
+
+						String configureGooglePageSpeedURL =
+							jsonObject.getString("configureGooglePageSpeedURL");
+
+						Assert.assertTrue(
+							configureGooglePageSpeedURL.contains(
+								"configuration_admin"));
+
+						Assert.assertEquals(
+							LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+							jsonObject.getString("defaultLanguageId"));
+
+						Assert.assertTrue(
+							jsonObject.getBoolean("validConnection"));
+					}
+					finally {
+						infoItemFieldValuesProviderServiceRegistration.
+							unregister();
+					}
 				});
-
-			JSONArray pageURLsJSONArray = jsonObject.getJSONArray("pageURLs");
-
-			Assert.assertEquals(
-				String.valueOf(pageURLsJSONArray), 2,
-				pageURLsJSONArray.length());
-
-			JSONObject pageURLJSONObject1 = pageURLsJSONArray.getJSONObject(0);
-
-			Assert.assertEquals(
-				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				pageURLJSONObject1.get("languageId"));
-			Assert.assertEquals(
-				"defaultMappedTitle", pageURLJSONObject1.get("title"));
-
-			JSONObject pageURLJSONObject2 = pageURLsJSONArray.getJSONObject(1);
-
-			String imagesPath = jsonObject.getString("imagesPath");
-
-			Assert.assertTrue(imagesPath.contains("images"));
-
-			Assert.assertEquals(
-				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
-				pageURLJSONObject2.getString("languageId"));
-			Assert.assertEquals(
-				"defaultMappedTitle", pageURLJSONObject2.getString("title"));
-
-			String configureGooglePageSpeedURL = jsonObject.getString(
-				"configureGooglePageSpeedURL");
-
-			Assert.assertTrue(
-				configureGooglePageSpeedURL.contains("configuration_admin"));
-
-			Assert.assertEquals(
-				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				jsonObject.getString("defaultLanguageId"));
-
-			Assert.assertTrue(jsonObject.getBoolean("validConnection"));
-		}
-		finally {
-			infoItemFieldValuesProviderServiceRegistration.unregister();
-
-			ServiceContextThreadLocal.popServiceContext();
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-		}
 	}
 
 	@Test
 	public void testGetDataWithoutApiKey() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				StringPool.BLANK, true, _group.getGroupId(),
+				() -> {
+					Layout layout = LayoutTestUtil.addLayout(
+						_group.getGroupId());
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.layout.reports.web.internal.configuration." +
-						"LayoutReportsGooglePageSpeedCompanyConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"apiKey", StringPool.BLANK
-					).put(
-						"enabled", true
-					).build())) {
+					JSONObject jsonObject = _serveResource(layout);
 
-			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
-
-			JSONObject jsonObject = _serveResource(layout);
-
-			Assert.assertFalse(jsonObject.getBoolean("validConnection"));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-		}
+					Assert.assertFalse(
+						jsonObject.getBoolean("validConnection"));
+				});
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
@@ -390,9 +354,6 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

@@ -7,11 +7,11 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.14.0"
-	testCompile group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
-	testCompile group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"
-	testCompile group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"
-	testCompile group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
-	testCompile group: "org.apache.lucene", name: "lucene-sandbox", version: "5.2.1"
+	testCompile group: "org.apache.lucene", name: "lucene-analyzers-common", version: "7.1.0"
+	testCompile group: "org.apache.lucene", name: "lucene-core", version: "7.1.0"
+	testCompile group: "org.apache.lucene", name: "lucene-queries", version: "7.1.0"
+	testCompile group: "org.apache.lucene", name: "lucene-queryparser", version: "7.1.0"
+	testCompile group: "org.apache.lucene", name: "lucene-sandbox", version: "7.1.0"
 	testCompile project(":apps:document-library:document-library-repository-search")
 	testCompile project(":core:petra:petra-lang")
 }

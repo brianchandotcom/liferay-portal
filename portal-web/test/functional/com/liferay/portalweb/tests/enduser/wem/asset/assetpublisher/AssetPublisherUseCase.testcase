@@ -872,6 +872,66 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-133629. The user can select folder when create web content based on Basic Web Content via Asset Publisher."
+	@priority = "5"
+	test SelectFolderWhenCreateWebContentViaAssetPublisher {
+		task ("Add a web content folder") {
+			JSONWebcontent.addFolder(
+				folderDescription = "WC Folder Description",
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a web content based on Basic Web Content via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
+		}
+
+		task ("Type title and content") {
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the Home is shown in selector input") {
+			AssertTextEquals.assertValue(
+				key_value = "folderName",
+				locator1 = "TextInput#ANY_ID",
+				value1 = "Home");
+		}
+
+		task ("Select the new folder") {
+			WebContent.selectFolder(folderName = "WC Folder Name");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the new folder and web content are shown in Asset Publisher") {
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "WC Folder Description",
+				assetTitle = "WC Folder Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+		}
+
+		task ("Navigate to the new folder in Web Content admin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+		}
+
+		task ("View the web content shown in new folder") {
+			WebContent.viewTitle(webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "View assets filter by tag or category in Asset Publisher."
 	@priority = "4"
 	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {

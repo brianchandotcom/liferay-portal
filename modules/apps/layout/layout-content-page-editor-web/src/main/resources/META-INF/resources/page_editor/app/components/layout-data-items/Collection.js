@@ -158,7 +158,7 @@ const ColumnContext = ({
 };
 
 const DEFAULT_COLLECTION = {
-	items: [{defaultTitle: Liferay.Language.get('title')}],
+	items: [{}],
 	length: 1,
 };
 

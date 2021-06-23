@@ -1734,7 +1734,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
+		if (isSet(searchTerm)) {
+			Type(
+				locator1 = "TextInput#SEARCH",
+				value1 = "${searchTerm}");
+
+			Click(
+				key_nodeName = "${folderName}",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+		else {
+			WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
+		}
 
 		SelectFrame(value1 = "relative=top");
 

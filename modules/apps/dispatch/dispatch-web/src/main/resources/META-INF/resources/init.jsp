@@ -52,9 +52,12 @@ page import="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse" %>
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Date" %>
@@ -68,6 +71,8 @@ page import="java.util.Date" %>
 <portlet:defineObjects />
 
 <%
+Format fastDateFormat = FastDateFormatFactoryUtil.getDateTime(themeDisplay.getLocale());
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);

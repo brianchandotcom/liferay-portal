@@ -33,7 +33,7 @@ DispatchLog dispatchLog = dispatchLogDisplayContext.getDispatchLog();
 
 			<div class="lfr-form-content">
 				<aui:fieldset>
-					<aui:input disabled="<%= true %>" label="start-date" name="startDate" value="<%= dispatchLogDisplayContext.getDateString(dispatchLog.getStartDate()) %>" />
+					<aui:input disabled="<%= true %>" label="start-date" name="startDate" value='<%= (dispatchLog.getStartDate() != null) ? fastDateFormat.format(dispatchLog.getStartDate()) : "" %>' />
 
 					<%
 					DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());

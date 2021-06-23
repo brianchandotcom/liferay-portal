@@ -519,6 +519,10 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
+		if (isSet(personalizedVariation)) {
+			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
+		}
+
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 
 		Click(
@@ -543,6 +547,10 @@ definition {
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if (isSet(personalizedVariation)) {
+			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
+		}
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 
@@ -571,6 +579,10 @@ definition {
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if (isSet(personalizedVariation)) {
+			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
+		}
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 

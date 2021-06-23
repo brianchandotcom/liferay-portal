@@ -588,6 +588,79 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-130083. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
+	@priority = "4"
+	test ViewEllipsisButtonOnTheTopperOfFragmentInsideNestedGrid {
+		task ("Add a Grid element to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Add a second Grid to the second module of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Layout Elements",
+				columnNumber = "2",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+		}
+
+		task ("Add a Heading fragment to the first module of inner Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "1",
+				fragmentName = "Heading",
+				navTab = "Fragments",
+				position = "2");
+		}
+
+		task ("Add a Button fragment to the second module of inner Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "2",
+				fragmentName = "Button",
+				navTab = "Fragments",
+				position = "2");
+		}
+
+		task ("Add a Paragraph fragment to the third module of inner Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "3",
+				fragmentName = "Paragraph",
+				navTab = "Fragments",
+				position = "2");
+		}
+
+		task ("View the ellipsis button is visible on topper of Heading fragment") {
+			PageEditor.clickConfigurableField(fragmentName = "Heading");
+
+			AssertVisible(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+		}
+
+		task ("View the ellipsis button is visible on topper of Button fragment") {
+			PageEditor.clickConfigurableField(fragmentName = "Button");
+
+			AssertVisible(
+				key_fragmentName = "Button",
+				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+		}
+
+		task ("View the ellipsis button is visible on topper of Paragraph fragment") {
+			PageEditor.clickConfigurableField(fragmentName = "Paragraph");
+
+			AssertVisible(
+				key_fragmentName = "Paragraph",
+				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+		}
+	}
+
 	@description = "This is a test for LPS-104629. The header of fragment selected can reach the border of the management toolbar."
 	@priority = "5"
 	@uitest

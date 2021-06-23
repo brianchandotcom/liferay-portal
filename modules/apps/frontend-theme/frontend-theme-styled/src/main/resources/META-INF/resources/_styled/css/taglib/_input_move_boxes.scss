@@ -1,18 +1,104 @@
 .taglib-move-boxes {
-	.choice-selector label {
-		background: #ebf1f9;
-		border-bottom-color: #8db2f3;
+	margin-bottom: 1em;
+
+	label {
+		border-bottom: 1px solid transparent;
+		display: block;
+		margin-bottom: 5px;
+		padding: 5px;
 	}
 
-	.sortable-container .move-option {
-		background-color: transparent;
+	.toolbar {
+		text-align: center;
+	}
 
-		&.move-option-dragging {
-			background-color: #fafafa;
-		}
+	.arrow-button img {
+		border-width: 0;
+		height: 16px;
+		width: 16px;
+	}
 
-		.handle {
-			color: #999;
+	.choice-selector {
+		width: 100%;
+
+		label {
+			background: #ebf1f9;
+			border-bottom-color: #8db2f3;
 		}
 	}
+
+	.field-content {
+		margin-bottom: 0;
+	}
+
+	.move-arrow-buttons {
+		margin-top: 5em;
+
+		.arrow-button {
+			display: block;
+		}
+	}
+
+	.sortable-container {
+		margin-top: 10px;
+
+		.btn.edit-selection {
+			margin-bottom: 10px;
+		}
+
+		.move-option {
+			background-color: transparent;
+			border-top: 1px solid #ddd;
+			display: none;
+			margin: 2px 0;
+			padding: 2px;
+			position: relative;
+
+			&.selected {
+				display: block;
+			}
+
+			&.move-option-dragging {
+				background-color: #fafafa;
+			}
+
+			.checkbox,
+			.handle {
+				position: absolute;
+			}
+
+			.checkbox {
+				display: none;
+				margin: 7px 0 0 5px;
+			}
+
+			.handle {
+				color: #999;
+				cursor: pointer;
+				font-size: 1.5em;
+				padding: 6px;
+			}
+
+			.title {
+				font-size: 1.2em;
+				margin: 1px 0 1px 30px;
+			}
+		}
+
+		&.edit-list-active .move-option {
+			display: block;
+
+			.checkbox {
+				display: inline-block;
+			}
+
+			.handle {
+				display: none;
+			}
+		}
+	}
+}
+
+.mobile .taglib-move-boxes .selector-container {
+	display: none;
 }

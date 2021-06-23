@@ -55,7 +55,14 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 					LayoutReportsGooglePageSpeedGroupConfiguration.class,
 					group.getGroupId());
 
-		return layoutReportsGooglePageSpeedGroupConfiguration.strategy();
+		String strategy =
+			layoutReportsGooglePageSpeedGroupConfiguration.strategy();
+
+		if (!strategy.equals("DESKTOP") && !strategy.equals("MOBILE")) {
+			return "DESKTOP";
+		}
+
+		return strategy;
 	}
 
 	public boolean isEnabled() {

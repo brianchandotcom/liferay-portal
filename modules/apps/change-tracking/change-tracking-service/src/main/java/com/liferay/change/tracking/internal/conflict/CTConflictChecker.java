@@ -541,33 +541,30 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Connection connection, CTPersistence<T> ctPersistence,
 		String primaryKeyName, boolean resolved) {
 
-		Set<String> conflictingColumnNames = new HashSet<>();
-
-		if (resolved) {
-			conflictingColumnNames.addAll(
-				ctPersistence.getCTColumnNames(CTColumnResolutionType.IGNORE));
-
-			conflictingColumnNames.addAll(
-				ctPersistence.getCTColumnNames(CTColumnResolutionType.MAX));
-
-			conflictingColumnNames.addAll(
-				ctPersistence.getCTColumnNames(CTColumnResolutionType.MIN));
-		}
-		else {
-			conflictingColumnNames = ctPersistence.getCTColumnNames(
-				CTColumnResolutionType.STRICT);
-		}
-
-		if (conflictingColumnNames.isEmpty()) {
-			return Collections.emptyList();
-		}
-
 		Map<String, Integer> columnsMap = new HashMap<>(
 			ctPersistence.getTableColumnsMap());
 
 		Set<String> columnNames = columnsMap.keySet();
 
-		columnNames.retainAll(conflictingColumnNames);
+		if (resolved) {
+			Set<String> conflictingColumnNames = new HashSet<>(
+				ctPersistence.getCTColumnNames(CTColumnResolutionType.IGNORE));
+
+			conflictingColumnNames.addAll(
+				ctPersistence.getCTColumnNames(CTColumnResolutionType.MAX));
+			conflictingColumnNames.addAll(
+				ctPersistence.getCTColumnNames(CTColumnResolutionType.MIN));
+
+			columnNames.retainAll(conflictingColumnNames);
+		}
+		else {
+			columnNames.retainAll(
+				ctPersistence.getCTColumnNames(CTColumnResolutionType.STRICT));
+		}
+
+		if (columnsMap.isEmpty()) {
+			return Collections.emptyList();
+		}
 
 		StringBundler sb = new StringBundler((6 * columnsMap.size()) + 24);
 

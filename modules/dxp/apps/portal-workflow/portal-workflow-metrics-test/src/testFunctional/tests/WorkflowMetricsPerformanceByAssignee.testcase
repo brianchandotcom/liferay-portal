@@ -39,12 +39,122 @@ definition {
 	}
 
 	@description = "LPS-97666 - Verify that the Performance by Assignee card are also considering inactive users"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CardConsideresInactiveUser {
+		JSONUser.addUser(
+			userEmailAddress = "user2@liferay.com",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userScreenName = "user2");
 
-		// TODO LRQA-67706 CardConsideresInactiveUser pending implementation
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user2@liferay.com");
 
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "user2@liferay.com");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "user2",
+			userLastName = "user2",
+			userScreenName = "user2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user2@liferay.com",
+			userLoginFullName = "user2 user2");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "Test",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Navigator.gotoNavItem(navItem = "Performance");
+
+		AssertElementPresent(
+			key_assignee = "user2 user2",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_NAME");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deactivateCP(userFirstName = "user2");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Navigator.gotoNavItem(navItem = "Performance");
+
+		AssertElementPresent(
+			key_assignee = "user2 user2",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_NAME");
 	}
 
 	@description = "LPS-97666 - Verify that, when there is an unexpected error, the Performance by Assignee card displays the specific error state"

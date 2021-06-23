@@ -41,7 +41,6 @@ definition {
 	@priority = "4"
 	test AssertEmailVerificationIsRequiredByDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
-		property test.name.skip.portal.instance = "CPPortalSettings#AssertEmailVerificationIsRequiredByDefault";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -120,8 +119,6 @@ definition {
 
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsOrganizationSites";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -164,8 +161,6 @@ definition {
 
 	@priority = "4"
 	test EditDefaultUserAssociationsRoles {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsRoles";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -195,8 +190,6 @@ definition {
 
 	@priority = "4"
 	test EditDefaultUserAssociationsSites {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsSites";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -226,8 +219,6 @@ definition {
 
 	@priority = "4"
 	test EditDefaultUserAssociationsUserGroups {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsUserGroups";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -258,7 +249,6 @@ definition {
 	@priority = "5"
 	test EnterReservedEmailAddress {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedEmailAddress";
 
 		PortalSettings.enterReservedEmailAddressCP(userEmailAddress = "userea@liferay.com");
 
@@ -277,7 +267,6 @@ definition {
 	@priority = "5"
 	test EnterReservedScreenName {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedScreenName";
 
 		PortalSettings.viewReservedCredentialsScreenNamesCP();
 
@@ -297,8 +286,6 @@ definition {
 
 	@priority = "4"
 	test FactoryConfigurationCanBeDeleted {
-		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationCanBeDeleted";
-
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
 
@@ -336,8 +323,6 @@ definition {
 
 	@priority = "4"
 	test FactoryConfigurationCanBeEdited {
-		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationCanBeEdited";
-
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
 
@@ -370,8 +355,6 @@ definition {
 
 	@priority = "4"
 	test ViewContentSharingDisabledAcrossSitesViaAP {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingDisabledAcrossSitesViaAP";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PortalSettings.gotoConfiguration(
@@ -473,8 +456,6 @@ definition {
 
 	@priority = "4"
 	test ViewContentSharingEnabledAcrossSitesViaAP {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingEnabledAcrossSitesViaAP";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PortalSettings.gotoConfiguration(
@@ -551,8 +532,6 @@ definition {
 
 	@priority = "3"
 	test ViewDefaultUserAssociations {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewDefaultUserAssociations";
-
 		Navigator.openURL();
 
 		PortalSettings.viewDefaultUserAssociationsCP();
@@ -560,8 +539,6 @@ definition {
 
 	@priority = "3"
 	test ViewEmailNotificationsAccountCreatedNotification {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsAccountCreatedNotification";
-
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
@@ -569,8 +546,6 @@ definition {
 
 	@priority = "3"
 	test ViewEmailNotificationsPasswordChangedNotification {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsPasswordChangedNotification";
-
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
@@ -578,8 +553,6 @@ definition {
 
 	@priority = "3"
 	test ViewEmailNotificationsSender {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsSender";
-
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsSenderCP();
@@ -588,8 +561,6 @@ definition {
 	@description = "This is a use case for LPS-97907."
 	@priority = "5"
 	test ViewSystemSettingsSavedByKeyboard {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewSystemSettingsSavedByKeyboard";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>PROCESS_STEP_DROPDOWN</td>
-	<td>//button[contains(@class, 'dropdown-toggle filter-dropdown-button btn btn-secondary')]</td>
+	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), 'Process Step')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -634,12 +634,43 @@ definition {
 	}
 
 	@description = "LPS-106219 - Verify that the user can filter, by Process Step, instances with pending tasks in parallel"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test UserCanFilterInstanceWithPendingTasksInParallelByStep {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListReassignTasks#UserCanFilterInstanceWithPendingTasksInParallelByStep";
 
-		// TODO LRQA-67836 UserCanFilterInstanceWithPendingTasksInParallelByStep pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "multi_task_process.xml",
+			workflowDefinitionTitle = "Multi Task Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.viewTaskFilterOnReassignTasks(processStep = "task1");
+
+		Click(locator1 = "WorkflowReassignModal#CLEAR_SEARCH_MODAL_BUTTON");
+
+		WorkflowMetrics.viewTaskFilterOnReassignTasks(processStep = "task1,task2");
+
+		Click(locator1 = "WorkflowReassignModal#CLEAR_SEARCH_MODAL_BUTTON");
+
+		WorkflowMetrics.viewTaskFilterOnReassignTasks(processStep = "task1,task2,task3");
 	}
 
 	@description = "LPS-102664 - Verify that the Bulk Reassign is letting the user reassign only pending tasks"

@@ -130,17 +130,20 @@ public class AMImageValidatorImpl implements AMImageValidator {
 				for (Map.Entry<String, List<DDMFormFieldValue>> entry :
 						ddmFormFieldValuesMap.entrySet()) {
 
-					if (Objects.equals(entry.getKey(), "TIFF_IMAGE_LENGTH")) {
-						return _isValidDimension(
+					if (Objects.equals(entry.getKey(), "TIFF_IMAGE_LENGTH") &&
+						!_isValidDimension(
 							entry.getValue(),
-							PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
+							PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT)) {
+
+						return false;
 					}
 					else if (Objects.equals(
-								entry.getKey(), "TIFF_IMAGE_WIDTH")) {
+								entry.getKey(), "TIFF_IMAGE_WIDTH") &&
+							 !_isValidDimension(
+								 entry.getValue(),
+								 PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)) {
 
-						return _isValidDimension(
-							entry.getValue(),
-							PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
+						return false;
 					}
 				}
 			}

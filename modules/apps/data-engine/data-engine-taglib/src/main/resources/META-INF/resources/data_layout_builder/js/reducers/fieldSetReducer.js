@@ -16,6 +16,7 @@ import {PagesVisitor} from 'data-engine-js-components-web';
 import {
 	FieldSetUtil,
 	FieldSupport,
+	HandleSectionAdded,
 	SettingsContext,
 } from 'dynamic-data-mapping-form-builder';
 
@@ -44,6 +45,7 @@ export default (state, action, config) => {
 
 			const {
 				fieldSet,
+				fieldName,
 				indexes = {
 					columnIndex: 0,
 					pageIndex: activePage,
@@ -82,6 +84,7 @@ export default (state, action, config) => {
 				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
+				fieldTypes,
 				generateFieldNameUsingFieldLabel,
 			};
 
@@ -128,6 +131,29 @@ export default (state, action, config) => {
 					fieldSetField,
 					'rows',
 					rows
+				);
+			}
+
+			if (fieldName) {
+				return HandleSectionAdded(
+					props,
+					{
+						...state,
+						pages,
+					},
+					{
+						data: {
+							fieldName,
+							parentFieldName,
+						},
+						indexes,
+						newField: SettingsContext.updateField(
+							props,
+							fieldSetField,
+							'label',
+							fieldSet.name
+						),
+					}
 				);
 			}
 

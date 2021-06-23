@@ -11,7 +11,7 @@ targetCompatibility = "1.6"
 dependencies {
 	compile group: "com.google.protobuf", name: "protobuf-java", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
-	compile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.16"
+	compile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.17"
 	compile group: "org.antlr", name: "antlr", version: "3.3"
 	compile group: "org.antlr", name: "antlr-runtime", version: "3.3"
 	compile group: "org.drools", name: "drools-core", optional, version: "5.4.0.Final"

@@ -33,6 +33,8 @@ export default function IssuesList() {
 
 	const [percentage, setPercentage] = useState(0);
 
+	const localizedIssues = layoutReportsIssues?.[languageId];
+
 	useEffect(() => {
 		if (loading && !error) {
 			const initial = Date.now();
@@ -63,9 +65,9 @@ export default function IssuesList() {
 			{loading ? (
 				<LoadingProgressBar percentage={percentage} />
 			) : (
-				layoutReportsIssues && (
+				localizedIssues && (
 					<Issues
-						layoutReportsIssues={layoutReportsIssues}
+						layoutReportsIssues={localizedIssues.issues}
 						successImage={successImage}
 					/>
 				)

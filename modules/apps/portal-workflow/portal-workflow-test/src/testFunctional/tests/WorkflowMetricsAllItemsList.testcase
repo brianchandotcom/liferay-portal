@@ -414,12 +414,77 @@ definition {
 	}
 
 	@description = "LPS-130166 - Verify that popover for Due Date will display up to 2 SLAs and the order should be from the most to the least critical SLA"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
 
-		// TODO LRQA-67742 PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "Test Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "01:00",
+			slaDefinitionName = "Test1",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "Test Description 2",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:00",
+			slaDefinitionName = "Test2",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "Test Description 3",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:30",
+			slaDefinitionName = "Test3",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry");
+
+		Pause(locator1 = "60000");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "ONTIME",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.assertDueDatePopoverInfo(
+			itemPosition = "3",
+			rowNumber = "1",
+			slaName = "Test3",
+			slaPosition = "1");
+
+		WorkflowMetrics.assertDueDatePopoverInfo(
+			itemPosition = "3",
+			rowNumber = "1",
+			slaName = "Test1",
+			slaPosition = "2");
 	}
 
 	@description = "LPS-130166 - Verify that the popover is not displayd when hovering untracked items on Due Date column item"

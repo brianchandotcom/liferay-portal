@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DUE_DATE_POPOVER_SLA_INFO</td>
+	<td>//div[@class='popover-body']//div[${key_slaPosition}]//div[contains(text(), '${key_slaName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REASSIGN_TASK_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Reassign Task')]</td>
 	<td></td>
@@ -274,6 +279,11 @@
     <td>MODAL_TITLE_ICON</td>
     <td>//span[contains(@class,'bg-muted')]</td>
     <td></td>
+</tr>
+<tr>
+	<td>METRICS_INSTANCE_ITEMS_POSITION</td>
+	<td>//tr[${key_rowNumber}]//td[${key_itemPosition}]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_INSTANCE_NAME</td>

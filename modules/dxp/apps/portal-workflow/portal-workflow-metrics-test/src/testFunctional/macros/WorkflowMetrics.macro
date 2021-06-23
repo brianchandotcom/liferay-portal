@@ -185,6 +185,19 @@ definition {
 			value1 = "inst / day");
 	}
 
+	macro assertDueDatePopoverInfo {
+		MouseOver(
+			key_itemPosition = "${itemPosition}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "WorkflowAllItems#METRICS_INSTANCE_ITEMS_POSITION");
+
+		AssertTextEquals.assertPartialText(
+			key_slaName = "${slaName}",
+			key_slaPosition = "${slaPosition}",
+			locator1 = "WorkflowAllItems#DUE_DATE_POPOVER_SLA_INFO",
+			value1 = "${slaName}");
+	}
+
 	macro assertErrorSlaPresent {
 		AssertElementPresent(locator1 = "Message#ERROR");
 

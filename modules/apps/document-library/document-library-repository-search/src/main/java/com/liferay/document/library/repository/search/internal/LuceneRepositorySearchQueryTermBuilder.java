@@ -34,7 +34,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.apache.lucene.analysis.LowerCaseFilter;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.KeywordTokenizer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
@@ -68,7 +70,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 			QueryParser queryParser = new QueryParser(field, _analyzer);
 
 			queryParser.setAllowLeadingWildcard(true);
-			queryParser.setLowercaseExpandedTerms(false);
+			queryParser.setSplitOnWhitespace(true);
 
 			Query query = null;
 
@@ -93,7 +95,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_analyzer = new KeywordAnalyzer();
+		_analyzer = new RepositoryAnalyzer();
 	}
 
 	protected BooleanClauseOccur getBooleanClauseOccur(
@@ -149,7 +151,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 
 			BooleanQuery disjunctionQuery = new BooleanQueryImpl();
 
-			for (BooleanClause booleanClause : curBooleanQuery.getClauses()) {
+			for (BooleanClause booleanClause : curBooleanQuery.clauses()) {
 				BooleanClauseOccur curBooleanClauseOccur =
 					getBooleanClauseOccur(booleanClause.getOccur());
 
@@ -255,5 +257,19 @@ public class LuceneRepositorySearchQueryTermBuilder
 		LuceneRepositorySearchQueryTermBuilder.class);
 
 	private Analyzer _analyzer;
+
+	private static class RepositoryAnalyzer extends Analyzer {
+
+		@Override
+		protected TokenStreamComponents createComponents(String fieldName) {
+			return new TokenStreamComponents(new KeywordTokenizer());
+		}
+
+		@Override
+		protected TokenStream normalize(String fieldName, TokenStream in) {
+			return new LowerCaseFilter(in);
+		}
+
+	}
 
 }

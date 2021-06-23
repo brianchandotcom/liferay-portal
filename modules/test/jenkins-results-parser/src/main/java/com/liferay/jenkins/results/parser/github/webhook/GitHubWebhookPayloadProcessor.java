@@ -118,6 +118,10 @@ public class GitHubWebhookPayloadProcessor {
 
 		String repositoryName = pullRequest.getGitRepositoryName();
 
+		if (repositoryName.equals("liferay-fix-pack-builder-ee")) {
+			return "test-fixpack-builder-pullrequest";
+		}
+
 		if (repositoryName.equals("liferay-jenkins-ee")) {
 			return "test-jenkins-acceptance-pullrequest";
 		}

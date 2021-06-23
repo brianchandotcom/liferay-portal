@@ -77,6 +77,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 		<c:if test='<%= Objects.equals(accountEntryDisplay.getStatusLabel(), "active") %>'>
 			<portlet:actionURL name="/account_admin/update_account_entry_status" var="deactivateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="navigation" value="<%= navigation %>" />
 				<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
 			</portlet:actionURL>

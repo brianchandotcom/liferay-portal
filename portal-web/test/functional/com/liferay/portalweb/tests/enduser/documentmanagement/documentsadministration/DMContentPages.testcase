@@ -1,0 +1,243 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This test covers LPS-94508 and LPS-129430. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
+	@priority = "5"
+	@refactorneeded
+	test CreateTagUsingAutocomplete {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addMultiplePG(
+			contentPage = "true",
+			dmDocumentFileList = "Document_1.doc,Document_2.docx");
+
+		for (var tagName : list "tagone,tagtwo,tagthree") {
+			var key_dmDocumentTitle = "Document_1";
+
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+			Click(locator1 = "Icon#EDIT_TAGS");
+
+			DMDocument.editTags(tagName = "${tagName}");
+
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1");
+
+			DMDocument.viewTag(tagName = "${tagName}");
+
+			Navigator.gotoPage(pageName = "Test Content Page Name");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_dmDocumentTitle = "Document_2";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Tags");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "You're editing the tags for the selected item.");
+
+		Click(locator1 = "Modal#BODY");
+
+		Type.sendKeys(
+			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+			value1 = "ta");
+
+		AssertClick(
+			key_tagName = "tagtwo",
+			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
+			value1 = "tagtwo");
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2");
+
+		DMDocument.viewTag(tagName = "tagtwo");
+	}
+
+	@description = "This test ensures that user can edit document in folder via a content page."
+	@priority = "5"
+	@refactorneeded
+	test EditFolderDocument {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMFolder.addPG(
+			contentPage = "true",
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.editPG(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
+	}
+
+	@description = "This test covers LPS-127683. It ensures that the shortcut cannot be restored before the shortcut target is restored."
+	@priority = "3"
+	@refactorneeded
+	test RestoreShortcutAfterDeletingTarget {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "Document_1.jpg",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewDefaultCP();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewDefaultCP();
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document_1.jpg");
+
+		MenuItem.viewNotPresent(menuItem = "Restore");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.restoreCP(
+			assetName = "Document_1.jpg",
+			assetType = "Document");
+
+		RecycleBin.viewDefaultCP(assetName = "Document_1.jpg");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.restoreCP(
+			assetName = "Document_1.jpg",
+			assetType = "Shortcut");
+
+		RecycleBin.viewDefaultCP(assetName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_text = "shortcut",
+			locator1 = "Icon#ANY_LAST");
+	}
+
+}

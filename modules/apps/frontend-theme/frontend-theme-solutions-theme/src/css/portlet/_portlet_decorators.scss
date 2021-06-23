@@ -1,0 +1,32 @@
+.portlet-decorate {
+	.portlet {
+		margin-bottom: 24px;
+	}
+
+	.portlet-content {
+		background-color: $portlet-decorate-bg;
+		border: $portlet-decorate-border;
+		border-radius: 0.25rem;
+		padding: 24px;
+	}
+}
+
+.portlet-barebone,
+.portlet-borderless {
+	.panel {
+		background-color: transparent;
+
+		&.card {
+			border-color: #cdced9;
+			box-shadow: none;
+		}
+	}
+
+	.panel-default {
+		border-color: #cdced9;
+	}
+
+	.widget-mode-detail {
+		background-color: transparent;
+	}
+}

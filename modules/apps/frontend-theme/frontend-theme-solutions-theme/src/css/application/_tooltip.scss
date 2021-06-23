@@ -1,0 +1,70 @@
+.lfr-portal-tooltip {
+	display: inline-block;
+
+	&,
+	a {
+		-webkit-touch-callout: none;
+
+		@include user-select(none);
+	}
+}
+
+.tooltip {
+	max-width: 200px;
+
+	.tooltip-arrow {
+		background-color: $tooltip-bg;
+		height: 0.6rem;
+		position: absolute;
+		transform: rotate(45deg);
+		width: 0.6rem;
+	}
+}
+
+.tooltip.top,
+.tooltip.bottom {
+	.tooltip-arrow {
+		left: 50%;
+		margin-left: -0.3rem;
+	}
+}
+
+.tooltip.right,
+.tooltip.left {
+	.tooltip-arrow {
+		margin-top: -0.3rem;
+		top: 50%;
+	}
+}
+
+.tooltip.bottom {
+	padding-top: 0.3rem;
+
+	.tooltip-arrow {
+		top: 0;
+	}
+}
+
+.tooltip.left {
+	padding-right: 0.3rem;
+
+	.tooltip-arrow {
+		right: 0;
+	}
+}
+
+.tooltip.right {
+	padding-left: 0.3rem;
+
+	.tooltip-arrow {
+		left: 0;
+	}
+}
+
+.tooltip.top {
+	padding-bottom: 0.3rem;
+
+	.tooltip-arrow {
+		bottom: 0;
+	}
+}

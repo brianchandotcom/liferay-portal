@@ -1,0 +1,21 @@
+.lfr-translation-manager {
+	.lfr-translation-manager-available-translations {
+		.lfr-translation-manager-available-translations-links {
+			line-height: 1;
+		}
+	}
+
+	.lfr-translation-manager-translation {
+		text-decoration: none;
+
+		&:hover {
+			background-color: #d1e5ef;
+		}
+
+		&.lfr-translation-manager-translation-editing {
+			background-color: #598bec;
+			border-color: #224fa8;
+			color: #fff;
+		}
+	}
+}

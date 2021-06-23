@@ -1,0 +1,61 @@
+.modify-pages {
+	li {
+		position: relative;
+
+		&.lfr-nav-hover {
+			.delete-tab {
+				opacity: 1;
+			}
+		}
+	}
+
+	.delete-tab {
+		color: #444;
+		cursor: pointer;
+		display: block;
+		font-size: 20px;
+		font-weight: bold;
+		height: 16px;
+		line-height: 6px;
+		margin-top: -8px;
+		opacity: 0;
+		overflow: hidden;
+		padding: 3px 0;
+		position: absolute;
+		right: 1px;
+		text-shadow: 0 1px #fff;
+		top: 50%;
+
+		&:hover {
+			color: #b50303;
+		}
+	}
+
+	.drag-handle {
+		cursor: move;
+		left: 3px;
+		margin-left: 15px;
+		position: absolute;
+		top: 15px;
+	}
+}
+
+.controls-hidden .modify-pages {
+	.drag-handle {
+		display: none;
+	}
+}
+
+.touch .modify-pages {
+	@include media-breakpoint-up(md) {
+		.drag-handle {
+			display: none;
+		}
+	}
+}
+
+.nav {
+	li .toolbar {
+		margin-top: 5px;
+	}
+}

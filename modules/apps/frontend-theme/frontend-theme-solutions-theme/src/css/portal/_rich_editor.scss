@@ -1,0 +1,13 @@
+textarea.lfr-editor-textarea {
+	font-family: monospace;
+}
+
+.lfr-rich-editor.ace_editor {
+	border-color: #a1a2a4;
+}
+
+.lfr-plain-editor textarea,
+.lfr-rich-editor.ace_editor {
+	font-family: 'Monaco', 'Menlo', 'Droid Sans Mono', 'Courier New', monospace;
+	font-size: 12px;
+}

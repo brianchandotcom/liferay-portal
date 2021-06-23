@@ -1,0 +1,20 @@
+.diff-version-comparator {
+	.taglib-diff-html {
+		.diff-html-changed {
+			background-image: none;
+			border-bottom-color: #009ae5;
+
+			img {
+				border-color: #009ae5;
+			}
+		}
+	}
+
+	.diff-target-selector {
+		border-left-color: #e5e5e5;
+	}
+
+	.diff-version-filter {
+		background-color: #f9f9f9;
+	}
+}

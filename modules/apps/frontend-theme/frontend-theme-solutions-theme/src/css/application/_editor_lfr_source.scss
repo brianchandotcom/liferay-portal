@@ -1,0 +1,118 @@
+.lfr-source-editor {
+	border-color: #ccc;
+
+	.lfr-source-editor-toolbar {
+		li {
+			> .btn {
+				background-color: #fff;
+				border: transparent;
+				color: #717383;
+				outline: 0;
+			}
+		}
+	}
+
+	.lfr-source-editor-code {
+		background-color: #fff;
+		color: #2b4259;
+
+		.ace_gutter {
+			background-color: #ededef;
+			color: #868896;
+			overflow: hidden;
+
+			.ace_fold-widget {
+				font-family: fontawesome-alloy;
+				text-align: center;
+				vertical-align: middle;
+
+				&.ace_open,
+				&.ace_closed {
+					background-image: none;
+				}
+
+				&.ace_open:before {
+					content: '\25be';
+				}
+
+				&.ace_closed:before {
+					content: '\25b8';
+				}
+			}
+
+			.ace_gutter-active-cell {
+				color: #fff;
+			}
+
+			.ace_gutter-active-line {
+				background-color: #717383;
+			}
+
+			.ace_gutter-layer {
+				border-right: solid 1px #ccc;
+			}
+
+			.ace_info {
+				background-image: none;
+			}
+		}
+
+		.ace_content {
+			.ace_active-line {
+				background-color: #ededef;
+			}
+
+			.ace_constant {
+				color: #34adab;
+			}
+
+			.ace_tag {
+				color: #1d5ec7;
+			}
+
+			.ace_string {
+				color: #ff6c58;
+
+				&.ace_regex {
+					color: #f00;
+				}
+			}
+		}
+	}
+
+	&.ace_dark {
+		.lfr-source-editor-code {
+			background-color: #47474f;
+			color: #fff;
+
+			.ace_gutter {
+				background: #54555e;
+				color: #fff;
+
+				.ace_gutter-active-line {
+					background-color: #009aed;
+				}
+			}
+
+			.ace_content {
+				.ace_active-line {
+					background-color: #11394e;
+				}
+
+				.ace_cursor {
+					color: #fff;
+				}
+
+				.ace_tag {
+					color: #4d91ff;
+				}
+			}
+		}
+	}
+}
+
+.lfr-fullscreen-source-editor
+	.lfr-fullscreen-source-editor-content
+	.panel-splitter {
+	border-color: #ccc;
+}

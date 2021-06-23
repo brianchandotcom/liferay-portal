@@ -1,0 +1,335 @@
+// Aspect ratio
+
+.aspect-ratio:not([class*='aspect-ratio-']) {
+	padding-bottom: var(--aspect-ratio);
+}
+
+.aspect-ratio-4-to-3 {
+	padding-bottom: var(--aspect-ratio-4-to-3);
+}
+
+.aspect-ratio-8-to-3 {
+	padding-bottom: var(--aspect-ratio-8-to-3);
+}
+
+.aspect-ratio-16-to-9 {
+	padding-bottom: var(--aspect-ratio-16-to-9);
+}
+
+.card-type-asset .aspect-ratio {
+	padding-bottom: var(--aspect-ratio-16-to-9);
+}
+
+// Background and text color variants
+
+@each $color, $value in $custom-properties-theme-colors {
+	.bg-#{$color} {
+		background-color: $value !important;
+	}
+
+	.text-#{$color} {
+		color: $value !important;
+	}
+}
+
+// Blockquotes
+
+.blockquote {
+	font-size: var(--blockquote-font-size);
+}
+
+.blockquote-footer {
+	color: var(--blockquote-small-color);
+	font-size: var(--blockquote-small-font-size);
+}
+
+// Body
+
+body,
+#wrapper {
+	background-color: var(--body-bg);
+	color: var(--body-color);
+	font-family: var(--font-family-base);
+	font-size: var(--font-size-base);
+}
+
+// Buttons
+
+@each $key, $map in $custom-properties-button-maps {
+	.btn-#{$key}#{$custom-properties-button-not-classes} {
+		@include clay-button-variant($map);
+	}
+}
+
+.btn-outline-borderless#{$custom-properties-button-not-classes} {
+	border-color: transparent;
+
+	&:hover,
+	&:focus {
+		border-color: transparent;
+	}
+
+	&:disabled,
+	&.disabled {
+		border-color: transparent;
+	}
+}
+
+// Container max
+
+@each $key, $value in $custom-properties-container-max-widths {
+	.container-fluid-max-#{$key} {
+		max-width: #{$value};
+	}
+}
+
+// Display
+
+.display-1 {
+	font-size: var(--display1-size);
+	font-weight: var(--display1-weight);
+	line-height: var(--display-line-height);
+}
+
+.display-2 {
+	font-size: var(--display2-size);
+	font-weight: var(--display2-weight);
+	line-height: var(--display-line-height);
+}
+
+.display-3 {
+	font-size: var(--display3-size);
+	font-weight: var(--display3-weight);
+	line-height: var(--display-line-height);
+}
+
+.display-4 {
+	font-size: var(--display4-size);
+	font-weight: var(--display4-weight);
+	line-height: var(--display-line-height);
+}
+
+// Headers
+
+h1,
+.h1 {
+	font-size: var(--h1-font-size);
+}
+
+h2,
+.h2 {
+	font-size: var(--h2-font-size);
+}
+
+h3,
+.h3 {
+	font-size: var(--h3-font-size);
+}
+
+h4,
+.h4 {
+	font-size: var(--h4-font-size);
+}
+
+h5,
+.h5 {
+	font-size: var(--h5-font-size);
+}
+
+h6,
+.h6 {
+	font-size: var(--h6-font-size);
+}
+
+// Lead
+
+.lead {
+	font-size: var(--lead-font-size);
+	font-weight: var(--lead-font-weight);
+}
+
+// Portlet
+
+.portlet {
+	.portlet-content {
+		background-color: var(--portlet-bg);
+	}
+
+	@at-root .controls-visible {
+		.portlet-content-editable {
+			@include media-breakpoint-down(sm) {
+				border-color: var(--portlet-topper-border);
+			}
+		}
+
+		.portlet:hover,
+		.portlet.open,
+		.portlet.focus {
+			> .portlet-content-editable {
+				@include media-breakpoint-up(sm) {
+					border-color: var(--portlet-topper-border);
+				}
+			}
+		}
+	}
+}
+
+.portlet-layout {
+	.portlet-header {
+		margin-bottom: var(--portlet-header-margin-bottom);
+	}
+}
+
+.portlet-topper {
+	background-color: var(--portlet-topper-bg);
+	border-color: var(--portlet-topper-border);
+	border-radius: var(--portlet-topper-border-radius);
+	color: var(--portlet-topper-color);
+}
+
+// Rounded
+
+.rounded {
+	border-radius: var(--border-radius) !important;
+}
+
+.rounded-circle {
+	border-radius: var(--border-radius-circle) !important;
+}
+
+.rounded-lg {
+	border-radius: var(--border-radius-lg) !important;
+}
+
+.rounded-pill {
+	border-radius: var(--rounded-pill) !important;
+}
+
+.rounded-sm {
+	border-radius: var(--border-radius-sm) !important;
+}
+
+// Separator
+
+hr {
+	border-top: var(--hr-border-width) solid var(--hr-border-color);
+	margin-bottom: var(--hr-margin-y);
+	margin-top: var(--hr-margin-y);
+}
+
+// Shadows
+
+.shadow {
+	box-shadow: var(--box-shadow) !important;
+}
+
+.shadow-sm {
+	box-shadow: var(--box-shadow-sm) !important;
+}
+
+.shadow-lg {
+	box-shadow: var(--box-shadow-lg) !important;
+}
+
+// Spacers
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+	$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+	@include media-breakpoint-up($breakpoint) {
+		@each $size, $length in $custom-properties-spacers {
+			@each $library in ('bs', 'clay') {
+				$important: '';
+				$prefix: '';
+
+				@if ($library == 'bs') {
+					$important: '!important';
+				} @else {
+					$prefix: 'c-';
+				}
+
+				@each $prop, $abbrev in (margin: m, padding: p) {
+					$variants: ('positive');
+
+					@if ($prop == 'margin') {
+						$variants: ('positive', 'negative');
+					}
+
+					@each $variant in $variants {
+						$variation: '';
+						$value: $length;
+
+						@if ($variant != 'negative' or $size != 0) {
+							@if ($variant == 'negative') {
+								$value: calc(#{$length} * -1);
+								$variation: 'n';
+							}
+
+							.#{$prefix}#{$abbrev}#{$infix}-#{$variation}#{$size} {
+								#{$prop}: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}t#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}y#{$infix}-#{$variation}#{$size} {
+								#{$prop}-top: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}r#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}x#{$infix}-#{$variation}#{$size} {
+								#{$prop}-right: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}b#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}y#{$infix}-#{$variation}#{$size} {
+								#{$prop}-bottom: #{$value} #{$important};
+							}
+							.#{$prefix}#{$abbrev}l#{$infix}-#{$variation}#{$size},
+							.#{$prefix}#{$abbrev}x#{$infix}-#{$variation}#{$size} {
+								#{$prop}-left: #{$value} #{$important};
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// Text format
+
+.font-weight-bold {
+	font-weight: var(--font-weight-bold) !important;
+}
+
+.font-weight-bolder {
+	font-weight: var(--font-weight-bolder) !important;
+}
+
+.font-weight-light {
+	font-weight: var(--font-weight-light) !important;
+}
+
+.font-weight-lighter {
+	font-weight: var(--font-weight-lighter) !important;
+}
+
+.font-weight-normal {
+	font-weight: var(--font-weight-normal) !important;
+}
+
+.font-weight-semi-bold {
+	font-weight: var(--font-weight-semi-bold) !important;
+}
+
+// Text muted
+
+.text-muted {
+	color: var(--text-muted) !important;
+}
+
+// Transition
+
+.collapsing {
+	transition: var(--transition-collapse);
+}
+
+.fade {
+	transition: var(--transition-fade);
+}

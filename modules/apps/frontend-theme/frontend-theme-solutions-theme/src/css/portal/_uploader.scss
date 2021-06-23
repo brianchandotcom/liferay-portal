@@ -1,0 +1,80 @@
+.lfr-upload-container {
+	.upload-target {
+		border-color: #ddd;
+
+		h4 span {
+			text-transform: lowercase;
+		}
+
+		.drop-file-text {
+			font-weight: normal;
+		}
+	}
+
+	a {
+		&.browse-button {
+			background-image: url(../images/common/add.png);
+			background-repeat: no-repeat;
+			color: white;
+			font-size: 1.2em;
+			font-weight: bold;
+			text-decoration: none;
+		}
+
+		&.clear-uploads {
+			background-image: url(../images/common/remove.png);
+			background-repeat: no-repeat;
+		}
+
+		&.cancel-uploads {
+			background-image: url(../images/common/close.png);
+			background-repeat: no-repeat;
+		}
+	}
+
+	.upload-list-info h4 {
+		font-size: 1.3em;
+	}
+
+	.cancel-button {
+		color: #869cad;
+	}
+
+	.delete-button {
+		color: #869cad;
+	}
+
+	.file-added .success-message {
+		font-weight: normal;
+	}
+
+	.upload-error {
+		opacity: 1;
+	}
+
+	.multiple-files .upload-error {
+		background: #fdd url(../images/messages/error.png) no-repeat 5px 5px;
+		border-color: #900;
+		color: #900;
+		font-weight: normal;
+		margin-bottom: 16px;
+		padding: 8px 8px 8px 24px;
+	}
+
+	.upload-complete {
+		.error-message,
+		.success-message {
+			font-weight: bold;
+		}
+	}
+
+	.file-uploading {
+		background-color: #ffc;
+	}
+}
+
+.upload-drop-active .lfr-upload-container .upload-target {
+	background-color: #ddedde;
+	border-color: #7d7;
+	border-style: dashed;
+}

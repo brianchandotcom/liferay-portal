@@ -1,0 +1,25 @@
+.underlay {
+	clear: both;
+	top: 100%;
+
+	.yui3-widget-hd {
+		height: 38px;
+	}
+}
+
+.underlay-hidden {
+	display: none;
+}
+
+.underlay-content {
+	background: #f4f3f3 url(../images/common/message_panel_shadow.png) repeat-x
+		0 0;
+	border: 0 solid #aeafb1;
+	border-width: 0 1px 1px;
+}
+
+.underlay-close {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}

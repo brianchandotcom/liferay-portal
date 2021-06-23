@@ -1,0 +1,73 @@
+.portlet-layout.dragging {
+	border-collapse: separate;
+}
+
+.drop-area {
+	background-color: #d3dadd;
+}
+
+.active-area {
+	background: #ffc;
+}
+
+.portlet-boundary.yui3-dd-dragging {
+	opacity: 0.6;
+
+	.portlet {
+		border: 2px dashed #ccc;
+	}
+}
+
+.sortable-layout-proxy {
+	opacity: 1;
+
+	.portlet-topper {
+		background-image: none;
+	}
+}
+
+.proxy {
+	cursor: move;
+
+	opacity: 0.65;
+
+	position: absolute;
+
+	&.generic-portlet {
+		height: 200px;
+		width: 300px;
+
+		.portlet-title {
+			padding: 10px;
+		}
+	}
+
+	&.not-intersecting .forbidden-action {
+		background: url(../images/application/forbidden_action.png) no-repeat;
+		display: block;
+		height: 32px;
+		position: absolute;
+		right: -15px;
+		top: -15px;
+		width: 32px;
+	}
+}
+
+.resizable-proxy {
+	border: 1px dashed #828f95;
+	position: absolute;
+	visibility: hidden;
+}
+
+.sortable-proxy {
+	background: #727c81;
+	margin-top: 1px;
+}
+
+.sortable-layout-drag-target-indicator {
+	margin: 2px 0;
+}
+
+.yui3-dd-proxy {
+	z-index: 1110 !important;
+}

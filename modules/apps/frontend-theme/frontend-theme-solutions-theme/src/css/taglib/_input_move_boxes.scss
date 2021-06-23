@@ -1,0 +1,18 @@
+.taglib-move-boxes {
+	.choice-selector label {
+		background: #ebf1f9;
+		border-bottom-color: #8db2f3;
+	}
+
+	.sortable-container .move-option {
+		background-color: transparent;
+
+		&.move-option-dragging {
+			background-color: #fafafa;
+		}
+
+		.handle {
+			color: #999;
+		}
+	}
+}

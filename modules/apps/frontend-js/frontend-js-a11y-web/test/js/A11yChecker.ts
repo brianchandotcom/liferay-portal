@@ -61,7 +61,14 @@ describe('A11yChecker', () => {
 			scheduler.scheduleCallback(fn, 'baz');
 		});
 
-		it('execute many callbacks within the 100ms deadline', (done) => {
+		/**
+		 * This test when run on CI is flaky, when the test is run in some
+		 * moments there is a fight for resource causing the instance of
+		 * Node.js to be "frozen" for longer than expected, the test needs
+		 * a high level of accuracy of frame time to know if the task was
+		 * executed within the same deadline.
+		 */
+		it.skip('execute many callbacks within the 100ms deadline', (done) => {
 			const callbacksCalled: Array<{
 				deadline: number;
 				target: string;

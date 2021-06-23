@@ -104,7 +104,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Andre DXP 7.4");
+		ACProperties.switchProperty(propertyName = "Liferay DXP");
 
 		ACNavigation.goToSegments();
 

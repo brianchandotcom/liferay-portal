@@ -28,13 +28,13 @@ exports[`DatePicker has a predefinedValue 1`] = `
           <input
             name="datePicker"
             type="hidden"
-            value="Tue Jun 02 2020 00:00:00 GMT-0700 (Pacific Daylight Time)"
+            value="06/02/2020"
           />
           <input
             aria-labelledby="dateField_fieldDetails"
             class="form-control input-group-inset input-group-inset-after"
             type="text"
-            value="Tue Jun 02 2020 00:00:00 GMT-0700 (Pacific Daylight Time)"
+            value="06/02/2020"
           />
           <div
             class="input-group-inset-item input-group-inset-item-after"

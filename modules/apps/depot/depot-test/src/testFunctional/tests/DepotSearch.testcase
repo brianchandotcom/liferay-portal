@@ -501,6 +501,6 @@ definition {
 		SearchPortlets.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
 
 		SearchPortlets.viewResultDetails(searchAssetTitle = "WC WebContent Title");
-	}	
+	}
 
 }

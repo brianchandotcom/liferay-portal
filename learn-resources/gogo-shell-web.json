@@ -1,7 +1,7 @@
 {
 	"gogo-shell-web-help": {
 		"en_US": {
-			"message": "What can I do in Gogo Shell?",
+			"message": "Help me use Gogo Shell.",
 			"url": "https://learn.liferay.com/dxp/latest/en/liferay-internals/fundamentals/using-the-gogo-shell/using-the-gogo-shell.html"
 		}
 	}

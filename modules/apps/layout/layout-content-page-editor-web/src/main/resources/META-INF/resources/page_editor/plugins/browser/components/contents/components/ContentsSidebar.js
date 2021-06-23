@@ -26,10 +26,6 @@ import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
 const getEditableTitle = (editable, languageId) => {
-	if (editable.type === EDITABLE_TYPES['rich-text']) {
-		return Liferay.Language.get('rich-text');
-	}
-
 	const div = document.createElement('div');
 
 	div.innerHTML =
@@ -37,7 +33,7 @@ const getEditableTitle = (editable, languageId) => {
 		editable[config.defaultLanguageId] ||
 		editable.defaultValue;
 
-	return div.textContent;
+	return div.textContent.trim();
 };
 
 const getEditableValues = (fragmentEntryLinks, segmentsExperienceId) =>
@@ -106,10 +102,11 @@ export default function ContentsSidebar() {
 
 	const inlineTextContents = useMemo(
 		() =>
-			getEditableValues(
-				fragmentEntryLinks,
-				segmentsExperienceId
-			).map((editable) => normalizeEditableValues(editable, languageId)),
+			getEditableValues(fragmentEntryLinks, segmentsExperienceId)
+				.map((editable) =>
+					normalizeEditableValues(editable, languageId)
+				)
+				.filter((editable) => editable.title),
 		[fragmentEntryLinks, languageId, segmentsExperienceId]
 	);
 

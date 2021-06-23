@@ -1,7 +1,12 @@
 {
-	"name": "liferay-solutions-theme",
-	"version": "1.0.0",
-	"main": "package.json",
+	"devDependencies": {
+		"compass-mixins": "0.12.10",
+		"gulp": "4.0.2",
+		"liferay-frontend-css-common": "6.0.0",
+		"liferay-frontend-theme-styled": "6.0.2",
+		"liferay-frontend-theme-unstyled": "6.0.2",
+		"liferay-theme-tasks": "^10.4.0"
+	},
 	"keywords": [
 		"liferay-theme"
 	],
@@ -12,22 +17,17 @@
 		"templateLanguage": "ftl",
 		"version": "7.4"
 	},
-	"devDependencies": {
-		"compass-mixins": "0.12.10",
-		"gulp": "4.0.2",
-		"liferay-frontend-css-common": "6.0.0",
-		"liferay-frontend-theme-styled": "6.0.2",
-		"liferay-frontend-theme-unstyled": "6.0.2",
-		"liferay-theme-tasks": "^10.4.0"
-	},
+	"main": "package.json",
+	"name": "liferay-solutions-theme",
 	"scripts": {
-		"init": "gulp init",
 		"build": "gulp build",
 		"deploy": "gulp deploy",
 		"extend": "gulp extend",
+		"init": "gulp init",
 		"kickstart": "gulp kickstart",
 		"status": "gulp status",
 		"upgrade": "gulp upgrade",
 		"watch": "gulp watch"
-	}
+	},
+	"version": "1.0.0"
 }

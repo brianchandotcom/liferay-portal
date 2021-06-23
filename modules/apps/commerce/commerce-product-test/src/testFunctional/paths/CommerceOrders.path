@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_SHIPMENT_DETAILS</td>
+	<td>//h5[contains(.,'${key_text}')]/..//a[text()='Edit']</td>
+	<td></td>
+</tr>
+<tr>
     <td>ORDER_WAREHOUSE_BY_ACTIVE_STATUS</td>
     <td>//a[contains(text(), '${key_warehouseName}')]/ancestor::tr//td//span[contains(@class,'commerce-admin-icon-check')]</td>
     <td></td>

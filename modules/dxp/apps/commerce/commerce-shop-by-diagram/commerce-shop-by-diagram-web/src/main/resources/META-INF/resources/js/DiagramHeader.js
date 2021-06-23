@@ -18,6 +18,7 @@ import React, {useState} from 'react';
 
 const DiagramHeader = ({
 	addNewPinState,
+	namespace,
 	newPinSettings,
 	radiusChoice,
 	setAddNewPinState,
@@ -98,9 +99,11 @@ const DiagramHeader = ({
 					<ClayDropDown.Divider />
 					<ClayDropDown.Caption>
 						<div className="form-group">
-							<label htmlFor="slider">CUSTOM</label>
+							<label htmlFor="slider">
+								{Liferay.get.language('custom-radius')}
+							</label>
 							<ClaySlider
-								id="slider"
+								id={namespace + 'custom-radius'}
 								onValueChange={(item) =>
 									setAddNewPinState({
 										color,

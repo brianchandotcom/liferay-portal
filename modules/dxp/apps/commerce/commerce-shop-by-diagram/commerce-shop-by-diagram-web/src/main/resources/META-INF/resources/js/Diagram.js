@@ -92,6 +92,7 @@ const Diagram = ({
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<DiagramHeader
 					addNewPinState={addNewPinState}
+					namespace={namespace}
 					newPinSettings={newPinSettings}
 					setAddNewPinState={setAddNewPinState}
 					setAddPinHandler={setAddPinHandler}

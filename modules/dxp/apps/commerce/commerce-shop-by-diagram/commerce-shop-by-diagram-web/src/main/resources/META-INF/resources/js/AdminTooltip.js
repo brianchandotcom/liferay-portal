@@ -18,7 +18,12 @@ import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const AdminTooltip = ({setRemovePinHandler, setShowTooltip, showTooltip}) => {
+const AdminTooltip = ({
+	namespace,
+	setRemovePinHandler,
+	setShowTooltip,
+	showTooltip,
+}) => {
 	const [position, setPosition] = useState(showTooltip.details.label);
 	const [linkedValue, setLinkedValue] = useState(
 		showTooltip.details.linked_to_sku
@@ -50,11 +55,13 @@ const AdminTooltip = ({setRemovePinHandler, setShowTooltip, showTooltip}) => {
 		<ClayCard className="admin-tooltip" style={cardStyle}>
 			<ClayCard.Body className="row">
 				<ClayForm.Group className="col-12 form-group-sm text-left">
-					<label htmlFor="basicInputText">Position</label>
+					<label htmlFor={namespace + 'pin-position'}>Position</label>
 					<ClayInput
-						id="basicInputText"
+						id={namespace + 'pin-position'}
 						onChange={(event) => setPosition(event.target.value)}
-						placeholder="Insert your name here"
+						placeholder={Liferay.get.language(
+							'insert-your-name-here'
+						)}
 						type="text"
 						value={position}
 					/>
@@ -73,11 +80,14 @@ const AdminTooltip = ({setRemovePinHandler, setShowTooltip, showTooltip}) => {
 				</ClayForm.Group>
 
 				<ClayForm.Group className="col-9 form-group-sm text-left">
-					<label htmlFor="basicInputText">Select SKU</label>
+					<label htmlFor={namespace + 'pin-sku'}>
+						{Liferay.get.language('Select SKU')}
+					</label>
 					<ClayAutocomplete>
 						<ClayAutocomplete.Input
+							id={namespace + 'pin-sku'}
 							onChange={(event) => setSku(event.target.value)}
-							placeholder="Type SKU here"
+							placeholder={Liferay.get.language('type-sku-here')}
 							value={sku}
 						/>
 						<ClayAutocomplete.DropDown

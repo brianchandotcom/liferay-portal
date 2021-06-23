@@ -1,10 +1,11 @@
 .diagram {
-	&-header {
+	.diagram-header {
 		height: 58px;
 		.auto-mapping {
 			height: 40px;
 		}
 	}
+
 	.diagram-pins-container {
 		position: relative;
 	}

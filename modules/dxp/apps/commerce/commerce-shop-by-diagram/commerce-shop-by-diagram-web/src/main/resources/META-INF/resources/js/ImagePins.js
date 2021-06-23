@@ -15,7 +15,7 @@ import React, {useLayoutEffect, useRef} from 'react';
 
 import AdminTooltip from './AdminTooltip';
 import NavigationButtons from './NavigationButtons';
-import {moveController, namespace, zoomIn, zoomOut} from './NavigationsUtils';
+import {moveController, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
 
 const PIN_ATTRIBUTES = [
@@ -41,6 +41,7 @@ const ImagePins = ({
 	handleAddPin,
 	imageSettings,
 	imageURL,
+	namespace,
 	navigationController,
 	removePinHandler,
 	resetZoom,
@@ -300,6 +301,7 @@ const ImagePins = ({
 		}
 
 		select('#newPin').on('click', handleAddPin);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		addPinHandler,
 		removePinHandler,
@@ -353,6 +355,7 @@ const ImagePins = ({
 
 			{showTooltip.tooltip && (
 				<AdminTooltip
+					namespace={namespace}
 					removePinHandler={removePinHandler}
 					setRemovePinHandler={setRemovePinHandler}
 					setShowTooltip={setShowTooltip}
@@ -411,6 +414,7 @@ ImagePins.propTypes = {
 		height: PropTypes.string,
 		width: PropTypes.string,
 	}),
+	namespace: PropTypes.string.isRequired,
 	navigationController: PropTypes.shape({
 		dragStep: PropTypes.number,
 		enable: PropTypes.bool,

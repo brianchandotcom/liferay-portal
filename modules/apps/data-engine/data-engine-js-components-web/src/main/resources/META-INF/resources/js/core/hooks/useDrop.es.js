@@ -262,6 +262,7 @@ export const useDrop = ({
 
 					dispatch({
 						payload: {
+							fieldName: field?.fieldName,
 							fieldSet,
 							indexes,
 							parentFieldName: parentField?.fieldName,

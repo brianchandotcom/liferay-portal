@@ -16,6 +16,18 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON");
 	}
 
+	macro assertTooltipMessage {
+		MouseOver(
+			key_sectionName = "${sectionName}",
+			key_tooltipMessage = "${tooltipMessage}",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_TOOLTIP_MESSAGE");
+
+		AssertElementPresent(
+			key_sectionName = "${sectionName}",
+			key_tooltipMessage = "${tooltipMessage}",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_TOOLTIP_MESSAGE");
+	}
+
 	macro changePagination {
 		Click(locator1 = "WorkflowMetricsProcessListView#ITEMS_PER_PAGE_SELECT");
 		var key_itemsPerPage = "${itemsPerPage}";

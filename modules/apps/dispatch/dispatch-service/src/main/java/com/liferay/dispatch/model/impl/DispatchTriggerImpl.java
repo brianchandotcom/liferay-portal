@@ -17,7 +17,10 @@ package com.liferay.dispatch.model.impl;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.DispatchLogLocalServiceUtil;
+import com.liferay.dispatch.service.DispatchTriggerLocalServiceUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.util.Date;
 
 /**
  * @author Alessio Antonio Rendina
@@ -62,6 +65,20 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 	}
 
 	@Override
+	public Date getNextFireDate() {
+		if ((_nextFireDate != null) &&
+			(_nextFireDate.getTime() > System.currentTimeMillis())) {
+
+			return _nextFireDate;
+		}
+
+		_nextFireDate = DispatchTriggerLocalServiceUtil.fetchNextFireDate(
+			getDispatchTriggerId());
+
+		return _nextFireDate;
+	}
+
+	@Override
 	public void setDispatchTaskSettings(String dispatchTaskSettings) {
 		super.setDispatchTaskSettings(dispatchTaskSettings);
 
@@ -85,5 +102,6 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 
 	private transient UnicodeProperties _dispatchTaskSettingsUnicodeProperties;
 	private transient DispatchTaskStatus _dispatchTaskStatus;
+	private transient Date _nextFireDate;
 
 }

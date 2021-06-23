@@ -239,7 +239,22 @@ const ImagePins = ({
 		};
 
 		const removePin = (id) => {
-			setCpins(cPins.filter((element) => element.id !== id));
+			const removePinState = cPins.filter((element) => element.id !== id);
+			const newState = removePinState.map((pin, i) => {
+				return {
+					cx: pin.cx,
+					cy: pin.cy,
+					draggable: pin.draggable,
+					fill: pin.fill,
+					id: i,
+					label: pin.label,
+					linked_to_sku: pin.linked_to_sku,
+					quantity: pin.quantity,
+					r: pin.r,
+					sku: pin.sku,
+				};
+			});
+			setCpins(newState);
 		};
 
 		if (removePinHandler.handler) {

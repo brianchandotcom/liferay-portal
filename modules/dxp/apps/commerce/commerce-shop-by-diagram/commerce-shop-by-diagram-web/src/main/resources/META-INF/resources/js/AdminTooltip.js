@@ -24,15 +24,13 @@ const AdminTooltip = ({
 	setShowTooltip,
 	showTooltip,
 }) => {
-	const [position, setPosition] = useState(showTooltip.details.label);
+	const [pinLabel, setPinLabel] = useState(showTooltip.details.label);
 	const [linkedValue, setLinkedValue] = useState(
 		showTooltip.details.linked_to_sku
 	);
 	const [sku, setSku] = useState(showTooltip.details.sku);
 	const [quantity, setQuantity] = useState(showTooltip.details.quantity);
-
 	const [networkStatus, setNetworkStatus] = useState(4);
-
 	const initialLoading = networkStatus === 1;
 	const loadingAd = networkStatus < 4;
 	const error = networkStatus === 5;
@@ -55,15 +53,17 @@ const AdminTooltip = ({
 		<ClayCard className="admin-tooltip" style={cardStyle}>
 			<ClayCard.Body className="row">
 				<ClayForm.Group className="col-12 form-group-sm text-left">
-					<label htmlFor={namespace + 'pin-position'}>Position</label>
+					<label htmlFor={namespace + 'pin-position'}>
+						{Liferay.Language.get('position')}
+					</label>
 					<ClayInput
 						id={namespace + 'pin-position'}
-						onChange={(event) => setPosition(event.target.value)}
-						placeholder={Liferay.get.language(
+						onChange={(event) => setPinLabel(event.target.value)}
+						placeholder={Liferay.Language.get(
 							'insert-your-name-here'
 						)}
 						type="text"
-						value={position}
+						value={pinLabel}
 					/>
 				</ClayForm.Group>
 
@@ -81,13 +81,13 @@ const AdminTooltip = ({
 
 				<ClayForm.Group className="col-9 form-group-sm text-left">
 					<label htmlFor={namespace + 'pin-sku'}>
-						{Liferay.get.language('Select SKU')}
+						{Liferay.Language.get('select-sku')}
 					</label>
 					<ClayAutocomplete>
 						<ClayAutocomplete.Input
 							id={namespace + 'pin-sku'}
 							onChange={(event) => setSku(event.target.value)}
-							placeholder={Liferay.get.language('type-sku-here')}
+							placeholder={Liferay.Language.get('type-sku-here')}
 							value={sku}
 						/>
 						<ClayAutocomplete.DropDown
@@ -116,9 +116,11 @@ const AdminTooltip = ({
 				</ClayForm.Group>
 
 				<ClayForm.Group className="col-3 form-group-sm">
-					<label htmlFor="basicInputText">Qty</label>
+					<label htmlFor={namespace + 'pin-quantity'}>
+						{Liferay.Language.get('quantity')}
+					</label>
 					<ClayInput
-						id="basicInputText"
+						id={namespace + 'pin-quantity'}
 						onChange={(event) =>
 							setQuantity(parseInt(event.target.value, 10))
 						}
@@ -149,7 +151,7 @@ const AdminTooltip = ({
 							});
 						}}
 					>
-						Delete
+						{Liferay.Language.get('delete')}
 					</ClayButton>
 				</ClayForm.Group>
 
@@ -171,7 +173,7 @@ const AdminTooltip = ({
 							})
 						}
 					>
-						Cancel
+						{Liferay.Language.get('cancel')}
 					</ClayButton>
 					<ClayButton
 						displayType="primary"
@@ -181,7 +183,7 @@ const AdminTooltip = ({
 									cx: showTooltip.details.cx,
 									cy: showTooltip.details.cy,
 									id: showTooltip.details.id,
-									label: position,
+									label: pinLabel,
 									linked_to_sku: linkedValue,
 									quantity,
 									sku,
@@ -190,7 +192,7 @@ const AdminTooltip = ({
 							});
 						}}
 					>
-						Save
+						{Liferay.Language.get('save')}
 					</ClayButton>
 				</ClayForm.Group>
 			</ClayCard.Body>

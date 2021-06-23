@@ -484,9 +484,9 @@ definition {
 				locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
 				value1 = "${assetType}");
 
-			SelectFrame.selectFrameNoLoading(
-				key_title = "Select ${assetType}",
-				locator1 = "IFrame#MODAL_ANY");
+			WaitForElementPresent(locator1 = "APConfigurationManual#ASSET_SELECTION_MANUAL_SELECT_ASSET_ENTRIES_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			if (isSet(assetTitle)) {
 				var key_assetTitle = "${assetTitle}";

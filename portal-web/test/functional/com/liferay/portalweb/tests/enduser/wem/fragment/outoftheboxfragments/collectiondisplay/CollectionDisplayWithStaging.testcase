@@ -258,8 +258,6 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
 		AssertTextEquals(
 			key_fieldLabel = "Collection",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
@@ -291,8 +289,6 @@ definition {
 		}
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
-
-		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",

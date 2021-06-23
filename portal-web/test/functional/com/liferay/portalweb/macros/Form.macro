@@ -489,6 +489,12 @@ definition {
 		}
 	}
 
+	macro gotoFieldContainer {
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "Form#FIELD_LABEL");
+	}
+
 	macro gotoFieldsTab {
 		AssertClick(
 			locator1 = "Form#SIDEBAR_FIELDS_TAB",

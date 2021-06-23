@@ -36,14 +36,102 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Autofill) action can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AutofillRuleCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133811 AutofillRuleCanBePreviewed pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
 
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Data Providers",
+			configurationName = "Data Providers",
+			configurationScope = "Data Providers");
+
+		FormFields.enableCheckbox(fieldName = "accessLocalNetwork");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Data Providers");
+
+		FormsAdminNavigator.gotoAddDataProvider();
+
+		FormsAdmin.editDataProviderLocalNetwork(
+			name = "Countries of the World",
+			outputParameterLabel = "Country Name",
+			outputParameterPath = "$..nameCurrentValue",
+			outputParameterType = "List",
+			timeout = "1000",
+			url = "http://localhost:8080/api/jsonws/country/get-countries/");
+
+		Button.clickSave();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Region");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Select from List",
+			formPageNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Country");
+
+		FormFields.selectSelectOption(
+			fieldName = "Create List",
+			selectOption = "From Autofill");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.selectConditionField(
+			conditionField = "Region",
+			conditionRowNumber = "1");
+
+		FormRules.selectConditionOperator(
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Autofill",
+			actionRowNumber = "1",
+			actionTarget = "Countries of the World");
+
+		FormRules.selectAutofillOutput(dataProviderOutput = "Country");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Asia");
+
+		Form.gotoFieldContainer(fieldName = "Region");
+
+		FormFields.viewFieldDropdownItem(itemName = "Afghanistan");
 	}
 
 	@description = "Verify that a rule with a (Calculate) action can be previewed"

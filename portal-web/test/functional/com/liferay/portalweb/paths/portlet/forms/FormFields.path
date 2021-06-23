@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_DROPDOWN_ITEM</td>
+	<td>//button[@class='dropdown-item' and contains(text(),'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPEN_GRAPH_LABEL</td>
 	<td>//div[contains(@class,'form-group')]/label[normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>

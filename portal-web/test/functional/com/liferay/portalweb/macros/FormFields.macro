@@ -1021,6 +1021,16 @@ definition {
 			locator1 = "FormFields#FIELD");
 	}
 
+	macro viewFieldDropdownItem {
+		WaitForElementPresent(
+			key_itemName = "${itemName}",
+			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+		AssertElementPresent(
+			key_itemName = "${itemName}",
+			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+	}
+
 	macro viewFieldHelpText {
 		AssertTextEquals(
 			key_fieldName = "${fieldName}",

@@ -185,9 +185,12 @@ definition {
 	}
 
 	macro addNewDiscountsEntry {
+		Pause(locator1 = "3000");
+
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
 		Type(
+			
 			locator1 = "TextInput#NAME",
 			value1 = "${discountName}");
 

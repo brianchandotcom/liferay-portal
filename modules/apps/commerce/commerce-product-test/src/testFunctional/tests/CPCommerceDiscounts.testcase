@@ -27,13 +27,136 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6231. Discount lifecycle"
-	@ignore = "true"
 	@priority = "3"
 	test AddEditAndDeleteDiscountEntry {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance ="CPCommerceDiscounts#AddEditAndDeleteDiscountEntry";
 
-		// TODO COMMERCE-6231 AddEditAndDeleteDiscountEntry Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(
+			siteName = "Minium 2",
+			siteTemplateName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		AssertElementPresent(
+			key_entryName = "Minium Portal",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
+
+		AssertElementPresent(
+			key_entryName = "Minium 2 Portal",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			channelsEligibility = "Minium Portal",
+			discountAmount = "25",
+			discountName = "Test Discount",
+			discountTarget = "Products",
+			discountType = "Percentage");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "U-Joint",
+			title = "Add Products");
+
+		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+			discountPercentage = "25",
+			productDiscountedPrice = "18.00",
+			productListPrice = "24.00");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT");
+
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "24.00");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(
+			key_value = "",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Type(
+			locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
+			value1 = "10");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		Refresh();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+			discountPercentage = "10",
+			productDiscountedPrice = "21.60",
+			productListPrice = "24.00");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT");
+
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "24.00");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(
+			key_value = "",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+		
 	}
 
 	@description = "This is a test for COMMERCE-6232. Discount Rules lifecycle"

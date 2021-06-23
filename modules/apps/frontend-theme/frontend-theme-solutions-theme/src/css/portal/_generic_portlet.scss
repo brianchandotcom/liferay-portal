@@ -1,0 +1,17 @@
+.lfr-button {
+	background: no-repeat 0 50%;
+}
+
+.lfr-table {
+	> tbody,
+	> thead,
+	> tfoot {
+		> tr > th {
+			font-weight: bold;
+		}
+	}
+}
+
+.lfr-checkbox-preselected {
+	opacity: 0.5;
+}

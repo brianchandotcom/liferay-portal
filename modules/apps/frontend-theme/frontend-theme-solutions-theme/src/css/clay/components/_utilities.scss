@@ -1,0 +1,430 @@
+// Background
+
+.bg-checkered {
+	@include clay-bg-checkered($bg-checkered-fg);
+}
+
+// Rounded
+
+.rounded {
+	border-radius: $rounded-border-radius !important;
+}
+
+.rounded-circle {
+	border-radius: $rounded-circle-border-radius !important;
+}
+
+.rounded-0 {
+	border-radius: $rounded-0-border-radius !important;
+}
+
+// Close
+
+.close {
+	@include clay-close($close);
+}
+
+// C Focus Inset
+
+.c-focus-inset {
+	&:focus:not(:disabled):not(.disabled):not([disabled]),
+	&.focus:not(:disabled):not(.disabled):not([disabled]) {
+		@include clay-css($c-focus-inset-focus);
+	}
+}
+
+// Autofit Row
+
+%autofit-row {
+	display: flex;
+	flex-wrap: nowrap;
+	width: 100%;
+
+	@at-root {
+		ul#{&} {
+			@include list-unstyled;
+		}
+	}
+}
+
+.autofit-row {
+	@extend %autofit-row;
+}
+
+// Autofit Row Center
+
+%autofit-row-center {
+	> .autofit-col {
+		justify-content: center;
+	}
+}
+
+.autofit-row-center {
+	@extend %autofit-row-center;
+}
+
+// Autofit Row End
+
+%autofit-row-end {
+	> .autofit-col {
+		justify-content: flex-end;
+	}
+}
+
+.autofit-row-end {
+	@extend %autofit-row-end;
+}
+
+// Autofit Padded
+
+%autofit-padded {
+	> .autofit-col {
+		padding-bottom: $autofit-padded-col-padding-y;
+		padding-left: $autofit-padded-col-padding-x;
+		padding-right: $autofit-padded-col-padding-x;
+		padding-top: $autofit-padded-col-padding-y;
+	}
+}
+
+.autofit-padded {
+	@extend %autofit-padded !optional;
+}
+
+%autofit-padded-no-gutters-x {
+	margin-left: math-sign($autofit-padded-col-padding-x);
+	margin-right: math-sign($autofit-padded-col-padding-x);
+	width: auto;
+
+	> .autofit-col {
+		padding-bottom: $autofit-padded-col-padding-y;
+		padding-left: $autofit-padded-col-padding-x;
+		padding-right: $autofit-padded-col-padding-x;
+		padding-top: $autofit-padded-col-padding-y;
+	}
+}
+
+.autofit-padded-no-gutters-x {
+	@extend %autofit-padded-no-gutters-x !optional;
+}
+
+%autofit-padded-no-gutters-y {
+	margin-bottom: math-sign($autofit-padded-col-padding-y);
+	margin-top: math-sign($autofit-padded-col-padding-y);
+	width: auto;
+
+	> .autofit-col {
+		padding-bottom: $autofit-padded-col-padding-y;
+		padding-left: $autofit-padded-col-padding-x;
+		padding-right: $autofit-padded-col-padding-x;
+		padding-top: $autofit-padded-col-padding-y;
+	}
+}
+
+.autofit-padded-no-gutters-y {
+	@extend %autofit-padded-no-gutters-y !optional;
+}
+
+%autofit-padded-no-gutters {
+	margin-bottom: math-sign($autofit-padded-col-padding-y);
+	margin-left: math-sign($autofit-padded-col-padding-x);
+	margin-right: math-sign($autofit-padded-col-padding-x);
+	margin-top: math-sign($autofit-padded-col-padding-y);
+	width: auto;
+
+	> .autofit-col {
+		padding-bottom: $autofit-padded-col-padding-y;
+		padding-left: $autofit-padded-col-padding-x;
+		padding-right: $autofit-padded-col-padding-x;
+		padding-top: $autofit-padded-col-padding-y;
+	}
+}
+
+.autofit-padded-no-gutters {
+	@extend %autofit-padded-no-gutters !optional;
+}
+
+%autofit-padded-no-gutters-sm {
+	@include clay-autofit-row($autofit-padded-no-gutters-sm);
+}
+
+.autofit-padded-no-gutters-sm {
+	@extend %autofit-padded-no-gutters-sm !optional;
+}
+
+// Autofit Columns
+
+%autofit-col {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	min-height: 0;
+	position: relative;
+}
+
+.autofit-col {
+	@extend %autofit-col;
+}
+
+.autofit-col-shrink {
+	flex-shrink: 1;
+	min-width: 1rem;
+	word-wrap: break-word;
+}
+
+%autofit-col-expand {
+	flex-grow: 1;
+	flex-shrink: 1;
+	min-width: $autofit-col-expand-min-width;
+	word-wrap: break-word;
+}
+
+.autofit-col-expand {
+	@extend %autofit-col-expand;
+}
+
+// Autofit Section
+
+%autofit-section {
+	max-width: 100%;
+}
+
+.autofit-section {
+	@extend %autofit-section;
+}
+
+// Autofit Float
+
+%autofit-float {
+	@include clay-autofit-float;
+}
+
+.autofit-float {
+	@extend %autofit-float;
+}
+
+%autofit-float-sm-down {
+	@include media-breakpoint-down(sm) {
+		@include clay-autofit-float;
+	}
+}
+
+.autofit-float-sm-down {
+	@extend %autofit-float-sm-down;
+}
+
+// Autofit Float Md Down
+
+%autofit-float-md-down {
+	@include media-breakpoint-down(md) {
+		@include clay-autofit-float;
+	}
+}
+
+.autofit-float-md-down {
+	@extend %autofit-float-md-down;
+}
+
+// Autofit Float End
+
+%autofit-float-end {
+	@include clay-autofit-float;
+
+	justify-content: flex-end;
+}
+
+.autofit-float-end {
+	@extend %autofit-float-end;
+}
+
+%autofit-float-end-sm-down {
+	@include media-breakpoint-down(sm) {
+		@include clay-autofit-float;
+
+		justify-content: flex-end;
+	}
+}
+
+.autofit-float-end-sm-down {
+	@extend %autofit-float-end-sm-down;
+}
+
+%autofit-float-end-md-down {
+	@include media-breakpoint-down(md) {
+		@include clay-autofit-float;
+
+		justify-content: flex-end;
+	}
+}
+
+.autofit-float-end-md-down {
+	@extend %autofit-float-end-md-down;
+}
+
+// C Inner
+
+@if ($enable-c-inner) {
+	.c-inner {
+		@include clay-css($c-inner);
+	}
+}
+
+// Headings (h1-6)
+
+.heading-start {
+	margin-right: $heading-spacer-x;
+}
+
+.heading-end {
+	margin-left: $heading-spacer-x;
+}
+
+.heading-text {
+	margin-bottom: $heading-text-margin-bottom;
+	margin-top: $heading-text-margin-top;
+}
+
+// Inline Scroller
+
+.inline-scroller {
+	list-style: none;
+	margin: 0;
+	max-height: $inline-scroller-max-height;
+	overflow: auto;
+
+	-webkit-overflow-scrolling: touch;
+
+	padding: 0;
+}
+
+// Inline Item
+
+.inline-item {
+	align-items: center;
+	display: inline-flex;
+	vertical-align: middle;
+
+	.inline-item {
+		display: inline;
+	}
+
+	.lexicon-icon {
+		margin-top: $inline-item-lexicon-icon-margin-top;
+	}
+
+	.loading-animation {
+		font-size: $inline-item-loading-animation-font-size;
+	}
+}
+
+.inline-item-before {
+	margin-right: $inline-item-spacer-x;
+}
+
+.inline-item-middle {
+	margin-left: $inline-item-spacer-x;
+	margin-right: $inline-item-spacer-x;
+
+	+ .inline-item-middle {
+		margin-left: 0;
+	}
+}
+
+.inline-item-after {
+	margin-left: $inline-item-spacer-x;
+}
+
+// Page Header
+
+.page-header {
+	background-color: $page-header-bg;
+}
+
+// Clay Margin and Padding
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($breakpoint) {
+		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+		@each $prop, $abbrev in (margin: c-m, padding: c-p) {
+			@each $size, $length in $spacers {
+				.#{$abbrev}#{$infix}-#{$size} {
+					#{$prop}: $length;
+				}
+
+				.#{$abbrev}t#{$infix}-#{$size},
+				.#{$abbrev}y#{$infix}-#{$size} {
+					#{$prop}-top: $length;
+				}
+
+				.#{$abbrev}r#{$infix}-#{$size},
+				.#{$abbrev}x#{$infix}-#{$size} {
+					#{$prop}-right: $length;
+				}
+
+				.#{$abbrev}b#{$infix}-#{$size},
+				.#{$abbrev}y#{$infix}-#{$size} {
+					#{$prop}-bottom: $length;
+				}
+
+				.#{$abbrev}l#{$infix}-#{$size},
+				.#{$abbrev}x#{$infix}-#{$size} {
+					#{$prop}-left: $length;
+				}
+			}
+		}
+
+		// Negative margins (e.g., where `.c-mb-n1` is negative version of `.c-mb-1`)
+
+		@each $size, $length in $spacers {
+			@if $size != 0 {
+				.c-m#{$infix}-n#{$size} {
+					margin: -$length;
+				}
+
+				.c-mt#{$infix}-n#{$size},
+				.c-my#{$infix}-n#{$size} {
+					margin-top: -$length;
+				}
+
+				.c-mr#{$infix}-n#{$size},
+				.c-mx#{$infix}-n#{$size} {
+					margin-right: -$length;
+				}
+
+				.c-mb#{$infix}-n#{$size},
+				.c-my#{$infix}-n#{$size} {
+					margin-bottom: -$length;
+				}
+
+				.c-ml#{$infix}-n#{$size},
+				.c-mx#{$infix}-n#{$size} {
+					margin-left: -$length;
+				}
+			}
+		}
+
+		.c-m#{$infix}-auto {
+			margin: auto;
+		}
+
+		.c-mt#{$infix}-auto,
+		.c-my#{$infix}-auto {
+			margin-top: auto;
+		}
+
+		.c-mr#{$infix}-auto,
+		.c-mx#{$infix}-auto {
+			margin-right: auto;
+		}
+
+		.c-mb#{$infix}-auto,
+		.c-my#{$infix}-auto {
+			margin-bottom: auto;
+		}
+
+		.c-ml#{$infix}-auto,
+		.c-mx#{$infix}-auto {
+			margin-left: auto;
+		}
+	}
+}

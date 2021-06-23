@@ -1,0 +1,22 @@
+.card-tab-group {
+	.card-tab:nth-child(n + 2) {
+		border-left: $card-tab-border-left-width solid
+			$card-tab-border-left-color;
+		padding-left: $card-tab-padding-left-width;
+
+		.card-tab {
+			border-left: $card-tab-border-left-width solid
+				lighten($card-tab-border-left-color, 10%);
+			padding-left: $card-tab-padding-left-width;
+
+			.card-tab {
+				border-left-color: lighten($card-tab-border-left-color, 20%);
+
+				.card-tab {
+					border-left-width: 0;
+					padding-left: 0;
+				}
+			}
+		}
+	}
+}

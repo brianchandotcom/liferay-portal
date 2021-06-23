@@ -1,0 +1,14 @@
+$portlet-header-margin-bottom: map-get($spacers, 5);
+
+$portlet-topper-bg: $primary;
+$portlet-topper-border: $primary;
+$portlet-topper-color: $white;
+$portlet-topper-link-color: $white;
+$portlet-topper-link-hover-color: $white;
+
+$portlet-content-border-radius: 0;
+$portlet-topper-border-radius: 2px 2px 0 0;
+
+$widget-resume-line-clamp-image: 3;
+$widget-resume-line-clamp: 10;
+$widget-resume-line-height: 1.35rem;

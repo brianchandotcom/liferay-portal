@@ -1,0 +1,33 @@
+.input-localized {
+	.palette-item-inner .lfr-input-localized-flag {
+		font-size: 16px;
+		opacity: 0.5;
+	}
+
+	&.input-localized-focused .palette-item-inner .lfr-input-localized-flag {
+		opacity: 1;
+	}
+
+	.palette-item-inner {
+		border-color: #666;
+	}
+
+	.palette-item,
+	.palette-item-inner,
+	.palette-item-hover,
+	.palette-item-hover .palette-item-inner {
+		border-color: transparent;
+	}
+
+	.lfr-input-localized .lfr-input-localized-state {
+		background: #ddd;
+
+		&.lfr-input-localized-state-error {
+			background: #ff0047;
+		}
+	}
+
+	.palette-item-selected .lfr-input-localized-state {
+		background: #27c1f2;
+	}
+}

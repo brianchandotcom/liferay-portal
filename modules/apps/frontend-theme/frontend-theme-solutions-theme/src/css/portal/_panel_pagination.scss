@@ -1,0 +1,27 @@
+.lfr-panel-content {
+	.paginator-container {
+		background: #cfd2d5;
+		border-bottom-color: #dcdee0;
+		border-top-color: #dcdee0;
+	}
+
+	.paginator-page-container .paginator-page-link {
+		background: none;
+		border-color: #cfd2d5;
+
+		&.paginator-current-page {
+			background: #99a7b3
+				url(../images/application/current_page_hover_bg.png) repeat-x 0
+				0;
+			border-color: #6b7785 #7c8994 #919fa9;
+			color: #fff;
+			font-weight: bold;
+
+			&:hover {
+				background: #5094d7
+					url(../images/application/current_page_bg.png) repeat-x 0 0;
+				border-color: #31659c #396ea8 #4c8ccb;
+			}
+		}
+	}
+}

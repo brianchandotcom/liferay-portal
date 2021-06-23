@@ -1,0 +1,84 @@
+.app-view-entry {
+	&:hover .entry-thumbnail {
+		border-color: #7abfdd;
+	}
+
+	&.selected {
+		.entry-thumbnail {
+			border-color: #057cb0;
+		}
+
+		.entry-metadata {
+			dt,
+			dd,
+			.entry-categories,
+			.entry-tags,
+			.entry-description {
+				color: #f0f0f0;
+			}
+		}
+	}
+
+	.entry-title {
+		font-weight: bold;
+	}
+
+	.entry-link {
+		text-decoration: none;
+	}
+
+	.entry-metadata {
+		dt,
+		dd,
+		.entry-categories,
+		.entry-tags,
+		.entry-description {
+			color: #333;
+			word-wrap: break-word;
+		}
+
+		.entry-categories .taglib-asset-categories-summary {
+			font-weight: bold;
+
+			.asset-category {
+				font-weight: normal;
+			}
+		}
+	}
+
+	&.selected,
+	&.selected:hover {
+		background-color: #00a2ea;
+	}
+
+	&.selected a {
+		&,
+		&:focus,
+		&:hover {
+			color: #fff;
+		}
+
+		.lfr-icon-menu-arrow {
+			color: #333;
+		}
+	}
+
+	&.active-area,
+	&.active-area.hover,
+	&.active-area td {
+		background-color: #5ad300;
+	}
+
+	&:hover,
+	&.hover {
+		background-color: #d3e8f1;
+	}
+
+	a.entry-link:hover {
+		text-decoration: none;
+
+		.entry-metadata .entry-title .entry-title-text {
+			text-decoration: underline;
+		}
+	}
+}

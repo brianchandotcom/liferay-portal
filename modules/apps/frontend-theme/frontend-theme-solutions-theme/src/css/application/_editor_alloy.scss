@@ -1,0 +1,28 @@
+.alloy-editor-container {
+	.alloy-editor {
+		&.alloy-editor-placeholder {
+			color: #2b4259;
+
+			&.ae-placeholder:not(:focus) {
+				border-left-color: #dbdde1;
+				color: #b0b4bb;
+			}
+
+			&.readonly {
+				color: #ccc;
+			}
+		}
+
+		outline: 0;
+	}
+
+	.alloy-editor-icon {
+		color: #869cad;
+	}
+}
+
+.has-error .alloy-editor-container .alloy-editor.alloy-editor-placeholder {
+	&.ae-placeholder:not(:focus) {
+		border-left-color: #c67;
+	}
+}

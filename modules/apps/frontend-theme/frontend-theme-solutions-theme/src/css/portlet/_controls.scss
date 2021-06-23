@@ -1,0 +1,86 @@
+body.portlet {
+	border-width: 0;
+}
+
+.portlet-icon-back {
+	margin-top: -2px;
+}
+
+.portlet-topper {
+	position: relative;
+
+	.portlet-topper-toolbar {
+		.portlet-icon-back {
+			background: url(../images/arrows/12_left.png) no-repeat 0 50%;
+			padding: 5px 5px 5px 18px;
+		}
+
+		.portlet-options .lfr-icon-menu-text {
+			display: none;
+		}
+	}
+}
+
+.portlet-title-editable {
+	cursor: pointer;
+}
+
+.portlet-title-text {
+	display: inline-block;
+	margin-top: 0;
+	max-width: 95%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.panel-page-content,
+.panel-page-body {
+	.portlet-title-text {
+		cursor: auto;
+	}
+}
+
+.portlet-minimized .portlet-content {
+	padding: 0;
+}
+
+.portlet-nested-portlets .portlet-boundary {
+	left: 0 !important;
+	position: relative !important;
+	top: 0 !important;
+}
+
+.portlet-layout {
+	.portlet-header {
+		margin-bottom: $portlet-header-margin-bottom;
+	}
+}
+
+.portlet-draggable {
+	.portlet-topper {
+		cursor: move;
+	}
+}
+
+.portlet {
+	.visible-interaction {
+		@include media-breakpoint-up(sm) {
+			display: none;
+		}
+	}
+
+	&:hover,
+	&.open {
+		.visible-interaction {
+			display: block;
+		}
+	}
+}
+
+.controls-hidden .portlet .visible-interaction {
+	@include media-breakpoint-down(sm) {
+		display: none;
+	}
+}

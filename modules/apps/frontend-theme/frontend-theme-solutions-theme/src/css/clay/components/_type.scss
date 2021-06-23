@@ -1,0 +1,329 @@
+// Headings
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	color: $headings-color;
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: $headings-line-height;
+	margin-bottom: $headings-margin-bottom;
+}
+
+h1,
+.h1 {
+	font-size: $h1-font-size;
+
+	@include clay-scale-component {
+		font-size: $h1-font-size-mobile;
+	}
+}
+
+h2,
+.h2 {
+	font-size: $h2-font-size;
+
+	@include clay-scale-component {
+		font-size: $h2-font-size-mobile;
+	}
+}
+
+h3,
+.h3 {
+	font-size: $h3-font-size;
+
+	@include clay-scale-component {
+		font-size: $h3-font-size-mobile;
+	}
+}
+
+h4,
+.h4 {
+	font-size: $h4-font-size;
+
+	@include clay-scale-component {
+		font-size: $h4-font-size-mobile;
+	}
+}
+
+h5,
+.h5 {
+	font-size: $h5-font-size;
+
+	@include clay-scale-component {
+		font-size: $h5-font-size-mobile;
+	}
+}
+
+h6,
+.h6 {
+	font-size: $h6-font-size;
+
+	@include clay-scale-component {
+		font-size: $h6-font-size-mobile;
+	}
+}
+
+.lead {
+	font-size: $lead-font-size;
+	font-weight: $lead-font-weight;
+}
+
+// Type display classes
+
+.display-1 {
+	font-size: $display1-size;
+	font-weight: $display1-weight;
+	line-height: $display-line-height;
+}
+
+.display-2 {
+	font-size: $display2-size;
+	font-weight: $display2-weight;
+	line-height: $display-line-height;
+}
+
+.display-3 {
+	font-size: $display3-size;
+	font-weight: $display3-weight;
+	line-height: $display-line-height;
+}
+
+.display-4 {
+	font-size: $display4-size;
+	font-weight: $display4-weight;
+	line-height: $display-line-height;
+}
+
+// Horizontal rules
+
+hr {
+	border-color: $hr-border-color;
+	border-style: solid;
+	border-width: $hr-border-width 0 0 0;
+	margin-bottom: $hr-margin-y;
+	margin-top: $hr-margin-y;
+}
+
+// Emphasis
+
+small,
+.small {
+	font-size: $small-font-size;
+	font-weight: $font-weight-normal;
+}
+
+mark,
+.mark {
+	@include clay-highlight-text($mark-bg, $mark-color);
+}
+
+// Lists
+
+.list-unstyled {
+	list-style: none;
+	padding-left: 0;
+}
+
+// Inline turns list items into inline-block
+
+.list-inline {
+	list-style: none;
+	padding-left: 0;
+}
+
+.list-inline-item {
+	display: inline-block;
+
+	&:not(:last-child) {
+		margin-right: $list-inline-padding;
+	}
+}
+
+// Misc
+
+// Builds on `abbr`
+
+.initialism {
+	font-size: 90%;
+	text-transform: uppercase;
+}
+
+// Blockquotes
+
+.blockquote {
+	font-size: $blockquote-font-size;
+	margin-bottom: $spacer;
+}
+
+.blockquote-footer {
+	color: $blockquote-small-color;
+	display: block;
+	font-size: $blockquote-small-font-size;
+
+	&::before {
+		// em dash, nbsp
+
+		content: '\2014\00A0';
+	}
+}
+
+// CLAY CSS START
+
+b {
+	font-weight: $b-font-weight;
+}
+
+strong {
+	font-weight: $strong-font-weight;
+}
+
+// Reference Mark
+
+.reference-mark {
+	display: inline-block;
+	font-size: $reference-mark-font-size;
+	position: relative;
+	vertical-align: $reference-mark-vertical-align;
+}
+
+// Kbd
+
+.c-kbd-group {
+	@include clay-css($c-kbd-group);
+
+	> .c-kbd {
+		font-size: inherit;
+	}
+}
+
+.c-kbd {
+	@include clay-css($c-kbd);
+}
+
+// Nested Kbd
+
+.c-kbd {
+	> .c-kbd {
+		@include clay-css($c-kbd-c-kbd);
+
+		&[class*='c-kbd-'] {
+			border-width: inherit;
+			height: inherit;
+			min-width: inherit;
+			padding: inherit;
+
+			&:first-child {
+				margin-left: math-sign(map-get($c-kbd, padding-left));
+			}
+
+			&:last-child {
+				margin-right: math-sign(map-get($c-kbd, padding-right));
+			}
+		}
+	}
+
+	> .c-kbd.c-kbd-monospaced {
+		@include clay-css($c-kbd-monospaced);
+	}
+
+	> .c-kbd-separator {
+		@include clay-css($c-kbd-c-kbd-separator);
+	}
+}
+
+// Kbd Monospaced
+
+.c-kbd-monospaced {
+	@include clay-css($c-kbd-monospaced);
+}
+
+// Kbd Inline
+
+.c-kbd-inline {
+	@include clay-css($c-kbd-inline);
+
+	.c-kbd-separator {
+		@include clay-css($c-kbd-inline-c-kbd-separator);
+	}
+}
+
+// Kbd Sm
+
+%c-kbd-sm {
+	@include clay-css($c-kbd-sm);
+}
+
+.c-kbd-group-sm {
+	@include clay-css($c-kbd-group-sm);
+}
+
+.c-kbd-sm,
+.c-kbd.c-kbd-sm {
+	@extend %c-kbd-sm !optional;
+}
+
+// Kbd Lg
+
+%c-kbd-lg {
+	@include clay-css($c-kbd-lg);
+}
+
+.c-kbd-group-lg {
+	@include clay-css($c-kbd-group-lg);
+}
+
+.c-kbd-lg,
+.c-kbd.c-kbd-lg {
+	@extend %c-kbd-lg !optional;
+}
+
+// Kbd Light
+
+.c-kbd-group-light {
+	@include clay-css($c-kbd-group-light);
+}
+
+.c-kbd-light {
+	@include clay-css($c-kbd-light);
+}
+
+// Kbd Dark
+
+.c-kbd-group-dark {
+	@include clay-css($c-kbd-group-dark);
+}
+
+.c-kbd-dark {
+	@include clay-css($c-kbd-dark);
+}
+
+// Text Truncate
+
+.text-truncate {
+	display: block;
+}
+
+.text-truncate-inline {
+	display: inline-flex;
+	max-width: 100%;
+
+	.text-truncate {
+		display: inline-block;
+		max-width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		white-space: nowrap;
+		word-wrap: normal;
+	}
+}

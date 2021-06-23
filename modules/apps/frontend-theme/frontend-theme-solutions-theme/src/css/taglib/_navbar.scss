@@ -1,0 +1,9 @@
+.navbar {
+	.navbar-search {
+		background-color: #f3f3f3;
+
+		@include media-breakpoint-up(sm) {
+			background-color: transparent;
+		}
+	}
+}

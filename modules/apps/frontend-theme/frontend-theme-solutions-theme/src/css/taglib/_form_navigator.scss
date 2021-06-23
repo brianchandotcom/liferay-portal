@@ -1,0 +1,62 @@
+.taglib-form-navigator {
+	> .form-steps > ul.form-navigator.list-group {
+		background: transparent;
+
+		.tab {
+			&.active {
+				background: transparent;
+				opacity: 1;
+
+				.tab-label {
+					&:hover,
+					&:focus {
+						background: transparent;
+					}
+
+					.message {
+						color: #000;
+						opacity: 0.7;
+					}
+
+					.number {
+						background: #333;
+						font-size: 18px;
+						opacity: 1;
+					}
+
+					.tab-icon {
+						color: #333;
+					}
+				}
+			}
+
+			.tab-label {
+				background: transparent;
+				outline: 0;
+
+				&:hover,
+				&:focus {
+					text-decoration: none;
+
+					.number {
+						opacity: 1;
+					}
+				}
+
+				.number {
+					background: #ccc;
+					color: #fff;
+					font-size: 14px;
+					font-weight: bold;
+					opacity: 0.6;
+					text-decoration: none;
+				}
+
+				.message {
+					color: #000;
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,33 @@
+.app-view-search-entry-taglib {
+	.entry-discussion,
+	.entry-attachment {
+		a {
+			text-decoration: none;
+		}
+
+		&:hover {
+			background-color: #d3e8f1;
+		}
+	}
+
+	.entry-folder {
+		color: #999;
+	}
+
+	.entry-link .entry-thumbnail-image {
+		color: #000;
+		text-decoration: none;
+	}
+
+	&.alt {
+		background-color: #edf0f3;
+	}
+
+	&.search {
+		background-color: #fff;
+
+		&.alt {
+			background-color: #e2e5e8;
+		}
+	}
+}

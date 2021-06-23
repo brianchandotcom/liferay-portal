@@ -1,0 +1,140 @@
+$bg-checkered-fg: $gray-200 !default;
+$inline-scroller-max-height: 125px !default;
+
+// Autofit Row
+
+$autofit-col-expand-min-width: 3.125rem !default; // 50px
+
+$autofit-padded-col-padding-x: 0.5rem !default; // 8px
+$autofit-padded-col-padding-y: 0.25rem !default; // 4px
+
+$autofit-padded-no-gutters-sm: () !default;
+$autofit-padded-no-gutters-sm: map-merge(
+	(
+		margin: -0.25rem,
+		width: auto,
+		autofit-col: (
+			padding: 0.25rem,
+		),
+	),
+	$autofit-padded-no-gutters-sm
+);
+
+// Close
+
+$close-color: $black !default;
+$close-font-size: $font-size-base * 1.5 !default;
+$close-font-weight: $font-weight-bold !default;
+$close-text-shadow: 0 1px 0 $white !default;
+
+$close: () !default;
+$close: map-deep-merge(
+	(
+		align-items: center,
+		appearance: none,
+		background-color: transparent,
+		border-radius: $btn-border-radius-sm,
+		border-width: 0,
+		color: $close-color,
+		cursor: $link-cursor,
+		display: inline-flex,
+		font-size: 1rem,
+		font-weight: $close-font-weight,
+		height: 2rem,
+		justify-content: center,
+		line-height: 1,
+		opacity: 0.5,
+		padding: 0,
+		text-align: center,
+		text-shadow: $close-text-shadow,
+		transition: $btn-transition,
+		width: 2rem,
+		hover: (
+			color: $close-color,
+			opacity: 0.75,
+			text-decoration: none,
+		),
+		focus: (
+			opacity: 0.75,
+		),
+		disabled: (
+			box-shadow: none,
+			cursor: $disabled-cursor,
+			opacity: 0.25,
+			outline: 0,
+		),
+		disabled-active: (
+			pointer-events: none,
+		),
+		btn-focus-box-shadow: $input-btn-focus-box-shadow,
+		btn-focus-outline: 0,
+		lexicon-icon-margin-top: 0,
+	),
+	$close
+);
+
+// C Focus Inset
+
+$c-focus-inset-focus: () !default;
+$c-focus-inset-focus: map-deep-merge(
+	(
+		box-shadow: $component-focus-inset-box-shadow,
+		border-color: $input-btn-focus-color,
+		outline: 0,
+	),
+	$c-focus-inset-focus
+);
+
+// C Inner
+
+$c-inner: () !default;
+$c-inner: map-deep-merge(
+	(
+		align-items: inherit,
+		display: inherit,
+		flex-direction: inherit,
+		height: inherit,
+		justify-content: inherit,
+		line-height: inherit,
+		max-width: inherit,
+		min-width: inherit,
+		outline: 0,
+		overflow: inherit,
+		padding-bottom: inherit,
+		padding-left: inherit,
+		padding-right: inherit,
+		padding-top: inherit,
+		text-overflow: inherit,
+		width: inherit,
+	),
+	$c-inner
+);
+
+// Heading
+
+$heading-spacer-x: 1rem !default; // 16px
+
+$heading-text-margin-bottom: auto !default;
+$heading-text-margin-top: auto !default;
+
+// Inline Item
+
+$inline-item-lexicon-icon-margin-top: -0.1em !default;
+$inline-item-spacer-x: 0.5rem !default; // 8px
+
+$inline-item-loading-animation-font-size: 1.25em !default;
+
+$page-header-bg: $gray-200 !default;
+
+// Display
+
+$displays: none, inline, inline-block, block, table, table-row, table-cell, flex,
+	inline-flex !default;
+
+// Overflow
+
+$overflows: auto, hidden !default;
+
+// Position
+
+$positions: static, relative, absolute, fixed, sticky !default;

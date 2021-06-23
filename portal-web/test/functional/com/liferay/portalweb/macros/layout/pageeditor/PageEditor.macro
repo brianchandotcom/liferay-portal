@@ -1451,12 +1451,7 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		if (isSet(selectedName)) {
 			AssertElementPresent(
@@ -1561,12 +1556,7 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 		}
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		if (isSet(selectedName)) {
 			AssertElementPresent(
@@ -1714,12 +1704,7 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		if (isSet(inCollectionDisplay)) {
 			Select(
@@ -1871,15 +1856,8 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
-		AssertVisible(
-			key_sidebarButton = "Selection",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
 		if ("${panel}" == "General") {
-			AssertClick(
-				key_navItem = "General",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "General");
+			Navigator.gotoNavTab(navTab = "General");
 
 			if (isSet(displayedBehavior)) {
 				while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "${displayedBehavior}", locator1 = "Checkbox#ANY_CHECKBOX")) {
@@ -1972,14 +1950,7 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "Image Source",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Image Source");
-
-		Pause(locator1 = "3000");
+		Navigator.gotoNavTab(navTab = "Image Source");
 
 		if (!(IsSelectedLabel(key_fieldLabel = "Source Selection", locator1 = "Select#GENERIC_SELECT_FIELD", value1 = "Direct"))) {
 			Select(
@@ -2101,13 +2072,8 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
-		PageEditor.gotoTab(tabName = "Selection");
-
 		if ("${panel}" == "Styles") {
-			AssertClick(
-				key_navItem = "Styles",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Styles");
+			Navigator.gotoNavTab(navTab = "Styles");
 
 			if (isSet(backgroundColor)) {
 				PageEditor.selectColorSwatchItem(
@@ -2407,10 +2373,7 @@ definition {
 		}
 
 		if ("${panel}" == "General") {
-			AssertClick(
-				key_navItem = "General",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "General");
+			Navigator.gotoNavTab(navTab = "General");
 
 			if ("${link}" == "Mapped URL") {
 				Select(
@@ -2478,13 +2441,8 @@ definition {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 		}
 
-		PageEditor.gotoTab(tabName = "Selection");
-
 		if ("${panel}" == "General") {
-			AssertClick(
-				key_navItem = "General",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "General");
+			Navigator.gotoNavTab(navTab = "General");
 
 			if (isSet(columnCount)) {
 				Select(
@@ -2512,10 +2470,7 @@ definition {
 			}
 		}
 		else if ("${panel}" == "Styles") {
-			AssertClick(
-				key_navItem = "Styles",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Styles");
+			Navigator.gotoNavTab(navTab = "Styles");
 
 			if (isSet(layout)) {
 				Select(
@@ -2567,14 +2522,11 @@ definition {
 		}
 
 		AssertVisible(
-			key_sidebarButton = "Selection",
+			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		if ("${panel}" == "General") {
-			AssertClick(
-				key_navItem = "General",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "General");
+			Navigator.gotoNavTab(navTab = "General");
 
 			if (isSet(siteMenus)) {
 				Click(
@@ -2628,10 +2580,7 @@ definition {
 			}
 		}
 		else if ("${panel}" == "Styles") {
-			AssertClick(
-				key_navItem = "Styles",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Styles");
+			Navigator.gotoNavTab(navTab = "Styles");
 
 			if (isSet(hoveredItemColor)) {
 				PageEditor.selectColorSwatchItem(
@@ -2728,16 +2677,11 @@ definition {
 	macro gotoConfiguration {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
 		AssertElementPresent(
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
 
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 	}
 
 	macro gotoContentConfiguration {
@@ -2756,12 +2700,7 @@ definition {
 				locator1 = "Fragment#CONTENT_FRAGMENT_BODY");
 		}
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 	}
 
 	macro gotoDuplicate {
@@ -2812,12 +2751,7 @@ definition {
 	macro gotoSelectPanel {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
-		AssertClick(
-			key_navItem = "General",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "General");
+		Navigator.gotoNavTab(navTab = "General");
 
 		WaitForElementPresent(
 			key_fieldLabel = "Item",
@@ -2844,16 +2778,11 @@ definition {
 	macro gotoStyle {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-		PageEditor.gotoTab(tabName = "Selection");
-
 		AssertElementPresent(
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
 
-		AssertClick(
-			key_navItem = "Styles",
-			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Styles");
+		Navigator.gotoNavTab(navTab = "Styles");
 	}
 
 	macro gotoTab {

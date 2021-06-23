@@ -113,6 +113,27 @@ public class DispatchLogServiceSoap {
 		}
 	}
 
+	public static com.liferay.dispatch.model.DispatchLogSoap[] getDispatchLogs(
+			long dispatchTriggerId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.dispatch.model.DispatchLog> orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.dispatch.model.DispatchLog> returnValue =
+				DispatchLogServiceUtil.getDispatchLogs(
+					dispatchTriggerId, start, end, orderByComparator);
+
+			return com.liferay.dispatch.model.DispatchLogSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getDispatchLogsCount(long dispatchTriggerId)
 		throws RemoteException {
 

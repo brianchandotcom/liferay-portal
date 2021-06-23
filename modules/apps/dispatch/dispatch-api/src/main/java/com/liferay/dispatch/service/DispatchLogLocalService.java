@@ -249,6 +249,11 @@ public interface DispatchLogLocalService
 	public List<DispatchLog> getDispatchLogs(
 		long dispatchTriggerId, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DispatchLog> getDispatchLogs(
+		long dispatchTriggerId, int start, int end,
+		OrderByComparator<DispatchLog> orderByComparator);
+
 	/**
 	 * Returns the number of dispatch logs.
 	 *

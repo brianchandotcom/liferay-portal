@@ -55,6 +55,18 @@ public class DispatchLogServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchLog>
+			getDispatchLogs(
+				long dispatchTriggerId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dispatch.model.DispatchLog> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchLogService.getDispatchLogs(
+			dispatchTriggerId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getDispatchLogsCount(long dispatchTriggerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

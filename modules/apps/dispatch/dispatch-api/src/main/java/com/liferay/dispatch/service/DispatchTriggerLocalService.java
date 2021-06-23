@@ -219,6 +219,9 @@ public interface DispatchTriggerLocalService
 	public DispatchTrigger fetchDispatchTrigger(long companyId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Date fetchNextFireDate(long dispatchTriggerId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Date fetchPreviousFireDate(long dispatchTriggerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

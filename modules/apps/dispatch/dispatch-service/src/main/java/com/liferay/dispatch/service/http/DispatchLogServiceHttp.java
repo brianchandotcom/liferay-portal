@@ -170,6 +170,51 @@ public class DispatchLogServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.dispatch.model.DispatchLog>
+			getDispatchLogs(
+				HttpPrincipal httpPrincipal, long dispatchTriggerId, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.dispatch.model.DispatchLog> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DispatchLogServiceUtil.class, "getDispatchLogs",
+				_getDispatchLogsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, dispatchTriggerId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.dispatch.model.DispatchLog>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static int getDispatchLogsCount(
 			HttpPrincipal httpPrincipal, long dispatchTriggerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -177,7 +222,7 @@ public class DispatchLogServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchLogServiceUtil.class, "getDispatchLogsCount",
-				_getDispatchLogsCountParameterTypes3);
+				_getDispatchLogsCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId);
@@ -219,7 +264,12 @@ public class DispatchLogServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getDispatchLogsParameterTypes2 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getDispatchLogsCountParameterTypes3 =
+	private static final Class<?>[] _getDispatchLogsParameterTypes3 =
+		new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getDispatchLogsCountParameterTypes4 =
 		new Class[] {long.class};
 
 }

@@ -306,6 +306,11 @@ public class DispatchTriggerWrapper
 		return model.getName();
 	}
 
+	@Override
+	public Date getNextFireDate() {
+		return model.getNextFireDate();
+	}
+
 	/**
 	 * Returns the overlap allowed of this dispatch trigger.
 	 *

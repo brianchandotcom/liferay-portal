@@ -16,6 +16,7 @@ package com.liferay.dispatch.service;
 
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -55,6 +56,15 @@ public class DispatchLogServiceUtil {
 		throws PortalException {
 
 		return getService().getDispatchLogs(dispatchTriggerId, start, end);
+	}
+
+	public static List<DispatchLog> getDispatchLogs(
+			long dispatchTriggerId, int start, int end,
+			OrderByComparator<DispatchLog> orderByComparator)
+		throws PortalException {
+
+		return getService().getDispatchLogs(
+			dispatchTriggerId, start, end, orderByComparator);
 	}
 
 	public static int getDispatchLogsCount(long dispatchTriggerId)

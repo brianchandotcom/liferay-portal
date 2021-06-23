@@ -62,6 +62,8 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 	public com.liferay.dispatch.executor.DispatchTaskStatus
 		getDispatchTaskStatus();
 
+	public java.util.Date getNextFireDate();
+
 	public void setDispatchTaskSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			dispatchTaskSettingsUnicodeProperties);

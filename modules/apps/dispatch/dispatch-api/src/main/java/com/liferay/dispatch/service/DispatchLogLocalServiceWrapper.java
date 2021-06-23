@@ -312,6 +312,17 @@ public class DispatchLogLocalServiceWrapper
 			dispatchTriggerId, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchLog>
+		getDispatchLogs(
+			long dispatchTriggerId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.dispatch.model.DispatchLog> orderByComparator) {
+
+		return _dispatchLogLocalService.getDispatchLogs(
+			dispatchTriggerId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of dispatch logs.
 	 *

@@ -235,6 +235,10 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().fetchDispatchTrigger(companyId, name);
 	}
 
+	public static java.util.Date fetchNextFireDate(long dispatchTriggerId) {
+		return getService().fetchNextFireDate(dispatchTriggerId);
+	}
+
 	public static java.util.Date fetchPreviousFireDate(long dispatchTriggerId) {
 		return getService().fetchPreviousFireDate(dispatchTriggerId);
 	}

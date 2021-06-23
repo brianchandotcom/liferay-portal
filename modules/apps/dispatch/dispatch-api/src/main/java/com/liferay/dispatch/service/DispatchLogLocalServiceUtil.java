@@ -276,6 +276,14 @@ public class DispatchLogLocalServiceUtil {
 		return getService().getDispatchLogs(dispatchTriggerId, start, end);
 	}
 
+	public static List<DispatchLog> getDispatchLogs(
+		long dispatchTriggerId, int start, int end,
+		OrderByComparator<DispatchLog> orderByComparator) {
+
+		return getService().getDispatchLogs(
+			dispatchTriggerId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of dispatch logs.
 	 *

@@ -260,6 +260,12 @@ public class DispatchTriggerLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Date fetchNextFireDate(long dispatchTriggerId) {
+		return _dispatchTriggerLocalService.fetchNextFireDate(
+			dispatchTriggerId);
+	}
+
+	@Override
 	public java.util.Date fetchPreviousFireDate(long dispatchTriggerId) {
 		return _dispatchTriggerLocalService.fetchPreviousFireDate(
 			dispatchTriggerId);

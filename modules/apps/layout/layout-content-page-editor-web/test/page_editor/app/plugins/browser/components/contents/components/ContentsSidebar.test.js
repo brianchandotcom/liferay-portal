@@ -113,9 +113,27 @@ describe('ContentsSidebar', () => {
 	});
 
 	it('shows inline text within the content list when the editable type is rich-text', () => {
-		const {getByText} = renderPageContent({});
+		const {getByText} = renderPageContent({
+			fragmentEntryLinks: {
+				39685: {
+					editableTypes: {'element-text': 'rich-text'},
+					editableValues: {
+						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+							'element-text': {
+								defaultValue: '\n\tHeading example\n',
+								en_US: 'This is a title&nbsp&nbsp&nbsp',
+							},
+						},
+					},
+					fragmentEntryLinkId: '39685',
+					name: 'Heading',
+					segmentsExperienceId: '0',
+				},
+			},
+			pageContents: [],
+		});
 
-		expect(getByText('rich-text')).toBeInTheDocument();
+		expect(getByText('This is a title')).toBeInTheDocument();
 	});
 
 	it('shows inline text corresponding to an experience', () => {
@@ -144,7 +162,6 @@ describe('ContentsSidebar', () => {
 	it('shows only text content for inline text (without html) when the editable type is text', () => {
 		const {queryByText} = renderPageContent({
 			fragmentEntryLinks: {
-				...FRAGMENT_ENTRY_LINKS,
 				39685: {
 					editableTypes: {'element-text': 'text'},
 					editableValues: {
@@ -160,8 +177,61 @@ describe('ContentsSidebar', () => {
 					segmentsExperienceId: '0',
 				},
 			},
+			pageContents: [],
 		});
 
 		expect(queryByText('This is a title')).toBeInTheDocument();
+	});
+
+	it('shows only text content for inline text (without html) when the editable type is rich text', () => {
+		const {queryByText} = renderPageContent({
+			fragmentEntryLinks: {
+				39685: {
+					editableTypes: {'element-text': 'rich-text'},
+					editableValues: {
+						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+							'element-text': {
+								defaultValue: '\n\tParagraph example\n',
+								en_US:
+									'<span style="background: black;">This is a paragraph&nbsp&nbsp&nbsp<span>',
+							},
+						},
+					},
+					fragmentEntryLinkId: '39685',
+					name: 'Paragraph',
+					segmentsExperienceId: '0',
+				},
+			},
+			pageContents: [],
+		});
+
+		expect(queryByText('This is a paragraph')).toBeInTheDocument();
+	});
+
+	it('does not show inline text within the content list when the editable type is rich-text and there are only images', () => {
+		const {getByText} = renderPageContent({
+			fragmentEntryLinks: {
+				39685: {
+					editableTypes: {'element-text': 'rich-text'},
+					editableValues: {
+						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+							'element-text': {
+								defaultValue: '\n\tParagraph example\n',
+								en_US:
+									'<img src="first-image"><img src="second-image">',
+							},
+						},
+					},
+					fragmentEntryLinkId: '39685',
+					name: 'Paragraph',
+					segmentsExperienceId: '0',
+				},
+			},
+			pageContents: [],
+		});
+
+		expect(
+			getByText('there-is-no-content-on-this-page')
+		).toBeInTheDocument();
 	});
 });

@@ -13,12 +13,19 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import IssuesList from '../../../src/main/resources/META-INF/resources/js/components/IssuesList';
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import loadIssues from '../../../src/main/resources/META-INF/resources/js/utils/loadIssues';
+
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/js/utils/loadIssues',
+	() => jest.fn(() => () => {})
+);
 
 const mockLayoutReportsIssues = [
 	{
@@ -121,11 +128,16 @@ const mockLayoutReportsIssuesSEODetails = [
 
 const mockPageURLs = [
 	{languageId: 'en-US', title: 'English', url: 'English URL'},
+	{languageId: 'es-ES', title: 'Español', url: 'URL en Español'},
 ];
 
 const defaultLanguageId = 'en-US';
 
-const renderIssuesList = ({layoutReportsIssues, loading = false}) => {
+const renderIssuesList = ({
+	languageId = defaultLanguageId,
+	layoutReportsIssues,
+	loading = false,
+}) => {
 	return render(
 		<StoreContextProvider
 			value={{
@@ -137,7 +149,7 @@ const renderIssuesList = ({layoutReportsIssues, loading = false}) => {
 					},
 					pageURLs: mockPageURLs,
 				},
-				languageId: defaultLanguageId,
+				languageId,
 				loading,
 			}}
 		>
@@ -237,5 +249,31 @@ describe('IssuesList', () => {
 		const button = getByText('en-US').parentElement;
 
 		expect(button.disabled).toBe(true);
+	});
+
+	it('renders no issues loaded view when there are no issues for the selected language', () => {
+		const {getByText} = renderIssuesList({
+			languageId: 'es-ES',
+			layoutReportsIssues: mockLayoutReportsIssuesSEODetails,
+		});
+
+		expect(
+			getByText(
+				"launch-a-page-audit-to-check-issues-that-impact-on-your-page's-accesibility-and-seo"
+			)
+		).toBeInTheDocument();
+	});
+
+	it('calls loadIssues when clicking launch button in no issues loaded view', () => {
+		const {getByTitle} = renderIssuesList({
+			languageId: 'es-ES',
+			layoutReportsIssues: mockLayoutReportsIssuesSEODetails,
+		});
+
+		const button = getByTitle('launch-page-audit');
+
+		userEvent.click(button);
+
+		expect(loadIssues).toBeCalled();
 	});
 });

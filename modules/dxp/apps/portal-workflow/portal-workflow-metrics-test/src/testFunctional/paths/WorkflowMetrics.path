@@ -391,6 +391,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_ORDER</td>
+	<td>//li[${key_order}]//span[contains(@class, "dropdown-item control-hidden")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION</td>
 	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//*[text()='${key_workflowStep}']</td>
 	<td></td>

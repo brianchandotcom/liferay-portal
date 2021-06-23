@@ -30,12 +30,15 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that the filter options are (All Steps) is the first option in the dropdown and the following fields are sorted alphabetically"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AllStepsIsTheFirstOptionInDropdown {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67626 AllStepsIsTheFirstOptionInDropdown pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
 
+		AssertElementPresent(
+			key_order = "1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_ORDER");
 	}
 
 	@description = "LPS-98518 - Verify that there is an image besides the assignee name that is retrieved from the global user profile picture (add, delete, update)"

@@ -704,9 +704,7 @@ public class LayoutCTTest {
 	}
 
 	@Test
-	public void testPublishModifiedLayoutWithIgnorableChange()
-		throws Exception {
-
+	public void testPublishModifiedLayoutWithIgnorable() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
 		Date modifiedDate = layout.getModifiedDate();
@@ -726,6 +724,8 @@ public class LayoutCTTest {
 
 			layout = _layoutLocalService.updateLayout(layout);
 		}
+
+		modifiedDate = layout.getModifiedDate();
 
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
@@ -756,18 +756,20 @@ public class LayoutCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			layout.setModifiedDate(modifiedDate);
+			layout.setModifiedDate(
+				new Date(modifiedDate.getTime() + Time.HOUR));
 
 			layout = _layoutLocalService.updateLayout(layout);
 		}
 
 		layout = _layoutLocalService.getLayout(layout.getPlid());
 
-		modifiedDate = new Date(modifiedDate.getTime() + Time.HOUR);
-
-		layout.setModifiedDate(modifiedDate);
+		layout.setModifiedDate(
+			new Date(modifiedDate.getTime() + (2 * Time.HOUR)));
 
 		layout = _layoutLocalService.updateLayout(layout);
+
+		modifiedDate = layout.getModifiedDate();
 
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());

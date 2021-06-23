@@ -590,11 +590,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(primaryKeyName);
 		sb.append(" and ctEntry.changeType = ");
 		sb.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
-
-		if (!resolved) {
-			sb.append(
-				" and ctEntry.modelMvccVersion != production.mvccVersion");
-		}
+		sb.append(" and ctEntry.modelMvccVersion != production.mvccVersion");
 
 		Collection<Integer> columnTypes = columnsMap.values();
 

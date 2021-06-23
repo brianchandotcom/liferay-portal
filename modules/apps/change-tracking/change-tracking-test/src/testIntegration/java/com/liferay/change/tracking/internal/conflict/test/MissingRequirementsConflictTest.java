@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.test;
+package com.liferay.change.tracking.internal.conflict.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.conflict.ConflictInfo;

@@ -248,13 +248,197 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6200. Consume booked quantities of one item in multiple warehouses"
-	@ignore = "true"
 	@priority = "3"
 	test ConsumeBookedQuantitiesFromMultipleWarehouses {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceWarehouses#ConsumeBookedQuantitiesFromMultipleWarehouses";
 
-		// TODO COMMERCE-6200 ConsumeBookedQuantitiesFromMultipleWarehouses Pending Implementation
+		// TODO Review
 
+		var previousTotal = "0";
+		var newTotal = "0";
+		var newTotalExpected = "0";
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		for (var option : list "0,1,2") {
+			key_value1 = "${option}";
+
+			WaitForElementPresent(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
+
+			var aux = selenium.getElementValue(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
+
+			previousTotal = MathUtil.sum("${previousTotal}","${aux}");
+		}
+
+		echo("${previousTotal}");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "buyer");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "ABS Sensor",
+			productQuantity = "1",
+			productUnitPrice = "50",
+			shippingMethod = "Standard");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+		Click(
+			key_text = "Accept Order",
+			locator1 = "Link#ANY");
+
+		Click(
+			key_text = "Create Shipment",
+			locator1 = "Button#ANY");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Check.checkToggleSwitch(
+			key_productSKU = "MIN93015",
+			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+
+		Button.clickSubmitButton();
+
+		CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_warehouseName = "Italy",
+			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+			value1 = "1");
+
+		Button.clickSave();
+
+		Refresh();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		for (var option : list "0,1,2") {
+			key_value1 = "${option}";
+
+			WaitForElementPresent(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
+
+			var aux = selenium.getElementValue(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
+
+			newTotal = MathUtil.sum("${newTotal}","${aux}");
+		}
+
+		echo("${newTotal}");
+
+		newTotalExpected = MathUtil.difference("${previousTotal}","1");
+
+		echo("${newTotalExpected}");
+
+		if ("${newTotal}" == "${newTotalExpected}") {
+			AssertTextEquals(
+				key_value1 = "0",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "19");
+		}
+		else {
+			AssertTextNotEquals(
+				key_value1 = "0",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "19");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6201. Consume quantities of one item in multiple warehouses"

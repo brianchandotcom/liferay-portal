@@ -319,7 +319,7 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Separator");
 	}
 
-	@description = "Veriy that the Field Label can be hidden"
+	@description = "Verify that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "false";

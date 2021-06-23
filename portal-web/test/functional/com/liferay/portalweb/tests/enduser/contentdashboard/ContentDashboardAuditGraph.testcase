@@ -669,7 +669,7 @@ definition {
 	@priority = "5"
 	test CheckTopPositionVocabularyXAxis {
 		property portal.acceptance = "true";
-		
+
 		task ("Create a Web Content with Audience and Stage categories") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

@@ -234,8 +234,8 @@ definition {
 		echo("## * File Entry ID: ${fileEntryId}");
 	}
 
-	@summary = "This calls the JSON WS API to subscribe folder"
-	macro subscribeFolder {
+	@summary = "This calls the JSON WS API to subscribe to a folder"
+	macro subscribeToFolder {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			name = "${dmFolderName}",
 			groupName = "${groupName}");

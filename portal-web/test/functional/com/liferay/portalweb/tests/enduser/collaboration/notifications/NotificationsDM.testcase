@@ -80,7 +80,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.subscribeFolder(
+		JSONDocument.subscribeToFolder(
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
@@ -128,7 +128,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.subscribeFolder(
+		JSONDocument.subscribeToFolder(
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
@@ -168,7 +168,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.subscribeFolder(
+		JSONDocument.subscribeToFolder(
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
@@ -216,7 +216,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
-		JSONDocument.subscribeFolder(
+		JSONDocument.subscribeToFolder(
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 

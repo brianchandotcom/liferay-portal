@@ -65,7 +65,8 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Site name-staging");
+			groupName = "Site Name (Staging)",
+			site = "false");
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
@@ -257,7 +258,8 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Site name-staging");
+			groupName = "Site Name (Staging)",
+			site = "false");
 
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
@@ -307,7 +309,8 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name-staging");
+			groupName = "Site Name (Staging)",
+			site = "false");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",

@@ -51,7 +51,7 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name-staging");
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",

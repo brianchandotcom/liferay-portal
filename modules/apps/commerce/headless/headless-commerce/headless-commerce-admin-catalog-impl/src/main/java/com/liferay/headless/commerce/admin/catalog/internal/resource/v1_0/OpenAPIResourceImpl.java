@@ -94,6 +94,8 @@ public class OpenAPIResourceImpl {
 
 			add(ProductResourceImpl.class);
 
+			add(ProductAccountGroupResourceImpl.class);
+
 			add(ProductChannelResourceImpl.class);
 
 			add(ProductConfigurationResourceImpl.class);

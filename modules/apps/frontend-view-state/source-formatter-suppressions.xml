@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaAPISignatureCheck" files="frontend-view-state-api/src/main/java/com/liferay/frontend/view/state/active/FVSActiveSettingsFactory\.java" />
-	</source-check>
-</suppressions>

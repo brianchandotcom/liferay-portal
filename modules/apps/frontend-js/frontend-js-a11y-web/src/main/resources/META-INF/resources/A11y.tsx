@@ -29,7 +29,7 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 
 	const [state, dispatch] = useFilterViolations(violations);
 
-	const nodes = Object.keys(state.violations.nodes);
+	const nodes = Object.keys(violations.nodes);
 
 	useLayoutEffect(() => {
 		if (nodes.length > 0) {
@@ -41,13 +41,13 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 		}
 	}, [nodes]);
 
-	if (Object.keys(violations.nodes).length === 0) {
+	if (nodes.length === 0) {
 		return null;
 	}
 
 	return (
 		<>
-			{nodes.map((target, index) => (
+			{Object.keys(state.violations.nodes).map((target, index) => (
 				<ViolationPopover
 					key={`${target}:${index}`}
 					rules={state.violations.rules}

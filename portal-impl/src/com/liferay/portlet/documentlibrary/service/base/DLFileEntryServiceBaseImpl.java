@@ -39,11 +39,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
+import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
+import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
+import com.liferay.portal.kernel.service.persistence.RoleFinder;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
+import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
@@ -243,6 +250,69 @@ public abstract class DLFileEntryServiceBaseImpl
 	}
 
 	/**
+	 * Returns the company local service.
+	 *
+	 * @return the company local service
+	 */
+	public com.liferay.portal.kernel.service.CompanyLocalService
+		getCompanyLocalService() {
+
+		return companyLocalService;
+	}
+
+	/**
+	 * Sets the company local service.
+	 *
+	 * @param companyLocalService the company local service
+	 */
+	public void setCompanyLocalService(
+		com.liferay.portal.kernel.service.CompanyLocalService
+			companyLocalService) {
+
+		this.companyLocalService = companyLocalService;
+	}
+
+	/**
+	 * Returns the company remote service.
+	 *
+	 * @return the company remote service
+	 */
+	public com.liferay.portal.kernel.service.CompanyService
+		getCompanyService() {
+
+		return companyService;
+	}
+
+	/**
+	 * Sets the company remote service.
+	 *
+	 * @param companyService the company remote service
+	 */
+	public void setCompanyService(
+		com.liferay.portal.kernel.service.CompanyService companyService) {
+
+		this.companyService = companyService;
+	}
+
+	/**
+	 * Returns the company persistence.
+	 *
+	 * @return the company persistence
+	 */
+	public CompanyPersistence getCompanyPersistence() {
+		return companyPersistence;
+	}
+
+	/**
+	 * Sets the company persistence.
+	 *
+	 * @param companyPersistence the company persistence
+	 */
+	public void setCompanyPersistence(CompanyPersistence companyPersistence) {
+		this.companyPersistence = companyPersistence;
+	}
+
+	/**
 	 * Returns the group local service.
 	 *
 	 * @return the group local service
@@ -381,6 +451,90 @@ public abstract class DLFileEntryServiceBaseImpl
 	}
 
 	/**
+	 * Returns the organization local service.
+	 *
+	 * @return the organization local service
+	 */
+	public com.liferay.portal.kernel.service.OrganizationLocalService
+		getOrganizationLocalService() {
+
+		return organizationLocalService;
+	}
+
+	/**
+	 * Sets the organization local service.
+	 *
+	 * @param organizationLocalService the organization local service
+	 */
+	public void setOrganizationLocalService(
+		com.liferay.portal.kernel.service.OrganizationLocalService
+			organizationLocalService) {
+
+		this.organizationLocalService = organizationLocalService;
+	}
+
+	/**
+	 * Returns the organization remote service.
+	 *
+	 * @return the organization remote service
+	 */
+	public com.liferay.portal.kernel.service.OrganizationService
+		getOrganizationService() {
+
+		return organizationService;
+	}
+
+	/**
+	 * Sets the organization remote service.
+	 *
+	 * @param organizationService the organization remote service
+	 */
+	public void setOrganizationService(
+		com.liferay.portal.kernel.service.OrganizationService
+			organizationService) {
+
+		this.organizationService = organizationService;
+	}
+
+	/**
+	 * Returns the organization persistence.
+	 *
+	 * @return the organization persistence
+	 */
+	public OrganizationPersistence getOrganizationPersistence() {
+		return organizationPersistence;
+	}
+
+	/**
+	 * Sets the organization persistence.
+	 *
+	 * @param organizationPersistence the organization persistence
+	 */
+	public void setOrganizationPersistence(
+		OrganizationPersistence organizationPersistence) {
+
+		this.organizationPersistence = organizationPersistence;
+	}
+
+	/**
+	 * Returns the organization finder.
+	 *
+	 * @return the organization finder
+	 */
+	public OrganizationFinder getOrganizationFinder() {
+		return organizationFinder;
+	}
+
+	/**
+	 * Sets the organization finder.
+	 *
+	 * @param organizationFinder the organization finder
+	 */
+	public void setOrganizationFinder(OrganizationFinder organizationFinder) {
+		this.organizationFinder = organizationFinder;
+	}
+
+	/**
 	 * Returns the repository local service.
 	 *
 	 * @return the repository local service
@@ -469,6 +623,84 @@ public abstract class DLFileEntryServiceBaseImpl
 	}
 
 	/**
+	 * Returns the role local service.
+	 *
+	 * @return the role local service
+	 */
+	public com.liferay.portal.kernel.service.RoleLocalService
+		getRoleLocalService() {
+
+		return roleLocalService;
+	}
+
+	/**
+	 * Sets the role local service.
+	 *
+	 * @param roleLocalService the role local service
+	 */
+	public void setRoleLocalService(
+		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
+
+		this.roleLocalService = roleLocalService;
+	}
+
+	/**
+	 * Returns the role remote service.
+	 *
+	 * @return the role remote service
+	 */
+	public com.liferay.portal.kernel.service.RoleService getRoleService() {
+		return roleService;
+	}
+
+	/**
+	 * Sets the role remote service.
+	 *
+	 * @param roleService the role remote service
+	 */
+	public void setRoleService(
+		com.liferay.portal.kernel.service.RoleService roleService) {
+
+		this.roleService = roleService;
+	}
+
+	/**
+	 * Returns the role persistence.
+	 *
+	 * @return the role persistence
+	 */
+	public RolePersistence getRolePersistence() {
+		return rolePersistence;
+	}
+
+	/**
+	 * Sets the role persistence.
+	 *
+	 * @param rolePersistence the role persistence
+	 */
+	public void setRolePersistence(RolePersistence rolePersistence) {
+		this.rolePersistence = rolePersistence;
+	}
+
+	/**
+	 * Returns the role finder.
+	 *
+	 * @return the role finder
+	 */
+	public RoleFinder getRoleFinder() {
+		return roleFinder;
+	}
+
+	/**
+	 * Sets the role finder.
+	 *
+	 * @param roleFinder the role finder
+	 */
+	public void setRoleFinder(RoleFinder roleFinder) {
+		this.roleFinder = roleFinder;
+	}
+
+	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -544,6 +776,89 @@ public abstract class DLFileEntryServiceBaseImpl
 	 */
 	public void setUserFinder(UserFinder userFinder) {
 		this.userFinder = userFinder;
+	}
+
+	/**
+	 * Returns the user group local service.
+	 *
+	 * @return the user group local service
+	 */
+	public com.liferay.portal.kernel.service.UserGroupLocalService
+		getUserGroupLocalService() {
+
+		return userGroupLocalService;
+	}
+
+	/**
+	 * Sets the user group local service.
+	 *
+	 * @param userGroupLocalService the user group local service
+	 */
+	public void setUserGroupLocalService(
+		com.liferay.portal.kernel.service.UserGroupLocalService
+			userGroupLocalService) {
+
+		this.userGroupLocalService = userGroupLocalService;
+	}
+
+	/**
+	 * Returns the user group remote service.
+	 *
+	 * @return the user group remote service
+	 */
+	public com.liferay.portal.kernel.service.UserGroupService
+		getUserGroupService() {
+
+		return userGroupService;
+	}
+
+	/**
+	 * Sets the user group remote service.
+	 *
+	 * @param userGroupService the user group remote service
+	 */
+	public void setUserGroupService(
+		com.liferay.portal.kernel.service.UserGroupService userGroupService) {
+
+		this.userGroupService = userGroupService;
+	}
+
+	/**
+	 * Returns the user group persistence.
+	 *
+	 * @return the user group persistence
+	 */
+	public UserGroupPersistence getUserGroupPersistence() {
+		return userGroupPersistence;
+	}
+
+	/**
+	 * Sets the user group persistence.
+	 *
+	 * @param userGroupPersistence the user group persistence
+	 */
+	public void setUserGroupPersistence(
+		UserGroupPersistence userGroupPersistence) {
+
+		this.userGroupPersistence = userGroupPersistence;
+	}
+
+	/**
+	 * Returns the user group finder.
+	 *
+	 * @return the user group finder
+	 */
+	public UserGroupFinder getUserGroupFinder() {
+		return userGroupFinder;
+	}
+
+	/**
+	 * Sets the user group finder.
+	 *
+	 * @param userGroupFinder the user group finder
+	 */
+	public void setUserGroupFinder(UserGroupFinder userGroupFinder) {
+		this.userGroupFinder = userGroupFinder;
 	}
 
 	/**
@@ -1274,6 +1589,20 @@ public abstract class DLFileEntryServiceBaseImpl
 	protected ClassNamePersistence classNamePersistence;
 
 	@BeanReference(
+		type = com.liferay.portal.kernel.service.CompanyLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.CompanyLocalService
+		companyLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.CompanyService.class
+	)
+	protected com.liferay.portal.kernel.service.CompanyService companyService;
+
+	@BeanReference(type = CompanyPersistence.class)
+	protected CompanyPersistence companyPersistence;
+
+	@BeanReference(
 		type = com.liferay.portal.kernel.service.GroupLocalService.class
 	)
 	protected com.liferay.portal.kernel.service.GroupLocalService
@@ -1301,6 +1630,24 @@ public abstract class DLFileEntryServiceBaseImpl
 	protected ImagePersistence imagePersistence;
 
 	@BeanReference(
+		type = com.liferay.portal.kernel.service.OrganizationLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.OrganizationService.class
+	)
+	protected com.liferay.portal.kernel.service.OrganizationService
+		organizationService;
+
+	@BeanReference(type = OrganizationPersistence.class)
+	protected OrganizationPersistence organizationPersistence;
+
+	@BeanReference(type = OrganizationFinder.class)
+	protected OrganizationFinder organizationFinder;
+
+	@BeanReference(
 		type = com.liferay.portal.kernel.service.RepositoryLocalService.class
 	)
 	protected com.liferay.portal.kernel.service.RepositoryLocalService
@@ -1322,6 +1669,21 @@ public abstract class DLFileEntryServiceBaseImpl
 		resourceLocalService;
 
 	@BeanReference(
+		type = com.liferay.portal.kernel.service.RoleLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.RoleLocalService
+		roleLocalService;
+
+	@BeanReference(type = com.liferay.portal.kernel.service.RoleService.class)
+	protected com.liferay.portal.kernel.service.RoleService roleService;
+
+	@BeanReference(type = RolePersistence.class)
+	protected RolePersistence rolePersistence;
+
+	@BeanReference(type = RoleFinder.class)
+	protected RoleFinder roleFinder;
+
+	@BeanReference(
 		type = com.liferay.portal.kernel.service.UserLocalService.class
 	)
 	protected com.liferay.portal.kernel.service.UserLocalService
@@ -1335,6 +1697,24 @@ public abstract class DLFileEntryServiceBaseImpl
 
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.UserGroupLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserGroupLocalService
+		userGroupLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.UserGroupService.class
+	)
+	protected com.liferay.portal.kernel.service.UserGroupService
+		userGroupService;
+
+	@BeanReference(type = UserGroupPersistence.class)
+	protected UserGroupPersistence userGroupPersistence;
+
+	@BeanReference(type = UserGroupFinder.class)
+	protected UserGroupFinder userGroupFinder;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.WebDAVPropsLocalService.class

@@ -208,7 +208,8 @@ public class CommerceSubscriptionEngineImpl
 		if ((commercePaymentMethod == null) ||
 			!commercePaymentMethod.isCompleteRecurringEnabled()) {
 
-			return _commercePaymentUtils.emptyResult(commerceOrderId);
+			return _commercePaymentUtils.emptyResult(
+				commerceOrderId, transactionId);
 		}
 
 		CommerceOrder commerceOrder =
@@ -296,7 +297,8 @@ public class CommerceSubscriptionEngineImpl
 		if ((commercePaymentMethod == null) ||
 			!commercePaymentMethod.isProcessRecurringEnabled()) {
 
-			return _commercePaymentUtils.emptyResult(commerceOrderId);
+			return _commercePaymentUtils.emptyResult(
+				commerceOrderId, StringPool.BLANK);
 		}
 
 		CommercePaymentRequest commercePaymentRequest =

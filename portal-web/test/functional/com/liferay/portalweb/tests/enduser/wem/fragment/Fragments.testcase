@@ -1125,7 +1125,7 @@ main();
 
 			PageEditor.waitForAutoSave();
 
-			PageEditor.gotoTab(tabName = "Contents");
+			PageEditor.gotoTab(tabName = "Browser");
 
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 		}

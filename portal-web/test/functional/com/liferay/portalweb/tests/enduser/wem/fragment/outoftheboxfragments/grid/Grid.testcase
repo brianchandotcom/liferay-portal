@@ -361,7 +361,7 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
-			PageEditor.gotoTab(tabName = "Contents");
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		task ("Add a Heading fragment to module 2") {

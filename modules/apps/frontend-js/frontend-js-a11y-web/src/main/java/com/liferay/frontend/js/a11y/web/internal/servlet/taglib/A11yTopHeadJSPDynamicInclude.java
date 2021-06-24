@@ -58,7 +58,7 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 
 		List<String> denylist = new ArrayList<>(
 			Arrays.asList(
-				".a11y-overlay", ".a11y-popover", "#yui3-css-stamp",
+				".a11y-popover", "#a11yContainer", "#yui3-css-stamp",
 				".dropdown-menu", ".tooltip", "#tooltipContainer",
 				"[id*=senna_surface1-screen]:not([class=flipped])"));
 

@@ -1841,6 +1841,10 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntry;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void updateSmallImage(long smallImageId, long largeImageId)
 		throws PortalException {

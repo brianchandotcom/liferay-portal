@@ -751,6 +751,20 @@
 					"title": "The numberOfItems Schema",
 					"type": "integer"
 				},
+				"numberOfItemsPerPage": {
+					"minimum": 0,
+					"title": "The numberOfItemsPerPage Schema",
+					"type": "integer"
+				},
+				"paginationType": {
+					"enum": [
+						"None",
+						"Regular",
+						"Simple"
+					],
+					"title": "The paginationType Schema",
+					"type": "string"
+				},
 				"templateKey": {
 					"title": "The templateKey Schema",
 					"type": "string"

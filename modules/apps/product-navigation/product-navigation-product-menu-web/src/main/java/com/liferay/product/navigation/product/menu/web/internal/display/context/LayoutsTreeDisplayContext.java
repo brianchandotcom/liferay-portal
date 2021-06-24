@@ -24,6 +24,13 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -55,6 +62,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -315,6 +323,8 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"namespace", getNamespace()
 		).put(
+			"pageTypeOptions", _getPageTypeOptionsJSONArray()
+		).put(
 			"pageTypeSelectedOption", _getPageTypeSelectedOption()
 		).put(
 			"privateLayout", isPrivateLayout()
@@ -458,6 +468,45 @@ public class LayoutsTreeDisplayContext {
 			layout.isPrivateLayout());
 	}
 
+	private JSONObject _getOptionGroupJSONObject(
+		String nameKey, JSONArray itemsJSONArray) {
+
+		return JSONUtil.put(
+			"items", itemsJSONArray
+		).put(
+			"name", LanguageUtil.get(_themeDisplay.getLocale(), nameKey)
+		);
+	}
+
+	private JSONObject _getOptionJSONObject(String name, String value) {
+		return JSONUtil.put(
+			"name", name
+		).put(
+			"value", value
+		);
+	}
+
+	private JSONArray _getPagesOptionGroupJSONArray() {
+		return JSONUtil.putAll(
+			_getOptionJSONObject(
+				LanguageUtil.get(
+					_themeDisplay.getLocale(),
+					ProductNavigationProductMenuWebKeys.PUBLIC_PAGES_KEY),
+				ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT),
+			_getOptionJSONObject(
+				LanguageUtil.get(
+					_themeDisplay.getLocale(),
+					ProductNavigationProductMenuWebKeys.PRIVATE_PAGES_KEY),
+				ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT));
+	}
+
+	private JSONArray _getPageTypeOptionsJSONArray() {
+		return JSONUtil.putAll(
+			_getOptionGroupJSONObject("pages", _getPagesOptionGroupJSONArray()),
+			_getOptionGroupJSONObject(
+				"navigation-menus", _getSiteNavigationMenuJSONArray()));
+	}
+
 	private String _getPageTypeSelectedOption() {
 		if (_pageTypeSelectedOption != null) {
 			return _pageTypeSelectedOption;
@@ -481,6 +530,38 @@ public class LayoutsTreeDisplayContext {
 		_pageTypeSelectedOption = pageTypeSelectedOption;
 
 		return _pageTypeSelectedOption;
+	}
+
+	private JSONArray _getSiteNavigationMenuJSONArray() {
+		if (_siteNavigationMenuJSONArray != null) {
+			return _siteNavigationMenuJSONArray;
+		}
+
+		JSONArray siteNavigationMenuJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		List<SiteNavigationMenu> siteNavigationMenuList =
+			_siteNavigationMenuLocalService.getSiteNavigationMenus(
+				getGroupId());
+
+		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenuList) {
+			siteNavigationMenuJSONArray.put(
+				_getOptionJSONObject(
+					siteNavigationMenu.getName(),
+					String.valueOf(
+						siteNavigationMenu.getSiteNavigationMenuId())));
+		}
+
+		_siteNavigationMenuJSONArray = siteNavigationMenuJSONArray;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"GroupId: ", getGroupId(), " SiteNavigationMenuJSONArray: ",
+					_siteNavigationMenuJSONArray));
+		}
+
+		return _siteNavigationMenuJSONArray;
 	}
 
 	private boolean _isPageHierarchyOption(String pageTypeOption) {
@@ -528,6 +609,9 @@ public class LayoutsTreeDisplayContext {
 		return portletURL.toString();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutsTreeDisplayContext.class.getName());
+
 	private Long _groupId;
 	private final GroupProvider _groupProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -539,6 +623,7 @@ public class LayoutsTreeDisplayContext {
 		_siteNavigationMenuItemTypeRegistry;
 	private final Map<String, SiteNavigationMenuItemType>
 		_siteNavigationMenuItemTypesMap;
+	private JSONArray _siteNavigationMenuJSONArray;
 	private final SiteNavigationMenuLocalService
 		_siteNavigationMenuLocalService;
 	private final ThemeDisplay _themeDisplay;

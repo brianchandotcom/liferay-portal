@@ -39,6 +39,12 @@ const LAYOUT_OPTIONS = [
 	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6), value: '6'},
 ];
 
+const PAGINATION_TYPE_OPTIONS = [
+	{label: Liferay.Language.get('none'), value: ''},
+	{label: Liferay.Language.get('regular'), value: 'regular'},
+	{label: Liferay.Language.get('simple'), value: 'simple'},
+];
+
 const LIST_STYLE_GRID = '';
 
 const DEFAULT_LIST_STYLE = {
@@ -50,6 +56,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
 	const collectionNumberOfItemsId = useId();
+	const collectionPaginationTypeId = useId();
 	const dispatch = useDispatch();
 	const listStyleId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -264,6 +271,23 @@ export const CollectionGeneralPanel = ({item}) => {
 								</ClaySelect>
 							</ClayForm.Group>
 						)}
+
+					<ClayForm.Group small>
+						<label htmlFor={collectionPaginationTypeId}>
+							{Liferay.Language.get('pagination')}
+						</label>
+						<ClaySelectWithOption
+							aria-label={Liferay.Language.get('pagination')}
+							id={collectionPaginationTypeId}
+							onChange={({target: {value}}) =>
+								handleConfigurationChanged({
+									paginationType: value,
+								})
+							}
+							options={PAGINATION_TYPE_OPTIONS}
+							value={item.config.paginationType}
+						/>
+					</ClayForm.Group>
 
 					<ClayForm.Group small>
 						<label htmlFor={collectionNumberOfItemsId}>

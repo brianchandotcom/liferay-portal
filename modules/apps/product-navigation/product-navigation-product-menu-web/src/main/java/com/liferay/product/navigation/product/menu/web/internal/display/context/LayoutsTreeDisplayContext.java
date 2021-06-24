@@ -48,7 +48,12 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -69,6 +74,26 @@ public class LayoutsTreeDisplayContext {
 
 		_groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);
+
+		_namespace = PortalUtil.getPortletNamespace(
+			ProductNavigationProductMenuPortletKeys.
+				PRODUCT_NAVIGATION_PRODUCT_MENU);
+
+		_siteNavigationMenuItemLocalService =
+			(SiteNavigationMenuItemLocalService)
+				liferayPortletRequest.getAttribute(
+					"siteNavigationMenuItemLocalService");
+		_siteNavigationMenuItemTypeRegistry =
+			(SiteNavigationMenuItemTypeRegistry)
+				liferayPortletRequest.getAttribute(
+					"siteNavigationMenuItemTypeRegistry");
+
+		_siteNavigationMenuItemTypesMap = new HashMap<>();
+
+		_siteNavigationMenuLocalService =
+			(SiteNavigationMenuLocalService)liferayPortletRequest.getAttribute(
+				"siteNavigationMenuLocalService");
+
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -269,9 +294,7 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	public String getNamespace() {
-		return PortalUtil.getPortletNamespace(
-			ProductNavigationProductMenuPortletKeys.
-				PRODUCT_NAVIGATION_PRODUCT_MENU);
+		return _namespace;
 	}
 
 	public Map<String, Object> getPageTypeSelectorData() throws Exception {
@@ -446,6 +469,15 @@ public class LayoutsTreeDisplayContext {
 	private Long _groupId;
 	private final GroupProvider _groupProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private final String _namespace;
+	private final SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+	private final SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
+	private final Map<String, SiteNavigationMenuItemType>
+		_siteNavigationMenuItemTypesMap;
+	private final SiteNavigationMenuLocalService
+		_siteNavigationMenuLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

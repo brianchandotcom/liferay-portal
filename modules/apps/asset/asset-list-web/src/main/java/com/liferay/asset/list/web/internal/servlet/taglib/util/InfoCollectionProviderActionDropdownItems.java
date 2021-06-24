@@ -36,9 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class InfoListProviderActionDropdownItems {
+public class InfoCollectionProviderActionDropdownItems {
 
-	public InfoListProviderActionDropdownItems(
+	public InfoCollectionProviderActionDropdownItems(
 		InfoListProvider<?> infoListProvider,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
@@ -54,35 +54,35 @@ public class InfoListProviderActionDropdownItems {
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return DropdownItemListBuilder.add(
-			_getViewInfoListProviderItemsActionUnsafeConsumer()
+			_getViewInfoCollectionProviderItemsActionUnsafeConsumer()
 		).build();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getViewInfoListProviderItemsActionUnsafeConsumer()
+			_getViewInfoCollectionProviderItemsActionUnsafeConsumer()
 		throws Exception {
 
-		PortletURL viewInfoListProviderItemsURL =
+		PortletURL viewInfoCollectionProviderItemsURL =
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCPath(
-				"/view_info_list_provider_items.jsp"
+				"/view_info_collection_provider_items.jsp"
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
-				"infoListProviderKey", _infoListProvider.getKey()
+				"infoCollectionProviderKey", _infoListProvider.getKey()
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "viewInfoListProviderItems");
+			dropdownItem.putData("action", "viewInfoCollectionProviderItems");
 			dropdownItem.putData(
-				"infoListProviderTitle",
+				"infoCollectionProviderTitle",
 				_infoListProvider.getLabel(_themeDisplay.getLocale()));
 			dropdownItem.putData(
-				"viewInfoListProviderItemsURL",
-				String.valueOf(viewInfoListProviderItemsURL));
+				"viewInfoCollectionProviderItemsURL",
+				String.valueOf(viewInfoCollectionProviderItemsURL));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-items"));
 		};

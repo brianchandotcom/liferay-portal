@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = LayoutListRetriever.class)
-public class InfoListProviderLayoutListRetriever
+public class InfoCollectionProviderLayoutListRetriever
 	implements LayoutListRetriever
 		<InfoListProviderItemSelectorReturnType, KeyListObjectReference> {
 

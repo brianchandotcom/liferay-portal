@@ -275,7 +275,7 @@ public class AssetListDisplayContext {
 					currentItem.equals("collection-providers"));
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "mvcPath",
-					"/view_info_list_providers.jsp");
+					"/view_info_collection_providers.jsp");
 				navigationItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "collection-providers"));

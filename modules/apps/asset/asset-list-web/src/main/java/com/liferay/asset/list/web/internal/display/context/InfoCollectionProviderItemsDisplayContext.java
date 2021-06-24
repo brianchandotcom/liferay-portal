@@ -47,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class InfoListProviderItemsDisplayContext {
+public class InfoCollectionProviderItemsDisplayContext {
 
-	public InfoListProviderItemsDisplayContext(
+	public InfoCollectionProviderItemsDisplayContext(
 		InfoItemServiceTracker infoItemServiceTracker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -63,22 +63,7 @@ public class InfoListProviderItemsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public InfoItemFieldValuesProvider<Object>
-		getInfoItemFieldValuesProvider() {
-
-		if (_infoItemFieldValuesProvider != null) {
-			return _infoItemFieldValuesProvider;
-		}
-
-		_infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				GenericUtil.getGenericClassName(_getInfoListProvider()));
-
-		return _infoItemFieldValuesProvider;
-	}
-
-	public String getInfoListItemsType(Object result) {
+	public String getInfoCollectionItemsType(Object result) {
 		String className = StringPool.BLANK;
 
 		if (result instanceof AssetEntry) {
@@ -94,15 +79,30 @@ public class InfoListProviderItemsDisplayContext {
 			_themeDisplay.getLocale(), className);
 	}
 
-	public String getInfoListProviderClassName() {
-		if (Validator.isNotNull(_infoListProviderClassName)) {
-			return _infoListProviderClassName;
+	public String getInfoCollectionProviderClassName() {
+		if (Validator.isNotNull(_infoCollectionProviderClassName)) {
+			return _infoCollectionProviderClassName;
 		}
 
-		_infoListProviderClassName = GenericUtil.getGenericClassName(
+		_infoCollectionProviderClassName = GenericUtil.getGenericClassName(
 			_getInfoListProvider());
 
-		return _infoListProviderClassName;
+		return _infoCollectionProviderClassName;
+	}
+
+	public InfoItemFieldValuesProvider<Object>
+		getInfoItemFieldValuesProvider() {
+
+		if (_infoItemFieldValuesProvider != null) {
+			return _infoItemFieldValuesProvider;
+		}
+
+		_infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				GenericUtil.getGenericClassName(_getInfoListProvider()));
+
+		return _infoItemFieldValuesProvider;
 	}
 
 	public SearchContainer<Object> getSearchContainer() {
@@ -140,33 +140,33 @@ public class InfoListProviderItemsDisplayContext {
 		return _showActions;
 	}
 
+	private String _getInfoCollectionProviderKey() {
+		if (_infoCollectionProviderKey != null) {
+			return _infoCollectionProviderKey;
+		}
+
+		String infoCollectionProviderKey = ParamUtil.getString(
+			_renderRequest, "infoCollectionProviderKey");
+
+		if (Validator.isNull(infoCollectionProviderKey)) {
+			infoCollectionProviderKey = ParamUtil.getString(
+				_renderRequest, "collectionPK");
+		}
+
+		_infoCollectionProviderKey = infoCollectionProviderKey;
+
+		return _infoCollectionProviderKey;
+	}
+
 	private InfoListProvider<?> _getInfoListProvider() {
 		if (_infoListProvider != null) {
 			return _infoListProvider;
 		}
 
 		_infoListProvider = _infoItemServiceTracker.getInfoItemService(
-			InfoListProvider.class, _getInfoListProviderKey());
+			InfoListProvider.class, _getInfoCollectionProviderKey());
 
 		return _infoListProvider;
-	}
-
-	private String _getInfoListProviderKey() {
-		if (_infoListProviderKey != null) {
-			return _infoListProviderKey;
-		}
-
-		String infoListProviderKey = ParamUtil.getString(
-			_renderRequest, "infoListProviderKey");
-
-		if (Validator.isNull(infoListProviderKey)) {
-			infoListProviderKey = ParamUtil.getString(
-				_renderRequest, "collectionPK");
-		}
-
-		_infoListProviderKey = infoListProviderKey;
-
-		return _infoListProviderKey;
 	}
 
 	private PortletURL _getPortletURL() {
@@ -190,14 +190,14 @@ public class InfoListProviderItemsDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		InfoListProviderItemsDisplayContext.class);
+		InfoCollectionProviderItemsDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
+	private String _infoCollectionProviderClassName;
+	private String _infoCollectionProviderKey;
 	private InfoItemFieldValuesProvider<Object> _infoItemFieldValuesProvider;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private InfoListProvider<?> _infoListProvider;
-	private String _infoListProviderClassName;
-	private String _infoListProviderKey;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Boolean _showActions;

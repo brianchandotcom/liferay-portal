@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProviderDisplayContext)request.getAttribute(AssetListWebKeys.INFO_LIST_PROVIDER_DISPLAY_CONTEXT);
+InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (InfoCollectionProviderDisplayContext)request.getAttribute(AssetListWebKeys.INFO_COLLECTION_PROVIDER_DISPLAY_CONTEXT);
 %>
 
 <clay:navigation-bar
@@ -32,7 +32,7 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 
 	<liferay-ui:search-container
 		id="entries"
-		searchContainer="<%= infoListProviderDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= infoCollectionProviderDisplayContext.getSearchContainer() %>"
 		var="collectionsSearch"
 	>
 		<liferay-ui:search-container-row
@@ -48,22 +48,22 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 				colspan="<%= 2 %>"
 			>
 				<div class="list-group-title">
-					<%= HtmlUtil.escape(infoListProviderDisplayContext.getTitle(infoListProvider)) %>
+					<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getTitle(infoListProvider)) %>
 				</div>
 
 				<div class="list-group-subtext">
-					<liferay-ui:message key="<%= HtmlUtil.escape(infoListProviderDisplayContext.getSubtitle(infoListProvider)) %>" />
+					<liferay-ui:message key="<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getSubtitle(infoListProvider)) %>" />
 				</div>
 			</liferay-ui:search-container-column-text>
 
 			<%
-			InfoListProviderActionDropdownItems infoListProviderActionDropdownItems = new InfoListProviderActionDropdownItems(infoListProvider, liferayPortletRequest, liferayPortletResponse);
+			InfoCollectionProviderActionDropdownItems infoCollectionProviderActionDropdownItems = new InfoCollectionProviderActionDropdownItems(infoListProvider, liferayPortletRequest, liferayPortletResponse);
 			%>
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					dropdownItems="<%= infoListProviderActionDropdownItems.getActionDropdownItems() %>"
-					propsTransformer="js/InfoListProviderDropdownDefaultPropsTransformer"
+					dropdownItems="<%= infoCollectionProviderActionDropdownItems.getActionDropdownItems() %>"
+					propsTransformer="js/InfoCollectionProviderDropdownDefaultPropsTransformer"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

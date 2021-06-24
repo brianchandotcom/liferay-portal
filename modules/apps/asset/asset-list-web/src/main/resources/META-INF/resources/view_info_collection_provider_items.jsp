@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-InfoListProviderItemsDisplayContext infoListProviderItemsDisplayContext = (InfoListProviderItemsDisplayContext)request.getAttribute(AssetListWebKeys.INFO_LIST_PROVIDER_ITEMS_DISPLAY_CONTEXT);
+InfoCollectionProviderItemsDisplayContext infoCollectionProviderItemsDisplayContext = (InfoCollectionProviderItemsDisplayContext)request.getAttribute(AssetListWebKeys.INFO_COLLECTION_PROVIDER_ITEMS_DISPLAY_CONTEXT);
 ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDropdownItems)request.getAttribute(AssetListWebKeys.LIST_ITEMS_ACTION_DROPDOWN_ITEMS);
 
-InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoListProviderItemsDisplayContext.getInfoItemFieldValuesProvider();
+InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProviderItemsDisplayContext.getInfoItemFieldValuesProvider();
 
-String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoListProviderClassName();
+String infoCollectionProviderClassName = infoCollectionProviderItemsDisplayContext.getInfoCollectionProviderClassName();
 %>
 
 <clay:container-fluid
@@ -31,7 +31,7 @@ String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoLi
 	<aui:form name="fm">
 		<liferay-ui:search-container
 			id="assetEntries"
-			searchContainer="<%= infoListProviderItemsDisplayContext.getSearchContainer() %>"
+			searchContainer="<%= infoCollectionProviderItemsDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="Object"
@@ -51,7 +51,7 @@ String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoLi
 					<%
 					String displayPageURL = StringPool.BLANK;
 
-					if (infoListProviderItemsDisplayContext.isShowActions()) {
+					if (infoCollectionProviderItemsDisplayContext.isShowActions()) {
 						displayPageURL = listItemsActionDropdownItems.getViewDisplayPageURL(AssetEntry.class.getName(), result);
 					}
 					%>
@@ -70,7 +70,7 @@ String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoLi
 
 				<liferay-ui:search-container-column-text
 					name="type"
-					value="<%= infoListProviderItemsDisplayContext.getInfoListItemsType(result) %>"
+					value="<%= infoCollectionProviderItemsDisplayContext.getInfoCollectionItemsType(result) %>"
 				/>
 
 				<%
@@ -100,10 +100,10 @@ String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoLi
 					value="<%= String.valueOf(createDateInfoFieldValue.getValue()) %>"
 				/>
 
-				<c:if test="<%= infoListProviderItemsDisplayContext.isShowActions() %>">
+				<c:if test="<%= infoCollectionProviderItemsDisplayContext.isShowActions() %>">
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
-							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoListProviderClassName, result) %>"
+							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoCollectionProviderClassName, result) %>"
 							propsTransformer="js/ListItemsDropdownPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>

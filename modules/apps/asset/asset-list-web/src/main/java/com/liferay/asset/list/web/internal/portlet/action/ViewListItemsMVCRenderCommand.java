@@ -55,7 +55,7 @@ public class ViewListItemsMVCRenderCommand implements MVCRenderCommand {
 				collectionType,
 				InfoListProviderItemSelectorReturnType.class.getName())) {
 
-			return "/view_info_list_provider_items.jsp";
+			return "/view_info_collection_provider_items.jsp";
 		}
 
 		if (Objects.equals(

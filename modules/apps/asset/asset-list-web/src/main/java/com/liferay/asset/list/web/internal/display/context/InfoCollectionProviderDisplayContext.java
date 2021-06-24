@@ -43,9 +43,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class InfoListProviderDisplayContext {
+public class InfoCollectionProviderDisplayContext {
 
-	public InfoListProviderDisplayContext(
+	public InfoCollectionProviderDisplayContext(
 		InfoItemServiceTracker infoItemServiceTracker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -116,7 +116,7 @@ public class InfoListProviderDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		InfoListProviderDisplayContext.class);
+		InfoCollectionProviderDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;

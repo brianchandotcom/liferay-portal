@@ -21,7 +21,7 @@ List<InfoListProvider<?>> infoListProviders = assetPublisherDisplayContext.getAs
 %>
 
 <c:choose>
-	<c:when test="<%= ListUtil.isNotEmpty(infoListProviders) %>">
+	<c:when test="<%= ListUtil.isNotEmpty(infoCollectionProviders) %>">
 		<aui:select label="" name="preferences--infoListProviderKey--">
 			<aui:option label="none" value="" />
 

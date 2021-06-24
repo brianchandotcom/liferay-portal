@@ -15,10 +15,10 @@
 import {openModal} from 'frontend-js-web';
 
 const ACTIONS = {
-	viewInfoListProviderItems(itemData) {
+	viewInfoCollectionProviderItems(itemData) {
 		openModal({
-			title: itemData.infoListProviderTitle,
-			url: itemData.viewInfoListProviderItemsURL,
+			title: itemData.infoCollectionProviderTitle,
+			url: itemData.viewInfoCollectionProviderItemsURL,
 		});
 	},
 };

@@ -65,14 +65,14 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 				(fieldName) =>
 					fragment.editableValues[
 						FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-					][fieldName].classPK
+					]?.[fieldName]?.classPK
 			);
 
 			return filteredFieldNames.map(
 				(fieldName) =>
 					fragment.editableValues[
 						FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-					][fieldName] || {}
+					]?.[fieldName] || {}
 			);
 		}
 	}, [item, fragmentEntryLinks]);

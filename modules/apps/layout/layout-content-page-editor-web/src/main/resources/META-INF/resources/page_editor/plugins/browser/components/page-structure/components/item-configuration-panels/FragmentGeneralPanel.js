@@ -127,8 +127,8 @@ FragmentGeneralPanel.propTypes = {
 function getConfigurationValues(defaultConfigurationValues, fragmentEntryLink) {
 	return {
 		...defaultConfigurationValues,
-		...fragmentEntryLink.editableValues[
+		...(fragmentEntryLink.editableValues[
 			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		],
+		] || {}),
 	};
 }

@@ -138,8 +138,8 @@ CustomStyles.propTypes = {
 function getConfigurationValues(fragmentEntryLink) {
 	return {
 		...fragmentEntryLink.defaultConfigurationValues,
-		...fragmentEntryLink.editableValues[
+		...(fragmentEntryLink.editableValues[
 			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		],
+		] || {}),
 	};
 }

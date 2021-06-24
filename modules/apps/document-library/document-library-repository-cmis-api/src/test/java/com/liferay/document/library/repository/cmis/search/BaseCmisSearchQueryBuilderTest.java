@@ -284,12 +284,12 @@ public class BaseCmisSearchQueryBuilderTest {
 	public void testPrefixQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
-		searchContext.setKeywords("Test*");
+		searchContext.setKeywords("test*");
 
 		String cmisQuery = buildQuery(searchContext);
 
 		assertQueryEquals(
-			"(cmis:name LIKE 'Test%' OR cmis:createdBy LIKE 'Test%')",
+			"(cmis:name LIKE 'test%' OR cmis:createdBy LIKE 'test%')",
 			cmisQuery);
 	}
 

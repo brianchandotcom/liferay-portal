@@ -56,23 +56,18 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
-				"setValue('inputMask', FALSE)", "setVisible('inputMask', FALSE)"
-			},
-			condition = "equals(getValue('dataType'), 'double')"
-		),
-		@DDMFormRule(
-			actions = {
 				"setDataType('predefinedValue', getValue('dataType'))",
 				"setPropertyValue('predefinedValue', 'inputMask', getValue('inputMask'))",
 				"setPropertyValue('predefinedValue', 'inputMaskFormat', getLocalizedValue('inputMaskFormat'))",
 				"setPropertyValue('predefinedValue', 'numericInputMask', getLocalizedValue('numericInputMask'))",
 				"setValidationDataType('validation', getValue('dataType'))",
 				"setValidationFieldName('validation', getValue('name'))",
-				"setVisible('characterOptions', getValue('inputMask'))",
+				"setVisible('characterOptions', equals(getValue('dataType'), 'integer') and equals(getValue('inputMask'), TRUE))",
 				"setVisible('confirmationErrorMessage', getValue('requireConfirmation'))",
 				"setVisible('confirmationLabel', getValue('requireConfirmation'))",
 				"setVisible('direction', getValue('requireConfirmation'))",
-				"setVisible('inputMaskFormat', getValue('inputMask'))",
+				"setVisible('inputMaskFormat', equals(getValue('dataType'), 'integer') and equals(getValue('inputMask'), TRUE))",
+				"setVisible('numericInputMask', equals(getValue('dataType'), 'double') and equals(getValue('inputMask'), TRUE))",
 				"setVisible('requiredErrorMessage', getValue('required'))",
 				"setVisible('tooltip', false)"
 			},
@@ -115,7 +110,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 								"requireConfirmation", "direction",
 								"confirmationLabel", "confirmationErrorMessage",
 								"validation", "tooltip", "inputMask",
-								"inputMaskFormat", "characterOptions"
+								"inputMaskFormat", "characterOptions",
+								"numericInputMask"
 							}
 						)
 					}
@@ -184,6 +180,9 @@ public interface NumericDDMFormFieldTypeSettings
 		validationExpression = "match(inputMaskFormat, '^$|^(?=.*[09])([^1-8]+)$')"
 	)
 	public LocalizedValue inputMaskFormat();
+
+	@DDMFormField(type = "numeric_input_mask")
+	public LocalizedValue numericInputMask();
 
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",

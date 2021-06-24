@@ -12,9 +12,11 @@
  * details.
  */
 
-import React, {useMemo, useReducer} from 'react';
+import {useMemo, useReducer} from 'react';
 
-import type {ImpactValue, Result} from 'axe-core';
+import type {ImpactValue} from 'axe-core';
+
+import type {NodeViolations, Violations} from './useA11y';
 
 export const TYPES = {
 	CATEGORY_ADD: 'CATEGORY_ADD',
@@ -28,14 +30,10 @@ type TAction = {
 	type: keyof typeof TYPES;
 };
 
-type TFunctionRenderProps = {
-	dispatch: React.Dispatch<TAction>;
-	filteredViolations: Array<Result>;
+type TState = {
 	selectedCategories: Array<string> | [];
 	selectedImpact: Array<ImpactValue>;
 };
-
-type TState = Omit<TFunctionRenderProps, 'dispatch' | 'filteredViolations'>;
 
 const initialState: TState = {
 	selectedCategories: [],
@@ -77,32 +75,70 @@ function reducer(state: TState, action: TAction) {
 	}
 }
 
-export function useFilteredViolations(violations: Array<Result>) {
+export function useFilterViolations(value: Violations) {
 	const [{selectedCategories, selectedImpact}, dispatch] = useReducer(
 		reducer,
 		initialState
 	);
 
-	const filteredViolations = useMemo(() => {
+	const rules = useMemo(() => {
 		if (!selectedCategories.length && !selectedImpact.length) {
-			return violations;
+			return value.rules;
 		}
 
-		return violations.filter(({impact, tags}) => {
-			const hasCategory = selectedCategories.some((category) =>
-				tags.includes(category)
+		return Object.values(value.rules).reduce(
+			(prev, {impact, tags, ...otherProps}) => {
+				const hasCategory = selectedCategories.some((category) =>
+					tags.includes(category)
+				);
+
+				if (
+					hasCategory ||
+					(impact && selectedImpact.includes(impact))
+				) {
+					prev[otherProps.id] = {impact, tags, ...otherProps};
+				}
+
+				return prev;
+			},
+			{} as Violations['rules']
+		);
+	}, [selectedCategories, selectedImpact, value]);
+
+	const nodes = useMemo(() => {
+		if (!selectedCategories.length && !selectedImpact.length) {
+			return value.nodes;
+		}
+
+		const newNodes: Record<string, NodeViolations> = {};
+
+		for (const property in value.nodes) {
+			const rulesResults = value.nodes[property];
+			const rulesIds = Object.keys(rulesResults);
+
+			const results = Object.values(rulesResults).reduce(
+				(prevResults, results, index) => {
+					const ruleId = rulesIds[index];
+
+					if (rules[ruleId]) {
+						prevResults[ruleId] = results;
+					}
+
+					return prevResults;
+				},
+				{} as NodeViolations
 			);
 
-			if (impact) {
-				return hasCategory || selectedImpact.includes(impact);
+			if (Object.keys(results).length) {
+				newNodes[property] = results;
 			}
+		}
 
-			return hasCategory;
-		});
-	}, [violations, selectedCategories, selectedImpact]);
+		return newNodes;
+	}, [selectedCategories, selectedImpact, rules, value.nodes]);
 
 	return [
-		{filteredViolations, selectedCategories, selectedImpact},
+		{selectedCategories, selectedImpact, violations: {nodes, rules}},
 		dispatch,
 	] as const;
 }

@@ -1,0 +1,8 @@
+@import 'atlas-variables';
+
+.page-editor__collection-general-panel {
+	&__pagination-label {
+		color: $gray-600;
+		font-size: 0.75rem;
+	}
+}

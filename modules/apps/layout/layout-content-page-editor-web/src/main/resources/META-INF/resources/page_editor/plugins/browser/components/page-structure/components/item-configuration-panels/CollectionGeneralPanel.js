@@ -291,7 +291,11 @@ export const CollectionGeneralPanel = ({item}) => {
 
 					<ClayForm.Group small>
 						<label htmlFor={collectionNumberOfItemsId}>
-							{Liferay.Language.get('max-number-of-items')}
+							{item.config.paginationType
+								? Liferay.Language.get(
+										'max-number-of-items-per-page'
+								  )
+								: Liferay.Language.get('max-number-of-items')}
 						</label>
 						<ClayInput
 							id={collectionNumberOfItemsId}
@@ -304,6 +308,14 @@ export const CollectionGeneralPanel = ({item}) => {
 							type="number"
 							value={item.config.numberOfItems}
 						/>
+						{item.config.paginationType && (
+							<p className="mt-2 page-editor__collection-general-panel__pagination-label">
+								{Liferay.Util.sub(
+									Liferay.Language.get('x-items-maximum'),
+									[200]
+								)}
+							</p>
+						)}
 					</ClayForm.Group>
 				</>
 			)}

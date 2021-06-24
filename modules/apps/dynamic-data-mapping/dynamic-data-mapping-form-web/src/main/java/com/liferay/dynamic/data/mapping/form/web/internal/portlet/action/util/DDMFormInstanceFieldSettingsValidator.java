@@ -37,10 +37,12 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -313,22 +315,45 @@ public class DDMFormInstanceFieldSettingsValidator {
 				_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 					ddmFormField.getType());
 
-			DDMForm fieldDDMForm = DDMFormFactory.create(
+			DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
 				ddmFormFieldType.getDDMFormFieldTypeSettings());
 
-			DDMFormValues fieldDDMFormValues = createDDMFormFieldFormValues(
-				jsonObject.getJSONObject("settingsContext"), fieldDDMForm,
-				_ddmForm.getAvailableLocales(), _ddmForm.getDefaultLocale());
+			if (StringUtil.equals(ddmFormField.getDataType(), "integer") &&
+				GetterUtil.getBoolean(ddmFormField.getProperty("inputMask"))) {
+
+				Map<String, DDMFormField>
+					ddmFormFieldTypeSettingsDDMFormFieldsMap =
+						ddmFormFieldTypeSettingsDDMForm.getDDMFormFieldsMap(
+							false);
+
+				DDMFormField predefinedValueDDMFormField =
+					ddmFormFieldTypeSettingsDDMFormFieldsMap.get(
+						"predefinedValue");
+
+				predefinedValueDDMFormField.setDataType("integer");
+				predefinedValueDDMFormField.setProperty("inputMask", true);
+				predefinedValueDDMFormField.setProperty(
+					"inputMaskFormat",
+					ddmFormField.getProperty("inputMaskFormat"));
+			}
+
+			DDMFormValues ddmFormFieldTypeSettingsDDMFormValues =
+				createDDMFormFieldFormValues(
+					jsonObject.getJSONObject("settingsContext"),
+					ddmFormFieldTypeSettingsDDMForm,
+					_ddmForm.getAvailableLocales(),
+					_ddmForm.getDefaultLocale());
 
 			for (Locale availableLocale : _ddmForm.getAvailableLocales()) {
 				DDMFormEvaluatorEvaluateResponse
 					ddmFormEvaluatorEvaluateResponse = evaluate(
-						_portletRequest, fieldDDMForm, fieldDDMFormValues,
-						availableLocale);
+						_portletRequest, ddmFormFieldTypeSettingsDDMForm,
+						ddmFormFieldTypeSettingsDDMFormValues, availableLocale);
 
 				Set<String> invalidDDMFormFields = getInvalidDDMFormFields(
-					fieldDDMForm, ddmFormEvaluatorEvaluateResponse,
-					fieldDDMForm.getDefaultLocale());
+					ddmFormFieldTypeSettingsDDMForm,
+					ddmFormEvaluatorEvaluateResponse,
+					ddmFormFieldTypeSettingsDDMForm.getDefaultLocale());
 
 				if (!invalidDDMFormFields.isEmpty()) {
 					_fieldNamePropertiesMap.put(

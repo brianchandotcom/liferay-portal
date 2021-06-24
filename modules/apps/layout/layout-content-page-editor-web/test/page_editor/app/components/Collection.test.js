@@ -122,10 +122,13 @@ describe('Collection', () => {
 					itemSubtype: 'CollectionItemSubtype',
 					itemType: 'CollectionItemType',
 				},
+				listStyle: '',
 			});
 		});
 
-		expect(getByText(document.body, 'title')).toBeInTheDocument();
+		expect(
+			document.body.querySelector('.page-editor__collection-item')
+		).toBeInTheDocument();
 	});
 
 	it('renders empty collection items', async () => {

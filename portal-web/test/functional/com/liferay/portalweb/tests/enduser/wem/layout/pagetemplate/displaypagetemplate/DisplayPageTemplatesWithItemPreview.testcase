@@ -623,13 +623,11 @@ definition {
 				listStyle = "Bulleted List");
 		}
 
-		task ("View the Title is shown in Collection Display") {
+		task ("View the no items message is shown in Collection Display") {
 			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Title",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				key_message = "There are no items to display.",
+				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
 		}
 
 		task ("Select the category via preview item selector") {
@@ -658,13 +656,11 @@ definition {
 				item = "-- None --");
 		}
 
-		task ("View the Title is shown in Collection Display") {
+		task ("View the no items message is shown in Collection Display") {
 			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Title",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				key_message = "There are no items to display.",
+				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
 		}
 
 		task ("Open the Preview modal") {
@@ -709,11 +705,9 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_entryTitle = "Title",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				key_message = "There are no items to display.",
+				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
 		}
 	}
 

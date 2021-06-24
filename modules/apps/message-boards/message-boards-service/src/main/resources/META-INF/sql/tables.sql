@@ -122,18 +122,6 @@ create table MBMessage (
 	primary key (messageId, ctCollectionId)
 );
 
-create table MBStatsUser (
-	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	statsUserId LONG not null,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	messageCount INTEGER,
-	lastPostDate DATE null,
-	primary key (statsUserId, ctCollectionId)
-);
-
 create table MBThread (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,

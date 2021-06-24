@@ -49,9 +49,9 @@ definition {
 		Pause(locator1 = "60000");
 
 		for (var nodeNumber : list "8,10") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
@@ -68,9 +68,9 @@ definition {
 		property test.name.skip.portal.instance = "ClusteringLicense#ExceedDoubleNodeLimit";
 
 		for (var nodeNumber : list "8,9,10,11") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
@@ -88,9 +88,9 @@ definition {
 		}
 
 		for (var nodeNumber : list "8,9") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
@@ -117,9 +117,9 @@ definition {
 
 		CommerceLicense.viewCommerceAvailable();
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		CommerceLicense.viewCommerceAvailable();
@@ -134,9 +134,9 @@ definition {
 			expectedText = "licensed for this cluster has been exceeded",
 			nodePort = "10080");
 
-		User.loginPG(
-			nodePort = "10080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
 		CommerceLicense.viewCommerceMissing();
@@ -158,9 +158,9 @@ definition {
 
 		User.firstLoginPG();
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Clustering.shutdownSpecificServer(nodePort = "9080");
@@ -169,9 +169,9 @@ definition {
 			deleteLiferayHome = "true",
 			nodePort = "10080");
 
-		User.loginPG(
-			nodePort = "10080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
 		for (var nodeNumber : list "8,10") {
@@ -189,18 +189,18 @@ definition {
 				expectedText = "licensed for this cluster has been exceeded",
 				nodePort = "${nodeNumber}080");
 
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
 			Alert.viewErrorMessage(errorMessage = "grace period");
 		}
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
@@ -220,9 +220,9 @@ definition {
 				expectedText = "Finished shutting down overloaded nodes",
 				nodePort = "${nodeNumber}080");
 
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
@@ -250,9 +250,9 @@ definition {
 
 		CommerceLicense.viewCommerceAvailable();
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		CommerceLicense.viewCommerceAvailable();
@@ -263,18 +263,18 @@ definition {
 			deleteLiferayHome = "true",
 			nodePort = "10080");
 
-		User.loginPG(
-			nodePort = "10080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSpecificURL(url = "http://localhost:10080");
 
 		CommerceLicense.viewCommerceAvailable();
 
-		User.loginPG(
-			nodePort = "8080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
 		CommerceLicense.viewCommerceAvailable();
@@ -283,9 +283,9 @@ definition {
 			deleteLiferayHome = "false",
 			nodePort = "9080");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		CommerceLicense.viewCommerceAvailable();
@@ -297,9 +297,9 @@ definition {
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
 		for (var nodeNumber : list "8,10") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			CommerceLicense.viewCommerceAvailable();
@@ -325,9 +325,9 @@ definition {
 
 		User.firstLoginPG();
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Clustering.shutdownSpecificServer(nodePort = "9080");
@@ -336,9 +336,9 @@ definition {
 			deleteLiferayHome = "true",
 			nodePort = "10080");
 
-		User.loginPG(
-			nodePort = "10080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
 		for (var nodeNumber : list "8,10") {
@@ -412,9 +412,9 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
 		for (var nodeNumber : list "9,10") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
@@ -427,9 +427,9 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:10080/c/portal/logout");
 
-		User.loginPG(
-			nodePort = "10080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:10080",
 			userEmailAddress = "userea@liferay.com");
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
@@ -445,9 +445,9 @@ definition {
 				expectedText = "Finished shutting down overloaded nodes",
 				nodePort = "${nodeNumber}080");
 
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:10080",
 				userEmailAddress = "test@liferay.com");
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
@@ -478,9 +478,9 @@ definition {
 
 		CommerceLicense.viewCommerceAvailable();
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
@@ -491,9 +491,9 @@ definition {
 			deleteLiferayHome = "true",
 			nodePort = "10080");
 
-		User.loginPG(
-			nodePort = "10080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
@@ -505,9 +505,9 @@ definition {
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 
 		for (var nodeNumber : list "8,9") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			CommerceLicense.viewCommerceAvailable();
@@ -527,9 +527,9 @@ definition {
 				expectedText = "licensed for this cluster has been exceeded",
 				nodePort = "${nodeNumber}080");
 
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
@@ -543,9 +543,9 @@ definition {
 		Pause(locator1 = "360000");
 
 		for (var nodeNumber : list "8,9") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			Alert.viewErrorMessage(errorMessage = "Grace period which already ended");
@@ -564,9 +564,9 @@ definition {
 		Pause(locator1 = "60000");
 
 		for (var nodeNumber : list "8,9") {
-			User.loginPG(
-				nodePort = "${nodeNumber}080",
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ImageEditor} from 'item-selector-taglib';
 import PropTypes from 'prop-types';
@@ -19,6 +20,8 @@ import React from 'react';
 
 import {updateFragmentEntryLinkContent} from '../../../../../app/actions/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
+import {config} from '../../../../../app/config/index';
 import {useDispatch} from '../../../../../app/contexts/StoreContext';
 import FragmentService from '../../../../../app/services/FragmentService';
 
@@ -39,19 +42,27 @@ export default function ImageEditorModal({
 		if (response?.success) {
 			onClose();
 
-			const fragmentsWithImage = Object.values(
-				fragmentEntryLinks
-			).filter((fragmentEntryLink) =>
-				Object.values(
-					fragmentEntryLink.editableValues[
-						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					]
-				).filter(
-					(value) => value.classPK === fileEntryId && !value.removed
-				)
+			const fragmentsToUpdate = Object.values(fragmentEntryLinks).filter(
+				(fragmentEntryLink) => {
+					const editableValues = Object.entries(
+						fragmentEntryLink.editableValues[
+							EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+						]
+					);
+
+					return editableValues.some(
+						([key, value]) =>
+							fragmentEntryLink.editableTypes[key] ===
+								EDITABLE_TYPES.image &&
+							!fragmentEntryLink.removed &&
+							(value.classPK === fileEntryId ||
+								value[config.defaultLanguageId]?.classPK ===
+									fileEntryId)
+					);
+				}
 			);
 
-			fragmentsWithImage.forEach(({fragmentEntryLinkId}) => {
+			fragmentsToUpdate.forEach(({fragmentEntryLinkId}) => {
 				FragmentService.renderFragmentEntryLinkContent({
 					fragmentEntryLinkId,
 				}).then(({content}) => {

@@ -1,5 +1,29 @@
+$a11y-panel-width: 320px;
+
+.a11y-body {
+	padding-right: $a11y-panel-width;
+
+	.multi-panel-sidebar,
+	.page-editor__sidebar {
+		right: $a11y-panel-width;
+	}
+
+	.multi-panel-sidebar-content,
+	.page-editor__sidebar__content {
+		right: $a11y-panel-width + 42px;
+	}
+}
+
+.a11y-dropdown {
+	z-index: 1070 !important;
+}
+
 .a11y-panel__sidebar {
-	width: 320px;
+	position: fixed !important;
+	right: 0;
+	top: 0;
+	width: $a11y-panel-width;
+	z-index: 1060;
 
 	&--violations-panel-header-title {
 		border-bottom: 0.0625rem solid #f2f2f2;

@@ -94,6 +94,12 @@ public class CommerceAddressLocalServiceUtil {
 			commerceAddressId, className, classPK, serviceContext);
 	}
 
+	public static CommerceAddress createCommerceAddress(
+		long commerceAddressId) {
+
+		return getService().createCommerceAddress(commerceAddressId);
+	}
+
 	public static CommerceAddress deleteCommerceAddress(
 			CommerceAddress commerceAddress)
 		throws PortalException {

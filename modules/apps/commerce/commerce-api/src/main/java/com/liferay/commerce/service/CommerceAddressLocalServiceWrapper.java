@@ -92,6 +92,14 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceAddress createCommerceAddress(
+		long commerceAddressId) {
+
+		return _commerceAddressLocalService.createCommerceAddress(
+			commerceAddressId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceAddress deleteCommerceAddress(
 			com.liferay.commerce.model.CommerceAddress commerceAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {

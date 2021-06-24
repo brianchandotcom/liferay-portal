@@ -60,6 +60,8 @@ public interface CommerceAddress extends CommerceAddressModel {
 	public com.liferay.portal.kernel.model.Country getCountry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge();
+
 	public com.liferay.portal.kernel.model.Region getRegion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

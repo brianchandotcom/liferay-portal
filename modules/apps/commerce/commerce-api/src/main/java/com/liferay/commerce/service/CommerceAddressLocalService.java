@@ -89,6 +89,8 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceAddress createCommerceAddress(long commerceAddressId);
+
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceAddress deleteCommerceAddress(
 			CommerceAddress commerceAddress)

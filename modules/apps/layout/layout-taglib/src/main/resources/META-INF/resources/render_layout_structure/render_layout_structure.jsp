@@ -346,4 +346,16 @@ for (String childrenItemId : childrenItemIds) {
 			window.location.search = search;
 		}
 	}
+
+	function setValueInPageNumberSelectors() {
+		const search = new URLSearchParams(window.location.search);
+
+		search.forEach((value, key) => {
+			if (key.startsWith('page_number_')) {
+				document.getElementById(key + '_selector').value = value || 1;
+			}
+		});
+	}
+
+	setValueInPageNumberSelectors();
 </aui:script>

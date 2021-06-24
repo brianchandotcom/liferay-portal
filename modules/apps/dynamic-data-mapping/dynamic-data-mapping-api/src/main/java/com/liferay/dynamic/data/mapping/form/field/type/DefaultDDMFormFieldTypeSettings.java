@@ -55,7 +55,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							value = {
 								"dataType", "name", "showLabel", "repeatable",
 								"type", "validation", "visibilityExpression",
-								"visualProperty"
+								"visualProperty", "objectFieldName"
 							}
 						)
 					}
@@ -103,6 +103,9 @@ public interface DefaultDDMFormFieldTypeSettings
 	public default boolean nativeField() {
 		return false;
 	}
+
+	@DDMFormField(label = "%object-field", type = "object_field")
+	public String objectFieldName();
 
 	@DDMFormField(
 		label = "%predefined-value",

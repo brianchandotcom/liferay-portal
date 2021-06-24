@@ -396,6 +396,41 @@ definition {
 	}
 
 	@priority = "4"
+	test SingleFactoryConfigurationCanBeExported {
+		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
+		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID Connect Provider",
+			configurationScope = "Virtual Instance Scope");
+
+		OpenIDConnect.addProvider(
+			openIDConnectClientID = "${openIDConnectClientID}",
+			openIDConnectClientSecret = "${openIDConnectClientSecret}",
+			providerName = "Google");
+
+		LexiconEntry.viewEntryName(rowEntry = "Google");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Export",
+			rowEntry = "Google");
+
+		LexiconEntry.viewEntryName(rowEntry = "Google");
+
+		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration-*.config");
+		var tempFileDirectory = selenium.getOutputDirName();
+		var exportedConfigFile = FileUtil.exists("${tempFileDirectory}/${tempFileName}");
+
+		if ("${exportedConfigFile}" == "true") {
+			echo("The Configuration file for single factory is exported Successfully.");
+		}
+		else {
+			fail("FAIL! Cannot find the exported configuration file for single factory.");
+		}
+	}
+
+	@priority = "4"
 	test ViewContentSharingDisabledAcrossSitesViaAP {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

@@ -590,6 +590,7 @@ definition {
 
 	@description = "This is a test for LPS-130083. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
 	@priority = "4"
+	@uitest
 	test ViewEllipsisButtonOnTheTopperOfFragmentInsideNestedGrid {
 		task ("Add a Grid element to the content page") {
 			ContentPagesNavigator.openEditContentPage(

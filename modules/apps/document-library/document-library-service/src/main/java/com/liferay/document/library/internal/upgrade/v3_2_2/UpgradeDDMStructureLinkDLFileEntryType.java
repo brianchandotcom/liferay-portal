@@ -54,12 +54,10 @@ public class UpgradeDDMStructureLinkDLFileEntryType extends UpgradeProcess {
 					connection.prepareStatement(
 						"update DLFileEntryType set dataDefinitionId = ? " +
 							"where fileEntryTypeId = ? "));
-			PreparedStatement preparedStatement4 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"select structureLinkId from DDMStructureLink where " +
-							"companyId = ? and classNameId = ? and classPK = " +
-								"? and structureId = ?"));
+			PreparedStatement preparedStatement4 = connection.prepareStatement(
+				"select structureLinkId from DDMStructureLink where " +
+					"companyId = ? and classNameId = ? and classPK = ? and " +
+						"structureId = ?");
 			PreparedStatement preparedStatement5 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(

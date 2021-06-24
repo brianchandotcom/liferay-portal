@@ -2753,31 +2753,14 @@ public class DLFileEntryLocalServiceImpl
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringBundler.concat(
-					"Expiring file entries with expiration date previous to ",
-					expirationDate));
+				"Expiring file entries with expiration date previous to " +
+					expirationDate);
 		}
 
-		List<DLFileEntry> fileEntries = _getFileEntriesByExpirationDate(
-			expirationDate);
-
-		for (DLFileEntry fileEntry : fileEntries) {
-
-			if (fileEntry.getStatus() == WorkflowConstants.STATUS_EXPIRED){
-				continue;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Expiring file entry ", fileEntry.getFileEntryId()
-						, " with expiration date ",
-						fileEntry.getExpirationDate()));
-			}
-
-			//updateStatus()
-		}
-
+		companyLocalService.forEachCompanyId(
+			companyId -> _expireFileEntriesByCompanyId(
+				expirationDate, Collections.emptyMap(), new ServiceContext(),
+				companyId));
 	}
 
 	private void _checkFileEntriesByReviewDate(Date reviewDate)
@@ -2972,8 +2955,36 @@ public class DLFileEntryLocalServiceImpl
 			previousDLFileVersion, nextDLFileVersion);
 	}
 
-	private List<DLFileEntry> _getFileEntriesByExpirationDate(
-		Date expirationDate) {
+	private void _expireFileEntriesByCompanyId(
+			Date expirationDate, Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext, Long companyId)
+		throws PortalException {
+
+		List<DLFileEntry> fileEntries =
+			_getFileEntriesByCompanyIdAndExpirationDate(
+				companyId, expirationDate);
+
+		for (DLFileEntry fileEntry : fileEntries) {
+			DLFileVersion latestFileVersion =
+				dlFileVersionLocalService.fetchLatestFileVersion(
+					fileEntry.getFileEntryId(), false);
+
+			if (latestFileVersion.isExpired()) {
+				continue;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Expiring file entry ", fileEntry.getFileEntryId(),
+						" with expiration date ",
+						fileEntry.getExpirationDate()));
+			}
+		}
+	}
+
+	private List<DLFileEntry> _getFileEntriesByCompanyIdAndExpirationDate(
+		long companyId, Date expirationDate) {
 
 		return dlFileEntryPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -2981,8 +2992,10 @@ public class DLFileEntryLocalServiceImpl
 			).from(
 				DLFileEntryTable.INSTANCE
 			).where(
-				DLFileEntryTable.INSTANCE.expirationDate.lte(
-					expirationDate
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					DLFileEntryTable.INSTANCE.expirationDate.lte(expirationDate)
 				)
 			));
 	}

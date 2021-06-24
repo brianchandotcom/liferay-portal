@@ -61,6 +61,9 @@ const ColorPicker = ({
 						active={active}
 						alignElementRef={triggerElementRef}
 						className="clay-color-dropdown-menu"
+						containerProps={{
+							className: 'cadmin',
+						}}
 						focusRefOnEsc={splotchRef}
 						onSetActive={setActive}
 						ref={dropdownContainerRef}

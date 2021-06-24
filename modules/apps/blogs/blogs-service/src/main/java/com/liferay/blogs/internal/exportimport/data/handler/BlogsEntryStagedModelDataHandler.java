@@ -272,7 +272,7 @@ public class BlogsEntryStagedModelDataHandler
 			}
 
 			importedEntry = _blogsEntryLocalService.addEntry(
-				userId, entry.getTitle(), entry.getSubtitle(), urlTitle,
+				null, userId, entry.getTitle(), entry.getSubtitle(), urlTitle,
 				entry.getDescription(), entry.getContent(),
 				entry.getDisplayDate(), entry.isAllowPingbacks(),
 				entry.isAllowTrackbacks(), trackbacks,

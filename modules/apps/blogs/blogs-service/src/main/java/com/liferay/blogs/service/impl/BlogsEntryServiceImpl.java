@@ -107,6 +107,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addEntry(String, String, String, String, String, String, int, int, int,
+	 * int, int, boolean, boolean, String[], String, ImageSelector,
+	 * ImageSelector, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public BlogsEntry addEntry(
 			String title, String subtitle, String urlTitle, String description,
@@ -124,7 +131,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			ActionKeys.ADD_ENTRY);
 
 		return blogsEntryLocalService.addEntry(
-			getUserId(), title, subtitle, urlTitle, description, content,
+			null, getUserId(), title, subtitle, urlTitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,

@@ -222,18 +222,20 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), _user.getUserId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new Date(), false, false, null, null, null, null, serviceContext);
+			urlTitle, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), false, false, null, null,
+			null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), _user.getUserId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new Date(), false, false, null, null, null, null, serviceContext);
+			urlTitle, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), false, false, null, null,
+			null, null, serviceContext);
 
 		Assert.assertNotEquals(urlTitle, entry.getUrlTitle());
 	}
@@ -364,20 +366,22 @@ public class BlogsEntryLocalServiceTest {
 	@Test(expected = EntryUrlTitleException.class)
 	public void testAddEntryWithInvalidURLTitle() throws Exception {
 		BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(256),
-			StringUtil.randomString(), StringUtil.randomString(), new Date(),
-			true, true, new String[0], null, null, null, new ServiceContext());
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(256), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(), true, true, new String[0],
+			null, null, null, new ServiceContext());
 	}
 
 	@Test
 	public void testAddEntryWithNoImages() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), StringUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), new Date(),
-			true, true, new String[0], null, new ImageSelector(),
-			new ImageSelector(), ServiceContextTestUtil.getServiceContext());
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(), true, true, new String[0],
+			null, new ImageSelector(), new ImageSelector(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(0, entry.getCoverImageFileEntryId());
 		Assert.assertEquals(StringPool.BLANK, entry.getCoverImageURL());
@@ -391,10 +395,11 @@ public class BlogsEntryLocalServiceTest {
 		String urlTitle = StringUtil.toLowerCase(StringUtil.randomString());
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), StringUtil.randomString(),
-			StringUtil.randomString(), urlTitle, StringUtil.randomString(),
-			StringUtil.randomString(), new Date(), true, true, new String[0],
-			null, null, null, ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			StringUtil.randomString(), StringUtil.randomString(), urlTitle,
+			StringUtil.randomString(), StringUtil.randomString(), new Date(),
+			true, true, new String[0], null, null, null,
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(urlTitle, entry.getUrlTitle());
 	}
@@ -999,18 +1004,20 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), _user.getUserId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new Date(), false, false, null, null, null, null, serviceContext);
+			urlTitle, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), false, false, null, null,
+			null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), _user.getUserId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new Date(), false, false, null, null, null, null, serviceContext);
+			urlTitle, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), false, false, null, null,
+			null, null, serviceContext);
 
 		entry = BlogsEntryLocalServiceUtil.updateEntry(
 			_user.getUserId(), entry.getEntryId(), entry.getTitle(),

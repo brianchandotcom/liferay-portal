@@ -140,9 +140,9 @@ public class BlogsEntryServiceTest {
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 1, 1, 1990, 1, 1, true, false,
-				new String[0], RandomTestUtil.randomString(), null, null,
-				serviceContext);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 1,
+				1, 1990, 1, 1, true, false, new String[0],
+				RandomTestUtil.randomString(), null, null, serviceContext);
 		}
 	}
 
@@ -181,9 +181,9 @@ public class BlogsEntryServiceTest {
 			BlogsEntryServiceUtil.addEntry(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 1, 1, 1990, 1, 1, true, false,
-				new String[0], RandomTestUtil.randomString(), null, null,
-				serviceContext);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 1,
+				1, 1990, 1, 1, true, false, new String[0],
+				RandomTestUtil.randomString(), null, null, serviceContext);
 		}
 	}
 

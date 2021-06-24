@@ -176,7 +176,8 @@ public class BaseBatchEngineTaskExecutorTest {
 				blogPosting.getDatePublished());
 
 			_blogsEntryService.addEntry(
-				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
+				null, blogPosting.getHeadline(),
+				blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),

@@ -378,6 +378,17 @@ public class LayoutsTreeDisplayContext {
 		return layout.getPlid();
 	}
 
+	public Map<String, Object> getSiteNavigationMenuData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"selectedSiteNavigationMenuItemId",
+			String.valueOf(getSelectedSiteNavigationMenuItemId())
+		).put(
+			"siteNavigationMenuId", _getSiteNavigationMenuId()
+		).put(
+			"siteNavigationMenuItems", _getSiteNavigationMenuItemsJSONArray()
+		).build();
+	}
+
 	public String getViewCollectionItemsURL()
 		throws PortalException, WindowStateException {
 

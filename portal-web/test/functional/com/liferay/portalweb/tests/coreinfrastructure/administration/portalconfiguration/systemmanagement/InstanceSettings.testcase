@@ -395,6 +395,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Edit Google");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test SingleFactoryConfigurationCanBeExported {
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");

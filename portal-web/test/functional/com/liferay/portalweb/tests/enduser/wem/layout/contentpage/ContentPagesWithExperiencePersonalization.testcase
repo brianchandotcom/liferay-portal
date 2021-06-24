@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-128810. View collection items on content page when select segment."
+	@description = "This is a test for LPS-128810. View collection items on content page when select segment."
 	@priority = "4"
 	test ViewCollectionItemsOnContentPageWhenSelectSegment {
 		task ("Add a segment with a Regular Role field") {
@@ -80,13 +80,13 @@ definition {
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "New Segment");
 		}
 
-		task ("Select Web Content Article and Basic Web Content for Personalized Variation") {
+		task ("Select the Web Content Article item type and Basic Web Content item subtype") {
 			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article");
 		}
 
-		task ("Add a tag filter for Personalized Variation") {
+		task ("Add a tag filter") {
 			AssetListsAdmin.addTagsFilter(tagNameList = "tag name");
 		}
 
@@ -98,7 +98,7 @@ definition {
 				assetTitleList = "Web Content Title 1,Web Content Title 2");
 		}
 
-		task ("View only the web content with tag is shown and without tag is not shown in collection items when select New Segment personalized variation") {
+		task ("View only the web content with tag is shown in collection items when select New Segment personalized variation") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.viewContent(
@@ -148,7 +148,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("View both web contents shown in Simulation modal by default") {
+		task ("View both web contents shown in simulation modal by default") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -170,13 +170,13 @@ definition {
 			SelectFrameTop();
 		}
 
-		task ("Select the Segment on Simulation Panel") {
+		task ("Select the segment on Simulation panel") {
 			Check.checkNotVisible(
 				checkboxName = "New Segment",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		task ("View only the web content with tag shown and without tag is not shown in Simulation modal when select segment") {
+		task ("View only the web content with tag shown in simulation modal when select segment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertVisible(

@@ -46,6 +46,7 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
+import com.liferay.layout.taglib.internal.FFRenderLayoutStructureConfigurationUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -192,8 +193,10 @@ public class RenderLayoutStructureDisplayContext {
 		String paginationType =
 			collectionStyledLayoutStructureItem.getPaginationType();
 
-		if (Objects.equals(paginationType, PAGINATION_TYPE_REGULAR) ||
-			Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE)) {
+		if (FFRenderLayoutStructureConfigurationUtil.
+				collectionDisplayFragmentPaginationEnabled() &&
+			(Objects.equals(paginationType, PAGINATION_TYPE_REGULAR) ||
+			 Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE))) {
 
 			int currentPage = ParamUtil.getInteger(
 				_httpServletRequest,

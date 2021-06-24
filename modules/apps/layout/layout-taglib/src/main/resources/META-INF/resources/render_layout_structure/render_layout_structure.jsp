@@ -39,7 +39,7 @@ for (String childrenItemId : childrenItemIds) {
 
 			String paginationType = collectionStyledLayoutStructureItem.getPaginationType();
 
-			boolean paginationEnabled = Objects.equals(paginationType, "regular") || Objects.equals(paginationType, "simple");
+			boolean paginationEnabled = FFRenderLayoutStructureConfigurationUtil.collectionDisplayFragmentPaginationEnabled() && (Objects.equals(paginationType, "regular") || Objects.equals(paginationType, "simple"));
 			%>
 
 			<div class="<%= renderLayoutStructureDisplayContext.getCssClass(collectionStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(collectionStyledLayoutStructureItem) %>">

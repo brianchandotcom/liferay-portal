@@ -48,11 +48,8 @@ public class UpgradeReport {
 	public void generateReport() {
 	}
 
-	private static final Map<String, ArrayList<String>> _errors =
-		new HashMap<>();
-	private static final Map<String, ArrayList<String>> _events =
-		new HashMap<>();
-	private static final Map<String, ArrayList<String>> _warnings =
-		new HashMap<>();
+	private final Map<String, ArrayList<String>> _errors = new HashMap<>();
+	private final Map<String, ArrayList<String>> _events = new HashMap<>();
+	private final Map<String, ArrayList<String>> _warnings = new HashMap<>();
 
 }

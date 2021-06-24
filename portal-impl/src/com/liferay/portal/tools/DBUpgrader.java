@@ -146,7 +146,9 @@ public class DBUpgrader {
 			System.exit(1);
 		}
 		finally {
-			_upgradeLogAppender.stop();
+			if (_upgradeLogAppender != null) {
+				_upgradeLogAppender.stop();
+			}
 		}
 	}
 

@@ -2052,21 +2052,21 @@ definition {
 		task ("Assert styles of Container in view mode") {
 			var screenWidth	= selenium.getElementWidth("//body");
 
-			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
+			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]");
 
 			TestUtils.assertNotEquals(
 				actual = "${containerWidth}",
 				expected = "${screenWidth}");
 
-			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
+			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]//parent::div",
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]//parent::div",
 				locator2 = "background-color",
 				value1 = "rgba(46, 90, 172, 1)");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]",
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]",
 				locator2 = "max-width",
 				value1 = "${containerWidth}px");
 		}

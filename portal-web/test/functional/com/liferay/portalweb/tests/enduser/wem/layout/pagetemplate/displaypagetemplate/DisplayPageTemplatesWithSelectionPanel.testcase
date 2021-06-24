@@ -86,7 +86,7 @@ definition {
 		task ("Add a Button fragment to Collection Display") {
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Title",
+				entryTitle = "",
 				fragmentName = "Button");
 		}
 

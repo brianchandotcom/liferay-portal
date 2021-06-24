@@ -3467,7 +3467,7 @@ definition {
 		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Title",
+				entryTitle = "",
 				fragmentName = "Heading");
 
 			PageEditorMapping.mapEditableFieldToCollectionItems(
@@ -3614,7 +3614,7 @@ definition {
 		task ("Add a Heading to Collection Display and Map the Title field to editable field") {
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Title",
+				entryTitle = "",
 				fragmentName = "Heading");
 
 			PageEditorMapping.mapEditableFieldToCollectionItems(
@@ -3777,7 +3777,7 @@ definition {
 		task ("Add a Content Display to Collection Display") {
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Content Display",
-				entryTitle = "Title",
+				entryTitle = "",
 				fragmentName = "Content Display");
 
 			PageEditor.clickPublish();
@@ -3865,7 +3865,7 @@ definition {
 
 				PageEditor.addFragmentToCollectionDisplay(
 					collectionName = "Basic Components",
-					entryTitle = "Title",
+					entryTitle = "",
 					fragmentName = "Heading");
 
 				PageEditorMapping.mapEditableFieldToCollectionItems(

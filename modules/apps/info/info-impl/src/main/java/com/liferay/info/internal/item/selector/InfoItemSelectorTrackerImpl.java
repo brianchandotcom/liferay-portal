@@ -17,7 +17,6 @@ package com.liferay.info.internal.item.selector;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.selector.InfoItemSelector;
 import com.liferay.info.item.selector.InfoItemSelectorTracker;
-import com.liferay.info.list.provider.InfoListProvider;
 
 import java.util.HashSet;
 import java.util.List;
@@ -58,7 +57,7 @@ public class InfoItemSelectorTrackerImpl implements InfoItemSelectorTracker {
 	public Set<String> getInfoItemSelectorsClassNames() {
 		return new HashSet(
 			_infoItemServiceTracker.getInfoItemClassNames(
-				InfoListProvider.class));
+				InfoItemSelector.class));
 	}
 
 	@Reference

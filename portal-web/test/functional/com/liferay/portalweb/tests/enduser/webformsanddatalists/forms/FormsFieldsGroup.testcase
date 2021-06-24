@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that a Fields Group can be collapsed"
 	@priority = "5"
 	test CanBeCollapsed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -228,7 +228,7 @@ definition {
 	@description = "Verify that a Fields Group can be repeatable"
 	@priority = "5"
 	test CanBeRepeatable {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -283,7 +283,7 @@ definition {
 	@description = "Verify that fields within a Fields Group can be reordered"
 	@priority = "4"
 	test FieldsCanBeReordered {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -322,7 +322,7 @@ definition {
 	@description = "Verify that a Fields Group's Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -363,7 +363,7 @@ definition {
 	@description = "Verify that a Fields Group's Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

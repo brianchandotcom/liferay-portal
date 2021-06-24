@@ -28,15 +28,15 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 	service = UserNotificationDefinition.class
 )
-public class DLReviewEntryUserNotificationDefinition
+public class DLExpiredEntryUserNotificationDefinition
 	extends UserNotificationDefinition {
 
-	public DLReviewEntryUserNotificationDefinition() {
+	public DLExpiredEntryUserNotificationDefinition() {
 		super(
 			DLPortletKeys.DOCUMENT_LIBRARY, 0,
-			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY,
-			"receive-a-notification-when-review-is-needed-on-document-in-a-" +
-				"folder-you-are-subscribed-to");
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY,
+			"receive-a-notification-when-document-has-expired-in-a-folder-" +
+				"you-are-subscribed-to");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

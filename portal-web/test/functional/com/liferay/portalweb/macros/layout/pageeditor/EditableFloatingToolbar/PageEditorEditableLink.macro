@@ -1,6 +1,10 @@
 definition {
 
 	macro _selectContent {
+		WaitForElementPresent(
+			key_fieldLabel = "Item",
+			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL");
+
 		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Item']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
 
 		if ("${itemSelectorContentInputValue}" == "") {
@@ -63,7 +67,9 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Page");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(
+			key_fieldLabel = "Page",
+			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL");
 
 		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Page']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
 

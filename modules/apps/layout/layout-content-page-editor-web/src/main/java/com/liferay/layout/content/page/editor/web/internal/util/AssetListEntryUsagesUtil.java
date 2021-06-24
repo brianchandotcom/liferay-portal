@@ -26,9 +26,9 @@ import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoItemRelatedListProvider;
-import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceTrackerUtil;
@@ -324,14 +324,14 @@ public class AssetListEntryUsagesUtil {
 			getAssetRendererFactoryByClassName(className);
 	}
 
-	private static JSONObject _getInfoListProviderActionsJSONObject(
-		InfoListProvider<?> infoListProvider,
+	private static JSONObject _getInfoCollectionProviderActionsJSONObject(
+		InfoCollectionProvider<?> infoCollectionProvider,
 		HttpServletRequest httpServletRequest, String redirect) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String viewItemsURL = _getInfoListProviderViewItemsURL(
-			infoListProvider, httpServletRequest, redirect);
+		String viewItemsURL = _getInfoCollectionProviderViewItemsURL(
+			infoCollectionProvider, httpServletRequest, redirect);
 
 		if (Validator.isNotNull(viewItemsURL)) {
 			jsonObject.put("viewItemsURL", viewItemsURL);
@@ -340,8 +340,8 @@ public class AssetListEntryUsagesUtil {
 		return jsonObject;
 	}
 
-	private static String _getInfoListProviderViewItemsURL(
-		InfoListProvider<?> infoListProvider,
+	private static String _getInfoCollectionProviderViewItemsURL(
+		InfoCollectionProvider<?> infoCollectionProvider,
 		HttpServletRequest httpServletRequest, String redirect) {
 
 		PortletURL portletURL = null;
@@ -358,7 +358,8 @@ public class AssetListEntryUsagesUtil {
 			portletURL.setParameter("redirect", redirect);
 
 			portletURL.setParameter(
-				"collectionPK", String.valueOf(infoListProvider.getKey()));
+				"collectionPK",
+				String.valueOf(infoCollectionProvider.getKey()));
 			portletURL.setParameter(
 				"collectionType",
 				InfoListProviderItemSelectorReturnType.class.getName());
@@ -438,27 +439,28 @@ public class AssetListEntryUsagesUtil {
 
 		if (Objects.equals(
 				assetListEntryUsage.getClassName(),
-				InfoListProvider.class.getName())) {
+				InfoCollectionProvider.class.getName())) {
 
 			InfoItemServiceTracker infoItemServiceTracker =
 				InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
 
-			InfoListProvider<?> infoListProvider =
+			InfoCollectionProvider<?> infoCollectionProvider =
 				infoItemServiceTracker.getInfoItemService(
-					InfoListProvider.class, assetListEntryUsage.getKey());
+					InfoCollectionProvider.class, assetListEntryUsage.getKey());
 
-			if (infoListProvider != null) {
+			if (infoCollectionProvider != null) {
 				mappedContentJSONObject.put(
 					"actions",
-					_getInfoListProviderActionsJSONObject(
-						infoListProvider, httpServletRequest, redirect)
+					_getInfoCollectionProviderActionsJSONObject(
+						infoCollectionProvider, httpServletRequest, redirect)
 				).put(
 					"subtype",
 					ResourceActionsUtil.getModelResource(
 						themeDisplay.getLocale(),
-						GenericUtil.getGenericClassName(infoListProvider))
+						GenericUtil.getGenericClassName(infoCollectionProvider))
 				).put(
-					"title", infoListProvider.getLabel(themeDisplay.getLocale())
+					"title",
+					infoCollectionProvider.getLabel(themeDisplay.getLocale())
 				);
 			}
 			else {

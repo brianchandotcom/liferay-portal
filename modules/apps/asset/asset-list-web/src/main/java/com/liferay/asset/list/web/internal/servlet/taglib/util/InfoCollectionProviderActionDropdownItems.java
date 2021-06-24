@@ -16,7 +16,7 @@ package com.liferay.asset.list.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -39,11 +39,11 @@ import javax.servlet.http.HttpServletRequest;
 public class InfoCollectionProviderActionDropdownItems {
 
 	public InfoCollectionProviderActionDropdownItems(
-		InfoListProvider<?> infoListProvider,
+		InfoCollectionProvider<?> infoCollectionProvider,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_infoListProvider = infoListProvider;
+		_infoCollectionProvider = infoCollectionProvider;
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
@@ -70,7 +70,7 @@ public class InfoCollectionProviderActionDropdownItems {
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
-				"infoCollectionProviderKey", _infoListProvider.getKey()
+				"infoCollectionProviderKey", _infoCollectionProvider.getKey()
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).build();
@@ -79,7 +79,7 @@ public class InfoCollectionProviderActionDropdownItems {
 			dropdownItem.putData("action", "viewInfoCollectionProviderItems");
 			dropdownItem.putData(
 				"infoCollectionProviderTitle",
-				_infoListProvider.getLabel(_themeDisplay.getLocale()));
+				_infoCollectionProvider.getLabel(_themeDisplay.getLocale()));
 			dropdownItem.putData(
 				"viewInfoCollectionProviderItemsURL",
 				String.valueOf(viewInfoCollectionProviderItemsURL));
@@ -89,7 +89,7 @@ public class InfoCollectionProviderActionDropdownItems {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoListProvider<?> _infoListProvider;
+	private final InfoCollectionProvider<?> _infoCollectionProvider;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 

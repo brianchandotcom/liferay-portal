@@ -17,7 +17,7 @@ package com.liferay.asset.list.web.internal.model.listener;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
-import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -176,7 +176,7 @@ public class LayoutPageTemplateStructureRelModelListener
 
 			if (collectionJSONObject.has("key")) {
 				_addAssetListEntryUsage(
-					_portal.getClassNameId(InfoListProvider.class),
+					_portal.getClassNameId(InfoCollectionProvider.class),
 					layoutPageTemplateStructure.getGroupId(),
 					collectionJSONObject.getString("key"),
 					layoutPageTemplateStructure.

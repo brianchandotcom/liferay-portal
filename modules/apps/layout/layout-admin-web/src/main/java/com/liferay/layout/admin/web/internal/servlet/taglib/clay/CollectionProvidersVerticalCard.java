@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
-import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.GenericUtil;
@@ -41,13 +41,13 @@ import javax.servlet.http.HttpServletRequest;
 public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	public CollectionProvidersVerticalCard(
-		long groupId, InfoListProvider<?> infoListProvider,
+		long groupId, InfoCollectionProvider<?> infoCollectionProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(null, renderRequest, null);
 
 		_groupId = groupId;
-		_infoListProvider = infoListProvider;
+		_infoCollectionProvider = infoCollectionProvider;
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
@@ -75,7 +75,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 				).setBackURL(
 					themeDisplay.getURLCurrent()
 				).setParameter(
-					"collectionPK", _infoListProvider.getKey()
+					"collectionPK", _infoCollectionProvider.getKey()
 				).setParameter(
 					"collectionType",
 					InfoListProviderItemSelectorReturnType.class.getName()
@@ -112,7 +112,8 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		String className = GenericUtil.getGenericClassName(_infoListProvider);
+		String className = GenericUtil.getGenericClassName(
+			_infoCollectionProvider);
 
 		if (Validator.isNotNull(className)) {
 			return ResourceActionsUtil.getModelResource(
@@ -124,7 +125,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getTitle() {
-		return _infoListProvider.getLabel(themeDisplay.getLocale());
+		return _infoCollectionProvider.getLabel(themeDisplay.getLocale());
 	}
 
 	@Override
@@ -137,7 +138,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoListProvider<?> _infoListProvider;
+	private final InfoCollectionProvider<?> _infoCollectionProvider;
 	private final RenderResponse _renderResponse;
 
 }

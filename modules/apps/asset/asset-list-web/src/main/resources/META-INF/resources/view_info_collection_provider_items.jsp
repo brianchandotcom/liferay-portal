@@ -21,8 +21,6 @@ InfoCollectionProviderItemsDisplayContext infoCollectionProviderItemsDisplayCont
 ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDropdownItems)request.getAttribute(AssetListWebKeys.LIST_ITEMS_ACTION_DROPDOWN_ITEMS);
 
 InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProviderItemsDisplayContext.getInfoItemFieldValuesProvider();
-
-String infoCollectionProviderClassName = infoCollectionProviderItemsDisplayContext.getInfoCollectionProviderClassName();
 %>
 
 <clay:container-fluid
@@ -103,7 +101,7 @@ String infoCollectionProviderClassName = infoCollectionProviderItemsDisplayConte
 				<c:if test="<%= infoCollectionProviderItemsDisplayContext.isShowActions() %>">
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
-							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoCollectionProviderClassName, result) %>"
+							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoCollectionProviderItemsDisplayContext.getInfoCollectionProviderClassName(), result) %>"
 							propsTransformer="js/ListItemsDropdownPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>

@@ -22,7 +22,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
-import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
@@ -155,7 +155,7 @@ public class AssetPublisherPortletLayoutListener
 				 Validator.isNotNull(infoListProviderKey)) {
 
 			_addAssetListEntryUsage(
-				_portal.getClassNameId(InfoListProvider.class),
+				_portal.getClassNameId(InfoCollectionProvider.class),
 				infoListProviderKey, plid, portletId);
 		}
 		else if (Objects.equals(

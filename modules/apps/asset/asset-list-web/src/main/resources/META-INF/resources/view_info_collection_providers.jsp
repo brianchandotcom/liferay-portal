@@ -36,9 +36,9 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 		var="collectionsSearch"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.info.list.provider.InfoListProvider"
+			className="com.liferay.info.collection.provider.InfoCollectionProvider"
 			cssClass="entry"
-			modelVar="infoListProvider"
+			modelVar="infoCollectionProvider"
 		>
 			<liferay-ui:search-container-column-icon
 				icon="list"
@@ -48,16 +48,16 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 				colspan="<%= 2 %>"
 			>
 				<div class="list-group-title">
-					<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getTitle(infoListProvider)) %>
+					<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getTitle(infoCollectionProvider)) %>
 				</div>
 
 				<div class="list-group-subtext">
-					<liferay-ui:message key="<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getSubtitle(infoListProvider)) %>" />
+					<liferay-ui:message key="<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getSubtitle(infoCollectionProvider)) %>" />
 				</div>
 			</liferay-ui:search-container-column-text>
 
 			<%
-			InfoCollectionProviderActionDropdownItems infoCollectionProviderActionDropdownItems = new InfoCollectionProviderActionDropdownItems(infoListProvider, liferayPortletRequest, liferayPortletResponse);
+			InfoCollectionProviderActionDropdownItems infoCollectionProviderActionDropdownItems = new InfoCollectionProviderActionDropdownItems(infoCollectionProvider, liferayPortletRequest, liferayPortletResponse);
 			%>
 
 			<liferay-ui:search-container-column-text>

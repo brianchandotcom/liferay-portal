@@ -15,10 +15,12 @@
 package com.liferay.asset.list.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.list.provider.DefaultInfoListProviderContext;
-import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
@@ -29,13 +31,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -72,7 +71,8 @@ public class InfoCollectionProviderItemsDisplayContext {
 			className = PortalUtil.getClassName(assetEntry.getClassNameId());
 		}
 		else {
-			className = GenericUtil.getGenericClassName(_getInfoListProvider());
+			className = GenericUtil.getGenericClassName(
+				_getInfoCollectionProvider());
 		}
 
 		return ResourceActionsUtil.getModelResource(
@@ -85,7 +85,7 @@ public class InfoCollectionProviderItemsDisplayContext {
 		}
 
 		_infoCollectionProviderClassName = GenericUtil.getGenericClassName(
-			_getInfoListProvider());
+			_getInfoCollectionProvider());
 
 		return _infoCollectionProviderClassName;
 	}
@@ -100,7 +100,7 @@ public class InfoCollectionProviderItemsDisplayContext {
 		_infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
-				GenericUtil.getGenericClassName(_getInfoListProvider()));
+				GenericUtil.getGenericClassName(_getInfoCollectionProvider()));
 
 		return _infoItemFieldValuesProvider;
 	}
@@ -112,20 +112,20 @@ public class InfoCollectionProviderItemsDisplayContext {
 				_httpServletRequest,
 				"there-are-no-items-in-the-collection-provider"));
 
-		InfoListProvider<?> infoListProvider = _getInfoListProvider();
+		InfoCollectionProvider<?> infoCollectionProvider =
+			_getInfoCollectionProvider();
 
-		DefaultInfoListProviderContext defaultInfoListProviderContext =
-			new DefaultInfoListProviderContext(
-				_themeDisplay.getScopeGroup(), _themeDisplay.getUser());
+		CollectionQuery collectionQuery = new CollectionQuery();
 
-		List<Object> infoList = (List<Object>)infoListProvider.getInfoList(
-			defaultInfoListProviderContext);
+		collectionQuery.setPagination(
+			Pagination.of(
+				searchContainer.getEnd(), searchContainer.getStart()));
 
-		searchContainer.setResults(
-			ListUtil.subList(
-				infoList, searchContainer.getStart(),
-				searchContainer.getEnd()));
-		searchContainer.setTotal(infoList.size());
+		InfoPage infoPage = infoCollectionProvider.getCollectionInfoPage(
+			collectionQuery);
+
+		searchContainer.setResults(infoPage.getPageItems());
+		searchContainer.setTotal(infoPage.getTotalCount());
 
 		return searchContainer;
 	}
@@ -138,6 +138,17 @@ public class InfoCollectionProviderItemsDisplayContext {
 		_showActions = ParamUtil.get(_renderRequest, "showActions", false);
 
 		return _showActions;
+	}
+
+	private InfoCollectionProvider<?> _getInfoCollectionProvider() {
+		if (_infoCollectionProvider != null) {
+			return _infoCollectionProvider;
+		}
+
+		_infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
+			InfoCollectionProvider.class, _getInfoCollectionProviderKey());
+
+		return _infoCollectionProvider;
 	}
 
 	private String _getInfoCollectionProviderKey() {
@@ -156,17 +167,6 @@ public class InfoCollectionProviderItemsDisplayContext {
 		_infoCollectionProviderKey = infoCollectionProviderKey;
 
 		return _infoCollectionProviderKey;
-	}
-
-	private InfoListProvider<?> _getInfoListProvider() {
-		if (_infoListProvider != null) {
-			return _infoListProvider;
-		}
-
-		_infoListProvider = _infoItemServiceTracker.getInfoItemService(
-			InfoListProvider.class, _getInfoCollectionProviderKey());
-
-		return _infoListProvider;
 	}
 
 	private PortletURL _getPortletURL() {
@@ -193,11 +193,11 @@ public class InfoCollectionProviderItemsDisplayContext {
 		InfoCollectionProviderItemsDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
+	private InfoCollectionProvider<?> _infoCollectionProvider;
 	private String _infoCollectionProviderClassName;
 	private String _infoCollectionProviderKey;
 	private InfoItemFieldValuesProvider<Object> _infoItemFieldValuesProvider;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
-	private InfoListProvider<?> _infoListProvider;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Boolean _showActions;

@@ -14,8 +14,8 @@
 
 package com.liferay.asset.list.web.internal.display.context;
 
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
@@ -59,29 +59,32 @@ public class InfoCollectionProviderDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public SearchContainer<InfoListProvider<?>> getSearchContainer() {
-		SearchContainer<InfoListProvider<?>> searchContainer =
+	public SearchContainer<InfoCollectionProvider<?>> getSearchContainer() {
+		SearchContainer<InfoCollectionProvider<?>> searchContainer =
 			new SearchContainer<>(
 				_renderRequest, _getPortletURL(), null,
 				LanguageUtil.get(
 					_httpServletRequest, "there-are-no-collection-providers"));
 
-		List<InfoListProvider<?>> infoListProviders =
-			(List<InfoListProvider<?>>)
+		List<InfoCollectionProvider<?>> infoCollectionProviders =
+			(List<InfoCollectionProvider<?>>)
 				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
-					InfoListProvider.class);
+					InfoCollectionProvider.class);
 
 		searchContainer.setResults(
 			ListUtil.subList(
-				infoListProviders, searchContainer.getStart(),
+				infoCollectionProviders, searchContainer.getStart(),
 				searchContainer.getEnd()));
-		searchContainer.setTotal(infoListProviders.size());
+		searchContainer.setTotal(infoCollectionProviders.size());
 
 		return searchContainer;
 	}
 
-	public String getSubtitle(InfoListProvider<?> infoListProvider) {
-		String className = GenericUtil.getGenericClassName(infoListProvider);
+	public String getSubtitle(
+		InfoCollectionProvider<?> infoCollectionProvider) {
+
+		String className = GenericUtil.getGenericClassName(
+			infoCollectionProvider);
 
 		if (Validator.isNotNull(className)) {
 			return ResourceActionsUtil.getModelResource(
@@ -91,8 +94,8 @@ public class InfoCollectionProviderDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public String getTitle(InfoListProvider<?> infoListProvider) {
-		return infoListProvider.getLabel(_themeDisplay.getLocale());
+	public String getTitle(InfoCollectionProvider<?> infoCollectionProvider) {
+		return infoCollectionProvider.getLabel(_themeDisplay.getLocale());
 	}
 
 	private PortletURL _getPortletURL() {

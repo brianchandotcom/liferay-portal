@@ -19,11 +19,10 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderContext;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.info.pagination.Pagination;
-import com.liferay.info.sort.Sort;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -55,7 +54,6 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,9 +97,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_infoListProviderServiceRegistration = registry.registerService(
-			(Class<InfoListProvider<?>>)(Class<?>)InfoListProvider.class,
-			new TestInfoListProvider());
+		_infoCollectionProviderServiceRegistration = registry.registerService(
+			(Class<InfoCollectionProvider<?>>)
+				(Class<?>)InfoCollectionProvider.class,
+			new TestInfoCollectionProvider());
 
 		_originalThemeDisplayDefaultLocale =
 			LocaleThreadLocal.getThemeDisplayLocale();
@@ -113,8 +112,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
 
-		if (_infoListProviderServiceRegistration != null) {
-			_infoListProviderServiceRegistration.unregister();
+		if (_infoCollectionProviderServiceRegistration != null) {
+			_infoCollectionProviderServiceRegistration.unregister();
 		}
 
 		LocaleThreadLocal.setThemeDisplayLocale(
@@ -130,7 +129,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject layoutObjectReferenceJSONObject = JSONUtil.put(
 			"itemType", BlogsEntry.class.getName()
 		).put(
-			"key", TestInfoListProvider.class.getName()
+			"key", TestInfoCollectionProvider.class.getName()
 		).put(
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);
@@ -300,8 +299,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private ServiceRegistration<InfoListProvider<?>>
-		_infoListProviderServiceRegistration;
+	private ServiceRegistration<InfoCollectionProvider<?>>
+		_infoCollectionProviderServiceRegistration;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/get_collection_field"
@@ -315,36 +314,24 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	private ServiceContext _serviceContext;
 
-	private class TestInfoListProvider implements InfoListProvider<BlogsEntry> {
+	private class TestInfoCollectionProvider
+		implements InfoCollectionProvider<BlogsEntry> {
 
 		@Override
-		public List<BlogsEntry> getInfoList(
-			InfoListProviderContext infoListProviderContext) {
+		public InfoPage<BlogsEntry> getCollectionInfoPage(
+			CollectionQuery collectionQuery) {
 
-			return _blogsEntryLocalService.getGroupEntries(
-				_group.getGroupId(), _queryDefinition);
-		}
-
-		@Override
-		public List<BlogsEntry> getInfoList(
-			InfoListProviderContext infoListProviderContext,
-			Pagination pagination, Sort sort) {
-
-			return _blogsEntryLocalService.getGroupEntries(
-				_group.getGroupId(), _queryDefinition);
-		}
-
-		@Override
-		public int getInfoListCount(
-			InfoListProviderContext infoListProviderContext) {
-
-			return _blogsEntryLocalService.getGroupEntriesCount(
-				_group.getGroupId(), _queryDefinition);
+			return InfoPage.of(
+				_blogsEntryLocalService.getGroupEntries(
+					_group.getGroupId(), _queryDefinition),
+				collectionQuery.getPagination(),
+				_blogsEntryLocalService.getGroupEntriesCount(
+					_group.getGroupId(), _queryDefinition));
 		}
 
 		@Override
 		public String getLabel(Locale locale) {
-			return TestInfoListProvider.class.getSimpleName();
+			return TestInfoCollectionProvider.class.getSimpleName();
 		}
 
 		private final QueryDefinition<BlogsEntry> _queryDefinition =

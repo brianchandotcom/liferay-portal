@@ -27,12 +27,12 @@ SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = (Sel
 		var="collectionsSearch"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.info.list.provider.InfoListProvider"
-			modelVar="infoListProvider"
+			className="com.liferay.info.collection.provider.InfoCollectionProvider"
+			modelVar="infoCollectionProvider"
 		>
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard="<%= new CollectionProvidersVerticalCard(selectLayoutCollectionDisplayContext.getSelGroupId(), infoListProvider, renderRequest, renderResponse) %>"
+					verticalCard="<%= new CollectionProvidersVerticalCard(selectLayoutCollectionDisplayContext.getSelGroupId(), infoCollectionProvider, renderRequest, renderResponse) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

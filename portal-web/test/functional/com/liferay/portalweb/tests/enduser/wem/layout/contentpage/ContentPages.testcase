@@ -588,7 +588,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-130083. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
+	@description = "This is a test for LPS-130083. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
 	@priority = "4"
 	test ViewEllipsisButtonOnTheTopperOfFragmentInsideNestedGrid {
 		task ("Add a Grid element to the content page") {

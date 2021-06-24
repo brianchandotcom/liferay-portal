@@ -49,10 +49,6 @@ export default function PageContent({
 	subtype,
 	title,
 }) {
-	const dropdownItems = useSelectorCallback(
-		selectPageContentDropdownItems(classPK),
-		[classPK]
-	);
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
@@ -72,6 +68,39 @@ export default function PageContent({
 	const isBeingEdited = useMemo(
 		() => toControlsId(editableId) === editableProcessorUniqueId,
 		[toControlsId, editableId, editableProcessorUniqueId]
+	);
+
+	const dropdownItems = useSelectorCallback(
+		(state) => {
+			const pageContentDropdownItems = selectPageContentDropdownItems(
+				classPK
+			)(state);
+
+			return pageContentDropdownItems?.map((item) => {
+				if (item.label === Liferay.Language.get('edit-image')) {
+					return {
+						...item,
+						onClick: () => {
+							setImageEditorParams({
+								editImageURL: item.editImageURL,
+								fileEntryId: item.fileEntryId,
+							});
+
+							previewURLsRef.current = null;
+
+							ImageService.getFileEntry({
+								fileEntryId: item.fileEntryId,
+							}).then(({fileEntryURL}) => {
+								previewURLsRef.current = fileEntryURL;
+							});
+						},
+					};
+				}
+
+				return item;
+			});
+		},
+		[classPK]
 	);
 
 	useEffect(() => {
@@ -156,28 +185,6 @@ export default function PageContent({
 		setEditableNextProcessorUniqueId(toControlsId(editableId));
 	};
 
-	const menuItems = dropdownItems?.map((item) => {
-		if (item.label === Liferay.Language.get('edit-image')) {
-			return {
-				...item,
-				onClick: () => {
-					setImageEditorParams({
-						editImageURL: item.editImageURL,
-						fileEntryId: item.fileEntryId,
-					});
-
-					ImageService.getFileEntry({
-						fileEntryId: item.fileEntryId,
-					}).then(({fileEntryURL}) => {
-						previewURLsRef.current = fileEntryURL;
-					});
-				},
-			};
-		}
-
-		return item;
-	});
-
 	return (
 		<li
 			className={classNames('page-editor__page-contents__page-content', {
@@ -210,9 +217,9 @@ export default function PageContent({
 					)}
 				</ClayLayout.ContentCol>
 
-				{menuItems ? (
+				{dropdownItems?.length ? (
 					<ClayDropDownWithItems
-						items={menuItems}
+						items={dropdownItems}
 						trigger={
 							<ClayButton
 								className="btn-monospaced btn-sm text-secondary"

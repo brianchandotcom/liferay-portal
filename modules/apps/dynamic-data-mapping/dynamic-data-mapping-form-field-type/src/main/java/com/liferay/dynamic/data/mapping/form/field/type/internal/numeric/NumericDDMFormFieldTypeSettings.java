@@ -63,6 +63,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		@DDMFormRule(
 			actions = {
 				"setDataType('predefinedValue', getValue('dataType'))",
+				"setPropertyValue('predefinedValue', 'inputMask', getValue('inputMask'))",
+				"setPropertyValue('predefinedValue', 'inputMaskFormat', getLocalizedValue('inputMaskFormat'))",
+				"setPropertyValue('predefinedValue', 'numericInputMask', getLocalizedValue('numericInputMask'))",
 				"setValidationDataType('validation', getValue('dataType'))",
 				"setValidationFieldName('validation', getValue('name'))",
 				"setVisible('characterOptions', getValue('inputMask'))",

@@ -137,7 +137,7 @@ definition {
 			takeScreenshot();
 		}
 
-		SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+		SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 	}
 
 }

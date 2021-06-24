@@ -636,28 +636,14 @@ definition {
 				position = "2");
 		}
 
-		task ("View the ellipsis button is visible on topper of Heading fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Heading");
+		task ("View the ellipsis button is visible on topper of fragments inside inner Grid") {
+			for (var fragmentName : list "Heading,Button,Paragraph") {
+				PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
-			AssertVisible(
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
-		}
-
-		task ("View the ellipsis button is visible on topper of Button fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Button");
-
-			AssertVisible(
-				key_fragmentName = "Button",
-				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
-		}
-
-		task ("View the ellipsis button is visible on topper of Paragraph fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Paragraph");
-
-			AssertVisible(
-				key_fragmentName = "Paragraph",
-				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+				AssertVisible(
+					key_fragmentName = "${fragmentName}",
+					locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+			}
 		}
 	}
 

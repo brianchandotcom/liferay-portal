@@ -55,7 +55,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 						  }
 						: value
 				}
-				showAddButton={!isWithinCollection}
+				showEditControls={!isWithinCollection}
 				transformValueCallback={itemSelectorValueToInfoItem}
 			/>
 

@@ -33,7 +33,7 @@ export default function ItemSelector({
 	quickMappedInfoItems = [],
 	modalProps,
 	selectedItem,
-	showAddButton = true,
+	showEditControls = true,
 	showMappedItems = true,
 	transformValueCallback,
 }) {
@@ -175,11 +175,11 @@ export default function ItemSelector({
 			<div className="d-flex">
 				<ClayInput
 					className={classNames('mr-2', {
-						'page-editor__item-selector__content-input': showAddButton,
+						'page-editor__item-selector__content-input': showEditControls,
 					})}
 					id={itemSelectorInputId}
 					onClick={() => {
-						if (showAddButton) {
+						if (showEditControls) {
 							openModal();
 						}
 					}}
@@ -193,7 +193,7 @@ export default function ItemSelector({
 					value={selectedItemTitle}
 				/>
 
-				{showAddButton &&
+				{showEditControls &&
 					(mappedItemsMenu.length > 0 ? (
 						<ClayDropDownWithItems
 							items={mappedItemsMenu}
@@ -220,7 +220,7 @@ export default function ItemSelector({
 						/>
 					))}
 
-				{selectedItem?.title && (
+				{showEditControls && selectedItem?.title && (
 					<ClayDropDownWithItems
 						items={optionsMenu}
 						trigger={
@@ -250,7 +250,17 @@ ItemSelector.propTypes = {
 	eventName: PropTypes.string,
 	itemSelectorURL: PropTypes.string,
 	label: PropTypes.string.isRequired,
+	modalProps: PropTypes.object,
 	onItemSelect: PropTypes.func.isRequired,
+	quickMappedInfoItems: PropTypes.arrayOf(
+		PropTypes.shape({
+			classNameId: PropTypes.string,
+			classPK: PropTypes.string,
+			title: PropTypes.string,
+		})
+	),
 	selectedItem: PropTypes.shape({title: PropTypes.string}),
+	showEditControls: PropTypes.bool,
+	showMappedItems: PropTypes.bool,
 	transformValueCallback: PropTypes.func.isRequired,
 };

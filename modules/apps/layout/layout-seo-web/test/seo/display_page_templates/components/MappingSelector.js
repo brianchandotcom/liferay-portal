@@ -20,14 +20,14 @@ import MappingSelector from '../../../../src/main/resources/META-INF/resources/j
 
 const baseProps = {
 	fieldType: 'text',
-	helpMessage: 'Map a text field, it will be used as Title.',
-	initialFields: [
+	fields: [
 		{key: 'field-1', label: 'Field 1', type: 'text'},
 		{key: 'field-2', label: 'Field 2', type: 'text'},
 		{key: 'field-3', label: 'Field 3', type: 'image'},
 		{key: 'field-4', label: 'Field 4', type: 'text'},
 		{key: 'field-5', label: 'Field 5', type: 'text'},
 	],
+	helpMessage: 'Map a text field, it will be used as Title.',
 	label: 'Label test mapping field',
 	name: 'testMappingSelector',
 	selectedFieldKey: 'field-2',
@@ -105,14 +105,12 @@ describe('MappingSelector', () => {
 			describe('and the user selects another field', () => {
 				beforeEach(() => {
 					fireEvent.change(fieldSelect, {
-						target: {value: baseProps.initialFields[0].key},
+						target: {value: baseProps.fields[0].key},
 					});
 				});
 
 				it('sets the new field key in the hidden input', () => {
-					expect(inputValue.value).toBe(
-						baseProps.initialFields[0].key
-					);
+					expect(inputValue.value).toBe(baseProps.fields[0].key);
 				});
 
 				it('sets the new field name in the user feedback input', () => {
@@ -187,7 +185,7 @@ describe('MappingSelector', () => {
 		});
 	});
 
-	describe('when rendered filtred with fieldType image', () => {
+	describe('when rendered with fieldType image', () => {
 		let result;
 		let fieldSelect;
 		let options;
@@ -205,10 +203,6 @@ describe('MappingSelector', () => {
 			options = fieldSelect.querySelectorAll('option');
 		});
 
-		it('only has two filtered options', () => {
-			expect(options.length).toBe(2);
-		});
-
 		it('has the first option unmapped', () => {
 			expect(options[0].value).toBe('unmapped');
 			expect(fieldSelect.value).toBe('unmapped');
@@ -217,10 +211,6 @@ describe('MappingSelector', () => {
 		it('has the selected field unmapped', () => {
 			expect(options[0].value).toBe('unmapped');
 			expect(fieldSelect.value).toBe('unmapped');
-		});
-
-		it('has the image field in the second position', () => {
-			expect(options[1].value).toBe(baseProps.initialFields[2].key);
 		});
 	});
 });

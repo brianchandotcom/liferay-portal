@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import MappingFields from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingFields';
@@ -97,6 +97,29 @@ describe('MappingFields', () => {
 			expect(hiddenImageInput.type).toBe('hidden');
 			expect(hiddenImageInput.name).toBe(baseProps.inputs[1].name);
 			expect(hiddenImageInput.value).toBe('unmapped');
+		});
+	});
+
+	describe('when rendered with filtered fieldType image', () => {
+		let result;
+		let fieldSelect;
+		let options;
+
+		beforeEach(() => {
+			result = renderComponent();
+
+			fireEvent.click(result.getAllByTitle('map')[1]);
+
+			fieldSelect = result.getByLabelText('field');
+			options = fieldSelect.querySelectorAll('option');
+		});
+
+		it('only has two filtered options', () => {
+			expect(options.length).toBe(2);
+		});
+
+		it('has the image field in the second position', () => {
+			expect(options[1].value).toBe(baseProps.fields[2].key);
 		});
 	});
 });

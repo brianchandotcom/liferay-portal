@@ -2058,14 +2058,6 @@ definition {
 				actual = "${containerWidth}",
 				expected = "${screenWidth}");
 
-			var screenWidth	= selenium.getElementWidth("//body");
-
-			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
-
-			TestUtils.assertNotEquals(
-				actual = "${containerWidth}",
-				expected = "${screenWidth}");
-
 			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
 
 			AssertCssValue(

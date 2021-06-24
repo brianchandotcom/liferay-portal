@@ -350,6 +350,18 @@ public class LayoutsTreeDisplayContext {
 		).buildString();
 	}
 
+	public long getSelectedSiteNavigationMenuItemId() {
+		if (_selectedSiteNavigationMenuItemId != null) {
+			return _selectedSiteNavigationMenuItemId;
+		}
+
+		_selectedSiteNavigationMenuItemId = ParamUtil.getLong(
+			_liferayPortletRequest.getHttpServletRequest(),
+			_SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME);
+
+		return _selectedSiteNavigationMenuItemId;
+	}
+
 	public long getSelPlid() {
 		Layout layout = _themeDisplay.getLayout();
 
@@ -811,6 +823,7 @@ public class LayoutsTreeDisplayContext {
 	private final String _namespace;
 	private Boolean _pageHierarchySelectedOption;
 	private String _pageTypeSelectedOption;
+	private Long _selectedSiteNavigationMenuItemId;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;

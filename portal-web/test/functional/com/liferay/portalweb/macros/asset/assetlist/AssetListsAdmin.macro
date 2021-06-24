@@ -506,11 +506,11 @@ definition {
 	macro viewCollectionItems {
 		AssetListsAdmin.gotoEntry(assetListName = "${assetListTitle}");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
 		if (isSet(personalizedVariation)) {
 			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
 		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 
@@ -535,11 +535,11 @@ definition {
 			key_title = "${assetListTitle}",
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
 		if (isSet(personalizedVariation)) {
 			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
 		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 
@@ -567,11 +567,11 @@ definition {
 			key_title = "${assetListTitle}",
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
 		if (isSet(personalizedVariation)) {
 			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
 		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 

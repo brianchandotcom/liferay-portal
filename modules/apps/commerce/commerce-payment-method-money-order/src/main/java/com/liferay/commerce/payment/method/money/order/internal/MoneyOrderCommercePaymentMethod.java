@@ -46,7 +46,8 @@ public class MoneyOrderCommercePaymentMethod implements CommercePaymentMethod {
 		throws Exception {
 
 		return new CommercePaymentResult(
-			null, commercePaymentRequest.getCommerceOrderId(),
+			commercePaymentRequest.getTransactionId(),
+			commercePaymentRequest.getCommerceOrderId(),
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING, false, null, null,
 			Collections.emptyList(), true);
 	}
@@ -92,7 +93,8 @@ public class MoneyOrderCommercePaymentMethod implements CommercePaymentMethod {
 		throws Exception {
 
 		return new CommercePaymentResult(
-			null, commercePaymentRequest.getCommerceOrderId(),
+			commercePaymentRequest.getTransactionId(),
+			commercePaymentRequest.getCommerceOrderId(),
 			CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, false, null, null,
 			Collections.emptyList(), true);
 	}

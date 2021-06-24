@@ -19,55 +19,103 @@ import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
-function PageTypeSelector(props) {
-	const [active, setActive] = useState(false);
+function PageTypeSelector({
+	addCollectionLayoutURL,
+	addLayoutURL,
+	configureLayoutSetURL,
+	namespace,
+	pageTypeOptions,
+	pageTypeSelectedOption,
+	pageTypeSelectedOptionLabel,
+	showAddIcon,
+	siteNavigationMenuEnabled,
+}) {
+	const [addPageDropdownActive, setAddPageDropdownActive] = useState(false);
+	const [pageTypeDropdownActive, setPageTypeDropdownActive] = useState(false);
 
-	const handleOnChange = useCallback(
-		(event) => {
-			const pageType = event.target.value;
-
-			Liferay.Util.Session.set(
-				`${props.namespace}PRIVATE_LAYOUT`,
-				pageType === 'private-pages'
-			).then(() => Liferay.Util.navigate(window.location.href));
-		},
-		[props.namespace]
-	);
+	const handleSelect = (type) => {
+		Liferay.Util.Session.set(
+			`${namespace}PAGE_TYPE_SELECTED_OPTION`,
+			type
+		).then(() => {
+			Liferay.Util.navigate(window.location.href);
+		});
+	};
 
 	const handleOnAddCollectionPageClick = useCallback(() => {
-		setActive(false);
-		Liferay.Util.navigate(props.addCollectionLayoutURL);
-	}, [props.addCollectionLayoutURL]);
+		setAddPageDropdownActive(false);
+		Liferay.Util.navigate(addCollectionLayoutURL);
+	}, [addCollectionLayoutURL]);
 
 	const handleOnAddPageClick = useCallback(() => {
-		setActive(false);
-		Liferay.Util.navigate(props.addLayoutURL);
-	}, [props.addLayoutURL]);
+		setAddPageDropdownActive(false);
+		Liferay.Util.navigate(addLayoutURL);
+	}, [addLayoutURL]);
 
 	return (
 		<div className="align-items-center d-flex page-type-selector">
-			<div>
-				<select
-					className="form-control form-control-sm"
-					defaultValue={
-						props.privateLayout ? 'private-pages' : 'public-pages'
+			{siteNavigationMenuEnabled ? (
+				<ClayDropDown
+					active={pageTypeDropdownActive}
+					onActiveChange={setPageTypeDropdownActive}
+					trigger={
+						<ClayButton
+							className="form-control-select text-left"
+							displayType="secondary"
+							small
+							type="button"
+						>
+							{pageTypeSelectedOptionLabel}
+						</ClayButton>
 					}
-					onChange={handleOnChange}
 				>
-					<option value="public-pages">
-						{Liferay.Language.get('public-pages')}
-					</option>
-					<option value="private-pages">
-						{Liferay.Language.get('private-pages')}
-					</option>
-				</select>
-			</div>
+					<ClayDropDown.ItemList>
+						{pageTypeOptions.map((option, index) => (
+							<React.Fragment key={index}>
+								<ClayDropDown.Item disabled key={option.value}>
+									{option.name}
+								</ClayDropDown.Item>
+								{option.items.map((item) => (
+									<ClayDropDown.Item
+										className="page-type-selector-option"
+										key={item.value}
+										onClick={() => handleSelect(item.value)}
+										symbolRight={
+											item.value ===
+											pageTypeSelectedOption
+												? 'check'
+												: null
+										}
+									>
+										{item.name}
+									</ClayDropDown.Item>
+								))}
+							</React.Fragment>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			) : (
+				<div>
+					<select
+						className="form-control form-control-sm"
+						defaultValue={pageTypeSelectedOption}
+						onChange={(event) => handleSelect(event.target.value)}
+					>
+						<option value="PUBLIC_LAYOUT">
+							{Liferay.Language.get('public-pages')}
+						</option>
+						<option value="PRIVATE_LAYOUT">
+							{Liferay.Language.get('private-pages')}
+						</option>
+					</select>
+				</div>
+			)}
 
 			<div className="flex-fill flex-grow-1 text-right">
-				{props.showAddIcon && (
+				{showAddIcon && (
 					<ClayDropDown
-						active={active}
-						onActiveChange={setActive}
+						active={addPageDropdownActive}
+						onActiveChange={setAddPageDropdownActive}
 						trigger={
 							<ClayButton
 								aria-haspopup="true"
@@ -79,7 +127,7 @@ function PageTypeSelector(props) {
 						}
 					>
 						<ClayDropDown.ItemList>
-							{props.addLayoutURL && (
+							{addLayoutURL && (
 								<ClayDropDown.Item
 									data-value={Liferay.Language.get(
 										'add-page'
@@ -91,7 +139,7 @@ function PageTypeSelector(props) {
 									{Liferay.Language.get('add-page')}
 								</ClayDropDown.Item>
 							)}
-							{props.addCollectionLayoutURL && (
+							{addCollectionLayoutURL && (
 								<ClayDropDown.Item
 									data-value={Liferay.Language.get(
 										'add-collection-page'
@@ -114,12 +162,12 @@ function PageTypeSelector(props) {
 				)}
 			</div>
 			<div className="autofit-col ml-2">
-				{props.configureLayoutSetURL && (
+				{configureLayoutSetURL && (
 					<ClayLink
 						borderless
 						className="configure-link"
 						displayType="unstyled"
-						href={props.configureLayoutSetURL}
+						href={configureLayoutSetURL}
 						monospaced
 						outline
 					>
@@ -132,11 +180,26 @@ function PageTypeSelector(props) {
 }
 
 PageTypeSelector.propTypes = {
+	addCollectionLayoutURL: PropTypes.string,
 	addLayoutURL: PropTypes.string,
 	configureLayoutSetURL: PropTypes.string,
 	namespace: PropTypes.string,
-	privateLayout: PropTypes.bool,
+	pageTypeOptions: PropTypes.arrayOf(
+		PropTypes.shape({
+			items: PropTypes.arrayOf(
+				PropTypes.shape({
+					name: PropTypes.string,
+					value: PropTypes.value,
+				})
+			),
+			name: PropTypes.string,
+			value: PropTypes.string,
+		})
+	),
+	pageTypeSelectedOption: PropTypes.string,
+	pageTypeSelectedOptionLabel: PropTypes.string,
 	showAddIcon: PropTypes.bool,
+	siteNavigationMenuEnabled: PropTypes.bool,
 };
 
 export default PageTypeSelector;

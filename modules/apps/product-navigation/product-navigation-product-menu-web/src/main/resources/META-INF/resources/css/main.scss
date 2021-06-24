@@ -114,6 +114,17 @@ $product-menu-pages-administration-link-height: 72px;
 			border-color: $gray-800;
 			color: $gray-500;
 		}
+
+		.dropdown-toggle.form-control-select {
+			&,
+			&:hover,
+			&:active,
+			&:focus {
+				background-color: $dark;
+				border-color: $gray-800;
+				color: $gray-500;
+			}
+		}
 	}
 
 	.tree-view {
@@ -266,6 +277,10 @@ $product-menu-pages-administration-link-height: 72px;
 	.view-collection-items-action-option.collection {
 		display: block;
 	}
+}
+
+.page-type-selector-option {
+	padding-left: 32px;
 }
 
 .tree-drag-helper {

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
 import classNames from 'classnames';
@@ -26,9 +27,22 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 	const [activePage, setActivePage] = useState(1);
 	const isActive = useIsActive();
 
-	const totalPages = Math.ceil(
+    const totalPages = Math.ceil(
 		TOTAL_ENTRIES / collectionConfig.numberOfItems
 	);
+
+	const simplePaginationButtons = [
+		{
+			disabled: activePage === 1,
+			label: Liferay.Language.get('previous'),
+			onClick: () => setActivePage(activePage - 1),
+		},
+		{
+			disabled: activePage === totalPages,
+			label: Liferay.Language.get('next'),
+			onClick: () => setActivePage(activePage + 1),
+		},
+	];
 
 	return (
 		<div
@@ -38,7 +52,7 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 				),
 			})}
 		>
-			{collectionConfig.paginationType === 'regular' && (
+			{collectionConfig.paginationType === 'regular' ? (
 				<ClayPaginationBar>
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
@@ -58,6 +72,26 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 						totalPages={totalPages}
 					/>
 				</ClayPaginationBar>
+			) : (
+				<div className="page-editor__collection__pagination--simple">
+					{simplePaginationButtons.map(
+						({disabled, label, onClick}) => (
+							<ClayButton
+								disabled={disabled}
+								displayType="unstyled"
+								key={label}
+							>
+								<span
+									className="c-inner"
+									onClick={onClick}
+									tabIndex="-1"
+								>
+									{label}
+								</span>
+							</ClayButton>
+						)
+					)}
+				</div>
 			)}
 		</div>
 	);

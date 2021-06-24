@@ -314,7 +314,7 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"configureLayoutSetURL",
 			() -> {
-				if (!hasConfigureLayoutPermission()) {
+				if (!isShowConfigureLayout()) {
 					return StringPool.BLANK;
 				}
 
@@ -327,25 +327,9 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"pageTypeSelectedOption", _getPageTypeSelectedOption()
 		).put(
-			"privateLayout", isPrivateLayout()
+			"pageTypeSelectedOptionLabel", _getPageTypeSelectedOptionLabel()
 		).put(
-			"showAddIcon",
-			() -> {
-				if (!hasAddLayoutPermission()) {
-					return false;
-				}
-
-				Group scopeGroup = _themeDisplay.getScopeGroup();
-
-				if (scopeGroup.isStaged() &&
-					Objects.equals(
-						scopeGroup, StagingUtil.getLiveGroup(scopeGroup))) {
-
-					return false;
-				}
-
-				return true;
-			}
+			"showAddIcon", this::_isShowAddIcon
 		).build();
 	}
 
@@ -457,15 +441,27 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	public boolean isPrivateLayout() {
-		Layout layout = _themeDisplay.getLayout();
+		return Objects.equals(
+			ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT,
+			_getPageTypeSelectedOption());
+	}
 
-		return GetterUtil.getBoolean(
-			SessionClicks.get(
-				PortalUtil.getHttpServletRequest(_liferayPortletRequest),
-				getNamespace() +
-					ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT,
-				"false"),
-			layout.isPrivateLayout());
+	public boolean isShowConfigureLayout() throws PortalException {
+		if (_isPageHierarchySelectedOption() &&
+			hasConfigureLayoutPermission()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSiteNavigationMenu() {
+		if (_getSiteNavigationMenuId() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private JSONObject _getOptionGroupJSONObject(
@@ -532,6 +528,53 @@ public class LayoutsTreeDisplayContext {
 		return _pageTypeSelectedOption;
 	}
 
+	private String _getPageTypeSelectedOptionLabel() {
+		if (Objects.equals(
+				_getPageTypeSelectedOption(),
+				ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT)) {
+
+			return LanguageUtil.get(
+				_themeDisplay.getLocale(),
+				ProductNavigationProductMenuWebKeys.PUBLIC_PAGES_KEY);
+		}
+
+		if (Objects.equals(
+				_getPageTypeSelectedOption(),
+				ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT)) {
+
+			return LanguageUtil.get(
+				_themeDisplay.getLocale(),
+				ProductNavigationProductMenuWebKeys.PRIVATE_PAGES_KEY);
+		}
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+				_getSiteNavigationMenuId());
+
+		if (siteNavigationMenu != null) {
+			return siteNavigationMenu.getName();
+		}
+
+		return _getPageTypeSelectedOption();
+	}
+
+	private long _getSiteNavigationMenuId() {
+		if (_siteNavigationMenuId != null) {
+			return _siteNavigationMenuId;
+		}
+
+		long siteNavigationMenuId = 0;
+
+		if (!_isPageHierarchyOption(_getPageTypeSelectedOption())) {
+			siteNavigationMenuId = GetterUtil.getLong(
+				_getPageTypeSelectedOption());
+		}
+
+		_siteNavigationMenuId = siteNavigationMenuId;
+
+		return _siteNavigationMenuId;
+	}
+
 	private JSONArray _getSiteNavigationMenuJSONArray() {
 		if (_siteNavigationMenuJSONArray != null) {
 			return _siteNavigationMenuJSONArray;
@@ -578,6 +621,33 @@ public class LayoutsTreeDisplayContext {
 		return false;
 	}
 
+	private boolean _isPageHierarchySelectedOption() {
+		if (_pageHierarchySelectedOption != null) {
+			return _pageHierarchySelectedOption;
+		}
+
+		_pageHierarchySelectedOption = _isPageHierarchyOption(
+			_getPageTypeSelectedOption());
+
+		return _pageHierarchySelectedOption;
+	}
+
+	private boolean _isShowAddIcon() throws PortalException {
+		if (!_isPageHierarchySelectedOption() || !hasAddLayoutPermission()) {
+			return false;
+		}
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (scopeGroup.isStaged() &&
+			Objects.equals(scopeGroup, StagingUtil.getLiveGroup(scopeGroup))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _isValidPageTypeSelectedOption(
 		String pageTypeSelectedOption) {
 
@@ -616,7 +686,9 @@ public class LayoutsTreeDisplayContext {
 	private final GroupProvider _groupProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final String _namespace;
+	private Boolean _pageHierarchySelectedOption;
 	private String _pageTypeSelectedOption;
+	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 	private final SiteNavigationMenuItemTypeRegistry

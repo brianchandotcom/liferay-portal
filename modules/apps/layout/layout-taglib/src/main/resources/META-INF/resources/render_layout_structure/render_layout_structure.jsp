@@ -34,6 +34,12 @@ for (String childrenItemId : childrenItemIds) {
 			CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem = (CollectionStyledLayoutStructureItem)layoutStructureItem;
 
 			InfoListRenderer<Object> infoListRenderer = (InfoListRenderer<Object>)renderLayoutStructureDisplayContext.getInfoListRenderer(collectionStyledLayoutStructureItem);
+
+			int collectionCount = renderLayoutStructureDisplayContext.getCollectionCount(collectionStyledLayoutStructureItem);
+
+			String paginationType = collectionStyledLayoutStructureItem.getPaginationType();
+
+			boolean paginationEnabled = Objects.equals(paginationType, "regular") || Objects.equals(paginationType, "simple");
 			%>
 
 			<div class="<%= renderLayoutStructureDisplayContext.getCssClass(collectionStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(collectionStyledLayoutStructureItem) %>">
@@ -55,9 +61,13 @@ for (String childrenItemId : childrenItemIds) {
 
 							List<Object> collection = renderLayoutStructureDisplayContext.getCollection(collectionStyledLayoutStructureItem);
 
-							int maxNumberOfItems = Math.min(collection.size(), collectionStyledLayoutStructureItem.getNumberOfItems());
+							int maxNumberOfItemsPerPage = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItems());
 
-							int numberOfRows = (int)Math.ceil((double)maxNumberOfItems / collectionStyledLayoutStructureItem.getNumberOfColumns());
+							if (paginationEnabled) {
+								maxNumberOfItemsPerPage = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+							}
+
+							int numberOfRows = (int)Math.ceil((double)maxNumberOfItemsPerPage / collectionStyledLayoutStructureItem.getNumberOfColumns());
 
 							for (int i = 0; i < numberOfRows; i++) {
 						%>
@@ -68,7 +78,7 @@ for (String childrenItemId : childrenItemIds) {
 								for (int j = 0; j < collectionStyledLayoutStructureItem.getNumberOfColumns(); j++) {
 									int index = (i * collectionStyledLayoutStructureItem.getNumberOfColumns()) + j;
 
-									if (index >= maxNumberOfItems) {
+									if ((index >= maxNumberOfItemsPerPage) || (index >= collection.size())) {
 										break;
 									}
 

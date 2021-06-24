@@ -222,7 +222,7 @@ definition {
 				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
 
 			MouseOver(
-				key_sidebarButton = "Selection",
+				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertAttributeValue(

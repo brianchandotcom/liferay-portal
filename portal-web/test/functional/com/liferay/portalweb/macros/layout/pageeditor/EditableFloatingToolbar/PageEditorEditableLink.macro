@@ -137,7 +137,7 @@ definition {
 			value1 = "${url}");
 
 		Click(
-			key_sidebarButton = "Selection",
+			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		if ("${target}" == "Blank") {

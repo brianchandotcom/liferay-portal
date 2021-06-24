@@ -42,7 +42,7 @@ export function StackNavigator({children}: StackNavigatorProps) {
 		previous: (payload?: unknown) => {
 			const index = activePageIndex - 1;
 
-			if (index > 0) {
+			if (index >= 0) {
 				setActivePageIndex(index);
 
 				if (payload) {

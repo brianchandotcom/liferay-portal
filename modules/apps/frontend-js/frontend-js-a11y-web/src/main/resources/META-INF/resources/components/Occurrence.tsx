@@ -18,7 +18,9 @@ import React from 'react';
 
 import PanelNavigator from './PanelNavigator';
 
-import type {ImpactValue, Result} from 'axe-core';
+import type {ImpactValue} from 'axe-core';
+
+import type {Violations} from '../hooks/useA11y';
 
 interface ICodeBlock extends React.HTMLAttributes<HTMLDivElement> {
 	children: React.ReactNode;
@@ -40,12 +42,12 @@ function CodeBlock({children, ...otherProps}: ICodeBlock) {
 
 type OccurrenceProps = {
 	navigationState?: {
-		occurrenceIndex: number;
-		occurrenceName: string;
-		violationIndex: number;
+		name: string;
+		ruleId: string;
+		target: string;
 	};
 	previous?: () => void;
-	violations: Array<Result>;
+	violations: Violations;
 };
 
 function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
@@ -53,13 +55,11 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 		return null;
 	}
 
-	const {occurrenceIndex, occurrenceName, violationIndex} = navigationState;
+	const {name, ruleId, target} = navigationState;
 
-	const currentViolation = violations[violationIndex];
+	const {helpUrl, tags} = violations.rules[ruleId];
 
-	const {helpUrl, tags} = currentViolation;
-
-	const {html, impact, target} = currentViolation.nodes[occurrenceIndex];
+	const {html, impact} = violations.nodes[target][ruleId];
 
 	return (
 		<>
@@ -72,7 +72,7 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 					}
 				}}
 				tags={tags}
-				title={occurrenceName}
+				title={name}
 			/>
 			<div className="a11y-panel__sidebar--occurrence-description-wrapper">
 				<p className="text-secondary">

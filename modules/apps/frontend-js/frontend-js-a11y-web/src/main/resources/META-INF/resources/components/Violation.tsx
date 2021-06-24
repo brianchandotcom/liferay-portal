@@ -21,7 +21,7 @@ import React from 'react';
 import PanelNavigator from './PanelNavigator';
 import Rule from './Rule';
 
-import type {Result} from 'axe-core';
+import type {Violations} from '../hooks/useA11y';
 
 type PanelSectionProps = {
 	children: React.ReactNode;
@@ -42,16 +42,16 @@ function PanelSection({children, title}: PanelSectionProps) {
 }
 
 type TViolationNext = {
-	occurrenceIndex: number;
-	occurrenceName: string;
-	violationIndex: number;
+	name: string;
+	ruleId: string;
+	target: string;
 };
 
 type ViolationProps = {
-	navigationState?: {violationIndex: number};
+	navigationState?: Pick<TViolationNext, 'ruleId'>;
 	next?: (payload: TViolationNext) => void;
 	previous?: () => void;
-	violations: Array<Result>;
+	violations: Violations;
 };
 
 function Violation({
@@ -64,10 +64,10 @@ function Violation({
 		return null;
 	}
 
-	const {violationIndex} = navigationState;
+	const {ruleId} = navigationState;
 
-	const {description, helpUrl, id, impact, nodes, tags} = violations[
-		violationIndex
+	const {description, helpUrl, id, impact, nodes, tags} = violations.rules[
+		ruleId
 	];
 
 	return (
@@ -90,25 +90,26 @@ function Violation({
 					</PanelSection>
 					<PanelSection title={Liferay.Language.get('occurrences')}>
 						<ClayList className="list-group-flush">
-							{nodes.map((_occurrence, index) => {
-								const occurrenceName = `${Liferay.Language.get(
-									'occurrence'
-								)} ${String(index + 1)}`;
+							{nodes.map((target, index) => {
+								const name = Liferay.Util.sub(
+									Liferay.Language.get('occurrence-x'),
+									String(index + 1)
+								);
 
 								return (
 									<Rule
-										aria-label={occurrenceName}
+										aria-label={name}
 										key={index}
 										onClick={() => {
 											if (next) {
 												next({
-													occurrenceIndex: index,
-													occurrenceName,
-													violationIndex,
+													name,
+													ruleId,
+													target,
 												});
 											}
 										}}
-										ruleText={occurrenceName}
+										ruleText={name}
 									/>
 								);
 							})}

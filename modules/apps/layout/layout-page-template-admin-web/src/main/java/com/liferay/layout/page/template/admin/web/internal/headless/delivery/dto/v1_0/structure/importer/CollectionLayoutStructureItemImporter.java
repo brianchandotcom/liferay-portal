@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.CollectionConfig;
+import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
@@ -84,6 +85,10 @@ public class CollectionLayoutStructureItemImporter
 				(Integer)definitionMap.get("numberOfColumns"));
 			collectionStyledLayoutStructureItem.setNumberOfItems(
 				(Integer)definitionMap.get("numberOfItems"));
+			collectionStyledLayoutStructureItem.setNumberOfItemsPerPage(
+				(Integer)definitionMap.get("numberOfItemsPerPage"));
+			collectionStyledLayoutStructureItem.setPaginationType(
+				_toPaginationType((String)definitionMap.get("paginationType")));
 			collectionStyledLayoutStructureItem.setTemplateKey(
 				(String)definitionMap.get("templateKey"));
 
@@ -231,6 +236,35 @@ public class CollectionLayoutStructureItemImporter
 		}
 
 		return classPK;
+	}
+
+	private String _toPaginationType(String paginationType) {
+		if (Validator.isNull(paginationType)) {
+			return null;
+		}
+
+		if (Objects.equals(
+				paginationType,
+				PageCollectionDefinition.PaginationType.NONE.getValue())) {
+
+			return "none";
+		}
+
+		if (Objects.equals(
+				paginationType,
+				PageCollectionDefinition.PaginationType.REGULAR.getValue())) {
+
+			return "regular";
+		}
+
+		if (Objects.equals(
+				paginationType,
+				PageCollectionDefinition.PaginationType.SIMPLE.getValue())) {
+
+			return "simple";
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

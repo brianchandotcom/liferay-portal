@@ -68,6 +68,12 @@ public class CollectionLayoutStructureItemMapper
 						numberOfItems =
 							collectionStyledLayoutStructureItem.
 								getNumberOfItems();
+						numberOfItemsPerPage =
+							collectionStyledLayoutStructureItem.
+								getNumberOfItemsPerPage();
+						paginationType = _getPaginationType(
+							collectionStyledLayoutStructureItem.
+								getPaginationType());
 						templateKey =
 							collectionStyledLayoutStructureItem.
 								getTemplateKey();
@@ -147,6 +153,28 @@ public class CollectionLayoutStructureItemMapper
 					collectionType = CollectionType.COLLECTION_PROVIDER;
 				}
 			};
+		}
+
+		return null;
+	}
+
+	private PageCollectionDefinition.PaginationType _getPaginationType(
+		String paginationType) {
+
+		if (Validator.isNull(paginationType)) {
+			return null;
+		}
+
+		if (Objects.equals(paginationType, "none")) {
+			return PageCollectionDefinition.PaginationType.NONE;
+		}
+
+		if (Objects.equals(paginationType, "regular")) {
+			return PageCollectionDefinition.PaginationType.REGULAR;
+		}
+
+		if (Objects.equals(paginationType, "simple")) {
+			return PageCollectionDefinition.PaginationType.SIMPLE;
 		}
 
 		return null;

@@ -272,10 +272,10 @@ public class BlogsEntryStagedModelDataHandler
 			}
 
 			importedEntry = _blogsEntryLocalService.addEntry(
-				null, userId, entry.getTitle(), entry.getSubtitle(), urlTitle,
-				entry.getDescription(), entry.getContent(),
-				entry.getDisplayDate(), entry.isAllowPingbacks(),
-				entry.isAllowTrackbacks(), trackbacks,
+				entry.getExternalReferenceCode(), userId, entry.getTitle(),
+				entry.getSubtitle(), urlTitle, entry.getDescription(),
+				entry.getContent(), entry.getDisplayDate(),
+				entry.isAllowPingbacks(), entry.isAllowTrackbacks(), trackbacks,
 				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
 		else {

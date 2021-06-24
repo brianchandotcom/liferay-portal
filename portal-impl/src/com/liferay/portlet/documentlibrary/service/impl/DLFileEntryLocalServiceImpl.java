@@ -79,9 +79,11 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WebDAVProps;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -2960,6 +2962,8 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext, Long companyId)
 		throws PortalException {
 
+		long userId = _getCompanyAdminUserId(companyId);
+
 		List<DLFileEntry> fileEntries =
 			_getFileEntriesByCompanyIdAndExpirationDate(
 				companyId, expirationDate);
@@ -2980,7 +2984,55 @@ public class DLFileEntryLocalServiceImpl
 						" with expiration date ",
 						fileEntry.getExpirationDate()));
 			}
+
+			updateStatus(
+				userId, fileEntry, latestFileVersion,
+				WorkflowConstants.STATUS_EXPIRED, serviceContext,
+				workflowContext);
 		}
+	}
+
+	private long _getCompanyAdminUserId(long companyId) throws PortalException {
+		Role role = roleLocalService.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		long[] userIds = userLocalService.getRoleUserIds(role.getRoleId());
+
+		if (!ArrayUtil.isEmpty(userIds)) {
+			return userIds[0];
+		}
+
+		List<Group> groups = groupLocalService.getRoleGroups(role.getRoleId());
+
+		for (Group group : groups) {
+			if (group.isOrganization()) {
+				userIds = organizationLocalService.getUserPrimaryKeys(
+					group.getClassPK());
+
+				if (!ArrayUtil.isEmpty(userIds)) {
+					return userIds[0];
+				}
+			}
+			else if (group.isRegularSite()) {
+				userIds = groupLocalService.getUserPrimaryKeys(
+					group.getGroupId());
+
+				if (!ArrayUtil.isEmpty(userIds)) {
+					return userIds[0];
+				}
+			}
+			else if (group.isUserGroup()) {
+				userIds = userGroupLocalService.getUserPrimaryKeys(
+					group.getClassPK());
+
+				if (!ArrayUtil.isEmpty(userIds)) {
+					return userIds[0];
+				}
+			}
+		}
+
+		throw new PortalException(
+			"Unable to find an administrator user in company " + companyId);
 	}
 
 	private List<DLFileEntry> _getFileEntriesByCompanyIdAndExpirationDate(

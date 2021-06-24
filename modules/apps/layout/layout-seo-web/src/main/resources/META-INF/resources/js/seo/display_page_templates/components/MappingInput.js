@@ -24,7 +24,7 @@ const UNMAPPED_OPTION = {
 	label: `-- ${Liferay.Language.get('unmapped')} --`,
 };
 
-const FIELD_TEMPLATE = (key) => ` $\{${key}} `;
+const fieldTemplate = (key) => ` $\{${key}} `;
 
 function MappingInput({
 	component,
@@ -65,7 +65,7 @@ function MappingInput({
 
 		const selectionStart = inputEl.current.selectionStart;
 		const selectionEnd = inputEl.current.selectionEnd;
-		const fieldVariable = FIELD_TEMPLATE(key);
+		const fieldVariable = fieldTemplate(key);
 
 		setValue(
 			(value) =>

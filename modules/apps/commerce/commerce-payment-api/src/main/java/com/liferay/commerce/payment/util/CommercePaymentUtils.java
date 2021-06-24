@@ -33,7 +33,14 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface CommercePaymentUtils {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by  {@link #emptyResult(long, String)}
+	 */
+	@Deprecated
 	public CommercePaymentResult emptyResult(long commerceOrderId);
+
+	public CommercePaymentResult emptyResult(
+		long commerceOrderId, String transactionId);
 
 	public CommercePaymentMethod getCommercePaymentMethod(long commerceOrderId)
 		throws PortalException;

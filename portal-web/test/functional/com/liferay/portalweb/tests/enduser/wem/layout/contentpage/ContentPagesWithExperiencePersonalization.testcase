@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("View only the web content with tag shown in simulation modal when select segment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 
 			AssertVisible(
 				key_colPosition = "1",

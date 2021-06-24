@@ -328,3 +328,22 @@ for (String childrenItemId : childrenItemIds) {
 <%
 }
 %>
+
+<aui:script>
+	function changePageNumber(itemId) {
+		if (itemId) {
+			const queryParamName = 'page_number_' + itemId;
+			const search = new URLSearchParams(window.location.search);
+
+			search.delete(queryParamName);
+
+			var pageNumber = document.getElementById(
+				'page_number_' + itemId + '_selector'
+			).value;
+
+			search.append(queryParamName, pageNumber);
+
+			window.location.search = search;
+		}
+	}
+</aui:script>

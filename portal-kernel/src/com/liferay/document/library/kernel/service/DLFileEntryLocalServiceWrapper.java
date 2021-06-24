@@ -1160,6 +1160,10 @@ public class DLFileEntryLocalServiceWrapper
 			userId, fileEntryId, fileEntryTypeId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void updateSmallImage(long smallImageId, long largeImageId)
 		throws com.liferay.portal.kernel.exception.PortalException {

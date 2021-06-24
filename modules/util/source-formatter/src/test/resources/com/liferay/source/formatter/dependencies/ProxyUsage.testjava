@@ -189,9 +189,9 @@ public class ProxyUsage implements Closeable {
 
 				@Override
 				public void modifiedService(
-					ServiceReference<Object> reference, Object service) {
+					ServiceReference<Object> serviceReference, Object service) {
 
-					super.modifiedService(reference, service);
+					super.modifiedService(serviceReference, service);
 
 					ServiceReference<Object> currentServiceReference =
 						getServiceReference();

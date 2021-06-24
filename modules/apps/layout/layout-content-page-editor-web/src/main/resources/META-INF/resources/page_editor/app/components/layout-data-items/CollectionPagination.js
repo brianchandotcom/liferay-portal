@@ -28,7 +28,7 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 	const isActive = useIsActive();
 
     const totalPages = Math.ceil(
-		TOTAL_ENTRIES / collectionConfig.numberOfItems
+		TOTAL_ENTRIES / collectionConfig.numberOfItemsPerPage
 	);
 
 	const simplePaginationButtons = [
@@ -58,9 +58,10 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 						{Liferay.Util.sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
 							[
-								collectionConfig.numberOfItems *
+								collectionConfig.numberOfItemsPerPage *
 									(activePage - 1) || 1,
-								collectionConfig.numberOfItems * activePage,
+								collectionConfig.numberOfItemsPerPage *
+									activePage,
 								TOTAL_ENTRIES,
 							]
 						)}

@@ -85,8 +85,15 @@ public class CollectionLayoutStructureItemImporter
 				(Integer)definitionMap.get("numberOfColumns"));
 			collectionStyledLayoutStructureItem.setNumberOfItems(
 				(Integer)definitionMap.get("numberOfItems"));
-			collectionStyledLayoutStructureItem.setNumberOfItemsPerPage(
-				(Integer)definitionMap.get("numberOfItemsPerPage"));
+
+			Integer numberOfItemsPerPage = (Integer)definitionMap.get(
+				"numberOfItemsPerPage");
+
+			if (numberOfItemsPerPage != null) {
+				collectionStyledLayoutStructureItem.setNumberOfItemsPerPage(
+					numberOfItemsPerPage);
+			}
+
 			collectionStyledLayoutStructureItem.setPaginationType(
 				_toPaginationType((String)definitionMap.get("paginationType")));
 			collectionStyledLayoutStructureItem.setTemplateKey(

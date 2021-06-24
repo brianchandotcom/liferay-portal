@@ -12,22 +12,14 @@
  * details.
  */
 
-/// <reference types="react" />
-
-import './Occurrence.scss';
-import type {Result} from 'axe-core';
-declare type OccurrenceProps = {
-	navigationState?: {
-		occurrenceIndex: number;
-		occurrenceName: string;
-		violationIndex: number;
-	};
-	previous?: () => void;
-	violations: Array<Result>;
+import React from 'react';
+declare type StackNavigatorProps = {
+	children: Array<React.ReactElement>;
 };
-declare function Occurrence({
-	navigationState,
-	previous,
-	violations,
-}: OccurrenceProps): JSX.Element | null;
-export default Occurrence;
+export declare function StackNavigator({
+	children,
+}: StackNavigatorProps): React.ReactElement<
+	any,
+	string | React.JSXElementConstructor<any>
+>;
+export {};

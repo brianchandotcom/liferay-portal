@@ -14,8 +14,7 @@
 
 /// <reference types="react" />
 
-import './A11y.scss';
 import type {A11yCheckerOptions} from './A11yChecker';
 export declare function A11y(
 	props: Omit<A11yCheckerOptions, 'callback'>
-): JSX.Element[] | null;
+): JSX.Element | null;

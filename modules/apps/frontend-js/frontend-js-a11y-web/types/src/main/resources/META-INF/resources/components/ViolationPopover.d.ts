@@ -14,9 +14,16 @@
 
 /// <reference types="react" />
 
-import type {Result} from 'axe-core';
-declare type A11yPanelProps = {
-	violations: Array<Result>;
+import './ViolationPopover.scss';
+import type {RuleRaw} from '../hooks/useA11y';
+declare type ViolationProps = {
+	target: string;
+	violations: Array<string>;
+	rules: Record<string, RuleRaw>;
 };
-export declare function A11yPanel({violations}: A11yPanelProps): JSX.Element;
+export declare function ViolationPopover({
+	rules,
+	target,
+	violations,
+}: ViolationProps): JSX.Element;
 export {};

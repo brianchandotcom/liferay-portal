@@ -12,8 +12,10 @@
  * details.
  */
 
-import React from 'react';
-import type {ImpactValue, Result} from 'axe-core';
+/// <reference types="react" />
+
+import type {ImpactValue} from 'axe-core';
+import type {NodeViolations, Violations} from './useA11y';
 export declare const TYPES: {
 	readonly CATEGORY_ADD: 'CATEGORY_ADD';
 	readonly CATEGORY_REMOVE: 'CATEGORY_REMOVE';
@@ -24,22 +26,19 @@ declare type TAction = {
 	payload: {
 		value: string;
 	};
-	type: 'CATEGORY_ADD' | 'CATEGORY_REMOVE' | 'IMPACT_ADD' | 'IMPACT_REMOVE';
+	type: keyof typeof TYPES;
 };
-declare type TState = {
-	filteredViolations: Array<Result>;
-	selectedCategories: Array<string> | [];
-	selectedImpact: Array<ImpactValue>;
-};
-export declare const useFilteredViolationsDispatch: () => React.Dispatch<
-	TAction
->;
-declare type FilteredViolationsContextProviderProps = {
-	children: (props: TState) => React.ReactNode;
-	value: Array<Result>;
-};
-export declare function FilteredViolationsContextProvider({
-	children,
-	value: violations,
-}: FilteredViolationsContextProviderProps): JSX.Element;
+export declare function useFilterViolations(
+	value: Violations
+): readonly [
+	{
+		readonly selectedCategories: string[] | [];
+		readonly selectedImpact: ImpactValue[];
+		readonly violations: {
+			readonly nodes: Record<string, NodeViolations>;
+			readonly rules: Record<string, import('./useA11y').RuleRaw>;
+		};
+	},
+	import('react').Dispatch<TAction>
+];
 export {};

@@ -12,6 +12,25 @@
  * details.
  */
 
-import type {Result} from 'axe-core';
-declare const violations: Result[];
-export default violations;
+/// <reference types="react" />
+
+import './Violation.scss';
+import type {Violations} from '../hooks/useA11y';
+declare type TViolationNext = {
+	name: string;
+	ruleId: string;
+	target: string;
+};
+declare type ViolationProps = {
+	navigationState?: Pick<TViolationNext, 'ruleId'>;
+	next?: (payload: TViolationNext) => void;
+	previous?: () => void;
+	violations: Violations;
+};
+declare function Violation({
+	navigationState,
+	next,
+	previous,
+	violations,
+}: ViolationProps): JSX.Element | null;
+export default Violation;

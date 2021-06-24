@@ -12,27 +12,19 @@
  * details.
  */
 
-/// <reference types="react" />
-
-import './Violation.scss';
-import type {Result} from 'axe-core';
-declare type TViolationNext = {
-	occurrenceIndex: number;
-	occurrenceName: string;
-	violationIndex: number;
+import type {NodeResult, Result} from 'axe-core';
+import type {A11yCheckerOptions} from '../A11yChecker';
+declare type Target = string;
+declare type RuleId = string;
+export interface RuleRaw extends Omit<Result, 'nodes'> {
+	nodes: Array<Target>;
+}
+export declare type NodeViolations = Record<RuleId, NodeResult>;
+export declare type Violations = {
+	nodes: Record<Target, NodeViolations>;
+	rules: Record<RuleId, RuleRaw>;
 };
-declare type ViolationProps = {
-	navigationState?: {
-		violationIndex: number;
-	};
-	next?: (payload: TViolationNext) => void;
-	previous?: () => void;
-	violations: Array<Result>;
-};
-declare function Violation({
-	navigationState,
-	next,
-	previous,
-	violations,
-}: ViolationProps): JSX.Element | null;
-export default Violation;
+export default function useA11y(
+	props: Omit<A11yCheckerOptions, 'callback'>
+): Violations;
+export {};

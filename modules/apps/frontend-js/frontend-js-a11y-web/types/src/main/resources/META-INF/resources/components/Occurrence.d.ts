@@ -14,21 +14,20 @@
 
 /// <reference types="react" />
 
-import './Violations.scss';
-import type {ImpactValue, Result} from 'axe-core';
-declare type TViolationNext = {
-	violationIndex: number;
+import './Occurrence.scss';
+import type {Violations} from '../hooks/useA11y';
+declare type OccurrenceProps = {
+	navigationState?: {
+		name: string;
+		ruleId: string;
+		target: string;
+	};
+	previous?: () => void;
+	violations: Violations;
 };
-declare type ViolationsProps = {
-	next?: (payload: TViolationNext) => void;
-	selectedCategories: Array<String>;
-	selectedImpact: Array<ImpactValue>;
-	violations: Array<Result>;
-};
-export default function Violations({
-	next,
-	selectedCategories,
-	selectedImpact,
+declare function Occurrence({
+	navigationState,
+	previous,
 	violations,
-}: ViolationsProps): JSX.Element;
-export {};
+}: OccurrenceProps): JSX.Element | null;
+export default Occurrence;

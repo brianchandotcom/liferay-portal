@@ -24,18 +24,14 @@ const UNMAPPED_OPTION = {
 };
 
 function MappingSelector({
-	fieldType,
+	fields: initialFields,
 	helpMessage,
-	initialFields,
 	label,
 	name,
 	selectedFieldKey,
 	selectedSource,
 }) {
-	const fields = [
-		UNMAPPED_OPTION,
-		...initialFields.filter(({type}) => type === fieldType),
-	];
+	const fields = [UNMAPPED_OPTION, ...initialFields];
 	const [source, setSource] = useState(selectedSource);
 	const [field, setField] = useState(
 		fields.find(({key}) => key === selectedFieldKey) || UNMAPPED_OPTION

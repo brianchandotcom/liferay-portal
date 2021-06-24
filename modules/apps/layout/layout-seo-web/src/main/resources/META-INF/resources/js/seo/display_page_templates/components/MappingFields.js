@@ -27,23 +27,28 @@ function MappingFields({
 }) {
 	return (
 		<MappingContext.Provider value={{ffSEOInlineFieldMappingEnabled}}>
-			{inputs.map((props) =>
-				ffSEOInlineFieldMappingEnabled && props.fieldType === 'text' ? (
+			{inputs.map((props) => {
+				const filteredFields = fields.filter(
+					({type}) => type === props.fieldType
+				);
+
+				return ffSEOInlineFieldMappingEnabled &&
+					props.fieldType === 'text' ? (
 					<MappingInput
-						initialFields={fields}
+						fields={filteredFields}
 						key={props.name}
 						selectedSource={selectedSource}
 						{...props}
 					/>
 				) : (
 					<MappingSelector
-						initialFields={fields}
+						fields={filteredFields}
 						key={props.name}
 						selectedSource={selectedSource}
 						{...props}
 					/>
-				)
-			)}
+				);
+			})}
 		</MappingContext.Provider>
 	);
 }

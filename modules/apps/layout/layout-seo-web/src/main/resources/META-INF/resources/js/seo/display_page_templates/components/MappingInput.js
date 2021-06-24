@@ -23,15 +23,13 @@ const fieldTemplate = (key) => ` $\{${key}} `;
 
 function MappingInput({
 	component,
-	fieldType,
+	fields,
 	helpMessage,
-	initialFields,
 	label,
 	name,
 	selectedSource,
 	value: initialValue,
 }) {
-	const fields = initialFields.filter(({type}) => type === fieldType);
 	const [source, setSource] = useState(selectedSource);
 	const [field, setField] = useState('');
 	const [value, setValue] = useState(initialValue || '');

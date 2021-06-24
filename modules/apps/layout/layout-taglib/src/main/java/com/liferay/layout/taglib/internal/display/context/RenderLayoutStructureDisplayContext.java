@@ -227,6 +227,54 @@ public class RenderLayoutStructureDisplayContext {
 			listObjectReference, defaultLayoutListRetrieverContext);
 	}
 
+	public int getCollectionCount(
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
+			return 0;
+		}
+
+		ListObjectReference listObjectReference = _getListObjectReference(
+			collectionJSONObject);
+
+		if (listObjectReference == null) {
+			return 0;
+		}
+
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
+			(LayoutListRetriever<?, ListObjectReference>)
+				_layoutListRetrieverTracker.getLayoutListRetriever(
+					collectionJSONObject.getString("type"));
+
+		if (layoutListRetriever == null) {
+			return 0;
+		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setContextObject(
+			Optional.ofNullable(
+				_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT)
+			).orElse(
+				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
+			));
+		defaultLayoutListRetrieverContext.setHttpServletRequest(
+			_httpServletRequest);
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+			_getSegmentsEntryIds());
+
+		return layoutListRetriever.getListCount(
+			listObjectReference, defaultLayoutListRetrieverContext);
+	}
+
 	public LayoutDisplayPageProvider<?> getCollectionLayoutDisplayPageProvider(
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {

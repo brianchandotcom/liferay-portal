@@ -49,13 +49,16 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -464,6 +467,27 @@ public class LayoutsTreeDisplayContext {
 		return false;
 	}
 
+	private JSONArray _getChildSiteNavigationMenuItemJSONArray(
+		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
+
+		JSONArray childSiteNavigationMenuItemJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItemList =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				siteNavigationMenuId, parentSiteNavigationMenuItemId);
+
+		for (SiteNavigationMenuItem childSiteNavigationMenuItem :
+				siteNavigationMenuItemList) {
+
+			childSiteNavigationMenuItemJSONArray.put(
+				_getSiteNavigationMenuItemJSONObject(
+					childSiteNavigationMenuItem));
+		}
+
+		return childSiteNavigationMenuItemJSONArray;
+	}
+
 	private JSONObject _getOptionGroupJSONObject(
 		String nameKey, JSONArray itemsJSONArray) {
 
@@ -575,6 +599,102 @@ public class LayoutsTreeDisplayContext {
 		return _siteNavigationMenuId;
 	}
 
+	private JSONObject _getSiteNavigationMenuItemJSONObject(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+
+		String name = siteNavigationMenuItemType.getTitle(
+			siteNavigationMenuItem, _themeDisplay.getSiteDefaultLocale());
+
+		String url = _getSiteNavigationMenuItemURL(
+			siteNavigationMenuItem, siteNavigationMenuItemType);
+
+		JSONArray childSiteNavigationMenuItemJSONArray =
+			_getChildSiteNavigationMenuItemJSONArray(
+				siteNavigationMenuItem.getSiteNavigationMenuId(),
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		return JSONUtil.put(
+			"children", childSiteNavigationMenuItemJSONArray
+		).put(
+			"id", siteNavigationMenuItem.getSiteNavigationMenuItemId()
+		).put(
+			"name", name
+		).put(
+			"url", url
+		);
+	}
+
+	private JSONArray _getSiteNavigationMenuItemsJSONArray() {
+		if (_siteNavigationMenuItemsJSONArray != null) {
+			return _siteNavigationMenuItemsJSONArray;
+		}
+
+		if (_getSiteNavigationMenuId() > 0) {
+			_siteNavigationMenuItemsJSONArray =
+				_getChildSiteNavigationMenuItemJSONArray(
+					_getSiteNavigationMenuId(), 0L);
+		}
+		else {
+			_siteNavigationMenuItemsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"GroupId: ", getGroupId(), " SiteNavigationMenuId: ",
+					_getSiteNavigationMenuId(),
+					" SiteNavigationMenuItemHierarchy: ",
+					_siteNavigationMenuItemsJSONArray.toJSONString()));
+		}
+
+		return _siteNavigationMenuItemsJSONArray;
+	}
+
+	private SiteNavigationMenuItemType _getSiteNavigationMenuItemType(
+		String type) {
+
+		if (!_siteNavigationMenuItemTypesMap.containsKey(type)) {
+			_siteNavigationMenuItemTypesMap.put(
+				type,
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(type));
+		}
+
+		return _siteNavigationMenuItemTypesMap.get(type);
+	}
+
+	private String _getSiteNavigationMenuItemURL(
+		SiteNavigationMenuItem siteNavigationMenuItem,
+		SiteNavigationMenuItemType siteNavigationMenuItemType) {
+
+		String url = StringPool.BLANK;
+
+		try {
+			url = siteNavigationMenuItemType.getRegularURL(
+				_liferayPortletRequest.getHttpServletRequest(),
+				siteNavigationMenuItem);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unabled to get url for siteNavigationMenuItemId: " +
+					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				exception);
+		}
+
+		if (Validator.isNotNull(url)) {
+			url = HttpUtil.addParameter(
+				url,
+				getNamespace() + _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME,
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		}
+
+		return url;
+	}
+
 	private JSONArray _getSiteNavigationMenuJSONArray() {
 		if (_siteNavigationMenuJSONArray != null) {
 			return _siteNavigationMenuJSONArray;
@@ -679,6 +799,9 @@ public class LayoutsTreeDisplayContext {
 		return portletURL.toString();
 	}
 
+	private static final String _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME =
+		"navigationItemMenuId";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsTreeDisplayContext.class.getName());
 
@@ -691,6 +814,7 @@ public class LayoutsTreeDisplayContext {
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
+	private JSONArray _siteNavigationMenuItemsJSONArray;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
 	private final Map<String, SiteNavigationMenuItemType>

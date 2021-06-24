@@ -12,128 +12,62 @@
  * details.
  */
 
-import './A11y.scss';
+import React, {useLayoutEffect} from 'react';
 
-import ClayIcon from '@clayui/icon';
-import ClayList from '@clayui/list';
-import ClayPopover from '@clayui/popover';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
-import React, {useCallback, useMemo, useState} from 'react';
-
+import Occurrence from './components/Occurrence';
+import {StackNavigator} from './components/StackNavigator';
+import Violation from './components/Violation';
+import {ViolationPopover} from './components/ViolationPopover';
+import Violations from './components/Violations';
 import useA11y from './hooks/useA11y';
-import {useObserveRect} from './hooks/useObserveRect';
+import {useFilterViolations} from './hooks/useFilterViolations';
 
 import type {A11yCheckerOptions} from './A11yChecker';
-import type {Violation as TViolation} from './hooks/useA11y';
-
-const Overlay = React.forwardRef<
-	HTMLDivElement,
-	React.ButtonHTMLAttributes<HTMLDivElement>
->(({style, ...othersProps}, ref) => (
-	<ReactPortal
-		{...othersProps}
-		className="a11y-overlay"
-		ref={ref}
-		style={style}
-	>
-		<div className="a11y-indicator">
-			<ClayIcon symbol="info-circle" />
-		</div>
-		<div className="a11y-backdrop" />
-	</ReactPortal>
-));
-
-type ViolationProps = {
-	modifyIndex: number;
-	target: string;
-	violations: Array<TViolation>;
-};
-
-function Violation({target, violations}: ViolationProps) {
-	const [visible, setVisible] = useState(false);
-	const [bounds, setBounds] = useState<React.CSSProperties>();
-
-	const node = useMemo(() => document.querySelector(target), [target]);
-
-	useObserveRect(
-		useCallback(
-			(bounds) => {
-				bounds = bounds ?? (node as Element).getBoundingClientRect();
-
-				setBounds({
-					height: bounds.height,
-					left: bounds.left,
-					top: bounds.top,
-					width: bounds.width,
-				});
-			},
-			[node]
-		),
-		node
-	);
-
-	return (
-		<ClayPopover
-			className="a11y-popover"
-			header={
-				<>
-					<div className="inline-item">
-						<ClayIcon
-							className="text-danger"
-							symbol="info-circle"
-						/>
-					</div>
-					<div className="inline-item inline-item-after">
-						<span>
-							{Liferay.Language.get('accessibility-violations')}
-						</span>
-					</div>
-				</>
-			}
-			onShowChange={setVisible}
-			show={visible}
-			trigger={<Overlay style={bounds} />}
-		>
-			<div className="list-group">
-				{violations.map(({help, id, impact}) => (
-					<button
-						className="list-group-item list-group-item-action list-group-item-flex list-group-item-flush"
-						key={id}
-					>
-						<ClayList.ItemField expand>
-							<ClayList.ItemTitle>
-								{id}{' '}
-								<span className="text-secondary">{`- ${impact}`}</span>
-							</ClayList.ItemTitle>
-							<ClayList.ItemText subtext>
-								{help}
-							</ClayList.ItemText>
-						</ClayList.ItemField>
-						<ClayList.ItemField>
-							<ClayIcon
-								className="text-secondary"
-								symbol="angle-right"
-							/>
-						</ClayList.ItemField>
-					</button>
-				))}
-			</div>
-		</ClayPopover>
-	);
-}
 
 export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 	const violations = useA11y(props);
 
-	if (violations) {
-		return violations.map(({target, ...otherProps}, index) => (
-			<Violation
-				key={`${target}:${index}`}
-				target={target}
-				{...otherProps}
-			/>
-		));
+	const [state, dispatch] = useFilterViolations(violations);
+
+	const nodes = Object.keys(state.violations.nodes);
+
+	useLayoutEffect(() => {
+		if (nodes.length > 0) {
+			document.body.classList.add('a11y-body');
+
+			return () => {
+				document.body.classList.remove('a11y-body');
+			};
+		}
+	}, [nodes]);
+
+	if (Object.keys(violations.nodes).length === 0) {
+		return null;
 	}
 
-	return null;
+	return (
+		<>
+			{nodes.map((target, index) => (
+				<ViolationPopover
+					key={`${target}:${index}`}
+					rules={state.violations.rules}
+					target={target}
+					violations={Object.keys(state.violations.nodes[target])}
+				/>
+			))}
+
+			<div className="a11y-panel__sidebar sidebar sidebar-light">
+				<StackNavigator>
+					<Violations
+						onFilterChange={(type, value) =>
+							dispatch({payload: {value}, type})
+						}
+						{...state}
+					/>
+					<Violation violations={state.violations} />
+					<Occurrence violations={state.violations} />
+				</StackNavigator>
+			</div>
+		</>
+	);
 }

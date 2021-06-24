@@ -2989,6 +2989,11 @@ public class DLFileEntryLocalServiceImpl
 				userId, fileEntry, latestFileVersion,
 				WorkflowConstants.STATUS_EXPIRED, serviceContext,
 				workflowContext);
+
+			_notifySubscribers(
+				fileEntry.getUserId(), latestFileVersion,
+				_buildEntryURL(latestFileVersion), "expire",
+				new ServiceContext());
 		}
 	}
 
@@ -3105,8 +3110,14 @@ public class DLFileEntryLocalServiceImpl
 		DLGroupServiceSettings dlGroupServiceSettings =
 			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
-		if (!emailType.equals("review") ||
+		if (Objects.equals(emailType, "review") &&
 			!dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) {
+
+			return;
+		}
+
+		if (Objects.equals(emailType, "expire") &&
+			!dlGroupServiceSettings.isEmailFileEntryExpiredEnabled()) {
 
 			return;
 		}
@@ -3122,17 +3133,35 @@ public class DLFileEntryLocalServiceImpl
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
-		if (emailType.equals("review")) {
+		int notificationType =
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+
+		if (Objects.equals(emailType, "review")) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryReviewSubject();
 			bodyLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryReviewBody();
+
+			notificationType =
+				UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
+		}
+		else if (Objects.equals(emailType, "expire")) {
+			subjectLocalizedValuesMap =
+				dlGroupServiceSettings.getEmailFileEntryExpiredSubject();
+			bodyLocalizedValuesMap =
+				dlGroupServiceSettings.getEmailFileEntryExpiredBody();
+
+			notificationType =
+				UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY;
 		}
 		else if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedBody();
+
+			notificationType =
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
 		}
 		else {
 			subjectLocalizedValuesMap =
@@ -3155,8 +3184,8 @@ public class DLFileEntryLocalServiceImpl
 			new GroupSubscriptionCheckSubscriptionSender(
 				DLConstants.RESOURCE_NAME);
 
-		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
 		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
+		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
 		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
 
 		if (folder != null) {
@@ -3196,9 +3225,6 @@ public class DLFileEntryLocalServiceImpl
 			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 		subscriptionSender.setMailId(
 			"file_entry", fileVersion.getFileEntryId());
-
-		int notificationType =
-			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
 
 		subscriptionSender.setNotificationType(notificationType);
 

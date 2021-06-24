@@ -86,6 +86,28 @@ public class DLGroupServiceSettings {
 			getEmailFileEntryAddedSubject(), "emailFileEntryAddedSubject");
 	}
 
+	public LocalizedValuesMap getEmailFileEntryExpiredBody() {
+		return _typedSettings.getLocalizedValuesMap(
+			"emailFileEntryExpiredBody");
+	}
+
+	@Settings.Property(ignore = true)
+	public String getEmailFileEntryExpiredBodyXml() {
+		return LocalizationUtil.getXml(
+			getEmailFileEntryExpiredBody(), "emailFileEntryExpired");
+	}
+
+	public LocalizedValuesMap getEmailFileEntryExpiredSubject() {
+		return _typedSettings.getLocalizedValuesMap(
+			"emailFileEntryExpiredSubject");
+	}
+
+	@Settings.Property(ignore = true)
+	public String getEmailFileEntryExpiredSubjectXml() {
+		return LocalizationUtil.getXml(
+			getEmailFileEntryExpiredSubject(), "emailFileEntryExpiredSubject");
+	}
+
 	public LocalizedValuesMap getEmailFileEntryReviewBody() {
 		return _typedSettings.getLocalizedValuesMap("emailFileEntryReviewBody");
 	}
@@ -139,6 +161,10 @@ public class DLGroupServiceSettings {
 		return _typedSettings.getBooleanValue("emailFileEntryAddedEnabled");
 	}
 
+	public boolean isEmailFileEntryExpiredEnabled() {
+		return _typedSettings.getBooleanValue("emailFileEntryExpiredEnabled");
+	}
+
 	public boolean isEmailFileEntryReviewEnabled() {
 		return _typedSettings.getBooleanValue("emailFileEntryReviewEnabled");
 	}
@@ -163,6 +189,15 @@ public class DLGroupServiceSettings {
 		fallbackKeys.add(
 			"emailFileEntryAddedSubject",
 			PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT);
+		fallbackKeys.add(
+			"emailFileEntryExpiredBody",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_EXPIRED_BODY);
+		fallbackKeys.add(
+			"emailFileEntryExpiredEnabled",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_EXPIRED_ENABLED);
+		fallbackKeys.add(
+			"emailFileEntryExpiredSubject",
+			PropsKeys.DL_EMAIL_FILE_ENTRY_EXPIRED_SUBJECT);
 		fallbackKeys.add(
 			"emailFileEntryReviewBody",
 			PropsKeys.DL_EMAIL_FILE_ENTRY_REVIEW_BODY);

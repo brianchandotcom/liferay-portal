@@ -225,12 +225,48 @@ definition {
 			value1 = "Anonymous Anonymous");
 	}
 
+	@description = "This test asserts that all applications that do not have items are visible but disabled."
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AppsWithNoEntriesAreDisabledInNewDataExport {
+
+		// TODO LRQA-50751 View app level data and switch between different lists of entities (LPS-77750)
+
+	}
+
 	@description = "This test anonymizes all entries from an application"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAnonymizeAllEntriesFromAnApplication {
 
 		// TODO LRQA-50727 Anonymize all entries from an Application
+
+	}
+
+	@description = "This test anonymizes all staged data from an application"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeAllStagedDataFromAnApplication {
+
+		// TODO LRQA-50755 Anonymize all staged data from an Application
+
+	}
+
+	@description = "This test adds an asset and link a related asset."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeARelatedAsset {
+
+		// TODO LRQA-50758
+
+	}
+
+	@description = "This test anonymizes a staged and a live entry from an applciation."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeASingleStagedAndLiveEntryFromAnApplication {
+
+		// TODO LRQA-50756 Anonymize a single staged and live entry from an Application
 
 	}
 
@@ -261,12 +297,39 @@ definition {
 
 	}
 
+	@description = "This test deletes multiple staged data from an application."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteAllStagedDataFromAnApplication {
+
+		// TODO LRQA-50753 Delete all staged data from an Application
+
+	}
+
 	@description = "This test deletes export process"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteAnExportProcess {
 
 		// TODO LRQA-50743 Delete Export
+
+	}
+
+	@description = "This test adds an asset and link a related asset."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteARelatedAsset {
+
+		// TODO LRQA-50757
+
+	}
+
+	@description = "This test deletes a staged and a live entry from an applciation."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteASingleStagedAndLiveEntryFromAnApplication {
+
+		// TODO LRQA-50754 Delete a staged and live single entry from an Application
 
 	}
 
@@ -285,6 +348,87 @@ definition {
 	test CanDeleteMultipleEntriesFromAnApplication {
 
 		// TODO LRQA-50723 Data Erasure - Delete multiple entries from an Application (LPS-77748)
+
+	}
+
+	@description = "LRQA-50747"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanFilterAndOrderExportProcesses {
+
+		// TODO LRQA-50747 Test Case 6c - Can Filter and Order Exports
+
+	}
+
+	@description = "This test filters application to Blogs and views all Blogs data in Review Data section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAndViewBlogsData {
+
+		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+
+	}
+
+	@description = "This test filters application to DM and views all DM data in Review Data section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAndViewDMData {
+
+		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+
+	}
+
+	@description = "This test filters application to Forms and views all Forms data in Review Data section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAndViewFormsData {
+
+		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+
+	}
+
+	@description = "This test filters application to Message Boards and views all Message Boards data in Review Data section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAndViewMessageBoardsData {
+
+		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+
+	}
+
+	@description = "This test filters application to WebContent and views all WebContent data in Review Data section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAndViewWebContentData {
+
+		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+
+	}
+
+	@description = "This test filters application to Wiki and views all Wiki data in Review Data section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAndViewWikiData {
+
+		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+
+	}
+
+	@description = "LPS-77749"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanOrderDataInViewData {
+
+		// TODO LRQA-50736 Filter and sort lists of entities (LPS-77749)
+
+	}
+
+	@description = "This test publishes a staged entry to live after deleting live entry."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanPublishToLiveADeletedLiveEntry {
+
+		// TODO LRQA-50759 Publish to live a deleted live entry (Message Board)
 
 	}
 
@@ -539,6 +683,15 @@ definition {
 			tableEntryPartialTextList = "Document_1.txt,Edit DM Document Description");
 	}
 
+	@description = "LPS-77750 This test asserts that the details of the entry display when user clicks on the Info icon."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EntryDetailsDisplayInInfoPanel {
+
+		// TODO LRQA-50735 View app level data and switch between different lists of entities (LPS-77750)
+
+	}
+
 	@priority = "4"
 	test ExportAllEntries {
 		User.logoutAndLoginPG(
@@ -675,6 +828,33 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.exception.SystemException");
+	}
+
+	@description = "This test changes pagination and assert export processes display properly."
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PaginationWorksInExportPersonalData {
+
+		// TODO LRQA-50749 GDPR - Test Case 6e - Assert Pagination
+
+	}
+
+	@description = "This test changes pagination and assert entries display properly."
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PaginationWorksInNewDataExport {
+
+		// TODO LRQA-50752 Test Case 6h - For the New Data Export page, assert pagination
+
+	}
+
+	@description = "LPS-91766. This test asserts that the Remaining Items count under Status Summary is accurate"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test RemainingItemsCountIsAccurate {
+
+		// TODO LRQA-50734 View application-level summary page of the user's data
+
 	}
 
 }

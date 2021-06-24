@@ -19,11 +19,6 @@ import React, {useRef, useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
-const UNMAPPED_OPTION = {
-	key: 'unmapped',
-	label: `-- ${Liferay.Language.get('unmapped')} --`,
-};
-
 const fieldTemplate = (key) => ` $\{${key}} `;
 
 function MappingInput({
@@ -36,12 +31,9 @@ function MappingInput({
 	selectedSource,
 	value: initialValue,
 }) {
-	const fields = [
-		UNMAPPED_OPTION,
-		...initialFields.filter(({type}) => type === fieldType),
-	];
+	const fields = initialFields.filter(({type}) => type === fieldType);
 	const [source, setSource] = useState(selectedSource);
-	const [field, setField] = useState(UNMAPPED_OPTION);
+	const [field, setField] = useState('');
 	const [value, setValue] = useState(initialValue || '');
 	const inputEl = useRef(null);
 	const isMounted = useIsMounted();
@@ -59,10 +51,6 @@ function MappingInput({
 	};
 
 	const addNewVar = ({key}) => {
-		if (key === UNMAPPED_OPTION.key) {
-			return;
-		}
-
 		const selectionStart = inputEl.current.selectionStart;
 		const selectionEnd = inputEl.current.selectionEnd;
 		const fieldVariable = fieldTemplate(key);

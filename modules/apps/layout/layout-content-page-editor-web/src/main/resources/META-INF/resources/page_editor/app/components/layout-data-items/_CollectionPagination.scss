@@ -1,0 +1,20 @@
+.page-editor__collection__pagination {
+	height: 64px;
+	padding: 15px 0;
+	position: relative;
+	text-align: center;
+
+	&__overlay:after {
+		content: '';
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	.pagination-results,
+	.pagination.pagination-root {
+		margin-bottom: 0;
+	}
+}

@@ -26,6 +26,7 @@ import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import CollectionService from '../../services/CollectionService';
 import UnsafeHTML from '../UnsafeHTML';
+import CollectionPagination from './CollectionPagination';
 
 const COLLECTION_ID_DIVIDER = '$';
 
@@ -246,6 +247,13 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 					customCollectionSelectorURL={
 						collection.customCollectionSelectorURL
 					}
+				/>
+			)}
+
+			{collectionConfig.paginationType && (
+				<CollectionPagination
+					collectionConfig={collectionConfig}
+					collectionId={item.itemId}
 				/>
 			)}
 		</div>

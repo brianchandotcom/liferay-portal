@@ -107,37 +107,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #addEntry(String, String, String, String, String, String, int, int, int,
-	 * int, int, boolean, boolean, String[], String, ImageSelector,
-	 * ImageSelector, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public BlogsEntry addEntry(
-			String title, String subtitle, String urlTitle, String description,
-			String content, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, String coverImageCaption,
-			ImageSelector coverImageImageSelector,
-			ImageSelector smallImageImageSelector,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_ENTRY);
-
-		return blogsEntryLocalService.addEntry(
-			null, getUserId(), title, subtitle, urlTitle, description, content,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
-			serviceContext);
-	}
-
 	@Override
 	public BlogsEntry addEntry(
 			String externalReferenceCode, String title, String subtitle,

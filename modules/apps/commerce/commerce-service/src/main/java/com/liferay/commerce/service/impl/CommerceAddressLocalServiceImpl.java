@@ -151,6 +151,18 @@ public class CommerceAddressLocalServiceImpl
 		return CommerceAddressImpl.fromAddress(copiedAddress);
 	}
 
+	@Override
+	public CommerceAddress createCommerceAddress(long commerceAddressId) {
+		CommerceAddress commerceAddress = new CommerceAddressImpl();
+
+		commerceAddress.setNew(true);
+		commerceAddress.setPrimaryKey(commerceAddressId);
+
+		commerceAddress.setCompanyId(CompanyThreadLocal.getCompanyId());
+
+		return commerceAddress;
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceAddress deleteCommerceAddress(

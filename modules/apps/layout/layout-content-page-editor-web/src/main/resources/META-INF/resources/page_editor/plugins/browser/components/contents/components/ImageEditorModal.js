@@ -88,7 +88,7 @@ export default function ImageEditorModal({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{previewURL && (
+				{previewURL ? (
 					<ImageEditor
 						imageId={fileEntryId}
 						imageSrc={previewURL}
@@ -96,6 +96,8 @@ export default function ImageEditorModal({
 						onSave={onSave}
 						saveURL={editImageURL}
 					/>
+				) : (
+					<ClayLoadingIndicator />
 				)}
 			</ClayModal.Body>
 		</ClayModal>

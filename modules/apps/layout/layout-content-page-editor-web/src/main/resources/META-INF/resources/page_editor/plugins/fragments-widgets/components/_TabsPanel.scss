@@ -1,11 +1,15 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.page-editor__sidebar__fragments-widgets-panel__tabs {
-	border-bottom: 1px solid $secondary-l3;
-	font-size: 12px;
-	margin-bottom: 12px;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__sidebar__fragments-widgets-panel__tabs {
+			border-bottom: 1px solid $cadmin-secondary-l3;
+			font-size: 12px;
+			margin-bottom: 12px;
 
-	.nav-link:not(.active) {
-		color: $secondary;
+			.nav-link:not(.active) {
+				color: $cadmin-secondary;
+			}
+		}
 	}
 }

@@ -1,49 +1,54 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 @import '../../../../../app/components/variables';
 
-.page-editor__sidebar {
-	.page-editor__page-structure__item-configuration {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		overflow: hidden;
+html#{$cadmin-selector} {
+	.cadmin {
+		&.page-editor__sidebar {
+			.page-editor__page-structure__item-configuration {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				overflow: hidden;
 
-		.tab-content {
-			overflow: auto;
-		}
+				.tab-content {
+					overflow: auto;
+				}
 
-		&-tab {
-			font-size: 0.75rem;
-		}
+				&-tab {
+					font-size: 12px;
+				}
 
-		label {
-			font-size: 12px;
-		}
+				label {
+					font-size: 12px;
+				}
 
-		.btn,
-		.btn-group,
-		.form-group,
-		.form-group-autofit {
-			margin-bottom: $pageEditorSpacing * 2;
+				.btn,
+				.btn-group,
+				.form-group,
+				.form-group-autofit {
+					margin-bottom: $pageEditorSpacing * 2;
 
-			&:last-child {
-				margin: 0;
+					&:last-child {
+						margin: 0;
+					}
+				}
+
+				.btn {
+					&:nth-last-child(2) {
+						margin: 0;
+					}
+				}
+
+				.form-group .btn {
+					border-color: $cadmin-gray-300;
+				}
+
+				.nav-underline {
+					border-bottom: 1px solid $cadmin-secondary-l3;
+					flex-shrink: 0;
+				}
 			}
-		}
-
-		.btn {
-			&:nth-last-child(2) {
-				margin: 0;
-			}
-		}
-
-		.form-group .btn {
-			border-color: $gray-300;
-		}
-
-		.nav-underline {
-			border-bottom: 1px solid $secondary-l3;
 		}
 	}
 }

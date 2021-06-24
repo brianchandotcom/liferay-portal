@@ -1,15 +1,19 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.page-editor__sidebar__page-design-options__tabs {
-	border-bottom: 1px solid $secondary-l3;
-	font-size: 0.75rem;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__sidebar__page-design-options__tabs {
+			border-bottom: 1px solid $cadmin-secondary-l3;
+			font-size: 12px;
 
-	.nav-link:not(.active) {
-		color: $secondary;
+			.nav-link:not(.active) {
+				color: $cadmin-secondary;
+			}
+		}
+
+		.page-editor__sidebar__design-options__tab-card--active .card {
+			box-shadow: 0 0 0 2px $cadmin-primary-l1;
+			cursor: pointer;
+		}
 	}
-}
-
-.page-editor__sidebar__design-options__tab-card--active .card {
-	box-shadow: 0 0 0 2px $primary-l1;
-	cursor: pointer;
 }

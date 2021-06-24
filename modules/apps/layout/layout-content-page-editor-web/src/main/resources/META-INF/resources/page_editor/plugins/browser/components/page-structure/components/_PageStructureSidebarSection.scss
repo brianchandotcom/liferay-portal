@@ -1,36 +1,40 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 @import '../../../../../app/components/variables';
 
-.page-editor__page-structure__section {
-	flex-basis: 0;
-	flex-grow: 1;
-	overflow: auto;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__page-structure__section {
+			flex-basis: 0;
+			flex-grow: 1;
+			overflow: auto;
 
-	&.resized {
-		flex-basis: auto;
-		flex-shrink: 0;
-	}
+			&.resized {
+				flex-basis: auto;
+				flex-shrink: 0;
+			}
 
-	& ~ & {
-		border-top: solid $gray-300 thin;
-	}
+			~ .page-editor__page-structure__section {
+				border-top: solid $cadmin-gray-300 thin;
+			}
 
-	&__custom-styles {
-		border-bottom: 1px solid $secondary-l3;
-		padding-bottom: $pageEditorSpacing * 2.5;
-	}
+			&__custom-styles {
+				border-bottom: 1px solid $cadmin-secondary-l3;
+				padding-bottom: $pageEditorSpacing * 2.5;
+			}
 
-	&__resize-handler {
-		cursor: row-resize;
-		height: 10px;
+			&__resize-handler {
+				cursor: row-resize;
+				height: 10px;
 
-		&:hover {
-			background: $gray-300;
-		}
+				&:hover {
+					background: $cadmin-gray-300;
+				}
 
-		&.active {
-			background: $gray-400;
+				&.active {
+					background: $cadmin-gray-400;
+				}
+			}
 		}
 	}
 }

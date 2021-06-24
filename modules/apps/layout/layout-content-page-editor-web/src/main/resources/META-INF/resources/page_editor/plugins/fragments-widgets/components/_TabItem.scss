@@ -1,148 +1,152 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 @import '../../../app/components/variables';
 
-.page-editor__fragments-widgets__tab {
-	&-card-item {
-		border-radius: 4px;
-		cursor: grab;
-		height: 112px;
-		transition: transform ease 0.3s;
-		width: calc(50% - 4px);
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__fragments-widgets__tab {
+			&-card-item {
+				border-radius: 4px;
+				cursor: grab;
+				height: 112px;
+				transition: transform ease 0.3s;
+				width: calc(50% - 4px);
 
-		&:hover:not(.disabled) {
-			box-shadow: 0 4px 8px fade_out($gray-900, 0.9);
-			transform: translateY(-4px);
+				&:hover:not(.disabled) {
+					box-shadow: 0 4px 8px fade_out($cadmin-gray-900, 0.9);
+					transform: translateY(-4px);
 
-			.card {
-				box-shadow: none;
+					.card {
+						box-shadow: none;
 
-				&::after {
-					border-radius: 4px;
-					box-shadow: inset 0 0 0 2px #80acff;
-					content: '';
-					height: 100%;
-					left: 0;
-					pointer-events: none;
-					position: absolute;
-					top: 0;
-					width: 100%;
+						&::after {
+							border-radius: 4px;
+							box-shadow: inset 0 0 0 2px #80acff;
+							content: '';
+							height: 100%;
+							left: 0;
+							pointer-events: none;
+							position: absolute;
+							top: 0;
+							width: 100%;
+						}
+					}
+				}
+
+				.file-card .card {
+					background-color: $cadmin-light;
+				}
+				&:nth-child(even) {
+					margin-left: 8px;
+				}
+
+				.card {
+					box-shadow: 0 0 0 1px $cadmin-gray-300;
+					height: 112px;
+				}
+
+				.card-item-first {
+					.card-type-asset-icon {
+						width: 32px;
+					}
+
+					.lexicon-icon {
+						color: $cadmin-secondary;
+					}
+
+					height: 70%;
+				}
+
+				.card-body {
+					align-items: center;
+					background-color: $cadmin-white;
+					border-bottom-left-radius: 4px;
+					border-bottom-right-radius: 4px;
+					display: flex;
+					height: 30%;
+					padding: 8px;
+
+					.card-title {
+						font-size: 12px;
+						font-weight: 600;
+						width: 100%;
+
+						.text-truncate,
+						.text-truncate-inline {
+							width: 100%;
+						}
+					}
+				}
+
+				&.disabled {
+					cursor: default;
+
+					.image-card .card-item-first {
+						opacity: 0.5;
+					}
+
+					.card {
+						box-shadow: 0 0 0 1px $cadmin-gray-300;
+
+						.lexicon-icon {
+							color: $cadmin-secondary-l1;
+						}
+
+						.card-title {
+							color: $cadmin-secondary-l1;
+						}
+					}
 				}
 			}
-		}
 
-		.file-card .card {
-			background-color: $light;
-		}
-		&:nth-child(even) {
-			margin-left: 8px;
-		}
-
-		.card {
-			box-shadow: 0 0 0 1px $gray-300;
-			height: 112px;
-		}
-
-		.card-item-first {
-			.card-type-asset-icon {
-				width: 32px;
-			}
-
-			.lexicon-icon {
-				color: $secondary;
-			}
-
-			height: 70%;
-		}
-
-		.card-body {
-			align-items: center;
-			background-color: $white;
-			border-bottom-left-radius: 4px;
-			border-bottom-right-radius: 4px;
-			display: flex;
-			height: 30%;
-			padding: 8px;
-
-			.card-title {
-				font-size: 0.75rem;
-				font-weight: 600;
+			&-list-item {
+				align-items: center;
+				border-radius: 4px;
+				color: $cadmin-secondary-d2;
+				cursor: grab;
+				display: flex;
+				height: 32px;
+				margin-bottom: 4px;
+				padding: 0 4px 0 12px;
+				transition: transform ease 0.3s;
 				width: 100%;
 
-				.text-truncate,
-				.text-truncate-inline {
-					width: 100%;
-				}
-			}
-		}
-
-		&.disabled {
-			cursor: default;
-
-			.image-card .card-item-first {
-				opacity: 0.5;
-			}
-
-			.card {
-				box-shadow: 0 0 0 1px $gray-300;
-
-				.lexicon-icon {
-					color: $secondary-l1;
+				&:hover:not(.disabled) {
+					box-shadow: 0 0 0 2px $cadmin-primary-l1,
+						0 4px 8px fade_out($cadmin-gray-900, 0.9);
+					transform: translateX(-4px);
 				}
 
-				.card-title {
-					color: $secondary-l1;
+				&.disabled {
+					color: $cadmin-secondary-l1;
+					cursor: default;
+
+					&:hover {
+						background-color: transparent;
+					}
+				}
+
+				&-body {
+					align-items: center;
+					display: flex;
+					font-size: 14px;
+					text-align: center;
+					width: calc(100% - 24px);
+
+					.lexicon-icon {
+						transform: translateY(1px);
+					}
+
+					.title {
+						font-size: 12px;
+						font-weight: 600;
+					}
 				}
 			}
-		}
-	}
 
-	&-list-item {
-		align-items: center;
-		border-radius: 4px;
-		color: $secondary-d2;
-		cursor: grab;
-		display: flex;
-		height: 32px;
-		margin-bottom: 4px;
-		padding: 0 4px 0 12px;
-		transition: transform ease 0.3s;
-		width: 100%;
-
-		&:hover:not(.disabled) {
-			box-shadow: 0 0 0 2px $primary-l1,
-				0 4px 8px fade_out($gray-900, 0.9);
-			transform: translateX(-4px);
-		}
-
-		&.disabled {
-			color: $secondary-l1;
-			cursor: default;
-
-			&:hover {
-				background-color: transparent;
+			&-portlet-item {
+				margin-left: 16px;
 			}
 		}
-
-		&-body {
-			align-items: center;
-			display: flex;
-			font-size: 14px;
-			text-align: center;
-			width: calc(100% - 24px);
-
-			.lexicon-icon {
-				transform: translateY(1px);
-			}
-
-			.title {
-				font-size: 12px;
-				font-weight: 600;
-			}
-		}
-	}
-
-	&-portlet-item {
-		margin-left: 16px;
 	}
 }

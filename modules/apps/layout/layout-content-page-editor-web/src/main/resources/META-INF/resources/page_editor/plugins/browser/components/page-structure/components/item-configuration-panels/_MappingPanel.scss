@@ -1,12 +1,16 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.page-editor__mapping-panel {
-	&__helper,
-	&__type-label {
-		font-size: 12px;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__mapping-panel {
+			&__helper,
+			&__type-label {
+				font-size: 12px;
 
-		span {
-			font-weight: 600;
+				span {
+					font-weight: 600;
+				}
+			}
 		}
 	}
 }

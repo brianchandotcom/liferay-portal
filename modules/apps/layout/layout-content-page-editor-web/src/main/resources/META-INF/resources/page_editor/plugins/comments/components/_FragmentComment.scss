@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 @keyframes FragmentCommentDecrease {
 	from {
@@ -25,86 +25,86 @@
 	}
 }
 
-.page-editor__fragment-comment {
-	min-height: 4.5rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
-	padding-top: 1rem;
-	position: relative;
-	transition: min-height ease 0.3s;
-	will-change: min-height;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__fragment-comment {
+			min-height: 72px;
+			padding-left: 16px;
+			padding-right: 16px;
+			padding-top: 16px;
+			position: relative;
+			transition: min-height ease 0.3s;
+			will-change: min-height;
 
-	&--hidden {
-		animation: FragmentCommentDecrease ease 0.4s,
-			FragmentCommentFadeOut ease 0.3s;
-		animation-fill-mode: forwards;
-		overflow: hidden;
+			&--hidden {
+				animation: FragmentCommentDecrease ease 0.4s,
+					FragmentCommentFadeOut ease 0.3s;
+				animation-fill-mode: forwards;
+				overflow: hidden;
 
-		&.page-editor__fragment-comment--with-resolve-mask {
-			animation-delay: 0.5s;
-		}
-	}
+				&.page-editor__fragment-comment--with-resolve-mask {
+					animation-delay: 0.5s;
+				}
+			}
 
-	&--highlighted {
-		background-color: $primary-l3;
-	}
+			&--highlighted {
+				background-color: $cadmin-primary-l3;
+			}
 
-	&--reply {
-		padding-left: 1rem;
-		padding-right: 0;
-		padding-top: 0.5rem;
-	}
+			&--reply {
+				padding-left: 16px;
+				padding-right: 0;
+				padding-top: 8px;
+			}
 
-	& + &:not(&--reply) {
-		border-top: solid thin $secondary-l2;
-	}
+			&--resolved {
+				background-color: $cadmin-success-l2;
+			}
 
-	&--resolved {
-		background-color: $success-l2;
-	}
+			&--with-delete-mask {
+				min-height: 160px;
+			}
 
-	&--with-delete-mask {
-		min-height: 10rem;
-	}
+			&--with-resolve-mask {
+				.resolve-mask {
+					align-items: center;
+					animation: FragmentCommentResolveMaskFadeIn ease 0.3s;
+					animation-fill-mode: forwards;
+					background: $cadmin-success-l2;
+					bottom: 0;
+					color: $cadmin-success;
+					display: flex;
+					font-size: 48px;
+					justify-content: center;
+					left: 0;
+					opacity: 0;
+					position: absolute;
+					right: 0;
+					top: 0;
+				}
+			}
 
-	&--with-resolve-mask {
-		.resolve-mask {
-			align-items: center;
-			animation: FragmentCommentResolveMaskFadeIn ease 0.3s;
-			animation-fill-mode: forwards;
-			background: $success-l2;
-			bottom: 0;
-			color: $success;
-			display: flex;
-			font-size: 48px;
-			justify-content: center;
-			left: 0;
-			opacity: 0;
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
-	}
+			> form {
+				margin-bottom: 16px;
+			}
 
-	> form {
-		margin-bottom: 1rem;
-	}
+			&-replies {
+				border-left: solid 2px $cadmin-secondary-l2;
+				margin-left: 5.6px;
+			}
 
-	&-replies {
-		border-left: solid 2px $secondary-l2;
-		margin-left: 0.35rem;
-	}
+			+ .page-editor__fragment-comment:not(.page-editor__fragment-comment--reply) {
+				border-top: solid thin $cadmin-secondary-l2;
+			}
 
-	& + &:not(&--reply) {
-		border-top: solid thin $secondary-l2;
-	}
+			.content {
+				hyphens: auto;
+				overflow-wrap: break-word;
 
-	.content {
-		hyphens: auto;
-		overflow-wrap: break-word;
-
-		p {
-			margin-bottom: 0;
+				p {
+					margin-bottom: 0;
+				}
+			}
 		}
 	}
 }

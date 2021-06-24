@@ -1,10 +1,14 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.page-editor__row-styles-panel__viewport-label {
-	background: $light-l1;
-	color: $gray-600;
-	font-size: 0.75rem;
-	font-weight: 600;
-	margin: -16px -16px 12px;
-	padding: 8px 16px;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__row-styles-panel__viewport-label {
+			background: $cadmin-light-l1;
+			color: $cadmin-gray-600;
+			font-size: 12px;
+			font-weight: 600;
+			margin: -16px -16px 12px;
+			padding: 8px 16px;
+		}
+	}
 }

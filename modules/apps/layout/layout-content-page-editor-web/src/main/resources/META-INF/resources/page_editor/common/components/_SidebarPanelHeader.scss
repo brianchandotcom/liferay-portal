@@ -1,13 +1,19 @@
+@import 'cadmin-variables';
+
 @import '../../app/components/variables';
 
-.page-editor__sidebar__panel-header {
-	font-size: 18px;
-	font-weight: bold;
-	margin-bottom: $pageEditorSpacing * 4;
-	margin-top: $pageEditorSpacing * 2;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__sidebar__panel-header {
+			font-size: 18px;
+			font-weight: bold;
+			margin-bottom: $pageEditorSpacing * 4;
+			margin-top: $pageEditorSpacing * 2;
 
-	&.light {
-		font-size: 14px;
-		margin-bottom: $pageEditorSpacing * 3;
+			&.light {
+				font-size: 14px;
+				margin-bottom: $pageEditorSpacing * 3;
+			}
+		}
 	}
 }

@@ -1,12 +1,18 @@
-.page-editor__page-structure {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+@import 'cadmin-variables';
 
-	&__content {
-		display: flex;
-		flex-direction: column;
-		flex-grow: 1;
-		overflow: hidden;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__page-structure {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+
+			&__content {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				overflow: hidden;
+			}
+		}
 	}
 }

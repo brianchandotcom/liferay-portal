@@ -1,20 +1,24 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.page-editor__sidebar__fragments-widgets-panel {
-	.form-control-sm {
-		padding-left: 12px;
-		padding-right: 12px;
-	}
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__sidebar__fragments-widgets-panel {
+			.form-control-sm {
+				padding-left: 12px;
+				padding-right: 12px;
+			}
 
-	.sheet-subtitle {
-		color: $secondary;
-		line-height: unset;
-	}
+			.sheet-subtitle {
+				color: $cadmin-secondary;
+				line-height: unset;
+			}
 
-	.collapse-icon {
-		border: 0;
-		font-size: 0.7rem;
-		height: 2rem;
-		margin-bottom: 4px;
+			.collapse-icon {
+				border: 0;
+				font-size: 11.2px;
+				height: 32px;
+				margin-bottom: 4px;
+			}
+		}
 	}
 }

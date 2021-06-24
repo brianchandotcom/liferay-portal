@@ -1,5 +1,3 @@
-@import 'atlas-variables';
-
 @import './variables';
 
 $toolbarHeight: 112px;
@@ -11,134 +9,144 @@ $desktopToolbarHeight: 64px;
 $zIndexButtons: 1;
 $zIndexContent: 0;
 
-.page-editor__sidebar {
-	display: flex;
-	height: calc(100vh - #{$desktopToolbarHeight});
-	position: fixed;
-	right: 0;
-	top: $desktopToolbarHeight;
-	z-index: $sidebarZIndex;
-
-	&__buttons {
-		background-color: $secondary-d1;
-		flex-direction: column;
-		padding-top: 16px;
-		width: $sidebarButtonWidth;
-		z-index: $zIndexButtons;
-
-		&.light {
-			background-color: $gray-200;
-			font-size: 14px;
-			padding: 16px 5px;
-			width: 42px;
-
-			button {
-				color: $secondary;
-				margin-bottom: 4px;
-
-				&.active,
-				&:active,
-				&:focus,
-				&:hover {
-					background-color: $light-d1;
-					color: $secondary-d2;
-				}
-			}
-
-			a {
-				color: $secondary;
-				height: 32px;
-
-				&.active,
-				&:active,
-				&:focus,
-				&:hover {
-					background-color: $light-d1;
-					color: $secondary-d2;
-				}
-			}
-		}
-
-		a {
-			align-items: center;
-			border-radius: 0.25rem;
-			color: $secondary-l1;
+html#{$cadmin-selector} {
+	.cadmin {
+		&.page-editor__sidebar {
 			display: flex;
-			height: 2.5em;
-			justify-content: center;
-
-			&.active,
-			&:active,
-			&:focus,
-			&:hover {
-				color: $white;
-			}
-
-			&:focus {
-				box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primary-l1,
-					inset 0 0 rgba(0, 0, 0, 0);
-				outline: none;
-			}
+			height: calc(100vh - #{$desktopToolbarHeight});
+			position: fixed;
+			right: 0;
+			top: $desktopToolbarHeight;
+			z-index: $sidebarZIndex;
 		}
 
-		button {
-			color: $secondary-l1;
+		.page-editor__sidebar {
+			&__buttons {
+				background-color: $cadmin-secondary-d1;
+				flex-direction: column;
+				padding-top: 16px;
+				width: $sidebarButtonWidth;
+				z-index: $zIndexButtons;
 
-			&.active,
-			&:active,
-			&:focus,
-			&:hover {
-				color: $white;
+				&.light {
+					background-color: $cadmin-gray-200;
+					font-size: 14px;
+					padding: 16px 5px;
+					width: 42px;
+
+					button {
+						color: $cadmin-secondary;
+						margin-bottom: 4px;
+
+						&.active,
+						&:active,
+						&:focus,
+						&:hover {
+							background-color: $cadmin-light-d1;
+							color: $cadmin-secondary-d2;
+						}
+					}
+
+					a {
+						color: $cadmin-secondary;
+						height: 32px;
+
+						&.active,
+						&:active,
+						&:focus,
+						&:hover {
+							background-color: $cadmin-light-d1;
+							color: $cadmin-secondary-d2;
+						}
+					}
+				}
+
+				a {
+					align-items: center;
+					border-radius: 4px;
+					color: $cadmin-secondary-l1;
+					display: flex;
+					height: 2.5em;
+					justify-content: center;
+
+					&.active,
+					&:active,
+					&:focus,
+					&:hover {
+						color: $cadmin-white;
+					}
+
+					&:focus {
+						box-shadow: 0 0 0 2px $cadmin-white,
+							0 0 0 4px $cadmin-primary-l1,
+							inset 0 0 rgba(0, 0, 0, 0);
+						outline: none;
+					}
+				}
+
+				button {
+					color: $cadmin-secondary-l1;
+
+					&.active,
+					&:active,
+					&:focus,
+					&:hover {
+						color: $cadmin-white;
+					}
+				}
+
+				hr {
+					border-color: $cadmin-secondary;
+					margin: 12px 8px;
+				}
 			}
-		}
 
-		hr {
-			border-color: $secondary;
-			margin: 12px 8px;
+			&__content {
+				background-color: $cadmin-white;
+				border-left: 1px solid $cadmin-secondary-l3;
+				height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+				overflow-x: hidden;
+				position: fixed;
+				right: $sidebarButtonWidth;
+				transform: translateX(100%);
+				transition: transform ease $defaultTransitionDuration;
+				width: $sidebarContentWidth;
+				z-index: $zIndexContent;
+
+				&.rtl {
+					transform: translateX(-100%);
+				}
+
+				&--open.page-editor__sidebar__content {
+					transform: translateX(0);
+				}
+
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					height: calc(
+						100vh - #{$desktopControlMenuHeight + $toolbarHeight}
+					);
+				}
+
+				@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
+					height: calc(
+						100vh - #{$desktopControlMenuHeight +
+							$desktopToolbarHeight}
+					);
+				}
+			}
 		}
 	}
 
-	&__content {
-		background-color: $white;
-		border-left: 1px solid $secondary-l3;
-		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
-		overflow-x: hidden;
-		position: fixed;
-		right: $sidebarButtonWidth;
-		transform: translateX(100%);
-		transition: transform ease $defaultTransitionDuration;
-		width: $sidebarContentWidth;
-		z-index: $zIndexContent;
-
-		&.rtl {
-			transform: translateX(-100%);
-		}
-
-		&--open.page-editor__sidebar__content {
-			transform: translateX(0);
-		}
-
-		@include media-breakpoint-up(sm) {
-			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
-		}
-
-		@include media-breakpoint-up(xl) {
-			height: calc(
-				100vh - #{$desktopControlMenuHeight + $desktopToolbarHeight}
-			);
-		}
-	}
-
-	body.has-control-menu & {
+	body.has-control-menu .cadmin.page-editor__sidebar {
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		top: $controlMenuHeight + $toolbarHeight;
 
-		@include media-breakpoint-up(sm) {
+		@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
 			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
 			top: $desktopControlMenuHeight + $toolbarHeight;
 		}
 
-		@include media-breakpoint-up(xl) {
+		@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
 			height: calc(
 				100vh - #{$desktopControlMenuHeight + $desktopToolbarHeight}
 			);

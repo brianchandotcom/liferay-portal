@@ -1,11 +1,17 @@
-.page-editor__textarea,
-.form-group-sm .form-control.page-editor__textarea {
-	height: 5rem;
-	transition: height ease 0.3s;
-	will-change: height;
+@import 'cadmin-variables';
 
-	&--empty:not(:focus) {
-		height: 2.5rem;
-		transition-delay: 0.3s;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__textarea,
+		.form-group-sm .form-control.page-editor__textarea {
+			height: 80px;
+			transition: height ease 0.3s;
+			will-change: height;
+
+			&--empty:not(:focus) {
+				height: 40px;
+				transition-delay: 0.3s;
+			}
+		}
 	}
 }

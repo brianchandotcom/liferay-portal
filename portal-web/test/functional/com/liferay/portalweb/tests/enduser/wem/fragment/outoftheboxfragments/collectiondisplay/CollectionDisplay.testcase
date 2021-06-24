@@ -149,6 +149,243 @@ definition {
 			value1 = "WC WebContent Title 3");
 	}
 
+	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with the Highest Rated Assets."
+	@priority = "5"
+	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithHighestRatedAssets {
+		task ("Add a web content,a blogs entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Select the web content as related assets in blogs entry") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Web Content Title",
+				assetType = "Basic Web Content");
+
+			PortletEntry.publish();
+		}
+
+		task ("Select the web content and blogs entry as related assets in document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Document Title");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Web Content Title",
+				assetType = "Basic Web Content");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Display to the first module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the Highest Rated Assets in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Add a Heading fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Document Title",
+				fragmentName = "Heading");
+		}
+
+		task ("Map Title of collection items to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Add a Collection Display to the second module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "2",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the Highest Rated Assets in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				columnNumber = "2",
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Add a Collection Display fragment into the second module Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document Title",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the new Related Assets in inner Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = "3",
+				infoItemRelatedListProviderName = "Related Assets");
+		}
+
+		task ("Add a Button fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Document Title",
+				fragmentName = "Button");
+		}
+
+		task ("Map Title of collection items to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("View the title of assets are shown in the first module") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the title of related assets are shown in the second module") {
+			var n = "1";
+
+			for (var title : list "Blogs Entry Title,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[@class='row'][${n}]//div[contains(@class,'page-editor__topper') and contains(.,'Button')]//*[contains(@data-lfr-editable-id,'link')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "1",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "1";
+
+			for (var title : list "Document Title,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[@class='row'][${n}]//div[contains(@class,'page-editor__topper') and contains(.,'Button')]//*[contains(@data-lfr-editable-id,'link')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "2",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[@class='row'][${n}]//div[contains(@class,'page-editor__topper') and contains(.,'Button')]//*[contains(@data-lfr-editable-id,'link')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "3",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the title of assets are shown in the first module") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					id = "element-text",
+					key_position = "${n}",
+					key_text = "${title}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the title of related assets are shown in the second module") {
+			var n = "1";
+
+			for (var title : list "Blogs Entry Title,Web Content Title,Document Title,Web Content Title,Document Title,Blogs Entry Title") {
+				AssertVisible(
+					id = "link",
+					key_position = "${n}",
+					key_text = "${title}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-86141. The fragment should be added to all cells of the Collection Display when add it to one cell."
 	@priority = "5"
 	test AddFragmentToOneCell {

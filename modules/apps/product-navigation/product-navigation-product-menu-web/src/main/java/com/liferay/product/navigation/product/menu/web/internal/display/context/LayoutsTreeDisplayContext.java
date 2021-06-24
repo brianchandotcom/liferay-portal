@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -314,6 +315,8 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"namespace", getNamespace()
 		).put(
+			"pageTypeSelectedOption", _getPageTypeSelectedOption()
+		).put(
 			"privateLayout", isPrivateLayout()
 		).put(
 			"showAddIcon",
@@ -455,6 +458,65 @@ public class LayoutsTreeDisplayContext {
 			layout.isPrivateLayout());
 	}
 
+	private String _getPageTypeSelectedOption() {
+		if (_pageTypeSelectedOption != null) {
+			return _pageTypeSelectedOption;
+		}
+
+		String pageTypeSelectedOption =
+			ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT;
+
+		String pageTypeSelectedOptionSessionValue = SessionClicks.get(
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
+			getNamespace() +
+				ProductNavigationProductMenuWebKeys.PAGE_TYPE_SELECTED_OPTION,
+			ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT);
+
+		if (_isValidPageTypeSelectedOption(
+				pageTypeSelectedOptionSessionValue)) {
+
+			pageTypeSelectedOption = pageTypeSelectedOptionSessionValue;
+		}
+
+		_pageTypeSelectedOption = pageTypeSelectedOption;
+
+		return _pageTypeSelectedOption;
+	}
+
+	private boolean _isPageHierarchyOption(String pageTypeOption) {
+		if (Objects.equals(
+				pageTypeOption,
+				ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT) ||
+			Objects.equals(
+				pageTypeOption,
+				ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isValidPageTypeSelectedOption(
+		String pageTypeSelectedOption) {
+
+		if (_isPageHierarchyOption(pageTypeSelectedOption)) {
+			return true;
+		}
+
+		long siteNavigationMenuId = GetterUtil.getLong(pageTypeSelectedOption);
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+
+		if (siteNavigationMenu != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _setSelPlid(PortletURL portletURL) {
 		if (portletURL == null) {
 			return StringPool.BLANK;
@@ -470,6 +532,7 @@ public class LayoutsTreeDisplayContext {
 	private final GroupProvider _groupProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final String _namespace;
+	private String _pageTypeSelectedOption;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 	private final SiteNavigationMenuItemTypeRegistry

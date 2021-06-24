@@ -32,6 +32,7 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -464,7 +465,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrderId);
 
 		_commercePaymentEngine.updateOrderPaymentStatus(
-			commerceOrderId, paymentStatus, commerceOrder.getTransactionId());
+			commerceOrderId, paymentStatus, commerceOrder.getTransactionId(),
+			StringPool.BLANK);
 	}
 
 	protected void updatePrintedNote(ActionRequest actionRequest)

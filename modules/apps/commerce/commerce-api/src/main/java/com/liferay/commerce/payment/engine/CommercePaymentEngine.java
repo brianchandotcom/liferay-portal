@@ -65,9 +65,14 @@ public interface CommercePaymentEngine {
 
 	public String getPaymentMethodName(String paymentMethodKey, Locale locale);
 
-	public CommercePaymentResult partiallyRefundPayment(long commerceOrderId);
+	public CommercePaymentResult partiallyRefundPayment(
+			long commerceOrderId, String transactionId,
+			HttpServletRequest httpServletRequest)
+		throws Exception;
 
-	public CommercePaymentResult postProcessPayment(long commerceOrderId)
+	public CommercePaymentResult postProcessPayment(
+			long commerceOrderId, String transactionId,
+			HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public CommercePaymentResult processPayment(
@@ -80,6 +85,10 @@ public interface CommercePaymentEngine {
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by  {@link #updateOrderPaymentStatus(long, int, String, String)}
+	 */
+	@Deprecated
 	public CommerceOrder updateOrderPaymentStatus(
 			long commerceOrderId, int paymentStatus, String transactionId)
 		throws PortalException;

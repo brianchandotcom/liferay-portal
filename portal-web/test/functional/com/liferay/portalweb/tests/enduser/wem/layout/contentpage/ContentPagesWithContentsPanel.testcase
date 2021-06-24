@@ -185,7 +185,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.gotoTab(tabName = "Contents");
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
 
 			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 				menuItem = "Permissions",
@@ -204,7 +206,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.gotoTab(tabName = "Contents");
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
 
 			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 				menuItem = "View Usages",
@@ -307,7 +311,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.gotoTab(tabName = "Contents");
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
 
 			AssertTextEquals(
 				key_listEntry = "WebContent Title 1",

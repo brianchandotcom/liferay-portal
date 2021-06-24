@@ -227,7 +227,9 @@ definition {
 
 		task ("Edit Web Content Article and Blogs Entry via Contents panel") {
 			for (var title : list "Web Content Title,Blogs Entry Title") {
-				PageEditor.gotoTab(tabName = "Contents");
+				PageEditor.gotoTab(tabName = "Browser");
+
+				Navigator.gotoNavTab(navTab = "Page Content");
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",

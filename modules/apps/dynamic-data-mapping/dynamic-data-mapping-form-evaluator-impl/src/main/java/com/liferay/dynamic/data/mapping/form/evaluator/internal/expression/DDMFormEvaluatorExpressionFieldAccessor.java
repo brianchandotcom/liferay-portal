@@ -83,10 +83,11 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	}
 
 	public Object getFieldPropertyChanged(
-		DDMFormEvaluatorFieldContextKey fieldContextKey, String property) {
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey,
+		String property) {
 
 		Map<String, Object> ddmFormFieldProperties =
-			_ddmFormFieldsPropertyChanges.get(fieldContextKey);
+			_ddmFormFieldsPropertyChanges.get(ddmFormEvaluatorFieldContextKey);
 
 		if ((ddmFormFieldProperties != null) &&
 			ddmFormFieldProperties.containsKey(property)) {
@@ -98,9 +99,10 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	}
 
 	public Object getFieldValue(
-		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		Object value = getFieldPropertyChanged(ddmFormFieldContextKey, "value");
+		Object value = getFieldPropertyChanged(
+			ddmFormEvaluatorFieldContextKey, "value");
 
 		if (value != null) {
 			return value;
@@ -108,12 +110,13 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 
 		DDMFormFieldValue ddmFormFieldValue =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldValue(
-				ddmFormFieldContextKey);
+				ddmFormEvaluatorFieldContextKey);
 
 		Value ddmFormFieldValueValue = ddmFormFieldValue.getValue();
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
-			getDDMFormFieldValueAccessor(ddmFormFieldContextKey.getName());
+			getDDMFormFieldValueAccessor(
+				ddmFormEvaluatorFieldContextKey.getName());
 
 		return ddmFormFieldValueAccessor.getValueForEvaluation(
 			ddmFormFieldValue,
@@ -145,6 +148,38 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 		return _defaultDDMFormFieldValueAccessor;
 	}
 
+	protected Object getFieldLocalizedValue(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		Object localizedValue = getFieldPropertyChanged(
+			ddmFormEvaluatorFieldContextKey, "localizedValue");
+
+		if (localizedValue != null) {
+			return localizedValue;
+		}
+
+		DDMFormFieldValue ddmFormFieldValue =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldValue(
+				ddmFormEvaluatorFieldContextKey);
+
+		return ddmFormFieldValue.getValue();
+	}
+
+	protected Object getFieldLocalizedValue(String fieldName) {
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
+				fieldName);
+
+		if (SetUtil.isEmpty(ddmFormFieldContextKeySet)) {
+			return null;
+		}
+
+		Iterator<DDMFormEvaluatorFieldContextKey> iterator =
+			ddmFormFieldContextKeySet.iterator();
+
+		return getFieldLocalizedValue(iterator.next());
+	}
+
 	protected Object getFieldProperty(String fieldName, String property) {
 		Object value = getFieldPropertyChanged(fieldName, property);
 
@@ -160,20 +195,27 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	}
 
 	protected Object getFieldPropertyByDDMFormFieldContextKey(
-		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey,
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey,
 		String property) {
 
-		if (property.equals("value")) {
-			return getFieldValue(ddmFormFieldContextKey);
+		if (property.equals("localizedValue")) {
+			return getFieldLocalizedValue(ddmFormEvaluatorFieldContextKey);
+		}
+		else if (property.equals("value")) {
+			return getFieldValue(ddmFormEvaluatorFieldContextKey);
 		}
 
-		return getFieldProperty(ddmFormFieldContextKey.getName(), property);
+		return getFieldProperty(
+			ddmFormEvaluatorFieldContextKey.getName(), property);
 	}
 
 	protected Object getFieldPropertyByFieldName(
 		String fieldName, String property) {
 
-		if (property.equals("value")) {
+		if (property.equals("localizedValue")) {
+			return getFieldLocalizedValue(fieldName);
+		}
+		else if (property.equals("value")) {
 			return getFieldValues(fieldName);
 		}
 
@@ -183,27 +225,27 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	protected Object getFieldPropertyChanged(
 		String fieldName, String property) {
 
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeyList =
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
 				fieldName);
 
-		if (SetUtil.isEmpty(ddmFormFieldContextKeyList)) {
+		if (SetUtil.isEmpty(ddmFormFieldContextKeySet)) {
 			return null;
 		}
 
 		Iterator<DDMFormEvaluatorFieldContextKey> iterator =
-			ddmFormFieldContextKeyList.iterator();
+			ddmFormFieldContextKeySet.iterator();
 
 		return getFieldPropertyChanged(iterator.next(), property);
 	}
 
 	protected Object getFieldValues(String fieldName) {
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeyList =
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
 				fieldName);
 
 		Stream<DDMFormEvaluatorFieldContextKey> stream =
-			ddmFormFieldContextKeyList.stream();
+			ddmFormFieldContextKeySet.stream();
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			getDDMFormFieldValueAccessor(fieldName);

@@ -34,6 +34,22 @@ definition {
 	test CanSyncAllContactsFromDXPToAC {
 		ACDXPSettings.connectDXPtoAnalyticsCloud();
 
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");
@@ -46,15 +62,15 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Known Individuals");
 
-		ACUtils.searchBar(searchItem = "Test Test");
+		ACUtils.searchBar(searchItem = "userfn userln");
 
-		ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Test Test");
+		ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
 
 		ACNavigation.switchTab(tabName = "Details");
 
-		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "test@liferay.com");
+		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userea@liferay.com");
 
-		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Test");
+		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
 	}
 
 	@description = "Validate if the user can connect AC to DXP"

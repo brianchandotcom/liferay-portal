@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
 
@@ -94,6 +97,17 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
 			_panelCategoryRegistry);
 
+		renderRequest.setAttribute(
+			"siteNavigationMenuItemLocalService",
+			_siteNavigationMenuItemLocalService);
+
+		renderRequest.setAttribute(
+			"siteNavigationMenuItemTypeRegistry",
+			_siteNavigationMenuItemTypeRegistry);
+
+		renderRequest.setAttribute(
+			"siteNavigationMenuLocalService", _siteNavigationMenuLocalService);
+
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
@@ -108,5 +122,16 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

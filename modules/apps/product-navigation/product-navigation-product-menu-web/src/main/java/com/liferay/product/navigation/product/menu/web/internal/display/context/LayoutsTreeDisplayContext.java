@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.product.navigation.product.menu.web.internal.util.FFProductMenuWebConfigurationUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -333,6 +334,9 @@ public class LayoutsTreeDisplayContext {
 			"pageTypeSelectedOptionLabel", _getPageTypeSelectedOptionLabel()
 		).put(
 			"showAddIcon", this::_isShowAddIcon
+		).put(
+			"siteNavigationMenuEnabled",
+			FFProductMenuWebConfigurationUtil.isSiteNavigationMenuEnabled()
 		).build();
 	}
 
@@ -544,6 +548,12 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private JSONArray _getPageTypeOptionsJSONArray() {
+		if (!FFProductMenuWebConfigurationUtil.isSiteNavigationMenuEnabled()) {
+			return JSONUtil.put(
+				_getOptionGroupJSONObject(
+					"pages", _getPagesOptionGroupJSONArray()));
+		}
+
 		return JSONUtil.putAll(
 			_getOptionGroupJSONObject("pages", _getPagesOptionGroupJSONArray()),
 			_getOptionGroupJSONObject(
@@ -796,6 +806,10 @@ public class LayoutsTreeDisplayContext {
 
 		if (_isPageHierarchyOption(pageTypeSelectedOption)) {
 			return true;
+		}
+
+		if (!FFProductMenuWebConfigurationUtil.isSiteNavigationMenuEnabled()) {
+			return false;
 		}
 
 		long siteNavigationMenuId = GetterUtil.getLong(pageTypeSelectedOption);

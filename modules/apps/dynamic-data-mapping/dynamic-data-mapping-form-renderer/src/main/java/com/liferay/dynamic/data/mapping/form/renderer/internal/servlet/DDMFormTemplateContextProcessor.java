@@ -125,6 +125,8 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getBoolean("localizable", false), ddmFormField);
 		setDDMFormFieldMultiple(
 			jsonObject.getBoolean("multiple"), ddmFormField);
+		setDDMFormFieldNumericInputMask(
+			jsonObject.getString("numericInputMask"), ddmFormField);
 		setDDMFormFieldOptions(
 			jsonObject.getJSONArray("options"), ddmFormField);
 		setDDMFormFieldPlaceholder(
@@ -351,6 +353,14 @@ public class DDMFormTemplateContextProcessor {
 
 			ddmFormField.addNestedDDMFormField(nestedDDMFormField);
 		}
+	}
+
+	protected void setDDMFormFieldNumericInputMask(
+		String numericInputMask, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"numericInputMask",
+			getLocalizedValue(GetterUtil.getString(numericInputMask)));
 	}
 
 	protected void setDDMFormFieldOptions(

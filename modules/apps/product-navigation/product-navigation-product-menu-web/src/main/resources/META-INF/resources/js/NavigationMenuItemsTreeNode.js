@@ -12,22 +12,31 @@
  * details.
  */
 
-import {Treeview} from 'frontend-js-components-web';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React from 'react';
 
-import NavigationMenuItemsTreeNode from './NavigationMenuItemsTreeNode';
-
-export default function NavigationMenuItemsTree({
-	selectedSiteNavigationMenuItemId,
-	siteNavigationMenuItems,
-}) {
+export default function NavigationMenuItemsTreeNode({node}) {
 	return (
-		<div className="navigation-menu-items-tree">
-			<Treeview
-				NodeComponent={NavigationMenuItemsTreeNode}
-				initialSelectedNodeIds={[selectedSiteNavigationMenuItemId]}
-				nodes={siteNavigationMenuItems}
-			/>
+		<div
+			className={classNames('navigation-menu-items-tree-node', {
+				selected: node.selected,
+			})}
+			onClick={(event) => {
+
+				// Disable default selected behaviour
+
+				event.stopPropagation();
+			}}
+		>
+			{node.url ? (
+				<a href={node.url}>
+					<ClayIcon className="mr-2" symbol="page" />
+					{node.name}
+				</a>
+			) : (
+				<p className="m-0">{node.name}</p>
+			)}
 		</div>
 	);
 }

@@ -155,8 +155,8 @@ definition {
 				value1 = "Content Editing");
 		}
 
-		task ("Assert only Selection, Contents and Comments are shown in sidebar") {
-			for (var tabName : list "Selection,Contents,Comments") {
+		task ("Assert only Browser and Comments are shown in sidebar") {
+			for (var tabName : list "Browser,Comments") {
 				AssertVisible(
 					key_tabName = "${tabName}",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");

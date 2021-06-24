@@ -122,8 +122,8 @@ definition {
 				targetFragmentName = "Container");
 		}
 
-		task ("Move the Tabs to the top of Paragraph inside the Container via Selection Panel") {
-			PageEditor.gotoTab(tabName = "Selection");
+		task ("Move the Tabs to the top of Paragraph inside the Container via Browser Panel") {
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Pause(locator1 = "3000");
 
@@ -256,8 +256,8 @@ definition {
 				targetFragmentName = "Container");
 		}
 
-		task ("Move the Image to the top of Button inside the Container via Selection Panel") {
-			PageEditor.gotoTab(tabName = "Selection");
+		task ("Move the Image to the top of Button inside the Container via Browser Panel") {
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Pause(locator1 = "3000");
 
@@ -337,8 +337,8 @@ definition {
 				targetFragmentName = "Container");
 		}
 
-		task ("Move the Banner Center to the top of Heading inside the Container via Selection Panel") {
-			PageEditor.gotoTab(tabName = "Selection");
+		task ("Move the Banner Center to the top of Heading inside the Container via Browser Panel") {
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Pause(locator1 = "3000");
 
@@ -417,8 +417,8 @@ definition {
 				targetFragmentName = "Container");
 		}
 
-		task ("Move the Card to the top of Heading inside the Container via Selection Panel") {
-			PageEditor.gotoTab(tabName = "Selection");
+		task ("Move the Card to the top of Heading inside the Container via Browser Panel") {
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Pause(locator1 = "3000");
 

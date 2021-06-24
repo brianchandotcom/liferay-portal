@@ -872,7 +872,7 @@ definition {
 			fieldValue = "${videoLink}");
 
 		Click(
-			key_sidebarButton = "Selection",
+			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		PageEditor.waitForAutoSave();
@@ -1297,7 +1297,7 @@ definition {
 				value1 = "${numberOfTabs}");
 
 			Click(
-				key_sidebarButton = "Selection",
+				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertTextEquals(
@@ -1669,7 +1669,7 @@ definition {
 				value1 = "${maxNumberOfItems}");
 
 			Click(
-				key_sidebarButton = "Selection",
+				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertTextEquals(
@@ -2016,7 +2016,7 @@ definition {
 				value1 = "${imageDescription}");
 
 			Click(
-				key_sidebarButton = "Selection",
+				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			PageEditor.waitForAutoSave();
@@ -2208,7 +2208,7 @@ definition {
 					value1 = "${borderWidth}");
 
 				Click(
-					key_sidebarButton = "Selection",
+					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 				Pause(locator1 = "3000");
@@ -2269,7 +2269,7 @@ definition {
 					value1 = "${height}");
 
 				Click(
-					key_sidebarButton = "Selection",
+					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 			}
 
@@ -2325,7 +2325,7 @@ definition {
 					value1 = "${opacity}");
 
 				Click(
-					key_sidebarButton = "Selection",
+					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 				Pause(locator1 = "3000");
@@ -2406,7 +2406,7 @@ definition {
 					value1 = "${url}");
 
 				Click(
-					key_sidebarButton = "Selection",
+					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 			}
 

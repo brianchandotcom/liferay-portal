@@ -75,8 +75,8 @@ definition {
 			}
 		}
 
-		task ("Assert the order of element nodes in the Selection panel") {
-			PageEditor.gotoTab(tabName = "Selection");
+		task ("Assert the order of element nodes in the Browser panel") {
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Pause(locator1 = "3000");
 
@@ -206,8 +206,8 @@ definition {
 			}
 		}
 
-		task ("Move the Button into the Container via the Selection panel") {
-			PageEditor.gotoTab(tabName = "Selection");
+		task ("Move the Button into the Container via the Browser panel") {
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Pause(locator1 = "3000");
 
@@ -473,7 +473,7 @@ definition {
 		task ("View the configuration panel is restored when access to it second time") {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-			PageEditor.gotoTab(tabName = "Selection");
+			PageEditor.gotoTab(tabName = "Browser");
 
 			AssertElementPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE");
 

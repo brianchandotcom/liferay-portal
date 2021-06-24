@@ -56,6 +56,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
 	const collectionNumberOfItemsId = useId();
+	const collectionNumberOfItemsPerPageId = useId();
 	const collectionPaginationTypeId = useId();
 	const dispatch = useDispatch();
 	const listStyleId = useId();
@@ -291,11 +292,7 @@ export const CollectionGeneralPanel = ({item}) => {
 
 					<ClayForm.Group small>
 						<label htmlFor={collectionNumberOfItemsId}>
-							{item.config.paginationType
-								? Liferay.Language.get(
-										'max-number-of-items-per-page'
-								  )
-								: Liferay.Language.get('max-number-of-items')}
+							{Liferay.Language.get('max-number-of-items')}
 						</label>
 						<ClayInput
 							id={collectionNumberOfItemsId}
@@ -308,15 +305,34 @@ export const CollectionGeneralPanel = ({item}) => {
 							type="number"
 							value={item.config.numberOfItems}
 						/>
-						{item.config.paginationType && (
+					</ClayForm.Group>
+
+					{item.config.paginationType && (
+						<ClayForm.Group small>
+							<label htmlFor={collectionNumberOfItemsPerPageId}>
+								{Liferay.Language.get(
+									'max-number-of-items-per-page'
+								)}
+							</label>
+							<ClayInput
+								id={collectionNumberOfItemsPerPageId}
+								min={1}
+								onChange={({target: {value}}) =>
+									handleConfigurationChanged({
+										numberOfItemsPerPage: value,
+									})
+								}
+								type="number"
+								value={item.config.numberOfItemsPerPage}
+							/>
 							<p className="mt-2 page-editor__collection-general-panel__pagination-label">
 								{Liferay.Util.sub(
 									Liferay.Language.get('x-items-maximum'),
 									[200]
 								)}
 							</p>
-						)}
-					</ClayForm.Group>
+						</ClayForm.Group>
+					)}
 				</>
 			)}
 		</>

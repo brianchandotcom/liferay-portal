@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowMetricsAllItemsListUpdateDueDate</title>
 </head>
+
 <body>
-<table cellpadding="1" cellspacing="1" border="1">
+<table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetricsAllItemsListUpdateDueDate</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>FILTER_CLEAR_ALL</td>
@@ -28,7 +30,7 @@
 	<td>//p[@class='small' and contains(.,'There is no data at the moment.')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>METRICS_UPDATE_DUE_DATE_CARD_FILTER_PROCESS_STEP</td>
 	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), 'Process Step')]</td>
 	<td></td>
@@ -44,24 +46,24 @@
 	<td></td>
 </tr>
 <tr>
-    <td>DUE_DATE_BUTTON_ALL_ITEMS_LIST</td>
-    <td>//button[contains(@class,'component-action quick-action-item')][2]</td>
-    <td></td>
+	<td>DUE_DATE_BUTTON_ALL_ITEMS_LIST</td>
+	<td>//button[contains(@class,'component-action quick-action-item')][2]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>DUE_DATE_MODAL_ALL_ITEMS_LIST</td>
-    <td>//div[contains(@class, 'modal-content')]</td>
-    <td></td>
+	<td>DUE_DATE_MODAL_ALL_ITEMS_LIST</td>
+	<td>//div[contains(@class, 'modal-content')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST</td>
-    <td>//input[contains(@placeholder,'MM/DD/YYYY')]</td>
-    <td></td>
+	<td>NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST</td>
+	<td>//input[contains(@placeholder,'MM/DD/YYYY')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST_TIME</td>
-    <td>//input[contains(@placeholder, 'HH:mm am/pm')]</td>
-    <td></td>
+	<td>NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST_TIME</td>
+	<td>//input[contains(@placeholder, 'HH:mm am/pm')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

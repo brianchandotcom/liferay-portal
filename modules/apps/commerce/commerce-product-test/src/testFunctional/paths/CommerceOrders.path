@@ -101,9 +101,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>EDIT_SHIPMENT_DETAILS</td>
-    <td>//h5[contains(.,'${key_text}')]/..//a[text()='Edit']</td>
-    <td></td>
+	<td>EDIT_SHIPMENT_DETAILS</td>
+	<td>//h5[contains(.,'${key_text}')]/..//a[text()='Edit']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

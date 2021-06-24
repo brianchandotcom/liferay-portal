@@ -11,14 +11,14 @@
 
 <tbody>
 <tr>
-    <td>DELETE_SLA_MESSAGE</td>
-    <td>//p[contains(text(),'Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?')]</td>
-    <td></td>
+	<td>DELETE_SLA_MESSAGE</td>
+	<td>//p[contains(text(),'Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>METRICS_WORKFLOW_SEARCH_BAR</td>
-    <td>//input[@placeholder='Search for']</td>
-    <td></td>
+	<td>METRICS_WORKFLOW_SEARCH_BAR</td>
+	<td>//input[@placeholder='Search for']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_SEARCH_BAR_BUTTON</td>
@@ -96,14 +96,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ASSERT_SLA_INFO</td>
-    <td>//th[contains(text(),'${key_columnName}')]/../../..//td[contains(text(),'${key_fieldName}')]</td>
-    <td></td>
+	<td>ASSERT_SLA_INFO</td>
+	<td>//th[contains(text(),'${key_columnName}')]/../../..//td[contains(text(),'${key_fieldName}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ASSERT_SLA_NAME</td>
-    <td>//th[contains(text(),'SLA Name')]/../../..//a[contains(text(),'${key_slaName}')]</td>
-    <td></td>
+	<td>ASSERT_SLA_NAME</td>
+	<td>//th[contains(text(),'SLA Name')]/../../..//a[contains(text(),'${key_slaName}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

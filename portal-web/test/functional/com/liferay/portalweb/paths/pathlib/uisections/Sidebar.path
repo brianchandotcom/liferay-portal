@@ -31,9 +31,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>BACK</td>
-    <td>//div[contains(@class,'sidebar-header')]//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
-    <td></td>
+	<td>BACK</td>
+	<td>//div[contains(@class,'sidebar-header')]//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DDM_ANY</td>

@@ -32,10 +32,8 @@ definition {
 	macro changeCriterionInput {
 		var key_criterionInputOption = "${criterionInputOption}";
 
-		Click(locator1 = "Segmentation#CRITERION_INPUT");
-
-		Click(
-			locator1 = "Segmentation#CRITERION_INPUT_OPTION",
+		Select(
+			locator1 = "Segmentation#CRITERION_INPUT",
 			value1 = "${criterionInputOption}");
 	}
 

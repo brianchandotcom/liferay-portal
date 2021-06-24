@@ -2520,6 +2520,10 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
 		Navigator.gotoNavTab(navTab = "General");
 
 		AssertSelectedLabel(
@@ -2592,6 +2596,10 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		Navigator.gotoNavTab(navTab = "General");
 
@@ -5432,6 +5440,10 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
 		Navigator.gotoNavTab(navTab = "General");
 
 		AssertSelectedLabel(
@@ -5545,6 +5557,10 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		Navigator.gotoNavTab(navTab = "General");
 

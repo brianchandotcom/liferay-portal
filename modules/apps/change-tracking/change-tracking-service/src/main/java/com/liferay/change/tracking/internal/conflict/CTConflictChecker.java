@@ -544,8 +544,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Set<String> strictColumnNames = ctPersistence.getCTColumnNames(
 			CTColumnResolutionType.STRICT);
 
-		StringBundler sb = new StringBundler(
-			(7 * strictColumnNames.size()) + 24);
+		StringBundler sb = new StringBundler();
 
 		sb.append("select publication.");
 		sb.append(primaryKeyName);
@@ -594,6 +593,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			for (Map.Entry<String, Integer> entry : columnsMap.entrySet()) {
 				String conflictColumnName = entry.getKey();
 
+				sb.append("((");
+
 				if (entry.getValue() == Types.CLOB) {
 					sb.append("CAST_CLOB_TEXT(publication.");
 					sb.append(conflictColumnName);
@@ -610,6 +611,20 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					sb.append("production.");
 					sb.append(conflictColumnName);
 				}
+
+				sb.append(") or (publication.");
+				sb.append(conflictColumnName);
+				sb.append(" is null and production.");
+				sb.append(conflictColumnName);
+
+				if (!resolved) {
+					sb.append(" is not null) or (publication.");
+					sb.append(conflictColumnName);
+					sb.append(" is not null and production.");
+					sb.append(conflictColumnName);
+				}
+
+				sb.append(" is null))");
 
 				sb.append(andOr);
 			}

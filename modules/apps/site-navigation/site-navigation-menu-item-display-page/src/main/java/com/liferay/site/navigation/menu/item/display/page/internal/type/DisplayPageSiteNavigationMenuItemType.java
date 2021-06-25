@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -28,19 +29,25 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemTypeConfiguration;
 import com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
@@ -76,6 +83,63 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DisplayPageSiteNavigationMenuItemType
 	implements SiteNavigationMenuItemType {
+
+	@Override
+	public boolean exportData(
+		PortletDataContext portletDataContext,
+		Element siteNavigationMenuItemElement,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
+
+		typeSettingsUnicodeProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		long classNameId = GetterUtil.getLong(
+			typeSettingsUnicodeProperties.get("classNameId"));
+
+		if (classNameId <= 0) {
+			return false;
+		}
+
+		String className = _portal.getClassName(classNameId);
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(className);
+
+		if (layoutDisplayPageProvider == null) {
+			return false;
+		}
+
+		long classPK = GetterUtil.getLong(
+			typeSettingsUnicodeProperties.get("classPK"));
+
+		try {
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(className, classPK));
+
+			siteNavigationMenuItemElement.addAttribute(
+				"display-page-class-name", className);
+			siteNavigationMenuItemElement.addAttribute(
+				"display-page-class-pk", String.valueOf(classPK));
+
+			portletDataContext.addReferenceElement(
+				siteNavigationMenuItem, siteNavigationMenuItemElement,
+				(ClassedModel)
+					layoutDisplayPageObjectProvider.getDisplayObject(),
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+
+			return true;
+		}
+		catch (RuntimeException runtimeException) {
+			_log.error(runtimeException, runtimeException);
+		}
+
+		return false;
+	}
 
 	@Override
 	public PortletURL getAddURL(
@@ -210,6 +274,46 @@ public class DisplayPageSiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean importData(
+		PortletDataContext portletDataContext,
+		SiteNavigationMenuItem siteNavigationMenuItem,
+		SiteNavigationMenuItem importedSiteNavigationMenuItem) {
+
+		Element element = portletDataContext.getImportDataElement(
+			siteNavigationMenuItem);
+
+		String className = element.attributeValue("display-page-class-name");
+		long classPK = GetterUtil.getLong(
+			element.attributeValue("display-page-class-pk"));
+
+		if (Validator.isNull(className) || (classPK <= 0)) {
+			return false;
+		}
+
+		Map<Long, Long> newClassPKsMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
+
+		long existingClassPK = MapUtil.getLong(
+			newClassPKsMap, classPK, classPK);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
+
+		typeSettingsUnicodeProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		typeSettingsUnicodeProperties.put(
+			"classNameId", String.valueOf(_portal.getClassNameId(className)));
+		typeSettingsUnicodeProperties.put(
+			"classPK", String.valueOf(existingClassPK));
+
+		importedSiteNavigationMenuItem.setTypeSettings(
+			typeSettingsUnicodeProperties.toString());
+
+		return true;
+	}
+
+	@Override
 	public boolean isAvailable(
 		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
 
@@ -293,6 +397,9 @@ public class DisplayPageSiteNavigationMenuItemType
 			new InfoItemReference(className, classPK));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageSiteNavigationMenuItemType.class);
+
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
@@ -320,5 +427,8 @@ public class DisplayPageSiteNavigationMenuItemType
 		unbind = "-"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
 
 }

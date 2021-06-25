@@ -1272,6 +1272,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: processVersion
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer

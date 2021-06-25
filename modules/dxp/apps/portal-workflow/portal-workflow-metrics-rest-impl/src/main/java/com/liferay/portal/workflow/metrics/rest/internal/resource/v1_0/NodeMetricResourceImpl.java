@@ -86,18 +86,20 @@ public class NodeMetricResourceImpl
 	@Override
 	public Page<NodeMetric> getProcessNodeMetricsPage(
 			Long processId, Boolean completed, Date dateEnd, Date dateStart,
-			String key, Pagination pagination, Sort[] sorts)
+			String key, String processVersion, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		String latestProcessVersion = _resourceHelper.getLatestProcessVersion(
 			contextCompany.getCompanyId(), processId);
 
 		Map<String, Bucket> taskBuckets = _getTaskBuckets(
-			GetterUtil.getBoolean(completed), key, processId,
-			latestProcessVersion);
+			GetterUtil.getBoolean(completed), key, latestProcessVersion,
+			processId, processVersion);
 
 		Map<String, NodeMetric> nodeMetrics = _getNodeMetrics(
-			key, processId, taskBuckets.keySet(), latestProcessVersion);
+			key, latestProcessVersion, processId, processVersion,
+			taskBuckets.keySet());
 
 		long count = nodeMetrics.size();
 
@@ -435,7 +437,8 @@ public class NodeMetricResourceImpl
 	}
 
 	private Map<String, NodeMetric> _getNodeMetrics(
-		String key, long processId, Set<String> taskNames, String version) {
+		String key, String latestProcessVersion, long processId,
+		String processVersion, Set<String> taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -448,8 +451,34 @@ public class NodeMetricResourceImpl
 		searchSearchRequest.setIndexNames(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
-		searchSearchRequest.setQuery(
-			_createNodesBooleanQuery(key, processId, taskNames, version));
+
+		if (processVersion == null) {
+			searchSearchRequest.setQuery(
+				_createNodesBooleanQuery(
+					key, processId, taskNames, latestProcessVersion));
+		}
+		else {
+			TermsQuery termsQuery = _queries.terms("name");
+
+			termsQuery.addValues(taskNames.toArray(new Object[0]));
+
+			BooleanQuery filterBooleanQuery = _queries.booleanQuery();
+
+			filterBooleanQuery.addMustQueryClauses(termsQuery);
+
+			filterBooleanQuery.addMustQueryClauses(
+				_queries.term("processId", processId),
+				_queries.term("version", processVersion));
+
+			BooleanQuery booleanQuery = _queries.booleanQuery();
+
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", contextCompany.getCompanyId()),
+				_queries.term("deleted", false), _queries.term("type", "TASK"));
+
+			searchSearchRequest.setQuery(
+				booleanQuery.addFilterQueryClauses(filterBooleanQuery));
+		}
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -487,7 +516,8 @@ public class NodeMetricResourceImpl
 	}
 
 	private Map<String, Bucket> _getTaskBuckets(
-		boolean completed, String key, long processId, String version) {
+		boolean completed, String key, String latestProcessVersion,
+		long processId, String processVersion) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -500,8 +530,31 @@ public class NodeMetricResourceImpl
 		searchSearchRequest.setIndexNames(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
-		searchSearchRequest.setQuery(
-			_createTasksBooleanQuery(completed, key, processId, version));
+
+		if (processVersion == null) {
+			searchSearchRequest.setQuery(
+				_createTasksBooleanQuery(
+					completed, key, processId, latestProcessVersion));
+		}
+		else {
+			BooleanQuery booleanQuery = _queries.booleanQuery();
+
+			booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
+
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", contextCompany.getCompanyId()),
+				_queries.term("deleted", false),
+				_queries.term("instanceCompleted", true));
+
+			BooleanQuery filterBooleanQuery = _queries.booleanQuery();
+
+			filterBooleanQuery.addMustQueryClauses(
+				_queries.term("processId", processId),
+				_queries.term("version", processVersion));
+
+			searchSearchRequest.setQuery(
+				booleanQuery.addFilterQueryClauses(filterBooleanQuery));
+		}
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

@@ -157,19 +157,11 @@ definition {
 	}
 
 	macro setGoogleCloudTranslationServiceKey {
-		var os = OSDetector.isWindows();
-
-		if ("${os}" == "true") {
-			var lineSeparater = "\r\n";
-		}
-
-		else {
-			var lineSeparater = "\n";
-		}
+		var lineSeparater = "\n";
 
 		var value1 = PropsUtil.get("google.cloud.translation.service.key.type");
 		var value2 = PropsUtil.get("google.cloud.translation.service.key.project.id");
-		var value4 = PropsUtil.get("google.cloud.translation.service.key.private.key.id");
+		var value3 = PropsUtil.get("google.cloud.translation.service.key.private.key.id");
 		var value5 = PropsUtil.get("google.cloud.translation.service.key.client.email");
 		var value6 = PropsUtil.get("google.cloud.translation.service.key.client.id");
 		var value7 = PropsUtil.get("google.cloud.translation.service.key.auth.uri");
@@ -187,8 +179,8 @@ definition {
 			ListUtil.add("${list}", "${value}");
 		}
 
-		var value3 = ListUtil.toString("${list}","");
-		var value3 = '''-----BEGIN PRIVATE KEY-----${value3}=${lineSeparater}-----END PRIVATE KEY-----${lineSeparater}''';
+		var value4 = ListUtil.toString("${list}","");
+		var value4 = '''-----BEGIN PRIVATE KEY-----${value4}=${lineSeparater}-----END PRIVATE KEY-----${lineSeparater}''';
 
 		var attribute1 = '''"type" : "${value1}"''';
 		var attribute2 = '''"project_id" : "${value2}"''';

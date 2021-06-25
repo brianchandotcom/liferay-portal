@@ -20,11 +20,13 @@ definition {
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
+		var valueReference = Translations.setGoogleCloudTranslationServiceKey();
+
 		SystemSettings.configureSystemSetting(
 			enableSetting = "true",
 			settingFieldName = "Enabled",
 			settingName = "Service Account Private Key",
-			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+			settingValue = "${valueReference}");
 	}
 
 	tearDown {

@@ -202,6 +202,18 @@ public class LiferayBasePlugin implements Plugin<Project> {
 						project, PORTAL_CONFIGURATION_NAME,
 						appServerLibPortalDirJarFiles);
 
+					File appServerShieldedContainerLibPortalDir = new File(
+						liferayExtension.getAppServerPortalDir(),
+						"WEB-INF/shielded-container-lib");
+
+					FileTree appServerShieldedContainerLibPortalDirJarFiles =
+						FileUtil.getJarsFileTree(
+							project, appServerShieldedContainerLibPortalDir);
+
+					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME,
+						appServerShieldedContainerLibPortalDirJarFiles);
+
 					FileTree appServerLibGlobalDirJarFiles =
 						FileUtil.getJarsFileTree(
 							project,

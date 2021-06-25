@@ -1034,6 +1034,8 @@ definition {
 
 	@priority = "5"
 	test AddListRecordWithHTMLField {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

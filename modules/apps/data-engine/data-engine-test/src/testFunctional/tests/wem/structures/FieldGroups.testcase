@@ -658,7 +658,6 @@ definition {
 	@description = "This is a test for LPS-98077. Edit a field placed in a duplicated FieldGroup"
 	@priority = "3"
 	test EditFieldOnDuplicatedFieldGroup {
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

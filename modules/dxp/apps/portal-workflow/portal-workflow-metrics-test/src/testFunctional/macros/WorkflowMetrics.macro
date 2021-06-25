@@ -1306,6 +1306,40 @@ definition {
 		}
 	}
 
+	macro validateInstanceDetailsSLA {
+		if (isSet(openNumber)) {
+			key_slaNumber = "${openNumber}";
+
+			AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_OPEN_SLA_NUMBER");
+
+			for (var slaNames : list "${slaNames}") {
+				var key_slaName = "${slaNames}";
+
+				AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_NAME");
+			}
+		}
+
+		if (isSet(notStartedNumber)) {
+			key_slaNumber = "${notStartedNumber}";
+
+			AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_NOT_STARTED_SLA_NUMBER");
+
+			for (var slaNames : list "${slaNames}") {
+				var key_slaName = "${slaNames}";
+
+				AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_NAME");
+
+				AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_UNTRACKED");
+			}
+		}
+
+		else if ("${slaNames}" == "No SLA") {
+			AssertElementPresent(
+				key_slaName = "No SLA records for this item.",
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_NAME");
+		}
+	}
+
 	macro verifyCustomCalendarExistOrNot {
 		var key_calendar = "${calendar}";
 		var key_durationMessage = "${durationMessage}";

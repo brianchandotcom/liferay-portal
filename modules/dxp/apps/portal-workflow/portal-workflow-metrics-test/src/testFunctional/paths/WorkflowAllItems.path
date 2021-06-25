@@ -131,6 +131,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAIL_PAGE_NOT_STARTED_SLA_NUMBER</td>
+	<td>//div[contains(@class,'modal-body')]/h5[contains(.,'NOT STARTED (${key_slaNumber})')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAIL_PAGE_PROCESS_STATUS</td>
 	<td>//h4[contains(.,'Process Details')]//following-sibling::p[1][contains(.,'Process Status')]//following-sibling::span[1]</td>
 	<td></td>
@@ -143,6 +148,21 @@
 <tr>
 	<td>DETAIL_PAGE_SLA_MESSAGE</td>
 	<td>//div[contains(@class,'modal-body')]/h4[contains(.,'Due Date by SLA')]//following-sibling::p/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_SLA_NAME</td>
+	<td>//div[contains(@class,'modal-body')]//span[contains(.,'${key_slaName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_SLA_UNTRACKED</td>
+	<td>//div[contains(@class,'sla-result')]//span[@class='small'][contains(.,'(Untracked)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_OPEN_SLA_NUMBER</td>
+	<td>//div[contains(@class,'modal-body')]/h5[contains(.,'OPEN (${key_slaNumber})')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -62,8 +62,6 @@ definition {
 	macro gotoSelectCategory {
 		IFrame.selectCategoryFrame();
 
-		AssertVisible(locator1 = "Treeview#NODE_COLLAPSE_BUTTON");
-
 		Portlet.expandTree();
 	}
 

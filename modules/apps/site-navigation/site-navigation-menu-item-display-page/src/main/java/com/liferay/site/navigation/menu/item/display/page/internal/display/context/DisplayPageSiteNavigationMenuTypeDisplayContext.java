@@ -109,8 +109,16 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 		typeSettingsUnicodeProperties.fastLoad(
 			_siteNavigationMenuItem.getTypeSettings());
 
-		_classTypeId = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("classTypeId"));
+		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider(typeSettingsUnicodeProperties);
+
+		if (layoutDisplayPageObjectProvider != null) {
+			_classTypeId = layoutDisplayPageObjectProvider.getClassTypeId();
+		}
+		else {
+			_classTypeId = GetterUtil.getLong(
+				typeSettingsUnicodeProperties.get("classTypeId"));
+		}
 
 		return _classTypeId;
 	}

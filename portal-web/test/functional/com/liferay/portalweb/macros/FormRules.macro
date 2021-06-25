@@ -101,6 +101,18 @@ definition {
 		}
 	}
 
+	macro deleteActions {
+		var key_actionRowNumber = "${rowNumber}";
+		MouseOver(
+			key_actionRowNumber = "${rowNumber}",
+			locator1 = "FormRules#RULE_ACTION_FIELD");
+		Click(
+			key_actionRowNumber = "${rowNumber}",
+			locator1 = "FormRules#RULE_DELETE_ACTION_FIELD");
+
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+	}
+	
 	macro gotoDelete {
 		var key_ruleNumber = "${ruleNumber}";
 
@@ -229,6 +241,37 @@ definition {
 		Click(locator1 = "FormRules#RULE_BUILDER_RULE_CONDITION_DROPDOWN");
 
 		MenuItem.click(menuItem = "${condition}");
+	}
+
+	macro viewAction {
+		var key_selectActionValue = "${action}";
+		var key_actionRowNumber = "${actionRowNumber}";
+		var key_selectActionTargetValue = "${actionTarget}";
+
+		AssertElementPresent(
+			key_actionRowNumber = "${actionRowNumber}",
+			key_selectActionValue = "${action}",
+			locator1 = "FormRules#RULE_ACTION_FIELD_VALUE");
+
+		AssertElementPresent(
+			key_actionRowNumber = "${actionRowNumber}",
+			key_selectActionTargetValue = "${actionTarget}",
+			locator1 = "FormRules#RULE_ACTION_TARGET_FIELD_VALUE");
+	}
+
+	macro viewActionNotPresent {
+		var key_selectActionValue = "${action}";
+		var key_actionRowNumber = "${actionRowNumber}";
+		var key_selectActionTargetValue = "${actionTarget}";
+
+		AssertElementNotPresent(
+			key_actionRowNumber = "${actionRowNumber}",
+			key_selectActionValue = "${action}",
+			locator1 = "FormRules#RULE_ACTION_FIELD_VALUE");
+		AssertElementNotPresent(
+			key_actionRowNumber = "${actionRowNumber}",
+			key_selectActionTargetValue = "${actionTarget}",
+			locator1 = "FormRules#RULE_ACTION_TARGET_FIELD_VALUE");
 	}
 
 	macro viewActionSummary {

@@ -63,6 +63,12 @@ public class DLUserNotificationHandler
 			message = "x-added-a-new-x";
 		}
 		else if (notificationType ==
+					UserNotificationDefinition.
+						NOTIFICATION_TYPE_EXPIRED_ENTRY) {
+
+			message = "x-x-has-expired";
+		}
+		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY) {
 
 			message = "x-review-a-x";

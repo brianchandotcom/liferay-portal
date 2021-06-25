@@ -453,13 +453,107 @@ definition {
 	}
 
 	@description = "COMMERCE-6666. I want to be able to select a Display Template in Placed Orders widget and see it applied to the widget"
-	@ignore = "true"
 	@priority = "3"
 	test UseADTInPlacedOrdersWidget {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SFCommerceOrders#UseADTInPlacedOrdersWidget";
 
-		// TODO COMMERCE-6666 UseADTInPlacedOrdersWidget pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Pause(locator1 = "5000");
+
+		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+		MouseOver(locator1 = "CommerceEntry#PAGINATION_BAR");
+
+		Click.clickNoWaitForVisible(
+			key_text = "qfkd",
+			locator1 = "Icon#SVG_ELLIPSIS_BY_ID");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_text = "Manage Templates",
+			locator1 = "Link#ANY");
+
+		SelectFrameTop();
+
+		SelectFrame(
+			key_title = "Widget Templates",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Placed Orders Template");
+
+		Click(
+			key_fieldName = "Commerce Orders",
+			locator1 = "DDMEditTemplate#SCRIPT_FIELD");
+
+		Button.clickSave();
+
+		SelectFrameTop();
+
+		Click(
+			key_modalTitle = "Widget Templates",
+			locator1 = "Button#CLOSE_MODAL");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Select(
+			key_selectFieldLabel = "Display Template",
+			locator1 = "Select#ANY",
+			value1 = "Placed Orders Template");
+
+		Button.clickSave();
+
+		SelectFrameTop();
+
+		Click(locator1 = "CommerceEntry#MODAL_CLOSE");
+
+		AssertElementPresent(
+			key_portletName = "${orderId}",
+			locator1 = "Portlet#BODY");
 	}
 
 	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"

@@ -304,7 +304,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processNodeMetrics(completed: ___, dateEnd: ___, dateStart: ___, key: ___, page: ___, pageSize: ___, processId: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processNodeMetrics(completed: ___, dateEnd: ___, dateStart: ___, key: ___, page: ___, pageSize: ___, processId: ___, processVersion: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public NodeMetricPage processNodeMetrics(
@@ -313,6 +313,7 @@ public class Query {
 			@GraphQLName("dateEnd") Date dateEnd,
 			@GraphQLName("dateStart") Date dateStart,
 			@GraphQLName("key") String key,
+			@GraphQLName("processVersion") String processVersion,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("sort") String sortsString)
@@ -324,7 +325,7 @@ public class Query {
 			nodeMetricResource -> new NodeMetricPage(
 				nodeMetricResource.getProcessNodeMetricsPage(
 					processId, completed, dateEnd, dateStart, key,
-					Pagination.of(page, pageSize),
+					processVersion, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(nodeMetricResource, sortsString))));
 	}
 
@@ -718,6 +719,7 @@ public class Query {
 				@GraphQLName("dateEnd") Date dateEnd,
 				@GraphQLName("dateStart") Date dateStart,
 				@GraphQLName("key") String key,
+				@GraphQLName("processVersion") String processVersion,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
 				@GraphQLName("sort") String sortsString)
@@ -729,7 +731,7 @@ public class Query {
 				nodeMetricResource -> new NodeMetricPage(
 					nodeMetricResource.getProcessNodeMetricsPage(
 						_process.getId(), completed, dateEnd, dateStart, key,
-						Pagination.of(page, pageSize),
+						processVersion, Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(
 							nodeMetricResource, sortsString))));
 		}

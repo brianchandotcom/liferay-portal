@@ -52,7 +52,8 @@ public interface NodeMetricResource {
 
 	public Page<NodeMetric> getProcessNodeMetricsPage(
 			Long processId, Boolean completed, Date dateEnd, Date dateStart,
-			String key, Pagination pagination, Sort[] sorts)
+			String key, String processVersion, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

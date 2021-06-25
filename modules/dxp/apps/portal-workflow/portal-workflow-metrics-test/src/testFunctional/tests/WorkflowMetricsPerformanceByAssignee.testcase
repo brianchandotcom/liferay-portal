@@ -556,10 +556,9 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
-			entryTitle = "Test Blog Title");
+			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -651,9 +650,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");

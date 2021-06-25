@@ -1183,7 +1183,7 @@ definition {
 			value1 = "rtl");
 
 		AssertCssValue(
-			locator1 = "ProductMenu#TOGGLE",
+			locator1 = "ProductMenu#PRODUCT_MENU_OPENED",
 			locator2 = "text-align",
 			value1 = "right");
 

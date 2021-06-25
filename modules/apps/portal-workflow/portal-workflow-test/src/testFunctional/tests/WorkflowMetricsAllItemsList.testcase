@@ -39,12 +39,58 @@ definition {
 	}
 
 	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanOrderByAssignee {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-68170 CanOrderByAssignee pending implementation
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
+			numberOfBlogInstances = "3",
+			numberOfUsers = "3",
+			site = "${siteName}");
 
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER");
+
+		AssertTextEquals(
+			key_entryIndex = "1",
+			key_itemIndex = "3",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES",
+			value1 = "3user user3");
+
+		AssertTextEquals(
+			key_entryIndex = "2",
+			key_itemIndex = "3",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES",
+			value1 = "2user user2");
+
+		AssertTextEquals(
+			key_entryIndex = "3",
+			key_itemIndex = "3",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES",
+			value1 = "1user user1");
+
+		Click(locator1 = "//span[contains(@data-title,'Assignee')]");
+
+		AssertTextEquals(
+			key_entryIndex = "1",
+			key_itemIndex = "3",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES",
+			value1 = "1user user1");
+
+		AssertTextEquals(
+			key_entryIndex = "2",
+			key_itemIndex = "3",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES",
+			value1 = "2user user2");
+
+		AssertTextEquals(
+			key_entryIndex = "3",
+			key_itemIndex = "3",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES",
+			value1 = "3user user3");
 	}
 
 	@description = "LPS-130218 - Verify that the user is able to click on the table header Created by to choose the items order (A-Z / Z-A)."

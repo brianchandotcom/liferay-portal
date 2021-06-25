@@ -191,6 +191,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER</td>
+	<td>//span[contains(@data-title,'Assignee')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_BY</td>
 	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), '${key_allItemsFilterName}')]</td>
 	<td></td>
@@ -233,6 +238,11 @@
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE</td>
 	<td>//td[(3) and contains(text(),'${key_workflowInstanceName}')]/following-sibling::td[(5) and contains(text(),'${key_workflowInstanceAssignee}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_BY_INDEXES</td>
+	<td>//tr[${key_entryIndex}]//td[contains(@class,'bounded-column')][${key_itemIndex}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -301,12 +301,42 @@ definition {
 	}
 
 	@description = "LPS-98518 - Verify that a search bar is present in the step filter when the dropdown is higher than 496px"
-	@ignore = "Test Stub"
 	@priority = "3"
-	test SearchBarIsPresentWhenDropdownIsHigherThan496Px {
+	test SearchBarIsPresentInStepFilter {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67574 SearchBarIsPresentWhenDropdownIsHigherThan496Px pending implementation
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "12_transitions_definition.xml",
+			workflowDefinitionTitle = "12 transitions");
 
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "12 transitions",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Content",
+			entrySubtitle = "Blogs Subtitle",
+			entryTitle = "Blogs Entry");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "12 transitions");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_STEPS");
 	}
 
 	@description = "LPS-103368 - Verify that the user can filter the results inside (Workload by Assignee) page by assignee names that contain non-ascii chars (such as ç,é,コン, etc) using the search field"

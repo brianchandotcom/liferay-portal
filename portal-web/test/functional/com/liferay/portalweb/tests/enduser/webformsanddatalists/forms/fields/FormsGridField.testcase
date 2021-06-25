@@ -633,8 +633,8 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.notViewOptionRowName(
-			fieldTitle = "Grid",
+		FormFields.viewOptionRowNameNotPresent(
+			fieldName = "Grid",
 			optionName = "Option 1",
 			rowNumber = "1");
 

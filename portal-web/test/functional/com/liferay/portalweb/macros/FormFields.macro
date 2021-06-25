@@ -600,9 +600,9 @@ definition {
 			value1 = "");
 	}
 
-	macro notViewOptionRowName {
+	macro viewOptionRowNameNotPresent {
 		AssertElementNotPresent(
-			key_fieldName = "${fieldTitle}",
+			key_fieldName = "${fieldName}",
 			key_optionName = "${optionName}",
 			key_rowNumber = "${rowNumber}",
 			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
@@ -1199,7 +1199,7 @@ definition {
 
 	macro viewOptionSingleSelection {
 		AssertElementPresent(
-			key_bodyText = "${bodyText}",
+			key_optionName = "${optionName}",
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
 	}

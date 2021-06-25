@@ -142,19 +142,19 @@ definition {
 			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
 
 		FormFields.viewOptionSingleSelection(
-			bodyText = "Option 1",
+			optionName = "Option 1",
 			fieldName = "Single Selection");
 
 		FormFields.viewOptionSingleSelection(
-			bodyText = "Option 2",
+			optionName = "Option 2",
 			fieldName = "Single Selection");
 
 		FormFields.viewOptionSingleSelection(
-			bodyText = "Option 1",
+			optionName = "Option 1",
 			fieldName = "Copy of Single Selection");
 
 		FormFields.viewOptionSingleSelection(
-			bodyText = "Option 2",
+			optionName = "Option 2",
 			fieldName = "Copy of Single Selection");
 
 		FormViewBuilder.assertHelpTextPresent(

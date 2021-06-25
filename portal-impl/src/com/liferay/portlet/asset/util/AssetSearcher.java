@@ -91,7 +91,7 @@ public class AssetSearcher extends BaseSearcher {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addSearchAllCategories(BooleanFilter, String)}
+	 *             #addSearchAllCategories(BooleanFilter, String...)}
 	 */
 	@Deprecated
 	protected void addSearchAllCategories(BooleanFilter queryBooleanFilter)
@@ -206,7 +206,7 @@ public class AssetSearcher extends BaseSearcher {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addSearchAnyCategories(BooleanFilter, String)}
+	 *             #addSearchAnyCategories(BooleanFilter, String...)}
 	 */
 	@Deprecated
 	protected void addSearchAnyCategories(BooleanFilter queryBooleanFilter)
@@ -383,7 +383,7 @@ public class AssetSearcher extends BaseSearcher {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addSearchNotAllCategories(BooleanFilter, String)}
+	 *             #addSearchNotAllCategories(BooleanFilter, String...)}
 	 */
 	@Deprecated
 	protected void addSearchNotAllCategories(BooleanFilter queryBooleanFilter)
@@ -497,7 +497,7 @@ public class AssetSearcher extends BaseSearcher {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addSearchNotAnyCategories(BooleanFilter, String)}
+	 *             #addSearchNotAnyCategories(BooleanFilter, String...)}
 	 */
 	@Deprecated
 	protected void addSearchNotAnyCategories(BooleanFilter queryBooleanFilter)

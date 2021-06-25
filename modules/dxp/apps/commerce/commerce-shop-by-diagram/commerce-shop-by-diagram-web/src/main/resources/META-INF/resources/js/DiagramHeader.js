@@ -25,7 +25,7 @@ const DiagramHeader = ({
 	setAddPinHandler,
 }) => {
 	const [active, setActive] = useState(false);
-	const [customColors, setCustoms] = useState(
+	const [customColors, setCustomColors] = useState(
 		newPinSettings.colorPicker.defaultColors
 	);
 
@@ -49,7 +49,6 @@ const DiagramHeader = ({
 							{Liferay.Language.get('default-diameter')}
 						</ClayButton>
 					}
-					x
 				>
 					<ClayDropDown.ItemList className="diagram-header-picker">
 						<ClayDropDown.Group
@@ -59,8 +58,8 @@ const DiagramHeader = ({
 								colors={customColors}
 								label={Liferay.Language.get('custom-colors')}
 								max={100}
-								name={namespace + 'diagram-color-picker'}
-								onColorsChange={setCustoms}
+								name={`${namespace}diagram-color-picker`}
+								onColorsChange={setCustomColors}
 								onValueChange={(item) => {
 									setAddNewPinState({
 										fill: item.replace('#', ''),
@@ -102,10 +101,12 @@ const DiagramHeader = ({
 					<ClayDropDown.Caption>
 						<div className="form-group">
 							<label htmlFor="slider">
+
 								{Liferay.Language.get('custom-radius')}
+								
 							</label>
 							<ClaySlider
-								id={namespace + 'custom-radius'}
+								id={`${namespace}custom-radius`}
 								onValueChange={(item) =>
 									setAddNewPinState({
 										fill: addNewPinState.fill,

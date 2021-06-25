@@ -53,11 +53,11 @@ const AdminTooltip = ({
 		<ClayCard className="admin-tooltip" style={cardStyle}>
 			<ClayCard.Body className="row">
 				<ClayForm.Group className="col-12 form-group-sm text-left">
-					<label htmlFor={namespace + 'pin-position'}>
+					<label htmlFor={`${namespace}pin-position`}>
 						{Liferay.Language.get('position')}
 					</label>
 					<ClayInput
-						id={namespace + 'pin-position'}
+						id={`${namespace}pin-position`}
 						onChange={(event) => setPinLabel(event.target.value)}
 						placeholder={Liferay.Language.get(
 							'insert-your-name-here'
@@ -80,12 +80,12 @@ const AdminTooltip = ({
 				</ClayForm.Group>
 
 				<ClayForm.Group className="col-9 form-group-sm text-left">
-					<label htmlFor={namespace + 'pin-sku'}>
+					<label htmlFor={`${namespace}pin-sku`}>
 						{Liferay.Language.get('select-sku')}
 					</label>
 					<ClayAutocomplete>
 						<ClayAutocomplete.Input
-							id={namespace + 'pin-sku'}
+							id={`${namespace}pin-sku`}
 							onChange={(event) => setSku(event.target.value)}
 							placeholder={Liferay.Language.get('type-sku-here')}
 							value={sku}
@@ -116,11 +116,11 @@ const AdminTooltip = ({
 				</ClayForm.Group>
 
 				<ClayForm.Group className="col-3 form-group-sm">
-					<label htmlFor={namespace + 'pin-quantity'}>
+					<label htmlFor={`${namespace}pin-quantity`}>
 						{Liferay.Language.get('quantity')}
 					</label>
 					<ClayInput
-						id={namespace + 'pin-quantity'}
+						id={`${namespace}pin-quantity`}
 						onChange={(event) =>
 							setQuantity(parseInt(event.target.value, 10))
 						}
@@ -199,8 +199,6 @@ const AdminTooltip = ({
 		</ClayCard>
 	);
 };
-
-AdminTooltip.defaultProps = {};
 
 AdminTooltip.propTypes = {
 	setShowTooltip: PropTypes.func,

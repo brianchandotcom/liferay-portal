@@ -629,12 +629,74 @@ definition {
 	}
 
 	@description = "LPS-130216 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ItemOrdetationIsPreservedWhenChangesPagination {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68167 ItemOrdetationIsPreservedWhenChangesPagination pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		for (var webContentNumber : list "1,2,3,4") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "Web Content Title ${webContentNumber}");
+		}
+
+		for (var blogNumber : list "5,6,7,8") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title ${blogNumber}");
+		}
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
+
+		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "8 Entries");
+
+		for (var orderNumber : list "1,2,3,4") {
+			AssertElementPresent(
+				key_itemSubject = "Web Content Article: Web Content Title ${orderNumber}",
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ITEM_ORDER");
+		}
+
+		for (var orderNumber : list "5,6,7,8") {
+			AssertElementPresent(
+				key_itemSubject = "Blogs Entry: Blogs Entry Title ${orderNumber}",
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ITEM_ORDER");
+		}
+
+		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "20 Entries");
+
+		for (var orderNumber : list "1,2,3,4") {
+			AssertElementPresent(
+				key_itemSubject = "Web Content Article: Web Content Title ${orderNumber}",
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ITEM_ORDER");
+		}
+
+		for (var orderNumber : list "5,6,7,8") {
+			AssertElementPresent(
+				key_itemSubject = "Blogs Entry: Blogs Entry Title ${orderNumber}",
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ITEM_ORDER");
+		}
 	}
 
 	@description = "LPS-86652 - Verify that long texts will display ellipsis"

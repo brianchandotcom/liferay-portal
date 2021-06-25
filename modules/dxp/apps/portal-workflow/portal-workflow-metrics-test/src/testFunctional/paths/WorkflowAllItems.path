@@ -186,6 +186,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_ITEM_SUBJECT</td>
+	<td>//span[contains(@class, "text-truncate title") and text()="Item Subject"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_ITEM_ORDER</td>
+	<td>//tbody//tr[${key_order}]//td[4][@title='${key_itemSubject}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE</td>
 	<td>//span[contains(@class, 'dropdown-item')]//span[contains(@class, 'custom-control-label-text')][contains(text(), '${assigneeName}')]</td>
 	<td></td>

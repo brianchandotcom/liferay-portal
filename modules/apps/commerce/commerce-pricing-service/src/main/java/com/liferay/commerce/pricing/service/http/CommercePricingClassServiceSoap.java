@@ -67,6 +67,16 @@ import java.util.Map;
 @Deprecated
 public class CommercePricingClassServiceSoap {
 
+	/**
+	 * @param userId
+	 * @param titleMap
+	 * @param descriptionMap
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.pricing.model.CommercePricingClassSoap
 			addCommercePricingClass(
 				long userId, String[] titleMapLanguageIds,
@@ -97,6 +107,17 @@ public class CommercePricingClassServiceSoap {
 		}
 	}
 
+	/**
+	 * @param externalReferenceCode
+	 * @param userId
+	 * @param titleMap
+	 * @param descriptionMap
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.commerce.pricing.model.CommercePricingClassSoap
 			addCommercePricingClass(
 				String externalReferenceCode, long userId,
@@ -117,6 +138,37 @@ public class CommercePricingClassServiceSoap {
 				returnValue =
 					CommercePricingClassServiceUtil.addCommercePricingClass(
 						externalReferenceCode, userId, titleMap, descriptionMap,
+						serviceContext);
+
+			return com.liferay.commerce.pricing.model.CommercePricingClassSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.pricing.model.CommercePricingClassSoap
+			addCommercePricingClass(
+				String externalReferenceCode, String[] titleMapLanguageIds,
+				String[] titleMapValues, String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.commerce.pricing.model.CommercePricingClass
+				returnValue =
+					CommercePricingClassServiceUtil.addCommercePricingClass(
+						externalReferenceCode, titleMap, descriptionMap,
 						serviceContext);
 
 			return com.liferay.commerce.pricing.model.CommercePricingClassSoap.

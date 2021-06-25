@@ -127,12 +127,10 @@ public class CommercePricingClassPermissionImpl
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				permissionChecker.getCompanyId(),
+				commercePricingClass.getCompanyId(),
 				CommercePricingClass.class.getName(),
 				commercePricingClass.getCommercePricingClassId(),
-				permissionChecker.getUserId(), actionId) &&
-			(commercePricingClass.getUserId() ==
-				permissionChecker.getUserId())) {
+				commercePricingClass.getUserId(), actionId)) {
 
 			return true;
 		}

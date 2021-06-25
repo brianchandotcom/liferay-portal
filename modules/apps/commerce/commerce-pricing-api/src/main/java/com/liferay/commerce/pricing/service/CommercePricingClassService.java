@@ -66,15 +66,42 @@ public interface CommercePricingClassService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.pricing.service.impl.CommercePricingClassServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce pricing class remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommercePricingClassServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @param userId
+	 * @param titleMap
+	 * @param descriptionMap
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePricingClass addCommercePricingClass(
 			long userId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @param externalReferenceCode
+	 * @param userId
+	 * @param titleMap
+	 * @param descriptionMap
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public CommercePricingClass addCommercePricingClass(
 			String externalReferenceCode, long userId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePricingClass addCommercePricingClass(
+			String externalReferenceCode, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePricingClass addOrUpdateCommercePricingClass(

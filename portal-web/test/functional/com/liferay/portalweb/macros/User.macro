@@ -1938,6 +1938,10 @@ definition {
 		User.answerPasswordReminder();
 
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			takeScreenshot();
+
+			echo("URL login failed, falling back to UI login.");
+
 			User.firstLoginUI(
 				idpName = "${idpName}",
 				password = "${password}",
@@ -2108,6 +2112,10 @@ definition {
 		User.answerPasswordReminder();
 
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			takeScreenshot();
+
+			echo("URL login failed, falling back to UI login.");
+
 			User.firstLoginUI(
 				idpName = "${idpName}",
 				password = "${password}",

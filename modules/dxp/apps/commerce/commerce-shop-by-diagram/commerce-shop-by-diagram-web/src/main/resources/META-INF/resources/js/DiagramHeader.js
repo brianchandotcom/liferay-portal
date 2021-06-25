@@ -101,9 +101,7 @@ const DiagramHeader = ({
 					<ClayDropDown.Caption>
 						<div className="form-group">
 							<label htmlFor="slider">
-
 								{Liferay.Language.get('custom-radius')}
-								
 							</label>
 							<ClaySlider
 								id={`${namespace}custom-radius`}

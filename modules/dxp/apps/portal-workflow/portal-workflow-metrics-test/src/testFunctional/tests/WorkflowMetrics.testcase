@@ -2088,7 +2088,7 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		PortletEntry.selectAll();
 
 		AssertElementNotPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
 	}

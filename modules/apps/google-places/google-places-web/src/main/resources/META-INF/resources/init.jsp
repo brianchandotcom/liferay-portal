@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,14 +12,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.dynamic.data.mapping.constants;
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-/**
- * @author Rodrigo Paulino
- */
-public class GooglePlacesWebKeys {
-
-	public static final String GOOGLE_PLACES_API_KEY = "GOOGLE_PLACES_API_KEY";
-
-}
+<%@ page import="com.liferay.google.places.web.internal.constants.GooglePlacesWebKeys" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %>

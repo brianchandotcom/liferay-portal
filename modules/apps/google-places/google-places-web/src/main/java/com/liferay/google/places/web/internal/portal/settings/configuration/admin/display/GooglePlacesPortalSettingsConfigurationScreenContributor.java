@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.site.settings.configuration.admin.display;
+package com.liferay.google.places.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.dynamic.data.mapping.constants.GooglePlacesWebKeys;
-import com.liferay.dynamic.data.mapping.util.GooglePlacesUtil;
+import com.liferay.google.places.web.internal.constants.GooglePlacesWebKeys;
+import com.liferay.google.places.web.internal.util.GooglePlacesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
@@ -36,23 +34,23 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rodrigo Paulino
  */
-@Component(service = SiteSettingsConfigurationScreenContributor.class)
-public class GooglePlacesSiteSettingsConfigurationScreenContributor
-	implements SiteSettingsConfigurationScreenContributor {
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class GooglePlacesPortalSettingsConfigurationScreenContributor
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "third-party-applications";
+		return "third-party";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/site_settings/google_places.jsp";
+		return "/portal_settings/google_places.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "third-party-applications-places";
+		return "third-party-places";
 	}
 
 	@Override
@@ -60,8 +58,13 @@ public class GooglePlacesSiteSettingsConfigurationScreenContributor
 		return LanguageUtil.get(
 			ResourceBundleUtil.getBundle(
 				locale,
-				GooglePlacesSiteSettingsConfigurationScreenContributor.class),
+				GooglePlacesPortalSettingsConfigurationScreenContributor.class),
 			"google-places");
+	}
+
+	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/portal_settings/edit_company";
 	}
 
 	@Override
@@ -74,28 +77,20 @@ public class GooglePlacesSiteSettingsConfigurationScreenContributor
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		SiteSettingsConfigurationScreenContributor.super.setAttributes(
+		PortalSettingsConfigurationScreenContributor.super.setAttributes(
 			httpServletRequest, httpServletResponse);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getSiteGroup();
-
 		httpServletRequest.setAttribute(
 			GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
 			GooglePlacesUtil.getGooglePlacesAPIKey(
-				themeDisplay.getCompanyId(), group.getGroupId(),
-				_groupLocalService));
+				themeDisplay.getCompanyId()));
 	}
 
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.web)"
-	)
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.google.places.web)")
 	private ServletContext _servletContext;
 
 }

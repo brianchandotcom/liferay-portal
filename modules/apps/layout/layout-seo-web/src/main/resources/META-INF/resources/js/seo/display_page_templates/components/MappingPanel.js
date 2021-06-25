@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {useContext, useRef, useState} from 'react';
 
+import {FIELD_TYPES} from '../constants';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import MappingContext from './MappingContext';
 
@@ -34,6 +35,7 @@ function MappingPanel({
 	name,
 	fields,
 	field: initialField,
+	fieldType,
 	source,
 	onSelect = noop,
 	clearSelectionOnClose = false,
@@ -130,7 +132,9 @@ function MappingPanel({
 								displayType="primary"
 								onClick={handleOnSelect}
 							>
-								{Liferay.Language.get('map-content')}
+								{fieldType === FIELD_TYPES.TEXT
+									? Liferay.Language.get('add-field')
+									: Liferay.Language.get('map-content')}
 							</ClayButton>
 						)}
 					</div>
@@ -146,6 +150,7 @@ MappingPanel.propTypes = {
 		key: PropTypes.string,
 		label: PropTypes.string,
 	}),
+	fieldType: PropTypes.string,
 	fields: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,

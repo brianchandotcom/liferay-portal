@@ -23,6 +23,7 @@ const fieldTemplate = (key) => ` $\{${key}} `;
 
 function MappingInput({
 	component,
+	fieldType,
 	fields,
 	helpMessage,
 	label,
@@ -88,6 +89,7 @@ function MappingInput({
 				<ClayInput.GroupItem shrink>
 					<MappingPanel
 						clearSelectionOnClose
+						fieldType={fieldType}
 						fields={fields}
 						isActive={isActive}
 						name={name}

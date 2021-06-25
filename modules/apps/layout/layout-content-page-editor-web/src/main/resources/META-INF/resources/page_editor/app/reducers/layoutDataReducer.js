@@ -22,8 +22,10 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
 	UPDATE_LAYOUT_DATA,
+	UPDATE_PREVIEW_IMAGE,
 	UPDATE_ROW_COLUMNS,
 } from '../actions/types';
+import {setIn} from '../utils/setIn';
 
 export const INITIAL_STATE = {
 	items: {},
@@ -42,6 +44,34 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 		case UPDATE_ITEM_CONFIG:
 		case UPDATE_ROW_COLUMNS:
 			return action.layoutData;
+
+		case UPDATE_PREVIEW_IMAGE: {
+			const newItems = Object.fromEntries(
+				Object.entries(layoutData.items).map(([key, value]) => {
+					const newValue =
+						value.config?.styles?.backgroundImage?.classPK ===
+						action.fileEntryId
+							? setIn(
+									value,
+									[
+										'config',
+										'styles',
+										'backgroundImage',
+										'url',
+									],
+									action.previewURL
+							  )
+							: value;
+
+					return [key, newValue];
+				})
+			);
+
+			return {
+				...layoutData,
+				items: newItems,
+			};
+		}
 
 		default:
 			return layoutData;

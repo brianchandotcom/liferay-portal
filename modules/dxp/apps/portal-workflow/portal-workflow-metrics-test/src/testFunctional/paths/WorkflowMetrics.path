@@ -2,13 +2,11 @@
 <head>
 <title>WorkflowMetrics</title>
 </head>
-
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetrics</td></tr>
 </thead>
-
 <tbody>
 <tr>
 	<td>DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS</td>
@@ -90,6 +88,7 @@
 	<td>//div[@class='header'][span[contains(text(),'${key_status}')]]/following-sibling::div[1]</td>
 	<td></td>
 </tr>
+<tr>
 	<td>GENERIC_TABLE_HEADER</td>
 	<td>//tr//th[text()='${key_columnName}']</td>
 	<td></td>
@@ -296,8 +295,7 @@
 </tr>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_AVG_COMPLETION_TIME</td>
-	<td>xpath=(//span[contains(text(),'${key_assignee}')]/ancestor::td[1]/following-sibling::td//span)[2]
-</td>
+	<td>xpath=(//span[contains(text(),'${key_assignee}')]/ancestor::td[1]/following-sibling::td//span)[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -458,7 +456,7 @@
 <tr>
 	<td>NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
 	<td>//div[@class='header']//span[contains(text(),'${newLanguageCardName}')]</td>
-		<td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME_NEW_LANGUAGE</td>

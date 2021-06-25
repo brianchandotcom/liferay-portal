@@ -12,8 +12,8 @@
     <td>METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS</td>
     <td>//p[contains(text(),'There is no data at the moment.')]</td>
     <td></td>
-<tr>
 </tr>
+<tr>
 	<td>WORKFLOW_PERFORMANCE_BT_STEP_ALL_STEPS_FILTER</td>
 	<td>//div[contains(@class, "panel mt-4 tabs-card")]//button[contains(@class, 'dropdown-toggle filter-dropdown-button btn btn-secondary')][contains(text(), 'All Steps')]</td>
 	<td></td>

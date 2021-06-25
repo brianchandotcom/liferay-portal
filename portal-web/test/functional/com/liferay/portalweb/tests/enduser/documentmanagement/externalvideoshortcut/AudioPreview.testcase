@@ -43,7 +43,7 @@ definition {
 	@description = "This test ensures no preview will be generated for a newly added audio file once ffmpeg is disabled, "
 	@priority = "3"
 	test CanNotPreviewAfterDisablingFFmpeg {
-		property test.name.skip.portal.instance = "DLAudio#CanNotPreviewAfterDisablingFFmpeg";
+		property test.name.skip.portal.instance = "AudioPreview#CanNotPreviewAfterDisablingFFmpeg";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
 
@@ -64,7 +64,7 @@ definition {
 	@description = "This test ensures that the audio preview generated for a document remains intact after FFmpeg is disabled."
 	@priority = "4"
 	test PreviewRemainsAfterDisablingFFmpeg {
-		property test.name.skip.portal.instance = "DLAudio#PreviewRemainsAfterDisablingFFmpeg";
+		property test.name.skip.portal.instance = "AudioPreview#PreviewRemainsAfterDisablingFFmpeg";
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Audio Title In Site",

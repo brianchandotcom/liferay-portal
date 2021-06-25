@@ -36,13 +36,26 @@ function MappingPanel({
 	field: initialField,
 	source,
 	onSelect = noop,
+	clearSelectionOnClose = false,
 }) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
-	const [fieldValue, setFieldValue] = useState(initialField.key);
+	const [fieldValue, setFieldValue] = useState(
+		initialField?.key || fields[0].key
+	);
 	const {ffSEOInlineFieldMappingEnabled} = useContext(MappingContext);
 	const wrapperRef = useRef(null);
 
-	useOnClickOutside([wrapperRef.current], () => setIsPanelOpen(false));
+	const handleOnClose = () => {
+		if (isPanelOpen) {
+			setIsPanelOpen(false);
+
+			if (clearSelectionOnClose) {
+				setFieldValue(fields[0].key);
+			}
+		}
+	};
+
+	useOnClickOutside([wrapperRef.current], handleOnClose);
 
 	const handleChangeField = (event) => {
 		const {value} = event.target;
@@ -128,10 +141,11 @@ function MappingPanel({
 }
 
 MappingPanel.propTypes = {
+	clearSelectionOnClose: PropTypes.bool,
 	field: PropTypes.shape({
 		key: PropTypes.string,
 		label: PropTypes.string,
-	}).isRequired,
+	}),
 	fields: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,

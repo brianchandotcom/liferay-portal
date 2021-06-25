@@ -31,7 +31,6 @@ function MappingInput({
 	value: initialValue,
 }) {
 	const [source, setSource] = useState(selectedSource);
-	const [field, setField] = useState('');
 	const [value, setValue] = useState(initialValue || '');
 	const inputEl = useRef(null);
 	const isMounted = useIsMounted();
@@ -44,7 +43,6 @@ function MappingInput({
 
 	const handleOnSelect = ({field, source}) => {
 		setSource(source);
-		setField(field);
 		addNewVar(field);
 	};
 
@@ -89,7 +87,7 @@ function MappingInput({
 				</ClayInput.GroupItem>
 				<ClayInput.GroupItem shrink>
 					<MappingPanel
-						field={field}
+						clearSelectionOnClose
 						fields={fields}
 						isActive={isActive}
 						name={name}

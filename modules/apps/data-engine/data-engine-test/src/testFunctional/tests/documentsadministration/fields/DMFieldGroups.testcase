@@ -268,7 +268,6 @@ definition {
 	@description = "This test ensures it's possible to edit a field's property for a field inside a field group."
 	@priority = "3"
 	test EditFieldOnDuplicatedFieldGroup {
-
 		var dmDocumentTypeName = "DM Document Type Name";
 
 		DataEngine.addFieldNested(

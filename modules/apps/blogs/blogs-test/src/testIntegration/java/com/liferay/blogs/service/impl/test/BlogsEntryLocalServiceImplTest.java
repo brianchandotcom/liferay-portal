@@ -15,6 +15,7 @@
 package com.liferay.blogs.service.impl.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.exception.DuplicateEntryExternalReferenceCodeException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +49,59 @@ public class BlogsEntryLocalServiceImplTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test(expected = DuplicateEntryExternalReferenceCodeException.class)
+	public void testAddBlogsEntryWithExistingExternalReferenceCode()
+		throws Exception {
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(),
+			ServiceContextTestUtil.getServiceContext());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			blogsEntry.getExternalReferenceCode(), blogsEntry.getUserId(),
+			blogsEntry.getTitle(), blogsEntry.getSubtitle(),
+			blogsEntry.getUrlTitle(), blogsEntry.getDescription(),
+			blogsEntry.getContent(), blogsEntry.getDisplayDate(),
+			blogsEntry.isAllowPingbacks(), blogsEntry.isAllowTrackbacks(),
+			new String[] {blogsEntry.getTrackbacks()},
+			blogsEntry.getCoverImageCaption(), null, null,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test
+	public void testAddBlogsEntryWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.nextDate(), false,
+			false, new String[0], RandomTestUtil.randomString(), null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			externalReferenceCode, blogsEntry.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddBlogsEntryWithoutExternalReferenceCode()
+		throws Exception {
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			null, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.nextDate(), false, false, new String[0],
+			RandomTestUtil.randomString(), null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			blogsEntry.getExternalReferenceCode(),
+			String.valueOf(blogsEntry.getEntryId()));
+	}
 
 	@Test
 	public void testAddDiscussion() throws Exception {

@@ -369,6 +369,9 @@ public class BlogsEntryStagedModelDataHandlerTest
 		BlogsEntry entry = (BlogsEntry)stagedModel;
 		BlogsEntry importedEntry = (BlogsEntry)importedStagedModel;
 
+		Assert.assertEquals(
+			entry.getExternalReferenceCode(),
+			importedEntry.getExternalReferenceCode());
 		Assert.assertEquals(entry.getTitle(), importedEntry.getTitle());
 		Assert.assertEquals(entry.getSubtitle(), importedEntry.getSubtitle());
 		Assert.assertEquals(entry.getUrlTitle(), importedEntry.getUrlTitle());

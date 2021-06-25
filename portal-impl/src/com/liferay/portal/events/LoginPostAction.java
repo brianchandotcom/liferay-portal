@@ -115,9 +115,11 @@ public class LoginPostAction extends Action {
 					userId = PortalUtil.getUserId(httpServletRequest);
 				}
 
-				UserLocalServiceUtil.addDefaultGroups(userId);
-				UserLocalServiceUtil.addDefaultRoles(userId);
-				UserLocalServiceUtil.addDefaultUserGroups(userId);
+				User user = UserLocalServiceUtil.getUser(userId);
+
+				UserLocalServiceUtil.addDefaultGroups(user);
+				UserLocalServiceUtil.addDefaultRoles(user);
+				UserLocalServiceUtil.addDefaultUserGroups(user);
 
 				Indexer<User> userIndexer = IndexerRegistryUtil.getIndexer(
 					User.class.getName());

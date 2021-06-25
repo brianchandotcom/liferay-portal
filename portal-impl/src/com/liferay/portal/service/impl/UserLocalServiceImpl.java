@@ -294,7 +294,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>admin.default.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addDefaultGroups(User)}
 	 */
+	@Deprecated
 	@Override
 	public void addDefaultGroups(long userId) throws PortalException {
 		addDefaultGroups(userPersistence.findByPrimaryKey(userId));
@@ -394,7 +397,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>admin.default.role.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addDefaultRoles(User)}
 	 */
+	@Deprecated
 	@Override
 	public void addDefaultRoles(long userId) throws PortalException {
 		addDefaultRoles(userPersistence.findByPrimaryKey(userId));
@@ -452,7 +458,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>admin.default.user.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addDefaultUserGroups(User)}
 	 */
+	@Deprecated
 	@Override
 	public void addDefaultUserGroups(long userId) throws PortalException {
 		addDefaultUserGroups(userPersistence.findByPrimaryKey(userId));
@@ -1294,7 +1303,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			groupLocalService.addUserGroups(userId, groups);
 		}
 
-		addDefaultGroups(userId);
+		addDefaultGroups(user);
 
 		// Organizations
 
@@ -1308,7 +1317,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userPersistence.setRoles(userId, roleIds);
 		}
 
-		addDefaultRoles(userId);
+		addDefaultRoles(user);
 
 		// User groups
 
@@ -1316,7 +1325,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userPersistence.setUserGroups(userId, userGroupIds);
 		}
 
-		addDefaultUserGroups(userId);
+		addDefaultUserGroups(user);
 
 		// Resources
 

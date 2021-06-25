@@ -99,8 +99,13 @@ html#{$cadmin-selector} {
 			&__page-tree {
 				padding: 16px 0;
 
-				.tree-expanded > .tree-hitarea {
-					padding-right: 4px;
+				.tree-root-container {
+					margin-left: 15px;
+				}
+
+				.tree-view ul {
+					list-style: none;
+					padding-left: 0;
 				}
 
 				.tree-container:not(.tree-root-container) {
@@ -116,10 +121,20 @@ html#{$cadmin-selector} {
 					margin-top: 8px;
 
 					.tree-hitarea {
+						cursor: pointer;
 						font-size: 8px;
 						margin-right: 0;
+						outline-width: thin;
+						padding-right: 4px;
 						text-align: center;
 					}
+				}
+
+				.tree-label {
+					display: inline-block;
+					margin-left: 3px;
+					max-width: calc(100% - 33px);
+					vertical-align: middle;
 				}
 			}
 

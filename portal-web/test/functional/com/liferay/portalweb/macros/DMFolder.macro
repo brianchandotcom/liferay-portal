@@ -130,6 +130,8 @@ definition {
 	macro configureWorkflowCP {
 		DMFolder.gotoEditCP(folderName = "${dmFolderName}");
 
+		Alert.closeMessage(messageType = "SUCCESS");
+
 		if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
 			Click(locator1 = "DocumentsAndMediaEditFolder#WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE");
 		}

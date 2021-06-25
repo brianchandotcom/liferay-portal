@@ -140,14 +140,80 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Jump to page' action can be created"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateAJumpToPageRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134406 CanCreateAJumpToPageRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		Form.addPage(formAddNewPageNumber = "2");
+
+		Form.editPageTitle(
+			formPageName = "Page C",
+			formTitleNumber = "3");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Contains",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Jump to Page",
+			actionRowNumber = "1",
+			actionTarget = "3 Page C");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.viewPageName(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.clickNextPage();
+
+		Form.viewPageName(
+			formPageName = "Page C",
+			formTitleNumber = "1");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Rule with 'Enable' action can be created"

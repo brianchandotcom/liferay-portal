@@ -175,7 +175,51 @@ definition {
 	@priority = "3"
 	test CorrectNumberOfEntriesDisplayedWhenPaginationEdited {
 
-		// TODO LRQA-67727 CorrectNumberOfEntriesDisplayedWhenPaginationEdited pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var blogNumber : list "1,2,3,4,5,6,7,8") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title ${blogNumber}");
+		}
+		
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "4 Entries");
+
+		for (var orderNumber : list "1,2,3,4") {
+			AssertElementPresent(
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+		}
+
+		AssertElementNotPresent(
+			key_order = "5",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON");
+
+		for (var orderNumber : list "1,2,3,4") {
+			AssertElementPresent(
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+		}
+
+		AssertElementNotPresent(
+			key_order = "5",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
 
 	}
 

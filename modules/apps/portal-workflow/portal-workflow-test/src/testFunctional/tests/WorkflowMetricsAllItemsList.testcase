@@ -1,0 +1,514 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-98517 - Verify that the Assignee dropdown options are listed in alphabetical order"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AssigneeOptionsAreListedInAlphabeticalOrder {
+
+		// TODO LRQA-67761 AssigneeOptionsAreListedInAlphabeticalOrder pending implementation
+
+	}
+
+	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanOrderByAssignee {
+
+		// TODO LRQA-68170 CanOrderByAssignee pending implementation
+
+	}
+
+	@description = "LPS-130218 - Verify that the user is able to click on the table header Created by to choose the items order (A-Z / Z-A)."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanOrderByCreatedBy {
+
+		// TODO LRQA-68168 CanOrderByCreatedBy pending implementation
+
+	}
+
+	@description = "LPS-130216 - Verify that user is able to click on the table header title to choose to order items by Item Subject: A-z / Z-a."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanOrderByItemSubject {
+
+		// TODO LRQA-68165 CanOrderByItemSubject pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ClickOnProcessIdColumnToSeeItemDetailsPage {
+
+		// TODO LRQA-67736 ClickOnProcessIdColumnToSeeItemDetailsPage pending implementation
+
+	}
+
+	@description = "LPS-86652 - Verify that every column displays the correct info for a item"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ColumnsDiplayCorrectInfo {
+
+		// TODO LRQA-67926 ColumnsDiplayCorrectInfo pending implementation
+
+	}
+
+	@description = "LPS-86652 - Validate that the correct number of entries is showed when user chooses 4, 8, 20, 40, 60"
+	@priority = "3"
+	test CorrectNumberOfEntriesDisplayedWhenPaginationEdited {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var blogNumber : list "1,2,3,4,5,6,7,8") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title ${blogNumber}");
+		}
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "4 Entries");
+
+		for (var orderNumber : list "1,2,3,4") {
+			AssertElementPresent(
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+		}
+
+		AssertElementNotPresent(
+			key_order = "5",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON");
+
+		for (var orderNumber : list "1,2,3,4") {
+			AssertElementPresent(
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+		}
+
+		AssertElementNotPresent(
+			key_order = "5",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
+	}
+
+	@description = "LPS-130218 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CreatedBySortIsPreservedWhenChangesPagination {
+
+		// TODO LRQA-68169 CreatedBySortIsPreservedWhenChangesPagination pending implementation
+
+	}
+
+	@description = "LPS-130217 - Verify that the header title Creation Date is underline and bold on mouse hover"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CreationDateTitleIsUnderlineAndBold {
+
+		// TODO LRQA-67719 CreationDateTitleIsUnderlineAndBold pending implementation
+
+	}
+
+	@description = "LPS-130217 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DefinitionIsPreservedWhenChangesPagination {
+
+		// TODO LRQA-67724 DefinitionIsPreservedWhenChangesPagination pending implementation
+
+	}
+
+	@description = "LPS-86652 - Verify that the correct columns are displayed ID, Due Date, Item Subject, Process Step, Assignee, Created By, Creation Date"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DisplayColumns {
+
+		// TODO LRQA-67776 DisplayColumns pending implementation
+
+	}
+
+	@description = "LPS-92043 - Verify that the Due Date is displayed with a hyphen if a SLA didn't start counting"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplayDueDateWithHyphenWhenSLANotStarted {
+
+		// TODO LRQA-67729 DisplayDueDateWithHyphenWhenSLANotStarted pending implementation
+
+	}
+
+	@description = "LPS-92043 - Verify that the Due Date displays the next SLA in line when a SLA didn't start counting"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DisplayNextSLAInLineWhenSLANotStarted {
+
+		// TODO LRQA-67733 DisplayNextSLAInLineWhenSLANotStarted pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will group SLAs into Open or Resolved"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DueDateBySlaGroupsSlaIntoOpenOrResolved {
+
+		// TODO LRQA-67743 DueDateBySlaGroupsSlaIntoOpenOrResolved pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will provide a summary for the total number of entries for each group next to the section title"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DueDateBySlaProvidesSummaryForTotalNumberOfEntries {
+
+		// TODO LRQA-67745 DueDateBySlaProvidesSummaryForTotalNumberOfEntries pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, Resolved each due date has an icon according to the status On Time or Overdue, SLA name, due date and resolution status resolved on time or overdue"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DueDateHasIconSlaNameDueDateAndResolutionStatus {
+
+		// TODO LRQA-67752 DueDateHasIconSlaNameDueDateAndResolutionStatus pending implementation
+
+	}
+
+	@description = "LPS-130167 - Verify that the table entries should be ordered by Due Date, from older to the most recent date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EntriesAreOrderedByDueDate {
+
+		// TODO LRQA-67740 EntriesAreOrderedByDueDate pending implementation
+
+	}
+
+	@description = "LPS-94146 - Verify that user can close the filters shown as tags clicking on x and the result is applied on items list"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FiltersCanBeClosedAndResultAppliedOnList {
+
+		// TODO LRQA-67772 FiltersCanBeClosedAndResultAppliedOnList pending implementation
+
+	}
+
+	@description = "LPS-87571 - Verify that when user reaches the page through Dashboard tab, the filter options are: SLA Status, Process Status, Process Step and Assignee"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FiltersDisplayedWhenReachingPageThroughDashboardTab {
+
+		// TODO LRQA-67769 FiltersDisplayedWhenReachingPageThroughDashboardTab pending implementation
+
+	}
+
+	@description = "LPS-87571 - Verify that when user reaches the page through Performance tab, the filter options are: SLA Status, Process Status, Process Step, Completion Time and Assignee"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FiltersDisplayedWhenReachingPageThroughPerformanceTab {
+
+		// TODO LRQA-67771 FiltersDisplayedWhenReachingPageThroughPerformanceTab pending implementation
+
+	}
+
+	@description = "LPS-86652 - Verify that hovering the cursor on a ellipsis text will display a tooltip that contains the rest of the text"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test HoveringCursorDisplayTooltip {
+
+		// TODO LRQA-67731 HoveringCursorDisplayTooltip pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed, the icon on modal title will keep informing the SLA status - On Time, Overdue, No SLA -, but styled in grey color"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test IconOnModalTitleIsGreyWhenItemIsCompleted {
+
+		// TODO LRQA-67759 IconOnModalTitleIsGreyWhenItemIsCompleted pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that an item is considered overdue if it has at least one SLA overdue, regardless if it is resolved or open"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ItemIsConsideredOverdueWhenItHasOneSlaOverdue {
+
+		// TODO LRQA-67753 ItemIsConsideredOverdueWhenItHasOneSlaOverdue pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: No SLA"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ItemModalPlacesIconReferringToSlaStatusNoSla {
+
+		// TODO LRQA-67757 ItemModalPlacesIconReferringToSlaStatusNoSla pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: On Time"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ItemModalPlacesIconReferringToSlaStatusOnTime {
+
+		// TODO LRQA-67747 ItemModalPlacesIconReferringToSlaStatusOnTime pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: Overdue"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ItemModalPlacesIconReferringToSlaStatusOverdue {
+
+		// TODO LRQA-67750 ItemModalPlacesIconReferringToSlaStatusOverdue pending implementation
+
+	}
+
+	@description = "LPS-130216 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ItemOrdetationIsPreservedWhenChangesPagination {
+
+		// TODO LRQA-68167 ItemOrdetationIsPreservedWhenChangesPagination pending implementation
+
+	}
+
+	@description = "LPS-86652 - Verify that long texts will display ellipsis"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test LongTextsDisplayEllipsis {
+
+		// TODO LRQA-67728 LongTextsDisplayEllipsis pending implementation
+
+	}
+
+	@description = "LPS-98517 - Verify that a long username that exceeds 240px in the assignee dropdown option is placed in more than one line, respecting the alignment of the field"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test LongUserNameIsDisplayedInMoreThanOneLineInDropdown {
+
+		// TODO LRQA-67755 LongUserNameIsDisplayedInMoreThanOneLineInDropdown pending implementation
+
+	}
+
+	@description = "LPS-98517 - Verify that the long usernames in the result table are placed in more than one line if the text doesn't fit one line"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test LongUserNameIsDisplayedInMoreThanOneLineInTable {
+
+		// TODO LRQA-67758 LongUserNameIsDisplayedInMoreThanOneLineInTable pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that the Go to submission page button opens the submission page in another tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OpenSubmissionPageInAnotherTab {
+
+		// TODO LRQA-67739 OpenSubmissionPageInAnotherTab pending implementation
+
+	}
+
+	@description = "LPS-130167 - Verify that the ordination icon is displayed next to the column title to be ordered"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test OrdinationIconIsDisplayedNextToDueDateColumn {
+
+		// TODO LRQA-67737 OrdinationIconIsDisplayedNextToDueDateColumn pending implementation
+
+	}
+
+	@description = "LPS-130217 - Verify that the page provides loading feedback when the table is being updated according to order options"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
+
+		// TODO LRQA-67722 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
+
+	}
+
+	@description = "LPS-130166 - Verify that popover for Due Date will display up to 2 SLAs and the order should be from the most to the least critical SLA"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
+
+		// TODO LRQA-67742 PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical pending implementation
+
+	}
+
+	@description = "LPS-130166 - Verify that the popover is not displayd when hovering untracked items on Due Date column item"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PopoverIsNotDisplayedForUntrackedItems {
+
+		// TODO LRQA-67768 PopoverIsNotDisplayedForUntrackedItems pending implementation
+
+	}
+
+	@description = "LPS-130217 - Verify that user is able to click on the table header title to order items by Creation Date: old-new / new-old"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ReorderEntriesClickingCreationDateColumn {
+
+		// TODO LRQA-67726 ReorderEntriesClickingCreationDateColumn pending implementation
+
+	}
+
+	@description = "LPS-130167 - Verify that the user is able to reorder entries by clicking the Due Date column title"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ReorderEntriesClickingDueDateColumn {
+
+		// TODO LRQA-67734 ReorderEntriesClickingDueDateColumn pending implementation
+
+	}
+
+	@description = "LPS-98517 - Verify that if Assignee dropdown menu is higher than 496px a search bar is added on it as specified on Figma"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px {
+
+		// TODO LRQA-67764 SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, when one of the sections has no entries, the section title is completely removed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SectionIsRemovedWhenItHasNoEntries {
+
+		// TODO LRQA-67754 SectionIsRemovedWhenItHasNoEntries pending implementation
+
+	}
+
+	@description = "LPS-92052 - Verify that when the task has multiple assignees, the sort considers the first one displayed on the row"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SortConsidersOnlyTheFirstAssignee {
+
+		// TODO LRQA-68171 SortConsidersOnlyTheFirstAssignee pending implementation
+
+	}
+
+	@description = "LPS-130216 - Verify that the Item Subject sort will only use the Asset Type information for sorting."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SortOnlyUseAssetTypeInformation {
+
+		// TODO LRQA-68166 SortOnlyUseAssetTypeInformation pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed, the summary section should hide the info Current Step and replace it with End Date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SummarySectionDisplaysEndDateInsteadOfCurrentStep {
+
+		// TODO LRQA-67763 SummarySectionDisplaysEndDateInsteadOfCurrentStep pending implementation
+
+	}
+
+	@description = "LPS-86652 - Verify that hovering the cursor on the process step, when it contains more than 1 option, the toolip will display a bullet list"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TooltipDisplaysBulletListWhenMultipleItems {
+
+		// TODO LRQA-67732 TooltipDisplaysBulletListWhenMultipleItems pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that the Go to submission page button, on hover, displays a tooltip saying Open page in new tab"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TooltipIsDisplayedWhenHoveringButton {
+
+		// TODO LRQA-67741 TooltipIsDisplayedWhenHoveringButton pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that, in All Items page, when the users select an instance that can't be transitioned by them, the option to transition is not available to be selected"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TransitionOptionIsNotAvailableWhenUserCanNotTransitionInstance {
+
+		// TODO LRQA-67744 TransitionOptionIsNotAvailableWhenUserCanNotTransitionInstance pending implementation
+
+	}
+
+	@description = "LPS-98517 - Verify that the usernames in the result table are separated by a comma when there is more than one assignee per item"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test UsernamesAreSeparatedByComma {
+
+		// TODO LRQA-67751 UsernamesAreSeparatedByComma pending implementation
+
+	}
+
+	@description = "LPS-98517 - Verify that, in the item detail modal, the usernames are separated by a comma when there is more than one assignee per item under the Process Details section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test UsernamesAreSeparatedByCommaInItemDetailModal {
+
+		// TODO LRQA-67746 UsernamesAreSeparatedByCommaInItemDetailModal pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, Pause instead of due date, the UI will inform SLA Paused sentence next to the SLA name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WhenSlaIsPausedSlaPausedIsDisplayedInsteadOfDueDate {
+
+		// TODO LRQA-67770 WhenSlaIsPausedSlaPausedIsDisplayedInsteadOfDueDate pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, Open when an SLA is paused, the SLA status will be related to the moment when it triggered the pause timer"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WhenSlaIsPausedSlaStatusIsRelatedToThePauseTimer {
+
+		// TODO LRQA-67767 WhenSlaIsPausedSlaStatusIsRelatedToThePauseTimer pending implementation
+
+	}
+
+}

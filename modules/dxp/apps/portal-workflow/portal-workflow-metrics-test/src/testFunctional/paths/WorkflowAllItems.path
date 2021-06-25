@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_ORDER</td>
+	<td>//tbody//tr[${key_order}][contains(@class, "")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECTED_TEXT</td>
 	<td>//span[@class='ml-0 mr-0 navbar-text']</td>
 	<td></td>

@@ -69,7 +69,7 @@ const StyleBookEditor = ({
 				setPreviewLayout,
 			}}
 		>
-			<div className="style-book-editor">
+			<div className="cadmin style-book-editor">
 				<LayoutPreview />
 				<Sidebar />
 			</div>

@@ -1,179 +1,194 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 $controlMenuDesktopHeight: 56px;
 $previewInfoBarHeight: 36px;
 $toolbarDesktopHeight: 56px;
 
-.style-book-editor {
-	--style-book-color-picker-color: none;
+html#{$cadmin-selector} {
+	.cadmin {
+		&.style-book-editor {
+			--style-book-color-picker-color: none;
 
-	display: flex;
-	height: calc(100vh - #{$controlMenuDesktopHeight});
-	left: 0;
-	overflow: hidden;
-	position: absolute;
-	top: 0;
-	width: 100%;
-
-	&__color-frontend-token {
-		.clay-color-picker .clay-color .input-group-item .input-group-text {
-			border-radius: 0.25rem 0 0 0.25rem;
-		}
-
-		.clay-color-btn {
-			background-color: var(--style-book-color-picker-color) !important;
-		}
-	}
-
-	&__page-preview {
-		flex-grow: 1;
-		position: relative;
-
-		&-frame {
-			border: none;
-			height: calc(100% - #{$previewInfoBarHeight});
+			display: flex;
+			height: calc(100vh - #{$controlMenuDesktopHeight});
+			left: 0;
+			overflow: hidden;
+			position: absolute;
+			top: 0;
 			width: 100%;
 		}
 
-		&-info-bar {
-			align-items: center;
-			background: $primary-l1;
-			color: $white;
-			display: flex;
-			font-size: 0.875rem;
-			height: $previewInfoBarHeight;
-			justify-content: space-between;
-			padding-bottom: 1px;
-			padding-left: 24px;
-			padding-right: 24px;
-
-			.dropdown-toggle.btn {
-				&:active {
-					background-color: rgba($white, 0.25);
+		.style-book-editor {
+			&__color-frontend-token {
+				.clay-color-picker
+					.clay-color
+					.input-group-item
+					.input-group-text {
+					border-radius: 4px 0 0 4px;
 				}
-				&:hover {
-					background-color: rgba($white, 0.15);
+
+				.clay-color-btn {
+					background-color: var(
+						--style-book-color-picker-color
+					) !important;
 				}
 			}
-		}
 
-		&-no-page-message {
-			align-items: center;
-			background-color: $gray-100;
-			color: $gray-500;
-			display: flex;
-			font-size: 0.875rem;
-			font-weight: 600;
-			height: 100%;
-			justify-content: center;
-		}
+			&__page-preview {
+				flex-grow: 1;
+				position: relative;
 
-		&-text {
-			font-weight: 700;
-		}
-	}
+				&-frame {
+					border: none;
+					height: calc(100% - #{$previewInfoBarHeight});
+					width: 100%;
+				}
 
-	&__page-type-selector {
-		border-bottom: 1px solid $gray-300;
-		padding: 16px;
-	}
+				&-info-bar {
+					align-items: center;
+					background: $cadmin-primary-l1;
+					color: $cadmin-white;
+					display: flex;
+					font-size: 14px;
+					height: $previewInfoBarHeight;
+					justify-content: space-between;
+					padding-bottom: 1px;
+					padding-left: 24px;
+					padding-right: 24px;
 
-	&__page-selector {
-		min-width: 320px;
-		padding: 0;
+					.dropdown-toggle.btn {
+						&:active {
+							background-color: rgba($cadmin-white, 0.25);
+						}
+						&:hover {
+							background-color: rgba($cadmin-white, 0.15);
+						}
+					}
+				}
 
-		.dropdown-item:hover {
-			background-color: $white;
-		}
-	}
+				&-no-page-message {
+					align-items: center;
+					background-color: $cadmin-gray-100;
+					color: $cadmin-gray-500;
+					display: flex;
+					font-size: 14px;
+					font-weight: 600;
+					height: 100%;
+					justify-content: center;
+				}
 
-	&__page-tree {
-		padding: 16px 0;
+				&-text {
+					font-weight: 700;
+				}
+			}
 
-		.tree-expanded > .tree-hitarea {
-			padding-right: 4px;
-		}
+			&__page-type-selector {
+				border-bottom: 1px solid $cadmin-gray-300;
+				padding: 16px;
+			}
 
-		.tree-container:not(.tree-root-container) {
-			margin-left: 22px;
-		}
+			&__page-selector {
+				min-width: 320px;
+				padding: 0;
 
-		.lexicon-icon:not(.lexicon-icon-hr):not(.lexicon-icon-plus) {
-			margin-right: 4px;
-		}
+				.dropdown-item:hover {
+					background-color: $cadmin-white;
+				}
+			}
 
-		.tree-node {
-			margin-bottom: 8px;
-			margin-top: 8px;
+			&__page-tree {
+				padding: 16px 0;
 
-			.tree-hitarea {
-				font-size: 8px;
-				margin-right: 0;
-				text-align: center;
+				.tree-expanded > .tree-hitarea {
+					padding-right: 4px;
+				}
+
+				.tree-container:not(.tree-root-container) {
+					margin-left: 22px;
+				}
+
+				.lexicon-icon:not(.lexicon-icon-hr):not(.lexicon-icon-plus) {
+					margin-right: 4px;
+				}
+
+				.tree-node {
+					margin-bottom: 8px;
+					margin-top: 8px;
+
+					.tree-hitarea {
+						font-size: 8px;
+						margin-right: 0;
+						text-align: center;
+					}
+				}
+			}
+
+			&__sidebar {
+				background-color: $cadmin-white;
+				border-left: 1px solid $cadmin-gray-300;
+				width: 320px;
+			}
+
+			&__sidebar-collapse {
+				cursor: pointer;
+
+				.collapse-icon {
+					background: none;
+					border: none;
+					color: $cadmin-gray-600;
+					font-size: 11.2px;
+					height: 32px;
+					margin-bottom: 4px;
+					padding-left: 0;
+					text-align: left;
+					width: 100%;
+				}
+
+				.sheet-subtitle {
+					line-height: inherit;
+				}
+			}
+
+			&__sidebar-content {
+				height: calc(
+					100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}
+				);
+				overflow-y: auto;
+				padding: 16px;
+
+				.form-group-sm label {
+					font-size: 12px;
+				}
+			}
+
+			&__status-text {
+				font-size: 12px;
+				font-weight: 600;
+			}
+
+			&__status-icon {
+				color: $cadmin-success;
+				font-size: 12px;
+			}
+
+			&__toolbar {
+				align-items: center;
+				border-bottom: 1px solid $cadmin-gray-300;
+				display: flex;
+				flex-direction: row;
+				height: $toolbarDesktopHeight;
+				justify-content: space-between;
 			}
 		}
 	}
 
-	&__sidebar {
-		background-color: $white;
-		border-left: 1px solid $gray-300;
-		width: 320px;
-	}
-
-	&__sidebar-collapse {
-		cursor: pointer;
-
-		.collapse-icon {
-			background: none;
-			border: none;
-			color: $gray-600;
-			font-size: 0.7rem;
-			height: 2rem;
-			margin-bottom: 4px;
-			padding-left: 0;
-			text-align: left;
-			width: 100%;
-
-			&-closed {
-				.rtl & {
+	&.rtl {
+		.cadmin {
+			.style-book-editor__sidebar-collapse {
+				.collapse-icon-closed {
 					transform: rotate(-180deg);
 				}
 			}
 		}
-
-		.sheet-subtitle {
-			line-height: inherit;
-		}
-	}
-
-	&__sidebar-content {
-		height: calc(
-			100vh - #{$controlMenuDesktopHeight + $toolbarDesktopHeight}
-		);
-		overflow-y: auto;
-		padding: 1rem;
-
-		.form-group-sm label {
-			font-size: 0.75rem;
-		}
-	}
-
-	&__status-text {
-		font-size: 0.75rem;
-		font-weight: 600;
-	}
-
-	&__status-icon {
-		color: $success;
-		font-size: 0.75rem;
-	}
-
-	&__toolbar {
-		align-items: center;
-		border-bottom: 1px solid $gray-300;
-		display: flex;
-		flex-direction: row;
-		height: $toolbarDesktopHeight;
-		justify-content: space-between;
 	}
 }

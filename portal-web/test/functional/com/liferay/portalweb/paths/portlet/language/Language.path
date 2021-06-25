@@ -44,7 +44,7 @@
 <!--EXPORT_TRANSLATION-->
 <tr>
 	<td>EXPORT_TRANSLATION_ORIGIN_LANGUAGE</td>
-	<td>//div[contains(@class,'form-group')]//input[@readonly and @value='English (United States)']</td>
+	<td>//div[contains(@class,'form-group')]//input[@readonly and @value='English (United States)'] | //div[contains(@class,'form-group')]//select[contains(@name,'sourceLanguageId')]//option[contains(.,'English (United States)')]</td>
 	<td></td>
 </tr>
 </tbody>

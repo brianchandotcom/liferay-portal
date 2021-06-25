@@ -1385,11 +1385,13 @@ definition {
 	}
 
 	macro viewProcessStepDisplaysUpdateStatus {
-		Refresh();
+		var key_workflowAssetTitle = "${workflowAssetTitle}";
 
-		while (IsElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS")) {
-			AssertTextEquals(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS");
+		while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS") && (maxIterations = "5")) {
+			Refresh();
 		}
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS");
 	}
 
 	macro viewSLAErrorMessage {

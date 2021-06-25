@@ -81,7 +81,8 @@ definition {
 
 		Button.clickDone();
 
-		WorkflowMetrics.viewProcessStepDisplaysUpdateStatus();
+		WorkflowMetrics.viewProcessStepDisplaysUpdateStatus(workflowAssetTitle = "Blogs Entry Title 1");
+		WorkflowMetrics.viewProcessStepDisplaysUpdateStatus(workflowAssetTitle = "Blogs Entry Title 2");
 	}
 
 	@description = "LPS-108138 - Verify that tasks that are not assigned to the current users can't be transitioned via bulk transition action"

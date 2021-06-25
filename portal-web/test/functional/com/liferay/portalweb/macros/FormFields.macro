@@ -328,6 +328,12 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editPlaceholderField {
+		Type(
+			locator1 = "FormFields#SIDEBAR_BASIC_PLACEHOLDER",
+			value1 = "${fieldValue}");
+	}
+
 	macro editPredefinedValue {
 		Form.gotoAdvancedTab();
 

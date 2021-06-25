@@ -858,6 +858,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_BASIC_PLACEHOLDER</td>
+	<td>//input[contains(@name,'placeholder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPLOAD_FILE_NAME</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')]</td>
 	<td></td>

@@ -2579,6 +2579,7 @@ definition {
 				WebContentNavigator.gotoEditCP(
 					webContentTitle = "${webContentTitle}",
 					webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+
 				AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 			}
 
@@ -2780,10 +2781,11 @@ definition {
 			}
 
 			if ("${fieldType}" == "Multiple Lines") {
-				var actual = selenium.getHtmlNodeText("//label[normalize-space(text())='${webContentTextFieldLabel}']//following-sibling::textarea");
 				WaitForElementPresent(
 					key_fieldFieldLabel = "${webContentTextFieldLabel}",
 					locator1 = "DDMField#MULTIPLE_LINES");
+
+				var actual = TestUtils.getElementTextContent(element = "//label[normalize-space(text())='${webContentTextFieldLabel}']//following-sibling::textarea");
 
 				TestUtils.assertEquals(
 					actual = "${actual}",

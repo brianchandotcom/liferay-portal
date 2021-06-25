@@ -486,7 +486,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')]",
 			value1 = "WC WebContent Text");
 
-		var actual = selenium.getHtmlNodeText("//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')]");
+		var actual = TestUtils.getElementTextContent(element = "//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')]");
 
 		TestUtils.assertEquals(
 			actual = "${actual}",

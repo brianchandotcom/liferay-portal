@@ -361,6 +361,8 @@ public class UpgradeClient {
 
 		_appendClassPath(sb, _appServer.getPortalLibDir());
 
+		_appendClassPath(sb, _appServer.getPortalShieldedContainerLibDir());
+
 		_appendClassPath(sb, _appServer.getExtraLibDirs());
 
 		return sb.toString();

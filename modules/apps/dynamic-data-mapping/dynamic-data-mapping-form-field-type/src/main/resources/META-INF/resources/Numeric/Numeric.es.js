@@ -111,9 +111,9 @@ const Numeric = ({
 
 	const inputValue = useMemo(() => {
 		const newValue =
-			localizedValue?.[editingLanguageId] ??
-			localizedValue?.[defaultLanguageId] ??
-			value ??
+			((localizedValue?.[editingLanguageId] ??
+				localizedValue?.[defaultLanguageId]) ||
+				value) ??
 			predefinedValue ??
 			'';
 

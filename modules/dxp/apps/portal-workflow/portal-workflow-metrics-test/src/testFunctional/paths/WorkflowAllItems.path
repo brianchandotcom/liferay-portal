@@ -251,6 +251,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_DROPDOWN_DISABLED</td>
+	<td>//td[contains(@style,'padding-right')]//div[contains(@class,'dropdown')]//button[contains(@disabled,'')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_INSTANCE_ID</td>
 	<td>//td[contains(@class,'table-title')]//strong | //span[contains(@class,'link-text')]//strong</td>
 	<td></td>

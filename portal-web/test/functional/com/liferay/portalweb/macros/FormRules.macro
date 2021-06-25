@@ -36,6 +36,10 @@ definition {
 			value1 = "${calculateOperator}");
 	}
 
+	macro clickOnCalculatorBackspace {
+		Click.javaScriptClick(locator1 = "FormRules#RULE_BUILDER_CALCULATE_BACKSPACE");
+	}
+
 	macro clickOnCalculatorNumbersKeyboard {
 		Click(
 			key_buttonName = "${buttonName}",

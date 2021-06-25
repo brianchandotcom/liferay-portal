@@ -36,14 +36,92 @@ definition {
 	}
 
 	@description = "Verify that the backspace function can delete all entries in the Calculator"
-	@ignore = "True"
 	@priority = "5"
 	test BackspaceCanDeleteAllEntriesInCalculator {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134405 BackspaceCanDeleteAllEntriesInCalculator pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Numeric",
+			label = "Numeric 1");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Numeric",
+			label = "Numeric 2");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric 1",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Calculate",
+			actionRowNumber = "1",
+			actionTarget = "Numeric 2");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "(");
+
+		FormRules.selectCalculateField(calculateFieldOption = "Numeric 1");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "*");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "+");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "7");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "-");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "5");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = ")");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "/");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+
+		for (var i : list "1,2,3,4") {
+			FormRules.clickOnCalculatorBackspace();
+		}
+
+		FormRules.viewCalculatorExpression(calculatorExpression = "(Numeric 1*2+7-");
+
+		for (var i : list "1,2,3,4") {
+			FormRules.clickOnCalculatorBackspace();
+		}
+
+		FormRules.viewCalculatorExpression(calculatorExpression = "(Numeric 1*");
+
+		for (var i : list "1,2,3") {
+			FormRules.clickOnCalculatorBackspace();
+		}
+
+		FormRules.viewCalculatorExpression(calculatorExpression = "");
 	}
 
 	@description = "Verify that a Rule Action can be deleted"

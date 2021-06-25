@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_BUILDER_CALCULATE_BACKSPACE</td>
+	<td>//button[@title='Backspace']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

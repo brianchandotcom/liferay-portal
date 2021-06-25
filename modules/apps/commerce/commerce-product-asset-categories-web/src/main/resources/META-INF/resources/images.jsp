@@ -52,17 +52,16 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 		>
 
 			<%
-				String thumbnailSrc = StringPool.BLANK;
+			String thumbnailSrc = StringPool.BLANK;
 
 			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
 
-			if(fileEntry == null){
+			if (fileEntry == null) {
 				thumbnailSrc = cpAttachmentFileEntry.getCdnUrl();
 			}
-			else{
+			else {
 				thumbnailSrc = CommerceMediaResolverUtil.getThumbnailURL(CommerceAccountConstants.ACCOUNT_ID_GUEST, cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 			}
-
 			%>
 
 			<c:choose>

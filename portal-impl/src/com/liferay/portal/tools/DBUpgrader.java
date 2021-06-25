@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
@@ -50,6 +49,8 @@ import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -128,6 +129,38 @@ public class DBUpgrader {
 			try (SafeCloseable safeCloseable =
 					ProxyModeThreadLocal.setWithSafeCloseable(false)) {
 
+				final ServiceDependencyManager serviceDependencyManager =
+					new ServiceDependencyManager();
+
+				serviceDependencyManager.addServiceDependencyListener(
+					new ServiceDependencyListener() {
+
+						@Override
+						public void dependenciesFulfilled() {
+							Registry registry = RegistryUtil.getRegistry();
+
+							_appenderServiceReference =
+								registry.getServiceReference(Appender.class);
+
+							ServiceReference<? extends Appender>
+								appenderServiceReference =
+									_appenderServiceReference;
+
+							_appender = registry.getService(
+								appenderServiceReference);
+
+							_appender.start();
+						}
+
+						@Override
+						public void destroy() {
+						}
+
+					});
+
+				serviceDependencyManager.registerDependencies(
+					getDependencies());
+
 				upgrade();
 			}
 
@@ -145,6 +178,11 @@ public class DBUpgrader {
 			exception.printStackTrace();
 
 			System.exit(1);
+		}
+		finally {
+			if (_appender != null) {
+				_appender.stop();
+			}
 		}
 	}
 
@@ -179,6 +217,10 @@ public class DBUpgrader {
 			new VerifyResourcePermissions();
 
 		verifyResourcePermissions.verify();
+	}
+
+	protected static Class<?>[] getDependencies() {
+		return new Class<?>[] {Appender.class, Appender.class};
 	}
 
 	private static void _checkClassNamesAndResourceActions() {
@@ -379,5 +421,9 @@ public class DBUpgrader {
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);
 
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
+
+	private static volatile Appender _appender;
+	private static volatile ServiceReference<Appender>
+		_appenderServiceReference;
 
 }

@@ -80,13 +80,13 @@ definition {
 
 		OpenGraph.configureOpenGraph(
 			customDescription = '''description@#$%^*()~`1234567890''',
-			customTitle = '''@#$%^&amp;*()~`1234567890title''');
+			customTitle = '''@#$%^*()~`1234567890title''');
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="@#$%^&amp;*()~`1234567890title","og:description" content="description@#$%^*()~`1234567890"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="@#$%^*()~`1234567890title","og:description" content="description@#$%^*()~`1234567890"''');
 	}
 
 	@description = "This ensures that OG tags will not appear when Open Graph is disabled."

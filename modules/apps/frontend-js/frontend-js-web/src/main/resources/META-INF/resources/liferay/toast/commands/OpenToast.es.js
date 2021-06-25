@@ -35,7 +35,7 @@ const DEFAULT_TOAST_TYPE_TITLES = {
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
 const TPL_ALERT_CONTAINER = `
-	<div class="alert-container container">
+	<div class="alert-container cadmin container">
 		<div class="alert-notifications alert-notifications-fixed" id=${DEFAULT_ALERT_CONTAINER_ID}></div>
 	</div>
 `;

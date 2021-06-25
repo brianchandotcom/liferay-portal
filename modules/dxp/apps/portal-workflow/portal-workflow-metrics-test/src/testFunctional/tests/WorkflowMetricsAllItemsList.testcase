@@ -867,12 +867,67 @@ definition {
 	}
 
 	@description = "LPS-130216 - Verify that the Item Subject sort will only use the Asset Type information for sorting."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SortOnlyUseAssetTypeInformation {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
 
-		// TODO LRQA-68166 SortOnlyUseAssetTypeInformation pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "AA");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "CC");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "BB");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "DD");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		Click(
+			key_orderBy = "Item Subject",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Web Content Article: BB",
+			keyCompare = "Blogs Entry: AA",
+			rowNumber = "1");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Web Content Article: DD",
+			keyCompare = "Blogs Entry: CC",
+			rowNumber = "2");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: AA",
+			keyCompare = "Web Content Article: BB",
+			rowNumber = "3");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: CC",
+			keyCompare = "Web Content Article: DD",
+			rowNumber = "4");
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed, the summary section should hide the info Current Step and replace it with End Date"

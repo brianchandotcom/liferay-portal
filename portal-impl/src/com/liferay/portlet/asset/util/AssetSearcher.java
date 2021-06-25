@@ -214,48 +214,58 @@ public class AssetSearcher extends BaseSearcher {
 	}
 
 	protected void addSearchAnyCategories(
-			BooleanFilter queryBooleanFilter, String fieldName)
+			BooleanFilter queryBooleanFilter, String... fieldNamesArray)
 		throws Exception {
 
-		long[] anyCategoryIds = _filterCategoryIdsByVisibilityType(
-			_assetEntryQuery.getAnyCategoryIds(), fieldName);
+		BooleanFilter categoryIdsQueryBooleanFilter = new BooleanFilter();
 
-		if (anyCategoryIds.length == 0) {
-			return;
-		}
+		for (String fieldName : fieldNamesArray) {
+			long[] anyCategoryIds = _filterCategoryIdsByVisibilityType(
+				_assetEntryQuery.getAnyCategoryIds(), fieldName);
 
-		long[] filteredAnyCategoryIds = AssetUtil.filterCategoryIds(
-			PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
-
-		filteredAnyCategoryIds = _filterCategoryIdsByVisibilityType(
-			filteredAnyCategoryIds, fieldName);
-
-		if (filteredAnyCategoryIds.length == 0) {
-			addImpossibleTerm(queryBooleanFilter, fieldName);
-
-			return;
-		}
-
-		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
-
-		for (long anyCategoryId : filteredAnyCategoryIds) {
-			List<Long> categoryIds = new ArrayList<>();
-
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				categoryIds.addAll(
-					AssetCategoryLocalServiceUtil.getSubcategoryIds(
-						anyCategoryId));
+			if (anyCategoryIds.length == 0) {
+				continue;
 			}
 
-			if (categoryIds.isEmpty()) {
-				categoryIds.add(anyCategoryId);
+			long[] filteredAnyCategoryIds = AssetUtil.filterCategoryIds(
+				PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
+
+			filteredAnyCategoryIds = _filterCategoryIdsByVisibilityType(
+				filteredAnyCategoryIds, fieldName);
+
+			if (filteredAnyCategoryIds.length == 0) {
+				addImpossibleTerm(queryBooleanFilter, fieldName);
+
+				continue;
 			}
 
-			categoryIdsTermsFilter.addValues(
-				ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
+			TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
+
+			for (long anyCategoryId : filteredAnyCategoryIds) {
+				List<Long> categoryIds = new ArrayList<>();
+
+				if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+					categoryIds.addAll(
+						AssetCategoryLocalServiceUtil.getSubcategoryIds(
+							anyCategoryId));
+				}
+
+				if (categoryIds.isEmpty()) {
+					categoryIds.add(anyCategoryId);
+				}
+
+				categoryIdsTermsFilter.addValues(
+					ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
+			}
+
+			categoryIdsQueryBooleanFilter.add(
+				categoryIdsTermsFilter, BooleanClauseOccur.SHOULD);
 		}
 
-		queryBooleanFilter.add(categoryIdsTermsFilter, BooleanClauseOccur.MUST);
+		if (categoryIdsQueryBooleanFilter.hasClauses()) {
+			queryBooleanFilter.add(
+				categoryIdsQueryBooleanFilter, BooleanClauseOccur.MUST);
+		}
 	}
 
 	protected void addSearchAnyKeywords(BooleanFilter queryBooleanFilter)
@@ -304,15 +314,24 @@ public class AssetSearcher extends BaseSearcher {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
+		String[] assetCategoryFieldsArray;
+
+		if (searchContext.isIncludeInternalAssetCategories()) {
+			assetCategoryFieldsArray = new String[] {
+				Field.ASSET_CATEGORY_IDS, Field.ASSET_INTERNAL_CATEGORY_IDS
+			};
+		}
+		else {
+			assetCategoryFieldsArray = new String[] {Field.ASSET_CATEGORY_IDS};
+		}
+
 		addSearchAllCategories(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
-		addSearchAnyCategories(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
+		addSearchAnyCategories(queryBooleanFilter, assetCategoryFieldsArray);
 		addSearchNotAnyCategories(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
 		addSearchNotAllCategories(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
 
 		if (searchContext.isIncludeInternalAssetCategories()) {
 			addSearchAllCategories(
-				queryBooleanFilter, Field.ASSET_INTERNAL_CATEGORY_IDS);
-			addSearchAnyCategories(
 				queryBooleanFilter, Field.ASSET_INTERNAL_CATEGORY_IDS);
 			addSearchNotAnyCategories(
 				queryBooleanFilter, Field.ASSET_INTERNAL_CATEGORY_IDS);

@@ -59,7 +59,6 @@ definition {
 	@description = "This is a test for LPS-107630. Make sure the Fieldset does not crash when editing its properties directly from Object sidebar during reuse in a new form view"
 	@priority = "4"
 	test EditFieldsetPropertiesFromSideBar {
-		property portal.acceptance = "quarantine";
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text",

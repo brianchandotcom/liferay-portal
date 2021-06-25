@@ -56,6 +56,9 @@ export default function ColorFrontendToken({
 				<ClayInput.GroupItem prepend shrink>
 					<ClayColorPicker
 						colors={customColors}
+						dropDownContainerProps={{
+							className: 'cadmin',
+						}}
 						onColorsChange={setCustomColors}
 						onValueChange={(color) => {
 							setColor(`#${color}`);

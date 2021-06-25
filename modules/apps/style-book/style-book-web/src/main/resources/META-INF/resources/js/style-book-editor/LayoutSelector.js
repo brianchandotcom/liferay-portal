@@ -35,6 +35,9 @@ export default function LayoutSelector() {
 			alignmentPosition={Align.BottomRight}
 			menuElementAttrs={{
 				className: 'style-book-editor__page-selector',
+				containerProps: {
+					className: 'cadmin',
+				},
 			}}
 			onActiveChange={setActive}
 			trigger={

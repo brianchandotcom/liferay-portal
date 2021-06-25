@@ -5804,29 +5804,35 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			defaultTeams.add(defaultTeam);
 		}
 
-		for (long userId : userIds) {
-			Set<Long> userRoleIdsSet = new HashSet<>();
+		if (!defaultSiteRoles.isEmpty()) {
+			for (long userId : userIds) {
+				Set<Long> userRoleIdsSet = new HashSet<>();
 
-			for (Role role : defaultSiteRoles) {
-				userRoleIdsSet.add(role.getRoleId());
+				for (Role role : defaultSiteRoles) {
+					userRoleIdsSet.add(role.getRoleId());
+				}
+
+				long[] userRoleIds = ArrayUtil.toArray(
+					userRoleIdsSet.toArray(new Long[0]));
+
+				userGroupRoleLocalService.addUserGroupRoles(
+					userId, groupId, userRoleIds);
 			}
+		}
 
-			long[] userRoleIds = ArrayUtil.toArray(
-				userRoleIdsSet.toArray(new Long[0]));
+		if (!defaultTeams.isEmpty()) {
+			for (long userId : userIds) {
+				Set<Long> userTeamIdsSet = new HashSet<>();
 
-			userGroupRoleLocalService.addUserGroupRoles(
-				userId, groupId, userRoleIds);
+				for (Team team : defaultTeams) {
+					userTeamIdsSet.add(team.getTeamId());
+				}
 
-			Set<Long> userTeamIdsSet = new HashSet<>();
+				long[] userTeamIds = ArrayUtil.toArray(
+					userTeamIdsSet.toArray(new Long[0]));
 
-			for (Team team : defaultTeams) {
-				userTeamIdsSet.add(team.getTeamId());
+				userPersistence.addTeams(userId, userTeamIds);
 			}
-
-			long[] userTeamIds = ArrayUtil.toArray(
-				userTeamIdsSet.toArray(new Long[0]));
-
-			userPersistence.addTeams(userId, userTeamIds);
 		}
 	}
 

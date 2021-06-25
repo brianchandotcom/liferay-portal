@@ -22,6 +22,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_PREVIEW_COLOR</td>
+	<td>portal/screenshots/page/page_preview_color.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NO_PAGE_MESSAGE</td>
 	<td>//div[contains(@class,'no-page-message')][normalize-space(text())='You cannot preview the style book because there are no pages in this site.']</td>
 	<td></td>

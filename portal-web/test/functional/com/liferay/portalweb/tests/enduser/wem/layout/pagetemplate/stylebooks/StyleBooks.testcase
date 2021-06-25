@@ -597,6 +597,61 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-119898. When editing a style book you can preview the changes instantly."
+	@priority = "4"
+	test PreviewBackgroundColorWhenEditingStyleBook {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
+		task ("Add a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add an Button fragment into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				navTab = "Fragments");
+		}
+
+		task ("Change the background color of Container and publish the page") {
+			PageEditor.editLayoutContainer(
+				backgroundColor = "Danger",
+				panel = "Styles");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Edit Background Color in Button Primary section") {
+			Type(
+				key_fieldLabel = "Danger",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "#0b5fff");
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Aseert css applied instantly") {
+			SikuliAssertElementPresent(locator1 = "StyleBookEditor#PAGE_PREVIEW_COLOR");
+		}
+	}
+
 	@description = "This is for LPS-116078. Can preview the effect on page when edit the style book."
 	@priority = "5"
 	test PreviewTheEffectOnPageInStyleBookEditor {

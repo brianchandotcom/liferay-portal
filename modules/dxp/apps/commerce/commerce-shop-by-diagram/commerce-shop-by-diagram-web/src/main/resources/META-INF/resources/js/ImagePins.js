@@ -110,6 +110,132 @@ const ImagePins = ({
 				),
 			zoomIn: () => zoomIn(containerRef.current, panZoomRef.current),
 			zoomOut: () => zoomOut(containerRef.current, panZoomRef.current),
+		}
+
+		const clickAction = (updatedPin) =>
+			setShowTooltip({
+				details: {
+					cx: updatedPin.cx,
+					cy: updatedPin.cy,
+					id: updatedPin.id,
+					label: updatedPin.label,
+					linked_to_sku: updatedPin.linked_to_sku,
+					quantity: updatedPin.quantity,
+					sku: updatedPin.sku,
+				},
+				tooltip: true,
+			});
+
+		function dragstarted() {
+			select(this).raise().classed('active', true);
+		}
+
+		function dragged() {
+			select(this).attr(
+				'transform',
+				'translate(' + event.x + ',' + event.y + ')'
+			);
+		}
+
+		function dragended() {
+			const current = select(this);
+			const newPos = current._groups[0][0].attributes;
+			const beSure = [...newPos];
+			const updatedPin = {};
+
+			select(this).classed('active', false);
+			PIN_ATTRIBUTES.map((element) => {
+				beSure.filter((attr) => {
+					if (attr.name === element) {
+						if (element === 'cx') {
+							updatedPin[`${attr.name}`] = parseFloat(event.x);
+						}
+						else if (element === 'cy') {
+							updatedPin[`${attr.name}`] = parseFloat(event.y);
+						}
+						else if (
+							element === 'quantity' ||
+							element === 'r' ||
+							element === 'id'
+						) {
+							updatedPin[`${attr.name}`] = parseInt(
+								attr.value,
+								10
+							);
+						}
+						else if (element === 'draggable') {
+							updatedPin[`${attr.name}`] = attr.value
+								? true
+								: false;
+						}
+						else {
+							updatedPin[`${attr.name}`] = attr.value;
+						}
+					}
+				});
+			});
+			const newState = cPins.map((element) => {
+				if (element.id === updatedPin.id) {
+					if (
+						Math.abs(element.cx - updatedPin.cx) < 15 &&
+						Math.abs(element.cy - updatedPin.cy) < 15
+					) {
+						clickAction(updatedPin);
+					}
+
+					return updatedPin;
+				}
+				else {
+					return element;
+				}
+			});
+			setCpins(newState);
+		}
+
+		const dragHandler = drag()
+			.on('start', dragstarted)
+			.on('drag', dragged)
+			.on('end', dragended);
+
+		const addPin = () => {
+			setCpins(
+				cPins.concat({
+					cx: 50,
+					cy: 50,
+					draggable: true,
+					fill: '#' + addNewPinState.fill,
+					id: cPins.length,
+					label: 'new' + cPins.length,
+					linked_to_sku: 'sku',
+					quantity: 0,
+					r: addNewPinState.radius,
+					sku: addNewPinState.sku,
+				})
+			);
+		};
+
+		const removePin = (id) => {
+			const currentPins = cPins.filter((element) => element.id !== id);
+
+			const newState = currentPins.map((pin, i) => {
+
+				return {
+					cx: pin.cx,
+					cy: pin.cy,
+					draggable: pin.draggable,
+					fill: pin.fill,
+					id: i,
+					label: pin.label,
+					linked_to_sku: pin.linked_to_sku,
+					quantity: pin.quantity,
+					r: pin.r,
+					sku: pin.sku,
+				};
+
+			});
+
+			setCpins(newState);
+			
 		};
 
 		if (removePinHandler.handler) {
@@ -202,8 +328,8 @@ const ImagePins = ({
 				width={imageSettings.width}
 			>
 				<g
-					data-testid={namespace + 'container'}
-					id={namespace + 'container'}
+					data-testid={`${namespace}container`}
+					id={`${namespace}container`}
 					transform="translate(0,0) scale(1)"
 				>
 					<image

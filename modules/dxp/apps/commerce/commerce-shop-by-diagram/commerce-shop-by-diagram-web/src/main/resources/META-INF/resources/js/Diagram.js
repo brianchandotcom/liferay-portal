@@ -55,7 +55,7 @@ const Diagram = ({
 
 	useEffect(() => {
 		if (!showTooltip.tooltip) {
-			const myNewState = cPins.map((element) => {
+			const newCPinState = cPins.map((element) => {
 				if (element.id === showTooltip.details.id) {
 					return {
 						cx: cPins[element.id].cx,
@@ -74,7 +74,7 @@ const Diagram = ({
 					return element;
 				}
 			});
-			setCpins(myNewState);
+			setCpins(newCPinState);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showTooltip, setShowTooltip]);

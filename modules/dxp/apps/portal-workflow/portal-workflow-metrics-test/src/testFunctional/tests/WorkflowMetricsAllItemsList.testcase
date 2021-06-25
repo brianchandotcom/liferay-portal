@@ -218,12 +218,30 @@ definition {
 
 	}
 
-	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed, the icon on modal title will keep informing the SLA status - On Time, Overdue, No SLA -, but styled in grey color"
+	@description = "Verify that, in the item detail modal, when an item is completed with No SLA, the icon on modal title will keep informing the SLA status but styled in grey color"
 	@ignore = "Test Stub"
 	@priority = "3"
-	test IconOnModalTitleIsGreyWhenItemIsCompleted {
+	test IconOnModalTitleIsGreyWhenItemIsCompletedNoSLA {
 
-		// TODO LRQA-67759 IconOnModalTitleIsGreyWhenItemIsCompleted pending implementation
+		// TODO LRQA-68202 IconOnModalTitleIsGreyWhenItemIsCompletedNoSLA pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed On Time, the icon on modal title will keep informing the SLA status but styled in grey color"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test IconOnModalTitleIsGreyWhenItemIsCompletedOnTime {
+
+		// TODO LRQA-67759 IconOnModalTitleIsGreyWhenItemIsCompletedOnTime pending implementation
+
+	}
+
+	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed Overdue, the icon on modal title will keep informing the SLA status but styled in grey color "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test IconOnModalTitleIsGreyWhenItemIsCompletedOverdue {
+
+		// TODO LRQA-68201 IconOnModalTitleIsGreyWhenItemIsCompletedOverdue pending implementation
 
 	}
 

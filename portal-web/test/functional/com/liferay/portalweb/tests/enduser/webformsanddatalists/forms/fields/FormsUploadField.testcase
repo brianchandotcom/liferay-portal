@@ -424,8 +424,8 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.addRepeatableField(
-			key_fieldName = "Upload",
-			key_repeatableFieldsNumber = "1");
+			fieldName = "Upload",
+			repeatableFieldNumber = "1");
 
 		FormFields.viewFieldRepeatableButton(
 			fieldName = "Upload",
@@ -444,6 +444,10 @@ definition {
 			uploadFileName = "Document_1.docx");
 
 		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that changes to the Field can be canceled"

@@ -121,32 +121,9 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
-
-			for (long allCategoryId : filteredAllCategoryIds) {
-				List<Long> categoryIds = new ArrayList<>();
-
-				if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-					categoryIds.addAll(
-						AssetCategoryLocalServiceUtil.getSubcategoryIds(
-							allCategoryId));
-				}
-
-				if (categoryIds.isEmpty()) {
-					categoryIds.add(allCategoryId);
-				}
-
-				TermsFilter categoryIdTermsFilter = new TermsFilter(fieldName);
-
-				categoryIdTermsFilter.addValues(
-					ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
-
-				categoryIdsBooleanFilter.add(
-					categoryIdTermsFilter, BooleanClauseOccur.MUST);
-			}
-
 			queryBooleanFilter.add(
-				categoryIdsBooleanFilter, BooleanClauseOccur.MUST);
+				_getCategoryIdsBooleanFilter(fieldName, filteredAllCategoryIds),
+				BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -241,27 +218,9 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
-
-			for (long anyCategoryId : filteredAnyCategoryIds) {
-				List<Long> categoryIds = new ArrayList<>();
-
-				if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-					categoryIds.addAll(
-						AssetCategoryLocalServiceUtil.getSubcategoryIds(
-							anyCategoryId));
-				}
-
-				if (categoryIds.isEmpty()) {
-					categoryIds.add(anyCategoryId);
-				}
-
-				categoryIdsTermsFilter.addValues(
-					ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
-			}
-
 			categoryIdsQueryBooleanFilter.add(
-				categoryIdsTermsFilter, BooleanClauseOccur.SHOULD);
+				_getCategoryIdsTermsFilter(fieldName, filteredAnyCategoryIds),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		if (categoryIdsQueryBooleanFilter.hasClauses()) {
@@ -407,32 +366,10 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
-
-			for (long notAllCategoryId : filteredNotAllCategoryIds) {
-				List<Long> categoryIds = new ArrayList<>();
-
-				if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-					categoryIds.addAll(
-						AssetCategoryLocalServiceUtil.getSubcategoryIds(
-							notAllCategoryId));
-				}
-
-				if (categoryIds.isEmpty()) {
-					categoryIds.add(notAllCategoryId);
-				}
-
-				TermsFilter categoryIdTermsFilter = new TermsFilter(fieldName);
-
-				categoryIdTermsFilter.addValues(
-					ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
-
-				categoryIdsBooleanFilter.add(
-					categoryIdTermsFilter, BooleanClauseOccur.MUST);
-			}
-
 			categoryIdsQueryBooleanFilter.add(
-				categoryIdsBooleanFilter, BooleanClauseOccur.MUST);
+				_getCategoryIdsBooleanFilter(
+					fieldName, filteredNotAllCategoryIds),
+				BooleanClauseOccur.MUST);
 		}
 
 		if (categoryIdsQueryBooleanFilter.hasClauses()) {
@@ -519,27 +456,10 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
-
-			for (long notAnyCategoryId : filteredNotAnyCategoryIds) {
-				List<Long> categoryIds = new ArrayList<>();
-
-				if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-					categoryIds.addAll(
-						AssetCategoryLocalServiceUtil.getSubcategoryIds(
-							notAnyCategoryId));
-				}
-
-				if (categoryIds.isEmpty()) {
-					categoryIds.add(notAnyCategoryId);
-				}
-
-				categoryIdsTermsFilter.addValues(
-					ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
-			}
-
 			queryBooleanFilter.add(
-				categoryIdsTermsFilter, BooleanClauseOccur.MUST_NOT);
+				_getCategoryIdsTermsFilter(
+					fieldName, filteredNotAnyCategoryIds),
+				BooleanClauseOccur.MUST_NOT);
 		}
 	}
 
@@ -662,6 +582,61 @@ public class AssetSearcher extends BaseSearcher {
 		}
 
 		return ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0]));
+	}
+
+	private BooleanFilter _getCategoryIdsBooleanFilter(
+		String fieldName, long[] filteredCategoryIds) {
+
+		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
+
+		for (long allCategoryId : filteredCategoryIds) {
+			List<Long> categoryIds = new ArrayList<>();
+
+			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+				categoryIds.addAll(
+					AssetCategoryLocalServiceUtil.getSubcategoryIds(
+						allCategoryId));
+			}
+
+			if (categoryIds.isEmpty()) {
+				categoryIds.add(allCategoryId);
+			}
+
+			TermsFilter categoryIdTermsFilter = new TermsFilter(fieldName);
+
+			categoryIdTermsFilter.addValues(
+				ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
+
+			categoryIdsBooleanFilter.add(
+				categoryIdTermsFilter, BooleanClauseOccur.MUST);
+		}
+
+		return categoryIdsBooleanFilter;
+	}
+
+	private TermsFilter _getCategoryIdsTermsFilter(
+		String fieldName, long[] filteredCategoryIds) {
+
+		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
+
+		for (long anyCategoryId : filteredCategoryIds) {
+			List<Long> categoryIds = new ArrayList<>();
+
+			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+				categoryIds.addAll(
+					AssetCategoryLocalServiceUtil.getSubcategoryIds(
+						anyCategoryId));
+			}
+
+			if (categoryIds.isEmpty()) {
+				categoryIds.add(anyCategoryId);
+			}
+
+			categoryIdsTermsFilter.addValues(
+				ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
+		}
+
+		return categoryIdsTermsFilter;
 	}
 
 	private AssetEntryQuery _assetEntryQuery;

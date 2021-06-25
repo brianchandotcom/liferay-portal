@@ -329,13 +329,8 @@ public class AssetSearcher extends BaseSearcher {
 
 		addSearchAllCategories(queryBooleanFilter, assetCategoryFieldsArray);
 		addSearchAnyCategories(queryBooleanFilter, assetCategoryFieldsArray);
-		addSearchNotAnyCategories(queryBooleanFilter, Field.ASSET_CATEGORY_IDS);
 		addSearchNotAllCategories(queryBooleanFilter, assetCategoryFieldsArray);
-
-		if (searchContext.isIncludeInternalAssetCategories()) {
-			addSearchNotAnyCategories(
-				queryBooleanFilter, Field.ASSET_INTERNAL_CATEGORY_IDS);
-		}
+		addSearchNotAnyCategories(queryBooleanFilter, assetCategoryFieldsArray);
 	}
 
 	@Override
@@ -512,37 +507,40 @@ public class AssetSearcher extends BaseSearcher {
 	}
 
 	protected void addSearchNotAnyCategories(
-			BooleanFilter queryBooleanFilter, String fieldName)
+			BooleanFilter queryBooleanFilter, String... fieldNamesArray)
 		throws Exception {
 
-		long[] filteredNotAnyCategoryIds = _filterCategoryIdsByVisibilityType(
-			_assetEntryQuery.getNotAnyCategoryIds(), fieldName);
+		for (String fieldName : fieldNamesArray) {
+			long[] filteredNotAnyCategoryIds =
+				_filterCategoryIdsByVisibilityType(
+					_assetEntryQuery.getNotAnyCategoryIds(), fieldName);
 
-		if (filteredNotAnyCategoryIds.length == 0) {
-			return;
-		}
-
-		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
-
-		for (long notAnyCategoryId : filteredNotAnyCategoryIds) {
-			List<Long> categoryIds = new ArrayList<>();
-
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				categoryIds.addAll(
-					AssetCategoryLocalServiceUtil.getSubcategoryIds(
-						notAnyCategoryId));
+			if (filteredNotAnyCategoryIds.length == 0) {
+				continue;
 			}
 
-			if (categoryIds.isEmpty()) {
-				categoryIds.add(notAnyCategoryId);
+			TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
+
+			for (long notAnyCategoryId : filteredNotAnyCategoryIds) {
+				List<Long> categoryIds = new ArrayList<>();
+
+				if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+					categoryIds.addAll(
+						AssetCategoryLocalServiceUtil.getSubcategoryIds(
+							notAnyCategoryId));
+				}
+
+				if (categoryIds.isEmpty()) {
+					categoryIds.add(notAnyCategoryId);
+				}
+
+				categoryIdsTermsFilter.addValues(
+					ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
 			}
 
-			categoryIdsTermsFilter.addValues(
-				ArrayUtil.toStringArray(categoryIds.toArray(new Long[0])));
+			queryBooleanFilter.add(
+				categoryIdsTermsFilter, BooleanClauseOccur.MUST_NOT);
 		}
-
-		queryBooleanFilter.add(
-			categoryIdsTermsFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
 	protected void addSearchNotAnyKeywords(BooleanFilter queryBooleanFilter)

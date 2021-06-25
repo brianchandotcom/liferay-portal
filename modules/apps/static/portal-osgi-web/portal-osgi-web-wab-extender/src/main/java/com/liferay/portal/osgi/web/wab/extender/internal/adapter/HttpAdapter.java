@@ -191,8 +191,11 @@ public class HttpAdapter {
 
 			String methodName = method.getName();
 
-			if (methodName.equals("getInitParameter") && (args != null) &&
-				(args.length == 1)) {
+			if (methodName.equals("getEffectiveMajorVersion")) {
+				return 3;
+			}
+			else if (methodName.equals("getInitParameter") && (args != null) &&
+					 (args.length == 1)) {
 
 				if (Objects.equals(args[0], "osgi.http.endpoint")) {
 					return _servletContext.getInitParameter((String)args[0]);

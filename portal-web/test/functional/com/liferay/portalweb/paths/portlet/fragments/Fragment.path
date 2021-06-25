@@ -374,8 +374,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_HEADER_2</td>
-	<td>xpath=(//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')])[2]</td>
+	<td>FRAGMENT_HEADER_ANY</td>
+	<td>xpath=(//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

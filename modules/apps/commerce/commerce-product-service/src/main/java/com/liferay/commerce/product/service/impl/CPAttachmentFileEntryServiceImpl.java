@@ -367,13 +367,13 @@ public class CPAttachmentFileEntryServiceImpl
 	 * @param      serviceContext
 	 * @throws     PortalException
 	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             #upsertCPAttachmentFileEntry(long, long, long, long, int,
+	 *             #addOrUpdateCPAttachmentFileEntry(long, long, long, long, int,
 	 *             int, int, int, int, int, int, int, int, int, boolean, Map,
 	 *             String, double, int, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
-	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long fileEntryId, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
@@ -396,7 +396,7 @@ public class CPAttachmentFileEntryServiceImpl
 			checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
 		}
 
-		return cpAttachmentFileEntryLocalService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryLocalService.addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK, 0,
 			fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -410,7 +410,7 @@ public class CPAttachmentFileEntryServiceImpl
 	 */
 	@Deprecated
 	@Override
-	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -421,7 +421,7 @@ public class CPAttachmentFileEntryServiceImpl
 			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		return cpAttachmentFileEntryService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK,
 			cpAttachmentFileEntryId, fileEntryId, null, false, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
@@ -431,7 +431,7 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
-	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
 			String cdnUrl, boolean cdn, int displayDateMonth,
@@ -464,7 +464,7 @@ public class CPAttachmentFileEntryServiceImpl
 			checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
 		}
 
-		return cpAttachmentFileEntryLocalService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryLocalService.addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK,
 			cpAttachmentFileEntryId, fileEntryId, cdnUrl, cdn, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,

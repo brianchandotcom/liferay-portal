@@ -780,13 +780,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	 * @param      serviceContext
 	 * @throws     PortalException
 	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             #upsertCPAttachmentFileEntry(long, long, long, long, int,
+	 *             #addOrUpdateCPAttachmentFileEntry(long, long, long, long, int,
 	 *             int, int, int, int, int, int, int, int, int, boolean, Map,
 	 *             String, double, int, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
-	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long fileEntryId, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
@@ -797,7 +797,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		return cpAttachmentFileEntryLocalService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryLocalService.addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK, 0,
 			fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -811,7 +811,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	 */
 	@Deprecated
 	@Override
-	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -822,7 +822,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		return cpAttachmentFileEntryLocalService.upsertCPAttachmentFileEntry(
+		return cpAttachmentFileEntryLocalService.addOrUpdateCPAttachmentFileEntry(
 			externalReferenceCode, groupId, classNameId, classPK, 0,
 			fileEntryId, null, false, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -832,7 +832,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
 			String cdnUrl, boolean cdn, int displayDateMonth,

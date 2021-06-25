@@ -149,12 +149,40 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that when deleting a user with pending instances, the Workload by Assignee card is updated accordingly"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-67624 CardIsUpdatedWhenUserWithPendingInstanceIsDeleted pending implementation
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
+			numberOfBlogInstances = "1",
+			numberOfUsers = "1",
+			site = "${siteName}");
 
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(
+			key_assigneeName = "1user user1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
+
+		User.openUsersAdmin();
+
+		User.searchCP(searchTerm = "1user user1");
+
+		var key_rowEntry = "1user user1";
+
+		Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Deactivate");
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+		Alert.viewSuccessMessage();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementNotPresent(
+			key_assigneeName = "1user user1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
 	}
 
 	@description = "LPS-98518 - Verify that the filters values inside (Workload by Assignee) are alphabetically sorted"

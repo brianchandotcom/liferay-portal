@@ -19,18 +19,20 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {updateFragmentEntryLinkContent} from '../../../../../app/actions/index';
+import updatePreviewImage from '../../../../../app/actions/updatePreviewImage';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {config} from '../../../../../app/config/index';
 import {useDispatch} from '../../../../../app/contexts/StoreContext';
 import FragmentService from '../../../../../app/services/FragmentService';
+import ImageService from '../../../../../app/services/ImageService';
 
 export default function ImageEditorModal({
 	editImageURL,
 	fileEntryId,
 	fragmentEntryLinks,
 	onCloseModal,
-	previewURL
+	previewURL,
 }) {
 	const dispatch = useDispatch();
 
@@ -41,6 +43,17 @@ export default function ImageEditorModal({
 	const onSave = (response) => {
 		if (response?.success) {
 			onClose();
+
+			ImageService.getFileEntry({
+				fileEntryId,
+			}).then(({fileEntryURL}) => {
+				dispatch(
+					updatePreviewImage({
+						fileEntryId,
+						previewURL: fileEntryURL,
+					})
+				);
+			});
 
 			const fragmentsToUpdate = Object.values(fragmentEntryLinks).filter(
 				(fragmentEntryLink) => {

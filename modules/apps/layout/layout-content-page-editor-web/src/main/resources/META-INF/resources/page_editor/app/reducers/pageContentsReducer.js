@@ -12,7 +12,7 @@
  * details.
  */
 
-import {UPDATE_PAGE_CONTENTS} from '../actions/types';
+import {UPDATE_PAGE_CONTENTS, UPDATE_PREVIEW_IMAGE} from '../actions/types';
 
 const INITIAL_STATE = [];
 
@@ -23,6 +23,28 @@ export default function pageContentsReducer(
 	switch (action.type) {
 		case UPDATE_PAGE_CONTENTS:
 			return [...action.pageContents];
+
+		case UPDATE_PREVIEW_IMAGE: {
+			const nextPageContents = pageContents.map((pageContent) => {
+				if (pageContent.classPK === action.fileEntryId) {
+					return {
+						...pageContent,
+						actions: {
+							...pageContent.actions,
+							editImage: {
+								...pageContent.actions.editImage,
+								previewURL: action.previewURL,
+							},
+						},
+					};
+				}
+				else {
+					return pageContent;
+				}
+			});
+
+			return nextPageContents;
+		}
 
 		default:
 			return pageContents;

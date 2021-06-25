@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
@@ -38,7 +38,6 @@ import {
 	useSelectorCallback,
 } from '../../../../../app/contexts/StoreContext';
 import {selectPageContentDropdownItems} from '../../../../../app/selectors/selectPageContentDropdownItems';
-import ImageService from '../../../../../app/services/ImageService';
 import ImageEditorModal from './ImageEditorModal';
 
 export default function PageContent({
@@ -63,8 +62,6 @@ export default function PageContent({
 	const [imageEditorParams, setImageEditorParams] = useState(null);
 	const toControlsId = useToControlsId();
 
-	const previewURLsRef = useRef(null);
-
 	const isBeingEdited = useMemo(
 		() => toControlsId(editableId) === editableProcessorUniqueId,
 		[toControlsId, editableId, editableProcessorUniqueId]
@@ -84,14 +81,7 @@ export default function PageContent({
 							setImageEditorParams({
 								editImageURL: item.editImageURL,
 								fileEntryId: item.fileEntryId,
-							});
-
-							previewURLsRef.current = null;
-
-							ImageService.getFileEntry({
-								fileEntryId: item.fileEntryId,
-							}).then(({fileEntryURL}) => {
-								previewURLsRef.current = fileEntryURL;
+								previewURL: item.previewURL,
 							});
 						},
 					};
@@ -255,7 +245,7 @@ export default function PageContent({
 					fileEntryId={imageEditorParams.fileEntryId}
 					fragmentEntryLinks={fragmentEntryLinks}
 					onCloseModal={() => setImageEditorParams(null)}
-					previewURL={previewURLsRef.current}
+					previewURL={imageEditorParams.previewURL}
 				/>
 			)}
 		</li>

@@ -16,12 +16,8 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import {PropTypes} from 'prop-types';
 import React, {useState} from 'react';
 
+import {UNMAPPED_OPTION} from '../constants';
 import MappingPanel from './MappingPanel';
-
-const UNMAPPED_OPTION = {
-	key: 'unmapped',
-	label: `-- ${Liferay.Language.get('unmapped')} --`,
-};
 
 function MappingSelector({
 	fields: initialFields,

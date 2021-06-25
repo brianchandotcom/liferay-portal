@@ -15,6 +15,7 @@
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
+import {FIELD_TYPES} from '../constants';
 import MappingContext from './MappingContext';
 import MappingInput from './MappingInput';
 import MappingSelector from './MappingSelector';
@@ -33,7 +34,7 @@ function MappingFields({
 				);
 
 				return ffSEOInlineFieldMappingEnabled &&
-					props.fieldType === 'text' ? (
+					props.fieldType === FIELD_TYPES.TEXT ? (
 					<MappingInput
 						fields={filteredFields}
 						key={props.name}

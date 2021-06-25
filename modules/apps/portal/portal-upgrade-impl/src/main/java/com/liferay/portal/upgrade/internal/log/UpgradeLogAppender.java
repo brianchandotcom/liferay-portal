@@ -29,8 +29,6 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -105,13 +103,15 @@ public class UpgradeLogAppender implements Appender {
 	public void setHandler(ErrorHandler handler) {
 	}
 
-	public void setUpgradeReport(UpgradeReport upgradeReport) {
-		_upgradeReport = upgradeReport;
-	}
-
 	@Override
 	public void start() {
-		_started = true;
+		if (PropsValues.UPGRADE_REPORT_ENABLED) {
+			_started = true;
+
+			_upgradeReport = new UpgradeReport();
+
+			_rootLogger.addAppender(this);
+		}
 	}
 
 	@Override
@@ -121,17 +121,6 @@ public class UpgradeLogAppender implements Appender {
 		}
 
 		_started = false;
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		if (PropsValues.UPGRADE_REPORT_ENABLED) {
-			start();
-
-			_upgradeReport = new UpgradeReport();
-
-			_rootLogger.addAppender(this);
-		}
 	}
 
 	private static final Logger _rootLogger =

@@ -49,6 +49,7 @@ import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -144,11 +145,6 @@ public class DBUpgrader {
 			exception.printStackTrace();
 
 			System.exit(1);
-		}
-		finally {
-			if (_upgradeLogAppender != null) {
-				_upgradeLogAppender.stop();
-			}
 		}
 	}
 
@@ -383,9 +379,5 @@ public class DBUpgrader {
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);
 
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
-
-	private static volatile Appender _upgradeLogAppender =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Appender.class, DBUpgrader.class, "_upgradeLogAppender", false);
 
 }

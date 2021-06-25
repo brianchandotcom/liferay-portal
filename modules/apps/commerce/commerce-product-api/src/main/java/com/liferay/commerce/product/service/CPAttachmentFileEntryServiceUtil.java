@@ -85,6 +85,101 @@ public class CPAttachmentFileEntryServiceUtil {
 			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
+	/**
+	 * @param classNameId
+	 * @param classPK
+	 * @param fileEntryId
+	 * @param displayDateMonth
+	 * @param displayDateDay
+	 * @param displayDateYear
+	 * @param displayDateHour
+	 * @param displayDateMinute
+	 * @param expirationDateMonth
+	 * @param expirationDateDay
+	 * @param expirationDateYear
+	 * @param expirationDateHour
+	 * @param expirationDateMinute
+	 * @param neverExpire
+	 * @param titleMap
+	 * @param json
+	 * @param priority
+	 * @param type
+	 * @param externalReferenceCode
+	 * @param serviceContext
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 #addOrUpdateCPAttachmentFileEntry(long, long, long, long, int,
+	 int, int, int, int, int, int, int, int, int, boolean, Map,
+	 String, double, int, String, ServiceContext)}
+	 */
+	@Deprecated
+	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long fileEntryId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<java.util.Locale, String> titleMap,
+			String json, double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCPAttachmentFileEntry(
+			externalReferenceCode, groupId, classNameId, classPK, fileEntryId,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, titleMap, json, priority, type, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<java.util.Locale, String> titleMap,
+			String json, double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCPAttachmentFileEntry(
+			externalReferenceCode, groupId, classNameId, classPK,
+			cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+			json, priority, type, serviceContext);
+	}
+
+	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
+			String cdnUrl, boolean cdn, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<java.util.Locale, String> titleMap,
+			String json, double priority, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCPAttachmentFileEntry(
+			externalReferenceCode, groupId, classNameId, classPK,
+			cpAttachmentFileEntryId, fileEntryId, cdnUrl, cdn, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+			json, priority, type, serviceContext);
+	}
+
 	public static void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
 		throws PortalException {
 
@@ -189,101 +284,6 @@ public class CPAttachmentFileEntryServiceUtil {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, titleMap, json, priority, type, serviceContext);
-	}
-
-	/**
-	 * @param classNameId
-	 * @param classPK
-	 * @param fileEntryId
-	 * @param displayDateMonth
-	 * @param displayDateDay
-	 * @param displayDateYear
-	 * @param displayDateHour
-	 * @param displayDateMinute
-	 * @param expirationDateMonth
-	 * @param expirationDateDay
-	 * @param expirationDateYear
-	 * @param expirationDateHour
-	 * @param expirationDateMinute
-	 * @param neverExpire
-	 * @param titleMap
-	 * @param json
-	 * @param priority
-	 * @param type
-	 * @param externalReferenceCode
-	 * @param serviceContext
-	 * @throws PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 #upsertCPAttachmentFileEntry(long, long, long, long, int,
-	 int, int, int, int, int, int, int, int, int, boolean, Map,
-	 String, double, int, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long fileEntryId, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<java.util.Locale, String> titleMap,
-			String json, double priority, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCPAttachmentFileEntry(
-			externalReferenceCode, groupId, classNameId, classPK, fileEntryId,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<java.util.Locale, String> titleMap,
-			String json, double priority, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCPAttachmentFileEntry(
-			externalReferenceCode, groupId, classNameId, classPK,
-			cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, serviceContext);
-	}
-
-	public static CPAttachmentFileEntry upsertCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			String cdnUrl, boolean cdn, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<java.util.Locale, String> titleMap,
-			String json, double priority, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCPAttachmentFileEntry(
-			externalReferenceCode, groupId, classNameId, classPK,
-			cpAttachmentFileEntryId, fileEntryId, cdnUrl, cdn, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, serviceContext);
 	}
 
 	public static CPAttachmentFileEntryService getService() {

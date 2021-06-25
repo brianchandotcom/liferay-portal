@@ -297,9 +297,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addDefaultGroups(long userId) throws PortalException {
-		User user = userPersistence.findByPrimaryKey(userId);
+		addDefaultGroups(userPersistence.findByPrimaryKey(userId));
+	}
 
+	/**
+	 * Adds the user to the default groups, unless the user is already in these
+	 * groups. The default groups can be specified in
+	 * <code>portal.properties</code> with the key
+	 * <code>admin.default.group.names</code>.
+	 *
+	 * @param user the user
+	 * @return <code>true</code> if user was added to default groups;
+	 *         <code>false</code> if user was already a member
+	 */
+	@Override
+	public boolean addDefaultGroups(User user) throws PortalException {
 		Set<Long> groupIdsSet = new HashSet<>();
+
+		long[] userGroupIds = user.getGroupIds();
 
 		String[] defaultGroupNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
@@ -320,7 +335,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Group group = groupPersistence.fetchByC_GK(
 				user.getCompanyId(), defaultGroupName);
 
-			if (group != null) {
+			if ((group != null) &&
+				!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
+
 				groupIdsSet.add(group.getGroupId());
 			}
 		}
@@ -340,18 +357,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Group group = groupPersistence.fetchByC_GK(
 				user.getCompanyId(), defaultOrganizationGroupName);
 
-			if (group != null) {
+			if ((group != null) &&
+				!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
+
 				groupIdsSet.add(group.getGroupId());
 			}
 		}
 
+		if (groupIdsSet.isEmpty()) {
+			return false;
+		}
+
 		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[0]));
 
-		userPersistence.addGroups(userId, groupIds);
+		userPersistence.addGroups(user.getUserId(), groupIds);
 
 		for (long groupId : groupIds) {
-			addDefaultRolesAndTeams(groupId, new long[] {userId});
+			addDefaultRolesAndTeams(groupId, new long[] {user.getUserId()});
 		}
+
+		return true;
 	}
 
 	/**
@@ -364,9 +389,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addDefaultRoles(long userId) throws PortalException {
-		User user = userPersistence.findByPrimaryKey(userId);
+		addDefaultRoles(userPersistence.findByPrimaryKey(userId));
+	}
 
+	/**
+	 * Adds the user to the default regular roles, unless the user already has
+	 * these regular roles. The default regular roles can be specified in
+	 * <code>portal.properties</code> with the key
+	 * <code>admin.default.role.names</code>.
+	 *
+	 * @param user the user
+	 * @return <code>true</code> if user was given default roles;
+	 * 	       <code>false</code> if user already has default roles
+	 */
+	@Override
+	public boolean addDefaultRoles(User user) throws PortalException {
 		Set<Long> roleIdSet = new HashSet<>();
+
+		long[] userRoleIds = user.getRoleIds();
 
 		String[] defaultRoleNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_ROLE_NAMES,
@@ -377,17 +417,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getCompanyId(), defaultRoleName);
 
 			if ((role != null) &&
-				(role.getType() == RoleConstants.TYPE_REGULAR)) {
+				(role.getType() == RoleConstants.TYPE_REGULAR) &&
+				!ArrayUtil.contains(userRoleIds, role.getRoleId())) {
 
 				roleIdSet.add(role.getRoleId());
 			}
+		}
+
+		if (roleIdSet.isEmpty()) {
+			return false;
 		}
 
 		long[] roleIds = ArrayUtil.toArray(roleIdSet.toArray(new Long[0]));
 
 		roleIds = UsersAdminUtil.addRequiredRoles(user, roleIds);
 
-		userPersistence.addRoles(userId, roleIds);
+		userPersistence.addRoles(user.getUserId(), roleIds);
+
+		return true;
 	}
 
 	/**
@@ -400,9 +447,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addDefaultUserGroups(long userId) throws PortalException {
-		User user = userPersistence.findByPrimaryKey(userId);
+		addDefaultUserGroups(userPersistence.findByPrimaryKey(userId));
+	}
 
+	/**
+	 * Adds the user to the default user groups, unless the user is already in
+	 * these user groups. The default user groups can be specified in
+	 * <code>portal.properties</code> with the property
+	 * <code>admin.default.user.group.names</code>.
+	 *
+	 * @param user the user
+	 * @return <code>true</code> if user was added to default user groups;
+	 * 	       <code>false</code> if user is already a user group member
+	 */
+	@Override
+	public boolean addDefaultUserGroups(User user) throws PortalException {
 		Set<Long> userGroupIdSet = new HashSet<>();
+
+		long[] userUserGroupIds = user.getUserGroupIds();
 
 		String[] defaultUserGroupNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES,
@@ -412,15 +474,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			UserGroup userGroup = userGroupPersistence.fetchByC_N(
 				user.getCompanyId(), defaultUserGroupName);
 
-			if (userGroup != null) {
+			if ((userGroup != null) &&
+				!ArrayUtil.contains(
+					userUserGroupIds, userGroup.getUserGroupId())) {
+
 				userGroupIdSet.add(userGroup.getUserGroupId());
 			}
+		}
+
+		if (userGroupIdSet.isEmpty()) {
+			return false;
 		}
 
 		long[] userGroupIds = ArrayUtil.toArray(
 			userGroupIdSet.toArray(new Long[0]));
 
-		userPersistence.addUserGroups(userId, userGroupIds);
+		userPersistence.addUserGroups(user.getUserId(), userGroupIds);
+
+		return true;
 	}
 
 	/**

@@ -91,6 +91,14 @@ const getDateFormat = (locale) => {
 	};
 };
 
+const getInitialMonth = (value) => {
+	if (moment(value).isValid()) {
+		return moment(value).toDate();
+	}
+
+	return moment().toDate();
+};
+
 const getInitialValue = (
 	defaultLanguageId,
 	date,
@@ -112,14 +120,6 @@ const getInitialValue = (
 	}
 
 	return date;
-};
-
-const getInitialMonth = (value) => {
-	if (moment(value).isValid()) {
-		return moment(value).toDate();
-	}
-
-	return moment().toDate();
 };
 
 const getValueForHidden = (value, locale) => {

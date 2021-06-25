@@ -156,6 +156,70 @@ definition {
 		Alert.viewErrorMessage(errorMessage = " The service account private key must be in JSON format.");
 	}
 
+	macro setGoogleCloudTranslationServiceKey {
+		var os = OSDetector.isWindows();
+
+		if ("${os}" == "true") {
+			var lineSeparater = "\r\n";
+		}
+
+		else {
+			var lineSeparater = "\n";
+		}
+
+		var value1 = PropsUtil.get("google.cloud.translation.service.key.type");
+		var value2 = PropsUtil.get("google.cloud.translation.service.key.project.id");
+		var value4 = PropsUtil.get("google.cloud.translation.service.key.private.key.id");
+		var value5 = PropsUtil.get("google.cloud.translation.service.key.client.email");
+		var value6 = PropsUtil.get("google.cloud.translation.service.key.client.id");
+		var value7 = PropsUtil.get("google.cloud.translation.service.key.auth.uri");
+		var value8 = PropsUtil.get("google.cloud.translation.service.key.token.uri");
+		var value9 = PropsUtil.get("google.cloud.translation.service.key.auth.provider.x509.cert.url");
+		var value10 = PropsUtil.get("google.cloud.translation.service.key.client.x509.cert.url");
+
+		var keys = PropsUtil.get("google.cloud.translation.service.key.private.key");
+
+		var list = ListUtil.newList();
+
+		for (var key : list "${keys}") {
+			var value = '''${lineSeparater}${key}''';
+
+			ListUtil.add("${list}", "${value}");
+		}
+
+		var value3 = ListUtil.toString("${list}","");
+		var value3 = '''-----BEGIN PRIVATE KEY-----${value3}=${lineSeparater}-----END PRIVATE KEY-----${lineSeparater}''';
+
+		var attribute1 = '''"type" : "${value1}"''';
+		var attribute2 = '''"project_id" : "${value2}"''';
+		var attribute3 = '''"private_key_id" : "${value3}"''';
+		var attribute4 = '''"private_key" : "${value4}"''';
+		var attribute5 = '''"client_email" : "${value5}"''';
+		var attribute6 = '''"client_id" : "${value6}"''';
+		var attribute7 = '''"auth_uri" : "${value7}"''';
+		var attribute8 = '''"token_uri" : "${value8}"''';
+		var attribute9 = '''"auth_provider_x509_cert_url" : "${value9}"''';
+		var attribute10 = '''"client_x509_cert_url" : "${value10}"''';
+
+		var list = ListUtil.newList();
+
+		ListUtil.add("${list}", "${attribute1}");
+		ListUtil.add("${list}", "${attribute2}");
+		ListUtil.add("${list}", "${attribute3}");
+		ListUtil.add("${list}", "${attribute4}");
+		ListUtil.add("${list}", "${attribute5}");
+		ListUtil.add("${list}", "${attribute6}");
+		ListUtil.add("${list}", "${attribute7}");
+		ListUtil.add("${list}", "${attribute8}");
+		ListUtil.add("${list}", "${attribute9}");
+		ListUtil.add("${list}", "${attribute10}");
+
+		var attributes = ListUtil.toString("${list}");
+		var attributes = '''{${attributes}}''';
+
+		return "${attributes}";
+	}
+
 	macro translateFields {
 		if (isSet(webContentTitle)) {
 			PortletEntry.inputTitle(title = "${webContentTitle}");

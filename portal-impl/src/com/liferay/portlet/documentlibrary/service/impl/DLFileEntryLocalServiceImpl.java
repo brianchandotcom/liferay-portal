@@ -2967,7 +2967,7 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext, Long companyId)
 		throws PortalException {
 
-		long userId = _getCompanyAdminUserId(companyId);
+		long userId = _getActiveCompanyAdminUserId(companyId);
 
 		List<DLFileEntry> fileEntries =
 			_getFileEntriesByCompanyIdAndExpirationDate(
@@ -2996,25 +2996,33 @@ public class DLFileEntryLocalServiceImpl
 				workflowContext);
 
 			_notifySubscribers(
-				fileEntry.getUserId(), latestFileVersion,
-				_buildEntryURL(latestFileVersion), "expire",
-				new ServiceContext());
+				userId, latestFileVersion, _buildEntryURL(latestFileVersion),
+				"expire", new ServiceContext());
 
 			_notifyOwner(
-				fileEntry.getUserId(), latestFileVersion,
-				_buildEntryURL(latestFileVersion), "expire",
-				new ServiceContext());
+				userId, latestFileVersion, _buildEntryURL(latestFileVersion),
+				"expire", new ServiceContext());
 		}
 	}
 
-	private long _getCompanyAdminUserId(long companyId) throws PortalException {
+	private long _getActiveCompanyAdminUserId(long companyId)
+		throws PortalException {
+
 		Role role = roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
 		long[] userIds = userLocalService.getRoleUserIds(role.getRoleId());
 
+		User user = null;
+
 		if (!ArrayUtil.isEmpty(userIds)) {
-			return userIds[0];
+			for (long userId : userIds) {
+				user = userLocalService.fetchUser(userId);
+
+				if ((user != null) && user.isActive()) {
+					return userId;
+				}
+			}
 		}
 
 		List<Group> groups = groupLocalService.getRoleGroups(role.getRoleId());
@@ -3025,7 +3033,13 @@ public class DLFileEntryLocalServiceImpl
 					group.getClassPK());
 
 				if (!ArrayUtil.isEmpty(userIds)) {
-					return userIds[0];
+					for (long userId : userIds) {
+						user = userLocalService.fetchUser(userId);
+
+						if ((user != null) && user.isActive()) {
+							return userId;
+						}
+					}
 				}
 			}
 			else if (group.isRegularSite()) {
@@ -3033,7 +3047,13 @@ public class DLFileEntryLocalServiceImpl
 					group.getGroupId());
 
 				if (!ArrayUtil.isEmpty(userIds)) {
-					return userIds[0];
+					for (long userId : userIds) {
+						user = userLocalService.fetchUser(userId);
+
+						if ((user != null) && user.isActive()) {
+							return userId;
+						}
+					}
 				}
 			}
 			else if (group.isUserGroup()) {
@@ -3041,7 +3061,13 @@ public class DLFileEntryLocalServiceImpl
 					group.getClassPK());
 
 				if (!ArrayUtil.isEmpty(userIds)) {
-					return userIds[0];
+					for (long userId : userIds) {
+						user = userLocalService.fetchUser(userId);
+
+						if ((user != null) && user.isActive()) {
+							return userId;
+						}
+					}
 				}
 			}
 		}
@@ -3113,8 +3139,8 @@ public class DLFileEntryLocalServiceImpl
 
 		User user = userLocalService.fetchUser(fileVersion.getUserId());
 
-		if (user == null) {
-			return;
+		if ((user == null) || !user.isActive()) {
+			user = userLocalService.fetchUser(userId);
 		}
 
 		DLGroupServiceSettings dlGroupServiceSettings =
@@ -3171,6 +3197,7 @@ public class DLFileEntryLocalServiceImpl
 			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
 			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]", entryTitle,
 			"[$DOCUMENT_URL$]", entryURL);
+
 		subscriptionSender.setContextCreatorUserPrefix("DOCUMENT");
 		subscriptionSender.setCreatorUserId(fileVersion.getUserId());
 		subscriptionSender.setCurrentUserId(userId);

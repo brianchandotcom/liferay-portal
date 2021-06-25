@@ -25,27 +25,33 @@ export default {
 	 * @param {function} options.onNetworkStatus
 	 */
 	getCollectionField({
+		activePage,
 		classNameId,
 		classPK,
 		collection,
 		languageId,
 		listItemStyle,
 		listStyle,
+		numberOfItems,
+		numberOfItemsPerPage,
 		onNetworkStatus,
-		size,
+		paginationType,
 		templateKey,
 	}) {
 		return serviceFetch(
 			config.getCollectionFieldURL,
 			{
 				body: {
+					activePage,
 					classNameId,
 					classPK,
 					languageId,
 					layoutObjectReference: JSON.stringify(collection),
 					listItemStyle,
 					listStyle,
-					size,
+					numberOfItems,
+					numberOfItemsPerPage,
+					paginationType,
 					templateKey,
 				},
 			},

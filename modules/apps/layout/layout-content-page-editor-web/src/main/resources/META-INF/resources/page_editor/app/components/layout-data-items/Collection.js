@@ -171,6 +171,7 @@ const DEFAULT_COLLECTION = {
 };
 
 const Collection = React.forwardRef(({children, item}, ref) => {
+	const activePage = 1;
 	const child = React.Children.toArray(children)[0];
 	const collectionConfig = item.config;
 
@@ -191,14 +192,17 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 	useEffect(() => {
 		if (collectionConfig.collection) {
 			CollectionService.getCollectionField({
+				activePage,
 				classNameId: itemClassNameId,
 				classPK: itemClassPK,
 				collection: collectionConfig.collection,
 				languageId,
 				listItemStyle: collectionConfig.listItemStyle || null,
 				listStyle: collectionConfig.listStyle,
+				numberOfItems: collectionConfig.numberOfItems,
+				numberOfItemsPerPage: collectionConfig.numberOfItemsPerPage,
 				onNetworkStatus: dispatch,
-				size: collectionConfig.numberOfItems,
+				paginationType: collectionConfig.paginationType,
 				templateKey: collectionConfig.templateKey || null,
 			})
 				.then((response) => {
@@ -215,12 +219,15 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				});
 		}
 	}, [
+		activePage,
 		itemClassNameId,
 		itemClassPK,
 		collectionConfig.collection,
 		collectionConfig.listItemStyle,
 		collectionConfig.listStyle,
 		collectionConfig.numberOfItems,
+		collectionConfig.numberOfItemsPerPage,
+		collectionConfig.paginationType,
 		collectionConfig.templateKey,
 		dispatch,
 		languageId,

@@ -14,12 +14,14 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -49,12 +51,12 @@ public class RetryWebElementImpl extends RemoteWebElement {
 	@Override
 	public void clear() {
 		try {
-			_webElement.clear();
+			_clear();
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			_webElement.clear();
+			_clear();
 		}
 	}
 
@@ -454,6 +456,16 @@ public class RetryWebElementImpl extends RemoteWebElement {
 
 	protected String getLocator() {
 		return _locator;
+	}
+
+	private void _clear() {
+		CharSequence controlCharSequence = Keys.CONTROL;
+
+		if (OSDetector.isApple()) {
+			controlCharSequence = Keys.COMMAND;
+		}
+
+		_webElement.sendKeys(Keys.chord(controlCharSequence, "a", Keys.DELETE));
 	}
 
 	private void _refreshWebElement(Throwable throwable) {

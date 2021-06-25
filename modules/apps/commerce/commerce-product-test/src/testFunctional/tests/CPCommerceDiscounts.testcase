@@ -409,13 +409,109 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6233. Discount expiration"
-	@ignore = "true"
 	@priority = "3"
 	test ViewExpiredDiscountEntry {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceDiscounts#ViewExpiredDiscountEntry";
 
-		// TODO COMMERCE-6233 ViewExpiredDiscountEntry Pending Implementation
+		// TODO Review
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		Click(
+			key_text = "Pricing",
+			locator1 = "Link#ANY");
+
+		Click(
+			key_text = "Discounts",
+			locator1 = "Link#ANY");
+
+		Type(
+			key_text = "Check Interval",
+			locator1 = "TextInput#ANY",
+			value1 = "1");
+
+		Button.clickSave();
+
+		Pause(locator1 = "1000");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			discountAmount = "0.00",
+			discountName = "discount1",
+			discountTarget = "Product Groups",
+			discountType = "Percentage");
+
+		var timeString = selenium.getElementValue( locator1 = "TextInput#EXPIRATION_DATE_TIME");
+
+		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
+		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
+		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
+
+		if ("${minutes}" == "58") {
+			var minutes = "00";
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+
+				if ("${ampm}" == "PM") {
+					var ampm = "AM"
+				}
+				else {
+					var ampm = "PM"
+				}
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+		else if ( "${minutes}" == "59") {
+			var minutes = "01";
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+
+				if ("${ampm}" == "PM") {
+					var ampm = "AM"
+				}
+				else {
+					var ampm = "PM"
+				}
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+		else {
+			var minutes = ${minutes} + 2;
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Never Expire",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			key_value = "expirationDateTime",
+			locator1 = "TextInput#ANY_ID",
+			value1 = "${hours}:${minutes} ${ampm}");
+
+		Button.clickPublish();
+
+		Pause(locator1 = "180000");
+
+		Refresh();
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
+			value1 = "Expired");
 	}
 
 }

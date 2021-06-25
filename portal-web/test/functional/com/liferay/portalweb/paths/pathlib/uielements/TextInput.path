@@ -241,6 +241,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRATION_DATE_TIME</td>
+	<td>//input[contains(@id,'expirationDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXTENSION</td>
 	<td>//div[label[contains(.,'Extension')]]/input</td>
 	<td></td>

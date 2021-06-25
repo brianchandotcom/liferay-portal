@@ -112,14 +112,28 @@ public class JSONUtil {
 		String key = parts[1];
 
 		if (type.equals("JSONArray")) {
-			JSONObject jsonObject = (JSONObject)object;
+			if (object instanceof JSONArray) {
+				JSONArray jsonArray = (JSONArray)object;
 
-			value = jsonObject.getJSONArray(key);
+				value = jsonArray.getJSONArray(GetterUtil.getInteger(key));
+			}
+			else if (object instanceof JSONObject) {
+				JSONObject jsonObject = (JSONObject)object;
+
+				value = jsonObject.getJSONArray(key);
+			}
 		}
 		else if (type.equals("JSONObject")) {
-			JSONObject jsonObject = (JSONObject)object;
+			if (object instanceof JSONArray) {
+				JSONArray jsonArray = (JSONArray)object;
 
-			value = jsonObject.getJSONObject(key);
+				value = jsonArray.getJSONObject(GetterUtil.getInteger(key));
+			}
+			else if (object instanceof JSONObject) {
+				JSONObject jsonObject = (JSONObject)object;
+
+				value = jsonObject.getJSONObject(key);
+			}
 		}
 		else if (type.equals("Object")) {
 			if (object instanceof JSONArray) {

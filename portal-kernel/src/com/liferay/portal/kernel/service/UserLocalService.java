@@ -100,8 +100,23 @@ public interface UserLocalService
 	 * <code>admin.default.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addDefaultGroups(User)}
 	 */
+	@Deprecated
 	public void addDefaultGroups(long userId) throws PortalException;
+
+	/**
+	 * Adds the user to the default groups, unless the user is already in these
+	 * groups. The default groups can be specified in
+	 * <code>portal.properties</code> with the key
+	 * <code>admin.default.group.names</code>.
+	 *
+	 * @param user the user
+	 * @return <code>true</code> if user was added to default groups;
+	 <code>false</code> if user was already a member
+	 */
+	public boolean addDefaultGroups(User user) throws PortalException;
 
 	/**
 	 * Adds the user to the default regular roles, unless the user already has
@@ -110,8 +125,23 @@ public interface UserLocalService
 	 * <code>admin.default.role.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addDefaultRoles(User)}
 	 */
+	@Deprecated
 	public void addDefaultRoles(long userId) throws PortalException;
+
+	/**
+	 * Adds the user to the default regular roles, unless the user already has
+	 * these regular roles. The default regular roles can be specified in
+	 * <code>portal.properties</code> with the key
+	 * <code>admin.default.role.names</code>.
+	 *
+	 * @param user the user
+	 * @return <code>true</code> if user was given default roles;
+	 <code>false</code> if user already has default roles
+	 */
+	public boolean addDefaultRoles(User user) throws PortalException;
 
 	/**
 	 * Adds the user to the default user groups, unless the user is already in
@@ -120,8 +150,23 @@ public interface UserLocalService
 	 * <code>admin.default.user.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addDefaultUserGroups(User)}
 	 */
+	@Deprecated
 	public void addDefaultUserGroups(long userId) throws PortalException;
+
+	/**
+	 * Adds the user to the default user groups, unless the user is already in
+	 * these user groups. The default user groups can be specified in
+	 * <code>portal.properties</code> with the property
+	 * <code>admin.default.user.group.names</code>.
+	 *
+	 * @param user the user
+	 * @return <code>true</code> if user was added to default user groups;
+	 <code>false</code> if user is already a user group member
+	 */
+	public boolean addDefaultUserGroups(User user) throws PortalException;
 
 	public void addGroupUser(long groupId, long userId);
 

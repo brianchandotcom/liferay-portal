@@ -113,21 +113,28 @@ public class GetCollectionFieldMVCResourceCommand
 		String languageId = ParamUtil.getString(
 			resourceRequest, "languageId", themeDisplay.getLanguageId());
 
+		int activePage = ParamUtil.getInteger(resourceRequest, "activePage");
 		String layoutObjectReference = ParamUtil.getString(
 			resourceRequest, "layoutObjectReference");
 		String listStyle = ParamUtil.getString(resourceRequest, "listStyle");
 		String listItemStyle = ParamUtil.getString(
 			resourceRequest, "listItemStyle");
+		int numberOfItems = ParamUtil.getInteger(
+			resourceRequest, "numberOfItems");
+		int numberOfItemsPerPage = ParamUtil.getInteger(
+			resourceRequest, "numberOfItemsPerPage");
+		String paginationType = ParamUtil.getString(
+			resourceRequest, "paginationType");
 		String templateKey = ParamUtil.getString(
 			resourceRequest, "templateKey");
-		int size = ParamUtil.getInteger(resourceRequest, "size");
 
 		try {
 			jsonObject = _getCollectionFieldsJSONObject(
 				_portal.getHttpServletRequest(resourceRequest),
-				_portal.getHttpServletResponse(resourceResponse), languageId,
-				layoutObjectReference, listStyle, listItemStyle,
-				resourceResponse.getNamespace(), themeDisplay.getPlid(), size,
+				_portal.getHttpServletResponse(resourceResponse), activePage,
+				languageId, layoutObjectReference, listStyle, listItemStyle,
+				resourceResponse.getNamespace(), numberOfItems,
+				numberOfItemsPerPage, paginationType, themeDisplay.getPlid(),
 				templateKey);
 		}
 		catch (Exception exception) {
@@ -145,9 +152,10 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private JSONObject _getCollectionFieldsJSONObject(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String languageId,
-			String layoutObjectReference, String listStyle,
-			String listItemStyle, String namespace, long plid, int size,
+			HttpServletResponse httpServletResponse, int activePage,
+			String languageId, String layoutObjectReference, String listStyle,
+			String listItemStyle, String namespace, int numberOfItems,
+			int numberOfItemsPerPage, String paginationType, long plid,
 			String templateKey)
 		throws PortalException {
 
@@ -178,12 +186,33 @@ public class GetCollectionFieldMVCResourceCommand
 						infoItem);
 				}
 
-				defaultLayoutListRetrieverContext.setPagination(
-					Pagination.of(size, 0));
-
 				ListObjectReference listObjectReference =
 					listObjectReferenceFactory.getListObjectReference(
 						layoutObjectReferenceJSONObject);
+
+				int end = numberOfItems;
+				int start = 0;
+
+				if (Objects.equals(paginationType, "regular") ||
+					Objects.equals(paginationType, "simple")) {
+
+					if (activePage < 1) {
+						activePage = 1;
+					}
+
+					int listCount = layoutListRetriever.getListCount(
+						listObjectReference, defaultLayoutListRetrieverContext);
+
+					end = Math.min(
+						Math.min(
+							activePage * numberOfItemsPerPage, numberOfItems),
+						listCount);
+
+					start = (activePage - 1) * numberOfItemsPerPage;
+				}
+
+				defaultLayoutListRetrieverContext.setPagination(
+					Pagination.of(end, start));
 
 				// LPS-111037
 

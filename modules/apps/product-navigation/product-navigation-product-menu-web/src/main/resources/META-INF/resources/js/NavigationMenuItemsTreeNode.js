@@ -17,6 +17,13 @@ import classNames from 'classnames';
 import React from 'react';
 
 export default function NavigationMenuItemsTreeNode({node}) {
+	const Parent = ({children}) =>
+		node.url ? (
+			<a href={node.url}>{children}</a>
+		) : (
+			<p className="m-0">{children}</p>
+		);
+
 	return (
 		<div
 			className={classNames('navigation-menu-items-tree-node', {
@@ -29,14 +36,13 @@ export default function NavigationMenuItemsTreeNode({node}) {
 				event.stopPropagation();
 			}}
 		>
-			{node.url ? (
-				<a href={node.url}>
-					<ClayIcon className="mr-2" symbol="page" />
-					{node.name}
-				</a>
-			) : (
-				<p className="m-0">{node.name}</p>
-			)}
+			<Parent>
+				<ClayIcon
+					className="mr-2"
+					symbol={node.url ? 'page' : 'folder'}
+				/>
+				{node.name}
+			</Parent>
 		</div>
 	);
 }

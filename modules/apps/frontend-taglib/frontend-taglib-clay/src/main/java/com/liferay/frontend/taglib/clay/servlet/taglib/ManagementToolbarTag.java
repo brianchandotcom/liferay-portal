@@ -938,7 +938,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			if (searchValue != null) {
 				jspWriter.write(" value=\"");
-				jspWriter.write(HtmlUtil.escape(searchValue));
+				jspWriter.write(HtmlUtil.escapeAttribute(searchValue));
 				jspWriter.write("\"");
 			}
 

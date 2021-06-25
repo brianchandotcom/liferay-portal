@@ -4888,6 +4888,37 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			throw new GroupFriendlyURLException(
 				GroupFriendlyURLException.INVALID_CHARACTERS);
 		}
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			String languageId = StringUtil.toLowerCase(
+				LocaleUtil.toLanguageId(locale));
+
+			String i18nPathLanguageId =
+				StringPool.SLASH +
+					PortalUtil.getI18nPathLanguageId(locale, languageId);
+
+			String underlineI18nPathLanguageId = StringUtil.replace(
+				i18nPathLanguageId, CharPool.DASH, CharPool.UNDERLINE);
+
+			if (friendlyURL.startsWith(i18nPathLanguageId + StringPool.SLASH) ||
+				friendlyURL.startsWith(
+					underlineI18nPathLanguageId + StringPool.SLASH) ||
+				friendlyURL.startsWith(
+					StringPool.SLASH + languageId + StringPool.SLASH) ||
+				friendlyURL.equals(i18nPathLanguageId) ||
+				friendlyURL.equals(underlineI18nPathLanguageId) ||
+				friendlyURL.equals(StringPool.SLASH + languageId)) {
+
+				GroupFriendlyURLException groupFriendlyURLException =
+					new GroupFriendlyURLException(
+						GroupFriendlyURLException.KEYWORD_CONFLICT);
+
+				groupFriendlyURLException.setKeywordConflict(
+					i18nPathLanguageId);
+
+				throw groupFriendlyURLException;
+			}
+		}
 	}
 
 	protected void validateGroupKey(

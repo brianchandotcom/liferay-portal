@@ -541,32 +541,11 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Connection connection, CTPersistence<T> ctPersistence,
 		String primaryKeyName, boolean resolved) {
 
-		Map<String, Integer> columnsMap = new HashMap<>(
-			ctPersistence.getTableColumnsMap());
+		Set<String> strictColumnNames = ctPersistence.getCTColumnNames(
+			CTColumnResolutionType.STRICT);
 
-		Set<String> columnNames = columnsMap.keySet();
-
-		if (resolved) {
-			Set<String> conflictingColumnNames = new HashSet<>(
-				ctPersistence.getCTColumnNames(CTColumnResolutionType.IGNORE));
-
-			conflictingColumnNames.addAll(
-				ctPersistence.getCTColumnNames(CTColumnResolutionType.MAX));
-			conflictingColumnNames.addAll(
-				ctPersistence.getCTColumnNames(CTColumnResolutionType.MIN));
-
-			columnNames.retainAll(conflictingColumnNames);
-		}
-		else {
-			columnNames.retainAll(
-				ctPersistence.getCTColumnNames(CTColumnResolutionType.STRICT));
-		}
-
-		if (columnsMap.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		StringBundler sb = new StringBundler((6 * columnsMap.size()) + 24);
+		StringBundler sb = new StringBundler(
+			(7 * strictColumnNames.size()) + 24);
 
 		sb.append("select publication.");
 		sb.append(primaryKeyName);
@@ -592,9 +571,24 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 		sb.append(" and ctEntry.modelMvccVersion != production.mvccVersion");
 
+		Map<String, Integer> columnsMap = new HashMap<>(
+			ctPersistence.getTableColumnsMap());
+
+		Set<String> columnNames = columnsMap.keySet();
+
+		columnNames.retainAll(strictColumnNames);
+
 		Collection<Integer> columnTypes = columnsMap.values();
 
-		if (resolved || !columnTypes.contains(Types.BLOB)) {
+		String andOr = " or ";
+		String comparison = " != ";
+
+		if (resolved) {
+			andOr = " and ";
+			comparison = " = ";
+		}
+
+		if (!columnTypes.contains(Types.BLOB)) {
 			sb.append(" where ");
 
 			for (Map.Entry<String, Integer> entry : columnsMap.entrySet()) {
@@ -603,18 +597,21 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				if (entry.getValue() == Types.CLOB) {
 					sb.append("CAST_CLOB_TEXT(publication.");
 					sb.append(conflictColumnName);
-					sb.append(") != CAST_CLOB_TEXT(production.");
+					sb.append(")");
+					sb.append(comparison);
+					sb.append("CAST_CLOB_TEXT(production.");
 					sb.append(conflictColumnName);
 					sb.append(")");
 				}
 				else {
 					sb.append("publication.");
 					sb.append(conflictColumnName);
-					sb.append(" != production.");
+					sb.append(comparison);
+					sb.append("production.");
 					sb.append(conflictColumnName);
 				}
 
-				sb.append(" or ");
+				sb.append(andOr);
 			}
 
 			sb.setIndex(sb.index() - 1);

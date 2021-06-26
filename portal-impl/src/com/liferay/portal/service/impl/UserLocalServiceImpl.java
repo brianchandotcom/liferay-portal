@@ -324,10 +324,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Group group = groupPersistence.fetchByC_GK(
 				user.getCompanyId(), defaultGroupName);
 
-			if ((group != null) &&
-				!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
-
-				groupIdsSet.add(group.getGroupId());
+			if (group != null) {
+				if (!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
+					groupIdsSet.add(group.getGroupId());
+				}
+				else {
+					addDefaultRolesAndTeams(
+						group.getGroupId(), new long[] {user.getUserId()});
+				}
 			}
 		}
 
@@ -346,10 +350,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Group group = groupPersistence.fetchByC_GK(
 				user.getCompanyId(), defaultOrganizationGroupName);
 
-			if ((group != null) &&
-				!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
-
-				groupIdsSet.add(group.getGroupId());
+			if (group != null) {
+				if (!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
+					groupIdsSet.add(group.getGroupId());
+				}
+				else {
+					addDefaultRolesAndTeams(
+						group.getGroupId(), new long[] {user.getUserId()});
+				}
 			}
 		}
 

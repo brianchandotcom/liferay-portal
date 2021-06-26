@@ -19,6 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
+import {Helmet} from 'react-helmet';
 import {Redirect, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
@@ -30,7 +31,10 @@ import {
 	getSectionsQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {historyPushWithSlug} from '../../utils/utils.es';
+import {
+	getBasePathWithHistoryRouter,
+	historyPushWithSlug,
+} from '../../utils/utils.es';
 
 export default withRouter(({history}) => {
 	const context = useContext(AppContext);
@@ -240,6 +244,18 @@ export default withRouter(({history}) => {
 			{loading && <ClayLoadingIndicator />}
 
 			<Alert info={error} />
+
+			{context.historyRouterBasePath && (
+				<Helmet>
+					<title>Questions</title>
+					<link
+						href={getBasePathWithHistoryRouter(
+							context.historyRouterBasePath
+						)}
+						rel="canonical"
+					/>
+				</Helmet>
+			)}
 		</section>
 	);
 });

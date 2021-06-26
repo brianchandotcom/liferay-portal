@@ -192,6 +192,28 @@ export function getBasePath(path) {
 	return href.substring(origin, href.indexOf(path));
 }
 
+export function getBasePathWithHistoryRouter(friendlyURLPath) {
+	const href = window.location.href;
+	const appPath = '/questions';
+
+	if (!href.includes(friendlyURLPath)) {
+		return normalizeUrl(href) + friendlyURLPath + appPath;
+	}
+	else if (!href.includes(appPath)) {
+		return normalizeUrl(href) + appPath;
+	}
+
+	return href;
+}
+
+function normalizeUrl(url) {
+	if (!url) {
+		return url;
+	}
+
+	return url[url.length - 1] === '/' ? url.substring(0, url.length - 1) : url;
+}
+
 export function getContextLink(url) {
 	let link = window.location.href;
 

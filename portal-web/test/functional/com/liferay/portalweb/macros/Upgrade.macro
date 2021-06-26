@@ -956,11 +956,7 @@ definition {
 	}
 
 	macro editAndDeleteMessageBoard {
-		MessageboardsThread.openToThread(
-			groupName = "Guest",
-			layoutName = "message-boards",
-			siteURLKey = "guest",
-			threadSubject = "Message Boards Subject");
+		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.editPG(
 			threadBodyEdit = "Message Boards Body Edit",

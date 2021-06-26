@@ -12,6 +12,20 @@ definition {
 		Pause(locator1 = "2000");
 	}
 
+	macro confirmSecurity {
+		if (IsElementPresent(key_title="Your connection is not private", locator1 = "Header#H1_TITLE")) {
+			Click(locator1 = "Button#ADVANCED");
+
+			AssertElementPresent(
+				key_text = "Proceed to localhost",
+				locator1 = "Link#ANY");
+
+			Click(
+				key_text = "Proceed to localhost (unsafe)",
+				locator1 = "Link#ANY");
+		}
+	}
+
 	macro viewDuplicateErrorMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",

@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADVANCED</td>
+	<td>//div[contains(@class,'nav-wrapper')]//button[contains(.,'Advanced')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED_REPLY</td>
 	<td>//button/span[contains(.,'Advanced Reply')]</td>
 	<td></td>

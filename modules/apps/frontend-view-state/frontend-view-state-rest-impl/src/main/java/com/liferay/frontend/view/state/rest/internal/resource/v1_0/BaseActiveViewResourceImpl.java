@@ -48,7 +48,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -63,25 +62,28 @@ public abstract class BaseActiveViewResourceImpl implements ActiveViewResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/frontend-view-state/v1.0/active-view/{activeViewId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/frontend-view-state/v1.0/active-view/{activeViewId}/page-layout/{pageLayoutId}/portlet/{portletId}'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "activeViewId"),
-			@Parameter(in = ParameterIn.QUERY, name = "plid"),
-			@Parameter(in = ParameterIn.QUERY, name = "portletId")
+			@Parameter(in = ParameterIn.PATH, name = "pageLayoutId"),
+			@Parameter(in = ParameterIn.PATH, name = "portletId")
 		}
 	)
-	@Path("/active-view/{activeViewId}")
+	@Path(
+		"/active-view/{activeViewId}/page-layout/{pageLayoutId}/portlet/{portletId}"
+	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ActiveView")})
-	public Object getActiveView(
+	public Object getActiveViewPageLayoutPortlet(
 			@NotNull @Parameter(hidden = true) @PathParam("activeViewId") String
 				activeViewId,
-			@Parameter(hidden = true) @QueryParam("plid") Long plid,
-			@Parameter(hidden = true) @QueryParam("portletId") String portletId)
+			@Parameter(hidden = true) @PathParam("pageLayoutId") Long
+				pageLayoutId,
+			@Parameter(hidden = true) @PathParam("portletId") String portletId)
 		throws Exception {
 
 		return null;
@@ -90,26 +92,29 @@ public abstract class BaseActiveViewResourceImpl implements ActiveViewResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/frontend-view-state/v1.0/active-view/{activeViewId}'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/frontend-view-state/v1.0/active-view/{activeViewId}/page-layout/{pageLayoutId}/portlet/{portletId}'  -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "activeViewId"),
-			@Parameter(in = ParameterIn.QUERY, name = "plid"),
-			@Parameter(in = ParameterIn.QUERY, name = "portletId")
+			@Parameter(in = ParameterIn.PATH, name = "pageLayoutId"),
+			@Parameter(in = ParameterIn.PATH, name = "portletId")
 		}
 	)
-	@Path("/active-view/{activeViewId}")
+	@Path(
+		"/active-view/{activeViewId}/page-layout/{pageLayoutId}/portlet/{portletId}"
+	)
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "ActiveView")})
-	public Response putActiveView(
+	public Response putActiveViewPageLayoutPortlet(
 			@NotNull @Parameter(hidden = true) @PathParam("activeViewId") String
 				activeViewId,
-			@Parameter(hidden = true) @QueryParam("plid") Long plid,
-			@Parameter(hidden = true) @QueryParam("portletId") String portletId,
+			@Parameter(hidden = true) @PathParam("pageLayoutId") Long
+				pageLayoutId,
+			@Parameter(hidden = true) @PathParam("portletId") String portletId,
 			String string)
 		throws Exception {
 

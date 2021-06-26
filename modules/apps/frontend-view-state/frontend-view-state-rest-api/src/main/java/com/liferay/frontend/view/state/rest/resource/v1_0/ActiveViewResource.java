@@ -46,12 +46,13 @@ public interface ActiveViewResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Object getActiveView(
-			String activeViewId, Long plid, String portletId)
+	public Object getActiveViewPageLayoutPortlet(
+			String activeViewId, Long pageLayoutId, String portletId)
 		throws Exception;
 
-	public Response putActiveView(
-			String activeViewId, Long plid, String portletId, String string)
+	public Response putActiveViewPageLayoutPortlet(
+			String activeViewId, Long pageLayoutId, String portletId,
+			String string)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

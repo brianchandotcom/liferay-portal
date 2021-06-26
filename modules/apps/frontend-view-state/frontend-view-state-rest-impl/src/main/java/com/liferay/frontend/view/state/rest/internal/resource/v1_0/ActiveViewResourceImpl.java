@@ -37,13 +37,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ActiveViewResourceImpl extends BaseActiveViewResourceImpl {
 
 	@Override
-	public Object getActiveView(
-			String activeViewId, Long plid, String portletId)
+	public Object getActiveViewPageLayoutPortlet(
+			String activeViewId, Long pageLayoutId, String portletId)
 		throws Exception {
 
 		FVSActiveEntry fvsActiveEntry =
 			_fvsActiveEntryLocalService.fetchFVSActiveEntry(
-				contextUser.getUserId(), activeViewId, plid, portletId);
+				contextUser.getUserId(), activeViewId, pageLayoutId, portletId);
 
 		if (fvsActiveEntry == null) {
 			throw new NoSuchModelException();
@@ -56,13 +56,14 @@ public class ActiveViewResourceImpl extends BaseActiveViewResourceImpl {
 	}
 
 	@Override
-	public Response putActiveView(
-			String activeViewId, Long plid, String portletId, String string)
+	public Response putActiveViewPageLayoutPortlet(
+			String activeViewId, Long pageLayoutId, String portletId,
+			String string)
 		throws Exception {
 
 		FVSActiveEntry fvsActiveEntry =
 			_fvsActiveEntryLocalService.fetchFVSActiveEntry(
-				contextUser.getUserId(), activeViewId, plid, portletId);
+				contextUser.getUserId(), activeViewId, pageLayoutId, portletId);
 
 		FVSEntry fvsEntry = null;
 
@@ -72,7 +73,7 @@ public class ActiveViewResourceImpl extends BaseActiveViewResourceImpl {
 
 			fvsActiveEntry = _fvsActiveEntryLocalService.addFVSActiveEntry(
 				contextUser.getUserId(), fvsEntry.getFvsEntryId(), activeViewId,
-				plid, portletId);
+				pageLayoutId, portletId);
 		}
 		else {
 			fvsEntry = _fvsEntryLocalService.getFVSEntry(

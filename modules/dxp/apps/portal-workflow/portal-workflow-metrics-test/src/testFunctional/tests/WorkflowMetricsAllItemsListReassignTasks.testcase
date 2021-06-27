@@ -211,7 +211,7 @@ definition {
 			allItemsFilterName = "Process Step",
 			assigneeName = "Review");
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		PortletEntry.selectAll();
 
 		Click(
 			locator1 = "WorkflowAllItems#REASSIGN_ICON",
@@ -338,7 +338,7 @@ definition {
 
 		Refresh();
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		PortletEntry.selectAll();
 
 		Click(locator1 = "WorkflowAllItems#REASSIGN_ICON_2");
 

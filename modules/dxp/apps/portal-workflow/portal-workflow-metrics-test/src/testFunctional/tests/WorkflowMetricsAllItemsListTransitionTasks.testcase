@@ -184,9 +184,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		Pause(locator1 = "1000");
-
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		PortletEntry.selectAll();
 
 		Click(
 			locator1 = "WorkflowAllItems#REASSIGN_ICON",

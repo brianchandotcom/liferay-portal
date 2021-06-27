@@ -803,8 +803,7 @@ definition {
 	}
 
 	macro goToTransitionTasks {
-		Pause(locator1 = "2000");
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		PortletEntry.selectAll();
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
 			task = "1");

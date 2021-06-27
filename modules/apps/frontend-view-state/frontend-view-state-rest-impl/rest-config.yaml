@@ -5,5 +5,7 @@ application:
     className: "FrontendViewStateRESTApplication"
     name: "Liferay.Frontend.View.State.REST"
 author: "Javier Gamarra"
+clientDir: "../frontend-view-state-rest-client/src/main/java"
 generateBatch: false
 generateGraphQL: false
+testDir: "../frontend-view-state-rest-test/src/testIntegration/java"

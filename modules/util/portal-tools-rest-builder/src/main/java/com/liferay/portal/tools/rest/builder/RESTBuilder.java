@@ -395,6 +395,10 @@ public class RESTBuilder {
 
 		String description = info.getDescription();
 
+		if (description == null) {
+			description = "";
+		}
+
 		if (description.contains(clientMessage)) {
 			description = StringUtil.removeSubstring(
 				description,

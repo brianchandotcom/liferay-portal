@@ -682,7 +682,7 @@ definition {
 
 		WorkflowMetrics.goToUpdateDueDateTasks();
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+		Check.checkNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 

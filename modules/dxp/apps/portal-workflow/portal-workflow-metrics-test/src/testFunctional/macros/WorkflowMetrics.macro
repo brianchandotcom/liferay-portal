@@ -89,7 +89,7 @@ definition {
 	}
 
 	macro assertBulkCount {
-		Click(
+		Check.checkNotVisible(
 			key_rowNumber = "1",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ROW");
 
@@ -726,7 +726,7 @@ definition {
 	}
 
 	macro goToBulkReassignSelectNewAssignee {
-		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+		Check.checkNotVisible(locator1 = "WorkflowReassignModal#SELECT_ALL");
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 	}
 
@@ -888,7 +888,7 @@ definition {
 	macro selectAllReassignTasks {
 		var key_taskList = "${taskList}";
 		var key_taskListUnchecked = "${taskListUnchecked}";
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+		Check.checkNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 		Click(locator1 = "WorkflowReassignModal#NEXT_PAGINATION_BUTTON");
 		WorkflowMetrics.assertCheckboxUnchecked(taskListUnchecked = "${taskListUnchecked}");
 		Click(locator1 = "WorkflowReassignModal#PREVIOUS_PAGINATION_BUTTON");
@@ -899,7 +899,7 @@ definition {
 	}
 
 	macro selectAllTransitionTasks {
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+		Check.checkNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 	}
 
@@ -993,7 +993,7 @@ definition {
 	}
 
 	macro selectNewAssigneeBulkTask {
-		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+		Check.checkNotVisible(locator1 = "WorkflowReassignModal#SELECT_ALL");
 
 		Click(locator1 = "WorkflowReassignModal#BULK_NEW_ASSIGNEE");
 

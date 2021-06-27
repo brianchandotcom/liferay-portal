@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WORKFLOW_ALL_ITEMS_SELECT_ALL</td>
-	<td>//li[@class='nav-item ml-2']//label</td>
-	<td></td>
-</tr>
-<tr>
 	<td>KEBAB_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle component-action btn btn-monospaced btn-unstyled')])[${task}]</td>
 	<td></td>

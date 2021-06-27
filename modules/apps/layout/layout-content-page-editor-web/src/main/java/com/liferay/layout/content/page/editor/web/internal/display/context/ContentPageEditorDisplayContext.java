@@ -136,6 +136,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
@@ -521,6 +522,9 @@ public class ContentPageEditorDisplayContext {
 				"renderFragmentEntryURL",
 				getResourceURL(
 					"/layout_content_page_editor/get_fragment_entry_link")
+			).put(
+				"searchContainerPageMaxDelta",
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA
 			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(

@@ -174,7 +174,7 @@ definition {
 			Workflow.assignTaskToUser(
 				assetTitle = "Blogs Entry Title",
 				assetType = "Blogs Entry",
-				assigneeName = "${userCount}user user${userCount}",
+				assigneeName = "${userCount}user (${userCount}user user${userCount})",
 				workflowTask = "Review");
 
 			var iterator = MathUtil.sum("${iterator}", "1");

@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECT_ROW</td>
-	<td>//tr['${key_rowNumber}']//label</td>
+	<td>//tr['${key_rowNumber}']//label//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -222,7 +222,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL</td>
-	<td>xpath=(//li[@class='nav-item ml-2']//label)[2]</td>
+	<td>xpath=(//li[contains(@class,'nav-item')]//label//input[contains(@type,'checkbox')])[2]</td>
 	<td></td>
 </tr>
 <tr>

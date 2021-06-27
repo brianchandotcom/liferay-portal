@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL</td>
-	<td>xpath=(//div[contains(@class,'fade modal')]//label)</td>
+	<td>xpath=(//div[contains(@class,'fade modal')]//label//input[contains(@type,'checkbox')])</td>
 	<td></td>
 </tr>
 <tr>

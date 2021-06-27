@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Frontend View State REST Client
+Bundle-SymbolicName: com.liferay.frontend.view.state.rest.client
+Bundle-Version: 1.0.0

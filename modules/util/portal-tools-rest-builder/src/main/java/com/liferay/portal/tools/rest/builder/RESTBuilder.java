@@ -1938,6 +1938,7 @@ public class RESTBuilder {
 		context.put("schemaName", schemaName);
 
 		String javaType = javaDataTypeMap.get(schemaName);
+
 		if (javaType == null) {
 			context.put("schemaJavaType", "Object");
 			context.put("schemaClientJavaType", "Object");
@@ -1947,8 +1948,8 @@ public class RESTBuilder {
 			context.put(
 				"schemaClientJavaType",
 				StringBundler.concat(
-					_configYAML.getApiPackagePath(), ".client.dto.", escapedVersion,
-					".", schemaName));
+					_configYAML.getApiPackagePath(), ".client.dto.",
+					escapedVersion, ".", schemaName));
 		}
 
 		context.put("schemaNames", TextFormatter.formatPlural(schemaName));

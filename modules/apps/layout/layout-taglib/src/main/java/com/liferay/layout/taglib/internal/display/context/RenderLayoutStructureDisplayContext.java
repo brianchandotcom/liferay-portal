@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
@@ -212,6 +213,13 @@ public class RenderLayoutStructureDisplayContext {
 
 			int numberOfItemsPerPage =
 				collectionStyledLayoutStructureItem.getNumberOfItemsPerPage();
+
+			if (numberOfItemsPerPage >
+					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA) {
+
+				numberOfItemsPerPage =
+					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
+			}
 
 			int listCount = layoutListRetriever.getListCount(
 				listObjectReference, defaultLayoutListRetrieverContext);

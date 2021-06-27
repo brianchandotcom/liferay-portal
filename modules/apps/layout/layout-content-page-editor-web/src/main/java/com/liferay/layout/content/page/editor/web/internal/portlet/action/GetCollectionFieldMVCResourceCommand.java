@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,8 +122,16 @@ public class GetCollectionFieldMVCResourceCommand
 			resourceRequest, "listItemStyle");
 		int numberOfItems = ParamUtil.getInteger(
 			resourceRequest, "numberOfItems");
+
 		int numberOfItemsPerPage = ParamUtil.getInteger(
 			resourceRequest, "numberOfItemsPerPage");
+
+		if (numberOfItemsPerPage >
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA) {
+
+			numberOfItemsPerPage = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
+		}
+
 		String paginationType = ParamUtil.getString(
 			resourceRequest, "paginationType");
 		String templateKey = ParamUtil.getString(

@@ -97,7 +97,9 @@ definition {
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECTED_TEXT",
 			value1 = "1 of 5 Selected");
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		Uncheck.uncheckToggleSwitch(
+			key_rowNumber = "1",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ROW");
 	}
 
 	macro assertChartIsPresent {

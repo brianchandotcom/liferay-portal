@@ -178,6 +178,8 @@ public interface ${schemaName}Resource {
 							return ${javaMethodSignature.returnType}.valueOf(content);
 						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Number")>
 							return Double.valueOf(content);
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Object")>
+							return (Object)content;
 						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.math.BigDecimal")>
 							return new java.math.BigDecimal(content);
 						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.util.Date")>

@@ -1,5 +1,7 @@
 package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
+import ${configYAML.apiPackagePath}.client.resource.${escapedVersion}.${schemaName}Resource;
+
 <#list allExternalSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 	import ${configYAML.apiPackagePath}.client.resource.${escapedVersion}.${schemaName}Resource;
@@ -157,79 +159,81 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	@Test
-	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				enable(SerializationFeature.INDENT_OUTPUT);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		${schemaName} ${schemaVarName}1 = random${schemaName}();
-
-		String json = objectMapper.writeValueAsString(${schemaVarName}1);
-
-		${schemaName} ${schemaVarName}2 = ${schemaName}SerDes.toDTO(json);
-
-		Assert.assertTrue(equals(${schemaVarName}1, ${schemaVarName}2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		${schemaName} ${schemaVarName} = random${schemaName}();
-
-		String json1 = objectMapper.writeValueAsString(${schemaVarName});
-		String json2 = ${schemaName}SerDes.toJSON(${schemaVarName});
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
-	}
-
 	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
-	@Test
-	public void testEscapeRegexInStringFields() throws Exception {
-		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
+		@Test
+		public void testClientSerDesToDTO() throws Exception {
+			ObjectMapper objectMapper = new ObjectMapper() {
+				{
+					configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+					configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+					enable(SerializationFeature.INDENT_OUTPUT);
+					setDateFormat(new ISO8601DateFormat());
+					setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+					setSerializationInclusion(JsonInclude.Include.NON_NULL);
+					setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+					setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+				}
+			};
 
-		${schemaName} ${schemaVarName} = random${schemaName}();
+			${schemaName} ${schemaVarName}1 = random${schemaName}();
 
-		<#list properties?keys as propertyName>
-			<#if stringUtil.equals(properties[propertyName], "String")>
-				${schemaVarName}.set${propertyName?cap_first}(regex);
-			</#if>
-		</#list>
+			String json = objectMapper.writeValueAsString(${schemaVarName}1);
 
-		String json = ${schemaName}SerDes.toJSON(${schemaVarName});
+			${schemaName} ${schemaVarName}2 = ${schemaName}SerDes.toDTO(json);
 
-		Assert.assertFalse(json.contains(regex));
+			Assert.assertTrue(equals(${schemaVarName}1, ${schemaVarName}2));
+		}
 
-		${schemaVarName} = ${schemaName}SerDes.toDTO(json);
+		@Test
+		public void testClientSerDesToJSON() throws Exception {
+			ObjectMapper objectMapper = new ObjectMapper() {
+				{
+					configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+					configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+					setDateFormat(new ISO8601DateFormat());
+					setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+					setSerializationInclusion(JsonInclude.Include.NON_NULL);
+					setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+					setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+				}
+			};
 
-		<#list properties?keys as propertyName>
-			<#if stringUtil.equals(properties[propertyName], "String")>
-				Assert.assertEquals(regex, ${schemaVarName}.get${propertyName?cap_first}());
-			</#if>
-		</#list>
-	}
+			${schemaName} ${schemaVarName} = random${schemaName}();
+
+			String json1 = objectMapper.writeValueAsString(${schemaVarName});
+			String json2 = ${schemaName}SerDes.toJSON(${schemaVarName});
+
+			Assert.assertEquals(
+				objectMapper.readTree(json1), objectMapper.readTree(json2));
+		}
+
+		@Test
+		public void testEscapeRegexInStringFields() throws Exception {
+			String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+			${schemaName} ${schemaVarName} = random${schemaName}();
+
+			<#list properties?keys as propertyName>
+				<#if stringUtil.equals(properties[propertyName], "String")>
+					${schemaVarName}.set${propertyName?cap_first}(regex);
+				</#if>
+			</#list>
+
+			String json = ${schemaName}SerDes.toJSON(${schemaVarName});
+
+			Assert.assertFalse(json.contains(regex));
+
+			${schemaVarName} = ${schemaName}SerDes.toDTO(json);
+
+			<#list properties?keys as propertyName>
+				<#if stringUtil.equals(properties[propertyName], "String")>
+					Assert.assertEquals(regex, ${schemaVarName}.get${propertyName?cap_first}());
+				</#if>
+			</#list>
+		}
+	</#if>
 
 	<#assign
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
@@ -1817,16 +1821,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 		Assert.assertEquals(expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(${schemaName} ${schemaVarName}1, ${schemaName} ${schemaVarName}2) {
+	protected void assertEquals(${schemaClientJavaType} ${schemaVarName}1, ${schemaClientJavaType} ${schemaVarName}2) {
 		Assert.assertTrue(${schemaVarName}1 + " does not equal " + ${schemaVarName}2, equals(${schemaVarName}1, ${schemaVarName}2));
 	}
 
-	protected void assertEquals(List<${schemaName}> ${schemaVarNames}1, List<${schemaName}> ${schemaVarNames}2) {
+	protected void assertEquals(List<${schemaClientJavaType}> ${schemaVarNames}1, List<${schemaClientJavaType}> ${schemaVarNames}2) {
 		Assert.assertEquals(${schemaVarNames}1.size(), ${schemaVarNames}2.size());
 
 		for (int i = 0; i < ${schemaVarNames}1.size(); i++) {
-			${schemaName} ${schemaVarName}1 = ${schemaVarNames}1.get(i);
-			${schemaName} ${schemaVarName}2 = ${schemaVarNames}2.get(i);
+			${schemaClientJavaType} ${schemaVarName}1 = ${schemaVarNames}1.get(i);
+			${schemaClientJavaType} ${schemaVarName}2 = ${schemaVarNames}2.get(i);
 
 			assertEquals(${schemaVarName}1, ${schemaVarName}2);
 		}
@@ -1843,13 +1847,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#list>
 
-	protected void assertEqualsIgnoringOrder(List<${schemaName}> ${schemaVarNames}1, List<${schemaName}> ${schemaVarNames}2) {
+	protected void assertEqualsIgnoringOrder(List<${schemaClientJavaType}> ${schemaVarNames}1, List<${schemaClientJavaType}> ${schemaVarNames}2) {
 		Assert.assertEquals(${schemaVarNames}1.size(), ${schemaVarNames}2.size());
 
-		for (${schemaName} ${schemaVarName}1 : ${schemaVarNames}1) {
+		for (${schemaClientJavaType} ${schemaVarName}1 : ${schemaVarNames}1) {
 			boolean contains = false;
 
-			for (${schemaName} ${schemaVarName}2 : ${schemaVarNames}2) {
+			for (${schemaClientJavaType} ${schemaVarName}2 : ${schemaVarNames}2) {
 				if (equals(${schemaVarName}1, ${schemaVarName}2)) {
 					contains = true;
 
@@ -1861,7 +1865,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	}
 
-	protected void assertValid(${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName} ${schemaVarName}) throws Exception {
+	protected void assertValid(${schemaClientJavaType} ${schemaVarName}) throws Exception {
 		boolean valid = true;
 
 		<#if properties?keys?seq_contains("dateCreated")>
@@ -1928,15 +1932,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 	}
 
 	<#if generateGetMultipartFilesMethod>
-		protected void assertValid(${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName} ${schemaVarName}, Map<String, File> multipartFiles) throws Exception {
+		protected void assertValid(${schemaClientJavaType} ${schemaVarName}, Map<String, File> multipartFiles) throws Exception {
 			throw new UnsupportedOperationException("This method needs to be implemented");
 		}
 	</#if>
 
-	protected void assertValid(Page<${schemaName}> page) {
+	protected void assertValid(Page<${schemaClientJavaType}> page) {
 		boolean valid = false;
 
-		java.util.Collection<${schemaName}> ${schemaVarNames} = page.getItems();
+		java.util.Collection<${schemaClientJavaType}> ${schemaVarNames} = page.getItems();
 
 		int size = ${schemaVarNames}.size();
 
@@ -2068,7 +2072,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(${schemaName} ${schemaVarName}1, ${schemaName} ${schemaVarName}2) {
+	protected boolean equals(${schemaClientJavaType} ${schemaVarName}1, ${schemaClientJavaType} ${schemaVarName}2) {
 		if (${schemaVarName}1 == ${schemaVarName}2) {
 			return true;
 		}
@@ -2200,7 +2204,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		);
 	}
 
-	protected String getFilterString(EntityField entityField, String operator, ${schemaName} ${schemaVarName}) {
+	protected String getFilterString(EntityField entityField, String operator, ${schemaClientJavaType} ${schemaVarName}) {
 		StringBundler sb = new StringBundler();
 
 		String entityFieldName = entityField.getName();
@@ -2288,41 +2292,43 @@ public abstract class Base${schemaName}ResourceTestCase {
 		return JSONFactoryUtil.createJSONObject(invoke(queryGraphQLField.toString()));
 	}
 
-	protected ${schemaName} random${schemaName}() throws Exception {
-		return new ${schemaName}() {
-			{
-				<#list properties?keys as propertyName>
-					<#if stringUtil.equals(propertyName, "siteId")>
-						${propertyName} = testGroup.getGroupId();
-					<#elseif stringUtil.equals(properties[propertyName], "Integer")>
-						${propertyName} = RandomTestUtil.randomInt();
-					<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
-						${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
-					<#elseif stringUtil.equals(properties[propertyName], "String")>
-						${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
-					<#elseif randomDataTypes?seq_contains(properties[propertyName])>
-						${propertyName} = RandomTestUtil.random${properties[propertyName]}();
-					<#elseif stringUtil.equals(properties[propertyName], "Date")>
-						${propertyName} = RandomTestUtil.nextDate();
-					</#if>
-				</#list>
-			}
-		};
-	}
+	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
+		protected ${schemaName} random${schemaName}() throws Exception {
+			return new ${schemaName}() {
+				{
+					<#list properties?keys as propertyName>
+						<#if stringUtil.equals(propertyName, "siteId")>
+							${propertyName} = testGroup.getGroupId();
+						<#elseif stringUtil.equals(properties[propertyName], "Integer")>
+							${propertyName} = RandomTestUtil.randomInt();
+						<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
+							${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
+						<#elseif stringUtil.equals(properties[propertyName], "String")>
+							${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
+						<#elseif randomDataTypes?seq_contains(properties[propertyName])>
+							${propertyName} = RandomTestUtil.random${properties[propertyName]}();
+						<#elseif stringUtil.equals(properties[propertyName], "Date")>
+							${propertyName} = RandomTestUtil.nextDate();
+						</#if>
+					</#list>
+				}
+			};
+		}
 
-	protected ${schemaName} randomIrrelevant${schemaName}() throws Exception {
-		${schemaName} randomIrrelevant${schemaName} = random${schemaName}();
+		protected ${schemaName} randomIrrelevant${schemaName}() throws Exception {
+			${schemaName} randomIrrelevant${schemaName} = random${schemaName}();
 
-		<#if properties?keys?seq_contains("siteId")>
-			randomIrrelevant${schemaName}.setSiteId(irrelevantGroup.getGroupId());
-		</#if>
+			<#if properties?keys?seq_contains("siteId")>
+				randomIrrelevant${schemaName}.setSiteId(irrelevantGroup.getGroupId());
+			</#if>
 
-		return randomIrrelevant${schemaName};
-	}
+			return randomIrrelevant${schemaName};
+		}
 
-	protected ${schemaName} randomPatch${schemaName}() throws Exception {
-		return random${schemaName}();
-	}
+		protected ${schemaName} randomPatch${schemaName}() throws Exception {
+			return random${schemaName}();
+		}
+	</#if>
 
 	<#list relatedSchemaNames as relatedSchemaName>
 		protected ${relatedSchemaName} random${relatedSchemaName}() throws Exception {

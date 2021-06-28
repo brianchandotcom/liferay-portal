@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DUE_DATE_COLUMN</td>
+	<td>//th//a[contains(@class, 'inline-item text-truncate-inline')]//span[contains(.,'Due Date')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DUE_DATE_ICON</td>
 	<td>//div[@class="quick-action-menu"]//button[2]</td>
 	<td></td>

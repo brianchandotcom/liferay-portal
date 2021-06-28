@@ -874,12 +874,33 @@ definition {
 	}
 
 	@description = "LPS-130167 - Verify that the ordination icon is displayed next to the column title to be ordered"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test OrdinationIconIsDisplayedNextToDueDateColumn {
+		Navigator.openURL();
 
-		// TODO LRQA-67737 OrdinationIconIsDisplayedNextToDueDateColumn pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Content 1",
+			entrySubtitle = "Subtitle 1",
+			entryTitle = "Blogs Entry 1");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowAllItems#DUE_DATE_COLUMN");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
 	}
 
 	@description = "LPS-130217 - Verify that the page provides loading feedback when the table is being updated according to order options"

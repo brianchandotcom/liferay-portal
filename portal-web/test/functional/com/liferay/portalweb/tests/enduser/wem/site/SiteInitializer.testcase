@@ -213,7 +213,7 @@ definition {
 
 			var screenWidth	= selenium.getElementWidth("//body");
 
-			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pr-3 pl-3')]/div[contains(@class,'mb-lg-0')]");
+			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pr-3 pl-3')]/div[contains(@style,'border-style')]");
 
 			TestUtils.assertNotEquals(
 				actual = "${containerWidth}",
@@ -259,7 +259,7 @@ definition {
 			var screenWidth	= selenium.getElementWidth("//body");
 
 			for (var collectionTitle : list "Open Claims,Closed Claims") {
-				var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')]/div[contains(.,'${collectionTitle}')]/following-sibling::div[contains(@class,'mb-lg-0')]");
+				var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')]/div[contains(.,'${collectionTitle}')]/following-sibling::div[contains(@style,'border-style')]");
 
 				TestUtils.assertNotEquals(
 					actual = "${containerWidth}",

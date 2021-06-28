@@ -1199,8 +1199,8 @@ definition {
 
 	macro viewOptionSingleSelection {
 		AssertElementPresent(
-			key_optionName = "${optionName}",
 			key_fieldName = "${fieldName}",
+			key_optionName = "${optionName}",
 			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
 	}
 

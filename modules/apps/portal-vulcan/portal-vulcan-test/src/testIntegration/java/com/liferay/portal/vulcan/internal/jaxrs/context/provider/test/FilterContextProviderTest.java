@@ -15,8 +15,10 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.search.QueryTerm;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -96,12 +98,16 @@ public class FilterContextProviderTest {
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 
-		Assert.assertTrue(filter instanceof TermFilter);
+		Assert.assertTrue(filter instanceof QueryFilter);
 
-		TermFilter termFilter = (TermFilter)filter;
+		QueryFilter queryFilter = (QueryFilter)filter;
 
-		Assert.assertEquals("example", termFilter.getValue());
-		Assert.assertEquals("internalTitle", termFilter.getField());
+		TermQuery termQuery = (TermQuery)queryFilter.getQuery();
+
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		Assert.assertEquals("example", queryTerm.getValue());
+		Assert.assertEquals("internalTitle", queryTerm.getField());
 	}
 
 	private ContextProvider<Filter> _contextProvider;

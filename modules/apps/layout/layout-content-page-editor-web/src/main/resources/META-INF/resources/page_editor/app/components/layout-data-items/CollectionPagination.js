@@ -21,18 +21,17 @@ import React from 'react';
 
 import {useIsActive} from '../../contexts/ControlsContext';
 
-const TOTAL_ENTRIES = 20;
-
 export default function CollectionPagination({
 	activePage,
 	collectionConfig,
 	collectionId,
 	onPageChange,
+	totalItems,
 }) {
 	const isActive = useIsActive();
 
 	const totalPages = Math.ceil(
-		TOTAL_ENTRIES / collectionConfig.numberOfItemsPerPage
+		totalItems / collectionConfig.numberOfItemsPerPage
 	);
 
 	const simplePaginationButtons = [
@@ -66,7 +65,7 @@ export default function CollectionPagination({
 									(activePage - 1) || 1,
 								collectionConfig.numberOfItemsPerPage *
 									activePage,
-								TOTAL_ENTRIES,
+								totalItems,
 							]
 						)}
 					</ClayPaginationBar.Results>
@@ -107,4 +106,5 @@ CollectionPagination.propTypes = {
 	collectionConfig: PropTypes.object,
 	collectionId: PropTypes.string,
 	onPageChange: PropTypes.func,
+	totalItems: PropTypes.number,
 };

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/schema/validator/SchemaValidator\.java" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="StringMethodsCheck" files="src/main/java/com/liferay/portal/tools/db/partition/schema/validator/SchemaValidator\.java" />
+	</source-check>
+</suppressions>

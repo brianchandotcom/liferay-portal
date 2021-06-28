@@ -80,44 +80,7 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetDataType1() {
-		String fieldName = "field";
-
-		DDMFormField ddmFormField = new DDMFormField(fieldName, "numeric");
-
-		ddmFormField.setProperty("dataType", "double");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setProperty("changedProperties", null);
-
-		Assert.assertEquals(
-			"double",
-			_numericDDMFormFieldTemplateContextContributor.getDataType(
-				ddmFormField, ddmFormFieldRenderingContext));
-	}
-
-	@Test
-	public void testGetDataType2() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		ddmFormField.setProperty("dataType", "integer");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setProperty(
-			"changedProperties", new HashMap<String, Object>());
-
-		Assert.assertEquals(
-			"integer",
-			_numericDDMFormFieldTemplateContextContributor.getDataType(
-				ddmFormField, ddmFormFieldRenderingContext));
-	}
-
-	@Test
-	public void testGetDataType3() {
+	public void testGetDataTypeChanged() {
 		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 
 		ddmFormField.setProperty("dataType", "integer");
@@ -133,28 +96,43 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertEquals(
 			"double",
-			_numericDDMFormFieldTemplateContextContributor.getDataType(
-				ddmFormField, ddmFormFieldRenderingContext));
+			_numericDDMFormFieldTemplateContextContributor.getPropertyValue(
+				ddmFormField, ddmFormFieldRenderingContext, "dataType"));
 	}
 
 	@Test
-	public void testGetDecimalSymbolsWithAmericanLocale() {
-		Map<String, String> separatorSymbolsMap =
-			_numericDDMFormFieldTemplateContextContributor.getSymbolsMap(
-				LocaleUtil.US);
+	public void testGetDataTypeDouble() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 
-		Assert.assertEquals(".", separatorSymbolsMap.get("decimalSymbol"));
-		Assert.assertEquals(",", separatorSymbolsMap.get("thousandsSeparator"));
+		ddmFormField.setProperty("dataType", "double");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty("changedProperties", null);
+
+		Assert.assertEquals(
+			"double",
+			_numericDDMFormFieldTemplateContextContributor.getPropertyValue(
+				ddmFormField, ddmFormFieldRenderingContext, "dataType"));
 	}
 
 	@Test
-	public void testGetDecimalSymbolsWithBrazilianLocale() {
-		Map<String, String> separatorSymbolsMap =
-			_numericDDMFormFieldTemplateContextContributor.getSymbolsMap(
-				LocaleUtil.BRAZIL);
+	public void testGetDataTypeInteger() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 
-		Assert.assertEquals(",", separatorSymbolsMap.get("decimalSymbol"));
-		Assert.assertEquals(".", separatorSymbolsMap.get("thousandsSeparator"));
+		ddmFormField.setProperty("dataType", "integer");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"changedProperties", new HashMap<String, Object>());
+
+		Assert.assertEquals(
+			"integer",
+			_numericDDMFormFieldTemplateContextContributor.getPropertyValue(
+				ddmFormField, ddmFormFieldRenderingContext, "dataType"));
 	}
 
 	@Test
@@ -174,6 +152,33 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(true, (boolean)parameters.get("inputMask"));
 		Assert.assertEquals(
 			"(999) 0999-9999", parameters.get("inputMaskFormat"));
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				"decimalSymbol", "."
+			).put(
+				"thousandsSeparator", ","
+			).build(),
+			parameters.get("symbols"));
+	}
+
+	@Test
+	public void testGetSymbols() {
+		Map<String, String> symbolsMap =
+			_numericDDMFormFieldTemplateContextContributor.getSymbolsMap(
+				LocaleUtil.US);
+
+		Assert.assertEquals(".", symbolsMap.get("decimalSymbol"));
+		Assert.assertEquals(",", symbolsMap.get("thousandsSeparator"));
+	}
+
+	@Test
+	public void testGetSymbolsBrazilLocale() {
+		Map<String, String> symbolsMap =
+			_numericDDMFormFieldTemplateContextContributor.getSymbolsMap(
+				LocaleUtil.BRAZIL);
+
+		Assert.assertEquals(",", symbolsMap.get("decimalSymbol"));
+		Assert.assertEquals(".", symbolsMap.get("thousandsSeparator"));
 	}
 
 	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext() {

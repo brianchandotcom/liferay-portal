@@ -20,6 +20,14 @@ definition {
 			locator2 = "Form#FIELD_ROW_TARGET");
 	}
 
+	macro addFieldToFieldsGroup {
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			key_fieldLabel = "${targetFieldLabel}",
+			key_fieldName = "${sourceFieldName}",
+			locator1 = "Form#PAGE_FIELD_LABEL",
+			locator2 = "FormFields#LABEL");
+	}
+
 	macro addPage {
 		var key_formAddNewPageNumber = "${formAddNewPageNumber}";
 

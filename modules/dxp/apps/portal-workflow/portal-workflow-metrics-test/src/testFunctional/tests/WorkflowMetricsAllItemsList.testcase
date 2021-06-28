@@ -556,12 +556,33 @@ definition {
 	}
 
 	@description = "LPS-87571 - Verify that when user reaches the page through Performance tab, the filter options are: SLA Status, Process Status, Process Step, Completion Time and Assignee"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test FiltersDisplayedWhenReachingPageThroughPerformanceTab {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67771 FiltersDisplayedWhenReachingPageThroughPerformanceTab pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		Click(locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "SLA Status",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Process Status",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Completion Period",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Process Step",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertElementPresent(
+			key_allItemsFilterName = "Assignee",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
 	}
 
 	@description = "LPS-86652 - Verify that hovering the cursor on a ellipsis text will display a tooltip that contains the rest of the text"

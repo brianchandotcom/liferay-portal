@@ -938,8 +938,10 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
-			slaDefinitionName = "SLA Name 2");
+			slaDefinitionName = "SLA Name 2",
+			slaDefinitionStart = "Process Begins");
 
 		Button.clickSave();
 

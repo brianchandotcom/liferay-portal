@@ -125,7 +125,6 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddEntryWithEmbeddedVideo {
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 		property testray.component.names = "WYSIWYG";
 

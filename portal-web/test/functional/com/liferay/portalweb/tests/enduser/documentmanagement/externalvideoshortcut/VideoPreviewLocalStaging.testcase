@@ -1,7 +1,6 @@
 @component-name = "portal-document-management"
 definition {
 
-	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Documents Management";

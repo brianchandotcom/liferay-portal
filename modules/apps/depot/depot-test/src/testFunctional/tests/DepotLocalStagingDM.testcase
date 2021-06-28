@@ -603,8 +603,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test DeleteVideoShortcutInDepot {
-		property dummy.socket.proxy.disabled = "true";
-
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(

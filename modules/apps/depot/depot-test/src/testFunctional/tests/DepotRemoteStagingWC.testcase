@@ -681,7 +681,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test PublishWCWithEmbeddedVideo {
-		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWCWithEmbeddedVideo";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");

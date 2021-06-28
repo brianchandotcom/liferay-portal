@@ -348,7 +348,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewVideoViaMediaGallery {
-		property dummy.socket.proxy.disabled = "true";
 		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "PGMediagallery#ViewVideoViaMediaGallery";
 

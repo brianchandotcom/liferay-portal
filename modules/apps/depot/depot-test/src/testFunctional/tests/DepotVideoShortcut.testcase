@@ -83,8 +83,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddWithShortenedURLToWCViaItemSelector {
-		property dummy.socket.proxy.disabled = "true";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Shortened URL Depot Name");
@@ -206,8 +204,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewFromDisconnectedSite {
-		property dummy.socket.proxy.disabled = "true";
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(

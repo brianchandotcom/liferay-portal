@@ -102,7 +102,7 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
-		return LanguageUtil.get(resourceBundle, "collection-category-filter");
+		return LanguageUtil.get(resourceBundle, "collection-filter");
 	}
 
 	@Override

@@ -127,6 +127,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				_getLayoutReportIssuesJSONObject(
+					ParamUtil.getBoolean(resourceRequest, "refreshCache"),
 					group, resourceBundle, themeDisplay,
 					ParamUtil.getString(resourceRequest, "url")));
 		}
@@ -266,24 +267,20 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 	}
 
 	private JSONObject _getLayoutReportIssuesJSONObject(
-			Group group, ResourceBundle resourceBundle,
+			boolean refreshCache, Group group, ResourceBundle resourceBundle,
 			ThemeDisplay themeDisplay, String url)
 		throws PortalException {
 
 		String cacheKey = themeDisplay.getLocale() + "-" + url;
 
-		JSONObject layoutReportIssuesJSONObject = _layoutReportsIssuesCache.get(
-			cacheKey);
-
-		if (layoutReportIssuesJSONObject == null) {
-			layoutReportIssuesJSONObject = _fetchLayoutReportIssuesJSONObject(
-				group, resourceBundle, themeDisplay, url);
-
+		if (refreshCache) {
 			_layoutReportsIssuesCache.put(
-				cacheKey, layoutReportIssuesJSONObject);
+				cacheKey,
+				_fetchLayoutReportIssuesJSONObject(
+					group, resourceBundle, themeDisplay, url));
 		}
 
-		return layoutReportIssuesJSONObject;
+		return _layoutReportsIssuesCache.get(cacheKey);
 	}
 
 	private boolean _hasViewPermission(

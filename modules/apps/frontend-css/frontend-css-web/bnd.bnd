@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend CSS Web
-Bundle-SymbolicName: com.liferay.frontend.css.web
-Bundle-Version: 5.0.6
-Web-ContextPath: /frontend-css-web

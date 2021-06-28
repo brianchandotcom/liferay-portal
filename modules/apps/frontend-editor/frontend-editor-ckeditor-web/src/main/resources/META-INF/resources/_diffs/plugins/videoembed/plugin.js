@@ -522,7 +522,6 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 					);
 
 					const doc = instance.wrapper.getDocument();
-					doc.appendStyleSheet('/o/frontend-css-web/main.css');
 
 					function mouseDownListener(event) {
 						const result = getSelectedElement(editor);

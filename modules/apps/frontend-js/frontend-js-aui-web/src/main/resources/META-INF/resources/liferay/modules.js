@@ -617,7 +617,7 @@
 				root: PATH_JAVASCRIPT + '/liferay/',
 			},
 		},
-		insertBefore: 'liferayPortalCSS',
+		insertBefore: 'liferayAUICSS',
 		lang: themeDisplay.getBCP47LanguageId(),
 		root: PATH_JAVASCRIPT + '/aui/',
 		useBrowserConsole: false,

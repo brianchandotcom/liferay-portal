@@ -2761,8 +2761,8 @@ public class DLFileEntryLocalServiceImpl
 
 		companyLocalService.forEachCompanyId(
 			companyId -> _expireFileEntriesByCompanyId(
-				expirationDate, Collections.emptyMap(), new ServiceContext(),
-				companyId));
+				companyId, expirationDate, Collections.emptyMap(),
+				new ServiceContext()));
 	}
 
 	private void _checkFileEntriesByReviewDate(Date reviewDate)
@@ -2794,13 +2794,13 @@ public class DLFileEntryLocalServiceImpl
 					fileEntry.getFileEntryId(), false);
 
 			_notifySubscribers(
-				fileEntry.getUserId(), latestFileVersion,
-				_buildEntryURL(latestFileVersion), "review",
+				fileEntry.getUserId(), _EMAIL_TYPE_REVIEW,
+				_buildEntryURL(latestFileVersion), latestFileVersion,
 				new ServiceContext());
 
 			_notifyOwner(
-				fileEntry.getUserId(), latestFileVersion,
-				_buildEntryURL(latestFileVersion), "review",
+				fileEntry.getUserId(), _EMAIL_TYPE_REVIEW,
+				_buildEntryURL(latestFileVersion), latestFileVersion,
 				new ServiceContext());
 		}
 	}
@@ -2963,8 +2963,9 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _expireFileEntriesByCompanyId(
-			Date expirationDate, Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext, Long companyId)
+			long companyId, Date expirationDate,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long userId = _getActiveCompanyAdminUserId(companyId);
@@ -2996,12 +2997,12 @@ public class DLFileEntryLocalServiceImpl
 				workflowContext);
 
 			_notifySubscribers(
-				userId, latestFileVersion, _buildEntryURL(latestFileVersion),
-				"expire", new ServiceContext());
+				userId, _EMAIL_TYPE_EXPIRED, _buildEntryURL(latestFileVersion),
+				latestFileVersion, new ServiceContext());
 
 			_notifyOwner(
-				userId, latestFileVersion, _buildEntryURL(latestFileVersion),
-				"expire", new ServiceContext());
+				userId, _EMAIL_TYPE_EXPIRED, _buildEntryURL(latestFileVersion),
+				latestFileVersion, new ServiceContext());
 		}
 	}
 
@@ -3054,11 +3055,9 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private Long _getActiveUser(long[] userIds) {
-		User user;
-
 		if (!ArrayUtil.isEmpty(userIds)) {
 			for (long userId : userIds) {
-				user = userLocalService.fetchUser(userId);
+				User user = userLocalService.fetchUser(userId);
 
 				if ((user != null) && user.isActive()) {
 					return userId;
@@ -3122,8 +3121,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _notifyOwner(
-			long userId, DLFileVersion fileVersion, String entryURL,
-			String emailType, ServiceContext serviceContext)
+			long userId, int emailType, String entryURL,
+			DLFileVersion fileVersion, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(entryURL)) {
@@ -3139,13 +3138,13 @@ public class DLFileEntryLocalServiceImpl
 		DLGroupServiceSettings dlGroupServiceSettings =
 			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
-		if (Objects.equals("review", emailType) &&
+		if ((emailType == _EMAIL_TYPE_REVIEW) &&
 			!dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) {
 
 			return;
 		}
 
-		if (Objects.equals("expire", emailType) &&
+		if ((emailType == _EMAIL_TYPE_EXPIRED) &&
 			!dlGroupServiceSettings.isEmailFileEntryExpiredEnabled()) {
 
 			return;
@@ -3205,7 +3204,7 @@ public class DLFileEntryLocalServiceImpl
 		int notificationType =
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 
-		if (Objects.equals(emailType, "review")) {
+		if (emailType == _EMAIL_TYPE_REVIEW) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryReviewSubject();
 			bodyLocalizedValuesMap =
@@ -3214,7 +3213,7 @@ public class DLFileEntryLocalServiceImpl
 			notificationType =
 				UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
 		}
-		else if (Objects.equals(emailType, "expire")) {
+		else if (emailType == _EMAIL_TYPE_EXPIRED) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryExpiredSubject();
 			bodyLocalizedValuesMap =
@@ -3273,8 +3272,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _notifySubscribers(
-			long userId, DLFileVersion fileVersion, String entryURL,
-			String emailType, ServiceContext serviceContext)
+			long userId, int emailType, String entryURL,
+			DLFileVersion fileVersion, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(entryURL)) {
@@ -3290,13 +3289,13 @@ public class DLFileEntryLocalServiceImpl
 		DLGroupServiceSettings dlGroupServiceSettings =
 			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
-		if (Objects.equals(emailType, "review") &&
+		if (Objects.equals(emailType, _EMAIL_TYPE_REVIEW) &&
 			!dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) {
 
 			return;
 		}
 
-		if (Objects.equals(emailType, "expire") &&
+		if (Objects.equals(emailType, _EMAIL_TYPE_EXPIRED) &&
 			!dlGroupServiceSettings.isEmailFileEntryExpiredEnabled()) {
 
 			return;
@@ -3313,7 +3312,7 @@ public class DLFileEntryLocalServiceImpl
 		int notificationType =
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 
-		if (Objects.equals(emailType, "review")) {
+		if (Objects.equals(emailType, _EMAIL_TYPE_REVIEW)) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryReviewSubject();
 			bodyLocalizedValuesMap =
@@ -3322,7 +3321,7 @@ public class DLFileEntryLocalServiceImpl
 			notificationType =
 				UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
 		}
-		else if (Objects.equals(emailType, "expire")) {
+		else if (Objects.equals(emailType, _EMAIL_TYPE_EXPIRED)) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryExpiredSubject();
 			bodyLocalizedValuesMap =
@@ -3585,6 +3584,10 @@ public class DLFileEntryLocalServiceImpl
 				"A folder already exists with name " + title);
 		}
 	}
+
+	private static final int _EMAIL_TYPE_EXPIRED = 0;
+
+	private static final int _EMAIL_TYPE_REVIEW = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);

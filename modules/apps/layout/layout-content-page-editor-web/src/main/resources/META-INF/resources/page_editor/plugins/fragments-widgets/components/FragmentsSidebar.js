@@ -199,6 +199,7 @@ export default function FragmentsSidebar() {
 					<ClayButtonWithIcon
 						borderless
 						className="lfr-portal-tooltip ml-2 mt-0"
+						data-tooltip-align="bottom-right"
 						disabled={displayStyleButtonDisabled}
 						displayType="secondary"
 						onClick={() => {

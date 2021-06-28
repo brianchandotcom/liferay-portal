@@ -66,12 +66,12 @@ public interface CommercePriceEntry
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.commerce.currency.model.CommerceMoney getPriceMoney(
-			long commerceCurrencyId)
+	public com.liferay.commerce.currency.model.CommerceMoney
+			getPriceCommerceMoney(long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.commerce.currency.model.CommerceMoney getPromoPriceMoney(
-			long commerceCurrencyId)
+	public com.liferay.commerce.currency.model.CommerceMoney
+			getPromoPriceCommerceMoney(long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }

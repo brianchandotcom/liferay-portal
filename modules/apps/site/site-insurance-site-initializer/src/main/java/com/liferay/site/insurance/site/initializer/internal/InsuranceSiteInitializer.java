@@ -79,7 +79,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.insurance.site.initializer.internal.util.ImagesImporterUtil;
-import com.liferay.site.insurance.site.initializer.internal.util.StyleBookEntriesImporterUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -88,6 +87,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.io.File;
 
@@ -583,7 +583,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 		File file = FileUtil.createTempFile(url.openStream());
 
-		StyleBookEntriesImporterUtil.importStyleBookEntries(
+		_styleBookEntryZipProcessor.importStyleBookEntries(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			file, false);
 	}
@@ -1097,6 +1097,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Reference
+	private StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

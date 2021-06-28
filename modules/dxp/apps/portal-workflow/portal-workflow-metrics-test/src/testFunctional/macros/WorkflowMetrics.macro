@@ -412,6 +412,18 @@ definition {
 			site = "${siteName}");
 	}
 
+	macro changePaginationAllItems {
+		Click(locator1 = "WorkflowMetrics#METRICS_ITEMS_PER_PAGE_SELECT");
+
+		var key_itemsPerPage = "${itemsPerPage}";
+
+		MenuItem.click(menuItem = "${itemsPerPage}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Questions#ITEMS_PER_PAGE_SELECT",
+			value1 = "${itemsPerPage}");
+	}
+
 	macro checkCompletedWorkflowValues {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE",
@@ -1384,6 +1396,12 @@ definition {
 		for (var key_workflowFilterValue : list "${isFilterOptionPresent}") {
 			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
 		}
+	}
+
+	macro viewCreatedBySort {
+		AssertElementPresent(
+			key_value = "${position}",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
 	}
 
 	macro viewDateRangeErrorMessage {

@@ -256,6 +256,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_ITEMS_PER_PAGE_SELECT</td>
+	<td>//div[contains(@class,'pagination-items-per-page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_NO_SLA_MESSAGE</td>
 	<td>//div[contains(., 'No SLAs are defined for this process.')]</td>
 	<td></td>

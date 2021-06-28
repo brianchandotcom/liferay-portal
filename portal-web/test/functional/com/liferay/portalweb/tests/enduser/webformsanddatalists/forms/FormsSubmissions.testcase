@@ -515,6 +515,8 @@ definition {
 
 		Form.configureSubmitLabel(submitLabel = "123456789");
 
+		Button.clickDone();
+
 		Form.save();
 
 		Form.publishForm();

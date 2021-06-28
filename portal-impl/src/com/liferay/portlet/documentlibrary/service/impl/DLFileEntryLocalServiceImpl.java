@@ -3011,9 +3011,50 @@ public class DLFileEntryLocalServiceImpl
 		Role role = roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
-		long[] userIds = userLocalService.getRoleUserIds(role.getRoleId());
+		Long userId = _getActiveUser(
+			userLocalService.getRoleUserIds(role.getRoleId()));
 
-		User user = null;
+		if (userId != null) {
+			return userId;
+		}
+
+		List<Group> groups = groupLocalService.getRoleGroups(role.getRoleId());
+
+		for (Group group : groups) {
+			if (group.isDepot() || group.isRegularSite()) {
+				userId = _getActiveUser(
+					groupLocalService.getUserPrimaryKeys(group.getGroupId()));
+
+				if (userId != null) {
+					return userId;
+				}
+			}
+			else if (group.isOrganization()) {
+				userId = _getActiveUser(
+					organizationLocalService.getUserPrimaryKeys(
+						group.getClassPK()));
+
+				if (userId != null) {
+					return userId;
+				}
+			}
+			else if (group.isUserGroup()) {
+				userId = _getActiveUser(
+					userGroupLocalService.getUserPrimaryKeys(
+						group.getClassPK()));
+
+				if (userId != null) {
+					return userId;
+				}
+			}
+		}
+
+		throw new PortalException(
+			"Unable to find an administrator user in company " + companyId);
+	}
+
+	private Long _getActiveUser(long[] userIds) {
+		User user;
 
 		if (!ArrayUtil.isEmpty(userIds)) {
 			for (long userId : userIds) {
@@ -3025,55 +3066,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
-		List<Group> groups = groupLocalService.getRoleGroups(role.getRoleId());
-
-		for (Group group : groups) {
-			if (group.isOrganization()) {
-				userIds = organizationLocalService.getUserPrimaryKeys(
-					group.getClassPK());
-
-				if (!ArrayUtil.isEmpty(userIds)) {
-					for (long userId : userIds) {
-						user = userLocalService.fetchUser(userId);
-
-						if ((user != null) && user.isActive()) {
-							return userId;
-						}
-					}
-				}
-			}
-			else if (group.isRegularSite()) {
-				userIds = groupLocalService.getUserPrimaryKeys(
-					group.getGroupId());
-
-				if (!ArrayUtil.isEmpty(userIds)) {
-					for (long userId : userIds) {
-						user = userLocalService.fetchUser(userId);
-
-						if ((user != null) && user.isActive()) {
-							return userId;
-						}
-					}
-				}
-			}
-			else if (group.isUserGroup()) {
-				userIds = userGroupLocalService.getUserPrimaryKeys(
-					group.getClassPK());
-
-				if (!ArrayUtil.isEmpty(userIds)) {
-					for (long userId : userIds) {
-						user = userLocalService.fetchUser(userId);
-
-						if ((user != null) && user.isActive()) {
-							return userId;
-						}
-					}
-				}
-			}
-		}
-
-		throw new PortalException(
-			"Unable to find an administrator user in company " + companyId);
+		return null;
 	}
 
 	private List<DLFileEntry> _getFileEntriesByCompanyIdAndExpirationDate(

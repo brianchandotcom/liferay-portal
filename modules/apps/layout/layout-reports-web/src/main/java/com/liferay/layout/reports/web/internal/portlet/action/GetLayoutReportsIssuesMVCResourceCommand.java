@@ -121,43 +121,12 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 				return;
 			}
 
-			LayoutReportsDataProvider layoutReportsDataProvider =
-				new LayoutReportsDataProvider(
-					_layoutReportsGooglePageSpeedConfigurationProvider.
-						getApiKey(group),
-					_layoutReportsGooglePageSpeedConfigurationProvider.
-						getStrategy(group));
-
 			String url = ParamUtil.getString(resourceRequest, "url");
-
-			List<LayoutReportsIssue> layoutReportsIssues =
-				layoutReportsDataProvider.getLayoutReportsIssues(
-					themeDisplay.getLocale(), url);
-
-			Stream<LayoutReportsIssue> stream = layoutReportsIssues.stream();
-
-			Format dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MMMM d, yyyy HH:mm a", locale);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"layoutReportsIssues",
-					JSONUtil.put(
-						"date", dateFormat.format(new Date())
-					).put(
-						"issues",
-						JSONUtil.putAll(
-							stream.map(
-								layoutReportsIssue ->
-									layoutReportsIssue.toJSONObject(
-										_getConfigureLayoutSeoURL(themeDisplay),
-										_getConfigurePagesSeoURL(themeDisplay),
-										resourceBundle)
-							).toArray(
-								size -> new JSONObject[size]
-							))
-					)));
+				_fetchLayoutReportIssuesJSONObject(
+					group, resourceBundle, themeDisplay, url));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -168,6 +137,45 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 					"error",
 					_language.get(locale, "an-unexpected-error-occurred")));
 		}
+	}
+
+	private JSONObject _fetchLayoutReportIssuesJSONObject(
+			Group group, ResourceBundle resourceBundle,
+			ThemeDisplay themeDisplay, String url)
+		throws PortalException {
+
+		LayoutReportsDataProvider layoutReportsDataProvider =
+			new LayoutReportsDataProvider(
+				_layoutReportsGooglePageSpeedConfigurationProvider.getApiKey(
+					group),
+				_layoutReportsGooglePageSpeedConfigurationProvider.getStrategy(
+					group));
+
+		List<LayoutReportsIssue> layoutReportsIssues =
+			layoutReportsDataProvider.getLayoutReportsIssues(
+				resourceBundle.getLocale(), url);
+
+		Stream<LayoutReportsIssue> stream = layoutReportsIssues.stream();
+
+		Format dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"MMMM d, yyyy HH:mm a", resourceBundle.getLocale());
+
+		return JSONUtil.put(
+			"layoutReportsIssues",
+			JSONUtil.put(
+				"date", dateFormat.format(new Date())
+			).put(
+				"issues",
+				JSONUtil.putAll(
+					stream.map(
+						layoutReportsIssue -> layoutReportsIssue.toJSONObject(
+							_getConfigureLayoutSeoURL(themeDisplay),
+							_getConfigurePagesSeoURL(themeDisplay),
+							resourceBundle)
+					).toArray(
+						size -> new JSONObject[size]
+					))
+			));
 	}
 
 	private String _getCompleteURL(ThemeDisplay themeDisplay) {

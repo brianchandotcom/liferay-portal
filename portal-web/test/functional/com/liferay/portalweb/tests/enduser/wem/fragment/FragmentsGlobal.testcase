@@ -232,7 +232,9 @@ definition {
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
 
-			Button.clickPublish();
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
 		}
 
 		task ("Propagate the changes") {

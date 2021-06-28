@@ -55,6 +55,8 @@ definition {
 
 			FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
 
+			FragmentsEditor.waitForAutoSave();
+
 			PortletEntry.publish();
 		}
 

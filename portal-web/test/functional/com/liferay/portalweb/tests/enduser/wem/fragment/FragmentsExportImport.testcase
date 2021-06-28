@@ -193,11 +193,17 @@ definition {
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
 
+			FragmentsEditor.waitForAutoSave();
+
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
+
+			FragmentsEditor.waitForAutoSave();
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
 
-			Button.clickPublish();
+			FragmentsEditor.waitForAutoSave();
+
+			PortletEntry.publish();
 
 			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
 		}

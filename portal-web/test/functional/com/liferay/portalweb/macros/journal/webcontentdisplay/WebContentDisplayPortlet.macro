@@ -186,6 +186,24 @@ definition {
 			value1 = "Select");
 
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(depotName)) {
+			var key_rowEntry = "${webContentTitle}";
+
+			AssertClick(
+				key_breadcrumbName = "Sites and Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites and Libraries");
+
+			AssertClick(
+				key_groupTab = "Asset Library",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Asset Library");
+
+			Click(
+				key_card = "${depotName}",
+				locator1 = "Card#CARD_TITLE");
+		}
 	}
 
 	macro removeWebContent {

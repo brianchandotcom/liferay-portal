@@ -8,4 +8,5 @@ Export-Package:\
 	com.liferay.style.book.service,\
 	com.liferay.style.book.service.persistence,\
 	com.liferay.style.book.util,\
-	com.liferay.style.book.util.comparator
+	com.liferay.style.book.util.comparator,\
+	com.liferay.style.book.zip.processor

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(enabled = true, immediate = true, service = {})
-public class CommerceSalesforceConnectorActivator {
+public class AddCommerceSalesforceConnectorPortalInstanceLifecycleListener {
 
 	@Activate
 	protected void activate() throws Exception {

@@ -21,6 +21,9 @@ import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKey
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.layout.reports.web.internal.model.LayoutReportsIssue;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -121,12 +124,11 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 				return;
 			}
 
-			String url = ParamUtil.getString(resourceRequest, "url");
-
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_fetchLayoutReportIssuesJSONObject(
-					group, resourceBundle, themeDisplay, url));
+				_getLayoutReportIssuesJSONObject(
+					group, resourceBundle, themeDisplay,
+					ParamUtil.getString(resourceRequest, "url")));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -263,6 +265,27 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		return null;
 	}
 
+	private JSONObject _getLayoutReportIssuesJSONObject(
+			Group group, ResourceBundle resourceBundle,
+			ThemeDisplay themeDisplay, String url)
+		throws PortalException {
+
+		String cacheKey = themeDisplay.getLocale() + "-" + url;
+
+		JSONObject layoutReportIssuesJSONObject = _layoutReportsIssuesCache.get(
+			cacheKey);
+
+		if (layoutReportIssuesJSONObject == null) {
+			layoutReportIssuesJSONObject = _fetchLayoutReportIssuesJSONObject(
+				group, resourceBundle, themeDisplay, url);
+
+			_layoutReportsIssuesCache.put(
+				cacheKey, layoutReportIssuesJSONObject);
+		}
+
+		return layoutReportIssuesJSONObject;
+	}
+
 	private boolean _hasViewPermission(
 			Layout layout, PermissionChecker permissionChecker)
 		throws Exception {
@@ -278,6 +301,11 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetLayoutReportsIssuesMVCResourceCommand.class);
+
+	private static final PortalCache<String, JSONObject>
+		_layoutReportsIssuesCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.MULTI_VM,
+			GetLayoutReportsIssuesMVCResourceCommand.class.getName());
 
 	@Reference
 	private GroupLocalService _groupLocalService;

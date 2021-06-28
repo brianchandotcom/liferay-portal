@@ -18,6 +18,7 @@ import React from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {useId} from '../../../app/utils/useId';
+import {COLLECTION_IDS} from './FragmentsSidebar';
 import TabCollection from './TabCollection';
 
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
@@ -69,7 +70,11 @@ export default function TabsPanel({
 							{tab.collections.map((collection, index) => (
 								<TabCollection
 									collection={collection}
-									displayStyle={displayStyle}
+									displayStyle={
+										tab.id === COLLECTION_IDS.widgets
+											? FRAGMENTS_DISPLAY_STYLES.LIST
+											: displayStyle
+									}
 									key={index}
 									open={
 										index <

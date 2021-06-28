@@ -27,7 +27,7 @@ import TabsPanel from './TabsPanel';
 
 const FRAGMENTS_DISPLAY_STYLE_KEY = 'FRAGMENTS_DISPLAY_STYLE_KEY';
 
-const COLLECTION_IDS = {
+export const COLLECTION_IDS = {
 	fragments: 'fragments',
 	widgets: 'widgets',
 };
@@ -180,6 +180,9 @@ export default function FragmentsSidebar() {
 		[tabs, searchValue]
 	);
 
+	const displayStyleButtonDisabled =
+		searchValue || activeTabId === COLLECTION_IDS.widgets;
+
 	return (
 		<>
 			<SidebarPanelHeader>
@@ -196,6 +199,7 @@ export default function FragmentsSidebar() {
 					<ClayButtonWithIcon
 						borderless
 						className="lfr-portal-tooltip ml-2 mt-0"
+						disabled={displayStyleButtonDisabled}
 						displayType="secondary"
 						onClick={() => {
 							const nextDisplayStyle =
@@ -212,9 +216,10 @@ export default function FragmentsSidebar() {
 						}}
 						small
 						symbol={
-							displayStyle === FRAGMENTS_DISPLAY_STYLES.CARDS
-								? 'cards2'
-								: 'list'
+							displayStyleButtonDisabled ||
+							displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
+								? 'list'
+								: 'cards2'
 						}
 						title={Liferay.Language.get('change-view')}
 					/>

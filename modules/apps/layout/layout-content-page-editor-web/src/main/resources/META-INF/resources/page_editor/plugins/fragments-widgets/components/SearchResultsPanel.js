@@ -19,7 +19,7 @@ import React from 'react';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import TabCollection from './TabCollection';
 
-export default function SearchResultsPanel({displayStyle, filteredTabs}) {
+export default function SearchResultsPanel({filteredTabs}) {
 	return filteredTabs.length ? (
 		filteredTabs.map((tab, index) => (
 			<div key={index}>
@@ -29,7 +29,6 @@ export default function SearchResultsPanel({displayStyle, filteredTabs}) {
 				{tab.collections.map((collection, index) => (
 					<TabCollection
 						collection={collection}
-						displayStyle={displayStyle}
 						isSearchResult
 						key={index}
 						open

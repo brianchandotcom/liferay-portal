@@ -38,10 +38,13 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
@@ -133,12 +136,15 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 
 			Stream<LayoutReportsIssue> stream = layoutReportsIssues.stream();
 
+			Format dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"MMMM d, yyyy HH:mm a", locale);
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"layoutReportsIssues",
 					JSONUtil.put(
-						"date", new Date()
+						"date", dateFormat.format(new Date())
 					).put(
 						"issues",
 						JSONUtil.putAll(

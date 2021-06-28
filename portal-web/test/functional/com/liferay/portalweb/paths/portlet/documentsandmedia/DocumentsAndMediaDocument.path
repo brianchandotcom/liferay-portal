@@ -305,11 +305,6 @@
 </tr>
 <!--METADATA_PANEL-->
 <tr>
-	<td>METADATA_PANEL_BOOLEAN</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_booleanValue}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>METADATA_PANEL_DATE</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text']</td>
 	<td></td>

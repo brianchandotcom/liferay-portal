@@ -201,6 +201,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>MODAL_TITLE_ICON</td>
+    <td>//span[contains(@class,'bg-muted')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_INSTANCE_NAME</td>
 	<td>//td[contains(text(),'${key_workflowInstanceName}')]</td>
 	<td></td>

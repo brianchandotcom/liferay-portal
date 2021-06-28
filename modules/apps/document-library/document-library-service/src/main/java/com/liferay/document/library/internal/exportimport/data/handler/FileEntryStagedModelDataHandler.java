@@ -991,7 +991,7 @@ public class FileEntryStagedModelDataHandler
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				fileEntry.getGroupId(),
-				_portal.getClassNameId(DLFileEntry.class),
+				_portal.getClassNameId(FileEntry.class.getName()),
 				fileEntry.getFileEntryId());
 
 		if (assetDisplayPageEntry != null) {

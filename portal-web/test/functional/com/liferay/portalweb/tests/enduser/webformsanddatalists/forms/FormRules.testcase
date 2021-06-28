@@ -78,9 +78,11 @@ definition {
 
 		FormsAdminNavigator.gotoFormBuilder();
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text",
-			label = "Text Test");
+		Click(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Test");
 
 		Form.save();
 

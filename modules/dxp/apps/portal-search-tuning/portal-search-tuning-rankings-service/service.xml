@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.portal.search.tuning.rankings">
+	<author>Bryan Engler</author>
+	<namespace>Rankings</namespace>
+	<entity local-service="true" name="Ranking">
+
+		<!-- PK fields -->
+
+		<column name="rankingId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="json" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="companyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="rankingId" />
+		</order>
+	</entity>
+</service-builder>

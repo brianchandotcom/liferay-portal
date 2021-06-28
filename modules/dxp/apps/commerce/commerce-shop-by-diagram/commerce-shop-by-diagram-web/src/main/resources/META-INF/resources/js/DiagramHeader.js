@@ -20,6 +20,7 @@ import React, {useState} from 'react';
 const DiagramHeader = ({
 	addNewPinState,
 	namespace,
+	isAdmin,
 	newPinSettings,
 	radiusChoice,
 	setAddNewPinState,
@@ -32,7 +33,8 @@ const DiagramHeader = ({
 
 	return (
 		<div className="d-flex diagram diagram-header justify-content-between">
-			<div className="d-flex text-align-center">
+			{isAdmin && (
+				<div className="d-flex text-align-center">
 				<label className="align-middle my-auto">
 					{Liferay.Language.get('diagram-pin')}
 				</label>
@@ -52,6 +54,7 @@ const DiagramHeader = ({
 							{Liferay.Language.get('default-diameter')}
 						</ClayButton>
 					}
+					
 				>
 					<ClayDropDown.ItemList className="diagram-header-picker">
 						<ClayDropDown.Group
@@ -132,7 +135,7 @@ const DiagramHeader = ({
 					</ClayDropDown.Caption>
 				</ClayDropDown>
 			</div>
-
+			)}
 			<ClayButton
 				className="auto-mapping my-auto pull-right"
 				displayType="secondary"

@@ -15,7 +15,7 @@ export const moveController = (container, navigationController, where) => {
 	// this regex takes a string value from inline html to make the image zoom/translations working
 
 	const scale = diagramBackgroundImagePosition.match(/(-?[0-9]+[.,-\s]*)+/g);
-	const coordinates = scale[0].split(',').map((x) => parseInt(x, 10));
+	const coordinates = scale[0].split(',').map((x) => parseFloat(x));
 	let newPosition;
 
 	if (where === 'right') {

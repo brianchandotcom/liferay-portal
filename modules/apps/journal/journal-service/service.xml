@@ -539,6 +539,7 @@
 		<exception>ArticleSmallImageSize</exception>
 		<exception>ArticleTitle</exception>
 		<exception>ArticleVersion</exception>
+		<exception>DuplicateArticleExternalReferenceCode</exception>
 		<exception>DuplicateArticleId</exception>
 		<exception>DuplicateFeedId</exception>
 		<exception>DuplicateFolderName</exception>

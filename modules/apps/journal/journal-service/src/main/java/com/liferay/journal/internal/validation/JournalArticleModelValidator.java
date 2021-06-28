@@ -38,6 +38,7 @@ import com.liferay.journal.exception.ArticleIdException;
 import com.liferay.journal.exception.ArticleSmallImageNameException;
 import com.liferay.journal.exception.ArticleSmallImageSizeException;
 import com.liferay.journal.exception.ArticleTitleException;
+import com.liferay.journal.exception.DuplicateArticleExternalReferenceCodeException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.model.JournalArticle;
@@ -220,14 +221,26 @@ public class JournalArticleModelValidator
 		}
 	}
 
+	public void validate(String articleId) throws PortalException {
+		if (Validator.isNull(articleId) ||
+			(articleId.indexOf(CharPool.COMMA) != -1) ||
+			(articleId.indexOf(CharPool.SPACE) != -1)) {
+
+			throw new ArticleIdException("Invalid article ID: " + articleId);
+		}
+	}
+
 	public void validate(
-			long companyId, long groupId, long classNameId, String articleId,
-			boolean autoArticleId, double version, Map<Locale, String> titleMap,
-			String content, String ddmStructureKey, String ddmTemplateKey,
-			Date displayDate, Date expirationDate, boolean smallImage,
-			String smallImageURL, File smallImageFile, byte[] smallImageBytes,
+			String externalReferenceCode, long companyId, long groupId,
+			long classNameId, String articleId, boolean autoArticleId,
+			double version, Map<Locale, String> titleMap, String content,
+			String ddmStructureKey, String ddmTemplateKey, Date displayDate,
+			Date expirationDate, boolean smallImage, String smallImageURL,
+			File smallImageFile, byte[] smallImageBytes,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		if (!autoArticleId) {
 			validate(articleId);
@@ -256,15 +269,6 @@ public class JournalArticleModelValidator
 			companyId, groupId, classNameId, titleMap, content, ddmStructureKey,
 			ddmTemplateKey, displayDate, expirationDate, smallImage,
 			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
-	}
-
-	public void validate(String articleId) throws PortalException {
-		if (Validator.isNull(articleId) ||
-			(articleId.indexOf(CharPool.COMMA) != -1) ||
-			(articleId.indexOf(CharPool.SPACE) != -1)) {
-
-			throw new ArticleIdException("Invalid article ID: " + articleId);
-		}
 	}
 
 	public void validateContent(String content) throws PortalException {
@@ -504,6 +508,21 @@ public class JournalArticleModelValidator
 
 		exportImportContentProcessor.validateContentReferences(
 			groupId, content);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		List<JournalArticle> articles = _journalArticlePersistence.findByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (!articles.isEmpty()) {
+			throw new DuplicateArticleExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate article external reference code ",
+					externalReferenceCode, "in group ", groupId));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

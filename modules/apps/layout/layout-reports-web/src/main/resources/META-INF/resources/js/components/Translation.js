@@ -51,6 +51,7 @@ export default function Translation({
 			dispatch,
 			languageId,
 			portletNamespace,
+			refreshCache: false,
 			url,
 		});
 	};

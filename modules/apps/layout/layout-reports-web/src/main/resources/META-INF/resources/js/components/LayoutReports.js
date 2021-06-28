@@ -76,6 +76,7 @@ export default function LayoutReports({eventTriggered}) {
 								languageId:
 									languageId || data.defaultLanguageId,
 								portletNamespace,
+								refreshCache: false,
 								url,
 							});
 						}

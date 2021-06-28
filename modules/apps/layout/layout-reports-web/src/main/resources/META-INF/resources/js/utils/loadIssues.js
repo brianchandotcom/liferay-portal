@@ -19,6 +19,7 @@ export default function loadIssues({
 	dispatch,
 	languageId,
 	portletNamespace,
+	refreshCache = true,
 	url,
 }) {
 	if (url) {
@@ -26,7 +27,8 @@ export default function loadIssues({
 
 		APIService.getLayoutReportsIssues(
 			url.layoutReportsIssuesURL,
-			portletNamespace
+			portletNamespace,
+			refreshCache
 		)
 			.then(({layoutReportsIssues}) => {
 				dispatch({

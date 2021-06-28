@@ -25,6 +25,7 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	UPDATE_LAYOUT_DATA,
+	UPDATE_PREVIEW_IMAGE,
 } from '../actions/types';
 
 export const INITIAL_STATE = {};
@@ -282,6 +283,23 @@ export default function fragmentEntryLinksReducer(
 			);
 
 			return nextFragmentEntryLinks;
+		}
+
+		case UPDATE_PREVIEW_IMAGE: {
+			const newFragmentEntryLinks = action.contents.map(
+				({content, fragmentEntryLinkId}) => [
+					fragmentEntryLinkId,
+					{
+						...fragmentEntryLinks[fragmentEntryLinkId],
+						content,
+					},
+				]
+			);
+
+			return {
+				...fragmentEntryLinks,
+				...Object.fromEntries(newFragmentEntryLinks),
+			};
 		}
 
 		default:

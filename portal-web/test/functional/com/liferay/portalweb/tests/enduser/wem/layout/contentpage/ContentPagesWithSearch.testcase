@@ -403,4 +403,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-119582. View content page shown in search results after execute reindex all."
+	@priority = "5"
+	test ViewContentPageShownInSearchResultsAfterExecuteReindexAll {
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewSearchResultOnPageAfterExecuteReindexAll";
+
+		task ("Add a new Paragraph to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+
+		task ("Edit the inline content of Paragraph") {
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Searchable paragraph");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Searchable Web Content Title");
+		}
+
+		task ("Navigate to the search page") {
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = "Test Site Name");
+		}
+
+		task ("Search keyword via search bar") {
+			Search.searchCP(searchTerm = "Searchable");
+		}
+
+		task ("View both the content page and web content shown in the search results") {
+			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
+				Search.viewResultAssetTitle(searchAssetTitle = "${title}");
+			}
+		}
+
+		task ("Execute Reindex all search indexes") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Search");
+
+			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		}
+
+		task ("Navigate to the search page") {
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = "Test Site Name");
+		}
+
+		task ("Search keyword via search bar") {
+			Search.searchCP(searchTerm = "Searchable");
+		}
+
+		task ("View both the content page and web content are still shown in the search results") {
+			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
+				Search.viewResultAssetTitle(searchAssetTitle = "${title}");
+			}
+		}
+	}
+
 }

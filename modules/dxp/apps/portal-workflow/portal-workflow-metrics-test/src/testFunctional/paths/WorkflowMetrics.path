@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowMetrics</title>
 </head>
+
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowMetrics</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS</td>

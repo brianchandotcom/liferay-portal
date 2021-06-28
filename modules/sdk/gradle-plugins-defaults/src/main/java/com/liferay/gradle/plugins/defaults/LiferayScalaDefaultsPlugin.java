@@ -41,6 +41,7 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.jvm.tasks.Jar;
 import org.gradle.language.scala.tasks.AbstractScalaCompile;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
+import org.gradle.plugins.ide.idea.IdeaPlugin;
 
 /**
  * @author Peter Shin
@@ -65,6 +66,7 @@ public class LiferayScalaDefaultsPlugin implements Plugin<Project> {
 
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
+		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, ScalaPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);

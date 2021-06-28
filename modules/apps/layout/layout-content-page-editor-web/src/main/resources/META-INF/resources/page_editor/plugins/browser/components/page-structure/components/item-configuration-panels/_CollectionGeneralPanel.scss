@@ -4,5 +4,9 @@
 	&__pagination-label {
 		color: $gray-600;
 		font-size: 0.75rem;
+
+		&.error {
+			color: $warning;
+		}
 	}
 }

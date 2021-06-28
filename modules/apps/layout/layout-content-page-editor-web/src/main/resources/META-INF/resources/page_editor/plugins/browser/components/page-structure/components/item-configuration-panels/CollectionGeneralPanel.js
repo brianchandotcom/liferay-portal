@@ -17,6 +17,7 @@ import ClayForm, {
 	ClaySelect,
 	ClaySelectWithOption,
 } from '@clayui/form';
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import {config} from '../../../../../../app/config/index';
@@ -61,6 +62,9 @@ export const CollectionGeneralPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const listStyleId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
+	const numberOfItemsPerPageError =
+		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
 
 	const handleConfigurationChanged = (itemConfig) => {
 		dispatch(
@@ -325,11 +329,32 @@ export const CollectionGeneralPanel = ({item}) => {
 								type="number"
 								value={item.config.numberOfItemsPerPage}
 							/>
-							<p className="mt-2 page-editor__collection-general-panel__pagination-label">
-								{Liferay.Util.sub(
-									Liferay.Language.get('x-items-maximum'),
-									[200]
+							<p
+								className={classNames(
+									'mt-2 page-editor__collection-general-panel__pagination-label',
+									{
+										error: numberOfItemsPerPageError,
+									}
 								)}
+							>
+								<span
+									className={classNames('mr-1', {
+										'font-weight-bold': numberOfItemsPerPageError,
+									})}
+								>
+									{Liferay.Util.sub(
+										Liferay.Language.get('x-items-maximum'),
+										[config.searchContainerPageMaxDelta]
+									)}
+								</span>
+
+								{numberOfItemsPerPageError &&
+									Liferay.Util.sub(
+										Liferay.Language.get(
+											'only-x-items-will-be-displayed'
+										),
+										[config.searchContainerPageMaxDelta]
+									)}
 							</p>
 						</ClayForm.Group>
 					)}

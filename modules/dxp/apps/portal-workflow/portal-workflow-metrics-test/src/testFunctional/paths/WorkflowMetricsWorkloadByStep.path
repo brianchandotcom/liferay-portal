@@ -30,6 +30,11 @@
 	<td>//td[contains(text(),'${key_stepName}')]/following-sibling::td[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_COLUMN</td>
+	<td>//tbody//tr[${key_taskNumber}]//td[contains(@class, "lfr-title-column table-cell-expand table-cell-minw-200 table-title")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

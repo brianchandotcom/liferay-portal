@@ -568,6 +568,156 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-127024. The user can add a Collection Display with a manual collection into another Collection Display with Recent Content."
+	@priority = "5"
+	test AddCollectionDisplayWithManualCollectionToAnotherCollectionDisplayWithRecentContent {
+		task ("Add a web content,a blogs entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a manual collection for All Types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Select the web content as collection item") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Web Content Title",
+				assetType = "Basic Web Content");
+		}
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Display to the first module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the Recent Content and Bordered List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				infoListProviderName = "Recent Content",
+				listStyle = "Bordered List");
+		}
+
+		task ("Add a Collection Display to the second module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "2",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the Recent Content in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				columnNumber = "2",
+				fragmentName = "Collection Display",
+				infoListProviderName = "Recent Content");
+		}
+
+		task ("Add a Collection Display fragment into the second module Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document Title",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection and Bulleted List in inner Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display",
+				index = "3",
+				listStyle = "Bulleted List");
+		}
+
+		task ("View the title of assets are shown in the first module") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the title of web content shown in the second module") {
+			for (var n : list "1,2,3") {
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'page-editor__topper') and contains(.,'Collection Display')]//div[contains(@class,'page-editor__collection')]//ul[not(contains(@class,'list-group'))]/li[1][normalize-space(text())='Web Content Title'])[${n}]");
+			}
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the title of assets are shown in the first module") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the title of web content shown in the second module") {
+			for (var n : list "1,2,3") {
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//ul[not(contains(@class,'list-group'))]/li[1][normalize-space(text())='Web Content Title'])[${n}]");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with the Highest Rated Assets."
 	@priority = "5"
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithHighestRatedAssets {

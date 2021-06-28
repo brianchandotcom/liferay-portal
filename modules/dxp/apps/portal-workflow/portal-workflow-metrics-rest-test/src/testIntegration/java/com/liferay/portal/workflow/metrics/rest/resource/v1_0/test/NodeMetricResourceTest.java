@@ -106,7 +106,7 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 			_process.getId(), "COMPLETED", nodeMetric2, "2.0");
 
 		Page<NodeMetric> page = nodeMetricResource.getProcessNodeMetricsPage(
-			_process.getId(), true, null, null, null, Pagination.of(1, 2),
+			_process.getId(), true, null, null, null, null, Pagination.of(1, 2),
 			"durationAvg:asc");
 
 		assertEquals(
@@ -136,7 +136,7 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 			(List<NodeMetric>)page.getItems());
 
 		page = nodeMetricResource.getProcessNodeMetricsPage(
-			_process.getId(), true, null, null, null, Pagination.of(1, 2),
+			_process.getId(), true, null, null, null, null, Pagination.of(1, 2),
 			"overdueInstanceCount:asc");
 
 		assertEqualsIgnoringOrder(
@@ -168,7 +168,7 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 		Node node1 = nodeMetric1.getNode();
 
 		page = nodeMetricResource.getProcessNodeMetricsPage(
-			_process.getId(), true, null, null, node1.getName(),
+			_process.getId(), true, null, null, node1.getName(), null,
 			Pagination.of(1, 2), null);
 
 		assertEquals(
@@ -188,7 +188,7 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 
 		page = nodeMetricResource.getProcessNodeMetricsPage(
 			_process.getId(), true, RandomTestUtil.nextDate(),
-			DateUtils.addMinutes(RandomTestUtil.nextDate(), -2), null,
+			DateUtils.addMinutes(RandomTestUtil.nextDate(), -2), null, null,
 			Pagination.of(1, 2), "durationAvg:desc");
 
 		assertEquals(
@@ -220,7 +220,7 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 		page = nodeMetricResource.getProcessNodeMetricsPage(
 			_process.getId(), true,
 			DateUtils.addHours(RandomTestUtil.nextDate(), -1),
-			DateUtils.addHours(RandomTestUtil.nextDate(), -2), null,
+			DateUtils.addHours(RandomTestUtil.nextDate(), -2), null, null,
 			Pagination.of(1, 2), "durationAvg:desc");
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -270,7 +270,7 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 			_process.getId(), "COMPLETED", nodeMetric4, "2.0");
 
 		page = nodeMetricResource.getProcessNodeMetricsPage(
-			_process.getId(), true, null, null, null, Pagination.of(1, 2),
+			_process.getId(), true, null, null, null, null, Pagination.of(1, 2),
 			"breachedInstancePercentage:desc");
 
 		Node node3 = nodeMetric3.getNode();
@@ -307,6 +307,46 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 							{
 								label = node4.getLabel();
 								name = node4.getName();
+							}
+						};
+					}
+				}),
+			(List<NodeMetric>)page.getItems());
+
+		_workflowMetricsRESTTestHelper.updateProcess(
+			testGroup.getCompanyId(), _process.getId(), "3.0");
+
+		NodeMetric nodeMetric5 = randomNodeMetric();
+
+		nodeMetric5.setBreachedInstanceCount(0L);
+		nodeMetric5.setDurationAvg(1000L);
+		nodeMetric5.setInstanceCount(1L);
+		nodeMetric5.setOnTimeInstanceCount(0L);
+		nodeMetric5.setOverdueInstanceCount(0L);
+
+		testGetProcessNodeMetricsPage_addNodeMetric(
+			_process.getId(), "COMPLETED", nodeMetric5, "3.0");
+
+		page = nodeMetricResource.getProcessNodeMetricsPage(
+			_process.getId(), true, null, null, null, "3.0",
+			Pagination.of(1, 2), null);
+
+		Node node5 = nodeMetric5.getNode();
+
+		assertEquals(
+			Arrays.asList(
+				new NodeMetric() {
+					{
+						breachedInstanceCount =
+							nodeMetric5.getBreachedInstanceCount();
+						breachedInstancePercentage =
+							nodeMetric5.getBreachedInstancePercentage();
+						durationAvg = nodeMetric5.getDurationAvg();
+						instanceCount = nodeMetric5.getInstanceCount();
+						node = new Node() {
+							{
+								label = node5.getLabel();
+								name = node5.getName();
 							}
 						};
 					}

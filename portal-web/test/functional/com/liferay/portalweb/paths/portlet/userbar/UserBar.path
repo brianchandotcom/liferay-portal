@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_AVATAR_IMAGE_LOADED</td>
+	<td>//span[@class='sticker-overlay']//img[@class = 'img-fluid']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_AVATAR_IN_CONTROL_MENU</td>
 	<td>//div[contains(@class,'control-menu')]//div[contains(@class,'personal-menu-dropdown')]</td>
 	<td></td>

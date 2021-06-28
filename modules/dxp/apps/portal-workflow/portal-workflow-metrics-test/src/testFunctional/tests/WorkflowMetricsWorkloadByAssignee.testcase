@@ -39,12 +39,95 @@ definition {
 	}
 
 	@description = "LPS-98518 - Verify that there is an image besides the assignee name that is retrieved from the global user profile picture (add, delete, update)"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AssigneeImagesRetrievedFromGlobalUserProfile {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67618 AssigneeImagesRetrievedFromGlobalUserProfile pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userfn@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "userfn_");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Power User",
+			userScreenName = "userfn_");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "userfn_");
+
+		Click(locator1 = "Icon#BACK");
+
+		UserNavigator.gotoUser(userScreenName = "userfn_");
+
+		Button.click(button = "Change");
+
+		IFrame.selectModalFrame();
+
+		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#UPLOAD_IMAGE_SELECT");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#UPLOAD_FILE",
+			value1 = "これは写真です.jpg");
+
+		Pause(locator1 = "3000");
+
+		WaitForElementPresent(locator1 = "UsersAndOrganizationsEditUser#USER_PORTRAIT_CROPPER");
+
+		WaitForElementNotPresent(
+			key_text = "Done",
+			locator1 = "Button#ANY_DISABLED");
+
+		Button.click(button = "Done");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignByDetails(user = "userfn");
+
+		Navigator.openURL();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(
+			key_assigneeName = "View All Assignees (1)",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE_LOADED");
 	}
 
 	@description = "LPS-97669 - Verify the user can search for a step with name containing non-ASCII chars (eg: japanese chars) using the search bar"

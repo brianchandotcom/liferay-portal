@@ -803,12 +803,56 @@ definition {
 	}
 
 	@description = "LPS-98517 - Verify that a long username that exceeds 240px in the assignee dropdown option is placed in more than one line, respecting the alignment of the field"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test LongUserNameIsDisplayedInMoreThanOneLineInDropdown {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67755 LongUserNameIsDisplayedInMoreThanOneLineInDropdown pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONUser.addUser(
+			userEmailAddress = "test2@liferay.com",
+			userFirstName = "testtesttesttesttesttesttesttest",
+			userLastName = "testtesttesttesttesttesttesttest",
+			userScreenName = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttest");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "test2@liferay.com");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Content",
+			entryTitle = "Blogs Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Title 1",
+			assetType = "Blogs Entry",
+			assigneeName = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_TITLE");
+
+		Click(
+			key_allItemsFilterName = "Assignee",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertCssValue(
+			key_workflowStep = "testtesttesttesttesttesttesttest",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION2",
+			locator2 = "font-weight",
+			value1 = "400");
 	}
 
 	@description = "LPS-98517 - Verify that the long usernames in the result table are placed in more than one line if the text doesn't fit one line"

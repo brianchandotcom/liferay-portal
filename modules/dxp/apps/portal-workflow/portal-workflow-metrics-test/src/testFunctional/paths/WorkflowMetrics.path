@@ -401,6 +401,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION2</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//*[contains(text(),'${key_workflowStep}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP</td>
 	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), 'Process Step')]</td>
 	<td></td>

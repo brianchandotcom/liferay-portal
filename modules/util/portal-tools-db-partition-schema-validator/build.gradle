@@ -1,0 +1,8 @@
+dependencies {
+	compileInclude group: "commons-cli", name: "commons-cli", version: "1.4"
+	compileInclude group: "mysql", name: "mysql-connector-java", version: "8.0.21"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}

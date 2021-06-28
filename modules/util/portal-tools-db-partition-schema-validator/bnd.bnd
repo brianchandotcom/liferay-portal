@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Tools DB Partition Schema Validator
+Bundle-SymbolicName: com.liferay.portal.tools.db.partition.schema.validator
+Bundle-Version: 1.0.0
+Main-Class: com.liferay.portal.tools.db.partition.schema.validator.SchemaValidator

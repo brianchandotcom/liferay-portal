@@ -47,16 +47,16 @@ public class UpgradeLogAppender implements Appender {
 
 		String formattedMessage = message.getFormattedMessage();
 
-		if (event.getLevel() == Level.ERROR) {
-			_upgradeReport.addError(loggerName, formattedMessage);
+		if (event.getLevel() == Level.INFO) {
+			if (loggerName.equals(UpgradeProcess.class.getName())) {
+				_upgradeReport.addEvent(loggerName, formattedMessage);
+			}
 		}
 		else if (event.getLevel() == Level.WARN) {
 			_upgradeReport.addWarning(loggerName, formattedMessage);
 		}
-		else if (event.getLevel() == Level.INFO) {
-			if (loggerName.equals(UpgradeProcess.class.getName())) {
-				_upgradeReport.addEvent(loggerName, formattedMessage);
-			}
+		else if (event.getLevel() == Level.ERROR) {
+			_upgradeReport.addError(loggerName, formattedMessage);
 		}
 	}
 

@@ -250,7 +250,9 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 							User user = _userLocalService.fetchUser(userId);
 
 							if (user != null) {
-								return user.getEmailAddress();
+								return DigesterUtil.digest(
+									_MESSAGE_DIGEST_ALGORITHM,
+									user.getEmailAddress());
 							}
 						}
 

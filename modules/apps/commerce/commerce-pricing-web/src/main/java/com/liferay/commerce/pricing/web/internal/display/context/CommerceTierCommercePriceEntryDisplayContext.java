@@ -135,8 +135,9 @@ public class CommerceTierCommercePriceEntryDisplayContext
 
 		CommercePriceList commercePriceList = getCommercePriceList();
 
-		CommerceMoney priceCommerceMoney = commerceTierPriceEntry.getPriceMoney(
-			commercePriceList.getCommerceCurrencyId());
+		CommerceMoney priceCommerceMoney =
+			commerceTierPriceEntry.getPriceCommerceMoney(
+				commercePriceList.getCommerceCurrencyId());
 
 		return priceCommerceMoney.format(
 			commercePricingRequestHelper.getLocale());

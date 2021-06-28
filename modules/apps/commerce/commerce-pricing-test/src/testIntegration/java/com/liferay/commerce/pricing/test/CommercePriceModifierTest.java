@@ -174,16 +174,18 @@ public class CommercePriceModifierTest {
 			CommercePricingClass.class.getName(),
 			commercePricingClass.getCommercePricingClassId());
 
-		CommerceMoney priceCommerceMoney1 = commercePriceEntry1.getPriceMoney(
-			_commerceCurrency.getCommerceCurrencyId());
+		CommerceMoney priceCommerceMoney1 =
+			commercePriceEntry1.getPriceCommerceMoney(
+				_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal modifiedPrice1 =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
 				commercePriceList.getCommercePriceListId(),
 				cpInstance1.getCPDefinitionId(), priceCommerceMoney1);
 
-		CommerceMoney priceCommerceMoney2 = commercePriceEntry2.getPriceMoney(
-			_commerceCurrency.getCommerceCurrencyId());
+		CommerceMoney priceCommerceMoney2 =
+			commercePriceEntry2.getPriceCommerceMoney(
+				_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal modifiedPrice2 =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
@@ -298,11 +300,13 @@ public class CommercePriceModifierTest {
 			commercePriceModifier2.getCommercePriceModifierId(),
 			AssetCategory.class.getName(), assetCategory.getCategoryId());
 
-		CommerceMoney priceCommerceMoney1 = commercePriceEntry1.getPriceMoney(
-			_commerceCurrency.getCommerceCurrencyId());
+		CommerceMoney priceCommerceMoney1 =
+			commercePriceEntry1.getPriceCommerceMoney(
+				_commerceCurrency.getCommerceCurrencyId());
 
-		CommerceMoney priceCommerceMoney2 = commercePriceEntry2.getPriceMoney(
-			_commerceCurrency.getCommerceCurrencyId());
+		CommerceMoney priceCommerceMoney2 =
+			commercePriceEntry2.getPriceCommerceMoney(
+				_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal modifiedPrice1 =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
@@ -388,8 +392,9 @@ public class CommercePriceModifierTest {
 			commercePriceModifier.getCommercePriceModifierId(),
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
-			_commerceCurrency.getCommerceCurrencyId());
+		CommerceMoney priceCommerceMoney =
+			commercePriceEntry.getPriceCommerceMoney(
+				_commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal finalPrice =
 			_commercePriceModifierHelper.applyCommercePriceModifier(

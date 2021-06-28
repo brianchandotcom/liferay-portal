@@ -91,7 +91,7 @@ public class CommercePriceEntryDisplayContext
 		}
 
 		CommerceMoney priceCommerceMoney =
-			instanceBaseCommercePriceEntry.getPriceMoney(
+			instanceBaseCommercePriceEntry.getPriceCommerceMoney(
 				commercePriceList.getCommerceCurrencyId());
 
 		return priceCommerceMoney.format(

@@ -677,7 +677,7 @@ public class CommerceProductPriceCalculationV2Impl
 				commercePrice =
 					_commercePriceModifierHelper.applyCommercePriceModifier(
 						commercePriceListId, cpInstance.getCPDefinitionId(),
-						commercePriceEntry.getPriceMoney(
+						commercePriceEntry.getPriceCommerceMoney(
 							commerceCurrency.getCommerceCurrencyId()));
 			}
 
@@ -701,7 +701,7 @@ public class CommerceProductPriceCalculationV2Impl
 
 				return _commercePriceModifierHelper.applyCommercePriceModifier(
 					commercePriceListId, cpInstance.getCPDefinitionId(),
-					commerceTierPriceEntry.getPriceMoney(
+					commerceTierPriceEntry.getPriceCommerceMoney(
 						commerceCurrency.getCommerceCurrencyId()));
 			}
 

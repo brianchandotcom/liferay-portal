@@ -149,6 +149,243 @@ definition {
 			value1 = "WC WebContent Title 3");
 	}
 
+	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Categories for This Item into another Collection Display with a dynamic collection."
+	@priority = "5"
+	test AddCollectionDisplayWithCategoriesForThisItemToAnotherCollectionDisplayWithDynamicCollection {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add three categories in vocabulary") {
+			var firstCategoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 1",
+				vocabularyName = "Vocabulary Name");
+
+			var secondCategoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 2",
+				vocabularyName = "Vocabulary Name");
+
+			var thirdCategoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 3",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with the first category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${firstCategoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with the first and second categories") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${firstCategoryId},${secondCategoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document entry with all three categories") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Display to the first module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				columnNumber = "1",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Heading fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Document Title",
+				fragmentName = "Heading");
+		}
+
+		task ("Map Title of collection items to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Add a Collection Display to the second module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "2",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				columnNumber = "2",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Collection Display fragment into the second module Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document Title",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Categories for This Item in inner Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = "3",
+				infoItemRelatedListProviderName = "Categories for This Item");
+		}
+
+		task ("Add a Button fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Category Name 1",
+				fragmentName = "Button");
+		}
+
+		task ("Map Name of categories to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Name",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("View the title of assets are shown in the first module") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the name of associated categories are shown in the second module") {
+			var n = "1";
+
+			for (var title : list "Category Name 1,Category Name 2,Category Name 3") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[@class='row'][${n}]//div[contains(@class,'page-editor__topper') and contains(.,'Button')]//*[contains(@data-lfr-editable-id,'link')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "1",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "1";
+
+			for (var title : list "Category Name 1,Category Name 2") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[@class='row'][${n}]//div[contains(@class,'page-editor__topper') and contains(.,'Button')]//*[contains(@data-lfr-editable-id,'link')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "2",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_element = "//div[@class='row']//div[contains(@class,'page-editor__topper') and contains(.,'Button')]//*[contains(@data-lfr-editable-id,'link')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+				value1 = "Category Name 1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the title of assets are shown in the first module") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					id = "element-text",
+					key_position = "${n}",
+					key_text = "${title}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the name of associated categories are shown in the second module") {
+			var n = "1";
+
+			for (var title : list "Category Name 1,Category Name 2,Category Name 3,Category Name 1,Category Name 2,Category Name 1") {
+				AssertVisible(
+					id = "link",
+					key_position = "${n}",
+					key_text = "${title}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with the Highest Rated Assets."
 	@priority = "5"
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithHighestRatedAssets {

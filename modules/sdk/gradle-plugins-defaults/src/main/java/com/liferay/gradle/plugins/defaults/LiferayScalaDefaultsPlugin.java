@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.defaults;
 
+import com.github.maiflai.ScalaTestPlugin;
+
 import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
@@ -68,6 +70,7 @@ public class LiferayScalaDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, ScalaPlugin.class);
+		GradleUtil.applyPlugin(project, ScalaTestPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 	}

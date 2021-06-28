@@ -43,14 +43,14 @@ public class CommercePriceEntryImpl extends CommercePriceEntryBaseImpl {
 	}
 
 	@Override
-	public CommerceMoney getPriceMoney(long commerceCurrencyId)
+	public CommerceMoney getPriceCommerceMoney(long commerceCurrencyId)
 		throws PortalException {
 
 		return CommerceMoneyFactoryUtil.create(commerceCurrencyId, getPrice());
 	}
 
 	@Override
-	public CommerceMoney getPromoPriceMoney(long commerceCurrencyId)
+	public CommerceMoney getPromoPriceCommerceMoney(long commerceCurrencyId)
 		throws PortalException {
 
 		return CommerceMoneyFactoryUtil.create(

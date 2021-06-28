@@ -1365,14 +1365,44 @@ definition {
 	}
 
 	@description = "Verify that translations can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TranslationsCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133781 TranslationsCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Texto");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormPortletConfiguration.viewTranslationLanguage(language = "en-US");
+
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormPortletConfiguration.changeLanguage(
+			currentLanguage = "en-US",
+			newLanguage = "español-España");
+
+		FormFields.viewLabel(
+			fieldLabel = "Texto",
+			fieldName = "Texto");
 	}
 
 	@description = "Verify that an Upload Field can be previewed"

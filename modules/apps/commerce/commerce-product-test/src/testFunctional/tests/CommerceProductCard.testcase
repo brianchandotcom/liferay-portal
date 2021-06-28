@@ -571,9 +571,6 @@ definition {
 	@priority = "3"
 	test AssertProductCardImageRedirectsToProductDetailsPage {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CommerceProductCard#AssertProductCardImageRedirectsToProductDetailsPage";
-
-		// Todo Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

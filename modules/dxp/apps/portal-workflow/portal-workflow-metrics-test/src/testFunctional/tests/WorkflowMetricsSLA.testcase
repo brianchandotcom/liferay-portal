@@ -1234,10 +1234,8 @@ definition {
 		WorkflowMetrics.fillSLAForm(
 			slaDefinitionDays = "0",
 			slaDefinitionDescription = "Test Description",
-			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "01:00",
-			slaDefinitionName = "Test",
-			slaDefinitionStart = "Process Begins");
+			slaDefinitionName = "Test");
 
 		Button.clickUpdate();
 

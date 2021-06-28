@@ -286,6 +286,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test FilterOptionsAreAlphabeticallyOrdered {
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListReassignTasks#FilterOptionsAreAlphabeticallyOrdered";
+
 		WorkflowMetrics.createUsersGroovy(numberOfUsers = "1");
 
 		ApplicationsMenu.gotoPortlet(

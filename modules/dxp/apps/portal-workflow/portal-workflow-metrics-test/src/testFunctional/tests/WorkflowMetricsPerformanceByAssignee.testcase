@@ -551,11 +551,6 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -563,12 +558,12 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Test Blog Title",
+			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Test Blog Title",
+			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
@@ -588,7 +583,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		BlogsNavigator.moveToRecycleBinCP(entryTitle = "Test Blog Title");
+		BlogsNavigator.moveToRecycleBinCP(entryTitle = "Blogs Entry Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
@@ -596,7 +591,7 @@ definition {
 			portlet = "Recycle Bin");
 
 		RecycleBin.deleteCP(
-			assetName = "Test Blog Title",
+			assetName = "Blogs Entry Title",
 			assetType = "Blogs Entry");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");

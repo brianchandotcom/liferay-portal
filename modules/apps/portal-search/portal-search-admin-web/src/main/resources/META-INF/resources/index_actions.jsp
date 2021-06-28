@@ -34,6 +34,8 @@ page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerClassNameComparator" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext" %><%@
 page import="com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys" %>
 
 <%@ page import="java.io.Serializable" %>
@@ -158,6 +160,28 @@ page import="java.util.Map" %>
 								<%= backgroundTaskDisplay.renderDisplayTemplate() %>
 							</c:otherwise>
 						</c:choose>
+					</div>
+				</li>
+
+			<%
+			}
+
+			SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+			List<String> indexReindexerClassNames = searchAdminDisplayContext.getIndexReindexerClassNames();
+
+			for (String indexReindexerClassName : indexReindexerClassNames) {
+			%>
+
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col autofit-col-expand">
+						<p class="list-group-title">
+							<liferay-ui:message arguments="<%= indexReindexerClassName %>" key="reindex-x" />
+						</p>
+					</div>
+
+					<div class="autofit-col index-action-wrapper" data-type="<%= indexReindexerClassName %>">
+						<aui:button cssClass="save-server-button" data-classname="<%= indexReindexerClassName %>" data-cmd="reindexIndexReindexer" value="execute" />
 					</div>
 				</li>
 

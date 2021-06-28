@@ -38,11 +38,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.admin.web.internal.util.DictionaryReindexer;
+import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -52,6 +54,9 @@ import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Wade Cao
@@ -92,12 +97,28 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		if (cmd.equals("reindex")) {
 			reindex(actionRequest);
+
+			reindexIndexReindexers(actionRequest);
 		}
 		else if (cmd.equals("reindexDictionaries")) {
 			reindexDictionaries(actionRequest);
 		}
+		else if (cmd.equals("reindexIndexReindexer")) {
+			reindexIndexReindexer(actionRequest);
+		}
 
 		sendRedirect(actionRequest, actionResponse, redirect);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addIndexReindexer(IndexReindexer indexReindexer) {
+		Class<?> clazz = indexReindexer.getClass();
+
+		_indexReindexers.put(clazz.getName(), indexReindexer);
 	}
 
 	protected void reindex(final ActionRequest actionRequest) throws Exception {
@@ -191,8 +212,36 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		dictionaryReindexer.reindexDictionaries();
 	}
 
+	protected void reindexIndexReindexer(ActionRequest actionRequest)
+		throws Exception {
+
+		String className = ParamUtil.getString(actionRequest, "className");
+
+		IndexReindexer indexReindexer = _indexReindexers.get(className);
+
+		indexReindexer.reindex(_portalInstancesLocalService.getCompanyIds());
+	}
+
+	protected void reindexIndexReindexers(ActionRequest actionRequest)
+		throws Exception {
+
+		for (IndexReindexer indexReindexer : _indexReindexers.values()) {
+			indexReindexer.reindex(
+				_portalInstancesLocalService.getCompanyIds());
+		}
+	}
+
+	protected void removeIndexReindexer(IndexReindexer indexReindexer) {
+		Class<?> clazz = indexReindexer.getClass();
+
+		_indexReindexers.remove(clazz.getName());
+	}
+
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
+
+	private final Map<String, IndexReindexer> _indexReindexers =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

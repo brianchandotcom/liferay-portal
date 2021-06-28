@@ -71,6 +71,27 @@ definition {
 			var userPassword = "test";
 		}
 
+		if (isSet(displayDate)) {
+			var displayDateMinute = DateUtil.getFormattedCurrentDate("m");
+			var displayDateHour = DateUtil.getCurrentHour();
+			var displayDateDay = DateUtil.getCurrentDate();
+			var displayDateYear = DateUtil.getCurrentYear();
+			var displayDateMonth = DateUtil.getCurrentMonth();
+
+			var displayDateMonth = ${displayDateMonth} - 1;
+
+			if (isSet(increaseMinutes)) {
+				var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
+			}
+		}
+		else {
+			var displayDateMinute = "01";
+			var displayDateHour = "01";
+			var displayDateDay = "01";
+			var displayDateMonth = "01";
+			var displayDateYear = "2004";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/blogs.blogsentry/add-entry \
 			-u ${userEmailAddress}:${userPassword} \
@@ -78,11 +99,11 @@ definition {
 			-d subtitle=${entrySubtitle} \
 			-d description= \
 			-d content=${contentXML} \
-			-d displayDateMonth=01 \
-			-d displayDateDay=01 \
-			-d displayDateYear=2004 \
-			-d displayDateHour=01 \
-			-d displayDateMinute=01 \
+			-d displayDateMonth=${displayDateMonth} \
+			-d displayDateDay=${displayDateDay} \
+			-d displayDateYear=${displayDateYear} \
+			-d displayDateHour=${displayDateHour} \
+			-d displayDateMinute=${displayDateMinute} \
 			-d allowPingbacks=true \
 			-d allowTrackbacks=true \
 			-d trackbacks= \

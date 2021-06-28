@@ -1194,6 +1194,12 @@ definition {
 			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 	}
 
+	macro viewFieldEnabled {
+		AssertEditable(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_FIELD");
+	}
+
 	macro viewFieldHelpText {
 		AssertTextEquals(
 			key_fieldName = "${fieldName}",

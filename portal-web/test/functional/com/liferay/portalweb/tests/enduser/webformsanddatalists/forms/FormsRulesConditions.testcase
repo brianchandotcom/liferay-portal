@@ -544,14 +544,77 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Is greater than' condition is working fine on the numeric field"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateAnIsGreaterThanRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134390 CanCreateAnIsGreaterThanRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric",
+			conditionFieldValue = "5",
+			conditionOperator = "Is greater than",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Enable",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Enable",
+			actionTarget = "Text",
+			conditionField = "Numeric",
+			conditionOperator = "Is greater than",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewFieldDisabled(fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "2");
+
+		FormFields.viewFieldDisabled(fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "8");
+
+		FormFields.viewFieldEnabled(fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
 	}
 
 	@description = "Verify that a Rule with 'Is less than or equal to' condition is working fine on the numeric field"

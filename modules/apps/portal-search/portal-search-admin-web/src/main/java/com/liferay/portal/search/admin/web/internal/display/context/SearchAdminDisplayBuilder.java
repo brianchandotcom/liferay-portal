@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.index.IndexInformation;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.RenderRequest;
@@ -44,6 +45,9 @@ public class SearchAdminDisplayBuilder {
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			new SearchAdminDisplayContext();
 
+		searchAdminDisplayContext.setIndexReindexerClassNames(
+			_indexReindexerClassNames);
+
 		NavigationItemList navigationItemList = new NavigationItemList();
 		String selectedTab = getSelectedTab();
 
@@ -64,6 +68,12 @@ public class SearchAdminDisplayBuilder {
 
 	public void setIndexInformation(IndexInformation indexInformation) {
 		_indexInformation = indexInformation;
+	}
+
+	public void setIndexReindexerClassNames(
+		List<String> indexReindexerClassNames) {
+
+		_indexReindexerClassNames = indexReindexerClassNames;
 	}
 
 	protected void addNavigationItemList(
@@ -110,6 +120,7 @@ public class SearchAdminDisplayBuilder {
 	}
 
 	private IndexInformation _indexInformation;
+	private List<String> _indexReindexerClassNames;
 	private final Language _language;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;

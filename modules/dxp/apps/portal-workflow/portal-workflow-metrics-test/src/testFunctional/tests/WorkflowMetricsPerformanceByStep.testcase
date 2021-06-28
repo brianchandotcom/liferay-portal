@@ -182,15 +182,6 @@ definition {
 
 	}
 
-	@description = "LPS-97667 - Verify that, when displaying time, the time units are shortened by using the biggest measurement possible, and use up to 2 units per time, with minute as smallest value and days as biggest unit"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TimeUnitsAreShortenedByBiggestMeasurementPossible {
-
-		// TODO LRQA-67671 TimeUnitsAreShortenedByBiggestMeasurementPossible pending implementation
-
-	}
-
 	@description = "LPS-100674 - Verify that the To date is greater than the From date"
 	@ignore = "Test Stub"
 	@priority = "3"

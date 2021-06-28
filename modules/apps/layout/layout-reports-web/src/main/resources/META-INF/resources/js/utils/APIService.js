@@ -15,9 +15,9 @@
 import {fetch} from 'frontend-js-web';
 
 export default {
-	getLayoutReportsIssues(layoutReportsIssuesURL, namespace) {
+	getLayoutReportsIssues(layoutReportsIssuesURL, namespace, refreshCache) {
 		return fetchWithError(layoutReportsIssuesURL, {
-			body: getFormDataRequest({}, namespace),
+			body: getFormDataRequest({refreshCache}, namespace),
 			method: 'POST',
 		});
 	},

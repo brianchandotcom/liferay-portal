@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <p class="font-weight-bold mb-1 <%= collectionFilterFragmentRendererDisplayContext.isShowLabel() ? "" : "sr-only" %>">
-	<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>
+	<%= collectionFilterFragmentRendererDisplayContext.getLabel() %>
 </p>
 
 <c:choose>

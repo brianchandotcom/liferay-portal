@@ -18,6 +18,16 @@
 					"label": "show-label",
 					"name": "showLabel",
 					"type": "checkbox"
+				},
+				{
+					"defaultValue": "",
+					"label": "label",
+					"localizable": true,
+					"name": "label",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "label"
+					}
 				}
 			]
 		}

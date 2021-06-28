@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -112,8 +111,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		String className = GenericUtil.getGenericClassName(
-			_infoCollectionProvider);
+		String className = _infoCollectionProvider.getCollectionItemClassName();
 
 		if (Validator.isNotNull(className)) {
 			return ResourceActionsUtil.getModelResource(

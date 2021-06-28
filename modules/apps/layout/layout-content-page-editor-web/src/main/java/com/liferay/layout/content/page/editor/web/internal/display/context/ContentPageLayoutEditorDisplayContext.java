@@ -41,7 +41,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
-import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -457,8 +456,7 @@ public class ContentPageLayoutEditorDisplayContext
 	private String _getInfoCollectionProviderItemTypeLabel(
 		InfoCollectionProvider<?> infoCollectionProvider) {
 
-		String className = GenericUtil.getGenericClassName(
-			infoCollectionProvider);
+		String className = infoCollectionProvider.getCollectionItemClassName();
 
 		if (Objects.equals(className, AssetEntry.class.getName())) {
 			return LanguageUtil.get(httpServletRequest, "multiple-item-types");
@@ -477,8 +475,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		return JSONUtil.put(
 			JSONUtil.put(
-				"itemType",
-				GenericUtil.getGenericClassName(infoCollectionProvider)
+				"itemType", infoCollectionProvider.getCollectionItemClassName()
 			).put(
 				"key", infoCollectionProvider.getKey()
 			).put(

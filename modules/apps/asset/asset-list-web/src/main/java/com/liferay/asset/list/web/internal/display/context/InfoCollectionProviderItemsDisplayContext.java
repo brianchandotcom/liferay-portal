@@ -22,7 +22,6 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -71,8 +70,8 @@ public class InfoCollectionProviderItemsDisplayContext {
 			className = PortalUtil.getClassName(assetEntry.getClassNameId());
 		}
 		else {
-			className = GenericUtil.getGenericClassName(
-				_getInfoCollectionProvider());
+			className =
+				_getInfoCollectionProvider().getCollectionItemClassName();
 		}
 
 		return ResourceActionsUtil.getModelResource(
@@ -84,8 +83,11 @@ public class InfoCollectionProviderItemsDisplayContext {
 			return _infoCollectionProviderClassName;
 		}
 
-		_infoCollectionProviderClassName = GenericUtil.getGenericClassName(
-			_getInfoCollectionProvider());
+		InfoCollectionProvider<?> infoCollectionProvider =
+			_getInfoCollectionProvider();
+
+		_infoCollectionProviderClassName =
+			infoCollectionProvider.getCollectionItemClassName();
 
 		return _infoCollectionProviderClassName;
 	}
@@ -97,10 +99,13 @@ public class InfoCollectionProviderItemsDisplayContext {
 			return _infoItemFieldValuesProvider;
 		}
 
+		InfoCollectionProvider<?> infoCollectionProvider =
+			_getInfoCollectionProvider();
+
 		_infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
-				GenericUtil.getGenericClassName(_getInfoCollectionProvider()));
+				infoCollectionProvider.getCollectionItemClassName());
 
 		return _infoItemFieldValuesProvider;
 	}

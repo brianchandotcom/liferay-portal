@@ -17,7 +17,6 @@ package com.liferay.asset.list.web.internal.display.context;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -83,8 +82,7 @@ public class InfoCollectionProviderDisplayContext {
 	public String getSubtitle(
 		InfoCollectionProvider<?> infoCollectionProvider) {
 
-		String className = GenericUtil.getGenericClassName(
-			infoCollectionProvider);
+		String className = infoCollectionProvider.getCollectionItemClassName();
 
 		if (Validator.isNotNull(className)) {
 			return ResourceActionsUtil.getModelResource(

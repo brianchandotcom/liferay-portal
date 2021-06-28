@@ -36,7 +36,6 @@ import com.liferay.layout.content.page.editor.web.internal.security.permission.r
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -457,7 +456,7 @@ public class AssetListEntryUsagesUtil {
 					"subtype",
 					ResourceActionsUtil.getModelResource(
 						themeDisplay.getLocale(),
-						GenericUtil.getGenericClassName(infoCollectionProvider))
+						infoCollectionProvider.getCollectionItemClassName())
 				).put(
 					"title",
 					infoCollectionProvider.getLabel(themeDisplay.getLocale())

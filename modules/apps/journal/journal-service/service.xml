@@ -27,6 +27,7 @@
 
 		<!-- Other fields -->
 
+		<column name="externalReferenceCode" type="String" />
 		<column name="folderId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
@@ -90,6 +91,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>
+		<finder name="G_ERC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="externalReferenceCode" />
+		</finder>
 		<finder name="G_F" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="folderId" />
@@ -147,6 +152,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="classNameId" />
+		</finder>
+		<finder name="G_ERC_V" return-type="WikiPage">
+			<finder-column name="groupId" />
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="version" />
 		</finder>
 		<finder name="G_F_ST" return-type="Collection">
 			<finder-column name="groupId" />

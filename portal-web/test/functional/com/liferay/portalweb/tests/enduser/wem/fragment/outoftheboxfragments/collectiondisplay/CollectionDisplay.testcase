@@ -386,6 +386,188 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Items with This Category into another Collection Display with Categories for This Item."
+	@priority = "4"
+	test AddCollectionDisplayWithItemsWithThisCategoryToAnotherCollectionDisplayWithCategoriesForThisItem {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category in vocabulary") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with the category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document entry with category") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Grid to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Display to the first module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the Categories for This Item in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Categories for This Item");
+		}
+
+		task ("Add a Heading fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "",
+				fragmentName = "Heading");
+		}
+
+		task ("Map Name of category to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Name",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Add a Collection Display to the second module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "2",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select the Categories for This Item in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				columnNumber = "2",
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Categories for This Item");
+		}
+
+		task ("Add a Collection Display fragment into the second module Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Items with This Category in inner Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = "3",
+				infoItemRelatedListProviderName = "Items with This Category");
+		}
+
+		task ("Add a Button fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "",
+				fragmentName = "Button");
+		}
+
+		task ("Map Title of collection items to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to associated display page template via View Content") {
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+		}
+
+		task ("View the name of associated categories are shown in the first module") {
+			AssertVisible(
+				id = "element-text",
+				key_position = "1",
+				key_text = "Category Name",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+
+		task ("View the title of assets are shown in the second module") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				AssertVisible(
+					id = "link",
+					key_position = "${n}",
+					key_text = "${title}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with the Highest Rated Assets."
 	@priority = "5"
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithHighestRatedAssets {

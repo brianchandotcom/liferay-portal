@@ -70,6 +70,14 @@ public abstract class BaseSpellCheckTestCase extends BaseIndexingTestCase {
 	}
 
 	@Test
+	public void testPhraseRetainsCorrectlySpelledWord() throws Exception {
+		indexSpellCheckWord("spellcheck");
+		indexSpellCheckWord("index");
+
+		assertSpellCheck("spellcheck index test", "spellchck indexef test");
+	}
+
+	@Test
 	public void testQuotedWords() throws Exception {
 		indexSpellCheckWord("liferay");
 		indexSpellCheckWord("search");

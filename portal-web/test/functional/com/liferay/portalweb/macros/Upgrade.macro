@@ -2641,6 +2641,16 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents");
 
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Type Title");
+
+		DMDocument.viewDocumentTypePG(
+			booleanValue = "checked",
+			checkboxName = "Boolean",
+			numericFieldLabel = "Number",
+			numericValue = "1234");
+
+		Navigator.gotoPage(pageName = "Documents");
+
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileName = "DM Document Video.mp4",

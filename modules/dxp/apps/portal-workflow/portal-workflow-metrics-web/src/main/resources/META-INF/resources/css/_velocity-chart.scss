@@ -51,7 +51,13 @@
 }
 
 .workflow-tooltip-chart {
-	border-collapse: collapse;
+	background-clip: padding-box;
+	background-color: #fff;
+	border-radius: 0.3rem;
+	box-shadow: 0 1px 15px -2px rgb(0 0 0 / 20%);
+	font-size: 0.875rem;
+	opacity: 1;
+	padding: 1rem;
 
 	.workflow-tooltip-chart-header {
 		border-bottom: solid 1px #e7e7ed;

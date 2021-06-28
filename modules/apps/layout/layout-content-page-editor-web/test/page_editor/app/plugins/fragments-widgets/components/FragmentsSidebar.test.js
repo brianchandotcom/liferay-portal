@@ -150,6 +150,7 @@ const NORMALIZED_TABS = [
 				label: 'Collection 1',
 			},
 		],
+		id: 'fragments',
 		label: 'fragments',
 	},
 	{
@@ -176,6 +177,7 @@ const NORMALIZED_TABS = [
 				label: 'Widget Collection 1',
 			},
 		],
+		id: 'widgets',
 		label: 'widgets',
 	},
 ];
@@ -238,7 +240,10 @@ describe('FragmentsSidebar', () => {
 		renderComponent(STATE);
 
 		expect(TabsPanel).toHaveBeenCalledWith(
-			{displayStyle: 'list', tabs: NORMALIZED_TABS},
+			expect.objectContaining({
+				displayStyle: 'list',
+				tabs: NORMALIZED_TABS,
+			}),
 			{}
 		);
 	});
@@ -330,7 +335,7 @@ describe('FragmentsSidebar', () => {
 		renderComponent(STATE);
 
 		expect(TabsPanel).toHaveBeenCalledWith(
-			{
+			expect.objectContaining({
 				displayStyle: 'list',
 				tabs: setIn(
 					NORMALIZED_TABS,
@@ -367,7 +372,7 @@ describe('FragmentsSidebar', () => {
 						type: 'fragment',
 					}
 				),
-			},
+			}),
 			{}
 		);
 	});
@@ -402,7 +407,7 @@ describe('FragmentsSidebar', () => {
 		renderComponent(STATE);
 
 		expect(TabsPanel).toHaveBeenCalledWith(
-			{
+			expect.objectContaining({
 				displayStyle: 'list',
 				tabs: setIn(
 					NORMALIZED_TABS,
@@ -439,7 +444,7 @@ describe('FragmentsSidebar', () => {
 						type: 'fragment',
 					}
 				),
-			},
+			}),
 			{}
 		);
 	});
@@ -472,7 +477,7 @@ describe('FragmentsSidebar', () => {
 		renderComponent(STATE);
 
 		expect(TabsPanel).toHaveBeenCalledWith(
-			{
+			expect.objectContaining({
 				displayStyle: 'list',
 				tabs: setIn(
 					NORMALIZED_TABS,
@@ -495,7 +500,7 @@ describe('FragmentsSidebar', () => {
 						},
 					]
 				),
-			},
+			}),
 			{}
 		);
 	});
@@ -552,7 +557,7 @@ describe('FragmentsSidebar', () => {
 		renderComponent(STATE);
 
 		expect(TabsPanel).toHaveBeenCalledWith(
-			{
+			expect.objectContaining({
 				displayStyle: 'list',
 				tabs: setIn(
 					NORMALIZED_TABS,
@@ -589,7 +594,7 @@ describe('FragmentsSidebar', () => {
 						},
 					]
 				),
-			},
+			}),
 			{}
 		);
 	});

@@ -1237,6 +1237,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-130506. Aseert Web Content Structure defaults not showing in Search Results."
+	@priority = "3"
+	test SearchStructureWithDefaultValue {
+		property test.name.skip.portal.instance = "WebContentWithCustomStructures#SearchStructureWithDefaultValue";
+
+		task ("Add a web content structure with text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Edit the default values of new structure") {
+			NavItem.gotoStructures();
+
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentText = "WC WebContent Title");
+
+			PortletEntry.save();
+		}
+
+		task ("Go to Home page and assert no web content displayed after searching") {
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Title");
+
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
+		}
+
+		task ("Reindex and search it again") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Search");
+
+			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Title");
+
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
+		}
+	}
+
 	@priority = "4"
 	test UseStructureAndTemplateFromParentSiteHierarchy {
 		property test.name.skip.portal.instance = "WebContentWithCustomStructures#UseStructureAndtemplateFromParentSiteHierarchy";

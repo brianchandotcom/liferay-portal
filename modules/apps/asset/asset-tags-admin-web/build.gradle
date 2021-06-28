@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:asset:asset-taglib")
 	compileOnly project(":apps:asset:asset-tags-api")
+	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")

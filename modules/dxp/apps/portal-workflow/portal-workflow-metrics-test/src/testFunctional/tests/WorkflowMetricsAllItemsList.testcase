@@ -2123,12 +2123,97 @@ definition {
 	}
 
 	@description = "LPS-98517 - Verify that, in the item detail modal, the usernames are separated by a comma when there is more than one assignee per item under the Process Details section"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test UsernamesAreSeparatedByCommaInItemDetailModal {
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#UsernamesAreSeparatedByCommaInItemDetailModal";
 
-		// TODO LRQA-67746 UsernamesAreSeparatedByCommaInItemDetailModal pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "multi_task_process.xml",
+			workflowDefinitionTitle = "Multi Task Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "User",
+			userLastName = "User",
+			userScreenName = "User1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "user1@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Power User",
+			userEmailAddress = "user1@liferay.com");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content 1",
+			entryTitle = "Test Blog 1");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+
+		Click(
+			key_processName = "task1",
+			locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
+		Click(
+			key_processName = "task2",
+			locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN_OPTION");
+
+		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
+
+		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+
+		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "User User",
+			taskList = "task1");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "User User",
+			taskList = "task2");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+
+		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "Test Test",
+			taskList = "task3");
+
+		while (IsElementNotPresent(key_workflowInstanceName = "Blogs Entry",
+				key_workflowInstanceAssignee = "Test Test, Unassigned, User User",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE") && (maxIterations = "20")) {
+			Pause(locator1 = "3000");
+			Refresh();
+		}
+
+		AssertTextEquals(
+			key_workflowInstanceAssignee = "Test Test, Unassigned, User User",
+			key_workflowInstanceName = "Blogs Entry",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE",
+			value1 = "Test Test, Unassigned, User User");
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, Pause instead of due date, the UI will inform SLA Paused sentence next to the SLA name"

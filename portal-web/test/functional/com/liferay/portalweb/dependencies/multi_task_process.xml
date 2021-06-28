@@ -104,7 +104,18 @@
 			]]>
 		</metadata>
 		<assignments>
-			<user />
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+					<auto-create>false</auto-create>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Power User</name>
+					<auto-create>false</auto-create>
+				</role>
+			</roles>
 		</assignments>
 		<transitions>
 			<transition>
@@ -127,7 +138,18 @@
 			]]>
 		</metadata>
 		<assignments>
-			<user />
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+					<auto-create>false</auto-create>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Power User</name>
+					<auto-create>false</auto-create>
+				</role>
+			</roles>
 		</assignments>
 		<transitions>
 			<transition>
@@ -150,7 +172,18 @@
 			]]>
 		</metadata>
 		<assignments>
-			<user />
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+					<auto-create>false</auto-create>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Power User</name>
+					<auto-create>false</auto-create>
+				</role>
+			</roles>
 		</assignments>
 		<transitions>
 			<transition>

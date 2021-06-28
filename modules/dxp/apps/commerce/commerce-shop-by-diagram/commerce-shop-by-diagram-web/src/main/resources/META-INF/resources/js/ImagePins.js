@@ -134,7 +134,7 @@ const ImagePins = ({
 			zoomIn(containerRef.current, panZoomRef.current);
 		}
 
-		function dragstarted() {
+		function dragStarted() {
 			select(this).raise().classed('active', true);
 		}
 
@@ -142,12 +142,11 @@ const ImagePins = ({
 			select(this).attr('transform', `translate(${event.x},${event.y})`);
 		}
 
-		function dragended() {
+		function dragEnded() {
 			const current = select(this);
 			const newPos = current._groups[0][0].attributes;
 			const beSure = [...newPos];
 			const updatedPin = {};
-
 			select(this).classed('active', false);
 			PIN_ATTRIBUTES.map((element) => {
 				beSure.filter((attr) => {
@@ -198,9 +197,9 @@ const ImagePins = ({
 		}
 
 		const dragHandler = drag()
-			.on('start', dragstarted)
+			.on('start', dragStarted)
 			.on('drag', dragged)
-			.on('end', dragended);
+			.on('end', dragEnded);
 
 		const addPin = () => {
 			setCpins(

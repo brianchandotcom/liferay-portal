@@ -1177,8 +1177,6 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Blogs");
-
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");

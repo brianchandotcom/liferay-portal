@@ -125,6 +125,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-134682 If categories are marked as internal, won't show in Categories Navigation widget."
+	@priority = "3"
+	test CheckInternalCategoriesWidgetAssetsCategorization {
+		task ("Add a global category to each Topic (public) and Audience (private)") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Topic Category",
+				vocabularyName = "Topic");
+
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience Category",
+				vocabularyName = "Audience");
+		}
+
+		task ("Add a Categories Navigation to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Categories Navigation");
+		}
+
+		task ("Check if only Topic Categories are shown") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Topic Category");
+
+			AssertElementNotPresent(
+				key_nodeName = "Audience",
+				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+				value1 = "Audience Category");
+		}
+	}
+
 	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Content Dashboard"
 	@priority = "3"
 	test CheckLearnHowLinkNotDisplayedContentDashboard {

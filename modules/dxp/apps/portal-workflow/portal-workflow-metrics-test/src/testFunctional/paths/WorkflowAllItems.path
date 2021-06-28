@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REASSIGN_CHECKBOX_DISABLED_BY_TITLE</td>
+	<td>//tr[@class]//td[@title='${key_itemTitle}']//..//div[contains(@class,'custom-control')]//input[@type='checkbox' and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REASSIGN_CHECKBOX_DISABLED</td>
 	<td>//div[contains(@class,'custom-control')]//input[@type='checkbox' and @disabled]</td>
 	<td></td>

@@ -48,12 +48,108 @@ definition {
 	}
 
 	@description = "LPS-130218 - Verify that the user is able to click on the table header Created by to choose the items order (A-Z / Z-A)."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanOrderByCreatedBy {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
 
-		// TODO LRQA-68168 CanOrderByCreatedBy pending implementation
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry");
+
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "user1",
+			userLastName = "user1",
+			userScreenName = "user1");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "user1@liferay.com");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "user1",
+			userLastName = "user1",
+			userScreenName = "user1");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user1@liferay.com",
+			userLoginFullName = "user1 user1");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Second Blogs Entry");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		Click(
+			key_orderBy = "Created By",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Second Blogs Entry",
+			keyCompare = "Blogs Entry: Blogs Entry",
+			rowNumber = "1");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Blogs Entry",
+			keyCompare = "Blogs Entry: Second Blogs Entry",
+			rowNumber = "2");
+
+		Click(
+			key_orderBy = "Created By",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Blogs Entry",
+			keyCompare = "Blogs Entry: Second Blogs Entry",
+			rowNumber = "1");
+
+		WorkflowMetrics.assertTableOrder(
+			itemTitle = "Blogs Entry: Second Blogs Entry",
+			keyCompare = "Blogs Entry: Blogs Entry",
+			rowNumber = "2");
 	}
 
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"

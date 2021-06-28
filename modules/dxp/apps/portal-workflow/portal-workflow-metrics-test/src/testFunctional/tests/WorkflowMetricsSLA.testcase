@@ -501,10 +501,6 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
 
-		Type(
-			locator1 = "WorkflowMetricsSLA#SLA_INPUT_START",
-			value1 = "Review");
-
 		AssertElementPresent(
 			key_slaDefinitionStart = "Enters Task: Review",
 			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION");
@@ -515,10 +511,6 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
 
-		Type(
-			locator1 = "WorkflowMetricsSLA#SLA_INPUT_PAUSE",
-			value1 = "Task");
-
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_PAUSE");
@@ -528,10 +520,6 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
-
-		Type(
-			locator1 = "WorkflowMetricsSLA#SLA_INPUT_STOP",
-			value1 = "Approved");
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
 

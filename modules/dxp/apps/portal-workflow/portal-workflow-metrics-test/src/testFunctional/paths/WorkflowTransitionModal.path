@@ -40,6 +40,11 @@
 	<td>//div[contains(@class, 'autofit-col autofit-col-expand')]//p[text()='${key_tilte}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TRANSITION_TASK_NAME</td>
+	<td>//p[contains(text(),'${key_taskName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

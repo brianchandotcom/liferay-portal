@@ -551,12 +551,84 @@ definition {
 	}
 
 	@description = "LPS-108138 - Verify that when there are 11 or more instances to be transitioned with the same step, only the first 10 instances are displayed with the -Show All/Show Less- buttons available to be selected"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ShowAllLessButtonAvailable {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67802 ShowAllLessButtonAvailable pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		var count = "1";
+
+		while ("${count}" != "12") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry",
+				entryTitle = "Blogs Entry Title ${count}");
+			var count = ${count} + 1;
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		var count = "1";
+
+		while ("${count}" != "12") {
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title ${count}",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+			var count = ${count} + 1;
+		}
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+
+		Click(locator1 = "Button#SELECT_ALL");
+
+		Button.clickNext();
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
+
+		var count = "1";
+
+		while ("${count}" != "11") {
+			AssertVisible(
+				key_taskName = "Blogs Entry Title ${count}",
+				locator1 = "WorkflowTransitionModal#TRANSITION_TASK_NAME");
+			var count = ${count} + 1;
+		}
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
+
+		var count = "1";
+
+		while ("${count}" != "12") {
+			AssertVisible(
+				key_taskName = "Blogs Entry Title ${count}",
+				locator1 = "WorkflowTransitionModal#TRANSITION_TASK_NAME");
+			var count = ${count} + 1;
+		}
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
+
+		var count = "1";
+
+		while ("${count}" != "11") {
+			AssertVisible(
+				key_taskName = "Blogs Entry Title ${count}",
+				locator1 = "WorkflowTransitionModal#TRANSITION_TASK_NAME");
+			var count = ${count} + 1;
+		}
 	}
 
 	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"

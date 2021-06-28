@@ -549,4 +549,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-133350. View master page after renaming display page template within custom master page."
+	@priority = "4"
+	test ViewMasterPageAfterRenamingDisplayPageTemplateWithinCustomMasterPage {
+		task ("Add a custom master page and publish") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "TestMaster");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "TestMaster");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Add a display page template with created master page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name 2",
+				masterLayoutName = "TestMaster",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Master");
+
+			AssertElementPresent(
+				key_card = "TestMaster",
+				locator1 = "Card#CARD_SELECTED");
+		}
+
+		task ("Go to display page template and rename") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.renameDisplayPage(
+				displayPageName = "Display Page Name 2",
+				newDisplayPageName = "Display Page Name New");
+		}
+
+		task ("View the master page after renaming") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name New");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			AssertElementPresent(
+				key_card = "TestMaster",
+				locator1 = "Card#CARD_SELECTED");
+		}
+	}
+
 }

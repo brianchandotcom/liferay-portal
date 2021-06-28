@@ -124,12 +124,92 @@ definition {
 	}
 
 	@description = "LPS-108138 - Verify that tasks that are not assigned to the current users can't be transitioned via bulk transition action"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotBulkTransitionTasksNotAssignedToCurrentUser {
+		JSONUser.addUser(
+			userEmailAddress = "usertest@liferay.com",
+			userFirstName = "User",
+			userLastName = "Test",
+			userScreenName = "usertest");
 
-		// TODO LRQA-67814 CanNotBulkTransitionTasksNotAssignedToCurrentUser pending implementation
+		JSONRole.assignRoleToUser(
+			roleTitle = "Power User",
+			userEmailAddress = "usertest@liferay.com");
 
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "usertest@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "Liferay DXP");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blog Entry 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blog Entry 2");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blog Entry 3");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.selectTransitionTask(task = "1");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "User Test",
+			taskList = "Blogs Entry: Blog Entry 1");
+
+		WorkflowMetrics.selectTransitionTask(task = "2");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "Test Test",
+			taskList = "Blogs Entry: Blog Entry 2");
+
+		AssertElementPresent(
+			key_itemTitle = "Blogs Entry: Blog Entry 1",
+			locator1 = "WorkflowAllItems#REASSIGN_CHECKBOX_DISABLED");
+
+		WorkflowMetrics.goToTransitionTasks();
+
+		Click(
+			key_task = "1",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_CHECKBOX_ITEM");
+
+		Click(locator1 = "Button#NEXT");
+
+		AssertElementPresent(
+			key_tilte = "Blogs Entry: Blog Entry 2",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW");
+
+		AssertElementNotPresent(
+			key_tilte = "Blogs Entry: Blog Entry 3",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW");
+
+		WorkflowMetrics.chooseTransitionPerStep(
+			taskName = "Review",
+			transitionOption = "Approve");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry: Blog Entry 2",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
 	}
 
 	@description = "LPS-108138 - Verify that there are loading cards in Select Steps to Transition and Choose Transition per Step"

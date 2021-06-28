@@ -230,6 +230,11 @@
 	<td>//div[contains(@id,'headerTitle') and contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DETAIL_SLA_ICON</td>
+	<td>//div[contains(@class,'sla-result')]//*[contains(@class,'lexicon-icon-${key_status}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

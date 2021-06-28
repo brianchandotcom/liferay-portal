@@ -17,17 +17,21 @@ import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {useIsActive} from '../../contexts/ControlsContext';
 
 const TOTAL_ENTRIES = 20;
 
-export default function CollectionPagination({collectionConfig, collectionId}) {
-	const [activePage, setActivePage] = useState(1);
+export default function CollectionPagination({
+	activePage,
+	collectionConfig,
+	collectionId,
+	onPageChange,
+}) {
 	const isActive = useIsActive();
 
-    const totalPages = Math.ceil(
+	const totalPages = Math.ceil(
 		TOTAL_ENTRIES / collectionConfig.numberOfItemsPerPage
 	);
 
@@ -35,12 +39,12 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 		{
 			disabled: activePage === 1,
 			label: Liferay.Language.get('previous'),
-			onClick: () => setActivePage(activePage - 1),
+			onClick: () => onPageChange(activePage - 1),
 		},
 		{
 			disabled: activePage === totalPages,
 			label: Liferay.Language.get('next'),
-			onClick: () => setActivePage(activePage + 1),
+			onClick: () => onPageChange(activePage + 1),
 		},
 	];
 
@@ -69,7 +73,7 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 
 					<ClayPaginationWithBasicItems
 						activePage={activePage}
-						onPageChange={setActivePage}
+						onPageChange={onPageChange}
 						totalPages={totalPages}
 					/>
 				</ClayPaginationBar>
@@ -99,6 +103,8 @@ export default function CollectionPagination({collectionConfig, collectionId}) {
 }
 
 CollectionPagination.propTypes = {
+	activePage: PropTypes.number,
 	collectionConfig: PropTypes.object,
 	collectionId: PropTypes.string,
+	onPageChange: PropTypes.func,
 };

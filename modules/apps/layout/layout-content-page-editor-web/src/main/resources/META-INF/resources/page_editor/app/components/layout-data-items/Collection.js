@@ -171,13 +171,13 @@ const DEFAULT_COLLECTION = {
 };
 
 const Collection = React.forwardRef(({children, item}, ref) => {
-	const activePage = 1;
 	const child = React.Children.toArray(children)[0];
 	const collectionConfig = item.config;
 
 	const dispatch = useDispatch();
 	const languageId = useSelector(selectLanguageId);
 
+	const [activePage, setActivePage] = useState(1);
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
 
 	const context = useContext(CollectionItemContext);
@@ -259,8 +259,10 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 			{collectionConfig.paginationType && (
 				<CollectionPagination
+					activePage={activePage}
 					collectionConfig={collectionConfig}
 					collectionId={item.itemId}
+					onPageChange={setActivePage}
 				/>
 			)}
 		</div>

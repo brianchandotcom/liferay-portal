@@ -12,6 +12,8 @@
  * details.
  */
 
+import isNullOrUndefined from '../utils/isNullOrUndefined';
+
 /**
  * @param {HTMLElement} element HTMLElement where the editor
  *  should be applied to.
@@ -45,7 +47,7 @@ function destroyEditor(element) {
  * @param {object} config config Editable value's config object
  */
 function render(element, value) {
-	if (value) {
+	if (!isNullOrUndefined(value)) {
 		element.innerHTML = value;
 	}
 }

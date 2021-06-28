@@ -14,6 +14,8 @@
 
 import {openModal, openToast} from 'frontend-js-web';
 
+import isNullOrUndefined from '../utils/isNullOrUndefined';
+
 /**
  * @param {HTMLElement} element HTMLElement where the editor
  *  should be applied to.
@@ -98,7 +100,7 @@ function destroyEditor() {}
  * @param {string} value Element content
  */
 function render(element, value) {
-	if (value) {
+	if (!isNullOrUndefined(value)) {
 		element.innerHTML = value;
 	}
 }

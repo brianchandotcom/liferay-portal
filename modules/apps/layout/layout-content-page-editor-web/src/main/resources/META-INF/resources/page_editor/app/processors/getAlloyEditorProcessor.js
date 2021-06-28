@@ -15,6 +15,7 @@
 import {debounce, openSelectionModal} from 'frontend-js-web';
 
 import {config} from '../config/index';
+import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 const KEY_ENTER = 13;
 const KEY_SPACE = 32;
@@ -31,7 +32,7 @@ const defaultGetEditorWrapper = (element) => {
 };
 
 const defaultRender = (element, value) => {
-	if (value) {
+	if (!isNullOrUndefined(value)) {
 		element.innerHTML = value;
 	}
 };

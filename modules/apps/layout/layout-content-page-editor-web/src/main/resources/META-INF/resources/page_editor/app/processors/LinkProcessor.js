@@ -13,6 +13,7 @@
  */
 
 import {config} from '../config/index';
+import isNullOrUndefined from '../utils/isNullOrUndefined';
 import getAlloyEditorProcessor from './getAlloyEditorProcessor';
 import {getLinkableEditableEditorWrapper} from './getLinkableEditableEditorWrapper';
 
@@ -32,8 +33,11 @@ export default getAlloyEditorProcessor(
 
 		if (anchor) {
 			anchor.href = link.href || '#';
-			anchor.innerHTML = value;
 			anchor.target = link.target || '';
+
+			if (!isNullOrUndefined(value)) {
+				anchor.innerHTML = value;
+			}
 		}
 	}
 );

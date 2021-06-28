@@ -28,8 +28,13 @@ import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminD
 import com.liferay.portal.search.admin.web.internal.display.context.SearchEngineDisplayBuilder;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 
 import java.io.IOException;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -81,6 +86,11 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 		searchAdminDisplayBuilder.setIndexInformation(indexInformation);
 
+		Collections.sort(_indexReindexerClassNames);
+
+		searchAdminDisplayBuilder.setIndexReindexerClassNames(
+			_indexReindexerClassNames);
+
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayBuilder.build();
 
@@ -126,6 +136,19 @@ public class SearchAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addIndexReindexer(IndexReindexer indexReindexer) {
+		_indexReindexerClassNames.add(indexReindexer.getModelClassName());
+	}
+
+	protected void removeIndexReindexer(IndexReindexer indexReindexer) {
+		_indexReindexerClassNames.remove(indexReindexer.getModelClassName());
+	}
+
+	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
@@ -141,6 +164,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private Http _http;
+
+	private final List<String> _indexReindexerClassNames =
+		new CopyOnWriteArrayList<>();
 
 	@Reference
 	private Language _language;

@@ -144,7 +144,7 @@ definition {
 
 		Click(
 			key_colPosition = "1",
-			key_element = "//*[contains(@class,'${lowerCase}') and contains(@data-lfr-editable-id,'${id}')]",
+			key_element = "//*[contains(@data-lfr-editable-id,'${id}')]",
 			key_fragmentName = "Collection Display",
 			key_rowPosition = "1",
 			locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");

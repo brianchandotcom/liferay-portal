@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>INVITE_USER_FULL_NAME</td>
-	<td>//div[contains(@id,'InviteMembersPortlet_membersList')]//span[contains(.,'${key_inviteUserFullName}')]</td>
+	<td>//div[contains(@id,'InviteMembersPortlet')]//span[contains(.,'${key_inviteUserFullName}')]</td>
 	<td></td>
 </tr>
 </tbody>

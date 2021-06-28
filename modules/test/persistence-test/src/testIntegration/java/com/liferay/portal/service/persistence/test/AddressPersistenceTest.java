@@ -302,6 +302,23 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C_T() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_C_C_T(0L, 0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_C_C_TArrayable() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByC_C_C_M() throws Exception {
 		_persistence.countByC_C_C_M(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -317,23 +334,6 @@ public class AddressPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_C_C_P(0L, 0L, 0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByC_C_C_T() throws Exception {
-		_persistence.countByC_C_C_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByC_C_C_T(0L, 0L, 0L, 0L);
-	}
-
-	@Test
-	public void testCountByC_C_C_TArrayable() throws Exception {
-		_persistence.countByC_C_C_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
 	}
 
 	@Test

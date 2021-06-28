@@ -1517,6 +1517,337 @@ public class AddressUtil {
 	}
 
 	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @return the matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long typeId) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeId);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long typeId, int start,
+		int end) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long typeId, int start,
+		int end, OrderByComparator<Address> orderByComparator) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long typeId, int start,
+		int end, OrderByComparator<Address> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeId, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public static Address findByC_C_C_T_First(
+			long companyId, long classNameId, long classPK, long typeId,
+			OrderByComparator<Address> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
+
+		return getPersistence().findByC_C_C_T_First(
+			companyId, classNameId, classPK, typeId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public static Address fetchByC_C_C_T_First(
+		long companyId, long classNameId, long classPK, long typeId,
+		OrderByComparator<Address> orderByComparator) {
+
+		return getPersistence().fetchByC_C_C_T_First(
+			companyId, classNameId, classPK, typeId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public static Address findByC_C_C_T_Last(
+			long companyId, long classNameId, long classPK, long typeId,
+			OrderByComparator<Address> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
+
+		return getPersistence().findByC_C_C_T_Last(
+			companyId, classNameId, classPK, typeId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public static Address fetchByC_C_C_T_Last(
+		long companyId, long classNameId, long classPK, long typeId,
+		OrderByComparator<Address> orderByComparator) {
+
+		return getPersistence().fetchByC_C_C_T_Last(
+			companyId, classNameId, classPK, typeId, orderByComparator);
+	}
+
+	/**
+	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * @param addressId the primary key of the current address
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next address
+	 * @throws NoSuchAddressException if a address with the primary key could not be found
+	 */
+	public static Address[] findByC_C_C_T_PrevAndNext(
+			long addressId, long companyId, long classNameId, long classPK,
+			long typeId, OrderByComparator<Address> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
+
+		return getPersistence().findByC_C_C_T_PrevAndNext(
+			addressId, companyId, classNameId, classPK, typeId,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeIds the type IDs
+	 * @return the matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long[] typeIds) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeIds);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeIds the type IDs
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long[] typeIds,
+		int start, int end) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeIds the type IDs
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long[] typeIds,
+		int start, int end, OrderByComparator<Address> orderByComparator) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeIds, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	public static List<Address> findByC_C_C_T(
+		long companyId, long classNameId, long classPK, long[] typeIds,
+		int start, int end, OrderByComparator<Address> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_C_C_T(
+			companyId, classNameId, classPK, typeIds, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 */
+	public static void removeByC_C_C_T(
+		long companyId, long classNameId, long classPK, long typeId) {
+
+		getPersistence().removeByC_C_C_T(
+			companyId, classNameId, classPK, typeId);
+	}
+
+	/**
+	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeId the type ID
+	 * @return the number of matching addresses
+	 */
+	public static int countByC_C_C_T(
+		long companyId, long classNameId, long classPK, long typeId) {
+
+		return getPersistence().countByC_C_C_T(
+			companyId, classNameId, classPK, typeId);
+	}
+
+	/**
+	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typeIds the type IDs
+	 * @return the number of matching addresses
+	 */
+	public static int countByC_C_C_T(
+		long companyId, long classNameId, long classPK, long[] typeIds) {
+
+		return getPersistence().countByC_C_C_T(
+			companyId, classNameId, classPK, typeIds);
+	}
+
+	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1954,337 +2285,6 @@ public class AddressUtil {
 
 		return getPersistence().countByC_C_C_P(
 			companyId, classNameId, classPK, primary);
-	}
-
-	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @return the matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeId);
-	}
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId, int start,
-		int end) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId, int start,
-		int end, OrderByComparator<Address> orderByComparator) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId, int start,
-		int end, OrderByComparator<Address> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeId, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	public static Address findByC_C_C_T_First(
-			long companyId, long classNameId, long classPK, long typeId,
-			OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
-
-		return getPersistence().findByC_C_C_T_First(
-			companyId, classNameId, classPK, typeId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching address, or <code>null</code> if a matching address could not be found
-	 */
-	public static Address fetchByC_C_C_T_First(
-		long companyId, long classNameId, long classPK, long typeId,
-		OrderByComparator<Address> orderByComparator) {
-
-		return getPersistence().fetchByC_C_C_T_First(
-			companyId, classNameId, classPK, typeId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address
-	 * @throws NoSuchAddressException if a matching address could not be found
-	 */
-	public static Address findByC_C_C_T_Last(
-			long companyId, long classNameId, long classPK, long typeId,
-			OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
-
-		return getPersistence().findByC_C_C_T_Last(
-			companyId, classNameId, classPK, typeId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching address, or <code>null</code> if a matching address could not be found
-	 */
-	public static Address fetchByC_C_C_T_Last(
-		long companyId, long classNameId, long classPK, long typeId,
-		OrderByComparator<Address> orderByComparator) {
-
-		return getPersistence().fetchByC_C_C_T_Last(
-			companyId, classNameId, classPK, typeId, orderByComparator);
-	}
-
-	/**
-	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param addressId the primary key of the current address
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next address
-	 * @throws NoSuchAddressException if a address with the primary key could not be found
-	 */
-	public static Address[] findByC_C_C_T_PrevAndNext(
-			long addressId, long companyId, long classNameId, long classPK,
-			long typeId, OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
-
-		return getPersistence().findByC_C_C_T_PrevAndNext(
-			addressId, companyId, classNameId, classPK, typeId,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeIds the type IDs
-	 * @return the matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeIds);
-	}
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeIds the type IDs
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds,
-		int start, int end) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeIds, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeIds the type IDs
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds,
-		int start, int end, OrderByComparator<Address> orderByComparator) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeIds, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching addresses
-	 */
-	public static List<Address> findByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds,
-		int start, int end, OrderByComparator<Address> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByC_C_C_T(
-			companyId, classNameId, classPK, typeIds, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 */
-	public static void removeByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId) {
-
-		getPersistence().removeByC_C_C_T(
-			companyId, classNameId, classPK, typeId);
-	}
-
-	/**
-	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeId the type ID
-	 * @return the number of matching addresses
-	 */
-	public static int countByC_C_C_T(
-		long companyId, long classNameId, long classPK, long typeId) {
-
-		return getPersistence().countByC_C_C_T(
-			companyId, classNameId, classPK, typeId);
-	}
-
-	/**
-	 * Returns the number of addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and typeId = any &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typeIds the type IDs
-	 * @return the number of matching addresses
-	 */
-	public static int countByC_C_C_T(
-		long companyId, long classNameId, long classPK, long[] typeIds) {
-
-		return getPersistence().countByC_C_C_T(
-			companyId, classNameId, classPK, typeIds);
 	}
 
 	/**

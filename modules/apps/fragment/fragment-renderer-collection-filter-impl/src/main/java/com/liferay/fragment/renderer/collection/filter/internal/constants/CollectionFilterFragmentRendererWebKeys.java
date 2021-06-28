@@ -34,6 +34,8 @@ public class CollectionFilterFragmentRendererWebKeys {
 
 	public static final String SHOW_LABEL = "SHOW_LABEL";
 
+	public static final String SHOW_SEARCH = "SHOW_SEARCH";
+
 	public static final String SINGLE_SELECTION = "SINGLE_SELECTION";
 
 }

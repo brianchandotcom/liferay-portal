@@ -21,6 +21,7 @@ export default function MultiSelectCategory({
 	assetCategories,
 	fragmentEntryLinkId,
 	selectedAssetCategoryIds: initialSelectedCategoryIds,
+	showSearch,
 }) {
 	const [selectedCategoryIds, setSelectedCategoryIds] = useState(() => {
 		return assetCategories
@@ -112,7 +113,7 @@ export default function MultiSelectCategory({
 			items={items}
 			onSearchValueChange={setSearchValue}
 			searchValue={searchValue}
-			searchable={true}
+			searchable={showSearch}
 			trigger={
 				<ClayButton
 					className="form-control-select form-control-sm text-left w-100"
@@ -135,4 +136,5 @@ MultiSelectCategory.propTypes = {
 	),
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	selectedAssetCategoryIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+	showSearch: PropTypes.bool.isRequired,
 };

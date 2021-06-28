@@ -20,6 +20,12 @@
 					"type": "checkbox"
 				},
 				{
+					"defaultValue": false,
+					"label": "include-search-field",
+					"name": "showSearch",
+					"type": "checkbox"
+				},
+				{
 					"defaultValue": "",
 					"label": "label",
 					"localizable": true,

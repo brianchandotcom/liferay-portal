@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.google.places.web.internal.constants;
+package com.liferay.google.places.constants;
 
 /**
  * @author Rodrigo Paulino

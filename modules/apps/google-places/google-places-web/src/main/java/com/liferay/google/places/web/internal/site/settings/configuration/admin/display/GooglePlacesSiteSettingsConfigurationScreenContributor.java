@@ -14,8 +14,8 @@
 
 package com.liferay.google.places.web.internal.site.settings.configuration.admin.display;
 
-import com.liferay.google.places.web.internal.constants.GooglePlacesWebKeys;
-import com.liferay.google.places.web.internal.util.GooglePlacesUtil;
+import com.liferay.google.places.constants.GooglePlacesWebKeys;
+import com.liferay.google.places.util.GooglePlacesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;

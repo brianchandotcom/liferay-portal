@@ -292,12 +292,54 @@ definition {
 	}
 
 	@description = "LPS-103365 - Verify that when the filters inside (Workload by Assignee) page are higher than 496px, a search bar on it should be included"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SearchBarIsIncludedWhenDropdownIsHigherThan496Px {
+		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SearchBarIsIncludedWhenDropdownIsHigherThan496Px";
 
-		// TODO LRQA-67617 SearchBarIsIncludedWhenDropdownIsHigherThan496Px pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "12_transitions_definition.xml",
+			workflowDefinitionTitle = "12 Transitions Definition");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "12 Transitions Definition",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "12 Transitions Definition");
+
+		Click(
+			key_assigneeName = "View All Assignees (1)",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR");
 	}
 
 	@description = "LPS-98518 - Verify that a search bar is present in the step filter when the dropdown is higher than 496px"

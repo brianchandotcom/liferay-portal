@@ -442,7 +442,7 @@ definition {
 		Translations.viewTranslationEntry(
 			language = "ja-JP",
 			status = "Approved",
-			title = "Translation of WC WebContent Title to ja-JP");
+			title = "Translation of This is the title of a web article in English to ja-JP");
 	}
 
 	@description = "The Auto Translate button should not appear in the side-by-side view after Google Translations are enabled then disabled"

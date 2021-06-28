@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -136,16 +137,21 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"layoutReportsIssues",
-					JSONUtil.putAll(
-						stream.map(
-							layoutReportsIssue ->
-								layoutReportsIssue.toJSONObject(
-									_getConfigureLayoutSeoURL(themeDisplay),
-									_getConfigurePagesSeoURL(themeDisplay),
-									resourceBundle)
-						).toArray(
-							size -> new JSONObject[size]
-						))));
+					JSONUtil.put(
+						"date", new Date()
+					).put(
+						"issues",
+						JSONUtil.putAll(
+							stream.map(
+								layoutReportsIssue ->
+									layoutReportsIssue.toJSONObject(
+										_getConfigureLayoutSeoURL(themeDisplay),
+										_getConfigurePagesSeoURL(themeDisplay),
+										resourceBundle)
+							).toArray(
+								size -> new JSONObject[size]
+							))
+					)));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

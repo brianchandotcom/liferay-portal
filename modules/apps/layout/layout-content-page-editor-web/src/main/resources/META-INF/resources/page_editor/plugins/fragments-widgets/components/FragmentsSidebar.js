@@ -27,6 +27,11 @@ import TabsPanel from './TabsPanel';
 
 const FRAGMENTS_DISPLAY_STYLE_KEY = 'FRAGMENTS_DISPLAY_STYLE_KEY';
 
+const COLLECTION_IDS = {
+	fragments: 'fragments',
+	widgets: 'widgets',
+};
+
 const collectionFilter = (collections, searchValue) => {
 	const searchValueLowerCase = searchValue.toLowerCase();
 
@@ -127,6 +132,7 @@ export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useWidgets();
 
+	const [activeTabId, setActiveTabId] = useState(COLLECTION_IDS.fragments);
 	const [displayStyle, setDisplayStyle] = useState(
 		window.sessionStorage.getItem(FRAGMENTS_DISPLAY_STYLE_KEY) ||
 			FRAGMENTS_DISPLAY_STYLES.LIST
@@ -144,12 +150,14 @@ export default function FragmentsSidebar() {
 					collectionId: collection.fragmentCollectionId,
 					label: collection.name,
 				})),
+				id: COLLECTION_IDS.fragments,
 				label: Liferay.Language.get('fragments'),
 			},
 			{
 				collections: widgets.map((collection) =>
 					normalizeCollections(collection)
 				),
+				id: COLLECTION_IDS.widgets,
 				label: Liferay.Language.get('widgets'),
 			},
 		],
@@ -212,12 +220,14 @@ export default function FragmentsSidebar() {
 					/>
 				</div>
 				{searchValue ? (
-					<SearchResultsPanel
-						displayStyle={displayStyle}
-						filteredTabs={filteredTabs}
-					/>
+					<SearchResultsPanel filteredTabs={filteredTabs} />
 				) : (
-					<TabsPanel displayStyle={displayStyle} tabs={tabs} />
+					<TabsPanel
+						activeTabId={activeTabId}
+						displayStyle={displayStyle}
+						setActiveTabId={setActiveTabId}
+						tabs={tabs}
+					/>
 				)}
 			</SidebarPanelContent>
 		</>

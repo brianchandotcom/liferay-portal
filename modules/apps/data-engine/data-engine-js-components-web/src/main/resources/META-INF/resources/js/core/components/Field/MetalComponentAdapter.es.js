@@ -86,11 +86,12 @@ export const MetalComponentAdapter = ({
 				activePage,
 				editable,
 				field,
+				onChange,
 				pageIndex,
 				spritemap,
 			});
 		}
-	}, [activePage, editable, pageIndex, spritemap, field]);
+	}, [activePage, editable, onChange, pageIndex, spritemap, field]);
 
 	return <NoRender forwardRef={container} />;
 };

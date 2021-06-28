@@ -116,6 +116,7 @@ definition {
 		Button.clickDone();
 
 		WorkflowMetrics.viewProcessStepDisplaysUpdateStatus(workflowAssetTitle = "Blogs Entry Title 1");
+
 		WorkflowMetrics.viewProcessStepDisplaysUpdateStatus(workflowAssetTitle = "Blogs Entry Title 2");
 	}
 

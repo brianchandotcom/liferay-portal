@@ -9,9 +9,9 @@
 </thead>
 <tbody>
 <tr>
-    <td>METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS</td>
-    <td>//p[contains(text(),'There is no data at the moment.')]</td>
-    <td></td>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS</td>
+	<td>//p[contains(text(),'There is no data at the moment.')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_PERFORMANCE_BT_STEP_ALL_STEPS_FILTER</td>

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
-import com.liferay.style.book.web.internal.portlet.zip.StyleBookEntryZipProcessor;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.io.File;
 import java.io.FileInputStream;

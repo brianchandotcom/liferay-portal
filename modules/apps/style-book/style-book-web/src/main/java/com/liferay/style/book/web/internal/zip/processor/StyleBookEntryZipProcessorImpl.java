@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.style.book.web.internal.portlet.zip;
+package com.liferay.style.book.web.internal.zip.processor;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +38,8 @@ import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.StyleBookEntryService;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessorImportResultEntry;
 
 import java.io.File;
 import java.io.InputStream;
@@ -58,8 +60,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = StyleBookEntryZipProcessor.class)
-public class StyleBookEntryZipProcessor {
+public class StyleBookEntryZipProcessorImpl
+	implements StyleBookEntryZipProcessor {
 
+	@Override
 	public File exportStyleBookEntries(List<StyleBookEntry> styleBookEntries)
 		throws PortletException {
 
@@ -77,8 +81,10 @@ public class StyleBookEntryZipProcessor {
 		}
 	}
 
-	public List<ImportResultEntry> importStyleBookEntries(
-			long userId, long groupId, File file, boolean overwrite)
+	@Override
+	public List<StyleBookEntryZipProcessorImportResultEntry>
+			importStyleBookEntries(
+				long userId, long groupId, File file, boolean overwrite)
 		throws Exception {
 
 		_importResultEntries = new ArrayList<>();
@@ -105,56 +111,6 @@ public class StyleBookEntryZipProcessor {
 		}
 
 		return _importResultEntries;
-	}
-
-	public static class ImportResultEntry {
-
-		public ImportResultEntry(String name, Status status) {
-			_name = name;
-			_status = status;
-		}
-
-		public ImportResultEntry(
-			String name, Status status, String errorMessage) {
-
-			_name = name;
-			_status = status;
-			_errorMessage = errorMessage;
-		}
-
-		public String getErrorMessage() {
-			return _errorMessage;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public Status getStatus() {
-			return _status;
-		}
-
-		public enum Status {
-
-			IMPORTED("imported"), IMPORTED_DRAFT("imported-draft"),
-			INVALID("invalid");
-
-			public String getLabel() {
-				return _label;
-			}
-
-			private Status(String label) {
-				_label = label;
-			}
-
-			private final String _label;
-
-		}
-
-		private String _errorMessage;
-		private final String _name;
-		private final Status _status;
-
 	}
 
 	private StyleBookEntry _addStyleBookEntry(
@@ -184,15 +140,18 @@ public class StyleBookEntryZipProcessor {
 			}
 
 			_importResultEntries.add(
-				new ImportResultEntry(
-					name, ImportResultEntry.Status.IMPORTED, StringPool.BLANK));
+				new StyleBookEntryZipProcessorImportResultEntry(
+					name,
+					StyleBookEntryZipProcessorImportResultEntry.Status.IMPORTED,
+					StringPool.BLANK));
 
 			return styleBookEntry;
 		}
 		catch (PortalException portalException) {
 			_importResultEntries.add(
-				new ImportResultEntry(
-					name, ImportResultEntry.Status.INVALID,
+				new StyleBookEntryZipProcessorImportResultEntry(
+					name,
+					StyleBookEntryZipProcessorImportResultEntry.Status.INVALID,
 					portalException.getMessage()));
 		}
 
@@ -402,7 +361,8 @@ public class StyleBookEntryZipProcessor {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private List<ImportResultEntry> _importResultEntries;
+	private List<StyleBookEntryZipProcessorImportResultEntry>
+		_importResultEntries;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryEntryLocalService;

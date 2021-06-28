@@ -26,7 +26,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
-import com.liferay.style.book.web.internal.portlet.zip.StyleBookEntryZipProcessor;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessorImportResultEntry;
 
 import java.io.File;
 
@@ -80,7 +81,7 @@ public class ImportStyleBookEntriesMVCActionCommand
 			actionRequest, "overwrite", true);
 
 		try {
-			List<StyleBookEntryZipProcessor.ImportResultEntry>
+			List<StyleBookEntryZipProcessorImportResultEntry>
 				styleBookEntryZipProcessorImportResultEntries =
 					_importStyleBookEntries(
 						themeDisplay.getUserId(),
@@ -104,7 +105,7 @@ public class ImportStyleBookEntriesMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	private List<StyleBookEntryZipProcessor.ImportResultEntry>
+	private List<StyleBookEntryZipProcessorImportResultEntry>
 			_importStyleBookEntries(
 				long userId, long groupId, File file, boolean overwrite)
 		throws Exception {

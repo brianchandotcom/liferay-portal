@@ -16,7 +16,7 @@ package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.style.book.web.internal.portlet.zip.StyleBookEntryZipProcessor;
+import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessorImportResultEntry;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,9 +34,9 @@ public class ImportStyleBookDisplayContext {
 	}
 
 	public List<String> getStyleBookEntryZipProcessorImportResultEntryNames(
-		StyleBookEntryZipProcessor.ImportResultEntry.Status status) {
+		StyleBookEntryZipProcessorImportResultEntry.Status status) {
 
-		List<StyleBookEntryZipProcessor.ImportResultEntry>
+		List<StyleBookEntryZipProcessorImportResultEntry>
 			styleBookEntryZipProcessorImportResultEntries =
 				_getStyleBookEntryZipProcessorImportResultEntryNames();
 
@@ -44,7 +44,7 @@ public class ImportStyleBookDisplayContext {
 			return null;
 		}
 
-		Stream<StyleBookEntryZipProcessor.ImportResultEntry> stream =
+		Stream<StyleBookEntryZipProcessorImportResultEntry> stream =
 			styleBookEntryZipProcessorImportResultEntries.stream();
 
 		return stream.filter(
@@ -52,13 +52,13 @@ public class ImportStyleBookDisplayContext {
 				styleBookEntryZipProcessorImportResultEntry.getStatus() ==
 					status
 		).map(
-			StyleBookEntryZipProcessor.ImportResultEntry::getName
+			StyleBookEntryZipProcessorImportResultEntry::getName
 		).collect(
 			Collectors.toList()
 		);
 	}
 
-	private List<StyleBookEntryZipProcessor.ImportResultEntry>
+	private List<StyleBookEntryZipProcessorImportResultEntry>
 		_getStyleBookEntryZipProcessorImportResultEntryNames() {
 
 		if (_styleBookEntryZipProcessorImportResultEntries != null) {
@@ -66,7 +66,7 @@ public class ImportStyleBookDisplayContext {
 		}
 
 		_styleBookEntryZipProcessorImportResultEntries =
-			(List<StyleBookEntryZipProcessor.ImportResultEntry>)
+			(List<StyleBookEntryZipProcessorImportResultEntry>)
 				SessionMessages.get(
 					_renderRequest,
 					"styleBookEntryZipProcessorImportResultEntries");
@@ -75,7 +75,7 @@ public class ImportStyleBookDisplayContext {
 	}
 
 	private final RenderRequest _renderRequest;
-	private List<StyleBookEntryZipProcessor.ImportResultEntry>
+	private List<StyleBookEntryZipProcessorImportResultEntry>
 		_styleBookEntryZipProcessorImportResultEntries;
 
 }

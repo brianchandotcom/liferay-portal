@@ -33,7 +33,7 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 	<liferay-frontend:edit-form-body>
 
 		<%
-		List<String> draftStyleBookEntryZipProcessorImportResultEntryNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntryNames(StyleBookEntryZipProcessor.ImportResultEntry.Status.IMPORTED_DRAFT);
+		List<String> draftStyleBookEntryZipProcessorImportResultEntryNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntryNames(StyleBookEntryZipProcessorImportResultEntry.Status.IMPORTED_DRAFT);
 		%>
 
 		<c:if test="<%= ListUtil.isNotEmpty(draftStyleBookEntryZipProcessorImportResultEntryNames) %>">
@@ -44,7 +44,7 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 		</c:if>
 
 		<%
-		List<String> invalidStyleBookEntryZipProcessorImportResultEntryNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntryNames(StyleBookEntryZipProcessor.ImportResultEntry.Status.INVALID);
+		List<String> invalidStyleBookEntryZipProcessorImportResultEntryNames = importStyleBookDisplayContext.getStyleBookEntryZipProcessorImportResultEntryNames(StyleBookEntryZipProcessorImportResultEntry.Status.INVALID);
 		%>
 
 		<c:if test="<%= ListUtil.isNotEmpty(invalidStyleBookEntryZipProcessorImportResultEntryNames) %>">

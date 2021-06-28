@@ -769,14 +769,17 @@ public class JournalArticleActionDropdownItemsProvider {
 		_getTranslateActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
 			dropdownItem.setHref(
 				_translationURLProvider.getTranslateURL(
 					PortalUtil.getClassNameId(JournalArticle.class.getName()),
 					_article.getResourcePrimKey(),
 					RequestBackedPortletURLFactoryUtil.create(
 						_httpServletRequest)),
-				"redirect", _getRedirect(), "referringPortletResource",
-				_getReferringPortletResource());
+				"redirect", _getRedirect(), "portletResource",
+				portletDisplay.getId());
+
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "translate"));
 		};

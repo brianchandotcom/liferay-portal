@@ -391,6 +391,8 @@ public class TranslateDisplayContext {
 			_liferayPortletResponse
 		).setActionName(
 			"/translation/update_translation"
+		).setPortletResource(
+			ParamUtil.getString(_httpServletRequest, "portletResource")
 		).setParameter(
 			"classNameId", PortalUtil.getClassNameId(_className)
 		).setParameter(

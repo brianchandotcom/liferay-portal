@@ -18,10 +18,17 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.moderation.internal.constants.MBModerationConstants;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,10 +64,34 @@ public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			company.getCompanyId(), defaultUserId,
-			MBModerationConstants.WORKFLOW_DEFINITION_NAME,
+			LocalizationUtil.getXml(
+				_getTitleMap(company.getCompanyId()),
+				_language.getLanguageId(company.getLocale()), "title"),
 			MBModerationConstants.WORKFLOW_DEFINITION_NAME,
 			MBMessage.class.getName(), content.getBytes());
 	}
+
+	private Map<String, String> _getTitleMap(long companyId) {
+		Map<String, String> titleMap = new HashMap<>();
+
+		for (Locale locale : _language.getCompanyAvailableLocales(companyId)) {
+			titleMap.put(
+				_language.getLanguageId(locale),
+				_language.get(
+					_resourceBundleLoader.loadResourceBundle(locale),
+					MBModerationConstants.WORKFLOW_DEFINITION_NAME));
+		}
+
+		return titleMap;
+	}
+
+	@Reference
+	private Language _language;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.message.boards.moderation)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private UserLocalService _userLocalService;

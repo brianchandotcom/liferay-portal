@@ -14,8 +14,13 @@
 
 import {UPDATE_PREVIEW_IMAGE} from './types';
 
-export default function updatePreviewImage({fileEntryId, previewURL}) {
+export default function updatePreviewImage({
+	contents,
+	fileEntryId,
+	previewURL,
+}) {
 	return {
+		contents,
 		fileEntryId,
 		previewURL,
 		type: UPDATE_PREVIEW_IMAGE,

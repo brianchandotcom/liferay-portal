@@ -18,7 +18,6 @@ import {ImageEditor} from 'item-selector-taglib';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {updateFragmentEntryLinkContent} from '../../../../../app/actions/index';
 import updatePreviewImage from '../../../../../app/actions/updatePreviewImage';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
@@ -44,17 +43,6 @@ export default function ImageEditorModal({
 		if (response?.success) {
 			onClose();
 
-			ImageService.getFileEntry({
-				fileEntryId,
-			}).then(({fileEntryURL}) => {
-				dispatch(
-					updatePreviewImage({
-						fileEntryId,
-						previewURL: fileEntryURL,
-					})
-				);
-			});
-
 			const fragmentsToUpdate = Object.values(fragmentEntryLinks).filter(
 				(fragmentEntryLink) => {
 					const editableValues = Object.entries(
@@ -75,17 +63,28 @@ export default function ImageEditorModal({
 				}
 			);
 
-			fragmentsToUpdate.forEach(({fragmentEntryLinkId}) => {
-				FragmentService.renderFragmentEntryLinkContent({
-					fragmentEntryLinkId,
-				}).then(({content}) => {
-					dispatch(
-						updateFragmentEntryLinkContent({
-							content,
-							fragmentEntryLinkId,
-						})
-					);
-				});
+			const getFileEntryPromise = ImageService.getFileEntry({
+				fileEntryId,
+			});
+
+			const getFragmentEntryLinkContentPromises = fragmentsToUpdate.map(
+				({fragmentEntryLinkId}) =>
+					FragmentService.renderFragmentEntryLinkContent({
+						fragmentEntryLinkId,
+					}).then(({content}) => ({content, fragmentEntryLinkId}))
+			);
+
+			Promise.all([
+				getFileEntryPromise,
+				...getFragmentEntryLinkContentPromises,
+			]).then(([{fileEntryURL}, ...contents]) => {
+				dispatch(
+					updatePreviewImage({
+						contents,
+						fileEntryId,
+						previewURL: fileEntryURL,
+					})
+				);
 			});
 		}
 	};

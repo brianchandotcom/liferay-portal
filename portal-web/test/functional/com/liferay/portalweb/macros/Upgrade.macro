@@ -2703,9 +2703,7 @@ definition {
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
-		LexiconEntry.openEntryMenu(rowEntry = "DM Document Type Name");
-
-		MenuItem.click(menuItem = "Edit");
+		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Text",

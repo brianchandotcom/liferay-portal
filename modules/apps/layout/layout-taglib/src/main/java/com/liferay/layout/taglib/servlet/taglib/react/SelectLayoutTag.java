@@ -89,10 +89,6 @@ public class SelectLayoutTag extends IncludeTag {
 		return _checkDisplayPage;
 	}
 
-	public boolean isDoAsUser() {
-		return _doAsUser;
-	}
-
 	public boolean isEnableCurrentPage() {
 		return _enableCurrentPage;
 	}
@@ -115,10 +111,6 @@ public class SelectLayoutTag extends IncludeTag {
 
 	public void setComponentId(String componentId) {
 		_componentId = componentId;
-	}
-
-	public void setDoAsUser(boolean doAsUser) {
-		_doAsUser = doAsUser;
 	}
 
 	public void setEnableCurrentPage(boolean enableCurrentPage) {
@@ -178,7 +170,6 @@ public class SelectLayoutTag extends IncludeTag {
 
 		_checkDisplayPage = false;
 		_componentId = null;
-		_doAsUser = true;
 		_enableCurrentPage = false;
 		_followURLOnTitleClick = false;
 		_itemSelectorSaveEvent = null;
@@ -401,7 +392,6 @@ public class SelectLayoutTag extends IncludeTag {
 
 	private boolean _checkDisplayPage;
 	private String _componentId;
-	private boolean _doAsUser = true;
 	private boolean _enableCurrentPage;
 	private boolean _followURLOnTitleClick;
 	private String _itemSelectorSaveEvent;

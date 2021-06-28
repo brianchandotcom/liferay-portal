@@ -31,10 +31,6 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _checkDisplayPage;
 	}
 
-	public boolean isDoAsUser() {
-		return _doAsUser;
-	}
-
 	public boolean isEnableCurrentPage() {
 		return _enableCurrentPage;
 	}
@@ -71,10 +67,6 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_checkDisplayPage = checkDisplayPage;
 	}
 
-	public void setDoAsUser(boolean doAsUser) {
-		_doAsUser = doAsUser;
-	}
-
 	public void setEnableCurrentPage(boolean enableCurrentPage) {
 		_enableCurrentPage = enableCurrentPage;
 	}
@@ -108,7 +100,6 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private boolean _checkDisplayPage;
-	private boolean _doAsUser;
 	private boolean _enableCurrentPage;
 	private boolean _followURLOnTitleClick;
 	private boolean _multiSelection;

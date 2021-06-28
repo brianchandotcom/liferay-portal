@@ -71,10 +71,6 @@ public class LayoutItemSelectorViewDisplayContext {
 		return _layoutItemSelectorCriterion.isCheckDisplayPage();
 	}
 
-	public boolean isDoAsUser() {
-		return _layoutItemSelectorCriterion.isDoAsUser();
-	}
-
 	public boolean isEnableCurrentPage() {
 		return _layoutItemSelectorCriterion.isEnableCurrentPage();
 	}

@@ -30,7 +30,6 @@ LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (Lay
 
 <liferay-layout:select-layout
 	checkDisplayPage="<%= layoutItemSelectorViewDisplayContext.isCheckDisplayPage() %>"
-	doAsUser="<%= layoutItemSelectorViewDisplayContext.isDoAsUser() %>"
 	enableCurrentPage="<%= layoutItemSelectorViewDisplayContext.isEnableCurrentPage() %>"
 	followURLOnTitleClick="<%= layoutItemSelectorViewDisplayContext.isFollowURLOnTitleClick() %>"
 	itemSelectorSaveEvent="<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>"

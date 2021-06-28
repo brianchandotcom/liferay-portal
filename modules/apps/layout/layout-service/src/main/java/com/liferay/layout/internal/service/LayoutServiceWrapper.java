@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.service.LayoutServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -35,13 +34,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yang Cao
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class ContentPageLayoutServiceWrapper extends LayoutServiceWrapper {
+public class LayoutServiceWrapper
+	extends com.liferay.portal.kernel.service.LayoutServiceWrapper {
 
-	public ContentPageLayoutServiceWrapper() {
+	public LayoutServiceWrapper() {
 		super(null);
 	}
 
-	public ContentPageLayoutServiceWrapper(LayoutService layoutService) {
+	public LayoutServiceWrapper(LayoutService layoutService) {
 		super(layoutService);
 	}
 

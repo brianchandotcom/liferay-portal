@@ -528,6 +528,8 @@
 
 		<Logger level="ERROR" name="org.apache.xbean" />
 
+		<Logger level="ERROR" name="org.elasticsearch.client.RestClient" />
+
 		<Logger level="ERROR" name="org.hibernate" />
 
 		<Logger level="OFF" name="org.hibernate.event.def.AbstractFlushingEventListener" />

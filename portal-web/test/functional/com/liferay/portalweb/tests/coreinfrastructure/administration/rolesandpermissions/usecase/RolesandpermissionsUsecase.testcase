@@ -44,6 +44,49 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CanRemoveSiteInScope {
+		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#CanRemoveSiteInScope";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONRole.addRegularRole(
+			roleKey = "Remove Permission Scope",
+			roleTitle = "Remove Permission Scope");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			roleTitle = "Remove Permission Scope",
+			siteNameScope = "Liferay");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media > Document",
+			siteNameScope = "${siteName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCmdCP(
+			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
+			permissionDefinitionValue = "View",
+			removeSiteScope = "${siteName}",
+			roleTitle = "Remove Permission Scope");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View",
+			permissionNavigationValue = "Documents and Media > Document",
+			siteNameScope = "All Sites and Asset Libraries");
+	}
+
 	@description = "This is a use case for LPS-116055."
 	@priority = "5"
 	test ChangeScope {

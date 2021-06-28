@@ -1192,6 +1192,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_REMOVE_SITE_SCOPE</td>
+	<td>//span[contains(@id,'DLFileEntryVIE')]/span[contains(.,'${key_removeSiteScope}')]/span//button[*[name()='svg'][contains(@class,'times-small')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

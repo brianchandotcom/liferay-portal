@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.upgrade.v2_5_1;
+package com.liferay.change.tracking.web.internal.upgrade.v1_0_2;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.petra.string.CharPool;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -45,9 +46,11 @@ import java.util.Map;
 public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 
 	public PublicationsUserRoleUpgradeProcess(
+		ResourceActions resourceActions,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, UserLocalService userLocalService) {
 
+		_resourceActions = resourceActions;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 		_userLocalService = userLocalService;
@@ -55,6 +58,10 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_resourceActions.populatePortletResources(
+			PublicationsUserRoleUpgradeProcess.class.getClassLoader(),
+			"resource-actions/default.xml");
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select CTPreferences.companyId from CTPreferences where " +
 					"CTPreferences.userId = 0");
@@ -112,6 +119,7 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private final ResourceActions _resourceActions;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;

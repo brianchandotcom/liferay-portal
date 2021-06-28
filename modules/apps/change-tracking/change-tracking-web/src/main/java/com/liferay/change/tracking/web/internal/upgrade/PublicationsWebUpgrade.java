@@ -16,6 +16,11 @@ package com.liferay.change.tracking.web.internal.upgrade;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.web.internal.upgrade.v1_0_2.PublicationsUserRoleUpgradeProcess;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -54,9 +59,27 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"1.0.1", "1.0.2",
+			new PublicationsUserRoleUpgradeProcess(
+				_resourceActions, _resourcePermissionLocalService,
+				_roleLocalService, _userLocalService));
 	}
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private ResourceActions _resourceActions;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

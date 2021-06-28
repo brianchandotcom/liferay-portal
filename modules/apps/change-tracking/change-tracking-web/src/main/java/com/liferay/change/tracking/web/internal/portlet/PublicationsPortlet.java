@@ -136,7 +136,7 @@ public class PublicationsPortlet extends MVCPortlet {
 	private PortletPermission _portletPermission;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.change.tracking.web)(&(release.schema.version>=1.0.1)(!(release.schema.version>=2.0.0))))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.change.tracking.web)(&(release.schema.version>=1.0.2)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
 

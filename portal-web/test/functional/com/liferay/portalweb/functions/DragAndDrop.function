@@ -56,11 +56,17 @@ definition {
 
 		selenium.mouseDown("${locator1}");
 
-		selenium.mouseMoveAt("${locator2}", "0,50");
+		selenium.mouseMoveAt("${locator2}", "0,80");
+
+		selenium.mouseMoveAt("${locator2}", "0,-80");
+
+		selenium.mouseMoveAt("${locator2}", "0,80");
+
+		selenium.mouseMove("${locator2}");
 
 		selenium.pause("3000");
 
-		selenium.mouseRelease();
+		selenium.mouseRelease("${locator2}");
 
 		selenium.assertJavaScriptErrors();
 

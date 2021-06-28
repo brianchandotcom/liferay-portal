@@ -280,7 +280,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						"UPDATE", Constants.UPDATE
 					).build()
 				).put(
-					"editorURL", editorURL.toString()
+					"editorURL", editorURL
 				).put(
 					"formName", HtmlUtil.escapeJS(discussionTaglibHelper.getFormName())
 				).put(

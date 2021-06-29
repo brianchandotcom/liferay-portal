@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.internal.log;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -105,13 +104,11 @@ public class UpgradeLogAppender implements Appender {
 
 	@Override
 	public void start() {
-		if (PropsValues.UPGRADE_REPORT_ENABLED) {
-			_started = true;
+		_started = true;
 
-			_upgradeReport = new UpgradeReport();
+		_upgradeReport = new UpgradeReport();
 
-			_rootLogger.addAppender(this);
-		}
+		_rootLogger.addAppender(this);
 	}
 
 	@Override

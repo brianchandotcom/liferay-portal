@@ -129,37 +129,9 @@ public class DBUpgrader {
 			try (SafeCloseable safeCloseable =
 					ProxyModeThreadLocal.setWithSafeCloseable(false)) {
 
-				final ServiceDependencyManager serviceDependencyManager =
-					new ServiceDependencyManager();
-
-				serviceDependencyManager.addServiceDependencyListener(
-					new ServiceDependencyListener() {
-
-						@Override
-						public void dependenciesFulfilled() {
-							Registry registry = RegistryUtil.getRegistry();
-
-							_appenderServiceReference =
-								registry.getServiceReference(Appender.class);
-
-							ServiceReference<? extends Appender>
-								appenderServiceReference =
-									_appenderServiceReference;
-
-							_appender = registry.getService(
-								appenderServiceReference);
-
-							_appender.start();
-						}
-
-						@Override
-						public void destroy() {
-						}
-
-					});
-
-				serviceDependencyManager.registerDependencies(
-					getDependencies());
+				if (PropsValues.UPGRADE_REPORT_ENABLED) {
+					_registerAppenderDependency();
+				}
 
 				upgrade();
 			}
@@ -274,6 +246,37 @@ public class DBUpgrader {
 				"No Release exists with the primary key " +
 					ReleaseConstants.DEFAULT_ID);
 		}
+	}
+
+	private static void _registerAppenderDependency() {
+		final ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		serviceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
+					_appenderServiceReference = registry.getServiceReference(
+						Appender.class);
+
+					ServiceReference<? extends Appender>
+						appenderServiceReference = _appenderServiceReference;
+
+					_appender = registry.getService(appenderServiceReference);
+
+					_appender.start();
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		serviceDependencyManager.registerDependencies(getDependencies());
 	}
 
 	private static void _registerModuleServiceLifecycle(

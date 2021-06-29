@@ -14,6 +14,7 @@
 
 package com.liferay.account.rest.internal.resource.v1_0;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.rest.dto.v1_0.Account;
@@ -25,8 +26,11 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -35,6 +39,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -232,6 +237,90 @@ public class AccountResourceImpl
 			account);
 	}
 
+	private Map<String, Map<String, String>> _getActions(Long accountEntryId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				ActionKeys.DELETE, accountEntryId, "deleteAccount",
+				_accountEntryModelResourcePermission)
+		).put(
+			"delete",
+			addAction(
+				ActionKeys.DELETE, accountEntryId,
+				"deleteAccountByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"delete",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"deleteOrganizationAccounts",
+				_accountEntryModelResourcePermission)
+		).put(
+			"delete",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"deleteOrganizationAccountsByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"get",
+			addAction(
+				ActionKeys.VIEW, accountEntryId, "getAccount",
+				_accountEntryModelResourcePermission)
+		).put(
+			"get",
+			addAction(
+				ActionKeys.VIEW, accountEntryId,
+				"getAccountByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				ActionKeys.UPDATE, accountEntryId, "patchAccount",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				ActionKeys.UPDATE, accountEntryId,
+				"patchAccountByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"patchOrganizationMoveAccounts",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"patchOrganizationMoveAccountsByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"postOrganizationAccounts",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"postOrganizationAccountsByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				ActionKeys.UPDATE, accountEntryId, "putAccount",
+				_accountEntryModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				ActionKeys.UPDATE, accountEntryId,
+				"putAccountByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).build();
+	}
+
 	private String[] _getDomains(Account account) {
 		return Optional.ofNullable(
 			account.getDomains()
@@ -267,11 +356,21 @@ public class AccountResourceImpl
 	}
 
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {
-		return _accountResourceDTOConverter.toDTO(accountEntry);
+		Account account = _accountResourceDTOConverter.toDTO(accountEntry);
+
+		account.setActions(_getActions(accountEntry.getAccountEntryId()));
+
+		return account;
 	}
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference
 	private AccountEntryOrganizationRelLocalService

@@ -100,6 +100,8 @@ public class OpenAPIResourceImpl {
 
 			add(ProcessMetricResourceImpl.class);
 
+			add(ProcessVersionResourceImpl.class);
+
 			add(ReindexStatusResourceImpl.class);
 
 			add(RoleResourceImpl.class);

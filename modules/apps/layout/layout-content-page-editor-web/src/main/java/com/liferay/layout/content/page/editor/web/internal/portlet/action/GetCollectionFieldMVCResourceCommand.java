@@ -202,15 +202,15 @@ public class GetCollectionFieldMVCResourceCommand
 				int end = numberOfItems;
 				int start = 0;
 
+				int listCount = layoutListRetriever.getListCount(
+					listObjectReference, defaultLayoutListRetrieverContext);
+
 				if (Objects.equals(paginationType, "regular") ||
 					Objects.equals(paginationType, "simple")) {
 
 					if (activePage < 1) {
 						activePage = 1;
 					}
-
-					int listCount = layoutListRetriever.getListCount(
-						listObjectReference, defaultLayoutListRetrieverContext);
 
 					end = Math.min(
 						Math.min(
@@ -298,6 +298,8 @@ public class GetCollectionFieldMVCResourceCommand
 					"length",
 					layoutListRetriever.getListCount(
 						listObjectReference, defaultLayoutListRetrieverContext)
+				).put(
+					"totalNumberOfItems", Math.min(listCount, numberOfItems)
 				);
 			}
 		}

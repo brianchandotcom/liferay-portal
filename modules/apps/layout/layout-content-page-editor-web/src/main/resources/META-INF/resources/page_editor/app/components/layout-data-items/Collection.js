@@ -84,7 +84,9 @@ const Grid = ({
 }) => {
 	const maxNumberOfItems = Math.min(
 		collectionLength,
-		collectionConfig.numberOfItems
+		collectionConfig.paginationType
+			? collectionConfig.numberOfItemsPerPage
+			: collectionConfig.numberOfItems
 	);
 	const numberOfRows = Math.ceil(
 		maxNumberOfItems / collectionConfig.numberOfColumns
@@ -209,7 +211,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				templateKey: collectionConfig.templateKey || null,
 			})
 				.then((response) => {
-					setTotalItems(response.length);
+					setTotalItems(response.totalNumberOfItems);
 
 					setCollection(
 						response.length > 0 && response.items?.length > 0

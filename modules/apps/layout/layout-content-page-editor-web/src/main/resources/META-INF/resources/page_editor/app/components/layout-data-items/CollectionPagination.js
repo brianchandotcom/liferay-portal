@@ -29,10 +29,13 @@ export default function CollectionPagination({
 	totalItems,
 }) {
 	const isActive = useIsActive();
+	const {
+		numberOfItems,
+		numberOfItemsPerPage,
+		paginationType,
+	} = collectionConfig;
 
-	const totalPages = Math.ceil(
-		totalItems / collectionConfig.numberOfItemsPerPage
-	);
+	const totalPages = Math.ceil(totalItems / numberOfItemsPerPage);
 
 	const simplePaginationButtons = [
 		{
@@ -47,6 +50,17 @@ export default function CollectionPagination({
 		},
 	];
 
+	const regularPaginationLabel = [
+		numberOfItemsPerPage && numberOfItems && totalItems
+			? (activePage - 1) * numberOfItemsPerPage + 1
+			: 0,
+		Math.min(
+			Math.min(activePage * numberOfItemsPerPage, numberOfItems),
+			totalItems
+		),
+		Math.min(numberOfItems, totalItems),
+	];
+
 	return (
 		<div
 			className={classNames('page-editor__collection__pagination', {
@@ -55,25 +69,21 @@ export default function CollectionPagination({
 				),
 			})}
 		>
-			{collectionConfig.paginationType === 'regular' ? (
+			{paginationType === 'regular' ? (
 				<ClayPaginationBar>
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
-							[
-								collectionConfig.numberOfItemsPerPage *
-									(activePage - 1) || 1,
-								collectionConfig.numberOfItemsPerPage *
-									activePage,
-								totalItems,
-							]
+							regularPaginationLabel
 						)}
 					</ClayPaginationBar.Results>
 
 					<ClayPaginationWithBasicItems
 						activePage={activePage}
 						onPageChange={onPageChange}
-						totalPages={totalPages}
+						totalPages={
+							Number.isFinite(totalPages) ? totalPages : 0
+						}
 					/>
 				</ClayPaginationBar>
 			) : (

@@ -1,33 +1,28 @@
 {
-	"devDependencies": {
-		"compass-mixins": "0.12.10",
-		"gulp": "4.0.2",
-		"liferay-frontend-css-common": "6.0.0",
-		"liferay-frontend-theme-styled": "6.0.2",
-		"liferay-frontend-theme-unstyled": "6.0.2",
-		"liferay-theme-tasks": "^10.4.0"
+	"author": "Evan Thibodeau <evan.thibodeau@liferay.com > (https://github.com/ethib137)",
+	"bugs": {
+		"url": "https://issues.liferay.com/"
 	},
 	"keywords": [
 		"liferay-theme"
 	],
+	"license": "LGPL",
 	"liferayTheme": {
 		"baseTheme": "styled",
-		"fontAwesome": false,
-		"screenshot": "",
-		"templateLanguage": "ftl",
-		"version": "7.4"
+		"distName": "solutions-theme",
+		"rubySass": false,
+		"sassOptions": {
+			"dartSass": true
+		},
+		"version": "7.1"
 	},
 	"main": "package.json",
-	"name": "liferay-solutions-theme",
+	"name": "@liferay/solutions-theme",
+	"repository": "liferay/liferay-portal",
 	"scripts": {
-		"build": "gulp build",
-		"deploy": "gulp deploy",
-		"extend": "gulp extend",
-		"init": "gulp init",
-		"kickstart": "gulp kickstart",
-		"status": "gulp status",
-		"upgrade": "gulp upgrade",
-		"watch": "gulp watch"
+		"build": "liferay-npm-scripts theme build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.0"
+	"version": "5.0.2"
 }

@@ -165,12 +165,31 @@ definition {
 	}
 
 	@description = "Verify that the user can select Edit option in the kebab menu for a Not Published process"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectEditOptionForNonPublishedProcess {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68246 CanSelectEditOptionForNonPublishedProcess pending implementation
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		AssertTextEquals(
+			key_workflowDefinitionTitle = "Not Published",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE",
+			value1 = "Not Published");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		AssertTextEquals(
+			locator1 = "ProcessBuilderListView#WORKFLOW_HEADER_TITLE",
+			value1 = "Single Approver");
+
+		AssertEditable(locator1 = "WorkflowDefinition#DEFINITION_TITLE");
+
+		AssertElementPresent(locator1 = "Button#PUBLISH");
+
+		AssertElementPresent(locator1 = "Button#SAVE");
 	}
 
 	@description = "Verify that the user can select Permissions option in the kebab menu for a particular row"

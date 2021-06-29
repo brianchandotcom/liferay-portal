@@ -68,9 +68,23 @@ public class LayoutReportsDataProvider {
 			super(exception);
 		}
 
+		public LayoutReportsDataProviderException(
+			JSONObject googlePageSpeedErrorJSONObject, String message) {
+
+			super(message);
+
+			_googlePageSpeedErrorJSONObject = googlePageSpeedErrorJSONObject;
+		}
+
 		public LayoutReportsDataProviderException(String message) {
 			super(message);
 		}
+
+		public JSONObject getGooglePageSpeedErrorJSONObject() {
+			return _googlePageSpeedErrorJSONObject;
+		}
+
+		private JSONObject _googlePageSpeedErrorJSONObject;
 
 	}
 
@@ -119,7 +133,8 @@ public class LayoutReportsDataProvider {
 		Http.Response response = options.getResponse();
 
 		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			throw new PortalException(
+			throw new LayoutReportsDataProviderException(
+				JSONFactoryUtil.createJSONObject(responseJSON),
 				StringBundler.concat(
 					"Response code ", response.getResponseCode(), ": ",
 					responseJSON));

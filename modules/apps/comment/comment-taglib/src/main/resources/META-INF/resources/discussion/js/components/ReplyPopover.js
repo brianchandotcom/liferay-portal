@@ -15,8 +15,9 @@
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
+import useOnClickOutside from '../hooks/useOnClickOutside';
 import UserIcon from './UserIcon';
 
 function ReplyPopover({
@@ -29,6 +30,11 @@ function ReplyPopover({
 	username,
 }) {
 	const [openPopover, setOpenPopover] = useState(false);
+	const popoverRef = useRef(null);
+
+	useOnClickOutside([popoverRef.current, '.lfr-discussion-parent-link'], () =>
+		setOpenPopover(false)
+	);
 
 	return (
 		<ClayPopover
@@ -51,6 +57,7 @@ function ReplyPopover({
 				</ClayLayout.ContentRow>
 			}
 			onShowChange={setOpenPopover}
+			ref={popoverRef}
 			show={openPopover}
 			trigger={
 				<a

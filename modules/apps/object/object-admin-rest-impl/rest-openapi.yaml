@@ -29,6 +29,7 @@ components:
                     type: array
             type: object
         ObjectField:
+            # @review
             properties:
                 id:
                     format: int64
@@ -43,6 +44,7 @@ components:
                 name:
                     type: string
                 type:
+                    description: "The available default types are: BigDecimal, Boolean, Date, Double, Integer, Long and String."
                     type: string
 info:
     license:

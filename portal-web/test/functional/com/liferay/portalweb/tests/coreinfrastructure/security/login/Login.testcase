@@ -627,7 +627,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",
-			value1 = "verify-token-based-login -Dportal.url=localhost:8080/web/guest -Duser.token=test@liferay.com");
+			value1 = "verify-token-based-login -Dportal.url=http://localhost:8080/web/guest -Duser.token=test@liferay.com");
 
 		FormFields.disableCheckbox(fieldName = "Enabled");
 
@@ -664,7 +664,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",
-			value1 = "verify-token-based-login -Dportal.url=www.able.com:8080/web/guest -Duser.token=test@www.able.com");
+			value1 = "verify-token-based-login -Dportal.url=http://www.able.com:8080/web/guest -Duser.token=test@www.able.com");
 	}
 
 	@priority = "3"

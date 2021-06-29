@@ -28,18 +28,38 @@ import type {ImpactValue} from 'axe-core';
 import type {RuleRaw, Violations} from '../hooks/useA11y';
 
 const IMPACT_FILTER_OPTIONS = [
-	{label: Liferay.Language.get('critical'), value: 'critical'},
-	{label: Liferay.Language.get('serious'), value: 'serious'},
-	{label: Liferay.Language.get('moderate'), value: 'moderate'},
-	{label: Liferay.Language.get('minor'), value: 'minor'},
+	{
+		'data-testid': 'critical',
+		label: Liferay.Language.get('critical'),
+		value: 'critical',
+	},
+	{
+		'data-testid': 'serious',
+		label: Liferay.Language.get('serious'),
+		value: 'serious',
+	},
+	{
+		'data-testid': 'moderate',
+		label: Liferay.Language.get('moderate'),
+		value: 'moderate',
+	},
+	{
+		'data-testid': 'minor',
+		label: Liferay.Language.get('minor'),
+		value: 'minor',
+	},
 ];
 
 const CATEGORY_FILTER_OPTIONS = [
 	{label: 'WCAG 2.0A', value: 'wcag2a'},
-	{label: 'WCAG 2.0 Level AA', value: 'wcag2aa'},
+	{'data-testid': 'wcag2aa', label: 'WCAG 2.0 Level AA', value: 'wcag2aa'},
 	{label: 'WCAG 2.1 Level A', value: 'wcag21a'},
 	{label: 'WCAG 2.1 Level AA', value: 'wcag21aa'},
-	{label: 'Best Practices', value: 'best-practice'},
+	{
+		'data-testid': 'best-practice',
+		label: 'Best Practices',
+		value: 'best-practice',
+	},
 ];
 
 const IMPACT_PRIORITY = {
@@ -82,30 +102,38 @@ const getItems = (
 ) => {
 	return [
 		{
-			items: IMPACT_FILTER_OPTIONS.map(({label, value}) => ({
-				checked: getChecked(value),
-				label,
-				onChange: (checked: boolean) =>
-					onChange(
-						checked ? TYPES.IMPACT_ADD : TYPES.IMPACT_REMOVE,
-						value
-					),
-				type: 'checkbox' as const,
-			})),
+			items: IMPACT_FILTER_OPTIONS.map(
+				({label, value, ...otherProps}) => ({
+					...otherProps,
+					checked: getChecked(value),
+					label,
+					onChange: (checked: boolean) =>
+						onChange(
+							checked ? TYPES.IMPACT_ADD : TYPES.IMPACT_REMOVE,
+							value
+						),
+					type: 'checkbox' as const,
+				})
+			),
 			label: Liferay.Language.get('filter-by-impact'),
 			type: 'group' as const,
 		},
 		{
-			items: CATEGORY_FILTER_OPTIONS.map(({label, value}) => ({
-				checked: getChecked(value),
-				label,
-				onChange: (checked: boolean) =>
-					onChange(
-						checked ? TYPES.CATEGORY_ADD : TYPES.CATEGORY_REMOVE,
-						value
-					),
-				type: 'checkbox' as const,
-			})),
+			items: CATEGORY_FILTER_OPTIONS.map(
+				({label, value, ...otherProps}) => ({
+					...otherProps,
+					checked: getChecked(value),
+					label,
+					onChange: (checked: boolean) =>
+						onChange(
+							checked
+								? TYPES.CATEGORY_ADD
+								: TYPES.CATEGORY_REMOVE,
+							value
+						),
+					type: 'checkbox' as const,
+				})
+			),
 			label: Liferay.Language.get('filter-by-category'),
 			type: 'group' as const,
 		},

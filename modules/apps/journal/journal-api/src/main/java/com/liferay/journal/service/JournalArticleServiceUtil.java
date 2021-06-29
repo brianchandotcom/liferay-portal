@@ -42,10 +42,145 @@ public class JournalArticleServiceUtil {
 	 */
 
 	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, long, long, String, boolean,
+	 Map, Map, Map, String, String, String, String, int, int, int,
+	 int, int, int, int, int, int, int, boolean, int, int, int,
+	 int, int, boolean, boolean, boolean, String, File, Map,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, long classPK,
+			String articleId, boolean autoArticleId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
+			Map<java.util.Locale, String> friendlyURLMap, String content,
+			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallFile,
+			Map<String, byte[]> images, String articleURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addArticle(
+			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
+			titleMap, descriptionMap, friendlyURLMap, content, ddmStructureKey,
+			ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
+			smallFile, images, articleURL, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, long, long, String, boolean,
+	 Map, Map, Map, String, String, String, String, int, int, int,
+	 int, int, int, int, int, int, int, boolean, int, int, int,
+	 int, int, boolean, boolean, boolean, String, File, Map,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, long classPK,
+			String articleId, boolean autoArticleId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String content,
+			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallFile,
+			Map<String, byte[]> images, String articleURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addArticle(
+			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
+			titleMap, descriptionMap, content, ddmStructureKey, ddmTemplateKey,
+			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
+			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
+			indexable, smallImage, smallImageURL, smallFile, images, articleURL,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, long, long, String, boolean,
+	 Map, Map, Map, String, String, String, String, int, int, int,
+	 int, int, int, int, int, int, int, boolean, int, int, int,
+	 int, int, boolean, boolean, boolean, String, File, Map,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, long classPK,
+			String articleId, boolean autoArticleId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String content,
+			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, String articleURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addArticle(
+			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
+			titleMap, descriptionMap, content, ddmStructureKey, ddmTemplateKey,
+			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
+			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
+			indexable, articleURL, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, Map, Map, String, String,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
+	public static JournalArticle addArticle(
+			long groupId, long folderId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String content,
+			String ddmStructureKey, String ddmTemplateKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addArticle(
+			groupId, folderId, titleMap, descriptionMap, content,
+			ddmStructureKey, ddmTemplateKey, serviceContext);
+	}
+
+	/**
 	 * Adds a web content article with additional parameters. All scheduling
 	 * parameters (display date, expiration date, and review date) use the
 	 * current user's timezone.
 	 *
+	 * @param externalReferenceCode the external reference code of the web
+	 content article
 	 * @param groupId the primary key of the web content article's group
 	 * @param folderId the primary key of the web content article folder
 	 * @param classNameId the primary key of the DDMStructure class if the web
@@ -122,9 +257,9 @@ public class JournalArticleServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static JournalArticle addArticle(
-			long groupId, long folderId, long classNameId, long classPK,
-			String articleId, boolean autoArticleId,
-			Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long groupId, long folderId,
+			long classNameId, long classPK, String articleId,
+			boolean autoArticleId, Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap,
 			Map<java.util.Locale, String> friendlyURLMap, String content,
 			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
@@ -141,227 +276,23 @@ public class JournalArticleServiceUtil {
 		throws PortalException {
 
 		return getService().addArticle(
-			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
-			titleMap, descriptionMap, friendlyURLMap, content, ddmStructureKey,
-			ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
-			smallFile, images, articleURL, serviceContext);
-	}
-
-	/**
-	 * Adds a web content article with additional parameters. All scheduling
-	 * parameters (display date, expiration date, and review date) use the
-	 * current user's timezone.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param folderId the primary key of the web content article folder
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param classPK the primary key of the DDM structure, if the primary key
-	 of the DDMStructure class is given as the
-	 <code>classNameId</code> parameter, the primary key of the class
-	 associated with the web content article, or <code>0</code>
-	 otherwise
-	 * @param articleId the primary key of the web content article
-	 * @param autoArticleId whether to auto generate the web content article ID
-	 * @param titleMap the web content article's locales and localized titles
-	 * @param descriptionMap the web content article's locales and localized
-	 descriptions
-	 * @param content the HTML content wrapped in XML. For more information,
-	 see the content example in the {@link #updateArticle(long, long,
-	 String, double, String, ServiceContext)} description.
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKey the primary key of the web content article's DDM
-	 template
-	 * @param layoutUuid the unique string identifying the web content
-	 article's display page
-	 * @param displayDateMonth the month the web content article is set to
-	 display
-	 * @param displayDateDay the calendar day the web content article is set to
-	 display
-	 * @param displayDateYear the year the web content article is set to
-	 display
-	 * @param displayDateHour the hour the web content article is set to
-	 display
-	 * @param displayDateMinute the minute the web content article is set to
-	 display
-	 * @param expirationDateMonth the month the web content article is set to
-	 expire
-	 * @param expirationDateDay the calendar day the web content article is set
-	 to expire
-	 * @param expirationDateYear the year the web content article is set to
-	 expire
-	 * @param expirationDateHour the hour the web content article is set to
-	 expire
-	 * @param expirationDateMinute the minute the web content article is set to
-	 expire
-	 * @param neverExpire whether the web content article is not set to auto
-	 expire
-	 * @param reviewDateMonth the month the web content article is set for
-	 review
-	 * @param reviewDateDay the calendar day the web content article is set for
-	 review
-	 * @param reviewDateYear the year the web content article is set for review
-	 * @param reviewDateHour the hour the web content article is set for review
-	 * @param reviewDateMinute the minute the web content article is set for
-	 review
-	 * @param neverReview whether the web content article is not set for review
-	 * @param indexable whether the web content article is searchable
-	 * @param smallImage whether the web content article has a small image
-	 * @param smallImageURL the web content article's small image URL
-	 * @param smallFile the web content article's small image file
-	 * @param images the web content's images
-	 * @param articleURL the web content article's accessible URL
-	 * @param serviceContext the service context to be applied. Can set the
-	 UUID, creation date, modification date, expando bridge
-	 attributes, guest permissions, group permissions, asset category
-	 IDs, asset tag names, asset link entry IDs, asset priority, URL
-	 title, and workflow actions for the web content article. Can also
-	 set whether to add the default guest and group permissions.
-	 * @return the web content article
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static JournalArticle addArticle(
-			long groupId, long folderId, long classNameId, long classPK,
-			String articleId, boolean autoArticleId,
-			Map<java.util.Locale, String> titleMap,
-			Map<java.util.Locale, String> descriptionMap, String content,
-			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
-			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
-			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallFile,
-			Map<String, byte[]> images, String articleURL,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addArticle(
-			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
-			titleMap, descriptionMap, content, ddmStructureKey, ddmTemplateKey,
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
-			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
-			indexable, smallImage, smallImageURL, smallFile, images, articleURL,
+			externalReferenceCode, groupId, folderId, classNameId, classPK,
+			articleId, autoArticleId, titleMap, descriptionMap, friendlyURLMap,
+			content, ddmStructureKey, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageURL, smallFile, images, articleURL,
 			serviceContext);
-	}
-
-	/**
-	 * Adds a web content article without any images. All scheduling parameters
-	 * (display date, expiration date, and review date) use the current user's
-	 * timezone.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param folderId the primary key of the web content article folder
-	 * @param classNameId the primary key of the DDMStructure class if the web
-	 content article is related to a DDM structure, the primary key of
-	 the class name associated with the article, or
-	 JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 module otherwise
-	 * @param classPK the primary key of the DDM structure, if the primary key
-	 of the DDMStructure class is given as the
-	 <code>classNameId</code> parameter, the primary key of the class
-	 associated with the web content article, or <code>0</code>
-	 otherwise
-	 * @param articleId the primary key of the web content article
-	 * @param autoArticleId whether to auto generate the web content article ID
-	 * @param titleMap the web content article's locales and localized titles
-	 * @param descriptionMap the web content article's locales and localized
-	 descriptions
-	 * @param content the HTML content wrapped in XML
-	 * @param ddmStructureKey the primary key of the web content article's DDM
-	 structure, if the article is related to a DDM structure, or
-	 <code>null</code> otherwise
-	 * @param ddmTemplateKey the primary key of the web content article's DDM
-	 template
-	 * @param layoutUuid the unique string identifying the web content
-	 article's display page
-	 * @param displayDateMonth the month the web content article is set to
-	 display
-	 * @param displayDateDay the calendar day the web content article is set to
-	 display
-	 * @param displayDateYear the year the web content article is set to
-	 display
-	 * @param displayDateHour the hour the web content article is set to
-	 display
-	 * @param displayDateMinute the minute the web content article is set to
-	 display
-	 * @param expirationDateMonth the month the web content article is set to
-	 expire
-	 * @param expirationDateDay the calendar day the web content article is set
-	 to expire
-	 * @param expirationDateYear the year the web content article is set to
-	 expire
-	 * @param expirationDateHour the hour the web content article is set to
-	 expire
-	 * @param expirationDateMinute the minute the web content article is set to
-	 expire
-	 * @param neverExpire whether the web content article is not set to auto
-	 expire
-	 * @param reviewDateMonth the month the web content article is set for
-	 review
-	 * @param reviewDateDay the calendar day the web content article is set for
-	 review
-	 * @param reviewDateYear the year the web content article is set for review
-	 * @param reviewDateHour the hour the web content article is set for review
-	 * @param reviewDateMinute the minute the web content article is set for
-	 review
-	 * @param neverReview whether the web content article is not set for review
-	 * @param indexable whether the web content article is searchable
-	 * @param articleURL the web content article's accessible URL
-	 * @param serviceContext the service context to be applied. Can set the
-	 UUID, creation date, modification date, expando bridge
-	 attributes, guest permissions, group permissions, asset category
-	 IDs, asset tag names, asset link entry IDs, asset priority, URL
-	 title, and workflow actions for the web content article. Can also
-	 set whether to add the default guest and group permissions.
-	 * @return the web content article
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static JournalArticle addArticle(
-			long groupId, long folderId, long classNameId, long classPK,
-			String articleId, boolean autoArticleId,
-			Map<java.util.Locale, String> titleMap,
-			Map<java.util.Locale, String> descriptionMap, String content,
-			String ddmStructureKey, String ddmTemplateKey, String layoutUuid,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
-			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
-			boolean neverReview, boolean indexable, String articleURL,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addArticle(
-			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
-			titleMap, descriptionMap, content, ddmStructureKey, ddmTemplateKey,
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
-			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
-			indexable, articleURL, serviceContext);
 	}
 
 	/**
 	 * Adds a web content article.
 	 *
+	 * @param externalReferenceCode the external reference code of the web
+	 content article
 	 * @param groupId the primary key of the web content article's group
 	 * @param folderId the primary key of the web content article folder
 	 * @param titleMap the web content article's locales and localized titles
@@ -385,15 +316,16 @@ public class JournalArticleServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static JournalArticle addArticle(
-			long groupId, long folderId, Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long groupId, long folderId,
+			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, String content,
 			String ddmStructureKey, String ddmTemplateKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addArticle(
-			groupId, folderId, titleMap, descriptionMap, content,
-			ddmStructureKey, ddmTemplateKey, serviceContext);
+			externalReferenceCode, groupId, folderId, titleMap, descriptionMap,
+			content, ddmStructureKey, ddmTemplateKey, serviceContext);
 	}
 
 	public static JournalArticle addArticleDefaultValues(
@@ -547,6 +479,24 @@ public class JournalArticleServiceUtil {
 		throws PortalException {
 
 		return getService().fetchArticle(groupId, articleId);
+	}
+
+	/**
+	 * Returns the latest web content article matching the group and the
+	 * external reference code.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param externalReferenceCode the external reference code of the web
+	 content article
+	 * @return the latest matching web content article, or <code>null</code> if
+	 no matching web content article could be found
+	 */
+	public static JournalArticle fetchLatestArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchLatestArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**
@@ -1389,6 +1339,24 @@ public class JournalArticleServiceUtil {
 		return getService().getLatestArticle(groupId, className, classPK);
 	}
 
+	/**
+	 * Returns the latest web content article matching the group and the
+	 * external reference code.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param externalReferenceCode the external reference code of the web
+	 content article
+	 * @return the latest matching web content article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static JournalArticle getLatestArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getLatestArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static List<JournalArticle> getLatestArticles(
 		long groupId, int status, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
@@ -1697,11 +1665,11 @@ public class JournalArticleServiceUtil {
 	 * @param displayDateLT the date before which a matching web content
 	 article's display date must be before (optionally
 	 <code>null</code>)
+	 * @param reviewDate the web content article's scheduled review date
+	 (optionally <code>null</code>)
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
 	 * @param start the lower bound of the range of web content articles to
 	 return
 	 * @param end the upper bound of the range of web content articles to
@@ -1771,11 +1739,11 @@ public class JournalArticleServiceUtil {
 	 * @param displayDateLT the date before which a matching web content
 	 article's display date must be before (optionally
 	 <code>null</code>)
+	 * @param reviewDate the web content article's scheduled review date
+	 (optionally <code>null</code>)
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
 	 * @param andOperator whether every field must match its value or keywords,
 	 or just one field must match. Company, group, folder IDs, class
 	 name ID, and status must all match their values.
@@ -1851,11 +1819,11 @@ public class JournalArticleServiceUtil {
 	 * @param displayDateLT the date before which a matching web content
 	 article's display date must be before (optionally
 	 <code>null</code>)
+	 * @param reviewDate the web content article's scheduled review date
+	 (optionally <code>null</code>)
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
 	 * @param andOperator whether every field must match its value or keywords,
 	 or just one field must match.  Company, group, folder IDs, class
 	 name ID, and status must all match their values.
@@ -1916,11 +1884,11 @@ public class JournalArticleServiceUtil {
 	 * @param displayDateLT the date before which a matching web content
 	 article's display date must be before (optionally
 	 <code>null</code>)
+	 * @param reviewDate the web content article's scheduled review date
+	 (optionally <code>null</code>)
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
 	 * @return the number of matching web content articles
 	 */
 	public static int searchCount(
@@ -1971,11 +1939,11 @@ public class JournalArticleServiceUtil {
 	 * @param displayDateLT the date before which a matching web content
 	 article's display date must be before (optionally
 	 <code>null</code>)
+	 * @param reviewDate the web content article's scheduled review date
+	 (optionally <code>null</code>)
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
 	 * @param andOperator whether every field must match its value or keywords,
 	 or just one field must match. Group, folder IDs, class name ID,
 	 and status must all match their values.
@@ -2032,11 +2000,11 @@ public class JournalArticleServiceUtil {
 	 * @param displayDateLT the date before which a matching web content
 	 article's display date must be before (optionally
 	 <code>null</code>)
+	 * @param reviewDate the web content article's scheduled review date
+	 (optionally <code>null</code>)
 	 * @param status the web content article's workflow status. For more
 	 information see {@link WorkflowConstants} for constants starting
 	 with the "STATUS_" prefix.
-	 * @param reviewDate the web content article's scheduled review date
-	 (optionally <code>null</code>)
 	 * @param andOperator whether every field must match its value or keywords,
 	 or just one field must match.  Group, folder IDs, class name ID,
 	 and status must all match their values.

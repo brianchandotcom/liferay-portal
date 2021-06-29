@@ -145,6 +145,9 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setModifiedDate(RandomTestUtil.nextDate());
 
+		newJournalArticle.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newJournalArticle.setFolderId(RandomTestUtil.nextLong());
 
 		newJournalArticle.setClassNameId(RandomTestUtil.nextLong());
@@ -226,6 +229,9 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingJournalArticle.getModifiedDate()),
 			Time.getShortTimestamp(newJournalArticle.getModifiedDate()));
+		Assert.assertEquals(
+			existingJournalArticle.getExternalReferenceCode(),
+			newJournalArticle.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingJournalArticle.getFolderId(),
 			newJournalArticle.getFolderId());
@@ -417,6 +423,15 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_F() throws Exception {
 		_persistence.countByG_F(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -557,6 +572,16 @@ public class JournalArticlePersistenceTest {
 			RandomTestUtil.nextLong());
 
 		_persistence.countByG_U_C(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_ERC_V() throws Exception {
+		_persistence.countByG_ERC_V(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextDouble());
+
+		_persistence.countByG_ERC_V(0L, "null", 0D);
+
+		_persistence.countByG_ERC_V(0L, (String)null, 0D);
 	}
 
 	@Test
@@ -713,11 +738,12 @@ public class JournalArticlePersistenceTest {
 			"JournalArticle", "mvccVersion", true, "ctCollectionId", true,
 			"uuid", true, "id", true, "resourcePrimKey", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "folderId", true, "classNameId", true,
-			"classPK", true, "treePath", true, "articleId", true, "version",
-			true, "urlTitle", true, "DDMStructureKey", true, "DDMTemplateKey",
-			true, "defaultLanguageId", true, "layoutUuid", true, "displayDate",
-			true, "expirationDate", true, "reviewDate", true, "indexable", true,
+			true, "modifiedDate", true, "externalReferenceCode", true,
+			"folderId", true, "classNameId", true, "classPK", true, "treePath",
+			true, "articleId", true, "version", true, "urlTitle", true,
+			"DDMStructureKey", true, "DDMTemplateKey", true,
+			"defaultLanguageId", true, "layoutUuid", true, "displayDate", true,
+			"expirationDate", true, "reviewDate", true, "indexable", true,
 			"smallImage", true, "smallImageId", true, "smallImageURL", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
@@ -999,6 +1025,22 @@ public class JournalArticlePersistenceTest {
 				journalArticle, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
+			journalArticle.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				journalArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		AssertUtils.assertEquals(
+			journalArticle.getVersion(),
+			ReflectionTestUtil.<Double>invoke(
+				journalArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
+
+		Assert.assertEquals(
+			Long.valueOf(journalArticle.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				journalArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
 			Long.valueOf(journalArticle.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				journalArticle, "getColumnOriginalValue",
@@ -1050,6 +1092,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setCreateDate(RandomTestUtil.nextDate());
 
 		journalArticle.setModifiedDate(RandomTestUtil.nextDate());
+
+		journalArticle.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		journalArticle.setFolderId(RandomTestUtil.nextLong());
 

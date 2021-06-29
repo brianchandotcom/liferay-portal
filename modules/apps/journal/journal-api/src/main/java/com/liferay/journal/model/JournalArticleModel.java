@@ -265,6 +265,21 @@ public interface JournalArticleModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the external reference code of this journal article.
+	 *
+	 * @return the external reference code of this journal article
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this journal article.
+	 *
+	 * @param externalReferenceCode the external reference code of this journal article
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the folder ID of this journal article.
 	 *
 	 * @return the folder ID of this journal article

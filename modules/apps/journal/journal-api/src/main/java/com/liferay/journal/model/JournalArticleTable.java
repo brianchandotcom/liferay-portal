@@ -57,6 +57,10 @@ public class JournalArticleTable extends BaseTable<JournalArticleTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<JournalArticleTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, Long> folderId = createColumn(
 		"folderId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, Long> classNameId = createColumn(

@@ -77,7 +77,7 @@ public class JournalArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class JournalArticleCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", folderId=");
 		sb.append(folderId);
 		sb.append(", classNameId=");
@@ -191,6 +193,13 @@ public class JournalArticleCacheModel
 		}
 		else {
 			journalArticleImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		if (externalReferenceCode == null) {
+			journalArticleImpl.setExternalReferenceCode("");
+		}
+		else {
+			journalArticleImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		journalArticleImpl.setFolderId(folderId);
@@ -332,6 +341,7 @@ public class JournalArticleCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		folderId = objectInput.readLong();
 
@@ -401,6 +411,13 @@ public class JournalArticleCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(folderId);
 
@@ -505,6 +522,7 @@ public class JournalArticleCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String externalReferenceCode;
 	public long folderId;
 	public long classNameId;
 	public long classPK;

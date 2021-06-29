@@ -1,5 +1,15 @@
 # Poshi Runner Change Log
 
+## 1.0.309
+
+### PQL
+
+* [POSHI-177](https://issues.liferay.com/browse/POSHI-177) - Fix null values for PQL when it is not set anywhere
+
+### WebDriver
+
+* [POSHI-179](https://issues.liferay.com/browse/POSHI-179) - WebElement.clear() doesn't work on React input boxes in Chrome 86
+
 ## 1.0.307
 
 ### Other

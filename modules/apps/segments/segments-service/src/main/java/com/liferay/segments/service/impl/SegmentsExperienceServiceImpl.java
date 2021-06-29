@@ -270,11 +270,7 @@ public class SegmentsExperienceServiceImpl
 	private long _getPublishedLayoutClassPK(long classPK) {
 		Layout layout = layoutLocalService.fetchLayout(classPK);
 
-		if ((layout != null) &&
-			(layout.getClassNameId() == classNameLocalService.getClassNameId(
-				Layout.class)) &&
-			(layout.getClassPK() != 0)) {
-
+		if ((layout != null) && layout.isDraftLayout()) {
 			return layout.getClassPK();
 		}
 

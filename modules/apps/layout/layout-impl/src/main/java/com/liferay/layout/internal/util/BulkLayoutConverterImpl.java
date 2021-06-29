@@ -345,7 +345,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			Layout layout, ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((layout.getClassNameId() != 0) || (layout.getClassPK() != 0)) {
+		if (layout.isDraftLayout()) {
 			StringBundler sb = new StringBundler(3);
 
 			sb.append("Layout with PLID ");

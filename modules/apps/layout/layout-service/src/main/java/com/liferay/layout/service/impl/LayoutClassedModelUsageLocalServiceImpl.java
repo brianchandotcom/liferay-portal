@@ -199,7 +199,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 			return LayoutClassedModelUsageConstants.TYPE_DEFAULT;
 		}
 
-		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+		if (layout.isDraftLayout()) {
 			plid = layout.getClassPK();
 		}
 

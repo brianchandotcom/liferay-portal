@@ -56,9 +56,7 @@ public class NavItemUtil {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if ((layout.getClassNameId() == _portal.getClassNameId(Layout.class)) &&
-			(layout.getClassPK() > 0)) {
-
+		if (layout.isDraftLayout()) {
 			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
 		}
 

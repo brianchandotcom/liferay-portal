@@ -95,7 +95,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+		if (layout.isDraftLayout()) {
 			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
 		}
 

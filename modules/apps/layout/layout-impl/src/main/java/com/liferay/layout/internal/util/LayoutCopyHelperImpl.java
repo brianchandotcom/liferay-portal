@@ -120,7 +120,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		if (_isDraft(sourceLayout)) {
+		if (sourceLayout.isDraftLayout()) {
 			return;
 		}
 
@@ -132,7 +132,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		Layout layout = targetLayout;
 
-		if (_isDraft(targetLayout)) {
+		if (targetLayout.isDraftLayout()) {
 			layout = _layoutLocalService.getLayout(targetLayout.getClassPK());
 		}
 
@@ -496,7 +496,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				sourceLayout.getPlid());
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			if (_isDraft(sourceLayout) &&
+			if (sourceLayout.isDraftLayout() &&
 				(sourceLayout.getClassPK() == targetLayout.getPlid())) {
 
 				segmentsExperienceIds.put(
@@ -508,7 +508,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			long plid = targetLayout.getPlid();
 
-			if (_isDraft(targetLayout)) {
+			if (targetLayout.isDraftLayout()) {
 				plid = targetLayout.getClassPK();
 			}
 
@@ -581,20 +581,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		return false;
-	}
-
-	private boolean _isDraft(Layout layout) {
-		if (layout.getClassPK() <= 0) {
-			return false;
-		}
-
-		if (layout.getClassNameId() != _portal.getClassNameId(
-				Layout.class.getName())) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private JSONObject _processDataJSONObject(
@@ -772,10 +758,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			unicodeProperties.load(_sourceLayout.getTypeSettings());
 
-			if ((_sourceLayout.getClassNameId() == _portal.getClassNameId(
-					Layout.class)) &&
-				(_targetLayout.getPlid() == _sourceLayout.getClassPK())) {
-
+			if (_sourceLayout.isDraftLayout()) {
 				unicodeProperties.put("published", Boolean.TRUE.toString());
 
 				_layoutLocalService.updateLayout(

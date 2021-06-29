@@ -138,7 +138,7 @@ public class AssetEntryUsagesDisplayContext {
 				return StringPool.BLANK;
 			}
 
-			if (!_isDraft(layout)) {
+			if (!layout.isDraftLayout()) {
 				return layout.getName(_themeDisplay.getLocale());
 			}
 
@@ -157,7 +157,7 @@ public class AssetEntryUsagesDisplayContext {
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			assetEntryUsage.getPlid());
 
-		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+		if (layout.isDraftLayout()) {
 			plid = layout.getClassPK();
 		}
 
@@ -169,7 +169,7 @@ public class AssetEntryUsagesDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		if (!_isDraft(layout)) {
+		if (!layout.isDraftLayout()) {
 			return layoutPageTemplateEntry.getName();
 		}
 
@@ -436,7 +436,7 @@ public class AssetEntryUsagesDisplayContext {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+		if (layout.isDraftLayout()) {
 			plid = layout.getClassPK();
 		}
 
@@ -550,16 +550,6 @@ public class AssetEntryUsagesDisplayContext {
 		}
 
 		return 0;
-	}
-
-	private boolean _isDraft(Layout layout) {
-		if (layout.getClassNameId() != PortalUtil.getClassNameId(
-				Layout.class.getName())) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private final AssetEntry _assetEntry;

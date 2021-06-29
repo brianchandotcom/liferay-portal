@@ -115,9 +115,7 @@ public class FragmentEntryLinkDisplayContext {
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			fragmentEntryLink.getPlid());
 
-		if (Validator.isNotNull(layout.getClassNameId()) &&
-			(layout.getClassPK() > 0)) {
-
+		if (layout.isDraftLayout()) {
 			layoutPageTemplateEntryPlid = layout.getClassPK();
 		}
 
@@ -159,9 +157,7 @@ public class FragmentEntryLinkDisplayContext {
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			fragmentEntryLink.getPlid());
 
-		if (Validator.isNotNull(layout.getClassNameId()) &&
-			(layout.getClassPK() > 0)) {
-
+		if (layout.isDraftLayout()) {
 			layoutPageTemplateEntryPlid = layout.getClassPK();
 		}
 

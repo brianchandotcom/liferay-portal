@@ -88,7 +88,7 @@ public class AssetListEntryUsagesDisplayContext {
 				return StringPool.BLANK;
 			}
 
-			if (!_isDraft(layout)) {
+			if (!layout.isDraftLayout()) {
 				return layout.getName(_themeDisplay.getLocale());
 			}
 
@@ -97,7 +97,7 @@ public class AssetListEntryUsagesDisplayContext {
 
 		long plid = assetListEntryUsage.getPlid();
 
-		if (_isDraft(layout)) {
+		if (layout.isDraftLayout()) {
 			plid = layout.getClassPK();
 		}
 
@@ -109,7 +109,7 @@ public class AssetListEntryUsagesDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		if (!_isDraft(layout)) {
+		if (!layout.isDraftLayout()) {
 			return layoutPageTemplateEntry.getName();
 		}
 
@@ -314,16 +314,6 @@ public class AssetListEntryUsagesDisplayContext {
 			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
-	}
-
-	private boolean _isDraft(Layout layout) {
-		if (layout.getClassNameId() != PortalUtil.getClassNameId(
-				Layout.class.getName())) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private Long _assetListEntryId;

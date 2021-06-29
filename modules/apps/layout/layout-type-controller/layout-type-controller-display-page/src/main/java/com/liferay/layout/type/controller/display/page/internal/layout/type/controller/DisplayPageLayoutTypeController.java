@@ -74,7 +74,7 @@ public class DisplayPageLayoutTypeController
 			HttpServletRequest httpServletRequest, Layout layout)
 		throws PortalException {
 
-		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+		if (layout.isDraftLayout()) {
 			return null;
 		}
 
@@ -124,7 +124,7 @@ public class DisplayPageLayoutTypeController
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+		if (layout.isDraftLayout()) {
 			Layout curLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
 
@@ -323,7 +323,7 @@ public class DisplayPageLayoutTypeController
 			return layoutPageTemplateEntry;
 		}
 
-		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+		if (layout.isDraftLayout()) {
 			Layout publishedLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
 

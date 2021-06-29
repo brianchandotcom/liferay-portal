@@ -92,7 +92,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		Boolean hasUpdatePermissions = null;
 
-		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+		if (layout.isDraftLayout()) {
 			Layout curLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
 
@@ -306,7 +306,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			return layoutPageTemplateEntry;
 		}
 
-		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+		if (layout.isDraftLayout()) {
 			Layout publishedLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
 

@@ -84,10 +84,7 @@ public class PublishLayoutMVCActionCommand
 		Layout draftLayout = _layoutLocalService.getLayout(
 			themeDisplay.getPlid());
 
-		if ((draftLayout.getClassPK() == 0) ||
-			(_portal.getClassNameId(Layout.class) !=
-				draftLayout.getClassNameId())) {
-
+		if (!draftLayout.isDraftLayout()) {
 			sendRedirect(actionRequest, actionResponse);
 
 			return;

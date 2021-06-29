@@ -1278,10 +1278,7 @@ public class LayoutsAdminDisplayContext {
 	public boolean isDraft() {
 		Layout layout = getSelLayout();
 
-		if (layout.isSystem() && (layout.getClassPK() > 0) &&
-			(layout.getClassNameId() == PortalUtil.getClassNameId(
-				Layout.class))) {
-
+		if (layout.isSystem() && layout.isDraftLayout()) {
 			return true;
 		}
 

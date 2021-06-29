@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerU
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 import java.util.Objects;
@@ -187,9 +186,7 @@ public class FragmentEntryLinkServiceImpl
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
-		if (Validator.isNotNull(layout.getClassNameId()) &&
-			(layout.getClassPK() > 0)) {
-
+		if (layout.isDraftLayout()) {
 			layoutPageTemplateEntryPlid = layout.getClassPK();
 		}
 

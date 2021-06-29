@@ -342,11 +342,7 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private boolean _isPublishedContentPage(Layout layout) {
-		if (layout.isTypeContent() &&
-			((layout.getClassNameId() == 0) ||
-			 (PortalUtil.getClassNameId(Layout.class.getName()) !=
-				 layout.getClassNameId()))) {
-
+		if (layout.isTypeContent() && !layout.isDraftLayout()) {
 			return true;
 		}
 

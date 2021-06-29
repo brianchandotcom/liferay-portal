@@ -92,10 +92,7 @@ public class DiscardDraftLayoutMVCActionCommand
 
 		Layout draftLayout = _layoutLocalService.getLayout(selPlid);
 
-		if ((draftLayout.getClassPK() == 0) ||
-			(_portal.getClassNameId(Layout.class) !=
-				draftLayout.getClassNameId())) {
-
+		if (!draftLayout.isDraftLayout()) {
 			sendRedirect(actionRequest, actionResponse);
 
 			return;

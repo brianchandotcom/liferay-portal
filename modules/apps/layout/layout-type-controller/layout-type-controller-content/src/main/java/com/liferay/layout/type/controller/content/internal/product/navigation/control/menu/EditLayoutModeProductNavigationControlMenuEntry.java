@@ -94,10 +94,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 			Layout layout = themeDisplay.getLayout();
 
-			if ((layout.getClassPK() > 0) &&
-				(_portal.getClassNameId(Layout.class) ==
-					layout.getClassNameId())) {
-
+			if (layout.isDraftLayout()) {
 				redirect = _portal.getLayoutFullURL(
 					_layoutLocalService.getLayout(layout.getClassPK()),
 					themeDisplay);

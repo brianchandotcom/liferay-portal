@@ -169,7 +169,7 @@ public class AssetEntryUsageLocalServiceImpl
 			return AssetEntryUsageConstants.TYPE_DEFAULT;
 		}
 
-		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+		if (layout.isDraftLayout()) {
 			plid = layout.getClassPK();
 		}
 

@@ -1225,7 +1225,7 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_ASSET_TIME_LEFT");
 	}
-	
+
 	macro validateDueDateBySLADetails {
 		Click(
 			key_itemName = "${itemName}",
@@ -1486,16 +1486,16 @@ definition {
 		}
 	}
 
-	macro viewCreatedBySort {
-		AssertElementPresent(
-			key_value = "${position}",
-			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
-	}
-
 	macro verifyFiltersFromDashboardNotPresent {
 		for (var key_workflowFilterValue : list "${isNotPresent}") {
 			AssertElementNotPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
 		}
+	}
+
+	macro viewCreatedBySort {
+		AssertElementPresent(
+			key_value = "${position}",
+			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
 	}
 
 	macro viewDateRangeErrorMessage {

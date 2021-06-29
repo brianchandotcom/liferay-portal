@@ -96,11 +96,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WORKFLOW_ALL_ITEMS_TABLE_ORDER</td>
-	<td>//tbody//tr[${key_order}][contains(@class, "")]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECTED_TEXT</td>
 	<td>//span[@class='ml-0 mr-0 navbar-text']</td>
 	<td></td>
@@ -227,7 +222,7 @@
 </tr>
 <tr>
 	<td>TOOLTIP_MESSAGE</td>
-	<td>//div[contains(@class,'tooltip-inner') and contains(.,'${key_processStep}')]</td>
+	<td>//td[contains(@data-restore-title, '${key_tooltip}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -316,14 +311,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>MODAL_TITLE_ICON</td>
-    <td>//span[contains(@class,'bg-muted')]</td>
-    <td></td>
-</tr>
-<tr>
 	<td>METRICS_INSTANCE_ITEMS_POSITION</td>
 	<td>//tr[${key_rowNumber}]//td[${key_itemPosition}]</td>
-    <td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_DIFFERENTS_INSTANCE_ID</td>
@@ -343,11 +333,6 @@
 <tr>
 	<td>PROCESS_STEP_FILTER</td>
 	<td>//span[contains(@class,'control-label-text') and contains(.,'${key_processFilter}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_ALL_ITEMS_ORDER_BY</td>
-	<td>//tr//span[@data-title="${key_orderBy}"]</td>
 	<td></td>
 </tr>
 <tr>

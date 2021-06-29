@@ -110,7 +110,10 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		WorkflowMetrics.viewTooltipCompletionVelocity();
+		AssertElementPresent(
+			key_sectionName = "Completion Velocity",
+			key_tooltipMessage = "Completion velocity tracks the number of completed workflow instances over the selected time period.",
+			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_TOOLTIP_MESSAGE");
 	}
 
 	@description = "LPS-97665 - Verify that an item out of the timeframe selected is not considered in the velocity result"

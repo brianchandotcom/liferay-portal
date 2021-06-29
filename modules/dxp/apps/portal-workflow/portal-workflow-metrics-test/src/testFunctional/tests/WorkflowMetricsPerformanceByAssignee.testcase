@@ -32,6 +32,8 @@ definition {
 	@description = "LPS-97666 - Verify that the names inside the steps filter component from Performance by Assignee card are breaking into another line when the component width exceeds 240px"
 	@priority = "3"
 	test AssigneeNamesBreaksIntoAnotherLine {
+		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByAssignee#AssigneeNamesBreaksIntoAnotherLine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -485,10 +487,12 @@ definition {
 
 		Button.clickSave();
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

@@ -319,17 +319,25 @@ definition {
 	}
 
 	macro assertWarningBlockedSlaNotPresent {
-		while (IsElementNotPresent(
-				key_warningMessage = "${warningMessage}",
-				locator1 = "Message#WARNING_SPECIFIC")) {
-			Pause(locator1 = "10000");
+		var key_warningMessage = "${warningMessage}";
+
+		while (IsElementPresent(locator1 = "Message#WARNING_SPECIFIC")) {
 			Refresh();
+			Pause(locator1 = "10000");
 		}
+
+		AssertElementNotPresent(locator1 = "Message#WARNING_SPECIFIC");
 	}
 
 	macro assertWarningBlockedSlaPresent {
+		var key_warningMessage = "${warningMessage}";
+
+		while (IsElementNotPresent(locator1 = "Message#WARNING_SPECIFIC")) {
+			Refresh();
+			Pause(locator1 = "10000");
+		}
+
 		AssertTextEquals.assertPartialText(
-			key_warningMessage = "${warningMessage}",
 			locator1 = "Message#WARNING_SPECIFIC",
 			value1 = "${warningMessage}");
 	}
@@ -1455,14 +1463,6 @@ definition {
 
 	macro viewSLASuccessMessage {
 		WaitForElementPresent(locator1 = "WorkflowMetricsSLA#SLA_SUCCESS_MESSAGE");
-	}
-
-	macro viewTooltipCompletionVelocity {
-		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_TOOLTIP");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#TOOLTIP",
-			value1 = "Completion velocity tracks the number of completed workflow instances over the selected time period.");
 	}
 
 	macro viewUserWorkloadByStepOnAllItems {

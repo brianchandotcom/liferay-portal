@@ -11,7 +11,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 
 		Navigator.openURL();
 
@@ -37,16 +37,16 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		Click(
-			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS",
+			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
 			value1 = "Last 30 Days");
 
 		Click(
 			completedItemsDateRange = "Last 7 Days",
-			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
+			locator1 = "WorkflowMetricsCompletedItems#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION");
 
 		AssertElementNotPresent(
 			completedItemsDateRange = "Last 30 Days",
-			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
+			locator1 = "WorkflowMetricsCompletedItems#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION");
 	}
 
 	@description = "LPS-87571 - Verify that the users are able to click on the metric cards from the Completed Items card and be directed to the All Items page"
@@ -146,11 +146,11 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		Click(locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN");
 
 		Click(
 			completedItemsDateRange = "Custom Range",
-			locator1 = "WorkflowMetricsCompletedItems#DATE_RANGE_DROPDOWN_OPTION_COMPLETED_ITEMS");
+			locator1 = "WorkflowMetricsCompletedItems#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION");
 
 		AssertElementPresent(
 			key_dateFormat = "Default date format is MM/DD/YYYY.",

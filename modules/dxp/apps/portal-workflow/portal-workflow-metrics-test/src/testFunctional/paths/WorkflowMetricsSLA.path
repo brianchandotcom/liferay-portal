@@ -122,17 +122,17 @@
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_PAUSE_OPTION</td>
-	<td>//ul[@id="dropDownListpause"]//span[contains(text(),'${key_slaDefinitionPause}')]</td>
+	<td>//ul[@id="dropDownListpause"]//span[text() = '${key_slaDefinitionPause}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_START_OPTION</td>
-	<td>//ul[@id='dropDownListstart']//span[contains(text(),'${key_slaDefinitionStart}')]</td>
+	<td>//ul[@id='dropDownListstart']//span[text() = '${key_slaDefinitionStart}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DROPDOWN_STOP_OPTION</td>
-	<td>//ul[@id='dropDownListstop']//span[contains(text(),'${key_slaDefinitionEnd}')]</td>
+	<td>//ul[@id='dropDownListstop']//span[text() = '${key_slaDefinitionEnd}']</td>
 	<td></td>
 </tr>
 <tr>

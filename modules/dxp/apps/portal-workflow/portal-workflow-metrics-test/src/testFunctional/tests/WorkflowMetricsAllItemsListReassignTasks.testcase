@@ -52,10 +52,12 @@ definition {
 			roleTitle = "Administrator",
 			userScreenName = "usertest");
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

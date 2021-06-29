@@ -126,7 +126,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_getLayoutReportIssuesJSONObject(
+				_getLayoutReportIssuesResponseJSONObject(
 					ParamUtil.getBoolean(resourceRequest, "refreshCache"),
 					group, resourceBundle, themeDisplay,
 					ParamUtil.getString(resourceRequest, "url")));
@@ -164,21 +164,18 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 			"MMMM d, yyyy HH:mm a", resourceBundle.getLocale());
 
 		return JSONUtil.put(
-			"layoutReportsIssues",
-			JSONUtil.put(
-				"date", dateFormat.format(new Date())
-			).put(
-				"issues",
-				JSONUtil.putAll(
-					stream.map(
-						layoutReportsIssue -> layoutReportsIssue.toJSONObject(
-							_getConfigureLayoutSeoURL(themeDisplay),
-							_getConfigurePagesSeoURL(themeDisplay),
-							resourceBundle)
-					).toArray(
-						size -> new JSONObject[size]
-					))
-			));
+			"date", dateFormat.format(new Date())
+		).put(
+			"issues",
+			JSONUtil.putAll(
+				stream.map(
+					layoutReportsIssue -> layoutReportsIssue.toJSONObject(
+						_getConfigureLayoutSeoURL(themeDisplay),
+						_getConfigurePagesSeoURL(themeDisplay), resourceBundle)
+				).toArray(
+					size -> new JSONObject[size]
+				))
+		);
 	}
 
 	private String _getCompleteURL(ThemeDisplay themeDisplay) {
@@ -266,7 +263,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		return null;
 	}
 
-	private JSONObject _getLayoutReportIssuesJSONObject(
+	private JSONObject _getLayoutReportIssuesResponseJSONObject(
 			boolean refreshCache, Group group, ResourceBundle resourceBundle,
 			ThemeDisplay themeDisplay, String url)
 		throws PortalException {
@@ -280,7 +277,8 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 					group, resourceBundle, themeDisplay, url));
 		}
 
-		return _layoutReportsIssuesCache.get(cacheKey);
+		return JSONUtil.put(
+			"layoutReportsIssues", _layoutReportsIssuesCache.get(cacheKey));
 	}
 
 	private boolean _hasViewPermission(

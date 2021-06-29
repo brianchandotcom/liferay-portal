@@ -414,10 +414,11 @@ public class ExportImportPerformanceTest {
 			LocaleUtil.toLanguageId(defaultLocale));
 
 		return _journalArticleLocalService.addArticle(
-			_serviceContext.getUserId(), _group.getGroupId(),
+			null, _serviceContext.getUserId(), _group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
 			true, JournalArticleConstants.VERSION_DEFAULT,
+			RandomTestUtil.randomLocaleStringMap(defaultLocale),
 			RandomTestUtil.randomLocaleStringMap(defaultLocale),
 			RandomTestUtil.randomLocaleStringMap(defaultLocale), content,
 			_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey(),

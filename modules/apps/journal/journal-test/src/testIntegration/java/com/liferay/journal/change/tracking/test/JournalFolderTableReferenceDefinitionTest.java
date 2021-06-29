@@ -100,10 +100,13 @@ public class JournalFolderTableReferenceDefinitionTest
 			user.getTimeZone());
 
 		_journalArticleLocalService.addArticle(
-			user.getUserId(), group.getGroupId(),
+			null, user.getUserId(), group.getGroupId(),
 			parentJournalFolder.getFolderId(),
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
 			true, JournalArticleConstants.VERSION_DEFAULT,
+			HashMapBuilder.put(
+				defaultLocale, RandomTestUtil.randomString()
+			).build(),
 			HashMapBuilder.put(
 				defaultLocale, RandomTestUtil.randomString()
 			).build(),

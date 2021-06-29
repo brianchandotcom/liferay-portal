@@ -55,7 +55,7 @@ public class JournalArticleFixture {
 		String ddmTemplateKey = "BASIC-WEB-CONTENT";
 
 		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0, titleMap,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0, titleMap,
 			descriptionMap,
 			DDMStructureTestUtil.getSampleStructuredContent("content", "title"),
 			ddmStructureKey, ddmTemplateKey, serviceContext);

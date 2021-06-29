@@ -227,7 +227,7 @@ public class FragmentEntryProcessorHelperTest {
 			user.getTimeZone());
 
 		return _journalArticleLocalService.addArticle(
-			user.getUserId(), _group.getGroupId(), 0,
+			null, user.getUserId(), _group.getGroupId(), 0,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
 			true, JournalArticleConstants.VERSION_DEFAULT,
 			HashMapBuilder.put(
@@ -235,6 +235,9 @@ public class FragmentEntryProcessorHelperTest {
 			).build(),
 			HashMapBuilder.put(
 				defaultLocale, defaultLocale.toString()
+			).build(),
+			HashMapBuilder.put(
+				defaultLocale, RandomTestUtil.randomString()
 			).build(),
 			_getJournalArticleStructuredContent(
 				fieldId,

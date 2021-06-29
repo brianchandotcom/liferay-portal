@@ -309,8 +309,8 @@ public class StructuredContentResourceImpl
 
 		return _toExtensionStructuredContent(
 			_journalArticleService.addArticle(
-				siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, 0, 0,
-				null, true, titleMap, descriptionMap, friendlyUrlMap,
+				null, siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				0, 0, null, true, titleMap, descriptionMap, friendlyUrlMap,
 				StructuredContentUtil.getJournalArticleContent(
 					_ddm,
 					DDMFormValuesUtil.toDDMFormValues(

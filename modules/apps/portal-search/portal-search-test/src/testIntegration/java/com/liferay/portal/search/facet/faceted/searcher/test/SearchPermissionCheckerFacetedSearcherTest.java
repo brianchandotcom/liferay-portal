@@ -127,7 +127,7 @@ public class SearchPermissionCheckerFacetedSearcherTest
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
 		JournalArticle article = journalArticleLocalService.addArticle(
-			user.getUserId(), group.getGroupId(), 0,
+			null, user.getUserId(), group.getGroupId(), 0,
 			Collections.singletonMap(LocaleUtil.US, title), null, content,
 			"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT", serviceContext);
 

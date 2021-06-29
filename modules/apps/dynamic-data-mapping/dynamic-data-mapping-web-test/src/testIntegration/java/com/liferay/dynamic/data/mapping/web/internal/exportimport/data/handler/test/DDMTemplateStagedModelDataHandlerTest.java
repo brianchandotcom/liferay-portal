@@ -130,7 +130,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.addArticle(
-				TestPropsValues.getUserId(), childGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), childGroup.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, titleMap,
 				descriptionMap, content, structure.getStructureKey(),
 				template.getTemplateKey(), serviceContext);

@@ -382,17 +382,19 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
 			int displayDateMinute = calendar.get(Calendar.MINUTE);
 
+			Map<Locale, String> titleMap = Collections.singletonMap(
+				LocaleUtil.getSiteDefault(),
+				journalArticleJSONObject.getString("name"));
+
 			_journalArticleLocalService.addArticle(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(),
 				journalFolderMap.getOrDefault(
 					journalArticleJSONObject.getString("folder"),
 					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				journalArticleJSONObject.getString("articleId"), false, 1,
-				Collections.singletonMap(
-					LocaleUtil.getSiteDefault(),
-					journalArticleJSONObject.getString("name")),
-				null,
+				titleMap, null, titleMap,
 				StringUtil.replace(
 					_read("journal_article.xml", url), "[$", "$]",
 					fileEntriesMap),

@@ -944,22 +944,22 @@ public class FileSystemImporter extends BaseImporter {
 				groupId, journalArticleId, WorkflowConstants.STATUS_ANY);
 
 		try {
+			Map<Locale, String> titleMap = getMap(articleDefaultLocale, title);
+
 			if (journalArticle == null) {
 				journalArticle = journalArticleLocalService.addArticle(
-					userId, groupId, folderId, 0, 0, journalArticleId, false,
-					JournalArticleConstants.VERSION_DEFAULT,
-					getMap(articleDefaultLocale, title), descriptionMap,
-					content, ddmStructureKey, ddmTemplateKey, StringPool.BLANK,
-					1, 1, 2010, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
-					indexable, smallImage, smallImageURL, null,
-					new HashMap<String, byte[]>(), StringPool.BLANK,
-					serviceContext);
+					null, userId, groupId, folderId, 0, 0, journalArticleId,
+					false, JournalArticleConstants.VERSION_DEFAULT, titleMap,
+					descriptionMap, titleMap, content, ddmStructureKey,
+					ddmTemplateKey, StringPool.BLANK, 1, 1, 2010, 0, 0, 0, 0, 0,
+					0, 0, true, 0, 0, 0, 0, 0, true, indexable, smallImage,
+					smallImageURL, null, new HashMap<String, byte[]>(),
+					StringPool.BLANK, serviceContext);
 			}
 			else {
 				journalArticle = journalArticleLocalService.updateArticle(
 					userId, groupId, folderId, journalArticleId,
-					journalArticle.getVersion(),
-					getMap(articleDefaultLocale, title), descriptionMap,
+					journalArticle.getVersion(), titleMap, descriptionMap,
 					content, ddmStructureKey, ddmTemplateKey, StringPool.BLANK,
 					1, 1, 2010, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
 					indexable, smallImage, smallImageURL, null,

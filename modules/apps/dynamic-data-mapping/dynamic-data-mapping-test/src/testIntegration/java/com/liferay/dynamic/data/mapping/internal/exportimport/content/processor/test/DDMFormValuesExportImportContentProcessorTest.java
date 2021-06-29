@@ -454,7 +454,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		String content = sb.toString();
 
 		_journalArticle = _journalArticleLocalService.addArticle(
-			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, nameMap, nameMap,
 			content, structure.getStructureKey(), _ddmTemplate.getTemplateKey(),
 			serviceContext);

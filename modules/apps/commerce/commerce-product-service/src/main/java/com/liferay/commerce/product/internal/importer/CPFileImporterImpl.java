@@ -32,8 +32,8 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
@@ -358,13 +358,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 		}
 
 		journalArticle = _journalArticleLocalService.addArticle(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0L,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0L, articleId, false,
-			1, titleMap, descriptionMap, content, ddmStructureKey,
-			ddmTemplateKey, StringPool.BLANK, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
-			true, 0, 0, 0, 0, 0, true, true, false, StringPool.BLANK, null,
-			null, StringPool.BLANK, serviceContext);
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			0L, JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0L, articleId,
+			false, 1, titleMap, descriptionMap, titleMap, content,
+			ddmStructureKey, ddmTemplateKey, StringPool.BLANK, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
+			StringPool.BLANK, null, null, StringPool.BLANK, serviceContext);
 
 		JSONArray permissionsJSONArray = jsonObject.getJSONArray("permissions");
 

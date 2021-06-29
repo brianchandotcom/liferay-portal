@@ -85,10 +85,11 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.addArticle(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), content,
 				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),

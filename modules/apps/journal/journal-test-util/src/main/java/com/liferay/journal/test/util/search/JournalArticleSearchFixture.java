@@ -116,7 +116,7 @@ public class JournalArticleSearchFixture {
 
 		try {
 			return _journalArticleLocalService.addArticle(
-				userId, groupId, folderId, titleMap, descriptionMap,
+				null, userId, groupId, folderId, titleMap, descriptionMap,
 				contentString, ddmStructureKey, ddmTemplateKey, serviceContext);
 		}
 		catch (PortalException portalException) {

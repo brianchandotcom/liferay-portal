@@ -100,7 +100,7 @@ public class UserFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
 		JournalArticle article = _journalArticleLocalService.addArticle(
-			user.getUserId(), group.getGroupId(), 0,
+			null, user.getUserId(), group.getGroupId(), 0,
 			Collections.singletonMap(_locale, title), null, content,
 			"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT", serviceContext);
 

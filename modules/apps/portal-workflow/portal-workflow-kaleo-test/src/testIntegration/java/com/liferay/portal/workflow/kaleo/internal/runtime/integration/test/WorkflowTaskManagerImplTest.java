@@ -1299,8 +1299,8 @@ public class WorkflowTaskManagerImplTest {
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
 		return _journalArticleLocalService.addArticle(
-			_adminUser.getUserId(), _group.getGroupId(), folderId, titleMap,
-			descriptionMap, content, ddmStructure.getStructureKey(),
+			null, _adminUser.getUserId(), _group.getGroupId(), folderId,
+			titleMap, descriptionMap, content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), _serviceContext);
 	}
 

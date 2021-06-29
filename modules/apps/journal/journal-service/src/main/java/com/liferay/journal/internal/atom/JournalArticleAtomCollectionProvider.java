@@ -223,14 +223,15 @@ public class JournalArticleAtomCollectionProvider
 		serviceContext.setScopeGroupId(groupId);
 
 		JournalArticle journalArticle = _journalArticleService.addArticle(
-			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
-			titleMap, descriptionMap, content, ddmStructureKey, ddmTemplateKey,
-			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
-			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
-			indexable, articleURL, serviceContext);
+			null, groupId, folderId, classNameId, classPK, articleId,
+			autoArticleId, titleMap, descriptionMap, titleMap, content,
+			ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+			reviewDateMinute, neverReview, indexable, false, null, null, null,
+			articleURL, serviceContext);
 
 		double version = journalArticle.getVersion();
 

@@ -59,6 +59,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -266,18 +267,18 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			RandomTestUtil.randomString(), "This is a test folder.",
 			serviceContext);
 
+		HashMap<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.getSiteDefault(), "Test Article"
+		).build();
+
 		return _journalArticleLocalService.addArticle(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			journalFolder.getFolderId(),
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
-			true, 0,
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), "Test Article"
-			).build(),
-			null, content, ddmStructure.getStructureKey(),
-			ddmTemplate.getTemplateKey(), null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0,
-			true, 0, 0, 0, 0, 0, true, true, false, null, null, null, null,
-			serviceContext);
+			true, 0, titleMap, null, titleMap, content,
+			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(), null,
+			1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
+			false, null, null, null, null, serviceContext);
 	}
 
 	private void _assertContentEquals(

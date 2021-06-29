@@ -1,0 +1,189 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownWorkflowDefinitions();
+		}
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to a Knowledge Base Article"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToBaseArticle {
+
+		// TODO LRQA-68290 CanAssignWorkflowToBaseArticle pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to a Comment"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToComment {
+
+		// TODO LRQA-68288 CanAssignWorkflowToComment pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to a Content Page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToContentPage {
+
+		// TODO LRQA-68289 CanAssignWorkflowToContentPage pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to Message Boards Message"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToMessageBoardsMessage {
+
+		// TODO LRQA-68291 CanAssignWorkflowToMessageBoardsMessage pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to Page Revision"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToPageRevision {
+
+		// TODO LRQA-68292 CanAssignWorkflowToPageRevision pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to Translation"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToTranslation {
+
+		// TODO LRQA-68293 CanAssignWorkflowToTranslation pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to User"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToUser {
+
+		// TODO LRQA-68294 CanAssignWorkflowToUser pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign a Workflow to Web Content Article"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToWebContentArticle {
+
+		// TODO LRQA-68295 CanAssignWorkflowToWebContentArticle pending implementation
+
+	}
+
+	@description = "Verify that the user is able to cancel the assignment"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelAssignment {
+
+		// TODO LRQA-68287 CanCancelAssignment pending implementation
+
+	}
+
+	@description = "Verify that the user is able to order by Resource"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByResource {
+
+		// TODO LRQA-68282 CanOrderByResource pending implementation
+
+	}
+
+	@description = "Verify that the user is able to order by Workflow"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByWorkflow {
+
+		// TODO LRQA-68283 CanOrderByWorkflow pending implementation
+
+	}
+
+	@description = "Verify that the user is able to reverse sort direction"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanReverseSortDirection {
+
+		// TODO LRQA-68284 CanReverseSortDirection pending implementation
+
+	}
+
+	@description = "Verify that the user is able to search by Asset Type"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchByAssetType {
+
+		// TODO LRQA-68278 CanSearchByAssetType pending implementation
+
+	}
+
+	@description = "Verify that the user is able to search by Workflow Assigned"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchByWorkflowAssigned {
+
+		// TODO LRQA-68279 CanSearchByWorkflowAssigned pending implementation
+
+	}
+
+	@description = "Verify that search can be done using non-ASCII character"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchNonAsciiChar {
+
+		// TODO LRQA-68281 CanSearchNonAsciiChar pending implementation
+
+	}
+
+	@description = "Verify that the user is able to unassign a Workflow from an Asset Type"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUnassignWorkflow {
+
+		// TODO LRQA-68286 CanUnassignWorkflow pending implementation
+
+	}
+
+	@description = "Verify that the Clear option cleans the search results"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ClearSearchResults {
+
+		// TODO LRQA-68280 ClearSearchResults pending implementation
+
+	}
+
+	@description = "Verify that there is a info message -The assets from Documents and Media and Forms are assigned within their respective applications.-"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test DisplaysInfoMessage {
+
+		// TODO LRQA-68296 DisplaysInfoMessage pending implementation
+
+	}
+
+}

@@ -178,12 +178,26 @@ definition {
 	}
 
 	@description = "Verify that the user is able to reverse sort direction"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanReverseSortDirection {
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
-		// TODO LRQA-68237 CanReverseSortDirection pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.clickRevertSortDirection();
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
+			value1 = "Copy of Single Approver");
+
+		AssertTextEquals(
+			key_rowNumber = "3",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
+			value1 = "Single Approver");
 	}
 
 	@description = "Verify that the user is able to search by Workflow title"

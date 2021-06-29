@@ -64,6 +64,21 @@
 	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROCESS_NAME_TABLE_ROW</td>
+	<td>//tr[${key_rowNumber}]//td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATE_SEARCH_RESULTS_BAR</td>
+	<td>//span[contains(.,'Results') and @class='text-truncate']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

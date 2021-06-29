@@ -1063,6 +1063,13 @@ definition {
 	macro viewAssetPG {
 		var key_assetTitle = "${assetTitle}";
 
+		if (isSet(filteredByCategory)) {
+			AssertTextEquals.assertPartialText(
+				key_categoryName = "${categoryName}",
+				locator1 = "AP#CATEGORIES_FILTER_CATEGORY",
+				value1 = "${categoryName}");
+		}
+
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${assetTitle}");

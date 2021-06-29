@@ -1,0 +1,166 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-105495 - Verify that the user can transition tasks adding a comment to it"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddCommentToATransitionTask {
+
+		// TODO LRQA-67809 CanAddCommentToATransitionTask pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that users can bulk-transition pending tasks assigned to themselves from more than 1 instance via Workflow Metrics"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanBulkTransitionPendingTasksFromMultipleInstances {
+
+		// TODO LRQA-67806 CanBulkTransitionPendingTasksFromMultipleInstances pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that tasks that are not assigned to the current users can't be transitioned via bulk transition action"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotBulkTransitionTasksNotAssignedToCurrentUser {
+
+		// TODO LRQA-67814 CanNotBulkTransitionTasksNotAssignedToCurrentUser pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that there are loading cards in Select Steps to Transition and Choose Transition per Step"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test LoadingCardsAreDisplayed {
+
+		// TODO LRQA-67810 LoadingCardsAreDisplayed pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that the message -Your connection has been unexpectedly lost. Select 'Done' to retry.- is displayed when the connection is lost before the user clicks on Done"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test MessageIsDisplayedWhenConnectionIsLost {
+
+		// TODO LRQA-67823 MessageIsDisplayedWhenConnectionIsLost pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that the message -The selected steps have transitioned successfully- is displayed when several steps are transitioned at once"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
+
+		// TODO LRQA-67820 MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that the message -Select a transition- and -All steps require a transition to be selected to complete this action.- are displayed when the user clicks on Done without selecting all transitions"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MessageIsDisplayedWhenSomeTransitionIsNotSelected {
+
+		// TODO LRQA-67818 MessageIsDisplayedWhenSomeTransitionIsNotSelected pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that, in -Choose Transition Per Step- modal, the user can add comments when transitioning tasks"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OnChooseTransitionPerStepCanAddCommentToATransitionTask {
+
+		// TODO LRQA-67812 OnChooseTransitionPerStepCanAddCommentToATransitionTask pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by assignees"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test OnChooseTransitionPerStepCanFilterByAssignee {
+
+		// TODO LRQA-67803 OnChooseTransitionPerStepCanFilterByAssignee pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that users can filter the tasks to be transitioned by steps"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test OnChooseTransitionPerStepCanFilterByStep {
+
+		// TODO LRQA-67805 OnChooseTransitionPerStepCanFilterByStep pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that only the tasks selected on -Select Steps to Transition- are being considered to be transitioned in the -Choose Transition Per Step- step"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OnlySelectedTasksAreConsideredToBeTransitioned {
+
+		// TODO LRQA-67811 OnlySelectedTasksAreConsideredToBeTransitioned pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that when there are 11 or more instances to be transitioned with the same step, only the first 10 instances are displayed with the -Show All/Show Less- buttons available to be selected"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ShowAllLessButtonAvailable {
+
+		// TODO LRQA-67802 ShowAllLessButtonAvailable pending implementation
+
+	}
+
+	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TasksAreGroupedByVersionedTasks {
+
+		// TODO LRQA-67813 TasksAreGroupedByVersionedTasks pending implementation
+
+	}
+
+	@description = "LPS-105495 - Verify that tasks with more than 10 possible transitions have a scroll inside the dropdown field"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TasksWithMoreThan10PossibleTransitionsHasScroll {
+
+		// TODO LRQA-67807 TasksWithMoreThan10PossibleTransitionsHasScroll pending implementation
+
+	}
+
+	@description = "LPS-105495 - Verify that an Unexpected Error message is displayed when the user tries to reassign a task and an unexpected error -such as a connection loss- occurs"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test UnexpectedErrorMessageIsDisplayed {
+
+		// TODO LRQA-67804 UnexpectedErrorMessageIsDisplayed pending implementation
+
+	}
+
+}

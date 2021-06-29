@@ -271,14 +271,14 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		String cacheKey = themeDisplay.getLocale() + "-" + url;
 
 		if (refreshCache) {
-			_layoutReportsIssuesCache.put(
+			_layoutReportsIssuesPortalCache.put(
 				cacheKey,
 				_fetchLayoutReportIssuesJSONObject(
 					group, resourceBundle, themeDisplay, url));
 		}
 
 		return JSONUtil.put(
-			"layoutReportsIssues", _layoutReportsIssuesCache.get(cacheKey));
+			"layoutReportsIssues", _layoutReportsIssuesPortalCache.get(cacheKey));
 	}
 
 	private boolean _hasViewPermission(
@@ -298,7 +298,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		GetLayoutReportsIssuesMVCResourceCommand.class);
 
 	private static final PortalCache<String, JSONObject>
-		_layoutReportsIssuesCache = PortalCacheHelperUtil.getPortalCache(
+		_layoutReportsIssuesPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM,
 			GetLayoutReportsIssuesMVCResourceCommand.class.getName());
 

@@ -45,6 +45,16 @@
 	<td>//ul[@class='control-menu-nav']//span[@data-qa-id='headerTitle']</td>
 	<td></td>
 </tr>
+	<td>DROPDOWN_ITEM</td>
+	<td>//a[contains(@class,'dropdown-item') and contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_NAME_IN_SECTION_BY_INDEX</td>
+	<td>//tr[contains(@class,'table-divider')]//td[contains(text(),'${key_section}')]/../../tr[contains(@data-qa-id,'row')][${key_index}]//a[contains(text(),'${key_processName}')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

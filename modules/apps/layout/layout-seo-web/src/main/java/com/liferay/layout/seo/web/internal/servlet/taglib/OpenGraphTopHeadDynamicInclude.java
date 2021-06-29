@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -36,6 +35,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -65,8 +65,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -362,31 +360,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			return Optional.empty();
 		}
 
-		StringBuffer sb = new StringBuffer();
-
-		Matcher matcher = _pattern.matcher(template);
-
-		while (matcher.find()) {
-			String variableName = matcher.group(1);
-
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValues.getInfoFieldValue(variableName);
-
-			if (infoFieldValue != null) {
-				matcher.appendReplacement(
-					sb,
-					Matcher.quoteReplacement(
-						String.valueOf(infoFieldValue.getValue(locale))));
-			}
-			else {
-				matcher.appendReplacement(
-					sb, Matcher.quoteReplacement(variableName));
-			}
-		}
-
-		matcher.appendTail(sb);
-
-		return Optional.of(sb.toString());
+		return Optional.of(
+			_layoutSEOTemplateProcessor.processTemplate(
+				template, infoItemFieldValues, locale));
 	}
 
 	private String _getOpenGraphTag(String property, String content) {
@@ -407,8 +383,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			return ReflectionUtil.throwException(portalException);
 		}
 	}
-
-	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]+)\\}");
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
@@ -443,6 +417,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
+
+	@Reference
+	private LayoutSEOTemplateProcessor _layoutSEOTemplateProcessor;
 
 	@Reference
 	private OpenGraphConfiguration _openGraphConfiguration;

@@ -25,7 +25,6 @@ import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -40,6 +39,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -75,8 +75,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -245,6 +243,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	protected LayoutPageTemplateEntryService layoutPageTemplateEntryService;
+
+	@Reference
+	protected LayoutSEOTemplateProcessor layoutSEOTemplateProcessor;
 
 	@Reference
 	protected Portal portal;
@@ -417,31 +418,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			return Optional.empty();
 		}
 
-		StringBuffer sb = new StringBuffer();
-
-		Matcher matcher = _pattern.matcher(template);
-
-		while (matcher.find()) {
-			String variableName = matcher.group(1);
-
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValues.getInfoFieldValue(variableName);
-
-			if (infoFieldValue != null) {
-				matcher.appendReplacement(
-					sb,
-					Matcher.quoteReplacement(
-						String.valueOf(infoFieldValue.getValue(locale))));
-			}
-			else {
-				matcher.appendReplacement(
-					sb, Matcher.quoteReplacement(variableName));
-			}
-		}
-
-		matcher.appendTail(sb);
-
-		return Optional.of(sb.toString());
+		return Optional.of(
+			layoutSEOTemplateProcessor.processTemplate(
+				template, infoItemFieldValues, locale));
 	}
 
 	private LayoutQueryStringComposite
@@ -617,7 +596,5 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAssetDisplayPageFriendlyURLResolver.class);
-
-	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]+)\\}");
 
 }

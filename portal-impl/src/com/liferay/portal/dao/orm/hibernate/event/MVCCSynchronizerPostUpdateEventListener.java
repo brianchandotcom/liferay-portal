@@ -46,8 +46,18 @@ public class MVCCSynchronizerPostUpdateEventListener
 
 			BaseModel<?> baseModel = (BaseModel<?>)entity;
 
-			EntityCacheUtil.putResult(
-				entity.getClass(), baseModel, false, false);
+			MVCCModel cachedMVCCModel = (MVCCModel)EntityCacheUtil.getResult(
+				baseModel.getClass(), baseModel.getPrimaryKeyObj());
+
+			if (cachedMVCCModel != null) {
+				MVCCModel mvccModel = (MVCCModel)entity;
+
+				cachedMVCCModel.setMvccVersion(mvccModel.getMvccVersion());
+
+				EntityCacheUtil.putResult(
+					entity.getClass(), (BaseModel<?>)cachedMVCCModel, false,
+					false);
+			}
 		}
 	}
 

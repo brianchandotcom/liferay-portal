@@ -54,9 +54,14 @@
 	<td>//tr[contains(@class,'table-divider')]//td[contains(text(),'${key_section}')]/../../tr[contains(@data-qa-id,'row')][${key_index}]//a[contains(text(),'${key_processName}')]</td>
 	<td></td>
 </tr>
-
+<tr>
 	<td>PERMISSIONS_MODAL</td>
 	<td>//div[contains(@class, 'modal-content') and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_BUILDER_HEADER_TITLE</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 </tbody>

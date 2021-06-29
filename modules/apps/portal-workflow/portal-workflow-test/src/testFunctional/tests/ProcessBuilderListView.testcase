@@ -262,12 +262,24 @@ definition {
 	}
 
 	@description = "Verify that the user can select View option in the kebab menu for a particular row"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectViewOption {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68239 CanSelectViewOption pending implementation
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
+		MenuItem.clickNoError(menuItem = "View");
+
+		AssertElementPresent(
+			key_pageName = "Single Approver",
+			locator1 = "ProcessBuilderListView#PROCESS_BUILDER_HEADER_TITLE");
+
+		AssertNotEditable(locator1 = "WorkflowDefinition#DEFINITION_TITLE");
 	}
 
 	@description = "Verify that a duplicated definition can be Unpublished"

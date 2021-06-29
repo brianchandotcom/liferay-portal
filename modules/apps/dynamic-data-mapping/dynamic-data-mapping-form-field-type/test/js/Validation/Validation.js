@@ -102,6 +102,7 @@ describe('Validation', () => {
 
 		const {container} = render(
 			<ValidationWithProvider
+				dataType="string"
 				defaultLanguageId="en_US"
 				editingLanguageId="en_US"
 				expression={{}}
@@ -197,6 +198,50 @@ describe('Validation', () => {
 			expression: {
 				name: 'eq',
 				value: 'numericfield=={parameter}',
+			},
+			parameter: {
+				en_US: undefined,
+			},
+		});
+	});
+
+	it('renders parameter field with Date element', () => {
+		const onChange = jest.fn();
+
+		const {container} = render(
+			<ValidationWithProvider
+				dataType="date"
+				defaultLanguageId="en_US"
+				editingLanguageId="en_US"
+				expression={{}}
+				label="Validator"
+				name="validation"
+				onChange={onChange}
+				spritemap={spritemap}
+				validation={{
+					dataType: 'date',
+					fieldName: 'dateField',
+				}}
+				value={defaultValue}
+			/>
+		);
+
+		const inputCheckbox = container.querySelector('input[type="checkbox"]');
+
+		fireEvent.click(inputCheckbox);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
+			enableValidation: true,
+			errorMessage: {
+				en_US: undefined,
+			},
+			expression: {
+				name: 'futureDates',
+				value: 'futureDates(dateField, "{parameter}")',
 			},
 			parameter: {
 				en_US: undefined,

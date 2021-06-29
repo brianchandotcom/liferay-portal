@@ -13,16 +13,24 @@
  */
 
 import ClayForm from '@clayui/form';
-import {usePrevious} from '@liferay/frontend-js-react-web';
 import {useFormState} from 'data-engine-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer} from 'react';
 
 import Checkbox from '../Checkbox/Checkbox.es';
-import Numeric from '../Numeric/Numeric';
-import Select from '../Select/Select.es';
-import Text from '../Text/Text.es';
-import {subWords} from '../util/strings.es';
-import {getSelectedValidation, transformData} from './transform.es';
+import ValidationDate from './ValidationDate';
+import ValidationTextAndNumeric from './ValidationTextAndNumeric';
+import {
+	getLocalizedValue,
+	getSelectedValidation,
+	transformData,
+} from './transform';
+import reducer, {EVENT_TYPES} from './validationReducer';
+
+const COMPONENTS = {
+	date: ValidationDate,
+	numeric: ValidationTextAndNumeric,
+	string: ValidationTextAndNumeric,
+};
 
 const Validation = ({
 	dataType,
@@ -33,100 +41,48 @@ const Validation = ({
 	label,
 	localizationMode,
 	name,
+	onBlur,
 	onChange,
 	parameter: initialParameter,
-	parameterMessage,
 	readOnly,
 	selectedValidation: initialSelectedValidation,
-	spritemap,
 	validation,
 	validations,
-	value,
 	visible,
 }) => {
 	const [
 		{enableValidation, errorMessage, parameter, selectedValidation},
-		setState,
-	] = useState({
-		enableValidation: initialEnableValidation,
-		errorMessage: initialErrorMessage,
-		parameter: initialParameter,
-		selectedValidation: initialSelectedValidation,
-	});
+		dispatch,
+	] = useReducer(
+		reducer({
+			editingLanguageId,
+			fieldName: validation?.fieldName,
+			onChange,
+		}),
+		{
+			enableValidation: initialEnableValidation,
+			errorMessage: initialErrorMessage,
+			parameter: initialParameter,
+			selectedValidation: initialSelectedValidation,
+		}
+	);
 
-	const DynamicComponent =
-		selectedValidation &&
-		selectedValidation.parameterMessage &&
-		dataType === 'string'
-			? Text
-			: Numeric;
-
-	const handleChange = (key, newValue) => {
-		setState((prevState) => {
-			const newState = {
-				...prevState,
-				[key]: newValue,
-			};
-
-			let expression = {};
-
-			if (newState.enableValidation) {
-				expression = {
-					name: newState.selectedValidation.name,
-					value: subWords(newState.selectedValidation.template, {
-						name: validation?.fieldName,
-					}),
-				};
-			}
-
-			onChange({
-				enableValidation: newState.enableValidation,
-				errorMessage: {
-					...value.errorMessage,
-					[editingLanguageId]: newState.errorMessage,
-				},
-				expression,
-				parameter: {
-					...value.parameter,
-					[editingLanguageId]: !value.expression
-						? parameterMessage
-						: newState.parameter,
-				},
-			});
-
-			return newState;
-		});
-	};
+	const ValidationComponent = COMPONENTS[dataType];
 
 	const transformSelectedValidation = getSelectedValidation(validations);
 
-	const prevEditingLanguageId = usePrevious(editingLanguageId);
-
-	useEffect(() => {
-		if (prevEditingLanguageId !== editingLanguageId) {
-			setState((prevState) => {
-				const {errorMessage = {}, parameter = {}} = value;
-
-				return {
-					...prevState,
-					errorMessage:
-						errorMessage[editingLanguageId] !== undefined
-							? errorMessage[editingLanguageId]
-							: errorMessage[defaultLanguageId],
-					parameter:
-						parameter[editingLanguageId] !== undefined
-							? parameter[editingLanguageId]
-							: parameter[defaultLanguageId],
-				};
-			});
-		}
-	}, [defaultLanguageId, editingLanguageId, prevEditingLanguageId, value]);
+	const localizedValue = getLocalizedValue({
+		defaultLanguageId,
+		editingLanguageId,
+	});
 
 	useEffect(() => {
 		if (readOnly || !visible) {
-			handleChange('enableValidation', false);
+			dispatch({
+				payload: {enableValidation: false},
+				type: EVENT_TYPES.ENABLE_VALIDATION,
+			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [readOnly, visible]);
 
 	return (
@@ -134,82 +90,52 @@ const Validation = ({
 			<Checkbox
 				label={label}
 				name="enableValidation"
-				onChange={(event, value) =>
-					handleChange('enableValidation', value)
-				}
+				onChange={(event, enableValidation) => {
+					dispatch({
+						payload: {
+							enableValidation,
+							fieldName: validation?.fieldName,
+						},
+						type: EVENT_TYPES.ENABLE_VALIDATION,
+					});
+				}}
 				readOnly={readOnly}
 				showAsSwitcher
-				spritemap={spritemap}
 				value={enableValidation}
 				visible={visible}
 			/>
 
 			{enableValidation && (
-				<>
-					<Select
-						disableEmptyOption
-						label={Liferay.Language.get('accept-if-input')}
-						name="selectedValidation"
-						onChange={(event, value) =>
-							handleChange(
-								'selectedValidation',
-								transformSelectedValidation(value)
-							)
-						}
-						options={validations}
-						placeholder={Liferay.Language.get('choose-an-option')}
-						readOnly={readOnly || localizationMode}
-						showEmptyOption={false}
-						spritemap={spritemap}
-						value={[selectedValidation.name]}
-						visible={visible}
-					/>
-					{selectedValidation.parameterMessage && (
-						<DynamicComponent
-							dataType={dataType}
-							label={Liferay.Language.get('value')}
-							name={`${name}_parameter`}
-							onChange={(event) =>
-								handleChange('parameter', event.target.value)
-							}
-							placeholder={selectedValidation.parameterMessage}
-							readOnly={readOnly}
-							required={false}
-							spritemap={spritemap}
-							value={parameter}
-							visible={visible}
-						/>
-					)}
-					<Text
-						label={Liferay.Language.get('error-message')}
-						name={`${name}_errorMessage`}
-						onChange={(event) =>
-							handleChange('errorMessage', event.target.value)
-						}
-						placeholder={Liferay.Language.get('error-message')}
-						readOnly={readOnly}
-						required={false}
-						spritemap={spritemap}
-						value={errorMessage}
-						visible={visible}
-					/>
-				</>
+				<ValidationComponent
+					dataType={dataType}
+					dispatch={dispatch}
+					errorMessage={errorMessage}
+					localizationMode={localizationMode}
+					localizedValue={localizedValue}
+					name={name}
+					onBlur={onBlur}
+					parameter={parameter}
+					readOnly={readOnly}
+					selectedValidation={selectedValidation}
+					transformSelectedValidation={transformSelectedValidation}
+					validations={validations}
+					visible={visible}
+				/>
 			)}
 		</ClayForm.Group>
 	);
 };
 
-const Main = ({
+const ValidationWrapper = ({
 	dataType: initialDataType,
 	defaultLanguageId,
 	editingLanguageId,
 	label,
-	name,
+	onBlur,
 	onChange,
 	readOnly,
-	spritemap,
 	validation,
-	value = {},
+	value,
 	visible,
 }) => {
 	const {validations} = useFormState();
@@ -229,9 +155,9 @@ const Main = ({
 			editingLanguageId={editingLanguageId}
 			label={label}
 			name={name}
+			onBlur={onBlur}
 			onChange={(value) => onChange({}, value)}
 			readOnly={readOnly}
-			spritemap={spritemap}
 			validation={validation}
 			value={value}
 			visible={visible}
@@ -239,4 +165,4 @@ const Main = ({
 	);
 };
 
-export default Main;
+export default ValidationWrapper;

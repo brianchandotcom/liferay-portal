@@ -110,7 +110,23 @@ definition {
 	@priority = "5"
 	test CanNotDeletePublishedProcess {
 
-		// TODO LRQA-68231 CanNotDeletePublishedProcess pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		AssertElementPresent(
+			key_processName = "Single Approver",
+			key_section = "Published",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION");
+
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_value = "Delete",
+			locator1 = "ProcessBuilderListView#UNPUBLISHED_OPTION");
 
 	}
 

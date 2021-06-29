@@ -71,7 +71,16 @@ definition {
 	@priority = "4"
 	test CanEditTitleOfDuplicatedProcess {
 
-		// TODO LRQA-68244 CanEditTitleOfDuplicatedProcess pending implementation
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		AssertElementPresent(
+			key_workflowInstanceName = "Single Approver 2",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE");
 
 	}
 

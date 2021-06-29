@@ -56,6 +56,11 @@
 	<td>//tbody//tr[${key_order}]//td//a[contains(text(), "${key_title}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DETAILS_WORKFLOW_TITLE</td>
+	<td>//a[contains(text(),'${key_workflowInstanceName}')]</td>
+	<td></td>
+</tr>
 <!--TRANSLATIONS_PREVIEW-->
 <tr>
 	<td>TRANSLATIONS_PREVIEW_EDITOR</td>

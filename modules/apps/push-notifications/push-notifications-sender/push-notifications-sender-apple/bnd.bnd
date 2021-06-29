@@ -2,6 +2,8 @@ Bundle-Name: Liferay Push Notifications Sender Apple
 Bundle-SymbolicName: com.liferay.push.notifications.sender.apple
 Bundle-Version: 5.0.5
 Import-Package:\
+	!com.aayushatharva.brotli4j.*,\
+	\
 	!com.barchart.udt.*,\
 	\
 	!com.fasterxml.aalto.*,\
@@ -10,40 +12,41 @@ Import-Package:\
 	\
 	!com.jcraft.jzlib.*,\
 	\
-	!com.ning.*,\
+	!com.ning.compress.*,\
 	\
-	!com.oracle.*,\
+	!com.oracle.svm.core.annotate.*,\
 	\
-	!com.sun.*,\
+	!com.sun.nio.sctp.*,\
 	\
 	!gnu.io.*,\
 	\
 	!io.netty.internal.tcnative.*,\
 	\
-	!jdk.nashorn.*,\
-	\
-	!jdk.net.*,\
-	\
-	!jdk.vm.*,\
-	\
 	!lzma.sdk.*,\
 	\
-	!net.jpountz.*,\
+	!net.jpountz.lz4.*,\
+	!net.jpountz.xxhash.*,\
 	\
 	!org.apache.commons.httpclient.*,\
+	!org.apache.logging.log4j.*,\
 	\
-	!org.bouncycastle.*,\
+	!org.bouncycastle.asn1.x500.*,\
+	!org.bouncycastle.cert.*,\
+	!org.bouncycastle.jce.provider.*,\
+	!org.bouncycastle.operator.*,\
 	\
 	!org.conscrypt.*,\
 	\
-	!org.eclipse.*,\
+	!org.eclipse.jetty.alpn.*,\
+	!org.eclipse.jetty.npn.*,\
 	\
-	!org.graalvm.*,\
-	\
-	!org.jboss.*,\
+	!org.jboss.marshalling.*,\
 	\
 	!reactor.blockhound.*,\
 	\
-	!sun.security.*,\
+	!sun.security.util.*,\
+	!sun.security.x509.*,\
+	\
+	io.netty.channel.socket.nio,\
 	\
 	*

@@ -408,7 +408,7 @@ definition {
 	test ViewContentPageShownInSearchResultsAfterExecuteReindexAll {
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewSearchResultOnPageAfterExecuteReindexAll";
 
-		task ("Add a new Paragraph to content page") {
+		task ("Add a Paragraph fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -446,7 +446,7 @@ definition {
 			Search.searchCP(searchTerm = "Searchable");
 		}
 
-		task ("View both the content page and web content shown in the search results") {
+		task ("View both content page and web content shown in the search results") {
 			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
 				Search.viewResultAssetTitle(searchAssetTitle = "${title}");
 			}
@@ -471,7 +471,7 @@ definition {
 			Search.searchCP(searchTerm = "Searchable");
 		}
 
-		task ("View both the content page and web content are still shown in the search results") {
+		task ("View both content page and web content are still shown in the search results") {
 			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
 				Search.viewResultAssetTitle(searchAssetTitle = "${title}");
 			}

@@ -30,6 +30,8 @@ definition {
 				optionValue = "${optionValue}",
 				productSKU = "${optionValueUppercase}SKU");
 
+			WaitForElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
+
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Purchasable",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");

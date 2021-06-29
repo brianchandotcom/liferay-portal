@@ -1180,6 +1180,16 @@ public abstract class BaseOrganizationResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"accountInformation", additionalAssertFieldName)) {
+
+				if (organization.getAccountInformation() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (organization.getActions() == null) {
 					valid = false;
@@ -1366,6 +1376,19 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"accountInformation", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						organization1.getAccountInformation(),
+						organization2.getAccountInformation())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!equals(
@@ -1619,6 +1642,11 @@ public abstract class BaseOrganizationResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("accountInformation")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(

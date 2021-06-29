@@ -60,7 +60,7 @@ public class KnowledgeBaseArticleResourceTest
 	public void testPutSiteKnowledgeBaseArticleByExternalReferenceCode()
 		throws Exception {
 
-		//Update
+		// Update
 
 		super.testPutSiteKnowledgeBaseArticleByExternalReferenceCode();
 

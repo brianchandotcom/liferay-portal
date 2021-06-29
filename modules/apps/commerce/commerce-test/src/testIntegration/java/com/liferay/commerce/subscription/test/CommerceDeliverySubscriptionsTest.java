@@ -26,6 +26,7 @@ import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
@@ -50,6 +51,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -75,6 +77,12 @@ public class CommerceDeliverySubscriptionsTest {
 		_company = CompanyTestUtil.addCompany();
 
 		_user = UserTestUtil.addUser(_company);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CommerceChannelLocalServiceUtil.deleteCommerceChannels(
+			_company.getCompanyId());
 	}
 
 	@Before

@@ -55,6 +55,7 @@ import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -94,6 +95,7 @@ import java.util.Objects;
 import org.frutilla.FrutillaRule;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -120,6 +122,12 @@ public class CommerceOrderItemLocalServiceTest {
 		_company = CompanyTestUtil.addCompany();
 
 		_user = UserTestUtil.addUser(_company);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CommerceChannelLocalServiceUtil.deleteCommerceChannels(
+			_company.getCompanyId());
 	}
 
 	@Before

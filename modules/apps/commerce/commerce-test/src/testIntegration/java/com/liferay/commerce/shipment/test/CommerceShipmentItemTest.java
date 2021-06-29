@@ -54,6 +54,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -80,6 +81,12 @@ public class CommerceShipmentItemTest {
 		_company = CompanyTestUtil.addCompany();
 
 		_user = UserTestUtil.addUser(_company);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CommerceChannelLocalServiceUtil.deleteCommerceChannels(
+			_company.getCompanyId());
 	}
 
 	@Before

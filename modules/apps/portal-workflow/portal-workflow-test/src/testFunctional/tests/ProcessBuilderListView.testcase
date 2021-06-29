@@ -216,12 +216,24 @@ definition {
 	}
 
 	@description = "Verify that the correct columns are displayed: Title, Description, Last Modified"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DisplaysColumnsTitleDescriptionLastModified {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68230 DisplaysColumnsTitleDescriptionLastModified pending implementation
+		AssertElementPresent(
+			key_columnName = "title",
+			locator1 = "ProcessBuilderListView#PROCESS_BUILDER_COLUMN_NAME");
 
+		AssertElementPresent(
+			key_columnName = "description",
+			locator1 = "ProcessBuilderListView#PROCESS_BUILDER_COLUMN_NAME");
+
+		AssertElementPresent(
+			key_columnName = "last-modified",
+			locator1 = "ProcessBuilderListView#PROCESS_BUILDER_COLUMN_NAME");
 	}
 
 	@description = "Verify that Not Published processes are displayed on table"

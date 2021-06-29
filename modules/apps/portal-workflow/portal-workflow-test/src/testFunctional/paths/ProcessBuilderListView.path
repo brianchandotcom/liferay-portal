@@ -30,6 +30,11 @@
 	<td>//div[contains(@class,'alert')]//div[contains(text(),'${key_message}') and contains(*,'Success')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROCESS_BUILDER_COLUMN_NAME</td>
+	<td>//th[contains(@class,'lfr-${key_columnName}-column')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

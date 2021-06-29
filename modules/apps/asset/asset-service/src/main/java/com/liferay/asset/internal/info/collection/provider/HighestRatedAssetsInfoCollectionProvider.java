@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.asset.internal.info.list.provider;
+package com.liferay.asset.internal.info.collection.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderContext;
-import com.liferay.info.pagination.Pagination;
-import com.liferay.info.sort.Sort;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -37,50 +35,30 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = InfoListProvider.class)
-public class MostViewedAssetsInfoListProvider
-	extends BaseAssetsInfoListProvider implements InfoListProvider<AssetEntry> {
+@Component(immediate = true, service = InfoCollectionProvider.class)
+public class HighestRatedAssetsInfoCollectionProvider
+	extends BaseAssetsInfoCollectionProvider
+	implements InfoCollectionProvider<AssetEntry> {
 
 	@Override
-	public List<AssetEntry> getInfoList(
-		InfoListProviderContext infoListProviderContext) {
-
-		return getInfoList(infoListProviderContext, null, null);
-	}
-
-	@Override
-	public List<AssetEntry> getInfoList(
-		InfoListProviderContext infoListProviderContext, Pagination pagination,
-		Sort sort) {
+	public InfoPage<AssetEntry> getCollectionInfoPage(
+		CollectionQuery collectionQuery) {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			infoListProviderContext, "viewCount", "DESC", pagination);
+			"ratings", "DESC", collectionQuery.getPagination());
 
 		try {
-			return _assetEntryService.getEntries(assetEntryQuery);
+			return InfoPage.of(
+				_assetEntryService.getEntries(assetEntryQuery),
+				collectionQuery.getPagination(),
+				_assetEntryService.getEntriesCount(assetEntryQuery));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);
 		}
 
-		return Collections.emptyList();
-	}
-
-	@Override
-	public int getInfoListCount(
-		InfoListProviderContext infoListProviderContext) {
-
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			infoListProviderContext, "viewCount", "DESC", null);
-
-		try {
-			return _assetEntryService.getEntriesCount(assetEntryQuery);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get asset entries count", exception);
-		}
-
-		return 0;
+		return InfoPage.of(
+			Collections.emptyList(), collectionQuery.getPagination(), 0);
 	}
 
 	@Override
@@ -88,11 +66,11 @@ public class MostViewedAssetsInfoListProvider
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "most-viewed-assets");
+		return LanguageUtil.get(resourceBundle, "highest-rated-assets");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MostViewedAssetsInfoListProvider.class);
+		HighestRatedAssetsInfoCollectionProvider.class);
 
 	@Reference
 	private AssetEntryService _assetEntryService;

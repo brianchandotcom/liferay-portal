@@ -12,28 +12,27 @@
  * details.
  */
 
-package com.liferay.asset.internal.info.list.provider;
+package com.liferay.asset.internal.info.collection.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderContext;
-import com.liferay.info.pagination.Pagination;
-import com.liferay.info.sort.Sort;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,66 +42,39 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = InfoListProvider.class)
-public class RelatedAssetsInfoListProvider
-	extends BaseAssetsInfoListProvider implements InfoListProvider<AssetEntry> {
+@Component(immediate = true, service = InfoCollectionProvider.class)
+public class RelatedAssetsInfoCollectionProvider
+	extends BaseAssetsInfoCollectionProvider
+	implements InfoCollectionProvider<AssetEntry> {
 
 	@Override
-	public List<AssetEntry> getInfoList(
-		InfoListProviderContext infoListProviderContext) {
-
-		return getInfoList(infoListProviderContext, null, null);
-	}
-
-	@Override
-	public List<AssetEntry> getInfoList(
-		InfoListProviderContext infoListProviderContext, Pagination pagination,
-		Sort sort) {
+	public InfoPage<AssetEntry> getCollectionInfoPage(
+		CollectionQuery collectionQuery) {
 
 		long assetEntryId = _getLayoutAssetEntryId();
 
 		if (assetEntryId == 0) {
-			return Collections.emptyList();
+			return InfoPage.of(
+				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			infoListProviderContext, Field.MODIFIED_DATE, "DESC", pagination);
+			Field.MODIFIED_DATE, "DESC", collectionQuery.getPagination());
 
 		assetEntryQuery.setLinkedAssetEntryId(assetEntryId);
 
 		try {
-			return _assetEntryService.getEntries(assetEntryQuery);
+			return InfoPage.of(
+				_assetEntryService.getEntries(assetEntryQuery),
+				collectionQuery.getPagination(),
+				_assetEntryService.getEntriesCount(assetEntryQuery));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);
 		}
 
-		return Collections.emptyList();
-	}
-
-	@Override
-	public int getInfoListCount(
-		InfoListProviderContext infoListProviderContext) {
-
-		long assetEntryId = _getLayoutAssetEntryId();
-
-		if (assetEntryId == 0) {
-			return 0;
-		}
-
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			infoListProviderContext, Field.MODIFIED_DATE, "DESC", null);
-
-		assetEntryQuery.setLinkedAssetEntryId(assetEntryId);
-
-		try {
-			return _assetEntryService.getEntriesCount(assetEntryQuery);
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get asset entries count", exception);
-		}
-
-		return 0;
+		return InfoPage.of(
+			Collections.emptyList(), collectionQuery.getPagination(), 0);
 	}
 
 	@Override
@@ -111,19 +83,20 @@ public class RelatedAssetsInfoListProvider
 	}
 
 	@Override
-	public boolean isAvailable(
-		InfoListProviderContext infoListProviderContext) {
+	public boolean isAvailable() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-		Optional<Layout> layoutOptional =
-			infoListProviderContext.getLayoutOptional();
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		if (layoutOptional.isPresent()) {
-			Layout layout = layoutOptional.get();
+		Layout layout = themeDisplay.getLayout();
 
-			return layout.isTypeAssetDisplay();
+		if (layout.isTypeControlPanel()) {
+			layout = _layoutLocalService.fetchLayout(
+				themeDisplay.getRefererPlid());
 		}
 
-		return false;
+		return layout.isTypeAssetDisplay();
 	}
 
 	private long _getLayoutAssetEntryId() {
@@ -144,9 +117,12 @@ public class RelatedAssetsInfoListProvider
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RelatedAssetsInfoListProvider.class);
+		RelatedAssetsInfoCollectionProvider.class);
 
 	@Reference
 	private AssetEntryService _assetEntryService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

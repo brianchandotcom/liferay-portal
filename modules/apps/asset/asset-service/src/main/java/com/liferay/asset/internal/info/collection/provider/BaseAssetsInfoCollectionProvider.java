@@ -12,40 +12,37 @@
  * details.
  */
 
-package com.liferay.asset.internal.info.list.provider;
+package com.liferay.asset.internal.info.collection.provider;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.pagination.Pagination;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
-
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
-public abstract class BaseAssetsInfoListProvider {
+public abstract class BaseAssetsInfoCollectionProvider {
 
 	protected AssetEntryQuery getAssetEntryQuery(
-		InfoListProviderContext infoListProviderContext, String orderByCol,
-		String orderByType, Pagination pagination) {
+		String orderByCol, String orderByType, Pagination pagination) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		Company company = infoListProviderContext.getCompany();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		long[] availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				company.getCompanyId(), true);
+				serviceContext.getCompanyId(), true);
 
 		availableClassNameIds = ArrayUtil.filter(
 			availableClassNameIds,
@@ -63,15 +60,8 @@ public abstract class BaseAssetsInfoListProvider {
 		assetEntryQuery.setClassNameIds(availableClassNameIds);
 
 		assetEntryQuery.setEnablePermissions(true);
-
-		Optional<Group> groupOptional =
-			infoListProviderContext.getGroupOptional();
-
-		if (groupOptional.isPresent()) {
-			Group group = groupOptional.get();
-
-			assetEntryQuery.setGroupIds(new long[] {group.getGroupId()});
-		}
+		assetEntryQuery.setGroupIds(
+			new long[] {serviceContext.getScopeGroupId()});
 
 		if (pagination != null) {
 			assetEntryQuery.setStart(pagination.getStart());

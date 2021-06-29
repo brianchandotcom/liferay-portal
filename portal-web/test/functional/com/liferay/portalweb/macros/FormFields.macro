@@ -30,6 +30,14 @@ definition {
 			value1 = "${optionName}");
 	}
 
+	macro addTableInBodyParagraph {
+		Click.clickNoMouseOver(
+			key_titleName = "Table",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+	}
+
 	macro assertFieldsGroup {
 		AssertVisible(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
@@ -102,6 +110,20 @@ definition {
 		AssertElementNotPresent(
 			key_valueOption = "${key_valueOption}",
 			locator1 = "FormFields#DELETE_OPTION_FROM_MULTIPLE_SELECTION");
+	}
+
+	macro deleteTextWithBackspaceInBodyParagraph {
+		Click(
+			key_fieldName = "Paragraph",
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		SelectFieldText(locator1 = "CKEditor#BODY");
+
+		KeyPress(
+			locator1 = "CKEditor#BODY",
+			value1 = "\BACK_SPACE");
 	}
 
 	macro disableCheckbox {
@@ -1605,6 +1627,14 @@ definition {
 		var key_optionValue = "${optionValue}";
 
 		AssertElementPresent(locator1 = "FormFields#SWITCHER_OPTION_IN_FIELD");
+	}
+
+	macro viewTableNotPresent {
+		AssertElementNotPresent(
+			key_fieldName = "liferay-ddm-form-field-paragraph-text",
+			locator1 = "FormFields#PARAGRAPH_BODY_CONTENT_TABLE");
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro viewTextField {

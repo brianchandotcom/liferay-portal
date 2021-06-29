@@ -27,6 +27,7 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeMetricResource
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessVersionResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ReindexStatusResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
@@ -86,6 +87,8 @@ public class ServletDataImpl implements ServletData {
 			_processResourceComponentServiceObjects);
 		Query.setProcessMetricResourceComponentServiceObjects(
 			_processMetricResourceComponentServiceObjects);
+		Query.setProcessVersionResourceComponentServiceObjects(
+			_processVersionResourceComponentServiceObjects);
 		Query.setReindexStatusResourceComponentServiceObjects(
 			_reindexStatusResourceComponentServiceObjects);
 		Query.setRoleResourceComponentServiceObjects(
@@ -162,6 +165,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProcessMetricResource>
 		_processMetricResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProcessVersionResource>
+		_processVersionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ReindexStatusResource>

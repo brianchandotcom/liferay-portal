@@ -338,6 +338,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isCustomizable();
 
+	public boolean isDraftLayout();
+
 	/**
 	 * Returns <code>true</code> if the current layout is the first layout in
 	 * its parent's hierarchical list of children layouts.

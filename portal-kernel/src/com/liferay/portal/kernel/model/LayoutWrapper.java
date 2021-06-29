@@ -1585,6 +1585,11 @@ public class LayoutWrapper
 		return model.isDraft();
 	}
 
+	@Override
+	public boolean isDraftLayout() {
+		return model.isDraftLayout();
+	}
+
 	/**
 	 * Returns <code>true</code> if this layout is expired.
 	 *

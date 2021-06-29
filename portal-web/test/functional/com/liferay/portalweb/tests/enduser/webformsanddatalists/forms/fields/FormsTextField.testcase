@@ -518,7 +518,7 @@ definition {
 	@description = "Verify that the Confirmation can be placed Horizontally"
 	@priority = "5"
 	test ConfirmationBoxCanBePlacedHorizontally {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -545,6 +545,8 @@ definition {
 		FormFields.viewConfirmationFieldDirection(
 			direction = "vertical",
 			fieldName = "Text");
+
+		ScrollBy(value1 = "0, 230");
 
 		FormFields.editRequireConfirmationField(direction = "Horizontal");
 

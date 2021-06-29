@@ -100,14 +100,6 @@ $light-color: #e7e7ed;
 		}
 	}
 
-	.lfr-discussion-reply {
-		font-size: 0.875rem;
-
-		&.popover {
-			max-width: 100%;
-		}
-	}
-
 	.lfr-discussion-controls
 		.autofit-col:first-of-type
 		> .btn-outline-borderless {
@@ -119,5 +111,13 @@ $light-color: #e7e7ed;
 		margin-top: 1.5rem;
 		padding-top: 1.5rem;
 		text-align: center;
+	}
+}
+
+.lfr-discussion-reply-popover {
+	width: 25rem;
+
+	@include media-breakpoint-up(sm) {
+		max-width: 25rem;
 	}
 }

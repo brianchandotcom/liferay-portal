@@ -121,6 +121,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_ALL_ITEMS_TABLE_CREATION_DATE</td>
+	<td>//span[contains(@data-title,'Creation Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_ALL_ITEMS_TABLE_CREATION_DATE_UNDERLINE</td>
+	<td>//span[contains(@data-title,'Creation Date') and contains(@data-restore-title,'Creation Date')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_ALL_ITEMS_TABLE_INSTANCE</td>
 	<td>//td[(3) and contains(text(),'${key_instanceInfo}')]</td>
 	<td></td>

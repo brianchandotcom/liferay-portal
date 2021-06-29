@@ -155,6 +155,12 @@ public class DBUpgrader {
 			if (_appender != null) {
 				_appender.stop();
 			}
+
+			if (_appenderServiceReference != null) {
+				Registry registry = RegistryUtil.getRegistry();
+
+				registry.ungetService(_appenderServiceReference);
+			}
 		}
 	}
 

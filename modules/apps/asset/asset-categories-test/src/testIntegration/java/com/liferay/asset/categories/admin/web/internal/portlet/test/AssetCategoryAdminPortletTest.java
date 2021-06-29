@@ -85,6 +85,36 @@ public class AssetCategoryAdminPortletTest {
 		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
 	}
 
+	@Test
+	public void testSetCategoryDisplayPageTemplateForTopLevelCategories()
+		throws Exception {
+
+		List<AssetCategory> assetCategories = new ArrayList<>();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		assetCategories.add(assetCategory1);
+		assetCategories.add(assetCategory2);
+
+		_testSetCategoryDisplayPageTemplate(assetCategories);
+	}
+
 	private void _testSetCategoryDisplayPageTemplate(
 			List<AssetCategory> assetCategories)
 		throws Exception {

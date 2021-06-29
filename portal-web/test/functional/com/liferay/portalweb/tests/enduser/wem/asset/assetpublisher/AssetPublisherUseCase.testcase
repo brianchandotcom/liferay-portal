@@ -793,6 +793,103 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-113996. The user could filter documents by field in Asset Publisher."
+	@priority = "4"
+	test FilterDocumentsByField {
+		task ("Add a document type with a Select from List field") {
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.addWithoutSave(
+				dmDocumentTypeFieldNames = "Select from List",
+				dmDocumentTypeName = "Document Type Name");
+		}
+
+		task ("Add two options to Select from List") {
+			for (var index : list "1,2") {
+				DataEngine.addFieldOption(
+					fieldFieldLabel = "Select from List",
+					index = "${index}",
+					optionValue = "Option ${index}");
+			}
+
+			DDLDataDefinition.save();
+		}
+
+		task ("Add two Documents based on Document Type") {
+			Navigator.gotoNavTab(navTab = "Documents and Media");
+
+			for (var n : list "1,2") {
+				DMDocument.addCP(
+					dmDocumentDescription = "DM Document Description ${n}",
+					dmDocumentTitle = "Document Title ${n}",
+					dmDocumentTypeName = "Document Type Name",
+					selectFromListField = "Option ${n}");
+			}
+		}
+
+		task ("Add a dynamic collection for Document and new document type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Document Type Name",
+				itemType = "Document",
+				title = "Dynamic Collection");
+		}
+
+		task ("Filter by Option 1 from Select from List field") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureFilterByField(fieldName = "Select from List");
+
+			Select(
+				key_fieldFieldLabel = "Select from List",
+				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
+				value1 = "Option 1");
+
+			AssertSelectedLabel(
+				key_fieldFieldLabel = "Select from List",
+				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
+				value1 = "Option 1");
+
+			Button.click(button = "Apply");
+
+			PortletEntry.save();
+		}
+
+		task ("View both documents are shown in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			for (var title : list "1,2") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "DM Document Description ${n}",
+					assetTitle = "Document Title ${n}");
+			}
+		}
+
+		task ("Select the dynamic collection in Asset Publisher") {
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View only the first document is shown in Asset Publisher") {
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "DM Document Description 1",
+				assetTitle = "Document Title 1");
+		}
+
+		task ("View the second document is not shown in Asset Publisher") {
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "DM Document Description 2",
+				assetTitle = "Document Title 2");
+		}
+	}
+
 	@description = "This is a test for LPS-129830. The user could remove multiple manual selection asset entries in Asset Publisher."
 	@priority = "4"
 	test RemoveMultipleManualSelectionAssetEntries {

@@ -14,14 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.internal.util;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -63,82 +63,29 @@ public class DDMFormValuesToMapConverterImpl
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		_addMissingDDMFormFieldValues(
-			ddmForm.getDDMFormFields(), ddmFormValues);
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+				ddmForm.getDDMFormFields(),
+				ddmFormValues.getDDMFormFieldValuesMap(true));
 
-		Map<String, DDMFormField> ddmFormFields =
+		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
 
-		Map<String, Object> values = new LinkedHashMap<>(ddmFormFields.size());
+		Map<String, Object> values = new LinkedHashMap<>(
+			ddmFormFieldsMap.size());
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
+		Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
+			ddmFormFieldValues.stream();
 
-			if (ddmFormFields.containsKey(ddmFormFieldValue.getName())) {
-				_addValues(ddmFormFields, ddmFormFieldValue, values);
-			}
-		}
+		ddmFormFieldValuesStream.filter(
+			ddmFormFieldValue -> ddmFormFieldsMap.containsKey(
+				ddmFormFieldValue.getName())
+		).forEach(
+			ddmFormFieldValue -> _addValues(
+				ddmFormFieldsMap, ddmFormFieldValue, values)
+		);
 
 		return values;
-	}
-
-	private void _addMissingDDMFormFieldValues(
-		List<DDMFormField> ddmFormFields, DDMFormValues ddmFormValues) {
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValuesMap(false);
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (!ddmFormFieldValues.containsKey(ddmFormField.getName()) &&
-				!GetterUtil.getBoolean(
-					ddmFormField.getProperty("upgradedStructure"))) {
-
-				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
-					{
-						setInstanceId(StringUtil.randomString());
-						setName(ddmFormField.getName());
-					}
-				};
-
-				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-				if (ListUtil.isNotEmpty(
-						ddmFormField.getNestedDDMFormFields())) {
-
-					_addMissingDDMFormFieldValues(
-						ddmFormField.getNestedDDMFormFields(),
-						ddmFormFieldValues, ddmFormFieldValue);
-				}
-			}
-		}
-	}
-
-	private void _addMissingDDMFormFieldValues(
-		List<DDMFormField> ddmFormFields,
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValues,
-		DDMFormFieldValue parentDDMFormFieldValue) {
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (!ddmFormFieldValues.containsKey(ddmFormField.getName())) {
-				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue() {
-					{
-						setInstanceId(StringUtil.randomString());
-						setName(ddmFormField.getName());
-					}
-				};
-
-				parentDDMFormFieldValue.addNestedDDMFormFieldValue(
-					ddmFormFieldValue);
-
-				if (ListUtil.isNotEmpty(
-						ddmFormField.getNestedDDMFormFields())) {
-
-					_addMissingDDMFormFieldValues(
-						ddmFormField.getNestedDDMFormFields(),
-						ddmFormFieldValues, ddmFormFieldValue);
-				}
-			}
-		}
 	}
 
 	private void _addValue(
@@ -166,7 +113,7 @@ public class DDMFormValuesToMapConverterImpl
 	}
 
 	private void _addValues(
-		Map<String, DDMFormField> ddmFormFields,
+		Map<String, DDMFormField> ddmFormFieldsMap,
 		DDMFormFieldValue ddmFormFieldValue, Map<String, Object> values) {
 
 		Map<String, Object> fieldInstanceValue =
@@ -174,7 +121,7 @@ public class DDMFormValuesToMapConverterImpl
 				_getDDMFormFieldValueInstanceKey(ddmFormFieldValue),
 				k -> new LinkedHashMap<>());
 
-		DDMFormField ddmFormField = ddmFormFields.get(
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(
 			ddmFormFieldValue.getName());
 
 		if (ddmFormField == null) {
@@ -196,7 +143,7 @@ public class DDMFormValuesToMapConverterImpl
 					ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 				_addValues(
-					ddmFormFields, nestedDDMFormFieldValue,
+					ddmFormFieldsMap, nestedDDMFormFieldValue,
 					nestedFieldInstanceValues);
 			}
 		}
@@ -217,8 +164,8 @@ public class DDMFormValuesToMapConverterImpl
 
 		Stream<Locale> stream = availableLocales.stream();
 
-		if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
-			fieldType.equals(DDMFormFieldType.SELECT)) {
+		if (fieldType.equals(DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
+			fieldType.equals(DDMFormFieldTypeConstants.SELECT)) {
 
 			return stream.collect(
 				Collectors.toMap(

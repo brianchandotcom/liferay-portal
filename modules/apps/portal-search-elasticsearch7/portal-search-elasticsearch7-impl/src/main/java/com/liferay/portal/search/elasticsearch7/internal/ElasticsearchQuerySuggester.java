@@ -73,8 +73,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 			return StringPool.BLANK;
 		}
 
-		List<String> words = getHighestRankedSuggestResults(
-			suggestSearchResult);
+		List<String> words = getHighestRankedSuggestions(suggestSearchResult);
 
 		return StringUtil.merge(words, StringPool.SPACE);
 	}
@@ -162,7 +161,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 			return StringPool.EMPTY_ARRAY;
 		}
 
-		List<String> keywordQueries = getHighestRankedSuggestResults(
+		List<String> keywordQueries = getHighestRankedSuggestions(
 			suggestSearchResult);
 
 		return keywordQueries.toArray(new String[0]);
@@ -248,29 +247,40 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		}
 	}
 
-	protected List<String> getHighestRankedSuggestResults(
+	protected List<String> getHighestRankedSuggestions(
 		SuggestSearchResult suggestSearchResult) {
 
-		List<String> texts = new ArrayList<>();
+		List<String> suggestions = new ArrayList<>();
 
-		List<SuggestSearchResult.Entry> suggestSearchResultEntries =
-			suggestSearchResult.getEntries();
+		boolean hasDifferences = false;
 
-		suggestSearchResultEntries.forEach(
-			suggestSearchResultEntry -> {
-				List<SuggestSearchResult.Entry.Option>
-					suggestSearchResultEntryOptions =
-						suggestSearchResultEntry.getOptions();
+		for (SuggestSearchResult.Entry suggestSearchResultEntry :
+				suggestSearchResult.getEntries()) {
+
+			List<SuggestSearchResult.Entry.Option>
+				suggestSearchResultEntryOptions =
+					suggestSearchResultEntry.getOptions();
+
+			if (!suggestSearchResultEntryOptions.isEmpty()) {
+				hasDifferences = true;
 
 				for (SuggestSearchResult.Entry.Option
 						suggestSearchResultEntryOption :
 							suggestSearchResultEntryOptions) {
 
-					texts.add(suggestSearchResultEntryOption.getText());
+					suggestions.add(suggestSearchResultEntryOption.getText());
 				}
-			});
+			}
+			else {
+				suggestions.add(suggestSearchResultEntry.getText());
+			}
+		}
 
-		return texts;
+		if (hasDifferences) {
+			return suggestions;
+		}
+
+		return new ArrayList<>();
 	}
 
 	protected Localization getLocalization() {

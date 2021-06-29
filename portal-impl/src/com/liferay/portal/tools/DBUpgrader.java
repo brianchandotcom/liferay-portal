@@ -191,10 +191,6 @@ public class DBUpgrader {
 		verifyResourcePermissions.verify();
 	}
 
-	protected static Class<?>[] getDependencies() {
-		return new Class<?>[] {Appender.class, Appender.class};
-	}
-
 	private static void _checkClassNamesAndResourceActions() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check class names");
@@ -276,7 +272,7 @@ public class DBUpgrader {
 
 			});
 
-		serviceDependencyManager.registerDependencies(getDependencies());
+		serviceDependencyManager.registerDependencies(Appender.class);
 	}
 
 	private static void _registerModuleServiceLifecycle(

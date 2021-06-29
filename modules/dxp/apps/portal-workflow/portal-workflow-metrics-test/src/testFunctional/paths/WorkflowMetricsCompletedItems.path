@@ -31,9 +31,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION</td>
-    <td>//div[@class='dropdown-menu show']//span[contains(@class, 'dropdown-item')]//div[contains(text(), '${completedItemsDateRange}')]</td>
-    <td></td>
+	<td>METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN_OPTION</td>
+	<td>//div[@class='dropdown-menu show']//span[contains(@class, 'dropdown-item')]//div[contains(text(), '${completedItemsDateRange}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>PERCENTAGE_CARDS</td>

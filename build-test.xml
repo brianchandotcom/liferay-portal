@@ -10013,13 +10013,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
-		<get-testcase-property property.name="liferay.data.guard.mode" />
+		<get-testcase-property property.name="liferay.data.guard.enabled" />
 
 		<if>
-			<isset property="liferay.data.guard.mode" />
+			<isset property="liferay.data.guard.enabled" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					liferay.data.guard.mode=${liferay.data.guard.mode}
+					liferay.data.guard.enabled=${liferay.data.guard.enabled}
 				</echo>
 			</then>
 		</if>

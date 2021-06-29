@@ -53,6 +53,9 @@ public class PropsValues {
 	public static final String IGNORE_ERRORS_FILE_NAME = PropsUtil.get(
 		"ignore.errors.file.name");
 
+	public static final Boolean LIFERAY_DATA_GUARD_ENABLED = GetterUtil.get(
+		PropsUtil.get("liferay.data.guard.enabled"), false);
+
 	public static final String LIFERAY_PORTAL_BRANCH = PropsUtil.get(
 		"liferay.portal.branch");
 

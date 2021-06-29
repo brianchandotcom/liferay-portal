@@ -34,6 +34,8 @@ function PageTypeSelector({
 	const [pageTypeDropdownActive, setPageTypeDropdownActive] = useState(false);
 
 	const handleSelect = (type) => {
+		setPageTypeDropdownActive(false);
+
 		Liferay.Util.Session.set(
 			`${namespace}PAGE_TYPE_SELECTED_OPTION`,
 			type

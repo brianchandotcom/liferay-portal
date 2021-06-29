@@ -219,6 +219,81 @@ definition {
 			searchAssetType = "Wiki Page");
 	}
 
+	@description = "This ensures that a depot category cannot be shown in Category Navigation on a disconnected site."
+	@priority = "4"
+	test CannotViewCategoryInCategoriesNavigationFromDisconnectedSite {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Categories Navigation");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDepot.disconnectSite(groupName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		CategoriesNavigationPortlet.viewNoCategory();
+	}
+
+	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
+	@priority = "5"
+	test CanSelectCategoryInCategoriesNavigation {
+		for (var portletName : list "Asset Publisher,Categories Navigation") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Page Name",
+				widgetName = "${portletName}");
+		}
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId}",
+			content = "WC WebContent Content 1",
+			groupName = "Site Name",
+			title = "WC WebContent Title 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 2",
+			groupName = "Site Name",
+			title = "WC WebContent Title 2");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC WebContent Content 1",
+			assetTitle = "WC WebContent Title 1",
+			categoryName = "Category Name",
+			filteredByCategory = "true");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC WebContent Content 2",
+			assetTitle = "WC WebContent Title 2");
+	}
+
 	@description = "This test covers LPS-131774. It ensures that a depot category can be viewed through details info on a connected site."
 	@priority = "4"
 	test CategoryCanBeViewedFromInfoPanel {

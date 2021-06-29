@@ -79,6 +79,18 @@
 	<td>//span[contains(.,'Results') and @class='text-truncate']</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>PROCESS_NAME_IN_SECTION</td>
+	<td>//tr[contains(@class,'table-divider')]//td[contains(text(),'${key_section}')]/../../tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_processName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNPUBLISHED_OPTION</td>
+	<td>//li[contains(@role,'presentation')]//span[contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

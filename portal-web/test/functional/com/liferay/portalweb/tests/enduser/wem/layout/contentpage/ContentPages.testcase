@@ -560,8 +560,6 @@ definition {
 		}
 
 		task ("Execute Clean Up Orphaned Theme Portlet Preferences in Server Administration") {
-			Navigator.openURL();
-
 			ApplicationsMenu.gotoPortlet(
 				category = "System",
 				panel = "Control Panel",

@@ -229,12 +229,25 @@ definition {
 	}
 
 	@description = "Verify that the user can select View option in the kebab menu for a Not Published process"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewNonPublishedProcess {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68245 CanViewNonPublishedProcess pending implementation
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		AssertTextEquals(
+			key_workflowDefinitionTitle = "Not Published",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE",
+			value1 = "Not Published");
+
+		Workflow.viewWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		AssertNotEditable(locator1 = "WorkflowDefinition#DEFINITION_TITLE");
+
+		AssertElementPresent(locator1 = "WorkflowDefinition#DEFINITION_VIEW_EDIT_BUTTON");
 	}
 
 	@description = "Verify that the Clear option cleans the search results"

@@ -63,6 +63,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFINITION_VIEW_EDIT_BUTTON</td>
+	<td>//span[contains(text(), "Edit")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

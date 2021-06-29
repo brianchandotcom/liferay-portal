@@ -1528,6 +1528,14 @@ definition {
 			value1 = "${webContentTitle}");
 	}
 
+	macro viewWorkflowDefinition {
+		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+
+		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "View");
+	}
+
 	macro webContentGoToAddCP {
 		Pause(locator1 = "3000");
 

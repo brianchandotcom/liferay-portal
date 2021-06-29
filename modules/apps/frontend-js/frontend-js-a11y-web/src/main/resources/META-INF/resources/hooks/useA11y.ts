@@ -37,41 +37,116 @@ export type Violations = {
 
 function segmentViolationsByRulesAndNodes(
 	violations: Array<Result>,
-	prevViolations: Violations
+	previousViolations: Violations
 ) {
-	return violations.reduce<Violations>(
-		(prev, current) => {
-			const {nodes, ...rule} = current;
 
-			const targets = nodes.map((node) => {
-				const target = node.target[0];
+	// Maintains a list of target elements to ensure that targets are unique
+	// and we don't add violations with different selectors for the
+	// same element.
 
-				if (prev.nodes[target]) {
-					prev.nodes[target][current.id] = node;
+	const elements = new WeakMap<Element, string>();
+
+	// Validates the previous list of violations by removing elements that are
+	// no longer visible in the DOM.
+
+	const revalidatedViolations = Object.values(
+		previousViolations.rules
+	).reduce(
+		(previousViolation, rule) => {
+
+			// Revalidation if the target exists on the DOM
+
+			const nodes = rule.nodes.filter((node) => {
+				const element = document.querySelector(node);
+
+				if (!element) {
+					delete previousViolation.nodes[node][rule.id];
 				}
 				else {
-					prev.nodes[target] = {[current.id]: node};
+					elements.set(element, node);
 				}
 
-				return target;
+				return element;
 			});
 
-			if (!prev.rules[current.id]) {
-				prev.rules[current.id] = {
+			if (nodes.length) {
+				previousViolation.rules[rule.id] = {
 					...rule,
-					nodes: targets,
+					nodes,
 				};
 			}
 			else {
-				prev.rules[current.id].nodes = [
-					...new Set([...prev.rules[current.id].nodes, ...targets]),
-				];
+				delete previousViolation.rules[rule.id];
 			}
 
-			return prev;
+			return previousViolation;
 		},
-		{...prevViolations}
+		{...previousViolations}
 	);
+
+	return violations.reduce<Violations>((previousViolation, current) => {
+		const {nodes, ...rule} = current;
+
+		const staleTargets = new Set<string>();
+
+		const targets = nodes.map((node) => {
+			const target = node.target[0];
+
+			if (previousViolation.nodes[target]) {
+				previousViolation.nodes[target][current.id] = node;
+			}
+			else {
+				const element = document.querySelector(target);
+
+				// The selector can be different for each analysis, but the
+				// element will be the same, we just keep the target updated
+				// to prevent two violations pointing to the same element and
+				// we keep duplicate information.
+
+				if (element && elements.has(element)) {
+					const previousNode = elements.get(element) as string;
+
+					previousViolation.nodes[target] = {
+						...previousViolation.nodes[previousNode],
+						[current.id]: node,
+					};
+
+					delete previousViolation.nodes[previousNode];
+
+					staleTargets.add(previousNode);
+				}
+				else {
+					previousViolation.nodes[target] = {[current.id]: node};
+				}
+			}
+
+			return target;
+		});
+
+		if (!previousViolation.rules[current.id]) {
+			previousViolation.rules[current.id] = {
+				...rule,
+				nodes: targets,
+			};
+		}
+		else {
+
+			// Removes stale targets from rules that are no longer valid or
+			// the selector has been updated.
+
+			const nodes = previousViolation.rules[current.id].nodes.filter(
+				(node) => !staleTargets.has(node)
+			);
+
+			previousViolation.rules[current.id].nodes = [
+				...new Set([...nodes, ...targets]),
+			];
+		}
+
+		staleTargets.clear();
+
+		return previousViolation;
+	}, revalidatedViolations);
 }
 
 const defaultState = {

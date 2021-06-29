@@ -26,9 +26,9 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
@@ -120,8 +120,6 @@ public class CISystemHistoryReportUtil {
 				}
 			}
 
-			durations.removeAll(Collections.singleton(null));
-
 			if (durations.isEmpty()) {
 				datesJSONArray.put(month);
 			}
@@ -173,8 +171,6 @@ public class CISystemHistoryReportUtil {
 
 				durations.add(duration);
 			}
-
-			durations.removeAll(Collections.singleton(null));
 
 			if (durations.isEmpty()) {
 				datesJSONArray.put(month);
@@ -228,8 +224,6 @@ public class CISystemHistoryReportUtil {
 				durations.add(duration);
 			}
 
-			durations.removeAll(Collections.singleton(null));
-
 			if (durations.isEmpty()) {
 				datesJSONArray.put(month);
 			}
@@ -263,11 +257,11 @@ public class CISystemHistoryReportUtil {
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(25, true);
-	private static final TreeMap<String, List<TestrayBuild>>
+	private static final HashMap<String, List<TestrayBuild>>
 		_recentTestrayBuilds;
 
 	static {
-		_recentTestrayBuilds = new TreeMap<String, List<TestrayBuild>>() {
+		_recentTestrayBuilds = new HashMap<String, List<TestrayBuild>>() {
 			{
 				LocalDate currentLocalDate = LocalDate.now();
 

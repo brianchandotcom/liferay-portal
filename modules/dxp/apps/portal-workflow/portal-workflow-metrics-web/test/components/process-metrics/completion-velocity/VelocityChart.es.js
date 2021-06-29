@@ -18,7 +18,18 @@ import VelocityChart from '../../../../src/main/resources/META-INF/resources/js/
 import '@testing-library/jest-dom/extend-expect';
 
 describe('The velocity chart should', () => {
-	test('Be rendered in document', () => {
+	beforeAll(() => {
+		jest.spyOn(
+			HTMLElement.prototype,
+			'clientHeight',
+			'get'
+		).mockReturnValue(100);
+		jest.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
+			100
+		);
+	});
+
+	it('Be rendered in document', () => {
 		const velocityData = {
 			histograms: [
 				{
@@ -72,123 +83,142 @@ describe('The velocity chart should', () => {
 	});
 
 	describe('Be render tooltip', () => {
-		test('with valid dates', async () => {
+		const CLASS_CHART_CONTENT = '.workflow-tooltip-chart-content';
+
+		it('with valid dates', async () => {
 			const timeRange = {
 				active: true,
-				dateEnd: '2019-09-25T17:06:52.000Z',
-				dateStart: '2019-06-28T00:00:00.000Z',
+				dateEnd: '2021-06-29T12:00:00.000Z',
+				dateStart: '2021-03-31T12:00:00.000Z',
 				defaultTimeRange: false,
-				description: 'Jun 28 - Sep 25',
+				description: 'Mar 31 - Jun 29',
 				id: 90,
 				key: '90',
 				name: 'Last 90 Days',
 			};
 
-			const dataPoints = [
+			const getContainer = (payload, unit, unitKey) => {
+				const {container} = render(
+					<VelocityChart.Tooltip
+						active
+						isAmPm
+						payload={payload}
+						timeRange={timeRange}
+						unit={unit}
+						unitKey={unitKey}
+					/>
+				);
+
+				return container;
+			};
+
+			const payload = [
 				{
-					id: 'data_1',
-					index: 5,
-					name: 'data_1',
+					payload: {
+						key: '2021-06-28T16:00:00.000Z',
+						value: 0,
+					},
 					value: 0,
-					x: new Date('2019-09-24T05:00:00.000Z'),
 				},
 			];
 
-			const text = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'Months',
-				'Inst / Month'
-			)(dataPoints);
+			const text = getContainer(
+				payload,
+				'Inst / Month',
+				'Months'
+			).querySelectorAll(CLASS_CHART_CONTENT)[1].innerHTML;
 
-			const textDefault = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'test',
-				'Inst / Month'
-			)(dataPoints);
+			const textDefault = getContainer(
+				payload,
+				'Inst / Month',
+				'test'
+			).querySelectorAll(CLASS_CHART_CONTENT)[1].innerHTML;
 
-			const textHours = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'Hours',
-				'Inst / Hours'
-			)(dataPoints);
+			const textHours = getContainer(
+				payload,
+				'Inst / Hours',
+				'Hours'
+			).querySelectorAll(CLASS_CHART_CONTENT)[1].innerHTML;
 
-			const textHoursAmPm = VelocityChart.Tooltip(
-				false,
-				timeRange,
-				'Hours',
-				'Inst / Hours'
-			)(dataPoints);
+			const textHoursAmPm = getContainer(
+				payload,
+				'Inst / Hours',
+				'Hours'
+			).querySelectorAll(CLASS_CHART_CONTENT)[1].innerHTML;
 
-			const textMonths = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'Months',
-				'Inst / Months'
-			)(dataPoints);
+			const textMonths = getContainer(
+				payload,
+				'Inst / Months',
+				'Months'
+			).querySelectorAll(CLASS_CHART_CONTENT)[1].innerHTML;
 
-			const textWeeks = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'Weeks',
-				'Inst / Weeks'
-			)(dataPoints);
+			const textWeeks = getContainer(
+				payload,
+				'Inst / Weeks',
+				'Weeks'
+			).querySelectorAll(CLASS_CHART_CONTENT)[1].innerHTML;
 
-			const textYears = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'Years',
-				'Inst / Years'
-			)(dataPoints);
+			const textYears = getContainer(
+				payload,
+				'Inst / Years',
+				'Years'
+			).querySelectorAll(CLASS_CHART_CONTENT)[1].innerHTML;
 
+			expect(text).toContain('0 Inst / Month');
+			expect(textDefault).toContain('0 Inst / Month');
 			expect(textHours).toContain('0 Inst / Hours');
 			expect(textHoursAmPm).toContain('0 Inst / Hours');
 			expect(textMonths).toContain('0 Inst / Months');
 			expect(textWeeks).toContain('0 Inst / Weeks');
 			expect(textYears).toContain('0 Inst / Years');
-			expect(text).toContain('0 Inst / Month');
-			expect(textDefault).toContain('0 Inst / Month');
 		});
 
-		test('with invalid date', async () => {
+		it('with invalid date', async () => {
 			const timeRange = {
 				active: true,
-				dateEnd: '2019-09-25T17:06:52.000Z',
-				dateStart: '2019-06-28T00:00:00.000Z',
+				dateEnd: '2021-06-29T12:00:00.000Z',
+				dateStart: '2021-03-31T00:00:00.000Z',
 				defaultTimeRange: false,
-				description: 'Jun 28 - Sep 25',
+				description: 'Mar 31 - Jun 29',
 				id: 90,
 				key: '90',
 				name: 'Last 90 Days',
 			};
 
-			const dataPoints = [
+			const getContainer = (payload) => {
+				const {container} = render(
+					<VelocityChart.Tooltip
+						active
+						isAmPm
+						payload={payload}
+						timeRange={timeRange}
+						unit="Inst / Hours"
+						unitKey="Hours"
+					/>
+				);
+
+				return container;
+			};
+
+			const payload = [
 				{
-					id: 'data_1',
-					index: 5,
-					name: 'data_1',
+					payload: {
+						key: '1936-09-25T17:06:52.000Z',
+						value: 0,
+					},
 					value: 0,
-					x: new Date('1936-09-25T17:06:52.000Z'),
 				},
 			];
 
-			const textHours = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'Hours',
-				'Inst / Hours'
-			)(dataPoints);
+			const textHours = getContainer(payload).querySelectorAll(
+				CLASS_CHART_CONTENT
+			)[1].innerHTML;
 
-			dataPoints[0].x = null;
+			payload[0].payload.key = null;
 
-			const textDefault = VelocityChart.Tooltip(
-				true,
-				timeRange,
-				'Hours',
-				'Inst / Hours'
-			)(dataPoints);
+			const textDefault = getContainer(payload).querySelectorAll(
+				CLASS_CHART_CONTENT
+			)[1].innerHTML;
 
 			expect(textHours).toContain('0 Inst / Hours');
 			expect(textDefault).toContain('0 Inst / Hours');

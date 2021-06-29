@@ -49,7 +49,6 @@ export default function IssueDetail() {
 const HtmlPanel = ({content, title}) => (
 	<ClayPanel
 		collapsable
-		collapseClassNames="mb-4 mt-3"
 		displayTitle={
 			<span className="c-inner" tabIndex="-1">
 				<ClayPanel.Title className="align-self-center panel-title">
@@ -97,7 +96,6 @@ const FailingElementsPanel = ({failingElements, issueType}) => {
 	return (
 		<ClayPanel
 			collapsable
-			collapseClassNames="mb-4 mt-3"
 			defaultExpanded
 			displayTitle={
 				<span className="c-inner" tabIndex="-1">
@@ -157,7 +155,7 @@ const FailingElement = ({element}) => {
 		<ClayList.Item className="failing-element mb-2 p-0" flex>
 			<ClayList.ItemField className="mb-2 p-0" expand>
 				{element.title && (
-					<ClayList.ItemText className="mb-2 text-secondary">
+					<ClayList.ItemText className="font-weight-semi-bold mb-2">
 						{element.title}
 					</ClayList.ItemText>
 				)}

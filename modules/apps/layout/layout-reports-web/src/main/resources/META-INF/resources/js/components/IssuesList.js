@@ -151,7 +151,6 @@ const Section = ({section}) => {
 	return (
 		<ClayPanel
 			collapsable
-			collapseClassNames="mb-4 mt-3"
 			defaultExpanded={sectionTotal > 0}
 			displayTitle={
 				<span className="c-inner" tabIndex="-1">

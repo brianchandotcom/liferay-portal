@@ -17,6 +17,7 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
 		else {
 			BlogsEntry.tearDownCP();
 
@@ -63,12 +64,30 @@ definition {
 	}
 
 	@description = "Verify that the user is able to filter by Published processes"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByPublishedProcesses {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68234 CanFilterByPublishedProcesses pending implementation
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
+		Navigator.gotoBack();
+
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Copy of Single Approver");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Published");
+
+		AssertElementPresent(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
+
+		AssertElementNotPresent(
+			key_workflowDefinitionTitle = "Copy of Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
 	}
 
 	@description = "Verify that the user can not delete a published process"

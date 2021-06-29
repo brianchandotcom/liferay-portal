@@ -40,6 +40,11 @@
 	<td>//div[contains(@class,'dropdown-menu show')]//a[contains(.,'${key_filterOption}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_HEADER_TITLE</td>
+	<td>//ul[@class='control-menu-nav']//span[@data-qa-id='headerTitle']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

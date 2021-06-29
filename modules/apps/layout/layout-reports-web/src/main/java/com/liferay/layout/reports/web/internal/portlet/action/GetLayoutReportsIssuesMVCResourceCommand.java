@@ -131,6 +131,23 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 					group, resourceBundle, themeDisplay,
 					ParamUtil.getString(resourceRequest, "url")));
 		}
+		catch (LayoutReportsDataProvider.LayoutReportsDataProviderException
+					layoutReportsDataProviderException) {
+
+			_log.error(
+				layoutReportsDataProviderException,
+				layoutReportsDataProviderException);
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"error", layoutReportsDataProviderException.getMessage()
+				).put(
+					"googlePageSpeedError",
+					layoutReportsDataProviderException.
+						getGooglePageSpeedErrorJSONObject()
+				));
+		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 

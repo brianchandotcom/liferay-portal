@@ -296,11 +296,7 @@ definition {
 			optionValue = "Option B",
 			rowNumber = "2");
 
-		FormPortlet.submitSuccessfully();
-
-		FormPortlet.viewSuccessPage(
-			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-			successPageTitle = "Thank you.");
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Form can be submitted with the Multiple Selection Field"

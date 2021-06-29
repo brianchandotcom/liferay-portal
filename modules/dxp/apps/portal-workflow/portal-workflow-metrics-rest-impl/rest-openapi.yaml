@@ -337,6 +337,13 @@ components:
                     format: int64
                     type: integer
             type: object
+        ProcessVersion:
+            description:
+                https://www.schema.org/ProcessVersion
+            properties:
+                name:
+                    type: string
+            type: object
         ReindexStatus:
             description:
                 https://www.schema.org/ReindexStatus
@@ -1327,6 +1334,32 @@ paths:
                     description:
                         ""
             tags: ["Node"]
+    "/processes/{processId}/process-versions":
+        get:
+            operationId: getProcessVersionsPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProcessVersion"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProcessVersion"
+                                type: array
+                    description:
+                        ""
+            tags: ["ProcessVersion"]
     "/processes/{processId}/roles":
         get:
             operationId: getProcessRolesPage

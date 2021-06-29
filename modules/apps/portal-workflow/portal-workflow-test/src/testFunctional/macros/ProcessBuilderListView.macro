@@ -39,5 +39,15 @@ definition {
 			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
 	}
+	
+	macro gotoPermissions {
+		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+
+		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Permissions");
+
+		AssertElementPresent(locator1 = "ProcessBuilderListView#PERMISSIONS_MODAL");
+	}
 
 }

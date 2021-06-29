@@ -87,12 +87,12 @@ definition {
 			AssertSelectedLabel(
 				key_fieldLabel = "Margen superior",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "0");
+				value1 = "Valor por defecto");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Relleno superior",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "0");
+				value1 = "Valor por defecto");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Desbordamiento",

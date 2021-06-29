@@ -72,28 +72,35 @@ function PageTypeSelector({
 					}
 				>
 					<ClayDropDown.ItemList>
-						{pageTypeOptions.map((option, index) => (
-							<React.Fragment key={index}>
-								<ClayDropDown.Item disabled key={option.value}>
-									{option.name}
-								</ClayDropDown.Item>
-								{option.items.map((item) => (
+						{pageTypeOptions
+							.filter((option) => option.items.length)
+							.map((option, index) => (
+								<React.Fragment key={index}>
 									<ClayDropDown.Item
-										className="page-type-selector-option"
-										key={item.value}
-										onClick={() => handleSelect(item.value)}
-										symbolRight={
-											item.value ===
-											pageTypeSelectedOption
-												? 'check'
-												: null
-										}
+										disabled
+										key={option.value}
 									>
-										{item.name}
+										{option.name}
 									</ClayDropDown.Item>
-								))}
-							</React.Fragment>
-						))}
+									{option.items.map((item) => (
+										<ClayDropDown.Item
+											className="page-type-selector-option"
+											key={item.value}
+											onClick={() =>
+												handleSelect(item.value)
+											}
+											symbolRight={
+												item.value ===
+												pageTypeSelectedOption
+													? 'check'
+													: null
+											}
+										>
+											{item.name}
+										</ClayDropDown.Item>
+									))}
+								</React.Fragment>
+							))}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			) : (

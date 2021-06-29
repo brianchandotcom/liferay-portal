@@ -322,12 +322,18 @@ definition {
 	}
 
 	@description = "Verify that the users are able to click on the + button and be directed to the New Workflow page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test RedirectToNewWorkflowPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68228 RedirectToNewWorkflowPage pending implementation
+		Click(locator1 = "Button#PLUS");
 
+		AssertElementPresent(
+			key_pageName = "New Workflow",
+			locator1 = "ProcessBuilderListView#PROCESS_BUILDER_HEADER_TITLE");
 	}
 
 	@description = "Verify that, in the error message when you try to unpublish a workflow in use, there is a link to the configuration tab"

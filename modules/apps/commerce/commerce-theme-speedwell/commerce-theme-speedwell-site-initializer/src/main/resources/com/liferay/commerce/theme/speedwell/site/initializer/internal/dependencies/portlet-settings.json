@@ -84,8 +84,8 @@
 		"portletPreferences": {
 			"displayDepth": "2",
 			"displayStyle": {
-				"Name": "ddmTemplate_NAVBAR-DEFAULT-FTL",
-				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+				"name": "ddmTemplate_NAVBAR-DEFAULT-FTL",
+				"portletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",
 			"includedLayouts": "auto",

@@ -1,10 +1,10 @@
 [
 	{
-		"Facetable": true,
-		"Key": "package-quantity",
-		"Required": true,
-		"SkuContributor": true,
-		"Values": [
+		"facetable": true,
+		"key": "package-quantity",
+		"required": true,
+		"skuContributor": true,
+		"values": [
 			"6",
 			"12",
 			"24",

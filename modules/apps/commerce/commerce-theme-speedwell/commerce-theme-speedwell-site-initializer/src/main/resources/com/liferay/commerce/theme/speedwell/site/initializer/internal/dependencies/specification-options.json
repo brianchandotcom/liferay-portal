@@ -1,41 +1,41 @@
 [
 	{
-		"CategoryKey": "quantity",
-		"Key": "quantity"
+		"categoryKey": "quantity",
+		"key": "quantity"
 	},
 	{
-		"CategoryKey": "material",
-		"Facetable": true,
-		"Key": "material"
+		"categoryKey": "material",
+		"facetable": true,
+		"key": "material"
 	},
 	{
-		"CategoryKey": "fit",
-		"Facetable": true,
-		"Key": "fit"
+		"categoryKey": "fit",
+		"facetable": true,
+		"key": "fit"
 	},
 	{
-		"CategoryKey": "dimensions",
-		"Key": "dimensions"
+		"categoryKey": "dimensions",
+		"key": "dimensions"
 	},
 	{
-		"CategoryKey": "dimensions",
-		"Key": "weight"
+		"categoryKey": "dimensions",
+		"key": "weight"
 	},
 	{
-		"CategoryKey": "dimensions",
-		"Key": "width"
+		"categoryKey": "dimensions",
+		"key": "width"
 	},
 	{
-		"CategoryKey": "warranty",
-		"Facetable": true,
-		"Key": "warranty"
+		"categoryKey": "warranty",
+		"facetable": true,
+		"key": "warranty"
 	},
 	{
-		"CategoryKey": "dimensions",
-		"Key": "length"
+		"categoryKey": "dimensions",
+		"key": "length"
 	},
 	{
-		"CategoryKey": "dimensions",
-		"Key": "height"
+		"categoryKey": "dimensions",
+		"key": "height"
 	}
 ]

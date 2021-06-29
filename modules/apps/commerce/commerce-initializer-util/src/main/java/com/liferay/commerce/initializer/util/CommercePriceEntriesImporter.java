@@ -154,7 +154,7 @@ public class CommercePriceEntriesImporter {
 			JSONObject jsonObject, ServiceContext serviceContext)
 		throws PortalException {
 
-		String name = jsonObject.getString("PriceList");
+		String name = jsonObject.getString("priceList");
 
 		String priceListExternalReferenceCode =
 			FriendlyURLNormalizerUtil.normalize(name);
@@ -168,7 +168,7 @@ public class CommercePriceEntriesImporter {
 				"No price list found with name " + name);
 		}
 
-		String sku = jsonObject.getString("Sku");
+		String sku = jsonObject.getString("sku");
 
 		String externalReferenceCode = FriendlyURLNormalizerUtil.normalize(sku);
 
@@ -193,8 +193,8 @@ public class CommercePriceEntriesImporter {
 		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
 			cpInstance.getCPDefinitionId());
 
-		double price = jsonObject.getDouble("Price", 0);
-		double promoPrice = jsonObject.getDouble("PromoPrice", 0);
+		double price = jsonObject.getDouble("price", 0);
+		double promoPrice = jsonObject.getDouble("promoPrice", 0);
 
 		_commercePriceEntryLocalService.addCommercePriceEntry(
 			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),

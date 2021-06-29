@@ -103,8 +103,8 @@ public class AssetCategoriesImporter {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			if (jsonObject != null) {
-				title = jsonObject.getString("Title");
-				imageFileName = jsonObject.getString("Image");
+				title = jsonObject.getString("title");
+				imageFileName = jsonObject.getString("image");
 			}
 			else {
 				title = jsonArray.getString(i);
@@ -123,7 +123,7 @@ public class AssetCategoriesImporter {
 			}
 
 			JSONArray permissionsJSONArray = jsonObject.getJSONArray(
-				"Permissions");
+				"permissions");
 
 			if ((permissionsJSONArray != null) &&
 				(permissionsJSONArray.length() > 0)) {
@@ -148,16 +148,16 @@ public class AssetCategoriesImporter {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"RoleName", "User"
+			"roleName", "User"
 		).put(
-			"Scope", 4
+			"scope", 4
 		);
 
 		JSONArray actionIdsJSONArray = _jsonFactory.createJSONArray();
 
 		actionIdsJSONArray.put("VIEW");
 
-		jsonObject.put("ActionIds", actionIdsJSONArray);
+		jsonObject.put("actionIds", actionIdsJSONArray);
 
 		jsonArray.put(jsonObject);
 
@@ -173,15 +173,15 @@ public class AssetCategoriesImporter {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			int scope = jsonObject.getInt("Scope");
+			int scope = jsonObject.getInt("scope");
 
-			String roleName = jsonObject.getString("RoleName");
+			String roleName = jsonObject.getString("roleName");
 
 			Role role = _roleLocalService.getRole(companyId, roleName);
 
 			String[] actionIds = new String[0];
 
-			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("ActionIds");
+			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
 
 			if (actionIdsJSONArray != null) {
 				for (int j = 0; j < actionIdsJSONArray.length(); j++) {

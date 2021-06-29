@@ -1,74 +1,74 @@
 [
 	{
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "User",
-				"Scope": 4
+				"roleName": "User",
+				"scope": 4
 			}
 		],
-		"Title": "Brake System"
+		"title": "Brake System"
 	},
 	{
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "User",
-				"Scope": 4
+				"roleName": "User",
+				"scope": 4
 			}
 		],
-		"Title": "Engine"
+		"title": "Engine"
 	},
 	{
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "User",
-				"Scope": 4
+				"roleName": "User",
+				"scope": 4
 			}
 		],
-		"Title": "Exhaust System"
+		"title": "Exhaust System"
 	},
 	{
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "User",
-				"Scope": 4
+				"roleName": "User",
+				"scope": 4
 			}
 		],
-		"Title": "Suspension"
+		"title": "Suspension"
 	},
 	{
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "User",
-				"Scope": 4
+				"roleName": "User",
+				"scope": 4
 			}
 		],
-		"Title": "Transmission"
+		"title": "Transmission"
 	},
 	{
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "User",
-				"Scope": 4
+				"roleName": "User",
+				"scope": 4
 			}
 		],
-		"Title": "Turbocharger"
+		"title": "Turbocharger"
 	}
 ]

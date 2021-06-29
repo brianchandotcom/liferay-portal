@@ -1,80 +1,80 @@
 [
 	{
 		"Image": "Brake_System.jpg",
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "Guest",
-				"Scope": 4
+				"roleName": "Guest",
+				"scope": 4
 			}
 		],
-		"Title": "Brake System"
+		"title": "Brake System"
 	},
 	{
 		"Image": "Engine.jpg",
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "Guest",
-				"Scope": 4
+				"roleName": "Guest",
+				"scope": 4
 			}
 		],
-		"Title": "Engine"
+		"title": "Engine"
 	},
 	{
 		"Image": "Exhaust_System.jpg",
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "Guest",
-				"Scope": 4
+				"roleName": "Guest",
+				"scope": 4
 			}
 		],
-		"Title": "Exhaust System"
+		"title": "Exhaust System"
 	},
 	{
 		"Image": "Suspension.jpg",
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "Guest",
-				"Scope": 4
+				"roleName": "Guest",
+				"scope": 4
 			}
 		],
-		"Title": "Suspension"
+		"title": "Suspension"
 	},
 	{
 		"Image": "Transmission.jpg",
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "Guest",
-				"Scope": 4
+				"roleName": "Guest",
+				"scope": 4
 			}
 		],
-		"Title": "Transmission"
+		"title": "Transmission"
 	},
 	{
 		"Image": "Turbocharger.jpg",
-		"Permissions": [
+		"permissions": [
 			{
-				"ActionIds": [
+				"actionIds": [
 					"VIEW"
 				],
-				"RoleName": "Guest",
-				"Scope": 4
+				"roleName": "Guest",
+				"scope": 4
 			}
 		],
-		"Title": "Turbocharger"
+		"title": "Turbocharger"
 	}
 ]

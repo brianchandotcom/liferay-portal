@@ -70,7 +70,7 @@ public class CPOptionCategoriesImporter {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String key = jsonObject.getString("Key");
+		String key = jsonObject.getString("key");
 
 		CPOptionCategory cpOptionCategory =
 			_cpOptionCategoryLocalService.fetchCPOptionCategory(
@@ -83,12 +83,12 @@ public class CPOptionCategoriesImporter {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> titleMap = Collections.singletonMap(
-			locale, CommerceInitializerUtil.getValue(jsonObject, "Title", key));
+			locale, CommerceInitializerUtil.getValue(jsonObject, "title", key));
 
 		Map<Locale, String> descriptionMap = Collections.singletonMap(
-			locale, jsonObject.getString("Description"));
+			locale, jsonObject.getString("description"));
 
-		double priority = jsonObject.getDouble("Priority", defaultPriority);
+		double priority = jsonObject.getDouble("priority", defaultPriority);
 
 		return _cpOptionCategoryLocalService.addCPOptionCategory(
 			serviceContext.getUserId(), titleMap, descriptionMap, priority, key,

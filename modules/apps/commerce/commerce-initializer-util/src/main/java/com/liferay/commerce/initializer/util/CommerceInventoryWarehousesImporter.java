@@ -90,7 +90,7 @@ public class CommerceInventoryWarehousesImporter {
 		// Commerce inventory warehouse
 
 		String externalReferenceCode = jsonObject.getString(
-			"ExternalReferenceCode");
+			"externalReferenceCode");
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseLocalService.
@@ -100,26 +100,26 @@ public class CommerceInventoryWarehousesImporter {
 		if (Validator.isNotNull(externalReferenceCode) &&
 			(commerceInventoryWarehouse == null)) {
 
-			String countryNumericISOCode = jsonObject.getString("Country");
+			String countryNumericISOCode = jsonObject.getString("country");
 
 			Country country = _countryLocalService.fetchCountryByNumber(
 				serviceContext.getCompanyId(), countryNumericISOCode);
 
-			String regionCode = jsonObject.getString("Region");
+			String regionCode = jsonObject.getString("region");
 
 			Region region = _regionLocalService.getRegion(
 				country.getCountryId(), regionCode);
 
-			String name = jsonObject.getString("Name");
-			String description = jsonObject.getString("Description");
-			boolean active = jsonObject.getBoolean("Active", true);
-			String street1 = jsonObject.getString("Street1");
-			String street2 = jsonObject.getString("Street2");
-			String street3 = jsonObject.getString("Street3");
-			String city = jsonObject.getString("City");
-			String zip = jsonObject.getString("Zip");
-			double latitude = jsonObject.getDouble("Latitude");
-			double longitude = jsonObject.getDouble("Longitude");
+			String name = jsonObject.getString("name");
+			String description = jsonObject.getString("description");
+			boolean active = jsonObject.getBoolean("active", true);
+			String street1 = jsonObject.getString("street1");
+			String street2 = jsonObject.getString("street2");
+			String street3 = jsonObject.getString("street3");
+			String city = jsonObject.getString("city");
+			String zip = jsonObject.getString("zip");
+			double latitude = jsonObject.getDouble("latitude");
+			double longitude = jsonObject.getDouble("longitude");
 
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseLocalService.

@@ -1,90 +1,90 @@
 [
 	{
-		"AccountGroups": [
+		"accountGroups": [
 			"Gold Accounts",
 			"North American Accounts"
 		],
-		"AccountType": "Business",
-		"City": "Los Angeles",
-		"CompanyLogo": "minium_logos_9.png",
-		"Country": "US",
-		"Name": "S Auto Service",
-		"PriceLists": [
+		"accountType": "Business",
+		"city": "Los Angeles",
+		"companyLogo": "minium_logos_9.png",
+		"country": "US",
+		"name": "S Auto Service",
+		"priceLists": [
 			"Gold Accounts Pricing"
 		],
-		"Region": "CA",
-		"RelatedOrganization": "United States",
-		"Street1": "3200 Front Avenue",
-		"Zip": "90023"
+		"region": "CA",
+		"relatedOrganization": "United States",
+		"street1": "3200 Front Avenue",
+		"zip": "90023"
 	},
 	{
-		"AccountGroups": [
+		"accountGroups": [
 			"European Accounts"
 		],
-		"AccountType": "Business",
-		"City": "Milan",
-		"CompanyLogo": "minium_logos_10.png",
-		"Country": "IT",
-		"Name": "Leo Auto Parts Distributor",
-		"Region": "MI",
-		"RelatedOrganization": "Italy",
-		"Street1": "6 Via Varesina",
-		"TaxId": "12345678901",
-		"Zip": "20156"
+		"accountType": "Business",
+		"city": "Milan",
+		"companyLogo": "minium_logos_10.png",
+		"country": "IT",
+		"name": "Leo Auto Parts Distributor",
+		"region": "MI",
+		"relatedOrganization": "Italy",
+		"street1": "6 Via Varesina",
+		"taxId": "12345678901",
+		"zip": "20156"
 	},
 	{
-		"AccountGroups": [
+		"accountGroups": [
 			"Gold Accounts",
 			"North American Accounts"
 		],
-		"AccountType": "Business",
-		"City": "Oxnard",
-		"CompanyLogo": "minium_logos_4.png",
-		"Country": "US",
-		"Name": "CC West",
-		"Region": "CA",
-		"RelatedOrganization": "United States",
-		"Street1": "1300 W 256th Street",
-		"Zip": "93030"
+		"accountType": "Business",
+		"city": "Oxnard",
+		"companyLogo": "minium_logos_4.png",
+		"country": "US",
+		"name": "CC West",
+		"region": "CA",
+		"relatedOrganization": "United States",
+		"street1": "1300 W 256th Street",
+		"zip": "93030"
 	},
 	{
-		"AccountGroups": [
+		"accountGroups": [
 			"North American Accounts"
 		],
-		"AccountType": "Business",
-		"City": "Chicago",
-		"CompanyLogo": "minium_logos_8.png",
-		"Country": "US",
-		"Name": "Connolly Repair",
-		"Region": "IL",
-		"RelatedOrganization": "United States",
-		"Street1": "205 W Wacker Drive",
-		"Zip": "60606"
+		"accountType": "Business",
+		"city": "Chicago",
+		"companyLogo": "minium_logos_8.png",
+		"country": "US",
+		"name": "Connolly Repair",
+		"region": "IL",
+		"relatedOrganization": "United States",
+		"street1": "205 W Wacker Drive",
+		"zip": "60606"
 	},
 	{
-		"AccountGroups": [
+		"accountGroups": [
 			"North American Accounts"
 		],
-		"AccountType": "Business",
-		"City": "Toronto",
-		"CompanyLogo": "minium_logos_7.png",
-		"Country": "CA",
-		"Name": "Joe's Complete Auto Care",
-		"RelatedOrganization": "Canada",
-		"Street1": "1 Richmond Street",
-		"Zip": "M4C 1M5"
+		"accountType": "Business",
+		"city": "Toronto",
+		"companyLogo": "minium_logos_7.png",
+		"country": "CA",
+		"name": "Joe's Complete Auto Care",
+		"relatedOrganization": "Canada",
+		"street1": "1 Richmond Street",
+		"zip": "M4C 1M5"
 	},
 	{
-		"AccountGroups": [
+		"accountGroups": [
 			"North American Accounts"
 		],
-		"AccountType": "Business",
-		"City": "Edmonton",
-		"CompanyLogo": "minium_logos_3.png",
-		"Country": "CA",
-		"Name": "Honest Auto Repair Centre",
-		"RelatedOrganization": "Canada",
-		"Street1": "163 Spadina Avenue",
-		"Zip": "T5A 0A1"
+		"accountType": "Business",
+		"city": "Edmonton",
+		"companyLogo": "minium_logos_3.png",
+		"country": "CA",
+		"name": "Honest Auto Repair Centre",
+		"relatedOrganization": "Canada",
+		"street1": "163 Spadina Avenue",
+		"zip": "T5A 0A1"
 	}
 ]

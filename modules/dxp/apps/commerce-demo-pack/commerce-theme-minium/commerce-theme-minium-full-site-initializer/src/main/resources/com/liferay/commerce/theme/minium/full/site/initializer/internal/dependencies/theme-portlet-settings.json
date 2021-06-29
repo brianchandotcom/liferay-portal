@@ -4,9 +4,9 @@
 		"portletName": "com_liferay_blogs_web_portlet_BlogsPortlet",
 		"portletPreferences": {
 			"displayStyle": {
-				"FileName": "MINIUM_NEWS.ftl",
-				"Name": "Minium News",
-				"PortletClassName": "com.liferay.blogs.model.BlogsEntry"
+				"fileName": "MINIUM_NEWS.ftl",
+				"name": "Minium News",
+				"portletClassName": "com.liferay.blogs.model.BlogsEntry"
 			},
 			"portletSetupUseCustomTitle": "true"
 		}
@@ -17,9 +17,9 @@
 		"portletPreferences": {
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "MINIUM_SITE_NAVIGATION.ftl",
-				"Name": "Minium Site Navigation",
-				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+				"fileName": "MINIUM_SITE_NAVIGATION.ftl",
+				"name": "Minium Site Navigation",
+				"portletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",
 			"includedLayouts": "auto",
@@ -36,9 +36,9 @@
 		"portletPreferences": {
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "MINIUM_SUB_SITE_NAVIGATION.ftl",
-				"Name": "Minium Sub Site Navigation",
-				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+				"fileName": "MINIUM_SUB_SITE_NAVIGATION.ftl",
+				"name": "Minium Sub Site Navigation",
+				"portletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",
 			"includedLayouts": "auto",

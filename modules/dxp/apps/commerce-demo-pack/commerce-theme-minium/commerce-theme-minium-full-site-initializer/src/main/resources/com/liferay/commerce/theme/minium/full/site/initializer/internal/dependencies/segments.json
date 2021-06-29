@@ -1,14 +1,14 @@
 [
 	{
-		"Name": "Geography - United States",
-		"Users": [
+		"name": "Geography - United States",
+		"users": [
 			"brenda.collins",
 			"mike.smith"
 		]
 	},
 	{
-		"Name": "Geography - Italy",
-		"Users": [
+		"name": "Geography - Italy",
+		"users": [
 			"roberto.moretti"
 		]
 	}

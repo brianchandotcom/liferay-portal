@@ -5,9 +5,9 @@
 		"portletPreferences": {
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "SPEEDWELL_SITE_NAVIGATION.ftl",
-				"Name": "Speedwell Site Navigation",
-				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+				"fileName": "SPEEDWELL_SITE_NAVIGATION.ftl",
+				"name": "Speedwell Site Navigation",
+				"portletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",
 			"includedLayouts": "auto",
@@ -24,9 +24,9 @@
 		"portletPreferences": {
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "SPEEDWELL_SUB_SITE_NAVIGATION.ftl",
-				"Name": "Speedwell Sub Site Navigation",
-				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+				"fileName": "SPEEDWELL_SUB_SITE_NAVIGATION.ftl",
+				"name": "Speedwell Sub Site Navigation",
+				"portletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",
 			"includedLayouts": "auto",
@@ -43,9 +43,9 @@
 		"portletPreferences": {
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "SPEEDWELL_SITE_NAVIGATION.ftl",
-				"Name": "Speedwell Sub Site Navigation",
-				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
+				"fileName": "SPEEDWELL_SITE_NAVIGATION.ftl",
+				"name": "Speedwell Sub Site Navigation",
+				"portletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",
 			"includedLayouts": "auto",
@@ -63,9 +63,9 @@
 			"assetVocabularyId": "",
 			"displayDepth": "0",
 			"displayStyle": {
-				"FileName": "SPEEDWELL_CATEGORY_NAVIGATION.ftl",
-				"Name": "Speedwell Category Navigation",
-				"PortletClassName": "com.liferay.commerce.product.asset.categories.navigation.web.internal.portlet.CPAssetCategoriesNavigationPortlet"
+				"fileName": "SPEEDWELL_CATEGORY_NAVIGATION.ftl",
+				"name": "Speedwell Category Navigation",
+				"portletClassName": "com.liferay.commerce.product.asset.categories.navigation.web.internal.portlet.CPAssetCategoriesNavigationPortlet"
 			},
 			"displayStyleGroupId": "",
 			"includedLayouts": "auto",

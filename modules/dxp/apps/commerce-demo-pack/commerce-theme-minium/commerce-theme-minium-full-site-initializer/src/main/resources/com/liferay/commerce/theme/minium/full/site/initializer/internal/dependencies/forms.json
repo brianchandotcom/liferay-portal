@@ -96,10 +96,10 @@
 					"fieldNamespace": "",
 					"indexType": "keyword",
 					"label": {
-						"[$LOCALE$]": "Name"
+						"[$LOCALE$]": "name"
 					},
 					"localizable": true,
-					"name": "Name",
+					"name": "name",
 					"options": [
 						{
 							"label": {
@@ -577,7 +577,7 @@
 							"columns": [
 								{
 									"fieldNames": [
-										"Name"
+										"name"
 									],
 									"size": 6
 								},

@@ -73,7 +73,7 @@ public class CPSpecificationOptionsImporter {
 			JSONObject jsonObject, ServiceContext serviceContext)
 		throws PortalException {
 
-		String key = jsonObject.getString("Key");
+		String key = jsonObject.getString("key");
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
@@ -85,7 +85,7 @@ public class CPSpecificationOptionsImporter {
 
 		long cpOptionCategoryId = 0;
 
-		String categoryKey = jsonObject.getString("CategoryKey");
+		String categoryKey = jsonObject.getString("categoryKey");
 
 		if (Validator.isNotNull(categoryKey)) {
 			CPOptionCategory cpOptionCategory =
@@ -98,12 +98,12 @@ public class CPSpecificationOptionsImporter {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> titleMap = Collections.singletonMap(
-			locale, CommerceInitializerUtil.getValue(jsonObject, "Title", key));
+			locale, CommerceInitializerUtil.getValue(jsonObject, "title", key));
 
 		Map<Locale, String> descriptionMap = Collections.singletonMap(
-			locale, jsonObject.getString("Description"));
+			locale, jsonObject.getString("description"));
 
-		boolean facetable = jsonObject.getBoolean("Facetable");
+		boolean facetable = jsonObject.getBoolean("facetable");
 
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(
 			serviceContext.getUserId(), cpOptionCategoryId, titleMap,

@@ -1,17 +1,17 @@
 [
 	{
-		"Key": "quantity"
+		"key": "quantity"
 	},
 	{
-		"Key": "fit"
+		"key": "fit"
 	},
 	{
-		"Key": "warranty"
+		"key": "warranty"
 	},
 	{
-		"Key": "material"
+		"key": "material"
 	},
 	{
-		"Key": "dimensions"
+		"key": "dimensions"
 	}
 ]

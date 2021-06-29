@@ -1,9 +1,9 @@
 [
 	{
-		"AccountGroups": [
+		"accountGroups": [
 			"Gold Accounts"
 		],
-		"CurrencyCode": "USD",
-		"Name": "Gold Accounts Pricing"
+		"currencyCode": "USD",
+		"name": "Gold Accounts Pricing"
 	}
 ]

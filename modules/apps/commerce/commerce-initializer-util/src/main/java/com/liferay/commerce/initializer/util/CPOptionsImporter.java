@@ -86,7 +86,7 @@ public class CPOptionsImporter {
 
 		// Commerce product option
 
-		String key = jsonObject.getString("Key");
+		String key = jsonObject.getString("key");
 
 		CPOption cpOption = _cpOptionLocalService.fetchCPOption(
 			serviceContext.getCompanyId(), key);
@@ -98,16 +98,16 @@ public class CPOptionsImporter {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> nameMap = Collections.singletonMap(
-			locale, CommerceInitializerUtil.getValue(jsonObject, "Name", key));
+			locale, CommerceInitializerUtil.getValue(jsonObject, "name", key));
 
 		Map<Locale, String> descriptionMap = Collections.singletonMap(
-			locale, jsonObject.getString("Description"));
+			locale, jsonObject.getString("description"));
 
 		String ddmFormFieldTypeName = jsonObject.getString(
-			"DDMFormFieldTypeName", "select");
-		boolean facetable = jsonObject.getBoolean("Facetable");
-		boolean required = jsonObject.getBoolean("Required");
-		boolean skuContributor = jsonObject.getBoolean("SkuContributor");
+			"ddmFormFieldTypeName", "select");
+		boolean facetable = jsonObject.getBoolean("facetable");
+		boolean required = jsonObject.getBoolean("required");
+		boolean skuContributor = jsonObject.getBoolean("skuContributor");
 
 		cpOption = _cpOptionLocalService.addCPOption(
 			null, serviceContext.getUserId(), nameMap, descriptionMap,
@@ -116,7 +116,7 @@ public class CPOptionsImporter {
 
 		// Commerce product option values
 
-		JSONArray valuesJSONArray = jsonObject.getJSONArray("Values");
+		JSONArray valuesJSONArray = jsonObject.getJSONArray("values");
 
 		if (valuesJSONArray == null) {
 			return cpOption;
@@ -143,13 +143,13 @@ public class CPOptionsImporter {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String key = jsonObject.getString("Key");
+		String key = jsonObject.getString("key");
 
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(),
-			CommerceInitializerUtil.getValue(jsonObject, "Name", key));
+			CommerceInitializerUtil.getValue(jsonObject, "name", key));
 
-		double priority = jsonObject.getDouble("Priority", defaultPriority);
+		double priority = jsonObject.getDouble("priority", defaultPriority);
 
 		return _cpOptionValueLocalService.addCPOptionValue(
 			cpOption.getCPOptionId(), nameMap, priority, key, serviceContext);

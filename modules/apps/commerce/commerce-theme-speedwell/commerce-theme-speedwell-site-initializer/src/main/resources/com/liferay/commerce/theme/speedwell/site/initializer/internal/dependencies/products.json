@@ -1,2489 +1,2489 @@
 [
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93015",
-		"Height": 2,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93015",
+		"height": 2,
+		"images": [
 			"Speedwell_ProductImage_24.png"
 		],
-		"Length": 7,
-		"ManufacturerPartNumber": "BB98318",
-		"MinStockQuantity": 5,
-		"Name": "ABS Sensor",
-		"Price": 50.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED93015",
-		"SpecificationOptions": [
+		"length": 7,
+		"manufacturerPartNumber": "BB98318",
+		"minStockQuantity": 5,
+		"name": "ABS Sensor",
+		"price": 50.0,
+		"promoPrice": 0,
+		"sku": "SPEED93015",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.00 lbs"
+				"key": "weight",
+				"value": "1.00 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "7\" x 5.6\" x 2\""
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 60,
-		"Warehouse3": 20,
-		"Weight": 1,
-		"Width": 5.6
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 20,
+		"weight": 1,
+		"width": 5.6
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93016",
-		"Height": 2.5,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93016",
+		"height": 2.5,
+		"images": [
 			"Speedwell_ProductImage_103.png"
 		],
-		"Length": 4,
-		"MinStockQuantity": 5,
-		"Name": "Brake Fluid",
-		"Options": [
+		"length": 4,
+		"minStockQuantity": 5,
+		"name": "Brake Fluid",
+		"options": [
 			{
-				"Key": "package-quantity",
-				"Values": [
+				"key": "package-quantity",
+				"values": [
 					"12",
 					"48",
 					"112"
 				]
 			}
 		],
-		"Skus": [
+		"skus": [
 			{
-				"ContributorOptions": [
+				"contributorOptions": [
 					{
 						"key": "package-quantity",
 						"value": "12"
 					}
 				],
-				"ManufacturerPartNumber": "BB98319",
-				"Price": 80.0,
-				"PromoPrice": 72.0,
-				"Sku": "SPEED93016A",
-				"Warehouse1": 100,
-				"Warehouse2": 40,
-				"Warehouse3": 100
+				"manufacturerPartNumber": "BB98319",
+				"price": 80.0,
+				"promoPrice": 72.0,
+				"sku": "SPEED93016A",
+				"warehouse1": 100,
+				"warehouse2": 40,
+				"warehouse3": 100
 			},
 			{
-				"ContributorOptions": [
+				"contributorOptions": [
 					{
 						"key": "package-quantity",
 						"value": "48"
 					}
 				],
-				"ManufacturerPartNumber": "BB98320",
-				"Price": 80.0,
-				"PromoPrice": 72.0,
-				"Sku": "SPEED93016B",
-				"Warehouse1": 100,
-				"Warehouse2": 20,
-				"Warehouse3": 60
+				"manufacturerPartNumber": "BB98320",
+				"price": 80.0,
+				"promoPrice": 72.0,
+				"sku": "SPEED93016B",
+				"warehouse1": 100,
+				"warehouse2": 20,
+				"warehouse3": 60
 			},
 			{
-				"ContributorOptions": [
+				"contributorOptions": [
 					{
 						"key": "package-quantity",
 						"value": "112"
 					}
 				],
-				"ManufacturerPartNumber": "BB98321",
-				"Price": 80.0,
-				"PromoPrice": 72.0,
-				"Sku": "SPEED93016C",
-				"Warehouse1": 100,
-				"Warehouse2": 100,
-				"Warehouse3": 40
+				"manufacturerPartNumber": "BB98321",
+				"price": 80.0,
+				"promoPrice": 72.0,
+				"sku": "SPEED93016C",
+				"warehouse1": 100,
+				"warehouse2": 100,
+				"warehouse3": 40
 			}
 		],
-		"SpecificationOptions": [
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "12, 48 or 112"
+				"key": "quantity",
+				"value": "12, 48 or 112"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.75 lbs"
+				"key": "weight",
+				"value": "1.75 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"Tags": [
+		"tags": [
 			"featured"
 		],
-		"TaxCategory": "Normal Product",
-		"Weight": 1.75,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"weight": 1.75,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93017",
-		"Height": 2.5,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93017",
+		"height": 2.5,
+		"images": [
 			"Speedwell_ProductImage_103.png"
 		],
-		"Length": 4,
-		"ManufacturerPartNumber": "BB98322",
-		"MinStockQuantity": 5,
-		"Name": "Premium Brake Fluid",
-		"Price": 100.0,
-		"PromoPrice": 90.0,
-		"Sku": "SPEED93017",
-		"SpecificationOptions": [
+		"length": 4,
+		"manufacturerPartNumber": "BB98322",
+		"minStockQuantity": 5,
+		"name": "Premium Brake Fluid",
+		"price": 100.0,
+		"promoPrice": 90.0,
+		"sku": "SPEED93017",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "6"
+				"key": "quantity",
+				"value": "6"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.875 lbs"
+				"key": "weight",
+				"value": "0.875 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"Tags": [
+		"tags": [
 			"featured"
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 60,
-		"Warehouse3": 40,
-		"Weight": 0.875,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 0.875,
+		"width": 9.5
 	},
 	{
-		"Attachments": [
+		"attachments": [
 			"Minium_InstallationGuide.pdf"
 		],
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93027",
-		"Height": 8.7,
-		"Length": 6.2,
-		"ManufacturerPartNumber": "BB98334",
-		"MinStockQuantity": 5,
-		"Name": "Wear Sensors",
-		"Price": 60.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED93027",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93027",
+		"height": 8.7,
+		"length": 6.2,
+		"manufacturerPartNumber": "BB98334",
+		"minStockQuantity": 5,
+		"name": "Wear Sensors",
+		"price": 60.0,
+		"promoPrice": 0,
+		"sku": "SPEED93027",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1 lbs"
+				"key": "weight",
+				"value": "1 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "6.2\" x 2.1\" x 8.7\""
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 60,
-		"Warehouse3": 60,
-		"Weight": 1,
-		"Width": 2.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 1,
+		"width": 2.1
 	},
 	{
-		"Attachments": [
+		"attachments": [
 			"Minium_InstallationGuide.pdf"
 		],
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93018",
-		"Height": 8.7,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93018",
+		"height": 8.7,
+		"images": [
 			"Speedwell_ProductImage_83.png"
 		],
-		"Length": 6.2,
-		"ManufacturerPartNumber": "BB98323",
-		"MinStockQuantity": 5,
-		"Name": "Brake Pads",
-		"Price": 21.0,
-		"PromoPrice": 18.9,
-		"RelatedProducts": [
+		"length": 6.2,
+		"manufacturerPartNumber": "BB98323",
+		"minStockQuantity": 5,
+		"name": "Brake Pads",
+		"price": 21.0,
+		"promoPrice": 18.9,
+		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"Sku": "SPEED93018",
-		"SpecificationOptions": [
+		"sku": "SPEED93018",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "3.96 lbs"
+				"key": "weight",
+				"value": "3.96 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "6.2\" x 2.1\" x 8.7\""
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
 			}
 		],
-		"Tags": [
+		"tags": [
 			"featured"
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 40,
-		"Warehouse3": 40,
-		"Weight": 3.96,
-		"Width": 2.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 3.96,
+		"width": 2.1
 	},
 	{
-		"Attachments": [
+		"attachments": [
 			"Minium_InstallationGuide.pdf"
 		],
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93019",
-		"Height": 8.7,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93019",
+		"height": 8.7,
+		"images": [
 			"Speedwell_ProductImage_83.png"
 		],
-		"Length": 6.2,
-		"ManufacturerPartNumber": "BB98324",
-		"MinStockQuantity": 5,
-		"Name": "Premium Brake Pads",
-		"Price": 29.0,
-		"PromoPrice": 26.1,
-		"RelatedProducts": [
+		"length": 6.2,
+		"manufacturerPartNumber": "BB98324",
+		"minStockQuantity": 5,
+		"name": "Premium Brake Pads",
+		"price": 29.0,
+		"promoPrice": 26.1,
+		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"Sku": "SPEED93019",
-		"SpecificationOptions": [
+		"sku": "SPEED93019",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Ceramic"
+				"key": "material",
+				"value": "Ceramic"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "4.01 lbs"
+				"key": "weight",
+				"value": "4.01 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "6.2\" x 2.1\" x 8.7\""
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
 			}
 		],
-		"Tags": [
+		"tags": [
 			"featured"
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 20,
-		"Warehouse3": 20,
-		"Weight": 4.01,
-		"Width": 2.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 20,
+		"warehouse3": 20,
+		"weight": 4.01,
+		"width": 2.1
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93020",
-		"Height": 1.7,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93020",
+		"height": 1.7,
+		"images": [
 			"Speedwell_ProductImage_30.png"
 		],
-		"Length": 10.2,
-		"ManufacturerPartNumber": "BB98325",
-		"MinStockQuantity": 5,
-		"Name": "Brake Rotors",
-		"Price": 40.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED93020",
-		"SpecificationOptions": [
+		"length": 10.2,
+		"manufacturerPartNumber": "BB98325",
+		"minStockQuantity": 5,
+		"name": "Brake Rotors",
+		"price": 40.0,
+		"promoPrice": 0,
+		"sku": "SPEED93020",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Cast Iron"
+				"key": "material",
+				"value": "Cast Iron"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "12.45 lbs"
+				"key": "weight",
+				"value": "12.45 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"Tags": [
+		"tags": [
 			"featured"
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 100,
-		"Warehouse3": 100,
-		"Weight": 12.45,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 12.45,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93021",
-		"Height": 5.3,
-		"Length": 9.4,
-		"ManufacturerPartNumber": "BB98326",
-		"MinStockQuantity": 5,
-		"Name": "Calipers",
-		"Price": 90.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED93021",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93021",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "BB98326",
+		"minStockQuantity": 5,
+		"name": "Calipers",
+		"price": 90.0,
+		"promoPrice": 0,
+		"sku": "SPEED93021",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "7.34 lbs"
+				"key": "weight",
+				"value": "7.34 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 60,
-		"Warehouse3": 60,
-		"Weight": 7.34,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 7.34,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93022",
-		"Height": 18,
-		"Length": 12,
-		"MinStockQuantity": 5,
-		"Name": "Hoses",
-		"Options": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93022",
+		"height": 18,
+		"length": 12,
+		"minStockQuantity": 5,
+		"name": "Hoses",
+		"options": [
 			{
-				"Key": "package-quantity",
-				"Values": [
+				"key": "package-quantity",
+				"values": [
 					"6",
 					"24",
 					"48"
 				]
 			}
 		],
-		"Skus": [
+		"skus": [
 			{
-				"ContributorOptions": [
+				"contributorOptions": [
 					{
 						"key": "package-quantity",
 						"value": "6"
 					}
 				],
-				"ManufacturerPartNumber": "BB98327",
-				"Price": 120.0,
-				"PromoPrice": 0,
-				"Sku": "SPEED93022A",
-				"Warehouse1": 40,
-				"Warehouse2": 40,
-				"Warehouse3": 40
+				"manufacturerPartNumber": "BB98327",
+				"price": 120.0,
+				"promoPrice": 0,
+				"sku": "SPEED93022A",
+				"warehouse1": 40,
+				"warehouse2": 40,
+				"warehouse3": 40
 			},
 			{
-				"ContributorOptions": [
+				"contributorOptions": [
 					{
 						"key": "package-quantity",
 						"value": "24"
 					}
 				],
-				"ManufacturerPartNumber": "BB98328",
-				"Price": 120.0,
-				"PromoPrice": 0,
-				"Sku": "SPEED93022B",
-				"Warehouse1": 40,
-				"Warehouse2": 20,
-				"Warehouse3": 20
+				"manufacturerPartNumber": "BB98328",
+				"price": 120.0,
+				"promoPrice": 0,
+				"sku": "SPEED93022B",
+				"warehouse1": 40,
+				"warehouse2": 20,
+				"warehouse3": 20
 			},
 			{
-				"ContributorOptions": [
+				"contributorOptions": [
 					{
 						"key": "package-quantity",
 						"value": "48"
 					}
 				],
-				"ManufacturerPartNumber": "BB98329",
-				"Price": 120.0,
-				"PromoPrice": 0,
-				"Sku": "SPEED93022C",
-				"Warehouse1": 40,
-				"Warehouse2": 100,
-				"Warehouse3": 100
+				"manufacturerPartNumber": "BB98329",
+				"price": 120.0,
+				"promoPrice": 0,
+				"sku": "SPEED93022C",
+				"warehouse1": 40,
+				"warehouse2": 100,
+				"warehouse3": 100
 			}
 		],
-		"SpecificationOptions": [
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "6"
+				"key": "quantity",
+				"value": "6"
 			},
 			{
-				"Key": "material",
-				"Value": "Rubber"
+				"key": "material",
+				"value": "Rubber"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "11.7 oz"
+				"key": "weight",
+				"value": "11.7 oz"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Weight": 0.73125,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"weight": 0.73125,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93023",
-		"Height": 18,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93023",
+		"height": 18,
+		"images": [
 			"Speedwell_ProductImage_42.png"
 		],
-		"Length": 12,
-		"ManufacturerPartNumber": "BB98330",
-		"MinStockQuantity": 5,
-		"Name": "Timing Belt",
-		"Price": 600.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED93023",
-		"SpecificationOptions": [
+		"length": 12,
+		"manufacturerPartNumber": "BB98330",
+		"minStockQuantity": 5,
+		"name": "Timing Belt",
+		"price": 600.0,
+		"promoPrice": 0,
+		"sku": "SPEED93023",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "12"
+				"key": "quantity",
+				"value": "12"
 			},
 			{
-				"Key": "material",
-				"Value": "Rubber"
+				"key": "material",
+				"value": "Rubber"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1 lbs"
+				"key": "weight",
+				"value": "1 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 60,
-		"Warehouse3": 60,
-		"Weight": 1,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 1,
+		"width": 2
 	},
 	{
-		"Attachments": [
+		"attachments": [
 			"Minium_InstallationGuide.pdf"
 		],
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93024",
-		"Height": 3.8,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93024",
+		"height": 3.8,
+		"images": [
 			"Speedwell_ProductImage_77.png",
 			"Speedwell_ProductImage_105.png"
 		],
-		"Length": 2.5,
-		"ManufacturerPartNumber": "BB98331",
-		"MinStockQuantity": 5,
-		"Name": "Master Cylinder",
-		"Price": 78.0,
-		"PromoPrice": 0,
-		"RelatedProducts": [
+		"length": 2.5,
+		"manufacturerPartNumber": "BB98331",
+		"minStockQuantity": 5,
+		"name": "Master Cylinder",
+		"price": 78.0,
+		"promoPrice": 0,
+		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"Sku": "SPEED93024",
-		"SpecificationOptions": [
+		"sku": "SPEED93024",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Aluminum"
+				"key": "material",
+				"value": "Aluminum"
 			},
 			{
-				"Key": "warranty",
-				"Value": "3 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "3 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.456 lbs"
+				"key": "weight",
+				"value": "1.456 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "2.5\" x 4.1\" x 3.8\""
+				"key": "dimensions",
+				"value": "2.5\" x 4.1\" x 3.8\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 40,
-		"Warehouse3": 40,
-		"Weight": 1.456,
-		"Width": 4.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 1.456,
+		"width": 4.1
 	},
 	{
-		"Attachments": [
+		"attachments": [
 			"Minium_InstallationGuide.pdf"
 		],
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93025",
-		"Height": 3.8,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93025",
+		"height": 3.8,
+		"images": [
 			"Speedwell_ProductImage_77.png",
 			"Speedwell_ProductImage_105.png"
 		],
-		"Length": 2.5,
-		"ManufacturerPartNumber": "BB98332",
-		"MinStockQuantity": 5,
-		"Name": "Master Cylinder",
-		"Price": 34.0,
-		"PromoPrice": 0,
-		"RelatedProducts": [
+		"length": 2.5,
+		"manufacturerPartNumber": "BB98332",
+		"minStockQuantity": 5,
+		"name": "Master Cylinder",
+		"price": 34.0,
+		"promoPrice": 0,
+		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"Sku": "SPEED93025",
-		"SpecificationOptions": [
+		"sku": "SPEED93025",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Cast Iron"
+				"key": "material",
+				"value": "Cast Iron"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1 lbs"
+				"key": "weight",
+				"value": "1 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "2.5\" x 4.1\" x 3.8\""
+				"key": "dimensions",
+				"value": "2.5\" x 4.1\" x 3.8\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 20,
-		"Warehouse3": 20,
-		"Weight": 1,
-		"Width": 4.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 20,
+		"warehouse3": 20,
+		"weight": 1,
+		"width": 4.1
 	},
 	{
-		"Attachments": [
+		"attachments": [
 			"Minium_InstallationGuide.pdf"
 		],
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Brake System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED93026",
-		"Height": 3.8,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED93026",
+		"height": 3.8,
+		"images": [
 			"Speedwell_ProductImage_77.png",
 			"Speedwell_ProductImage_105.png"
 		],
-		"Length": 2.5,
-		"ManufacturerPartNumber": "BB98333",
-		"MinStockQuantity": 5,
-		"Name": "Master Cylinder",
-		"Price": 39.0,
-		"PromoPrice": 0,
-		"RelatedProducts": [
+		"length": 2.5,
+		"manufacturerPartNumber": "BB98333",
+		"minStockQuantity": 5,
+		"name": "Master Cylinder",
+		"price": 39.0,
+		"promoPrice": 0,
+		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"Sku": "SPEED93026",
-		"SpecificationOptions": [
+		"sku": "SPEED93026",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1 lbs"
+				"key": "weight",
+				"value": "1 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "2.5\" x 4.1\" x 3.8\""
+				"key": "dimensions",
+				"value": "2.5\" x 4.1\" x 3.8\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 100,
-		"Warehouse3": 100,
-		"Weight": 1,
-		"Width": 4.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 1,
+		"width": 4.1
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00673",
-		"Height": 1.7,
-		"Length": 10.2,
-		"ManufacturerPartNumber": "EX938051",
-		"MinStockQuantity": 5,
-		"Name": "Bearings",
-		"Price": 70.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00673",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00673",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "EX938051",
+		"minStockQuantity": 5,
+		"name": "Bearings",
+		"price": 70.0,
+		"promoPrice": 0,
+		"sku": "SPEED00673",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "2 lbs"
+				"key": "weight",
+				"value": "2 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 40,
-		"Warehouse3": 40,
-		"Weight": 2,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 2,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00674",
-		"Height": 5.3,
-		"Length": 9.4,
-		"ManufacturerPartNumber": "EX938052",
-		"MinStockQuantity": 5,
-		"Name": "Cams",
-		"Price": 695.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00674",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00674",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "EX938052",
+		"minStockQuantity": 5,
+		"name": "Cams",
+		"price": 695.0,
+		"promoPrice": 0,
+		"sku": "SPEED00674",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "2.81 lbs"
+				"key": "weight",
+				"value": "2.81 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 100,
-		"Warehouse3": 20,
-		"Weight": 2.81,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 2.81,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00675",
-		"Height": 18,
-		"Length": 12,
-		"ManufacturerPartNumber": "EX938053",
-		"MinStockQuantity": 5,
-		"Name": "Engine Mount",
-		"Price": 120.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00675",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00675",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "EX938053",
+		"minStockQuantity": 5,
+		"name": "Engine Mount",
+		"price": 120.0,
+		"promoPrice": 0,
+		"sku": "SPEED00675",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.9 lbs"
+				"key": "weight",
+				"value": "1.9 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 100,
-		"Warehouse3": 100,
-		"Weight": 1.9,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 1.9,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00676",
-		"Height": 2.5,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00676",
+		"height": 2.5,
+		"images": [
 			"Speedwell_ProductImage_46.png"
 		],
-		"Length": 4,
-		"ManufacturerPartNumber": "EX938054",
-		"MinStockQuantity": 5,
-		"Name": "Oil Filter",
-		"Price": 450.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00676",
-		"SpecificationOptions": [
+		"length": 4,
+		"manufacturerPartNumber": "EX938054",
+		"minStockQuantity": 5,
+		"name": "Oil Filter",
+		"price": 450.0,
+		"promoPrice": 0,
+		"sku": "SPEED00676",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "24"
+				"key": "quantity",
+				"value": "24"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "9 lbs"
+				"key": "weight",
+				"value": "9 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 100,
-		"Warehouse3": 60,
-		"Weight": 9,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 100,
+		"warehouse3": 60,
+		"weight": 9,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00677",
-		"Height": 2,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00677",
+		"height": 2,
+		"images": [
 			"Speedwell_ProductImage_33.png"
 		],
-		"Length": 7,
-		"ManufacturerPartNumber": "EX938055",
-		"MinStockQuantity": 5,
-		"Name": "Oil Pump",
-		"Price": 79.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00677",
-		"SpecificationOptions": [
+		"length": 7,
+		"manufacturerPartNumber": "EX938055",
+		"minStockQuantity": 5,
+		"name": "Oil Pump",
+		"price": 79.0,
+		"promoPrice": 0,
+		"sku": "SPEED00677",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "2.05 lbs"
+				"key": "weight",
+				"value": "2.05 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "7\" x 5.6\" x 2\""
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 20,
-		"Warehouse3": 40,
-		"Weight": 2.05,
-		"Width": 5.6
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 2.05,
+		"width": 5.6
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00678",
-		"Height": 2.5,
-		"Length": 4,
-		"ManufacturerPartNumber": "EX938056",
-		"MinStockQuantity": 5,
-		"Name": "Piston",
-		"Price": 14.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00678",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00678",
+		"height": 2.5,
+		"length": 4,
+		"manufacturerPartNumber": "EX938056",
+		"minStockQuantity": 5,
+		"name": "Piston",
+		"price": 14.0,
+		"promoPrice": 0,
+		"sku": "SPEED00678",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Aluminum"
+				"key": "material",
+				"value": "Aluminum"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.72 lbs"
+				"key": "weight",
+				"value": "1.72 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 60,
-		"Warehouse3": 20,
-		"Weight": 1.72,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 20,
+		"weight": 1.72,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00679",
-		"Height": 8.7,
-		"Length": 6.2,
-		"ManufacturerPartNumber": "EX938057",
-		"MinStockQuantity": 5,
-		"Name": "Pulley Kit",
-		"Price": 201.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00679",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00679",
+		"height": 8.7,
+		"length": 6.2,
+		"manufacturerPartNumber": "EX938057",
+		"minStockQuantity": 5,
+		"name": "Pulley Kit",
+		"price": 201.0,
+		"promoPrice": 0,
+		"sku": "SPEED00679",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Aluminum"
+				"key": "material",
+				"value": "Aluminum"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.93 lbs"
+				"key": "weight",
+				"value": "1.93 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "6.2\" x 2.1\" x 8.7\""
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 40,
-		"Warehouse3": 100,
-		"Weight": 1.93,
-		"Width": 2.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 40,
+		"warehouse3": 100,
+		"weight": 1.93,
+		"width": 2.1
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00680",
-		"Height": 1.7,
-		"Length": 10.2,
-		"ManufacturerPartNumber": "EX938058",
-		"MinStockQuantity": 5,
-		"Name": "Seal",
-		"Price": 30.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00680",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00680",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "EX938058",
+		"minStockQuantity": 5,
+		"name": "Seal",
+		"price": 30.0,
+		"promoPrice": 0,
+		"sku": "SPEED00680",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "2"
+				"key": "quantity",
+				"value": "2"
 			},
 			{
-				"Key": "material",
-				"Value": "Rubber"
+				"key": "material",
+				"value": "Rubber"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.19 lbs"
+				"key": "weight",
+				"value": "0.19 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 20,
-		"Warehouse3": 60,
-		"Weight": 0.19,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 0.19,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00681",
-		"Height": 5.3,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00681",
+		"height": 5.3,
+		"images": [
 			"Speedwell_ProductImage_94.png"
 		],
-		"Length": 9.4,
-		"ManufacturerPartNumber": "EX938059",
-		"MinStockQuantity": 5,
-		"Name": "Timing Chain Tensioner",
-		"Price": 30.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00681",
-		"SpecificationOptions": [
+		"length": 9.4,
+		"manufacturerPartNumber": "EX938059",
+		"minStockQuantity": 5,
+		"name": "Timing Chain Tensioner",
+		"price": 30.0,
+		"promoPrice": 0,
+		"sku": "SPEED00681",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Plastic"
+				"key": "material",
+				"value": "Plastic"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.45 lbs"
+				"key": "weight",
+				"value": "0.45 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 0,
-		"Warehouse2": 3,
-		"Warehouse3": 0,
-		"Weight": 0.45,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 0,
+		"warehouse2": 3,
+		"warehouse3": 0,
+		"weight": 0.45,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00682",
-		"Height": 18,
-		"Length": 12,
-		"ManufacturerPartNumber": "EX938060",
-		"MinStockQuantity": 5,
-		"Name": "Timing Chain",
-		"Price": 23.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00682",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00682",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "EX938060",
+		"minStockQuantity": 5,
+		"name": "Timing Chain",
+		"price": 23.0,
+		"promoPrice": 0,
+		"sku": "SPEED00682",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Aluminum"
+				"key": "material",
+				"value": "Aluminum"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.3 lbs"
+				"key": "weight",
+				"value": "1.3 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 60,
-		"Warehouse3": 40,
-		"Weight": 1.3,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 1.3,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Engine"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED00683",
-		"Height": 1.7,
-		"Length": 10.2,
-		"ManufacturerPartNumber": "EX938061",
-		"MinStockQuantity": 5,
-		"Name": "Valve Cover Grommets",
-		"Price": 6.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED00683",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED00683",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "EX938061",
+		"minStockQuantity": 5,
+		"name": "Valve Cover Grommets",
+		"price": 6.0,
+		"promoPrice": 0,
+		"sku": "SPEED00683",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "2"
+				"key": "quantity",
+				"value": "2"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.1 lbs"
+				"key": "weight",
+				"value": "0.1 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 40,
-		"Warehouse3": 40,
-		"Weight": 0.1,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 0.1,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Exhaust System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED77822",
-		"Height": 5.3,
-		"Length": 9.4,
-		"ManufacturerPartNumber": "ES98205",
-		"MinStockQuantity": 5,
-		"Name": "Catalytic Converters",
-		"Price": 106.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED77822",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED77822",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "ES98205",
+		"minStockQuantity": 5,
+		"name": "Catalytic Converters",
+		"price": 106.0,
+		"promoPrice": 0,
+		"sku": "SPEED77822",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "4.7 lbs"
+				"key": "weight",
+				"value": "4.7 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 0,
-		"Warehouse2": 0,
-		"Warehouse3": 0,
-		"Weight": 4.7,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 0,
+		"warehouse2": 0,
+		"warehouse3": 0,
+		"weight": 4.7,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
 			"Exhaust System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED77823",
-		"Height": 18,
-		"Length": 12,
-		"ManufacturerPartNumber": "ES98206",
-		"MinStockQuantity": 5,
-		"Name": "Exhaust Clamps",
-		"Price": 9.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED77823",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED77823",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "ES98206",
+		"minStockQuantity": 5,
+		"name": "Exhaust Clamps",
+		"price": 9.0,
+		"promoPrice": 0,
+		"sku": "SPEED77823",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.62 lbs"
+				"key": "weight",
+				"value": "0.62 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 20,
-		"Warehouse3": 100,
-		"Weight": 0.62,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 100,
+		"weight": 0.62,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "7-14 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "7-14 days",
+		"backOrders": true,
+		"categories": [
 			"Exhaust System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED77824",
-		"Height": 2.5,
-		"Length": 4,
-		"ManufacturerPartNumber": "ES98207",
-		"MinStockQuantity": 5,
-		"Name": "Muffler/Resonators",
-		"Price": 32.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED77824",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED77824",
+		"height": 2.5,
+		"length": 4,
+		"manufacturerPartNumber": "ES98207",
+		"minStockQuantity": 5,
+		"name": "Muffler/Resonators",
+		"price": 32.0,
+		"promoPrice": 0,
+		"sku": "SPEED77824",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "11.75 lbs"
+				"key": "weight",
+				"value": "11.75 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 100,
-		"Warehouse3": 60,
-		"Weight": 11.75,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 60,
+		"weight": 11.75,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "7-14 days",
-		"BackOrders": true,
-		"Categories": [
+		"availabilityEstimate": "7-14 days",
+		"backOrders": true,
+		"categories": [
 			"Exhaust System"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED77825",
-		"Height": 2,
-		"Length": 7,
-		"ManufacturerPartNumber": "ES98208",
-		"MinStockQuantity": 5,
-		"Name": "Lift Support",
-		"Price": 20.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED77825",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED77825",
+		"height": 2,
+		"length": 7,
+		"manufacturerPartNumber": "ES98208",
+		"minStockQuantity": 5,
+		"name": "Lift Support",
+		"price": 20.0,
+		"promoPrice": 0,
+		"sku": "SPEED77825",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.6 lbs"
+				"key": "weight",
+				"value": "0.6 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "7\" x 5.6\" x 2\""
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 20,
-		"Warehouse3": 40,
-		"Weight": 0.6,
-		"Width": 5.6
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 0.6,
+		"width": 5.6
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Turbocharger"
 		],
-		"Description": "Includes wastegate actuator. Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment.",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED19999",
-		"FilterAccountGroups": [
+		"description": "Includes wastegate actuator. Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED19999",
+		"filterAccountGroups": [
 			"North American Accounts"
 		],
-		"Height": 14.4,
-		"Images": [
+		"height": 14.4,
+		"images": [
 			"Speedwell_ProductImage_106.png",
 			"Speedwell_ProductImage_107.png",
 			"Speedwell_ProductImage_108.png"
 		],
-		"Length": 15.3,
-		"ManufacturerPartNumber": "TC90432",
-		"MinStockQuantity": 5,
-		"Name": "Turbocharger",
-		"Price": 665.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED19999",
-		"SpecificationOptions": [
+		"length": 15.3,
+		"manufacturerPartNumber": "TC90432",
+		"minStockQuantity": 5,
+		"name": "Turbocharger",
+		"price": 665.0,
+		"promoPrice": 0,
+		"sku": "SPEED19999",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Aluminum"
+				"key": "material",
+				"value": "Aluminum"
 			},
 			{
-				"Key": "warranty",
-				"Value": "3 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "3 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "19 lbs"
+				"key": "weight",
+				"value": "19 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "15.3\" x 12.9\" x 14.4\""
+				"key": "dimensions",
+				"value": "15.3\" x 12.9\" x 14.4\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 60,
-		"Warehouse3": 20,
-		"Weight": 19,
-		"Width": 12.9
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 60,
+		"warehouse3": 20,
+		"weight": 19,
+		"width": 12.9
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38794",
-		"Height": 1.7,
-		"Length": 10.2,
-		"ManufacturerPartNumber": "HM88893",
-		"MinStockQuantity": 5,
-		"Name": "Ball Joints",
-		"Price": 152.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38794",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38794",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "HM88893",
+		"minStockQuantity": 5,
+		"name": "Ball Joints",
+		"price": 152.0,
+		"promoPrice": 0,
+		"sku": "SPEED38794",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "20.51 lbs"
+				"key": "weight",
+				"value": "20.51 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 40,
-		"Warehouse3": 100,
-		"Weight": 20.51,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 40,
+		"warehouse3": 100,
+		"weight": 20.51,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38795",
-		"Height": 5.3,
-		"Length": 9.4,
-		"ManufacturerPartNumber": "HM88894",
-		"MinStockQuantity": 5,
-		"Name": "Bushings",
-		"Price": 18.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38795",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38795",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "HM88894",
+		"minStockQuantity": 5,
+		"name": "Bushings",
+		"price": 18.0,
+		"promoPrice": 0,
+		"sku": "SPEED38795",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Rubber"
+				"key": "material",
+				"value": "Rubber"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.5 lbs"
+				"key": "weight",
+				"value": "0.5 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 20,
-		"Warehouse3": 60,
-		"Weight": 0.5,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 0.5,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38796",
-		"Height": 18,
-		"Length": 12,
-		"ManufacturerPartNumber": "HM88895",
-		"MinStockQuantity": 5,
-		"Name": "CV Axles",
-		"Price": 89.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38796",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38796",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "HM88895",
+		"minStockQuantity": 5,
+		"name": "CV Axles",
+		"price": 89.0,
+		"promoPrice": 0,
+		"sku": "SPEED38796",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "19.39 lbs"
+				"key": "weight",
+				"value": "19.39 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 100,
-		"Warehouse3": 40,
-		"Weight": 19.39,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 100,
+		"warehouse3": 40,
+		"weight": 19.39,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38797",
-		"Height": 2.5,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38797",
+		"height": 2.5,
+		"images": [
 			"Speedwell_ProductImage_20.png"
 		],
-		"Length": 4,
-		"ManufacturerPartNumber": "HM88896",
-		"MinStockQuantity": 5,
-		"Name": "Universal CV Boot",
-		"Price": 185.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38797",
-		"SpecificationOptions": [
+		"length": 4,
+		"manufacturerPartNumber": "HM88896",
+		"minStockQuantity": 5,
+		"name": "Universal CV Boot",
+		"price": 185.0,
+		"promoPrice": 0,
+		"sku": "SPEED38797",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "24"
+				"key": "quantity",
+				"value": "24"
 			},
 			{
-				"Key": "material",
-				"Value": "Neoprene"
+				"key": "material",
+				"value": "Neoprene"
 			},
 			{
-				"Key": "weight",
-				"Value": "6.35 lbs"
+				"key": "weight",
+				"value": "6.35 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 100,
-		"Warehouse3": 20,
-		"Weight": 6.35,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 6.35,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38798",
-		"Height": 2,
-		"Length": 7,
-		"ManufacturerPartNumber": "HM88897",
-		"MinStockQuantity": 5,
-		"Name": "Hub Bearing Assembly - Rear",
-		"Price": 175.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38798",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38798",
+		"height": 2,
+		"length": 7,
+		"manufacturerPartNumber": "HM88897",
+		"minStockQuantity": 5,
+		"name": "Hub Bearing Assembly - Rear",
+		"price": 175.0,
+		"promoPrice": 0,
+		"sku": "SPEED38798",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "warranty",
-				"Value": "3 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "3 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "13.10 lbs"
+				"key": "weight",
+				"value": "13.10 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "7\" x 5.6\" x 2\""
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 60,
-		"Warehouse3": 100,
-		"Weight": 13.1,
-		"Width": 5.6
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 60,
+		"warehouse3": 100,
+		"weight": 13.1,
+		"width": 5.6
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38799",
-		"Height": 2.5,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38799",
+		"height": 2.5,
+		"images": [
 			"Speedwell_ProductImage_13.png",
 			"Speedwell_ProductImage_73.png"
 		],
-		"Length": 4,
-		"ManufacturerPartNumber": "HM88898",
-		"MinStockQuantity": 5,
-		"Name": "Coil Spring - Rear",
-		"Price": 104.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38799",
-		"SpecificationOptions": [
+		"length": 4,
+		"manufacturerPartNumber": "HM88898",
+		"minStockQuantity": 5,
+		"name": "Coil Spring - Rear",
+		"price": 104.0,
+		"promoPrice": 0,
+		"sku": "SPEED38799",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "2"
+				"key": "quantity",
+				"value": "2"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "19.81 lbs"
+				"key": "weight",
+				"value": "19.81 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 20,
-		"Warehouse3": 60,
-		"Weight": 19.81,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 19.81,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "5-7 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "5-7 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38800",
-		"Height": 8.7,
-		"Length": 6.2,
-		"ManufacturerPartNumber": "HM88899",
-		"MinStockQuantity": 5,
-		"Name": "Power Steering Pump",
-		"Price": 160.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38800",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38800",
+		"height": 8.7,
+		"length": 6.2,
+		"manufacturerPartNumber": "HM88899",
+		"minStockQuantity": 5,
+		"name": "Power Steering Pump",
+		"price": 160.0,
+		"promoPrice": 0,
+		"sku": "SPEED38800",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Cast Iron"
+				"key": "material",
+				"value": "Cast Iron"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "4.76 lbs"
+				"key": "weight",
+				"value": "4.76 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "6.2\" x 2.1\" x 8.7\""
+				"key": "dimensions",
+				"value": "6.2\" x 2.1\" x 8.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 0,
-		"Warehouse2": 0,
-		"Warehouse3": 0,
-		"Weight": 4.76,
-		"Width": 2.1
+		"taxCategory": "Normal Product",
+		"warehouse1": 0,
+		"warehouse2": 0,
+		"warehouse3": 0,
+		"weight": 4.76,
+		"width": 2.1
 	},
 	{
-		"AvailabilityEstimate": "7-14 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "7-14 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38801",
-		"Height": 1.7,
-		"Length": 10.2,
-		"ManufacturerPartNumber": "HM88900",
-		"MinStockQuantity": 5,
-		"Name": "Differential Ring and Pinion - Universal",
-		"Price": 211.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38801",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38801",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "HM88900",
+		"minStockQuantity": 5,
+		"name": "Differential Ring and Pinion - Universal",
+		"price": 211.0,
+		"promoPrice": 0,
+		"sku": "SPEED38801",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "17.88 lbs"
+				"key": "weight",
+				"value": "17.88 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 100,
-		"Warehouse3": 20,
-		"Weight": 17.88,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 17.88,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38802",
-		"Height": 5.3,
-		"Length": 9.4,
-		"ManufacturerPartNumber": "HM88901",
-		"MinStockQuantity": 5,
-		"Name": "Shock Absorber",
-		"Price": 75.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38802",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38802",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "HM88901",
+		"minStockQuantity": 5,
+		"name": "Shock Absorber",
+		"price": 75.0,
+		"promoPrice": 0,
+		"sku": "SPEED38802",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "12 lbs"
+				"key": "weight",
+				"value": "12 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 60,
-		"Warehouse3": 100,
-		"Weight": 12,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 60,
+		"warehouse3": 100,
+		"weight": 12,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38803",
-		"Height": 18,
-		"Length": 12,
-		"ManufacturerPartNumber": "HM88902",
-		"MinStockQuantity": 5,
-		"Name": "Shock Strut - Front",
-		"Price": 129.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38803",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38803",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "HM88902",
+		"minStockQuantity": 5,
+		"name": "Shock Strut - Front",
+		"price": 129.0,
+		"promoPrice": 0,
+		"sku": "SPEED38803",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Rubber"
+				"key": "material",
+				"value": "Rubber"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "23.48 lbs"
+				"key": "weight",
+				"value": "23.48 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 40,
-		"Warehouse3": 60,
-		"Weight": 23.48,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 40,
+		"warehouse3": 60,
+		"weight": 23.48,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "7-14 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "7-14 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38804",
-		"Height": 1.7,
-		"Length": 10.2,
-		"ManufacturerPartNumber": "HM88903",
-		"MinStockQuantity": 5,
-		"Name": "Tie Rod End Tool",
-		"Price": 35.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38804",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38804",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "HM88903",
+		"minStockQuantity": 5,
+		"name": "Tie Rod End Tool",
+		"price": 35.0,
+		"promoPrice": 0,
+		"sku": "SPEED38804",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "2 lbs"
+				"key": "weight",
+				"value": "2 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 60,
-		"Warehouse3": 40,
-		"Weight": 2,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 2,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Suspension"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED38805",
-		"Height": 5.3,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED38805",
+		"height": 5.3,
+		"images": [
 			"Speedwell_ProductImage_103.png"
 		],
-		"Length": 9.4,
-		"ManufacturerPartNumber": "HM88904",
-		"MinStockQuantity": 5,
-		"Name": "Wheel Bearing Grease",
-		"Price": 54.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED38805",
-		"SpecificationOptions": [
+		"length": 9.4,
+		"manufacturerPartNumber": "HM88904",
+		"minStockQuantity": 5,
+		"name": "Wheel Bearing Grease",
+		"price": 54.0,
+		"promoPrice": 0,
+		"sku": "SPEED38805",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "6"
+				"key": "quantity",
+				"value": "6"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.75 lbs"
+				"key": "weight",
+				"value": "0.75 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 20,
-		"Warehouse3": 20,
-		"Weight": 0.75,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 20,
+		"weight": 0.75,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55853",
-		"Height": 18,
-		"Length": 12,
-		"ManufacturerPartNumber": "TT00024",
-		"MinStockQuantity": 5,
-		"Name": "CV Axles",
-		"Price": 89.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55853",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55853",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "TT00024",
+		"minStockQuantity": 5,
+		"name": "CV Axles",
+		"price": 89.0,
+		"promoPrice": 0,
+		"sku": "SPEED55853",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "19.39 lbs"
+				"key": "weight",
+				"value": "19.39 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 100,
-		"Warehouse3": 100,
-		"Weight": 19.39,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 19.39,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55854",
-		"Height": 2.5,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55854",
+		"height": 2.5,
+		"images": [
 			"Speedwell_ProductImage_20.png"
 		],
-		"Length": 4,
-		"ManufacturerPartNumber": "TT00025",
-		"MinStockQuantity": 5,
-		"Name": "Universal CV Boot",
-		"Price": 185.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55854",
-		"SpecificationOptions": [
+		"length": 4,
+		"manufacturerPartNumber": "TT00025",
+		"minStockQuantity": 5,
+		"name": "Universal CV Boot",
+		"price": 185.0,
+		"promoPrice": 0,
+		"sku": "SPEED55854",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "24"
+				"key": "quantity",
+				"value": "24"
 			},
 			{
-				"Key": "material",
-				"Value": "Neoprene"
+				"key": "material",
+				"value": "Neoprene"
 			},
 			{
-				"Key": "weight",
-				"Value": "6.35 lbs"
+				"key": "weight",
+				"value": "6.35 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 20,
-		"Warehouse3": 60,
-		"Weight": 6.35,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 20,
+		"warehouse3": 60,
+		"weight": 6.35,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55855",
-		"Height": 2,
-		"Length": 7,
-		"ManufacturerPartNumber": "TT00026",
-		"MinStockQuantity": 5,
-		"Name": "Drive Shafts",
-		"Price": 396.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55855",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55855",
+		"height": 2,
+		"length": 7,
+		"manufacturerPartNumber": "TT00026",
+		"minStockQuantity": 5,
+		"name": "Drive Shafts",
+		"price": 396.0,
+		"promoPrice": 0,
+		"sku": "SPEED55855",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.75 lbs"
+				"key": "weight",
+				"value": "1.75 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "7\" x 5.6\" x 2\""
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 40,
-		"Warehouse2": 60,
-		"Warehouse3": 40,
-		"Weight": 1.75,
-		"Width": 5.6
+		"taxCategory": "Normal Product",
+		"warehouse1": 40,
+		"warehouse2": 60,
+		"warehouse3": 40,
+		"weight": 1.75,
+		"width": 5.6
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55856",
-		"Height": 2.5,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55856",
+		"height": 2.5,
+		"images": [
 			"Speedwell_ProductImage_103.png"
 		],
-		"Length": 4,
-		"ManufacturerPartNumber": "TT00027",
-		"MinStockQuantity": 5,
-		"Name": "Transmission Fluid",
-		"Price": 42.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55856",
-		"SpecificationOptions": [
+		"length": 4,
+		"manufacturerPartNumber": "TT00027",
+		"minStockQuantity": 5,
+		"name": "Transmission Fluid",
+		"price": 42.0,
+		"promoPrice": 0,
+		"sku": "SPEED55856",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "6"
+				"key": "quantity",
+				"value": "6"
 			},
 			{
-				"Key": "weight",
-				"Value": "11.72 lbs"
+				"key": "weight",
+				"value": "11.72 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 40,
-		"Warehouse3": 40,
-		"Weight": 11.72,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 40,
+		"warehouse3": 40,
+		"weight": 11.72,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55857",
-		"Height": 1.7,
-		"Length": 10.2,
-		"ManufacturerPartNumber": "TT00028",
-		"MinStockQuantity": 5,
-		"Name": "Mount",
-		"Price": 3.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55857",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55857",
+		"height": 1.7,
+		"length": 10.2,
+		"manufacturerPartNumber": "TT00028",
+		"minStockQuantity": 5,
+		"name": "Mount",
+		"price": 3.0,
+		"promoPrice": 0,
+		"sku": "SPEED55857",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "2.26 lbs"
+				"key": "weight",
+				"value": "2.26 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "10.2\" x 10.2\" x 1.7\""
+				"key": "dimensions",
+				"value": "10.2\" x 10.2\" x 1.7\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 20,
-		"Warehouse3": 40,
-		"Weight": 2.26,
-		"Width": 10.2
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 2.26,
+		"width": 10.2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55858",
-		"Height": 5.3,
-		"Length": 9.4,
-		"ManufacturerPartNumber": "TT00029",
-		"MinStockQuantity": 5,
-		"Name": "Wheel Seal - Front",
-		"Price": 4.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55858",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55858",
+		"height": 5.3,
+		"length": 9.4,
+		"manufacturerPartNumber": "TT00029",
+		"minStockQuantity": 5,
+		"name": "Wheel Seal - Front",
+		"price": 4.0,
+		"promoPrice": 0,
+		"sku": "SPEED55858",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.04 lbs"
+				"key": "weight",
+				"value": "0.04 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "9.4\" x 7.3\" x 5.3\""
+				"key": "dimensions",
+				"value": "9.4\" x 7.3\" x 5.3\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 100,
-		"Warehouse2": 100,
-		"Warehouse3": 20,
-		"Weight": 0.04,
-		"Width": 7.3
+		"taxCategory": "Normal Product",
+		"warehouse1": 100,
+		"warehouse2": 100,
+		"warehouse3": 20,
+		"weight": 0.04,
+		"width": 7.3
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55859",
-		"Height": 18,
-		"Length": 12,
-		"ManufacturerPartNumber": "TT00030",
-		"MinStockQuantity": 5,
-		"Name": "Torque Converters",
-		"Price": 34.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55859",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55859",
+		"height": 18,
+		"length": 12,
+		"manufacturerPartNumber": "TT00030",
+		"minStockQuantity": 5,
+		"name": "Torque Converters",
+		"price": 34.0,
+		"promoPrice": 0,
+		"sku": "SPEED55859",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "1 Year Unlimited Mileage Warranty"
+				"key": "warranty",
+				"value": "1 Year Unlimited Mileage Warranty"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.22 lbs"
+				"key": "weight",
+				"value": "0.22 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "12\" x 2\" x 18\""
+				"key": "dimensions",
+				"value": "12\" x 2\" x 18\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 100,
-		"Warehouse3": 100,
-		"Weight": 0.22,
-		"Width": 2
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 100,
+		"warehouse3": 100,
+		"weight": 0.22,
+		"width": 2
 	},
 	{
-		"AvailabilityEstimate": "3-5 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "3-5 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55860",
-		"Height": 2.5,
-		"Length": 4,
-		"ManufacturerPartNumber": "TT00031",
-		"MinStockQuantity": 5,
-		"Name": "Transmission Cooler Line Assembly",
-		"Price": 15.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55860",
-		"SpecificationOptions": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55860",
+		"height": 2.5,
+		"length": 4,
+		"manufacturerPartNumber": "TT00031",
+		"minStockQuantity": 5,
+		"name": "Transmission Cooler Line Assembly",
+		"price": 15.0,
+		"promoPrice": 0,
+		"sku": "SPEED55860",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Rubber"
+				"key": "material",
+				"value": "Rubber"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "0.71 lbs"
+				"key": "weight",
+				"value": "0.71 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "4\" x 9.5\" x 2.5\""
+				"key": "dimensions",
+				"value": "4\" x 9.5\" x 2.5\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 20,
-		"Warehouse2": 60,
-		"Warehouse3": 60,
-		"Weight": 0.71,
-		"Width": 9.5
+		"taxCategory": "Normal Product",
+		"warehouse1": 20,
+		"warehouse2": 60,
+		"warehouse3": 60,
+		"weight": 0.71,
+		"width": 9.5
 	},
 	{
-		"AvailabilityEstimate": "7-14 days",
-		"BackOrders": false,
-		"Categories": [
+		"availabilityEstimate": "7-14 days",
+		"backOrders": false,
+		"categories": [
 			"Transmission"
 		],
-		"Description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
-		"DisplayAvailability": true,
-		"DisplayStockQuantity": true,
-		"ExternalReferenceCode": "SPEED55861",
-		"Height": 2,
-		"Images": [
+		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "SPEED55861",
+		"height": 2,
+		"images": [
 			"Speedwell_ProductImage_64.png"
 		],
-		"Length": 7,
-		"ManufacturerPartNumber": "TT00032",
-		"MinStockQuantity": 5,
-		"Name": "U-Joint",
-		"Price": 24.0,
-		"PromoPrice": 0,
-		"Sku": "SPEED55861",
-		"SpecificationOptions": [
+		"length": 7,
+		"manufacturerPartNumber": "TT00032",
+		"minStockQuantity": 5,
+		"name": "U-Joint",
+		"price": 24.0,
+		"promoPrice": 0,
+		"sku": "SPEED55861",
+		"specificationOptions": [
 			{
-				"Key": "quantity",
-				"Value": "1"
+				"key": "quantity",
+				"value": "1"
 			},
 			{
-				"Key": "material",
-				"Value": "Steel"
+				"key": "material",
+				"value": "Steel"
 			},
 			{
-				"Key": "warranty",
-				"Value": "Limited Lifetime"
+				"key": "warranty",
+				"value": "Limited Lifetime"
 			},
 			{
-				"Key": "weight",
-				"Value": "1.30 lbs"
+				"key": "weight",
+				"value": "1.30 lbs"
 			},
 			{
-				"Key": "dimensions",
-				"Value": "7\" x 5.6\" x 2\""
+				"key": "dimensions",
+				"value": "7\" x 5.6\" x 2\""
 			}
 		],
-		"TaxCategory": "Normal Product",
-		"Warehouse1": 60,
-		"Warehouse2": 20,
-		"Warehouse3": 40,
-		"Weight": 1.3,
-		"Width": 5.6
+		"taxCategory": "Normal Product",
+		"warehouse1": 60,
+		"warehouse2": 20,
+		"warehouse3": 40,
+		"weight": 1.3,
+		"width": 5.6
 	}
 ]

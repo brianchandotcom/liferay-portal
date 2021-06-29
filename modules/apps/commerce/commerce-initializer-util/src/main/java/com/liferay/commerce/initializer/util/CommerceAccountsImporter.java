@@ -115,7 +115,7 @@ public class CommerceAccountsImporter {
 			String dependenciesPath, ServiceContext serviceContext)
 		throws Exception {
 
-		String name = jsonObject.getString("Name");
+		String name = jsonObject.getString("name");
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.fetchCommerceAccountByReferenceCode(
@@ -126,9 +126,9 @@ public class CommerceAccountsImporter {
 			return;
 		}
 
-		String accountType = jsonObject.getString("AccountType");
-		String email = jsonObject.getString("Email");
-		String taxId = jsonObject.getString("TaxId");
+		String accountType = jsonObject.getString("accountType");
+		String email = jsonObject.getString("email");
+		String taxId = jsonObject.getString("taxId");
 
 		// Add Commerce Account
 
@@ -144,13 +144,13 @@ public class CommerceAccountsImporter {
 			taxId, commerceAccountType, true,
 			FriendlyURLNormalizerUtil.normalize(name), serviceContext);
 
-		String twoLetterISOCode = jsonObject.getString("Country");
+		String twoLetterISOCode = jsonObject.getString("country");
 
 		Country country = getCountry(twoLetterISOCode);
 
 		long regionId = 0;
 
-		String regionCode = jsonObject.getString("Region");
+		String regionCode = jsonObject.getString("region");
 
 		if (!Validator.isBlank(regionCode)) {
 			try {
@@ -164,9 +164,9 @@ public class CommerceAccountsImporter {
 			}
 		}
 
-		String street1 = jsonObject.getString("Street1");
-		String city = jsonObject.getString("City");
-		String zip = jsonObject.getString("Zip");
+		String street1 = jsonObject.getString("street1");
+		String city = jsonObject.getString("city");
+		String zip = jsonObject.getString("zip");
 
 		// Add Commerce Address
 
@@ -179,7 +179,7 @@ public class CommerceAccountsImporter {
 
 		// Add Company Logo
 
-		String companyLogo = jsonObject.getString("CompanyLogo");
+		String companyLogo = jsonObject.getString("companyLogo");
 
 		if (!Validator.isBlank(companyLogo)) {
 			String filePath = dependenciesPath + "images/" + companyLogo;
@@ -203,7 +203,7 @@ public class CommerceAccountsImporter {
 		// Add Related Organization
 
 		String relatedOrganization = jsonObject.getString(
-			"RelatedOrganization");
+			"relatedOrganization");
 
 		if (!Validator.isBlank(relatedOrganization)) {
 			Organization organization =
@@ -238,7 +238,7 @@ public class CommerceAccountsImporter {
 
 		// Add Price List Account Rel
 
-		JSONArray priceListsJSONArray = jsonObject.getJSONArray("PriceLists");
+		JSONArray priceListsJSONArray = jsonObject.getJSONArray("priceLists");
 
 		if (priceListsJSONArray != null) {
 			for (int i = 0; i < priceListsJSONArray.length(); i++) {
@@ -271,7 +271,7 @@ public class CommerceAccountsImporter {
 		// Add/Find Account Group and Add Rel
 
 		JSONArray accountGroupsJSONArray = jsonObject.getJSONArray(
-			"AccountGroups");
+			"accountGroups");
 
 		if (accountGroupsJSONArray != null) {
 			for (int i = 0; i < accountGroupsJSONArray.length(); i++) {

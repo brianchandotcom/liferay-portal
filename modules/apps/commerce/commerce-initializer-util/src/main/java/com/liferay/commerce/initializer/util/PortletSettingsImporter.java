@@ -117,10 +117,10 @@ public class PortletSettingsImporter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String fileName = jsonObject.getString("FileName");
-		String name = jsonObject.getString("Name");
+		String fileName = jsonObject.getString("fileName");
+		String name = jsonObject.getString("name");
 
-		String portletClassName = jsonObject.getString("PortletClassName");
+		String portletClassName = jsonObject.getString("portletClassName");
 
 		long classNameId = _portal.getClassNameId(portletClassName);
 
@@ -247,7 +247,7 @@ public class PortletSettingsImporter {
 					displayStyleJSONObject, classLoader,
 					displayTemplateDependenciesPath, serviceContext);
 
-				String templateName = displayStyleJSONObject.getString("Name");
+				String templateName = displayStyleJSONObject.getString("name");
 
 				if (Validator.isBlank(value) &&
 					templateName.contains("ddmTemplate_")) {

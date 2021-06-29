@@ -37,12 +37,18 @@ definition {
 	}
 
 	@description = "Verify that the user can select Duplicate option in the kebab menu for a particular row"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDuplicateProcess {
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
-		// TODO LRQA-68241 CanDuplicateProcess pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		AssertElementPresent(
+			key_workflowInstanceName = "Copy of Single Approver",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE");
 	}
 
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"

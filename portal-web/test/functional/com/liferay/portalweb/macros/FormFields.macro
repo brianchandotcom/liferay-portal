@@ -1064,6 +1064,14 @@ definition {
 			locator1 = "FormFields#FIELD");
 	}
 
+	macro viewFieldByIndex {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_formPageNumber = "${formPageNumber}",
+			key_index = "${index}",
+			locator1 = "FormFields#FIELD_LABEL_BY_INDEX");
+	}
+
 	macro viewFieldDropdownItem {
 		WaitForElementPresent(
 			key_itemName = "${itemName}",

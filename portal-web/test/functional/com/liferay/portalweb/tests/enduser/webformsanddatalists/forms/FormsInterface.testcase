@@ -58,14 +58,51 @@ definition {
 	}
 
 	@description = "Verify that fields can be reordered by DND"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsCanBeReorderedViaDND {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134240 FieldsCanBeReorderedViaDND pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.viewFieldByIndex(
+			fieldLabel = "Text",
+			formPageNumber = "0",
+			index = "2");
+
+		FormFields.viewFieldByIndex(
+			fieldLabel = "Numeric",
+			formPageNumber = "0",
+			index = "3");
+
+		Form.reorderFields(
+			fieldName = "Numeric",
+			index = "1");
+
+		FormFields.viewFieldByIndex(
+			fieldLabel = "Numeric",
+			formPageNumber = "0",
+			index = "2");
+
+		FormFields.viewFieldByIndex(
+			fieldLabel = "Text",
+			formPageNumber = "0",
+			index = "3");
 	}
 
 	@description = "Verify that fields can be resized"

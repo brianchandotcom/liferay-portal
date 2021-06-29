@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_LABEL_BY_INDEX</td>
+	<td>//div[@data-ddm-page='${key_formPageNumber}']/div[${key_index}]//label[contains(text(),'${key_fieldLabel}')] | //div[@data-ddm-page='${key_formPageNumber}']/div[${key_index}]//legend[contains(text(),'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_REPEATABLE_BUTTON_BY_INDEX</td>
 	<td>//div[${key_duplicatedIndex}][contains(@class,'ddm-field')]//div[contains(@data-field-name,'${key_fieldName}')]//button[contains(@class,'ddm-form-field-repeatable-add-button')]</td>
 	<td></td>

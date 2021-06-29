@@ -662,6 +662,14 @@ definition {
 		Form.assertFormWasPublished();
 	}
 
+	macro reorderFields {
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldName = "${fieldName}",
+			key_index = "${index}",
+			locator1 = "Form#PAGE_FIELD_LABEL",
+			locator2 = "Form#FIELD_ROW_TARGET");
+	}
+
 	macro reorderFieldsFromFieldsGroup {
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_fieldName = "${key_fieldName}",

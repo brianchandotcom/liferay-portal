@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Field Numeric Input Mask toggle has an inputMaskFormat 1`] = `
+exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
 <div>
   <div
     aria-labelledby="numericField"

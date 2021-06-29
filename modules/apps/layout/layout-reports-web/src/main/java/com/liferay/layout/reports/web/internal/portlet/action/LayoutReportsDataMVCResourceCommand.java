@@ -310,6 +310,8 @@ public class LayoutReportsDataMVCResourceCommand
 						_getResourceURL(
 							layout.getGroupId(), url, portletResponse)
 					).put(
+						"private", layout.isPrivateLayout()
+					).put(
 						"title", _getTitle(portletRequest, layout, locale)
 					).put(
 						"url", url

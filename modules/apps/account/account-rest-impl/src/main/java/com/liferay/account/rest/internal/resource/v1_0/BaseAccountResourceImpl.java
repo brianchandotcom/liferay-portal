@@ -243,6 +243,10 @@ public abstract class BaseAccountResourceImpl
 		Account existingAccount = getAccountByExternalReferenceCode(
 			externalReferenceCode);
 
+		if (account.getActions() != null) {
+			existingAccount.setActions(account.getActions());
+		}
+
 		if (account.getDescription() != null) {
 			existingAccount.setDescription(account.getDescription());
 		}
@@ -403,6 +407,10 @@ public abstract class BaseAccountResourceImpl
 		throws Exception {
 
 		Account existingAccount = getAccount(accountId);
+
+		if (account.getActions() != null) {
+			existingAccount.setActions(account.getActions());
+		}
 
 		if (account.getDescription() != null) {
 			existingAccount.setDescription(account.getDescription());

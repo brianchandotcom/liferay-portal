@@ -19,6 +19,7 @@ import com.liferay.account.rest.client.serdes.v1_0.AccountSerDes;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -33,6 +34,28 @@ public class Account implements Cloneable, Serializable {
 	public static Account toDTO(String json) {
 		return AccountSerDes.toDTO(json);
 	}
+
+	public Map<String, Map<String, String>> getActions() {
+		return actions;
+	}
+
+	public void setActions(Map<String, Map<String, String>> actions) {
+		this.actions = actions;
+	}
+
+	public void setActions(
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
+
+		try {
+			actions = actionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Map<String, String>> actions;
 
 	public String getDescription() {
 		return description;

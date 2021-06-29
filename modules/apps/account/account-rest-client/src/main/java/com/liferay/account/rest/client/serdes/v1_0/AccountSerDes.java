@@ -53,6 +53,16 @@ public class AccountSerDes {
 
 		sb.append("{");
 
+		if (account.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(account.getActions()));
+		}
+
 		if (account.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -187,6 +197,13 @@ public class AccountSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (account.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(account.getActions()));
+		}
+
 		if (account.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -269,7 +286,13 @@ public class AccountSerDes {
 			Account account, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					account.setActions(
+						(Map)AccountSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					account.setDescription((String)jsonParserFieldValue);
 				}

@@ -534,7 +534,7 @@ definition {
 			locator1 = "WorkflowDefinition#DEFINITION_TITLE",
 			value1 = "${workflowCopyName}");
 	}
-	
+
 	macro duplicateSingleApproverWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -659,6 +659,16 @@ definition {
 		Click(locator1 = "AssetWorkflow#PROCESS_BUILDER_FILTER_AND_ORDER_BUTTON");
 
 		Click(locator1 = "AssetWorkflow#PROCESS_BUILDER_FILTER_AND_ORDER_OPTION");
+	}
+	
+	macro permissionsWorkflowDefinition {
+		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+
+		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Permissions");
+
+		AssertElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PERMISSIONS");
 	}
 
 	macro publishExistingWorkflowDefinition {

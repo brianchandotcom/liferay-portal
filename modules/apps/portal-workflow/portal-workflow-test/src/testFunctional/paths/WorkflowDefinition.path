@@ -68,6 +68,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFINITION_TABLE_TITLE_PERMISSIONS</td>
+	<td>//div[contains(@class, "modal-content modal-full-screen-content yui3-widget-stdmod yui3-widget-content-expanded")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

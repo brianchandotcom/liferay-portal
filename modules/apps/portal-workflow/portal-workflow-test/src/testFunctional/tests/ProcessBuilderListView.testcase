@@ -306,9 +306,14 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectPermissionsOptionForNonPublishedProcess {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68248 CanSelectPermissionsOptionForNonPublishedProcess pending implementation
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		Workflow.permissionsWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 	}
 
 	@description = "Verify that the user can select View option in the kebab menu for a particular row"

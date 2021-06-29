@@ -45,10 +45,10 @@ const SidebarHeader = ({title}) => {
 
 				<ClayLayout.ContentCol>
 					<ClayButtonWithIcon
-						className="component-action"
+						className="text-secondary"
 						displayType="unstyled"
 						onClick={onClose}
-						symbol="times-small"
+						symbol="times"
 					/>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>

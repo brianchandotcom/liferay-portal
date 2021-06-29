@@ -71,7 +71,9 @@
 }
 
 .content-dashboard.sidebar {
+	border-left: 1px solid $gray-300;
 	bottom: 0;
+	box-shadow: none;
 	height: auto;
 	left: 100%;
 	position: fixed;

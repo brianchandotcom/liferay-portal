@@ -109,12 +109,35 @@ definition {
 	}
 
 	@description = "Verify that the user can not unpublish a Workflow in use and system displays an error message"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanNotUnpublishWorkflowInUse {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68243 CanNotUnpublishWorkflowInUse pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		AssertElementPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Workflow in use. Remove its assignment to this asset: Blogs Entry.");
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 	}
 
 	@description = "Verify that the user is able to order by Last Modified"

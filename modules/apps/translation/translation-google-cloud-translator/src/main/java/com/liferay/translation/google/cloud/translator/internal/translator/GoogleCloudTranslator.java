@@ -15,6 +15,7 @@
 package com.liferay.translation.google.cloud.translator.internal.translator;
 
 import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.cloud.translate.Language;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
@@ -22,8 +23,10 @@ import com.google.cloud.translate.Translation;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.google.cloud.translator.internal.configuration.GoogleCloudTranslatorConfiguration;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
@@ -37,6 +40,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -63,19 +69,31 @@ public class GoogleCloudTranslator implements Translator {
 	}
 
 	@Override
-	public TranslatorPacket translate(TranslatorPacket translatorPacket) {
+	public TranslatorPacket translate(TranslatorPacket translatorPacket)
+		throws PortalException {
+
 		if (!isEnabled()) {
 			return translatorPacket;
+		}
+
+		String sourceLanguageCode = _getLanguageCode(
+			translatorPacket.getSourceLanguageId());
+		String targetLanguageCode = _getLanguageCode(
+			translatorPacket.getTargetLanguageId());
+
+		if (!_supportedLanguageCodes.contains(sourceLanguageCode) ||
+			!_supportedLanguageCodes.contains(targetLanguageCode)) {
+
+			throw new TranslatorException(
+				"Translation between the selected languages is not supported");
 		}
 
 		Map<String, String> fieldsMap = translatorPacket.getFieldsMap();
 
 		List<Translation> translations = _translate.translate(
 			new ArrayList<>(fieldsMap.values()),
-			Translate.TranslateOption.sourceLanguage(
-				_getLanguageCode(translatorPacket.getSourceLanguageId())),
-			Translate.TranslateOption.targetLanguage(
-				_getLanguageCode(translatorPacket.getTargetLanguageId())));
+			Translate.TranslateOption.sourceLanguage(sourceLanguageCode),
+			Translate.TranslateOption.targetLanguage(targetLanguageCode));
 
 		Map<String, String> translationFieldsMap = new HashMap<>();
 
@@ -141,6 +159,16 @@ public class GoogleCloudTranslator implements Translator {
 			).setCredentials(
 				serviceAccountCredentials
 			).build());
+
+		List<Language> supportedLanguages = _translate.listSupportedLanguages();
+
+		Stream<Language> stream = supportedLanguages.stream();
+
+		_supportedLanguageCodes = stream.map(
+			Language::getCode
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	private String _getLanguageCode(String languageId) {
@@ -151,6 +179,7 @@ public class GoogleCloudTranslator implements Translator {
 
 	private GoogleCloudTranslatorConfiguration
 		_googleCloudTranslatorConfiguration;
+	private Set<String> _supportedLanguageCodes;
 	private Translate _translate;
 
 }

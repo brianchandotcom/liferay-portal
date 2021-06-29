@@ -140,4 +140,20 @@ definition {
 		Refresh();
 	}
 
+	macro getProductMediaId {
+		CommerceNavigator.gotoEntry(entryName = "Commerce_Blue.jpg");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		var productMediaId = selenium.getText("CommerceEntry#SIDE_PANEL_IFRAME_TITLE");
+
+		productMediaId = StringUtil.extractDigits("${productMediaId}");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		IFrame.selectTopFrame();
+
+		return "${productMediaId}";
+	}
+
 }

@@ -92,43 +92,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									Date parentDiscussionCreateDate = parentDiscussionComment.getCreateDate();
 									%>
 
-									<liferay-util:buffer
-										var="parentCommentUserBuffer"
-									>
-										<clay:content-row
-											noGutters="x"
-										>
-											<clay:content-col>
-												<liferay-ui:user-portrait
-													cssClass="sticker-lg"
-													user="<%= parentDiscussionComment.getUser() %>"
-												/>
-											</clay:content-col>
-
-											<clay:content-col
-												expand="<%= true %>"
-											>
-												<div class="username">
-													<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
-												</div>
-
-												<div class="text-secondary">
-													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-												</div>
-											</clay:content-col>
-										</clay:content-row>
-									</liferay-util:buffer>
-
-									<clay:link
-										aria-label='<%= LanguageUtil.format(request, "in-reply-to-x", HtmlUtil.escape(parentDiscussionComment.getUserName()), false) %>'
-										cssClass="lfr-discussion-parent-link"
-										data-inreply-content="<%= HtmlUtil.escapeAttribute(parentDiscussionComment.getBody()) %>"
-										data-inreply-title="<%= HtmlUtil.escapeAttribute(parentCommentUserBuffer) %>"
-										href='<%= "#" + randomNamespace + "message_" + parentDiscussionComment.getCommentId() %>'
-										icon="redo"
-										label="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>"
-									/>
-
 									<span>
 										<clay:link
 											aria-label='<%= LanguageUtil.format(request, "in-reply-to-x", HtmlUtil.escape(parentDiscussionComment.getUserName()), false) %>'

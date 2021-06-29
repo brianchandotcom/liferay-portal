@@ -307,49 +307,5 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			%>'
 			module="discussion/js/Comments"
 		/>
-
-		<aui:script use="aui-popover,event-outside">
-			var discussionContainer = A.one('#<%= namespace %>discussionContainer');
-
-			var popover = new A.Popover({
-				constrain: true,
-				cssClass: 'lfr-discussion-reply',
-				position: 'top',
-				visible: false,
-				width: 400,
-				zIndex: Liferay.zIndex.OVERLAY,
-			}).render(discussionContainer);
-
-			var handle;
-
-			var boundingBox = popover.get('boundingBox');
-
-			discussionContainer.delegate(
-				'click',
-				(event) => {
-					event.preventDefault();
-					event.stopPropagation();
-
-					if (handle) {
-						handle.detach();
-
-						handle = null;
-					}
-
-					handle = boundingBox.once('clickoutside', popover.hide, popover);
-
-					popover.hide();
-
-					var currentTarget = event.currentTarget;
-
-					popover.set('align.node', currentTarget);
-					popover.set('bodyContent', currentTarget.attr('data-inreply-content'));
-					popover.set('headerContent', currentTarget.attr('data-inreply-title'));
-
-					popover.show();
-				},
-				'.lfr-discussion-parent-link:not(.new)'
-			);
-		</aui:script>
 	</c:if>
 </section>

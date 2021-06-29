@@ -55,7 +55,7 @@ function ReplyPopover({
 			trigger={
 				<a
 					aria-label={ariaLabel}
-					className="lfr-discussion-parent-link new"
+					className="lfr-discussion-parent-link"
 					href={href}
 					onClick={(event) => {
 						event.preventDefault();

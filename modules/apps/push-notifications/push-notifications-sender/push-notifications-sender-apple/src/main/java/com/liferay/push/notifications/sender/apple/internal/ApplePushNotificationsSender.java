@@ -278,7 +278,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 			PushNotificationsConstants.KEY_SILENT);
 
 		if (silent) {
-			simpleApnsPayloadBuilder.setSound(null);
+			simpleApnsPayloadBuilder.setContentAvailable(true);
 		}
 
 		String sound = payloadJSONObject.getString(

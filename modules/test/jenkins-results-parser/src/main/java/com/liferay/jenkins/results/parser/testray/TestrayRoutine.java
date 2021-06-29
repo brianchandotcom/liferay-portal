@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -237,29 +235,37 @@ public class TestrayRoutine {
 	}
 
 	public List<TestrayBuild> getTestrayBuilds() {
-		return getTestrayBuilds(_DELTA, null, null);
+		return getTestrayBuilds(_DELTA);
 	}
 
 	public List<TestrayBuild> getTestrayBuilds(int maxSize) {
-		return getTestrayBuilds(maxSize, null, null);
+		return getTestrayBuilds(maxSize, null);
 	}
 
 	public List<TestrayBuild> getTestrayBuilds(
-		int maxSize, LocalDate localDate, String name) {
+		int maxSize, String... nameFilters) {
 
 		int current = 1;
 
 		StringBuilder sb = new StringBuilder();
 
-		if (localDate != null) {
-			sb.append("&name=%22");
-			sb.append(localDate);
-			sb.append("%22");
-		}
+		if ((nameFilters != null) && (nameFilters.length > 0)) {
+			for (String nameFilter : nameFilters) {
+				if (JenkinsResultsParserUtil.isNullOrEmpty(nameFilter)) {
+					continue;
+				}
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(name)) {
-			sb.append("&name=");
-			sb.append(name);
+				sb.append("&name=");
+
+				if (nameFilter.contains("-")) {
+					sb.append("%22");
+					sb.append(nameFilter);
+					sb.append("%22");
+				}
+				else {
+					sb.append(nameFilter);
+				}
+			}
 		}
 
 		while ((current * _DELTA) <= maxSize) {
@@ -306,16 +312,24 @@ public class TestrayRoutine {
 		for (TestrayBuild testrayBuild : _testrayBuildsByID.values()) {
 			String testrayBuildName = testrayBuild.getName();
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(name) &&
-				!testrayBuildName.contains(name)) {
+			if ((nameFilters != null) && (nameFilters.length > 0)) {
+				boolean matches = true;
 
-				continue;
-			}
+				for (String nameFilter : nameFilters) {
+					if (JenkinsResultsParserUtil.isNullOrEmpty(nameFilter) ||
+						testrayBuildName.contains(nameFilter)) {
 
-			if ((localDate != null) &&
-				!testrayBuildName.contains(localDate.toString())) {
+						continue;
+					}
 
-				continue;
+					matches = false;
+
+					break;
+				}
+
+				if (!matches) {
+					continue;
+				}
 			}
 
 			testrayBuilds.add(testrayBuild);

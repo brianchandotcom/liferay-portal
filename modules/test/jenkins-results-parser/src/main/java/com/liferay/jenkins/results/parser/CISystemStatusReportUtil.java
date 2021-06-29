@@ -68,7 +68,7 @@ public class CISystemStatusReportUtil {
 
 		for (LocalDate localDate : _recentTestrayBuilds.keySet()) {
 			List<TestrayBuild> builds = testrayRoutine.getTestrayBuilds(
-				200, localDate, nameFilter);
+				200, localDate.toString(), nameFilter);
 
 			_recentTestrayBuilds.put(localDate, builds);
 
@@ -93,23 +93,23 @@ public class CISystemStatusReportUtil {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var relevantSuiteBuildData = ");
-		sb.append(String.valueOf(_getRelevantSuiteBuildDataJSONObject()));
+		sb.append(_getRelevantSuiteBuildDataJSONObject());
 
 		sb.append("\nvar topLevelTotalBuildDurationData = ");
-		sb.append(String.valueOf(_getTopLevelTotalBuildDurationJSONObject()));
+		sb.append(_getTopLevelTotalBuildDurationJSONObject());
 
 		sb.append("\nvar topLevelActiveBuildDurationData = ");
-		sb.append(String.valueOf(_getTopLevelActiveBuildDurationJSONObject()));
+		sb.append(_getTopLevelActiveBuildDurationJSONObject());
 
 		sb.append("\nvar downstreamBuildDurationData = ");
-		sb.append(String.valueOf(_getDownstreamBuildDurationJSONObject()));
+		sb.append(_getDownstreamBuildDurationJSONObject());
 
 		sb.append("\nvar testrayDataGeneratedDate = new Date(");
 		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
 		sb.append(");");
 
 		sb.append("\nvar successRateData = ");
-		sb.append(String.valueOf(_getSuccessRateDataJSONArray()));
+		sb.append(_getSuccessRateDataJSONArray());
 		sb.append(";");
 
 		JenkinsResultsParserUtil.write(filePath, sb.toString());
@@ -148,7 +148,15 @@ public class CISystemStatusReportUtil {
 					continue;
 				}
 
-				durations.addAll(downstreamDurations);
+				for (Long downstreamDuration : downstreamDurations) {
+					if ((downstreamDuration == null) ||
+						(downstreamDuration < 0)) {
+
+						continue;
+					}
+
+					durations.add(downstreamDuration);
+				}
 			}
 
 			durations.removeAll(Collections.singleton(null));
@@ -368,7 +376,13 @@ public class CISystemStatusReportUtil {
 			List<Long> durations = new ArrayList<>();
 
 			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(date)) {
-				durations.add(testrayBuild.getTopLevelActiveBuildDuration());
+				Long duration = testrayBuild.getTopLevelActiveBuildDuration();
+
+				if ((duration == null) || (duration < 0)) {
+					continue;
+				}
+
+				durations.add(duration);
 			}
 
 			durations.removeAll(Collections.singleton(null));
@@ -411,7 +425,13 @@ public class CISystemStatusReportUtil {
 			List<Long> durations = new ArrayList<>();
 
 			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(date)) {
-				durations.add(testrayBuild.getTopLevelBuildDuration());
+				Long duration = testrayBuild.getTopLevelBuildDuration();
+
+				if ((duration == null) || (duration < 0)) {
+					continue;
+				}
+
+				durations.add(duration);
 			}
 
 			durations.removeAll(Collections.singleton(null));

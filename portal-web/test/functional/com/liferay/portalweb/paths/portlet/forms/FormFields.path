@@ -462,6 +462,12 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NUMBER_FIELD_VALUE_ROW</td>
+	<td>//div[${key_rowNumber}]//div[contains(concat(' ',normalize-space(@class),' '),'ddm-field-container')]//label[contains(text(),'${key_fieldName}')]/..//input[@value='${key_fieldValue}']
+</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

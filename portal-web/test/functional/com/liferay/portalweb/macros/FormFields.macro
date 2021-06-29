@@ -1332,6 +1332,14 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewNumericFieldValue {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_fieldValue = "${value}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#NUMBER_FIELD_VALUE_ROW");
+	}
+
 	macro viewOptionColumnsName {
 		AssertElementPresent(
 			key_fieldName = "${fieldTitle}",

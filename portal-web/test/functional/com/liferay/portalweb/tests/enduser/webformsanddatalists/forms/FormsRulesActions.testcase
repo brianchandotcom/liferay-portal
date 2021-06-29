@@ -605,14 +605,82 @@ definition {
 	}
 
 	@description = "Verify that a Calculate Rule can be created using Numeric Fields in the calculation"
-	@ignore = "True"
 	@priority = "5"
 	test CanIncludeNumericFieldsInCalculations {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134401 CanIncludeNumericFieldsInCalculations pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 1");
+
+		Form.gotoAdvancedTab();
+
+		Form.editFieldReferenceMetal(fieldValue = "ValueReference1");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric 1",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Calculate",
+			actionRowNumber = "1",
+			actionTarget = "Numeric 2");
+
+		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "ValueReference1");
+
+		FormRules.chooseCalculateOperator(calculateOperator = "*");
+
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "2",
+			value = "");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "15");
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "2",
+			value = "30");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Calculate Rule can be created using all operators (+, -, *, /)"

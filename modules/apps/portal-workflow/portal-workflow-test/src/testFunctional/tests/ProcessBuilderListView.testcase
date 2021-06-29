@@ -397,8 +397,18 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test ClearSearchResults {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68229 ClearSearchResults pending implementation
+		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
+
+		Click(locator1 = "ProcessBuilderListView#CLEAR_BUTTON_PROCESS_BUILDER");
+
+		AssertElementNotPresent(locator1 = "ProcessBuilderListView#CLEAR_BUTTON_PROCESS_BUILDER");
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 
 	}
 

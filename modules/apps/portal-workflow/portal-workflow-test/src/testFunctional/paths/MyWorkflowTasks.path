@@ -22,6 +22,11 @@
 </tr>
 <!--TABLE_GENERIC-->
 <tr>
+	<td>UNPUBLISH_ALERT_ERROR_MESSAGE_LINK</td>
+	<td>//a[text()='Configure assignments']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_GENERIC_ASSET_TITLE</td>
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]//a</td>
 	<td></td>

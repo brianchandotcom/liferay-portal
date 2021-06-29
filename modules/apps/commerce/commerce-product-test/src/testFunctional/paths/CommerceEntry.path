@@ -615,6 +615,11 @@
 	<td>//iframe[@title='${key_frameTitle}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SIDE_PANEL_IFRAME_TITLE</td>
+	<td>//div[@class='side-panel-iframe-title']//h3</td>
+	<td></td>
+</tr>
 <!--PRICE-->
 <tr>
 	<td>INPUT_PRICE</td>

@@ -159,8 +159,8 @@ definition {
 			CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Topic Category");
 
 			AssertElementNotPresent(
-				key_nodeName = "Audience",
-				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+				key_nodeName = "Audience Category",
+				locator1 = "Treeview#NODE_UNSELECTED",
 				value1 = "Audience Category");
 		}
 	}

@@ -111,12 +111,26 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Last Modified"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanOrderByLastModified {
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
-		// TODO LRQA-68236 CanOrderByLastModified pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.processBuilderFilterAndOrder(optionOrder = "Last Modified");
+
+		AssertElementPresent(
+			key_order = "2",
+			key_title = "Single Approver",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE_ORDER");
+
+		AssertElementPresent(
+			key_order = "3",
+			key_title = "Copy of Single Approver",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE_ORDER");
 	}
 
 	@description = "Verify that the user is able to order by Title"

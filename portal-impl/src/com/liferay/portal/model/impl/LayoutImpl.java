@@ -986,6 +986,22 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return false;
 	}
 
+	@Override
+	public boolean isDraftLayout() {
+		if (!isTypeContent() && !isTypeAssetDisplay()) {
+			return false;
+		}
+
+		if ((getClassPK() > 0) &&
+			(getClassNameId() == PortalUtil.getClassNameId(
+				Layout.class.getName()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the current layout is the first layout in
 	 * its parent's hierarchical list of children layouts.

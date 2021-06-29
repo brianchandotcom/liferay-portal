@@ -84,8 +84,6 @@ public class ObjectDefinitionResourceImpl
 
 		return new ObjectField() {
 			{
-				dateCreated = objectField.getCreateDate();
-				dateModified = objectField.getModifiedDate();
 				id = objectField.getObjectFieldId();
 				indexed = objectField.getIndexed();
 				indexedAsKeyword = objectField.getIndexedAsKeyword();

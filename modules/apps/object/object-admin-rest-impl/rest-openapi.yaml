@@ -30,14 +30,6 @@ components:
             type: object
         ObjectField:
             properties:
-                dateCreated:
-                    format: date
-                    readOnly: true
-                    type: string
-                dateModified:
-                    format: date
-                    readOnly: true
-                    type: string
                 id:
                     format: int64
                     readOnly: true

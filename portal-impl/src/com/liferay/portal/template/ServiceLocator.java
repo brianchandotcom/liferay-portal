@@ -57,6 +57,10 @@ public class ServiceLocator {
 		return object;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public Object findService(String servletContextName, String serviceName) {
 		return findService(serviceName);
 	}

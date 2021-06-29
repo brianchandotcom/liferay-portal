@@ -65,6 +65,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -353,21 +355,38 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private Optional<String> _getMappedValueOptional(
-		String fieldName, InfoItemFieldValues infoItemFieldValues,
+		String template, InfoItemFieldValues infoItemFieldValues,
 		Locale locale) {
 
-		if (infoItemFieldValues == null) {
+		if ((infoItemFieldValues == null) || Validator.isNull(template)) {
 			return Optional.empty();
 		}
 
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(fieldName);
+		StringBuffer sb = new StringBuffer();
 
-		if (infoFieldValue != null) {
-			return Optional.of(String.valueOf(infoFieldValue.getValue(locale)));
+		Matcher matcher = _pattern.matcher(template);
+
+		while (matcher.find()) {
+			String variableName = matcher.group(1);
+
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(variableName);
+
+			if (infoFieldValue != null) {
+				matcher.appendReplacement(
+					sb,
+					Matcher.quoteReplacement(
+						String.valueOf(infoFieldValue.getValue(locale))));
+			}
+			else {
+				matcher.appendReplacement(
+					sb, Matcher.quoteReplacement(variableName));
+			}
 		}
 
-		return Optional.empty();
+		matcher.appendTail(sb);
+
+		return Optional.of(sb.toString());
 	}
 
 	private String _getOpenGraphTag(String property, String content) {
@@ -388,6 +407,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			return ReflectionUtil.throwException(portalException);
 		}
 	}
+
+	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]+)\\}");
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

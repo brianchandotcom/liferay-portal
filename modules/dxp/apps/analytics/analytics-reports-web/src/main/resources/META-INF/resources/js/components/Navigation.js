@@ -132,13 +132,21 @@ export default function Navigation({
 	return (
 		<>
 			{!validAnalyticsConnection && (
-				<ClayAlert displayType="danger" variant="stripe">
+				<ClayAlert
+					className="mb-3"
+					displayType="danger"
+					variant="stripe"
+				>
 					{Liferay.Language.get('an-unexpected-error-occurred')}
 				</ClayAlert>
 			)}
 
 			{validAnalyticsConnection && warning && (
-				<ClayAlert displayType="warning" variant="stripe">
+				<ClayAlert
+					className="mb-3"
+					displayType="warning"
+					variant="stripe"
+				>
 					{Liferay.Language.get(
 						'some-data-is-temporarily-unavailable'
 					)}
@@ -147,6 +155,7 @@ export default function Navigation({
 
 			{validAnalyticsConnection && publishedToday && !warning && (
 				<ClayAlert
+					className="mb-3"
 					displayType="info"
 					title={Liferay.Language.get('no-data-is-available-yet')}
 					variant="stripe"

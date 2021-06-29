@@ -1119,13 +1119,54 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6208. Concurrency management for inventory entities"
-	@ignore = "true"
 	@priority = "3"
 	test ManageInventoryEntityConcurrency {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceWarehouses#ManageInventoryEntityConcurrency";
 
-		// TODO COMMERCE-6208 ManageInventoryEntityConcurrency Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
+
+		Click(
+			key_metadataSetName = "Italy",
+			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+
+		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SelectWindow(locator1 = "title=Home - ${siteName}");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
+
+		Click(
+			key_metadataSetName = "Italy",
+			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Italy - 2");
+
+		Button.clickSave();
+
+		Close();
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Italy - 3");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "This item is no longer valid. Please try again.");
 	}
 
 	@description = "This is a test for COMMERCE-5708. As a product specialist i want to update the quantity of a product inside a warehouse"

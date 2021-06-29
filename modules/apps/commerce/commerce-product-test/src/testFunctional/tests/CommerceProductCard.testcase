@@ -634,10 +634,12 @@ definition {
 			imageTitles = "Blue",
 			validationImage = "true");
 
+		var productImageId = CommerceProductImages.getProductMediaId();
+
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		AssertElementPresent(
-			key_itemImage = "Commerce_Blue",
+			key_itemImage = "${productImageId}",
 			key_itemName = "Blue T-Shirt",
 			locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
 	}

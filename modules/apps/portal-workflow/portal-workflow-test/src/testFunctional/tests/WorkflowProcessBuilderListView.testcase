@@ -100,12 +100,22 @@ definition {
 	}
 
 	@description = "Verify that the user is not able to search by Workflow description"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanNotSearchByDescription {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68226 CanNotSearchByDescription pending implementation
+		ProcessBuilderListView.searchForWorkflow(workflowName = "workflow content");
 
+		ProcessBuilderListView.validateIfSearchItem(
+			numberResults = "0",
+			workflowName = "workflow content");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No workflow definitions are defined.");
 	}
 
 	@description = "Verify that the user can not unpublish a Workflow in use and system displays an error message"

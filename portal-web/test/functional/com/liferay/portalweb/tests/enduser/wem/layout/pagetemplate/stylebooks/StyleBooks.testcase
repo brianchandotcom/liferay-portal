@@ -648,7 +648,14 @@ definition {
 		}
 
 		task ("Aseert css applied instantly") {
-			SikuliAssertElementPresent(locator1 = "StyleBookEditor#PAGE_PREVIEW_COLOR");
+			SelectFrame.selectFrameNoLoading(locator1 = "StyleBookEditor#PAGE_PREVIEW_IFRAME");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'bg-dangerColor')]",
+				locator2 = "background-color",
+				value1 = "rgba(11, 95, 255, 1)");
+
+			SelectFrameTop();
 		}
 	}
 

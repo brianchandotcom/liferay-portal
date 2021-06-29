@@ -286,12 +286,21 @@ definition {
 	}
 
 	@description = "Verify that Not Published processes are displayed on table"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaysNonPublishedProcessesOnTable {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68232 DisplaysNonPublishedProcessesOnTable pending implementation
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		AssertTextEquals(
+			key_workflowDefinitionTitle = "Not Published",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE",
+			value1 = "Not Published");
+
+		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "Single Approver");
 	}
 
 	@description = "Verify that hovering the + button will display the text New Workflow"

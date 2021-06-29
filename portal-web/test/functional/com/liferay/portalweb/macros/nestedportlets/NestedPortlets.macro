@@ -9,7 +9,7 @@ definition {
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER",
 			value1 = "${portletName}");
 
-		DragAndDrop.dragAndDropPortletToObject(
+		DragAndDrop.dragAndDropPortletToPortlet(
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER",
 			locator2 = "Home#PORTLET_COLUMN_${portletColumnNumberTo}",
 			value1 = "${portletName}");

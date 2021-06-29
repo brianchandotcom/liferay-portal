@@ -636,7 +636,7 @@ definition {
 
 		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-		DragAndDrop.dragAndDropPortletToObject(
+		DragAndDrop.dragAndDropPortletToPortlet(
 			key_portletTitleName = "Asset Publisher",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_HEADER",
 			locator2 = "Home#PORTLET_COLUMN_1",
@@ -948,7 +948,7 @@ definition {
 
 		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
-		DragAndDrop.dragAndDropPortletToObject(
+		DragAndDrop.dragAndDropPortletToPortlet(
 			key_portletTitleName = "Asset Publisher",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_HEADER",
 			locator2 = "Home#PORTLET_COLUMN_1",

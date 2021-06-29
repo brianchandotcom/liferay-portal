@@ -1,0 +1,14 @@
+{
+	"advanced": {
+		"en_US": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/file-storage/configuring-file-storage.html"
+		}
+	},
+	"simple": {
+		"en_US": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/dxp/latest/en/system-administration/file-storage/other-file-store-types/simple-file-system-store.html"
+		}
+	}
+}

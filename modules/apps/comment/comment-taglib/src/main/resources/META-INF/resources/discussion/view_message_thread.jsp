@@ -88,6 +88,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 									<%
 									DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
+
+									Date parentDiscussionCreateDate = parentDiscussionComment.getCreateDate();
 									%>
 
 									<liferay-util:buffer
@@ -110,10 +112,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 												</div>
 
-												<%
-												Date parentDiscussionCreateDate = parentDiscussionComment.getCreateDate();
-												%>
-
 												<div class="text-secondary">
 													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 												</div>
@@ -130,6 +128,35 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										icon="redo"
 										label="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>"
 									/>
+
+									<span>
+										<clay:link
+											aria-label='<%= LanguageUtil.format(request, "in-reply-to-x", HtmlUtil.escape(parentDiscussionComment.getUserName()), false) %>'
+											cssClass="lfr-discussion-parent-link"
+											href='<%= "#" + randomNamespace + "message_" + parentDiscussionComment.getCommentId() %>'
+											icon="redo"
+											label="<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>"
+										/>
+
+										<react:component
+											module="discussion/js/components/ReplyPopover"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"ariaLabel", LanguageUtil.format(request, "in-reply-to-x", parentDiscussionComment.getUserName(), false)
+												).put(
+													"contentHTML", parentDiscussionComment.getBody()
+												).put(
+													"href", "#" + randomNamespace + "message_" + parentDiscussionComment.getCommentId()
+												).put(
+													"time", LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionCreateDate.getTime(), true), false)
+												).put(
+													"userId", parentDiscussionComment.getUserId()
+												).put(
+													"username", parentDiscussionComment.getUserName()
+												).build()
+											%>'
+										/>
+									</span>
 								</c:if>
 							</div>
 

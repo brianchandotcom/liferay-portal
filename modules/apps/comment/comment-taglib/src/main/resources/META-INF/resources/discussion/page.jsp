@@ -348,7 +348,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 					popover.show();
 				},
-				'.lfr-discussion-parent-link'
+				'.lfr-discussion-parent-link:not(.new)'
 			);
 		</aui:script>
 	</c:if>

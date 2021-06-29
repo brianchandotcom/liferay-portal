@@ -59,4 +59,11 @@ definition {
 		AssertElementPresent(locator1 = "Treeview#NODE_UNSELECTED");
 	}
 
+	macro viewNoCategory {
+		AssertTextEquals(
+			key_infoMessage = "There are no categories.",
+			locator1 = "Message#INFO_SPECIFIC",
+			value1 = "There are no categories.");
+	}
+
 }

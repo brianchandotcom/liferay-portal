@@ -548,6 +548,17 @@ definition {
 			PageEditor.clickPublish();
 		}
 
+		task ("View web content displayed at Title List in Asset Publisher at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertText(
+				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
+				rowNumber = "1",
+				value1 = "Web Content Title");
+		}
+
 		task ("Execute Clean Up Orphaned Theme Portlet Preferences in Server Administration") {
 			Navigator.openURL();
 
@@ -561,6 +572,17 @@ definition {
 
 		task ("View web content displayed at Title List in Asset Publisher at view mode") {
 			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertText(
+				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
+				rowNumber = "1",
+				value1 = "Web Content Title");
+		}
+
+		task ("View web content displayed at Title List in Asset Publisher at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 

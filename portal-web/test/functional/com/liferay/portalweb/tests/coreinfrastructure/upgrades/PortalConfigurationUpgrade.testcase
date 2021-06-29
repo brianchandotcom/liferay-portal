@@ -7,9 +7,17 @@ definition {
 	property testray.main.component.name = "Upgrades User and System Management";
 
 	setUp {
-		User.firstLoginUI(
-			authenticationMethod = "By Screen Name",
-			userScreenName = "test");
+		Navigator.openURL();
+
+		Type(
+			locator1 = "TextInput#SCREEN_NAME",
+			value1 = "test");
+
+		Type.typePause(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "test");
+
+		Button.click(button = "Sign In");
 
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -857,6 +857,10 @@ definition {
 			fieldName = "${fieldName}");
 	}
 
+	macro viewFormTemporarilyNotAvailableMessage {
+		AssertElementPresent(locator1 = "Form#FORM_TEMPORARILY_NOT_AVAILABLE");
+	}
+
 	macro viewPageEmptyField {
 		AssertElementPresent(
 			key_pageNumber = "${pageIndex}",

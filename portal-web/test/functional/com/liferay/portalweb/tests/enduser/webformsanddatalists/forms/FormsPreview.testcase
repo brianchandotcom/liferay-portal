@@ -750,14 +750,24 @@ definition {
 	}
 
 	@description = "Verify that is is not possible to preview an invalid Form (ie. no Fields or a Paragraph field with no body text)"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test InvalidFormCannotBePreviewed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133730 InvalidFormCannotBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		Form.viewFormTemporarilyNotAvailableMessage();
 	}
 
 	@description = "Verify that a rule with an (Is empty) condition can be previewed"

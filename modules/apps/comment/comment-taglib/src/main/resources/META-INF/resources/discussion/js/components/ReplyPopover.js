@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import UserIcon from './UserIcon';
@@ -30,15 +30,16 @@ function ReplyPopover({
 	username,
 }) {
 	const [openPopover, setOpenPopover] = useState(false);
-	const popoverRef = useRef(null);
 
-	useOnClickOutside([popoverRef.current, '.lfr-discussion-parent-link'], () =>
-		setOpenPopover(false)
+	useOnClickOutside(
+		['.lfr-discussion-reply-popover', '.lfr-discussion-parent-link'],
+		() => setOpenPopover(false)
 	);
 
 	return (
 		<ClayPopover
 			alignPosition="top"
+			className="lfr-discussion-reply-popover"
 			header={
 				<ClayLayout.ContentRow noGutters="x" padded>
 					<ClayLayout.ContentCol>
@@ -57,7 +58,6 @@ function ReplyPopover({
 				</ClayLayout.ContentRow>
 			}
 			onShowChange={setOpenPopover}
-			ref={popoverRef}
 			show={openPopover}
 			trigger={
 				<a

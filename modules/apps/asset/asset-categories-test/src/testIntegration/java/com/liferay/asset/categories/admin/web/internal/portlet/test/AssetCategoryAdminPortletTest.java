@@ -86,6 +86,51 @@ public class AssetCategoryAdminPortletTest {
 	}
 
 	@Test
+	public void testSetCategoryDisplayPageTemplateForSubcategories()
+		throws Exception {
+
+		List<AssetCategory> assetCategories = new ArrayList<>();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory parentAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				assetVocabulary.getVocabularyId(), serviceContext);
+
+		AssetCategory childAssetCategory1 =
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				parentAssetCategory.getCategoryId(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, assetVocabulary.getVocabularyId(), null, serviceContext);
+
+		AssetCategory childAssetCategory2 =
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				parentAssetCategory.getCategoryId(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, assetVocabulary.getVocabularyId(), null, serviceContext);
+
+		assetCategories.add(childAssetCategory1);
+		assetCategories.add(childAssetCategory2);
+
+		_testSetCategoryDisplayPageTemplate(assetCategories);
+	}
+
+	@Test
 	public void testSetCategoryDisplayPageTemplateForTopLevelCategories()
 		throws Exception {
 

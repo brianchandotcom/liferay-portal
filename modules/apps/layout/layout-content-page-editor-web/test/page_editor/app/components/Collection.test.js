@@ -113,6 +113,7 @@ describe('Collection', () => {
 			Promise.resolve({
 				items: [],
 				length: 0,
+				totalNumberOfItems: 1,
 			})
 		);
 
@@ -141,6 +142,7 @@ describe('Collection', () => {
 			Promise.resolve({
 				items,
 				length: 2,
+				totalNumberOfItems: 2,
 			})
 		);
 

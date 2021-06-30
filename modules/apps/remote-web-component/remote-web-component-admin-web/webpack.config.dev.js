@@ -11,13 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export declare const STR_NULL_IMAGE_FILE_ENTRY_ID = "0";
-declare const imageSelectorCoverImageAtom: {
-    readonly default: {
-        readonly fileEntryId: string;
-        readonly src: string;
-    };
-    readonly key: string;
-    readonly 'Liferay.State.ATOM': true;
+
+const config = require('./webpack.config');
+
+module.exports = {
+	...config,
+	devServer: {
+		port: 3000,
+		proxy: {
+			'**': 'http://0.0.0.0:8080',
+		},
+		publicPath: config.output.publicPath,
+	},
+	devtool: 'inline-source-map',
+	mode: 'development',
 };
-export default imageSelectorCoverImageAtom;

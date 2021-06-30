@@ -11,13 +11,31 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export declare const STR_NULL_IMAGE_FILE_ENTRY_ID = "0";
-declare const imageSelectorCoverImageAtom: {
-    readonly default: {
-        readonly fileEntryId: string;
-        readonly src: string;
-    };
-    readonly key: string;
-    readonly 'Liferay.State.ATOM': true;
+
+const path = require('path');
+
+const PUBLIC_PATH = '/o/remote-web-component-admin-web/';
+
+module.exports = {
+	context: path.resolve(__dirname),
+	devtool: 'source-map',
+	entry: './src/main/resources/META-INF/resources/js/index.ts',
+	mode: 'production',
+	module: {
+		rules: [
+			{
+				test: /\.ts?$/,
+				use: 'ts-loader',
+			},
+		],
+	},
+	output: {
+		filename: 'remote-web-component-admin-web.js',
+		libraryTarget: 'window',
+		path: path.resolve('./build/resources/main/META-INF/resources/'),
+		publicPath: PUBLIC_PATH,
+	},
+	resolve: {
+		extensions: ['.js', '.ts'],
+	},
 };
-export default imageSelectorCoverImageAtom;

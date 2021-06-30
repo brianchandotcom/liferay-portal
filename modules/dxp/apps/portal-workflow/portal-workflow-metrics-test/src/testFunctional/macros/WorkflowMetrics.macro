@@ -1437,16 +1437,6 @@ definition {
 		}
 	}
 
-	macro viewProcessStepDisplaysUpdateStatus {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-
-		while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS") && (maxIterations = "5")) {
-			Refresh();
-		}
-
-		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS");
-	}
-	
 	macro viewPerformanceByStepFromAndToAreRequiredFields {
 		var key_completionVelocityDateRange = "${selectVelocityDateRange}";
 		var key_endDateRange = "${endDateRange}";
@@ -1473,6 +1463,16 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
 
 		WorkflowMetrics.viewDateRangeErrorMessage(errorMessage = "Please enter a valid date.");
+	}
+
+	macro viewProcessStepDisplaysUpdateStatus {
+		var key_workflowAssetTitle = "${workflowAssetTitle}";
+
+		while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS") && (maxIterations = "5")) {
+			Refresh();
+		}
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS");
 	}
 
 	macro viewSLAErrorMessage {

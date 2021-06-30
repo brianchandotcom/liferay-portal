@@ -5,3 +5,5 @@ application:
     className: "ObjectAdminRESTApplication"
     name: "Liferay.Object.Admin.REST"
 author: "Javier Gamarra"
+clientDir: "../object-admin-rest-client/src/main/java"
+testDir: "../object-admin-rest-test/src/testIntegration/java"

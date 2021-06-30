@@ -28,11 +28,14 @@ import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -120,6 +123,9 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	private final Map
 		<ServiceReference<InfoListProvider<?>>,
@@ -278,7 +284,21 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 				serviceContext.getScopeGroupId());
 			User user = _userLocalService.fetchUser(serviceContext.getUserId());
 
-			return new DefaultInfoListProviderContext(group, user);
+			DefaultInfoListProviderContext defaultInfoListProviderContext =
+				new DefaultInfoListProviderContext(group, user);
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (layout.isTypeControlPanel()) {
+				layout = _layoutLocalService.fetchLayout(
+					themeDisplay.getRefererPlid());
+			}
+
+			defaultInfoListProviderContext.setLayout(layout);
+
+			return defaultInfoListProviderContext;
 		}
 
 		private final InfoListProvider<?> _infoListProvider;

@@ -940,7 +940,9 @@ public class ContentPageEditorDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return infoListSelectorURL.toString();
+		return HttpUtil.addParameter(
+			infoListSelectorURL.toString(), "refererPlid",
+			themeDisplay.getPlid());
 	}
 
 	private Map<String, Object> _getContributedFragmentEntry(
@@ -1714,7 +1716,9 @@ public class ContentPageEditorDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return infoListSelectorURL.toString();
+		return HttpUtil.addParameter(
+			infoListSelectorURL.toString(), "refererPlid",
+			themeDisplay.getPlid());
 	}
 
 	private String _getItemSelectorURL() {

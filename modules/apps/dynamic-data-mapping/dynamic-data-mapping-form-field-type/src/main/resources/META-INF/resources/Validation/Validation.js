@@ -22,6 +22,7 @@ import ValidationTextAndNumeric from './ValidationTextAndNumeric';
 import {
 	getLocalizedValue,
 	getSelectedValidation,
+	normalizeDataType,
 	transformData,
 } from './transform';
 import reducer, {EVENT_TYPES} from './validationReducer';
@@ -67,7 +68,7 @@ const Validation = ({
 		}
 	);
 
-	const ValidationComponent = COMPONENTS[dataType];
+	const ValidationComponent = COMPONENTS[normalizeDataType(dataType)];
 
 	const transformSelectedValidation = getSelectedValidation(validations);
 
@@ -131,6 +132,7 @@ const ValidationWrapper = ({
 	defaultLanguageId,
 	editingLanguageId,
 	label,
+	name,
 	onBlur,
 	onChange,
 	readOnly,

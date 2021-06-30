@@ -278,7 +278,8 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		}
 
 		return JSONUtil.put(
-			"layoutReportsIssues", _layoutReportsIssuesPortalCache.get(cacheKey));
+			"layoutReportsIssues",
+			_layoutReportsIssuesPortalCache.get(cacheKey));
 	}
 
 	private boolean _hasViewPermission(

@@ -345,7 +345,8 @@ export default withRouter(
 					pageSize,
 					search,
 					section,
-					siteKey
+					siteKey,
+					'dateCreated:desc'
 				);
 			}
 
@@ -453,6 +454,12 @@ export default withRouter(
 
 		const filterOptions = getFilterOptions();
 
+		function isVotedFilter(filter) {
+			return (
+				filter == 'month' || filter == 'most-voted' || filter == 'week'
+			);
+		}
+
 		const navigateToNewQuestion = () => {
 			if (context.redirectToLogin && !themeDisplay.isSignedIn()) {
 				const baseURL = getBasePath();
@@ -501,7 +508,9 @@ export default withRouter(
 							}
 							data={questions}
 							emptyState={
-								sectionTitle && !search && !filter ? (
+								sectionTitle &&
+								!search &&
+								!isVotedFilter(filter) ? (
 									<ClayEmptyState
 										description={Liferay.Language.get(
 											'there-are-no-questions-inside-this-topic-be-the-first-to-ask-something'

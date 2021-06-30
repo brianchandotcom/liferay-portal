@@ -1,0 +1,133 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.object.admin.rest.resource.v1_0.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.test.rule.Inject;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Javier Gamarra
+ */
+@RunWith(Arquillian.class)
+public class ObjectDefinitionResourceTest
+	extends BaseObjectDefinitionResourceTestCase {
+
+	@After
+	@Override
+	public void tearDown() {
+		if (objectDefinition != null) {
+			try {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition.getId());
+			}
+			catch (Exception exception) {
+			}
+		}
+	}
+
+	@Override
+	@Test
+	public void testGetObjectDefinitionsPage() throws Exception {
+		Page<ObjectDefinition> objectDefinitionsPage =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				Pagination.of(1, 10));
+
+		Assert.assertEquals(0, objectDefinitionsPage.getTotalCount());
+
+		_addObjectDefinition(randomObjectDefinition());
+
+		objectDefinitionsPage =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				Pagination.of(1, 10));
+
+		Assert.assertEquals(1, objectDefinitionsPage.getTotalCount());
+	}
+
+	public ObjectDefinition objectDefinition;
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name"};
+	}
+
+	@Override
+	protected ObjectDefinition randomObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition = super.randomObjectDefinition();
+
+		objectDefinition.setName("A" + objectDefinition.getName());
+
+		ObjectField objectField = new ObjectField();
+
+		objectField.setName("column");
+		objectField.setType("String");
+
+		objectDefinition.setObjectFields(new ObjectField[] {objectField});
+
+		return objectDefinition;
+	}
+
+	@Override
+	protected ObjectDefinition testDeleteObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return _addObjectDefinition(randomObjectDefinition());
+	}
+
+	@Override
+	protected ObjectDefinition testGetObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return _addObjectDefinition(randomObjectDefinition());
+	}
+
+	@Override
+	protected ObjectDefinition testGraphQLObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return _addObjectDefinition(randomObjectDefinition());
+	}
+
+	@Override
+	protected ObjectDefinition testPostObjectDefinition_addObjectDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _addObjectDefinition(objectDefinition);
+	}
+
+	private ObjectDefinition _addObjectDefinition(
+			ObjectDefinition randomObjectDefinition)
+		throws Exception {
+
+		objectDefinition = objectDefinitionResource.postObjectDefinition(
+			randomObjectDefinition);
+
+		return objectDefinition;
+	}
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+}

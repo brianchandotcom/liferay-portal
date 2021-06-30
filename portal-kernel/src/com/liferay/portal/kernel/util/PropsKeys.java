@@ -3287,6 +3287,9 @@ public interface PropsKeys {
 	public static final String TABLE_MAPPER_CACHELESS_MAPPING_TABLE_NAMES =
 		"table.mapper.cacheless.mapping.table.names";
 
+	public static final String TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
+		"template.engine.service.locator.restrict";
+
 	public static final String TERMS_OF_USE_REQUIRED = "terms.of.use.required";
 
 	public static final String TEXT_EXTRACTION_FORK_PROCESS_ENABLED =

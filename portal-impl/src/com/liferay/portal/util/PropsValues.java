@@ -2910,6 +2910,10 @@ public class PropsValues {
 	public static String[] STRIP_MIME_TYPES = PropsUtil.getArray(
 		PropsKeys.STRIP_MIME_TYPES);
 
+	public static final boolean TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT));
+
 	public static boolean TERMS_OF_USE_REQUIRED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.TERMS_OF_USE_REQUIRED));
 

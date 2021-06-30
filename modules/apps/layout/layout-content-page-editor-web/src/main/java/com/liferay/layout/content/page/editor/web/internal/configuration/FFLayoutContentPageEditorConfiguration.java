@@ -28,6 +28,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FFLayoutContentPageEditorConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
+	public boolean collectionDisplayFragmentPaginationEnabled();
+
+	@Meta.AD(deflt = "false", required = false)
 	public boolean contentBrowsingEnabled();
 
 	@Meta.AD(deflt = "false", required = false)

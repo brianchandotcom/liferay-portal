@@ -277,22 +277,24 @@ export const CollectionGeneralPanel = ({item}) => {
 							</ClayForm.Group>
 						)}
 
-					<ClayForm.Group small>
-						<label htmlFor={collectionPaginationTypeId}>
-							{Liferay.Language.get('pagination')}
-						</label>
-						<ClaySelectWithOption
-							aria-label={Liferay.Language.get('pagination')}
-							id={collectionPaginationTypeId}
-							onChange={({target: {value}}) =>
-								handleConfigurationChanged({
-									paginationType: value,
-								})
-							}
-							options={PAGINATION_TYPE_OPTIONS}
-							value={item.config.paginationType}
-						/>
-					</ClayForm.Group>
+					{config.collectionDisplayFragmentPaginationEnabled && (
+						<ClayForm.Group small>
+							<label htmlFor={collectionPaginationTypeId}>
+								{Liferay.Language.get('pagination')}
+							</label>
+							<ClaySelectWithOption
+								aria-label={Liferay.Language.get('pagination')}
+								id={collectionPaginationTypeId}
+								onChange={({target: {value}}) =>
+									handleConfigurationChanged({
+										paginationType: value,
+									})
+								}
+								options={PAGINATION_TYPE_OPTIONS}
+								value={item.config.paginationType}
+							/>
+						</ClayForm.Group>
+					)}
 
 					<ClayForm.Group small>
 						<label htmlFor={collectionNumberOfItemsId}>
@@ -311,53 +313,58 @@ export const CollectionGeneralPanel = ({item}) => {
 						/>
 					</ClayForm.Group>
 
-					{item.config.paginationType && (
-						<ClayForm.Group small>
-							<label htmlFor={collectionNumberOfItemsPerPageId}>
-								{Liferay.Language.get(
-									'max-number-of-items-per-page'
-								)}
-							</label>
-							<ClayInput
-								id={collectionNumberOfItemsPerPageId}
-								min={1}
-								onChange={({target: {value}}) =>
-									handleConfigurationChanged({
-										numberOfItemsPerPage: value,
-									})
-								}
-								type="number"
-								value={item.config.numberOfItemsPerPage}
-							/>
-							<p
-								className={classNames(
-									'mt-2 page-editor__collection-general-panel__pagination-label',
-									{
-										error: numberOfItemsPerPageError,
-									}
-								)}
-							>
-								<span
-									className={classNames('mr-1', {
-										'font-weight-bold': numberOfItemsPerPageError,
-									})}
+					{config.collectionDisplayFragmentPaginationEnabled &&
+						item.config.paginationType && (
+							<ClayForm.Group small>
+								<label
+									htmlFor={collectionNumberOfItemsPerPageId}
 								>
-									{Liferay.Util.sub(
-										Liferay.Language.get('x-items-maximum'),
-										[config.searchContainerPageMaxDelta]
+									{Liferay.Language.get(
+										'max-number-of-items-per-page'
 									)}
-								</span>
+								</label>
+								<ClayInput
+									id={collectionNumberOfItemsPerPageId}
+									min={1}
+									onChange={({target: {value}}) =>
+										handleConfigurationChanged({
+											numberOfItemsPerPage: value,
+										})
+									}
+									type="number"
+									value={item.config.numberOfItemsPerPage}
+								/>
+								<p
+									className={classNames(
+										'mt-2 page-editor__collection-general-panel__pagination-label',
+										{
+											error: numberOfItemsPerPageError,
+										}
+									)}
+								>
+									<span
+										className={classNames('mr-1', {
+											'font-weight-bold': numberOfItemsPerPageError,
+										})}
+									>
+										{Liferay.Util.sub(
+											Liferay.Language.get(
+												'x-items-maximum'
+											),
+											[config.searchContainerPageMaxDelta]
+										)}
+									</span>
 
-								{numberOfItemsPerPageError &&
-									Liferay.Util.sub(
-										Liferay.Language.get(
-											'only-x-items-will-be-displayed'
-										),
-										[config.searchContainerPageMaxDelta]
-									)}
-							</p>
-						</ClayForm.Group>
-					)}
+									{numberOfItemsPerPageError &&
+										Liferay.Util.sub(
+											Liferay.Language.get(
+												'only-x-items-will-be-displayed'
+											),
+											[config.searchContainerPageMaxDelta]
+										)}
+								</p>
+							</ClayForm.Group>
+						)}
 				</>
 			)}
 		</>

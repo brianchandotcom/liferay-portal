@@ -274,6 +274,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/change_style_book_entry")
 			).put(
+				"collectionDisplayFragmentPaginationEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					collectionDisplayFragmentPaginationEnabled()
+			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(
 				"commonStyles",

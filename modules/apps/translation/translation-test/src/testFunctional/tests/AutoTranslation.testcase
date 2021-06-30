@@ -40,6 +40,8 @@ definition {
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
+		SystemSettings.resetConfiguration();
+
 		Translations.saveInvalidConfiguration(settingValue = "");
 
 		Translations.saveInvalidConfiguration(settingValue = "This is an invalid input");

@@ -240,6 +240,14 @@ definition {
 		}
 	}
 
+	macro goToVocabulary {
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		AssertElementPresent(
+			key_title = "${vocabularyName}",
+			locator1 = "Header#H2_TITLE");
+	}
+
 	macro tearDownCP {
 		Navigator.openURL();
 

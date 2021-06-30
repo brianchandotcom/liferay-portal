@@ -388,4 +388,22 @@ definition {
 		}
 	}
 
+	@description = "When the user accesses to Categorization > Categories, he can navigate from one to another"
+	@priority = "3"
+	test MoveBetweenVocabularies {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Edit the new vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.goToVocabulary(vocabularyName = "Audience");
+
+			Vocabulary.goToVocabulary(vocabularyName = "Vocabulary Name");
+		}
+	}
+
 }

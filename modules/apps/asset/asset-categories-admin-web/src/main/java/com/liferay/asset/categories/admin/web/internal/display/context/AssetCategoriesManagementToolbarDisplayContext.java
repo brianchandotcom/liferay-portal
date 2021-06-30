@@ -14,7 +14,6 @@
 
 package com.liferay.asset.categories.admin.web.internal.display.context;
 
-import com.liferay.asset.categories.admin.web.internal.util.FFAssetCategoriesAdminWebConfigurationUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -342,9 +341,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			return _setDisplayPageTemplateEnabled;
 		}
 
-		boolean setDisplayPageTemplateEnabled =
-			FFAssetCategoriesAdminWebConfigurationUtil.
-				setDisplayPageTemplateEnabled();
+		boolean setDisplayPageTemplateEnabled = true;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

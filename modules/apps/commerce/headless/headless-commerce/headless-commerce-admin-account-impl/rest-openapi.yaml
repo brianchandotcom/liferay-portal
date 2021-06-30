@@ -141,6 +141,9 @@ components:
                     items:
                         $ref: "#/components/schemas/AccountOrganization"
                     type: array
+                active:
+                    example: true
+                    type: boolean
                 customFields:
                     additionalProperties: true
                     type: object

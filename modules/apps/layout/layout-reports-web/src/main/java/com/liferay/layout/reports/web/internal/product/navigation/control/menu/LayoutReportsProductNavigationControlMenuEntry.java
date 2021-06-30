@@ -263,25 +263,13 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		).buildString();
 	}
 
-	private boolean _hasViewPermission(
+	private boolean _hasEditPermission(
 			Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		if (!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.VIEW)) {
+				permissionChecker, layout, ActionKeys.UPDATE)) {
 
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _hasEditPermission(
-		Layout layout, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		if (!LayoutPermissionUtil.contains(
-			permissionChecker, layout, ActionKeys.UPDATE)) {
 			return false;
 		}
 

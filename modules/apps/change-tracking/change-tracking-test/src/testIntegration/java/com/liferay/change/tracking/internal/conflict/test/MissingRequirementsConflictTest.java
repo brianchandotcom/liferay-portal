@@ -61,7 +61,27 @@ public class MissingRequirementsConflictTest {
 	}
 
 	@Test
-	public void testMissingParentFolder() throws Exception {
+	public void testMissingParentFolderProduction() throws Exception {
+		_testMissingConflicts(false);
+	}
+
+	@Test
+	public void testMissingParentFolderPublication() throws Exception {
+		_testMissingConflicts(true);
+	}
+
+	private CTCollection _addCTCollection(String name) throws Exception {
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			MissingRequirementsConflictTest.class.getSimpleName() + " " + name,
+			null);
+
+		_ctCollections.add(ctCollection);
+
+		return ctCollection;
+	}
+
+	private void _testMissingConflicts(boolean publication) throws Exception {
 		CTCollection ctCollection1 = _addCTCollection("1");
 
 		JournalFolder rootFolder = null;
@@ -94,9 +114,32 @@ public class MissingRequirementsConflictTest {
 
 		Assert.assertTrue(conflictsMap.toString(), conflictsMap.isEmpty());
 
-		_journalFolderLocalService.deleteFolder(rootFolder.getFolderId());
+		if (publication) {
+			CTCollection ctCollection3 = _addCTCollection("3");
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection3.getCtCollectionId())) {
+
+				_journalFolderLocalService.deleteFolder(
+					rootFolder.getFolderId());
+			}
+
+			conflictsMap = _ctCollectionLocalService.checkConflicts(
+				ctCollection2);
+
+			Assert.assertTrue(conflictsMap.toString(), conflictsMap.isEmpty());
+
+			_ctProcessLocalService.addCTProcess(
+				ctCollection3.getUserId(), ctCollection3.getCtCollectionId());
+		}
+		else {
+			_journalFolderLocalService.deleteFolder(rootFolder.getFolderId());
+		}
 
 		conflictsMap = _ctCollectionLocalService.checkConflicts(ctCollection2);
+
+		Assert.assertFalse(conflictsMap.toString(), conflictsMap.isEmpty());
 
 		List<ConflictInfo> conflictInfos = conflictsMap.remove(
 			_classNameLocalService.getClassNameId(JournalFolder.class));
@@ -113,17 +156,6 @@ public class MissingRequirementsConflictTest {
 		Assert.assertFalse(conflictInfo.isResolved());
 
 		Assert.assertTrue(conflictsMap.toString(), conflictsMap.isEmpty());
-	}
-
-	private CTCollection _addCTCollection(String name) throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			MissingRequirementsConflictTest.class.getSimpleName() + " " + name,
-			null);
-
-		_ctCollections.add(ctCollection);
-
-		return ctCollection;
 	}
 
 	@Inject

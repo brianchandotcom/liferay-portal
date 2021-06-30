@@ -9,6 +9,10 @@ $light-color: #e7e7ed;
 	font-size: 0.875rem;
 	margin-top: 1rem;
 
+	.actions-menu .component-action {
+		display: inline-flex;
+	}
+
 	.button-holder {
 		margin: 1rem 0;
 	}

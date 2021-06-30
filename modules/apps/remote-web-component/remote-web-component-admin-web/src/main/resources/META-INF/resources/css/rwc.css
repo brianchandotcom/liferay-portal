@@ -1,0 +1,105 @@
+.columns-max .portlet-layout .portlet-header {
+	float: right;
+	margin-bottom: 0;
+	width: unset;
+}
+
+div.spa-additional-portlets > .portlet-dropzone.has-update {
+	padding: 4px;
+}
+
+div.spa-additional-portlets > .portlet-dropzone.has-update > .portlet-boundary {
+	display: inline-block;
+	margin-right: 4px;
+}
+
+div.spa-additional-portlets section.portlet > .portlet-content {
+	display: none;
+}
+
+div.spa-additional-portlets .portlet > .portlet-topper,
+div.spa-additional-portlets .portlet.open > .portlet-topper,
+div.spa-additional-portlets .portlet:hover > .portlet-topper,
+div.spa-additional-portlets .portlet.focus > .portlet-topper {
+	background-color: #80acff;
+	border-radius: 10px;
+	opacity: unset;
+	position: relative;
+	transform: unset;
+}
+
+div.spa-additional-portlets .portlet > .portlet-topper .portlet-title-default {
+	vertical-align: top;
+}
+
+div.spa-additional-portlets .portlet > .portlet-topper .portlet-name-text {
+	margin-right: unset;
+}
+
+div.spa-additional-portlets .portlet > .portlet-topper .portlet-topper-toolbar {
+	display: inline-block;
+	vertical-align: unset;
+}
+
+
+div.spa-additional-portlets .navbar {
+background-color: #80acff;
+border-radius: 2px 2px 0 0;
+}
+
+div.spa-additional-portlets .navbar span {
+color: white;
+float: left;
+padding: 4px 8px;
+text-align: center;
+text-decoration: none;
+}
+
+div.spa-additional-portlets .dropdown {
+float: left;
+}
+
+div.spa-additional-portlets .dropdown .dropbtn {
+background-color: inherit;
+border: none;
+color: white;
+min-width: 140px;
+outline: none;
+padding: 4px 8px;
+font-family: inherit; /* ---------- Important for vertical align on mobile phones ---------- */
+margin: 0; /* ---------- Important for vertical align on mobile phones ---------- */
+}
+
+div.spa-additional-portlets .dropdown:hover .dropbtn {
+background-color: #004ad7;
+border-radius: 0 2px 0 0;
+}
+
+div.spa-additional-portlets .dropdown-content {
+background-color: #f7f8f9;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+display: none;
+position: absolute;
+right: 0;
+z-index: 1;
+}
+
+div.spa-additional-portlets .dropdown-content a {
+display: block;
+float: none;
+font-size: .8em;
+min-width: 140px;
+padding: 4px 8px;
+text-align: left;
+text-decoration: none;
+white-space: nowrap;
+}
+
+div.spa-additional-portlets .dropdown-content a:hover {
+background-color: #ddd;
+color: black;
+}
+
+div.spa-additional-portlets .dropdown:hover .dropdown-content {
+display: block;
+}

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Remote Web Component Admin Web
+Bundle-SymbolicName: com.liferay.remote.web.component.admin.web
+Bundle-Version: 1.0.4
+Export-Package: com.liferay.remote.web.component.admin.web.configuration
+Web-ContextPath: /remote-web-component-admin-web

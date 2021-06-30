@@ -11,13 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export declare const STR_NULL_IMAGE_FILE_ENTRY_ID = "0";
-declare const imageSelectorCoverImageAtom: {
-    readonly default: {
-        readonly fileEntryId: string;
-        readonly src: string;
-    };
-    readonly key: string;
-    readonly 'Liferay.State.ATOM': true;
-};
-export default imageSelectorCoverImageAtom;
+
+type JSONValue =
+	| boolean
+	| null
+	| number
+	| string
+	| {[property: string]: JSONValue}
+	| Array<JSONValue>;

@@ -1,0 +1,16 @@
+{
+	"dependencies": {
+		"redux-micro-frontend": "^1.0.1"
+	},
+	"description": "",
+	"main": "js/index.js",
+	"name": "@liferay/remote-web-component-admin-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
+	},
+	"version": "1.0.4"
+}

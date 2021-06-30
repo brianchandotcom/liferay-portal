@@ -429,4 +429,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-133032. Can export and import a site containing a style book."
+	@priority = "4"
+	test ExportImportSiteWithStyleBook {
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+		}
+
+		task ("Export the site") {
+			LAR.openExportAdmin(siteScopeName = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			LAR.exportWithAssertionOnSuccess();
+
+			LAR.downloadLar();
+		}
+
+		task ("Add a new site based on Blank Site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Import the lar into the new site") {
+			var larFileName = LAR.getLarFileName();
+
+			LAR.importSiteCP(
+				larFileName = "${larFileName}",
+				siteName = "Site Name");
+		}
+
+		task ("Assert no error and the style book persists") {
+			AssertConsoleTextNotPresent(value1 = "com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException");
+
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "site-name");
+
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name");
+		}
+	}
+
 }

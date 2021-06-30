@@ -297,8 +297,28 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUnassignWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68286 CanUnassignWorkflow pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Single Approver",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "No Workflow",
+			workflowResourceValue = "Blogs Entry");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "No Workflow",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
 
 	}
 

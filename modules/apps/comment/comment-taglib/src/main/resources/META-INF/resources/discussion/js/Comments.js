@@ -12,7 +12,7 @@
  * details.
  */
 
-import {runScriptsInElement} from 'frontend-js-web';
+import {fetch, runScriptsInElement} from 'frontend-js-web';
 
 export default function ({
 	constants,
@@ -56,7 +56,7 @@ export default function ({
 				userId,
 			});
 
-			Liferay.Util.fetch(paginationURL, {
+			fetch(paginationURL, {
 				body: Util.objectToFormData(data),
 				method: 'POST',
 			})
@@ -203,7 +203,7 @@ export default function ({
 
 		formData.append('doAsUserId', themeDisplay.getDoAsUserIdEncoded());
 
-		Liferay.Util.fetch(form.action, {
+		fetch(form.action, {
 			body: formData,
 			method: 'POST',
 		})
@@ -314,7 +314,7 @@ export default function ({
 			element && element.querySelector(`#${formId} .editor-wrapper`);
 
 		if (!editorWrapper || editorWrapper.childNodes.length === 0) {
-			Liferay.Util.fetch(editorURL, {
+			fetch(editorURL, {
 				body: Util.objectToFormData(Util.ns(namespace, options)),
 				method: 'POST',
 			})

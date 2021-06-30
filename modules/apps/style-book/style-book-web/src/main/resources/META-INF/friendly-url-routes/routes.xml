@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.4.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_4_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/style_books/{styleBookEntryId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/style_book/edit_style_book_entry</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/style_books</pattern>
+		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_v_l_s_g_id" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_v_l_s_g_id" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+</routes>

@@ -37,12 +37,9 @@ export default function loadIssues({
 					type: SET_ISSUES,
 				});
 			})
-			.catch(() => {
+			.catch((error = {}) => {
 				dispatch({
-					error: {
-						buttonTitle: Liferay.Language.get('relaunch'),
-						message: Liferay.Language.get('connection-failed'),
-					},
+					error: error.googlePageSpeedError.error || error,
 					type: SET_ERROR,
 				});
 			});

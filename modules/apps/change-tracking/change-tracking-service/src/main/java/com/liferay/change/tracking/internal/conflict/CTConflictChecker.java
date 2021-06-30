@@ -23,11 +23,13 @@ import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverContextImpl;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -290,22 +292,26 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			List<ConflictInfo> conflictInfos)
 		throws PortalException {
 
-		Set<Long> primaryKeys = new HashSet<>();
+		if (!_ctEntryLocalService.hasCTEntries(
+				_sourceCTCollectionId, _modelClassNameId)) {
 
-		for (CTEntry ctEntry :
-				_ctEntryLocalService.getCTEntries(
-					_sourceCTCollectionId, _modelClassNameId)) {
-
-			if (ctEntry.getChangeType() ==
-					CTConstants.CT_CHANGE_TYPE_ADDITION) {
-
-				primaryKeys.add(ctEntry.getModelClassPK());
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
 			return;
 		}
+
+		DSLQuery ctEntryQuery = DSLQueryFactoryUtil.select(
+			CTEntryTable.INSTANCE.modelClassPK
+		).from(
+			CTEntryTable.INSTANCE
+		).where(
+			CTEntryTable.INSTANCE.ctCollectionId.eq(
+				_sourceCTCollectionId
+			).and(
+				CTEntryTable.INSTANCE.modelClassNameId.eq(_modelClassNameId)
+			).and(
+				CTEntryTable.INSTANCE.changeType.eq(
+					CTConstants.CT_CHANGE_TYPE_ADDITION)
+			)
+		);
 
 		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
 			_tableReferenceDefinitionManager.getCombinedTableReferenceInfos();
@@ -318,8 +324,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				"No table reference definition for " +
 					ctPersistence.getModelClass());
 		}
-
-		Long[] primaryKeysArray = primaryKeys.toArray(new Long[0]);
 
 		DSLQuery dslQuery = null;
 
@@ -348,7 +352,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				missingRequirementWherePredicate =
 					missingRequirementWherePredicate.and(
 						childPKColumn.in(
-							primaryKeysArray
+							ctEntryQuery
 						).and(
 							ctCollectionIdColumn.eq(_sourceCTCollectionId)
 						));

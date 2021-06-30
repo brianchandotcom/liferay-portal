@@ -118,19 +118,26 @@ for (String childrenItemId : childrenItemIds) {
 				%>
 
 				<c:if test="<%= paginationEnabled %>">
-					<select id="page_number_<%= collectionStyledLayoutStructureItem.getItemId() %>_selector" onchange="changePageNumber('<%= collectionStyledLayoutStructureItem.getItemId() %>')">
-
-							<%
-							for (int j = 1; j <= numberOfPages; j++) {
-							%>
-
-								<option value="<%= j %>"><%= j %></option>
-
-							<%
-							}
-							%>
-
-					</select>
+					<div>
+						<react:component
+							module="render_layout_structure/js/CollectionPagination"
+							props='<%=
+								HashMapBuilder.<String, Object>put(
+									"collectionId", collectionStyledLayoutStructureItem.getItemId()
+								).put(
+									"numberOfItems", collectionStyledLayoutStructureItem.getNumberOfItems()
+								).put(
+									"numberOfItemsPerPage", collectionStyledLayoutStructureItem.getNumberOfItemsPerPage()
+								).put(
+									"paginationType", paginationType
+								).put(
+									"totalItems", collectionCount
+								).put(
+									"totalPages", numberOfPages
+								).build()
+							%>'
+						/>
+					</div>
 				</c:if>
 			</div>
 		</c:when>
@@ -328,34 +335,3 @@ for (String childrenItemId : childrenItemIds) {
 <%
 }
 %>
-
-<aui:script>
-	function changePageNumber(itemId) {
-		if (itemId) {
-			const queryParamName = 'page_number_' + itemId;
-			const search = new URLSearchParams(window.location.search);
-
-			search.delete(queryParamName);
-
-			var pageNumber = document.getElementById(
-				'page_number_' + itemId + '_selector'
-			).value;
-
-			search.append(queryParamName, pageNumber);
-
-			window.location.search = search;
-		}
-	}
-
-	function setValueInPageNumberSelectors() {
-		const search = new URLSearchParams(window.location.search);
-
-		search.forEach((value, key) => {
-			if (key.startsWith('page_number_')) {
-				document.getElementById(key + '_selector').value = value || 1;
-			}
-		});
-	}
-
-	setValueInPageNumberSelectors();
-</aui:script>

@@ -116,7 +116,7 @@ definition {
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		IFrame.selectConfigurationFrame();
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		NotificationsPortlet.disableUserDeliveries(
 			actionType = "Updates",

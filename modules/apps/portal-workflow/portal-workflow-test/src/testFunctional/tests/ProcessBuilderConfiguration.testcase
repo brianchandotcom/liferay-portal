@@ -18,11 +18,11 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
-		//else {
-		//	Workflow.tearDownPortalWorkflow();
+		else {
+			Workflow.tearDownPortalWorkflow();
 
-		//	Workflow.tearDownWorkflowDefinitions();
-		//}
+			Workflow.tearDownWorkflowDefinitions();
+		}
 
 	}
 
@@ -62,12 +62,20 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Message Boards Message"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToMessageBoardsMessage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68291 CanAssignWorkflowToMessageBoardsMessage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Message Boards Message");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow assigned to Message Boards Message.");
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Page Revision"

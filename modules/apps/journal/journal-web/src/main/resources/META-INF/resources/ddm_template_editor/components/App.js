@@ -18,7 +18,7 @@ import React, {useEffect, useState} from 'react';
 import {useChannel} from '../hooks/useChannel';
 import {ClosableAlert} from './ClosableAlert';
 import {Editor} from './Editor';
-import {Sidebar} from './Sidebar';
+import {ElementsSidebarPanel} from './ElementsSidebarPanel';
 
 export default function App({
 	editorAutocompleteData,
@@ -59,7 +59,7 @@ export default function App({
 		<div className="ddm_template_editor__App">
 			{editorMode !== 'xml' && (
 				<div className="ddm_template_editor__App-sidebar">
-					<Sidebar
+					<ElementsSidebarPanel
 						onButtonClick={(item) =>
 							inputChannel.sendData(item.content)
 						}

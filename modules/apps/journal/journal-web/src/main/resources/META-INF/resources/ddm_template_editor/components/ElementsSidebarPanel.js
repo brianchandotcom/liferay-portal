@@ -21,7 +21,7 @@ import {CollapsableButtonList} from './CollapsableButtonList';
 
 const SEARCH_INPUT_ID = 'ddm_template_editor_Sidebar-SearchInputId';
 
-export const Sidebar = ({
+export const ElementsSidebarPanel = ({
 	onButtonClick,
 	templateVariableGroups: initialTemplateVariableGroups,
 }) => {
@@ -92,7 +92,7 @@ export const Sidebar = ({
 	);
 };
 
-Sidebar.propTypes = {
+ElementsSidebarPanel.propTypes = {
 	onButtonClick: PropTypes.func.isRequired,
 	templateVariableGroups: PropTypes.arrayOf(
 		PropTypes.shape({

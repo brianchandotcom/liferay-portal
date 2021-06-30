@@ -22,16 +22,6 @@ definition {
 			value1 = "${criteriaType}");
 
 		Button.clickSave();
-
-		CommerceEntry.gotoNestedMenu(nestedMenu = "Users");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceItemSelector.selectEntry(entryName = "${user}");
-
-		AssertClick(
-			locator1 = "ItemSelector#ADD_BUTTON",
-			value1 = "Add");
 	}
 
 	macro addNewAvailabilityEstimatesEntry {

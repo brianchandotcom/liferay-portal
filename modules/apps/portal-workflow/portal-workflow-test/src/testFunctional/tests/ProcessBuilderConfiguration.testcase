@@ -25,12 +25,20 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Knowledge Base Article"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToBaseArticle {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68290 CanAssignWorkflowToBaseArticle pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow assigned to Knowledge Base Article.");
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Comment"

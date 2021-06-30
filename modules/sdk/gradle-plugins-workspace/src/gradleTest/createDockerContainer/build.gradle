@@ -48,7 +48,7 @@ runGradleTest {
 		assert deployDirFileNames.contains("com.liferay.foo.web-1.0.0.jar")
 	}
 
-	finalizedBy removeDockerContainer
+	finalizedBy cleanDockerImage
 }
 
 untarOverrideTestScript {

@@ -48,8 +48,19 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToContentPage {
+			
+			ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68289 CanAssignWorkflowToContentPage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Content Page");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow assigned to Content Page.");
 
 	}
 

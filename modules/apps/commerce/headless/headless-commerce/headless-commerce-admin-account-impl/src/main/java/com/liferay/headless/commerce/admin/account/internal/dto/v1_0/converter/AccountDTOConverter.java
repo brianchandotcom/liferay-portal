@@ -73,6 +73,7 @@ public class AccountDTOConverter
 
 		return new Account() {
 			{
+				active = commerceAccount.isActive();
 				customFields = expandoBridge.getAttributes();
 				dateCreated = commerceAccount.getCreateDate();
 				dateModified = commerceAccount.getModifiedDate();

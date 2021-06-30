@@ -231,12 +231,27 @@ definition {
 	}
 
 	@description = "Verify that search can be done using non-ASCII character"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchNonAsciiChar {
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
 
-		// TODO LRQA-68281 CanSearchNonAsciiChar pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "単一承認者",
+			workflowResourceValue = "Blogs Entry");
+
+		ProcessBuilderListView.searchForWorkflow(workflowName = "単一承認者");
+
+		AssertTextEquals(
+			key_workflowResourceValue = "単一承認者",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW",
+			value1 = "単一承認者");
 	}
 
 	@description = "Verify that the user is able to unassign a Workflow from an Asset Type"

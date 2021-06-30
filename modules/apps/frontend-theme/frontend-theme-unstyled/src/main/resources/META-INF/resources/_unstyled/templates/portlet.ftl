@@ -35,7 +35,10 @@
 
 				<#if portlet_configuration_icons?has_content>
 					<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
-						<@liferay_portlet["icon-options"] direction="right cadmin" portletConfigurationIcons=portlet_configuration_icons />
+						<@liferay_portlet["icon-options"]
+							direction="right cadmin"
+							portletConfigurationIcons=portlet_configuration_icons
+						/>
 					</menu>
 				</#if>
 			</header>

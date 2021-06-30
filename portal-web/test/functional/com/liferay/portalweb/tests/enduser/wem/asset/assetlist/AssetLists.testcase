@@ -139,6 +139,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-132626. Able to select all vocabularies when creating a collection."
+	@priority = "4"
+	test ViewAllTwoCategoriesInDynamicCollection {
+		task ("Add a vocabulary with Web Content Article") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+
+			PortletEntry.inputName(name = "Language");
+
+			Vocabulary.addAssociatedAssetType(
+				assetType = "Web Content Article",
+				vocabularyName = "Language");
+
+			Button.clickNoError(button = "Save");
+
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary with public visibility?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a vocabulary with two associated asset types") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+
+			PortletEntry.inputName(name = "Region");
+
+			Vocabulary.addAssociatedAssetType(assetType = "Web Content Article");
+
+			Button.clickAddRow();
+
+			Vocabulary.addAssociatedAssetType(
+				assetType = "Page",
+				rowNumber = "2");
+
+			Button.clickNoError(button = "Save");
+
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary with public visibility?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Assert the 2 vocabularies in Collection Category Filter") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			Panel.expandPanel(panel = "Filter");
+
+			Select(
+				locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
+				value1 = "Categories");
+
+			Click(locator1 = "Button#SELECT_CATEGORIES");
+
+			AssetCategorization.gotoSelectCategory();
+
+			for (var vocabularyName : list "Language,Region") {
+				AssertElementPresent(
+					key_nodeName = "${vocabularyName}",
+					locator1 = "Treeview#NODE_UNSELECTED");
+			}
+		}
+	}
+
 	@description = "Assert that Asset Lists correctly display their selected content."
 	@priority = "4"
 	@uitest

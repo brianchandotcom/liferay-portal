@@ -257,6 +257,10 @@ definition {
 	test CanTranslateTextBoxFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextBoxFieldIndependently";
 
+		JSONWebcontent.deleteWebContent(
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		NavItem.gotoStructures();
@@ -300,7 +304,7 @@ definition {
 		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Text Box");
 
 		Translations.viewTargetFields(
-			webContentTextBox = "これは、英語のテキスト ボックス フィールドの内容です",
+			webContentTextBox = "これは英語のテキストボックスフィールドの内容です",
 			webContentTitle = "これは英語のウェブ記事のタイトルです");
 
 		PortletEntry.publish();
@@ -313,7 +317,7 @@ definition {
 			webContentTitle = "This is the title of a web article in English");
 
 		Translations.viewTargetFields(
-			webContentTextBox = "これは、英語のテキスト ボックス フィールドの内容です",
+			webContentTextBox = "これは英語のテキストボックスフィールドの内容です",
 			webContentTitle = "これは英語のウェブ記事のタイトルです");
 	}
 
@@ -321,6 +325,10 @@ definition {
 	@priority = "5"
 	test CanTranslateTextFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateTextFieldIndependently";
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -477,6 +485,10 @@ definition {
 		AssertElementNotPresent(
 			key_text = "Auto Translate",
 			locator1 = "Button#ANY");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
 
 		Translations.viewTargetFields(
 			webContentContent = "Este es el contenido de un artículo web en inglés.",

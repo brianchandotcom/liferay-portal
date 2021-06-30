@@ -32,7 +32,7 @@ definition {
 		Type(
 			locator1 = "PageAudit#API_FIELD",
 			value1 = "");
-		
+
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
 			Click(locator1 = "Button#SAVE");
 		}
@@ -102,14 +102,14 @@ definition {
 		}
 	}
 
-	macro openPanelBeforeConfiguration {
-		if (IsElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON")) {
+	macro openPanelAfterConfiguration {
+		if (IsElementNotPresent(locator1 = "PageAudit#PANEL_PAGE_TITLE")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
 
-	macro openPanelAfterConfiguration {
-		if (IsElementNotPresent(locator1 = "PageAudit#PANEL_PAGE_TITLE")) {
+	macro openPanelBeforeConfiguration {
+		if (IsElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
@@ -130,7 +130,7 @@ definition {
 		Type(
 			locator1 = "PageAudit#API_FIELD",
 			value1 = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-		
+
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
 			Click(locator1 = "Button#SAVE");
 		}
@@ -152,7 +152,7 @@ definition {
 		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click(locator1 = "Checkbox#ANY_CHECKBOX");
 		}
-		
+
 		Type(
 			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
 			value1 = "https://liferay-tango.github.io/liferay-portal/page-audit-test.html");

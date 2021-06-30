@@ -36,6 +36,29 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	@uitest
+	test AssertProgressBar {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setAPIViaSystemSettings();
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+		task ("Open Page Audit panel and assert the progress bar") {
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
+		}
+	}
+
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
 	@priority = "3"
 	test PageAuditBackButton {
@@ -349,32 +372,6 @@ definition {
 
 		task ("Assert the Page Audit panel is not shown") {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-	}
-
-	@description = "LPS-119066: "Given the Page Audit Panel 
-		When the audit is launched (the API is called)
-		Then a progress bar shows and moves forward while retrieving the data until they can be shown.""
-	@priority = "3"
-	@uitest
-	test AssertProgressBar {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setAPIViaSystemSettings();
-		}
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-		task ("Open Page Audit panel and assert the progress bar") {
-			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
-
-			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
 		}
 	}
 

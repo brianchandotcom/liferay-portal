@@ -333,6 +333,8 @@ public class LogAssertionTestRule
 
 		private LogAppender() {
 			super(StringUtil.randomString(), null, null, true, null);
+
+			start();
 		}
 
 	}

@@ -15,6 +15,8 @@
 package com.liferay.remote.web.component.admin.web.internal.layouttpl;
 
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
@@ -32,9 +34,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Raymond Augé
@@ -69,21 +68,25 @@ public class LayoutTemplateComponent {
 			if (_log.isInfoEnabled()) {
 				if (_layoutTemplates.size() == 1) {
 					_log.info(
-						"1 layout template for {} is available for use",
-						_servletContext.getServletContextName());
+						String.format(
+							"1 layout template for %s is available for use",
+							_servletContext.getServletContextName()));
 				}
 				else {
 					_log.info(
-						"{} layout templates for {} are available for use",
-						_layoutTemplates.size(),
-						_servletContext.getServletContextName());
+						String.format(
+							"%s layout templates for %s are available for use",
+							_layoutTemplates.size(),
+							_servletContext.getServletContextName()));
 				}
 			}
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Error initializing layout templates for {}",
-				_servletContext.getServletContextName(), exception);
+				String.format(
+					"Error initializing layout templates for %s",
+					_servletContext.getServletContextName()),
+				exception);
 		}
 	}
 
@@ -101,7 +104,8 @@ public class LayoutTemplateComponent {
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Could not process layoutTemplate {}", layoutTemplate,
+					String.format(
+						"Could not process layoutTemplate %s", layoutTemplate),
 					exception);
 			}
 		}
@@ -109,19 +113,21 @@ public class LayoutTemplateComponent {
 		if (_log.isInfoEnabled()) {
 			if (_layoutTemplates.size() == 1) {
 				_log.info(
-					"1 layout template for {} was unregistered",
-					_servletContext.getServletContextName());
+					String.format(
+						"1 layout template for {} was unregistered",
+						_servletContext.getServletContextName()));
 			}
 			else {
 				_log.info(
-					"{} layout templates for {} were unregistered",
-					_layoutTemplates.size(),
-					_servletContext.getServletContextName());
+					String.format(
+						"%s layout templates for %s were unregistered",
+						_layoutTemplates.size(),
+						_servletContext.getServletContextName()));
 			}
 		}
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutTemplateComponent.class);
 
 	@Reference

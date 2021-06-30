@@ -14,6 +14,8 @@
 
 package com.liferay.remote.web.component.admin.web.internal.spa;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -44,9 +47,6 @@ import javax.portlet.filter.RenderResponseWrapper;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Raymond Augé
  */
@@ -62,7 +62,7 @@ public class SPAPortletFilter implements RenderFilter {
 
 	@Override
 	public void doFilter(
-			RenderRequest renderRequest, RenderResponse response,
+			RenderRequest renderRequest, RenderResponse renderResponse,
 			FilterChain chain)
 		throws IOException, PortletException {
 
@@ -73,11 +73,14 @@ public class SPAPortletFilter implements RenderFilter {
 			LayoutTypePortlet layoutTypePortlet =
 				themeDisplay.getLayoutTypePortlet();
 
+			String singlePageApplication = "spa";
+
 			if ((layoutTypePortlet != null) &&
-				"spa".equals(layoutTypePortlet.getLayoutTemplateId())) {
+				singlePageApplication.equals(
+					layoutTypePortlet.getLayoutTemplateId())) {
 
 				LiferayPortletRequest liferayPortletRequest =
-					(LiferayPortletRequest)renderRequest;
+					PortalUtil.getLiferayPortletRequest(renderRequest);
 
 				List<Portlet> columnPortlets = layoutTypePortlet.getAllPortlets(
 					"column-2");
@@ -101,7 +104,7 @@ public class SPAPortletFilter implements RenderFilter {
 								// inline header sections approach.
 
 								RenderResponseWrapper renderResponseWrapper =
-									new RenderResponseWrapper(response) {
+									new RenderResponseWrapper(renderResponse) {
 
 										@Override
 										public OutputStream
@@ -143,7 +146,7 @@ public class SPAPortletFilter implements RenderFilter {
 													}
 
 												});
-									};
+										}
 
 									};
 
@@ -152,11 +155,11 @@ public class SPAPortletFilter implements RenderFilter {
 							}
 						}
 						catch (Exception exception) {
-							if (_log.isErrorEnabled()) {
-								_log.error(
-									"Failure rendering alternate SPA view for {}",
-									portlet, exception);
-							}
+							_log.error(
+								String.format(
+									"Failure rendering alternate SPA view for %s",
+									portlet),
+								exception);
 						}
 
 						return;
@@ -165,7 +168,7 @@ public class SPAPortletFilter implements RenderFilter {
 			}
 		}
 
-		chain.doFilter(renderRequest, response);
+		chain.doFilter(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -175,7 +178,7 @@ public class SPAPortletFilter implements RenderFilter {
 
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SPAPortletFilter.class);
 
 	@Reference

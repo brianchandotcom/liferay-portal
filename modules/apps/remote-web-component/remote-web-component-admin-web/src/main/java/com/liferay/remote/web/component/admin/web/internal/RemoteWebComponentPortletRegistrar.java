@@ -17,6 +17,8 @@ package com.liferay.remote.web.component.admin.web.internal;
 import static com.liferay.portal.kernel.util.Validator.isNotNull;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration;
@@ -40,9 +42,6 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Iván Zaera Avellón
  * @author Raymond Augé
@@ -64,7 +63,9 @@ public class RemoteWebComponentPortletRegistrar {
 		_elementName = _remoteWebComponentConfiguration.elementName();
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Starting remote web component {}", _elementName);
+			_log.info(
+				String.format(
+					"Starting remote web component %s", _elementName));
 		}
 
 		// Portlet
@@ -95,11 +96,11 @@ public class RemoteWebComponentPortletRegistrar {
 			customProperties.forEach(componentProperties::put);
 		}
 		catch (IOException ioe) {
-			if (_log.isErrorEnabled()) {
-				_log.error(
-					"Could not parse portlet service properties for {}",
-					_elementName, ioe);
-			}
+			_log.error(
+				String.format(
+					"Could not parse portlet service properties for %s",
+					_elementName),
+				ioe);
 		}
 
 		Instant now = Instant.now();
@@ -181,14 +182,17 @@ public class RemoteWebComponentPortletRegistrar {
 				componentProperties);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Started remote web component {}", _elementName);
+			_log.info(
+				String.format("Started remote web component %s", _elementName));
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (_log.isInfoEnabled()) {
-			_log.info("Stopping remote web component {}", _elementName);
+			_log.info(
+				String.format(
+					"Stopping remote web component %s", _elementName));
 		}
 
 		_portletInstance.dispose();
@@ -202,7 +206,8 @@ public class RemoteWebComponentPortletRegistrar {
 		_topJsDynamicInclude = null;
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Stopped remote web component {}", _elementName);
+			_log.info(
+				String.format("Stopped remote web component %s", _elementName));
 		}
 	}
 
@@ -218,7 +223,7 @@ public class RemoteWebComponentPortletRegistrar {
 		return _getPortletName() + ".Language";
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteWebComponentPortletRegistrar.class);
 
 	private volatile ComponentInstance _bundleResourceLoaderInstance;

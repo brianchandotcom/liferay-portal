@@ -43,16 +43,16 @@ public class SPAPortletFilterManager {
 
 		Stream<Portlet> portletStream = _portlets.stream();
 
-		String[] portletNames = portletStream.map(
-			Portlet::getRootPortletId
-		).distinct(
-		).toArray(
-			String[]::new
-		);
-
 		componentProperties.put(
 			"filter.lifecycles", Collections.singleton("RENDER_PHASE"));
-		componentProperties.put("javax.portlet.name", portletNames);
+		componentProperties.put(
+			"javax.portlet.name",
+			portletStream.map(
+				Portlet::getRootPortletId
+			).distinct(
+			).toArray(
+				String[]::new
+			));
 		componentProperties.put("preinitialized.filter", "true");
 
 		_portletFilterInstance = _portletFilterFactory.newInstance(

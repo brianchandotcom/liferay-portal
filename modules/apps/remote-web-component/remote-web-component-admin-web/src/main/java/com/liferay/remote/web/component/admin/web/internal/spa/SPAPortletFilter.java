@@ -90,80 +90,77 @@ public class SPAPortletFilter implements RenderFilter {
 
 				Stream<Portlet> portletStream = columnPortlets.stream();
 
-				if (portletStream.anyMatch(portlet::equals)) {
+				if (portletStream.anyMatch(portlet::equals) &&
+					(WindowState.NORMAL == renderRequest.getWindowState())) {
 
-					if (WindowState.NORMAL == renderRequest.getWindowState()) {
-						try {
-							if (_layoutPermission.contains(
-									PermissionThreadLocal.
-										getPermissionChecker(),
-									layoutTypePortlet.getLayout(),
-									ActionKeys.UPDATE)) {
+					try {
+						if (_layoutPermission.contains(
+								PermissionThreadLocal.getPermissionChecker(),
+								layoutTypePortlet.getLayout(),
+								ActionKeys.UPDATE)) {
 
-								// NO-OP response: do not display portlet BUT make sure it's still called in case it uses
-								// inline header sections approach.
+							// NO-OP response: do not display portlet BUT make sure it's still called in case it uses
+							// inline header sections approach.
 
-								RenderResponseWrapper renderResponseWrapper =
-									new RenderResponseWrapper(renderResponse) {
+							RenderResponseWrapper renderResponseWrapper =
+								new RenderResponseWrapper(renderResponse) {
 
-										@Override
-										public OutputStream
-												getPortletOutputStream()
-											throws IOException {
+									@Override
+									public OutputStream getPortletOutputStream()
+										throws IOException {
 
-											return new OutputStream() {
+										return new OutputStream() {
+
+											@Override
+											public void write(int b)
+												throws IOException {
+											}
+
+										};
+									}
+
+									@Override
+									public PrintWriter getWriter()
+										throws IOException {
+
+										return new PrintWriter(
+											new Writer() {
 
 												@Override
-												public void write(int b)
+												public void close()
 													throws IOException {
 												}
 
-											};
-										}
+												@Override
+												public void flush()
+													throws IOException {
+												}
 
-										@Override
-										public PrintWriter getWriter()
-											throws IOException {
+												@Override
+												public void write(
+														char[] arg0, int arg1,
+														int arg2)
+													throws IOException {
+												}
 
-											return new PrintWriter(
-												new Writer() {
+											});
+									}
 
-													@Override
-													public void close()
-														throws IOException {
-													}
+								};
 
-													@Override
-													public void flush()
-														throws IOException {
-													}
-
-													@Override
-													public void write(
-															char[] arg0,
-															int arg1, int arg2)
-														throws IOException {
-													}
-
-												});
-										}
-
-									};
-
-								chain.doFilter(
-									renderRequest, renderResponseWrapper);
-							}
+							chain.doFilter(
+								renderRequest, renderResponseWrapper);
 						}
-						catch (Exception exception) {
-							_log.error(
-								String.format(
-									"Failure rendering alternate SPA view for %s",
-									portlet),
-								exception);
-						}
-
-						return;
 					}
+					catch (Exception exception) {
+						_log.error(
+							String.format(
+								"Failure rendering alternate SPA view for %s",
+								portlet),
+							exception);
+					}
+
+					return;
 				}
 			}
 		}

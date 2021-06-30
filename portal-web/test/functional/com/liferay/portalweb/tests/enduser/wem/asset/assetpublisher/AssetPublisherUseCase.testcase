@@ -812,6 +812,11 @@ definition {
 					fieldFieldLabel = "Select from List",
 					index = "${index}",
 					optionValue = "Option ${index}");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldFieldLabel = "Select from List",
+					fieldReferenceOfFieldOption = "Value${index}",
+					index = "${index}");
 			}
 
 			DDLDataDefinition.save();
@@ -855,6 +860,11 @@ definition {
 				value1 = "Option 1");
 
 			Button.click(button = "Apply");
+
+			AssertTextEquals.assertPartialText(
+				key_text = "Select from List: Value1",
+				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
+				value1 = "Select from List: Value1");
 
 			PortletEntry.save();
 		}

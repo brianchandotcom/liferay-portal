@@ -12,10 +12,10 @@
  * details.
  */
 
-type JSONValue =
-	| boolean
-	| null
-	| number
-	| string
-	| {[property: string]: JSONValue}
-	| Array<JSONValue>;
+declare global {
+	interface Window {
+		StateManager: any;
+		__REDUX_DEVTOOLS_EXTENSION__: any;
+	}
+}
+export {};

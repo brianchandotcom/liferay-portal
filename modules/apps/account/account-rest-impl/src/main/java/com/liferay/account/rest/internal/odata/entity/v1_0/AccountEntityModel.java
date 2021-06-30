@@ -17,6 +17,7 @@ package com.liferay.account.rest.internal.odata.entity.v1_0;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
@@ -29,7 +30,10 @@ public class AccountEntityModel implements EntityModel {
 	public AccountEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME)));
+				"name", locale -> Field.getSortableFieldName(Field.NAME)),
+			new IdEntityField(
+				"organizationIds", locale -> "organizationIds",
+				String::valueOf));
 	}
 
 	@Override

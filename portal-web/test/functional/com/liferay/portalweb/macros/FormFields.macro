@@ -1241,15 +1241,6 @@ definition {
 		}
 	}
 
-	macro viewFieldsSameRow {
-		for (var fieldName : list "${fieldNames}") {
-			AssertElementPresent(
-				key_fieldName = "${fieldName}",
-				key_fieldRowNumber = "${fieldRowNumber}",
-				locator1 = "FormFields#FIELD_ON_ROW");
-		}
-	}
-
 	macro viewFieldSize {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",
@@ -1262,6 +1253,15 @@ definition {
 			key_fieldName = "${fieldName}",
 			key_size = "${size}",
 			locator1 = "FormFields#FIELD_SIZE");
+	}
+
+	macro viewFieldsSameRow {
+		for (var fieldName : list "${fieldNames}") {
+			AssertElementPresent(
+				key_fieldName = "${fieldName}",
+				key_fieldRowNumber = "${fieldRowNumber}",
+				locator1 = "FormFields#FIELD_ON_ROW");
+		}
 	}
 
 	macro viewFieldValidationErrorMessage {

@@ -502,8 +502,8 @@ definition {
 			fieldType = "Numeric");
 
 		Form.addFieldToFieldsGroup(
-			fieldLabel = "Text",
-			fieldName = "Numeric");
+			sourceFieldName = "Numeric",
+			targetFieldLabel = "Text");
 
 		FormFields.viewField(fieldName = "FieldsGroup");
 
@@ -563,8 +563,8 @@ definition {
 			fieldType = "Numeric");
 
 		Form.addFieldToFieldsGroup(
-			fieldLabel = "Text",
-			fieldName = "Numeric");
+			sourceFieldName = "Numeric",
+			targetFieldLabel = "Text");
 
 		FormFields.viewField(fieldName = "FieldsGroup");
 

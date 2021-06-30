@@ -97,8 +97,6 @@ public class StyleBookVerticalCard
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/style_book/edit_style_book_entry"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
 		).setParameter(
 			"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
 		).buildString();

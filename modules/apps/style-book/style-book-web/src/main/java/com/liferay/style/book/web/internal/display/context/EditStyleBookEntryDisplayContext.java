@@ -171,8 +171,6 @@ public class EditStyleBookEntryDisplayContext {
 
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCRenderCommandName(
-			"/style_book/view"
 		).buildString();
 	}
 

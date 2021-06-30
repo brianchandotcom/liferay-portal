@@ -188,8 +188,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
-				"/style_book/edit_style_book_entry", "redirect",
-				_themeDisplay.getURLCurrent(), "styleBookEntryId",
+				"/style_book/edit_style_book_entry", "styleBookEntryId",
 				_styleBookEntry.getStyleBookEntryId());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));

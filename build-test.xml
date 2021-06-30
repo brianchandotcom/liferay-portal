@@ -8502,10 +8502,14 @@ virtualHostname="localhost"
 	</target>
 
 	<target name="merge-test-results">
-		<mkdir dir="test-results" />
+		<local name="dest.dir" />
 
-		<parallel timeout="1800000">
-			<junitreport todir="test-results">
+		<property location="test-results/src" name="dest.dir" />
+
+		<mkdir dir="${dest.dir}" />
+
+		<for param="test.results.file">
+			<path>
 				<fileset
 					dir="modules"
 					erroronmissingdir="false"
@@ -8578,6 +8582,78 @@ virtualHostname="localhost"
 					erroronmissingdir="false"
 				>
 					<include name="**/TEST-*.xml" />
+				</fileset>
+			</path>
+			<sequential>
+				<beanshell>
+					<![CDATA[
+						import com.liferay.jenkins.results.parser.Dom4JUtil;
+						import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+						import org.dom4j.Document;
+						import org.dom4j.Element;
+						import org.dom4j.Node;
+
+						File testResultsFile = new File("@{test.results.file}");
+
+						if (!testResultsFile.exists()) {
+							return;
+						}
+
+						int maxTextSize = 10 * 1024;
+
+						String content = JenkinsResultsParserUtil.read(testResultsFile);
+
+						try {
+							Document document = Dom4JUtil.parse(content);
+
+							List nodes = Dom4JUtil.getNodesByXPath(document, "//testsuite/testcase/failure");
+
+							if ((nodes != null) && !nodes.isEmpty()) {
+								for (Node node : nodes) {
+									if (!(node instanceof Element)) {
+										continue;
+									}
+
+									Element element = (Element)node;
+
+									String text = element.getText();
+
+									if (text.length() > maxTextSize) {
+										element.setText(text.substring(0, maxTextSize));
+									}
+
+									String attributeValue = element.attributeValue("message");
+
+									String text = element.getText();
+
+									if (attributeValue.length() > maxTextSize) {
+										element.setAttributeValue("message", attributeValue.substring(0, maxTextSize));
+									}
+								}
+							}
+
+							File updatedTestResultsFile = new File(project.getProperty("dest.dir"), testResultsFile.getName());
+
+							JenkinsResultsParserUtil.write(updatedTestResultsFile, Dom4JUtil.format(document.getRootElement()));
+
+							System.out.println("Copying " + testResultsFile + " to " + updatedTestResultsFile);
+						}
+						catch (Exception exception) {
+							exception.printStackTrace();
+						}
+					]]>
+				</beanshell>
+			</sequential>
+		</for>
+
+		<parallel timeout="1800000">
+			<junitreport todir="test-results">
+				<fileset
+					dir="${dest.dir}"
+					erroronmissingdir="false"
+				>
+					<include name="TEST-*.xml" />
 				</fileset>
 				<report format="frames" todir="test-results/html" />
 			</junitreport>

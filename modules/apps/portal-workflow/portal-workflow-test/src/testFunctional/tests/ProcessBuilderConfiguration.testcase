@@ -17,7 +17,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			Workflow.tearDownPortalWorkflow();
 
@@ -38,18 +37,11 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Knowledge Base Article");
+			workflowResourceValue = "Comment");
 
-		Alert.viewSuccessMessageText(successMessage = "Workflow assigned to Knowledge Base Article.");
-	}
-
-	@description = "Verify that the user is able to assign a Workflow to a Comment"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanAssignWorkflowToComment {
-
-		// TODO LRQA-68288 CanAssignWorkflowToComment pending implementation
-
+		AssertElementPresent(
+			key_workflowResourceValue = "Single Approver",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Content Page"

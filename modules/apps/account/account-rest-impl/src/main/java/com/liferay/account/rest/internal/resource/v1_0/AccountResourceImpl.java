@@ -117,6 +117,17 @@ public class AccountResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					AccountActionKeys.ADD_ACCOUNT_ENTRY, "postAccount",
+					AccountConstants.RESOURCE_NAME, 0L)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, 0L, "getAccountsPage",
+					_accountEntryModelResourcePermission)
+			).build(),
 			booleanQuery -> {
 			},
 			filter, AccountEntry.class, keywords, pagination,
@@ -129,14 +140,14 @@ public class AccountResourceImpl
 					searchContext.setKeywords(keywords);
 				}
 			},
+			sorts,
 			document -> {
 				long accountEntryId = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
 				return _toAccount(
 					_accountEntryLocalService.getAccountEntry(accountEntryId));
-			},
-			sorts);
+			});
 	}
 
 	@Override

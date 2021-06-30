@@ -46,8 +46,8 @@ function fetchWithError(url, options = {}) {
 	return fetch(url, options)
 		.then((response) => response.json())
 		.then((objectResponse) => {
-			if (objectResponse.error) {
-				throw objectResponse.error;
+			if (objectResponse?.error) {
+				throw objectResponse;
 			}
 
 			return objectResponse;

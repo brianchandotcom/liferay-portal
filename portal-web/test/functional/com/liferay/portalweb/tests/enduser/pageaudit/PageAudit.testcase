@@ -11,12 +11,25 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL();
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+		PageAudit.deleteAPIViaSystemSettings();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -43,7 +56,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPageAuditPanel();
+			PageAudit.openPanelBeforeConfiguration();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -87,7 +100,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPageAuditPanel();
+			PageAudit.openPanelBeforeConfiguration();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -131,7 +144,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPageAuditPanel();
+			PageAudit.openPanelBeforeConfiguration();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -216,7 +229,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPageAuditPanel();
+			PageAudit.openPanelBeforeConfiguration();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -300,7 +313,7 @@ definition {
 		}
 
 		task ("Open Page Audit panel") {
-			PageAudit.openPageAuditPanel();
+			PageAudit.openPanelBeforeConfiguration();
 
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
@@ -336,6 +349,32 @@ definition {
 
 		task ("Assert the Page Audit panel is not shown") {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+	}
+
+	@description = "LPS-119066: "Given the Page Audit Panel 
+		When the audit is launched (the API is called)
+		Then a progress bar shows and moves forward while retrieving the data until they can be shown.""
+	@priority = "3"
+	@uitest
+	test AssertProgressBar {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setAPIViaSystemSettings();
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+		task ("Open Page Audit panel and assert the progress bar") {
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
 		}
 	}
 

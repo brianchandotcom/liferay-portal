@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>API_FIELD</td>
+	<td>//textarea[contains(@id, 'apiKey')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECK_ISSUES_TEXT</td>
 	<td>//*[contains(@class, 'text-center')]//*[contains(@class, 'font-weight-semi-bold')]</td>
 	<td></td>
@@ -28,6 +33,16 @@
 <tr>
 	<td>PAGE_AUDIT_BUTTON</td>
 	<td>//*[contains(@class, 'lexicon-icon-info-circle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_PAGE_TITLE</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(@title, '${pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROGRESS_BAR</td>
+	<td>//*[contains(@class, 'progress-bar')]</td>
 	<td></td>
 </tr>
 </tbody>

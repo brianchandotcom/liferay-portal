@@ -150,7 +150,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = "10",
-			webContentTitle = "This is the title of a web article in English");
+			webContentTitle = "This is the title of the numeric field in English");
 
 		PortletEntry.publish();
 
@@ -159,7 +159,7 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "es_ES",
-			webContentTitle = "This is the title of a web article in English");
+			webContentTitle = "This is the title of the numeric field in English");
 
 		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Decimal");
 
@@ -185,7 +185,7 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "es_ES",
-			webContentTitle = "This is the title of a web article in English");
+			webContentTitle = "This is the title of the numeric field in English");
 
 		Translations.viewTargetFields(
 			webContentDecimal = "1,0",
@@ -217,7 +217,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentRichText = "This is the content of the rich text field in English",
-			webContentTitle = "This is the title of a web article in English");
+			webContentTitle = "This is the title of the rich text field in English");
 
 		PortletEntry.publish();
 
@@ -226,19 +226,19 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of a web article in English");
+			webContentTitle = "This is the title of the rich text field in English");
 
 		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Title");
 
 		Translations.viewTargetFields(
 			webContentSourceHTML = "This is the content of the rich text field in English",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 
 		Translations.translateSpecificFieldsWithGoogle(fieldNameList = "Rich Text");
 
 		Translations.viewTargetFields(
 			webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 
 		PortletEntry.publish();
 
@@ -247,11 +247,11 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
-			webContentTitle = "This is the title of a web article in English");
+			webContentTitle = "This is the title of the rich text field in English");
 
 		Translations.viewTargetFields(
 			webContentSourceHTML = "これは英語のリッチ テキスト フィールドの内容です",
-			webContentTitle = "これは英語のウェブ記事のタイトルです");
+			webContentTitle = "これは英語のリッチテキストフィールドのタイトルです");
 	}
 
 	@description = "This ensures that the text box field of a customized web content can be translated independently"
@@ -502,6 +502,11 @@ definition {
 	@priority = "4"
 	test TranslateButtonIsDisabledWhenFieldIsNull {
 		property test.name.skip.portal.instance = "AutoTranslation#TranslateButtonIsDisabledWhenFieldIsNull";
+
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			groupName = "Site Name",
+			title = "Title Translate Button is Disabled When Field is Null");
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",

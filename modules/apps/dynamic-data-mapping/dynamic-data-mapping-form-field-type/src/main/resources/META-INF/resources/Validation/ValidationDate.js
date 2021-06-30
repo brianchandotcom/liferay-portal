@@ -18,6 +18,17 @@ import Select from '../Select/Select.es';
 import Text from '../Text/Text.es';
 import {EVENT_TYPES} from './validationReducer';
 
+const getSelectedParameter = (localizedValue, selectedParameterName) => {
+	if (localizedValue && typeof localizedValue === 'string') {
+		try {
+			localizedValue = JSON.parse(localizedValue);
+		}
+		catch (error) {}
+	}
+
+	return localizedValue?.[selectedParameterName];
+};
+
 const parameters = {
 	futureDates: {
 		label: Liferay.Language.get('starts-from'),
@@ -40,6 +51,7 @@ const ValidationDate = ({
 	localizedValue,
 	name,
 	onBlur,
+	parameter,
 	readOnly,
 	selectedValidation,
 	transformSelectedValidation,
@@ -90,7 +102,10 @@ const ValidationDate = ({
 				placeholder={Liferay.Language.get('choose-an-option')}
 				readOnly={localizationMode || readOnly}
 				showEmptyOption={false}
-				value={[selectedParameter.options[0].name]}
+				value={getSelectedParameter(
+					localizedValue(parameter),
+					selectedParameter.name
+				)}
 				visible={visible}
 			/>
 

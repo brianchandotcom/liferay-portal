@@ -15,9 +15,9 @@
 package com.liferay.portal.upgrade.internal.report;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Sam Ziemer
@@ -48,8 +48,11 @@ public class UpgradeReport {
 	public void generateReport() {
 	}
 
-	private final Map<String, ArrayList<String>> _errors = new HashMap<>();
-	private final Map<String, ArrayList<String>> _events = new HashMap<>();
-	private final Map<String, ArrayList<String>> _warnings = new HashMap<>();
+	private final Map<String, ArrayList<String>> _errors =
+		new ConcurrentHashMap<>();
+	private final Map<String, ArrayList<String>> _events =
+		new ConcurrentHashMap<>();
+	private final Map<String, ArrayList<String>> _warnings =
+		new ConcurrentHashMap<>();
 
 }

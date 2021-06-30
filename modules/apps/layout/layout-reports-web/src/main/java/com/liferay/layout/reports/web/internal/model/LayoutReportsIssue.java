@@ -664,6 +664,20 @@ public class LayoutReportsIssue {
 		}
 
 		private int _calculateTotal() {
+			if (Objects.equals(
+					_lighthouseAuditJSONObject.getString("scoreDisplayMode"),
+					"notApplicable")) {
+
+				return 0;
+			}
+
+			float score = GetterUtil.getFloat(
+				_lighthouseAuditJSONObject.get("score"));
+
+			if (score == 1) {
+				return 0;
+			}
+
 			JSONArray failingElementsJSONArray =
 				_key.getFailingElementsJSONArray(
 					null, null, _lighthouseAuditJSONObject,
@@ -674,16 +688,6 @@ public class LayoutReportsIssue {
 
 				return failingElementsJSONArray.length();
 			}
-
-			if (Objects.equals(
-					_lighthouseAuditJSONObject.getString("scoreDisplayMode"),
-					"notApplicable")) {
-
-				return 0;
-			}
-
-			float score = GetterUtil.getFloat(
-				_lighthouseAuditJSONObject.get("score"));
 
 			if (score == 0) {
 				return 1;

@@ -18,6 +18,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.rest.client.dto.v1_0.Account;
+import com.liferay.account.rest.client.pagination.Page;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -28,11 +29,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -138,6 +141,30 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				hasAccountEntryOrganizationRel(
 					accountEntry.getAccountEntryId(),
 					organization.getOrganizationId()));
+	}
+
+	@Override
+	@Test
+	public void testGetAccountsPage() throws Exception {
+		super.testGetAccountsPage();
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+		AccountEntry accountEntry2 = _addAccountEntry();
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_addAccountEntry();
+
+		_testGetAccountsPage(Arrays.asList(accountEntry1, accountEntry2), null);
+		_testGetAccountsPage(
+			Collections.emptyList(), organization.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			organization.getOrganizationId());
+
+		_testGetAccountsPage(
+			Collections.singletonList(accountEntry1),
+			organization.getOrganizationId());
 	}
 
 	@Override
@@ -402,6 +429,41 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	private Account _postAccount(Account account) throws Exception {
 		return accountResource.postAccount(account);
+	}
+
+	private void _testGetAccountsPage(
+			List<AccountEntry> expectedAccountEntries, Long organizationId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		for (AccountEntry accountEntry : expectedAccountEntries) {
+			if (sb.length() != 0) {
+				sb.append(" or ");
+			}
+
+			sb.append(
+				String.format("contains(name, '%s')", accountEntry.getName()));
+		}
+
+		if (organizationId != null) {
+			if (sb.length() != 0) {
+				sb.append(" and ");
+			}
+
+			sb.append(String.format("organizationIds eq '%s'", organizationId));
+		}
+
+		Page<Account> accountsPage = accountResource.getAccountsPage(
+			null, sb.toString(), null, null);
+
+		Assert.assertEquals(
+			expectedAccountEntries.size(), accountsPage.getTotalCount());
+
+		for (Account account : accountsPage.getItems()) {
+			expectedAccountEntries.contains(
+				_accountEntryLocalService.getAccountEntry(account.getId()));
+		}
 	}
 
 	@Inject

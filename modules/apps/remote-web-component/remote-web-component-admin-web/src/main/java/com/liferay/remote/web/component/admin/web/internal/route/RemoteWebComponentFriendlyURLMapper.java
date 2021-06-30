@@ -80,11 +80,14 @@ public class RemoteWebComponentFriendlyURLMapper
 		_remoteWebComponentConfiguration = ConfigurableUtil.createConfigurable(
 			RemoteWebComponentConfiguration.class, properties);
 
-		_mapping =
-			Validator.isNotNull(
-				_remoteWebComponentConfiguration.portletAlias()) ?
-					_remoteWebComponentConfiguration.portletAlias() :
-						_remoteWebComponentConfiguration.elementName();
+		if (Validator.isNotNull(
+				_remoteWebComponentConfiguration.portletAlias())) {
+
+			_mapping = _remoteWebComponentConfiguration.portletAlias();
+		}
+		else {
+			_mapping = _remoteWebComponentConfiguration.elementName();
+		}
 
 		boolean instanceable = _remoteWebComponentConfiguration.instanceable();
 		Router router = new RouterImpl();

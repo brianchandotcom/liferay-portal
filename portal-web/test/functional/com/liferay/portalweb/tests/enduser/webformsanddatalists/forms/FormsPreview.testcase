@@ -1488,14 +1488,48 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TextFieldCanBePreviewed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133783 TextFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormFields.editPlaceholderField(fieldValue = "Test Placeholder Text");
+
+		FormFields.editHelpTextField(fieldHelpText = "Test Help Text");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewTextField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormFields.viewFieldPlaceholderText(
+			fieldName = "Text",
+			placeHolder = "Test Placeholder Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormFields.viewTextValue(
+			fieldName = "Text",
+			fieldValue = "Test");
 	}
 
 	@description = "Verify that translations can be previewed"

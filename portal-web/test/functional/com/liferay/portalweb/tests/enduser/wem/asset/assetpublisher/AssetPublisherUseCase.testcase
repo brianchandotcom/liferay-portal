@@ -817,7 +817,7 @@ definition {
 			DDLDataDefinition.save();
 		}
 
-		task ("Add two Documents based on Document Type") {
+		task ("Add two documents based on new document type") {
 			Navigator.gotoNavTab(navTab = "Documents and Media");
 
 			for (var n : list "1,2") {
@@ -859,7 +859,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("View both documents are shown in Asset Publisher") {
+		task ("View both documents are shown in Asset Publisher by default") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
@@ -881,9 +881,7 @@ definition {
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "DM Document Description 1",
 				assetTitle = "Document Title 1");
-		}
 
-		task ("View the second document is not shown in Asset Publisher") {
 			AssetPublisherPortlet.viewAssetNotPresentPG(
 				assetContent = "DM Document Description 2",
 				assetTitle = "Document Title 2");

@@ -149,7 +149,7 @@ definition {
 				PageEditor.addElementToColumn(
 					collectionName = "Content Display",
 					columnNumber = "${columnNumber}",
-					fragmentName = "Collection Category Filter",
+					fragmentName = "Collection Filter",
 					navTab = "Fragments");
 			}
 		}
@@ -158,12 +158,12 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category A",
 				columnNumber = "1",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				vocabularyName = "Vocabulary A");
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Category Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary A");
@@ -173,13 +173,13 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category B",
 				columnNumber = "2",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				multipleSelection = "true",
 				vocabularyName = "Vocabulary B");
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Category Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary B");
@@ -452,7 +452,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				dropTarget = "Header",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				targetFragmentName = "Container");
 		}
 
@@ -460,7 +460,7 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryName = "Category Name",
 				categoryNameList = "Category Name",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				multipleSelection = "true",
 				subcategoryNameList = "Subcategory A,Subcategory B,Subcategory C",
 				vocabularyName = "Vocabulary Name");
@@ -468,7 +468,7 @@ definition {
 
 		task ("View the category name is shown in Collection Category Filter") {
 			AssertTextEquals.assertPartialText(
-				key_fragmentName = "Collection Category Filter",
+				key_fragmentName = "Collection Filter",
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Category Name");
 		}
@@ -762,20 +762,20 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				dropTarget = "Header",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				targetFragmentName = "Container");
 		}
 
 		task ("Select the vocabulary in Collection Category Filter") {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category Name",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("View the vocabulary name shown in Collection Category Filter") {
 			AssertTextEquals.assertPartialText(
-				key_fragmentName = "Collection Category Filter",
+				key_fragmentName = "Collection Filter",
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Vocabulary Name");
 		}
@@ -1026,7 +1026,7 @@ definition {
 				PageEditor.addElementToColumn(
 					collectionName = "Content Display",
 					columnNumber = "${columnNumber}",
-					fragmentName = "Collection Category Filter",
+					fragmentName = "Collection Filter",
 					navTab = "Fragments");
 			}
 		}
@@ -1035,12 +1035,12 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category A",
 				columnNumber = "1",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				vocabularyName = "Vocabulary A");
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "1",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Category Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary A");
@@ -1050,13 +1050,13 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category B",
 				columnNumber = "2",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				multipleSelection = "true",
 				vocabularyName = "Vocabulary B");
 
 			AssertTextEquals.assertPartialText(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Category Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Collection Filter')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
 				value1 = "Vocabulary B");
@@ -1333,21 +1333,21 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				dropTarget = "Header",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				targetFragmentName = "Container");
 		}
 
 		task ("Select the Vocabulary Name in Collection Category Filter and choose Multiple Selection") {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category A,Category B,Category C",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				multipleSelection = "true",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Assert Vocabulary Name is shown in Collection Category Filter") {
 			AssertTextEquals.assertPartialText(
-				key_fragmentName = "Collection Category Filter",
+				key_fragmentName = "Collection Filter",
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Vocabulary Name");
 		}
@@ -1659,20 +1659,20 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				dropTarget = "Header",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				targetFragmentName = "Container");
 		}
 
 		task ("Select the Vocabulary Name in Collection Category Filter") {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category Name",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Assert Vocabulary Name is shown in Collection Category Filter") {
 			AssertTextEquals.assertPartialText(
-				key_fragmentName = "Collection Category Filter",
+				key_fragmentName = "Collection Filter",
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Vocabulary Name");
 		}
@@ -1901,7 +1901,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				dropTarget = "Header",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				targetFragmentName = "Container");
 		}
 
@@ -1909,14 +1909,14 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryName = "Category Name",
 				categoryNameList = "Category Name",
-				fragmentName = "Collection Category Filter",
+				fragmentName = "Collection Filter",
 				subcategoryNameList = "Subcategory Name",
 				vocabularyName = "Topic");
 		}
 
 		task ("Assert Category Name is shown in Collection Category Filter") {
 			AssertTextEquals.assertPartialText(
-				key_fragmentName = "Collection Category Filter",
+				key_fragmentName = "Collection Filter",
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Category Name");
 		}

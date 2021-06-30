@@ -75,7 +75,20 @@ definition {
 	@priority = "5"
 	test CanAssignWorkflowToPageRevision {
 
-		// TODO LRQA-68292 CanAssignWorkflowToPageRevision pending implementation
+			ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Page Revision");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Single Approver",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
 
 	}
 

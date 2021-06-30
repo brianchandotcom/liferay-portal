@@ -117,6 +117,19 @@ public class JSONUtilTest {
 	}
 
 	@Test
+	public void testGetValueWithNestedJSONArray() {
+		JSONObject jsonObject = JSONUtil.put(
+			"alpha",
+			JSONUtil.put("beta", JSONUtil.put(JSONUtil.put("gamma", "delta"))));
+
+		Assert.assertEquals(
+			"delta",
+			JSONUtil.getValue(
+				jsonObject, "JSONObject/alpha", "JSONArray/beta",
+				"JSONObject/0", "Object/gamma"));
+	}
+
+	@Test
 	public void testHasValue() {
 		Assert.assertFalse(
 			JSONUtil.hasValue(JSONUtil.putAll("alpha", "beta", "gamma"), "1"));

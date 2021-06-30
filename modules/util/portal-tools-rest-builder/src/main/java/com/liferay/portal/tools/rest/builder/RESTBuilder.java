@@ -389,13 +389,6 @@ public class RESTBuilder {
 			return yamlString;
 		}
 
-		String clientVersion = clientVersionOptional.get();
-
-		String clientMessage = StringBundler.concat(
-			"A Java client JAR is available for use with the group ID '",
-			clientMavenGroupId, "', artifact ID '",
-			_configYAML.getApiPackagePath(), ".client', and version '");
-
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		Info info = openAPIYAML.getInfo();
@@ -403,8 +396,15 @@ public class RESTBuilder {
 		String description = info.getDescription();
 
 		if (description == null) {
-			description = "";
+			return yamlString;
 		}
+
+		String clientVersion = clientVersionOptional.get();
+
+		String clientMessage = StringBundler.concat(
+			"A Java client JAR is available for use with the group ID '",
+			clientMavenGroupId, "', artifact ID '",
+			_configYAML.getApiPackagePath(), ".client', and version '");
 
 		if (description.contains(clientMessage)) {
 			description = StringUtil.removeSubstring(

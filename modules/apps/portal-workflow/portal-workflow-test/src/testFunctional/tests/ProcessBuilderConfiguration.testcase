@@ -105,12 +105,19 @@ definition {
 	}
 
 	@description = "Verify that the user is able to cancel the assignment"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelAssignment {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68287 CanCancelAssignment pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflowCancel(
+			workflowDefinition = "Single Approver",
+			workflowDefinitionEnd = "No Workflow",
+			workflowResourceValue = "Blogs Entry");
 	}
 
 	@description = "Verify that the user is able to order by Resource"

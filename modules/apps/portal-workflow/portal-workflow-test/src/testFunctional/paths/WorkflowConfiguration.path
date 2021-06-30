@@ -12,6 +12,11 @@
 <tbody>
 <!--RESOURCE_TABLE-->
 <tr>
+	<td>RESOURCE_TABLE_CANCEL</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_workflowResourceValue}')]//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESOURCE_TABLE_WORKFLOW</td>
 	<td>//div[contains(@id,'WorkflowPortlet')]//tr[contains(.,'${key_workflowResourceValue}')]/td[2]</td>
 	<td></td>

@@ -417,6 +417,38 @@ definition {
 			workflowResourceValue = "${workflowResourceValue}");
 	}
 
+	macro configureWorkflowCancel {
+		var key_workflowResourceValue = "${workflowResourceValue}";
+
+		AssertClick.pauseAssertTextClickAt(
+			key_rowEntry = "${workflowResourceValue}",
+			locator1 = "Button#EDIT_ROW",
+			value1 = "Edit");
+
+		if (IsNotVisible(locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT")) {
+			Refresh();
+
+			WaitForSPARefresh();
+
+			AssertClick.pauseAssertTextClickAt(
+				key_rowEntry = "${workflowResourceValue}",
+				locator1 = "Button#EDIT_ROW",
+				value1 = "Edit");
+		}
+
+		Select(
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
+			value1 = "${workflowDefinition}");
+
+		AssertClick(
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_CANCEL",
+			value1 = "Cancel");
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "${workflowDefinitionEnd}",
+			workflowResourceValue = "${workflowResourceValue}");
+	}
+
 	macro configureWorkflowViaPortlet {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Edit");
 

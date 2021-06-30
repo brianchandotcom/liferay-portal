@@ -354,7 +354,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				}
 			),
 			{
-				portletId: '<%= portletDisplay.getPortletName() %>'
+				portletId: '<%= portletDisplay.getId() %>'
 			}
 		);
 	</aui:script>

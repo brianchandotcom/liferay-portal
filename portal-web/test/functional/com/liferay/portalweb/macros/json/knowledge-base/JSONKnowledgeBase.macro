@@ -110,6 +110,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
+				-d externalReferenceCode= \
 				-d portletId=0 \
 				-d parentResourceClassNameId=${parentResourceClassNameId} \
 				-d parentResourcePrimKey=${folderId} \
@@ -153,6 +154,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
+				-d externalReferenceCode= \
 				-d portletId=0 \
 				-d parentResourceClassNameId=${parentResourceClassNameId} \
 				-d parentResourcePrimKey=${parentResourcePrimKey} \
@@ -203,6 +205,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbfolder/add-kb-folder \
+				-d externalReferenceCode= \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentResourceClassNameId=${parentResourceClassNameId} \
@@ -243,6 +246,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbarticle/add-kb-article \
 				-u test@liferay.com:test \
+				-d externalReferenceCode= \
 				-d portletId=0 \
 				-d parentResourceClassNameId=${parentResourceClassNameId} \
 				-d parentResourcePrimKey=${parentResourcePrimKey} \

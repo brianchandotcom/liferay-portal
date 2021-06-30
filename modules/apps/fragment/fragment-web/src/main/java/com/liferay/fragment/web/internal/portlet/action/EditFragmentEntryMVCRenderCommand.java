@@ -15,12 +15,17 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -39,7 +44,22 @@ public class EditFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/edit_fragment_entry.jsp";
+		long fragmentEntryId = ParamUtil.getLong(
+			renderRequest, "fragmentEntryId");
+
+		try {
+			_fragmentEntryLocalService.getFragmentEntry(fragmentEntryId);
+
+			return "/edit_fragment_entry.jsp";
+		}
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
+
+			return "/error.jsp";
+		}
 	}
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

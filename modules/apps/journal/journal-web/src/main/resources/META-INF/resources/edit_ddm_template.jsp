@@ -65,65 +65,35 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 						%>
 
 						<aui:button cssClass="btn-sm mr-3" onClick="<%= taglibOnClickSaveTemplate %>" type="submit" value="save" />
-
-						<clay:button
-							borderless="<%= true %>"
-							icon="cog"
-							id='<%= liferayPortletResponse.getNamespace() + "contextualSidebarButton" %>'
-							small="<%= true %>"
-						/>
 					</div>
 				</li>
 			</ul>
 		</clay:container-fluid>
 	</nav>
 
-	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
-		<div class="sidebar-header">
-			<h4 class="component-title">
-				<liferay-ui:message key="properties" />
-			</h4>
-		</div>
+	<div class="ddm-template-editor">
+		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
 
-		<div class="sidebar-body">
-			<liferay-frontend:form-navigator
-				fieldSetCssClass="panel-group-flush"
-				formModelBean="<%= ddmTemplate %>"
-				id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_TEMPLATE %>"
-				showButtons="<%= false %>"
-			/>
-		</div>
-	</div>
-
-	<div class="contextual-sidebar-content">
-		<clay:container-fluid
-			cssClass="container-view"
-		>
-			<div class="sheet">
-				<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-				<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
-
-				<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
-					<div class="alert alert-warning">
-						<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
-					</div>
-				</c:if>
-
-				<aui:input name="scriptContent" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getScript() %>" />
-
-				<div id="<portlet:namespace />ddmTemplateEditor">
-					<div class="inline-item my-5 p-5 w-100">
-						<span aria-hidden="true" class="loading-animation"></span>
-					</div>
-
-					<react:component
-						componentId="ddmTemplateEditor"
-						module="ddm_template_editor/components/App"
-						props="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
-					/>
-				</div>
+		<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
 			</div>
-		</clay:container-fluid>
+		</c:if>
+
+		<div>
+			<div id="<portlet:namespace />ddmTemplateEditor">
+				<div class="inline-item my-5 p-5 w-100">
+					<span aria-hidden="true" class="loading-animation"></span>
+				</div>
+
+				<react:component
+					componentId="ddmTemplateEditor"
+					module="ddm_template_editor/components/App"
+					props="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
+				/>
+			</div>
+		</div>
 	</div>
 </aui:form>
 
@@ -137,37 +107,4 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	Liferay.after('<portlet:namespace />saveTemplate', () => {
 		submitForm(document.<portlet:namespace />fm);
 	});
-
-	var contextualSidebarButton = document.getElementById(
-		'<portlet:namespace />contextualSidebarButton'
-	);
-	var contextualSidebarContainer = document.getElementById(
-		'<portlet:namespace />contextualSidebarContainer'
-	);
-
-	if (
-		contextualSidebarContainer &&
-		window.innerWidth > Liferay.BREAKPOINTS.PHONE
-	) {
-		contextualSidebarContainer.classList.add('contextual-sidebar-visible');
-	}
-
-	if (contextualSidebarButton) {
-		contextualSidebarButton.addEventListener('click', (event) => {
-			if (
-				contextualSidebarContainer.classList.contains(
-					'contextual-sidebar-visible'
-				)
-			) {
-				contextualSidebarContainer.classList.remove(
-					'contextual-sidebar-visible'
-				);
-			}
-			else {
-				contextualSidebarContainer.classList.add(
-					'contextual-sidebar-visible'
-				);
-			}
-		});
-	}
 </aui:script>

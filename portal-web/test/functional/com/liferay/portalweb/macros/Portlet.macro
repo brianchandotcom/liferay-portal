@@ -171,6 +171,76 @@ definition {
 			value1 = "${applicationDecorator}");
 	}
 
+	macro configureCustomBorderStylesViaLookAnfeelPG {
+		Navigator.gotoNavTab(navTab = "Border Styles");
+
+		if (isSet(sameForAllList)) {
+			for (var fieldsetLabel : list "${sameForAllList}") {
+				Check.checkToggleSwitch(
+					key_fieldLabel = "Same for All",
+					key_fieldsetLabel = "${fieldsetLabel}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
+			}
+		}
+
+		if (isSet(borderWidthAttributeList)) {
+			for (var borderWidthAttribute : list "${borderWidthAttributeList}") {
+				var fieldLabel = StringUtil.extractFirst("${borderWidthAttribute}", "-");
+
+				var value = StringUtil.extractLast("${borderWidthAttribute}", "-");
+
+				Type(
+					key_value = "${fieldLabel}",
+					locator1 = "TextInput#ANY_ID",
+					value1 = "${value}");
+			}
+		}
+
+		if (isSet(borderWidthUnitList)) {
+			for (var borderWidthSelect : list "${borderWidthUnitList}") {
+				var fieldLabel = StringUtil.extractFirst("${borderWidthSelect}", "-");
+
+				var value = StringUtil.extractLast("${borderWidthSelect}", "-");
+
+				Select(
+					key_fieldName = "${fieldLabel}",
+					locator1 = "Select#ANY_ID",
+					value1 = "${value}");
+			}
+		}
+
+		if (isSet(borderStyleAttributeList)) {
+			for (var borderStyleAttribute : list "${borderStyleAttributeList}") {
+				var fieldLabel = StringUtil.extractFirst("${borderStyleAttribute}", "-");
+
+				var value = StringUtil.extractLast("${borderStyleAttribute}", "-");
+
+				Select(
+					key_fieldName = "${fieldLabel}",
+					locator1 = "Select#ANY_ID",
+					value1 = "${value}");
+			}
+		}
+
+		if (isSet(borderColorAttributeList)) {
+			for (var borderColorAttribute : list "${borderColorAttributeList}") {
+				var fieldLabel = StringUtil.extractFirst("${borderColorAttribute}", "-");
+
+				var value = StringUtil.extractLast("${borderColorAttribute}", "-");
+
+				Click(
+					key_fieldLabel = "${fieldLabel}",
+					locator1 = "PageEditor#ITEM_SELECTOR_DROPDOWN_TOGGLE");
+
+				Click(
+					key_colorSwatchItem = "${value}",
+					locator1 = "Button#COLOR_SWATCH_ITEM");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureCustomStylesViaLookandfeelPG {
 		Navigator.gotoNavTab(navTab = "Text Styles");
 

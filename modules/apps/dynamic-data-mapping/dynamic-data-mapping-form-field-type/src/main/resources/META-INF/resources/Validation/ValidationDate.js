@@ -88,7 +88,7 @@ const ValidationDate = ({
 				}}
 				options={selectedParameter.options}
 				placeholder={Liferay.Language.get('choose-an-option')}
-				readOnly={readOnly}
+				readOnly={localizationMode || readOnly}
 				showEmptyOption={false}
 				value={[selectedParameter.options[0].name]}
 				visible={visible}

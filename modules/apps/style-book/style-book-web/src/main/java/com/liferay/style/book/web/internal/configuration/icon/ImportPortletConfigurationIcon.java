@@ -39,7 +39,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK,
+	property = {
+		"javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK,
+		"path=/style_books", "path=/style_books/style_books"
+	},
 	service = PortletConfigurationIcon.class
 )
 public class ImportPortletConfigurationIcon

@@ -239,24 +239,36 @@ public class AccountResourceImpl
 
 	private Map<String, Map<String, String>> _getActions(Long accountEntryId) {
 		return HashMapBuilder.<String, Map<String, String>>put(
+			"create-organization-accounts",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"postOrganizationAccounts",
+				_accountEntryModelResourcePermission)
+		).put(
+			"create-organization-accounts-by-external-reference-code",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"postOrganizationAccountsByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
 			"delete",
 			addAction(
 				ActionKeys.DELETE, accountEntryId, "deleteAccount",
 				_accountEntryModelResourcePermission)
 		).put(
-			"delete",
+			"delete-by-external-reference-code",
 			addAction(
 				ActionKeys.DELETE, accountEntryId,
 				"deleteAccountByExternalReferenceCode",
 				_accountEntryModelResourcePermission)
 		).put(
-			"delete",
+			"delete-organization-accounts",
 			addAction(
 				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
 				"deleteOrganizationAccounts",
 				_accountEntryModelResourcePermission)
 		).put(
-			"delete",
+			"delete-organization-accounts-by-external-reference-code",
 			addAction(
 				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
 				"deleteOrganizationAccountsByExternalReferenceCode",
@@ -267,10 +279,33 @@ public class AccountResourceImpl
 				ActionKeys.VIEW, accountEntryId, "getAccount",
 				_accountEntryModelResourcePermission)
 		).put(
-			"get",
+			"get-by-external-reference-code",
 			addAction(
 				ActionKeys.VIEW, accountEntryId,
 				"getAccountByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"move-organization-accounts",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"patchOrganizationMoveAccounts",
+				_accountEntryModelResourcePermission)
+		).put(
+			"move-organization-accounts-by-external-reference-code",
+			addAction(
+				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+				"patchOrganizationMoveAccountsByExternalReferenceCode",
+				_accountEntryModelResourcePermission)
+		).put(
+			"replace",
+			addAction(
+				ActionKeys.UPDATE, accountEntryId, "putAccount",
+				_accountEntryModelResourcePermission)
+		).put(
+			"replace-by-external-reference-code",
+			addAction(
+				ActionKeys.UPDATE, accountEntryId,
+				"putAccountByExternalReferenceCode",
 				_accountEntryModelResourcePermission)
 		).put(
 			"update",
@@ -278,45 +313,10 @@ public class AccountResourceImpl
 				ActionKeys.UPDATE, accountEntryId, "patchAccount",
 				_accountEntryModelResourcePermission)
 		).put(
-			"update",
+			"update-by-external-reference-code",
 			addAction(
 				ActionKeys.UPDATE, accountEntryId,
 				"patchAccountByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"patchOrganizationMoveAccounts",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"patchOrganizationMoveAccountsByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"postOrganizationAccounts",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"postOrganizationAccountsByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update",
-			addAction(
-				ActionKeys.UPDATE, accountEntryId, "putAccount",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update",
-			addAction(
-				ActionKeys.UPDATE, accountEntryId,
-				"putAccountByExternalReferenceCode",
 				_accountEntryModelResourcePermission)
 		).build();
 	}

@@ -128,12 +128,18 @@ public class AccountEntryModelResourcePermission
 			}
 		}
 
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+		long accountEntryGroupId = 0L;
+
+		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
 			accountEntryId);
 
+		if (accountEntry != null) {
+			accountEntryGroupId = accountEntry.getAccountEntryGroupId();
+		}
+
 		return permissionChecker.hasPermission(
-			accountEntry.getAccountEntryGroupId(), AccountEntry.class.getName(),
-			accountEntryId, actionId);
+			accountEntryGroupId, AccountEntry.class.getName(), accountEntryId,
+			actionId);
 	}
 
 	@Override

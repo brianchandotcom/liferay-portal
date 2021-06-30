@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
+	configurationPid = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
 	factory = "remote.web.component.friendly.url.mapper",
 	service = FriendlyURLMapper.class
 )
@@ -56,11 +57,12 @@ public class RemoteWebComponentFriendlyURLMapper
 
 		addParametersIncludedInPath(liferayPortletURL, routeParameters);
 
-		return StringPool.SLASH.concat(
-			getMapping()
-		).concat(
-			friendlyURLPath
-		);
+		StringBuilder sb = new StringBuilder(StringPool.SLASH);
+
+		sb.append(getMapping());
+		sb.append(friendlyURLPath);
+
+		return sb.toString();
 	}
 
 	@Override

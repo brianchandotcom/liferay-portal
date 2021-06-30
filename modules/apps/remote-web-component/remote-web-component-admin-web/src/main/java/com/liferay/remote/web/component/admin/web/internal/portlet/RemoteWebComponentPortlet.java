@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -80,7 +81,7 @@ public class RemoteWebComponentPortlet
 
 		String elementName = _remoteWebComponentConfiguration.elementName();
 
-		headers(renderRequest, renderResponse, elementName);
+		_headers(renderRequest, renderResponse, elementName);
 
 		try {
 			PrintWriter printWriter = renderResponse.getWriter();
@@ -122,23 +123,25 @@ public class RemoteWebComponentPortlet
 					sb.append(k.replaceAll("\\.", "-"));
 					sb.append("=\"");
 
-					if (v.getClass(
-						).isArray()) {
+					Class<?> attributeValueClass = v.getClass();
+
+					if (attributeValueClass.isArray()) {
+						List<Object> list = Arrays.asList(v);
+
+						Stream<?> stream = list.stream();
 
 						sb.append(
-							Arrays.asList(
-								v
-							).stream(
-							).map(
+							stream.map(
 								String::valueOf
 							).collect(
 								joining(" ")
 							));
 					}
 					else if (v instanceof Collection) {
+						Stream<?> stream = ((Collection<?>)v).stream();
+
 						sb.append(
-							((Collection<?>)v).stream(
-							).map(
+							stream.map(
 								String::valueOf
 							).collect(
 								joining(" ")
@@ -187,7 +190,7 @@ public class RemoteWebComponentPortlet
 		);
 	}
 
-	private void headers(
+	private void _headers(
 			RenderRequest renderRequest, MimeResponse mimeResponse,
 			String elementName)
 		throws PortletException {

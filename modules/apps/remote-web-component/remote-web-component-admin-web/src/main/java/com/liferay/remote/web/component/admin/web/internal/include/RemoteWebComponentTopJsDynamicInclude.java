@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
+	configurationPid = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
 	factory = "remote.web.component.top.js.dynamic.include",
 	service = DynamicInclude.class
 )

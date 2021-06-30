@@ -43,7 +43,9 @@ const DiagramHeader = () => {
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton
-							alt="Click-to-select-custom-diameter"
+							alt={Liferay.Language.get(
+								'click-to-select-custom-diameter'
+							)}
 							className="ml-3 select-diameter"
 							displayType="secondary"
 						>
@@ -99,11 +101,13 @@ const DiagramHeader = () => {
 					</ClayDropDown.ItemList>
 
 					<ClayDropDown.Divider />
+
 					<ClayDropDown.Caption>
 						<div className="form-group">
 							<label htmlFor="slider">
 								{Liferay.Language.get('custom-radius')}
 							</label>
+
 							<ClaySlider
 								id={`${namespace}custom-radius`}
 								onValueChange={(item) =>
@@ -115,8 +119,9 @@ const DiagramHeader = () => {
 								value={addNewPinState.radius}
 							/>
 						</div>
+
 						<ClayButton
-							block="true"
+							block
 							displayType="primary"
 							onClick={() => setAddPinHandler(true)}
 						>

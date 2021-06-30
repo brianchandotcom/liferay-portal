@@ -33,6 +33,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -87,10 +88,9 @@ public class SPAPortletFilter implements RenderFilter {
 
 				Portlet portlet = liferayPortletRequest.getPortlet();
 
-				if (columnPortlets.stream(
-					).anyMatch(
-						portlet::equals
-					)) {
+				Stream<Portlet> portletStream = columnPortlets.stream();
+
+				if (portletStream.anyMatch(portlet::equals)) {
 
 					if (WindowState.NORMAL == renderRequest.getWindowState()) {
 						try {

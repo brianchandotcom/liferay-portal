@@ -200,7 +200,7 @@ public class RemoteWebComponentPortlet
 		String routerBaseSelf = _http.removeDomain(renderURL.toString());
 
 		String headerContent = StringUtil.replace(
-			StringUtil.read(RemoteWebComponentPortlet.class, "header.js"),
+			StringUtil.read(RemoteWebComponentPortlet.class, "header.html"),
 			new String[] {
 				"$[ELEMENT_NAME]$", "$[INSTANCE_ID]$", "$[NAME]$",
 				"$[ROUTER_BASE_SELF]$", "$[ROUTER_BASE_SELF_NORMAL]$",

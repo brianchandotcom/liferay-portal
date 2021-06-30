@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
@@ -40,8 +41,9 @@ public class SPAPortletFilterManager {
 	protected void activate() {
 		Dictionary<String, Object> componentProperties = new Hashtable<>();
 
-		String[] portletNames = _portlets.stream(
-		).map(
+		Stream<Portlet> portletStream = _portlets.stream();
+
+		String[] portletNames = portletStream.map(
 			Portlet::getRootPortletId
 		).distinct(
 		).toArray(

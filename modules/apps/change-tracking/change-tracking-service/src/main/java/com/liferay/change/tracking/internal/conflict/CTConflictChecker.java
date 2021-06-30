@@ -338,52 +338,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					continue;
 				}
 
-				Column<?, Long> childPKColumn =
-					tableJoinHolder.getChildPKColumn();
-
-				Table<?> childTable = childPKColumn.getTable();
-
-				Column<?, Long> ctCollectionIdColumn = childTable.getColumn(
-					"ctCollectionId", Long.class);
-
-				Predicate missingRequirementWherePredicate =
-					tableJoinHolder.getMissingRequirementWherePredicate();
-
-				missingRequirementWherePredicate =
-					missingRequirementWherePredicate.and(
-						childPKColumn.in(
-							ctEntryQuery
-						).and(
-							ctCollectionIdColumn.eq(_sourceCTCollectionId)
-						));
-
-				Column<?, Long> parentPKColumn =
-					tableJoinHolder.getParentPKColumn();
-
-				Table<?> parentTable = parentPKColumn.getTable();
-
-				ctCollectionIdColumn = parentTable.getColumn(
-					"ctCollectionId", Long.class);
-
-				if ((ctCollectionIdColumn != null) &&
-					ctCollectionIdColumn.isPrimaryKey()) {
-
-					missingRequirementWherePredicate =
-						missingRequirementWherePredicate.and(
-							ctCollectionIdColumn.neq(
-								_sourceCTCollectionId
-							).or(
-								ctCollectionIdColumn.neq(_targetCTCollectionId)
-							).or(
-								parentPKColumn.isNull()
-							).withParentheses());
-				}
-
-				WhereStep whereStep =
-					tableJoinHolder.getMissingRequirementWhereStep();
-
-				DSLQuery nextDSLQuery = whereStep.where(
-					missingRequirementWherePredicate);
+				DSLQuery nextDSLQuery = _getMissingRequirementsDSLQuery(
+					ctEntryQuery, tableJoinHolder);
 
 				if (dslQuery == null) {
 					dslQuery = nextDSLQuery;
@@ -539,6 +495,52 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		catch (SQLException sqlException) {
 			throw new ORMException(sqlException);
 		}
+	}
+
+	private DSLQuery _getMissingRequirementsDSLQuery(
+		DSLQuery ctEntryQuery, TableJoinHolder tableJoinHolder) {
+
+		Column<?, Long> childPKColumn = tableJoinHolder.getChildPKColumn();
+
+		Table<?> childTable = childPKColumn.getTable();
+
+		Column<?, Long> ctCollectionIdColumn = childTable.getColumn(
+			"ctCollectionId", Long.class);
+
+		Predicate missingRequirementWherePredicate =
+			tableJoinHolder.getMissingRequirementWherePredicate();
+
+		missingRequirementWherePredicate = missingRequirementWherePredicate.and(
+			childPKColumn.in(
+				ctEntryQuery
+			).and(
+				ctCollectionIdColumn.eq(_sourceCTCollectionId)
+			));
+
+		Column<?, Long> parentPKColumn = tableJoinHolder.getParentPKColumn();
+
+		Table<?> parentTable = parentPKColumn.getTable();
+
+		ctCollectionIdColumn = parentTable.getColumn(
+			"ctCollectionId", Long.class);
+
+		if ((ctCollectionIdColumn != null) &&
+			ctCollectionIdColumn.isPrimaryKey()) {
+
+			missingRequirementWherePredicate =
+				missingRequirementWherePredicate.and(
+					ctCollectionIdColumn.neq(
+						_sourceCTCollectionId
+					).or(
+						ctCollectionIdColumn.neq(_targetCTCollectionId)
+					).or(
+						parentPKColumn.isNull()
+					).withParentheses());
+		}
+
+		WhereStep whereStep = tableJoinHolder.getMissingRequirementWhereStep();
+
+		return whereStep.where(missingRequirementWherePredicate);
 	}
 
 	private List<Long> _getModifiedPrimaryKeys(

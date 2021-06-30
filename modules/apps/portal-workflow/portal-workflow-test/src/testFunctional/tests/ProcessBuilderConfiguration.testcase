@@ -279,7 +279,26 @@ definition {
 	@priority = "4"
 	test CanSearchByAssetType {
 
-		// TODO LRQA-68278 CanSearchByAssetType pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "Article");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#SEARCH_BUTTON");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Knowledge Base Article",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Web Content Article",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
 
 	}
 

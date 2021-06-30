@@ -159,6 +159,7 @@ definition {
 				categoryNameList = "Category A",
 				columnNumber = "1",
 				fragmentName = "Collection Filter",
+				singleSelection = "true",
 				vocabularyName = "Vocabulary A");
 
 			AssertTextEquals.assertPartialText(
@@ -174,7 +175,6 @@ definition {
 				categoryNameList = "Category B",
 				columnNumber = "2",
 				fragmentName = "Collection Filter",
-				multipleSelection = "true",
 				vocabularyName = "Vocabulary B");
 
 			AssertTextEquals.assertPartialText(
@@ -461,7 +461,6 @@ definition {
 				categoryName = "Category Name",
 				categoryNameList = "Category Name",
 				fragmentName = "Collection Filter",
-				multipleSelection = "true",
 				subcategoryNameList = "Subcategory A,Subcategory B,Subcategory C",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -770,6 +769,7 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category Name",
 				fragmentName = "Collection Filter",
+				singleSelection = "true",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -1036,6 +1036,7 @@ definition {
 				categoryNameList = "Category A",
 				columnNumber = "1",
 				fragmentName = "Collection Filter",
+				singleSelection = "true",
 				vocabularyName = "Vocabulary A");
 
 			AssertTextEquals.assertPartialText(
@@ -1051,7 +1052,6 @@ definition {
 				categoryNameList = "Category B",
 				columnNumber = "2",
 				fragmentName = "Collection Filter",
-				multipleSelection = "true",
 				vocabularyName = "Vocabulary B");
 
 			AssertTextEquals.assertPartialText(
@@ -1341,7 +1341,6 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category A,Category B,Category C",
 				fragmentName = "Collection Filter",
-				multipleSelection = "true",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -1667,6 +1666,7 @@ definition {
 			PageEditor.editCollectionCategoryFilter(
 				categoryNameList = "Category Name",
 				fragmentName = "Collection Filter",
+				singleSelection = "true",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -1910,6 +1910,7 @@ definition {
 				categoryName = "Category Name",
 				categoryNameList = "Category Name",
 				fragmentName = "Collection Filter",
+				singleSelection = "true",
 				subcategoryNameList = "Subcategory Name",
 				vocabularyName = "Topic");
 		}

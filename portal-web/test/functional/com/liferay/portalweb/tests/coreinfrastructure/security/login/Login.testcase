@@ -621,9 +621,11 @@ definition {
 			configurationName = "Token Based SSO",
 			configurationScope = "System Scope");
 
+		SystemSettings.resetConfiguration();
+
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
-		PortletEntry.update();
+		SystemSettings.saveConfiguration();
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",
@@ -631,7 +633,7 @@ definition {
 
 		FormFields.disableCheckbox(fieldName = "Enabled");
 
-		PortletEntry.update();
+		SystemSettings.saveConfiguration();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -658,9 +660,11 @@ definition {
 			configurationName = "Token Based SSO",
 			configurationScope = "Virtual Instance Scope");
 
+		SystemSettings.resetConfiguration();
+
 		FormFields.enableCheckbox(fieldName = "enabled");
 
-		PortletEntry.save();
+		SystemSettings.saveConfiguration();
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",

@@ -127,9 +127,11 @@ public class RemoteWebComponentPortletRegistrar {
 		componentProperties.put(
 			"com.liferay.portlet.display-category",
 			"category." + displayCategory);
+
 		componentProperties.put(
 			"com.liferay.portlet.instanceable",
 			String.valueOf(_remoteWebComponentConfiguration.instanceable()));
+
 		//componentProperties.put(
 
 		//    "com.liferay.portlet.single-page-application", "false");

@@ -14,6 +14,7 @@
 
 package com.liferay.remote.web.component.admin.web.internal.util;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -22,9 +23,9 @@ import org.osgi.framework.FrameworkUtil;
 public class LastModified {
 
 	public static long get() {
-		return FrameworkUtil.getBundle(
-			LastModified.class
-		).getLastModified();
+		Bundle bundle = FrameworkUtil.getBundle(LastModified.class);
+
+		return bundle.getLastModified();
 	}
 
 	public static String getString() {

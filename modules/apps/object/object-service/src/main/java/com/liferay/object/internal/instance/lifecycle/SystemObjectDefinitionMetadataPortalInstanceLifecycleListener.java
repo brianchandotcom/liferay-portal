@@ -15,6 +15,8 @@
 package com.liferay.object.internal.instance.lifecycle;
 
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -24,14 +26,13 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Marco Leo
@@ -50,33 +51,54 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addSystemObjectDefinitionMetadata(
-			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
-		throws Exception {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_systemObjectDefinitionMetadatas = ServiceTrackerListFactory.open(
+			bundleContext, SystemObjectDefinitionMetadata.class, null,
+			new ServiceTrackerCustomizer
+				<SystemObjectDefinitionMetadata,
+				 SystemObjectDefinitionMetadata>() {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Adding " + systemObjectDefinitionMetadata);
-		}
+				@Override
+				public SystemObjectDefinitionMetadata addingService(
+					ServiceReference<SystemObjectDefinitionMetadata>
+						serviceReference) {
 
-		_systemObjectDefinitionMetadatas.add(systemObjectDefinitionMetadata);
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata =
+							bundleContext.getService(serviceReference);
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> _apply(companyId, systemObjectDefinitionMetadata));
+					_companyLocalService.forEachCompanyId(
+						companyId -> _apply(
+							companyId, systemObjectDefinitionMetadata));
+
+					return systemObjectDefinitionMetadata;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<SystemObjectDefinitionMetadata>
+						serviceReference,
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<SystemObjectDefinitionMetadata>
+						serviceReference,
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata) {
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
 	}
 
-	protected void removeSystemObjectDefinitionMetadata(
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Removing " + systemObjectDefinitionMetadata);
-		}
-
-		_systemObjectDefinitionMetadatas.remove(systemObjectDefinitionMetadata);
+	@Deactivate
+	protected void deactivate() {
+		_systemObjectDefinitionMetadatas.close();
 	}
 
 	@Reference(
@@ -104,7 +126,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final List<SystemObjectDefinitionMetadata>
-		_systemObjectDefinitionMetadatas = new CopyOnWriteArrayList<>();
+	private ServiceTrackerList
+		<SystemObjectDefinitionMetadata, SystemObjectDefinitionMetadata>
+			_systemObjectDefinitionMetadatas;
 
 }

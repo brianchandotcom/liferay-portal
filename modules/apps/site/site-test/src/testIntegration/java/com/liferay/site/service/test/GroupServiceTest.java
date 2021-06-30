@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -511,6 +512,23 @@ public class GroupServiceTest {
 
 		_groupService.updateFriendlyURL(
 			_group.getGroupId(), "/" + _group.getGroupId());
+	}
+
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testFriendlyURLSetToLanguageKey() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		Locale locale = LocaleUtil.US;
+
+		String languageId = StringUtil.toLowerCase(
+			LocaleUtil.toLanguageId(locale));
+
+		String i18nPathLanguageId =
+			StringPool.SLASH +
+				PortalUtil.getI18nPathLanguageId(locale, languageId);
+
+		_groupService.updateFriendlyURL(
+			_group.getGroupId(), i18nPathLanguageId);
 	}
 
 	@Test(expected = GroupFriendlyURLException.class)

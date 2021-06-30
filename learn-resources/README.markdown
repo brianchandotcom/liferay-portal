@@ -59,7 +59,6 @@ In your module's JSP file, to the resources using `liferay-learn:message` tags. 
 
 The first line includes the `liferay-learn` tag library. The `liferay-learn:message` tag links to the `download-app` resource in the `learn-resources/marketplace-store-web.json` file. When the JSP renders, the text *How can I download an app?* links to the resource located at <https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/installing-apps/downloading-apps.html>.
 
-
 That's how you link to Liferay Learn resources!
 
 ## Guidelines

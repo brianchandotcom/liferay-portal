@@ -130,7 +130,7 @@ public class DBUpgrader {
 					ProxyModeThreadLocal.setWithSafeCloseable(false)) {
 
 				if (PropsValues.UPGRADE_REPORT_ENABLED) {
-					_registerAppenderDependency();
+					_startUpgradeLogAppender();
 				}
 
 				upgrade();
@@ -153,7 +153,7 @@ public class DBUpgrader {
 		}
 		finally {
 			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				_unregisterAppenderDependency();
+				_stopUpgradeLogAppender();
 			}
 		}
 	}
@@ -244,7 +244,25 @@ public class DBUpgrader {
 		}
 	}
 
-	private static void _registerAppenderDependency() {
+	private static void _registerModuleServiceLifecycle(
+		String moduleServiceLifecycle) {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(
+			ModuleServiceLifecycle.class,
+			new ModuleServiceLifecycle() {
+			},
+			HashMapBuilder.<String, Object>put(
+				"module.service.lifecycle", moduleServiceLifecycle
+			).put(
+				"service.vendor", ReleaseInfo.getVendor()
+			).put(
+				"service.version", ReleaseInfo.getVersion()
+			).build());
+	}
+
+	private static void _startUpgradeLogAppender() {
 		final ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
@@ -275,25 +293,7 @@ public class DBUpgrader {
 		serviceDependencyManager.registerDependencies(Appender.class);
 	}
 
-	private static void _registerModuleServiceLifecycle(
-		String moduleServiceLifecycle) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.registerService(
-			ModuleServiceLifecycle.class,
-			new ModuleServiceLifecycle() {
-			},
-			HashMapBuilder.<String, Object>put(
-				"module.service.lifecycle", moduleServiceLifecycle
-			).put(
-				"service.vendor", ReleaseInfo.getVendor()
-			).put(
-				"service.version", ReleaseInfo.getVersion()
-			).build());
-	}
-
-	private static void _unregisterAppenderDependency() {
+	private static void _stopUpgradeLogAppender() {
 		if (_appender != null) {
 			_appender.stop();
 		}

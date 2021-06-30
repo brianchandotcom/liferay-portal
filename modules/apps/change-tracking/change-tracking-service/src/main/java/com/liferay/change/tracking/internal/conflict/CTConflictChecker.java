@@ -31,10 +31,13 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.WhereStep;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
+import com.liferay.petra.sql.dsl.spi.query.Join;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -60,9 +63,11 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -500,6 +505,43 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	private DSLQuery _getMissingRequirementsDSLQuery(
 		DSLQuery ctEntryQuery, TableJoinHolder tableJoinHolder) {
 
+		WhereStep whereStep = tableJoinHolder.getMissingRequirementWhereStep();
+
+		Deque<Join> joins = new LinkedList<>();
+
+		ASTNode astNode = whereStep;
+
+		while (astNode instanceof Join) {
+			Join join = (Join)astNode;
+
+			joins.push(join);
+
+			astNode = join.getChild();
+		}
+
+		Join join = null;
+
+		JoinStep joinStep = (JoinStep)astNode;
+
+		while ((join = joins.poll()) != null) {
+			Predicate predicate = join.getOnPredicate();
+
+			Table<?> table = join.getTable();
+
+			Column<?, Long> ctCollectionIdColumn = table.getColumn(
+				"ctCollectionId", Long.class);
+
+			if (ctCollectionIdColumn != null) {
+				predicate = predicate.and(
+					ctCollectionIdColumn.in(
+						new Long[] {
+							_sourceCTCollectionId, _targetCTCollectionId
+						}));
+			}
+
+			joinStep = joinStep.leftJoinOn(table, predicate);
+		}
+
 		Column<?, Long> childPKColumn = tableJoinHolder.getChildPKColumn();
 
 		Table<?> childTable = childPKColumn.getTable();
@@ -510,37 +552,13 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Predicate missingRequirementWherePredicate =
 			tableJoinHolder.getMissingRequirementWherePredicate();
 
-		missingRequirementWherePredicate = missingRequirementWherePredicate.and(
-			childPKColumn.in(
-				ctEntryQuery
-			).and(
-				ctCollectionIdColumn.eq(_sourceCTCollectionId)
-			));
-
-		Column<?, Long> parentPKColumn = tableJoinHolder.getParentPKColumn();
-
-		Table<?> parentTable = parentPKColumn.getTable();
-
-		ctCollectionIdColumn = parentTable.getColumn(
-			"ctCollectionId", Long.class);
-
-		if ((ctCollectionIdColumn != null) &&
-			ctCollectionIdColumn.isPrimaryKey()) {
-
-			missingRequirementWherePredicate =
-				missingRequirementWherePredicate.and(
-					ctCollectionIdColumn.neq(
-						_sourceCTCollectionId
-					).or(
-						ctCollectionIdColumn.neq(_targetCTCollectionId)
-					).or(
-						parentPKColumn.isNull()
-					).withParentheses());
-		}
-
-		WhereStep whereStep = tableJoinHolder.getMissingRequirementWhereStep();
-
-		return whereStep.where(missingRequirementWherePredicate);
+		return joinStep.where(
+			missingRequirementWherePredicate.and(
+				childPKColumn.in(
+					ctEntryQuery
+				).and(
+					ctCollectionIdColumn.eq(_sourceCTCollectionId)
+				)));
 	}
 
 	private List<Long> _getModifiedPrimaryKeys(

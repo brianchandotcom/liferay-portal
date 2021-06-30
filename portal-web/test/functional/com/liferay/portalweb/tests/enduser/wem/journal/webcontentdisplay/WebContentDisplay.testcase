@@ -584,6 +584,66 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
+	@description = "This is a test for LPS-129438. View the changes of Border Styles in WCD on widget page."
+	@priority = "4"
+	test ConfigureLookAndFeelBorderStyleOfWCD {
+		task ("View the default border width and border color of WCD") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			for (var borderType : list "border-top-width,border-right-width,border-bottom-width,border-left-width") {
+				AssertCssValue(
+					locator1 = "Portlet#PORTLET_CONTENT",
+					locator2 = "${borderType}",
+					value1 = "1px");
+			}
+
+			for (var borderType : list "border-top-color,border-right-color,border-bottom-color,border-left-color") {
+				AssertCssValue(
+					locator1 = "Portlet#PORTLET_CONTENT",
+					locator2 = "${borderType}",
+					value1 = "rgba(0, 0, 0, 0)");
+			}
+		}
+
+		task ("Open Look and Feel configuration on WCD") {
+			Portlet.gotoPortletOptions(
+				portletName = "Web Content Display",
+				portletOption = "Look and Feel Configuration");
+		}
+
+		task ("Define the border width and border color") {
+			IFrame.selectConfigurationFrame();
+
+			Portlet.configureCustomBorderStylesViaLookAnfeelPG(
+				borderColorAttributeList = "Top-FF0D0D",
+				borderWidthAttributeList = "WidthTop-15",
+				borderWidthUnitList = "WidthTop-px",
+				sameForAllList = "Border Width,Border Color");
+
+			IFrame.closeFrame();
+
+			Refresh();
+		}
+
+		task ("View the border width and border color of WCD") {
+			for (var borderType : list "border-top-width,border-right-width,border-bottom-width,border-left-width") {
+				AssertCssValue(
+					locator1 = "Portlet#PORTLET_CONTENT",
+					locator2 = "${borderType}",
+					value1 = "15px");
+			}
+
+			for (var borderType : list "border-top-color,border-right-color,border-bottom-color,border-left-color") {
+				AssertCssValue(
+					locator1 = "Portlet#PORTLET_CONTENT",
+					locator2 = "${borderType}",
+					value1 = "rgba(255, 13, 13, 1)");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-129944. The user could configure WCD when selected web content based on template with embedded widget."
 	@priority = "4"
 	test ConfigureWCDWhenSelectedWebContentBasedOnTemplateWithEmbeddedWidget {

@@ -175,6 +175,10 @@ $h4 liferay.workspace.themes.java.build
 Set this to true to build the theme projects using the Liferay Portal Tools
 Theme Builder. The default value is `false`.
 
+$h4 liferay.workspace.wars.dir
+Set the folder that contains all legacy WAR projects. Set to `*` to search all
+subdirectories. The default value is `modules`.
+
 $h4 microsoft.translator.subscription.key
 Set the subscription key for Microsoft Translation integration. This is service
 is used to provide automatic translations for `buildLang`.

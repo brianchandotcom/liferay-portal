@@ -162,7 +162,7 @@ definition {
 	@description = "Verify that an image can be uploaded from Liferay Documents and Media"
 	@priority = "5"
 	test CanUploadFromDocumentsAndMedia {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

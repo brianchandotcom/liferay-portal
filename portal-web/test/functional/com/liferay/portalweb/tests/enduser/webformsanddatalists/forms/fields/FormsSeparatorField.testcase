@@ -34,7 +34,7 @@ definition {
 	@description = "Verify that a Separator Field can be created"
 	@priority = "5"
 	test CanBeCreated {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -63,7 +63,7 @@ definition {
 	@description = "Verify that a Separator Field can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -100,7 +100,7 @@ definition {
 	@description = "Verify that a Separator Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -137,7 +137,7 @@ definition {
 	@description = "Verify that a Separator Field can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -180,7 +180,7 @@ definition {
 	@description = "Verify that a Separator Field can be set to repeatable"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -224,7 +224,7 @@ definition {
 	@description = "Verify that a Form can be submitted with the Separator Field"
 	@priority = "5"
 	test CanBeSubmitted {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -274,7 +274,7 @@ definition {
 	@description = "Verify that a help text can be added to a Separator Field"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -311,7 +311,7 @@ definition {
 	@description = "Verify that the Field Label can be changed"
 	@priority = "5"
 	test LabelCanBeEdited {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -348,7 +348,7 @@ definition {
 	@description = "Verify that the Field Label can be hidden"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -386,7 +386,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test ReferenceCanBeEdited {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

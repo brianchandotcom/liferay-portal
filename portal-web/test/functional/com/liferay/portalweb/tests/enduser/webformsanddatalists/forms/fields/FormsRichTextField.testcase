@@ -105,7 +105,7 @@ definition {
 	@description = "Verify that a Rich Text Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -359,7 +359,7 @@ definition {
 	@description = "Verify that a help text can be added to a Rich Text Field"
 	@priority = "5"
 	test HelpTextCanBeAdded {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

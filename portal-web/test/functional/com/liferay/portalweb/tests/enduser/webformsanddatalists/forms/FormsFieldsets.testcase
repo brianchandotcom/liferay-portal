@@ -970,7 +970,7 @@ definition {
 	@description = "Verify that an Upload Field can be added to a Form via Fieldset"
 	@priority = "5"
 	test CanAddAUploadFieldToAForm {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1080,7 +1080,7 @@ definition {
 	@description = "Verify that a Fieldset can be added multiple times to Form"
 	@priority = "3"
 	test CanBeAddedToAFormMultipleTimes {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1344,7 +1344,7 @@ definition {
 	@description = "Verify that a Field with the Autocomplete Property persists after being added to a Form via Fieldset"
 	@priority = "5"
 	test PreserveTheAutoCompleteProperty {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1503,7 +1503,7 @@ definition {
 	@description = "Verify that an Inline Property persists after being added to a Form via Fieldset"
 	@priority = "4"
 	test PreserveTheInlineProperty {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1663,7 +1663,7 @@ definition {
 	@description = "Verify that a Placeholder Text persists after being added to a Form via Fieldset"
 	@priority = "5"
 	test PreserveThePlaceholderText {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1726,7 +1726,7 @@ definition {
 	@description = "Verify that a Predefined Value persists after being added to a Form via Fieldset"
 	@priority = "5"
 	test PreserveThePredefinedValue {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1928,7 +1928,7 @@ definition {
 	@description = "Verify that a Show as Switcher Property persists after being added to a Form via Fieldset"
 	@priority = "4"
 	test PreserveTheShowAsSwitcherProperty {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

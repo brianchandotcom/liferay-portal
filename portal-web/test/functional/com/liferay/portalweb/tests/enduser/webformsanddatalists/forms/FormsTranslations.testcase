@@ -257,7 +257,7 @@ definition {
 	@description = "Verify that a translation can be previewed"
 	@priority = "5"
 	test CanBePreviewed {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1316,7 +1316,7 @@ definition {
 	@description = "Verify that a Text field's Label, Placeholder Text and Help Text can be translated"
 	@priority = "5"
 	test TextFieldBasicPropertiesCanBeTranslated {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -1375,7 +1375,7 @@ definition {
 	@description = "Verify that a Text field's Predefined Value can be translated"
 	@priority = "5"
 	test TextFieldPredefinedValueCanBeTranslated {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(

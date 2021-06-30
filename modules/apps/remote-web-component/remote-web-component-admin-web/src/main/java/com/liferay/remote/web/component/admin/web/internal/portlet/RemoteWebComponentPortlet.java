@@ -20,6 +20,8 @@ import static java.util.stream.Collectors.toMap;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Http;
@@ -55,9 +57,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Raymond Augé
@@ -95,6 +94,7 @@ public class RemoteWebComponentPortlet
 			String routerBaseSelf = _http.removeDomain(renderURL.toString());
 
 			int portletURLSeparator = routerBaseSelf.indexOf("/-/");
+
 			String routerBasePage = routerBaseSelf.substring(
 				0, portletURLSeparator);
 
@@ -162,7 +162,9 @@ public class RemoteWebComponentPortlet
 		}
 		catch (Throwable throwable) {
 			_log.error(
-				"Unable to render web Component <{}>", elementName, throwable);
+				String.format(
+					"Unable to render web Component <%s>", elementName),
+				throwable);
 		}
 	}
 
@@ -209,10 +211,11 @@ public class RemoteWebComponentPortlet
 				_remoteWebComponentConfiguration.elementName(),
 				mimeResponse.getNamespace(),
 				_remoteWebComponentConfiguration.name(),
-				routerBaseSelf.replace("/s/normal", ""), routerBaseSelf,
-				routerBaseSelf.replace("/s/normal", "/s/maximized"),
-				routerBaseSelf.replace("/s/normal", "/s/exclusive"),
-				routerBaseSelf.replace("/s/normal", "/s/pop_up")
+				StringUtil.removeSubstring(routerBaseSelf, "/s/normal"),
+				routerBaseSelf,
+				StringUtil.replace(routerBaseSelf, "/s/normal", "/s/maximized"),
+				StringUtil.replace(routerBaseSelf, "/s/normal", "/s/exclusive"),
+				StringUtil.replace(routerBaseSelf, "/s/normal", "/s/pop_up")
 			});
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
@@ -233,7 +236,7 @@ public class RemoteWebComponentPortlet
 		markupHeadElements.add(headerContent);
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteWebComponentPortlet.class);
 
 	private static final List<String> _configMethodNames = Stream.of(

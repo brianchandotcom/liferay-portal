@@ -14,9 +14,6 @@
 
 package com.liferay.remote.web.component.admin.web.internal.spa;
 
-import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
-import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
-
 import com.liferay.portal.kernel.model.Portlet;
 
 import java.util.Collections;
@@ -30,6 +27,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
@@ -70,7 +69,10 @@ public class SPAPortletFilterManager {
 
 	private volatile ComponentInstance _portletFilterInstance;
 
-	@Reference(cardinality = MULTIPLE, policyOption = GREEDY)
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private List<Portlet> _portlets;
 
 }

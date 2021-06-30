@@ -14,13 +14,12 @@
 
 package com.liferay.remote.web.component.admin.web.internal;
 
-import static com.liferay.portal.kernel.util.Validator.isNotNull;
-
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration;
 import com.liferay.remote.web.component.admin.web.internal.util.Timestamp;
 
@@ -95,12 +94,12 @@ public class RemoteWebComponentPortletRegistrar {
 				_remoteWebComponentConfiguration.portletServiceProperties());
 			customProperties.forEach(componentProperties::put);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			_log.error(
 				String.format(
 					"Could not parse portlet service properties for %s",
 					_elementName),
-				ioe);
+				ioException);
 		}
 
 		Instant now = Instant.now();
@@ -123,7 +122,7 @@ public class RemoteWebComponentPortletRegistrar {
 			_remoteWebComponentConfiguration.portletDisplayCategory();
 
 		displayCategory =
-			isNotNull(displayCategory) ? displayCategory : "sample";
+			Validator.isNotNull(displayCategory) ? displayCategory : "sample";
 
 		componentProperties.put(
 			"com.liferay.portlet.display-category",
@@ -216,7 +215,9 @@ public class RemoteWebComponentPortletRegistrar {
 			_remoteWebComponentConfiguration.portletAlias();
 
 		return PortalUtil.getJsSafePortletId(
-			"rwc_" + (isNotNull(portletAlias) ? portletAlias : _elementName));
+			"rwc_" +
+				(Validator.isNotNull(portletAlias) ? portletAlias :
+					_elementName));
 	}
 
 	private String _getResourceBundleName() {

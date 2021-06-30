@@ -26,7 +26,7 @@ public class Timestamp {
 
 	public static String[] append(String[] urls, Instant now) {
 		return Stream.of(
-			(urls != null) ? urls : EMPTY
+			(urls != null) ? urls : _EMPTY
 		).filter(
 			Objects::nonNull
 		).map(
@@ -49,6 +49,6 @@ public class Timestamp {
 	private Timestamp() {
 	}
 
-	private static final String[] EMPTY = new String[0];
+	private static final String[] _EMPTY = new String[0];
 
 }

@@ -18,9 +18,5 @@ Provide-Capability:\
 	osgi.contract;\
 		osgi.contract="JavaJSP";\
 		uses:="javax.servlet.jsp,javax.servlet.jsp.el,javax.servlet.jsp.tagext";\
-		version:Version=2.3.0,\
-	osgi.extender;\
-		osgi.extender="jsp.taglib";\
-		uri="http://java.sun.com/JSP/Page";\
-		version:Version="${Bundle-Version}"
+		version:Version=2.3.0
 -fixupmessages: The JAR is empty:...;is:=ignore

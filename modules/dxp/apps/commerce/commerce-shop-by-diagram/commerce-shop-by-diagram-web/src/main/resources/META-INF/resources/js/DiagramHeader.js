@@ -15,6 +15,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClaySlider from '@clayui/slider';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+import ClayForm from '@clayui/form';
 
 const DiagramHeader = ({
 	addNewPinState,
@@ -103,30 +104,34 @@ const DiagramHeader = () => {
 					<ClayDropDown.Divider />
 
 					<ClayDropDown.Caption>
-						<div className="form-group">
-							<label htmlFor="slider">
-								{Liferay.Language.get('custom-radius')}
-							</label>
+						<ClayForm>
+							<ClayForm.Group className="form-group-sm">
+								<label htmlFor="slider">
+									{Liferay.Language.get('custom-radius')}
+								</label>
 
-							<ClaySlider
-								id={`${namespace}custom-radius`}
-								onValueChange={(item) =>
-									setAddNewPinState({
-										fill: addNewPinState.fill,
-										radius: item,
-									})
-								}
-								value={addNewPinState.radius}
-							/>
-						</div>
+								<ClaySlider
+									id={`${namespace}custom-radius`}
+									onValueChange={(item) =>
+										setAddNewPinState({
+											fill: addNewPinState.fill,
+											radius: item,
+										})
+									}
+									value={addNewPinState.radius}
+								/>
 
-						<ClayButton
-							block
-							displayType="primary"
-							onClick={() => setAddPinHandler(true)}
-						>
-							{Liferay.Language.get('add-pin')}
-						</ClayButton>
+								<ClayButton
+									block
+									displayType="primary"
+									onClick={() => setAddPinHandler(true)}
+								>
+									{Liferay.Language.get('add-pin')}
+								</ClayButton>
+							</ClayForm.Group>
+
+						</ClayForm>
+						
 					</ClayDropDown.Caption>
 				</ClayDropDown>
 			</div>

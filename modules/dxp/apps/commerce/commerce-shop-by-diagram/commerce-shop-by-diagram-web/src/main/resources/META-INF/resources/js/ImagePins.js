@@ -180,7 +180,8 @@ const ImagePins = ({
 						Math.abs(element.cx - updatedPin.cx) < 15 &&
 						Math.abs(element.cy - updatedPin.cy) < 15
 					) {
-						clickAction(updatedPin);
+						/* eslint no-console: "error" */
+						console.log(updatedPin);
 					}
 
 					return updatedPin;

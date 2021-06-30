@@ -36,11 +36,13 @@ import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
+import com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -76,7 +78,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García
  */
-@Component(service = DynamicInclude.class)
+@Component(
+	configurationPid = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping",
+	service = DynamicInclude.class
+)
 public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
@@ -173,7 +178,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			Optional<String> descriptionOptional = _getMappedValueOptional(
 				layout.getTypeSettingsProperty(
-					"mapped-openGraphDescription", "description"),
+					"mapped-openGraphDescription",
+					_getDefaultDescriptionTemplate()),
 				infoItemFieldValues, themeDisplay.getLocale());
 
 			String description = descriptionOptional.orElseGet(
@@ -209,7 +215,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			Optional<String> titleOptional = _getMappedValueOptional(
 				layout.getTypeSettingsProperty(
-					"mapped-openGraphTitle", "title"),
+					"mapped-openGraphTitle", _getDefaultTitleTemplate()),
 				infoItemFieldValues, themeDisplay.getLocale());
 
 			String title = titleOptional.orElseGet(
@@ -294,7 +300,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		_ffSEOInlineFieldMapping = ConfigurableUtil.createConfigurable(
+			FFSEOInlineFieldMapping.class, properties);
+
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
 			_dlFileEntryMetadataLocalService, _dlurlHelper,
@@ -321,6 +330,22 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		sb.append("\" />");
 
 		return sb.toString();
+	}
+
+	private String _getDefaultDescriptionTemplate() {
+		if (_ffSEOInlineFieldMapping.enabled()) {
+			return "${description}";
+		}
+
+		return "description";
+	}
+
+	private String _getDefaultTitleTemplate() {
+		if (_ffSEOInlineFieldMapping.enabled()) {
+			return "${title}";
+		}
+
+		return "title";
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValues(
@@ -403,6 +428,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
+
+	private FFSEOInlineFieldMapping _ffSEOInlineFieldMapping;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

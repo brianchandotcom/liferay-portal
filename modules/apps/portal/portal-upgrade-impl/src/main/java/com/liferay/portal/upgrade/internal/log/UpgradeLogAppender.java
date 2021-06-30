@@ -124,7 +124,7 @@ public class UpgradeLogAppender implements Appender {
 	private static final Logger _rootLogger =
 		(Logger)LogManager.getRootLogger();
 
-	private boolean _started;
-	private UpgradeReport _upgradeReport;
+	private volatile boolean _started;
+	private volatile UpgradeReport _upgradeReport;
 
 }

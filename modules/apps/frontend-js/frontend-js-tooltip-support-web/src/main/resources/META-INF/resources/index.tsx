@@ -32,7 +32,7 @@ const SELECTOR_TRIGGER = `
 	.upper-tbar [data-title]:not(.lfr-portal-tooltip),
 	.upper-tbar [title]:not(.lfr-portal-tooltip),
 	.upper-tbar [data-restore-title],
-	.lfr-tooltip-scope [title]:not(iframe,[title=""]),
+	.lfr-tooltip-scope [title]:not(iframe):not([title=""]),
 	.lfr-tooltip-scope [data-title]:not([data-title=""]),
 	.lfr-tooltip-scope [data-restore-title]:not([data-restore-title=""])
 `;

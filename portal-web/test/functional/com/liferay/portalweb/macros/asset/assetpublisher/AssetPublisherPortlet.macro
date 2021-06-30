@@ -956,7 +956,9 @@ definition {
 
 		Button.clickSelect();
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ASSET_LIST_DIALOG");
+		WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
 			AssertClick(

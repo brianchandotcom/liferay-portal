@@ -153,7 +153,13 @@ export default (state, action, config) => {
 			const {fieldTypes} = config;
 			const {editingLanguageId, pages} = state;
 			const {fieldSet} = action.payload;
-			const {dataDefinitionFields, defaultDataLayout, id} = fieldSet;
+			const {
+				availableLanguageIds,
+				dataDefinitionFields,
+				defaultDataLayout,
+				defaultLanguageId,
+				id,
+			} = fieldSet;
 			const fieldSetId = `${id}`;
 			const visitor = new PagesVisitor(pages);
 			const newPages = visitor.mapFields((field) => {
@@ -171,8 +177,19 @@ export default (state, action, config) => {
 				const rows = normalizeDataLayoutRows(
 					defaultDataLayout.dataLayoutPages
 				);
+				const props = {
+					availableLanguageIds,
+					defaultLanguageId,
+					editingLanguageId,
+				};
+				const updatedFieldSet = SettingsContext.updateField(
+					props,
+					field,
+					'label',
+					fieldSet.name
+				);
 
-				return {...field, nestedFields, rows};
+				return {...updatedFieldSet, nestedFields, rows};
 			});
 
 			return {pages: newPages};

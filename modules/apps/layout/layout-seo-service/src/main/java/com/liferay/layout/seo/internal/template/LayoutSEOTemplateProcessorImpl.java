@@ -18,7 +18,6 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.layout.seo.internal.configuration.FFSEOInlineFieldMapping;
 import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Validator;
 

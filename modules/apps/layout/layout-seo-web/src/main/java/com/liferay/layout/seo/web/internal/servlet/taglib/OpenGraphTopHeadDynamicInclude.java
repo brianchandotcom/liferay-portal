@@ -173,7 +173,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			Optional<String> descriptionOptional = _getMappedValueOptional(
 				layout.getTypeSettingsProperty(
-					"mapped-description", "openGraphDescription"),
+					"mapped-openGraphDescription", "description"),
 				infoItemFieldValues, themeDisplay.getLocale());
 
 			String description = descriptionOptional.orElseGet(
@@ -208,7 +208,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				_getOpenGraphTag("og:site_name", group.getDescriptiveName()));
 
 			Optional<String> titleOptional = _getMappedValueOptional(
-				layout.getTypeSettingsProperty("title", "openGraphTitle"),
+				layout.getTypeSettingsProperty(
+					"mapped-openGraphTitle", "title"),
 				infoItemFieldValues, themeDisplay.getLocale());
 
 			String title = titleOptional.orElseGet(

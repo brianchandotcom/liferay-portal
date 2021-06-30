@@ -1527,17 +1527,17 @@ definition {
 			}
 		}
 
-		if (isSet(multipleSelection)) {
-			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Multiple Selection", locator1 = "Checkbox#ANY_CHECKBOX")) {
+		if (isSet(singleSelection)) {
+			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Single Selection", locator1 = "Checkbox#ANY_CHECKBOX")) {
 				Click.clickAtNotVisible(
-					checkboxName = "Multiple Selection",
+					checkboxName = "Single Selection",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
 
 			Pause(locator1 = "3000");
 
 			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "Multiple Selection",
+				checkboxName = "Single Selection",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}

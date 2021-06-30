@@ -3,7 +3,7 @@ dependencies {
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-6"
-	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2-LIFERAY-CACHED-1"
+	compileOnly group: "com.liferay", name: "org.eclipse.equinox.http.servlet", version: "1.2.2.v20210530-0325-LIFERAY-CACHED"
 	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-11"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

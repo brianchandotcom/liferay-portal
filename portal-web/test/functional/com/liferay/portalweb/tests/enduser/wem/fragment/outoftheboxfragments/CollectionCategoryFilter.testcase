@@ -33,6 +33,8 @@ definition {
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple categories in multiple filters."
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {
+		property portal.acceptance = "true";
+
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
 				JSONCategory.addVocabulary(
@@ -331,6 +333,8 @@ definition {
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple subcategories in one filter."
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -672,6 +676,8 @@ definition {
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting single category."
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionBySingleCategory {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

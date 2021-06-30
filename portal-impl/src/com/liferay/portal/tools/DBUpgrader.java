@@ -152,14 +152,8 @@ public class DBUpgrader {
 			System.exit(1);
 		}
 		finally {
-			if (_appender != null) {
-				_appender.stop();
-			}
-
-			if (_appenderServiceReference != null) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				registry.ungetService(_appenderServiceReference);
+			if (PropsValues.UPGRADE_REPORT_ENABLED) {
+				_unregisterAppenderDependency();
 			}
 		}
 	}
@@ -297,6 +291,18 @@ public class DBUpgrader {
 			).put(
 				"service.version", ReleaseInfo.getVersion()
 			).build());
+	}
+
+	private static void _unregisterAppenderDependency() {
+		if (_appender != null) {
+			_appender.stop();
+		}
+
+		if (_appenderServiceReference != null) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(_appenderServiceReference);
+		}
 	}
 
 	private static void _updateCompanyKey() throws Exception {

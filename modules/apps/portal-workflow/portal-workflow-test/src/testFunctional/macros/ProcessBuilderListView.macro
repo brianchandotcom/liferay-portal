@@ -19,5 +19,25 @@ definition {
 			locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",
 			value1 = "${numberResults} Results for ${workflowName}");
 	}
+	
+	macro filterAndOrder {
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		Click(
+			key_filterOption = "${filterOption}",
+			locator1 = "ProcessBuilderListView#FILTER_AND_ORDER");
+	}
+
+	macro viewWorkflowIsNotPresent {
+		AssertElementNotPresent(
+			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED");
+	}
+
+	macro viewWorkflowIsPresent {
+		AssertElementPresent(
+			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
+	}
 
 }

@@ -54,12 +54,24 @@ definition {
 	}
 
 	@description = "Verify that the user is able to filter by Not Published processes"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByNonPublishedProcesses {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68233 CanFilterByNonPublishedProcesses pending implementation
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
+		Navigator.gotoBack();
+
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Copy of Single Approver");
+
+		ProcessBuilderListView.filterAndOrder(filterOption = "Not Published");
+
+		ProcessBuilderListView.viewWorkflowIsPresent(workflowDefinitionTitle = "Copy of Single Approver");
+
+		ProcessBuilderListView.viewWorkflowIsNotPresent(workflowDefinitionTitle = "Single Approver");
 	}
 
 	@description = "Verify that the user is able to filter by Published processes"

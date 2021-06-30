@@ -78,28 +78,21 @@ public class AutoTranslateServlet extends HttpServlet {
 		catch (TranslatorException translatorException) {
 			_log.error(translatorException, translatorException);
 
-			_writeJSON(
+			_writeErrorJSON(
 				httpServletResponse,
-				StringBundler.concat(
-					"{\"error\": {\"message\": \"",
-					StringUtil.replace(
-						translatorException.getMessage(), CharPool.QUOTE,
-						"\\\""),
-					"\"}}"));
+				StringUtil.replace(
+					translatorException.getMessage(), CharPool.QUOTE, "\\\""));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
-			_writeJSON(
+			_writeErrorJSON(
 				httpServletResponse,
-				StringBundler.concat(
-					"{\"error\": {\"message\": \"",
-					_language.get(
-						_resourceBundleLoader.loadResourceBundle(
-							_portal.getLocale(httpServletRequest)),
-						"there-is-a-problem-with-the-translation-service,-" +
-							"please-contact-your-administrator"),
-					"\"}}"));
+				_language.get(
+					_resourceBundleLoader.loadResourceBundle(
+						_portal.getLocale(httpServletRequest)),
+					"there-is-a-problem-with-the-translation-service,-please-" +
+						"contact-your-administrator"));
 		}
 	}
 
@@ -121,6 +114,16 @@ public class AutoTranslateServlet extends HttpServlet {
 		).put(
 			"targetLanguageId", translatorPacket.getTargetLanguageId()
 		).toString();
+	}
+
+	private void _writeErrorJSON(
+			HttpServletResponse httpServletResponse, String message)
+		throws IOException {
+
+		_writeJSON(
+			httpServletResponse,
+			StringBundler.concat(
+				"{\"error\": {\"message\": \"", message, "\"}}"));
 	}
 
 	private void _writeJSON(

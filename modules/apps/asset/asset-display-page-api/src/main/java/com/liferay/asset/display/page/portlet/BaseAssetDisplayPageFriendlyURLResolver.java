@@ -418,7 +418,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			return Optional.empty();
 		}
 
-		return Optional.of(
+		return Optional.ofNullable(
 			layoutSEOTemplateProcessor.processTemplate(
 				template, infoItemFieldValues, locale));
 	}

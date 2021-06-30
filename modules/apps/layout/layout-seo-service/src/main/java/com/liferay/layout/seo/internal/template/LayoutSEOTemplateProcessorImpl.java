@@ -47,7 +47,7 @@ public class LayoutSEOTemplateProcessorImpl
 		Locale locale) {
 
 		if ((infoItemFieldValues == null) || Validator.isNull(template)) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		if (!_ffSEOInlineFieldMapping.enabled()) {
@@ -55,7 +55,7 @@ public class LayoutSEOTemplateProcessorImpl
 				infoItemFieldValues.getInfoFieldValue(template);
 
 			if (infoFieldValue == null) {
-				return template;
+				return null;
 			}
 
 			return String.valueOf(infoFieldValue.getValue(locale));

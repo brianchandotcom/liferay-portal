@@ -360,7 +360,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			return Optional.empty();
 		}
 
-		return Optional.of(
+		return Optional.ofNullable(
 			_layoutSEOTemplateProcessor.processTemplate(
 				template, infoItemFieldValues, locale));
 	}

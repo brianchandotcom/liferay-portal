@@ -123,6 +123,16 @@ public class AccountSerDes {
 			sb.append("]");
 		}
 
+		if (account.getActive() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"active\": ");
+
+			sb.append(account.getActive());
+		}
+
 		if (account.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -349,6 +359,13 @@ public class AccountSerDes {
 				String.valueOf(account.getAccountOrganizations()));
 		}
 
+		if (account.getActive() == null) {
+			map.put("active", null);
+		}
+		else {
+			map.put("active", String.valueOf(account.getActive()));
+		}
+
 		if (account.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -515,6 +532,11 @@ public class AccountSerDes {
 						).toArray(
 							size -> new AccountOrganization[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "active")) {
+				if (jsonParserFieldValue != null) {
+					account.setActive((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

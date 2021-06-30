@@ -855,6 +855,14 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (account.getActive() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (account.getCustomFields() == null) {
 					valid = false;
@@ -1069,6 +1077,16 @@ public abstract class BaseAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						account1.getAccountOrganizations(),
 						account2.getAccountOrganizations())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getActive(), account2.getActive())) {
 
 					return false;
 				}
@@ -1338,6 +1356,11 @@ public abstract class BaseAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("active")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1516,6 +1539,7 @@ public abstract class BaseAccountResourceTestCase {
 	protected Account randomAccount() throws Exception {
 		return new Account() {
 			{
+				active = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				defaultBillingAccountAddressId = RandomTestUtil.randomLong();

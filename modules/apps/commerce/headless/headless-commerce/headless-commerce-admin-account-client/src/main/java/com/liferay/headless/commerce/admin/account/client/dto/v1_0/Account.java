@@ -104,6 +104,27 @@ public class Account implements Cloneable, Serializable {
 
 	protected AccountOrganization[] accountOrganizations;
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		try {
+			active = activeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean active;
+
 	public Map<String, ?> getCustomFields() {
 		return customFields;
 	}

@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Sam Ziemer
  */
 @Component(
-	immediate = true, service = {Appender.class, UpgradeLogAppender.class}
+	immediate = true, property = "appender.name=UpgradeLogAppender",
+	service = Appender.class
 )
 public class UpgradeLogAppender implements Appender {
 

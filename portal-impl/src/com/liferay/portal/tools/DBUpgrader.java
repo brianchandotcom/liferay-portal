@@ -266,13 +266,13 @@ public class DBUpgrader {
 		final ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
+		Registry registry = RegistryUtil.getRegistry();
+
 		serviceDependencyManager.addServiceDependencyListener(
 			new ServiceDependencyListener() {
 
 				@Override
 				public void dependenciesFulfilled() {
-					Registry registry = RegistryUtil.getRegistry();
-
 					_appenderServiceReference = registry.getServiceReference(
 						Appender.class);
 
@@ -290,7 +290,11 @@ public class DBUpgrader {
 
 			});
 
-		serviceDependencyManager.registerDependencies(Appender.class);
+		serviceDependencyManager.registerDependencies(
+			registry.getFilter(
+				StringBundler.concat(
+					"(&(appender.name=UpgradeLogAppender)(objectClass=",
+					Appender.class.getName(), "))")));
 	}
 
 	private static void _stopUpgradeLogAppender() {

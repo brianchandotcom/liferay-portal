@@ -34,6 +34,8 @@ import itemSelectorValueToInfoItem from '../../app/utils/item-selector-value/ite
 import {useId} from '../../app/utils/useId';
 import ItemSelector from './ItemSelector';
 
+const COLLECTION_TYPE_DIVIDER = ' - ';
+
 const MAPPING_SOURCE_TYPES = {
 	content: 'content',
 	structure: 'structure',
@@ -116,6 +118,7 @@ export default function MappingSelectorWrapper({
 	] = useState('');
 	const [collectionItemTypeLabel, setCollectionItemTypeLabel] = useState('');
 	const mappingFields = useSelector((state) => state.mappingFields);
+	const pageContents = useSelector(selectPageContents);
 
 	useEffect(() => {
 		if (!collectionConfig) {
@@ -142,21 +145,44 @@ export default function MappingSelectorWrapper({
 			return;
 		}
 
-		CollectionService.getCollectionMappingFields({
-			itemSubtype: collectionConfig.collection.itemSubtype || '',
-			itemType: collectionConfig.collection.itemType,
-			onNetworkStatus: () => {},
-		})
-			.then((response) => {
-				setCollectionItemSubtypeLabel(response.itemSubtypeLabel);
-				setCollectionItemTypeLabel(response.itemTypeLabel);
+		if (config.contentBrowsingEnabled) {
+			const {
+				classNameId,
+				classPK,
+				key: collectionKey,
+			} = collectionConfig.collection;
+
+			const collection = pageContents.find((content) =>
+				collectionKey
+					? content.classPK === collectionKey
+					: content.classNameId === classNameId &&
+					  content.classPK === classPK
+			);
+
+			const [typeLabel, subtypeLabel] = collection.subtype.split(
+				COLLECTION_TYPE_DIVIDER
+			);
+
+			setCollectionItemTypeLabel(typeLabel);
+			setCollectionItemSubtypeLabel(subtypeLabel);
+		}
+		else {
+			CollectionService.getCollectionMappingFields({
+				itemSubtype: collectionConfig.collection.itemSubtype || '',
+				itemType: collectionConfig.collection.itemType,
+				onNetworkStatus: () => {},
 			})
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-			});
-	});
+				.then((response) => {
+					setCollectionItemSubtypeLabel(response.itemSubtypeLabel);
+					setCollectionItemTypeLabel(response.itemTypeLabel);
+				})
+				.catch((error) => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+				});
+		}
+	}, [collectionConfig, pageContents]);
 
 	return collectionConfig ? (
 		<>

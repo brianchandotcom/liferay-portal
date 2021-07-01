@@ -39,7 +39,7 @@ function ReplyPopover({
 
 	return (
 		<ClayPopover
-			alignPosition="top"
+			alignPosition={Liferay.Browser.isMobile() ? 'top-left' : 'top'}
 			className="lfr-discussion-reply-popover"
 			header={
 				<ClayLayout.ContentRow noGutters="x" padded>

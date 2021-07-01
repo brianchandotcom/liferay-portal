@@ -90,6 +90,14 @@ $light-color: #e7e7ed;
 		color: #67678c;
 		font-weight: 600;
 		margin-left: 1em;
+
+		@include media-breakpoint-down(sm) {
+			display: block;
+			margin-left: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	}
 
 	.lfr-discussion-reply {

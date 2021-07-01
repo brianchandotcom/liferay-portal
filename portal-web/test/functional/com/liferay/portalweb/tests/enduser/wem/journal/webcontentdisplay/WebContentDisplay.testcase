@@ -592,17 +592,17 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
-			for (var borderType : list "border-top-width,border-right-width,border-bottom-width,border-left-width") {
+			for (var borderType : list "top,right,bottom,left") {
 				AssertCssValue(
 					locator1 = "Portlet#PORTLET_CONTENT",
-					locator2 = "${borderType}",
+					locator2 = "border-${borderType}-width",
 					value1 = "1px");
 			}
 
-			for (var borderType : list "border-top-color,border-right-color,border-bottom-color,border-left-color") {
+			for (var borderType : list "top,right,bottom,left") {
 				AssertCssValue(
 					locator1 = "Portlet#PORTLET_CONTENT",
-					locator2 = "${borderType}",
+					locator2 = "border-${borderType}-color",
 					value1 = "rgba(0, 0, 0, 0)");
 			}
 		}
@@ -625,17 +625,17 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("View the border width and border color of WCD") {
-			for (var borderType : list "border-top-width,border-right-width,border-bottom-width,border-left-width") {
+			for (var borderType : list "top,right,bottom,left") {
 				AssertCssValue(
 					locator1 = "Portlet#PORTLET_CONTENT",
-					locator2 = "${borderType}",
+					locator2 = "border-${borderType}-width",
 					value1 = "15px");
 			}
 
-			for (var borderType : list "border-top-color,border-right-color,border-bottom-color,border-left-color") {
+			for (var borderType : list "top,right,bottom,left") {
 				AssertCssValue(
 					locator1 = "Portlet#PORTLET_CONTENT",
-					locator2 = "${borderType}",
+					locator2 = "border-${borderType}-color",
 					value1 = "rgba(255, 13, 13, 1)");
 			}
 		}

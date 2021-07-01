@@ -27,7 +27,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,9 +90,7 @@ public class AssetVocabularyCTDisplayRenderer
 	}
 
 	@Override
-	public String getTitle(Locale locale, AssetVocabulary assetVocabulary)
-		throws PortalException {
-
+	public String getTitle(Locale locale, AssetVocabulary assetVocabulary) {
 		return assetVocabulary.getTitle(locale);
 	}
 
@@ -179,11 +176,9 @@ public class AssetVocabularyCTDisplayRenderer
 					sb.append(StringPool.COMMA_AND_SPACE);
 				}
 
-				if (sb.index() == 0) {
-					return StringPool.BLANK;
+				if (sb.index() > 0) {
+					sb.setIndex(sb.index() - 1);
 				}
-
-				sb.setIndex(sb.index() - 1);
 
 				return sb.toString();
 			}

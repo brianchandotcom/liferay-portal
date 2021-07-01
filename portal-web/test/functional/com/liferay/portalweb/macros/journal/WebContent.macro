@@ -1385,13 +1385,9 @@ definition {
 	}
 
 	macro editViaContentPanel {
-		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Content");
-
-		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${webContentTitle}");
+		PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+			itemName = "${webContentTitle}",
+			menuItem = "Edit");
 
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 

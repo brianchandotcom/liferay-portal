@@ -12,42 +12,45 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 
-type StackNavigatorProps = {
+type StackNavigatorProps<T> = {
+	activePage: number;
 	children: Array<React.ReactElement>;
+	onActiveChange: (index: number) => void;
+	onParamsChange: (payload: T) => void;
+	params: T | undefined;
 };
 
-export function StackNavigator({children}: StackNavigatorProps) {
-	const [activePageIndex, setActivePageIndex] = useState(0);
-
-	const [navigationState, setNavigationState] = useState<unknown>();
-
+export function StackNavigator<T>({
+	activePage,
+	children,
+	onActiveChange,
+	onParamsChange,
+	params,
+}: StackNavigatorProps<T>) {
 	const childrenArray = React.Children.toArray(children);
 
-	const child = childrenArray[activePageIndex];
+	const child = childrenArray[activePage];
 
 	return React.cloneElement(child, {
 		...child.props,
-		index: activePageIndex,
-		navigationState,
-		next: (payload: unknown) => {
-			const index = activePageIndex + 1;
+		index: activePage,
+		next: (payload: T) => {
+			const index = activePage + 1;
 
 			if (React.Children.count(children) > index) {
-				setActivePageIndex(index);
-				setNavigationState(payload);
+				onActiveChange(index);
+				onParamsChange(payload);
 			}
 		},
-		previous: (payload?: unknown) => {
-			const index = activePageIndex - 1;
+		params,
+		previous: (payload: T) => {
+			const index = activePage - 1;
 
 			if (index >= 0) {
-				setActivePageIndex(index);
-
-				if (payload) {
-					setNavigationState(payload);
-				}
+				onActiveChange(index);
+				onParamsChange(payload);
 			}
 		},
 	});

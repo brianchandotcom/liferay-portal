@@ -40,22 +40,24 @@ function CodeBlock({children, ...otherProps}: ICodeBlock) {
 	);
 }
 
+type Params = {
+	name: string;
+	ruleId: string;
+	target: string;
+};
+
 type OccurrenceProps = {
-	navigationState?: {
-		name: string;
-		ruleId: string;
-		target: string;
-	};
-	previous?: () => void;
+	params?: Params;
+	previous?: (state: Omit<Params, 'target'>) => void;
 	violations: Violations;
 };
 
-function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
-	if (!navigationState) {
+function Occurrence({params, previous, violations}: OccurrenceProps) {
+	if (!params) {
 		return null;
 	}
 
-	const {name, ruleId, target} = navigationState;
+	const {name, ruleId, target} = params;
 
 	const {helpUrl, tags} = violations.rules[ruleId];
 
@@ -68,7 +70,7 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 				impact={impact as ImpactValue}
 				onBack={() => {
 					if (previous) {
-						previous();
+						previous({name, ruleId});
 					}
 				}}
 				tags={tags}

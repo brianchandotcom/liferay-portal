@@ -36,12 +36,18 @@ const Overlay = React.forwardRef<
 ));
 
 type ViolationProps = {
+	onClick: (target: string, id: string) => void;
+	rules: Record<string, RuleRaw>;
 	target: string;
 	violations: Array<string>;
-	rules: Record<string, RuleRaw>;
 };
 
-export function ViolationPopover({rules, target, violations}: ViolationProps) {
+export function ViolationPopover({
+	onClick,
+	rules,
+	target,
+	violations,
+}: ViolationProps) {
 	const [visible, setVisible] = useState(false);
 	const [bounds, setBounds] = useState<React.CSSProperties>();
 
@@ -91,6 +97,7 @@ export function ViolationPopover({rules, target, violations}: ViolationProps) {
 					<button
 						className="list-group-item list-group-item-action list-group-item-flex list-group-item-flush"
 						key={ruleId}
+						onClick={() => onClick(target, ruleId)}
 					>
 						<ClayList.ItemField expand>
 							<ClayList.ItemTitle>

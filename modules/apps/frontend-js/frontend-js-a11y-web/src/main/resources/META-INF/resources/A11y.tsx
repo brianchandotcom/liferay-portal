@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useLayoutEffect} from 'react';
+import React, {useCallback, useLayoutEffect, useState} from 'react';
 
 import Occurrence from './components/Occurrence';
 import {StackNavigator} from './components/StackNavigator';
@@ -20,14 +20,24 @@ import Violation from './components/Violation';
 import {ViolationPopover} from './components/ViolationPopover';
 import Violations from './components/Violations';
 import useA11y from './hooks/useA11y';
-import {useFilterViolations} from './hooks/useFilterViolations';
+import {TYPES, useFilterViolations} from './hooks/useFilterViolations';
 
 import type {A11yCheckerOptions} from './A11yChecker';
+
+type Params = {
+	name?: string;
+	ruleId?: string;
+	target?: string;
+};
 
 export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 	const violations = useA11y(props);
 
 	const [state, dispatch] = useFilterViolations(violations);
+
+	const [params, setParams] = useState<Params>();
+
+	const [activePage, setActivePage] = useState(0);
 
 	const nodes = Object.keys(violations.nodes);
 
@@ -41,6 +51,39 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 		}
 	}, [nodes]);
 
+	const onParamsChange = useCallback(
+		(newParams: Params) => {
+			if (newParams?.ruleId) {
+				dispatch({
+					payload: {key: 'id', value: newParams.ruleId},
+					type: TYPES.ADD_FILTER,
+				});
+			}
+			else if (params?.ruleId) {
+				dispatch({
+					payload: {key: 'id', value: params.ruleId},
+					type: TYPES.REMOVE_FILTER,
+				});
+			}
+
+			if (newParams?.target) {
+				dispatch({
+					payload: {key: 'nodes', value: newParams.target},
+					type: TYPES.ADD_FILTER,
+				});
+			}
+			else if (params?.target) {
+				dispatch({
+					payload: {key: 'nodes', value: params.target},
+					type: TYPES.REMOVE_FILTER,
+				});
+			}
+
+			setParams(newParams);
+		},
+		[dispatch, params]
+	);
+
 	if (nodes.length === 0) {
 		return null;
 	}
@@ -50,6 +93,25 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 			{Object.keys(state.violations.nodes).map((target, index) => (
 				<ViolationPopover
 					key={`${target}:${index}`}
+					onClick={(target, ruleId) => {
+						dispatch({
+							payload: {key: 'id', value: ruleId},
+							type: TYPES.ADD_FILTER,
+						});
+						dispatch({
+							payload: {key: 'nodes', value: target},
+							type: TYPES.ADD_FILTER,
+						});
+						setActivePage(2);
+						setParams({
+							name: Liferay.Util.sub(
+								Liferay.Language.get('occurrence-x'),
+								'1'
+							),
+							ruleId,
+							target,
+						});
+					}}
 					rules={state.violations.rules}
 					target={target}
 					violations={Object.keys(state.violations.nodes[target])}
@@ -57,7 +119,12 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 			))}
 
 			<div className="a11y-panel__sidebar sidebar sidebar-light">
-				<StackNavigator>
+				<StackNavigator<Params>
+					activePage={activePage}
+					onActiveChange={setActivePage}
+					onParamsChange={onParamsChange}
+					params={params}
+				>
 					<Violations
 						onFilterChange={(type, payload) =>
 							dispatch({payload, type})

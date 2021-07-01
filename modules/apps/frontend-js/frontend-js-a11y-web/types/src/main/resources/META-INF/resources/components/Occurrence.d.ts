@@ -16,17 +16,18 @@
 
 import './Occurrence.scss';
 import type {Violations} from '../hooks/useA11y';
+declare type Params = {
+	name: string;
+	ruleId: string;
+	target: string;
+};
 declare type OccurrenceProps = {
-	navigationState?: {
-		name: string;
-		ruleId: string;
-		target: string;
-	};
-	previous?: () => void;
+	params?: Params;
+	previous?: (state: Omit<Params, 'target'>) => void;
 	violations: Violations;
 };
 declare function Occurrence({
-	navigationState,
+	params,
 	previous,
 	violations,
 }: OccurrenceProps): JSX.Element | null;

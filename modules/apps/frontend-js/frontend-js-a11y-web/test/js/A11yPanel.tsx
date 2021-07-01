@@ -15,7 +15,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, getByText, render} from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
-import React from 'react';
+import React, {useState} from 'react';
 
 import Occurrence from '../../src/main/resources/META-INF/resources/components/Occurrence';
 import {StackNavigator} from '../../src/main/resources/META-INF/resources/components/StackNavigator';
@@ -25,11 +25,18 @@ import {useFilterViolations} from '../../src/main/resources/META-INF/resources/h
 import violationsMock from './__fixtures__/violationsMock';
 
 const Panel = () => {
+	const [activePage, setActivePage] = useState(0);
+	const [params, setParams] = useState();
 	const [state, dispatch] = useFilterViolations(violationsMock);
 
 	return (
 		<div className="a11y-panel__sidebar sidebar sidebar-light">
-			<StackNavigator>
+			<StackNavigator
+				activePage={activePage}
+				onActiveChange={setActivePage}
+				onParamsChange={setParams}
+				params={params}
+			>
 				<Violations
 					onFilterChange={(type, payload) =>
 						dispatch({payload, type})

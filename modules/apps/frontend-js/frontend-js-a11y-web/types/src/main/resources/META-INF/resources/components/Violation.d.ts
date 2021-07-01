@@ -16,20 +16,20 @@
 
 import './Violation.scss';
 import type {Violations} from '../hooks/useA11y';
-declare type TViolationNext = {
+declare type Params = {
 	name: string;
 	ruleId: string;
 	target: string;
 };
 declare type ViolationProps = {
-	navigationState?: Pick<TViolationNext, 'ruleId'>;
-	next?: (payload: TViolationNext) => void;
+	next?: (payload: Params) => void;
+	params?: Pick<Params, 'ruleId'>;
 	previous?: () => void;
 	violations: Violations;
 };
 declare function Violation({
-	navigationState,
 	next,
+	params,
 	previous,
 	violations,
 }: ViolationProps): JSX.Element | null;

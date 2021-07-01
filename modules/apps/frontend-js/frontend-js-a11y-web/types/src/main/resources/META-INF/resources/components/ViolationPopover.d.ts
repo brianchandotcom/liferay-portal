@@ -17,11 +17,13 @@
 import './ViolationPopover.scss';
 import type {RuleRaw} from '../hooks/useA11y';
 declare type ViolationProps = {
+	onClick: (target: string, id: string) => void;
+	rules: Record<string, RuleRaw>;
 	target: string;
 	violations: Array<string>;
-	rules: Record<string, RuleRaw>;
 };
 export declare function ViolationPopover({
+	onClick,
 	rules,
 	target,
 	violations,

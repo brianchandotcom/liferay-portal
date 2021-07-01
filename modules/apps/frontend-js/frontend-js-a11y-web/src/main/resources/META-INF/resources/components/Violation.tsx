@@ -41,30 +41,25 @@ function PanelSection({children, title}: PanelSectionProps) {
 	);
 }
 
-type TViolationNext = {
+type Params = {
 	name: string;
 	ruleId: string;
 	target: string;
 };
 
 type ViolationProps = {
-	navigationState?: Pick<TViolationNext, 'ruleId'>;
-	next?: (payload: TViolationNext) => void;
+	next?: (payload: Params) => void;
+	params?: Pick<Params, 'ruleId'>;
 	previous?: () => void;
 	violations: Violations;
 };
 
-function Violation({
-	navigationState,
-	next,
-	previous,
-	violations,
-}: ViolationProps) {
-	if (!navigationState) {
+function Violation({next, params, previous, violations}: ViolationProps) {
+	if (!params) {
 		return null;
 	}
 
-	const {ruleId} = navigationState;
+	const {ruleId} = params;
 
 	const {description, helpUrl, id, impact, nodes, tags} = violations.rules[
 		ruleId

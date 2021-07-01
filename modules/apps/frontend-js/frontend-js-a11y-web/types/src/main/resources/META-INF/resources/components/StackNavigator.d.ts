@@ -13,12 +13,20 @@
  */
 
 import React from 'react';
-declare type StackNavigatorProps = {
+declare type StackNavigatorProps<T> = {
+	activePage: number;
 	children: Array<React.ReactElement>;
+	onActiveChange: (index: number) => void;
+	onParamsChange: (payload: T) => void;
+	params: T | undefined;
 };
-export declare function StackNavigator({
+export declare function StackNavigator<T>({
+	activePage,
 	children,
-}: StackNavigatorProps): React.ReactElement<
+	onActiveChange,
+	onParamsChange,
+	params,
+}: StackNavigatorProps<T>): React.ReactElement<
 	any,
 	string | React.JSXElementConstructor<any>
 >;

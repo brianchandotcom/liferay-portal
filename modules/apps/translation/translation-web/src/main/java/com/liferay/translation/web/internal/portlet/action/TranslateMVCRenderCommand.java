@@ -92,13 +92,27 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
+			Object object = _getInfoItem(className, classPK);
+
+			if (object == null) {
+				renderRequest.setAttribute(
+					TranslateDisplayContext.class.getName(),
+					new TranslateDisplayContext(
+						Collections.emptyList(), Collections.emptyList(),
+						() -> (_translator != null) && _translator.isEnabled(),
+						className, classPK, null,
+						_portal.getLiferayPortletRequest(renderRequest),
+						_portal.getLiferayPortletResponse(renderResponse), null,
+						null, null, null, null, _translationInfoFieldChecker));
+
+				return "/translate.jsp";
+			}
+
 			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemLanguagesProvider.class, className);
 
-			Object object = _getInfoItem(className, classPK);
-
-			if (object == null) {
+			if (infoItemLanguagesProvider == null) {
 				renderRequest.setAttribute(
 					TranslateDisplayContext.class.getName(),
 					new TranslateDisplayContext(
@@ -130,10 +144,38 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemFormProvider.class, className);
 
+			if (infoItemFormProvider == null) {
+				renderRequest.setAttribute(
+					TranslateDisplayContext.class.getName(),
+					new TranslateDisplayContext(
+						Collections.emptyList(), Collections.emptyList(),
+						() -> (_translator != null) && _translator.isEnabled(),
+						className, classPK, null,
+						_portal.getLiferayPortletRequest(renderRequest),
+						_portal.getLiferayPortletResponse(renderResponse), null,
+						null, null, null, null, _translationInfoFieldChecker));
+
+				return "/translate.jsp";
+			}
+
 			InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
 
 			InfoItemFieldValues sourceInfoItemFieldValues =
 				_getSourceInfoItemFieldValues(className, object);
+
+			if (sourceInfoItemFieldValues == null) {
+				renderRequest.setAttribute(
+					TranslateDisplayContext.class.getName(),
+					new TranslateDisplayContext(
+						Collections.emptyList(), Collections.emptyList(),
+						() -> (_translator != null) && _translator.isEnabled(),
+						className, classPK, null,
+						_portal.getLiferayPortletRequest(renderRequest),
+						_portal.getLiferayPortletResponse(renderResponse), null,
+						null, null, null, null, _translationInfoFieldChecker));
+
+				return "/translate.jsp";
+			}
 
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId",
@@ -172,6 +214,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemPermissionProvider.class, className);
 
+		if (infoItemPermissionProvider == null) {
+			return Collections.emptyList();
+		}
+
 		boolean hasUpdatePermission = infoItemPermissionProvider.hasPermission(
 			themeDisplay.getPermissionChecker(), object, ActionKeys.UPDATE);
 
@@ -208,6 +254,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class, className);
 
+			if (infoItemObjectProvider == null) {
+				return null;
+			}
+
 			return infoItemObjectProvider.getInfoItem(classPK);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
@@ -225,6 +275,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		InfoItemFieldValuesProvider<T> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			return null;
+		}
 
 		return infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 	}

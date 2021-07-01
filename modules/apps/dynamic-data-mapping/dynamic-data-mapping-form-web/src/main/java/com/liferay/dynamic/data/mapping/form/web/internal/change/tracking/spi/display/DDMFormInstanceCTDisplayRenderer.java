@@ -20,15 +20,12 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -60,24 +57,12 @@ public class DDMFormInstanceCTDisplayRenderer
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			liferayPortletRequest);
-
-		Fields fields = (Fields)serviceContext.getAttribute(
-			Fields.class.getName() + ddmFormInstance.getStructureId());
-
-		ddmFormFieldRenderingContext.setFields(fields);
-
 		ddmFormFieldRenderingContext.setHttpServletRequest(
 			liferayPortletRequest.getHttpServletRequest());
 		ddmFormFieldRenderingContext.setHttpServletResponse(
 			liferayPortletResponse.getHttpServletResponse());
 		ddmFormFieldRenderingContext.setLocale(
 			liferayPortletRequest.getLocale());
-		ddmFormFieldRenderingContext.setMode(
-			ParamUtil.getString(liferayPortletRequest, "mode"));
-		ddmFormFieldRenderingContext.setNamespace(
-			ParamUtil.getString(liferayPortletRequest, "namespace"));
 		ddmFormFieldRenderingContext.setPortletNamespace(
 			liferayPortletResponse.getNamespace());
 		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);

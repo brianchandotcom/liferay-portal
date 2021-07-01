@@ -36,9 +36,11 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -132,8 +134,10 @@ public class AssetVocabularyCTDisplayRenderer
 			String name = null;
 
 			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_ID) {
-				name = LanguageUtil.get(
-					displayBuilder.getLocale(), "all-asset-types");
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					displayBuilder.getLocale(), getClass());
+
+				name = LanguageUtil.get(resourceBundle, "all-asset-types");
 			}
 			else if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
 				name = ResourceActionsUtil.getModelResource(

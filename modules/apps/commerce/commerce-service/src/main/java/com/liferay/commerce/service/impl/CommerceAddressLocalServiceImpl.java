@@ -291,7 +291,7 @@ public class CommerceAddressLocalServiceImpl
 				companyId, className, classPK, keywords,
 				LinkedHashMapBuilder.<String, Object>put(
 					"typeIds",
-					new Long[] {
+					new long[] {
 						CommerceAddressImpl.toAddressTypeId(
 							CommerceAddressConstants.ADDRESS_TYPE_BILLING),
 						CommerceAddressImpl.toAddressTypeId(
@@ -316,7 +316,7 @@ public class CommerceAddressLocalServiceImpl
 				companyId, className, classPK, keywords,
 				LinkedHashMapBuilder.<String, Object>put(
 					"typeIds",
-					new Long[] {
+					new long[] {
 						CommerceAddressImpl.toAddressTypeId(
 							CommerceAddressConstants.ADDRESS_TYPE_BILLING),
 						CommerceAddressImpl.toAddressTypeId(
@@ -458,7 +458,7 @@ public class CommerceAddressLocalServiceImpl
 				companyId, className, classPK, keywords,
 				LinkedHashMapBuilder.<String, Object>put(
 					"typeIds",
-					new Long[] {
+					new long[] {
 						CommerceAddressImpl.toAddressTypeId(
 							CommerceAddressConstants.
 								ADDRESS_TYPE_BILLING_AND_SHIPPING),
@@ -483,7 +483,7 @@ public class CommerceAddressLocalServiceImpl
 				companyId, className, classPK, keywords,
 				LinkedHashMapBuilder.<String, Object>put(
 					"typeIds",
-					new Long[] {
+					new long[] {
 						CommerceAddressImpl.toAddressTypeId(
 							CommerceAddressConstants.
 								ADDRESS_TYPE_BILLING_AND_SHIPPING),

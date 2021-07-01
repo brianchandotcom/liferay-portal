@@ -2,6 +2,7 @@ Bundle-Name: Liferay Batch Planner API
 Bundle-SymbolicName: com.liferay.batch.planner.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.batch.planner.batch.engine.broker,\
 	com.liferay.batch.planner.constants,\
 	com.liferay.batch.planner.exception,\
 	com.liferay.batch.planner.model,\

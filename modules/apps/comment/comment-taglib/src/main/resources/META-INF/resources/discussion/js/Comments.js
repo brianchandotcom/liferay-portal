@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, runScriptsInElement} from 'frontend-js-web';
+import {fetch, openToast, runScriptsInElement} from 'frontend-js-web';
 
 function hideEl(elementId) {
 	const element = document.getElementById(elementId);
@@ -94,7 +94,7 @@ export default function ({
 					}
 				})
 				.catch(() => {
-					showStatusMessage({
+					openToast({
 						id: randomNamespace,
 						message: Liferay.Language.get(
 							'your-request-failed-to-complete'
@@ -104,13 +104,6 @@ export default function ({
 				});
 		});
 	}
-
-	const showStatusMessage = Liferay.lazyLoad(
-		'frontend-js-web/liferay/toast/commands/OpenToast.es',
-		(toastCommands, data) => {
-			toastCommands.openToast(data);
-		}
-	);
 
 	function sendMessage(form, refreshPage) {
 		const commentButtons = form.querySelectorAll('.btn-comment');
@@ -195,7 +188,7 @@ export default function ({
 						);
 					}
 
-					showStatusMessage({
+					openToast({
 						id: randomNamespace,
 						message: errorKey,
 						type: 'danger',
@@ -205,7 +198,7 @@ export default function ({
 				Util.toggleDisabled(commentButtons, false);
 			})
 			.catch(() => {
-				showStatusMessage({
+				openToast({
 					id: randomNamespace,
 					message: Liferay.Language.get(
 						'your-request-failed-to-complete'
@@ -250,7 +243,7 @@ export default function ({
 					window[`${randomNamespace}showEl`](formId);
 				})
 				.catch(() => {
-					showStatusMessage({
+					openToast({
 						id: randomNamespace,
 						message: Liferay.Language.get(
 							'your-request-failed-to-complete'
@@ -437,7 +430,7 @@ export default function ({
 					const randomId = node.value;
 
 					if (index === 0) {
-						showStatusMessage({
+						openToast({
 							id: randomId,
 							message: Liferay.Language.get(
 								'your-request-completed-successfully'

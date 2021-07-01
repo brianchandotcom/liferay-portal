@@ -104,6 +104,78 @@ export default function ({
 		});
 	}
 
+	function onMessagePosted(response, refreshPage) {
+		Liferay.onceAfter(`${portletDisplayId}:portletRefreshed`, () => {
+			const randomNamespaceNodes = document.querySelectorAll(
+				`input[id^="${namespace}"][id$="randomNamespace"]`
+			);
+
+			Array.prototype.forEach.call(
+				randomNamespaceNodes,
+				(node, index) => {
+					const randomId = node.value;
+
+					if (index === 0) {
+						openToast({
+							message: Liferay.Language.get(
+								'your-request-completed-successfully'
+							),
+							type: 'success',
+						});
+					}
+
+					const currentMessageSelector = `${randomId}message_${response.commentId}`;
+
+					const targetNode = document.getElementById(
+						currentMessageSelector
+					);
+
+					if (targetNode) {
+						location.hash = '#' + currentMessageSelector;
+					}
+				}
+			);
+		});
+
+		const className = Util.getFormElement(form, 'className').value;
+		const classPK = Util.getFormElement(form, 'classPK').value;
+
+		if (response.commentId) {
+			const messageTextNode = document.querySelector(
+				`input[name^="${namespace}${randomNamespace}body"]`
+			);
+
+			if (messageTextNode) {
+				Liferay.fire('messagePosted', {
+					className,
+					classPK,
+					commentId: response.commentId,
+					text: messageTextNode.value,
+				});
+			}
+		}
+
+		if (refreshPage) {
+			window.location.reload();
+		}
+		else {
+			const portletNodeId = `p_p_id_${portletDisplayId}_`;
+
+			const portletNode = document.getElementById(portletNodeId);
+
+			const data = Liferay.Util.ns(namespace, {
+				className,
+				classPK,
+				skipEditorLoading: true,
+			});
+
+			Liferay.Portlet.refresh('#' + portletNodeId, {
+				...data,
+				...(portletNode.refreshURLData || {}),
+			});
+		}
+	}
+
 	function sendMessage(form, refreshPage) {
 		const commentButtons = form.querySelectorAll('.btn-comment');
 
@@ -141,10 +213,7 @@ export default function ({
 					Liferay.onceAfter(
 						`${portletDisplayId}:messagePosted`,
 						() => {
-							window[`${randomNamespace}onMessagePosted`](
-								response,
-								refreshPage
-							);
+							onMessagePosted(response, refreshPage);
 						}
 					);
 
@@ -409,80 +478,5 @@ export default function ({
 		}
 
 		editorInstance.dispose();
-	};
-
-	window[`${randomNamespace}onMessagePosted`] = function (
-		response,
-		refreshPage
-	) {
-		Liferay.onceAfter(`${portletDisplayId}:portletRefreshed`, () => {
-			const randomNamespaceNodes = document.querySelectorAll(
-				`input[id^="${namespace}"][id$="randomNamespace"]`
-			);
-
-			Array.prototype.forEach.call(
-				randomNamespaceNodes,
-				(node, index) => {
-					const randomId = node.value;
-
-					if (index === 0) {
-						openToast({
-							message: Liferay.Language.get(
-								'your-request-completed-successfully'
-							),
-							type: 'success',
-						});
-					}
-
-					const currentMessageSelector = `${randomId}message_${response.commentId}`;
-
-					const targetNode = document.getElementById(
-						currentMessageSelector
-					);
-
-					if (targetNode) {
-						location.hash = '#' + currentMessageSelector;
-					}
-				}
-			);
-		});
-
-		const className = Util.getFormElement(form, 'className').value;
-		const classPK = Util.getFormElement(form, 'classPK').value;
-
-		if (response.commentId) {
-			const messageTextNode = document.querySelector(
-				`input[name^="${namespace}${randomNamespace}body"]`
-			);
-
-			if (messageTextNode) {
-				Liferay.fire('messagePosted', {
-					className,
-					classPK,
-					commentId: response.commentId,
-					text: messageTextNode.value,
-				});
-			}
-		}
-
-		if (refreshPage) {
-			window.location.reload();
-		}
-		else {
-			const portletNodeId = `p_p_id_${portletDisplayId}_`;
-
-			const portletNode = document.getElementById(portletNodeId);
-
-			const data = Liferay.Util.ns(namespace, {
-				className,
-				classPK,
-				skipEditorLoading: true,
-			});
-
-			Liferay.Portlet.refresh('#' + portletNodeId, {
-				...data,
-				...(portletNode.refreshURLData || {}),
-			});
-		}
 	};
 }

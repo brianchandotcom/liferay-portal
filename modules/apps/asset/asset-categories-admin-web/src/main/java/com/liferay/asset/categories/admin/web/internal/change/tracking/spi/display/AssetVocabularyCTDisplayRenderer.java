@@ -26,7 +26,6 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -111,16 +110,15 @@ public class AssetVocabularyCTDisplayRenderer
 		).display(
 			"create-date", assetVocabulary.getCreateDate()
 		).display(
-			"asset-type", () -> _getAssetType(displayBuilder, assetVocabulary)
+			"asset-type", _getAssetType(displayBuilder, assetVocabulary)
 		).display(
 			"number-of-categories", assetVocabulary.getCategoriesCount()
 		);
 	}
 
 	private String _getAssetType(
-			DisplayBuilder<AssetVocabulary> displayBuilder,
-			AssetVocabulary assetVocabulary)
-		throws PortalException {
+		DisplayBuilder<AssetVocabulary> displayBuilder,
+		AssetVocabulary assetVocabulary) {
 
 		long[] selectedClassNameIds = assetVocabulary.getSelectedClassNameIds();
 		long[] selectedClassTypePKs = assetVocabulary.getSelectedClassTypePKs();
@@ -156,12 +154,9 @@ public class AssetVocabularyCTDisplayRenderer
 
 					name = classType.getName();
 				}
-				catch (NoSuchModelException noSuchModelException) {
+				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to get asset type for class type primary " +
-								"key " + classTypePK,
-							noSuchModelException);
+						_log.debug(portalException, portalException);
 					}
 
 					continue;

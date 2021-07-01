@@ -246,12 +246,16 @@ definition {
 	}
 
 	@description = "Verify that hovering the + button will display the text New Workflow"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test DisplaysText {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68227 DisplaysText pending implementation
-
+		AssertElementPresent(
+			key_tooltip = "New Workflow",
+			locator1 = "ProcessBuilderListView#TOOLTIP_MESSAGE");
 	}
 
 	@description = "Verify that the pagination component is displayed when the table has 5 items or more"

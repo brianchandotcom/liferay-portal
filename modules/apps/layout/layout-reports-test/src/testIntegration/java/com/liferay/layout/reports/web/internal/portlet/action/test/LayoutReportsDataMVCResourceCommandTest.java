@@ -24,6 +24,7 @@ import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -270,6 +272,49 @@ public class LayoutReportsDataMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetDataWithLocalizedCanonicalURL() throws Exception {
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), true, _group.getGroupId(),
+				() -> {
+					GroupTestUtil.updateDisplaySettings(
+						_group.getGroupId(),
+						Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
+						LocaleUtil.US);
+
+					Layout layout = LayoutTestUtil.addLayout(
+						_group.getGroupId());
+
+					_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+						TestPropsValues.getUserId(), _group.getGroupId(),
+						layout.isPrivateLayout(), layout.getLayoutId(), true,
+						HashMapBuilder.put(
+							LocaleUtil.SPAIN, "https://liferay.com"
+						).build(),
+						ServiceContextTestUtil.getServiceContext(
+							_group.getGroupId()));
+
+					JSONObject jsonObject = _serveResource(layout);
+
+					JSONArray pageURLsJSONArray = jsonObject.getJSONArray(
+						"pageURLs");
+
+					JSONObject pageURLJSONObject =
+						pageURLsJSONArray.getJSONObject(1);
+
+					Assert.assertEquals(
+						LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+						pageURLJSONObject.getString("languageId"));
+					Assert.assertEquals(
+						layout.getName(LocaleUtil.SPAIN),
+						pageURLJSONObject.getString("title"));
+					Assert.assertEquals(
+						"https://liferay.com",
+						pageURLJSONObject.getString("url"));
+				});
+	}
+
+	@Test
 	public void testGetDataWithoutApiKey() throws Exception {
 		LayoutReportsTestUtil.
 			withLayoutReportsGooglePageSpeedGroupConfiguration(
@@ -360,6 +405,9 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 	@Inject(filter = "mvc.command.name=/layout_reports/data")
 	private MVCResourceCommand _layoutReportsDataMVCResourceCommand;
+
+	@Inject
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	private static class MockInfoItemFieldValuesProvider
 		implements InfoItemFieldValuesProvider<MockObject> {

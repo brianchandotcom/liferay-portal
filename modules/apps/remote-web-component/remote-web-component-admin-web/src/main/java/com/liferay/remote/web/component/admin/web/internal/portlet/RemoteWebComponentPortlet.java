@@ -14,10 +14,6 @@
 
 package com.liferay.remote.web.component.admin.web.internal.portlet;
 
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,8 +35,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.HeaderPortlet;
@@ -64,8 +60,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
-	factory = "remote.web.component.portlet", 
-	service = Portlet.class)
+	factory = "remote.web.component.portlet", service = Portlet.class
+)
 public class RemoteWebComponentPortlet
 	extends MVCPortlet implements HeaderPortlet {
 
@@ -103,6 +99,7 @@ public class RemoteWebComponentPortlet
 				0, portletURLSeparator);
 
 			int pageSeparator = routerBasePage.lastIndexOf("/");
+
 			String routerBaseSite = routerBasePage.substring(0, pageSeparator);
 
 			printWriter.append(StringPool.LESS_THAN);
@@ -137,7 +134,7 @@ public class RemoteWebComponentPortlet
 							stream.map(
 								String::valueOf
 							).collect(
-								joining(" ")
+								Collectors.joining(" ")
 							));
 					}
 					else if (v instanceof Collection) {
@@ -147,7 +144,7 @@ public class RemoteWebComponentPortlet
 							stream.map(
 								String::valueOf
 							).collect(
-								joining(" ")
+								Collectors.joining(" ")
 							));
 					}
 					else {
@@ -189,7 +186,7 @@ public class RemoteWebComponentPortlet
 				p -> p.test(e.getKey())
 			)
 		).collect(
-			toMap(Map.Entry::getKey, Map.Entry::getValue)
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 		);
 	}
 
@@ -250,7 +247,7 @@ public class RemoteWebComponentPortlet
 	).map(
 		Method::getName
 	).collect(
-		toList()
+		Collectors.toList()
 	);
 	private static final List<Predicate<String>> _keyFilters = Arrays.asList(
 		"component.id"::equals, "component.name"::equals,

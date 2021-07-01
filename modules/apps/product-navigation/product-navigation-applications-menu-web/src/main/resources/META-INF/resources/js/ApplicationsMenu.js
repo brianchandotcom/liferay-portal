@@ -462,6 +462,7 @@ const ApplicationsMenu = ({
 			{visible && (
 				<ClayModal
 					className="applications-menu-modal"
+					containerProps={{className: 'cadmin'}}
 					observer={observer}
 					status="info"
 				>

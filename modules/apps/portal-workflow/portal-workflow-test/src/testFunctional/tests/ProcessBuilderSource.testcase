@@ -298,12 +298,44 @@ definition {
 	}
 
 	@description = "Verify that the Revision History tab displays the list of modification dates"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DisplaysModificationDates {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#DisplaysModificationDates";
 
-		// TODO LRQA-68329 DisplaysModificationDates pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		Navigator.gotoNavTab(navTab = "Revision History");
+
+		AssertElementPresent(
+			key_ruleNumber = "1",
+			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
+
+		PortletEntry.inputTitle(title = "New Workflow Definition Title 2");
+
+		Button.clickSave();
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		Navigator.gotoNavTab(navTab = "Revision History");
+
+		AssertElementPresent(
+			key_ruleNumber = "1",
+			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
+
+		AssertElementPresent(
+			key_ruleNumber = "2",
+			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
 	}
 
 	@description = "Verify that revision history is not copied to the duplicated definition"

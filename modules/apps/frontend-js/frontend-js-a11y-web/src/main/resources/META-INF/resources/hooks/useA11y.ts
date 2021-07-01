@@ -61,6 +61,10 @@ function segmentViolationsByRulesAndNodes(
 
 				if (!element) {
 					delete previousViolation.nodes[node][rule.id];
+
+					if (!Object.values(previousViolation.nodes[node]).length) {
+						delete previousViolation.nodes[node];
+					}
 				}
 				else {
 					elements.set(element, node);

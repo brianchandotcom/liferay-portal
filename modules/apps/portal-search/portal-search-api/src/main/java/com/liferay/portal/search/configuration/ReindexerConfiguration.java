@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * @author André de Oliveira
  */
-@ExtendedObjectClassDefinition(category = "search")
+@ExtendedObjectClassDefinition(category = "search", generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.ReindexerConfiguration",
 	localization = "content/Language", name = "reindexer-configuration-name"

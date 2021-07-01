@@ -180,7 +180,8 @@ public class AssetListPortletItemSelectorView
 				public String getPayload() {
 					return JSONUtil.put(
 						"classNameId",
-						_portal.getClassNameId(AssetListEntry.class)
+						String.valueOf(
+							_portal.getClassNameId(AssetListEntry.class))
 					).put(
 						"classPK", assetListEntry.getAssetListEntryId()
 					).put(

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -81,7 +80,7 @@ public class SPAPortletFilter implements RenderFilter {
 					layoutTypePortlet.getLayoutTemplateId())) {
 
 				LiferayPortletRequest liferayPortletRequest =
-					PortalUtil.getLiferayPortletRequest(renderRequest);
+					_portal.getLiferayPortletRequest(renderRequest);
 
 				List<Portlet> columnPortlets = layoutTypePortlet.getAllPortlets(
 					"column-2");

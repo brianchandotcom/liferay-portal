@@ -611,10 +611,7 @@ definition {
 
 		User.firstLoginUI();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "SSO",
@@ -635,10 +632,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
+		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",
@@ -659,8 +653,6 @@ definition {
 			configurationCategory = "SSO",
 			configurationName = "Token Based SSO",
 			configurationScope = "Virtual Instance Scope");
-
-		SystemSettings.resetConfiguration();
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 

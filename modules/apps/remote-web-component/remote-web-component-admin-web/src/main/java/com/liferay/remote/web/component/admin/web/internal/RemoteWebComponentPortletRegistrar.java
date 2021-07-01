@@ -87,12 +87,12 @@ public class RemoteWebComponentPortletRegistrar {
 			"javax.portlet.security-role-ref", "power-user,user");
 		componentProperties.put("javax.portlet.version", "3.0");
 
-		UnicodeProperties customProperties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		try {
-			customProperties.load(
+			unicodeProperties.load(
 				_remoteWebComponentConfiguration.portletServiceProperties());
-			customProperties.forEach(componentProperties::put);
+			unicodeProperties.forEach(componentProperties::put);
 		}
 		catch (IOException ioException) {
 			_log.error(

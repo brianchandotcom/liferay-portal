@@ -62,7 +62,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(factory = "remote.web.component.portlet", service = Portlet.class)
+@Component(
+	configurationPid = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
+	factory = "remote.web.component.portlet", 
+	service = Portlet.class)
 public class RemoteWebComponentPortlet
 	extends MVCPortlet implements HeaderPortlet {
 

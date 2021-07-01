@@ -1017,7 +1017,7 @@ definition {
 
 		task ("View the Home is shown in selector input") {
 			AssertTextEquals.assertValue(
-				key_value = "folderName",
+				key_fieldName = "folderName",
 				locator1 = "TextInput#ANY_ID",
 				value1 = "Home");
 		}
@@ -1079,7 +1079,7 @@ definition {
 
 		task ("View the Home is shown in selector input") {
 			AssertTextEquals.assertValue(
-				key_value = "folderName",
+				key_fieldName = "folderName",
 				locator1 = "TextInput#ANY_ID",
 				value1 = "Home");
 		}

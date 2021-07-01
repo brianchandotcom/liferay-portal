@@ -190,7 +190,7 @@ definition {
 				var value = StringUtil.extractLast("${borderWidthAttribute}", "-");
 
 				Type(
-					key_value = "${fieldLabel}",
+					key_fieldName = "${fieldLabel}",
 					locator1 = "TextInput#ANY_ID",
 					value1 = "${value}");
 			}

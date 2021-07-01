@@ -184,7 +184,7 @@ definition {
 			value1 = "Italy");
 
 		Type(
-			key_value = "date",
+			key_fieldName = "date",
 			locator1 = "TextInput#ANY_ID",
 			value1 = "06/11/2021");
 
@@ -206,7 +206,7 @@ definition {
 			value1 = "15");
 
 		Type(
-			key_value = "date",
+			key_fieldName = "date",
 			locator1 = "TextInput#ANY_ID",
 			value1 = "06/12/2021");
 
@@ -226,7 +226,7 @@ definition {
 			value1 = "15");
 
 		AssertTextEquals(
-			key_value = "date",
+			key_fieldName = "date",
 			locator1 = "TextInput#ANY_ID",
 			value1 = "06/12/2021");
 

@@ -499,7 +499,7 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		Type(
-			key_value = "expirationDateTime",
+			key_fieldName = "expirationDateTime",
 			locator1 = "TextInput#ANY_ID",
 			value1 = "${hours}:${minutes} ${ampm}");
 

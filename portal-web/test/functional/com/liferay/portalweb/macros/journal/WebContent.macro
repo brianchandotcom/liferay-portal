@@ -1750,7 +1750,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals.assertValue(
-			key_value = "folderName",
+			key_fieldName = "folderName",
 			locator1 = "TextInput#ANY_ID",
 			value1 = "${folderName}");
 	}

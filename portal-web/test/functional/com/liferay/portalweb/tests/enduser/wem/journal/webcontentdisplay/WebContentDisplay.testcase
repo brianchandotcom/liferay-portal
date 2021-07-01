@@ -592,6 +592,10 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
 
+			AssertVisible(
+				key_portletName = "Web Content Display",
+				locator1 = "Portlet#TITLE");
+
 			for (var borderType : list "top,right,bottom,left") {
 				AssertCssValue(
 					locator1 = "Portlet#PORTLET_CONTENT",
@@ -608,20 +612,27 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("Define the border width and border color of WCD") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			Portlet.gotoPortletOptions(
 				portletName = "Web Content Display",
 				portletOption = "Look and Feel Configuration");
+
 			IFrame.selectConfigurationFrame();
 
 			Portlet.configureCustomBorderStylesViaLookandfeelPG(
 				borderColorAttributeList = "Top-FF0D0D",
 				borderWidthAttributeList = "WidthTop-15",
 				borderWidthUnitList = "WidthTop-px",
-				sameForAllList = "Border Width,Border Color");
+				sameForAllFieldsetLabelList = "Border Width,Border Color");
 
 			IFrame.closeFrame();
 
 			Refresh();
+
+			AssertVisible(
+				key_portletName = "Web Content Display",
+				locator1 = "Portlet#TITLE");
 		}
 
 		task ("View the border width and border color of WCD") {

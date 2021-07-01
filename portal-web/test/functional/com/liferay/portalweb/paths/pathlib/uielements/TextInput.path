@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>ANY_ID</td>
-	<td>//input[contains(@id,'${key_value}')]</td>
+	<td>//input[contains(@id,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

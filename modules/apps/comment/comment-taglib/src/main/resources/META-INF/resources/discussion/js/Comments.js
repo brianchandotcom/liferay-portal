@@ -105,92 +105,7 @@ export default function ({
 		});
 	}
 
-	window[`${namespace}${randomNamespace}0ReplyOnChange`] = function (html) {
-		Util.toggleDisabled(
-			`#${namespace}${randomNamespace}postReplyButton0`,
-			html.trim() === ''
-		);
-	};
-
-	window[`${randomNamespace}afterLogin`] = function (
-		emailAddress,
-		anonymousAccount
-	) {
-		Util.setFormValues(form, {
-			emailAddress,
-		});
-
-		window[`${namespace}${randomNamespace}sendMessage`](
-			form,
-			!anonymousAccount
-		);
-	};
-
-	window[`${randomNamespace}deleteMessage`] = function (i) {
-		const commentIdElement = Util.getFormElement(form, 'commentId' + i);
-
-		if (commentIdElement) {
-			Util.setFormValues(form, {
-				cmd: constants.DELETE,
-				commentId: commentIdElement.value,
-			});
-
-			window[`${namespace}${randomNamespace}sendMessage`](form);
-		}
-	};
-
-	window[`${randomNamespace}hideEditor`] = function (editorName, formId) {
-		const editor = window[`${namespace}${editorName}`];
-
-		if (editor) {
-			editor.destroy();
-		}
-
-		hideEl(formId);
-	};
-
-	window[`${randomNamespace}postReply`] = function (i) {
-		const editorInstance =
-			window[`${namespace}${randomNamespace}postReplyBody${i}`];
-
-		const parentCommentIdElement = Util.getFormElement(
-			form,
-			'parentCommentId' + i
-		);
-
-		if (parentCommentIdElement) {
-			Util.setFormValues(form, {
-				body: editorInstance.getHTML(),
-				cmd: constants.ADD,
-				parentCommentId: parentCommentIdElement.value,
-			});
-		}
-
-		if (!themeDisplay.isSignedIn()) {
-			window.namespace = namespace;
-			window.randomNamespace = randomNamespace;
-
-			Util.openWindow({
-				dialog: {
-					height: 450,
-					width: 560,
-				},
-				id: `${namespace}signInDialog`,
-				title: Liferay.Language.get('sign-in'),
-				uri: loginURL,
-			});
-		}
-		else {
-			window[`${namespace}${randomNamespace}sendMessage`](form);
-
-			editorInstance.dispose();
-		}
-	};
-
-	window[`${namespace}${randomNamespace}sendMessage`] = function (
-		form,
-		refreshPage
-	) {
+	function sendMessage(form, refreshPage) {
 		const commentButtons = form.querySelectorAll('.btn-comment');
 
 		Util.toggleDisabled(commentButtons, true);
@@ -293,6 +208,85 @@ export default function ({
 
 				Util.toggleDisabled(commentButtons, false);
 			});
+	}
+
+	window[`${namespace}${randomNamespace}0ReplyOnChange`] = function (html) {
+		Util.toggleDisabled(
+			`#${namespace}${randomNamespace}postReplyButton0`,
+			html.trim() === ''
+		);
+	};
+
+	window[`${randomNamespace}afterLogin`] = function (
+		emailAddress,
+		anonymousAccount
+	) {
+		Util.setFormValues(form, {
+			emailAddress,
+		});
+
+		sendMessage(form, !anonymousAccount);
+	};
+
+	window[`${randomNamespace}deleteMessage`] = function (i) {
+		const commentIdElement = Util.getFormElement(form, 'commentId' + i);
+
+		if (commentIdElement) {
+			Util.setFormValues(form, {
+				cmd: constants.DELETE,
+				commentId: commentIdElement.value,
+			});
+
+			sendMessage(form);
+		}
+	};
+
+	window[`${randomNamespace}hideEditor`] = function (editorName, formId) {
+		const editor = window[`${namespace}${editorName}`];
+
+		if (editor) {
+			editor.destroy();
+		}
+
+		hideEl(formId);
+	};
+
+	window[`${randomNamespace}postReply`] = function (i) {
+		const editorInstance =
+			window[`${namespace}${randomNamespace}postReplyBody${i}`];
+
+		const parentCommentIdElement = Util.getFormElement(
+			form,
+			'parentCommentId' + i
+		);
+
+		if (parentCommentIdElement) {
+			Util.setFormValues(form, {
+				body: editorInstance.getHTML(),
+				cmd: constants.ADD,
+				parentCommentId: parentCommentIdElement.value,
+			});
+		}
+
+		if (!themeDisplay.isSignedIn()) {
+			window.namespace = namespace;
+			window.randomNamespace = randomNamespace;
+
+			Util.openWindow({
+				dialog: {
+					height: 450,
+					width: 560,
+				},
+				id: `${namespace}signInDialog`,
+				title: Liferay.Language.get('sign-in'),
+				uri: loginURL,
+			});
+		}
+		else {
+			sendMessage(form);
+
+			editorInstance.dispose();
+		}
 	};
 
 	window[`${randomNamespace}showEl`] = function (elementId) {
@@ -406,7 +400,7 @@ export default function ({
 				: constants.UNSUBSCRIBE_FROM_COMMENTS,
 		});
 
-		window[`${namespace}${randomNamespace}sendMessage`](form);
+		sendMessage(form);
 	};
 
 	window[`${randomNamespace}updateMessage`] = function (i, pending) {
@@ -428,7 +422,7 @@ export default function ({
 				commentId: commentIdElement.value,
 			});
 
-			window[`${namespace}${randomNamespace}sendMessage`](form);
+			sendMessage(form);
 		}
 
 		editorInstance.dispose();

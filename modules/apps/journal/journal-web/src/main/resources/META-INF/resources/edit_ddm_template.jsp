@@ -71,28 +71,26 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		</clay:container-fluid>
 	</nav>
 
-	<div class="ddm-template-editor">
-		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
+	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
 
-		<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
-			<div class="alert alert-warning">
-				<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
+	<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
+		</div>
+	</c:if>
+
+	<div>
+		<div id="<portlet:namespace />ddmTemplateEditor">
+			<div class="inline-item my-5 p-5 w-100">
+				<span aria-hidden="true" class="loading-animation"></span>
 			</div>
-		</c:if>
 
-		<div>
-			<div id="<portlet:namespace />ddmTemplateEditor">
-				<div class="inline-item my-5 p-5 w-100">
-					<span aria-hidden="true" class="loading-animation"></span>
-				</div>
-
-				<react:component
-					componentId="ddmTemplateEditor"
-					module="ddm_template_editor/components/App"
-					props="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
-				/>
-			</div>
+			<react:component
+				componentId="ddmTemplateEditor"
+				module="ddm_template_editor/components/App"
+				props="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
+			/>
 		</div>
 	</div>
 </aui:form>

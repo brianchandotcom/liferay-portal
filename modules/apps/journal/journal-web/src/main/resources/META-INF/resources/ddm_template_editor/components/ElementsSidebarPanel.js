@@ -59,8 +59,9 @@ export const ElementsSidebarPanel = ({
 	};
 
 	return (
-		<>
-			<ClayForm.Group>
+		<div className="p-3">
+			<h1>{Liferay.Language.get('elements')}</h1>
+			<ClayForm.Group small>
 				<label className="sr-only" htmlFor={SEARCH_INPUT_ID}>
 					{Liferay.Language.get('search')}
 				</label>
@@ -88,7 +89,7 @@ export const ElementsSidebarPanel = ({
 					/>
 				))
 			)}
-		</>
+		</div>
 	);
 };
 

@@ -12,13 +12,14 @@
  * details.
  */
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {useChannel} from '../hooks/useChannel';
 import {ClosableAlert} from './ClosableAlert';
 import {Editor} from './Editor';
-import {ElementsSidebarPanel} from './ElementsSidebarPanel';
+import Sidebar from './Sidebar';
 
 export default function App({
 	editorAutocompleteData,
@@ -55,20 +56,15 @@ export default function App({
 		}
 	}, [portletNamespace]);
 
+	const [sidebarOpen, setSidebarOpen] = useState(false);
+
 	return (
 		<div className="ddm_template_editor__App">
-			{editorMode !== 'xml' && (
-				<div className="ddm_template_editor__App-sidebar">
-					<ElementsSidebarPanel
-						onButtonClick={(item) =>
-							inputChannel.sendData(item.content)
-						}
-						templateVariableGroups={templateVariableGroups}
-					/>
-				</div>
-			)}
-
-			<div className="ddm_template_editor__App-content">
+			<div
+				className={classNames('ddm_template_editor__App-content', {
+					'ddm_template_editor__App-content--sidebar-open': sidebarOpen,
+				})}
+			>
 				<ClosableAlert
 					message={Liferay.Language.get(
 						'changing-the-language-does-not-automatically-translate-the-existing-template-script'
@@ -93,6 +89,15 @@ export default function App({
 					portletNamespace={portletNamespace}
 				/>
 			</div>
+
+			{editorMode !== 'xml' && (
+				<Sidebar
+					inputChannel={inputChannel}
+					setSidebarOpen={setSidebarOpen}
+					sidebarOpen={sidebarOpen}
+					templateVariableGroups={templateVariableGroups}
+				/>
+			)}
 		</div>
 	);
 }

@@ -1,27 +1,109 @@
+@import 'atlas-variables';
+
 @import 'CodeMirrorEditor';
+
+$controlMenuDesktopHeight: 56px;
+$controlMenuHeight: 48px;
+$toolbarDesktopHeight: 4rem;
+$toolbarHeight: 6.875rem;
 
 .ddm_template_editor__App {
 	display: flex;
-	flex-wrap: wrap-reverse;
+	height: calc(100vh - #{$toolbarHeight} - #{$controlMenuHeight});
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	top: $toolbarHeight;
+	width: 100%;
 
-	@supports (gap: 24px) {
-		gap: 24px;
+	@include media-breakpoint-up(sm) {
+		height: calc(100vh - #{$toolbarHeight} - #{$controlMenuDesktopHeight});
 	}
 
-	&-content {
-		flex-basis: 40ch;
-		flex-grow: 10;
-		overflow: hidden;
+	@include media-breakpoint-up(lg) {
+		top: $toolbarDesktopHeight;
+		height: calc(
+			100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
+		);
+	}
+
+	@include media-breakpoint-up(lg) {
+		top: $toolbarDesktopHeight;
+		height: calc(
+			100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
+		);
+	}
+
+	.ddm_template_editor__App-content {
+		background: $white;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		overflow-y: auto;
+		padding-right: 42px;
+		transition: padding ease 0.5s;
+
+		&--sidebar-open {
+			padding-right: 320px;
+		}
 	}
 
 	&-sidebar {
-		flex-basis: 30ch;
-		flex-grow: 1;
-		flex-shrink: 0;
-		margin-bottom: 24px;
+		display: flex;
+		height: calc(100vh - #{$toolbarHeight} - #{$controlMenuHeight});
+		position: fixed;
+		right: 0;
 
-		@supports not (gap: 24px) {
-			margin-right: 24px;
+		@include media-breakpoint-up(lg) {
+			height: calc(
+				100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
+			);
+		}
+
+		&-buttons {
+			align-items: center;
+			background-color: $light;
+			border-left: 1px solid $gray-300;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			width: 42px;
+			z-index: 1;
+
+			.btn {
+				height: 32px;
+				width: 32px;
+			}
+
+			.lexicon-icon {
+				margin-top: 0;
+			}
+		}
+
+		&-content {
+			background-color: $white;
+			border-left: 1px solid $gray-300;
+			height: calc(100vh - #{$toolbarHeight} - #{$controlMenuHeight});
+			position: fixed;
+			right: 42px;
+			transform: translateX(100%);
+			transition: transform ease 0.5s;
+			width: 278px;
+			z-index: 0;
+
+			.rtl & {
+				transform: translateX(-100%);
+			}
+
+			@include media-breakpoint-up(lg) {
+				height: calc(
+					100vh - #{$toolbarDesktopHeight} - #{$controlMenuDesktopHeight}
+				);
+			}
+
+			&.open {
+				transform: translateX(0);
+			}
 		}
 	}
 }

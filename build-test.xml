@@ -9152,7 +9152,16 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<prepare-portal-elasticsearch-osgi-configuration />
 
-		<prepare-portal-search-osgi-configuration/>
+		<get-testcase-property property.name="portal.version" />
+
+		<if>
+			<not>
+				<isset property="portal.version" />
+			</not>
+			<then>
+				<prepare-portal-search-osgi-configuration/>
+			</then>
+		</if>
 
 		<prepare-portal-template-freemarker-osgi-configuration />
 

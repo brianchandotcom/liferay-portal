@@ -481,7 +481,9 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"contentStructureId", "creatorId"};
+		return new String[] {
+			"assetLibraryId", "contentStructureId", "creatorId", "siteId"
+		};
 	}
 
 	@Override

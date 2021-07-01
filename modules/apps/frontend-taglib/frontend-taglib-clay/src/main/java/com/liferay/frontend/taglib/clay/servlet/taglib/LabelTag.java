@@ -52,6 +52,14 @@ public class LabelTag extends BaseContainerTag {
 		return _label;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isLarge()}
+	 */
+	@Deprecated
+	public boolean getLarge() {
+		return _large;
+	}
+
 	public boolean isLarge() {
 		return _large;
 	}

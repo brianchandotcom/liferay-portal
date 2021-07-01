@@ -817,7 +817,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Reference(
 		target = "(class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"
 	)
-	private RepositoryFactory _repositoryFactory;
+	private RepositoryFactory _portletRepositoryFactory;
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

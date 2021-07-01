@@ -80,7 +80,6 @@ definition {
 	test PublishSimpleProduct {
 		property environment.acceptance = "true";
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

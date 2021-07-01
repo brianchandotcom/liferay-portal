@@ -71,7 +71,6 @@ definition {
 	@priority = "3"
 	test AddASKUWithSubscriptions {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

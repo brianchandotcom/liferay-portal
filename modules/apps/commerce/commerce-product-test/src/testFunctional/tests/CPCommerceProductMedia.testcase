@@ -34,7 +34,6 @@ definition {
 	@priority = "3"
 	test AddAnAttachment {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -65,7 +64,6 @@ definition {
 
 	test AddAnImage {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -86,7 +84,6 @@ definition {
 	@priority = "3"
 	test AddAnImageToAnOption {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		// TODO Review
 
@@ -144,7 +141,6 @@ definition {
 	@priority = "3"
 	test EditAnAttachment {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -235,7 +231,6 @@ definition {
 	@priority = "3"
 	test RemoveAnAttachment {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		// TODO Review
 
@@ -265,7 +260,6 @@ definition {
 	@priority = "3"
 	test RemoveAnImage {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		// TODO Review
 

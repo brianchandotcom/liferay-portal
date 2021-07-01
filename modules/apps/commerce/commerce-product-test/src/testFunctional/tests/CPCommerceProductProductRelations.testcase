@@ -86,7 +86,6 @@ definition {
 	@priority = "3"
 	test EditAProductRelations {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -130,7 +129,6 @@ definition {
 	@priority = "3"
 	test RemoveAProductRelations {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

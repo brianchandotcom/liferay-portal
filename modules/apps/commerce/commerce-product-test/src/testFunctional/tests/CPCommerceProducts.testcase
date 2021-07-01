@@ -167,7 +167,6 @@ definition {
 	@priority = "3"
 	test AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -439,7 +438,6 @@ definition {
 
 	test CreateProductBundleWithPriceTypeDynamic {
 		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -526,7 +524,6 @@ definition {
 	@priority = "3"
 	test CreateProductBundleWithPriceTypeStatic {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

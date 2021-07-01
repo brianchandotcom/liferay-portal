@@ -71,7 +71,6 @@ definition {
 	@priority = "3"
 	test AddAPreExistingProductGroup {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		// TODO Review
 

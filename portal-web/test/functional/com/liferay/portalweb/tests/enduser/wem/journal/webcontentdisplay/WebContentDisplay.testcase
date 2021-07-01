@@ -616,7 +616,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		task ("Define the border width and border color") {
 			IFrame.selectConfigurationFrame();
 
-			Portlet.configureCustomBorderStylesViaLookAnfeelPG(
+			Portlet.configureCustomBorderStylesViaLookandfeelPG(
 				borderColorAttributeList = "Top-FF0D0D",
 				borderWidthAttributeList = "WidthTop-15",
 				borderWidthUnitList = "WidthTop-px",

@@ -136,13 +136,13 @@ public class DuplicateQueryStringsDetectorImpl
 	}
 
 	protected IdsQuery getUnlessRankingIdQuery(Criteria criteria) {
-		if (Validator.isBlank(criteria.getUnlessRankingId())) {
+		if (Validator.isBlank(criteria.getUnlessRankingDocumentId())) {
 			return null;
 		}
 
 		IdsQuery idsQuery = queries.ids();
 
-		idsQuery.addIds(criteria.getUnlessRankingId());
+		idsQuery.addIds(criteria.getUnlessRankingDocumentId());
 
 		return idsQuery;
 	}
@@ -174,8 +174,8 @@ public class DuplicateQueryStringsDetectorImpl
 		}
 
 		@Override
-		public String getUnlessRankingId() {
-			return _unlessRankingId;
+		public String getUnlessRankingDocumentId() {
+			return _unlessRankingDocumentId;
 		}
 
 		protected CriteriaImpl(CriteriaImpl criteriaImpl) {
@@ -186,7 +186,7 @@ public class DuplicateQueryStringsDetectorImpl
 			_index = criteriaImpl._index;
 			_queryStrings = new HashSet<>(criteriaImpl._queryStrings);
 			_rankingIndexName = criteriaImpl._rankingIndexName;
-			_unlessRankingId = criteriaImpl._unlessRankingId;
+			_unlessRankingDocumentId = criteriaImpl._unlessRankingDocumentId;
 		}
 
 		protected static class BuilderImpl implements Criteria.Builder {
@@ -223,8 +223,11 @@ public class DuplicateQueryStringsDetectorImpl
 			}
 
 			@Override
-			public BuilderImpl unlessRankingId(String unlessRankingId) {
-				_criteriaImpl._unlessRankingId = unlessRankingId;
+			public BuilderImpl unlessRankingDocumentId(
+				String unlessRankingDocumentId) {
+
+				_criteriaImpl._unlessRankingDocumentId =
+					unlessRankingDocumentId;
 
 				return this;
 			}
@@ -236,7 +239,7 @@ public class DuplicateQueryStringsDetectorImpl
 		private String _index;
 		private Collection<String> _queryStrings = new HashSet<>();
 		private RankingIndexName _rankingIndexName;
-		private String _unlessRankingId;
+		private String _unlessRankingDocumentId;
 
 	}
 

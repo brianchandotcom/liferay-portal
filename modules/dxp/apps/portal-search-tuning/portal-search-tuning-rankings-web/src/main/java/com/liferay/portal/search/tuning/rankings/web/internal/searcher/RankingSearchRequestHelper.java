@@ -40,15 +40,15 @@ public class RankingSearchRequestHelper {
 		SearchRequestBuilder searchRequestBuilder, Ranking ranking) {
 
 		Stream.concat(
-			getPinIdsQueryParts(ranking),
-			Stream.of(getBlockIdsQueryPart(ranking))
+			getPinnedDocumentIdsQueryParts(ranking),
+			Stream.of(getHiddenDocumentIdsQueryPart(ranking))
 		).forEach(
 			searchRequestBuilder::addComplexQueryPart
 		);
 	}
 
-	protected ComplexQueryPart getBlockIdsQueryPart(Ranking ranking) {
-		List<String> ids = ranking.getBlockIds();
+	protected ComplexQueryPart getHiddenDocumentIdsQueryPart(Ranking ranking) {
+		List<String> ids = ranking.getHiddenDocumentIds();
 
 		if (ids.isEmpty()) {
 			return null;
@@ -67,7 +67,7 @@ public class RankingSearchRequestHelper {
 	protected IdsQuery getIdsQuery(Ranking.Pin pin, int size) {
 		IdsQuery idsQuery = queries.ids();
 
-		idsQuery.addIds(pin.getId());
+		idsQuery.addIds(pin.getDocumentId());
 
 		idsQuery.setBoost((size - pin.getPosition()) * 10000F);
 
@@ -85,7 +85,9 @@ public class RankingSearchRequestHelper {
 		).build();
 	}
 
-	protected Stream<ComplexQueryPart> getPinIdsQueryParts(Ranking ranking) {
+	protected Stream<ComplexQueryPart> getPinnedDocumentIdsQueryParts(
+		Ranking ranking) {
+
 		List<Ranking.Pin> pins = ranking.getPins();
 
 		Stream<Ranking.Pin> stream = pins.stream();

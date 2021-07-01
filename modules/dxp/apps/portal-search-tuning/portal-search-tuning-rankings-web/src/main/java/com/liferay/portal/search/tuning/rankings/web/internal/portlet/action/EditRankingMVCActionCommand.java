@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -39,9 +40,9 @@ import com.liferay.portal.search.tuning.rankings.web.internal.exception.Duplicat
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexWriter;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.storage.RankingStorageAdapter;
 
 import java.io.IOException;
 
@@ -180,7 +181,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	protected void delete(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			EditRankingMVCActionRequest editRankingMVCActionRequest)
-		throws IOException {
+		throws IOException, PortalException {
 
 		doDelete(actionRequest, editRankingMVCActionRequest);
 
@@ -225,7 +226,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		RankingIndexName rankingIndexName = getRankingIndexName();
 
-		String id = rankingIndexWriter.create(rankingIndexName, ranking);
+		String id = rankingStorageAdapter.create(rankingIndexName, ranking);
 
 		Optional<Ranking> optional = rankingIndexReader.fetchOptional(
 			rankingIndexName, id);
@@ -234,9 +235,10 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void doDeactivate(
-		ActionRequest actionRequest,
-		EditRankingMVCActionRequest editRankingMVCActionRequest,
-		boolean inactive) {
+			ActionRequest actionRequest,
+			EditRankingMVCActionRequest editRankingMVCActionRequest,
+			boolean inactive)
+		throws PortalException {
 
 		List<Ranking> rankings = _getRankings(
 			actionRequest, editRankingMVCActionRequest);
@@ -251,27 +253,29 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 			rankingBuilder.inactive(inactive);
 
-			rankingIndexWriter.update(
+			rankingStorageAdapter.update(
 				getRankingIndexName(), rankingBuilder.build());
 		}
 	}
 
 	protected void doDelete(
-		ActionRequest actionRequest,
-		EditRankingMVCActionRequest editRankingMVCActionRequest) {
+			ActionRequest actionRequest,
+			EditRankingMVCActionRequest editRankingMVCActionRequest)
+		throws PortalException {
 
-		String[] deleteResultsRankingUids = _getResultsRankingUids(
+		String[] rankingDocumentIds = _getRankingDocumentIds(
 			actionRequest, editRankingMVCActionRequest);
 
-		for (String deleteResultsRankingUid : deleteResultsRankingUids) {
-			rankingIndexWriter.remove(
-				getRankingIndexName(), deleteResultsRankingUid);
+		for (String rankingDocumentId : rankingDocumentIds) {
+			rankingStorageAdapter.delete(
+				getRankingIndexName(), rankingDocumentId);
 		}
 	}
 
 	protected void doUpdate(
-		ActionRequest actionRequest,
-		EditRankingMVCActionRequest editRankingMVCActionRequest) {
+			ActionRequest actionRequest,
+			EditRankingMVCActionRequest editRankingMVCActionRequest)
+		throws PortalException {
 
 		String id = editRankingMVCActionRequest.getResultsRankingUid();
 
@@ -328,7 +332,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			rankingBuilder.pins(null);
 		}
 
-		rankingIndexWriter.update(
+		rankingStorageAdapter.update(
 			getRankingIndexName(), rankingBuilder.build());
 	}
 
@@ -413,7 +417,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	protected RankingIndexReader rankingIndexReader;
 
 	@Reference
-	protected RankingIndexWriter rankingIndexWriter;
+	protected RankingStorageAdapter rankingStorageAdapter;
 
 	private boolean _detectedDuplicateQueryStrings(
 		Ranking ranking, Collection<String> queryStrings) {

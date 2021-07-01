@@ -88,12 +88,22 @@ definition {
 	}
 
 	@description = "Verify that, when entering valid content, the Workflow is published"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishWorkflow {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanPublishWorkflow";
 
-		// TODO LRQA-68321 CanPublishWorkflow pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_2.xml",
+			workflowDefinitionTitle = "Manuel Task");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Manuel Task");
 	}
 
 	@description = "Verify that the user is able to restore a previous version of definition by clicking on Restore option, on kebab menu"

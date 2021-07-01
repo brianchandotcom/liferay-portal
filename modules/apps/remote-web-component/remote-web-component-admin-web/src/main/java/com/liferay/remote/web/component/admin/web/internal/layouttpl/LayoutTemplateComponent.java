@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
+import java.net.URL;
+
 import java.util.List;
 import java.util.Properties;
 
@@ -45,11 +47,10 @@ public class LayoutTemplateComponent {
 	protected void activate(BundleContext bundleContext) {
 		Bundle bundle = bundleContext.getBundle();
 
+		URL url = bundle.getEntry("/META-INF/liferay-layout-templates.xml");
+
 		try {
-			String layoutTemplateXml = StreamUtil.toString(
-				bundle.getEntry(
-					"/META-INF/liferay-layout-templates.xml"
-				).openStream());
+			String layoutTemplateXml = StreamUtil.toString(url.openStream());
 
 			Properties props = new Properties();
 

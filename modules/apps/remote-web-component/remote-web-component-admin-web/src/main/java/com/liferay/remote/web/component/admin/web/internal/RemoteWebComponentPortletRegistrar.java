@@ -17,7 +17,7 @@ package com.liferay.remote.web.component.admin.web.internal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration;
@@ -216,10 +216,10 @@ public class RemoteWebComponentPortletRegistrar {
 		final String portletAlias =
 			_remoteWebComponentConfiguration.portletAlias();
 
-		return PortalUtil.getJsSafePortletId(
-			"rwc_" +
-				(Validator.isNotNull(portletAlias) ? portletAlias :
-					_elementName));
+		String portletName =
+			Validator.isNotNull(portletAlias) ? portletAlias : _elementName;
+
+		return _portal.getJsSafePortletId("rwc_" + portletName);
 	}
 
 	private String _getResourceBundleName() {
@@ -232,6 +232,10 @@ public class RemoteWebComponentPortletRegistrar {
 	private volatile ComponentInstance _bundleResourceLoaderInstance;
 	private volatile String _elementName;
 	private volatile ComponentInstance _friendlyURLMapperInstance;
+
+	@Reference
+	private Portal _portal;
+
 	private volatile ComponentInstance _portletInstance;
 	private volatile RemoteWebComponentConfiguration
 		_remoteWebComponentConfiguration;

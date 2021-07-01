@@ -129,9 +129,14 @@ public class AssetVocabularyCTDisplayRenderer
 					if (classNameId !=
 							AssetCategoryConstants.ALL_CLASS_NAME_ID) {
 
-						if (classTypePK !=
+						if (classTypePK ==
 								AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
 
+							name = ResourceActionsUtil.getModelResource(
+								displayBuilder.getLocale(),
+								_portal.getClassName(classNameId));
+						}
+						else {
 							AssetRendererFactory<?> assetRendererFactory =
 								AssetRendererFactoryRegistryUtil.
 									getAssetRendererFactoryByClassNameId(
@@ -158,11 +163,6 @@ public class AssetVocabularyCTDisplayRenderer
 
 								continue;
 							}
-						}
-						else {
-							name = ResourceActionsUtil.getModelResource(
-								displayBuilder.getLocale(),
-								_portal.getClassName(classNameId));
 						}
 					}
 

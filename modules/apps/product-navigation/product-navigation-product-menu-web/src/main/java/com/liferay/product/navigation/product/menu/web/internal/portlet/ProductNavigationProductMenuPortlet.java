@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
+import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.product.navigation.product.menu.web.internal.display.context.LayoutsTreeDisplayContext;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -97,18 +99,24 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
 			_panelCategoryRegistry);
 
-		renderRequest.setAttribute(
-			"siteNavigationMenuItemLocalService",
-			_siteNavigationMenuItemLocalService);
-
-		renderRequest.setAttribute(
-			"siteNavigationMenuItemTypeRegistry",
-			_siteNavigationMenuItemTypeRegistry);
-
-		renderRequest.setAttribute(
-			"siteNavigationMenuLocalService", _siteNavigationMenuLocalService);
+		setLayoutsTreeDisplayContextRequestAttribute(renderRequest);
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	protected void setLayoutsTreeDisplayContextRequestAttribute(
+		RenderRequest renderRequest) {
+
+		LayoutsTreeDisplayContext layoutsTreeDisplayContext =
+			new LayoutsTreeDisplayContext(
+				_groupProvider, _portal.getLiferayPortletRequest(renderRequest),
+				_siteNavigationMenuItemLocalService,
+				_siteNavigationMenuItemTypeRegistry,
+				_siteNavigationMenuLocalService);
+
+		renderRequest.setAttribute(
+			ProductNavigationProductMenuWebKeys.LAYOUTS_TREE_DISPLAY_CONTEXT,
+			layoutsTreeDisplayContext);
 	}
 
 	@Reference

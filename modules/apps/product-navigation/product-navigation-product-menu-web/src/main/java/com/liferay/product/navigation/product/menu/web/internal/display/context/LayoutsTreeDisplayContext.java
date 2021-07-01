@@ -81,7 +81,11 @@ import javax.portlet.WindowStateException;
 public class LayoutsTreeDisplayContext {
 
 	public LayoutsTreeDisplayContext(
-		LiferayPortletRequest liferayPortletRequest) {
+		GroupProvider groupProvider,
+		LiferayPortletRequest liferayPortletRequest,
+		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
+		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
+		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 
@@ -93,19 +97,13 @@ public class LayoutsTreeDisplayContext {
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
 		_siteNavigationMenuItemLocalService =
-			(SiteNavigationMenuItemLocalService)
-				liferayPortletRequest.getAttribute(
-					"siteNavigationMenuItemLocalService");
+			siteNavigationMenuItemLocalService;
 		_siteNavigationMenuItemTypeRegistry =
-			(SiteNavigationMenuItemTypeRegistry)
-				liferayPortletRequest.getAttribute(
-					"siteNavigationMenuItemTypeRegistry");
+			siteNavigationMenuItemTypeRegistry;
 
 		_siteNavigationMenuItemTypesMap = new HashMap<>();
 
-		_siteNavigationMenuLocalService =
-			(SiteNavigationMenuLocalService)liferayPortletRequest.getAttribute(
-				"siteNavigationMenuLocalService");
+		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

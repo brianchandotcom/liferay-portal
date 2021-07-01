@@ -52,7 +52,8 @@ public class RankingToDocumentTranslatorTest {
 	public void testBlocks() {
 		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
 
-		rankingBuilder.blocks(Arrays.asList("142857", "285714", "428571"));
+		rankingBuilder.hiddenDocumentIds(
+			Arrays.asList("142857", "285714", "428571"));
 
 		Document document = translate(rankingBuilder.build());
 
@@ -65,7 +66,8 @@ public class RankingToDocumentTranslatorTest {
 			document, null);
 
 		Assert.assertEquals(
-			"[142857, 285714, 428571]", String.valueOf(ranking2.getBlockIds()));
+			"[142857, 285714, 428571]",
+			String.valueOf(ranking2.getHiddenDocumentIds()));
 	}
 
 	@Test
@@ -82,7 +84,8 @@ public class RankingToDocumentTranslatorTest {
 			document, null);
 
 		Assert.assertEquals("[]", String.valueOf(ranking2.getAliases()));
-		Assert.assertEquals("[]", String.valueOf(ranking2.getBlockIds()));
+		Assert.assertEquals(
+			"[]", String.valueOf(ranking2.getHiddenDocumentIds()));
 		Assert.assertEquals("[]", String.valueOf(ranking2.getPins()));
 		Assert.assertEquals("[]", String.valueOf(ranking2.getQueryStrings()));
 	}
@@ -155,7 +158,7 @@ public class RankingToDocumentTranslatorTest {
 
 		return String.valueOf(
 			stream.map(
-				pin -> pin.getPosition() + "=" + pin.getId()
+				pin -> pin.getPosition() + "=" + pin.getDocumentId()
 			).collect(
 				Collectors.toList()
 			));

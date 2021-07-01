@@ -7459,7 +7459,7 @@ virtualHostname="localhost"
 				<available file="${liferay.home}/osgi/test/com.liferay.data.guard.connector.jar" />
 			</not>
 			<then>
-				<deploy-osgi-modules osgi.modules="data-guard-connector" />
+				<deploy-osgi-modules osgi.modules="required-dependencies" />
 			</then>
 		</if>
 

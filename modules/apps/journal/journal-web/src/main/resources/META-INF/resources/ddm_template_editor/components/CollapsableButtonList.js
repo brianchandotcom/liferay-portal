@@ -12,24 +12,17 @@
  * details.
  */
 
-import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {ButtonList} from './ButtonList';
+import Collapse from './Collapse';
 
 export const CollapsableButtonList = ({items, label, onButtonClick}) => {
 	return (
-		<ClayPanel
-			className="ddm_template_editor__CollapsableButtonList"
-			collapsable
-			defaultExpanded
-			displayTitle={label}
-			displayType="unstyled"
-			showCollapseIcon={true}
-		>
+		<Collapse label={label}>
 			<ButtonList items={items} onButtonClick={onButtonClick} />
-		</ClayPanel>
+		</Collapse>
 	);
 };
 

@@ -59,8 +59,10 @@ export const ElementsSidebarPanel = ({
 	};
 
 	return (
-		<div className="p-3">
-			<h1>{Liferay.Language.get('elements')}</h1>
+		<div className="px-3">
+			<h1 className="ddm_template_editor__App-sidebar-title my-3">
+				{Liferay.Language.get('elements')}
+			</h1>
 			<ClayForm.Group small>
 				<label className="sr-only" htmlFor={SEARCH_INPUT_ID}>
 					{Liferay.Language.get('search')}

@@ -22,7 +22,7 @@ export const Button = ({label, onClick = noop, tooltip}) => {
 	return (
 		<ClayButton
 			borderless
-			className="font-weight-normal text-left text-truncate w-100"
+			className="ddm_template_editor__App-sidebar-button font-weight-normal text-left text-truncate w-100"
 			data-tooltip-align="right"
 			data-tooltip-delay="0"
 			displayType="unstyled"

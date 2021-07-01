@@ -18,6 +18,7 @@ import com.liferay.shielded.container.Ordered;
 import com.liferay.shielded.container.ShieldedContainerInitializer;
 import com.liferay.shielded.container.internal.proxy.ProxyFactory;
 import com.liferay.shielded.container.internal.proxy.ServletContextDelegate;
+import com.liferay.shielded.container.internal.session.ShieldedContainerHttpSessionListener;
 
 import java.io.File;
 
@@ -59,6 +60,8 @@ public class ShieldedContainerServletContainerInitializer
 			servletContextDelegate, servletContext);
 
 		servletContextDelegate.setProxiedServletContext(servletContext);
+
+		servletContext.addListener(ShieldedContainerHttpSessionListener.class);
 
 		ServiceLoader<ShieldedContainerInitializer> serviceLoader =
 			ServiceLoader.load(
@@ -121,8 +124,13 @@ public class ShieldedContainerServletContainerInitializer
 				malformedURLException);
 		}
 
-		return new ShieldedContainerClassLoader(
+		ClassLoader classLoader = new ShieldedContainerClassLoader(
 			urls.toArray(new URL[0]), servletContext.getClassLoader());
+
+		servletContext.setAttribute(
+			ShieldedContainerClassLoader.NAME, classLoader);
+
+		return classLoader;
 	}
 
 	private int _getOrder(Object object) {

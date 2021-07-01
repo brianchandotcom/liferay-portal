@@ -29,6 +29,9 @@ import java.util.List;
  */
 public class ShieldedContainerClassLoader extends URLClassLoader {
 
+	public static final String NAME =
+		ShieldedContainerClassLoader.class.getName();
+
 	public ShieldedContainerClassLoader(
 		URL[] urls, ClassLoader fallbackClassLoader) {
 

@@ -407,7 +407,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long messageId = counterLocalService.increment();
 
-		if (externalReferenceCode == null) {
+		if (Validator.isNull(externalReferenceCode)) {
 			externalReferenceCode = String.valueOf(messageId);
 		}
 

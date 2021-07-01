@@ -125,7 +125,7 @@ definition {
 	}
 
 	macro gotoFragmentPageContentEllipsisMenuItem {
-		Click.waitForMenuToggleJSClick(
+		Click.clickAtNotVisible(
 			key_rowEntry = "${rowEntry}",
 			locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
 

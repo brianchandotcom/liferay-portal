@@ -190,12 +190,26 @@ definition {
 	}
 
 	@description = "Verify that the user is able to reverse sort direction"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanReverseSortDirection {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68284 CanReverseSortDirection pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.clickRevertSortDirection();
+
+		AssertElementPresent(
+			key_fieldName = "Wiki Page",
+			key_order = "1",
+			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
+
+		AssertElementPresent(
+			key_fieldName = "Blogs Entry",
+			key_order = "19",
+			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
 	}
 
 	@description = "Verify that the user is able to search by Asset Type"

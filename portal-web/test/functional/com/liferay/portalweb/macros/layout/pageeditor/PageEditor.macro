@@ -2770,6 +2770,16 @@ definition {
 		MenuItem.click(menuItem = "${menuItem}");
 	}
 
+	macro gotoEllipsisMenuItemInPageContentPanel {
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Content");
+
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "${menuItem}",
+			rowEntry = "${itemName}");
+	}
+
 	macro gotoSaveAsFragment {
 		key_fragmentName = "${fragmentName}";
 

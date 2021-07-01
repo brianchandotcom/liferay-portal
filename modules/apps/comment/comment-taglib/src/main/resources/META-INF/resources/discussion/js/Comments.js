@@ -94,7 +94,7 @@ export default function ({
 					}
 				})
 				.catch(() => {
-					window[`${randomNamespace}showStatusMessage`]({
+					showStatusMessage({
 						id: randomNamespace,
 						message: Liferay.Language.get(
 							'your-request-failed-to-complete'
@@ -104,6 +104,13 @@ export default function ({
 				});
 		});
 	}
+
+	const showStatusMessage = Liferay.lazyLoad(
+		'frontend-js-web/liferay/toast/commands/OpenToast.es',
+		(toastCommands, data) => {
+			toastCommands.openToast(data);
+		}
+	);
 
 	function sendMessage(form, refreshPage) {
 		const commentButtons = form.querySelectorAll('.btn-comment');
@@ -188,7 +195,7 @@ export default function ({
 						);
 					}
 
-					window[`${randomNamespace}showStatusMessage`]({
+					showStatusMessage({
 						id: randomNamespace,
 						message: errorKey,
 						type: 'danger',
@@ -198,7 +205,7 @@ export default function ({
 				Util.toggleDisabled(commentButtons, false);
 			})
 			.catch(() => {
-				window[`${randomNamespace}showStatusMessage`]({
+				showStatusMessage({
 					id: randomNamespace,
 					message: Liferay.Language.get(
 						'your-request-failed-to-complete'
@@ -243,7 +250,7 @@ export default function ({
 					window[`${randomNamespace}showEl`](formId);
 				})
 				.catch(() => {
-					window[`${randomNamespace}showStatusMessage`]({
+					showStatusMessage({
 						id: randomNamespace,
 						message: Liferay.Language.get(
 							'your-request-failed-to-complete'
@@ -358,13 +365,6 @@ export default function ({
 		);
 	};
 
-	window[`${randomNamespace}showStatusMessage`] = Liferay.lazyLoad(
-		'frontend-js-web/liferay/toast/commands/OpenToast.es',
-		(toastCommands, data) => {
-			toastCommands.openToast(data);
-		}
-	);
-
 	window[`${randomNamespace}showEditReplyEditor`] = function (index) {
 		const discussionId = `${namespace}${randomNamespace}discussionMessage${index}`;
 
@@ -437,7 +437,7 @@ export default function ({
 					const randomId = node.value;
 
 					if (index === 0) {
-						window[`${randomNamespace}showStatusMessage`]({
+						showStatusMessage({
 							id: randomId,
 							message: Liferay.Language.get(
 								'your-request-completed-successfully'

@@ -55,9 +55,20 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportXMLFile {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanImportXMLFile";
 
-		// TODO LRQA-68323 CanImportXMLFile pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_1.xml",
+			workflowDefinitionTitle = "New Uploaded Definition");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Uploaded Definition");
 	}
 
 	@description = "Verify that, when the definition is published, the Delete option is not present in kebab menu"

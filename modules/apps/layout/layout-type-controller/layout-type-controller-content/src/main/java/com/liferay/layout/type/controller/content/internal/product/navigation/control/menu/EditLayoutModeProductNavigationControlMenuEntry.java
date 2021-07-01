@@ -43,6 +43,7 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -162,6 +163,14 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (_stagingGroupHelper.isLocalLiveGroup(scopeGroupId) ||
+			_stagingGroupHelper.isRemoteLiveGroup(scopeGroupId)) {
+
+			return false;
+		}
+
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
@@ -227,5 +236,8 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

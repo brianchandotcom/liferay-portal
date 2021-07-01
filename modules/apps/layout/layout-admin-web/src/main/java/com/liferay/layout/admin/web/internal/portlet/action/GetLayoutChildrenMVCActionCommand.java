@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
@@ -48,7 +49,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration",
+	configurationPid = {
+		"com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration",
+		"com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration"
+	},
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
@@ -61,6 +65,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_ffLayoutTranslationConfiguration = ConfigurableUtil.createConfigurable(
+			FFLayoutTranslationConfiguration.class, properties);
 		_layoutConverterConfiguration = ConfigurableUtil.createConfigurable(
 			LayoutConverterConfiguration.class, properties);
 	}
@@ -84,7 +90,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 		MillerColumnsDisplayContext millerColumnsDisplayContext =
 			new MillerColumnsDisplayContext(
-				layoutsAdminDisplayContext,
+				_ffLayoutTranslationConfiguration, layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse),
 				_translationPermission, _translationURLProvider);
@@ -96,6 +102,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, JSONUtil.put("children", jsonArray));
 	}
 
+	private volatile FFLayoutTranslationConfiguration
+		_ffLayoutTranslationConfiguration;
 	private volatile LayoutConverterConfiguration _layoutConverterConfiguration;
 
 	@Reference

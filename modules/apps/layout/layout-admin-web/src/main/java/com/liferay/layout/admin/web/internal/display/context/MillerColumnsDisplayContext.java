@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationConfiguration;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -67,12 +68,14 @@ import javax.servlet.http.HttpServletRequest;
 public class MillerColumnsDisplayContext {
 
 	public MillerColumnsDisplayContext(
+		FFLayoutTranslationConfiguration ffLayoutTranslationConfiguration,
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		TranslationPermission translationPermission,
 		TranslationURLProvider translationURLProvider) {
 
+		_ffLayoutTranslationConfiguration = ffLayoutTranslationConfiguration;
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
 		_translationPermission = translationPermission;
@@ -807,7 +810,9 @@ public class MillerColumnsDisplayContext {
 	}
 
 	private boolean _isShowTranslateAction() {
-		if (_hasTranslatePermission() && !_isSingleLanguageSite()) {
+		if (_ffLayoutTranslationConfiguration.enabled() &&
+			_hasTranslatePermission() && !_isSingleLanguageSite()) {
+
 			return true;
 		}
 
@@ -825,6 +830,8 @@ public class MillerColumnsDisplayContext {
 		return false;
 	}
 
+	private final FFLayoutTranslationConfiguration
+		_ffLayoutTranslationConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;

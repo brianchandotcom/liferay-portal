@@ -30,12 +30,91 @@ definition {
 	}
 
 	@description = "LPS-98517 - Verify that the Assignee dropdown options are listed in alphabetical order"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AssigneeOptionsAreListedInAlphabeticalOrder {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-67761 AssigneeOptionsAreListedInAlphabeticalOrder pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		JSONUser.addUser(
+			userEmailAddress = "AUser@liferay.com",
+			userFirstName = "A User",
+			userLastName = "A Userl",
+			userScreenName = "Auser_");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Power User",
+			userScreenName = "auser_");
+
+		Click(locator1 = "Icon#BACK");
+
+		JSONUser.addUser(
+			userEmailAddress = "BUser@liferay.com",
+			userFirstName = "B User",
+			userLastName = "B Userl",
+			userScreenName = "Buser_");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Power User",
+			userScreenName = "buser_");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry A",
+			entrySubtitle = "Subtitle",
+			entryTitle = "First Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry B",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Second Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry C",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Third Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(
+			key_instanceInfo = "Blogs Entry: First Blogs Entry Title",
+			locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
+
+		AssertElementPresent(
+			key_instanceInfo = "Blogs Entry: Second Blogs Entry Title",
+			locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
+
+		AssertElementPresent(
+			key_instanceInfo = "Blogs Entry: Third Blogs Entry Title",
+			locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
 	}
 
 	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"

@@ -23,6 +23,7 @@ import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGoogle
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
+import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -119,11 +120,11 @@ public class LayoutReportsDataMVCResourceCommand
 	}
 
 	private Map<Locale, String> _getAlternateURLs(
-		String currentCompleteURL, Layout layout, ThemeDisplay themeDisplay) {
+		Layout layout, ThemeDisplay themeDisplay) {
 
 		try {
-			return _portal.getAlternateURLs(
-				currentCompleteURL, themeDisplay, layout);
+			return _layoutSEOCanonicalURLProvider.getCanonicalURLMap(
+				layout, themeDisplay);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -262,7 +263,7 @@ public class LayoutReportsDataMVCResourceCommand
 			_getCompleteURL(portletRequest), layout, themeDisplay);
 
 		Map<Locale, String> alternateURLs = _getAlternateURLs(
-			canonicalURL, layout, themeDisplay);
+			layout, themeDisplay);
 
 		return JSONUtil.putAll(
 			Optional.ofNullable(
@@ -408,6 +409,9 @@ public class LayoutReportsDataMVCResourceCommand
 	@Reference
 	private LayoutReportsGooglePageSpeedConfigurationProvider
 		_layoutReportsGooglePageSpeedConfigurationProvider;
+
+	@Reference
+	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

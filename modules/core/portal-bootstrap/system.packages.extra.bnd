@@ -126,7 +126,7 @@ Export-Package:\
 	\
 	javax.mail.*;version='1.6.6',\
 	\
-	javax.persistence.*;version='2.1',\
+	javax.persistence.*;version='2.2.1',\
 	\
 	javax.portlet.*;version='2.0',\
 	\

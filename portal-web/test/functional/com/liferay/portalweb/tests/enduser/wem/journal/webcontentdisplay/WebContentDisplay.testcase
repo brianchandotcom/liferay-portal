@@ -584,7 +584,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
-	@description = "This is a test for LPS-129438. View the changes of Border Styles in WCD on widget page."
+	@description = "This is a test for LPS-129438. The user could configure the border styles of WCD."
 	@priority = "4"
 	test ConfigureBorderStyles {
 		task ("View the default border width and border color of WCD") {
@@ -607,13 +607,10 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			}
 		}
 
-		task ("Open Look and Feel configuration on WCD") {
+		task ("Define the border width and border color of WCD") {
 			Portlet.gotoPortletOptions(
 				portletName = "Web Content Display",
 				portletOption = "Look and Feel Configuration");
-		}
-
-		task ("Define the border width and border color") {
 			IFrame.selectConfigurationFrame();
 
 			Portlet.configureCustomBorderStylesViaLookandfeelPG(

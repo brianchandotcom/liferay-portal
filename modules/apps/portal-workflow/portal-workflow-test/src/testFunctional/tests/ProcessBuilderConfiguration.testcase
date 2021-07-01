@@ -123,12 +123,40 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Workflow"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderByWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68283 CanOrderByWorkflow pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Comment");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		ContentDashboard.filterByAuthorAll(filterOption = "Workflow");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Comment",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Blogs Entry",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Translation",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
 	}
 
 	@description = "Verify that the user is able to reverse sort direction"

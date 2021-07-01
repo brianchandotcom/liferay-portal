@@ -15,6 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import useOnClickOutside from '../hooks/useOnClickOutside';
@@ -23,7 +24,7 @@ import UserIcon from './UserIcon';
 function ReplyPopover({
 	ariaLabel,
 	contentHTML,
-	href,
+	href = '#',
 	portraitURL,
 	time,
 	userId,
@@ -82,5 +83,13 @@ function ReplyPopover({
 		</ClayPopover>
 	);
 }
+
+ReplyPopover.propTypes = {
+	ariaLabel: PropTypes.string,
+	contentHTML: PropTypes.string.isRequired,
+	href: PropTypes.string,
+	time: PropTypes.string.isRequired,
+	username: PropTypes.string.isRequired,
+};
 
 export default ReplyPopover;

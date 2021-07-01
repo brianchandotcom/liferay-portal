@@ -146,12 +146,24 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Web Content Article"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToWebContentArticle {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68295 CanAssignWorkflowToWebContentArticle pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		VerifyVisible(locator1 = "Message#SUCCESS");
+
+		AssertElementPresent(
+			key_message = "Workflow assigned to Web Content Article",
+			locator1 = "ProcessBuilderListView#SUCCESS_MESSAGE_POPUP");
 	}
 
 	@description = "Verify that the user is able to cancel the assignment"

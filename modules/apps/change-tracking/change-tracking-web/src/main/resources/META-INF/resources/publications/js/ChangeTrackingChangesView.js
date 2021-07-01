@@ -77,6 +77,7 @@ const CTComments = ({
 	deleteCommentURL,
 	getCache,
 	getCommentsURL,
+	keyParam,
 	setShowComments,
 	spritemap,
 	updateCache,
@@ -87,6 +88,14 @@ const CTComments = ({
 	const [fetchData, setFetchData] = useState(null);
 	const [inputValue, setInputValue] = useState('');
 	const [loading, setLoading] = useState(false);
+
+	const sidebarRef = useRef(null);
+
+	const commentRef = useCallback((node) => {
+		if (node && sidebarRef.current) {
+			sidebarRef.current.scrollTop = sidebarRef.current.scrollHeight;
+		}
+	}, []);
 
 	useEffect(() => {
 		setDeleting(0);
@@ -367,6 +376,8 @@ const CTComments = ({
 							? ' publications-fade-in'
 							: ''
 					}`}
+					key={keyParam + '_' + comment.ctCommentId}
+					ref={commentRef}
 				>
 					{deleting === comment.ctCommentId && (
 						<div className="comment-deleting-overlay">
@@ -493,6 +504,7 @@ const CTComments = ({
 				className={`sidebar-body${
 					fetchData && loading ? ' publications-loading' : ''
 				}`}
+				ref={sidebarRef}
 			>
 				{fetchData && fetchData.errorMessage && (
 					<div className="autofit-padded-no-gutters-x autofit-row">
@@ -2543,45 +2555,52 @@ export default ({
 								: {}
 						}
 					>
-						<CTComments
-							ctEntryId={
-								renderState.node.ctEntryId
-									? renderState.node.ctEntryId
-									: 0
-							}
-							currentUser={currentUser}
-							deleteCommentURL={deleteCTCommentURL}
-							getCache={() => {
-								if (renderState.node.ctEntryId) {
-									return commentsCache.current[
-										renderState.node.ctEntryId.toString()
-									];
+						{showComments && (
+							<CTComments
+								ctEntryId={
+									renderState.node.ctEntryId
+										? renderState.node.ctEntryId
+										: 0
 								}
+								currentUser={currentUser}
+								deleteCommentURL={deleteCTCommentURL}
+								getCache={() => {
+									if (renderState.node.ctEntryId) {
+										return commentsCache.current[
+											renderState.node.ctEntryId.toString()
+										];
+									}
 
-								return commentsCache.current['0'];
-							}}
-							getCommentsURL={getCTCommentsURL}
-							setShowComments={setShowComments}
-							spritemap={spritemap}
-							updateCache={(data) => {
-								const cacheData = JSON.parse(
-									JSON.stringify(data)
-								);
+									return commentsCache.current['0'];
+								}}
+								getCommentsURL={getCTCommentsURL}
+								keyParam={getPathParam(
+									renderState.filterClass,
+									renderState.node,
+									renderState.viewType
+								)}
+								setShowComments={setShowComments}
+								spritemap={spritemap}
+								updateCache={(data) => {
+									const cacheData = JSON.parse(
+										JSON.stringify(data)
+									);
 
-								cacheData.updatedCommentId = null;
+									cacheData.updatedCommentId = null;
 
-								if (renderState.node.ctEntryId) {
-									commentsCache.current[
-										renderState.node.ctEntryId.toString()
-									] = cacheData;
+									if (renderState.node.ctEntryId) {
+										commentsCache.current[
+											renderState.node.ctEntryId.toString()
+										] = cacheData;
 
-									return;
-								}
+										return;
+									}
 
-								commentsCache.current['0'] = cacheData;
-							}}
-							updateCommentURL={updateCTCommentURL}
-						/>
+									commentsCache.current['0'] = cacheData;
+								}}
+								updateCommentURL={updateCTCommentURL}
+							/>
+						)}
 					</div>
 				</div>
 				<div

@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -178,13 +179,17 @@ public class RemoteWebComponentPortlet
 		_remoteWebComponentConfiguration = ConfigurableUtil.createConfigurable(
 			RemoteWebComponentConfiguration.class, properties);
 
-		_webComponentConfigurationAttributes = properties.entrySet(
-		).stream(
-		).filter(
-			e -> _keyFilters.stream(
-			).noneMatch(
-				p -> p.test(e.getKey())
-			)
+		Set<Map.Entry<String, Object>> entrySet = properties.entrySet();
+
+		Stream<Map.Entry<String, Object>> stream = entrySet.stream();
+
+		_webComponentConfigurationAttributes = stream.filter(
+			e -> {
+				Stream<Predicate<String>> keyFilterStream =
+					_keyFilters.stream();
+
+				return keyFilterStream.noneMatch(p -> p.test(e.getKey()));
+			}
 		).collect(
 			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 		);

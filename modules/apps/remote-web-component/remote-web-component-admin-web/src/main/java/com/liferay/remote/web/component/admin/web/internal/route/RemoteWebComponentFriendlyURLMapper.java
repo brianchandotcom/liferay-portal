@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.WindowState;
@@ -92,15 +93,17 @@ public class RemoteWebComponentFriendlyURLMapper
 		}
 
 		boolean instanceable = _remoteWebComponentConfiguration.instanceable();
+
 		Router router = new RouterImpl();
+
+		List<Route> list = router.getRoutes();
 
 		// Render URL with any state and a path
 
 		String baseRoute =
 			(instanceable ? "/{instanceId}" : "") + "/s/{p_p_state}/{%path:.*}";
 
-		if (router.getRoutes(
-			).stream(
+		if (list.stream(
 			).map(
 				Route::getPattern
 			).noneMatch(
@@ -116,8 +119,7 @@ public class RemoteWebComponentFriendlyURLMapper
 
 		baseRoute = (instanceable ? "/{instanceId}" : "") + "/s/{p_p_state}";
 
-		if (router.getRoutes(
-			).stream(
+		if (list.stream(
 			).map(
 				Route::getPattern
 			).noneMatch(
@@ -133,8 +135,7 @@ public class RemoteWebComponentFriendlyURLMapper
 
 		baseRoute = instanceable ? "/{instanceId}" : "/{%path:.*}";
 
-		if (router.getRoutes(
-			).stream(
+		if (list.stream(
 			).map(
 				Route::getPattern
 			).noneMatch(
@@ -152,8 +153,7 @@ public class RemoteWebComponentFriendlyURLMapper
 
 		baseRoute = instanceable ? "/{instanceId}" : "";
 
-		if (router.getRoutes(
-			).stream(
+		if (list.stream(
 			).map(
 				Route::getPattern
 			).noneMatch(

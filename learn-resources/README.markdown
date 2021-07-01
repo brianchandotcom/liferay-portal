@@ -11,11 +11,11 @@ The links have two parts:
 1. A JSON file that specifies the resource you're linking to.
 1. A `liferay-learn:message` tag that references the JSON file's resource.
 
-Specifying resources in a file separate from the template facilitates adding localized resources and updating link labels and URLs.
+Specifying resources in a JSON file separate from the template facilitates adding locale translations and updating link labels and URLs.
 
 **Note:** If a `liferay-learn:message` tag references a missing JSON file or unspecified resource entry, there's no ugly error--the tag simply doesn't render.
 
-Start with adding a resource.
+Start with specifying a resource.
 
 ## Adding Resources in a JSON File
 
@@ -57,9 +57,15 @@ In your module's JSP file, to the resources using `liferay-learn:message` tags. 
 />
 ```
 
-The first line includes the `liferay-learn` tag library. The `liferay-learn:message` tag links to the `download-app` resource in the `learn-resources/marketplace-store-web.json` file. When the JSP renders, the text *How can I download an app?* links to the resource located at <https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/installing-apps/downloading-apps.html>.
+The first line includes the `liferay-learn` tag library. Then the `liferay-learn:message` tag links to the `download-app` resource in the `learn-resources/marketplace-store-web.json` file. When the JSP renders, the text *How can I download an app?* links to the resource located at <https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/installing-apps/downloading-apps.html>.
 
 That's how you link to Liferay Learn resources!
+
+> A CDN server hosts the JSON files. For example, here's how the `<liferay-learn:messag key="download-app" resource="marketplace-store-web" />` tag works:
+> 
+> 1. The tag checks for the resource file (JSON file with prefix `marketplace-store-web`) on the *local* CDN server at <https://learn-resources.liferay.com/marketplace-store-web.json>.
+> 1. The local server checks the *global* server at <http://s3.amazonaws.com/learn-resources.liferay.com/marketplace-store-web.json> for updates to the resource.
+> 1. If the local resource is valid, it's served immediately. Otherwise, the local server serves the resource after refreshing the local resource cache with the latest update from the global server.
 
 ## Guidelines
 

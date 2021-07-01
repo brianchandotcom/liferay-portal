@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>ProcessBuilderSource</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ProcessBuilderSource</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>PROCESS_DETAILS</td>
+	<td>//dt[contains(text(), '${key_titleValue}')]/following::dd[contains(text(), '${key_infoValue}')][1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

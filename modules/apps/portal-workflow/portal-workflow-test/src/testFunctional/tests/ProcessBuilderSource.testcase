@@ -298,12 +298,57 @@ definition {
 	}
 
 	@description = "Verify that the time format in Details tab is following the system language"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test TimeFormatFollowsSystemLanguageInDetails {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68328 TimeFormatFollowsSystemLanguageInDetails pending implementation
+		Click(
+			key_workflowResourceValue = "Single Approver",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
 
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		AssertElementPresent(
+			key_infoValue = "PM",
+			key_titleValue = "Created",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+
+		AssertElementPresent(
+			key_infoValue = "PM",
+			key_titleValue = "Last Modified",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		MyAccount.changeUserLanguage(
+			languageName = "português (Brasil)",
+			saveButton = "Save");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Fluxo de trabalho",
+			panel = "Aplicativos",
+			portlet = "Construtor de Processo");
+
+		Click(
+			key_workflowDefinitionTitle = "Aprovador Único",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Editar");
+
+		Click(locator1 = "Icon#INFO");
+
+		AssertElementNotPresent(
+			key_infoValue = "PM",
+			key_titleValue = "Criado",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
+
+		AssertElementNotPresent(
+			key_infoValue = "PM",
+			key_titleValue = "Última Modificação",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS");
 	}
 
 	@description = "Verify that the time format in Revision History tab is following the system language"

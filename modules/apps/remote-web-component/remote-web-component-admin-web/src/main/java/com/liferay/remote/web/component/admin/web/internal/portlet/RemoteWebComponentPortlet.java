@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration;
+import com.liferay.remote.web.component.admin.web.internal.configuration.RemoteWebComponentConfiguration;
 
 import java.io.PrintWriter;
 
@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
+	configurationPid = "com.liferay.remote.web.component.admin.web.internal.configuration.RemoteWebComponentConfiguration",
 	factory = "remote.web.component.portlet", service = Portlet.class
 )
 public class RemoteWebComponentPortlet

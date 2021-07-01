@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration;
+import com.liferay.remote.web.component.admin.web.internal.configuration.RemoteWebComponentConfiguration;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
+	configurationPid = "com.liferay.remote.web.component.admin.web.internal.configuration.RemoteWebComponentConfiguration",
 	factory = "remote.web.component.friendly.url.mapper",
 	service = FriendlyURLMapper.class
 )

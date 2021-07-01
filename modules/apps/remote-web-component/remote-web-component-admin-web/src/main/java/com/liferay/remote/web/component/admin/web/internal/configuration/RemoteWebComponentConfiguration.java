@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.web.component.admin.web.configuration;
+package com.liferay.remote.web.component.admin.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -72,7 +72,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
+	id = "com.liferay.remote.web.component.admin.web.internal.configuration.RemoteWebComponentConfiguration",
 	localization = "content/Language",
 	name = "remote-web-component-configuration-name"
 )

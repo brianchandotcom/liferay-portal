@@ -350,6 +350,7 @@ definition {
 					fieldTitle = "Paragraph",
 					fieldValue = "Test.");
 			}
+
 			if ("${value}" != "6") {
 				FormFields.editTextWithBackspace(fieldName = "Numeric");
 			}

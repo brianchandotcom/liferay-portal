@@ -54,7 +54,12 @@ const getDefaultTooltipContainer = () => {
 export default () => {
 	render(
 		ClayTooltipProvider,
-		{scope: SELECTOR_TRIGGER},
+		{
+			containerProps: {
+				className: 'cadmin',
+			},
+			scope: SELECTOR_TRIGGER,
+		},
 		getDefaultTooltipContainer()
 	);
 };

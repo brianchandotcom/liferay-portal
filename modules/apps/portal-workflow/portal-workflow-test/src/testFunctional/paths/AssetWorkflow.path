@@ -47,8 +47,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_WORKFLOW_CREATED_DATE</td>
+	<td>//dl[contains(@class,'sidebar')]/dd[contains(.,'')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_WORKFLOW_LAST_MODIFIED</td>
+	<td>//dl[contains(@class,'sidebar')]/dd[contains(.,'')][2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]//strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_WORKFLOW_TOTAL_MODIFICATIONS</td>
+	<td>//dl[contains(@class,'sidebar-dl')]/dd[contains(.,'Revisions')]</td>
 	<td></td>
 </tr>
 <!--TRANSLATIONS_PREVIEW-->

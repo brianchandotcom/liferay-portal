@@ -255,12 +255,28 @@ definition {
 	}
 
 	@description = "Verify that the Details tab displays the Created date, Last Modified date and Total Modifications"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DisplaysCreatedDateLastModifiedTotalModifications {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#DisplaysCreatedDateLastModifiedTotalModifications";
 
-		// TODO LRQA-68327 DisplaysCreatedDateLastModifiedTotalModifications pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
+
+		Workflow.saveDefinition();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
+
+		Click(locator1 = "Icon#INFO");
+
+		AssertElementPresent(locator1 = "AssetWorkflow#DETAILS_WORKFLOW_CREATED_DATE");
+
+		AssertElementPresent(locator1 = "AssetWorkflow#DETAILS_WORKFLOW_LAST_MODIFIED");
+
+		AssertElementPresent(locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TOTAL_MODIFICATIONS");
 	}
 
 	@description = "Verify that the Revision History tab displays the list of modification dates"

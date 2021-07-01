@@ -34,15 +34,8 @@ public class ProductNavigationProductMenuWebKeys {
 
 	public static final String PRIVATE_LAYOUT = "PRIVATE_LAYOUT";
 
-	public static final String PRIVATE_PAGES_KEY = "private-pages";
-
 	public static final String PRODUCT_MENU = "PRODUCT_MENU";
 
 	public static final String PUBLIC_LAYOUT = "PUBLIC_LAYOUT";
-
-	public static final String PUBLIC_PAGES_KEY = "public-pages";
-
-	public static final String SITE_NAVIGATION_MENU_ID =
-		"SITE_NAVIGATION_MENU_ID";
 
 }

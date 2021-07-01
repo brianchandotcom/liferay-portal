@@ -14,6 +14,14 @@
 
 import {fetch, runScriptsInElement} from 'frontend-js-web';
 
+function hideEl(elementId) {
+	const element = document.getElementById(elementId);
+
+	if (element) {
+		element.style.display = 'none';
+	}
+}
+
 export default function ({
 	constants,
 	editorURL,
@@ -129,14 +137,6 @@ export default function ({
 		}
 	};
 
-	window[`${randomNamespace}hideEl`] = function (elementId) {
-		const element = document.getElementById(elementId);
-
-		if (element) {
-			element.style.display = 'none';
-		}
-	};
-
 	window[`${randomNamespace}hideEditor`] = function (editorName, formId) {
 		const editor = window[`${namespace}${editorName}`];
 
@@ -144,7 +144,7 @@ export default function ({
 			editor.destroy();
 		}
 
-		window[`${randomNamespace}hideEl`](formId);
+		hideEl(formId);
 	};
 
 	window[`${randomNamespace}postReply`] = function (i) {
@@ -398,7 +398,7 @@ export default function ({
 				`${namespace}${randomNamespace}postReplyForm${index}`
 			);
 
-			window[`${randomNamespace}hideEl`](discussionId);
+			hideEl(discussionId);
 		}
 	};
 

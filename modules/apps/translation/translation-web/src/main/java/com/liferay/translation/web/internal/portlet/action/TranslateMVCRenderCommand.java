@@ -95,17 +95,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			Object object = _getInfoItem(className, classPK);
 
 			if (object == null) {
-				renderRequest.setAttribute(
-					TranslateDisplayContext.class.getName(),
-					new TranslateDisplayContext(
-						Collections.emptyList(), Collections.emptyList(),
-						() -> (_translator != null) && _translator.isEnabled(),
-						className, classPK, null,
-						_portal.getLiferayPortletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse), null,
-						null, null, null, null, _translationInfoFieldChecker));
-
-				return "/translate.jsp";
+				return _getErrorJSP(
+					renderRequest, renderResponse, className, classPK);
 			}
 
 			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
@@ -113,17 +104,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					InfoItemLanguagesProvider.class, className);
 
 			if (infoItemLanguagesProvider == null) {
-				renderRequest.setAttribute(
-					TranslateDisplayContext.class.getName(),
-					new TranslateDisplayContext(
-						Collections.emptyList(), Collections.emptyList(),
-						() -> (_translator != null) && _translator.isEnabled(),
-						className, classPK, null,
-						_portal.getLiferayPortletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse), null,
-						null, null, null, null, _translationInfoFieldChecker));
-
-				return "/translate.jsp";
+				return _getErrorJSP(
+					renderRequest, renderResponse, className, classPK);
 			}
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
@@ -145,17 +127,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					InfoItemFormProvider.class, className);
 
 			if (infoItemFormProvider == null) {
-				renderRequest.setAttribute(
-					TranslateDisplayContext.class.getName(),
-					new TranslateDisplayContext(
-						Collections.emptyList(), Collections.emptyList(),
-						() -> (_translator != null) && _translator.isEnabled(),
-						className, classPK, null,
-						_portal.getLiferayPortletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse), null,
-						null, null, null, null, _translationInfoFieldChecker));
-
-				return "/translate.jsp";
+				return _getErrorJSP(
+					renderRequest, renderResponse, className, classPK);
 			}
 
 			InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
@@ -164,17 +137,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				_getSourceInfoItemFieldValues(className, object);
 
 			if (sourceInfoItemFieldValues == null) {
-				renderRequest.setAttribute(
-					TranslateDisplayContext.class.getName(),
-					new TranslateDisplayContext(
-						Collections.emptyList(), Collections.emptyList(),
-						() -> (_translator != null) && _translator.isEnabled(),
-						className, classPK, null,
-						_portal.getLiferayPortletRequest(renderRequest),
-						_portal.getLiferayPortletResponse(renderResponse), null,
-						null, null, null, null, _translationInfoFieldChecker));
-
-				return "/translate.jsp";
+				return _getErrorJSP(
+					renderRequest, renderResponse, className, classPK);
 			}
 
 			String targetLanguageId = ParamUtil.getString(
@@ -248,6 +212,23 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return availableTargetLanguageIds.get(0);
 	}
 
+	private String _getErrorJSP(
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		String className, long classPK) {
+
+		renderRequest.setAttribute(
+			TranslateDisplayContext.class.getName(),
+			new TranslateDisplayContext(
+				Collections.emptyList(), Collections.emptyList(),
+				() -> (_translator != null) && _translator.isEnabled(),
+				className, classPK, null,
+				_portal.getLiferayPortletRequest(renderRequest),
+				_portal.getLiferayPortletResponse(renderResponse), null, null,
+				null, null, null, _translationInfoFieldChecker));
+
+		return "/translate.jsp";
+	}
+
 	private Object _getInfoItem(String className, long classPK) {
 		try {
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
@@ -285,8 +266,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	private <T> InfoItemFieldValues _getTargetInfoItemFieldValues(
 			String className, long classPK,
-			InfoItemFieldValues journalArticleInfoItemFieldValues,
-			String targetLanguageId)
+			InfoItemFieldValues infoItemFieldValues, String targetLanguageId)
 		throws PortalException {
 
 		TranslationEntry translationEntry =
@@ -294,7 +274,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				className, classPK, targetLanguageId);
 
 		if ((translationEntry == null) || translationEntry.isApproved()) {
-			return journalArticleInfoItemFieldValues;
+			return infoItemFieldValues;
 		}
 
 		InfoItemFieldValues translationEntryInfoItemFieldValues =
@@ -303,13 +283,13 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				translationEntry.getClassPK(), translationEntry.getContent());
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
-			journalArticleInfoItemFieldValues.getInfoFieldValues();
+			infoItemFieldValues.getInfoFieldValues();
 
 		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
 
 		return InfoItemFieldValues.builder(
 		).infoItemReference(
-			journalArticleInfoItemFieldValues.getInfoItemReference()
+			infoItemFieldValues.getInfoItemReference()
 		).infoFieldValues(
 			stream.map(
 				infoFieldValue -> new InfoFieldValue<>(

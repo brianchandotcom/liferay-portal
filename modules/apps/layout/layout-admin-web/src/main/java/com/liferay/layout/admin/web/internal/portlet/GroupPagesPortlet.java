@@ -63,6 +63,8 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
+import com.liferay.translation.security.permission.TranslationPermission;
+import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.io.IOException;
 
@@ -201,7 +203,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 				new MillerColumnsDisplayContext(
 					layoutsAdminDisplayContext,
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					_portal.getLiferayPortletResponse(renderResponse),
+					_translationPermission, _translationURLProvider));
 
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT,
@@ -279,5 +282,11 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Reference
+	private TranslationPermission _translationPermission;
+
+	@Reference
+	private TranslationURLProvider _translationURLProvider;
 
 }

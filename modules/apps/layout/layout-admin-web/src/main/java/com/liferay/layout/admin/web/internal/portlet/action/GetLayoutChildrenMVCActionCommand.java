@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
+import com.liferay.translation.security.permission.TranslationPermission;
+import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.Map;
 
@@ -84,7 +86,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 			new MillerColumnsDisplayContext(
 				layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
-				_portal.getLiferayPortletResponse(actionResponse));
+				_portal.getLiferayPortletResponse(actionResponse),
+				_translationPermission, _translationURLProvider);
 
 		JSONArray jsonArray = millerColumnsDisplayContext.getLayoutsJSONArray(
 			layout.getLayoutId(), layout.isPrivateLayout());
@@ -109,5 +112,11 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Reference
+	private TranslationPermission _translationPermission;
+
+	@Reference
+	private TranslationURLProvider _translationURLProvider;
 
 }

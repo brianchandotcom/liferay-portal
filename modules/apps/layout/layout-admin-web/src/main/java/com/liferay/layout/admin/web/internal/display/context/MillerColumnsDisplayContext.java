@@ -30,10 +30,13 @@ import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -45,11 +48,16 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.translation.constants.TranslationActionKeys;
+import com.liferay.translation.security.permission.TranslationPermission;
+import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,10 +69,14 @@ public class MillerColumnsDisplayContext {
 	public MillerColumnsDisplayContext(
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		TranslationPermission translationPermission,
+		TranslationURLProvider translationURLProvider) {
 
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
+		_translationPermission = translationPermission;
+		_translationURLProvider = translationURLProvider;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
@@ -525,6 +537,33 @@ public class MillerColumnsDisplayContext {
 			}
 		}
 
+		if (_isShowTranslateAction()) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "translate"
+				).put(
+					"label", LanguageUtil.get(_httpServletRequest, "translate")
+				).put(
+					"url",
+					PortletURLBuilder.create(
+						_translationURLProvider.getTranslateURL(
+							PortalUtil.getClassNameId(Layout.class.getName()),
+							layout.getPlid(),
+							RequestBackedPortletURLFactoryUtil.create(
+								_httpServletRequest))
+					).setRedirect(
+						PortalUtil.getCurrentURL(_httpServletRequest)
+					).setPortletResource(
+						() -> {
+							PortletDisplay portletDisplay =
+								_themeDisplay.getPortletDisplay();
+
+							return portletDisplay.getId();
+						}
+					).build()
+				));
+		}
+
 		if (_layoutsAdminDisplayContext.isShowConfigureAction(layout)) {
 			jsonArray.put(
 				JSONUtil.put(
@@ -749,9 +788,48 @@ public class MillerColumnsDisplayContext {
 		return jsonArray;
 	}
 
+	private boolean _hasTranslatePermission() {
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+		long scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(scopeGroupId)) {
+			if (_translationPermission.contains(
+					permissionChecker, scopeGroupId,
+					LanguageUtil.getLanguageId(locale),
+					TranslationActionKeys.TRANSLATE)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isShowTranslateAction() {
+		if (_hasTranslatePermission() && !_isSingleLanguageSite()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSingleLanguageSite() {
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			_themeDisplay.getSiteGroupId());
+
+		if (availableLocales.size() == 1) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
+	private final TranslationPermission _translationPermission;
+	private final TranslationURLProvider _translationURLProvider;
 
 }

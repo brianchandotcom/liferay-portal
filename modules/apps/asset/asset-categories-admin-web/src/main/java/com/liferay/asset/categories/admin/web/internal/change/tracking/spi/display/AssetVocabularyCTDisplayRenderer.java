@@ -131,41 +131,37 @@ public class AssetVocabularyCTDisplayRenderer
 						name = LanguageUtil.get(
 							displayBuilder.getLocale(), "all-asset-types");
 					}
-					else {
-						if (classTypePK ==
+					else if (classTypePK ==
 								AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
 
-							name = ResourceActionsUtil.getModelResource(
-								displayBuilder.getLocale(),
-								_portal.getClassName(classNameId));
+						name = ResourceActionsUtil.getModelResource(
+							displayBuilder.getLocale(),
+							_portal.getClassName(classNameId));
+					}
+					else {
+						AssetRendererFactory<?> assetRendererFactory =
+							AssetRendererFactoryRegistryUtil.
+								getAssetRendererFactoryByClassNameId(
+									classNameId);
+
+						ClassTypeReader classTypeReader =
+							assetRendererFactory.getClassTypeReader();
+
+						try {
+							ClassType classType = classTypeReader.getClassType(
+								classTypePK, displayBuilder.getLocale());
+
+							name = classType.getName();
 						}
-						else {
-							AssetRendererFactory<?> assetRendererFactory =
-								AssetRendererFactoryRegistryUtil.
-									getAssetRendererFactoryByClassNameId(
-										classNameId);
-
-							ClassTypeReader classTypeReader =
-								assetRendererFactory.getClassTypeReader();
-
-							try {
-								ClassType classType =
-									classTypeReader.getClassType(
-										classTypePK,
-										displayBuilder.getLocale());
-
-								name = classType.getName();
+						catch (NoSuchModelException noSuchModelException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Unable to get asset type for class type " +
+										"primary key " + classTypePK,
+									noSuchModelException);
 							}
-							catch (NoSuchModelException noSuchModelException) {
-								if (_log.isDebugEnabled()) {
-									_log.debug(
-										"Unable to get asset type for class " +
-											"type primary key " + classTypePK,
-										noSuchModelException);
-								}
 
-								continue;
-							}
+							continue;
 						}
 					}
 

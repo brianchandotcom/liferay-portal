@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -133,17 +135,16 @@ public class AssetTagsSelectorDisplayContext {
 				new EntriesChecker(_renderRequest, _renderResponse));
 		}
 
-		int tagsCount = AssetTagServiceUtil.getTagsCount(
-			_getGroupIds(), _getKeywords());
-
-		tagsSearchContainer.setTotal(tagsCount);
-
 		List<AssetTag> tags = AssetTagServiceUtil.getTags(
 			_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),
 			tagsSearchContainer.getEnd(),
 			tagsSearchContainer.getOrderByComparator());
 
-		tagsSearchContainer.setResults(tags);
+		List<AssetTag> filteredTags = _removeDuplicatedAssetTags(tags);
+
+		tagsSearchContainer.setTotal(filteredTags.size());
+
+		tagsSearchContainer.setResults(filteredTags);
 
 		_tagsSearchContainer = tagsSearchContainer;
 
@@ -199,6 +200,20 @@ public class AssetTagsSelectorDisplayContext {
 			_httpServletRequest, "orderByCol", "name");
 
 		return _orderByCol;
+	}
+
+	private List<AssetTag> _removeDuplicatedAssetTags(List<AssetTag> tags) {
+		HashMap<String, AssetTag> filteredTags = new HashMap<>();
+
+		for (AssetTag tag : tags) {
+			String tagName = tag.getName();
+
+			if (!filteredTags.containsKey(tagName)) {
+				filteredTags.put(tagName, tag);
+			}
+		}
+
+		return new ArrayList<>(filteredTags.values());
 	}
 
 	private String _eventName;

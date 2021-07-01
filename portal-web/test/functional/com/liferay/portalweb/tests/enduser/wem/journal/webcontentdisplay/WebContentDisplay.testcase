@@ -586,6 +586,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 	@description = "This is a test for LPS-129438. The user could configure the border styles of WCD."
 	@priority = "4"
+	@uitest
 	test ConfigureBorderStyles {
 		task ("View the default border width and border color of WCD") {
 			Navigator.gotoSitePage(

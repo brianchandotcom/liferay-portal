@@ -19,6 +19,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
@@ -58,38 +59,36 @@ public class SchemaValidator {
 
 		_schemaName = commandLine.getOptionValue("db-schema");
 
-		String jdbcUrl = _DEFAULT_JDBC_URL.replace("{db-schema}", _schemaName);
+		String jdbcURL = _DEFAULT_JDBC_URL.replace("db-schema", _schemaName);
 
 		if (commandLine.hasOption("jdbc-url")) {
-			jdbcUrl = commandLine.getOptionValue("jdbc-url");
-		}
-
-		if (commandLine.hasOption("schema-prefix")) {
-			_schema_prefix = commandLine.getOptionValue("schema-prefix");
+			jdbcURL = commandLine.getOptionValue("jdbc-url");
 		}
 
 		String password = commandLine.getOptionValue("password");
 		String user = commandLine.getOptionValue("user");
 
 		try {
-			_connection = DriverManager.getConnection(jdbcUrl, user, password);
+			_connection = DriverManager.getConnection(jdbcURL, user, password);
 
-			boolean debug = commandLine.hasOption("debug");
+			_debug = commandLine.hasOption("debug");
 
 			boolean defaultSchema = true;
 
-			for (Long companyId : _getCompanies()) {
+			for (long companyId : _getCompanyIds()) {
 				if (defaultSchema) {
-					_validateSchema(companyId, _schemaName, true, debug);
+					_validateSchema(companyId, _schemaName, true);
 
 					defaultSchema = false;
 
 					continue;
 				}
 
-				String schemaName = _schema_prefix + companyId;
+				if (commandLine.hasOption("schema-prefix")) {
+					_schemaPrefix = commandLine.getOptionValue("schema-prefix");
+				}
 
-				_validateSchema(companyId, schemaName, false, debug);
+				_validateSchema(companyId, _schemaPrefix + companyId, false);
 			}
 		}
 		finally {
@@ -99,7 +98,7 @@ public class SchemaValidator {
 		}
 	}
 
-	private static List<Long> _getCompanies() throws Exception {
+	private static List<Long> _getCompanyIds() throws Exception {
 		try (Statement statement = _connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
 				"select companyId from Company order by companyId asc")) {
@@ -114,6 +113,37 @@ public class SchemaValidator {
 		}
 	}
 
+	private static int _getInvalidRecordsCount(
+			long companyId, String schemaName, String tableName,
+			boolean defaultSchema)
+		throws SQLException {
+
+		String query =
+			"select count(*) from " + schemaName + "." + tableName + " where " +
+				"companyId != " + companyId;
+
+		if (defaultSchema) {
+			query += " and companyId != 0";
+		}
+
+		int count = 0;
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				query);
+			ResultSet resultSet1 = preparedStatement.executeQuery()) {
+
+			if (resultSet1.next()) {
+				count = resultSet1.getInt(1);
+
+				if (tableName.equals("DLFileEntryType") && (count == 1)) {
+					return 0;
+				}
+			}
+		}
+
+		return count;
+	}
+
 	private static Options _getOptions() {
 		Options options = new Options();
 
@@ -122,7 +152,7 @@ public class SchemaValidator {
 		options.addOption("j", "jdbc-url", true, "JDBC url.");
 		options.addOption(
 			"s", "schema-prefix", true,
-			"Schema prefix for non-default databases.");
+			"Schema prefix for nondefault databases.");
 
 		options.addRequiredOption(
 			"d", "db-schema", true, "Default database schema name.");
@@ -151,24 +181,25 @@ public class SchemaValidator {
 	}
 
 	private static void _validateSchema(
-			Long companyId, String schemaName, boolean defaultSchema,
-			boolean debug)
+			long companyId, String schemaName, boolean defaultSchema)
 		throws Exception {
 
-		System.out.println("# Validating schema " + schemaName);
+		System.out.println(
+			"# Validating schema " + schemaName + " for company ID " +
+				companyId);
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
 				schemaName, schemaName, null, new String[] {"TABLE"})) {
 
-			boolean found = false;
+			boolean validSchema = true;
 
 			while (resultSet.next()) {
 				String tableName = resultSet.getString("TABLE_NAME");
 
 				if (_controlTableNames.contains(tableName)) {
-					if (debug) {
+					if (_debug) {
 						System.out.println(tableName + " is control table");
 					}
 
@@ -176,66 +207,42 @@ public class SchemaValidator {
 				}
 
 				if (_hasColumn(schemaName, tableName, "companyId")) {
-					String fullTableName = schemaName + _PERIOD + tableName;
+					int count = _getInvalidRecordsCount(
+						companyId, schemaName, tableName, defaultSchema);
 
-					String query =
-						"select count(*) from " + fullTableName + " where " +
-							"companyId != " + companyId;
+					if (count > 0) {
+						System.out.println(
+							"Table " + tableName + " contains " + count +
+								" records with an invalid company ID");
 
-					if (defaultSchema) {
-						query += " and companyId != 0";
+						validSchema = false;
 					}
-
-					try (PreparedStatement preparedStatement =
-							_connection.prepareStatement(query);
-						ResultSet resultSet1 =
-							preparedStatement.executeQuery()) {
-
-						if (resultSet1.next()) {
-							int count = resultSet1.getInt(1);
-
-							if (tableName.equals("DLFileEntryType") &&
-								(count == 1)) {
-
-								continue;
-							}
-
-							if (count > 0) {
-								found = true;
-
-								System.out.println(
-									"Table " + fullTableName + " contains " +
-										resultSet1.getInt(1) + " records " +
-											"with an invalid companyId");
-							}
-							else if (debug) {
-								System.out.println(
-									"Table " + fullTableName + " does not " +
-										"contain invalid records");
-							}
-						}
+					else if (_debug) {
+						System.out.println(
+							"Table " + tableName + " does not contain " +
+								"invalid records");
 					}
 				}
 			}
 
-			if (!found) {
-				System.out.println("No records with invalid companyId found");
+			if (validSchema) {
+				System.out.println(
+					"Validation passed successfully for schema " + schemaName);
 			}
 		}
 	}
 
 	private static final String _DEFAULT_JDBC_URL =
-		"jdbc:mysql://localhost/{db-schema}?characterEncoding=UTF-8&" +
+		"jdbc:mysql://localhost/db-schema?characterEncoding=UTF-8&" +
 			"dontTrackOpenResources=true&holdResultsOpenOverStatementClose=" +
 				"true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=" +
 					"true";
 
-	private static final String _PERIOD = ".";
-
 	private static Connection _connection;
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("Company", "VirtualHost"));
-	private static String _schema_prefix = "lpartition_";
+	private static boolean _debug;
 	private static String _schemaName;
+	private static String _schemaPrefix = "lpartition_";
 
 }

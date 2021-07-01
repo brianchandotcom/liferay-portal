@@ -87,7 +87,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102887. A user can edit displayed content in an Asset Publisher widget through Contents panel."
+	@description = "This is a test for LPS-97189. A user can edit displayed content in an Asset Publisher widget through Contents panel."
 	@priority = "4"
 	test EditDisplayedWebContentInAssetPublisher {
 		task ("Add a web content based on Basic Web Content") {
@@ -99,7 +99,7 @@ definition {
 
 		task ("Add an Asset Publisher") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
@@ -145,7 +145,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102887. A user can edit displayed content in a Web Content Display widget through Contents panel."
+	@description = "This is a test for LPS-97189. A user can edit displayed content in a Web Content Display widget through Contents panel."
 	@priority = "5"
 	test EditDisplayedWebContentInWebContentDisplay {
 		property portal.acceptance = "true";

@@ -193,14 +193,68 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Is empty' condition can be created"
-	@ignore = "True"
 	@priority = "4"
 	test CanCreateAnIsEmptyRule {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134386 CanCreateAnIsEmptyRule pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Numeric");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Numeric",
+			conditionField = "Text",
+			conditionFieldConstant = "Numeric",
+			conditionOperator = "Is empty",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Numeric");
+
+		FormFields.viewTextLabel(fieldLabel = "Indicates Required Fields");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormFields.viewRequiredAsteriskDataFieldNotPresent(fieldFieldLabel = "Numeric");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Indicates Required Fields");
 	}
 
 	@description = "Verify that a Rule with 'Is Equal to' condition can be created"

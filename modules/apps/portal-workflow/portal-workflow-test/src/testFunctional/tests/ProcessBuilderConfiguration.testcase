@@ -278,12 +278,36 @@ definition {
 	}
 
 	@description = "Verify that the Clear option cleans the search results"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ClearSearchResults {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68280 ClearSearchResults pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.searchFieldPresent(fieldName = "article");
+
+		AssertElementPresent(
+			key_fieldName = "Knowledge Base Article",
+			key_order = "1",
+			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
+
+		AssertElementPresent(
+			key_fieldName = "Web Content Article",
+			key_order = "2",
+			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
+
+		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
+
+		AssertElementPresent(locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD");
+
+		for (var orderNumber : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
+			AssertElementPresent(
+				key_order = "${orderNumber}",
+				locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_ORDER");
+		}
 	}
 
 	@description = "Verify that there is a info message -The assets from Documents and Media and Forms are assigned within their respective applications.-"

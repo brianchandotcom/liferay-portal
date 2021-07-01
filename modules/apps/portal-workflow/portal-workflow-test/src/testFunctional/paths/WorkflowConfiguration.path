@@ -37,8 +37,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROCESS_BUILDER_SEARCH_BAR_BUTTON</td>
+	<td>//span[contains(@class,'input-group-inset-item input-group-inset-item-after')]//button[2][contains(@class,'btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_BUILDER_TABLE_FIELD</td>
+	<td>//div[contains(@class, "table-responsive")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_BUILDER_TABLE_FIELD_NAME</td>
 	<td>//tbody//tr[${key_order}]//td//span//span[contains(text(),"${key_fieldName}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_BUILDER_TABLE_FIELD_ORDER</td>
+	<td>//tbody//tr[${key_order}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLEAR_BUTTON</td>
+	<td>//a[contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
 </tbody>

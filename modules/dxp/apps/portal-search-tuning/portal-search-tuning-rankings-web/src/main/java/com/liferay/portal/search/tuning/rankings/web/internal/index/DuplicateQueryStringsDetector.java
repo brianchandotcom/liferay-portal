@@ -36,7 +36,7 @@ public interface DuplicateQueryStringsDetector {
 
 		public RankingIndexName getRankingIndexName();
 
-		public String getUnlessRankingId();
+		public String getUnlessRankingDocumentId();
 
 		public interface Builder {
 
@@ -48,7 +48,8 @@ public interface DuplicateQueryStringsDetector {
 
 			public Builder rankingIndexName(RankingIndexName rankingIndexName);
 
-			public Builder unlessRankingId(String unlessRankingId);
+			public Builder unlessRankingDocumentId(
+				String unlessRankingDocumentId);
 
 		}
 

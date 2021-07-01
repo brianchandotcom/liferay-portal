@@ -38,7 +38,8 @@ public class RankingTest {
 		Ranking ranking = rankingBuilder.build();
 
 		Assert.assertEquals("[]", String.valueOf(ranking.getAliases()));
-		Assert.assertEquals("[]", String.valueOf(ranking.getBlockIds()));
+		Assert.assertEquals(
+			"[]", String.valueOf(ranking.getHiddenDocumentIds()));
 		Assert.assertEquals("[]", String.valueOf(ranking.getPins()));
 		Assert.assertEquals("[]", String.valueOf(ranking.getQueryStrings()));
 	}

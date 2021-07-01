@@ -35,17 +35,15 @@ public class DocumentToRankingTranslatorImpl
 	implements DocumentToRankingTranslator {
 
 	@Override
-	public Ranking translate(Document document, String id) {
+	public Ranking translate(Document document, String rankingDocumentId) {
 		return builder(
 		).aliases(
 			_getAliases(document)
-		).blocks(
+		).hiddenDocumentIds(
 			document.getStrings(RankingFields.BLOCKS)
-		).id(
-			id
 		).inactive(
 			document.getBoolean(RankingFields.INACTIVE)
-		).index(
+		).indexName(
 			document.getString("index")
 		).name(
 			_getName(document)
@@ -53,6 +51,8 @@ public class DocumentToRankingTranslatorImpl
 			_getPins(document)
 		).queryString(
 			_getQueryString(document)
+		).rankingDocumentId(
+			rankingDocumentId
 		).build();
 	}
 

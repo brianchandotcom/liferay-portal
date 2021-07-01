@@ -23,7 +23,8 @@ public interface RankingIndexWriter {
 
 	public String create(RankingIndexName rankingIndexName, Ranking ranking);
 
-	public void remove(RankingIndexName rankingIndexName, String uid);
+	public void remove(
+		RankingIndexName rankingIndexName, String rankingDocumentId);
 
 	public void update(RankingIndexName rankingIndexName, Ranking ranking);
 

@@ -185,7 +185,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 				queryStrings
 			).rankingIndexName(
 				_getRankingIndexName(resourceRequest)
-			).unlessRankingId(
+			).unlessRankingDocumentId(
 				validateRankingMVCResourceRequest.getResultsRankingUid()
 			).build());
 	}

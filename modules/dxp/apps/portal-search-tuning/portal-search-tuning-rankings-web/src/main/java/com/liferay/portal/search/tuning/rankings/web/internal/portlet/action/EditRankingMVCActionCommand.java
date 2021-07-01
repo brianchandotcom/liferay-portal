@@ -206,11 +206,12 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 					Arrays.asList(new Ranking.Pin(0, resultActionUid)));
 			}
 			else {
-				rankingBuilder.blocks(ListUtil.fromString(resultActionUid));
+				rankingBuilder.hiddenDocumentIds(
+					ListUtil.fromString(resultActionUid));
 			}
 		}
 
-		rankingBuilder.index(
+		rankingBuilder.indexName(
 			getIndexName(actionRequest)
 		).name(
 			editRankingMVCActionRequest.getQueryString()
@@ -299,11 +300,13 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		rankingBuilder.aliases(
 			_getAliases(editRankingMVCActionRequest)
-		).blocks(
-			_update(ranking.getBlockIds(), hiddenIdsAdded, hiddenIdsRemoved)
+		).hiddenDocumentIds(
+			_update(
+				ranking.getHiddenDocumentIds(), hiddenIdsAdded,
+				hiddenIdsRemoved)
 		).inactive(
 			_isInactive(editRankingMVCActionRequest)
-		).index(
+		).indexName(
 			getIndexName(actionRequest)
 		).name(
 			_getNameForUpdate(ranking.getName(), editRankingMVCActionRequest)
@@ -353,7 +356,8 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			"mvcRenderCommandName", "/result_rankings/edit_results_rankings");
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter("resultsRankingUid", ranking.getId(), false);
+		portletURL.setParameter(
+			"resultsRankingUid", ranking.getRankingDocumentId(), false);
 		portletURL.setParameter(
 			EditRankingMVCActionRequest.PARAM_ALIASES,
 			StringUtil.merge(ranking.getAliases(), StringPool.COMMA), false);
@@ -423,8 +427,8 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 					queryStrings
 				).rankingIndexName(
 					getRankingIndexName()
-				).unlessRankingId(
-					ranking.getId()
+				).unlessRankingDocumentId(
+					ranking.getRankingDocumentId()
 				).build());
 
 		return ListUtil.isNotEmpty(duplicateQueryStrings);
@@ -469,20 +473,40 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		);
 	}
 
+	private String[] _getRankingDocumentIds(
+		ActionRequest actionRequest,
+		EditRankingMVCActionRequest editRankingMVCActionRequest) {
+
+		String[] rankingDocumentIds = null;
+
+		String resultsRankingUid =
+			editRankingMVCActionRequest.getResultsRankingUid();
+
+		if (Validator.isNotNull(resultsRankingUid)) {
+			rankingDocumentIds = new String[] {resultsRankingUid};
+		}
+		else {
+			rankingDocumentIds = ParamUtil.getStringValues(
+				actionRequest, "rowIds");
+		}
+
+		return rankingDocumentIds;
+	}
+
 	private List<Ranking> _getRankings(
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
 		List<Ranking> rankings = new ArrayList<>();
 
-		String[] resultRankingsUids = _getResultsRankingUids(
+		String[] rankingDocumentIds = _getRankingDocumentIds(
 			actionRequest, editRankingMVCActionRequest);
 
 		RankingIndexName rankingIndexName = getRankingIndexName();
 
-		for (String resultRankingsUid : resultRankingsUids) {
+		for (String rankingDocumentId : rankingDocumentIds) {
 			Optional<Ranking> optional = rankingIndexReader.fetchOptional(
-				rankingIndexName, resultRankingsUid);
+				rankingIndexName, rankingDocumentId);
 
 			if (optional.isPresent()) {
 				Ranking ranking = optional.get();
@@ -492,26 +516,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return rankings;
-	}
-
-	private String[] _getResultsRankingUids(
-		ActionRequest actionRequest,
-		EditRankingMVCActionRequest editRankingMVCActionRequest) {
-
-		String[] resultsRankingUids = null;
-
-		String resultsRankingUid =
-			editRankingMVCActionRequest.getResultsRankingUid();
-
-		if (Validator.isNotNull(resultsRankingUid)) {
-			resultsRankingUids = new String[] {resultsRankingUid};
-		}
-		else {
-			resultsRankingUids = ParamUtil.getStringValues(
-				actionRequest, "rowIds");
-		}
-
-		return resultsRankingUids;
 	}
 
 	private void _guardDuplicateQueryStrings(

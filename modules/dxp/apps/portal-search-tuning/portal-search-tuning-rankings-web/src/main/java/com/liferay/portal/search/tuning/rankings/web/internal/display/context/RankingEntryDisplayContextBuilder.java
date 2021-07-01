@@ -60,7 +60,7 @@ public class RankingEntryDisplayContextBuilder {
 		RankingEntryDisplayContext rankingEntryDisplayContext) {
 
 		rankingEntryDisplayContext.setHiddenResultsCount(
-			getSizeString(_ranking.getBlockIds()));
+			getSizeString(_ranking.getHiddenDocumentIds()));
 	}
 
 	private void _setInactive(
@@ -72,7 +72,7 @@ public class RankingEntryDisplayContextBuilder {
 	private void _setIndex(
 		RankingEntryDisplayContext rankingEntryDisplayContext) {
 
-		rankingEntryDisplayContext.setIndex(_ranking.getIndex());
+		rankingEntryDisplayContext.setIndex(_ranking.getIndexName());
 	}
 
 	private void _setNameForDisplay(
@@ -91,7 +91,7 @@ public class RankingEntryDisplayContextBuilder {
 	private void _setUid(
 		RankingEntryDisplayContext rankingEntryDisplayContext) {
 
-		rankingEntryDisplayContext.setUid(_ranking.getId());
+		rankingEntryDisplayContext.setUid(_ranking.getRankingDocumentId());
 	}
 
 	private final Ranking _ranking;

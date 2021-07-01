@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -81,9 +80,7 @@ public class AssetCategoryCTDisplayRenderer
 	}
 
 	@Override
-	public String getTitle(Locale locale, AssetCategory assetCategory)
-		throws PortalException {
-
+	public String getTitle(Locale locale, AssetCategory assetCategory) {
 		return assetCategory.getTitle(locale);
 	}
 
@@ -94,12 +91,10 @@ public class AssetCategoryCTDisplayRenderer
 		AssetCategory assetCategory = displayBuilder.getModel();
 
 		displayBuilder.display(
-			"category",
-			HtmlUtil.escape(assetCategory.getTitle(displayBuilder.getLocale()))
+			"category", assetCategory.getTitle(displayBuilder.getLocale())
 		).display(
 			"description",
-			HtmlUtil.escape(
-				assetCategory.getDescription(displayBuilder.getLocale()))
+			assetCategory.getDescription(displayBuilder.getLocale())
 		).display(
 			"create-date", assetCategory.getCreateDate()
 		).display(

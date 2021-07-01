@@ -313,9 +313,11 @@ renderResponse.setTitle(title);
 								if (workflowDefinitionLink == null) {
 									LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(scopeGroupId, false);
 
-									Group layoutSetPrototypeGroup = GroupLocalServiceUtil.getLayoutSetPrototypeGroup(company.getCompanyId(), layoutSet.getLayoutSetPrototypeId());
+									if (layoutSet.getLayoutSetPrototypeId() > 0) {
+										Group layoutSetPrototypeGroup = GroupLocalServiceUtil.getLayoutSetPrototypeGroup(company.getCompanyId(), layoutSet.getLayoutSetPrototypeId());
 
-									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), layoutSetPrototypeGroup.getGroupId(), JournalFolder.class.getName(), folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
+										workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), layoutSetPrototypeGroup.getGroupId(), JournalFolder.class.getName(), folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
+									}
 								}
 
 								for (WorkflowDefinition workflowDefinition : workflowDefinitions) {

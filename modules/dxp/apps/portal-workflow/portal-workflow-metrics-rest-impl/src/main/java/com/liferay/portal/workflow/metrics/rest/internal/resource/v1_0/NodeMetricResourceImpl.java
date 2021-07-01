@@ -192,45 +192,6 @@ public class NodeMetricResourceImpl
 			_queries.term("slaDefinitionId", 0));
 	}
 
-	private BooleanQuery _createFilterBooleanQuery(
-		boolean completed, String key, long processId, String version) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		if (Validator.isNotNull(key)) {
-			booleanQuery.addMustQueryClauses(
-				_queries.wildcard("name", "*" + key + "*"));
-		}
-
-		booleanQuery.addShouldQueryClauses(
-			_createBooleanQuery(completed, processId));
-
-		return booleanQuery.addShouldQueryClauses(
-			_createBooleanQuery(processId, version));
-	}
-
-	private BooleanQuery _createFilterBooleanQuery(
-		String key, long processId, Set<String> taskNames, String version) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		if (Validator.isNotNull(key)) {
-			booleanQuery.addMustQueryClauses(
-				_queries.wildcard("name", "*" + key + "*"));
-		}
-
-		if (!taskNames.isEmpty()) {
-			TermsQuery termsQuery = _queries.terms("name");
-
-			termsQuery.addValues(taskNames.toArray(new Object[0]));
-
-			booleanQuery.addShouldQueryClauses(termsQuery);
-		}
-
-		return booleanQuery.addShouldQueryClauses(
-			_createBooleanQuery(processId, version));
-	}
-
 	private NodeMetric _createNodeMetric(String nodeName) {
 		return new NodeMetric() {
 			{
@@ -249,12 +210,46 @@ public class NodeMetricResourceImpl
 	}
 
 	private BooleanQuery _createNodesBooleanQuery(
-		String key, long processId, Set<String> taskNames, String version) {
+		String key, String latestProcessVersion, long processId,
+		String processVersion, Set<String> taskNames) {
+
+		BooleanQuery filterBooleanQuery = _queries.booleanQuery();
+
+		if (Validator.isNotNull(key)) {
+			filterBooleanQuery.addMustQueryClauses(
+				_queries.wildcard("name", "*" + key + "*"));
+		}
+
+		TermsQuery termsQuery = null;
+
+		if (!taskNames.isEmpty()) {
+			termsQuery = _queries.terms("name");
+
+			termsQuery.addValues(taskNames.toArray(new Object[0]));
+		}
+
+		if (processVersion != null) {
+			if (!taskNames.isEmpty()) {
+				filterBooleanQuery.addMustQueryClauses(termsQuery);
+			}
+
+			filterBooleanQuery.addMustQueryClauses(
+				_queries.term("deleted", false),
+				_queries.term("processId", processId),
+				_queries.term("version", processVersion));
+		}
+		else {
+			if (!taskNames.isEmpty()) {
+				filterBooleanQuery.addShouldQueryClauses(termsQuery);
+			}
+
+			filterBooleanQuery.addShouldQueryClauses(
+				_createBooleanQuery(processId, latestProcessVersion));
+		}
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addFilterQueryClauses(
-			_createFilterBooleanQuery(key, processId, taskNames, version));
+		booleanQuery.addFilterQueryClauses(filterBooleanQuery);
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
@@ -325,12 +320,35 @@ public class NodeMetricResourceImpl
 	}
 
 	private BooleanQuery _createTasksBooleanQuery(
-		boolean completed, String key, long processId, String version) {
+		boolean completed, String key, String latestProcessVersion,
+		long processId, String processVersion) {
+
+		BooleanQuery filterBooleanQuery = _queries.booleanQuery();
+
+		if (Validator.isNotNull(key)) {
+			filterBooleanQuery.addMustQueryClauses(
+				_queries.wildcard("name", "*" + key + "*"));
+		}
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addFilterQueryClauses(
-			_createFilterBooleanQuery(completed, key, processId, version));
+		if (processVersion != null) {
+			booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
+
+			booleanQuery.addMustQueryClauses(
+				_queries.term("instanceCompleted", completed));
+
+			filterBooleanQuery.addMustQueryClauses(
+				_queries.term("processId", processId),
+				_queries.term("version", processVersion));
+		}
+		else {
+			filterBooleanQuery.addShouldQueryClauses(
+				_createBooleanQuery(completed, processId),
+				_createBooleanQuery(processId, latestProcessVersion));
+		}
+
+		booleanQuery.addFilterQueryClauses(filterBooleanQuery);
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
@@ -452,33 +470,10 @@ public class NodeMetricResourceImpl
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
-		if (processVersion == null) {
-			searchSearchRequest.setQuery(
-				_createNodesBooleanQuery(
-					key, processId, taskNames, latestProcessVersion));
-		}
-		else {
-			TermsQuery termsQuery = _queries.terms("name");
-
-			termsQuery.addValues(taskNames.toArray(new Object[0]));
-
-			BooleanQuery filterBooleanQuery = _queries.booleanQuery();
-
-			filterBooleanQuery.addMustQueryClauses(termsQuery);
-
-			filterBooleanQuery.addMustQueryClauses(
-				_queries.term("processId", processId),
-				_queries.term("version", processVersion));
-
-			BooleanQuery booleanQuery = _queries.booleanQuery();
-
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", contextCompany.getCompanyId()),
-				_queries.term("deleted", false), _queries.term("type", "TASK"));
-
-			searchSearchRequest.setQuery(
-				booleanQuery.addFilterQueryClauses(filterBooleanQuery));
-		}
+		searchSearchRequest.setQuery(
+			_createNodesBooleanQuery(
+				key, latestProcessVersion, processId, processVersion,
+				taskNames));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -531,30 +526,10 @@ public class NodeMetricResourceImpl
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
-		if (processVersion == null) {
-			searchSearchRequest.setQuery(
-				_createTasksBooleanQuery(
-					completed, key, processId, latestProcessVersion));
-		}
-		else {
-			BooleanQuery booleanQuery = _queries.booleanQuery();
-
-			booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
-
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", contextCompany.getCompanyId()),
-				_queries.term("deleted", false),
-				_queries.term("instanceCompleted", true));
-
-			BooleanQuery filterBooleanQuery = _queries.booleanQuery();
-
-			filterBooleanQuery.addMustQueryClauses(
-				_queries.term("processId", processId),
-				_queries.term("version", processVersion));
-
-			searchSearchRequest.setQuery(
-				booleanQuery.addFilterQueryClauses(filterBooleanQuery));
-		}
+		searchSearchRequest.setQuery(
+			_createTasksBooleanQuery(
+				completed, key, latestProcessVersion, processId,
+				processVersion));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

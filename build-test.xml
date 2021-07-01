@@ -7439,6 +7439,36 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
+	<target name="deploy-data-guard">
+		<if>
+			<not>
+				<available file="${liferay.home}/osgi/test/com.liferay.portal.test.jar" />
+			</not>
+			<then>
+				<ant dir="portal-test" inheritAll="false" target="deploy" />
+			</then>
+		</if>
+
+		<move
+			file="${liferay.home}/osgi/test/com.liferay.portal.test.jar"
+			tofile="${liferay.home}/osgi/modules/com.liferay.portal.test.jar"
+		/>
+
+		<if>
+			<not>
+				<available file="${liferay.home}/osgi/test/com.liferay.data.guard.connector.jar" />
+			</not>
+			<then>
+				<deploy-osgi-modules osgi.modules="data-guard-connector" />
+			</then>
+		</if>
+
+		<move
+			file="${liferay.home}/osgi/test/com.liferay.data.guard.connector.jar"
+			tofile="${liferay.home}/osgi/modules/com.liferay.data.guard.connector.jar"
+		/>
+	</target>
+
 	<target name="deploy-dependency-jars">
 		<get-testcase-property property.name="liferay.training.dependency.jars" />
 
@@ -13686,6 +13716,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<antcall target="hot-deploy-osgi-apps" />
 
 		<antcall target="deploy-osgi-modules" />
+
+		<antcall target="deploy-data-guard" />
 
 		<if>
 			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />

@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LAUNCH_PAGE_AUDIT_BUTTON</td>
+	<td>//*[contains(@class, 'btn-secondary') and contains (text(), 'Launch')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_AUDIT_BUTTON</td>
 	<td>//*[contains(@class, 'lexicon-icon-info-circle')]</td>
 	<td></td>
@@ -43,6 +48,11 @@
 <tr>
 	<td>PROGRESS_BAR</td>
 	<td>//*[contains(@class, 'progress-bar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELAUNCH_PAGE_AUDIT_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon-reload')]</td>
 	<td></td>
 </tr>
 </tbody>

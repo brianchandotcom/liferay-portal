@@ -106,6 +106,13 @@ definition {
 		if (IsElementNotPresent(locator1 = "PageAudit#PANEL_PAGE_TITLE")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
+
+		if (IsElementPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
+			Click(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+		}
+		else {
+			Click(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
+		}
 	}
 
 	macro openPanelBeforeConfiguration {
@@ -155,7 +162,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
-			value1 = "https://liferay-tango.github.io/liferay-portal/page-audit-test.html");
+			value1 = " ");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
+			value1 = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 
 		PortletEntry.save();
 	}

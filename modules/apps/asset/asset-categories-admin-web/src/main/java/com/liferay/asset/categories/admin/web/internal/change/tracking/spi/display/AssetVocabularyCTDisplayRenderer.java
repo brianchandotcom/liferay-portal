@@ -23,7 +23,6 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -127,21 +126,11 @@ public class AssetVocabularyCTDisplayRenderer
 					long classNameId = selectedClassNameIds[i];
 					long classTypePK = selectedClassTypePKs[i];
 
-					DisplayContext<AssetVocabulary> displayContext =
-						displayBuilder.getDisplayContext();
-
-					HttpServletRequest httpServletRequest =
-						displayContext.getHttpServletRequest();
-
 					String name = LanguageUtil.get(
-						httpServletRequest, "all-asset-types");
+						displayBuilder.getLocale(), "all-asset-types");
 
 					if (classNameId !=
 							AssetCategoryConstants.ALL_CLASS_NAME_ID) {
-
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
 
 						if (classTypePK !=
 								AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
@@ -157,7 +146,8 @@ public class AssetVocabularyCTDisplayRenderer
 							try {
 								ClassType classType =
 									classTypeReader.getClassType(
-										classTypePK, themeDisplay.getLocale());
+										classTypePK,
+										displayBuilder.getLocale());
 
 								name = classType.getName();
 							}
@@ -174,7 +164,7 @@ public class AssetVocabularyCTDisplayRenderer
 						}
 						else {
 							name = ResourceActionsUtil.getModelResource(
-								themeDisplay.getLocale(),
+								displayBuilder.getLocale(),
 								_portal.getClassName(classNameId));
 						}
 					}

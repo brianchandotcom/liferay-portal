@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function ({
+export default function PageResources({
 	hideMoreComments,
 	index,
 	originalNamespace,

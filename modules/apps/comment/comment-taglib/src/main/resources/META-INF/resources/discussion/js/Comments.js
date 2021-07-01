@@ -22,7 +22,7 @@ function hideEl(elementId) {
 	}
 }
 
-export default function ({
+export default function Comments({
 	constants,
 	editorURL,
 	formName,

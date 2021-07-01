@@ -131,7 +131,7 @@ public class TranslationEntryServiceImpl
 		InfoItemPermissionProvider<JournalArticle> infoItemPermissionProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemPermissionProvider.class,
-				JournalArticle.class.getName());
+				infoItemReference.getClassName());
 
 		if (!infoItemPermissionProvider.hasPermission(
 				permissionChecker, infoItemReference, ActionKeys.UPDATE)) {

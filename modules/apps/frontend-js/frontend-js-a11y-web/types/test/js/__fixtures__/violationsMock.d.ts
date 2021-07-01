@@ -12,6 +12,6 @@
  * details.
  */
 
-import type {Result} from 'axe-core';
-declare const violations: Result[];
+import type {Violations} from '../../../src/main/resources/META-INF/resources/hooks/useA11y';
+declare const violations: Violations;
 export default violations;

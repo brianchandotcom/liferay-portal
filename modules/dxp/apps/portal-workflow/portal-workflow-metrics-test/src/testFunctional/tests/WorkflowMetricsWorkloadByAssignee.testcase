@@ -736,13 +736,106 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME");
 	}
 
-	@description = "LPS-97669 - Verify that the card (Workload by Assignee) has no more than 10 users"
-	@ignore = "Test Stub"
+	@description = "LPS-97669 - Verify that the sum of items Overdue and On time of 'Workload by Assignee' page are never bigger than the Total items"
 	@priority = "3"
 	test SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67615 SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0002",
+			slaDefinitionName = "SLAName",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content 1",
+			entryTitle = "Test Blog 1");
+
+		Pause(locator1 = "62000");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content 2",
+			entryTitle = "Test Blog 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Test Blog 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Test Blog 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(
+			key_tabName = "On Time",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
+
+		AssertElementPresent(
+			key_taskCount = "2",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
+
+		Click(
+			key_tabName = "Total",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
+
+		AssertElementPresent(
+			key_taskCount = "2",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
+
+		WorkflowMetrics.waitForSLA(
+			key_expectedValue = "0",
+			key_status = "OVERDUE");
+
+		Click(
+			key_tabName = "On Time",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
+
+		AssertElementPresent(
+			key_taskCount = "1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
+
+		Click(
+			key_tabName = "Overdue",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
+
+		AssertElementPresent(
+			key_taskCount = "1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
+
+		Click(
+			key_tabName = "Total",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
+
+		AssertElementPresent(
+			key_taskCount = "2",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
 	}
 
 	@description = "LPS-97669 - Verify there is no percentage indication out of the total amount of assigned tasks when the tab Total is selected"

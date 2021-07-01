@@ -81,7 +81,7 @@ public class RankingGetHiddenResultsBuilder {
 
 		Ranking ranking = optional.get();
 
-		List<String> ids = ranking.getBlockIds();
+		List<String> ids = ranking.getHiddenDocumentIds();
 
 		List<String> paginatedIds = paginateIds(ids);
 
@@ -114,7 +114,7 @@ public class RankingGetHiddenResultsBuilder {
 		Stream<String> stringStream = ids.stream();
 
 		Stream<JSONObject> jsonObjectStream = stringStream.map(
-			id -> getDocument(ranking.getIndex(), id, LIFERAY_DOCUMENT_TYPE)
+			id -> getDocument(ranking.getIndexName(), id, LIFERAY_DOCUMENT_TYPE)
 		).filter(
 			document -> document != null
 		).map(
@@ -128,9 +128,9 @@ public class RankingGetHiddenResultsBuilder {
 		return jsonArray;
 	}
 
-	protected Document getDocument(String index, String id, String type) {
+	protected Document getDocument(String indexName, String id, String type) {
 		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
-			index, id);
+			indexName, id);
 
 		getDocumentRequest.setFetchSource(true);
 		getDocumentRequest.setFetchSourceInclude("*");

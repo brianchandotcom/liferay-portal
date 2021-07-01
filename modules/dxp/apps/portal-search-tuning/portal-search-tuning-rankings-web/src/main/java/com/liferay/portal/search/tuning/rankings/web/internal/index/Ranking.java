@@ -36,30 +36,26 @@ public class Ranking {
 
 	public Ranking(Ranking ranking) {
 		_aliases = new ArrayList<>(ranking._aliases);
-		_blockIds = new LinkedHashSet<>(ranking._blockIds);
-		_id = ranking._id;
+		_hiddenDocumentIds = new LinkedHashSet<>(ranking._hiddenDocumentIds);
 		_inactive = ranking._inactive;
-		_index = ranking._index;
+		_indexName = ranking._indexName;
 		_name = ranking._name;
-		_pinIds = new HashSet<>(ranking._pinIds);
+		_pinnedDocumentIds = new HashSet<>(ranking._pinnedDocumentIds);
 		_pins = new ArrayList<>(ranking._pins);
 		_queryString = ranking._queryString;
+		_rankingDocumentId = ranking._rankingDocumentId;
 	}
 
 	public List<String> getAliases() {
 		return Collections.unmodifiableList(_aliases);
 	}
 
-	public List<String> getBlockIds() {
-		return new ArrayList<>(_blockIds);
+	public List<String> getHiddenDocumentIds() {
+		return new ArrayList<>(_hiddenDocumentIds);
 	}
 
-	public String getId() {
-		return _id;
-	}
-
-	public String getIndex() {
-		return _index;
+	public String getIndexName() {
+		return _indexName;
 	}
 
 	public String getName() {
@@ -100,30 +96,34 @@ public class Ranking {
 		);
 	}
 
+	public String getRankingDocumentId() {
+		return _rankingDocumentId;
+	}
+
 	public boolean isInactive() {
 		return _inactive;
 	}
 
-	public boolean isPinned(String id) {
-		return _pinIds.contains(id);
+	public boolean isPinned(String documentId) {
+		return _pinnedDocumentIds.contains(documentId);
 	}
 
 	public static class Pin {
 
-		public Pin(int position, String id) {
+		public Pin(int position, String documentId) {
 			_position = position;
-			_id = id;
+			_documentId = documentId;
 		}
 
-		public String getId() {
-			return _id;
+		public String getDocumentId() {
+			return _documentId;
 		}
 
 		public int getPosition() {
 			return _position;
 		}
 
-		private final String _id;
+		private final String _documentId;
 		private final int _position;
 
 	}
@@ -144,18 +144,15 @@ public class Ranking {
 			return this;
 		}
 
-		public RankingBuilder blocks(List<String> hiddenIds) {
-			_ranking._blockIds = new LinkedHashSet<>(toList(hiddenIds));
-
-			return this;
-		}
-
 		public Ranking build() {
 			return new Ranking(_ranking);
 		}
 
-		public RankingBuilder id(String id) {
-			_ranking._id = id;
+		public RankingBuilder hiddenDocumentIds(
+			List<String> hiddenDocumentIds) {
+
+			_ranking._hiddenDocumentIds = new LinkedHashSet<>(
+				toList(hiddenDocumentIds));
 
 			return this;
 		}
@@ -166,8 +163,8 @@ public class Ranking {
 			return this;
 		}
 
-		public RankingBuilder index(String index) {
-			_ranking._index = index;
+		public RankingBuilder indexName(String indexName) {
+			_ranking._indexName = indexName;
 
 			return this;
 		}
@@ -182,9 +179,9 @@ public class Ranking {
 			if (pins != null) {
 				Stream<Pin> stream = pins.stream();
 
-				_ranking._pinIds = new LinkedHashSet<>(
+				_ranking._pinnedDocumentIds = new LinkedHashSet<>(
 					stream.map(
-						Pin::getId
+						Pin::getDocumentId
 					).collect(
 						Collectors.toSet()
 					));
@@ -192,7 +189,7 @@ public class Ranking {
 				_ranking._pins = pins;
 			}
 			else {
-				_ranking._pinIds.clear();
+				_ranking._pinnedDocumentIds.clear();
 
 				_ranking._pins.clear();
 			}
@@ -202,6 +199,12 @@ public class Ranking {
 
 		public RankingBuilder queryString(String queryString) {
 			_ranking._queryString = queryString;
+
+			return this;
+		}
+
+		public RankingBuilder rankingDocumentId(String rankingDocumentId) {
+			_ranking._rankingDocumentId = rankingDocumentId;
 
 			return this;
 		}
@@ -222,13 +225,13 @@ public class Ranking {
 	}
 
 	private List<String> _aliases = new ArrayList<>();
-	private Set<String> _blockIds = new LinkedHashSet<>();
-	private String _id;
+	private Set<String> _hiddenDocumentIds = new LinkedHashSet<>();
 	private boolean _inactive;
-	private String _index;
+	private String _indexName;
 	private String _name;
-	private Set<String> _pinIds = new LinkedHashSet<>();
+	private Set<String> _pinnedDocumentIds = new LinkedHashSet<>();
 	private List<Pin> _pins = new ArrayList<>();
 	private String _queryString;
+	private String _rankingDocumentId;
 
 }

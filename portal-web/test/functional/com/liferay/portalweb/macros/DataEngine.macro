@@ -973,7 +973,7 @@ definition {
 		}
 
 		if (isSet(optionFieldLabel)) {
-			DoubleClick(
+			SelectFieldText(
 				index = "${index}",
 				key_optionFieldLabel = "${optionFieldLabel}",
 				locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT");
@@ -985,7 +985,7 @@ definition {
 				value1 = "${fieldReferenceOfFieldOption}");
 		}
 		else {
-			DoubleClick(
+			SelectFieldText(
 				index = "${index}",
 				locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT");
 

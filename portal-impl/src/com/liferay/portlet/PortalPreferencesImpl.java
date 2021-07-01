@@ -47,7 +47,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.hibernate.StaleObjectStateException;
+import org.hibernate.StaleStateException;
 import org.hibernate.exception.ConstraintViolationException;
 
 /**
@@ -521,7 +521,7 @@ public class PortalPreferencesImpl
 
 		while (throwable != causeThrowable) {
 			if (throwable instanceof ConstraintViolationException ||
-				throwable instanceof StaleObjectStateException) {
+				throwable instanceof StaleStateException) {
 
 				return true;
 			}

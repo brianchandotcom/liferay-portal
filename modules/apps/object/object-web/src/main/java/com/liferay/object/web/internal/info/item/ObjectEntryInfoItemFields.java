@@ -25,26 +25,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public interface ObjectEntryInfoItemFields {
 
-	public static final InfoField<TextInfoFieldType> authorNameInfoField =
-		InfoField.builder(
-		).infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).name(
-			"authorName"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				ObjectEntryInfoItemFields.class, "author-name")
-		).build();
-	public static final InfoField<ImageInfoFieldType>
-		authorProfileImageInfoField = InfoField.builder(
-		).infoFieldType(
-			ImageInfoFieldType.INSTANCE
-		).name(
-			"authorProfileImage"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.journal.lang", "author-profile-image")
-		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		InfoField.builder(
 		).infoFieldType(
@@ -75,5 +55,24 @@ public interface ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "publish-date")
 		).build();
+	public static final InfoField<TextInfoFieldType> userNameInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"userName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "user-name")
+		).build();
+	public static final InfoField userProfileImage = InfoField.builder(
+	).infoFieldType(
+		ImageInfoFieldType.INSTANCE
+	).name(
+		"userProfileImage"
+	).labelInfoLocalizedValue(
+		InfoLocalizedValue.localize(
+			ObjectEntryInfoItemFields.class, "user-profile-image")
+	).build();
 
 }

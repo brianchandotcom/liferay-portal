@@ -93,11 +93,15 @@ public class ObjectEntryInfoItemFormProvider
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.createDateInfoField
+		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.modifiedDateInfoField
+		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.publishDateInfoField
 		).infoFieldSetEntry(
-			ObjectEntryInfoItemFields.authorNameInfoField
+			ObjectEntryInfoItemFields.userNameInfoField
 		).infoFieldSetEntry(
-			ObjectEntryInfoItemFields.authorProfileImageInfoField
+			ObjectEntryInfoItemFields.userProfileImage
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(

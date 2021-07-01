@@ -17,11 +17,13 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			Workflow.tearDownPortalWorkflow();
 
-			Workflow.tearDownWorkflowDefinitions();
-		}
+		//else {
+		//	Workflow.tearDownPortalWorkflow();
+
+		//	Workflow.tearDownWorkflowDefinitions();
+		//}
+
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Knowledge Base Article"
@@ -78,12 +80,24 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Translation"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToTranslation {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68293 CanAssignWorkflowToTranslation pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		VerifyVisible(locator1 = "Message#SUCCESS");
+
+		AssertElementPresent(
+			key_message = "Workflow assigned to Translation",
+			locator1 = "ProcessBuilderListView#SUCCESS_MESSAGE_POPUP");
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to User"

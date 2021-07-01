@@ -43,12 +43,34 @@ definition {
 	}
 
 	@description = "Verify that, when importing a non XML file, an error message is displayed and the Workflow is not published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportNonXMLFile {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68324 CanImportNonXMLFile pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Document_1.doc");
 
+		if (IsElementPresent(locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB")) {
+			KaleoDesigner.viewSourceXMLTab();
+		}
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "Document_1.doc");
+
+		Alert.viewSuccessMessageText(successMessage = "Definition imported successfully.");
+
+		PortletEntry.publish();
+
+		Alert.viewErrorMessage(errorMessage = "Please enter valid content.");
+
+		Navigator.gotoBack();
+
+		AssertElementNotPresent(
+			key_workflowResourceValue = "Document_1",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
 	}
 
 	@description = "Verify that the user is able to import a XML file"

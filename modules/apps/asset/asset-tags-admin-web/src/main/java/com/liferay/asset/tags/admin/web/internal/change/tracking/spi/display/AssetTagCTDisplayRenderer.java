@@ -88,7 +88,7 @@ public class AssetTagCTDisplayRenderer extends BaseCTDisplayRenderer<AssetTag> {
 			"name", assetTag.getName()
 		).display(
 			"usages",
-			() -> _assetTagLocalService.getTagsSize(
+			_assetTagLocalService.getTagsSize(
 				assetTag.getGroupId(), assetTag.getName())
 		);
 	}

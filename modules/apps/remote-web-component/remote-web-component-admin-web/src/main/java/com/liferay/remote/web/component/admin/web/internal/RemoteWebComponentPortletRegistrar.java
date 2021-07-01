@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration;
+import com.liferay.remote.web.component.admin.web.internal.configuration.RemoteWebComponentConfiguration;
 import com.liferay.remote.web.component.admin.web.internal.util.Timestamp;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.remote.web.component.admin.web.configuration.RemoteWebComponentConfiguration",
+	configurationPid = "com.liferay.remote.web.component.admin.web.internal.configuration.RemoteWebComponentConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = RemoteWebComponentPortletRegistrar.class
 )

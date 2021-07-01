@@ -30,6 +30,7 @@ import com.liferay.portal.lock.service.LockLocalServiceUtil;
 import com.liferay.portal.test.rule.ExpectedDBType;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedMultipleLogs;
 import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -49,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.persistence.PersistenceException;
 
+import org.hibernate.engine.jdbc.batch.internal.BatchingBatch;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
@@ -81,70 +83,84 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock("className", "key");
 	}
 
-	@ExpectedLogs(
-		expectedLogs = {
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "Error for batch element",
-				expectedType = ExpectedType.PREFIX
+	@ExpectedMultipleLogs(
+		expectedMultipleLogs = {
+			@ExpectedLogs(
+				expectedLogs = {
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.DB2,
+						expectedLog = "Error for batch element",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.DB2,
+						expectedLog = "Batch failure.",
+						expectedType = ExpectedType.CONTAINS
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.HYPERSONIC,
+						expectedLog = "integrity constraint violation: unique constraint or index violation: IX_228562AD",
+						expectedType = ExpectedType.EXACT
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MARIADB,
+						expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
+						expectedType = ExpectedType.EXACT
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MARIADB,
+						expectedLog = "Duplicate entry",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MYSQL,
+						expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
+						expectedType = ExpectedType.EXACT
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MYSQL,
+						expectedLog = "Duplicate entry",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.ORACLE,
+						expectedLog = "ORA-00001: unique constraint",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.POSTGRESQL,
+						expectedLog = "Batch entry 0 insert into Lock_ ",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.POSTGRESQL,
+						expectedLog = "ERROR: duplicate key value violates unique constraint ",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.SQLSERVER,
+						expectedLog = "Cannot insert duplicate key row in object",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.SYBASE,
+						expectedLog = "Attempt to insert duplicate key row",
+						expectedType = ExpectedType.CONTAINS
+					)
+				},
+				level = "ERROR", loggerClass = SqlExceptionHelper.class
 			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "Batch failure.",
-				expectedType = ExpectedType.CONTAINS
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.HYPERSONIC,
-				expectedLog = "integrity constraint violation: unique constraint or index violation: IX_228562AD",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MARIADB,
-				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MARIADB,
-				expectedLog = "Duplicate entry",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog = "Duplicate entry",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.ORACLE,
-				expectedLog = "ORA-00001: unique constraint",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog = "Batch entry 0 insert into Lock_ ",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog = "ERROR: duplicate key value violates unique constraint ",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.SQLSERVER,
-				expectedLog = "Cannot insert duplicate key row in object",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.SYBASE,
-				expectedLog = "Attempt to insert duplicate key row",
-				expectedType = ExpectedType.CONTAINS
+			@ExpectedLogs(
+				expectedLogs = {
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.NONE,
+						expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
+						expectedType = ExpectedType.PREFIX
+					)
+				},
+				level = "ERROR", loggerClass = BatchingBatch.class
 			)
-		},
-		level = "ERROR", loggerClass = SqlExceptionHelper.class
+		}
 	)
 	@Test
 	public void testLock() throws Exception {
@@ -287,70 +303,84 @@ public class LockLocalServiceTest {
 		}
 	}
 
-	@ExpectedLogs(
-		expectedLogs = {
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "Error for batch element",
-				expectedType = ExpectedType.PREFIX
+	@ExpectedMultipleLogs(
+		expectedMultipleLogs = {
+			@ExpectedLogs(
+				expectedLogs = {
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.DB2,
+						expectedLog = "Error for batch element",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.DB2,
+						expectedLog = "Batch failure.",
+						expectedType = ExpectedType.CONTAINS
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.HYPERSONIC,
+						expectedLog = "integrity constraint violation: unique constraint or index violation: IX_228562AD",
+						expectedType = ExpectedType.EXACT
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MARIADB,
+						expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
+						expectedType = ExpectedType.EXACT
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MARIADB,
+						expectedLog = "Duplicate entry",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MYSQL,
+						expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
+						expectedType = ExpectedType.EXACT
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.MYSQL,
+						expectedLog = "Duplicate entry",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.ORACLE,
+						expectedLog = "ORA-00001: unique constraint",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.POSTGRESQL,
+						expectedLog = "Batch entry 0 insert into Lock_ ",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.POSTGRESQL,
+						expectedLog = "ERROR: duplicate key value violates unique constraint ",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.SQLSERVER,
+						expectedLog = "Cannot insert duplicate key row in object",
+						expectedType = ExpectedType.PREFIX
+					),
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.SYBASE,
+						expectedLog = "Attempt to insert duplicate key row",
+						expectedType = ExpectedType.CONTAINS
+					)
+				},
+				level = "ERROR", loggerClass = SqlExceptionHelper.class
 			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.DB2,
-				expectedLog = "Batch failure.",
-				expectedType = ExpectedType.CONTAINS
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.HYPERSONIC,
-				expectedLog = "integrity constraint violation: unique constraint or index violation: IX_228562AD",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MARIADB,
-				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MARIADB,
-				expectedLog = "Duplicate entry",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog = "Duplicate entry",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.ORACLE,
-				expectedLog = "ORA-00001: unique constraint",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog = "Batch entry 0 insert into Lock_ ",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog = "ERROR: duplicate key value violates unique constraint ",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.SQLSERVER,
-				expectedLog = "Cannot insert duplicate key row in object",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.SYBASE,
-				expectedLog = "Attempt to insert duplicate key row",
-				expectedType = ExpectedType.CONTAINS
+			@ExpectedLogs(
+				expectedLogs = {
+					@ExpectedLog(
+						expectedDBType = ExpectedDBType.NONE,
+						expectedLog = "HHH000315: Exception executing batch [java.sql.BatchUpdateException",
+						expectedType = ExpectedType.PREFIX
+					)
+				},
+				level = "ERROR", loggerClass = BatchingBatch.class
 			)
-		},
-		level = "ERROR", loggerClass = SqlExceptionHelper.class
+		}
 	)
 	@Test
 	public void testMutualExcludeLockingParallel() throws Exception {

@@ -95,7 +95,6 @@ export default function ({
 				})
 				.catch(() => {
 					openToast({
-						id: randomNamespace,
 						message: Liferay.Language.get(
 							'your-request-failed-to-complete'
 						),
@@ -189,7 +188,6 @@ export default function ({
 					}
 
 					openToast({
-						id: randomNamespace,
 						message: errorKey,
 						type: 'danger',
 					});
@@ -199,7 +197,6 @@ export default function ({
 			})
 			.catch(() => {
 				openToast({
-					id: randomNamespace,
 					message: Liferay.Language.get(
 						'your-request-failed-to-complete'
 					),
@@ -244,7 +241,6 @@ export default function ({
 				})
 				.catch(() => {
 					openToast({
-						id: randomNamespace,
 						message: Liferay.Language.get(
 							'your-request-failed-to-complete'
 						),
@@ -431,7 +427,6 @@ export default function ({
 
 					if (index === 0) {
 						openToast({
-							id: randomId,
 							message: Liferay.Language.get(
 								'your-request-completed-successfully'
 							),

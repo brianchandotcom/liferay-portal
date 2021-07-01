@@ -231,6 +231,71 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="deploy-osgi-modules">
+		<attribute name="osgi.modules" />
+
+		<sequential>
+			<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
+
+			<property name="osgi.module.pattern" value="**" />
+
+			<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/@{osgi.modules}">
+				<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />
+			</antelope:stringutil>
+
+			<pathconvert pathsep="," property="osgi.modules.paths">
+				<dirset
+					dir="modules"
+					excludes="**/node_modules/**"
+					includes="${osgi.modules.includes.pattern}"
+				>
+					<or>
+						<present targetdir="modules">
+							<mapper
+								from="*"
+								to="*/build.gradle"
+								type="glob"
+							/>
+						</present>
+						<present targetdir="modules">
+							<mapper
+								from="*"
+								to="*/build.xml"
+								type="glob"
+							/>
+						</present>
+					</or>
+				</dirset>
+			</pathconvert>
+
+			<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
+				<sequential>
+					<local name="module.base.dir" />
+					<local name="osgi.module.command.prefix" />
+
+					<dirname file="@{osgi.module.path}" property="module.base.dir" />
+
+					<move
+						failonerror="false"
+						file="${module.base.dir}/settings.gradle"
+						tofile="${module.base.dir}/settings.gradle.temp"
+						verbose="true"
+					/>
+
+					<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
+						<arg value="clean" />
+					</gradle-execute>
+
+					<move
+						failonerror="false"
+						file="${module.base.dir}/settings.gradle.temp"
+						tofile="${module.base.dir}/settings.gradle"
+					/>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="docker-copy">
 		<attribute name="dest.path" />
 		<attribute name="src.path" />
@@ -7859,64 +7924,7 @@ virtualHostname="localhost"
 		<if>
 			<isset property="osgi.modules.includes" />
 			<then>
-				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
-
-				<property name="osgi.module.pattern" value="**" />
-
-				<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/${osgi.modules.includes}">
-					<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />
-				</antelope:stringutil>
-
-				<pathconvert pathsep="," property="osgi.modules.paths">
-					<dirset
-						dir="modules"
-						excludes="**/node_modules/**"
-						includes="${osgi.modules.includes.pattern}"
-					>
-						<or>
-							<present targetdir="modules">
-								<mapper
-									from="*"
-									to="*/build.gradle"
-									type="glob"
-								/>
-							</present>
-							<present targetdir="modules">
-								<mapper
-									from="*"
-									to="*/build.xml"
-									type="glob"
-								/>
-							</present>
-						</or>
-					</dirset>
-				</pathconvert>
-
-				<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
-					<sequential>
-						<local name="module.base.dir" />
-						<local name="osgi.module.command.prefix" />
-
-						<dirname file="@{osgi.module.path}" property="module.base.dir" />
-
-						<move
-							failonerror="false"
-							file="${module.base.dir}/settings.gradle"
-							tofile="${module.base.dir}/settings.gradle.temp"
-							verbose="true"
-						/>
-
-						<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
-							<arg value="clean" />
-						</gradle-execute>
-
-						<move
-							failonerror="false"
-							file="${module.base.dir}/settings.gradle.temp"
-							tofile="${module.base.dir}/settings.gradle"
-						/>
-					</sequential>
-				</for>
+				<deploy-osgi-modules osgi.modules="${osgi.modules.includes}" />
 			</then>
 		</if>
 	</target>

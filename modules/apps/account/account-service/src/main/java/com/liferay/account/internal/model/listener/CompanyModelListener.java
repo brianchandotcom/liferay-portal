@@ -32,16 +32,12 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
 	public void onAfterRemove(Company company) throws ModelListenerException {
-		super.onAfterRemove(company);
-
 		_accountRoleLocalService.deleteAccountRolesByCompanyId(
 			company.getCompanyId());
 	}
 
 	@Override
 	public void onBeforeRemove(Company company) throws ModelListenerException {
-		super.onAfterRemove(company);
-
 		_accountEntryLocalService.deleteAccountEntriesByCompanyId(
 			company.getCompanyId());
 	}

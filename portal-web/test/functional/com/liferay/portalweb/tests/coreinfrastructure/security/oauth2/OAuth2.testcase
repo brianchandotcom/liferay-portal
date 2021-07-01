@@ -765,6 +765,7 @@ definition {
 	@description = "This is a use case for LPS-129398."
 	@priority = "4"
 	test RememberDeviceWithMultipleAuth {
+		property test.name.skip.portal.instance = "OAuth2#RememberDeviceWithMultipleAuth";
 
 		// Test Setup
 
@@ -776,7 +777,7 @@ definition {
 				clientId = "default${count}",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret${count}",
-				websiteURL = "http://localhost:8080");
+				websiteURL = "http://www.liferay.com");
 		}
 
 		// Test starts here
@@ -822,6 +823,7 @@ definition {
 	@description = "This is a use case for LPS-129398."
 	@priority = "4"
 	test RememberDeviceWithMultipleAuthWithoutSession {
+		property test.name.skip.portal.instance = "OAuth2#RememberDeviceWithMultipleAuthWithoutSession";
 
 		// Test Setup
 
@@ -833,7 +835,7 @@ definition {
 				clientId = "default${count}",
 				clientProfile = "Web Application",
 				clientSecret = "defaultsecret${count}",
-				websiteURL = "http://localhost:8080");
+				websiteURL = "http://www.liferay.com");
 		}
 
 		// Test starts here

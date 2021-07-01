@@ -428,12 +428,16 @@ definition {
 	}
 
 	@description = "Verify that there is a info message -The assets from Documents and Media and Forms are assigned within their respective applications.-"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test DisplaysInfoMessage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68296 DisplaysInfoMessage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		AssertElementPresent(locator1 = "WorkflowConfiguration#PROCESS_BUILDER_CONFIGURATION_MESSAGE");
 	}
 
 }

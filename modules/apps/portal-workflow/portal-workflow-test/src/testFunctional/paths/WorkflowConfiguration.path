@@ -61,6 +61,11 @@
 	<td>//a[contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROCESS_BUILDER_CONFIGURATION_MESSAGE</td>
+	<td>//div[@class='autofit-section' and text()='The assets from Documents and Media and Forms are assigned within their respective applications.']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

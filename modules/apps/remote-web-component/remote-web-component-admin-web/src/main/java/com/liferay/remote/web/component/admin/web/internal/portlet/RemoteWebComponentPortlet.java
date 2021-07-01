@@ -14,6 +14,7 @@
 
 package com.liferay.remote.web.component.admin.web.internal.portlet;
 
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -44,7 +45,6 @@ import javax.portlet.HeaderPortlet;
 import javax.portlet.MimeResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
@@ -202,12 +202,12 @@ public class RemoteWebComponentPortlet
 			String elementName)
 		throws PortletException {
 
-		PortletURL renderURL = mimeResponse.createRenderURL(
-			MimeResponse.Copy.PUBLIC);
-
-		renderURL.setWindowState(WindowState.NORMAL);
-
-		String routerBaseSelf = _http.removeDomain(renderURL.toString());
+		String routerBaseSelf = _http.removeDomain(
+			PortletURLBuilder.createRenderURL(
+				mimeResponse, MimeResponse.Copy.PUBLIC
+			).setWindowState(
+				WindowState.NORMAL
+			).buildString());
 
 		String headerContent = StringUtil.replace(
 			StringUtil.read(RemoteWebComponentPortlet.class, "header.html"),

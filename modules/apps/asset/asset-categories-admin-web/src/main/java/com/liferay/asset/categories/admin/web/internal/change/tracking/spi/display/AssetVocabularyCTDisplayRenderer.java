@@ -125,7 +125,7 @@ public class AssetVocabularyCTDisplayRenderer
 		long[] selectedClassNameIds = assetVocabulary.getSelectedClassNameIds();
 		long[] selectedClassTypePKs = assetVocabulary.getSelectedClassTypePKs();
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4 * selectedClassNameIds.length);
 
 		for (int i = 0; i < selectedClassNameIds.length; i++) {
 			long classNameId = selectedClassNameIds[i];

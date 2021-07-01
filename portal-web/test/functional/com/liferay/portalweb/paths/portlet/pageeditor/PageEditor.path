@@ -759,6 +759,12 @@
 	<td>//button[contains(@aria-label,'History')]</td>
 	<td></td>
 </tr>
+<!--PAGE_CONTENTS-->
+<tr>
+	<td>PAGE_CONTENTS_ITEM</td>
+	<td>//li[contains(@class,'page-contents__page-content')]//span[normalize-space(text())='${key_itemName}']</td>
+	<td></td>
+</tr>
 <!--PAGE_DESIGN_OPTIONS-->
 <tr>
 	<td>MORE_LINK</td>

@@ -210,6 +210,50 @@ export default function ({
 			});
 	}
 
+	function showEditor(formId, options) {
+		const element = window[`${namespace}${options.name}`];
+
+		const editorWrapper =
+			element && element.querySelector(`#${formId} .editor-wrapper`);
+
+		if (!editorWrapper || editorWrapper.childNodes.length === 0) {
+			fetch(editorURL, {
+				body: Util.objectToFormData(Util.ns(namespace, options)),
+				method: 'POST',
+			})
+				.then((response) => {
+					return response.text();
+				})
+				.then((response) => {
+					var editorWrapper = document.querySelector(
+						`#${formId} .editor-wrapper`
+					);
+
+					if (editorWrapper) {
+						editorWrapper.innerHTML = response;
+
+						runScriptsInElement(editorWrapper);
+					}
+
+					Util.toggleDisabled(
+						'#' + options.name.replace('Body', 'Button'),
+						options.contents === ''
+					);
+
+					window[`${randomNamespace}showEl`](formId);
+				})
+				.catch(() => {
+					window[`${randomNamespace}showStatusMessage`]({
+						id: randomNamespace,
+						message: Liferay.Language.get(
+							'your-request-failed-to-complete'
+						),
+						type: 'danger',
+					});
+				});
+		}
+	}
+
 	window[`${namespace}${randomNamespace}0ReplyOnChange`] = function (html) {
 		Util.toggleDisabled(
 			`#${namespace}${randomNamespace}postReplyButton0`,
@@ -297,59 +341,12 @@ export default function ({
 		}
 	};
 
-	window[`${randomNamespace}showEditor`] = function (formId, options) {
-		const element = window[`${namespace}${options.name}`];
-
-		const editorWrapper =
-			element && element.querySelector(`#${formId} .editor-wrapper`);
-
-		if (!editorWrapper || editorWrapper.childNodes.length === 0) {
-			fetch(editorURL, {
-				body: Util.objectToFormData(Util.ns(namespace, options)),
-				method: 'POST',
-			})
-				.then((response) => {
-					return response.text();
-				})
-				.then((response) => {
-					var editorWrapper = document.querySelector(
-						`#${formId} .editor-wrapper`
-					);
-
-					if (editorWrapper) {
-						editorWrapper.innerHTML = response;
-
-						runScriptsInElement(editorWrapper);
-					}
-
-					Util.toggleDisabled(
-						'#' + options.name.replace('Body', 'Button'),
-						options.contents === ''
-					);
-
-					window[`${randomNamespace}showEl`](formId);
-				})
-				.catch(() => {
-					window[`${randomNamespace}showStatusMessage`]({
-						id: randomNamespace,
-						message: Liferay.Language.get(
-							'your-request-failed-to-complete'
-						),
-						type: 'danger',
-					});
-				});
-		}
-	};
-
 	window[`${randomNamespace}showPostReplyEditor`] = function (index) {
-		window[`${randomNamespace}showEditor`](
-			`${namespace}${randomNamespace}postReplyForm${index}`,
-			{
-				name: `${randomNamespace}postReplyBody${index}`,
-				onChangeMethod: `${randomNamespace}${index}ReplyOnChange`,
-				placeholder: 'type-your-comment-here',
-			}
-		);
+		showEditor(`${namespace}${randomNamespace}postReplyForm${index}`, {
+			name: `${randomNamespace}postReplyBody${index}`,
+			onChangeMethod: `${randomNamespace}${index}ReplyOnChange`,
+			placeholder: 'type-your-comment-here',
+		});
 
 		window[`${randomNamespace}hideEditor`](
 			`${randomNamespace}editReplyBody${index}`,
@@ -374,14 +371,11 @@ export default function ({
 		const discussionIdElement = document.getElementById(discussionId);
 
 		if (discussionIdElement) {
-			window[`${randomNamespace}showEditor`](
-				`${namespace}${randomNamespace}editForm${index}`,
-				{
-					contents: discussionIdElement.innerHTML,
-					name: `${randomNamespace}editReplyBody${index}`,
-					onChangeMethod: `${randomNamespace}${index}EditOnChange`,
-				}
-			);
+			showEditor(`${namespace}${randomNamespace}editForm${index}`, {
+				contents: discussionIdElement.innerHTML,
+				name: `${randomNamespace}editReplyBody${index}`,
+				onChangeMethod: `${randomNamespace}${index}EditOnChange`,
+			});
 
 			window[`${randomNamespace}hideEditor`](
 				`${randomNamespace}postReplyBody${index}`,

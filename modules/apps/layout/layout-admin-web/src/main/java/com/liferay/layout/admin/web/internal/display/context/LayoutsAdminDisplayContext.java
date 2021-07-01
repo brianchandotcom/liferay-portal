@@ -855,33 +855,21 @@ public class LayoutsAdminDisplayContext {
 
 		Collections.reverse(ancestorLayouts);
 
-		boolean showLayoutPath = false;
-
-		if (getSelPlid() <= 0) {
-			showLayoutPath = true;
-		}
-
 		for (Layout ancestorLayout : ancestorLayouts) {
-			if (showLayoutPath) {
-				BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-				if (LayoutPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), ancestorLayout,
-						ActionKeys.VIEW)) {
+			if (LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), ancestorLayout,
+					ActionKeys.VIEW)) {
 
-					breadcrumbEntry.setTitle(
-						ancestorLayout.getName(themeDisplay.getLocale()));
-				}
-				else {
-					breadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
-				}
-
-				breadcrumbEntries.add(breadcrumbEntry);
+				breadcrumbEntry.setTitle(
+					ancestorLayout.getName(themeDisplay.getLocale()));
+			}
+			else {
+				breadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
 			}
 
-			if (ancestorLayout.getPlid() == getSelPlid()) {
-				showLayoutPath = true;
-			}
+			breadcrumbEntries.add(breadcrumbEntry);
 		}
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();

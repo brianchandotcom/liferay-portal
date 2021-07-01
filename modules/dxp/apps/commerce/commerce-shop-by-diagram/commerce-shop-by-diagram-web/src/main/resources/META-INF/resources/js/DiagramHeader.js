@@ -12,10 +12,10 @@
 import ClayButton from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
 import ClayDropDown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
 import ClaySlider from '@clayui/slider';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import ClayForm from '@clayui/form';
 
 const DiagramHeader = ({
 	addNewPinState,
@@ -129,9 +129,7 @@ const DiagramHeader = () => {
 									{Liferay.Language.get('add-pin')}
 								</ClayButton>
 							</ClayForm.Group>
-
 						</ClayForm>
-						
 					</ClayDropDown.Caption>
 				</ClayDropDown>
 			</div>

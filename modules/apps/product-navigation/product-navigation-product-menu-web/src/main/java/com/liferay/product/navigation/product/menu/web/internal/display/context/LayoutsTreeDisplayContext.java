@@ -492,10 +492,10 @@ public class LayoutsTreeDisplayContext {
 		return false;
 	}
 
-	private JSONArray _getChildSiteNavigationMenuItemJSONArray(
+	private JSONArray _getChildSiteNavigationMenuItemsJSONArray(
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
 
-		JSONArray childSiteNavigationMenuItemJSONArray =
+		JSONArray childSiteNavigationMenuItemsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItemList =
@@ -505,12 +505,12 @@ public class LayoutsTreeDisplayContext {
 		for (SiteNavigationMenuItem childSiteNavigationMenuItem :
 				siteNavigationMenuItemList) {
 
-			childSiteNavigationMenuItemJSONArray.put(
+			childSiteNavigationMenuItemsJSONArray.put(
 				_getSiteNavigationMenuItemJSONObject(
 					childSiteNavigationMenuItem));
 		}
 
-		return childSiteNavigationMenuItemJSONArray;
+		return childSiteNavigationMenuItemsJSONArray;
 	}
 
 	private JSONObject _getOptionGroupJSONObject(
@@ -642,13 +642,13 @@ public class LayoutsTreeDisplayContext {
 		String url = _getSiteNavigationMenuItemURL(
 			siteNavigationMenuItem, siteNavigationMenuItemType);
 
-		JSONArray childSiteNavigationMenuItemJSONArray =
-			_getChildSiteNavigationMenuItemJSONArray(
+		JSONArray childSiteNavigationMenuItemsJSONArray =
+			_getChildSiteNavigationMenuItemsJSONArray(
 				siteNavigationMenuItem.getSiteNavigationMenuId(),
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 
 		return JSONUtil.put(
-			"children", childSiteNavigationMenuItemJSONArray
+			"children", childSiteNavigationMenuItemsJSONArray
 		).put(
 			"id", siteNavigationMenuItem.getSiteNavigationMenuItemId()
 		).put(
@@ -665,7 +665,7 @@ public class LayoutsTreeDisplayContext {
 
 		if (_getSiteNavigationMenuId() > 0) {
 			_siteNavigationMenuItemsJSONArray =
-				_getChildSiteNavigationMenuItemJSONArray(
+				_getChildSiteNavigationMenuItemsJSONArray(
 					_getSiteNavigationMenuId(), 0L);
 		}
 		else {

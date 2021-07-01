@@ -129,7 +129,7 @@ public class CPDefinitionPricingClassesRelationsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/definition_pricing_class/definition_pricing_classes.jsp");
+			"/cp_definitions/cp_definition_pricing_classes.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

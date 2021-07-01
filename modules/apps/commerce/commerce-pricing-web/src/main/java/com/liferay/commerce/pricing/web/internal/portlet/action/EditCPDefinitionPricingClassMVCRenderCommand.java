@@ -59,8 +59,7 @@ public class EditCPDefinitionPricingClassMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/definition_pricing_class" +
-					"/edit_cp_definition_pricing_class.jsp");
+				"/cp_definitions/edit_cp_definition_pricing_class.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =
@@ -83,7 +82,7 @@ public class EditCPDefinitionPricingClassMVCRenderCommand
 		}
 		catch (Exception exception) {
 			throw new PortletException(
-				"Unable to include edit_definition_pricing_class.jsp",
+				"Unable to include edit_cp_definition_pricing_class.jsp",
 				exception);
 		}
 

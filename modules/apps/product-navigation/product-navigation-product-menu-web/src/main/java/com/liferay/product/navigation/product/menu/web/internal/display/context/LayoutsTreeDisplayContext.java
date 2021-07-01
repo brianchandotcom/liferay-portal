@@ -534,14 +534,10 @@ public class LayoutsTreeDisplayContext {
 	private JSONArray _getPagesOptionGroupJSONArray() {
 		return JSONUtil.putAll(
 			_getOptionJSONObject(
-				LanguageUtil.get(
-					_themeDisplay.getLocale(),
-					ProductNavigationProductMenuWebKeys.PUBLIC_PAGES_KEY),
+				LanguageUtil.get(_themeDisplay.getLocale(), _PUBLIC_PAGES_KEY),
 				ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT),
 			_getOptionJSONObject(
-				LanguageUtil.get(
-					_themeDisplay.getLocale(),
-					ProductNavigationProductMenuWebKeys.PRIVATE_PAGES_KEY),
+				LanguageUtil.get(_themeDisplay.getLocale(), _PRIVATE_PAGES_KEY),
 				ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT));
 	}
 
@@ -589,8 +585,7 @@ public class LayoutsTreeDisplayContext {
 				ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT)) {
 
 			return LanguageUtil.get(
-				_themeDisplay.getLocale(),
-				ProductNavigationProductMenuWebKeys.PUBLIC_PAGES_KEY);
+				_themeDisplay.getLocale(), _PUBLIC_PAGES_KEY);
 		}
 
 		if (Objects.equals(
@@ -598,8 +593,7 @@ public class LayoutsTreeDisplayContext {
 				ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT)) {
 
 			return LanguageUtil.get(
-				_themeDisplay.getLocale(),
-				ProductNavigationProductMenuWebKeys.PRIVATE_PAGES_KEY);
+				_themeDisplay.getLocale(), _PRIVATE_PAGES_KEY);
 		}
 
 		SiteNavigationMenu siteNavigationMenu =
@@ -833,6 +827,10 @@ public class LayoutsTreeDisplayContext {
 
 		return portletURL.toString();
 	}
+
+	private static final String _PRIVATE_PAGES_KEY = "private-pages";
+
+	private static final String _PUBLIC_PAGES_KEY = "public-pages";
 
 	private static final String _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME =
 		"navigationItemMenuId";

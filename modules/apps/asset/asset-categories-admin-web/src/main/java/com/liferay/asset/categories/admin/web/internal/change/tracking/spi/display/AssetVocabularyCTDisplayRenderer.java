@@ -27,6 +27,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -110,80 +111,78 @@ public class AssetVocabularyCTDisplayRenderer
 		).display(
 			"create-date", assetVocabulary.getCreateDate()
 		).display(
-			"asset-type",
-			() -> {
-				long[] selectedClassNameIds =
-					assetVocabulary.getSelectedClassNameIds();
-				long[] selectedClassTypePKs =
-					assetVocabulary.getSelectedClassTypePKs();
-
-				StringBundler sb = new StringBundler();
-
-				for (int i = 0; i < selectedClassNameIds.length; i++) {
-					long classNameId = selectedClassNameIds[i];
-					long classTypePK = selectedClassTypePKs[i];
-
-					String name = null;
-
-					if (classNameId ==
-							AssetCategoryConstants.ALL_CLASS_NAME_ID) {
-
-						name = LanguageUtil.get(
-							displayBuilder.getLocale(), "all-asset-types");
-					}
-					else if (classTypePK ==
-								AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
-
-						name = ResourceActionsUtil.getModelResource(
-							displayBuilder.getLocale(),
-							_portal.getClassName(classNameId));
-					}
-					else {
-						AssetRendererFactory<?> assetRendererFactory =
-							AssetRendererFactoryRegistryUtil.
-								getAssetRendererFactoryByClassNameId(
-									classNameId);
-
-						ClassTypeReader classTypeReader =
-							assetRendererFactory.getClassTypeReader();
-
-						try {
-							ClassType classType = classTypeReader.getClassType(
-								classTypePK, displayBuilder.getLocale());
-
-							name = classType.getName();
-						}
-						catch (NoSuchModelException noSuchModelException) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(
-									"Unable to get asset type for class type " +
-										"primary key " + classTypePK,
-									noSuchModelException);
-							}
-
-							continue;
-						}
-					}
-
-					sb.append(name);
-
-					if (assetVocabulary.isRequired(classNameId, classTypePK)) {
-						sb.append(StringPool.SPACE);
-						sb.append(StringPool.STAR);
-					}
-
-					sb.append(StringPool.COMMA_AND_SPACE);
-				}
-
-				if (sb.index() > 0) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				return sb.toString();
-			}
+			"asset-type", () -> _getAssetType(displayBuilder, assetVocabulary)
 		).display(
 			"number-of-categories", assetVocabulary.getCategoriesCount()
 		);
+	}
+
+	private String _getAssetType(
+			DisplayBuilder<AssetVocabulary> displayBuilder,
+			AssetVocabulary assetVocabulary)
+		throws PortalException {
+
+		long[] selectedClassNameIds = assetVocabulary.getSelectedClassNameIds();
+		long[] selectedClassTypePKs = assetVocabulary.getSelectedClassTypePKs();
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < selectedClassNameIds.length; i++) {
+			long classNameId = selectedClassNameIds[i];
+			long classTypePK = selectedClassTypePKs[i];
+
+			String name = null;
+
+			if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_ID) {
+				name = LanguageUtil.get(
+					displayBuilder.getLocale(), "all-asset-types");
+			}
+			else if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
+				name = ResourceActionsUtil.getModelResource(
+					displayBuilder.getLocale(),
+					_portal.getClassName(classNameId));
+			}
+			else {
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassNameId(classNameId);
+
+				ClassTypeReader classTypeReader =
+					assetRendererFactory.getClassTypeReader();
+
+				try {
+					ClassType classType = classTypeReader.getClassType(
+						classTypePK, displayBuilder.getLocale());
+
+					name = classType.getName();
+				}
+				catch (NoSuchModelException noSuchModelException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to get asset type for class type primary " +
+								"key " + classTypePK,
+							noSuchModelException);
+					}
+
+					continue;
+				}
+			}
+
+			sb.append(name);
+
+			if (assetVocabulary.isRequired(classNameId, classTypePK)) {
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.STAR);
+			}
+
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

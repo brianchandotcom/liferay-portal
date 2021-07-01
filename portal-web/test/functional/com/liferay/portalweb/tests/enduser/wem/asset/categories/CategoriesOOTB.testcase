@@ -280,7 +280,7 @@ definition {
 
 			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 		}
-		
+
 		task ("Assert if vocabulary visibility can not be changed") {
 			Vocabulary.assertVocabularyVisibilityNonEditable(
 				visibilityType = "Public",
@@ -296,7 +296,7 @@ definition {
 				groupName = "Global",
 				title = "Public Category",
 				vocabularyName = "Topic");
-		
+
 			JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Internal Category",
@@ -310,7 +310,7 @@ definition {
 				categoryName = "Public Category",
 				vocabularyName = "Topic",
 				vocabularyName2 = "Audience");
-			
+
 			Category.assertMoveDifferentVisibilityVocabulary(
 				categoryName = "Internal Category",
 				vocabularyName = "Audience",

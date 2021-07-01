@@ -218,7 +218,7 @@ definition {
 			key_nodeName = "${vocabularyName2}",
 			locator1 = "Treeview#NODE_UNSELECTED",
 			value1 = "${vocabularyName2}");
-		
+
 		Button.clickCancel();
 	}
 

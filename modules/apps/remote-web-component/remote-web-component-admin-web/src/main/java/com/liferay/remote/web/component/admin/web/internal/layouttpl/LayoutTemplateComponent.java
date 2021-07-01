@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
-import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.net.URL;
@@ -99,7 +98,7 @@ public class LayoutTemplateComponent {
 
 		for (LayoutTemplate layoutTemplate : _layoutTemplates) {
 			try {
-				LayoutTemplateLocalServiceUtil.uninstallLayoutTemplate(
+				_layoutTemplateLocalService.uninstallLayoutTemplate(
 					layoutTemplate.getLayoutTemplateId(),
 					layoutTemplate.isStandard());
 			}

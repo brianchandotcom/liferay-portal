@@ -139,7 +139,9 @@ public class RemoteWebComponentPortlet
 							));
 					}
 					else if (v instanceof Collection) {
-						Stream<?> stream = ((Collection<?>)v).stream();
+						Collection<?> collection = (Collection)v;
+
+						Stream<?> stream = collection.stream();
 
 						sb.append(
 							stream.map(

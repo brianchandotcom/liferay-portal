@@ -98,7 +98,8 @@ public class SPAPortletFilter implements RenderFilter {
 								layoutTypePortlet.getLayout(),
 								ActionKeys.UPDATE)) {
 
-							// NO-OP response: do not display portlet BUT make sure it's still called in case it uses
+							// NO-OP response: do not display portlet BUT
+							// make sure it's still called in case it uses
 							// inline header sections approach.
 
 							RenderResponseWrapper renderResponseWrapper =

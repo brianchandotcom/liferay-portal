@@ -55,8 +55,8 @@ public class RemoteWebComponentTopHeadDynamicInclude
 		printWriter.append(_servletContext.getContextPath());
 		printWriter.append("/remote-web-component-admin-web.js?ts=");
 		printWriter.append(LastModified.getString());
-		printWriter.append(
-			"\" type=\"text/javascript\" data-senna-track=\"permanent\"></script>");
+		printWriter.append("\" type=\"text/javascript\"");
+		printWriter.append("data-senna-track=\"permanent\"></script>");
 
 		printWriter.flush();
 	}

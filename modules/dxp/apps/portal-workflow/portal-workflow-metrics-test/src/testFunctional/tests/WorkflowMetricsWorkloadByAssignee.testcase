@@ -837,7 +837,7 @@ definition {
 			key_assigneeName = "Test Test",
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
 
-		for (var userNumber : list "2,3,4,5,6,7,8,9,10") {
+		for (var userNumber : list "2,3,4,5,6,7,8,9") {
 			AssertElementPresent(
 				key_assigneeName = "${userNumber}user user${userNumber}",
 				locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");

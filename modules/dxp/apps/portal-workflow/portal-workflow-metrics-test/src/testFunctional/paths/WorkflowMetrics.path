@@ -481,11 +481,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK</td>
-	<td>//a//span[contains(text(), 'View All Assignees (${key_assigneesNumber})')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PERCENTAGE</td>
 	<td>//span[contains(@class, "task-count-percentage")]</td>
 	<td></td>

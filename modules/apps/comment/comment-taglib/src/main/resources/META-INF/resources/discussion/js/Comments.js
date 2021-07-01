@@ -41,7 +41,9 @@ export default function ({
 	const form = document[`${namespace}${randomNamespace}${formName}`];
 
 	if (messageId) {
-		window[`${randomNamespace}scrollIntoView`](messageId);
+		document
+			.getElementById(`${randomNamespace}messageScroll${messageId}`)
+			.scrollIntoView();
 	}
 
 	const moreCommentsTrigger = document.getElementById(
@@ -183,12 +185,6 @@ export default function ({
 
 			editorInstance.dispose();
 		}
-	};
-
-	window[`${randomNamespace}scrollIntoView`] = function (commentId) {
-		document
-			.getElementById(`${randomNamespace}messageScroll${commentId}`)
-			.scrollIntoView();
 	};
 
 	window[`${namespace}${randomNamespace}sendMessage`] = function (

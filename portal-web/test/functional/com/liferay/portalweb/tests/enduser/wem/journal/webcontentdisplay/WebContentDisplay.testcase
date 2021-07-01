@@ -586,7 +586,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 	@description = "This is a test for LPS-129438. View the changes of Border Styles in WCD on widget page."
 	@priority = "4"
-	test ConfigureLookAndFeelBorderStyleOfWCD {
+	test ConfigureBorderStyles {
 		task ("View the default border width and border color of WCD") {
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display Page",

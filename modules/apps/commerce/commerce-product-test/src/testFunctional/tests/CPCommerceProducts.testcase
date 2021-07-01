@@ -881,6 +881,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
+	@ignore = "true"
 	@priority = "3"
 	test UseFilters {
 		property portal.acceptance = "false";
@@ -1056,114 +1057,15 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
-	
-	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
-	@priority = "3"
-	test UseFilters {
-		property portal.acceptance = "false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		Click(
-			key_categoryFilter = "Category",
-			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
-
-		Check.checkNotVisible(
-			checkboxName = "Brake System",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		Click(
-			key_menuItem = "Add Filter",
-			locator1 = "CommerceEntry#ANY_MENU_ITEM");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		AssertElementNotPresent(
-			key_entryName = "Timing Chain",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-			
-		Button.click(button = "Reset Filters");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
-		Click(
-			key_categoryFilter = "Catalog",
-			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
-
-		Click(
-			key_fieldType = "Master",
-			locator1 = "FormViewBuilder#FIELD_LABEL_MULTIPLE_SELECTION");
-
-		Click(
-			key_menuItem = "Add Filter",
-			locator1 = "CommerceEntry#ANY_MENU_ITEM");
-
-		AssertElementNotPresent(
-			key_entryName = "Hoses",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-
-		Button.click(button = "Reset Filters");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
-		Click(
-			key_categoryFilter = "Channel",
-			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
-
-		Check.checkNotVisible(
-			checkboxName = "Test Channel",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		Click(
-			key_menuItem = "Add Filter",
-			locator1 = "CommerceEntry#ANY_MENU_ITEM");
-
-		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
-
-		Button.click(button = "Reset Filters");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
-		Click(
-			key_categoryFilter = "Product Type",
-			locator1 = "CommerceEntry#FILTER_SELECT_CATEGORY");
-
-		Click(
-			key_fieldType = "Virtual",
-			locator1 = "FormViewBuilder#FIELD_LABEL_MULTIPLE_SELECTION");
-
-		Click(
-			key_menuItem = "Add Filter",
-			locator1 = "CommerceEntry#ANY_MENU_ITEM");
-
-		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
-
-		Button.click(button = "Reset Filters");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-
-		Click(locator1 = "CommerceEntry#FILTER_BACK_ARROW");
-
-		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
-	}
 
 	@description = "This is a test for COMMERCE-5805. UseSearchBarAndPagination"
+	@ignore = "true"
 	@priority = "3"
 	test UseSearchBarAndPagination {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#UseSearchBarAndPagination";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

@@ -119,11 +119,17 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6210 CancelShipmentAndCreateNewFromPendingOrder Pending Implementation
+
 	}
 
+	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
+	@ignore = "true"
+	@priority = "3"
 	test DeactivateCurrency {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceOrders#DeactivateCurrency";
+
+		// TODO Review
 
 		var currencyName = "British Pound";
 		var currencyAbbreviation = "GBP";
@@ -917,10 +923,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"
+	@ignore = "true"
 	@priority = "3"
 	test SortOrdersByOrderDate {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceOrders#SortOrdersByOrderDate";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -977,10 +986,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
+	@ignore = "true"
 	@priority = "3"
 	test ViewOrderSKU {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceOrders#ViewOrderSKU";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1011,7 +1023,7 @@ definition {
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "View Details");
-		
+
 		Button.click(button = "Checkout");
 
 		Pause(locator1 = "3000");

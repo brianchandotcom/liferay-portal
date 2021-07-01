@@ -90,9 +90,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5842. As a system administrator I want currencies to be sorted by priority"
+	@ignore = "true"
 	@priority = "3"
 	test SortCurrenciesByPriority {
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceCurrencies#SortCurrenciesByPriority";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

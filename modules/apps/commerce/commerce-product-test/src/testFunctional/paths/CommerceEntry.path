@@ -764,12 +764,12 @@
 <tr>
 	<td>FIRST_CURRENCY_ELEMENT</td>
 	<td>//tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_entryName}')] | //a[@id='_com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet_commerceCurrencies_1_menu']</td>
-    <td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>LAST_CURRENCY_ELEMENT</td>
 	<td>//tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_entryName}')] | //a[@id='_com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet_commerceCurrencies_10_menu']</td>
-    <td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>ON_ORDER_QUANTITY</td>

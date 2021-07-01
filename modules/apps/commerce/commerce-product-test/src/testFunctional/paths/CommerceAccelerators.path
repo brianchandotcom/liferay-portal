@@ -20,10 +20,10 @@
 	<td>//div[contains(.,'${key_memberEmailAddress}')]/../div[contains(@class,'item-actions')]//button</td>
 	<td></td>
 </tr>
- <tr>
-    <td>ACCOUNT_ORDER_NAME</td>
-    <td>xpath=(//div[contains(@class,'dnd-td') and contains(text(),'${accountName}')])[1]</td>
-    <td></td>
+<tr>
+	<td>ACCOUNT_ORDER_NAME</td>
+	<td>xpath=(//div[contains(@class,'dnd-td') and contains(text(),'${accountName}')])[1]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ACCOUNT_MANAGEMENT_INPUT_TELEPHONE</td>

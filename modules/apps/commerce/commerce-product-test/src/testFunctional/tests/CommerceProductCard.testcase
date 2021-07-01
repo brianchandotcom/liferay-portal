@@ -52,10 +52,13 @@ definition {
 	}
 
 	@description = "COMMERCE-5859. As a buyer, I want to view the product price with the default channel currency"
+	@ignore = "true"
 	@priority = "3"
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductCard#AssertDefaultChannelCurrencyIsAppliedToProductCard";
+
+		// TODO Review
 
 		var currencyName = "US Dollar";
 
@@ -529,10 +532,13 @@ definition {
 	}
 
 	@description = "COMMERCE-5860. As a buyer, I want to change the channel currency and view the product price with the changed currency"
+	@ignore = "true"
 	@priority = "3"
 	test AssertProductCardCurrencyAfterChannelCurrencyChanged {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductCard#AssertProductCardCurrencyAfterChannelCurrencyChanged";
+
+		// TODO Review
 
 		var currencyName = "Euro";
 
@@ -1182,10 +1188,13 @@ definition {
 	}
 
 	@description = "COMMERCE-5864. As a buyer, I want to view the product price"
+	@ignore = "true"
 	@priority = "3"
 	test ViewProductCardPrice {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductCard#ViewProductCardPrice";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1263,19 +1272,21 @@ definition {
 	}
 
 	@description = "COMMERCE-5862. As a buyer, I want to view the product SKU, if set(single SKU)"
+	@ignore = "true"
 	@priority = "3"
 	test ViewProductCardSKU {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductCard#ViewProductCardSKU";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		AssertElementPresent(
-			key_productSKU = "MIN55861",
 			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_SKU"
-		);
+			key_productSKU = "MIN55861",
+			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 	}
 
 	@description = "COMMERCE-5865. As a buyer, I want to view starting price on product card when product has different SKUs with different prices"

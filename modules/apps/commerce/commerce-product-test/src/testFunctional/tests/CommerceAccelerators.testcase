@@ -151,6 +151,42 @@ definition {
 			value1 = "Success! Your order has been processed.");
 	}
 
+	@description = "This is a test for COMMERCE-5530. AssertPromoProductPriceTotalIsDifferent"
+	@ignore = "true"
+	@priority = "3"
+	test AssertPromoProductPriceTotalIsDifferent {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CommerceAccelerators#AssertPromoProductPriceTotalIsDifferent";
+
+		// TODO Review
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		Pagination.changePagination(itemsPerPage = "60");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Brake Pads",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Click(locator1 = "//a[contains(text(),'View')]");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
+			value1 = "$ 18.90");
+	}
+
 	@description = "This is a test for COMMERCE-4958."
 	test CheckoutWithOneShippingOption {
 		property portal.acceptance = "true";

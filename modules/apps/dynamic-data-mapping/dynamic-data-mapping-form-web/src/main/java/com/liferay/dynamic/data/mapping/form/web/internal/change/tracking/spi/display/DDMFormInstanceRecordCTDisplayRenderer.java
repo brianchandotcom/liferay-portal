@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.HTMLTag;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -35,10 +36,13 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -177,7 +181,16 @@ public class DDMFormInstanceRecordCTDisplayRenderer
 				return null;
 			}
 		).display(
-			"status", ddmFormInstanceRecord::getStatus
+			"status",
+			() -> {
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					displayBuilder.getLocale(), getClass());
+
+				return _language.get(
+					resourceBundle,
+					WorkflowConstants.getStatusLabel(
+						ddmFormInstanceRecord.getStatus()));
+			}
 		).display(
 			"version", ddmFormInstanceRecord.getVersion()
 		);
@@ -191,6 +204,9 @@ public class DDMFormInstanceRecordCTDisplayRenderer
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

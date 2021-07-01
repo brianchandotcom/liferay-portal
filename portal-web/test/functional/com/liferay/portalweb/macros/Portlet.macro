@@ -174,11 +174,11 @@ definition {
 	macro configureCustomBorderStylesViaLookAnfeelPG {
 		Navigator.gotoNavTab(navTab = "Border Styles");
 
-		if (isSet(sameForAllList)) {
-			for (var fieldsetLabel : list "${sameForAllList}") {
+		if (isSet(sameForAllFieldsetLabelList)) {
+			for (var sameForAllFieldsetLabel : list "${sameForAllFieldsetLabelList}") {
 				Check.checkToggleSwitch(
 					key_fieldLabel = "Same for All",
-					key_fieldsetLabel = "${fieldsetLabel}",
+					key_fieldsetLabel = "${sameForAllFieldsetLabel}",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
 			}
 		}
@@ -197,10 +197,10 @@ definition {
 		}
 
 		if (isSet(borderWidthUnitList)) {
-			for (var borderWidthSelect : list "${borderWidthUnitList}") {
-				var fieldLabel = StringUtil.extractFirst("${borderWidthSelect}", "-");
+			for (var borderWidthUnit : list "${borderWidthUnitList}") {
+				var fieldLabel = StringUtil.extractFirst("${borderWidthUnit}", "-");
 
-				var value = StringUtil.extractLast("${borderWidthSelect}", "-");
+				var value = StringUtil.extractLast("${borderWidthUnit}", "-");
 
 				Select(
 					key_fieldName = "${fieldLabel}",

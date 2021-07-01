@@ -348,6 +348,32 @@ definition {
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.sharing.internal.configuration.SharingSystemConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
+	macro openToEditWCEntry {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${depotName}", site = "false");
+
+		var articleId = JSONWebcontentSetter.setArticleId(
+			groupName = "${depotName}",
+			site = "false",
+			title = "${webContentTitle}");
+
+		if (isSet(folderName)) {
+			var folderId = JSONWebcontentSetter.setFolderId(
+				folderName = "${folderName}",
+				groupId = "${groupId}");
+		}
+		else {
+			var folderId = "0";
+		}
+
+		if (!(isSet(version))) {
+			version = "1.0";
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=http%3A%2F%2Flocalhost%3A8080%2Fgroup%2Fasset-library-${depotId}%2F%7E%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26p_p_auth%3DYarzxifn&_com_liferay_journal_web_portlet_JournalPortlet_articleId=${articleId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}&_com_liferay_journal_web_portlet_JournalPortlet_referringPortletResource=&_com_liferay_journal_web_portlet_JournalPortlet_version=${version}");
+	}
+
 	macro switchStagingStatus {
 		Click(locator1 = "Button#STAGING_INDICATOR");
 

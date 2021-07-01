@@ -114,12 +114,24 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to User"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToUser {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68294 CanAssignWorkflowToUser pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "User");
+
+		VerifyVisible(locator1 = "Message#SUCCESS");
+
+		AssertElementPresent(
+			key_message = "Workflow assigned to User",
+			locator1 = "ProcessBuilderListView#SUCCESS_MESSAGE_POPUP");
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Web Content Article"

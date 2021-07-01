@@ -14,99 +14,103 @@
 
 import {useMemo, useReducer} from 'react';
 
-import type {ImpactValue} from 'axe-core';
-
-import type {NodeViolations, Violations} from './useA11y';
+import type {NodeViolations, RuleRaw, Violations} from './useA11y';
 
 export const TYPES = {
-	CATEGORY_ADD: 'CATEGORY_ADD',
-	CATEGORY_REMOVE: 'CATEGORY_REMOVE',
-	IMPACT_ADD: 'IMPACT_ADD',
-	IMPACT_REMOVE: 'IMPACT_REMOVE',
+	ADD_FILTER: 'ADD_FILTER',
+	REMOVE_FILTER: 'REMOVE_FILTER',
 } as const;
 
 type TAction = {
-	payload: {value: string};
+	payload: {key: keyof RuleRaw; value: string};
 	type: keyof typeof TYPES;
 };
 
 type TState = {
-	selectedCategories: Array<string> | [];
-	selectedImpact: Array<ImpactValue>;
+	filters: Record<keyof RuleRaw, Array<string>>;
 };
 
-const initialState: TState = {
-	selectedCategories: [],
-	selectedImpact: [],
-};
+const initialState = {
+	filters: {},
+} as TState;
 
 function reducer(state: TState, action: TAction) {
-	const {selectedCategories, selectedImpact} = state;
-
-	const {value} = action.payload;
+	const {key, value} = action.payload;
 
 	switch (action.type) {
-		case TYPES.CATEGORY_ADD:
+		case TYPES.ADD_FILTER:
 			return {
 				...state,
-				selectedCategories: [...selectedCategories, value],
+				filters: {
+					...state.filters,
+					[key]: [...(state.filters[key] ?? []), value],
+				},
 			};
-		case TYPES.CATEGORY_REMOVE:
+		case TYPES.REMOVE_FILTER: {
+			const values = state.filters[key].filter((item) => item !== value);
+
+			const filters = {...state.filters};
+
+			if (values.length) {
+				filters[key] = values;
+			}
+			else {
+				delete filters[key];
+			}
+
 			return {
 				...state,
-				selectedCategories: selectedCategories.filter(
-					(currentItem) => currentItem !== value
-				),
+				filters,
 			};
-		case TYPES.IMPACT_ADD:
-			return {
-				...state,
-				selectedImpact: [...selectedImpact, value] as ImpactValue[],
-			};
-		case TYPES.IMPACT_REMOVE:
-			return {
-				...state,
-				selectedImpact: selectedImpact.filter(
-					(currentItem) => currentItem !== value
-				) as ImpactValue[],
-			};
+		}
 		default:
 			return state;
 	}
 }
 
 export function useFilterViolations(value: Violations) {
-	const [{selectedCategories, selectedImpact}, dispatch] = useReducer(
-		reducer,
-		initialState
-	);
+	const [{filters}, dispatch] = useReducer(reducer, initialState);
 
 	const rules = useMemo(() => {
-		if (!selectedCategories.length && !selectedImpact.length) {
+		if (!Object.keys(filters).length) {
 			return value.rules;
 		}
 
-		return Object.values(value.rules).reduce(
-			(prev, {impact, tags, ...otherProps}) => {
-				const hasCategory = selectedCategories.some((category) =>
-					tags.includes(category)
-				);
-
-				if (
-					hasCategory ||
-					(impact && selectedImpact.includes(impact))
-				) {
-					prev[otherProps.id] = {impact, tags, ...otherProps};
+		return Object.values(value.rules).reduce((prev, props) => {
+			const isVisible = (Object.keys(filters) as Array<
+				keyof RuleRaw
+			>).some((key) => {
+				switch (typeof props[key]) {
+					case 'string':
+						return filters[key].includes(props[key] as string);
+					case 'object':
+						return (props[key] as Array<string>).some((value) =>
+							filters[key].includes(value)
+						);
+					default:
+						return false;
 				}
+			});
 
-				return prev;
-			},
-			{} as Violations['rules']
-		);
-	}, [selectedCategories, selectedImpact, value]);
+			if (isVisible) {
+				const nodes = filters.nodes
+					? props.nodes.filter((node) =>
+							filters.nodes?.includes(node)
+					  )
+					: props.nodes;
+
+				prev[props.id] = {
+					...props,
+					nodes,
+				};
+			}
+
+			return prev;
+		}, {} as Violations['rules']);
+	}, [filters, value]);
 
 	const nodes = useMemo(() => {
-		if (!selectedCategories.length && !selectedImpact.length) {
+		if (!Object.keys(filters).length) {
 			return value.nodes;
 		}
 
@@ -120,7 +124,10 @@ export function useFilterViolations(value: Violations) {
 				(prevResults, results, index) => {
 					const ruleId = rulesIds[index];
 
-					if (rules[ruleId]) {
+					if (
+						rules[ruleId] &&
+						rules[ruleId].nodes.includes(property)
+					) {
 						prevResults[ruleId] = results;
 					}
 
@@ -135,10 +142,7 @@ export function useFilterViolations(value: Violations) {
 		}
 
 		return newNodes;
-	}, [selectedCategories, selectedImpact, rules, value.nodes]);
+	}, [filters, rules, value.nodes]);
 
-	return [
-		{selectedCategories, selectedImpact, violations: {nodes, rules}},
-		dispatch,
-	] as const;
+	return [{filters, violations: {nodes, rules}}, dispatch] as const;
 }

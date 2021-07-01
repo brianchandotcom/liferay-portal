@@ -31,8 +31,8 @@ const Panel = () => {
 		<div className="a11y-panel__sidebar sidebar sidebar-light">
 			<StackNavigator>
 				<Violations
-					onFilterChange={(type, value) =>
-						dispatch({payload: {value}, type})
+					onFilterChange={(type, payload) =>
+						dispatch({payload, type})
 					}
 					{...state}
 				/>

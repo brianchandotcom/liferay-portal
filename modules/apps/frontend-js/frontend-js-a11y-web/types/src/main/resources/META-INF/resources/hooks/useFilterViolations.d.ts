@@ -14,16 +14,14 @@
 
 /// <reference types="react" />
 
-import type {ImpactValue} from 'axe-core';
-import type {NodeViolations, Violations} from './useA11y';
+import type {NodeViolations, RuleRaw, Violations} from './useA11y';
 export declare const TYPES: {
-	readonly CATEGORY_ADD: 'CATEGORY_ADD';
-	readonly CATEGORY_REMOVE: 'CATEGORY_REMOVE';
-	readonly IMPACT_ADD: 'IMPACT_ADD';
-	readonly IMPACT_REMOVE: 'IMPACT_REMOVE';
+	readonly ADD_FILTER: 'ADD_FILTER';
+	readonly REMOVE_FILTER: 'REMOVE_FILTER';
 };
 declare type TAction = {
 	payload: {
+		key: keyof RuleRaw;
 		value: string;
 	};
 	type: keyof typeof TYPES;
@@ -32,11 +30,10 @@ export declare function useFilterViolations(
 	value: Violations
 ): readonly [
 	{
-		readonly selectedCategories: string[] | [];
-		readonly selectedImpact: ImpactValue[];
+		readonly filters: Record<keyof RuleRaw, string[]>;
 		readonly violations: {
 			readonly nodes: Record<string, NodeViolations>;
-			readonly rules: Record<string, import('./useA11y').RuleRaw>;
+			readonly rules: Record<string, RuleRaw>;
 		};
 	},
 	import('react').Dispatch<TAction>

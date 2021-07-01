@@ -16,23 +16,27 @@
 
 import './Violations.scss';
 import {TYPES} from '../hooks/useFilterViolations';
-import type {ImpactValue} from 'axe-core';
-import type {Violations} from '../hooks/useA11y';
+import type {RuleRaw, Violations} from '../hooks/useA11y';
 declare type TViolationNext = {
 	ruleId: string;
 };
+declare type onFilterChange = (
+	type: keyof typeof TYPES,
+	payload: {
+		value: string;
+		key: keyof RuleRaw;
+	}
+) => void;
 declare type ViolationsPanelProps = {
+	filters: Record<keyof RuleRaw, Array<string>>;
 	next?: (payload: TViolationNext) => void;
-	onFilterChange: (type: keyof typeof TYPES, value: string) => void;
-	selectedCategories: Array<String>;
-	selectedImpact: Array<ImpactValue>;
+	onFilterChange: onFilterChange;
 	violations: Violations;
 };
 export default function ViolationsPanel({
+	filters,
 	next,
 	onFilterChange,
-	selectedCategories,
-	selectedImpact,
 	violations,
 }: ViolationsPanelProps): JSX.Element;
 export {};

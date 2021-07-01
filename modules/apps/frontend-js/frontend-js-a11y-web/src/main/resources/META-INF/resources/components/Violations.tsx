@@ -88,16 +88,20 @@ type TViolationNext = {
 	ruleId: string;
 };
 
+type onFilterChange = (
+	type: keyof typeof TYPES,
+	payload: {value: string; key: keyof RuleRaw}
+) => void;
+
 type ViolationsPanelProps = {
+	filters: Record<keyof RuleRaw, Array<string>>;
 	next?: (payload: TViolationNext) => void;
-	onFilterChange: (type: keyof typeof TYPES, value: string) => void;
-	selectedCategories: Array<String>;
-	selectedImpact: Array<ImpactValue>;
+	onFilterChange: onFilterChange;
 	violations: Violations;
 };
 
 const getItems = (
-	onChange: (type: keyof typeof TYPES, value: string) => void,
+	onChange: onFilterChange,
 	getChecked: (value: string) => boolean
 ) => {
 	return [
@@ -109,8 +113,8 @@ const getItems = (
 					label,
 					onChange: (checked: boolean) =>
 						onChange(
-							checked ? TYPES.IMPACT_ADD : TYPES.IMPACT_REMOVE,
-							value
+							checked ? TYPES.ADD_FILTER : TYPES.REMOVE_FILTER,
+							{key: 'impact', value}
 						),
 					type: 'checkbox' as const,
 				})
@@ -126,10 +130,8 @@ const getItems = (
 					label,
 					onChange: (checked: boolean) =>
 						onChange(
-							checked
-								? TYPES.CATEGORY_ADD
-								: TYPES.CATEGORY_REMOVE,
-							value
+							checked ? TYPES.ADD_FILTER : TYPES.REMOVE_FILTER,
+							{key: 'tags', value}
 						),
 					type: 'checkbox' as const,
 				})
@@ -141,10 +143,9 @@ const getItems = (
 };
 
 export default function ViolationsPanel({
+	filters,
 	next,
 	onFilterChange,
-	selectedCategories,
-	selectedImpact,
 	violations,
 }: ViolationsPanelProps) {
 	const rules = sortByImpact(Object.values(violations.rules));
@@ -172,9 +173,8 @@ export default function ViolationsPanel({
 							items={getItems(
 								onFilterChange,
 								(value) =>
-									selectedImpact.includes(
-										value as ImpactValue
-									) || selectedCategories.includes(value)
+									filters.impact?.includes(value) ||
+									filters.tags?.includes(value)
 							)}
 							menuElementAttrs={{className: 'a11y-dropdown'}}
 							trigger={

@@ -143,7 +143,9 @@ public class AssetVocabularyCTDisplayRenderer
 							(ThemeDisplay)httpServletRequest.getAttribute(
 								WebKeys.THEME_DISPLAY);
 
-						if (classTypePK != -1) {
+						if (classTypePK !=
+								AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
+
 							AssetRendererFactory<?> assetRendererFactory =
 								AssetRendererFactoryRegistryUtil.
 									getAssetRendererFactoryByClassNameId(

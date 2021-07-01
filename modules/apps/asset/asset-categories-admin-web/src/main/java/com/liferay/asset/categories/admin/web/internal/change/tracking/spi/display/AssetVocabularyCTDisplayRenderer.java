@@ -125,9 +125,13 @@ public class AssetVocabularyCTDisplayRenderer
 
 					String name = null;
 
-					if (classNameId !=
+					if (classNameId ==
 							AssetCategoryConstants.ALL_CLASS_NAME_ID) {
 
+						name = LanguageUtil.get(
+							displayBuilder.getLocale(), "all-asset-types");
+					}
+					else {
 						if (classTypePK ==
 								AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
 
@@ -163,10 +167,6 @@ public class AssetVocabularyCTDisplayRenderer
 								continue;
 							}
 						}
-					}
-					else {
-						name = LanguageUtil.get(
-							displayBuilder.getLocale(), "all-asset-types");
 					}
 
 					sb.append(name);

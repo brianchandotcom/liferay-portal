@@ -207,6 +207,21 @@ definition {
 		AssertLocation(value1 = "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html");
 	}
 
+	macro assertMoveDifferentVisibilityVocabulary {
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Move",
+			rowEntry = "${categoryName}");
+
+		AssertElementNotPresent(
+			key_nodeName = "${vocabularyName2}",
+			locator1 = "Treeview#NODE_UNSELECTED",
+			value1 = "${vocabularyName2}");
+		
+		Button.clickCancel();
+	}
+
 	macro deleteByIconCP {
 		var key_categoryName = "${categoryName}";
 

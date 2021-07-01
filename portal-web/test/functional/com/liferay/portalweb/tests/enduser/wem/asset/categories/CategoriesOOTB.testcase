@@ -125,6 +125,35 @@ definition {
 		}
 	}
 
+	@description = "LPS-134875 Internal categories are not shown in facets and result in a public context."
+	@priority = "5"
+	test CheckInternalCategoriesInFacets {
+		property portal.acceptance = "true";
+
+		task ("Create internal categories") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Internal Category",
+				vocabularyName = "Audience");
+		}
+
+		task ("Add WC with internal category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Guest",
+				title = "Web Content Title");
+		}
+
+		task ("Search for Web Content and Assert") {
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "Internal Category");
+
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "Internal Category");
+		}
+	}
+
 	@description = "LPS-134682 If categories are marked as internal, won't show in Categories Navigation widget."
 	@priority = "3"
 	test CheckInternalCategoriesWidgetAssetsCategorization {
@@ -164,7 +193,7 @@ definition {
 				value1 = "Audience Category");
 		}
 	}
-
+	
 	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Content Dashboard"
 	@priority = "3"
 	test CheckLearnHowLinkNotDisplayedContentDashboard {
@@ -209,6 +238,83 @@ definition {
 			WebContentNavigator.gotoAddCP();
 
 			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
+		}
+	}
+
+	@description = "LPS-134875 Public categories are shown in facets and result in a public context."
+	@priority = "4"
+	test CheckPublicCategoriesInFacets {
+		property portal.acceptance = "true";
+
+		task ("Create public categories") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Public Category",
+				vocabularyName = "Topic");
+		}
+
+		task ("Add WC with public category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content With Category",
+				groupName = "Guest",
+				title = "Web Content Title");
+		}
+
+		task ("Search for Web Content and Assert") {
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "Internal Category");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Web Content Title",
+				searchAssetType = "Web Content Article");
+		}
+	}
+
+	@description = "LPS-134875 Visibility is not editable for vocabularies"
+	@priority = "4"
+	test CheckVocabularyVisibilityNotEditable {
+		task ("Add a vocabulary disallow multiple categories") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		}
+		
+		task ("Assert if vocabulary visibility can not be changed") {
+			Vocabulary.assertVocabularyVisibilityNonEditable(
+				visibilityType = "Public",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
+	@description = "LPS-134875 Categories can only be moved to vocabularies with the same visibility"
+	@priority = "4"
+	test MoveCategoryBetweenDifferentVisibility {
+		task ("Create categories in public and internal vocabularies") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Public Category",
+				vocabularyName = "Topic");
+		
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Internal Category",
+				vocabularyName = "Audience");
+		}
+
+		task ("Try to move category between vocabularies with differente visibility") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			Category.assertMoveDifferentVisibilityVocabulary(
+				categoryName = "Public Category",
+				vocabularyName = "Topic",
+				vocabularyName2 = "Audience");
+			
+			Category.assertMoveDifferentVisibilityVocabulary(
+				categoryName = "Internal Category",
+				vocabularyName = "Audience",
+				vocabularyName2 = "Topic");
 		}
 	}
 

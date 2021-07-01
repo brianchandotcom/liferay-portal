@@ -152,6 +152,11 @@
 	<td>//a[contains(text(), 'Learn how')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VOCABULARY_VISIBILITY_DISABLED</td>
+	<td>//div[@class='radio']/label[@class=' disabled' and contains(., '${key_visibilityType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

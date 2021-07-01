@@ -131,6 +131,18 @@ definition {
 			value1 = "${vocabularyName}");
 	}
 
+	macro assertVocabularyVisibilityNonEditable {
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		AssertElementPresent(
+			key_visibilityType = "${visibilityType}",
+			locator1 = "Categories#VOCABULARY_VISIBILITY_DISABLED");
+
+		Button.clickCancel();
+	}
+
 	macro deleteAssociatedAssetTypeViaVocabularyCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
@@ -331,6 +343,16 @@ definition {
 		}
 
 		SelectFrameTop(value1 = "relative=top");
+	}
+
+	macro viewVocabularyVisibilityEdit {
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "Categories#VOCABULARY_EDIT_CHECKBOX");
+
+		Button.clickCancel();
 	}
 
 	macro viewWithAssociatedAssetTypeCP {

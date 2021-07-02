@@ -267,12 +267,22 @@ definition {
 	}
 
 	@description = "Verify that the user can select Permissions option in the kebab for a particular definition"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSelectPermissions {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68334 CanSelectPermissions pending implementation
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Single Approver");
 
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Permissions");
+
+		AssertElementPresent(
+			locator1 = "Modal#HEADER",
+			value1 = "Permissions");
 	}
 
 	@description = "Verify that the user can select Unpublish option in the kebab menu for a particular definition"

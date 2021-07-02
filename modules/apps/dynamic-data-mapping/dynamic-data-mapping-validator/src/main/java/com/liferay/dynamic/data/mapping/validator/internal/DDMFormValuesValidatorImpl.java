@@ -127,6 +127,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 							ddmFormFieldValidationExpression.getValue(),
 							"{parameter}",
 							parameterLocalizedValue.getString(locale))
+					).withDDMExpressionDateValidation(
+						StringUtil.equals(dataType, FieldConstants.DATE)
 					).build());
 			}
 			else {

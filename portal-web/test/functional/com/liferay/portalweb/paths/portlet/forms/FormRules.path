@@ -57,14 +57,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>RULE_BUILDER_CANCEL_BUTTON</td>
-    <td>//div[contains(@class,'form-rule-builder-footer')]//button[contains(@class,'btn-secondary')]</td>
-    <td></td>
+	<td>RULE_BUILDER_CANCEL_BUTTON</td>
+	<td>//div[contains(@class,'form-rule-builder-footer')]//button[contains(@class,'btn-secondary')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>RULE_BUILDER_CONDITION_VALUE_FIELD</td>
-    <td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'option-selected')]</td>
-    <td></td>
+	<td>RULE_BUILDER_CONDITION_VALUE_FIELD</td>
+	<td>//ul[contains(@class, 'timeline')][1]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_conditionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_fieldColumnNumber}]//div[contains(@class,'option-selected')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD</td>

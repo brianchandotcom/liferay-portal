@@ -5,8 +5,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.3.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_3_0.xsd"
 >
-	<name>12 transitions</name>
-	<description>12 transitions definition</description>
+	<name>12 Transitions</name>
+	<description>12 transitions definition.</description>
 	<version>1</version>
 	<state>
 		<name>created</name>

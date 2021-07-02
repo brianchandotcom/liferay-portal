@@ -14,6 +14,7 @@
 
 package com.liferay.portal.webserver;
 
+import com.liferay.document.library.kernel.exception.FileEntryExpiredException;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
@@ -65,6 +66,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
@@ -427,20 +430,25 @@ public class WebServerServlet extends HttpServlet {
 		return null;
 	}
 
-	protected FileEntry getFileEntry(String[] pathArray) throws Exception {
+	protected FileEntry getFileEntry(
+			String[] pathArray, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		FileEntry fileEntry;
+
 		if (pathArray.length == 1) {
 			long fileShortcutId = GetterUtil.getLong(pathArray[0]);
 
 			FileShortcut dlFileShortcut = DLAppServiceUtil.getFileShortcut(
 				fileShortcutId);
 
-			return DLAppServiceUtil.getFileEntry(
+			fileEntry = DLAppServiceUtil.getFileEntry(
 				dlFileShortcut.getToFileEntryId());
 		}
 		else if (pathArray.length == 2) {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 
-			return DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+			fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
 				pathArray[1], groupId);
 		}
 		else if (pathArray.length == 3) {
@@ -455,7 +463,7 @@ public class WebServerServlet extends HttpServlet {
 			}
 
 			try {
-				return DLAppServiceUtil.getFileEntryByFileName(
+				fileEntry = DLAppServiceUtil.getFileEntryByFileName(
 					groupId, folderId, fileName);
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
@@ -464,7 +472,7 @@ public class WebServerServlet extends HttpServlet {
 						noSuchFileEntryException, noSuchFileEntryException);
 				}
 
-				return DLAppServiceUtil.getFileEntry(
+				fileEntry = DLAppServiceUtil.getFileEntry(
 					groupId, folderId, fileName);
 			}
 		}
@@ -473,8 +481,34 @@ public class WebServerServlet extends HttpServlet {
 
 			String uuid = pathArray[3];
 
-			return DLAppServiceUtil.getFileEntryByUuidAndGroupId(uuid, groupId);
+			fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
 		}
+
+		if (fileEntry != null) {
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			if (fileVersion.isExpired() &&
+				!ModelResourcePermissionUtil.contains(
+					_fileEntryModelResourcePermission,
+					_getPermissionChecker(httpServletRequest),
+					fileEntry.getGroupId(), fileEntry.getFileEntryId(),
+					ActionKeys.UPDATE)) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"The file ", fileEntry.getFileEntryId(),
+							" is expired, only users with EDIT permissions ",
+							"can access to it."));
+				}
+
+				throw new FileEntryExpiredException(
+					"The file " + fileEntry.getFileEntryId() + "is expired");
+			}
+		}
+
+		return fileEntry;
 	}
 
 	protected Image getImage(
@@ -727,7 +761,7 @@ public class WebServerServlet extends HttpServlet {
 				FileEntry fileEntry = null;
 
 				try {
-					fileEntry = getFileEntry(pathArray);
+					fileEntry = getFileEntry(pathArray, httpServletRequest);
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
@@ -996,7 +1030,7 @@ public class WebServerServlet extends HttpServlet {
 
 		// Retrieve file details
 
-		FileEntry fileEntry = getFileEntry(pathArray);
+		FileEntry fileEntry = getFileEntry(pathArray, httpServletRequest);
 
 		if (_processCompanyInactiveRequest(
 				httpServletRequest, httpServletResponse,
@@ -1505,7 +1539,7 @@ public class WebServerServlet extends HttpServlet {
 
 			// Check for sendFile
 
-			FileEntry fileEntry = getFileEntry(pathArray);
+			FileEntry fileEntry = getFileEntry(pathArray, httpServletRequest);
 
 			String portletId = _getPortletId(fileEntry, httpServletRequest);
 
@@ -1673,6 +1707,12 @@ public class WebServerServlet extends HttpServlet {
 
 	private static final Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
 		PropsValues.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
+	private static volatile ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, WebServerServlet.class,
+				"_fileEntryModelResourcePermission",
+				"(model.class.name=" + FileEntry.class.getName() + ")", true);
 	private static volatile InactiveRequestHandler _inactiveRequestHandler =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, WebServerServlet.class,

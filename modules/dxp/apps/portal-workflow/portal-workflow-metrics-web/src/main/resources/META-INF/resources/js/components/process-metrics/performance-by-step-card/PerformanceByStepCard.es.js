@@ -22,7 +22,7 @@ import TimeRangeFilter from '../../filter/TimeRangeFilter.es';
 import {getTimeRangeParams} from '../../filter/util/timeRangeUtil.es';
 import {Body, Footer} from './PerformanceByStepCardBody.es';
 
-function Header({disableFilters, prefixKey, processId, totalCount}) {
+function Header({disableFilters, prefixKey, processId}) {
 	return (
 		<PanelHeaderWithOptions
 			className="tabs-panel-header"
@@ -34,7 +34,7 @@ function Header({disableFilters, prefixKey, processId, totalCount}) {
 			<ClayLayout.ContentCol className="m-0 management-bar management-bar-light navbar">
 				<div className="navbar-nav">
 					<ProcessVersionFilter
-						disabled={!totalCount || disableFilters}
+						disabled={disableFilters}
 						options={{
 							hideControl: true,
 							multiple: false,
@@ -46,7 +46,7 @@ function Header({disableFilters, prefixKey, processId, totalCount}) {
 
 					<TimeRangeFilter
 						className="pl-3"
-						disabled={!totalCount || disableFilters}
+						disabled={disableFilters}
 						prefixKey={prefixKey}
 					/>
 				</div>

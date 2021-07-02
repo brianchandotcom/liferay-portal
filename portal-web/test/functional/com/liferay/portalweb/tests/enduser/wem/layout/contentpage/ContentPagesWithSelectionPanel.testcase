@@ -618,6 +618,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122396. The details of mapped assets are shown in Mapping panel."
+	@priority = "5"
+	test ViewDetailsOfMappedAssetsInMappingPanel {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Map the Title of web content to editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("View the details of mapped web content in Mapping panel") {
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+				value1 = "Type:Web Content Article");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
+				value1 = "Subtype:Basic Web Content");
+		}
+
+		task ("Add a Collection Display below the Button") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				targetFragmentName = "Button");
+		}
+
+		task ("Select the Highest Rated Assets in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Add a Heading fragment to the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title",
+				fragmentName = "Heading");
+		}
+
+		task ("View the details of mapped collection provider in Mapping panel") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+				value1 = "Type:Asset");
+		}
+	}
+
 	@description = "This is a test for LPS-121626. The elements information of Slider is organized in Selection panel."
 	@priority = "5"
 	test ViewElementInfoOrderOfSliderInSelectionPanel {

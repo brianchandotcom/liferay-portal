@@ -22,6 +22,38 @@ definition {
 		}
 	}
 
+	@description = "This test deletes an account group."
+	@priority = "4"
+	test CanDeleteAnAccountGroup {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.addCP(
+			accountGroupDescription = "This is an Account Group to make search field works.",
+			accountGroupName = "Search AG");
+
+		Navigator.gotoBack();
+
+		AccountGroups.addCP(
+			accountGroupDescription = "This is an Account Group for delete testing.",
+			accountGroupName = "Delete AG");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		LexiconEntry.viewEntryName(rowEntry = "Delete AG");
+
+		LexiconEntry.delete(rowEntry = "Delete AG");
+
+		Search.searchCP(searchTerm = "Delete");
+
+		AccountGroups.viewDefault(tabName = "Account Groups");
+	}
+
 	@description = "This test assigns an account to Account Group"
 	@priority = "4"
 	test CanManuallyAssignAccountToGroup {
@@ -128,38 +160,6 @@ definition {
 			accountGroupAccount = "5",
 			accountGroupDescription = "This is an Account Group with multiple accounts.",
 			accountGroupName = "Multiple Accounts AG");
-	}
-
-	@description = "This test deletes an account group."
-	@priority = "4"
-	test CanDeleteAnAccountGroup {
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
-
-		AccountGroups.addCP(
-			accountGroupDescription = "This is an Account Group to make search field works.",
-			accountGroupName = "Search AG");
-
-		Navigator.gotoBack();
-
-		AccountGroups.addCP(
-			accountGroupDescription = "This is an Account Group for delete testing.",
-			accountGroupName = "Delete AG");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
-
-		LexiconEntry.viewEntryName(rowEntry = "Delete AG");
-
-		LexiconEntry.delete(rowEntry = "Delete AG");
-
-		Search.searchCP(searchTerm = "Delete");
-
-		AccountGroups.viewDefault(tabName = "Account Groups");
 	}
 
 	@description = "This test removes an account from Account Group."

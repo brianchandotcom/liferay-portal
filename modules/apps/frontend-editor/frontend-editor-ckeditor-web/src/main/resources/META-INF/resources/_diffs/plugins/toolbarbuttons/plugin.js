@@ -148,21 +148,6 @@
 				title: editor.lang.table.title,
 			});
 
-			editor.ui.addBalloonToolbarButton('TableRow', {
-				icon: 'add-row',
-				title: editor.lang.table.row.menu,
-			});
-
-			editor.ui.addBalloonToolbarButton('TableColumn', {
-				icon: 'add-column',
-				title: editor.lang.table.column.menu,
-			});
-
-			editor.ui.addBalloonToolbarButton('TableCell', {
-				icon: 'add-cell',
-				title: editor.lang.table.cell.menu,
-			});
-
 			editor.ui.addBalloonToolbarButton('TableDelete', {
 				click() {
 					const selection = editor.getSelection();

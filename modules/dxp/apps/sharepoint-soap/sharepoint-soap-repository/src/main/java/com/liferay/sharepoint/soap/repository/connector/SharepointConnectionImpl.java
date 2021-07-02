@@ -356,6 +356,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 		authenticator.setAuthSchemes(
 			Collections.singletonList(AuthSchemes.NTLM));
+		authenticator.setDomain(url.getHost());
 		authenticator.setHost(url.getHost());
 		authenticator.setPassword(_sharepointConnectionInfo.getPassword());
 		authenticator.setPort(url.getPort());

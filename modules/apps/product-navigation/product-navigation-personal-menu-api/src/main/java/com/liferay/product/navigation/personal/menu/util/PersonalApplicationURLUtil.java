@@ -14,7 +14,9 @@
 
 package com.liferay.product.navigation.personal.menu.util;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -72,7 +74,7 @@ public class PersonalApplicationURLUtil {
 			}
 
 			return _addEmbeddedPersonalApplicationLayout(
-				user.getUserId(), group.getGroupId(), privateLayout);
+				user.getUserId(), group, privateLayout);
 		}
 	}
 
@@ -145,7 +147,7 @@ public class PersonalApplicationURLUtil {
 	}
 
 	private static Layout _addEmbeddedPersonalApplicationLayout(
-			long userId, long groupId, boolean privateLayout)
+			long userId, Group group, boolean privateLayout)
 		throws PortalException {
 
 		String friendlyURL = FriendlyURLNormalizerUtil.normalize(
@@ -156,22 +158,27 @@ public class PersonalApplicationURLUtil {
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
-		Layout layout = LayoutLocalServiceUtil.addLayout(
-			userId, groupId, privateLayout,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			PropsValues.CONTROL_PANEL_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, true, true,
-			friendlyURL, serviceContext);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					group.getCtCollectionId())) {
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
+			Layout layout = LayoutLocalServiceUtil.addLayout(
+				userId, group.getGroupId(), privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				PropsValues.CONTROL_PANEL_LAYOUT_NAME, StringPool.BLANK,
+				StringPool.BLANK, LayoutConstants.TYPE_PORTLET, true, true,
+				friendlyURL, serviceContext);
 
-		layoutTypePortlet.setLayoutTemplateId(
-			userId, "1_column_dynamic", false);
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
 
-		return LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
+			layoutTypePortlet.setLayoutTemplateId(
+				userId, "1_column_dynamic", false);
+
+			return LayoutLocalServiceUtil.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), layout.getTypeSettings());
+		}
 	}
 
 	private static PersonalMenuConfigurationTracker

@@ -14,7 +14,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="path_" name="path" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" cascade="save-update" class="com.liferay.document.library.content.model.DLContentDataBlobModel" constrained="true" name="dataBlobModel" outer-join="false" />
+		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" cascade="save-update" class="com.liferay.document.library.content.model.DLContentDataBlobModel" constrained="false" name="dataBlobModel" outer-join="false" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class dynamic-update="true" lazy="true" name="com.liferay.document.library.content.model.DLContentDataBlobModel" table="DLContent">

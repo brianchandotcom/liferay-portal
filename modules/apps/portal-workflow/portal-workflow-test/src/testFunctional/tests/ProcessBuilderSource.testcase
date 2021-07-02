@@ -25,12 +25,26 @@ definition {
 	}
 
 	@description = "Verify that the user can delete a Not Published process"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteUnpublishedWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68341 CanDeleteUnpublishedWorkflow pending implementation
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		Alert.viewSuccessMessageText(successMessage = "Workflow unpublished successfully.");
+
+		Refresh();
+
+		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "Single Approver");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow deleted successfully.");
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "Single Approver");
 	}
 
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"

@@ -66,8 +66,10 @@
 		<column name="fieldNameMapping" type="Map" />
 		<column name="operation" type="String" />
 		<column name="parameters" type="Map" />
+		<column name="processedItemsCount" type="int" />
 		<column name="startTime" type="Date" />
 		<column name="taskItemDelegateName" type="String" />
+		<column name="totalItemsCount" type="int" />
 
 		<!-- Finder methods -->
 

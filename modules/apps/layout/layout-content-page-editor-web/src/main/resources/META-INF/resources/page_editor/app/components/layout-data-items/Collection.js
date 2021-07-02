@@ -183,9 +183,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	const [activePage, setActivePage] = useState(1);
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
-	const [totalItems, setTotalItems] = useState(
-		collectionConfig.numberOfItems
-	);
 
 	const context = useContext(CollectionItemContext);
 	const {classNameId, classPK} = context.collectionItem || {};
@@ -215,8 +212,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				templateKey: collectionConfig.templateKey || null,
 			})
 				.then((response) => {
-					setTotalItems(response.totalNumberOfItems);
-
 					setCollection(
 						response.length > 0 && response.items?.length > 0
 							? response
@@ -275,7 +270,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 						collectionConfig={collectionConfig}
 						collectionId={item.itemId}
 						onPageChange={setActivePage}
-						totalItems={totalItems}
+						totalNumberOfItems={collection.totalNumberOfItems}
 					/>
 				)}
 		</div>

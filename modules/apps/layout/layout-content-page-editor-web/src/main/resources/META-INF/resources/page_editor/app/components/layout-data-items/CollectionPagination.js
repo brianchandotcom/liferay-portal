@@ -26,7 +26,7 @@ export default function CollectionPagination({
 	collectionConfig,
 	collectionId,
 	onPageChange,
-	totalItems,
+	totalNumberOfItems,
 }) {
 	const isActive = useIsActive();
 	const {
@@ -35,7 +35,7 @@ export default function CollectionPagination({
 		paginationType,
 	} = collectionConfig;
 
-	const totalPages = Math.ceil(totalItems / numberOfItemsPerPage);
+	const totalPages = Math.ceil(totalNumberOfItems / numberOfItemsPerPage);
 
 	const simplePaginationButtons = [
 		{
@@ -51,14 +51,14 @@ export default function CollectionPagination({
 	];
 
 	const regularPaginationLabel = [
-		numberOfItemsPerPage && numberOfItems && totalItems
+		numberOfItemsPerPage && numberOfItems && totalNumberOfItems
 			? (activePage - 1) * numberOfItemsPerPage + 1
 			: 0,
 		Math.min(
 			Math.min(activePage * numberOfItemsPerPage, numberOfItems),
-			totalItems
+			totalNumberOfItems
 		),
-		Math.min(numberOfItems, totalItems),
+		Math.min(numberOfItems, totalNumberOfItems),
 	];
 
 	return (
@@ -116,5 +116,5 @@ CollectionPagination.propTypes = {
 	collectionConfig: PropTypes.object,
 	collectionId: PropTypes.string,
 	onPageChange: PropTypes.func,
-	totalItems: PropTypes.number,
+	totalNumberOfItems: PropTypes.number,
 };

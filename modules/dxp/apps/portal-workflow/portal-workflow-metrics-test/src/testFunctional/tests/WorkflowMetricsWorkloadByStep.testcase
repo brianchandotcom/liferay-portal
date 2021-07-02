@@ -32,8 +32,6 @@ definition {
 	@description = "LPS-86642 - Verify that, when the workflow has pending items, the columns are populated with numbers"
 	@priority = "5"
 	test ColumnsWithNumbersWhenWorkflowHasPendingItems {
-		property portal.acceptance = "true";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -151,8 +149,6 @@ definition {
 	@description = "LPS-86642 - Verify that the On Time is the total number of pending instances that didn't breach any SLAs target times"
 	@priority = "4"
 	test PendingItemsThatDoNotBreachSlaIsOnTime {
-		property portal.acceptance = "true";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

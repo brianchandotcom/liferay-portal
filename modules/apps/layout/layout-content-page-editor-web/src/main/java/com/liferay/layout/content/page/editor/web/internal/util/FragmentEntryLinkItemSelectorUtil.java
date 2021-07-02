@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
-import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
+import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -159,16 +159,16 @@ public class FragmentEntryLinkItemSelectorUtil {
 		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
 			new InfoListItemSelectorCriterion();
 
-		InfoListProviderItemSelectorCriterion
-			infoListProviderItemSelectorCriterion =
-				new InfoListProviderItemSelectorCriterion();
+		InfoCollectionProviderItemSelectorCriterion
+			infoCollectionProviderItemSelectorCriterion =
+				new InfoCollectionProviderItemSelectorCriterion();
 
 		String itemType = typeOptionsJSONObject.getString("itemType");
 
 		if (Validator.isNotNull(itemType)) {
 			infoListItemSelectorCriterion.setItemType(itemType);
 
-			infoListProviderItemSelectorCriterion.setItemType(itemType);
+			infoCollectionProviderItemSelectorCriterion.setItemType(itemType);
 
 			String itemSubtype = typeOptionsJSONObject.getString("itemSubtype");
 
@@ -180,14 +180,15 @@ public class FragmentEntryLinkItemSelectorUtil {
 		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListItemSelectorReturnType());
 
-		infoListProviderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoListProviderItemSelectorReturnType());
+		infoCollectionProviderItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				new InfoListProviderItemSelectorReturnType());
 
 		PortletURL infoListSelectorURL = itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			liferayPortletResponse.getNamespace() + "selectInfoList",
 			infoListItemSelectorCriterion,
-			infoListProviderItemSelectorCriterion);
+			infoCollectionProviderItemSelectorCriterion);
 
 		if (infoListSelectorURL == null) {
 			return StringPool.BLANK;

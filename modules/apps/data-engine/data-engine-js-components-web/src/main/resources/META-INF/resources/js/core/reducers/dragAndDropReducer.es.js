@@ -13,15 +13,15 @@
  */
 
 import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
-import {
-	getColumn,
-	handleResizeLeft,
-	handleResizeRight,
-} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/handlers/columnResizedHandler.es';
 
 import * as FormSupport from '../../utils/FormSupport.es';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
+import {
+	getColumn,
+	handleResizeLeft,
+	handleResizeRight,
+} from '../utils/columnResizedHandler';
 import sectionAdded from '../utils/sectionAddedHandler';
 import {deleteField} from './fieldEditableReducer.es';
 

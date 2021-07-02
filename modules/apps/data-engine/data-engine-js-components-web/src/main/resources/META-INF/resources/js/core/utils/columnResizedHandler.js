@@ -12,9 +12,9 @@
  * details.
  */
 
-import {FormSupport} from 'data-engine-js-components-web';
+import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
-import {updateField} from '../util/settingsContext.es';
+import * as FormSupport from '../../utils/FormSupport.es';
 
 export const getColumn = (pages, nestedIndexes = []) => {
 	let column;
@@ -198,7 +198,12 @@ export const handleResizeRight = (props, state, indexes, columnTarget) => {
 
 	if (indexes.length > 1) {
 		newContext = [
-			updateField(props, newContext[0], 'rows', newContext[0].rows),
+			SettingsContext.updateField(
+				props,
+				newContext[0],
+				'rows',
+				newContext[0].rows
+			),
 		];
 
 		currentContext[0].settingsContext = newContext[0].settingsContext;
@@ -321,7 +326,12 @@ export const handleResizeLeft = (props, state, indexes, columnTarget) => {
 
 	if (indexes.length > 1) {
 		newContext = [
-			updateField(props, newContext[0], 'rows', newContext[0].rows),
+			SettingsContext.updateField(
+				props,
+				newContext[0],
+				'rows',
+				newContext[0].rows
+			),
 		];
 
 		currentContext[0].settingsContext = newContext[0].settingsContext;

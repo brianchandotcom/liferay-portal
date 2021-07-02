@@ -12,13 +12,12 @@
  * details.
  */
 
-import * as columnResizedHandler from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/columnResizedHandler.es';
+import {handleResizeRight} from '../../../../src/main/resources/META-INF/resources/js/core/utils/columnResizedHandler';
 
 const props = {};
-const source = {};
 
-describe('LayoutProvider/handlers/columnResizedHandler', () => {
-	describe('handleResizeRight(props, state, source, index, columnTarget)', () => {
+describe('core/utils/columnResizedHandler', () => {
+	describe('handleResizeRight(props, state, index, columnTarget)', () => {
 		it('resizes first field to the left', () => {
 			const indexes = [
 				{
@@ -48,13 +47,7 @@ describe('LayoutProvider/handlers/columnResizedHandler', () => {
 				],
 			};
 
-			const result = columnResizedHandler.handleResizeRight(
-				props,
-				state,
-				source,
-				indexes,
-				2
-			);
+			const result = handleResizeRight(props, state, indexes, 2);
 
 			expect(result[0].rows[0].columns[0].size).toEqual(2);
 			expect(result[0].rows[0].columns[1].size).toEqual(10);
@@ -89,13 +82,7 @@ describe('LayoutProvider/handlers/columnResizedHandler', () => {
 				],
 			};
 
-			const result = columnResizedHandler.handleResizeRight(
-				props,
-				state,
-				source,
-				indexes,
-				6
-			);
+			const result = handleResizeRight(props, state, indexes, 6);
 
 			expect(result[0].rows[0].columns[0].size).toEqual(6);
 			expect(result[0].rows[0].columns[1].size).toEqual(6);
@@ -130,13 +117,7 @@ describe('LayoutProvider/handlers/columnResizedHandler', () => {
 				],
 			};
 
-			const result = columnResizedHandler.handleResizeRight(
-				props,
-				state,
-				source,
-				indexes,
-				6
-			);
+			const result = handleResizeRight(props, state, indexes, 6);
 
 			expect(result[0].rows[0].columns[0].size).toEqual(4);
 			expect(result[0].rows[0].columns[1].size).toEqual(2);
@@ -176,13 +157,7 @@ describe('LayoutProvider/handlers/columnResizedHandler', () => {
 				],
 			};
 
-			const result = columnResizedHandler.handleResizeRight(
-				props,
-				state,
-				source,
-				indexes,
-				11
-			);
+			const result = handleResizeRight(props, state, indexes, 11);
 
 			expect(result[0].rows[0].columns[0].size).toEqual(4);
 			expect(result[0].rows[0].columns[1].size).toEqual(7);

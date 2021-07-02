@@ -86,8 +86,6 @@ public class DateDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(validationDDMFormField);
 		Assert.assertEquals("date", validationDDMFormField.getDataType());
 		Assert.assertEquals("validation", validationDDMFormField.getType());
-		Assert.assertEquals(
-			"FALSE", validationDDMFormField.getVisibilityExpression());
 
 		DDMFormField indexTypeDDMFormField = ddmFormFieldsMap.get("indexType");
 

@@ -76,7 +76,7 @@ function Occurrence({params, previous, violations}: OccurrenceProps) {
 				tags={tags}
 				title={name}
 			/>
-			<div className="a11y-panel__sidebar--occurrence-description-wrapper">
+			<div className="a11y-panel__sidebar--body">
 				<p className="text-secondary">
 					{Liferay.Language.get(
 						'open-developer-tools-in-the-browser-to-see-the-selected-occurrence'

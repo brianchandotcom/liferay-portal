@@ -14,6 +14,8 @@
 
 import React, {useCallback, useLayoutEffect, useState} from 'react';
 
+import {ErrorBoundary} from './components/ErrorBoundary';
+import {NotFound} from './components/NotFound';
 import Occurrence from './components/Occurrence';
 import {StackNavigator} from './components/StackNavigator';
 import Violation from './components/Violation';
@@ -131,8 +133,67 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 						}
 						{...state}
 					/>
-					<Violation violations={state.violations} />
-					<Occurrence violations={state.violations} />
+					<ErrorBoundary
+						fallback={
+							<NotFound
+								description={Liferay.Language.get(
+									'the-rule-was-not-found-it-is-common-when-the-elements-corresponding-to-the-rule-no-longer-exist-in-the-dom'
+								)}
+								onClick={() => {
+									const {ruleId} = params as Required<Params>;
+
+									dispatch({
+										payload: {
+											key: 'id',
+											value: ruleId,
+										},
+										type: TYPES.REMOVE_FILTER,
+									});
+									setActivePage(0);
+									setParams(undefined);
+								}}
+								title={Liferay.Language.get('rule-not-found')}
+							/>
+						}
+					>
+						<Violation violations={state.violations} />
+					</ErrorBoundary>
+					<ErrorBoundary
+						fallback={
+							<NotFound
+								description={Liferay.Language.get(
+									'the-occurrence-was-not-found-it-is-common-when-the-element-no-longer-exists-in-the-dom'
+								)}
+								onClick={() => {
+									const {ruleId, target} = params as Required<
+										Params
+									>;
+
+									dispatch({
+										payload: {
+											key: 'nodes',
+											value: target,
+										},
+										type: TYPES.REMOVE_FILTER,
+									});
+									dispatch({
+										payload: {
+											key: 'id',
+											value: ruleId,
+										},
+										type: TYPES.REMOVE_FILTER,
+									});
+									setActivePage(0);
+									setParams(undefined);
+								}}
+								title={Liferay.Language.get(
+									'occurrence-not-found'
+								)}
+							/>
+						}
+					>
+						<Occurrence violations={state.violations} />
+					</ErrorBoundary>
 				</StackNavigator>
 			</div>
 		</>

@@ -76,20 +76,26 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 
 					String url = "http://localhost:8080/test";
 
-					portalCache.put(
-						LocaleUtil.getDefault() + "-" + url,
-						JSONUtil.put("test", "test"));
+					String cacheKey = LocaleUtil.getDefault() + "-" + url;
 
-					JSONObject jsonObject = _serveResource(
-						LayoutTestUtil.addLayout(TestPropsValues.getGroupId()),
-						url);
+					try {
+						portalCache.put(cacheKey, JSONUtil.put("test", "test"));
 
-					JSONObject layoutReportsIssuesJSONObject =
-						jsonObject.getJSONObject("layoutReportsIssues");
+						JSONObject jsonObject = _serveResource(
+							LayoutTestUtil.addLayout(
+								TestPropsValues.getGroupId()),
+							url);
 
-					Assert.assertEquals(
-						"test",
-						layoutReportsIssuesJSONObject.getString("test"));
+						JSONObject layoutReportsIssuesJSONObject =
+							jsonObject.getJSONObject("layoutReportsIssues");
+
+						Assert.assertEquals(
+							"test",
+							layoutReportsIssuesJSONObject.getString("test"));
+					}
+					finally {
+						portalCache.remove(cacheKey);
+					}
 				});
 	}
 

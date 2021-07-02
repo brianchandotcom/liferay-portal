@@ -198,7 +198,12 @@ definition {
 		}
 
 		if (isSet(numericField)) {
-			var key_fieldName = "Numeric";
+			if (isSet(fieldFieldLabel)) {
+				var key_fieldLabel = "${fieldFieldLabel}";
+			}
+			else {
+				var key_fieldLabel = "Numeric";
+			}
 
 			Type(
 				locator1 = "TextInput#NUMERIC",

@@ -41,6 +41,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -70,6 +71,26 @@ public class DDMFormValuesValidatorTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormValuesValidator();
+	}
+
+	@Test
+	public void testEvaluateDateValidationExpression() throws Exception {
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
+			new DDMFormFieldValidationExpression() {
+				{
+					setValue("dateValidation(Field, \"{parameter}\")");
+				}
+			});
+		ddmFormFieldValidation.setParameterLocalizedValue(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"{\"startsFrom\": \"responseDate\"}", LocaleUtil.US));
+
+		Assert.assertTrue(
+			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
+				"date", "Field", ddmFormFieldValidation, LocaleUtil.US, null));
 	}
 
 	@Test
@@ -872,7 +893,11 @@ public class DDMFormValuesValidatorTest {
 					getDDMExpressionFunctionFactories(
 						Set<String> functionNames) {
 
-					return Collections.emptyMap();
+					return HashMapBuilder.
+						<String, DDMExpressionFunctionFactory>put(
+							"dateValidation",
+							new DateValidationFunctionFactory()
+						).build();
 				}
 
 				@Override
@@ -906,5 +931,30 @@ public class DDMFormValuesValidatorTest {
 
 	private final DDMFormValuesValidatorImpl _ddmFormValuesValidatorImpl =
 		new DDMFormValuesValidatorImpl();
+
+	private static class DateValidationFunction
+		implements DDMExpressionFunction.Function2<String, String, Boolean> {
+
+		@Override
+		public Boolean apply(String fieldName, String parameter) {
+			return StringUtil.equals(parameter, "{startsFrom: responseDate}");
+		}
+
+		@Override
+		public String getName() {
+			return "dateValidation";
+		}
+
+	}
+
+	private static class DateValidationFunctionFactory
+		implements DDMExpressionFunctionFactory {
+
+		@Override
+		public DDMExpressionFunction create() {
+			return new DateValidationFunction();
+		}
+
+	}
 
 }

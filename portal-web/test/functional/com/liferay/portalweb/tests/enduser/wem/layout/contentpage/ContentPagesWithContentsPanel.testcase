@@ -35,6 +35,158 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122204. The Page Creater can access to edit the collection items via Page Content panel."
+	@priority = "5"
+	test EditCollectionItems {
+		task ("Add a web content, a blogs entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Highest Rated Assets in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Navigate to view items modal via Page Content panel") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+				itemName = "Highest Rated Assets",
+				menuItem = "View Items");
+		}
+
+		task ("Access to the web content editor") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "Edit Content",
+				tableEntry = "Web Content Title");
+		}
+
+		task ("Edit the web content title") {
+			WebContent.addCP(webContentTitle = "Web Content Title Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the edited web content title shown in Collection Display") {
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title Edit",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Change to Most Viewed Assets in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Most Viewed Assets");
+		}
+
+		task ("Navigate to view items modal via Page Content panel") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+				itemName = "Most Viewed Assets",
+				menuItem = "View Items");
+		}
+
+		task ("Access to the blogs entry editor") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "Edit Content",
+				tableEntry = "Blogs Entry Title");
+		}
+
+		task ("Edit the blogs entry title") {
+			BlogsEntry.editTitle(
+				entryTitle = "Blogs Entry Title",
+				entryTitleEdit = "Blogs Entry Title Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the edited blogs entry title shown in Collection Display") {
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Blogs Entry Title Edit",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Change to Recent Content in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Recent Content");
+		}
+
+		task ("Navigate to view items modal via Page Content panel") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+				itemName = "Recent Content",
+				menuItem = "View Items");
+		}
+
+		task ("Access to the document editor") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "Edit Content",
+				tableEntry = "Document Title");
+		}
+
+		task ("Edit the document title") {
+			DMDocument.editCmd(dmDocumentTitleEdit = "Document Title Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the document title shown in Collection Display") {
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Document Title Edit",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+	}
+
 	@description = "This is a test for LPS-122204. The Page Creater can access to edit the document via Page Content panel."
 	@priority = "5"
 	test EditDisplayedDocument {

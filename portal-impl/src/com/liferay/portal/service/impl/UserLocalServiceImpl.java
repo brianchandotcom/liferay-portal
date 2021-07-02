@@ -294,10 +294,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>admin.default.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default groups;
+	 *         <code>false</code> if user was already a member
 	 */
 	@Override
-	public void addDefaultGroups(long userId) throws PortalException {
+	public boolean addDefaultGroups(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		long[] userGroupIds = user.getGroupIds();
 
 		Set<Long> groupIdsSet = new HashSet<>();
 
@@ -320,7 +324,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Group group = groupPersistence.fetchByC_GK(
 				user.getCompanyId(), defaultGroupName);
 
-			if (group != null) {
+			if ((group != null) &&
+				!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
+
 				groupIdsSet.add(group.getGroupId());
 			}
 		}
@@ -340,9 +346,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Group group = groupPersistence.fetchByC_GK(
 				user.getCompanyId(), defaultOrganizationGroupName);
 
-			if (group != null) {
+			if ((group != null) &&
+				!ArrayUtil.contains(userGroupIds, group.getGroupId())) {
+
 				groupIdsSet.add(group.getGroupId());
 			}
+		}
+
+		if (groupIdsSet.isEmpty()) {
+			return false;
 		}
 
 		long[] groupIds = ArrayUtil.toArray(groupIdsSet.toArray(new Long[0]));
@@ -352,6 +364,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		for (long groupId : groupIds) {
 			addDefaultRolesAndTeams(groupId, new long[] {userId});
 		}
+
+		return true;
 	}
 
 	/**
@@ -361,10 +375,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>admin.default.role.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was given default roles;
+	 * 	       <code>false</code> if user already has default roles
 	 */
 	@Override
-	public void addDefaultRoles(long userId) throws PortalException {
+	public boolean addDefaultRoles(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		long[] userRoleIds = user.getRoleIds();
 
 		Set<Long> roleIdSet = new HashSet<>();
 
@@ -377,10 +395,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getCompanyId(), defaultRoleName);
 
 			if ((role != null) &&
-				(role.getType() == RoleConstants.TYPE_REGULAR)) {
+				(role.getType() == RoleConstants.TYPE_REGULAR) &&
+				!ArrayUtil.contains(userRoleIds, role.getRoleId())) {
 
 				roleIdSet.add(role.getRoleId());
 			}
+		}
+
+		if (roleIdSet.isEmpty()) {
+			return false;
 		}
 
 		long[] roleIds = ArrayUtil.toArray(roleIdSet.toArray(new Long[0]));
@@ -388,6 +411,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		roleIds = UsersAdminUtil.addRequiredRoles(user, roleIds);
 
 		userPersistence.addRoles(userId, roleIds);
+
+		return true;
 	}
 
 	/**
@@ -397,10 +422,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * <code>admin.default.user.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default user groups;
+	 * 	       <code>false</code> if user is already a user group member
 	 */
 	@Override
-	public void addDefaultUserGroups(long userId) throws PortalException {
+	public boolean addDefaultUserGroups(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		long[] userUserGroupIds = user.getUserGroupIds();
 
 		Set<Long> userGroupIdSet = new HashSet<>();
 
@@ -412,15 +441,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			UserGroup userGroup = userGroupPersistence.fetchByC_N(
 				user.getCompanyId(), defaultUserGroupName);
 
-			if (userGroup != null) {
+			if ((userGroup != null) &&
+				!ArrayUtil.contains(
+					userUserGroupIds, userGroup.getUserGroupId())) {
+
 				userGroupIdSet.add(userGroup.getUserGroupId());
 			}
+		}
+
+		if (userGroupIdSet.isEmpty()) {
+			return false;
 		}
 
 		long[] userGroupIds = ArrayUtil.toArray(
 			userGroupIdSet.toArray(new Long[0]));
 
 		userPersistence.addUserGroups(userId, userGroupIds);
+
+		return true;
 	}
 
 	/**

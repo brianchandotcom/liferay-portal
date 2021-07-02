@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -40,6 +42,10 @@ public class InvalidFormatExceptionMapper
 	protected Problem getProblem(
 		InvalidFormatException invalidFormatException) {
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(invalidFormatException, invalidFormatException);
+		}
+
 		List<JsonMappingException.Reference> references =
 			invalidFormatException.getPath();
 
@@ -58,7 +64,12 @@ public class InvalidFormatExceptionMapper
 			invalidFormatException.getValue(), "\" to class \"",
 			clazz.getSimpleName(), "\"");
 
-		return new Problem(Response.Status.BAD_REQUEST, message);
+		return new Problem(
+			invalidFormatException.getLocalizedMessage(),
+			Response.Status.BAD_REQUEST, message, "InvalidFormat");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InvalidFormatExceptionMapper.class);
 
 }

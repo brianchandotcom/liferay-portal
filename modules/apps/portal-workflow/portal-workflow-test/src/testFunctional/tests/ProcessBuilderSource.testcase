@@ -153,12 +153,30 @@ definition {
 	}
 
 	@description = "Verify that the user can not unpublish a Workflow in use and system displays an error message"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotUnpublishWorkflowInUse {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68339 CanNotUnpublishWorkflowInUse pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.gotoNavItem(navItem = "Workflows");
+
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Unpublish");
+
+		Alert.viewErrorMessage(errorMessage = "Workflow in use. Remove its assignment to this asset: Blogs Entry.");
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 	}
 
 	@description = "Verify that, when entering valid content, the Workflow is published"

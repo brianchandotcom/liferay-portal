@@ -31,7 +31,6 @@
 			"FormRenderer",
 			"LayoutProvider/handlers/columnResizedHandler",
 			"LayoutProvider/handlers/fieldBlurredHandler",
-			"LayoutProvider/handlers/fieldDeletedHandler",
 			"LayoutProvider/handlers/fieldEditedHandler",
 			"LayoutProvider/handlers/fieldSetAddedHandler",
 			"LayoutProvider/handlers/focusedFieldEvaluationEndedHandler",

@@ -12,10 +12,9 @@
  * details.
  */
 
-import {FormSupport} from 'data-engine-js-components-web';
+import {FieldSupport, RulesSupport} from 'dynamic-data-mapping-form-builder';
 
-import {removeField} from '../../../util/fieldSupport.es';
-import RulesSupport from '../../RuleBuilder/RulesSupport.es';
+import * as FormSupport from '../../utils/FormSupport.es';
 
 export const handleFieldDeleted = (
 	props,
@@ -30,7 +29,7 @@ export const handleFieldDeleted = (
 
 	const newPages = pages.map((page, pageIndex) => {
 		if (activePage === pageIndex) {
-			const pagesWithFieldRemoved = removeField(
+			const pagesWithFieldRemoved = FieldSupport.removeField(
 				props,
 				pages,
 				fieldName,

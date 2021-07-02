@@ -12,14 +12,14 @@
  * details.
  */
 
-import {FormSupport} from 'data-engine-js-components-web';
+import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 
-import * as fieldDeletedHandler from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldDeletedHandler.es';
-import RulesSupport from '../../../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';
-import mockPages from '../../../__mock__/mockPages.es';
+import fieldDeletedHandler from '../../../../src/main/resources/META-INF/resources/js/core/utils/fieldDeletedHandler';
+import * as FormSupport from '../../../../src/main/resources/META-INF/resources/js/utils/FormSupport.es';
+import mockPages from '../../__mock__/mockPages.es';
 
-describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
-	describe('handleFieldDeleted(state, event)', () => {
+describe('core/utils/fieldDeletedHandler', () => {
+	describe('fieldDeletedHandler(state, event)', () => {
 		it('calls removeEmptyRows() when row is left with no fields after delete operation', () => {
 			const event = {
 				activePage: 0,
@@ -38,7 +38,7 @@ describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 
 			removeEmptyRowsSpy.mockImplementation(() => []);
 
-			fieldDeletedHandler.handleFieldDeleted({}, state, event);
+			fieldDeletedHandler({}, state, event);
 
 			expect(removeEmptyRowsSpy).toHaveBeenCalled();
 
@@ -74,7 +74,7 @@ describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 
 			formatRulesSpy.mockImplementation(() => []);
 
-			fieldDeletedHandler.handleFieldDeleted({}, state, event);
+			fieldDeletedHandler({}, state, event);
 
 			expect(formatRulesSpy).not.toHaveBeenCalled();
 

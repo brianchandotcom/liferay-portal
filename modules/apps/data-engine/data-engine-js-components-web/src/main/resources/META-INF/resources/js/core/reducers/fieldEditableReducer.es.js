@@ -19,11 +19,11 @@ import {
 	RulesUtil,
 	SettingsContext,
 } from 'dynamic-data-mapping-form-builder';
-import sectionAdded from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/handlers/sectionAddedHandler.es';
 
 import * as FormSupport from '../../utils/FormSupport.es';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
+import sectionAdded from '../utils/sectionAddedHandler';
 
 export const deleteField = ({
 	clean = false,

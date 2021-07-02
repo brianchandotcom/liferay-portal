@@ -12,16 +12,22 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'data-engine-js-components-web';
+import {
+	FieldSetUtil,
+	FieldSupport,
+	SettingsContext,
+} from 'dynamic-data-mapping-form-builder';
+import {FIELD_TYPE_FIELDSET} from 'dynamic-data-mapping-form-builder/js/util/constants.es';
 
-import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
-import {addField, createField} from '../../../util/fieldSupport.es';
-import {createFieldSet} from '../util/fieldset.es';
-import {updateField} from '../util/settingsContext.es';
-import handleFieldDeleted from './fieldDeletedHandler.es';
+import {
+	addFieldToColumn,
+	findFieldByFieldName,
+} from '../../utils/FormSupport.es';
+import {PagesVisitor} from '../../utils/visitors.es';
+import handleFieldDeleted from './fieldDeletedHandler';
 
 const addNestedField = ({field, indexes, nestedField, props}) => {
-	const layout = FormSupport.addFieldToColumn(
+	const layout = addFieldToColumn(
 		[{rows: field.rows}],
 		indexes.pageIndex,
 		indexes.rowIndex,
@@ -30,11 +36,16 @@ const addNestedField = ({field, indexes, nestedField, props}) => {
 	);
 	const nestedFields = [...field.nestedFields, nestedField];
 
-	field = updateField(props, field, 'nestedFields', nestedFields);
+	field = SettingsContext.updateField(
+		props,
+		field,
+		'nestedFields',
+		nestedFields
+	);
 
 	const {rows} = layout[indexes.pageIndex];
 
-	field = updateField(props, field, 'rows', rows);
+	field = SettingsContext.updateField(props, field, 'rows', rows);
 
 	return {
 		...field,
@@ -48,9 +59,9 @@ const handleSectionAdded = (props, state, event) => {
 	const {fieldName, parentFieldName} = data;
 	const {pages} = state;
 
-	const newField = event.newField ?? createField(props, event);
-	const existingField = FormSupport.findFieldByFieldName(pages, fieldName);
-	const fieldSetField = createFieldSet(props, event, [
+	const newField = event.newField ?? FieldSupport.createField(props, event);
+	const existingField = findFieldByFieldName(pages, fieldName);
+	const fieldSetField = FieldSetUtil.createFieldSet(props, event, [
 		existingField,
 		newField,
 	]);
@@ -63,7 +74,7 @@ const handleSectionAdded = (props, state, event) => {
 		newPages = visitor.mapFields(
 			(field) => {
 				if (field.fieldName === parentFieldName) {
-					const updatedParentField = FormSupport.findFieldByFieldName(
+					const updatedParentField = findFieldByFieldName(
 						handleFieldDeleted(props, state, {
 							fieldName,
 						}).pages,
@@ -88,7 +99,7 @@ const handleSectionAdded = (props, state, event) => {
 		);
 	}
 	else if (existingField.type === FIELD_TYPE_FIELDSET) {
-		newPages = addField({
+		newPages = FieldSupport.addField({
 			...props,
 			indexes,
 			newField,

@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
@@ -76,11 +75,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
 				_getDTOConverterContext(null, null, null),
 				ddmStorageAdapterDeleteRequest.getPrimaryKey());
-
-			Map<String, Object> properties = objectEntry.getProperties();
-
-			_ddmFieldLocalService.deleteDDMFormValues(
-				(Long)properties.get("ddmStorageId"));
 
 			_objectEntryManager.deleteObjectEntry(objectEntry.getId());
 

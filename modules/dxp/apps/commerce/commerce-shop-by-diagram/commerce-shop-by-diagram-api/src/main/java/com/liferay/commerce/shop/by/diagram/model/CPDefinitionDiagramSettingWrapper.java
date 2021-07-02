@@ -55,8 +55,10 @@ public class CPDefinitionDiagramSettingWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
-		attributes.put("radius", getRadius());
+		attributes.put("CPAttachmentFileEntryId", getCPAttachmentFileEntryId());
 		attributes.put("color", getColor());
+		attributes.put("radius", getRadius());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -112,16 +114,29 @@ public class CPDefinitionDiagramSettingWrapper
 			setCPDefinitionId(CPDefinitionId);
 		}
 
-		Double radius = (Double)attributes.get("radius");
+		Long CPAttachmentFileEntryId = (Long)attributes.get(
+			"CPAttachmentFileEntryId");
 
-		if (radius != null) {
-			setRadius(radius);
+		if (CPAttachmentFileEntryId != null) {
+			setCPAttachmentFileEntryId(CPAttachmentFileEntryId);
 		}
 
 		String color = (String)attributes.get("color");
 
 		if (color != null) {
 			setColor(color);
+		}
+
+		Double radius = (Double)attributes.get("radius");
+
+		if (radius != null) {
+			setRadius(radius);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -143,6 +158,16 @@ public class CPDefinitionDiagramSettingWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the cp attachment file entry ID of this cp definition diagram setting.
+	 *
+	 * @return the cp attachment file entry ID of this cp definition diagram setting
+	 */
+	@Override
+	public long getCPAttachmentFileEntryId() {
+		return model.getCPAttachmentFileEntryId();
 	}
 
 	/**
@@ -203,6 +228,16 @@ public class CPDefinitionDiagramSettingWrapper
 	@Override
 	public double getRadius() {
 		return model.getRadius();
+	}
+
+	/**
+	 * Returns the type of this cp definition diagram setting.
+	 *
+	 * @return the type of this cp definition diagram setting
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -271,6 +306,16 @@ public class CPDefinitionDiagramSettingWrapper
 	}
 
 	/**
+	 * Sets the cp attachment file entry ID of this cp definition diagram setting.
+	 *
+	 * @param CPAttachmentFileEntryId the cp attachment file entry ID of this cp definition diagram setting
+	 */
+	@Override
+	public void setCPAttachmentFileEntryId(long CPAttachmentFileEntryId) {
+		model.setCPAttachmentFileEntryId(CPAttachmentFileEntryId);
+	}
+
+	/**
 	 * Sets the cp definition diagram setting ID of this cp definition diagram setting.
 	 *
 	 * @param CPDefinitionDiagramSettingId the cp definition diagram setting ID of this cp definition diagram setting
@@ -330,6 +375,16 @@ public class CPDefinitionDiagramSettingWrapper
 	@Override
 	public void setRadius(double radius) {
 		model.setRadius(radius);
+	}
+
+	/**
+	 * Sets the type of this cp definition diagram setting.
+	 *
+	 * @param type the type of this cp definition diagram setting
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

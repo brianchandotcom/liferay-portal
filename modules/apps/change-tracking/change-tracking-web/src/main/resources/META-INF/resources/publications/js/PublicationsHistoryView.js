@@ -12,37 +12,34 @@
  * details.
  */
 
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-
+import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
 import ClayProgressBar from '@clayui/progress-bar';
+import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const renderUserPortrait = (entry, userInfo) => {
+	const user = userInfo[entry.userId];
+
 	return (
-		<div
-			className="text-center"
-			dangerouslySetInnerHTML={{
-				__html: userInfo[entry.userId].userPortraitHTML,
-			}}
+		<ClaySticker
+			className={`sticker-user-icon ${
+				user.portraitURL ? '' : 'user-icon-color-' + (entry.userId % 10)
+			}`}
 			data-tooltip-align="top"
-			title={userInfo[entry.userId].userName}
-		/>
+			title={user.userName}
+		>
+			{user.portraitURL ? (
+				<div className="sticker-overlay">
+					<img className="sticker-img" src={user.portraitURL} />
+				</div>
+			) : (
+				<ClayIcon symbol="user" />
+			)}
+		</ClaySticker>
 	);
 };
 

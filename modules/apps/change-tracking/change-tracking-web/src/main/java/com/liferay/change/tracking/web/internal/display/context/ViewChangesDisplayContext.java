@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.taglib.ui.UserPortraitTag;
 
 import java.io.Serializable;
 
@@ -303,20 +302,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"ctCollectionId", _ctCollection.getCtCollectionId()
 		).put(
-			"currentUser",
-			() -> {
-				User user = _themeDisplay.getUser();
-
-				return JSONUtil.put(
-					"userId", user.getUserId()
-				).put(
-					"userName", user.getFullName()
-				).put(
-					"userPortraitHTML",
-					UserPortraitTag.getUserPortraitHTML(
-						StringPool.BLANK, StringPool.BLANK, user, _themeDisplay)
-				);
-			}
+			"currentUserId", _themeDisplay.getUserId()
 		).put(
 			"dataURL",
 			() -> {

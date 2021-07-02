@@ -23,6 +23,7 @@ import ClayManagementToolbar, {
 } from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
@@ -837,15 +838,26 @@ export default ({
 	};
 
 	const renderUserPortrait = (entry, userInfo) => {
+		const user = userInfo[entry.userId];
+
 		return (
-			<div
-				className="text-center"
-				dangerouslySetInnerHTML={{
-					__html: userInfo[entry.userId].userPortraitHTML,
-				}}
+			<ClaySticker
+				className={`sticker-user-icon ${
+					user.portraitURL
+						? ''
+						: 'user-icon-color-' + (entry.userId % 10)
+				}`}
 				data-tooltip-align="top"
-				title={userInfo[entry.userId].userNam}
-			/>
+				title={user.userName}
+			>
+				{user.portraitURL ? (
+					<div className="sticker-overlay">
+						<img className="sticker-img" src={user.portraitURL} />
+					</div>
+				) : (
+					<ClayIcon symbol="user" />
+				)}
+			</ClaySticker>
 		);
 	};
 

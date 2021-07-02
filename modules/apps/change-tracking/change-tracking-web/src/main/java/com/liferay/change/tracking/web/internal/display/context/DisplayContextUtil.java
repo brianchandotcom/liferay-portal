@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.taglib.ui.UserPortraitTag;
 
 import java.util.List;
 import java.util.Set;
@@ -92,10 +91,6 @@ public class DisplayContextUtil {
 					"portraitURL", portraitURL
 				).put(
 					"userName", user.getFullName()
-				).put(
-					"userPortraitHTML",
-					UserPortraitTag.getUserPortraitHTML(
-						StringPool.BLANK, StringPool.BLANK, user, themeDisplay)
 				));
 		}
 

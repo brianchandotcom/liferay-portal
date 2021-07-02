@@ -73,7 +73,7 @@ const CTEditComment = ({handleCancel, handleSave, initialValue}) => {
 
 const CTComments = ({
 	ctEntryId,
-	currentUser,
+	currentUserId,
 	deleteCommentURL,
 	getCache,
 	getCommentsURL,
@@ -325,7 +325,7 @@ const CTComments = ({
 
 			let title = fetchData.userInfo[comment.userId.toString()].userName;
 
-			if (currentUser.userId.toString() === comment.userId.toString()) {
+			if (currentUserId === comment.userId) {
 				title = title + ' (' + Liferay.Language.get('you') + ')';
 			}
 
@@ -553,7 +553,7 @@ export default ({
 	changes,
 	contextView,
 	ctCollectionId,
-	currentUser,
+	currentUserId,
 	dataURL,
 	deleteCTCommentURL,
 	discardURL,
@@ -617,6 +617,8 @@ export default ({
 					model.changeTypeLabel = Liferay.Language.get('deleted');
 				}
 
+				model.portraitURL =
+					userInfo[model.userId.toString()].portraitURL;
 				model.userName = userInfo[model.userId.toString()].userName;
 
 				if (model.siteName === GLOBAL_SITE_NAME) {
@@ -1914,11 +1916,26 @@ export default ({
 			else {
 				cells.push(
 					<ClayTable.Cell>
-						<div
-							dangerouslySetInnerHTML={getUserPortraitHTML(node)}
+						<ClaySticker
+							className={`sticker-user-icon ${
+								node.portraitURL
+									? ''
+									: 'user-icon-color-' + (node.userId % 10)
+							}`}
 							data-tooltip-align="top"
 							title={node.userName}
-						/>
+						>
+							{node.portraitURL ? (
+								<div className="sticker-overlay">
+									<img
+										className="sticker-img"
+										src={node.portraitURL}
+									/>
+								</div>
+							) : (
+								<ClayIcon symbol="user" />
+							)}
+						</ClaySticker>
 					</ClayTable.Cell>
 				);
 
@@ -1960,10 +1977,6 @@ export default ({
 		}
 
 		return rows;
-	};
-
-	const getUserPortraitHTML = (node) => {
-		return {__html: userInfo[node.userId.toString()].userPortraitHTML};
 	};
 
 	const getViewTypes = () => {
@@ -2562,7 +2575,7 @@ export default ({
 										? renderState.node.ctEntryId
 										: 0
 								}
-								currentUser={currentUser}
+								currentUserId={currentUserId}
 								deleteCommentURL={deleteCTCommentURL}
 								getCache={() => {
 									if (renderState.node.ctEntryId) {

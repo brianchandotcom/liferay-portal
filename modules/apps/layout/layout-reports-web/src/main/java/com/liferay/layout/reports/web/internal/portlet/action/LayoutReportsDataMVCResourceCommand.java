@@ -115,6 +115,8 @@ public class LayoutReportsDataMVCResourceCommand
 				"pageURLs",
 				_getPageURLsJSONArray(resourceRequest, resourceResponse, layout)
 			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).put(
 				"validConnection", layoutReportsDataProvider.isValidConnection()
 			));
 	}
@@ -309,8 +311,6 @@ public class LayoutReportsDataMVCResourceCommand
 						"layoutReportsIssuesURL",
 						_getResourceURL(
 							layout.getGroupId(), url, portletResponse)
-					).put(
-						"private", layout.isPrivateLayout()
 					).put(
 						"title", _getTitle(portletRequest, layout, locale)
 					).put(

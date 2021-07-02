@@ -35,13 +35,15 @@ const DefaultSidebarHeader = () => {
 	const {portletNamespace} = useContext(ConstantsContext);
 	const dispatch = useContext(StoreDispatchContext);
 
+	const showRefreshButton = data?.validConnection && !data?.privateLayout;
+
 	return (
 		<div className="d-flex justify-content-between p-3 sidebar-header">
 			<span className="font-weight-bold">
 				{Liferay.Language.get('page-audit')}
 			</span>
 			<div>
-				{data?.validConnection && (
+				{showRefreshButton && (
 					<ClayButtonWithIcon
 						className="sidenav-relaunch text-secondary"
 						disabled={loading}

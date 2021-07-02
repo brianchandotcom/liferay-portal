@@ -12,6 +12,6 @@
  * details.
  */
 
-export const API_KEY_ERROR_CODE = 400;
-export const API_KEY_INVALID_STATUS = 'INVALID_ARGUMENT';
-export const SERVER_ERROR_CODE = 500;
+export const GPS_API_KEY_ERROR_CODE = 400;
+export const GPS_API_KEY_INVALID_STATUS = 'INVALID_ARGUMENT';
+export const GPS_SERVER_ERROR_CODE = 500;

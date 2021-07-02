@@ -110,7 +110,7 @@ export default function LayoutReports({eventTriggered}) {
 		return null;
 	}
 
-	const hasError = data.validConnection && error;
+	const hasError = (data.validConnection && error) || data.privateLayout;
 	const notConfigured = !loading && !data.validConnection;
 
 	return hasError ? (

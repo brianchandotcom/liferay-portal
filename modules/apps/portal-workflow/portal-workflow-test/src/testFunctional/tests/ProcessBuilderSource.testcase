@@ -159,12 +159,34 @@ definition {
 	}
 
 	@description = "Verify that the user is able to restore a previous version of definition by clicking on Restore option, on kebab menu"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanRestorePreviousVersionOnMenu {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68333 CanRestorePreviousVersionOnMenu pending implementation
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Button.clickUpdate();
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		Navigator.gotoNavTab(navTab = "Revision History");
+
+		Click(locator1 = "ProcessBuilderSource#REVISION_HISTORY_KEBAB");
+
+		MenuItem.click(menuItem = "Restore");
+
+		Alert.viewSuccessMessageText(successMessage = "Restored to Revision from");
+
+		KaleoDesigner.viewNodePresent(key_nodeNodeLabel = "update");
 	}
 
 	@description = "Verify that the user is able to restore a previous version of definition by clicking on Restore button, on Preview modal"

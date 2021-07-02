@@ -27,6 +27,7 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -123,6 +124,8 @@ public class ShieldedContainerServletContainerInitializer
 				"Unable to convert shielded container lib jar to URL",
 				malformedURLException);
 		}
+
+		urls.sort(Comparator.comparing(URL::getPath));
 
 		ClassLoader classLoader = new ShieldedContainerClassLoader(
 			urls.toArray(new URL[0]), servletContext.getClassLoader());

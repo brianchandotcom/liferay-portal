@@ -80,12 +80,32 @@ definition {
 	}
 
 	@description = "LPS-86642 - Verify that when there is no SLA defined for the process, the card should display only the Total Pending column populated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test OnlyTotalPendingColumnIsPopulatedWhenNoSLA {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67563 OnlyTotalPendingColumnIsPopulatedWhenNoSLA pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
+
+		WorkflowMetrics.checkPendingWorkflowValues(
+			key_ontime = "0",
+			key_overdue = "0",
+			key_pending = "1",
+			key_untracked = "1");
 	}
 
 	@description = "LPS-86642 - Verify that the Overdue is the total number of pending instances that breached one or more SLAs target times"

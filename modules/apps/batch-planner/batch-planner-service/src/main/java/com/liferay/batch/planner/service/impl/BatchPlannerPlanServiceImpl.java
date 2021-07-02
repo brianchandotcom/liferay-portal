@@ -45,7 +45,8 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
-			boolean export, String externalType, String name)
+			boolean export, String externalType, String externalURL,
+			String internalClassName, String name)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -55,7 +56,8 @@ public class BatchPlannerPlanServiceImpl
 			BatchPlannerActionKeys.ADD_BATCH_PLANNER_PLAN);
 
 		return batchPlannerPlanLocalService.addBatchPlannerPlan(
-			permissionChecker.getUserId(), export, externalType, name);
+			permissionChecker.getUserId(), export, externalType, externalURL,
+			internalClassName, name);
 	}
 
 	@Override

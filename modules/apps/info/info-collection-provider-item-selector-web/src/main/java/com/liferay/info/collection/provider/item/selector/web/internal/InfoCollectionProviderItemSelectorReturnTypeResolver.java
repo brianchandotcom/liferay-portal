@@ -14,7 +14,7 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal;
 
-import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ItemSelectorReturnTypeResolver.class)
 public class InfoCollectionProviderItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
-		<InfoListProviderItemSelectorReturnType, InfoListProvider<?>> {
+		<InfoListProviderItemSelectorReturnType, InfoCollectionProvider<?>> {
 
 	@Override
 	public Class<InfoListProviderItemSelectorReturnType>
@@ -38,18 +38,20 @@ public class InfoCollectionProviderItemSelectorReturnTypeResolver
 	}
 
 	@Override
-	public Class<InfoListProvider<?>> getModelClass() {
-		return (Class<InfoListProvider<?>>)(Class<?>)InfoListProvider.class;
+	public Class<InfoCollectionProvider<?>> getModelClass() {
+		return (Class<InfoCollectionProvider<?>>)
+			(Class<?>)InfoCollectionProvider.class;
 	}
 
 	@Override
 	public String getValue(
-		InfoListProvider<?> infoListProvider, ThemeDisplay themeDisplay) {
+		InfoCollectionProvider<?> infoCollectionProvider,
+		ThemeDisplay themeDisplay) {
 
 		return JSONUtil.put(
-			"key", infoListProvider.getKey()
+			"key", infoCollectionProvider.getKey()
 		).put(
-			"title", infoListProvider.getLabel(themeDisplay.getLocale())
+			"title", infoCollectionProvider.getLabel(themeDisplay.getLocale())
 		).toString();
 	}
 

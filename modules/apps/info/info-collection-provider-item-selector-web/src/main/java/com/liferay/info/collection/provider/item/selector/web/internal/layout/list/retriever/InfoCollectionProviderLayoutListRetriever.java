@@ -14,26 +14,20 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal.layout.list.retriever;
 
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.InfoRequestItemProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.filter.PropertyInfoItemServiceFilter;
-import com.liferay.info.list.provider.DefaultInfoListProviderContext;
-import com.liferay.info.list.provider.FilteredInfoListProvider;
-import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
@@ -58,48 +52,37 @@ public class InfoCollectionProviderLayoutListRetriever
 		KeyListObjectReference keyListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
-		InfoListProvider<Object> infoListProvider =
-			(InfoListProvider<Object>)
-				_infoItemServiceTracker.getInfoItemService(
-					InfoListProvider.class, keyListObjectReference.getKey());
+		InfoCollectionProvider<Object> infoCollectionProvider =
+			_infoItemServiceTracker.getInfoItemService(
+				InfoCollectionProvider.class, keyListObjectReference.getKey());
 
-		if (infoListProvider == null) {
+		if (infoCollectionProvider == null) {
 			return Collections.emptyList();
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Group group = _groupLocalService.fetchGroup(
-			serviceContext.getScopeGroupId());
-
-		User user = _userLocalService.fetchUser(
-			PrincipalThreadLocal.getUserId());
-
-		InfoListProviderContext infoListProviderContext =
-			new DefaultInfoListProviderContext(group, user);
+		CollectionQuery collectionQuery = new CollectionQuery();
 
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
 
-		Pagination pagination = paginationOptional.orElse(
-			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		collectionQuery.setPagination(paginationOptional.orElse(null));
 
-		if (infoListProvider instanceof FilteredInfoListProvider) {
-			FilteredInfoListProvider<Object, InfoFilter>
-				filteredInfoListProvider =
-					(FilteredInfoListProvider<Object, InfoFilter>)
-						infoListProvider;
+		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
+			FilteredInfoCollectionProvider<Object, InfoFilter>
+				filteredInfoCollectionProvider =
+					(FilteredInfoCollectionProvider<Object, InfoFilter>)
+						infoCollectionProvider;
 
-			return filteredInfoListProvider.getInfoList(
-				infoListProviderContext,
+			collectionQuery.setInfoFilter(
 				_getInfoFilter(
-					filteredInfoListProvider, layoutListRetrieverContext),
-				pagination, null);
+					filteredInfoCollectionProvider,
+					layoutListRetrieverContext));
 		}
 
-		return infoListProvider.getInfoList(
-			infoListProviderContext, pagination, null);
+		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
+			collectionQuery);
+
+		return (List<Object>)infoPage.getPageItems();
 	}
 
 	@Override
@@ -107,43 +90,37 @@ public class InfoCollectionProviderLayoutListRetriever
 		KeyListObjectReference keyListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
-		InfoListProvider<?> infoListProvider =
+		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
-				InfoListProvider.class, keyListObjectReference.getKey());
+				InfoCollectionProvider.class, keyListObjectReference.getKey());
 
-		if (infoListProvider == null) {
+		if (infoCollectionProvider == null) {
 			return 0;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		CollectionQuery collectionQuery = new CollectionQuery();
 
-		Group group = _groupLocalService.fetchGroup(
-			serviceContext.getScopeGroupId());
+		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
+			FilteredInfoCollectionProvider<Object, InfoFilter>
+				filteredInfoCollectionProvider =
+					(FilteredInfoCollectionProvider<Object, InfoFilter>)
+						infoCollectionProvider;
 
-		User user = _userLocalService.fetchUser(
-			PrincipalThreadLocal.getUserId());
-
-		InfoListProviderContext infoListProviderContext =
-			new DefaultInfoListProviderContext(group, user);
-
-		if (infoListProvider instanceof FilteredInfoListProvider) {
-			FilteredInfoListProvider<Object, InfoFilter>
-				filteredInfoListProvider =
-					(FilteredInfoListProvider<Object, InfoFilter>)
-						infoListProvider;
-
-			return filteredInfoListProvider.getInfoListCount(
-				infoListProviderContext,
+			collectionQuery.setInfoFilter(
 				_getInfoFilter(
-					filteredInfoListProvider, layoutListRetrieverContext));
+					filteredInfoCollectionProvider,
+					layoutListRetrieverContext));
 		}
 
-		return infoListProvider.getInfoListCount(infoListProviderContext);
+		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
+			collectionQuery);
+
+		return infoPage.getTotalCount();
 	}
 
 	private InfoFilter _getInfoFilter(
-		FilteredInfoListProvider<Object, InfoFilter> filteredInfoListProvider,
+		FilteredInfoCollectionProvider<Object, InfoFilter>
+			filteredInfoCollectionProvider,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
 		Optional<HttpServletRequest> httpServletRequestOptional =
@@ -157,7 +134,7 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		Class<?> infoFilterClass =
-			filteredInfoListProvider.getInfoFilterClass();
+			filteredInfoCollectionProvider.getInfoFilterClass();
 
 		InfoRequestItemProvider<InfoFilter> infoRequestItemProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(

@@ -48,6 +48,9 @@ public class DLFileEntryMetadataTableReferenceDefinition
 		).singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
 			DDMStorageLinkTable.INSTANCE.classPK
+		).singleColumnReference(
+			DLFileEntryMetadataTable.INSTANCE.DDMStructureId,
+			DDMStructureTable.INSTANCE.structureId
 		);
 	}
 
@@ -59,9 +62,6 @@ public class DLFileEntryMetadataTableReferenceDefinition
 		parentTableReferenceInfoBuilder.singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DLFileEntryMetadataTable.INSTANCE.DDMStructureId,
-			DDMStructureTable.INSTANCE.structureId
 		).singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.fileVersionId,
 			DLFileVersionTable.INSTANCE.fileVersionId

@@ -78,6 +78,9 @@ public class DLFileEntryTypeTableReferenceDefinition
 						DLFileEntryMetadata.class.getName())
 				)
 			)
+		).singleColumnReference(
+			DLFileEntryTypeTable.INSTANCE.dataDefinitionId,
+			DDMStructureTable.INSTANCE.structureId
 		);
 	}
 
@@ -87,11 +90,7 @@ public class DLFileEntryTypeTableReferenceDefinition
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.groupedModel(
-			DLFileEntryTypeTable.INSTANCE
-		).singleColumnReference(
-			DLFileEntryTypeTable.INSTANCE.dataDefinitionId,
-			DDMStructureTable.INSTANCE.structureId
-		);
+			DLFileEntryTypeTable.INSTANCE);
 	}
 
 	@Override

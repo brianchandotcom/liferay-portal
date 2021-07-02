@@ -37,18 +37,6 @@ export default function CollectionPagination({
 
 	const totalPages = Math.ceil(totalNumberOfItems / numberOfItemsPerPage);
 
-	const simplePaginationButtons = [
-		{
-			disabled: activePage === 1,
-			label: Liferay.Language.get('previous'),
-			onClick: () => onPageChange(activePage - 1),
-		},
-		{
-			disabled: activePage === totalPages,
-			label: Liferay.Language.get('next'),
-			onClick: () => onPageChange(activePage + 1),
-		},
-	];
 
 	const regularPaginationLabel = [
 		numberOfItemsPerPage && numberOfItems && totalNumberOfItems
@@ -88,23 +76,30 @@ export default function CollectionPagination({
 				</ClayPaginationBar>
 			) : (
 				<div className="page-editor__collection__pagination--simple">
-					{simplePaginationButtons.map(
-						({disabled, label, onClick}) => (
-							<ClayButton
-								disabled={disabled}
-								displayType="unstyled"
-								key={label}
-							>
-								<span
-									className="c-inner"
-									onClick={onClick}
-									tabIndex="-1"
-								>
-									{label}
-								</span>
-							</ClayButton>
-						)
-					)}
+					<ClayButton
+						disabled={activePage === 1}
+						displayType="unstyled"
+					>
+						<span
+							className="c-inner"
+							onClick={() => onPageChange(activePage - 1)}
+							tabIndex="-1"
+						>
+							{Liferay.Language.get('previous')}
+						</span>
+					</ClayButton>
+					<ClayButton
+						disabled={activePage === totalPages}
+						displayType="unstyled"
+					>
+						<span
+							className="c-inner"
+							onClick={() => onPageChange(activePage + 1)}
+							tabIndex="-1"
+						>
+							{Liferay.Language.get('next')}
+						</span>
+					</ClayButton>
 				</div>
 			)}
 		</div>

@@ -137,6 +137,42 @@ definition {
 			ownerName = "Test Test");
 	}
 
+	@description = "This test ensures that depot sharing can be disabled at the instance level."
+	@priority = "4"
+	test CanDisableDepotSharingAtInstanceScope {
+		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtInstanceScope";
+
+		DepotNavigator.openToConfigSharingInInstanceSettings();
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		AssertElementNotPresent(
+			key_panel = "Sharing",
+			locator1 = "Panel#PANEL");
+	}
+
+	@description = "This test ensures that depot sharing can be disabled at the system level."
+	@priority = "4"
+	test CanDisableDepotSharingAtSystemScope {
+		property test.name.skip.portal.instance = "DepotSharing#CanDisableDepotSharingAtSystemScope";
+
+		DepotNavigator.openToConfigSharingInSystemSettings();
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		AssertElementNotPresent(
+			key_panel = "Sharing",
+			locator1 = "Panel#PANEL");
+	}
+
 	@description = "This test ensures that sharing can be disabled in a depot."
 	@priority = "5"
 	@refactorneeded

@@ -14,15 +14,16 @@
 
 package com.liferay.commerce.account.internal.util;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -68,11 +69,13 @@ public class CommerceAccountRoleHelperImpl
 			serviceContext.getCompanyId(), name);
 
 		if (role == null) {
-			role = _roleLocalService.addRole(
-				serviceContext.getUserId(), null, 0, name,
+			AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+				serviceContext.getUserId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
 				Collections.singletonMap(serviceContext.getLocale(), name),
-				Collections.emptyMap(), RoleConstants.TYPE_SITE,
-				StringPool.BLANK, serviceContext);
+				Collections.emptyMap());
+
+			role = accountRole.getRole();
 		}
 
 		_setRolePermissions(role, serviceContext);
@@ -150,6 +153,9 @@ public class CommerceAccountRoleHelperImpl
 
 		_setRolePermissions(role, resourceActionIds, serviceContext);
 	}
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

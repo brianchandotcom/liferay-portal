@@ -211,15 +211,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<aui:button cssClass="btn-comment btn-secondary btn-sm" onClick="<%= taglibCancel %>" type="cancel" />
 							</aui:button-row>
-
-							<aui:script>
-								window['<%= namespace + index %>EditOnChange'] = function (html) {
-									Liferay.Util.toggleDisabled(
-										'#<%= namespace %>editReplyButton<%= index %>',
-										html.trim() === ''
-									);
-								};
-							</aui:script>
 						</div>
 					</c:if>
 				</div>
@@ -291,12 +282,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						</aui:button-row>
 
 						<aui:script>
-							window['<%= namespace + index %>ReplyOnChange'] = function (html) {
-								Liferay.Util.toggleDisabled(
-									'#<%= namespace %>postReplyButton<%= index %>',
-									html.trim() === ''
-								);
-							};
 						</aui:script>
 					</clay:content-col>
 				</clay:content-row>
@@ -316,4 +301,17 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		%>
 
 	</article>
+
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"index", index
+			).put(
+				"namespace", namespace
+			).put(
+				"randomNamespace", randomNamespace
+			).build()
+		%>'
+		module="discussion/js/ViewMessageThread"
+	/>
 </c:if>

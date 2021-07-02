@@ -193,7 +193,7 @@ definition {
 				value1 = "Audience Category");
 		}
 	}
-	
+
 	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Content Dashboard"
 	@priority = "3"
 	test CheckLearnHowLinkNotDisplayedContentDashboard {

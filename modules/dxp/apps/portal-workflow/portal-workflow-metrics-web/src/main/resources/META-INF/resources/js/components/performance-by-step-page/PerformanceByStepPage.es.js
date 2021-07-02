@@ -30,7 +30,7 @@ function PerformanceByStepPage({query, routeParams}) {
 	useProcessTitle(processId, Liferay.Language.get('performance-by-step'));
 
 	const {
-		filterValues: {dateEnd, dateStart},
+		filterValues: {dateEnd, dateStart, processVersion},
 		prefixedKeys,
 	} = useFilter({});
 
@@ -38,6 +38,7 @@ function PerformanceByStepPage({query, routeParams}) {
 		params: {
 			completed: true,
 			key: search,
+			processVersion,
 			...paginationParams,
 			...getTimeRangeParams(dateStart, dateEnd),
 		},

@@ -2570,28 +2570,14 @@ export default ({
 					>
 						{showComments && (
 							<CTComments
-								ctEntryId={
-									renderState.node.ctEntryId
-										? renderState.node.ctEntryId
-										: 0
-								}
+								ctEntryId={0}
 								currentUserId={currentUserId}
 								deleteCommentURL={deleteCTCommentURL}
 								getCache={() => {
-									if (renderState.node.ctEntryId) {
-										return commentsCache.current[
-											renderState.node.ctEntryId.toString()
-										];
-									}
-
 									return commentsCache.current['0'];
 								}}
 								getCommentsURL={getCTCommentsURL}
-								keyParam={getPathParam(
-									renderState.filterClass,
-									renderState.node,
-									renderState.viewType
-								)}
+								keyParam=""
 								setShowComments={setShowComments}
 								spritemap={spritemap}
 								updateCache={(data) => {
@@ -2600,14 +2586,6 @@ export default ({
 									);
 
 									cacheData.updatedCommentId = null;
-
-									if (renderState.node.ctEntryId) {
-										commentsCache.current[
-											renderState.node.ctEntryId.toString()
-										] = cacheData;
-
-										return;
-									}
 
 									commentsCache.current['0'] = cacheData;
 								}}

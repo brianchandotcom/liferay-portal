@@ -491,6 +491,16 @@ definition {
 		TypeScreen(locator1 = "${kdSourceXML}");
 	}
 
+	macro previewDraftWorkflow {
+		var key_rowIndexNumber = "${rowIndexNumber}";
+
+		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+
+		AssertClick(
+			locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY_PREVIEW_BUTTON",
+			value1 = "Preview");
+	}
+
 	macro restoreDraft {
 		var key_rowIndexNumber = "${rowIndexNumber}";
 
@@ -739,6 +749,10 @@ definition {
 		AssertTextEquals(
 			locator1 = "KaleoDesignerEditWorkflow#TOTAL_MODIFICATIONS",
 			value1 = "${totalModifications} Revisions");
+	}
+
+	macro viewUpdateLabelVisible {
+		AssertVisible(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_UPDATE");
 	}
 
 	macro viewViewTab {

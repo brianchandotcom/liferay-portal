@@ -57,6 +57,11 @@
 </tr>
 <!-- REVISION_HISTORY -->
 <tr>
+	<td>REVISION_HISTORY_PREVIEW_BUTTON</td>
+	<td>//span[contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVISION_HISTORY_RESTORE_BUTTON</td>
 	<td>//span[contains(.,'Restore')]</td>
 	<td></td>
@@ -254,6 +259,11 @@
 <tr>
 	<td>VIEW_FORM_NODE_DELETE_ICON</td>
 	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeNodeLabel}')]/../div[3]/div/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_FORM_NODE_UPDATE</td>
+	<td>//div[contains(text(),'update')]</td>
 	<td></td>
 </tr>
 <tr>

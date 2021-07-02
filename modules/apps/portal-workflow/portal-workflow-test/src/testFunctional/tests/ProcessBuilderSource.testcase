@@ -264,12 +264,28 @@ definition {
 	}
 
 	@description = "Verify that the user is able to view a previous version of definition by clicking on Preview option, on kebab menu"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewPreviousVersion {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68331 CanViewPreviousVersion pending implementation
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "update");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Button.click(button = "Update");
+
+		Click(locator1 = "Icon#INFO");
+
+		Click(locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY");
+
+		KaleoDesigner.previewDraftWorkflow(rowIndexNumber = "1");
+
+		KaleoDesigner.viewUpdateLabelVisible();
 	}
 
 	@description = "Verify that the Details tab displays the Created date, Last Modified date and Total Modifications"

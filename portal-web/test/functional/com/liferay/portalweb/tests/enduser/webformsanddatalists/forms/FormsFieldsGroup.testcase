@@ -122,14 +122,58 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be created from an existing Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreatedFromExistingField {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133878 CanBeCreatedFromExistingField pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormFields.editPlaceholderField(fieldValue = "Test Placeholder Text");
+
+		FormFields.editHelpTextField(fieldHelpText = "Test Help Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		FormFields.editPlaceholderField(fieldValue = "Test Placeholder Text Numeric");
+
+		FormFields.editHelpTextField(fieldHelpText = "Test Help Text Numeric");
+
+		Form.addFieldToFieldsGroup(
+			sourceFieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		FormFields.viewTextLabel(fieldLabel = "Fields Group");
+
+		FormFields.viewFieldPlaceholderText(
+			fieldName = "Text",
+			placeHolder = "Test Placeholder Text");
+
+		FormFields.viewTextField(
+			fieldHelpText = "Test Help Text",
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormFields.viewFieldPlaceholderText(
+			fieldName = "Numeric",
+			placeHolder = "Test Placeholder Text Numeric");
+
+		FormFields.viewTextField(
+			fieldHelpText = "Test Help Text Numeric",
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
 	}
 
 	@description = "Verify that a Fields Group can be deleted"

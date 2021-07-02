@@ -185,8 +185,7 @@ public class SchemaValidator {
 		throws Exception {
 
 		System.out.println(
-			"Validating schema " + schemaName + " for company ID " +
-				companyId);
+			"Validating schema " + schemaName + " for company ID " + companyId);
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 

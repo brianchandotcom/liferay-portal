@@ -108,30 +108,14 @@ definition {
 	}
 
 	macro deletePG {
-		var key_distributionScope = "${distributionScope}";
-		var key_entryTitle = "${entryTitle}";
-
 		AssertTextEquals(
+			key_entryTitle = "${entryTitle}",
 			locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
 			value1 = "${entryTitle}");
-
-		AssertTextEquals(
-			locator1 = "Announcements#CARD_VIEW_ENTRY_SCOPE",
-			value1 = "${distributionScope}");
-
-		var key_entryContent = "${entryContent}";
-
-		AssertTextEquals(
-			locator1 = "Announcements#CARD_VIEW_ENTRY_CONTENT",
-			value1 = "${entryContent}");
 
 		LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		AssertTextNotPresent(value1 = "${entryTitle}");
-
-		AssertTextNotPresent(value1 = "${entryContent}");
 	}
 
 	macro editPG {
@@ -181,6 +165,11 @@ definition {
 	macro markAsReadPG {
 		var key_entryContent = "${entryContent}";
 
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "${layoutName}",
+			siteURLKey = "${siteURLKey}",
+			tabName = "${tabName}");
+
 		AssertVisible(locator1 = "Announcements#CARD_VIEW_ENTRY_CONTENT");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Mark as Read");
@@ -204,12 +193,6 @@ definition {
 		}
 	}
 
-	macro viewDeletePG {
-		AssertTextNotPresent(value1 = "${entryTitle}");
-
-		AssertTextNotPresent(value1 = "${entryContent}");
-	}
-
 	macro viewList {
 		var key_entryTitle = "${entryTitle}";
 
@@ -220,6 +203,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "Blogs#ENTRY_TABLE_AUTHOR",
 			value1 = "${distributionScope}");
+	}
+
+	macro viewNoAdmin {
+		AssertTextEquals(
+			locator1 = "Message#NO_ENTRIES",
+			value1 = "No entries were found.");
 	}
 
 	macro viewNoPG {
@@ -241,6 +230,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "Announcements#CARD_VIEW_ENTRY_SCOPE",
 			value1 = "${distributionScope}");
+
+		if (isSet(priority)) {
+			AssertTextEquals(
+				locator1 = "Announcements#PRIORITY_IMPORTANT",
+				value1 = "${priority}");
+		}
 
 		var key_entryContent = "${entryContent}";
 

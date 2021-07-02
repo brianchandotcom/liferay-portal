@@ -221,6 +221,23 @@ definition {
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
 	}
 
+	macro addImageToBlogImages {
+		BlogsNavigator.openToAddEntry(siteURLKey = "${siteURLKey}");
+
+		for (var uploadFileName : list "${uploadFileNames}") {
+			if (IsElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE")) {
+				AssertClick(
+					locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE",
+					value1 = "Select File");
+			}
+			else {
+				BlogsNavigator.gotoBrowseImage();
+			}
+
+			ItemSelector.uploadFile(uploadFileName = "${uploadFileName}");
+		}
+	}
+
 	macro addViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 

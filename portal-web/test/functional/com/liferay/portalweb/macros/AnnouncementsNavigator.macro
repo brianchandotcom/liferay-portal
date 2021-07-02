@@ -1,0 +1,15 @@
+definition {
+
+	macro opentoAdmin {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=${groupId}");
+	}
+
+	macro openToEntriesTab {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsPortlet_INSTANCE_8zMt0QV1K3AB&_com_liferay_announcements_web_portlet_AnnouncementsPortlet_INSTANCE_8zMt0QV1K3AB_mvcRenderCommandName=%2Fannouncements%2Fview&_com_liferay_announcements_web_portlet_AnnouncementsPortlet_INSTANCE_8zMt0QV1K3AB_tabs1=${tabName}");
+	}
+
+}

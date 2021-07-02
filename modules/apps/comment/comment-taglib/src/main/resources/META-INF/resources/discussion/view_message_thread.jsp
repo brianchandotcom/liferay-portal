@@ -90,6 +90,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
 
 									Date parentDiscussionCreateDate = parentDiscussionComment.getCreateDate();
+
+									User parentMessageUser = parentDiscussionComment.getUser();
 									%>
 
 									<span>
@@ -110,6 +112,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													"contentHTML", parentDiscussionComment.getBody()
 												).put(
 													"href", "#" + randomNamespace + "message_" + parentDiscussionComment.getCommentId()
+												).put(
+													"portraitURL", parentMessageUser.getPortraitURL(themeDisplay)
 												).put(
 													"time", LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionCreateDate.getTime(), true), false)
 												).put(

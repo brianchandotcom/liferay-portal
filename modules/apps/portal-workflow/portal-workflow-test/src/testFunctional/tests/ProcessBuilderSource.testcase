@@ -34,12 +34,34 @@ definition {
 	}
 
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditDuplicatedWorkflowTitle {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanEditDuplicatedWorkflowTitle";
 
-		// TODO LRQA-68336 CanEditDuplicatedWorkflowTitle pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Duplicate");
+
+		Button.click(button = "Duplicate");
+
+		Alert.viewSuccessMessageText(successMessage = "Duplicated from 'Single Approver'");
+
+		Type(
+			locator1 = "WorkflowDefinition#DEFINITION_TITLE",
+			value1 = "Single Approver Updated");
+
+		Button.click(button = "Update");
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver Updated");
 	}
 
 	@description = "Verify that, when importing a non XML file, an error message is displayed and the Workflow is not published"

@@ -1,3 +1,22 @@
 assemble {
 	dependsOn packageRunBuild
 }
+
+task copyClassicTheme(type: Copy)
+
+copyClassicTheme {
+	from("../frontend-theme-classic/src/") {
+		exclude "**/css/_custom.scss"
+		exclude "**/css/clay.scss"
+		exclude "**/WEB-INF/frontend-token-definition.json"
+		exclude "**/WEB-INF/liferay-look-and-feel.xml"
+		exclude "**/WEB-INF/liferay-plugin-package.properties"
+	}
+
+	includeEmptyDirs = false
+	into file("src")
+}
+
+packageRunBuild {
+	dependsOn copyClassicTheme
+}

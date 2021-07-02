@@ -3,3 +3,10 @@
 /build_gradle
 /dist
 /liferay-theme.json
+/src/css
+!/src/css/_custom.scss
+!/src/css/clay.scss
+/src/images
+/src/js
+/src/templates
+/src/WEB-INF/src

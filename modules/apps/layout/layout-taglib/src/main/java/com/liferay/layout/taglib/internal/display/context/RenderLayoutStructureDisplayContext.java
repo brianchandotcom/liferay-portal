@@ -748,7 +748,7 @@ public class RenderLayoutStructureDisplayContext {
 			styleSB.append("background-position: 50% 50%; background-repeat: ");
 			styleSB.append("no-repeat; background-size: cover; ");
 			styleSB.append("background-image: url(");
-			styleSB.append(backgroundImage);
+			styleSB.append(PortalUtil.getPathContext() + backgroundImage);
 			styleSB.append(");");
 		}
 

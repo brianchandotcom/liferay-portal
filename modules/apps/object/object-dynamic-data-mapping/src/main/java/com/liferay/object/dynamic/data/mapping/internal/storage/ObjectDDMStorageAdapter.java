@@ -36,14 +36,19 @@ import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -197,12 +202,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	private Map<String, Object> _getObjectEntryProperties(
 		DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest,
-		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse,
 		List<ObjectField> objectFields) {
 
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"ddmStorageId", ddmStorageAdapterSaveResponse.getPrimaryKey()
-		).build();
+		Map<String, Object> properties = new HashMap<>();
 
 		Stream<ObjectField> stream = objectFields.stream();
 
@@ -218,9 +220,10 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		for (DDMFormFieldValue ddmFormValue :
 				ddmFormValues.getDDMFormFieldValues()) {
 
-			DDMFormField ddmFormField = ddmFormValue.getDDMFormField();
+			String objectFieldName = _getObjectFieldName(
+				ddmFormValue.getDDMFormField());
 
-			if (!objectFieldNames.contains(ddmFormField.getFieldReference())) {
+			if (!objectFieldNames.contains(objectFieldName)) {
 				continue;
 			}
 
@@ -229,8 +232,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			Map<Locale, String> values = value.getValues();
 
 			properties.put(
-				StringUtil.toLowerCase(ddmFormField.getFieldReference()),
-				values.get(value.getDefaultLocale()));
+				objectFieldName, values.get(value.getDefaultLocale()));
 		}
 
 		return properties;
@@ -238,9 +240,29 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	@Reference
 	private DDMFieldLocalService _ddmFieldLocalService;
+	private String _getObjectFieldName(DDMFormField ddmFormField) {
+		try {
+			JSONArray jsonArray = _jsonFactory.createJSONArray(
+				(String)ddmFormField.getProperty("objectFieldName"));
 
 	@Reference(target = "(ddm.storage.adapter.type=default)")
 	private DDMStorageAdapter _ddmStorageAdapter;
+			return jsonArray.getString(0);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return StringPool.BLANK;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDDMStorageAdapter.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectEntryManager _objectEntryManager;

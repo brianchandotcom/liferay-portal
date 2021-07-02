@@ -148,9 +148,14 @@ public class CPDefinitionDiagramSettingPersistenceTest {
 		newCPDefinitionDiagramSetting.setCPDefinitionId(
 			RandomTestUtil.nextLong());
 
-		newCPDefinitionDiagramSetting.setRadius(RandomTestUtil.nextDouble());
+		newCPDefinitionDiagramSetting.setCPAttachmentFileEntryId(
+			RandomTestUtil.nextLong());
 
 		newCPDefinitionDiagramSetting.setColor(RandomTestUtil.randomString());
+
+		newCPDefinitionDiagramSetting.setRadius(RandomTestUtil.nextDouble());
+
+		newCPDefinitionDiagramSetting.setType(RandomTestUtil.randomString());
 
 		_cpDefinitionDiagramSettings.add(
 			_persistence.update(newCPDefinitionDiagramSetting));
@@ -188,12 +193,18 @@ public class CPDefinitionDiagramSettingPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionDiagramSetting.getCPDefinitionId(),
 			newCPDefinitionDiagramSetting.getCPDefinitionId());
+		Assert.assertEquals(
+			existingCPDefinitionDiagramSetting.getCPAttachmentFileEntryId(),
+			newCPDefinitionDiagramSetting.getCPAttachmentFileEntryId());
+		Assert.assertEquals(
+			existingCPDefinitionDiagramSetting.getColor(),
+			newCPDefinitionDiagramSetting.getColor());
 		AssertUtils.assertEquals(
 			existingCPDefinitionDiagramSetting.getRadius(),
 			newCPDefinitionDiagramSetting.getRadius());
 		Assert.assertEquals(
-			existingCPDefinitionDiagramSetting.getColor(),
-			newCPDefinitionDiagramSetting.getColor());
+			existingCPDefinitionDiagramSetting.getType(),
+			newCPDefinitionDiagramSetting.getType());
 	}
 
 	@Test
@@ -254,7 +265,8 @@ public class CPDefinitionDiagramSettingPersistenceTest {
 			"CPDefinitionDiagramSetting", "uuid", true,
 			"CPDefinitionDiagramSettingId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"CPDefinitionId", true, "radius", true, "color", true);
+			"CPDefinitionId", true, "CPAttachmentFileEntryId", true, "color",
+			true, "radius", true, "type", true);
 	}
 
 	@Test
@@ -589,9 +601,14 @@ public class CPDefinitionDiagramSettingPersistenceTest {
 
 		cpDefinitionDiagramSetting.setCPDefinitionId(RandomTestUtil.nextLong());
 
-		cpDefinitionDiagramSetting.setRadius(RandomTestUtil.nextDouble());
+		cpDefinitionDiagramSetting.setCPAttachmentFileEntryId(
+			RandomTestUtil.nextLong());
 
 		cpDefinitionDiagramSetting.setColor(RandomTestUtil.randomString());
+
+		cpDefinitionDiagramSetting.setRadius(RandomTestUtil.nextDouble());
+
+		cpDefinitionDiagramSetting.setType(RandomTestUtil.randomString());
 
 		_cpDefinitionDiagramSettings.add(
 			_persistence.update(cpDefinitionDiagramSetting));

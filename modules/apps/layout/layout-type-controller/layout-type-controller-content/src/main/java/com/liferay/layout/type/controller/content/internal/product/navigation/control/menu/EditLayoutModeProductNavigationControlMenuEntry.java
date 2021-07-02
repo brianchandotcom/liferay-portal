@@ -95,9 +95,13 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 			Layout layout = themeDisplay.getLayout();
 
+			long publishedLayoutPlid = layout.getPlid();
+
 			if (layout.isDraftLayout()) {
+				publishedLayoutPlid = layout.getClassPK();
+
 				redirect = _portal.getLayoutFullURL(
-					_layoutLocalService.getLayout(layout.getClassPK()),
+					_layoutLocalService.getLayout(publishedLayoutPlid),
 					themeDisplay);
 			}
 			else {
@@ -135,7 +139,10 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			}
 
 			redirect = _http.setParameter(
-				redirect, "p_l_back_url", themeDisplay.getURLCurrent());
+				redirect, "p_l_back_url",
+				_portal.getLayoutFullURL(
+					_layoutLocalService.getLayout(publishedLayoutPlid),
+					themeDisplay));
 
 			return _http.setParameter(redirect, "p_l_mode", Constants.EDIT);
 		}

@@ -23,7 +23,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AddAccountWithMultiDomains {
+	test CanAddMultipleDomainsToAccount {
 		AccountConfiguration.enableAccountEmailDomain();
 
 		ApplicationsMenu.gotoPortlet(
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AddBlockedEmailDomain {
+	test WarningDisplaysWhenAddingUserWithBlockedEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		AccountConfiguration.enableAccountEmailDomain();
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AddNewUserViaPersonAccount {
+	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AddPersonAccount {
+	test CanAddAPersonAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AddUserWithDifferentDomain {
+	test WarningDisplaysWhenAddingAUserWithInvalidDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		AccountConfiguration.enableAccountEmailDomain();
@@ -251,7 +251,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AddUserWithSameDomain {
+	test NoWarningDisplaysWhenAddingAUserWithValidDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		AccountConfiguration.enableAccountEmailDomain();
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssignOrganizationToAccount {
+	test CanAssignOrganizationToAccount {
 		JSONOrganization.addOrganization(
 			organizationName = "Organization for Account",
 			organizationSite = "true");
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AssignUserToAccountWithDomain {
+	test UsersWithValidAndInvalidDomainsAreFilteredWhenAssigningUsers {
 		AccountConfiguration.enableAccountEmailDomain();
 
 		ApplicationsMenu.gotoPortlet(
@@ -459,7 +459,7 @@ definition {
 	}
 
 	@priority = "3"
-	test CancelAccountCreation {
+	test ClickingCancelOrBackWillNotSaveAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -518,7 +518,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ChangeAddressType {
+	test CanChangeAddressType {
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -600,7 +600,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteAccount {
+	test CanDeleteAccount {
 		property portal.acceptance = "true";
 
 		for (var accountNumber : list "1,2,3") {
@@ -658,7 +658,7 @@ definition {
 	}
 
 	@priority = "3"
-	test DeleteAddress {
+	test CanDeleteAddress {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -711,7 +711,7 @@ definition {
 
 	@description = "This is a use case for LPS-101315."
 	@priority = "3"
-	test DeleteInactiveAccount {
+	test CanDeleteAnInactiveAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -737,7 +737,7 @@ definition {
 	}
 
 	@priority = "5"
-	test EditAccount {
+	test CanEditNameAndDescription {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -815,7 +815,7 @@ definition {
 	}
 
 	@priority = "4"
-	test EditAccountCustomField {
+	test CanEditAccountCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -854,7 +854,7 @@ definition {
 	}
 
 	@priority = "3"
-	test FilterByType {
+	test CanFilterAccountsByType {
 		for (var accountType : list "Business,Person") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Accounts",
@@ -892,7 +892,7 @@ definition {
 	}
 
 	@priority = "4"
-	test InactiveAccount {
+	test CanDeactivateAccount {
 		for (var accountNumber : list "1,2,3") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Accounts",
@@ -1034,7 +1034,7 @@ definition {
 	}
 
 	@priority = "3"
-	test RemoveAddress {
+	test CanRemoveAddressAsDefault {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -1111,7 +1111,7 @@ definition {
 	}
 
 	@priority = "3"
-	test RemoveDomain {
+	test CanRemoveDomainFromAccount {
 		AccountConfiguration.enableAccountEmailDomain();
 
 		ApplicationsMenu.gotoPortlet(
@@ -1151,7 +1151,7 @@ definition {
 	}
 
 	@priority = "4"
-	test RemoveDomainFromBlacklist {
+	test CanRemoveDomainFromBlacklist {
 		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
 
 		for (var settingValue : list "yahoo.com,blocked.com,google.com") {
@@ -1172,7 +1172,7 @@ definition {
 	}
 
 	@priority = "3"
-	test SetDefaultAddresses {
+	test CanSetDefaultAddresses {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -1310,7 +1310,7 @@ definition {
 	}
 
 	@priority = "5"
-	test UnassignOrganizationFromAccount {
+	test CanRemoveOrganizationFromBusinessAccount {
 		property portal.acceptance = "true";
 
 		JSONOrganization.addOrganization(
@@ -1358,7 +1358,7 @@ definition {
 
 	@description = "This is a use case for LPS-101221."
 	@priority = "4"
-	test UpdateInactiveAccountViaNameLink {
+	test CanEditInactiveAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -1408,7 +1408,7 @@ definition {
 
 	@description = "This is a use case for LPS-101893."
 	@priority = "4"
-	test ViewAccountPagination {
+	test AccountsDisplayWhenChangingPagination {
 		for (var accountNum : list "1,2,3,4,5,6") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Accounts",

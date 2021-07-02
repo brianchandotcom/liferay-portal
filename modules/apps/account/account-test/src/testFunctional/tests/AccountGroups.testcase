@@ -23,7 +23,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssignAccount {
+	test CanManuallyAssignAccountToGroup {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -65,7 +65,7 @@ definition {
 
 	@description = "This is a use case for LPS-122414."
 	@priority = "4"
-	test AssignMultipleAccounts {
+	test CanManuallyAssignMultipleAccountsToGroup {
 		for (var accountNumber : list "1,2,3,4,5") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Accounts",
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@priority = "4"
-	test DeleteAccountGroup {
+	test CanDeleteAnAccountGroup {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@priority = "4"
-	test RemoveAccount {
+	test CanRemoveAccountFromGroup {
 		for (var accountNumber : list "1,2,3") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Accounts",

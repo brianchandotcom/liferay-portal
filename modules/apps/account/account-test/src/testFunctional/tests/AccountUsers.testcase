@@ -24,7 +24,7 @@ definition {
 
 	@description = "This test adds an account user via Account Users portlet"
 	@priority = "5"
-	test AddAccountUser {
+	test CanAddAccountUser {
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -58,7 +58,7 @@ definition {
 
 	@description = "This test adds a new user via the Users tab of an Account"
 	@priority = "4"
-	test AddAccountUserViaAssignUser {
+	test CanAddAccountUserViaAssignUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -94,7 +94,7 @@ definition {
 
 	@description = "This test assigns an existing user to account through the Users tab"
 	@priority = "4"
-	test AssignExistingUserToAccount {
+	test CanAssignExistingUserToAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -150,7 +150,7 @@ definition {
 
 	@description = "This test deactivates an active user"
 	@priority = "4"
-	test DeactivateUser {
+	test CanDeactivateUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -190,7 +190,7 @@ definition {
 
 	@description = "This test edits a user via Account Users portlet"
 	@priority = "5"
-	test EditAccountUser {
+	test CanEditAccountUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -246,7 +246,7 @@ definition {
 
 	@description = "This is a use case for LPS-107598 and LPS-129713"
 	@priority = "3"
-	test FilterAccountUserInTheUsersAdminPortlet {
+	test CanFilterAccountUserInTheUsersAdminPortlet {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -298,7 +298,7 @@ definition {
 
 	@description = "This filters users by accounts, choosing a specific account to view"
 	@priority = "3"
-	test FilterByAccounts {
+	test CanFilterByAccounts {
 		for (var accountType : list "Business,Person") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Accounts",
@@ -375,7 +375,7 @@ definition {
 
 	@description = "This filters users that do not have any assigned account"
 	@priority = "3"
-	test FilterByNoAssignedAccount {
+	test CanFilterByNoAssignedAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -428,7 +428,7 @@ definition {
 
 	@description = "This filters users by status: active and inactive"
 	@priority = "3"
-	test FilterByStatus {
+	test CanFilterByStatus {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -481,7 +481,7 @@ definition {
 
 	@description = "This test impersonates an account user via Account Users portlet"
 	@priority = "4"
-	test ImpersonateUser {
+	test CanImpersonateUser {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
@@ -519,7 +519,7 @@ definition {
 
 	@description = "This test removes a user from account via Users tab"
 	@priority = "5"
-	test RemoveUserFromAccount {
+	test CanRemoveUserFromAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",

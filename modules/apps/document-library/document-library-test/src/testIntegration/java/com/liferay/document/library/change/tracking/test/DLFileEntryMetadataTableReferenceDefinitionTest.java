@@ -136,6 +136,12 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 	}
 
 	private Map<String, DDMFormValues> _createDDMFormValuesMap() {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US));
+		ddmForm.setDefaultLocale(LocaleUtil.US);
+
 		DDMFormField ddmFormField = new DDMFormField(
 			DLFileEntryMetadataTableReferenceDefinitionTest.class.
 				getSimpleName(),
@@ -144,12 +150,6 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 		ddmFormField.setDataType("string");
 		ddmFormField.setRequired(false);
 		ddmFormField.setLocalizable(false);
-
-		DDMForm ddmForm = new DDMForm();
-
-		ddmForm.setAvailableLocales(
-			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US));
-		ddmForm.setDefaultLocale(LocaleUtil.US);
 
 		ddmForm.addDDMFormField(ddmFormField);
 

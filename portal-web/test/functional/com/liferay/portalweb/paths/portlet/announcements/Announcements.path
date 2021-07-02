@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>PRIORITY_IMPORTANT</td>
+	<td>//span[contains(text(),'Important')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRIORITY_SELECT</td>
 	<td>//select[contains(@id,'AnnouncementsPortlet') and contains(@id,'priority')]</td>
 	<td></td>

@@ -155,4 +155,34 @@ definition {
 		echo("## * Blogs ID: ${entryId}");
 	}
 
+	macro uploadBlogImage {
+		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+
+		var baseDir = PropsUtil.get("test.base.dir.name");
+
+		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+
+		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
+			-H accept: application/json \
+			-H Content-Type: multipart/form-data \
+			-u test@liferay.com:test \
+			-F file=@${filePath}
+		''';
+
+		var imageId = JSONCurlUtil.post("${curl}", "$..id");
+
+		return "${imageId}";
+	}
+
 }

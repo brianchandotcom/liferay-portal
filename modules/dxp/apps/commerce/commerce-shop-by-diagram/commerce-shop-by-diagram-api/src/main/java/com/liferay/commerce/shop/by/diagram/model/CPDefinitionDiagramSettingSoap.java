@@ -45,8 +45,11 @@ public class CPDefinitionDiagramSettingSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
-		soapModel.setRadius(model.getRadius());
+		soapModel.setCPAttachmentFileEntryId(
+			model.getCPAttachmentFileEntryId());
 		soapModel.setColor(model.getColor());
+		soapModel.setRadius(model.getRadius());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -176,12 +179,12 @@ public class CPDefinitionDiagramSettingSoap implements Serializable {
 		_CPDefinitionId = CPDefinitionId;
 	}
 
-	public double getRadius() {
-		return _radius;
+	public long getCPAttachmentFileEntryId() {
+		return _CPAttachmentFileEntryId;
 	}
 
-	public void setRadius(double radius) {
-		_radius = radius;
+	public void setCPAttachmentFileEntryId(long CPAttachmentFileEntryId) {
+		_CPAttachmentFileEntryId = CPAttachmentFileEntryId;
 	}
 
 	public String getColor() {
@@ -192,6 +195,22 @@ public class CPDefinitionDiagramSettingSoap implements Serializable {
 		_color = color;
 	}
 
+	public double getRadius() {
+		return _radius;
+	}
+
+	public void setRadius(double radius) {
+		_radius = radius;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
 	private String _uuid;
 	private long _CPDefinitionDiagramSettingId;
 	private long _companyId;
@@ -200,7 +219,9 @@ public class CPDefinitionDiagramSettingSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _CPDefinitionId;
-	private double _radius;
+	private long _CPAttachmentFileEntryId;
 	private String _color;
+	private double _radius;
+	private String _type;
 
 }

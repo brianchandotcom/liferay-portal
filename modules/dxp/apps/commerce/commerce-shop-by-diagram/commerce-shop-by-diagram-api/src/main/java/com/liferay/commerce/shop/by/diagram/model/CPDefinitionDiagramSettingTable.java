@@ -57,10 +57,16 @@ public class CPDefinitionDiagramSettingTable
 	public final Column<CPDefinitionDiagramSettingTable, Long> CPDefinitionId =
 		createColumn(
 			"CPDefinitionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramSettingTable, Double> radius =
-		createColumn("radius", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionDiagramSettingTable, Long>
+		CPAttachmentFileEntryId = createColumn(
+			"CPAttachmentFileEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionDiagramSettingTable, String> color =
 		createColumn("color", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionDiagramSettingTable, Double> radius =
+		createColumn("radius", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionDiagramSettingTable, String> type =
+		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CPDefinitionDiagramSettingTable() {
 		super(

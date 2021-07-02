@@ -19,23 +19,23 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Andrea Sbarra
  */
-public class NoSuchCPDefinitionDiagramSettingException
+public class NoSuchCPDefinitionDiagramEntryException
 	extends NoSuchModelException {
 
-	public NoSuchCPDefinitionDiagramSettingException() {
+	public NoSuchCPDefinitionDiagramEntryException() {
 	}
 
-	public NoSuchCPDefinitionDiagramSettingException(String msg) {
+	public NoSuchCPDefinitionDiagramEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchCPDefinitionDiagramSettingException(
+	public NoSuchCPDefinitionDiagramEntryException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionDiagramSettingException(Throwable throwable) {
+	public NoSuchCPDefinitionDiagramEntryException(Throwable throwable) {
 		super(throwable);
 	}
 

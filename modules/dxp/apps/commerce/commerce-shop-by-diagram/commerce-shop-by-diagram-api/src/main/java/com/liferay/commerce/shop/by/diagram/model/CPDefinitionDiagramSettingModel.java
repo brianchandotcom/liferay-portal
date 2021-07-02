@@ -203,18 +203,18 @@ public interface CPDefinitionDiagramSettingModel
 	public void setCPDefinitionId(long CPDefinitionId);
 
 	/**
-	 * Returns the radius of this cp definition diagram setting.
+	 * Returns the cp attachment file entry ID of this cp definition diagram setting.
 	 *
-	 * @return the radius of this cp definition diagram setting
+	 * @return the cp attachment file entry ID of this cp definition diagram setting
 	 */
-	public double getRadius();
+	public long getCPAttachmentFileEntryId();
 
 	/**
-	 * Sets the radius of this cp definition diagram setting.
+	 * Sets the cp attachment file entry ID of this cp definition diagram setting.
 	 *
-	 * @param radius the radius of this cp definition diagram setting
+	 * @param CPAttachmentFileEntryId the cp attachment file entry ID of this cp definition diagram setting
 	 */
-	public void setRadius(double radius);
+	public void setCPAttachmentFileEntryId(long CPAttachmentFileEntryId);
 
 	/**
 	 * Returns the color of this cp definition diagram setting.
@@ -230,5 +230,34 @@ public interface CPDefinitionDiagramSettingModel
 	 * @param color the color of this cp definition diagram setting
 	 */
 	public void setColor(String color);
+
+	/**
+	 * Returns the radius of this cp definition diagram setting.
+	 *
+	 * @return the radius of this cp definition diagram setting
+	 */
+	public double getRadius();
+
+	/**
+	 * Sets the radius of this cp definition diagram setting.
+	 *
+	 * @param radius the radius of this cp definition diagram setting
+	 */
+	public void setRadius(double radius);
+
+	/**
+	 * Returns the type of this cp definition diagram setting.
+	 *
+	 * @return the type of this cp definition diagram setting
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this cp definition diagram setting.
+	 *
+	 * @param type the type of this cp definition diagram setting
+	 */
+	public void setType(String type);
 
 }

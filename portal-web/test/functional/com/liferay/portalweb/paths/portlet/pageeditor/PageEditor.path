@@ -765,6 +765,11 @@
 	<td>//li[contains(@class,'page-contents__page-content')]//span[normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_CONTENTS_ITEM_EDIT_PENCIL</td>
+	<td>//li[contains(@class,'page-contents__page-content')][.//span[normalize-space(text())='${key_itemName}']]//button[*[name()='svg'][contains(@class,'icon-pencil')]]</td>
+	<td></td>
+</tr>
 <!--PAGE_DESIGN_OPTIONS-->
 <tr>
 	<td>MORE_LINK</td>

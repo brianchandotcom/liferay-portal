@@ -35,7 +35,6 @@
 			"LayoutProvider/handlers/fieldEditedHandler",
 			"LayoutProvider/handlers/fieldSetAddedHandler",
 			"LayoutProvider/handlers/focusedFieldEvaluationEndedHandler",
-			"LayoutProvider/LayoutProvider",
 			"LayoutProvider/util",
 			"PageRenderer",
 			"RuleBuilder/RulesSupport.",

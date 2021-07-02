@@ -221,11 +221,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>QUESTIONS_NAME_FIELD</td>
-	<td>//p[@title='${key_questionNameField}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>QUESTIONS_DETAILS_TITLE</td>
 	<td>//div[contains(@class,'questions-container')]//h1[contains(.,'${key_questionTitle}')]</td>
 	<td></td>

@@ -277,10 +277,10 @@ export default function Comments({
 	}
 
 	function showEditor(formId, options) {
-		const element = window[`${namespace}${options.name}`];
+		const editor = window[`${namespace}${options.name}`];
 
 		const editorWrapper =
-			element && element.querySelector(`#${formId} .editor-wrapper`);
+			editor && document.querySelector(`#${formId} .editor-wrapper`);
 
 		if (!editorWrapper || editorWrapper.childNodes.length === 0) {
 			fetch(editorURL, {

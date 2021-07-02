@@ -258,12 +258,34 @@ definition {
 	}
 
 	@description = "Verify that the user can select Duplicate option in the kebab for a particular definition"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSelectDuplicate {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanSelectDuplicate";
 
-		// TODO LRQA-68335 CanSelectDuplicate pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Single Approver");
+
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Duplicate");
+
+		Button.click(button = "Duplicate");
+
+		Alert.viewSuccessMessageText(successMessage = "Duplicated from 'Single Approver");
+
+		Navigator.gotoBack();
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Single Approver",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+
+		AssertElementPresent(
+			key_workflowResourceValue = "Copy of Single Approver",
+			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
 	}
 
 	@description = "Verify that the user can select Permissions option in the kebab for a particular definition"

@@ -195,6 +195,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122204. The Page Creater can access to edit the inline text via Page Content panel."
+	@priority = "5"
+	test EditInlineText {
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Access to the inline text editor of Heading via Page Content panel") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			PageEditor.editFragmentTextViaPageContentPanel(
+				itemName = "Heading Example",
+				text = "Edited Text");
+		}
+
+		task ("View the edited inline text shown in Heading") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Edited Text",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("View the edited inline text of Heading shown in Page Content panel") {
+			AssertVisible(
+				key_itemName = "Edited Text",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+		}
+
+		task ("Add a Paragraph fragment below the Heading fragment") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Access to the inline text editor of Paragraph via Page Content panel") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			PageEditor.editFragmentTextViaPageContentPanel(
+				itemName = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				text = "Edited Rich Text");
+		}
+
+		task ("View the edited inline text shown in Paragraph") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Edited Rich Text",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+
+		task ("View the edited inline text of Paragraph shown in Page Content panel") {
+			AssertVisible(
+				key_itemName = "Edited Rich Text",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-96794. View permissions and usage of mapped web content in Contents panel."
 	@priority = "4"
 	test ViewPermissionsAndUsageOfMappedWebContent {

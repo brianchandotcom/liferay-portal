@@ -1730,12 +1730,113 @@ definition {
 	}
 
 	@description = "LPS-92052 - Verify that when the task has multiple assignees, the sort considers the first one displayed on the row"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SortConsidersOnlyTheFirstAssignee {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-68171 SortConsidersOnlyTheFirstAssignee pending implementation
+		for (var orderNumber : list "1,2,3") {
+			key_order = "${orderNumber}";
+			key_title = "Blogs Entry: Blogs Entry Title ${orderNumber}";
 
+			JSONUser.addUser(
+				userEmailAddress = "user${orderNumber}@liferay.com",
+				userFirstName = "user${orderNumber}",
+				userLastName = "user${orderNumber}",
+				userScreenName = "user${orderNumber}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user${orderNumber}@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "user${orderNumber}@liferay.com");
+		}
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Memberships");
+
+		for (var orderNumber : list "1,2,3") {
+			key_order = "${orderNumber}";
+			Site.assignUserAsMemberCP(
+				userFirstName = "user${orderNumber}",
+				userLastName = "user${orderNumber}",
+				userScreenName = "user${orderNumber}");
+		}
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "similar_single_approver.xml",
+			workflowDefinitionTitle = "Similar Single Approver Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Similar Single Approver Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title 2");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Similar Single Approver Process");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.selectReassignTasks(taskList = "task1");
+
+		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+
+		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "user1 user1",
+			taskList = "task1");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.selectReassignTasks(taskList = "task2");
+
+		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+
+		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "user2 user2",
+			taskList = "task2");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.selectReassignTasks(taskList = "task3");
+
+		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+
+		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+
+		WorkflowMetrics.selectNewAssignee(
+			nameOfAssignee = "user3 user3",
+			taskList = "task3");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Similar Single Approver Process");
+
+		AssertElementPresent(
+			key_assigneeName = "user1 user1, user2 user2, user3 user3",
+			key_order = "1",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ASSIGNEE_ORDER");
 	}
 
 	@description = "LPS-130216 - Verify that the Item Subject sort will only use the Asset Type information for sorting."

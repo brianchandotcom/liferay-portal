@@ -306,6 +306,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_TABLE_ASSIGNEE_ORDER</td>
+	<td>//tbody//tr[${key_order}]//td[6][contains(@title, "${key_assigneeName}")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_INSTANCE_ID</td>
 	<td>//td[contains(@class,'table-title')]//strong | //span[contains(@class,'link-text')]//strong</td>
 	<td></td>

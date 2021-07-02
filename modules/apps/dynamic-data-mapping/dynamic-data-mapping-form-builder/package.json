@@ -14,10 +14,6 @@
 		],
 		"testPathIgnorePatterns": [
 			"fieldSupport",
-			"LayoutProvider/handlers/fieldBlurredHandler",
-			"LayoutProvider/handlers/fieldEditedHandler",
-			"LayoutProvider/handlers/fieldSetAddedHandler",
-			"LayoutProvider/handlers/focusedFieldEvaluationEndedHandler",
 			"LayoutProvider/util",
 			"PageRenderer",
 			"RuleBuilder/RulesSupport."

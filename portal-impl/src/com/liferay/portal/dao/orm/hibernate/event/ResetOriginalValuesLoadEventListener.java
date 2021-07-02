@@ -16,6 +16,8 @@ package com.liferay.portal.dao.orm.hibernate.event;
 
 import com.liferay.portal.kernel.model.BaseModel;
 
+import java.util.Objects;
+
 import org.hibernate.HibernateException;
 import org.hibernate.event.LoadEvent;
 import org.hibernate.event.def.DefaultLoadEventListener;
@@ -32,6 +34,14 @@ public class ResetOriginalValuesLoadEventListener
 	@Override
 	public void onLoad(LoadEvent loadEvent, LoadType loadType)
 		throws HibernateException {
+
+		String entityClassName = loadEvent.getEntityClassName();
+
+		if (entityClassName.endsWith("BlobModel") &&
+			Objects.equals(loadType.getName(), "INTERNAL_LOAD_NULLABLE")) {
+
+			return;
+		}
 
 		super.onLoad(loadEvent, loadType);
 

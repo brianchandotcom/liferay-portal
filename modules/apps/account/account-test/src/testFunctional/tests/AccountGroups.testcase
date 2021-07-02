@@ -22,6 +22,7 @@ definition {
 		}
 	}
 
+	@description = "This test assigns an account to Account Group"
 	@priority = "4"
 	test CanManuallyAssignAccountToGroup {
 		ApplicationsMenu.gotoPortlet(
@@ -63,7 +64,7 @@ definition {
 		AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
 	}
 
-	@description = "This is a use case for LPS-122414."
+	@description = "This is a use case for LPS-122414. It asserts the number of accounts in Accounts Group view is accurate."
 	@priority = "4"
 	test CanManuallyAssignMultipleAccountsToGroup {
 		for (var accountNumber : list "1,2,3,4,5") {
@@ -129,6 +130,7 @@ definition {
 			accountGroupName = "Multiple Accounts AG");
 	}
 
+	@description = "This test deletes an account group."
 	@priority = "4"
 	test CanDeleteAnAccountGroup {
 		ApplicationsMenu.gotoPortlet(
@@ -160,6 +162,7 @@ definition {
 		AccountGroups.viewDefault(tabName = "Account Groups");
 	}
 
+	@description = "This test removes an account from Account Group."
 	@priority = "4"
 	test CanRemoveAccountFromGroup {
 		for (var accountNumber : list "1,2,3") {

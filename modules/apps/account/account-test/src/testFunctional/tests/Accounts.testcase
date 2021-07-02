@@ -22,6 +22,7 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that users can add more than one domain to a business account."
 	@priority = "4"
 	test CanAddMultipleDomainsToAccount {
 		AccountConfiguration.enableAccountEmailDomain();
@@ -51,6 +52,7 @@ definition {
 		}
 	}
 
+	@description = "This test adds a blocked domain in instance settings. Warning will display when adding a user with blocked domain."
 	@priority = "4"
 	test WarningDisplaysWhenAddingUserWithBlockedEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -118,6 +120,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
 	@priority = "4"
 	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
 		ApplicationsMenu.gotoPortlet(
@@ -160,6 +163,7 @@ definition {
 			accountUserName = "userfn1");
 	}
 
+	@description = "This test adds a Person Account by changing the type in the dropdown upon creation."
 	@priority = "4"
 	test CanAddAPersonAccount {
 		ApplicationsMenu.gotoPortlet(
@@ -185,6 +189,7 @@ definition {
 			accountType = "Person");
 	}
 
+	@description = "This test sets a valid domain for a business account. It adds a user with a different domain and asserts that warning displays when a user attempts to do so."
 	@priority = "3"
 	test WarningDisplaysWhenAddingAUserWithInvalidDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -250,6 +255,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test sets a valid domain for a business account. It adds a user with a same domain and asserts no warning displays."
 	@priority = "3"
 	test NoWarningDisplaysWhenAddingAUserWithValidDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -315,6 +321,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test adds an organization as an assignee of a business account."
 	@priority = "4"
 	test CanAssignOrganizationToAccount {
 		JSONOrganization.addOrganization(
@@ -349,6 +356,7 @@ definition {
 		Accounts.viewAssignee(assigneeName = "Organization for Account");
 	}
 
+	@description = "This test assigns a user to an account with valid domain set. Manager can filter valid domain users and all users when assigning."
 	@priority = "3"
 	test UsersWithValidAndInvalidDomainsAreFilteredWhenAssigningUsers {
 		AccountConfiguration.enableAccountEmailDomain();
@@ -458,6 +466,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
 	}
 
+	@description = "This tests canceling account creation will not save it."
 	@priority = "3"
 	test ClickingCancelOrBackWillNotSaveAccount {
 		ApplicationsMenu.gotoPortlet(
@@ -517,6 +526,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Back Icon Account");
 	}
 
+	@description = "This test asserts that address type can be changed from Billing to Shipping and vice versa."
 	@priority = "5"
 	test CanChangeAddressType {
 		property portal.acceptance = "true";
@@ -599,6 +609,7 @@ definition {
 		}
 	}
 
+	@description = "This test asserts an account can be deleted successfully via management toolbar and menu item."
 	@priority = "5"
 	test CanDeleteAccount {
 		property portal.acceptance = "true";
@@ -657,6 +668,7 @@ definition {
 		}
 	}
 
+	@description = "This test asserts address deletes successfully."
 	@priority = "3"
 	test CanDeleteAddress {
 		ApplicationsMenu.gotoPortlet(
@@ -709,7 +721,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Liferay Dalian Software Co., Ltd.");
 	}
 
-	@description = "This is a use case for LPS-101315."
+	@description = "This is a use case for LPS-101315. Deleting an inactive account will navigate you back to inactive filter."
 	@priority = "3"
 	test CanDeleteAnInactiveAccount {
 		ApplicationsMenu.gotoPortlet(
@@ -736,6 +748,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 	}
 
+	@description = "This test updates an account's name and description and asserts change saves successfully."
 	@priority = "5"
 	test CanEditNameAndDescription {
 		ApplicationsMenu.gotoPortlet(
@@ -814,6 +827,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}
 
+	@description = "This test adds a custom field for an account entry and asserts field can be updated."
 	@priority = "4"
 	test CanEditAccountCustomField {
 		ApplicationsMenu.gotoPortlet(
@@ -853,6 +867,7 @@ definition {
 			customFieldText = "Custom Field for Account");
 	}
 
+	@description = "This test asserts accounts are filtered by All Accounts by default. Changing filter to Business and Person shows accurate results."
 	@priority = "3"
 	test CanFilterAccountsByType {
 		for (var accountType : list "Business,Person") {
@@ -891,6 +906,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Person Account");
 	}
 
+	@description = "This test deactivates an active account and asserts account displays in correct filter."
 	@priority = "4"
 	test CanDeactivateAccount {
 		for (var accountNumber : list "1,2,3") {
@@ -936,7 +952,7 @@ definition {
 		Accounts.viewInactiveAccount(accountName = "Accounts Name 3 for Test");
 	}
 
-	@description = "This is a use case for LPS-117171."
+	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
 	@priority = "3"
 	test NoFilterByNavigationForPersonAccount {
 		for (var accountType : list "Business,Person") {
@@ -1033,6 +1049,7 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
+	@description = "This test adds an address, sets it as default, and removes it as default"
 	@priority = "3"
 	test CanRemoveAddressAsDefault {
 		ApplicationsMenu.gotoPortlet(
@@ -1110,6 +1127,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
 	}
 
+	@description = "This test removes domain set to an account."
 	@priority = "3"
 	test CanRemoveDomainFromAccount {
 		AccountConfiguration.enableAccountEmailDomain();
@@ -1150,6 +1168,7 @@ definition {
 			locator1 = "Account#DOMAIN_TABLE_NAME");
 	}
 
+	@description = "This test removes a blocked domain in Instance Settings."
 	@priority = "4"
 	test CanRemoveDomainFromBlacklist {
 		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
@@ -1171,6 +1190,7 @@ definition {
 			fieldValue = "blocked.com");
 	}
 
+	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {
 		ApplicationsMenu.gotoPortlet(
@@ -1309,6 +1329,7 @@ definition {
 			accountTaxID = "Z9870654786390342199899Y");
 	}
 
+	@description = "This test removes an organization as an assignee of a business account."
 	@priority = "5"
 	test CanRemoveOrganizationFromBusinessAccount {
 		property portal.acceptance = "true";
@@ -1356,7 +1377,7 @@ definition {
 			assigneeType = "Organizations");
 	}
 
-	@description = "This is a use case for LPS-101221."
+	@description = "This is a use case for LPS-101221. It updates an inactive account by clicking on its link and asserts user stays on the Inactive filter when you go back to Accounts list."
 	@priority = "4"
 	test CanEditInactiveAccount {
 		ApplicationsMenu.gotoPortlet(
@@ -1406,7 +1427,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 	}
 
-	@description = "This is a use case for LPS-101893."
+	@description = "This is a use case for LPS-101893. It asserts all accounts display properly across pages."
 	@priority = "4"
 	test AccountsDisplayWhenChangingPagination {
 		for (var accountNum : list "1,2,3,4,5,6") {

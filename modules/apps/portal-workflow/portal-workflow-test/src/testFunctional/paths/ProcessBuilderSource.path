@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVISION_HISTORY_KEBAB</td>
+	<td>//*[contains(@class,'list-group-title')]/../..//span[contains(@class,'c-inner')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_DETAILS</td>
 	<td>//dt[contains(text(), '${key_titleValue}')]/following::dd[contains(text(), '${key_infoValue}')][1]</td>
 	<td></td>
@@ -30,6 +35,7 @@
 	<td>//*[contains(@class,'nav-link') and contains(.,'${key_tabName}')]</td>
 	<td></td>
 </tr>
+
 </tbody>
 </table>
 </body>

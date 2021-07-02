@@ -15,6 +15,7 @@
 package com.liferay.shielded.container.internal.proxy;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,7 @@ import javax.servlet.FilterRegistration;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
+import javax.servlet.http.HttpSessionListener;
 
 /**
  * @author Shuyang Zhou
@@ -118,10 +120,18 @@ public class ServletContextDelegate {
 			clazz = clazz.getSuperclass();
 		}
 
+		InvocationHandler invocationHandler =
+			new ContextClassLoaderInvocationHandler(_classLoader, t);
+
+		if (interfaceClasses.contains(HttpSessionListener.class)) {
+			invocationHandler = new HttpSessionListenerInvocationHandlerWrapper(
+				invocationHandler, _proxyFactory, _classLoader);
+		}
+
 		_servletContext.addListener(
 			_proxyFactory.<T>newProxyInstance(
 				_classLoader, interfaceClasses.toArray(new Class<?>[0]),
-				new ContextClassLoaderInvocationHandler(_classLoader, t)));
+				invocationHandler));
 	}
 
 	public ServletRegistration.Dynamic addServlet(

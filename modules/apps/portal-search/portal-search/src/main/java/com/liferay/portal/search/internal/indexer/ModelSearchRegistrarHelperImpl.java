@@ -122,6 +122,11 @@ public class ModelSearchRegistrarHelperImpl
 			_modelSearchSettingsImpl.setSelectAllLocales(selectAllLocales);
 		}
 
+		@Override
+		public void setStagingAware(boolean stagingAware) {
+			_modelSearchSettingsImpl.setStagingAware(stagingAware);
+		}
+
 		private ModelIndexerWriterContributor<?> _modelIndexWriterContributor;
 		private final ModelSearchSettingsImpl _modelSearchSettingsImpl;
 		private ModelSummaryContributor _modelSummaryContributor;

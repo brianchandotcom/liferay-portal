@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
 
@@ -24,5 +25,12 @@ import java.util.Locale;
 public interface DDMFormFieldValueRenderer {
 
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale);
+
+	public default String render(
+		String ddmFormFieldName, DDMFormFieldValue ddmFormFieldValue,
+		Locale locale) {
+
+		return StringPool.BLANK;
+	}
 
 }

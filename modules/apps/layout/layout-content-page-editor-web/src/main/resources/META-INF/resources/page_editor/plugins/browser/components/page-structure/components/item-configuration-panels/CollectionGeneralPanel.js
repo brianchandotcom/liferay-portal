@@ -351,7 +351,7 @@ export const CollectionGeneralPanel = ({item}) => {
 											Liferay.Language.get(
 												'x-items-maximum'
 											),
-											[config.searchContainerPageMaxDelta]
+											config.searchContainerPageMaxDelta
 										)}
 									</span>
 
@@ -360,7 +360,7 @@ export const CollectionGeneralPanel = ({item}) => {
 											Liferay.Language.get(
 												'only-x-items-will-be-displayed'
 											),
-											[config.searchContainerPageMaxDelta]
+											config.searchContainerPageMaxDelta
 										)}
 								</p>
 							</ClayForm.Group>

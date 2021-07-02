@@ -2058,7 +2058,7 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the dynamic collection, Bordered List as List Style and Abstract as List Item Style") {
+		task ("Select the Highest Rated Assets, Bordered List as List Style and Abstract as List Item Style") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Highest Rated Assets",
@@ -2959,7 +2959,7 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the dynamic collection, Bordered List as List Style and Full Content as List Item Style") {
+		task ("Select the Highest Rated Assets, Bordered List as List Style and Full Content as List Item Style") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Highest Rated Assets",

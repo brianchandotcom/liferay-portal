@@ -28,26 +28,13 @@ definition {
 
 	@description = "This makes sure that multiple blog images can be previewed by using the keyboard."
 	@priority = "5"
-	@refactorneeded
-	test PreviewMultipleImagesInBlogsImages {
-		for (var i : list "1,2,3") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+	@refactordone
+	test CanPreviewMultipleImagesInBlogsImages {
+		Blogs.addImageToBlogImages(
+			siteURLKey = "guest",
+			uploadFileNames = "Document_1.jpg,Document_2.jpg,Document_3.jpg");
 
-			Blogs.addEntryWithUploadedCoverImage(
-				coverImageName = "Document_${i}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title ${i}",
-				navTab = "Blog Images",
-				uploadFileName = "Document_${i}.jpg");
-
-			Button.clickPublish();
-
-			Pause(locator1 = "10000");
-		}
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -92,17 +79,18 @@ definition {
 
 	@description = "This makes sure that multiple DM images can be previewed by using the keyboard."
 	@priority = "5"
-	@refactorneeded
-	test PreviewMultipleImagesInDM {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+	@refactordone
+	test CanPreviewMultipleImagesInDM {
+		for (var documentTitle : list "Document_1,Document_2,Document_3") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "${documentTitle}",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "${documentTitle}.jpg");
+		}
 
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.jpg,Document_3.jpg");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
-
-		Pause(locator1 = "3000");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -151,26 +139,15 @@ definition {
 
 	@description = "This ensures that navigation arrows do not appear in image preview when there is only one image in the library."
 	@priority = "5"
-	@refactorneeded
-	test PreviewSingleImage {
+	@refactordone
+	test CanPreviewSingleImage {
 		property portal.acceptance = "true";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		Blogs.addImageToBlogImages(
+			siteURLKey = "guest",
+			uploadFileNames = "Document_1.jpg");
 
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title 1",
-			navTab = "Blog Images",
-			uploadFileName = "Document_1.jpg");
-
-		Button.clickPublish();
-
-		Pause(locator1 = "10000");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
 

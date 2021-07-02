@@ -18,35 +18,35 @@ import ClayLink from '@clayui/link';
 import React, {useContext, useState} from 'react';
 
 import {
-	API_KEY_ERROR_CODE,
-	API_KEY_INVALID_STATUS,
-	SERVER_ERROR_CODE,
+	GPS_API_KEY_ERROR_CODE,
+	GPS_API_KEY_INVALID_STATUS,
+	GPS_SERVER_ERROR_CODE,
 } from '../../constants/pageSpeed';
 import {StoreStateContext} from '../../context/StoreContext';
 import ErrorAlertExtendedInfo from './ErrorAlertExtendedInfo';
 
 const ErrorAlert = () => {
 	const [showErrorInfo, setShowErrorInfo] = useState(false);
-	const expandInfoHandler = () => {
+	const expandInfoHandler = () =>
 		setShowErrorInfo((currentValue) => !currentValue);
-	};
 
 	const {data, error} = useContext(StoreStateContext);
 
 	const {configureGooglePageSpeedURL, privateLayout} = data;
 	const {code: statusCode, status} = error;
 
-	const isApiKeyError =
-		statusCode === API_KEY_ERROR_CODE && status === API_KEY_INVALID_STATUS;
-	const isServerError = statusCode === SERVER_ERROR_CODE;
-	const unknownError = !isApiKeyError && !isServerError;
+	const apiKeyError =
+		statusCode === GPS_API_KEY_ERROR_CODE &&
+		status === GPS_API_KEY_INVALID_STATUS;
 
-	const unknownError =
-		statusCode >= API_KEY_ERROR_CODE && !isApiKeyError && !isServerError;
+	const serverError = statusCode === GPS_SERVER_ERROR_CODE;
+	const pageCanNotBeAudited = serverError || privateLayout;
 
-	const title = isApiKeyError
+	const unknownError = !apiKeyError && !pageCanNotBeAudited;
+
+	const title = apiKeyError
 		? Liferay.Language.get('incorrect-api-key')
-		: isServerError
+		: pageCanNotBeAudited
 		? Liferay.Language.get("this-page-can't-be-audited")
 		: Liferay.Language.get('an-unexpected-error-occurred');
 
@@ -54,18 +54,16 @@ const ErrorAlert = () => {
 		? Liferay.Language.get('hide-error-details')
 		: Liferay.Language.get('show-error-details');
 
-	const expandInfoHandler = () => {
-		setShowErrorInfo((currentValue) => !currentValue);
-	};
-
 	return (
 		<ClayAlert
 			displayType={apiKeyError || unknownError ? 'danger' : 'warning'}
 			variant="stripe"
 		>
-			<p>
+			<p className="mb-0">
 				<span
-					className={isServerError ? 'font-weight-bold' : undefined}
+					className={
+						pageCanNotBeAudited ? 'font-weight-bold' : undefined
+					}
 				>
 					{title}
 				</span>

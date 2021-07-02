@@ -95,17 +95,39 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 				%>
 
 					<c:choose>
-						<c:when test='<%= StringUtil.equals(ddmFormField.getType(), "image") %>'>
+						<c:when test="<%= StringUtil.equals(ddmFormField.getType(), DDMFormFieldTypeConstants.IMAGE) %>">
 							<liferay-ui:search-container-column-image
 								name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
-								src="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
+								src="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), StringPool.BLANK, ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
 							/>
+						</c:when>
+						<c:when test="<%= StringUtil.equals(ddmFormField.getType(), DDMFormFieldTypeConstants.SEARCH_LOCATION) %>">
+							<liferay-ui:search-container-column-text
+								name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
+								truncate="<%= true %>"
+								value='<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), "place", ddmFormFieldValuesMap.get(ddmFormField.getName())) %>'
+							/>
+
+							<%
+							for (String visibleField : ddmFormViewFormInstanceRecordsDisplayContext.getVisibleFields(ddmFormField)) {
+							%>
+
+								<liferay-ui:search-container-column-text
+									name="<%= visibleField %>"
+									truncate="<%= true %>"
+									value="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), visibleField, ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
+								/>
+
+							<%
+							}
+							%>
+
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
 								name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
 								truncate="<%= true %>"
-								value="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
+								value="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), StringPool.BLANK, ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
 							/>
 						</c:otherwise>
 					</c:choose>

@@ -42,7 +42,7 @@ create table BatchPlannerPlan (
 	active_ BOOLEAN,
 	export BOOLEAN,
 	externalType VARCHAR(75) null,
-	externalURL VARCHAR(75) null,
+	externalURL STRING null,
 	internalClassName VARCHAR(75) null,
 	name VARCHAR(75) null
 );

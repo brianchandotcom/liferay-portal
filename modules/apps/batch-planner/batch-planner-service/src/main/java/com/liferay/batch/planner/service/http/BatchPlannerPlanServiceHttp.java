@@ -54,7 +54,8 @@ public class BatchPlannerPlanServiceHttp {
 	public static com.liferay.batch.planner.model.BatchPlannerPlan
 			addBatchPlannerPlan(
 				HttpPrincipal httpPrincipal, boolean export,
-				String externalType, String name)
+				String externalType, String externalURL,
+				String internalClassName, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -63,7 +64,8 @@ public class BatchPlannerPlanServiceHttp {
 				_addBatchPlannerPlanParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, export, externalType, name);
+				methodKey, export, externalType, externalURL, internalClassName,
+				name);
 
 			Object returnObj = null;
 
@@ -221,7 +223,10 @@ public class BatchPlannerPlanServiceHttp {
 		BatchPlannerPlanServiceHttp.class);
 
 	private static final Class<?>[] _addBatchPlannerPlanParameterTypes0 =
-		new Class[] {boolean.class, String.class, String.class};
+		new Class[] {
+			boolean.class, String.class, String.class, String.class,
+			String.class
+		};
 	private static final Class<?>[] _deleteBatchPlannerPlanParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getBatchPlannerPlanParameterTypes2 =

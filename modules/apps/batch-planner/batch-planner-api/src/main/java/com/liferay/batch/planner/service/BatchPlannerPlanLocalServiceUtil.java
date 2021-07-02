@@ -62,11 +62,12 @@ public class BatchPlannerPlanLocalServiceUtil {
 	}
 
 	public static BatchPlannerPlan addBatchPlannerPlan(
-			long userId, boolean export, String externalType, String name)
+			long userId, boolean export, String externalType,
+			String externalURL, String internalClassName, String name)
 		throws PortalException {
 
 		return getService().addBatchPlannerPlan(
-			userId, export, externalType, name);
+			userId, export, externalType, externalURL, internalClassName, name);
 	}
 
 	/**
@@ -318,6 +319,14 @@ public class BatchPlannerPlanLocalServiceUtil {
 
 		return getService().updateBatchPlannerPlan(
 			userId, batchPlannerPlanId, name);
+	}
+
+	public static BatchPlannerPlan updateBatchPlannerPlanActive(
+			long batchPlannerPlanId, boolean active)
+		throws PortalException {
+
+		return getService().updateBatchPlannerPlanActive(
+			batchPlannerPlanId, active);
 	}
 
 	public static BatchPlannerPlanLocalService getService() {

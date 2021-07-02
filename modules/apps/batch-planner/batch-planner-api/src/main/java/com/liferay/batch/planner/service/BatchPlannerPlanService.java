@@ -50,7 +50,8 @@ public interface BatchPlannerPlanService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerPlanServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the batch planner plan remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BatchPlannerPlanServiceUtil} if injection and service tracking are not available.
 	 */
 	public BatchPlannerPlan addBatchPlannerPlan(
-			boolean export, String externalType, String name)
+			boolean export, String externalType, String externalURL,
+			String internalClassName, String name)
 		throws PortalException;
 
 	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)

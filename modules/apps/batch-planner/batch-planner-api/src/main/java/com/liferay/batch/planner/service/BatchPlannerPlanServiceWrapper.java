@@ -35,11 +35,12 @@ public class BatchPlannerPlanServiceWrapper
 
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPlan addBatchPlannerPlan(
-			boolean export, String externalType, String name)
+			boolean export, String externalType, String externalURL,
+			String internalClassName, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPlanService.addBatchPlannerPlan(
-			export, externalType, name);
+			export, externalType, externalURL, internalClassName, name);
 	}
 
 	@Override

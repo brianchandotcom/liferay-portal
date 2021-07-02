@@ -36,7 +36,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.HashMap;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -55,12 +54,9 @@ public class DLFileEntryTypeTableReferenceDefinitionTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
 	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_ddmStructure = _ddmStructureLocalService.addStructure(
+	protected CTModel<?> addCTModel() throws Exception {
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 			group.getCreatorUserId(), group.getGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
@@ -71,13 +67,10 @@ public class DLFileEntryTypeTableReferenceDefinitionTest
 			).build(),
 			new HashMap<>(), StringPool.BLANK, StorageType.DEFAULT.toString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-	}
 
-	@Override
-	protected CTModel<?> addCTModel() throws Exception {
-		_dlFileEntryTypeLocalService.addFileEntryType(
+		return _dlFileEntryTypeLocalService.addFileEntryType(
 			group.getCreatorUserId(), group.getGroupId(),
-			_ddmStructure.getStructureId(),
+			ddmStructure.getStructureId(),
 			DLFileEntryTypeTableReferenceDefinitionTest.class.getSimpleName(),
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(),
@@ -87,8 +80,6 @@ public class DLFileEntryTypeTableReferenceDefinitionTest
 			new HashMap<>(),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		return _ddmStructure;
 	}
 
 	@Inject
@@ -96,7 +87,5 @@ public class DLFileEntryTypeTableReferenceDefinitionTest
 
 	@Inject
 	private static DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	private DDMStructure _ddmStructure;
 
 }

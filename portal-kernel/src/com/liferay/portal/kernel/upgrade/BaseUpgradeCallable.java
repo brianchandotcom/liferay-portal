@@ -29,7 +29,7 @@ public abstract class BaseUpgradeCallable<T> implements Callable<T> {
 
 	@Override
 	public T call() throws Exception {
-		CompanyThreadLocal.setCompanyId(_companyId);
+		CompanyThreadLocal.lock(_companyId);
 
 		return doCall();
 	}

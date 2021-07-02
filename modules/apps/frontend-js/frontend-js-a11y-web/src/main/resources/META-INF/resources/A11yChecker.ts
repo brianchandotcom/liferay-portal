@@ -286,7 +286,6 @@ export class A11yChecker {
 		targets,
 	}: A11yCheckerOptions) {
 		const defaultOptions = {
-			absolutePaths: true,
 			reporter: 'v2',
 		} as const;
 

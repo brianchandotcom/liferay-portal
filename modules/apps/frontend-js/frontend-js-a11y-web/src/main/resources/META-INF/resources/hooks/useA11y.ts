@@ -59,14 +59,17 @@ function segmentViolationsByRulesAndNodes(
 			const nodes = rule.nodes.filter((node) => {
 				const element = document.querySelector(node);
 
-				if (!element) {
-					delete previousViolation.nodes[node][rule.id];
-
-					if (!Object.values(previousViolation.nodes[node]).length) {
-						delete previousViolation.nodes[node];
+				if (element) {
+					if (previousViolation.nodes[node]) {
+						previousViolation.nodes[node][rule.id] =
+							previousViolations.nodes[node][rule.id];
 					}
-				}
-				else {
+					else {
+						previousViolation.nodes[node] = {
+							[rule.id]: previousViolations.nodes[node][rule.id],
+						};
+					}
+
 					elements.set(element, node);
 				}
 
@@ -79,13 +82,10 @@ function segmentViolationsByRulesAndNodes(
 					nodes,
 				};
 			}
-			else {
-				delete previousViolation.rules[rule.id];
-			}
 
 			return previousViolation;
 		},
-		{...previousViolations}
+		{nodes: {}, rules: {}} as Violations
 	);
 
 	return violations.reduce<Violations>((previousViolation, current) => {

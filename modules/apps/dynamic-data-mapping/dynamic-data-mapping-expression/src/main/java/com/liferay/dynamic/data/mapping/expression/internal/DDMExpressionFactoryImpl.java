@@ -35,7 +35,8 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 		throws DDMExpressionException {
 
 		DDMExpressionImpl<T> ddmExpressionImpl = new DDMExpressionImpl<>(
-			createExpressionRequest.getExpression());
+			createExpressionRequest.getExpression(),
+			createExpressionRequest.isDDMExpressionDateValidation());
 
 		ddmExpressionImpl.setDDMExpressionActionHandler(
 			createExpressionRequest.getDDMExpressionActionHandler());

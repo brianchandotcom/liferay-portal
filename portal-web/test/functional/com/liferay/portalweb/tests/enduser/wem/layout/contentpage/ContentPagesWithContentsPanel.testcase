@@ -414,6 +414,137 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122396. The outline of editable field should be dashed when hover on mapped assets in Page Content panel."
+	@priority = "5"
+	test ViewDashedOutlineOfMappedEditableFieldWhenHoverOnAssets {
+		task ("Add a web content, a blogs entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Title of web content to title editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "01-title");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Map the Title of blogs entry to link editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "03-link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Blogs Entry Title",
+				navItem = "Blogs");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Map the Preview Image of document to background image editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "banner-center");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Document Title",
+				navItem = "Documents and Media");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Preview Image");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.clickManagementBar();
+		}
+
+		task ("View the dashed outline of mapped editable field when hover on assets") {
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			MouseOver(
+				key_itemName = "Web Content Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertCssValue(
+				id = "01-title",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "outline-style",
+				value1 = "dashed");
+
+			MouseOver(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			MouseOver(
+				key_itemName = "Blogs Entry Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertCssValue(
+				id = "03-link",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "outline-style",
+				value1 = "dashed");
+
+			MouseOver(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			MouseOver(
+				key_itemName = "Document Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertCssValue(
+				id = "banner-center",
+				key_fragmentName = "Banner Center",
+				locator1 = "Fragment#BACKGROUND_IMAGE_EDITABLE_FIELD",
+				locator2 = "outline-style",
+				value1 = "dashed");
+		}
+	}
+
 	@description = "This is a test for LPS-96794. View permissions and usage of mapped web content in Contents panel."
 	@priority = "4"
 	test ViewPermissionsAndUsageOfMappedWebContent {

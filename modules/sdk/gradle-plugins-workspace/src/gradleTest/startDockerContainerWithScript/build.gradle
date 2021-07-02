@@ -1,9 +1,9 @@
 task runGradleTest
 
-runGradleTest {
-	dependsOn "assertLog"
-}
-
 createDockerContainer {
 	hostConfig.portBindings = ['8888:8080']
+}
+
+runGradleTest {
+	dependsOn "assertLog"
 }

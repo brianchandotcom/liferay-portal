@@ -1019,14 +1019,82 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text field's Label, Help Text and Predefined Value can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test RichTextFieldCanBeTranslated {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133509 RichTextFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.addRichTextContent(
+			content = "Test Predefined Value",
+			fieldLabel = "Predefined Value");
+
+		Form.gotoBasicTab();
+
+		FormFields.editHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "tip");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Texto Rico");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.addRichTextContent(
+			content = "Valor Predefinido",
+			fieldLabel = "Predefined Value");
+
+		Form.gotoBasicTab();
+
+		FormFields.editHelpText(
+			fieldHelpText = "Texto de Ayuda",
+			fieldName = "tip");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortletConfiguration.viewTranslationLanguage(language = "en-US");
+
+		FormFields.viewLabel(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		FormFields.viewRichTextPredefinedValue(fieldValue = "Test Predefined Value");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Rich Text");
+
+		FormPortletConfiguration.changeLanguage(
+			currentLanguage = "en-US",
+			newLanguage = "español-España");
+
+		FormFields.viewLabel(
+			fieldLabel = "Texto Rico",
+			fieldName = "Texto Rico");
+
+		FormFields.viewRichTextPredefinedValue(fieldValue = "Valor Predefinido");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Texto de Ayuda",
+			fieldName = "Texto Rico");
 	}
 
 	@description = "Verify that a Select From List field's Label, Help Text and Options can be translated"

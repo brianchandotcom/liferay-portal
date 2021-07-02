@@ -330,12 +330,18 @@ definition {
 	}
 
 	@description = "Verify that the user can select Unpublish option in the kebab menu for a particular definition"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSelectUnpublish {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68338 CanSelectUnpublish pending implementation
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		Alert.viewSuccessMessageText(successMessage = "Workflow unpublished successfully.");
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "Single Approver");
 	}
 
 	@description = "Verify that when clicking the info icon, the process details and revision history are displayed"

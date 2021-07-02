@@ -59,7 +59,7 @@
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_TITLE_UNPUBLISHED</td>
-	<td>//tr[count(preceding-sibling::tr[contains(@class,'table-divider')])=2 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td>//tr[count(preceding-sibling::tr[contains(@class,'table-divider') and contains (.,'Not Published')]) and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

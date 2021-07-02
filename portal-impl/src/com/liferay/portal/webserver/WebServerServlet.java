@@ -320,7 +320,9 @@ public class WebServerServlet extends HttpServlet {
 				_createFileServingCallable(
 					httpServletRequest, httpServletResponse, user));
 		}
-		catch (NoSuchFileEntryException | NoSuchFolderException exception) {
+		catch (FileEntryExpiredException | NoSuchFileEntryException |
+			   NoSuchFolderException exception) {
+
 			PortalUtil.sendError(
 				HttpServletResponse.SC_NOT_FOUND, exception, httpServletRequest,
 				httpServletResponse);
@@ -504,7 +506,7 @@ public class WebServerServlet extends HttpServlet {
 				}
 
 				throw new FileEntryExpiredException(
-					"The file " + fileEntry.getFileEntryId() + "is expired");
+					"The file " + fileEntry.getFileEntryId() + " is expired");
 			}
 		}
 

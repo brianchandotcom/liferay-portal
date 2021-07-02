@@ -206,6 +206,8 @@ definition {
 		FormFields.editText(
 			fieldName = "submitLabel",
 			fieldValue = "${submitLabel}");
+
+		Button.clickDone();
 	}
 
 	macro configureWorkflow {

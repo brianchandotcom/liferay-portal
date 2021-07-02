@@ -398,8 +398,6 @@ definition {
 
 		Form.configureSubmitLabel(submitLabel = " ");
 
-		Button.clickDone();
-
 		Form.save();
 
 		FormsAdminNavigator.gotoPublishedForm();

@@ -116,12 +116,30 @@ definition {
 	}
 
 	@description = "Verify that, when the definition is published, the Delete option is not present in kebab menu"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotDeletePublishedWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68340 CanNotDeletePublishedWorkflow pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.gotoNavItem(navItem = "Workflows");
+
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		Click(locator1 = "ProcessBuilderSource#PROCESS_DETAILS_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Delete");
 	}
 
 	@description = "Verify that the Workflow is not published without title"

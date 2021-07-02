@@ -506,8 +506,8 @@ definition {
 
 	macro gotoCategory {
 		Click(
-			key_questionNameField = "${categoryName}",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+			key_card = "${categoryName}",
+			locator1 = "Card#CARD_TITLE");
 
 		AssertElementPresent(locator1 = "Questions#QUESTIONS_HOME_ICON");
 

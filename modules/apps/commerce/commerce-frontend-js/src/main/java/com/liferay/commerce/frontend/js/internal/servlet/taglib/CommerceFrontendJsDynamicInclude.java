@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.frontend.js.internal.servlet.taglib;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
@@ -44,8 +45,10 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print(
-			"<link href=\"/o/commerce-frontend-js/styles/main.css\" " +
-				"rel=\"stylesheet\" type=\"text/css\" />");
+			StringBundler.concat(
+				"<link href=\"", httpServletRequest.getContextPath(),
+				"/o/commerce-frontend-js/styles/main.css\" rel=\"stylesheet\"",
+				"type=\"text/css\" />"));
 	}
 
 	@Override

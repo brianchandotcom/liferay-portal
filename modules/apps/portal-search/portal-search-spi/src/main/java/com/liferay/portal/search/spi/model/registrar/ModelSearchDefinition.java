@@ -48,4 +48,6 @@ public interface ModelSearchDefinition {
 
 	public void setSelectAllLocales(boolean selectAllLocales);
 
+	public void setStagingAware(boolean stagingAware);
+
 }

@@ -26,6 +26,21 @@ body.portlet {
 	margin-top: -2px;
 }
 
+.portlet-topper {
+	position: relative;
+
+	.portlet-topper-toolbar {
+		.portlet-icon-back {
+			background: url(../images/arrows/12_left.png) no-repeat 0 50%;
+			padding: 5px 5px 5px 18px;
+		}
+
+		.portlet-options .lfr-icon-menu-text {
+			display: none;
+		}
+	}
+}
+
 .portlet-title-editable {
 	cursor: pointer;
 }

@@ -2074,6 +2074,39 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro editFragmentTextViaPageContentPanel {
+		Click.clickAtNotVisible(
+			key_itemName = "${itemName}",
+			locator1 = "PageEditor#PAGE_CONTENTS_ITEM_EDIT_PENCIL");
+
+		AssertElementPresent(
+			key_text = "Edit Inline Text",
+			locator1 = "Button#ANY_DISABLED");
+
+		if (isSet(text)) {
+			Type(
+				key_editor = "content",
+				locator1 = "AlloyEditor#EDITOR",
+				value1 = "${text}");
+		}
+
+		if (isSet(style)) {
+			SelectFieldText(
+				key_editor = "content",
+				locator1 = "AlloyEditor#EDITOR");
+
+			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_STYLE");
+
+			Click(
+				key_styleFormat = "${style}",
+				locator1 = "AlloyEditor#TEXT_FORMATTING_STYLE_DROPDOWN");
+		}
+
+		PageEditor.clickManagementBar();
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro editLayoutContainer {
 		var key_elementType = "Container";
 

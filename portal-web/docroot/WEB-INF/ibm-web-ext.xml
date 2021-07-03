@@ -4,5 +4,6 @@
 	<enable-reloading value="false" />
 	<jsp-attribute name="reloadEnabled" value="false" />
 	<jsp-attribute name="disableJspRuntimeCompilation" value="true" />
+	<jsp-attribute name="useFullPackageNames" value="true" />
 	<pre-compile-jsps value="false" />
 </web-ext>

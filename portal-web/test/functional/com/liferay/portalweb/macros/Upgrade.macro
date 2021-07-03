@@ -1438,6 +1438,46 @@ definition {
 			wikiPageTitle = "Wiki Page Title After Upgrade");
 	}
 
+	macro viewAndAccessRedirects {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-permanent-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-permanent-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-permanent-page");
+
+		SelectWindow(locator1 = "title=Test Destination Permanent Page - Test Site Name - Liferay DXP");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-permanent-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-source-temporary-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-temporary-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-temporary-page");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-temporary-page");
+
+		for (var i : list "1,2") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-without-references-page${i}");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-without-references-page3");
+		}
+
+		for (var i : list "1,2") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-with-references-page${i}");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-with-references-page3");
+		}
+	}
+
 	macro viewAndDeleteAutoTaggedBlogsEntry {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 

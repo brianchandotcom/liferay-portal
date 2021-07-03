@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.counter;
+package com.liferay.batch.engine.internal.item.counter;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.counter;
+package com.liferay.batch.engine.internal.item.counter;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 

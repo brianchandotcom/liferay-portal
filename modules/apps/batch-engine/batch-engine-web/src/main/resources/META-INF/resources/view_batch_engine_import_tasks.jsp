@@ -49,10 +49,10 @@ BatchEngineImportTaskDisplayContext batchEngineImportTaskDisplayContext = (Batch
 				property="createDate"
 			/>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-jsp
 				cssClass="important table-cell-ws-nowrap"
 				name="status"
-				property="executeStatus"
+				path="/batch_engine_import_task_status.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

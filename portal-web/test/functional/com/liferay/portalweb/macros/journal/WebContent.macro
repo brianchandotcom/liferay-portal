@@ -1006,23 +1006,33 @@ definition {
 			webContentTitle = "${webContentTitle}",
 			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "${depotName}");
+		}
+		else {
+			Navigator.gotoStagedSitePage(
+				pageName = "${pageName}",
+				siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
+			ProductMenu.gotoPortlet(
+				category = "Recycle Bin",
+				portlet = "Recycle Bin");
+		}
 
 		RecycleBin.emptyCP();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdminStaging(depotName = "${depotName}");
+		}
+		else {
+			Navigator.gotoStagedSitePage(
+				pageName = "${pageName}",
+				siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Web Content");
+		}
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
 	}

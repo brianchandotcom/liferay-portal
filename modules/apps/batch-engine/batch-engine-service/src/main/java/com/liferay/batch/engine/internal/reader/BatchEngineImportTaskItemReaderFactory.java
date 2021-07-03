@@ -18,8 +18,6 @@ import com.liferay.batch.engine.BatchEngineTaskContentType;
 
 import java.io.InputStream;
 
-import java.util.zip.ZipInputStream;
-
 /**
  * @author Shuyang Zhou
  * @author Ivica Cardic
@@ -36,8 +34,6 @@ public class BatchEngineImportTaskItemReaderFactory {
 			BatchEngineTaskContentType batchEngineTaskContentType,
 			InputStream inputStream)
 		throws Exception {
-
-		inputStream = _getZipInputStream(inputStream);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineImportTaskItemReader(
@@ -61,16 +57,6 @@ public class BatchEngineImportTaskItemReaderFactory {
 		throw new IllegalArgumentException(
 			"Unknown batch engine task content type " +
 				batchEngineTaskContentType);
-	}
-
-	private InputStream _getZipInputStream(InputStream inputStream)
-		throws Exception {
-
-		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-
-		zipInputStream.getNextEntry();
-
-		return zipInputStream;
 	}
 
 	private final String _csvFileColumnDelimiter;

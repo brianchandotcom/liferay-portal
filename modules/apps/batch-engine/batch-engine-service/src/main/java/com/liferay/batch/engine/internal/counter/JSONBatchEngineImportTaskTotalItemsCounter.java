@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Map;
-import java.util.zip.ZipInputStream;
 
 /**
  * @author Matija Petanjek
@@ -38,8 +37,6 @@ public class JSONBatchEngineImportTaskTotalItemsCounter
 	@Override
 	public int getTotalItemsCount(InputStream inputStream) throws IOException {
 		int totalItemsCount = 0;
-
-		inputStream = _getZipInputStream(inputStream);
 
 		try {
 			JsonParser jsonParser = _jsonFactory.createParser(inputStream);
@@ -63,16 +60,6 @@ public class JSONBatchEngineImportTaskTotalItemsCounter
 		}
 
 		return totalItemsCount;
-	}
-
-	private InputStream _getZipInputStream(InputStream inputStream)
-		throws IOException {
-
-		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-
-		zipInputStream.getNextEntry();
-
-		return zipInputStream;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

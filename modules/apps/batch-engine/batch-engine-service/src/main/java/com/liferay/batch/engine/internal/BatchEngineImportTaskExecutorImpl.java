@@ -74,8 +74,10 @@ public class BatchEngineImportTaskExecutorImpl
 
 			batchEngineImportTask.setTotalItemsCount(
 				batchEngineImportTaskTotalItemsCounter.getTotalItemsCount(
-					_batchEngineImportTaskLocalService.openContentInputStream(
-						batchEngineImportTask.getBatchEngineImportTaskId())));
+					_batchEngineImportTaskLocalService.
+						openUncompressedContentInputStream(
+							batchEngineImportTask.
+								getBatchEngineImportTaskId())));
 
 			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 				batchEngineImportTask);
@@ -155,8 +157,10 @@ public class BatchEngineImportTaskExecutorImpl
 				_batchEngineImportTaskItemReaderFactory.create(
 					BatchEngineTaskContentType.valueOf(
 						batchEngineImportTask.getContentType()),
-					_batchEngineImportTaskLocalService.openContentInputStream(
-						batchEngineImportTask.getBatchEngineImportTaskId()));
+					_batchEngineImportTaskLocalService.
+						openUncompressedContentInputStream(
+							batchEngineImportTask.
+								getBatchEngineImportTaskId()));
 			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(

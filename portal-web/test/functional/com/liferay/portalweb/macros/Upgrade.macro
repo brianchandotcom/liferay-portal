@@ -59,7 +59,12 @@ definition {
 	}
 
 	macro addAutoTaggedDM {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -68,7 +73,12 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
 
@@ -78,7 +88,12 @@ definition {
 	}
 
 	macro addAutoTaggedWebContent {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
 
 		WebContentNavigator.gotoAddCP();
 
@@ -88,7 +103,12 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1183,6 +1203,191 @@ definition {
 			webContentTitle = "Webコンテンツのタイトル");
 	}
 
+	macro publishCollectionsInStagingDepot {
+		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Depot Manual Asset List",
+			assetName = "DM Document Title Without Publish",
+			assetType = "Basic Document",
+			itemSubtype = "Basic Document",
+			itemType = "Document");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "DM Document Title Without Publish");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "DM Document Title Without Publish");
+
+		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		AssetListsAdmin.deleteEntry(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document Title For Collections",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		AssertElementNotPresent(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document Title For Collections",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		AssertElementNotPresent(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+	}
+
+	macro publishDMsInStagingDepot {
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "DM Document Title Without Publish",
+			assetType = "Basic Document",
+			depotName = "Test Depot Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentTitle = "Document_1.jpg",
+			dmDocumentTitleEdit = "Document_2.jpg");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_2.jpg",
+			assetType = "Document");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+	}
+
 	macro publishStagedSite {
 		Navigator.openSiteURL(siteName = "Staging Site Staging");
 
@@ -1234,6 +1439,108 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentStatus = "Approved",
 			webContentTitle = "Web Content Title");
+	}
+
+	macro publishWCsInStagingDepot {
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WebContent Title Without Publish",
+			assetType = "Basic Web Content",
+			depotName = "Test Depot Name Local Staging");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "WebContent Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WebContent Title Without Publish");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC WebContent Title Edit");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC WebContent Title Edit");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		WebContent.deleteStagedCP(
+			depotName = "Test Depot Name Local Staging",
+			webContentTitle = "WC WebContent Title Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
 	macro publishWorkflowDefinition {
@@ -1380,6 +1687,235 @@ definition {
 			entryTitle = "New Blog After Upgrade");
 	}
 
+	macro validateCollections {
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(
+			assetListName = "Depot Dynamic Asset List",
+			depotName = "Test Depot Name");
+
+		for (var assetTitle : list "DM Document Title With DM Type,DM Document DOCX AutoTagging,DM Document Image AutoTagging,DM Document Title Sharing,DM Document Title In Site") {
+			AssertVisible(
+				key_assetTitle = "${assetTitle}",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		}
+	}
+
+	macro validateDepotDMAndType {
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_assetTitle = "DM Document Title In Depot",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_1.txt",
+			dmDocumentFileNameEdit = "DM Document Title In Depot.txt",
+			dmDocumentTitle = "DM Document Title In Depot",
+			dmDocumentTitleEdit = "DM Document Title In Depot Edit");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title In Depot Edit");
+
+		DMDocument.viewCP(
+			dmDocumentFileName = "DM Document Title In Depot.txt",
+			dmDocumentTitle = "DM Document Title In Depot Edit");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title In Depot Edit");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertElementNotPresent(
+			key_assetTitle = "DM Document Title In Depot Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document with DM Document Type Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title With DM Type",
+			dmDocumentTypeName = "DM Document Type Name",
+			fieldFieldLabel = "Number",
+			numericField = "1234");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		DMDocument.viewDocumentTypePG(
+			numericFieldLabel = "Number",
+			numericValue = "1234");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.edit(
+			dmDocumentTypeName = "DM Document Type Name",
+			fieldFieldLabel = "Number",
+			fieldFieldLabelEdit = "Amount");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		DMDocument.viewDocumentTypePG(
+			numericFieldLabel = "Amount",
+			numericValue = "1234");
+	}
+
+	macro validateDepotEntries {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.editDepot(
+			depotDescriptionEdit = "This is an edited description of a depot",
+			depotName = "Test Depot Name",
+			depotNameEdit = "Edited Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.deleteCP(depotName = "Edited Test Depot Name");
+
+		AssertElementNotPresent(
+			key_card = "Edited Test Depot Name",
+			locator1 = "Card#CARD_TITLE_LINK");
+	}
+
+	macro validateDepotWCAndStructure {
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_assetTitle = "WC WebContent Title",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContent.deleteCP(
+			depotName = "Test Depot Name",
+			webContentTitle = "WC WebContent Title Edit");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title With Structure");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title With Structure");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edit");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTextFieldLabel = "Text Edit",
+			webContentTitle = "Web Content Title With Structure");
+	}
+
+	macro viewAndAccessRedirects {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-permanent-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-permanent-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-permanent-page");
+
+		SelectWindow(locator1 = "title=Test Destination Permanent Page - Test Site Name - Liferay DXP");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-permanent-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-source-temporary-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-temporary-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-temporary-page");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-temporary-page");
+
+		for (var i : list "1,2") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-without-references-page${i}");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-without-references-page3");
+		}
+
+		for (var i : list "1,2") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-with-references-page${i}");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-with-references-page3");
+		}
+	}
+
 	macro viewAndAddBlogEntry {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
@@ -1506,46 +2042,6 @@ definition {
 		WikiPage.viewPagePG(
 			wikiPageContent = "Wiki Page Content After Upgrade",
 			wikiPageTitle = "Wiki Page Title After Upgrade");
-	}
-
-	macro viewAndAccessRedirects {
-		var portalURL = PropsUtil.get("portal.url");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-permanent-page",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-source-permanent-page");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-permanent-page");
-
-		SelectWindow(locator1 = "title=Test Destination Permanent Page - Test Site Name - Liferay DXP");
-
-		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-permanent-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-source-temporary-page",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-destination-temporary-page");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-temporary-page");
-
-		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-temporary-page");
-
-		for (var i : list "1,2") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-without-references-page${i}");
-
-			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-without-references-page3");
-		}
-
-		for (var i : list "1,2") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-with-references-page${i}");
-
-			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-with-references-page3");
-		}
 	}
 
 	macro viewAndDeleteAutoTaggedBlogsEntry {
@@ -3539,13 +4035,19 @@ definition {
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "viewing",
-			contentTitle = "DM Document Title 1",
+			contentTitle = "${dmDocumentTitle}",
 			openNotification = "true",
 			ownerName = "Test Test");
 
 		DMDocumentSharing.viewDocumentViaSharedContent(
 			contentSharingPermission = "View",
-			dmDocumentTitle = "DM Document Title 1");
+			dmDocumentTitle = "${dmDocumentTitle}");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	macro viewStagingConfiguration {

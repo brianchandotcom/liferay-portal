@@ -1,0 +1,84 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.batch.engine.internal.counter;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.Map;
+import java.util.zip.ZipInputStream;
+
+/**
+ * @author Matija Petanjek
+ */
+public class JSONBatchEngineImportTaskTotalItemsCounter
+	implements BatchEngineImportTaskTotalItemsCounter {
+
+	@Override
+	public int getTotalItemsCount(InputStream inputStream) throws IOException {
+		int totalItemsCount = 0;
+
+		inputStream = _getZipInputStream(inputStream);
+
+		try {
+			JsonParser jsonParser = _jsonFactory.createParser(inputStream);
+
+			jsonParser.nextToken();
+
+			while (jsonParser.nextToken() == JsonToken.START_OBJECT) {
+				_objectMapper.readValue(
+					jsonParser,
+					new TypeReference<Map<String, Object>>() {
+					});
+
+				totalItemsCount++;
+			}
+		}
+		catch (IOException ioException) {
+			_log.error("Unable to calculate total items", ioException);
+		}
+		finally {
+			inputStream.close();
+		}
+
+		return totalItemsCount;
+	}
+
+	private InputStream _getZipInputStream(InputStream inputStream)
+		throws IOException {
+
+		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+
+		zipInputStream.getNextEntry();
+
+		return zipInputStream;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSONBatchEngineImportTaskTotalItemsCounter.class);
+
+	private static final JsonFactory _jsonFactory = new JsonFactory();
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+}

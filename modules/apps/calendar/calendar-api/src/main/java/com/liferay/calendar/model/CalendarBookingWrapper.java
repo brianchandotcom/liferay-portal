@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class CalendarBookingWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("calendarBookingId", getCalendarBookingId());
 		attributes.put("groupId", getGroupId());
@@ -84,6 +87,12 @@ public class CalendarBookingWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -346,6 +355,16 @@ public class CalendarBookingWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this calendar booking.
+	 *
+	 * @return the ct collection ID of this calendar booking
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -1046,6 +1065,16 @@ public class CalendarBookingWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this calendar booking.
+	 *
+	 * @param ctCollectionId the ct collection ID of this calendar booking
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the description of this calendar booking.
 	 *
 	 * @param description the description of this calendar booking
@@ -1429,6 +1458,20 @@ public class CalendarBookingWrapper
 	@Override
 	public void setVEventUid(String vEventUid) {
 		model.setVEventUid(vEventUid);
+	}
+
+	@Override
+	public Map<String, Function<CalendarBooking, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<CalendarBooking, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

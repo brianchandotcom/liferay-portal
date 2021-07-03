@@ -36,6 +36,9 @@ public class CalendarBookingTable extends BaseTable<CalendarBookingTable> {
 
 	public final Column<CalendarBookingTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CalendarBookingTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CalendarBookingTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CalendarBookingTable, Long> calendarBookingId =

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -44,8 +45,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CalendarBookingModel
-	extends BaseModel<CalendarBooking>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends BaseModel<CalendarBooking>, CTModel<CalendarBooking>,
+			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel,
+			TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -58,6 +60,7 @@ public interface CalendarBookingModel
 	 *
 	 * @return the primary key of this calendar booking
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -65,6 +68,7 @@ public interface CalendarBookingModel
 	 *
 	 * @param primaryKey the primary key of this calendar booking
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -82,6 +86,22 @@ public interface CalendarBookingModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this calendar booking.
+	 *
+	 * @return the ct collection ID of this calendar booking
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this calendar booking.
+	 *
+	 * @param ctCollectionId the ct collection ID of this calendar booking
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this calendar booking.

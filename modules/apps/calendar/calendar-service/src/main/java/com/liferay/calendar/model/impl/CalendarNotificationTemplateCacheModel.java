@@ -82,10 +82,12 @@ public class CalendarNotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", calendarNotificationTemplateId=");
@@ -127,6 +129,7 @@ public class CalendarNotificationTemplateCacheModel
 			new CalendarNotificationTemplateImpl();
 
 		calendarNotificationTemplateImpl.setMvccVersion(mvccVersion);
+		calendarNotificationTemplateImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			calendarNotificationTemplateImpl.setUuid("");
@@ -222,6 +225,8 @@ public class CalendarNotificationTemplateCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		calendarNotificationTemplateId = objectInput.readLong();
@@ -247,6 +252,8 @@ public class CalendarNotificationTemplateCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -314,6 +321,7 @@ public class CalendarNotificationTemplateCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long calendarNotificationTemplateId;
 	public long groupId;

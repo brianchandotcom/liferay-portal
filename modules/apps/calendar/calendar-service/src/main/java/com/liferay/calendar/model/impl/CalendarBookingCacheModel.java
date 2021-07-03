@@ -78,10 +78,12 @@ public class CalendarBookingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", calendarBookingId=");
@@ -150,6 +152,7 @@ public class CalendarBookingCacheModel
 		CalendarBookingImpl calendarBookingImpl = new CalendarBookingImpl();
 
 		calendarBookingImpl.setMvccVersion(mvccVersion);
+		calendarBookingImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			calendarBookingImpl.setUuid("");
@@ -281,6 +284,8 @@ public class CalendarBookingCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		calendarBookingId = objectInput.readLong();
@@ -330,6 +335,8 @@ public class CalendarBookingCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -440,6 +447,7 @@ public class CalendarBookingCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long calendarBookingId;
 	public long groupId;

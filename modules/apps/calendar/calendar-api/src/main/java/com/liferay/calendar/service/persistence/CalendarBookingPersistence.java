@@ -17,6 +17,7 @@ package com.liferay.calendar.service.persistence;
 import com.liferay.calendar.exception.NoSuchBookingException;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CalendarBookingPersistence
-	extends BasePersistence<CalendarBooking> {
+	extends BasePersistence<CalendarBooking>, CTPersistence<CalendarBooking> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

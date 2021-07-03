@@ -78,10 +78,12 @@ public class CalendarResourceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", calendarResourceId=");
@@ -124,6 +126,7 @@ public class CalendarResourceCacheModel
 		CalendarResourceImpl calendarResourceImpl = new CalendarResourceImpl();
 
 		calendarResourceImpl.setMvccVersion(mvccVersion);
+		calendarResourceImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			calendarResourceImpl.setUuid("");
@@ -206,6 +209,8 @@ public class CalendarResourceCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		calendarResourceId = objectInput.readLong();
@@ -234,6 +239,8 @@ public class CalendarResourceCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -297,6 +304,7 @@ public class CalendarResourceCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long calendarResourceId;
 	public long groupId;

@@ -17,6 +17,7 @@ package com.liferay.calendar.service.persistence;
 import com.liferay.calendar.exception.NoSuchCalendarException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CalendarPersistence extends BasePersistence<Calendar> {
+public interface CalendarPersistence
+	extends BasePersistence<Calendar>, CTPersistence<Calendar> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

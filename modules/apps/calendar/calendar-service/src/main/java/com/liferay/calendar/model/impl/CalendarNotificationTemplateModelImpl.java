@@ -76,7 +76,8 @@ public class CalendarNotificationTemplateModelImpl
 	public static final String TABLE_NAME = "CalendarNotificationTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR},
 		{"calendarNotificationTemplateId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -92,6 +93,7 @@ public class CalendarNotificationTemplateModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("calendarNotificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -110,7 +112,7 @@ public class CalendarNotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CalendarNotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(200) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null)";
+		"create table CalendarNotificationTemplate (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(200) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null,primary key (calendarNotificationTemplateId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CalendarNotificationTemplate";
@@ -204,6 +206,7 @@ public class CalendarNotificationTemplateModelImpl
 			new CalendarNotificationTemplateImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setCalendarNotificationTemplateId(
 			soapModel.getCalendarNotificationTemplateId());
@@ -390,6 +393,12 @@ public class CalendarNotificationTemplateModelImpl
 			(BiConsumer<CalendarNotificationTemplate, Long>)
 				CalendarNotificationTemplate::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", CalendarNotificationTemplate::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<CalendarNotificationTemplate, Long>)
+				CalendarNotificationTemplate::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"uuid", CalendarNotificationTemplate::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -505,6 +514,21 @@ public class CalendarNotificationTemplateModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -913,6 +937,7 @@ public class CalendarNotificationTemplateModelImpl
 			new CalendarNotificationTemplateImpl();
 
 		calendarNotificationTemplateImpl.setMvccVersion(getMvccVersion());
+		calendarNotificationTemplateImpl.setCtCollectionId(getCtCollectionId());
 		calendarNotificationTemplateImpl.setUuid(getUuid());
 		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(
 			getCalendarNotificationTemplateId());
@@ -1018,6 +1043,9 @@ public class CalendarNotificationTemplateModelImpl
 				new CalendarNotificationTemplateCacheModel();
 
 		calendarNotificationTemplateCacheModel.mvccVersion = getMvccVersion();
+
+		calendarNotificationTemplateCacheModel.ctCollectionId =
+			getCtCollectionId();
 
 		calendarNotificationTemplateCacheModel.uuid = getUuid();
 
@@ -1210,6 +1238,7 @@ public class CalendarNotificationTemplateModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _calendarNotificationTemplateId;
 	private long _groupId;
@@ -1257,6 +1286,7 @@ public class CalendarNotificationTemplateModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"calendarNotificationTemplateId", _calendarNotificationTemplateId);
@@ -1300,35 +1330,37 @@ public class CalendarNotificationTemplateModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("calendarNotificationTemplateId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("calendarNotificationTemplateId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("calendarId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("notificationType", 1024L);
+		columnBitmasks.put("calendarId", 1024L);
 
-		columnBitmasks.put("notificationTypeSettings", 2048L);
+		columnBitmasks.put("notificationType", 2048L);
 
-		columnBitmasks.put("notificationTemplateType", 4096L);
+		columnBitmasks.put("notificationTypeSettings", 4096L);
 
-		columnBitmasks.put("subject", 8192L);
+		columnBitmasks.put("notificationTemplateType", 8192L);
 
-		columnBitmasks.put("body", 16384L);
+		columnBitmasks.put("subject", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("body", 32768L);
+
+		columnBitmasks.put("lastPublishDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

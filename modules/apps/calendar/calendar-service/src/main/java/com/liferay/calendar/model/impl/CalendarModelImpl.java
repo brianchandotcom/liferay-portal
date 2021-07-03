@@ -82,15 +82,16 @@ public class CalendarModelImpl
 	public static final String TABLE_NAME = "Calendar";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"calendarId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"calendarResourceId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"timeZoneId", Types.VARCHAR}, {"color", Types.INTEGER},
-		{"defaultCalendar", Types.BOOLEAN}, {"enableComments", Types.BOOLEAN},
-		{"enableRatings", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"calendarId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"calendarResourceId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"timeZoneId", Types.VARCHAR},
+		{"color", Types.INTEGER}, {"defaultCalendar", Types.BOOLEAN},
+		{"enableComments", Types.BOOLEAN}, {"enableRatings", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,6 +99,7 @@ public class CalendarModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("calendarId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -118,7 +120,7 @@ public class CalendarModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Calendar (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null)";
+		"create table Calendar (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,calendarId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null,primary key (calendarId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Calendar";
 
@@ -199,6 +201,7 @@ public class CalendarModelImpl
 		Calendar model = new CalendarImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setCalendarId(soapModel.getCalendarId());
 		model.setGroupId(soapModel.getGroupId());
@@ -369,6 +372,11 @@ public class CalendarModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<Calendar, Long>)Calendar::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", Calendar::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<Calendar, Long>)Calendar::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", Calendar::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<Calendar, String>)Calendar::setUuid);
@@ -453,6 +461,21 @@ public class CalendarModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1153,6 +1176,7 @@ public class CalendarModelImpl
 		CalendarImpl calendarImpl = new CalendarImpl();
 
 		calendarImpl.setMvccVersion(getMvccVersion());
+		calendarImpl.setCtCollectionId(getCtCollectionId());
 		calendarImpl.setUuid(getUuid());
 		calendarImpl.setCalendarId(getCalendarId());
 		calendarImpl.setGroupId(getGroupId());
@@ -1248,6 +1272,8 @@ public class CalendarModelImpl
 		CalendarCacheModel calendarCacheModel = new CalendarCacheModel();
 
 		calendarCacheModel.mvccVersion = getMvccVersion();
+
+		calendarCacheModel.ctCollectionId = getCtCollectionId();
 
 		calendarCacheModel.uuid = getUuid();
 
@@ -1408,6 +1434,7 @@ public class CalendarModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _calendarId;
 	private long _groupId;
@@ -1459,6 +1486,7 @@ public class CalendarModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("calendarId", _calendarId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1501,39 +1529,41 @@ public class CalendarModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("calendarId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("calendarId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("calendarResourceId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("calendarResourceId", 1024L);
 
-		columnBitmasks.put("description", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("timeZoneId", 4096L);
+		columnBitmasks.put("description", 4096L);
 
-		columnBitmasks.put("color", 8192L);
+		columnBitmasks.put("timeZoneId", 8192L);
 
-		columnBitmasks.put("defaultCalendar", 16384L);
+		columnBitmasks.put("color", 16384L);
 
-		columnBitmasks.put("enableComments", 32768L);
+		columnBitmasks.put("defaultCalendar", 32768L);
 
-		columnBitmasks.put("enableRatings", 65536L);
+		columnBitmasks.put("enableComments", 65536L);
 
-		columnBitmasks.put("lastPublishDate", 131072L);
+		columnBitmasks.put("enableRatings", 131072L);
+
+		columnBitmasks.put("lastPublishDate", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -17,6 +17,7 @@ package com.liferay.calendar.service.persistence;
 import com.liferay.calendar.exception.NoSuchNotificationTemplateException;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CalendarNotificationTemplatePersistence
-	extends BasePersistence<CalendarNotificationTemplate> {
+	extends BasePersistence<CalendarNotificationTemplate>,
+			CTPersistence<CalendarNotificationTemplate> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

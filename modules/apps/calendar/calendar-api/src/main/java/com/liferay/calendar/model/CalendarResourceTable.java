@@ -35,6 +35,9 @@ public class CalendarResourceTable extends BaseTable<CalendarResourceTable> {
 
 	public final Column<CalendarResourceTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CalendarResourceTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CalendarResourceTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CalendarResourceTable, Long> calendarResourceId =

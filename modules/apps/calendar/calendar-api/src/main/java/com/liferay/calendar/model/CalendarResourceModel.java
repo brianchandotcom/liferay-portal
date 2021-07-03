@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -42,8 +43,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CalendarResourceModel
-	extends AttachedModel, BaseModel<CalendarResource>, LocalizedModel,
-			MVCCModel, ShardedModel, StagedGroupedModel {
+	extends AttachedModel, BaseModel<CalendarResource>,
+			CTModel<CalendarResource>, LocalizedModel, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -56,6 +58,7 @@ public interface CalendarResourceModel
 	 *
 	 * @return the primary key of this calendar resource
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -63,6 +66,7 @@ public interface CalendarResourceModel
 	 *
 	 * @param primaryKey the primary key of this calendar resource
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -80,6 +84,22 @@ public interface CalendarResourceModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this calendar resource.
+	 *
+	 * @return the ct collection ID of this calendar resource
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this calendar resource.
+	 *
+	 * @param ctCollectionId the ct collection ID of this calendar resource
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this calendar resource.

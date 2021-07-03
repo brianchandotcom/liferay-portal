@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.calendar.model.Calendar">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="calendarId" type="long" />
 		<field name="groupId" type="long" />
@@ -25,6 +26,7 @@
 	</model>
 	<model name="com.liferay.calendar.model.CalendarBooking">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="calendarBookingId" type="long" />
 		<field name="groupId" type="long" />
@@ -71,6 +73,7 @@
 	</model>
 	<model name="com.liferay.calendar.model.CalendarNotificationTemplate">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="calendarNotificationTemplateId" type="long" />
 		<field name="groupId" type="long" />
@@ -93,6 +96,7 @@
 	</model>
 	<model name="com.liferay.calendar.model.CalendarResource">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="calendarResourceId" type="long" />
 		<field name="groupId" type="long" />

@@ -1,0 +1,69 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Depot";
+	property testray.main.component.name = "Upgrades Collaboration";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test ViewDepotArchive73101 {
+		property data.archive.type = "data-archive-depot";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.validateDepotWCAndStructure();
+
+		Upgrade.validateDepotDMAndType();
+
+		Upgrade.validateCollections();
+
+		Upgrade.viewSharedDocument(dmDocumentTitle = "DM Document Title Sharing");
+
+		Upgrade.addAutoTaggedDM(
+			depotName = "Test Depot Name",
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "DM Document JPG New",
+			tagName = "jersey");
+
+		Upgrade.addAutoTaggedDM(
+			depotName = "Test Depot Name",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "DM Document PDF",
+			tagName = "alice");
+
+		Upgrade.addAutoTaggedWebContent(depotName = "Test Depot Name");
+
+		Upgrade.validateDepotEntries();
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test ViewDepotStagingArchive73101 {
+		property data.archive.type = "data-archive-depot-staging";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.publishDMsInStagingDepot();
+
+		Upgrade.publishWCsInStagingDepot();
+
+		Upgrade.publishCollectionsInStagingDepot();
+	}
+
+}

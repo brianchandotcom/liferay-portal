@@ -31,21 +31,24 @@ public class BatchEngineImportTaskTotalItemsCounterFactory {
 			return new JSONBatchEngineImportTaskTotalItemsCounter();
 		}
 
-		return new BatchEngineImportTaskTotalItemsCounter() {
+		return new DefaultBatchEngineImportTaskTotalItemsCounter();
+	}
 
-			@Override
-			public int getTotalItemsCount(InputStream inputStream)
-				throws IOException {
+	private class DefaultBatchEngineImportTaskTotalItemsCounter
+		implements BatchEngineImportTaskTotalItemsCounter {
 
-				try {
-					return 0;
-				}
-				finally {
-					inputStream.close();
-				}
+		@Override
+		public int getTotalItemsCount(InputStream inputStream)
+			throws IOException {
+
+			try {
+				return 0;
 			}
+			finally {
+				inputStream.close();
+			}
+		}
 
-		};
 	}
 
 }

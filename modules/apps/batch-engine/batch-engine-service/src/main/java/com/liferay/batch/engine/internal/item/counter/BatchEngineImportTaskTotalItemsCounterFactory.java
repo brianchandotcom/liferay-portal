@@ -31,6 +31,10 @@ public class BatchEngineImportTaskTotalItemsCounterFactory {
 			return new JSONBatchEngineImportTaskTotalItemsCounter();
 		}
 
+		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
+			return new JSONLBatchEngineImportTaskTotalItemsCounter();
+		}
+
 		return new DefaultBatchEngineImportTaskTotalItemsCounter();
 	}
 

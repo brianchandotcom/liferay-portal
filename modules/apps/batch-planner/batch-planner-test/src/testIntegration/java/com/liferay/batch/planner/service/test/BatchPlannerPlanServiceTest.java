@@ -54,7 +54,8 @@ public class BatchPlannerPlanServiceTest {
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, name);
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, "/test/uri",
+				"TEST Internal Class Name", name);
 
 		Assert.assertEquals(
 			BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
@@ -63,7 +64,8 @@ public class BatchPlannerPlanServiceTest {
 
 		try {
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, "", RandomTestUtil.randomString());
+				true, "", "/test/uri", "TEST Internal Class Name",
+				RandomTestUtil.randomString());
 
 			Assert.fail();
 		}
@@ -81,7 +83,8 @@ public class BatchPlannerPlanServiceTest {
 
 		try {
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, "");
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, "/test/uri",
+				"TEST Internal Class Name", "");
 
 			Assert.fail();
 		}
@@ -96,7 +99,8 @@ public class BatchPlannerPlanServiceTest {
 
 		try {
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, "/test/uri",
+				"TEST Internal Class Name",
 				RandomTestUtil.randomString(maxLength + 1));
 
 			Assert.fail();
@@ -109,7 +113,8 @@ public class BatchPlannerPlanServiceTest {
 
 		try {
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, name);
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, "/test/uri",
+				"TEST Internal Class Name", name);
 
 			Assert.fail();
 		}

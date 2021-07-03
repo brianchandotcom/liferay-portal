@@ -17,6 +17,7 @@ package com.liferay.batch.engine.internal.upgrade;
 import com.liferay.batch.engine.internal.upgrade.v4_0_0.VersionUpgradeProcess;
 import com.liferay.batch.engine.internal.upgrade.v4_0_1.ClassNameUpgradeProcess;
 import com.liferay.batch.engine.internal.upgrade.v4_1_0.TaskItemDelegateNameUpgradeProcess;
+import com.liferay.batch.engine.internal.upgrade.v4_2_0.BatchEngineImportTaskUpgradeProcess;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -40,6 +41,9 @@ public class BatchEngineServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"4.0.1", "4.1.0", new TaskItemDelegateNameUpgradeProcess());
+
+		registry.register(
+			"4.1.0", "4.2.0", new BatchEngineImportTaskUpgradeProcess());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)

@@ -20,6 +20,8 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.After;
@@ -54,7 +56,7 @@ public class ObjectDefinitionResourceTest
 			objectDefinitionResource.getObjectDefinitionsPage(
 				Pagination.of(1, 10));
 
-		Assert.assertEquals(0, objectDefinitionsPage.getTotalCount());
+		long totalCount = objectDefinitionsPage.getTotalCount();
 
 		_addObjectDefinition(randomObjectDefinition());
 
@@ -62,7 +64,31 @@ public class ObjectDefinitionResourceTest
 			objectDefinitionResource.getObjectDefinitionsPage(
 				Pagination.of(1, 10));
 
-		Assert.assertEquals(1, objectDefinitionsPage.getTotalCount());
+		Assert.assertEquals(
+			totalCount + 1, objectDefinitionsPage.getTotalCount());
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetObjectDefinitionsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"objectDefinitions", new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/objectDefinitions");
+
+		int totalCount = (int)objectDefinitionsJSONObject.get("totalCount");
+
+		testGraphQLObjectDefinition_addObjectDefinition();
+
+		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/objectDefinitions");
+
+		Assert.assertEquals(
+			totalCount + 1, objectDefinitionsJSONObject.get("totalCount"));
 	}
 
 	public ObjectDefinition objectDefinition;

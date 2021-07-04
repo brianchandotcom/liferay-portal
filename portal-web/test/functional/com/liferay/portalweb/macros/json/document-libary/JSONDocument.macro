@@ -139,7 +139,9 @@ definition {
 
 		echo("## * Description: ${description}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var fileEntryId = JSONCurlUtil.post("${curl}", "$..fileEntryId");
+
+		return "${fileEntryId}";
 	}
 
 	@summary = "This calls the JSON WS API to add a DL Folder"

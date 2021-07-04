@@ -24,6 +24,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Problem")
 public class Problem {
 
+	public Problem() {
+	}
+
 	public Problem(Response.Status status, String title) {
 		_status = status;
 		_title = title;

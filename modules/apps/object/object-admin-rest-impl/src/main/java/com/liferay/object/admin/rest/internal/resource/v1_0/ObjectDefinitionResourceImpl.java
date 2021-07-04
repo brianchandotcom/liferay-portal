@@ -102,7 +102,7 @@ public class ObjectDefinitionResourceImpl
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
 				id = objectDefinition.getObjectDefinitionId();
-				name = objectDefinition.getName();
+				name = objectDefinition.getShortName();
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),

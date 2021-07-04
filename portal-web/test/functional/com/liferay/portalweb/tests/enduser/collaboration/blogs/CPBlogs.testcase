@@ -232,17 +232,18 @@ definition {
 				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		var imageId	= JSONBlog.uploadBlogImage(
+			groupName = "Guest",
+			sourceFileName = "Document_3.jpg");
 
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_3",
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${imageId}",
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
-			navTab = "Documents and Media",
-			uploadFileName = "Document_3.jpg");
+			groupName = "Guest");
 
-		Button.clickPublish();
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 

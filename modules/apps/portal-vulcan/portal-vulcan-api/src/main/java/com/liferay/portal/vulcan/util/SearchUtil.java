@@ -314,6 +314,10 @@ public class SearchUtil {
 		SearchResponse searchResponse =
 			(SearchResponse)searchContext.getAttribute("search.response");
 
+		if (searchResponse == null) {
+			return new ArrayList<>();
+		}
+
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchResponse.getAggregationResultsMap();
 

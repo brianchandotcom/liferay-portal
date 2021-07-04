@@ -25,8 +25,6 @@ import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
 import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanPropertyFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
-import com.liferay.portal.vulcan.internal.jaxrs.serializer.PageJsonSerializer;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -83,12 +81,6 @@ public abstract class BaseMessageBodyWriter
 
 		simpleModule.addSerializer(
 			JSONArray.class, new JSONArrayStdSerializer(JSONArray.class));
-
-		if (mediaType.equals(MediaType.APPLICATION_XML_TYPE)) {
-			simpleModule.addSerializer(
-				(Class<Page<Object>>)(Class<?>)Page.class,
-				new PageJsonSerializer());
-		}
 
 		objectMapper.registerModule(simpleModule);
 

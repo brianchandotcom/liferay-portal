@@ -192,6 +192,16 @@ public class ServletContextDelegate {
 		return _classLoader;
 	}
 
+	public String getContextPath() {
+		String contextPath = _servletContext.getContextPath();
+
+		if (contextPath.equals("/")) {
+			return "";
+		}
+
+		return contextPath;
+	}
+
 	public String getInitParameter(String name) {
 		return _servletContext.getInitParameter(_encodeName(name));
 	}

@@ -32,7 +32,7 @@ public class TranslationInfoItemFieldValuesExporterTrackerUtil {
 		getTranslationInfoItemFieldValuesExporters() {
 
 		return _translationInfoItemFieldValuesExporterTracker.
-			getTranslationInfoItemFieldValueExporters();
+			getTranslationInfoItemFieldValuesExporters();
 	}
 
 	@Reference(unbind = "-")

@@ -36,17 +36,17 @@ public class TranslationInfoItemFieldValuesExporterTrackerImpl
 	implements TranslationInfoItemFieldValuesExporterTracker {
 
 	@Override
-	public Collection<TranslationInfoItemFieldValuesExporter>
-		getTranslationInfoItemFieldValueExporters() {
-
-		return _serviceTrackerMap.values();
-	}
-
-	@Override
 	public Optional<TranslationInfoItemFieldValuesExporter>
 		getTranslationInfoItemFieldValuesExporterOptional(String mimeType) {
 
 		return Optional.ofNullable(_serviceTrackerMap.getService(mimeType));
+	}
+
+	@Override
+	public Collection<TranslationInfoItemFieldValuesExporter>
+		getTranslationInfoItemFieldValuesExporters() {
+
+		return _serviceTrackerMap.values();
 	}
 
 	@Activate

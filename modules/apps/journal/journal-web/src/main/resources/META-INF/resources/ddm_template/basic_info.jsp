@@ -81,7 +81,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 	<aui:input name="webDavURL" type="resource" value="<%= ddmTemplate.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
 </c:if>
 
-<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
+<aui:input helpMessage="journal-template-cacheable-help" labelCssClass="control-label" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
 
 <c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
 	<aui:script>

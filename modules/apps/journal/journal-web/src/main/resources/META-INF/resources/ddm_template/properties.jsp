@@ -16,9 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:form-navigator
-	fieldSetCssClass="form-group-sm panel-group-flush"
-	formModelBean='<%= DDMTemplateLocalServiceUtil.fetchDDMTemplate(ParamUtil.getLong(request, "ddmTemplateId")) %>'
-	id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_TEMPLATE %>"
-	showButtons="<%= false %>"
-/>
+<div class="journal-ddm-template-properties">
+	<liferay-frontend:form-navigator
+		fieldSetCssClass="form-group-sm mb-0 panel-group-flush"
+		formModelBean='<%= DDMTemplateLocalServiceUtil.fetchDDMTemplate(ParamUtil.getLong(request, "ddmTemplateId")) %>'
+		id="<%= JournalWebConstants.FORM_NAVIGATOR_ID_JOURNAL_DDM_TEMPLATE %>"
+		showButtons="<%= false %>"
+	/>
+</div>

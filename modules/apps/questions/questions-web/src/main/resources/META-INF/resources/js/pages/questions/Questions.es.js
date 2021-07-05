@@ -350,16 +350,16 @@ export default withRouter(
 				);
 			}
 
-			fn.then(({data, loading}) => {
+			fn.then(({data}) => {
 				setQuestions(data || []);
-				setLoading(loading);
-			}).catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-				setLoading(false);
-				setError({message: 'Loading Questions', title: 'Error'});
-			});
+			})
+				.catch((error) => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+					setError({message: 'Loading Questions', title: 'Error'});
+				})
+				.finally(() => setLoading(false));
 		}, [
 			creatorId,
 			currentTag,

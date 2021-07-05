@@ -1169,6 +1169,99 @@ definition {
 			navTab = "Documents and Media");
 	}
 
+	@description = "This makes sure that the files in item selector can display by pagination."
+	@priority = "4"
+	@refactordone
+	test FilePaginationDisplaysCorrectCount {
+		for (var documentTitle : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "${documentTitle}",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "${documentTitle}.jpg");
+		}
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+
+		BlogsNavigator.gotoSelectFile();
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		ItemSelector.switchTab(navTab = "Documents and Media");
+
+		for (var card : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
+			LexiconCard.viewCardTitle(card = "${card}");
+		}
+
+		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		for (var card : list "Document_1,Document_2,Commerce_Black,Commerce_White") {
+			LexiconCard.viewCardTitle(card = "${card}");
+		}
+
+		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		for (var card : list "Document_3,Document_4") {
+			LexiconCard.viewCardTitle(card = "${card}");
+		}
+
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+	}
+
+	@description = "This test covers LPS-122139. It ensures that the files in the item selector can display by pagination after scoped everywhere filter."
+	@priority = "4"
+	@refactordone
+	test FilePaginationForFilteredResultsDisplaysCorrectCount {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		// Explore if can add a DM entry with customize file name by JSON
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.configureFilterViaSelectFile(
+			filterBy = "Everywhere",
+			navTab = "Documents and Media");
+
+		Pagination.changePagination(itemsPerPage = "40");
+
+		Pagination.viewResults(results = "Showing 1 to 30 of 30 entries.");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.configureFilterViaSelectFile(
+			filterBy = "Everywhere",
+			navTab = "Documents and Media");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
+	}
+
 	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."
 	@priority = "4"
 	@refactordone
@@ -1225,99 +1318,6 @@ definition {
 		LexiconCard.viewCardPresent(card = "Site X");
 
 		LexiconCard.viewCardNotPresent(card = "Site A");
-	}
-
-	@description = "This makes sure that the files in item selector can display by pagination."
-	@priority = "4"
-	@refactordone
-	test ValidateFilesPagination {
-		for (var documentTitle : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "${documentTitle}",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "${documentTitle}.jpg");
-		}
-
-		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
-
-		BlogsNavigator.gotoSelectFile();
-
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		ItemSelector.switchTab(navTab = "Documents and Media");
-
-		for (var card : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
-			LexiconCard.viewCardTitle(card = "${card}");
-		}
-
-		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
-
-		Pagination.changePagination(itemsPerPage = "4");
-
-		for (var card : list "Document_1,Document_2,Commerce_Black,Commerce_White") {
-			LexiconCard.viewCardTitle(card = "${card}");
-		}
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
-
-		Click(locator1 = "Pagination#NEXT_LINK");
-
-		for (var card : list "Document_3,Document_4") {
-			LexiconCard.viewCardTitle(card = "${card}");
-		}
-
-		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
-	}
-
-	@description = "This test covers LPS-122139. It ensures that the files in the item selector can display by pagination after scoped everywhere filter."
-	@priority = "4"
-	@refactordone
-	test ValidateFilesPaginationAfterScopedFilter {
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		// Explore if can add a DM entry with customize file name by JSON
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg,Document_4.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg,Document_1.jpg");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoSelectFile();
-
-		ItemSelector.configureFilterViaSelectFile(
-			filterBy = "Everywhere",
-			navTab = "Documents and Media");
-
-		Pagination.changePagination(itemsPerPage = "40");
-
-		Pagination.viewResults(results = "Showing 1 to 30 of 30 entries.");
-
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
-
-		BlogsNavigator.gotoSelectFile();
-
-		ItemSelector.configureFilterViaSelectFile(
-			filterBy = "Everywhere",
-			navTab = "Documents and Media");
-
-		Click(locator1 = "Pagination#NEXT_LINK");
-
-		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
 	}
 
 }

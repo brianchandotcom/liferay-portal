@@ -17,44 +17,71 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {ElementsSidebarPanel} from './ElementsSidebarPanel';
+import PropertiesSidebarPanel from './PropertiesSidebarPanel';
+
+const PANEL_IDS = {
+	elements: 'elements',
+	properties: 'properties',
+};
 
 export default function Sidebar({
-	inputChannel,
-	setSidebarOpen,
-	sidebarOpen,
-	templateVariableGroups,
+	selectedSidebarPanelId,
+	setSelectedSidebarPanelId,
 }) {
 	return (
-		<div
-			className={classNames('ddm_template_editor__App-sidebar', {
-				open: sidebarOpen,
-			})}
-		>
+		<div className="ddm_template_editor__App-sidebar">
 			<div
 				className={classNames(
 					'ddm_template_editor__App-sidebar-content',
 					{
-						open: sidebarOpen,
+						open: selectedSidebarPanelId,
 					}
 				)}
 			>
 				<ElementsSidebarPanel
-					onButtonClick={(item) =>
-						inputChannel.sendData(item.content)
-					}
-					templateVariableGroups={templateVariableGroups}
+					className={classNames({
+						'd-none': PANEL_IDS.elements !== selectedSidebarPanelId,
+					})}
+				/>
+
+				<PropertiesSidebarPanel
+					className={classNames({
+						'd-none':
+							PANEL_IDS.properties !== selectedSidebarPanelId,
+					})}
 				/>
 			</div>
 			<div className="ddm_template_editor__App-sidebar-buttons pt-1">
 				<ClayButtonWithIcon
 					borderless
+					className="mb-2"
 					displayType="secondary"
 					monospaced
-					onClick={() =>
-						setSidebarOpen((sidebarOpen) => !sidebarOpen)
-					}
+					onClick={() => {
+						setSelectedSidebarPanelId((selectedSidebarPanelId) =>
+							selectedSidebarPanelId === PANEL_IDS.elements
+								? null
+								: PANEL_IDS.elements
+						);
+					}}
 					outline
 					symbol="list-ul"
+				/>
+
+				<ClayButtonWithIcon
+					borderless
+					className="mb-2"
+					displayType="secondary"
+					monospaced
+					onClick={() => {
+						setSelectedSidebarPanelId((selectedSidebarPanelId) =>
+							selectedSidebarPanelId === PANEL_IDS.properties
+								? null
+								: PANEL_IDS.properties
+						);
+					}}
+					outline
+					symbol="cog"
 				/>
 			</div>
 		</div>

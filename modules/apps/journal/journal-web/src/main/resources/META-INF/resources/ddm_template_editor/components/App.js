@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {useChannel} from '../hooks/useChannel';
+import {AppContextProvider} from './AppContext';
 import {ClosableAlert} from './ClosableAlert';
 import {Editor} from './Editor';
 import Sidebar from './Sidebar';
@@ -25,6 +26,7 @@ export default function App({
 	editorAutocompleteData,
 	editorMode: initialEditorMode,
 	portletNamespace,
+	propertiesViewURL,
 	script: initialScript,
 	showCacheableWarning,
 	showLanguageChangeWarning,
@@ -56,7 +58,7 @@ export default function App({
 		}
 	}, [portletNamespace]);
 
-	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const [selectedSidebarPanelId, setSelectedSidebarPanelId] = useState(null);
 
 	return (
 		<AppContextProvider
@@ -65,7 +67,11 @@ export default function App({
 			templateVariableGroups={templateVariableGroups}
 		>
 			<div className="ddm_template_editor__App">
-				<div className="ddm_template_editor__App-content">
+				<div
+					className={classNames('ddm_template_editor__App-content', {
+						'ddm_template_editor__App-content--sidebar-open': selectedSidebarPanelId,
+					})}
+				>
 					<ClosableAlert
 						message={Liferay.Language.get(
 							'changing-the-language-does-not-automatically-translate-the-existing-template-script'
@@ -91,14 +97,10 @@ export default function App({
 					/>
 				</div>
 
-			{editorMode !== 'xml' && (
 				<Sidebar
-					inputChannel={inputChannel}
-					setSidebarOpen={setSidebarOpen}
-					sidebarOpen={sidebarOpen}
-					templateVariableGroups={templateVariableGroups}
+					selectedSidebarPanelId={selectedSidebarPanelId}
+					setSelectedSidebarPanelId={setSelectedSidebarPanelId}
 				/>
-			)}
 			</div>
 		</AppContextProvider>
 	);

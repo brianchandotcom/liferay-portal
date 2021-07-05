@@ -33,6 +33,7 @@ export const ClosableAlert = ({
 	return (
 		visible && (
 			<ClayAlert
+				className="m-3"
 				displayType="warning"
 				id={id}
 				onClose={() => setVisible(false)}

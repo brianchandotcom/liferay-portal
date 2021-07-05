@@ -220,21 +220,13 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that the cover image of a blog entry can be changed."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanChangeCoverImage {
-		for (var entryCount : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.jpg",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
 		var imageId	= JSONBlog.uploadBlogImage(
 			groupName = "Guest",
-			sourceFileName = "Document_3.jpg");
+			sourceFileName = "Document_1.jpg");
 
 		JSONBlog.addEntryWithImage(
 			coverImageId = "${imageId}",
@@ -251,19 +243,12 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
-			uploadFileName = "Document_3");
+			uploadFileName = "Document_1");
 
-		BlogsNavigator.gotoBrowseImage();
-
-		ItemSelector.searchDMImages(imageFileName = "Document_1");
-
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		var key_imageFileName = "Document_1.jpg";
-
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
-
-		SelectFrameTop(value1 = "relative=top");
+		BlogsEntry.editCoverImage(
+			coverImageName = "Document_2.jpg",
+			navTab = "Documents and Media",
+			uploadFileName = "Document_2.jpg");
 
 		PortletEntry.publish();
 
@@ -273,7 +258,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
-			uploadFileName = "Document_1");
+			uploadFileName = "Document_2");
 	}
 
 	@description = "This checks that a blog entry can saved as a draft and then deleted."
@@ -511,19 +496,18 @@ definition {
 
 	@description = "This test covers LPS-111741. It ensures that a blog entry can be added with the same blog image."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanUseBlogImageForDifferentEntries {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		var imageId	= JSONBlog.uploadBlogImage(
+			groupName = "Guest",
+			sourceFileName = "Document_1.jpg");
 
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${imageId}",
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
-			navTab = "Blog Images",
-			uploadFileName = "Document_1.jpg");
-
-		Button.clickPublish();
+			groupName = "Guest");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -548,27 +532,22 @@ definition {
 
 	@description = "This checks that the cover image details appear properly"
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanViewCoverImageDetails {
+		var imageId	= JSONBlog.uploadBlogImage(
+			groupName = "Guest",
+			sourceFileName = "Document_1.jpg");
+
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${imageId}",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest");
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			navTab = "Blog Images",
-			uploadFileName = "Document_1.jpg");
-
-		Button.clickPublish();
-
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			uploadFileName = "Document_1");
 
 		BlogsNavigator.gotoBrowseImage();
 

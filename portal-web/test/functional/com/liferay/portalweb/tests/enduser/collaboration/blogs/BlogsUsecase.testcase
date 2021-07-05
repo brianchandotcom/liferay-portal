@@ -250,6 +250,59 @@ definition {
 			userFullName = "Test Test");
 	}
 
+	@description = "This checks that the image in the DM folder can be added to a blog entry as a cover image."
+	@priority = "3"
+	@refactordone
+	test CanViewBlogsEntryWithCoverImageFromDMFolders {
+		for (var n : list "1,2") {
+			JSONDocument.addFolder(
+				dmFolderDescription = "DM Folder ${n} Description",
+				dmFolderName = "DM Folder ${n} Name",
+				groupName = "Guest");
+
+			JSONDocument.addFolder(
+				dmFolderDescription = "DM SubFolder ${n} Description",
+				dmFolderName = "DM SubFolder ${n} Name",
+				groupName = "Guest",
+				parentFolderName = "DM Folder ${n} Name");
+
+			var fileEntryId = JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${n}.jpg",
+				folderName = "DM SubFolder ${n} Name",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				parentFolderName = "DM Folder ${n} Name",
+				sourceFileName = "Document_${n}.jpg");
+
+			JSONBlog.addEntryWithImage(
+				coverImageId = "${fileEntryId}",
+				entryContent = "Blogs Entry${n} Content",
+				entryTitle = "Blogs Entry${n} Title",
+				groupName = "Guest");
+		}
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry1 Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_uploadFileName = "Document_1",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry2 Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_uploadFileName = "Document_2",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+	}
+
 	@description = "This checks that a custom blog abstracted can be viewed from the site page."
 	@priority = "4"
 	@refactordone
@@ -663,58 +716,6 @@ definition {
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test ViewBlogsEntryWithCoverImageFromDMFolders {
-		for (var n : list "1,2") {
-			JSONDocument.addFolder(
-				dmFolderDescription = "DM Folder ${n} Description",
-				dmFolderName = "DM Folder ${n} Name",
-				groupName = "Guest");
-
-			JSONDocument.addFolder(
-				dmFolderDescription = "DM SubFolder ${n} Description",
-				dmFolderName = "DM SubFolder ${n} Name",
-				groupName = "Guest",
-				parentFolderName = "DM Folder ${n} Name");
-
-			var fileEntryId = JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${n}.jpg",
-				folderName = "DM SubFolder ${n} Name",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				parentFolderName = "DM Folder ${n} Name",
-				sourceFileName = "Document_${n}.jpg");
-
-			JSONBlog.addEntryWithImage(
-				coverImageId = "${fileEntryId}",
-				entryContent = "Blogs Entry${n} Content",
-				entryTitle = "Blogs Entry${n} Title",
-				groupName = "Guest");
-		}
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry1 Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		AssertElementPresent(
-			key_uploadFileName = "Document_1",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry2 Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		AssertElementPresent(
-			key_uploadFileName = "Document_2",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
 	}
 
 	@priority = "4"

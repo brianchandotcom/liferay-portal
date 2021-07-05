@@ -732,17 +732,18 @@ definition {
 
 	@description = "This ensures that the cover image can be removed from the blog entry."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanRemoveCoverImageFromEntry {
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
+		var imageId	= JSONBlog.uploadBlogImage(
+			groupName = "Guest",
+			sourceFileName = "Document_1.jpg");
+
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${imageId}",
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
-			navTab = "Blog Images",
-			uploadFileName = "Document_1.jpg");
-
-		PortletEntry.publish();
+			groupName = "Guest");
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
@@ -1069,7 +1070,8 @@ definition {
 
 	@description = "This checks that a cover image can be uploaded and published in a blog"
 	@priority = "3"
-	@refactorneeded
+	@refactordone
+	@uitest
 	test CanUploadAndPublishCoverImage {
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
@@ -1088,7 +1090,8 @@ definition {
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This test covers LPS-130735. It ensures that the caption of cover image can be viewed in blogs when the small image is removed."

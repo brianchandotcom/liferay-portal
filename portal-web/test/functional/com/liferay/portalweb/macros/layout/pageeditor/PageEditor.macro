@@ -3034,6 +3034,20 @@ definition {
 			locator1 = "Button#COLOR_SWATCH_ITEM");
 	}
 
+	macro selectContentFilter {
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		Click(locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE");
+
+		DropdownMenuItem.click(menuItem = "${filter}");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+			value1 = "${filter}");
+	}
+
 	macro viewAutoSaveMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PageEditor#AUTOSAVE_MESSAGE",

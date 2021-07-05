@@ -12,6 +12,7 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
@@ -53,6 +54,28 @@ export const Editor = ({autocompleteData, initialScript}) => {
 
 		return () => {
 			refreshHandler.detach();
+		};
+	}, [initialScript, portletNamespace]);
+
+	useEffect(() => {
+		const scriptImportedHandler = Liferay.on(
+			`${portletNamespace}scriptImported`,
+			(event) => {
+				setScript(event.script);
+
+				openToast({
+					message: Liferay.Util.sub(
+						Liferay.Language.get('x-imported'),
+						event.fileName
+					),
+					title: Liferay.Language.get('success'),
+					type: 'success',
+				});
+			}
+		);
+
+		return () => {
+			scriptImportedHandler.detach();
 		};
 	}, [initialScript, portletNamespace]);
 

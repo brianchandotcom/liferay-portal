@@ -56,10 +56,10 @@ public class CompanyThreadLocal {
 	public static SafeCloseable lock(long companyId) {
 		SafeCloseable safeCloseable = setWithSafeCloseable(companyId);
 
-		_locked = true;
+		_locked.set(true);
 
 		return () -> {
-			_locked = false;
+			_locked.set(false);
 
 			safeCloseable.close();
 		};
@@ -186,7 +186,7 @@ public class CompanyThreadLocal {
 	}
 
 	private static boolean _setCompanyId(Long companyId) {
-		if (_locked) {
+		if (_locked.equals(true)) {
 			throw new UnsupportedOperationException(
 				"CompanyThreadLocal modification is not allowed");
 		}
@@ -243,6 +243,8 @@ public class CompanyThreadLocal {
 		new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._deleteInProcess",
 			() -> Boolean.FALSE);
-	private static boolean _locked;
+	private static final ThreadLocal<Boolean> _locked =
+		new CentralizedThreadLocal<>(
+			CompanyThreadLocal.class + "._locked", () -> Boolean.FALSE);
 
 }

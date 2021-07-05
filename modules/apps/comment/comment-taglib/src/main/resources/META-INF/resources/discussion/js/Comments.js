@@ -159,20 +159,13 @@ export default function Comments({
 			window.location.reload();
 		}
 		else {
-			const portletNodeId = `p_p_id_${portletDisplayId}_`;
-
-			const portletNode = document.getElementById(portletNodeId);
-
 			const data = Liferay.Util.ns(namespace, {
 				className,
 				classPK,
 				skipEditorLoading: true,
 			});
 
-			Liferay.Portlet.refresh('#' + portletNodeId, {
-				...data,
-				...(portletNode.refreshURLData || {}),
-			});
+			Liferay.Portlet.refresh(`#p_p_id_${portletDisplayId}_`, data, true);
 		}
 	}
 

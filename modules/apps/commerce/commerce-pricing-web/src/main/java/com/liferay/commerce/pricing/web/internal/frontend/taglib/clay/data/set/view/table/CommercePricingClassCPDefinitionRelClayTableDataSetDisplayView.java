@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -21,19 +21,20 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Riccardo Alberti
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS,
 	service = ClayDataSetDisplayView.class
 )
-public class CPInstancePriceEntryClayTableDataSetDisplayView
+public class CommercePricingClassCPDefinitionRelClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -41,16 +42,18 @@ public class CPInstancePriceEntryClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
+		ClayTableSchemaField imageField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"image", StringPool.BLANK);
+
+		imageField.setContentRenderer("image");
+
 		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"unitPrice", "unit-price");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"createDate", "create-date");
+		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
 		return clayTableSchemaBuilder.build();
 	}

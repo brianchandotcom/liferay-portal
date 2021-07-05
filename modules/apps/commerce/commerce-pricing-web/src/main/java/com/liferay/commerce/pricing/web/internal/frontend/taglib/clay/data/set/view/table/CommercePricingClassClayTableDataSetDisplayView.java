@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceDiscountChannelClayTableDataSetDisplayView
+public class CommercePricingClassClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,10 +42,15 @@ public class CommerceDiscountChannelClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"channel.name", "name");
+			clayTableSchemaBuilder.addClayTableSchemaField("title", "name");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"numberOfProducts", "number-of-products");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"lastPublishDate", "last-publish-date");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSet
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNTS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceDiscountAccountGroupClayTableDataSetDisplayView
+public class CommerceDiscountClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -40,8 +41,23 @@ public class CommerceDiscountAccountGroupClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
+		ClayTableSchemaField nameClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField("title", "name");
+
+		nameClayTableSchemaField.setContentRenderer("actionLink");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("target", "target");
+
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"accountGroup.name", "name");
+			"amountFormatted", "amount");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"level", "discount-level");
+
+		ClayTableSchemaField activeField =
+			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");
+
+		activeField.setContentRenderer("boolean");
 
 		return clayTableSchemaBuilder.build();
 	}

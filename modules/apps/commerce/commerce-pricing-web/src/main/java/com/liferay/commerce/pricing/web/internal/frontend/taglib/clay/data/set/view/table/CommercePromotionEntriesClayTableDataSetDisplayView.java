@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,10 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PROMOTION_ENTRIES,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePriceModifierClayTableDataSetDisplayView
+public class CommercePromotionEntriesClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -41,20 +42,34 @@ public class CommercePriceModifierClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+		ClayTableSchemaField imageField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"product.thumbnail", StringPool.BLANK);
 
-		nameClayTableSchemaField.setContentRenderer("actionLink");
+		imageField.setContentRenderer("image");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("target", "target");
+		ClayTableSchemaField skuField =
+			clayTableSchemaBuilder.addClayTableSchemaField("sku.name", "sku");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("modifier", "modifier");
+		skuField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"startDate", "publish-date");
+			"product.name.LANG", "name");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"endDate", "expiration-date");
+			"sku.basePromoPriceFormatted", "base-promotion-price");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"priceFormatted", "promotion-price");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"discountLevelsFormatted", "unit-discount");
+
+		ClayTableSchemaField tieredPrice =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"hasTierPrice", "tiered-price");
+
+		tieredPrice.setContentRenderer("boolean");
 
 		return clayTableSchemaBuilder.build();
 	}

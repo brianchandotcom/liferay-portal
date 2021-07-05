@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -20,8 +20,6 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSet
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRODUCT_DEFINITIONS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_CATEGORIES,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePriceModifierCPDefinitionClayTableDataSetDisplayView
+public class CommercePriceModifierCategoryClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,16 +40,12 @@ public class CommercePriceModifierCPDefinitionClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField imageField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"product.thumbnail", StringPool.BLANK);
-
-		imageField.setContentRenderer("image");
+		clayTableSchemaBuilder.addClayTableSchemaField("category.name", "name");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"product.name.LANG", "name");
+			"category.vocabulary", "vocabulary");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("product.sku", "sku");
+		clayTableSchemaBuilder.addClayTableSchemaField("category.path", "path");
 
 		return clayTableSchemaBuilder.build();
 	}

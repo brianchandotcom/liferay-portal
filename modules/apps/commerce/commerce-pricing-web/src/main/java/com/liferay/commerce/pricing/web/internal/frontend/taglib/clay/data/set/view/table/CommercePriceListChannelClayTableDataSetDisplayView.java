@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LISTS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_CHANNELS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePriceListClayTableDataSetDisplayView
+public class CommercePriceListChannelClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,30 +42,10 @@ public class CommercePriceListClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"channel.name", "name");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
-		nameClayTableSchemaField.setSortable(true);
-
-		clayTableSchemaBuilder.addClayTableSchemaField("author", "author");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"catalogName", "catalog");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("priority", "priority");
-
-		ClayTableSchemaField dateclayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"createDate", "create-date");
-
-		dateclayTableSchemaField.setContentRenderer("date");
-		dateclayTableSchemaField.setSortable(true);
-
-		ClayTableSchemaField clayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"workflowStatusInfo", "status");
-
-		clayTableSchemaField.setContentRenderer("status");
 
 		return clayTableSchemaBuilder.build();
 	}

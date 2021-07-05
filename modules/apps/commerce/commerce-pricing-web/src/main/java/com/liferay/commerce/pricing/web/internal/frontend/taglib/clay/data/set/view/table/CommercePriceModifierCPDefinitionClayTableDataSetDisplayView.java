@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -21,19 +21,20 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Riccardo Alberti
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_TIER_PRICE_ENTRIES,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRODUCT_DEFINITIONS,
 	service = ClayDataSetDisplayView.class
 )
-public class CPInstanceTierPriceEntryClayTableDataSetDisplayView
+public class CommercePriceModifierCPDefinitionClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -41,16 +42,16 @@ public class CPInstanceTierPriceEntryClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField priceClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
+		ClayTableSchemaField imageField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"product.thumbnail", StringPool.BLANK);
 
-		priceClayTableSchemaField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"minQuantity", "min-quantity");
+		imageField.setContentRenderer("image");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"createDate", "create-date");
+			"product.name.LANG", "name");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("product.sku", "sku");
 
 		return clayTableSchemaBuilder.build();
 	}

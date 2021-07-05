@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,10 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_CHANNELS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_ENTRIES,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePriceListChannelClayTableDataSetDisplayView
+public class CommercePriceEntryClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -41,11 +42,34 @@ public class CommercePriceListChannelClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameClayTableSchemaField =
+		ClayTableSchemaField imageField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				"channel.name", "name");
+				"product.thumbnail", StringPool.BLANK);
 
-		nameClayTableSchemaField.setContentRenderer("actionLink");
+		imageField.setContentRenderer("image");
+
+		ClayTableSchemaField skuField =
+			clayTableSchemaBuilder.addClayTableSchemaField("sku.name", "sku");
+
+		skuField.setContentRenderer("actionLink");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"product.name.LANG", "name");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"sku.basePriceFormatted", "base-price");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"priceFormatted", "price-list-price");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"discountLevelsFormatted", "unit-discount");
+
+		ClayTableSchemaField tieredPrice =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"hasTierPrice", "tiered-price");
+
+		tieredPrice.setContentRenderer("boolean");
 
 		return clayTableSchemaBuilder.build();
 	}

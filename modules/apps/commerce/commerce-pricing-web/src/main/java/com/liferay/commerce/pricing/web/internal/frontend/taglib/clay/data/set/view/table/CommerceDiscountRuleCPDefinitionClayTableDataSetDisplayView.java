@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,10 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRICING_CLASSES,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceDiscountPricingClassClayTableDataSetDisplayView
+public class CommerceDiscountRuleCPDefinitionClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -41,14 +42,15 @@ public class CommerceDiscountPricingClassClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameClayTableSchemaField =
+		ClayTableSchemaField imageField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
-				"productGroup.title.LANG", "title");
+				"image", StringPool.BLANK);
 
-		nameClayTableSchemaField.setContentRenderer("actionLink");
+		imageField.setContentRenderer("image");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"productGroup.productsCount", "number-of-products");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
 		return clayTableSchemaBuilder.build();
 	}

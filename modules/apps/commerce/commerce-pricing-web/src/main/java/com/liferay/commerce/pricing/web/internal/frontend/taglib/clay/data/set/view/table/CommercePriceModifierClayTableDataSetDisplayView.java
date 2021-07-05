@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -26,14 +26,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Riccardo Alberti
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePricingClassClayTableDataSetDisplayView
+public class CommercePriceModifierClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,15 +42,19 @@ public class CommercePricingClassClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("title", "name");
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"numberOfProducts", "number-of-products");
+		clayTableSchemaBuilder.addClayTableSchemaField("target", "target");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("modifier", "modifier");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"lastPublishDate", "last-publish-date");
+			"startDate", "publish-date");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"endDate", "expiration-date");
 
 		return clayTableSchemaBuilder.build();
 	}

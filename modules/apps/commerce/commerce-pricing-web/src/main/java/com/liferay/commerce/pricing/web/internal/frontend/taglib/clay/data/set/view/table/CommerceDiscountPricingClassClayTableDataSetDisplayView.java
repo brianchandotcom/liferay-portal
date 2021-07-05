@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.pricing.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_DISCOUNTS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRICING_CLASSES,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePricingClassDiscountClayTableDataSetDisplayView
+public class CommerceDiscountPricingClassClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,18 +42,13 @@ public class CommercePricingClassDiscountClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"productGroup.title.LANG", "title");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("target", "target");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
-
-		ClayTableSchemaField statusField =
-			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
-
-		statusField.setContentRenderer("label");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"productGroup.productsCount", "number-of-products");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -219,7 +219,7 @@ public class DisplayPageSiteNavigationMenuItemType
 			return friendlyURL;
 		}
 
-		return StringPool.BLANK;
+		return StringPool.POUND;
 	}
 
 	@Override

@@ -113,6 +113,10 @@ definition {
 			var description = "";
 		}
 
+		if (isSet(fileName)) {
+			var sourceFileName = "${fileName}";
+		}
+
 		var serviceContext = JSONDocumentSetter.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",

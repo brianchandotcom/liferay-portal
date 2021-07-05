@@ -13,6 +13,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
@@ -183,6 +184,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	const [activePage, setActivePage] = useState(1);
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
+	const [loading, setLoading] = useState(false);
 
 	const totalPages = Math.ceil(
 		collectionConfig.numberOfItems / collectionConfig.numberOfItemsPerPage
@@ -214,6 +216,8 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				? collectionConfig.collection && activePage <= totalPages
 				: collectionConfig.collection
 		) {
+			setLoading(true);
+
 			CollectionService.getCollectionField({
 				activePage,
 				classNameId: itemClassNameId,
@@ -241,6 +245,9 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 					if (process.env.NODE_ENV === 'development') {
 						console.error(error);
 					}
+				})
+				.finally(() => {
+					setLoading(false);
 				});
 		}
 	}, [
@@ -264,7 +271,9 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	return (
 		<div className="page-editor__collection" ref={ref}>
-			{!collectionIsMapped(collectionConfig) ? (
+			{loading ? (
+				<ClayLoadingIndicator />
+			) : !collectionIsMapped(collectionConfig) ? (
 				<NotCollectionSelectedMessage />
 			) : showEmptyMessage ? (
 				<EmptyCollectionMessage />

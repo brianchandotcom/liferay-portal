@@ -642,86 +642,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-96794. View permissions and usage of mapped web content in Contents panel."
-	@priority = "4"
-	test ViewPermissionsAndUsageOfMappedWebContent {
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WebContent Title");
-		}
-
-		task ("Add a Heading fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("Map the Title of web content to editable field") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				contributed = "true",
-				fragmentName = "Heading",
-				id = "element-text");
-
-			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "WebContent Title",
-				navItem = "Web Content");
-
-			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Title");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("View permissions of mapped web content in Contents panel") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
-
-			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
-				menuItem = "Permissions",
-				rowEntry = "WebContent Title");
-
-			IFrame.selectPermissionsFrame();
-
-			Role.viewPermissionPG(
-				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				permissionFlagged = "true",
-				roleTitle = "Owner");
-		}
-
-		task ("View usage of mapped web content in Contents panel") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
-
-			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
-				menuItem = "View Usages",
-				rowEntry = "WebContent Title");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertElementPresent(
-				locator1 = "AssetLists#ASSET_LIST_USAGES",
-				usageAmount = "2",
-				usageType = "Pages");
-		}
-	}
-
 	@description = "This is a test for LPS-122396. The details of displayed assets are shown in Page Content panel."
 	@priority = "5"
 	test ViewDetailsOfDisplayedAssets {
@@ -833,6 +753,86 @@ definition {
 				key_itemType = "Web Content Article - Basic Web Content",
 				key_style = "semi-bold",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM_DETAILS_WITH_TYPE");
+		}
+	}
+
+	@description = "This is a test for LPS-96794. View permissions and usage of mapped web content in Contents panel."
+	@priority = "4"
+	test ViewPermissionsAndUsageOfMappedWebContent {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WebContent Title");
+		}
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title of web content to editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WebContent Title",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View permissions of mapped web content in Contents panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+				menuItem = "Permissions",
+				rowEntry = "WebContent Title");
+
+			IFrame.selectPermissionsFrame();
+
+			Role.viewPermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				permissionFlagged = "true",
+				roleTitle = "Owner");
+		}
+
+		task ("View usage of mapped web content in Contents panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+				menuItem = "View Usages",
+				rowEntry = "WebContent Title");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementPresent(
+				locator1 = "AssetLists#ASSET_LIST_USAGES",
+				usageAmount = "2",
+				usageType = "Pages");
 		}
 	}
 

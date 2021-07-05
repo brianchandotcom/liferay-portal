@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Instances Insurance Portal Instance Initializer
+Bundle-SymbolicName: com.liferay.portal.instances.insurance.portal.instance.initializer
+Bundle-Version: 1.0.0
+Web-ContextPath: /portal-instances-insurance-portal-instance-initializer

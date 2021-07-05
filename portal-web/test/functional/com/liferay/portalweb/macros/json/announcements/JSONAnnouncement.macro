@@ -63,4 +63,11 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	@summary = "Delete a basic announcement"
+	macro deleteAnnouncement {
+		JSONAnnouncementAPI._deleteAnnouncement(
+			groupName = "${groupName}",
+			siteURLKey = "${siteURLKey}");
+	}
+
 }

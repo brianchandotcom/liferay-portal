@@ -18,7 +18,6 @@
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.bulk.selection.BulkSelectionRunner" %><%@
-page import="com.liferay.digital.signature.constants.DigitalSignatureConstants" %><%@
 page import="com.liferay.digital.signature.constants.DigitalSignaturePortletKeys" %><%@
 page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.document.library.exception.DLStorageQuotaExceededException" %><%@

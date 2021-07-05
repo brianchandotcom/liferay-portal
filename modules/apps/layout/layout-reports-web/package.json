@@ -19,6 +19,9 @@
 		"recharts": "1.8.5"
 	},
 	"jest": {
+		"modulePathIgnorePatterns": [
+			"test/js/mocks/*"
+		],
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
 		]

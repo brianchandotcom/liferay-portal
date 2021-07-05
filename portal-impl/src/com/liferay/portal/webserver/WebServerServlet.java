@@ -490,27 +490,30 @@ public class WebServerServlet extends HttpServlet {
 		if (fileEntry != null) {
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
-			if (fileVersion.isExpired() &&
-				!ModelResourcePermissionUtil.contains(
-					_fileEntryModelResourcePermission,
-					_getPermissionChecker(httpServletRequest),
-					fileEntry.getGroupId(), fileEntry.getFileEntryId(),
-					ActionKeys.UPDATE)) {
+			if (fileVersion.isExpired()){
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"The file ", fileEntry.getFileEntryId(),
-							" is expired, only users with EDIT permissions ",
-							"can access to it."));
+				User user = _getUser(httpServletRequest);
+
+				PermissionChecker permissionChecker =
+					_getPermissionChecker(httpServletRequest);
+
+				if (!permissionChecker.isContentReviewer(
+					user.getCompanyId(), fileVersion.getGroupId()) &&
+					!Objects.equals(fileVersion.getUserId(), user.getUserId())) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"The file ", fileEntry.getFileEntryId(),
+								" is expired, only users with EDIT permissions ",
+								"can access to it."));
+					}
+
+					throw new FileEntryExpiredException(
+						"The file " + fileEntry.getFileEntryId() + " is expired");
 				}
-
-				throw new FileEntryExpiredException(
-					"The file " + fileEntry.getFileEntryId() + " is expired");
 			}
 		}
-
-		return fileEntry;
 	}
 
 	protected Image getImage(

@@ -1,16 +1,169 @@
 definition {
 
+	@description = "Creating new user on the IdP portal and syncing his data by logging in on the SP portal then verify the user data on the My Account page"
+	macro addAndSyncNewUser {
+		JSONUser.addUser(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			specificURL = "${newUserPortalURL}",
+			userEmailAddress = "${newUserEmailAddress}",
+			userFirstName = "${newUserFirstName}",
+			userLastName = "${newUserLastName}",
+			userScreenName = "${newUserScreenName}");
+
+		SAML.resetPasswordOfUserAtSpecificHost(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			specificURL = "${newUserPortalURL}",
+			userEmailAddress = "${newUserEmailAddress}");
+
+		SAML.executeSPInitiatedSSO(
+			idpName = "${idpName}",
+			password = "test",
+			samlMultiIdPs = "${samlMultiIdPs}",
+			spURL = "${spURL}",
+			userEmailAddress = "${newUserEmailAddress}");
+
+		User.viewLoggedInPG();
+
+		MyAccount.openMyAccountAdmin(baseURL = "${spURL}");
+
+		User.viewUserInfomation(
+			baseURL = "${spURL}",
+			userEmailAddress = "${newUserEmailAddress}",
+			userFirstName = "${newUserFirstName}",
+			userLastName = "${newUserLastName}",
+			userScreenName = "${newUserScreenName}");
+	}
+
+	@description = "Add Identity Provider Configurations to Service Provider"
+	macro addIDPConfigurationsToServiceProvider {
+		if (isSet(userEmailAddress)) {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "${userEmailAddress}");
+		}
+		else {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		Navigator.openSpecificURL(url = "${spURL}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.addIdentityProviderConnection(
+			idpAttributeMapping = "${idpAttributeMapping}",
+			idpEntityID = "${idpEntityID}",
+			idpKeepAliveURL = "${idpKeepAliveURL}",
+			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
+			idpNameID = "${idpEntityID}",
+			nameIdentifierFormat = "${nameIdentifierFormat}",
+			userMatchingAttributeIndex = "${userMatchingAttributeIndex}",
+			userResolution = "${userResolution}");
+
+		// Logout from Service Provider host
+
+		User.logoutPG(specificURL = "${spURL}");
+
+		User.viewLoggedOutPG();
+	}
+
+	@description = "Add Service Provider Configurations to Identity Provider"
+	macro addSPConfigurationsToIdentityProvider {
+
+		// Add a configured SP connection to an IdP
+
+		if (isSet(userEmailAddress)) {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${idpURL}",
+				userEmailAddress = "${userEmailAddress}");
+		}
+		else {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${idpURL}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLNavigation.gotoServiceProviderConnection();
+
+		SAMLPortlet.addServiceProviderConnection(
+			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
+			nameIdentifierFormat = "${nameIdentifierFormat}",
+			spAttributes = "${spAttributes}",
+			spEntityID = "${spEntityID}",
+			spKeepAliveURL = "${spKeepAliveURL}",
+			spMetadataURL = "${spURL}/c/portal/saml/metadata",
+			spNameID = "${spEntityID}");
+
+		// Logout from Identity Provider host
+
+		User.logoutPG(specificURL = "${idpURL}");
+
+		User.viewLoggedOutPG();
+	}
+
+	@description = "Add virtual instances"
+	macro addVirtualInstances {
+
+		// Add new virtual instance to be the SP site
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		for (var virtualHostName : list "${virtualHosts}") {
+			PortalInstances.addCP(
+				mailDomain = "${virtualHostName}",
+				virtualHost = "${virtualHostName}",
+				webId = "${virtualHostName}");
+
+			PortalInstances.viewCP(virtualHost = "${virtualHostName}");
+		}
+
+		// Logout from localhost
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+	}
+
 	@description = "Configures Liferay SAML as the IdP"
 	macro configureLiferaySAMLAsIdP {
 
 		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
 
 		if (isSet(idpURL)) {
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "${idpURL}",
-				userEmailAddress = "test@liferay.com");
-
+			if (isSet(userEmailAddress)) {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${idpURL}",
+					userEmailAddress = "${userEmailAddress}");
+			}
+			else {
+				User.firstLoginUI(
+					password = "test",
+					specificURL = "${idpURL}",
+					userEmailAddress = "test@liferay.com");
+			}
 			Navigator.openSpecificURL(url = "${idpURL}");
 		}
 
@@ -124,7 +277,7 @@ definition {
 		SAMLNavigation.gotoIdentityProviderConnections();
 
 		SAMLPortlet.addIdentityProviderConnection(
-			idpAttributes = "${idpAttributes}",
+			idpAttributeMapping = "${idpAttributeMapping}",
 			idpEntityID = "${idpEntityID}",
 			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
@@ -167,6 +320,54 @@ definition {
 			spNameID = "${spEntityID}");
 	}
 
+	@description = "Enable SAML debug logs at localhost"
+	macro enableSAMLDebugLogs {
+
+		// Enable SAML debug logs
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.opensaml.integration",
+			categoryPriority = "DEBUG");
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.web.internal.opensaml.integration.field.expression.resolver",
+			categoryPriority = "DEBUG");
+	}
+
+	@description = "7.4-SAML-S2: Configure Portal Instance to act as a SAML Service Provider"
+	macro enableSPRoles {
+		if (isSet(userEmailAddress)) {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "${userEmailAddress}");
+		}
+		else {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		Navigator.openSpecificURL(url = "${spURL}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLRole.enable(samlEntityID = "${samlEntityID}");
+
+		User.logoutPG(specificURL = "${spURL}");
+
+		User.viewLoggedOutPG();
+	}
+
 	@description = "Sign into portal by executing a IdP initiated SSO login. The IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
 	macro executeIdPInitiatedSSO {
 		if ("${autoLogin}" == "true") {
@@ -193,6 +394,16 @@ definition {
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
+
+		else if (isSet(userEmailAddress)) {
+			User.firstLoginUI(
+				idpName = "${idpName}",
+				password = "test",
+				samlMultiIdPs = "${samlMultiIdPs}",
+				specificURL = "${spURL}",
+				userEmailAddress = "${userEmailAddress}");
+		}
+
 		else {
 			User.firstLoginUI(
 				idpName = "${idpName}",
@@ -205,6 +416,190 @@ definition {
 		Pause(locator1 = "1000");
 
 		AssertLocation.assertPartialLocation(value1 = "${spURL}");
+	}
+
+	macro resetPasswordOfUserAtSpecificHost {
+		Variables.assertDefined(parameterList = "${specificURL},${portalInstanceName},${userEmailAddress},${creatorEmailAddress},${creatorPassword}");
+
+		// Transfer variables from test case level to macro level
+
+		var specificURL = "${specificURL}";
+		var portalInstanceName = "${portalInstanceName}";
+		var userEmailAddress = "${newUserEmailAddress}";
+		var creatorEmailAddress = "${creatorEmailAddress}";
+		var creatorPassword = "${creatorPassword}";
+
+		// Get Company ID
+
+		var curl = '''
+					${specificURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+						-u ${creatorEmailAddress}:${creatorPassword}
+				''';
+
+		echo("# Get Company ID");
+
+		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
+
+		// Get User ID
+
+		curl = '''
+					${specificURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
+						-u ${creatorEmailAddress}:${creatorPassword}
+				''';
+
+		echo("# Get User ID");
+
+		var userId = JSONCurlUtil.get("${curl}", "$['userId']");
+
+		// Reset password to "test"
+
+		curl = '''
+					${specificURL}/api/jsonws/user/update-password \
+						-u ${creatorEmailAddress}:${creatorPassword} \
+						-d userId=${userId} \
+						-d password1=test \
+						-d password2=test \
+						-d passwordReset=false
+				''';
+
+		echo("# Reset password to : test");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
+		// Get Password Policy ID
+
+		var passwordPolicyName = "Default Password Policy";
+
+		curl = '''
+					${specificURL}/api/jsonws/passwordpolicy/search \
+						-u ${creatorEmailAddress}:${creatorPassword} \
+						-d companyId=${companyId} \
+						-d "name=Default Password Policy" \
+						-d "start=-1" \
+						-d "end=-1" \
+						-d -orderByComparator=
+				''';
+
+		var passwordPolicyId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${passwordPolicyName}')]['passwordPolicyId']");
+
+		echo("# Get Password Policy ID");
+
+		// Disable Password Change Required
+
+		curl = '''
+			${specificURL}/api/jsonws/passwordpolicy/update-password-policy \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d passwordPolicyId=${passwordPolicyId} \
+				-d "name=Default Password Policy" \
+				-d "description=Default Password Policy" \
+				-d changeable=true \
+				-d changeRequired=false \
+				-d minAge=0 \
+				-d checkSyntax=false \
+				-d allowDictionaryWords=true \
+				-d minAlphanumeric=0 \
+				-d minLength=6 \
+				-d minLowerCase=0 \
+				-d minNumbers=1 \
+				-d minSymbols=0 \
+				-d minUpperCase=1 \
+				-d regex="(?=.{4})(?:[a-zA-Z0-9]*)" \
+				-d history=false \
+				-d historyCount=6 \
+				-d expireable=false \
+				-d maxAge=8640000 \
+				-d warningTime=86400 \
+				-d graceLimit=0 \
+				-d lockout=false \
+				-d maxFailure=3 \
+				-d lockoutDuration=0 \
+				-d resetFailureCount=600 \
+				-d resetTicketMaxAge=86400
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
+		echo("# Disable Password change required ");
+
+		// Aggree terms and conditions and answer reminder query
+
+		curl = '''
+				${specificURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
+					-u ${creatorEmailAddress}:${creatorPassword}
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
+		curl = '''
+				${specificURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
+					-u ${creatorEmailAddress}:${creatorPassword}
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
+		echo("# Accept terms and conditions");
+	}
+
+	@description = "7.4-SAML-S1: Configure Portal Instance to act as a SAML Identity Provider"
+	macro setupIDP {
+		SAML.configureLiferaySAMLAsIdP(
+			idpSessionIdleTimeout = "${idpSessionIdleTimeout}",
+			idpSessionMaximumAge = "${idpSessionMaximumAge}",
+			idpURL = "${idpURL}",
+			samlEntityID = "${samlEntityID}",
+			userEmailAddress = "${userEmailAddress}");
+
+		// Logout from identity provider site
+
+		User.logoutPG(specificURL = "${idpURL}");
+
+		User.viewLoggedOutPG();
+	}
+
+	@description = "7.4-SAML-S2: Configure Portal Instance to act as a SAML Service Provider"
+	macro setupSP {
+		if (isSet(userEmailAddress)) {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "${userEmailAddress}");
+		}
+		else {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "${spURL}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		Navigator.openSpecificURL(url = "${spURL}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLRole.configure(
+			samlEntityID = "${samlEntityID}",
+			samlRoleType = "Service Provider");
+
+		if ("${encryptionCertificate}" == "true") {
+			for (var certificateUsage : list "SIGNING,ENCRYPTION") {
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "${certificateUsage}",
+					samlKeyPassword = "${samlEntityID}");
+			}
+		}
+		else {
+			SAMLRole.configureCertificateAndPrivateKey(
+				certificateUsage = "SIGNING",
+				samlKeyPassword = "${samlEntityID}");
+		}
+
+		// Logout from Service Provider host
+
+		User.logoutPG(specificURL = "${spURL}");
+
+		User.viewLoggedOutPG();
 	}
 
 	macro waitForSLO {

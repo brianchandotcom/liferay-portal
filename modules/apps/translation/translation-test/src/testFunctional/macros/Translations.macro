@@ -46,7 +46,9 @@ definition {
 	}
 
 	macro exportTranslation {
-		AssertElementPresent(locator1 = "Language#EXPORT_TRANSLATION_ORIGIN_LANGUAGE");
+		AssertElementPresent(
+			key_defaultLanguage = "English (United States)",
+			locator1 = "Language#EXPORT_TRANSLATION_DEFAULT_ORIGINAL_LANGUAGE");
 
 		AssertElementPresent(
 			key_checkboxName = "${defaultLanguage}",

@@ -43,8 +43,8 @@
 </tr>
 <!--EXPORT_TRANSLATION-->
 <tr>
-	<td>EXPORT_TRANSLATION_ORIGIN_LANGUAGE</td>
-	<td>//div[contains(@class,'form-group')]//input[@readonly and @value='English (United States)'] | //div[contains(@class,'form-group')]//select[contains(@name,'sourceLanguageId')]//option[contains(.,'English (United States)')]</td>
+	<td>EXPORT_TRANSLATION_DEFAULT_ORIGINAL_LANGUAGE</td>
+	<td>//div[contains(@class,'form-group')]//input[@readonly and @value='${key_defaultLanguage}'] | //div[contains(@class,'form-group')]//select[contains(@name,'sourceLanguageId')]//option[contains(.,'${key_defaultLanguage}')]</td>
 	<td></td>
 </tr>
 </tbody>

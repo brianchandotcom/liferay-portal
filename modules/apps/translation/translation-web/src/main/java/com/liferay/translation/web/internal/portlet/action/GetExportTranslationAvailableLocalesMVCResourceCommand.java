@@ -14,10 +14,13 @@
 
 package com.liferay.translation.web.internal.portlet.action;
 
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.GroupKeyInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -70,12 +73,8 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
-		long groupId = ParamUtil.getLong(
-			resourceRequest, "groupId", themeDisplay.getScopeGroupId());
-		String key = ParamUtil.getString(resourceRequest, "key");
-
 		Object object = infoItemObjectProvider.getInfoItem(
-			new GroupKeyInfoItemIdentifier(groupId, key));
+			_getInfoItemIdentifier(resourceRequest));
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -99,6 +98,20 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 				"defaultLanguageId",
 				infoItemLanguagesProvider.getDefaultLanguageId(object)
 			));
+	}
+
+	private InfoItemIdentifier _getInfoItemIdentifier(
+		ResourceRequest resourceRequest) {
+
+		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+
+		if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			return new ClassPKInfoItemIdentifier(
+				ParamUtil.getLong(resourceRequest, "key"));
+		}
+
+		return new GroupKeyInfoItemIdentifier(
+			groupId, ParamUtil.getString(resourceRequest, "key"));
 	}
 
 	@Reference

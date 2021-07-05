@@ -15,13 +15,16 @@
 package com.liferay.translation.web.internal.portlet.action;
 
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.GroupKeyInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,11 +90,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 					InfoItemObjectProvider.class, className);
 
 			Object object = infoItemObjectProvider.getInfoItem(
-				new GroupKeyInfoItemIdentifier(
-					ParamUtil.getLong(
-						resourceRequest, "groupId",
-						themeDisplay.getScopeGroupId()),
-					ParamUtil.getString(resourceRequest, "key")));
+				_getInfoItemIdentifier(resourceRequest));
 
 			InfoFieldValue<Object> infoItemFieldValue =
 				infoItemFieldValuesProvider.getInfoItemFieldValue(
@@ -154,6 +153,20 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		catch (IOException | PortalException exception) {
 			throw new PortletException(exception);
 		}
+	}
+
+	private InfoItemIdentifier _getInfoItemIdentifier(
+		ResourceRequest resourceRequest) {
+
+		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+
+		if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			return new ClassPKInfoItemIdentifier(
+				ParamUtil.getLong(resourceRequest, "key"));
+		}
+
+		return new GroupKeyInfoItemIdentifier(
+			groupId, ParamUtil.getString(resourceRequest, "key"));
 	}
 
 	@Reference

@@ -285,6 +285,32 @@ definition {
 			entryContentEdit = "${entryContentEdit}");
 	}
 
+	macro editCoverImage {
+		BlogsNavigator.gotoBrowseImage();
+
+		if (isSet(uploadedBlogImage)) {
+			ItemSelector.selectBlogImage(
+				imageFileName = "${uploadedBlogImage}",
+				navTab = "${navTab}");
+		}
+		else if (isSet(uploadedDMImage)) {
+			ItemSelector.selectDMImage(
+				imageFileName = "${uploadedDMImage}",
+				navTab = "${navTab}");
+		}
+		else {
+			ItemSelector.uploadFile(
+				navTab = "${navTab}",
+				uploadFileName = "${uploadFileName}");
+		}
+
+		SelectFrameTop(value1 = "relative=top");
+
+		AssertVisible(
+			key_coverImageName = "${coverImageName}",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+	}
+
 	macro editDisplayDate {
 		var displayDateDay = DateUtil.getCurrentDate();
 		var displayDateMonth = DateUtil.getCurrentMonth();

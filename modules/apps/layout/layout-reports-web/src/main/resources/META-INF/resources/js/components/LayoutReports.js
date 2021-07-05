@@ -112,15 +112,29 @@ export default function LayoutReports({eventTriggered}) {
 
 	const hasError = (data.validConnection && error) || data.privateLayout;
 	const notConfigured = !loading && !data.validConnection;
+	const hasApiKey = !notConfigured;
 
-	return hasError ? (
-		<ErrorAlert />
-	) : notConfigured ? (
-		<NotConfigured />
-	) : selectedIssue ? (
-		<IssueDetail />
-	) : (
-		<IssuesList />
+	return (
+		<>
+			{hasApiKey && (
+				<div className="pb-3 px-3">
+					<BasicInformation
+						defaultLanguageId={data.defaultLanguageId}
+						pageURLs={data.pageURLs}
+						selectedLanguageId={languageId}
+					/>
+				</div>
+			)}
+			{hasError ? (
+				<ErrorAlert />
+			) : notConfigured ? (
+				<NotConfigured />
+			) : selectedIssue ? (
+				<IssueDetail />
+			) : (
+				<IssuesList />
+			)}
+		</>
 	);
 }
 

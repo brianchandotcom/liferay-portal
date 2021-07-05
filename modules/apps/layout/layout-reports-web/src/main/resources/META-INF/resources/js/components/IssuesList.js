@@ -25,13 +25,12 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import getPageSpeedProgress from '../utils/getPageSpeedProgress';
-import BasicInformation from './BasicInformation';
 import NoIssuesLoaded from './NoIssuesLoaded';
 
 export default function IssuesList() {
 	const {data, error, languageId, loading} = useContext(StoreStateContext);
 
-	const {defaultLanguageId, imagesPath, layoutReportsIssues, pageURLs} = data;
+	const {imagesPath, layoutReportsIssues} = data;
 
 	const [percentage, setPercentage] = useState(0);
 
@@ -69,12 +68,6 @@ export default function IssuesList() {
 				</ClayAlert>
 			)}
 			<div className="pb-3 px-3">
-				<BasicInformation
-					defaultLanguageId={defaultLanguageId}
-					pageURLs={pageURLs}
-					selectedLanguageId={languageId}
-				/>
-
 				{loading ? (
 					<LoadingProgressBar percentage={percentage} />
 				) : localizedIssues ? (

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.templates.web.internal.constants;
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= templatesDisplayContext.getNavigationItems() %>"
-/>
+/**
+ * @author Lourdes Fernández Besada
+ */
+public class TemplatesWebKeys {
+
+	public static final String INFO_TEMPLATES = "info-templates";
+
+	public static final String WIDGET_TEMPLATES = "widget-templates";
+
+}

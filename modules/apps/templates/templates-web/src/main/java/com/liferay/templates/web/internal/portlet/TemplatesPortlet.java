@@ -14,12 +14,23 @@
 
 package com.liferay.templates.web.internal.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.templates.web.internal.constants.TemplatesPortletKeys;
+import com.liferay.templates.web.internal.display.context.TemplatesDisplayContext;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -44,4 +55,35 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class TemplatesPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		_setTemplatesDisplayContextRequestAttribute(
+			renderRequest, renderResponse);
+		super.render(renderRequest, renderResponse);
+	}
+
+	private void _setTemplatesDisplayContextRequestAttribute(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(renderRequest);
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(renderResponse);
+
+		TemplatesDisplayContext templatesDisplayContext =
+			new TemplatesDisplayContext(
+				liferayPortletRequest, liferayPortletResponse);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, templatesDisplayContext);
+	}
+
+	@Reference
+	private Portal _portal;
+
 }

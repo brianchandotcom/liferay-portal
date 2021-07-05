@@ -3024,6 +3024,14 @@ definition {
 			value1 = "${fragmentName}");
 	}
 
+	macro searchInPageContentPanel {
+		Navigator.gotoNavTab(navTab = "Page Content");
+
+		Type(
+			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+			value1 = "${searchTerm}");
+	}
+
 	macro selectColorSwatchItem {
 		Click(
 			key_fieldLabel = "${fieldLabel}",

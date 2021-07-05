@@ -79,6 +79,19 @@ export const Editor = ({autocompleteData, initialScript}) => {
 		};
 	}, [initialScript, portletNamespace]);
 
+	useEffect(() => {
+		const exportScriptHandler = Liferay.on(
+			`${portletNamespace}exportScript`,
+			() => {
+				exportScript(scriptRef.current, editorMode);
+			}
+		);
+
+		return () => {
+			exportScriptHandler.detach();
+		};
+	}, [initialScript, portletNamespace, editorMode]);
+
 	return (
 		<>
 			<CodeMirrorEditor
@@ -102,4 +115,18 @@ export const Editor = ({autocompleteData, initialScript}) => {
 Editor.propTypes = {
 	autocompleteData: PropTypes.object.isRequired,
 	initialScript: PropTypes.string.isRequired,
+};
+
+const exportScript = (script, editorMode) => {
+	const link = document.createElement('a');
+	const blob = new Blob([script]);
+
+	const fileURL = URL.createObjectURL(blob);
+
+	link.href = fileURL;
+	link.download = `script.${editorMode}`;
+
+	link.click();
+
+	URL.revokeObjectURL(fileURL);
 };

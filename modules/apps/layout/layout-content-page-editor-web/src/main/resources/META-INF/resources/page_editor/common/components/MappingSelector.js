@@ -141,7 +141,7 @@ export default function MappingSelectorWrapper({
 	}, [collectionConfig, mappingFields, fieldType]);
 
 	useEffect(() => {
-		if (!collectionConfig) {
+		if (!collectionConfig?.collection?.itemType) {
 			return;
 		}
 

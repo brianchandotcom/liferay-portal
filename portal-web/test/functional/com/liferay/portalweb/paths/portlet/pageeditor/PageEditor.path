@@ -761,6 +761,11 @@
 </tr>
 <!--PAGE_CONTENTS-->
 <tr>
+	<td>PAGE_CONTENTS_CONTENT_FILTER_TOGGLE</td>
+	<td>//div[contains(@class,'page-contents__content-filter')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_CONTENTS_ITEM</td>
 	<td>//li[contains(@class,'page-contents__page-content')]//span[normalize-space(text())='${key_itemName}']</td>
 	<td></td>

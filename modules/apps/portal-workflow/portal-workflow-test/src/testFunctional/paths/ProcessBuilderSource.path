@@ -11,13 +11,23 @@
 
 <tbody>
 <tr>
+	<td>REVISION_HISTORY_ITEM</td>
+	<td>//li[contains(@class,'list-group-item')][${key_ruleNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_DETAILS</td>
 	<td>//dt[contains(text(), '${key_titleValue}')]/following::dd[contains(text(), '${key_infoValue}')][1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>REVISION_HISTORY_ITEM</td>
-	<td>//li[contains(@class,'list-group-item')][${key_ruleNumber}]</td>
+	<td>PROCESS_DETAILS_REVISION_BY_ROW</td>
+	<td>//li[contains(@class, 'list-group-item list-group-item-flex')][${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_DETAILS_TAB</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'${key_tabName}')]</td>
 	<td></td>
 </tr>
 </tbody>

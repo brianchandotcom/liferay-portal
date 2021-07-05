@@ -402,12 +402,57 @@ definition {
 	}
 
 	@description = "Verify that the time format in Revision History tab is following the system language"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TimeFormatFollowsSystemLanguageInRevision {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68330 TimeFormatFollowsSystemLanguageInRevision pending implementation
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		Click(locator1 = "Icon#INFO");
+
+		Click(
+			key_tabName = "Revision History",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+
+		AssertTextEquals.assertPartialText(
+			key_rowNumber = "1",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW",
+			value1 = "PM");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		MyAccount.changeUserLanguage(
+			languageName = "português (Brasil)",
+			saveButton = "Save");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Fluxo de trabalho",
+			panel = "Aplicativos",
+			portlet = "Construtor de Processo");
+
+		Click(
+			key_workflowDefinitionTitle = "Aprovador Único",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Editar");
+
+		Click(locator1 = "Icon#INFO");
+
+		Click(
+			key_tabName = "Histórico de revisão",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+
+		AssertTextNotEquals.assertNotPartialText(
+			key_rowNumber = "1",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW",
+			value1 = "PM");
 	}
 
 }

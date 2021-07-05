@@ -21,6 +21,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 const {filters, processId} = {
 	filters: {
+		processVersion: '1.0',
 		stepDateEnd: '2019-12-09T00:00:00Z',
 		stepDateStart: '2019-12-03T00:00:00Z',
 		stepTimeRange: ['7'],
@@ -74,6 +75,7 @@ const timeRangeData = {
 	],
 	totalCount: 2,
 };
+const processVersions = {items: [{name: '1.0'}]};
 
 describe('The performance by step card component should', () => {
 	let getAllByText, getByText;
@@ -86,6 +88,7 @@ describe('The performance by step card component should', () => {
 		beforeAll(() => {
 			const clientMock = {
 				get: jest.fn().mockResolvedValue({data}),
+				request: jest.fn().mockResolvedValue({data: processVersions}),
 			};
 
 			const wrapper = ({children}) => (
@@ -104,10 +107,10 @@ describe('The performance by step card component should', () => {
 		});
 
 		test('Be rendered with time range filter', async () => {
-			const activeItem = document.querySelector('.active');
+			const activeItems = document.querySelectorAll('.active');
 
 			expect(getAllByText('Last 7 Days').length).toEqual(2);
-			expect(activeItem).toHaveTextContent('Last 7 Days');
+			expect(activeItems[1]).toHaveTextContent('Last 7 Days');
 		});
 
 		test('Be rendered with "View All Steps" button and total "(3)"', () => {
@@ -128,6 +131,7 @@ describe('The performance by step card component should', () => {
 				get: jest
 					.fn()
 					.mockResolvedValue({data: {items: [], totalCount: 0}}),
+				request: jest.fn().mockResolvedValue({data: processVersions}),
 			};
 
 			const wrapper = ({children}) => (

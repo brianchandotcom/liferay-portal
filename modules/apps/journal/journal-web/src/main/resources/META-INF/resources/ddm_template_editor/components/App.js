@@ -59,36 +59,37 @@ export default function App({
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
-		<div className="ddm_template_editor__App">
-			<div
-				className={classNames('ddm_template_editor__App-content', {
-					'ddm_template_editor__App-content--sidebar-open': sidebarOpen,
-				})}
-			>
-				<ClosableAlert
-					message={Liferay.Language.get(
-						'changing-the-language-does-not-automatically-translate-the-existing-template-script'
-					)}
-					visible={showLanguageChangeWarning}
-				/>
+		<AppContextProvider
+			inputChannel={inputChannel}
+			propertiesViewURL={propertiesViewURL}
+			templateVariableGroups={templateVariableGroups}
+		>
+			<div className="ddm_template_editor__App">
+				<div className="ddm_template_editor__App-content">
+					<ClosableAlert
+						message={Liferay.Language.get(
+							'changing-the-language-does-not-automatically-translate-the-existing-template-script'
+						)}
+						visible={showLanguageChangeWarning}
+					/>
 
-				<ClosableAlert
-					id={`${portletNamespace}-cacheableWarningMessage`}
-					linkedCheckboxId={`${portletNamespace}cacheable`}
-					message={Liferay.Language.get(
-						'this-template-is-marked-as-cacheable.-avoid-using-code-that-uses-request-handling,-the-cms-query-api,-taglibs,-or-other-dynamic-features.-uncheck-the-cacheable-property-if-dynamic-behavior-is-needed'
-					)}
-					visible={showCacheableWarning}
-				/>
+					<ClosableAlert
+						id={`${portletNamespace}-cacheableWarningMessage`}
+						linkedCheckboxId={`${portletNamespace}cacheable`}
+						message={Liferay.Language.get(
+							'this-template-is-marked-as-cacheable.-avoid-using-code-that-uses-request-handling,-the-cms-query-api,-taglibs,-or-other-dynamic-features.-uncheck-the-cacheable-property-if-dynamic-behavior-is-needed'
+						)}
+						visible={showCacheableWarning}
+					/>
 
-				<Editor
-					autocompleteData={editorAutocompleteData}
-					editorMode={editorMode}
-					initialScript={initialScript}
-					inputChannel={inputChannel}
-					portletNamespace={portletNamespace}
-				/>
-			</div>
+					<Editor
+						autocompleteData={editorAutocompleteData}
+						editorMode={editorMode}
+						initialScript={initialScript}
+						inputChannel={inputChannel}
+						portletNamespace={portletNamespace}
+					/>
+				</div>
 
 			{editorMode !== 'xml' && (
 				<Sidebar
@@ -98,7 +99,8 @@ export default function App({
 					templateVariableGroups={templateVariableGroups}
 				/>
 			)}
-		</div>
+			</div>
+		</AppContextProvider>
 	);
 }
 

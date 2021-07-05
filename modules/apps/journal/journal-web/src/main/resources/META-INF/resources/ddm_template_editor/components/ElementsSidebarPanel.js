@@ -13,19 +13,23 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
+import {AppContext} from './AppContext';
 import {ButtonList} from './ButtonList';
 import {CollapsableButtonList} from './CollapsableButtonList';
 
 const SEARCH_INPUT_ID = 'ddm_template_editor_Sidebar-SearchInputId';
 
-export const ElementsSidebarPanel = ({
-	onButtonClick,
-	templateVariableGroups: initialTemplateVariableGroups,
-}) => {
+export const ElementsSidebarPanel = ({className}) => {
 	const [filteredItems, setFilteredItems] = useState(null);
+
+	const {
+		inputChannel,
+		templateVariableGroups: initialTemplateVariableGroups,
+	} = useContext(AppContext);
 
 	const templateVariableGroups = useMemo(
 		() =>
@@ -37,6 +41,8 @@ export const ElementsSidebarPanel = ({
 			})),
 		[initialTemplateVariableGroups]
 	);
+
+	const onButtonClick = (item) => inputChannel.sendData(item.content);
 
 	const handleSearchInputChange = (event) => {
 		const slugify = (str) => str.toLowerCase().replace(/\s/g, '');
@@ -59,7 +65,7 @@ export const ElementsSidebarPanel = ({
 	};
 
 	return (
-		<div className="px-3">
+		<div className={classNames(className, 'px-3')}>
 			<h1 className="ddm_template_editor__App-sidebar-title my-3">
 				{Liferay.Language.get('elements')}
 			</h1>
@@ -96,7 +102,6 @@ export const ElementsSidebarPanel = ({
 };
 
 ElementsSidebarPanel.propTypes = {
-	onButtonClick: PropTypes.func.isRequired,
 	templateVariableGroups: PropTypes.arrayOf(
 		PropTypes.shape({
 			items: PropTypes.array.isRequired,

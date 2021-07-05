@@ -15,6 +15,7 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
+import com.liferay.batch.engine.internal.ZipInputStreamUtil;
 
 import java.io.InputStream;
 
@@ -34,6 +35,8 @@ public class BatchEngineImportTaskItemReaderFactory {
 			BatchEngineTaskContentType batchEngineTaskContentType,
 			InputStream inputStream)
 		throws Exception {
+
+		inputStream = ZipInputStreamUtil.asZipInputStream(inputStream);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineImportTaskItemReader(

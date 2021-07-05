@@ -31,8 +31,8 @@ import java.util.Map;
 /**
  * @author Matija Petanjek
  */
-public class JSONBatchEngineImportTaskTotalItemsCounter
-	implements BatchEngineImportTaskTotalItemsCounter {
+public class JSONBatchEngineTaskProgressImpl
+	implements BatchEngineTaskProgress {
 
 	@Override
 	public int getTotalItemsCount(InputStream inputStream) throws IOException {
@@ -63,7 +63,7 @@ public class JSONBatchEngineImportTaskTotalItemsCounter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JSONBatchEngineImportTaskTotalItemsCounter.class);
+		JSONBatchEngineTaskProgressImpl.class);
 
 	private static final JsonFactory _jsonFactory = new JsonFactory();
 	private static final ObjectMapper _objectMapper = new ObjectMapper();

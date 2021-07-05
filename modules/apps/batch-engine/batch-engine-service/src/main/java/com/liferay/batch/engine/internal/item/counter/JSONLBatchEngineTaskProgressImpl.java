@@ -25,8 +25,8 @@ import java.io.InputStreamReader;
 /**
  * @author Matija Petanjek
  */
-public class JSONLBatchEngineImportTaskTotalItemsCounter
-	implements BatchEngineImportTaskTotalItemsCounter {
+public class JSONLBatchEngineTaskProgressImpl
+	implements BatchEngineTaskProgress {
 
 	@Override
 	public int getTotalItemsCount(InputStream inputStream) throws IOException {
@@ -51,6 +51,6 @@ public class JSONLBatchEngineImportTaskTotalItemsCounter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JSONLBatchEngineImportTaskTotalItemsCounter.class);
+		JSONLBatchEngineTaskProgressImpl.class);
 
 }

@@ -20,7 +20,7 @@ import java.io.InputStream;
 /**
  * @author Matija Petanjek
  */
-public interface BatchEngineImportTaskTotalItemsCounter {
+public interface BatchEngineTaskProgress {
 
 	public int getTotalItemsCount(InputStream inputStream) throws IOException;
 

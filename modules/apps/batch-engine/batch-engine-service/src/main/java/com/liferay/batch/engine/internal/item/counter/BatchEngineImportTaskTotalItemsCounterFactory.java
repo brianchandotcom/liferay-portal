@@ -24,22 +24,22 @@ import java.io.InputStream;
  */
 public class BatchEngineImportTaskTotalItemsCounterFactory {
 
-	public BatchEngineImportTaskTotalItemsCounter create(
+	public BatchEngineTaskProgress create(
 		BatchEngineTaskContentType batchEngineTaskContentType) {
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineImportTaskTotalItemsCounter();
+			return new JSONBatchEngineTaskProgressImpl();
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
-			return new JSONLBatchEngineImportTaskTotalItemsCounter();
+			return new JSONLBatchEngineTaskProgressImpl();
 		}
 
-		return new DefaultBatchEngineImportTaskTotalItemsCounter();
+		return new DefaultBatchEngineTaskProgressImpl();
 	}
 
-	private class DefaultBatchEngineImportTaskTotalItemsCounter
-		implements BatchEngineImportTaskTotalItemsCounter {
+	private class DefaultBatchEngineTaskProgressImpl
+		implements BatchEngineTaskProgress {
 
 		@Override
 		public int getTotalItemsCount(InputStream inputStream)

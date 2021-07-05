@@ -2727,7 +2727,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException {
 
 		String portletId = PortletProviderUtil.getPortletId(
-			FileEntry.class.getName(), PortletProvider.Action.EDIT);
+			FileEntry.class.getName(), PortletProvider.Action.MANAGE);
 
 		String entryURL = PortalUtil.getControlPanelFullURL(
 			fileVersion.getGroupId(), portletId, null);
@@ -2735,7 +2735,7 @@ public class DLFileEntryLocalServiceImpl
 		entryURL = HttpUtil.addParameter(
 			entryURL,
 			PortalUtil.getPortletNamespace(portletId) + "mvcRenderCommandName",
-			"/document_library/view_file_entry");
+			"/document_library/edit_file_entry");
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 

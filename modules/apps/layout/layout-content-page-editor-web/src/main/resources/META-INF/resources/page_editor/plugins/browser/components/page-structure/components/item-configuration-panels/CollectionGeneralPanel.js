@@ -63,6 +63,14 @@ export const CollectionGeneralPanel = ({item}) => {
 	const listStyleId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
+	const [numberOfItemsNextValue, setNumberOfItemsNextValue] = useState(
+		item.config.numberOfItems
+	);
+	const [
+		numberOfItemsPerPageNextValue,
+		setNumberOfItemsPerPageNextValue,
+	] = useState(item.config.numberOfItemsPerPage);
+
 	const numberOfItemsPerPageError =
 		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
 
@@ -302,14 +310,21 @@ export const CollectionGeneralPanel = ({item}) => {
 						</label>
 						<ClayInput
 							id={collectionNumberOfItemsId}
-							min={1}
+							onBlur={({target: {value}}) => {
+								if (
+									numberOfItemsNextValue !==
+									item.config.numberOfItems
+								) {
+									handleConfigurationChanged({
+										numberOfItems: value,
+									});
+								}
+							}}
 							onChange={({target: {value}}) =>
-								handleConfigurationChanged({
-									numberOfItems: value,
-								})
+								setNumberOfItemsNextValue(value)
 							}
 							type="number"
-							value={item.config.numberOfItems}
+							value={numberOfItemsNextValue}
 						/>
 					</ClayForm.Group>
 
@@ -325,14 +340,21 @@ export const CollectionGeneralPanel = ({item}) => {
 								</label>
 								<ClayInput
 									id={collectionNumberOfItemsPerPageId}
-									min={1}
+									onBlur={({target: {value}}) => {
+										if (
+											numberOfItemsPerPageNextValue !==
+											item.config.numberOfItemsPerPage
+										) {
+											handleConfigurationChanged({
+												numberOfItemsPerPage: value,
+											});
+										}
+									}}
 									onChange={({target: {value}}) =>
-										handleConfigurationChanged({
-											numberOfItemsPerPage: value,
-										})
+										setNumberOfItemsPerPageNextValue(value)
 									}
 									type="number"
-									value={item.config.numberOfItemsPerPage}
+									value={numberOfItemsPerPageNextValue}
 								/>
 								<p
 									className={classNames(

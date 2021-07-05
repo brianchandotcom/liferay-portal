@@ -15,19 +15,11 @@
 package com.liferay.portal.module.framework;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URI;
 import java.net.URL;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
@@ -64,18 +56,7 @@ public class ModuleFrameworkUtil {
 	}
 
 	public static void initFramework() throws Exception {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(_classLoader);
-
-		try {
-			_moduleFramework.initFramework();
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
-		}
+		_moduleFramework.initFramework();
 	}
 
 	public static void registerContext(Object context) {
@@ -142,72 +123,11 @@ public class ModuleFrameworkUtil {
 		_moduleFramework.updateBundle(bundleId, inputStream);
 	}
 
-	private static final ClassLoader _classLoader;
 	private static final ModuleFramework _moduleFramework;
 
 	static {
-		try {
-			if (FileUtil.getFile() == null) {
-				FileUtil fileUtil = new FileUtil();
-
-				fileUtil.setFile(new FileImpl());
-			}
-
-			File coreDir = new File(
-				PropsValues.MODULE_FRAMEWORK_BASE_DIR, "core");
-
-			File[] files = coreDir.listFiles();
-
-			if (files == null) {
-				throw new IllegalStateException(
-					"Missing " + coreDir.getCanonicalPath());
-			}
-
-			URL[] urls = new URL[files.length];
-			String[] packageNames = new String[files.length + 4];
-
-			for (int i = 0; i < urls.length; i++) {
-				File file = files[i];
-
-				URI uri = file.toURI();
-
-				urls[i] = uri.toURL();
-
-				String name = file.getName();
-
-				if (name.endsWith(".jar")) {
-					name = name.substring(0, name.length() - 3);
-				}
-
-				if (name.endsWith(".api.")) {
-					name = name.substring(0, name.length() - 4);
-				}
-
-				if (name.endsWith(".impl.")) {
-					name = name.substring(0, name.length() - 5);
-
-					name = name.concat("internal.");
-				}
-
-				packageNames[i] = name;
-			}
-
-			packageNames[files.length] = "org.apache.felix.resolver.";
-			packageNames[files.length + 1] = "org.eclipse.core.";
-			packageNames[files.length + 2] = "org.eclipse.equinox.";
-			packageNames[files.length + 3] = "org.osgi.";
-
-			Arrays.sort(packageNames);
-
-			_classLoader = new ModuleFrameworkClassLoader(
-				urls, PortalClassLoaderUtil.getClassLoader(), packageNames);
-		}
-		catch (IOException ioException) {
-			throw new ExceptionInInitializerError(ioException);
-		}
-
 		ServiceLoader<ModuleFramework> serviceLoader = ServiceLoader.load(
-			ModuleFramework.class, _classLoader);
+			ModuleFramework.class, ModuleFrameworkUtil.class.getClassLoader());
 
 		Iterator<ModuleFramework> iterator = serviceLoader.iterator();
 

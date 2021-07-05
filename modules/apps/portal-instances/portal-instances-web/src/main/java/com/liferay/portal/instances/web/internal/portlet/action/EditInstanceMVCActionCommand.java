@@ -14,12 +14,15 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.portal.instances.initializer.PortalInstanceInitializer;
+import com.liferay.portal.instances.initializer.PortalInstanceInitializerRegistry;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,7 +37,10 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Collections;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -156,6 +162,29 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			_portalInstancesLocalService.initializePortalInstance(
 				servletContext, company.getWebId());
+
+			// Initialize instance with portal instance initializer
+
+			String portalInstanceInitializerKey = ParamUtil.getString(
+				actionRequest, "portalInstanceInitializerKey");
+
+			if (Validator.isNotNull(portalInstanceInitializerKey)) {
+				PortalInstanceInitializer portalInstanceInitializer =
+					_portalInstanceInitializerRegistry.
+						getPortalInstanceInitializer(
+							portalInstanceInitializerKey);
+
+				if (portalInstanceInitializer == null) {
+					throw new PortalException(
+						"Invalid initializer key " +
+							portalInstanceInitializerKey);
+				}
+
+				portalInstanceInitializer.initialize(
+					company.getCompanyId(),
+					_portal.getHttpServletRequest(actionRequest),
+					Collections.emptyMap());
+			}
 		}
 		else {
 
@@ -179,6 +208,10 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalInstanceInitializerRegistry
+		_portalInstanceInitializerRegistry;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

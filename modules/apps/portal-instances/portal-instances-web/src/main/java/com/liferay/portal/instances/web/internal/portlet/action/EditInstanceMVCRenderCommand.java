@@ -14,7 +14,9 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.portal.instances.initializer.PortalInstanceInitializerRegistry;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -54,6 +56,10 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			renderRequest.setAttribute(
+				PortalInstancesWebKeys.PORTAL_INSTANCE_INITIALIZER_REGISTRY,
+				_portalInstanceInitializerRegistry);
+
 			getInstance(renderRequest);
 		}
 		catch (Exception exception) {
@@ -91,5 +97,9 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalInstanceInitializerRegistry
+		_portalInstanceInitializerRegistry;
 
 }

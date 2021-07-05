@@ -23,6 +23,8 @@ Company selCompany = (Company)request.getAttribute(WebKeys.SEL_COMPANY);
 
 long companyId = BeanParamUtil.getLong(selCompany, request, "companyId");
 
+PortalInstanceInitializerRegistry portalInstanceInitializerRegistry = (PortalInstanceInitializerRegistry)request.getAttribute(PortalInstancesWebKeys.PORTAL_INSTANCE_INITIALIZER_REGISTRY);
+
 VirtualHost virtualHost = null;
 
 try {
@@ -72,6 +74,22 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 			<aui:input name="maxUsers" />
 
 			<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstancesLocalServiceUtil.getDefaultCompanyId()) %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />
+
+			<c:if test="<%= selCompany == null %>">
+				<aui:select label="virtual-instance-initializer" name="portalInstanceInitializerKey" showEmptyOption="<%= true %>">
+
+					<%
+					for (PortalInstanceInitializer portalInstanceInitializer : portalInstanceInitializerRegistry.getPortalInstanceInitializers(true)) {
+					%>
+
+						<aui:option label="<%= portalInstanceInitializer.getName(locale) %>" value="<%= portalInstanceInitializer.getKey() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</c:if>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

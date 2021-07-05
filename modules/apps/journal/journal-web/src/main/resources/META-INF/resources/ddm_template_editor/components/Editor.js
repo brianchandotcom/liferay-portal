@@ -13,10 +13,10 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
+import {AppContext} from './AppContext';
 import {CodeMirrorEditor} from './CodeMirrorEditor';
-import {ScriptInput} from './ScriptInput';
 
 export const Editor = ({autocompleteData, initialScript}) => {
 	const {editorMode, inputChannel, portletNamespace} = useContext(AppContext);
@@ -25,25 +25,6 @@ export const Editor = ({autocompleteData, initialScript}) => {
 
 	const scriptRef = useRef(script);
 	scriptRef.current = script;
-
-	useEffect(() => {
-		const eventHandler = Liferay.on(
-			`${portletNamespace}saveTemplate`,
-			() => {
-				const scriptInputElement = document.getElementById(
-					`${portletNamespace}scriptContent`
-				);
-
-				if (scriptInputElement) {
-					scriptInputElement.value = scriptRef.current;
-				}
-			}
-		);
-
-		return () => {
-			eventHandler.detach();
-		};
-	}, [portletNamespace]);
 
 	useEffect(() => {
 		const refreshHandler = Liferay.on(
@@ -85,7 +66,12 @@ export const Editor = ({autocompleteData, initialScript}) => {
 				onChange={setScript}
 			/>
 
-			<ScriptInput onSelectScript={setScript} />
+			<input
+				id={`${portletNamespace}scriptContent`}
+				name={`${portletNamespace}scriptContent`}
+				type="hidden"
+				value={script}
+			/>
 		</>
 	);
 };

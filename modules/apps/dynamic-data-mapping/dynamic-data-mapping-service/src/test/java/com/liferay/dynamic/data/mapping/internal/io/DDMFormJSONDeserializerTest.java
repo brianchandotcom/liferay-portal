@@ -84,6 +84,33 @@ public class DDMFormJSONDeserializerTest
 		Assert.assertEquals("2.0", ddmForm.getDefinitionSchemaVersion());
 	}
 
+	@Test
+	public void testDDMFormSuccessPageSettingsDifferentDefaultLocale()
+		throws Exception {
+
+		DDMForm ddmForm = deserialize(
+			read(
+				"ddm-form-success-page-settings-different-default-" +
+					"locale.json"));
+
+		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
+			ddmForm.getDDMFormSuccessPageSettings();
+
+		Assert.assertNotNull(ddmFormSuccessPageSettings);
+
+		LocalizedValue body = ddmFormSuccessPageSettings.getBody();
+
+		Assert.assertEquals("Texto", body.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals("Texto", body.getString(LocaleUtil.NETHERLANDS));
+
+		LocalizedValue title = ddmFormSuccessPageSettings.getTitle();
+
+		Assert.assertEquals("Título", title.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals("Título", title.getString(LocaleUtil.NETHERLANDS));
+
+		Assert.assertTrue(ddmFormSuccessPageSettings.isEnabled());
+	}
+
 	@Override
 	protected DDMForm deserialize(String serializedDDMForm) {
 		DDMFormDeserializerDeserializeRequest.Builder builder =

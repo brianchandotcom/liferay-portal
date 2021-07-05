@@ -1,0 +1,21 @@
+{
+	"availableLanguageIds": [
+		"pt_BR"
+	],
+	"defaultLanguageId": "pt_BR",
+	"fields": [
+		{
+			"name": "Text12345678",
+			"type": "text"
+		}
+	],
+	"successPage": {
+		"body": {
+			"pt_BR": "Texto"
+		},
+		"enabled": true,
+		"title": {
+			"pt_BR": "Título"
+		}
+	}
+}

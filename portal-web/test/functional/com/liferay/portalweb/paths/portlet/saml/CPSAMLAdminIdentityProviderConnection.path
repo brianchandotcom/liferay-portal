@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO</td>
-	<td>//input[contains(@id,'userIdentifierExpression-${key_index}')]</td>
+	<td>//input[contains(@id,'userIdentifierExpressionIndex') and @value=${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

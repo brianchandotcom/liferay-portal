@@ -184,6 +184,21 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 	const [activePage, setActivePage] = useState(1);
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
 
+	const totalPages = Math.ceil(
+		collectionConfig.numberOfItems / collectionConfig.numberOfItemsPerPage
+	);
+
+	useEffect(() => {
+		if (activePage > totalPages) {
+			setActivePage(1);
+		}
+	}, [
+		collectionConfig.numberOfItems,
+		collectionConfig.numberOfItemsPerPage,
+		activePage,
+		totalPages,
+	]);
+
 	const context = useContext(CollectionItemContext);
 	const {classNameId, classPK} = context.collectionItem || {};
 
@@ -194,7 +209,11 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 	const itemClassPK = classPK || displayPagePreviewItemData.classPK;
 
 	useEffect(() => {
-		if (collectionConfig.collection) {
+		if (
+			config.collectionDisplayFragmentPaginationEnabled
+				? collectionConfig.collection && activePage <= totalPages
+				: collectionConfig.collection
+		) {
 			CollectionService.getCollectionField({
 				activePage,
 				classNameId: itemClassNameId,
@@ -237,6 +256,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		collectionConfig.templateKey,
 		dispatch,
 		languageId,
+		totalPages,
 	]);
 
 	const showEmptyMessage =
@@ -271,6 +291,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 						collectionId={item.itemId}
 						onPageChange={setActivePage}
 						totalNumberOfItems={collection.totalNumberOfItems}
+						totalPages={totalPages}
 					/>
 				)}
 		</div>

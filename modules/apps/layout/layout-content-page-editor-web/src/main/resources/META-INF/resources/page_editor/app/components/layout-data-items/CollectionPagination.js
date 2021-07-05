@@ -27,6 +27,7 @@ export default function CollectionPagination({
 	collectionId,
 	onPageChange,
 	totalNumberOfItems,
+	totalPages,
 }) {
 	const isActive = useIsActive();
 	const {
@@ -34,9 +35,6 @@ export default function CollectionPagination({
 		numberOfItemsPerPage,
 		paginationType,
 	} = collectionConfig;
-
-	const totalPages = Math.ceil(totalNumberOfItems / numberOfItemsPerPage);
-
 
 	const regularPaginationLabel = [
 		numberOfItemsPerPage && numberOfItems && totalNumberOfItems

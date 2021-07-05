@@ -36,11 +36,13 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Navigator.gotoPage(pageName = "Announcements Page");
+			JSONAnnouncement.deleteAnnouncement(
+				groupName = "Guest",
+				siteURLKey = "guest");
 
-			AnnouncementsEntry.tearDownPG();
-
-			Page.tearDownCP();
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Announcements Page");
 		}
 	}
 
@@ -133,6 +135,35 @@ definition {
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 	}
 
+	@priority = "5"
+	@refactordone
+	test CanEditAnnouncementsEntry {
+		property portal.acceptance = "true";
+
+		JSONAnnouncement.addAnnouncement(
+			announcementContent = "Announcements Entry Content",
+			announcementTitle = "Announcements Entry Title",
+			announcementURL = "http://www.liferay.com");
+
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "announcements-page",
+			siteURLKey = "guest",
+			tabName = "unread");
+
+		AnnouncementsEntry.editPG(
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content",
+			entryContentEdit = "Announcements Entry Content Edit",
+			entryTitle = "Announcements Entry Title",
+			entryTitleEdit = "Announcements Entry Title Edit",
+			entryURLEdit = "http://www.alloyui.com");
+
+		AnnouncementsEntry.viewPG(
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content Edit",
+			entryTitle = "Announcements Entry Title Edit");
+	}
+
 	@priority = "3"
 	@refactordone
 	@uitest
@@ -191,35 +222,6 @@ definition {
 			value1 = "Unread");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test EditAnnouncementsEntry {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PGAnnouncements#EditAnnouncementsEntry";
-
-		JSONAnnouncement.addAnnouncement(
-			announcementContent = "Announcements Entry Content",
-			announcementTitle = "Announcements Entry Title",
-			announcementURL = "http://www.liferay.com");
-
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.editPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryContentEdit = "Announcements Entry Content Edit",
-			entryTitle = "Announcements Entry Title",
-			entryTitleEdit = "Announcements Entry Title Edit",
-			entryURLEdit = "http://www.alloyui.com");
-
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.viewPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content Edit",
-			entryTitle = "Announcements Entry Title Edit");
 	}
 
 }

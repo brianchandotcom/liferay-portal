@@ -36,36 +36,27 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Navigator.gotoPage(pageName = "Announcements Page");
+			AnnouncementsEntry.tearDownCP();
 
-			AnnouncementsEntry.tearDownPG();
-
-			Page.tearDownCP();
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Announcements Page");
 
 			JSONUser.tearDownNonAdminUsers();
 
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewAnnouncementsEntryWithDistributedScope {
+	@refactordone
+	test CanViewAnnouncementsEntryWithDistributedScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		Navigator.gotoPage(pageName = "Announcements Page");
 
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
 			announcementTitle = "Announcements Entry Title",
 			announcementURL = "http://www.liferay.com");
-
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.viewPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -73,24 +64,15 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Site Page Name");
 
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Site Page Name",
-			layoutTemplate = "1 Column");
-
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Site Page Name",
 			widgetName = "Announcements");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Test Site Name");
-
-		AnnouncementsEntry.viewPG(
-			distributionScope = "General",
-			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title");
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "site-page-name",
+			siteURLKey = "test-site-name",
+			tabName = "unread");
 
 		AnnouncementsEntry.addPG(
 			distributionScope = "Test Site Name",
@@ -98,12 +80,10 @@ definition {
 			entryTitle = "Announcements Entry2 Scoped Title",
 			entryURL = "http://www.yahoo.com");
 
-		AnnouncementsEntry.viewPG(
-			distributionScope = "Test Site Name",
-			entryContent = "Announcements Entry2 Scoped Content",
-			entryTitle = "Announcements Entry2 Scoped Title");
-
-		Navigator.gotoPage(pageName = "Announcements Page");
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "announcements-page",
+			siteURLKey = "guest",
+			tabName = "unread");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
 
@@ -118,39 +98,41 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "announcements-page",
+			siteURLKey = "guest",
+			tabName = "unread");
 
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.viewViaEntriesPG(
+		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Test Site Name");
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "site-page-name",
+			siteURLKey = "test-site-name",
+			tabName = "unread");
 
-		AnnouncementsEntry.viewViaEntriesPG(
+		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title");
 
-		AnnouncementsEntry.viewViaEntriesPG(
+		AnnouncementsEntry.viewPG(
 			distributionScope = "Test Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title");
 	}
 
 	@priority = "3"
-	@refactorneeded
-	test ViewAnnouncementsPagination {
+	@refactordone
+	test CanViewAnnouncementsPagination {
 		for (var entryCount : list "1,2,3,4,5,6,7") {
 			JSONAnnouncement.addAnnouncement(
 				announcementContent = "Announcements Entry Content ${entryCount}",
@@ -160,18 +142,23 @@ definition {
 				userPassword = "test");
 		}
 
-		Navigator.gotoPage(pageName = "Announcements Page");
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "announcements-page",
+			siteURLKey = "guest",
+			tabName = "unread");
 
 		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = "4");
 
-		Navigator.gotoPage(pageName = "Announcements Page");
+		AnnouncementsNavigator.openToEntriesTab(
+			layoutName = "announcements-page",
+			siteURLKey = "guest",
+			tabName = "unread");
 
 		for (var viewEntryCount : list "4,5,6,7") {
-			AnnouncementsEntry.viewViaEntriesPG(
+			AnnouncementsEntry.viewPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
-				entryTitle = "Announcements Entry Title ${viewEntryCount}",
-				entryURL = "http://www.liferay.com");
+				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
 		for (var viewEntryCount : list "1,2,3") {
@@ -185,11 +172,10 @@ definition {
 			value1 = "Next Page");
 
 		for (var viewEntryCount : list "1,2,3") {
-			AnnouncementsEntry.viewViaEntriesPG(
+			AnnouncementsEntry.viewPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
-				entryTitle = "Announcements Entry Title ${viewEntryCount}",
-				entryURL = "http://www.liferay.com");
+				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
 		for (var viewEntryCount : list "4,5,6,7") {
@@ -203,11 +189,10 @@ definition {
 			value1 = "Previous Page");
 
 		for (var viewEntryCount : list "4,5,6,7") {
-			AnnouncementsEntry.viewViaEntriesPG(
+			AnnouncementsEntry.viewPG(
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${viewEntryCount}",
-				entryTitle = "Announcements Entry Title ${viewEntryCount}",
-				entryURL = "http://www.liferay.com");
+				entryTitle = "Announcements Entry Title ${viewEntryCount}");
 		}
 
 		for (var viewEntryCount : list "1,2,3") {
@@ -216,10 +201,9 @@ definition {
 				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Communication",
-			panel = "Applications",
-			portlet = "Announcements and Alerts");
+		AnnouncementsNavigator.opentoAdmin(
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "4");
 

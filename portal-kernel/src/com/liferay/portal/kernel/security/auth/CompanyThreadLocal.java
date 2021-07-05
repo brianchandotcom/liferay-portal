@@ -186,7 +186,12 @@ public class CompanyThreadLocal {
 	}
 
 	private static boolean _setCompanyId(Long companyId) {
-		if (companyId.equals(_companyId.get()) || _locked) {
+		if (_locked) {
+			throw new UnsupportedOperationException(
+				"CompanyThreadLocal modification is not allowed");
+		}
+
+		if (companyId.equals(_companyId.get())) {
 			return false;
 		}
 

@@ -234,21 +234,6 @@ describe('IssuesList', () => {
 		expect(
 			getByText('connecting-with-google-pagespeed')
 		).toBeInTheDocument();
-
-		expect(getByText('en-US')).toBeInTheDocument();
-		expect(getByText('English')).toBeInTheDocument();
-		expect(getByText('English URL')).toBeInTheDocument();
-	});
-
-	it('renders language selector button disabled when issues are loading', () => {
-		const {getByText} = renderIssuesList({
-			layoutReportsIssues: mockLayoutReportsIssuesSEODetails,
-			loading: true,
-		});
-
-		const button = getByText('en-US').parentElement;
-
-		expect(button.disabled).toBe(true);
 	});
 
 	it('renders no issues loaded view when there are no issues for the selected language', () => {

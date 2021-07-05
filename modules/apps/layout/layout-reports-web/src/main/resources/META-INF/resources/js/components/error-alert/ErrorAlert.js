@@ -44,6 +44,8 @@ const ErrorAlert = () => {
 
 	const unknownError = !apiKeyError && !pageCanNotBeAudited;
 
+	const userHasNotPrivileges = !configureGooglePageSpeedURL;
+
 	const title = apiKeyError
 		? Liferay.Language.get('incorrect-api-key')
 		: pageCanNotBeAudited

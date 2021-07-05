@@ -18,6 +18,9 @@
 		"react": "16.12.0"
 	},
 	"jest": {
+		"modulePathIgnorePatterns": [
+			"test/js/mocks/*"
+		],
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
 		]

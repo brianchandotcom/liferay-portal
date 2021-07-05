@@ -27,5 +27,5 @@
 
 	<aui:input helpMessage="require-users-password-reminder-queries-help" label="require-users-password-reminder-queries" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_REQUIRED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_REQUIRED, PropsValues.USERS_REMINDER_QUERIES_REQUIRED) %>" />
 
-	<aui:input helpMessage="users-password-reminder-queries-questions-help" label="users-password-reminder-queries-questions" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS) %>" />
+	<aui:input helpMessage="users-password-reminder-queries-questions-help" label="users-password-reminder-queries-questions" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS) %>" />
 </aui:fieldset>

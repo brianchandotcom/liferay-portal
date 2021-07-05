@@ -193,4 +193,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122148. Only the inline text items from current experience shown in Page Content panel."
+	@priority = "5"
+	test ViewInlineTextItemsFromCurrentExperienceInPageContentPanel {
+		task ("Add a new experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			PageEditor.clickManagementBar();
+		}
+
+		task ("Switch to the default experience") {
+			PageEditor.changeExperience(newExperience = "Default");
+		}
+
+		task ("Add a Heading fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Add a Paragraph below the Heading") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Switch to the new experience") {
+			PageEditor.changeExperience(newExperience = "New Experience");
+		}
+
+		task ("Add a Card fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card");
+		}
+
+		task ("Select the Inline Text as content filter in Page Content panel") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			PageEditor.selectContentFilter(filter = "Inline Text");
+		}
+
+		task ("View only the inline texts of Card shown in Page Content panel") {
+			AssertVisible(
+				key_itemName = "Card Title example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertVisible(
+				key_itemName = "This is an example of quick text to fill the body of the card with some content in order to present it properly in page. We hope you like it.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Heading Example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+		}
+
+		task ("Switch to the default experience") {
+			PageEditor.changeExperience(newExperience = "Default");
+		}
+
+		task ("View only the inline texts of Heading and Paragraph shown in Page Content panel") {
+			AssertVisible(
+				key_itemName = "Heading Example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertVisible(
+				key_itemName = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Card Title example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "This is an example of quick text to fill the body of the card with some content in order to present it properly in page. We hope you like it.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+		}
+	}
+
 }

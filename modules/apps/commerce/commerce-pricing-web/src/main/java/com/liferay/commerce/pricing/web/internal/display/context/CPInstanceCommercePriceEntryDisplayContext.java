@@ -26,6 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -132,32 +133,31 @@ public class CPInstanceCommercePriceEntryDisplayContext
 				Collections.<ItemSelectorReturnType>singletonList(
 					new UUIDItemSelectorReturnType()));
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "priceListsSelectItem",
-			commercePriceListItemSelectorCriterion);
-
-		String checkedCommercePriceListIds = StringUtil.merge(
-			getCheckedCommercePriceListIds());
-
-		itemSelectorURL.setParameter(
-			"checkedCommercePriceListIds", checkedCommercePriceListIds);
+		PortletURL itemSelectorURL = PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "priceListsSelectItem",
+				commercePriceListItemSelectorCriterion)
+		).setParameter(
+			"checkedCommercePriceListIds",
+			StringUtil.merge(getCheckedCommercePriceListIds())
+		).build();
 
 		return itemSelectorURL.toString();
 	}
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/cp_definitions/edit_cp_instance");
-		portletURL.setParameter(
-			"cpInstanceId", String.valueOf(getCPInstanceId()));
-		portletURL.setParameter(
-			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
-		portletURL.setParameter("screenNavigationEntryKey", "price-lists");
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			super.getPortletURL()
+		).setMVCRenderCommandName(
+			"/cp_definitions/edit_cp_instance"
+		).setParameter(
+			"cpInstanceId", getCPInstanceId()
+		).setParameter(
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey()
+		).setParameter(
+			"screenNavigationEntryKey", "price-lists"
+		).build();
 	}
 
 	@Override

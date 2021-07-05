@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -174,16 +175,15 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCPInstanceCommerceTierPriceEntries");
-		portletURL.setParameter(
-			"commercePriceEntryId", String.valueOf(getCommercePriceEntryId()));
-		portletURL.setParameter(
-			"cpInstanceId", String.valueOf(getCPInstanceId()));
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			super.getPortletURL()
+		).setMVCRenderCommandName(
+			"viewCPInstanceCommerceTierPriceEntries"
+		).setParameter(
+			"commercePriceEntryId", getCommercePriceEntryId()
+		).setParameter(
+			"cpInstanceId", getCPInstanceId()
+		).build();
 	}
 
 	@Override

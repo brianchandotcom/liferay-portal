@@ -34,26 +34,28 @@ export const AutoFocus = ({children}) => {
 				setTimeout(() => setIncrement((value) => value + 1), 5);
 			}
 			else {
-				const firstInput = childRef.current.querySelector('input');
-				const sidebarOpen = document.querySelector(
-					'.ddm-form-builder--sidebar-open'
-				);
+				if (!document.activeElement.id) {
+					const firstInput = childRef.current.querySelector('input');
+					const sidebarOpen = document.querySelector(
+						'.ddm-form-builder--sidebar-open'
+					);
 
-				const userViewContent = containerElement.current.querySelector(
-					'.ddm-user-view-content'
-				);
+					const userViewContent = containerElement.current.querySelector(
+						'.ddm-user-view-content'
+					);
 
-				if (
-					firstInput &&
-					!containerElement.current.contains(
-						document.activeElement
-					) &&
-					(sidebarOpen || userViewContent)
-				) {
-					firstInput.focus();
+					if (
+						firstInput &&
+						!containerElement.current.contains(
+							document.activeElement
+						) &&
+						(sidebarOpen || userViewContent)
+					) {
+						firstInput.focus();
 
-					if (firstInput.select) {
-						firstInput.select();
+						if (firstInput.select) {
+							firstInput.select();
+						}
 					}
 				}
 			}

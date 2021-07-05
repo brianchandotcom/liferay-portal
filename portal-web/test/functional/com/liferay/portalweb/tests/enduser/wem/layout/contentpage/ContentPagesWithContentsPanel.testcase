@@ -414,6 +414,238 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122148. Filter the displayed assets by category in Page Content panel."
+	@priority = "5"
+	test FilterDisplayedAssetsByCategory {
+		task ("Add a web content, a blogs entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a manual collection for All Types") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("Select all assets in manual collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Web Content Title",
+				assetType = "Basic Web Content");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Document Title",
+				assetType = "Basic Document");
+		}
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Add a Banner Center below the Heading") {
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Map the Title of web content to title editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "01-title");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Map the Content of blogs entry to link editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "03-link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Blogs Entry Title",
+				navItem = "Blogs");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Content");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Map the Preview Image of document to background image editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "banner-center");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Document Title",
+				navItem = "Documents and Media");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Preview Image");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Add the first Collection Display below the Banner Center") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				targetFragmentName = "Banner Center");
+		}
+
+		task ("Select the dynamic collection in the first Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add the second collection below the first one") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				targetFragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the first Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display",
+				index = "2");
+		}
+
+		task ("Filter the displayed assets by category in Page Content panel") {
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			PageEditor.selectContentFilter(filter = "Inline Text");
+
+			AssertVisible(
+				key_itemName = "Heading Example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertVisible(
+				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection,Manual Collection") {
+				AssertElementNotPresent(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+
+			PageEditor.selectContentFilter(filter = "Blogs Entry");
+
+			AssertVisible(
+				key_itemName = "Blogs Entry Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			for (var itemName : list "Heading Example,Web Content Title,Document Title,Dynamic Collection,Manual Collection") {
+				AssertElementNotPresent(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+
+			AssertElementNotPresent(
+				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			PageEditor.selectContentFilter(filter = "Document");
+
+			AssertVisible(
+				key_itemName = "Document Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Heading Example,Dynamic Collection,Manual Collection") {
+				AssertElementNotPresent(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+
+			AssertElementNotPresent(
+				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			PageEditor.selectContentFilter(filter = "Collection");
+
+			for (var itemName : list "Dynamic Collection,Manual Collection") {
+				AssertVisible(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+
+			for (var itemName : list "Heading Example,Web Content Title,Blogs Entry Title,Document Title") {
+				AssertElementNotPresent(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+
+			AssertElementNotPresent(
+				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			PageEditor.selectContentFilter(filter = "All Content");
+
+			for (var itemName : list "Heading Example,Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection,Manual Collection") {
+				AssertVisible(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+
+			AssertVisible(
+				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-122396. The outline of editable field should be dashed when hover on inline text item in Page Content panel."
 	@priority = "5"
 	test ViewDashedOutlineOfEditableFieldWhenHoverOnInlineTextItems {

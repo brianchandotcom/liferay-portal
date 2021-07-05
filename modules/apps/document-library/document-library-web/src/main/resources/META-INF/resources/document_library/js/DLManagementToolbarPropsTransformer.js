@@ -20,16 +20,12 @@ import {
 	openSelectionModal,
 } from 'frontend-js-web';
 
-import {handleCollectDigitalSignatureVisibility} from './digital-signature/DigitalSignatureUtil';
-
 export default function propsTransformer({
 	additionalProps: {
 		collectDigitalSignaturePortlet,
-		digitalSignatureAllowedExtensions,
 		downloadEntryURL,
 		editEntryURL,
 		folderConfiguration,
-		isDigitalSignatureEnabled,
 		openViewMoreFileEntryTypesURL,
 		selectFileEntryTypeURL,
 		selectFolderURL,
@@ -279,16 +275,6 @@ export default function propsTransformer({
 			}
 			else if (action === 'move') {
 				move();
-			}
-		},
-		onCheckboxChange: () => {
-			if (isDigitalSignatureEnabled) {
-				setTimeout(() => {
-					handleCollectDigitalSignatureVisibility(
-						getAllSelectedElements().get('value'),
-						digitalSignatureAllowedExtensions
-					);
-				}, 50);
 			}
 		},
 		onFilterDropdownItemClick(event, {item}) {

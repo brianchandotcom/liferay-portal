@@ -87,12 +87,20 @@ public class BatchEngineImportTaskTable
 			"operation", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<BatchEngineImportTaskTable, Clob> parameters =
 		createColumn("parameters", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<BatchEngineImportTaskTable, Integer>
+		processedItemsCount = createColumn(
+			"processedItemsCount", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
 	public final Column<BatchEngineImportTaskTable, Date> startTime =
 		createColumn(
 			"startTime", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<BatchEngineImportTaskTable, String>
 		taskItemDelegateName = createColumn(
 			"taskItemDelegateName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<BatchEngineImportTaskTable, Integer> totalItemsCount =
+		createColumn(
+			"totalItemsCount", Integer.class, Types.INTEGER,
 			Column.FLAG_DEFAULT);
 
 	private BatchEngineImportTaskTable() {

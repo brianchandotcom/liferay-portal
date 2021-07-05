@@ -48,7 +48,9 @@
 		<field name="fieldNameMapping" type="Map" />
 		<field name="operation" type="String" />
 		<field name="parameters" type="Map" />
+		<field name="processedItemsCount" type="int" />
 		<field name="startTime" type="Date" />
 		<field name="taskItemDelegateName" type="String" />
+		<field name="totalItemsCount" type="int" />
 	</model>
 </model-hints>

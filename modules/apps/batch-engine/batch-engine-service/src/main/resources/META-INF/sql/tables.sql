@@ -38,6 +38,8 @@ create table BatchEngineImportTask (
 	fieldNameMapping TEXT null,
 	operation VARCHAR(75) null,
 	parameters TEXT null,
+	processedItemsCount INTEGER,
 	startTime DATE null,
-	taskItemDelegateName VARCHAR(75) null
+	taskItemDelegateName VARCHAR(75) null,
+	totalItemsCount INTEGER
 );

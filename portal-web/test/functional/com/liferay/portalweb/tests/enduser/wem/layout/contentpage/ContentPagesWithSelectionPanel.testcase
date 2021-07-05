@@ -451,6 +451,140 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125985. The Page Creater can perform actions on the asset displayed in Content Display via General panel."
+	@priority = "5"
+	test PerformActionsOnDisplayedAssetInContentDisplayViaGeneralPanel {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Access to the web content editor via General panel") {
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Item",
+				menuItem = "Edit Item");
+		}
+
+		task ("Edit the web content") {
+			WebContent.addCP(
+				webContentContent = "Web Content Content Edit",
+				webContentTitle = "Web Content Title Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the edited content shown in Content Display") {
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content Edit");
+		}
+
+		task ("View the edited title shown in Item field") {
+			PageEditor.gotoConfiguration(fragmentName = "Content Display");
+
+			AssertVisible(
+				key_contentName = "Web Content Title Edit",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+
+		task ("Define the permissions of web content via General panel") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Item",
+				menuItem = "Edit Item Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX");
+
+			Uncheck(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the customized permissions of web content via General panel") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Item",
+				menuItem = "Edit Item Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertNotChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the usage of web content via General panel") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Item",
+				menuItem = "View Item Usages");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementPresent(
+				locator1 = "AssetLists#ASSET_LIST_USAGES",
+				usageAmount = "1",
+				usageType = "All");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Remove the selected web content via General panel") {
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Item",
+				menuItem = "Remove Item");
+
+			PageEditor.waitForAutoSave();
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_contentName = "",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Select Item");
+		}
+
+		task ("View the default empty message is shown in Content Display") {
+			AssertVisible(
+				key_fragmentName = "Content Display",
+				key_messageIfo = "The selected content will be shown here.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+	}
+
 	@description = "This is a use case for LPS-116989. Resize the configuration panel."
 	@priority = "4"
 	test ResizeConfigurationPanel {

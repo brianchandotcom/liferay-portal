@@ -18,18 +18,14 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipInputStream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -102,24 +98,6 @@ public class BatchEngineImportTaskLocalServiceImpl
 	@Override
 	public int getBatchEngineImportTasksCount(long companyId) {
 		return batchEngineImportTaskPersistence.countByCompanyId(companyId);
-	}
-
-	@Override
-	public InputStream openUncompressedContentInputStream(
-			long batchEngineImportTaskId)
-		throws PortalException {
-
-		ZipInputStream zipInputStream = new ZipInputStream(
-			openContentInputStream(batchEngineImportTaskId));
-
-		try {
-			zipInputStream.getNextEntry();
-		}
-		catch (IOException ioException) {
-			throw new PortalException(ioException);
-		}
-
-		return zipInputStream;
 	}
 
 }

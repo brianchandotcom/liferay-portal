@@ -839,7 +839,7 @@
 </tr>
 <tr>
 	<td>ITEM_SELECTOR_DROPDOWN_TOGGLE</td>
-	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//button[contains(@class,'item-selector')]//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

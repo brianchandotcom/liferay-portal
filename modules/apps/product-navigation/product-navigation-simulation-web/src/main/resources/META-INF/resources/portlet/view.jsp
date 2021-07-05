@@ -24,7 +24,7 @@ PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(ProductNavi
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 %>
 
-<div class="simulation-menu" data-qa-id="simulationMenuBody" id="<portlet:namespace />simulationPanelContainer">
+<div class="pb-3 px-3 simulation-menu" data-qa-id="simulationMenuBody" id="<portlet:namespace />simulationPanelContainer">
 	<div aria-multiselectable="true" class="panel-group" role="tablist">
 
 		<%
@@ -33,8 +33,8 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 
 			<div class="panel">
 				<div class="panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" role="tab">
-					<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle list-group-heading panel-header" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="button">
-						<span class="category-name text-truncate"><%= panelApp.getLabel(locale) %></span>
+					<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle list-group-heading panel-header pl-0 text-decoration-none" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="button">
+						<span class="category-name font-weight-semi-bold text-truncate text-uppercase"><%= panelApp.getLabel(locale) %></span>
 
 						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 

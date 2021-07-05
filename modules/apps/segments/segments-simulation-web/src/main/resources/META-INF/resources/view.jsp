@@ -21,7 +21,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 %>
 
 <clay:container-fluid
-	cssClass="segments-simulation"
+	cssClass="p-0 segments-simulation"
 	id='<%= liferayPortletResponse.getNamespace() + "segmentsSimulationContainer" %>'
 >
 	<c:choose>

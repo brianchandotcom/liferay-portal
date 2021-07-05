@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
@@ -121,6 +122,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 						_layoutCopyHelper, liferayPortletRequest,
 						liferayPortletResponse, _stagingGroupHelper),
 					liferayPortletRequest, liferayPortletResponse,
+					_translationInfoItemFieldValuesExporterTracker,
 					_translationPermission, _translationURLProvider);
 
 			JSONObject jsonObject = JSONUtil.put(
@@ -159,6 +161,10 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Reference
+	private TranslationInfoItemFieldValuesExporterTracker
+		_translationInfoItemFieldValuesExporterTracker;
 
 	@Reference
 	private TranslationPermission _translationPermission;

@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
@@ -211,6 +212,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 					layoutsAdminDisplayContext,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
+					_translationInfoItemFieldValuesExporterTracker,
 					_translationPermission, _translationURLProvider));
 
 			renderRequest.setAttribute(
@@ -292,6 +294,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Reference
+	private TranslationInfoItemFieldValuesExporterTracker
+		_translationInfoItemFieldValuesExporterTracker;
 
 	@Reference
 	private TranslationPermission _translationPermission;

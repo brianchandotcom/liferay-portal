@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
@@ -93,6 +94,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 				_ffLayoutTranslationConfiguration, layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse),
+				_translationInfoItemFieldValuesExporterTracker,
 				_translationPermission, _translationURLProvider);
 
 		JSONArray jsonArray = millerColumnsDisplayContext.getLayoutsJSONArray(
@@ -120,6 +122,10 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Reference
+	private TranslationInfoItemFieldValuesExporterTracker
+		_translationInfoItemFieldValuesExporterTracker;
 
 	@Reference
 	private TranslationPermission _translationPermission;

@@ -112,11 +112,10 @@ export default function MappingSelectorWrapper({
 }) {
 	const collectionConfig = useCollectionConfig();
 	const [collectionFields, setCollectionFields] = useState([]);
-	const [
-		collectionItemSubtypeLabel,
-		setCollectionItemSubtypeLabel,
-	] = useState('');
-	const [collectionItemTypeLabel, setCollectionItemTypeLabel] = useState('');
+	const [collectionTypeLabels, setCollectionItemTypeLabels] = useState({
+		itemSubtype: '',
+		itemType: '',
+	});
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const pageContents = useSelector(selectPageContents);
 
@@ -159,12 +158,16 @@ export default function MappingSelectorWrapper({
 					  content.classPK === classPK
 			);
 
-			const [typeLabel, subtypeLabel] = collection.subtype.split(
-				COLLECTION_TYPE_DIVIDER
-			);
+			if (collection) {
+				const [typeLabel, subtypeLabel] = collection?.subtype?.split(
+					COLLECTION_TYPE_DIVIDER
+				);
 
-			setCollectionItemTypeLabel(typeLabel);
-			setCollectionItemSubtypeLabel(subtypeLabel);
+				setCollectionItemTypeLabels({
+					itemSubtype: subtypeLabel,
+					itemType: typeLabel,
+				});
+			}
 		}
 		else {
 			CollectionService.getCollectionMappingFields({
@@ -173,8 +176,10 @@ export default function MappingSelectorWrapper({
 				onNetworkStatus: () => {},
 			})
 				.then((response) => {
-					setCollectionItemSubtypeLabel(response.itemSubtypeLabel);
-					setCollectionItemTypeLabel(response.itemTypeLabel);
+					setCollectionItemTypeLabels({
+						itemSubtype: response.itemSubtypeLabel,
+						itemType: response.itemTypeLabel,
+					});
 				})
 				.catch((error) => {
 					if (process.env.NODE_ENV === 'development') {
@@ -186,21 +191,21 @@ export default function MappingSelectorWrapper({
 
 	return collectionConfig ? (
 		<>
-			{collectionItemTypeLabel && (
+			{collectionTypeLabels.itemType && (
 				<p className="mb-2 page-editor__mapping-panel__type-label">
 					<span className="mr-1">
 						{Liferay.Language.get('type')}:
 					</span>
-					{collectionItemTypeLabel}
+					{collectionTypeLabels.itemType}
 				</p>
 			)}
 
-			{collectionItemSubtypeLabel && (
+			{collectionTypeLabels.itemSubtype && (
 				<p className="mb-2 page-editor__mapping-panel__type-label">
 					<span className="mr-1">
 						{Liferay.Language.get('subtype')}:
 					</span>
-					{collectionItemSubtypeLabel}
+					{collectionTypeLabels.itemSubtype}
 				</p>
 			)}
 

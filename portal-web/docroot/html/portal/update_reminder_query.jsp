@@ -57,7 +57,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 			<aui:fieldset>
 				<%@ include file="/html/portal/update_reminder_query_question.jspf" %>
 
-				<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
+				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED, PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED) %>">
 					<div class="hide" id="customQuestionContainer">
 						<aui:input autoFocus="<%= true %>" bean="<%= user %>" cssClass="reminder-query-custom" fieldParam="reminderQueryCustomQuestion" label="" model="<%= User.class %>" name="reminderQueryQuestion" />
 					</div>
@@ -66,12 +66,12 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 				<%
 				String answer = user.getReminderQueryAnswer();
 
-				if (!PropsValues.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT && Validator.isNotNull(answer)) {
+				if (!PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT, PropsValues.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT) && Validator.isNotNull(answer)) {
 					answer = Portal.TEMP_OBFUSCATION_VALUE;
 				}
 				%>
 
-				<aui:input autocomplete="off" cssClass="reminder-query-answer" label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" showRequiredLabel="<%= false %>" size="50" type='<%= PropsValues.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT ? "text" : "password" %>' value="<%= answer %>">
+				<aui:input autocomplete="off" cssClass="reminder-query-answer" label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" showRequiredLabel="<%= false %>" size="50" type='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT, PropsValues.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT) ? "text" : "password" %>' value="<%= answer %>">
 					<aui:validator name="required" />
 				</aui:input>
 			</aui:fieldset>
@@ -100,7 +100,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 				'change',
 				function(event) {
 					if (reminderQueryQuestion.value === '<%= UsersAdmin.CUSTOM_QUESTION %>') {
-						<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
+						<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED, PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED) %>">
 							customQuestionContainer.classList.remove('hide');
 
 							Liferay.Util.focusFormField('#reminderQueryCustomQuestion');

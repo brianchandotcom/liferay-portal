@@ -96,7 +96,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 
 					<aui:input name="step" type="hidden" value="1" />
 
-					<c:if test="<%= !PropsValues.USERS_REMINDER_QUERIES_ENABLED %>">
+					<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_ENABLED, PropsValues.USERS_REMINDER_QUERIES_ENABLED) %>">
 						<portlet:renderURL var="redirectURL">
 							<portlet:param name="mvcRenderCommandName" value="/login/login" />
 						</portlet:renderURL>
@@ -113,7 +113,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					</c:if>
 
 					<aui:button-row>
-						<aui:button type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
+						<aui:button type="submit" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_ENABLED, PropsValues.USERS_REMINDER_QUERIES_ENABLED) ? "next" : "send-new-password" %>' />
 					</aui:button-row>
 				</c:when>
 				<c:when test="<%= user2 != null %>">
@@ -134,7 +134,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					</c:if>
 
 					<c:choose>
-						<c:when test="<%= PropsValues.USERS_REMINDER_QUERIES_REQUIRED && !user2.hasReminderQuery() %>">
+						<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_REQUIRED, PropsValues.USERS_REMINDER_QUERIES_REQUIRED) && !user2.hasReminderQuery() %>">
 							<div class="alert alert-info">
 								<liferay-ui:message key="the-password-cannot-be-reset-because-you-have-not-configured-a-reminder-query" />
 							</div>

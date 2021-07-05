@@ -14,7 +14,6 @@
 
 package com.liferay.batch.engine.internal.task;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -22,6 +21,6 @@ import java.io.InputStream;
  */
 public interface BatchEngineTaskProgress {
 
-	public int getTotalItemsCount(InputStream inputStream) throws IOException;
+	public int getTotalItemsCount(InputStream inputStream);
 
 }

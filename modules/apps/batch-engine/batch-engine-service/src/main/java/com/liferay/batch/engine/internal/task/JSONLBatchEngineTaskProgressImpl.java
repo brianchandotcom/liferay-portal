@@ -29,7 +29,7 @@ public class JSONLBatchEngineTaskProgressImpl
 	implements BatchEngineTaskProgress {
 
 	@Override
-	public int getTotalItemsCount(InputStream inputStream) throws IOException {
+	public int getTotalItemsCount(InputStream inputStream) {
 		int totalItemsCount = 0;
 
 		try {
@@ -44,7 +44,12 @@ public class JSONLBatchEngineTaskProgressImpl
 			_log.error("Unable to calculate total items", ioException);
 		}
 		finally {
-			inputStream.close();
+			try {
+				inputStream.close();
+			}
+			catch (IOException ioException) {
+				_log.error("Unable to close input stream", ioException);
+			}
 		}
 
 		return totalItemsCount;

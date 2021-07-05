@@ -15,6 +15,8 @@
 package com.liferay.batch.engine.internal.task;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,18 +40,24 @@ public class BatchEngineTaskProgressFactory {
 		return new DefaultBatchEngineTaskProgressImpl();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BatchEngineTaskProgressFactory.class);
+
 	private class DefaultBatchEngineTaskProgressImpl
 		implements BatchEngineTaskProgress {
 
 		@Override
-		public int getTotalItemsCount(InputStream inputStream)
-			throws IOException {
-
+		public int getTotalItemsCount(InputStream inputStream) {
 			try {
 				return 0;
 			}
 			finally {
-				inputStream.close();
+				try {
+					inputStream.close();
+				}
+				catch (IOException ioException) {
+					_log.error("Unable to close input stream", ioException);
+				}
 			}
 		}
 

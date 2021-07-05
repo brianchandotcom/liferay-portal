@@ -3,14 +3,17 @@ definition {
 	macro _addUser {
 		Variables.assertDefined(parameterList = "${locale},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
-		var companyId = JSONCompany.getCompanyId();
-
 		if (isSet(specificURL)) {
 			var portalURL = "${specificURL}";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+
+		var companyId = JSONCompany.getCompanyId(
+			portalInstanceName = "${portalInstanceName}",
+			creatorEmailAddress = "${creatorEmailAddress}",
+			portalURL = "${portalURL}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-user \
@@ -55,6 +58,7 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-group-users/group-id/${groupId}/user-ids/${userId} \
 				-u test@liferay.com:test

@@ -6,14 +6,39 @@ html#{$cadmin-selector} {
 				width: 320px;
 			}
 
+			.sidebar {
+				border-left: 1px solid $gray-300;
+			}
+
+			.sidebar-header {
+				line-height: 32px;
+			}
+
+			.panel-header {
+				border-bottom: 1px solid $gray-500;
+				color: $gray-900;
+				font-size: 12px;
+				line-height: 18px;
+				padding-bottom: 6px;
+				padding-top: 6px;
+
+				.collapse-icon-closed, 
+				.collapse-icon-open {
+					color: $gray-600;
+					right: 0;
+				}
+			}
+
+			.list-group-item {
+				border: 0 none;
+			}
+
 			.custom-devices {
-				background-color: #393a4a;
 				border-radius: 4px;
 				margin: 0 10px 20px;
 				padding: 8px 6px 16px;
 
 				label {
-					color: #a7a9bc;
 					font-size: 12px;
 				}
 
@@ -28,11 +53,9 @@ html#{$cadmin-selector} {
 			}
 
 			.default-devices {
-				margin-bottom: 20px;
-				padding: 0 14px;
+				margin-bottom: 24px;
 
 				.icon-monospaced {
-					color: #a7a9bc;
 					height: 40px;
 					width: 40px;
 
@@ -50,28 +73,33 @@ html#{$cadmin-selector} {
 			}
 
 			.lfr-device-item {
-				&.selected {
-					color: #fff;
+				color: $gray-600;
+				max-width: 33.33%;
 
+				.icon {
+					color: $gray-600;
+				}
+
+				small {
+					color: $gray-600;
+				}
+
+				&.selected {
 					.icon {
-						background-color: #393a4a;
+						background-color: $gray-200;
 						border-radius: 4px;
-						color: #fff;
+						color: $gray-900;
 					}
 
 					small {
-						color: #fff;
+						color: $gray-900;
 					}
-				}
-
-				.icon {
-					margin-top: 8px;
 				}
 			}
 
 			.panel {
 				.simulation-app-panel-body {
-					padding: 12px 0 4px;
+					padding: 16px 0 0;
 				}
 			}
 		}

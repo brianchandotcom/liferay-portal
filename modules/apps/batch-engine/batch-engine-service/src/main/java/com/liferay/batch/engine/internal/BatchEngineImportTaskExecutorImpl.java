@@ -21,11 +21,11 @@ import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
-import com.liferay.batch.engine.internal.item.counter.BatchEngineImportTaskTotalItemsCounter;
-import com.liferay.batch.engine.internal.item.counter.BatchEngineImportTaskTotalItemsCounterFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderUtil;
+import com.liferay.batch.engine.internal.task.BatchEngineTaskProgress;
+import com.liferay.batch.engine.internal.task.BatchEngineTaskProgressFactory;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.string.StringPool;
@@ -66,18 +66,15 @@ public class BatchEngineImportTaskExecutorImpl
 				BatchEngineTaskExecuteStatus.STARTED.toString());
 			batchEngineImportTask.setStartTime(new Date());
 
-			BatchEngineImportTaskTotalItemsCounter
-				batchEngineImportTaskTotalItemsCounter =
-					_batchEngineImportTaskTotalItemsCounterFactory.create(
-						BatchEngineTaskContentType.valueOf(
-							batchEngineImportTask.getContentType()));
+			BatchEngineTaskProgress batchEngineTaskProgress =
+				_batchEngineTaskProgressFactory.create(
+					BatchEngineTaskContentType.valueOf(
+						batchEngineImportTask.getContentType()));
 
 			batchEngineImportTask.setTotalItemsCount(
-				batchEngineImportTaskTotalItemsCounter.getTotalItemsCount(
-					_batchEngineImportTaskLocalService.
-						openUncompressedContentInputStream(
-							batchEngineImportTask.
-								getBatchEngineImportTaskId())));
+				batchEngineTaskProgress.getTotalItemsCount(
+					_batchEngineImportTaskLocalService.openContentInputStream(
+						batchEngineImportTask.getBatchEngineImportTaskId())));
 
 			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 				batchEngineImportTask);
@@ -116,8 +113,7 @@ public class BatchEngineImportTaskExecutorImpl
 					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
 
-		_batchEngineImportTaskTotalItemsCounterFactory =
-			new BatchEngineImportTaskTotalItemsCounterFactory();
+		_batchEngineTaskProgressFactory = new BatchEngineTaskProgressFactory();
 
 		_batchEngineTaskItemDelegateExecutorFactory =
 			new BatchEngineTaskItemDelegateExecutorFactory(
@@ -157,10 +153,8 @@ public class BatchEngineImportTaskExecutorImpl
 				_batchEngineImportTaskItemReaderFactory.create(
 					BatchEngineTaskContentType.valueOf(
 						batchEngineImportTask.getContentType()),
-					_batchEngineImportTaskLocalService.
-						openUncompressedContentInputStream(
-							batchEngineImportTask.
-								getBatchEngineImportTaskId()));
+					_batchEngineImportTaskLocalService.openContentInputStream(
+						batchEngineImportTask.getBatchEngineImportTaskId()));
 			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
@@ -242,13 +236,13 @@ public class BatchEngineImportTaskExecutorImpl
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
 
-	private BatchEngineImportTaskTotalItemsCounterFactory
-		_batchEngineImportTaskTotalItemsCounterFactory;
 	private BatchEngineTaskItemDelegateExecutorFactory
 		_batchEngineTaskItemDelegateExecutorFactory;
 
 	@Reference
 	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
+
+	private BatchEngineTaskProgressFactory _batchEngineTaskProgressFactory;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

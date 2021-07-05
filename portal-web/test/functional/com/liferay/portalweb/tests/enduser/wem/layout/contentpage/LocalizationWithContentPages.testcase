@@ -95,4 +95,124 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-122148. Search localized inline text items in Page Content panel."
+	@priority = "4"
+	test SearchLocalizedInlineTextItemsInPageContentPanel {
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Add a Banner Center below the Heading") {
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Edit the inline text of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Edited Text");
+		}
+
+		task ("Edit the inline text of title field in Banner Center") {
+			PageEditor.editFragmentText(
+				fragmentName = "Banner Center",
+				id = "01-title",
+				text = "Edited Title");
+		}
+
+		task ("Edit the inline text of subtitle field in Banner Center") {
+			PageEditor.editFragmentText(
+				fragmentName = "Banner Center",
+				id = "02-subtitle",
+				text = "Edited Subtitle");
+		}
+
+		task ("Change locale to es-ES") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+		}
+
+		task ("Edit the localized inline text of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Texto editado");
+		}
+
+		task ("Edit the localized inline text of title field in Banner Center") {
+			PageEditor.editFragmentText(
+				fragmentName = "Banner Center",
+				id = "01-title",
+				text = "Título editado");
+		}
+
+		task ("Change locale to en-US") {
+			PageEditor.changeLocale(
+				currentLocale = "es-ES",
+				locale = "en-US");
+		}
+
+		task ("View the inline texts in Page Content tab") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			for (var itemName : list "Edited Text,Edited Title,Edited Subtitle") {
+				AssertVisible(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+		}
+
+		task ("Change locale to es-ES") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+		}
+
+		task ("View the inline texts in Page Content tab") {
+			for (var itemName : list "Texto editado,Título editado,Edited Subtitle") {
+				AssertVisible(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+		}
+
+		task ("Search the localized inline text in Page Content panel") {
+			PageEditor.searchInPageContentPanel(searchTerm = "Texto");
+
+			AssertVisible(
+				key_itemName = "Texto editado",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			for (var itemName : list "Título editado,Edited Subtitle") {
+				AssertElementNotPresent(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+
+			PageEditor.searchInPageContentPanel(searchTerm = "Título");
+
+			AssertVisible(
+				key_itemName = "Título editado",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			for (var itemName : list "Texto editado,Edited Subtitle") {
+				AssertElementNotPresent(
+					key_itemName = "${itemName}",
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+		}
+	}
+
 }

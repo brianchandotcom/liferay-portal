@@ -102,10 +102,11 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		return internalDeserialize(ddmFormDeserializerDeserializeRequest);
 	}
 
-	protected static LocalizedValue deserializeLocalizedValue(String value)
+	protected static LocalizedValue deserializeLocalizedValue(
+			String value, Locale defaultLocale)
 		throws PortalException {
 
-		LocalizedValue localizedValue = new LocalizedValue();
+		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 
 		if (Validator.isNull(value)) {
 			return localizedValue;
@@ -227,10 +228,14 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 			return;
 		}
 
+		Locale defaultLocale = ddmForm.getDefaultLocale();
+
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			new DDMFormSuccessPageSettings(
-				deserializeLocalizedValue(jsonObject.getString("body")),
-				deserializeLocalizedValue(jsonObject.getString("title")),
+				deserializeLocalizedValue(
+					jsonObject.getString("body"), defaultLocale),
+				deserializeLocalizedValue(
+					jsonObject.getString("title"), defaultLocale),
 				jsonObject.getBoolean("enabled"));
 
 		ddmForm.setDDMFormSuccessPageSettings(ddmFormSuccessPageSettings);

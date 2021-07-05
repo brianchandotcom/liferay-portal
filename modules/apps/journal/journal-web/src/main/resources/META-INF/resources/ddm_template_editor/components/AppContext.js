@@ -12,23 +12,40 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
+
+import {useChannel} from '../hooks/useChannel';
 
 export const AppContext = React.createContext({
+	editorMode: null,
 	inputChannel: null,
+	portletNamespace: null,
 	propertiesViewURL: null,
+	setEditorMode: () => {},
 	templateVariableGroups: [],
 });
 
 export function AppContextProvider({
 	children,
-	inputChannel,
+	editorMode: initialEditorMode,
+	portletNamespace,
 	propertiesViewURL,
 	templateVariableGroups,
 }) {
+	const [editorMode, setEditorMode] = useState(initialEditorMode);
+
+	const inputChannel = useChannel();
+
 	return (
 		<AppContext.Provider
-			value={{inputChannel, propertiesViewURL, templateVariableGroups}}
+			value={{
+				editorMode,
+				inputChannel,
+				portletNamespace,
+				propertiesViewURL,
+				setEditorMode,
+				templateVariableGroups,
+			}}
 		>
 			{children}
 		</AppContext.Provider>

@@ -18,13 +18,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import {CodeMirrorEditor} from './CodeMirrorEditor';
 import {ScriptInput} from './ScriptInput';
 
-export const Editor = ({
-	autocompleteData,
-	editorMode,
-	initialScript,
-	inputChannel,
-	portletNamespace,
-}) => {
+export const Editor = ({autocompleteData, initialScript}) => {
+	const {editorMode, inputChannel, portletNamespace} = useContext(AppContext);
+
 	const [script, setScript] = useState(initialScript);
 
 	const scriptRef = useRef(script);
@@ -96,8 +92,5 @@ export const Editor = ({
 
 Editor.propTypes = {
 	autocompleteData: PropTypes.object.isRequired,
-	editorMode: PropTypes.oneOf(['ftl', 'xml', 'velocity']).isRequired,
 	initialScript: PropTypes.string.isRequired,
-	inputChannel: PropTypes.object.isRequired,
-	portletNamespace: PropTypes.string.isRequired,
 };

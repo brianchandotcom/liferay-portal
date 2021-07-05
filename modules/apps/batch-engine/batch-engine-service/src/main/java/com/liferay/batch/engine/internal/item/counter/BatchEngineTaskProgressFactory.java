@@ -22,7 +22,7 @@ import java.io.InputStream;
 /**
  * @author Matija Petanjek
  */
-public class BatchEngineImportTaskTotalItemsCounterFactory {
+public class BatchEngineTaskProgressFactory {
 
 	public BatchEngineTaskProgress create(
 		BatchEngineTaskContentType batchEngineTaskContentType) {

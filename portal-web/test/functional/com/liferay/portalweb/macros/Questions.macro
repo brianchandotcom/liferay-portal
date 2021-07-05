@@ -216,15 +216,9 @@ definition {
 	}
 
 	macro configureFilter {
-		Click(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
-
-		Pause(locator1 = "1000");
-
-		Click(
-			key_filter = "${filterBy}",
-			locator1 = "Questions#QUESTIONS_SELECT_FILTER_VALUE");
-
-		Pause(locator1 = "1000");
+		Select(
+			locator1 = "Questions#QUESTIONS_SELECT_FILTER",
+			value1 = "${filterBy}");
 	}
 
 	macro configureLandingPageTopicNavigation {
@@ -298,13 +292,9 @@ definition {
 	}
 
 	macro configureTagsFilter {
-		Click(locator1 = "Questions#QUESTIONS_TAGS_SELECT_FILTER");
-
-		Pause(locator1 = "1000");
-
-		Click(
-			key_filter = "${filterBy}",
-			locator1 = "Questions#QUESTIONS_SELECT_FILTER_VALUE");
+		Select(
+			locator1 = "Questions#QUESTIONS_TAGS_SELECT_FILTER",
+			value1 = "${filterBy}");
 	}
 
 	macro createSomethingInMessageBoards {

@@ -30,9 +30,11 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewMultipleImagesInBlogsImages {
-		Blogs.addImageToBlogImages(
-			siteURLKey = "guest",
-			uploadFileNames = "Document_1.jpg,Document_2.jpg,Document_3.jpg");
+		for (var num : list "1,2,3") {
+			JSONBlog.uploadBlogImage(
+				groupName = "Guest",
+				sourceFileName = "Document_${num}.jpg");
+		}
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 

@@ -131,12 +131,8 @@ definition {
 		}
 	}
 
-	macro addCP {
+	macro addBusinessAccount {
 		LexiconEntry.gotoAdd();
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Add Account");
 
 		PortletEntry.inputName(name = "${accountName}");
 
@@ -148,39 +144,10 @@ definition {
 			User.changeProfileImage(imageName = "${accountLogo}");
 		}
 
-		if (isSet(accountType)) {
-			SelectField.select(
-				selectFieldLabel = "Type",
-				selectFieldValue = "${accountType}");
-		}
-		else {
-			AssertTextEquals(
-				key_typeName = "Business",
-				locator1 = "Select#TYPE_SELECTED",
-				value1 = "Business");
-		}
-
-		AssertElementNotPresent(locator1 = "Account#USER_SELECT");
-
 		if (isSet(accountTaxID)) {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
 				text = "${accountTaxID}");
-		}
-
-		if ("${accountStatus}" == "Inactive") {
-			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-		}
-
-		if (isSet(domainEnable)) {
-			AssertElementPresent(locator1 = "Account#DOMAIN_SECTION");
-
-			if (isSet(domainNames)) {
-				Accounts.addDomains(domainNames = "${domainNames}");
-			}
-		}
-		else {
-			AssertElementNotPresent(locator1 = "Account#DOMAIN_SECTION");
 		}
 
 		Button.clickSave();
@@ -188,8 +155,58 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addDomains {
-		AssertElementPresent(locator1 = "Account#DOMAIN_SECTION");
+	macro addPersonAccount {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${accountName}");
+
+		SelectField.select(
+			selectFieldLabel = "Type",
+			selectFieldValue = "Person");
+
+		if (isSet(accountDescription)) {
+			PortletEntry.inputDescription(description = "${accountDescription}");
+		}
+
+		if (isSet(accountLogo)) {
+			User.changeProfileImage(imageName = "${accountLogo}");
+		}
+
+		if (isSet(accountTaxID)) {
+			PortletEntry.inputText(
+				fieldLabel = "Tax ID",
+				text = "${accountTaxID}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro addInactiveBusinessAccount {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${accountName}");
+
+		if (isSet(accountDescription)) {
+			PortletEntry.inputDescription(description = "${accountDescription}");
+		}
+
+		Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro addAccountWithDomain {
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add Account");
+
+		PortletEntry.inputName(name = "${accountName}");
 
 		AssertClick(
 			locator1 = "Account#ACCOUNT_DOMAIN_ADD_LINK",
@@ -208,6 +225,10 @@ definition {
 				key_domainName = "${domainName}",
 				locator1 = "Account#DOMAIN_TABLE_NAME");
 		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro deleteAccount {

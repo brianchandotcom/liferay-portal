@@ -585,6 +585,227 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125985. The Page Creater can perform actions on collection displayed in Collection Display via General panel."
+	@priority = "5"
+	test PerformActionsOnDisplayedCollectionInCollectionDisplayViaGeneralPanel {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category in vocabulary") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("View three assets shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Access to the collection editor via General panel") {
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Collection",
+				menuItem = "Edit Collection");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Dynamic Collection");
+		}
+
+		task ("Add a category filter rule") {
+			AssetListsAdmin.addCategoriesFilter(
+				categoryNameList = "Category Name",
+				queryAndOperator = "All",
+				queryContains = "Contains");
+		}
+
+		task ("Navigate to page editor") {
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("View only the web content shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			for (var title : list "Document Title,Blogs Entry Title") {
+				AssertElementNotPresent(
+					key_entryTitle = "${title}",
+					locator1 = "PageEditor#COLLECTION_CELL");
+			}
+		}
+
+		task ("View the collection items via General panel") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Collection",
+				menuItem = "View Items");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Add a new collection item via General panel") {
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Collection",
+				menuItem = "Add Items");
+
+			MenuItem.click(menuItem = "Basic Web Content");
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content 2",
+				webContentTitle = "Web Content Title 2");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the new web content shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "Web Content Title 2,Web Content Title") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Define the permissions of collection via General panel") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Collection",
+				menuItem = "Edit Collection Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Uncheck(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the customized permissions of collection via General panel") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Collection",
+				menuItem = "Edit Collection Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertNotChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Remove the selected collection via General panel") {
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Collection",
+				menuItem = "Remove Collection");
+
+			PageEditor.waitForAutoSave();
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_contentName = "",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Select Collection");
+		}
+
+		task ("View the default empty message is shown in Collection Display") {
+			AssertVisible(
+				key_fragmentName = "Collection Display",
+				key_message = "No Collection Selected Yet",
+				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+		}
+	}
+
 	@description = "This is a use case for LPS-116989. Resize the configuration panel."
 	@priority = "4"
 	test ResizeConfigurationPanel {

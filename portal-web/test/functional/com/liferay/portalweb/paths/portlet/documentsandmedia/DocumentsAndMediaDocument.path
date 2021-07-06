@@ -348,7 +348,7 @@
 <!--VIDEO_GENERATION-->
 <tr>
 	<td>VIDEO_GENERATION_INFO</td>
-	<td>//div[contains(@class,'video-embed-placeholder-text')]</td>
+	<td>//div[contains(@class,'video-embed-placeholder-text') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -3221,15 +3221,16 @@ definition {
 
 		if (isSet(disabled)) {
 			AssertTextEquals.assertPartialText(
+				key_text = "No video preview available.",
 				locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO",
 				value1 = "No video preview available.");
 		}
 		else {
-			AssertTextEquals.assertPartialText(
-				locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO",
-				value1 = "Generating video preview will take a few minutes.");
+			VerifyElementPresent(
+				key_text = "Generating video preview will take a few minutes.",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO");
 
-			while (IsElementPresent(locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO")) {
+			while (IsElementPresent(key_text = "Generating video preview will take a few minutes.",locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO")) {
 				Pause(locator1 = "1000");
 
 				Refresh();

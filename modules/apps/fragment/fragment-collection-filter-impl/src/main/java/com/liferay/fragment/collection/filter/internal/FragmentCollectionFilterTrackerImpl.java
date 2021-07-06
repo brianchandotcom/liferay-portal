@@ -42,7 +42,8 @@ public class FragmentCollectionFilterTrackerImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FragmentCollectionFilter.class, null);
+			bundleContext, FragmentCollectionFilter.class,
+			"fragment.collection.filter.key");
 	}
 
 	@Deactivate

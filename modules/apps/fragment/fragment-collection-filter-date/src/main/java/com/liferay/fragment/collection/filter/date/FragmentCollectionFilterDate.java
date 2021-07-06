@@ -24,7 +24,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pablo Molina
  */
-@Component(immediate = true, service = FragmentCollectionFilter.class)
+@Component(
+	immediate = true, property = "fragment.collection.filter.key=date",
+	service = FragmentCollectionFilter.class
+)
 public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 
 	@Override

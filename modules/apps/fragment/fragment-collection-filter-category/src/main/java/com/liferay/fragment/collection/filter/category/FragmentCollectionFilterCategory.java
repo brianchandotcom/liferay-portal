@@ -24,7 +24,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pablo Molina
  */
-@Component(immediate = true, service = FragmentCollectionFilter.class)
+@Component(
+	immediate = true, property = "fragment.collection.filter.key=category",
+	service = FragmentCollectionFilter.class
+)
 public class FragmentCollectionFilterCategory
 	implements FragmentCollectionFilter {
 

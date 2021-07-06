@@ -44,7 +44,7 @@ definition {
 
 		Upgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editAnnDeleteDocuments();
+		Upgrade.editAndDeleteDocuments();
 	}
 
 	@priority = "5"
@@ -59,7 +59,7 @@ definition {
 
 		Upgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editAnnDeleteDocuments();
+		Upgrade.editAndDeleteDocuments();
 	}
 
 	@priority = "5"
@@ -74,7 +74,7 @@ definition {
 
 		Upgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editAnnDeleteDocuments();
+		Upgrade.editAndDeleteDocuments();
 	}
 
 	@priority = "5"
@@ -107,7 +107,7 @@ definition {
 
 		Upgrade.addDMWithDocumentTypesAndMetadataSets();
 
-		Upgrade.editAnnDeleteDocuments();
+		Upgrade.editAndDeleteDocuments();
 	}
 
 }

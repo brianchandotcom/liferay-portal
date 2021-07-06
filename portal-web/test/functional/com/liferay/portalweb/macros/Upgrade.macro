@@ -997,6 +997,42 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
+	macro editAndDeleteDocuments {
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.editCmdPG(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileNameEdit = "DM Document Video Edit.mp4",
+			dmDocumentTitle = "DM Document Video",
+			dmDocumentTitleEdit = "DM Document Video Edit");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentFileName = "DM Document Video Edit.mp4",
+			dmDocumentTitle = "DM Document Video Edit",
+			dmDocumentVersionNumber = "1.1");
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.deletePG(dmDocumentTitle = "DM Document JPG");
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		PortletEntry.selectAll();
+
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewDefaultCP();
+	}
+
 	macro editAndDeleteKBArticle {
 		Navigator.gotoPage(pageName = "Knowledge Base");
 
@@ -1052,42 +1088,6 @@ definition {
 		WikiNavigator.gotoAllPagesPG();
 
 		WikiPage.deletePG(wikiPageTitle = "FrontPage");
-	}
-
-	macro editAnnDeleteDocuments {
-		Navigator.gotoPage(pageName = "Documents");
-
-		DMDocument.editCmdPG(
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentFileNameEdit = "DM Document Video Edit.mp4",
-			dmDocumentTitle = "DM Document Video",
-			dmDocumentTitleEdit = "DM Document Video Edit");
-
-		PortletEntry.publish();
-
-		Navigator.gotoPage(pageName = "Documents");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description Edit",
-			dmDocumentFileName = "DM Document Video Edit.mp4",
-			dmDocumentTitle = "DM Document Video Edit",
-			dmDocumentVersionNumber = "1.1");
-
-		Navigator.gotoPage(pageName = "Documents");
-
-		DMDocument.deletePG(dmDocumentTitle = "DM Document JPG");
-
-		Navigator.gotoPage(pageName = "Documents");
-
-		PortletEntry.selectAll();
-
-		ClickNoError(locator1 = "Icon#DELETE");
-
-		Alert.viewSuccessMessage();
-
-		Navigator.gotoPage(pageName = "Documents");
-
-		DMDocument.viewDefaultCP();
 	}
 
 	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {

@@ -51,10 +51,11 @@ export const useValidateFormWithObjects = () => {
 	return useCallback(
 		async (callbackFn) => {
 			const objectDefinitionId = await getObjectDefinitionId();
-			const unmappedFields = getUnmappedFields(getFields(pages));
 
-			if (objectDefinitionId && unmappedFields.length) {
-				if (callbackFn) {
+			if (objectDefinitionId) {
+				const unmappedFields = getUnmappedFields(getFields(pages));
+
+				if (callbackFn && unmappedFields.length) {
 					callbackFn(unmappedFields);
 				}
 

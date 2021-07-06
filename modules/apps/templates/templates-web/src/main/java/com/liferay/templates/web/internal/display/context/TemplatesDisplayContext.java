@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.templates.web.internal.constants.TemplatesWebKeys;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,27 +47,22 @@ public class TemplatesDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(
-						_getTabs1(), TemplatesWebKeys.INFO_TEMPLATES));
+					Objects.equals(_getTabs1(), _INFO_TEMPLATES));
 				navigationItem.setHref(
-					_liferayPortletResponse.createRenderURL(),
-					"tabs1", TemplatesWebKeys.INFO_TEMPLATES);
+					_liferayPortletResponse.createRenderURL(), "tabs1",
+					_INFO_TEMPLATES);
 				navigationItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, TemplatesWebKeys.INFO_TEMPLATES));
+					LanguageUtil.get(_httpServletRequest, _INFO_TEMPLATES));
 			}
 		).add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(
-						_getTabs1(), TemplatesWebKeys.WIDGET_TEMPLATES));
+					Objects.equals(_getTabs1(), _WIDGET_TEMPLATES));
 				navigationItem.setHref(
-					_liferayPortletResponse.createRenderURL(),
-					"tabs1", TemplatesWebKeys.WIDGET_TEMPLATES);
+					_liferayPortletResponse.createRenderURL(), "tabs1",
+					_WIDGET_TEMPLATES);
 				navigationItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest,
-						TemplatesWebKeys.WIDGET_TEMPLATES));
+					LanguageUtil.get(_httpServletRequest, _WIDGET_TEMPLATES));
 			}
 		).build();
 	}
@@ -79,10 +73,14 @@ public class TemplatesDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", TemplatesWebKeys.INFO_TEMPLATES);
+			_liferayPortletRequest, "tabs1", _INFO_TEMPLATES);
 
 		return _tabs1;
 	}
+
+	private static final String _INFO_TEMPLATES = "info-templates";
+
+	private static final String _WIDGET_TEMPLATES = "widget-templates";
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

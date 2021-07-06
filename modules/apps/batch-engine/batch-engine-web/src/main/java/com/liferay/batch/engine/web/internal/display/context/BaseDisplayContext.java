@@ -77,7 +77,7 @@ public class BaseDisplayContext {
 	public String getOrderByCol() {
 		return ParamUtil.getString(
 			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"modified-date");
+			"modifiedDate");
 	}
 
 	public String getOrderByType() {

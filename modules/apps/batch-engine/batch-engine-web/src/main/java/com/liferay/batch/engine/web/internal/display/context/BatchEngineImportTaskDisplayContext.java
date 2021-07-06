@@ -19,6 +19,7 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -71,17 +72,23 @@ public class BatchEngineImportTaskDisplayContext extends BaseDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			renderRequest, getPortletURL(), null, null);
+			renderRequest, getPortletURL(), null, "no-entries-were-found");
 
-		_searchContainer.setEmptyResultsMessage("no-entries-were-found");
-		_searchContainer.setOrderByCol(getOrderByCol());
-		_searchContainer.setOrderByComparator(null);
-		_searchContainer.setOrderByType(getOrderByType());
+		String orderByCol = getOrderByCol();
+
+		_searchContainer.setOrderByCol(orderByCol);
+
+		String orderByType = getOrderByType();
+
+		_searchContainer.setOrderByType(orderByType);
+
 		_searchContainer.setRowChecker(null);
 		_searchContainer.setResults(
 			_batchEngineImportTaskService.getBatchEngineImportTasks(
 				companyId, _searchContainer.getStart(),
-				_searchContainer.getEnd()));
+				_searchContainer.getEnd(),
+				OrderByComparatorFactoryUtil.create(
+					"BatchEngineImportTask", orderByCol, orderByType)));
 		_searchContainer.setTotal(
 			_batchEngineImportTaskService.getBatchEngineImportTasksCount(
 				companyId));

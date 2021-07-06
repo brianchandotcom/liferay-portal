@@ -111,7 +111,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	 * Returns the name of the layout set's default virtual host.
 	 *
 	 * <p>
-	 * When accessing a layout set that has a the virtual host, the URL elements
+	 * When accessing a layout set that has a virtual host, the URL elements
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
@@ -127,12 +127,15 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	 * Returns the names of the layout set's virtual hosts.
 	 *
 	 * <p>
-	 * When accessing a layout set that has a the virtual host, the URL elements
+	 * When accessing a layout set that has a virtual host, the URL elements
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
-	 * @return the layout set's virtual host names, or an empty string if the
-	 layout set has no virtual hosts configured
+	 * @return a map from the layout set's virtual host names to the language
+	 ids configured for them. If the virtual host is configured
+	 for the default language, it will map to the empty string instead
+	 of a language id. If the layout set has no virtual hosts
+	 configured, the returned map will be empty.
 	 */
 	public java.util.TreeMap<String, String> getVirtualHostnames();
 

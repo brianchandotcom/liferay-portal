@@ -22,7 +22,11 @@ import updatePreviewImage from '../../../../../app/actions/updatePreviewImage';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {config} from '../../../../../app/config/index';
-import {useDispatch} from '../../../../../app/contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+} from '../../../../../app/contexts/StoreContext';
+import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
 import FragmentService from '../../../../../app/services/FragmentService';
 import ImageService from '../../../../../app/services/ImageService';
 
@@ -34,6 +38,7 @@ export default function ImageEditorModal({
 	previewURL,
 }) {
 	const dispatch = useDispatch();
+	const languageId = useSelector(selectLanguageId);
 
 	const {observer, onClose} = useModal({
 		onClose: onCloseModal,
@@ -57,6 +62,7 @@ export default function ImageEditorModal({
 								EDITABLE_TYPES.image &&
 							!fragmentEntryLink.removed &&
 							(value.classPK === fileEntryId ||
+								value[languageId]?.classPK === fileEntryId ||
 								value[config.defaultLanguageId]?.classPK ===
 									fileEntryId)
 					);

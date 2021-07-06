@@ -324,18 +324,6 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_POSITION_BY_TITLE");
 	}
 
-	macro assertTableOrder {
-		AssertTextEquals(
-			key_rowNumber = "${rowNumber}",
-			locator1 = "WorkflowAllItems#METRICS_ALL_ITEMS_TABLE_ROW",
-			value1 = "${itemTitle}");
-
-		AssertTextNotEquals(
-			key_rowNumber = "${rowNumber}",
-			locator1 = "WorkflowAllItems#METRICS_ALL_ITEMS_TABLE_ROW",
-			value1 = "${keyCompare}");
-	}
-
 	macro assertSLAProcessingDate {
 		while (IsElementNotPresent(
 				key_warningMessage = "${warningMessage}",
@@ -356,6 +344,18 @@ definition {
 		}
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE");
+	}
+
+	macro assertTableOrder {
+		AssertTextEquals(
+			key_rowNumber = "${rowNumber}",
+			locator1 = "WorkflowAllItems#METRICS_ALL_ITEMS_TABLE_ROW",
+			value1 = "${itemTitle}");
+
+		AssertTextNotEquals(
+			key_rowNumber = "${rowNumber}",
+			locator1 = "WorkflowAllItems#METRICS_ALL_ITEMS_TABLE_ROW",
+			value1 = "${keyCompare}");
 	}
 
 	macro assertTransitionTaskOptionNotPresent {

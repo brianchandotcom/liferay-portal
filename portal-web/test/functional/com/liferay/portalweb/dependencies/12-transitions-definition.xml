@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.3.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_3_0.xsd"
 >
 	<name>12 Transitions</name>
-	<description>12 transitions definition.</description>
+	<description>Defintion of the 12 transitions of SLA workflow.</description>
 	<version>1</version>
 	<state>
 		<name>created</name>

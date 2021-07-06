@@ -456,16 +456,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DETAIL_PAGE_SLA_DEFINITION_RESOLVED</td>
-	<td>//span[contains(@class,'small')]/../..//div[contains(.,'SLA Definition (Resolved ${key_status})')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MODAL_TITLE_ICON</td>
-	<td>//span[contains(@class,'bg-muted')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WORKFLOW_ALL_ITEMS_ASSERT_ITEM</td>
 	<td>//span[contains(text(),'${key_columnName}')]/../../../../..//tr[contains(.,'${key_fieldName}')]</td>
 	<td></td>

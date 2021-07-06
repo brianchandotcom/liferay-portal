@@ -79,7 +79,7 @@ public class CompanyThreadLocalTest extends PowerMockito {
 	}
 
 	@Test
-	public void testLockWithSafeCloseable() {
+	public void testLockWithSetWithSafeCloseable() {
 		SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 			CompanyConstants.SYSTEM);
 

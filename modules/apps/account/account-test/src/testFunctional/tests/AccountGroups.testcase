@@ -40,10 +40,7 @@ definition {
 			accountGroupDescription = "This is an Account Group for delete testing.",
 			accountGroupName = "Delete AG");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		LexiconEntry.viewEntryName(rowEntry = "Delete AG");
 
@@ -57,19 +54,13 @@ definition {
 	@description = "This test assigns an account to Account Group"
 	@priority = "4"
 	test CanManuallyAssignAccountToGroup {
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Accounts");
+		Accounts.openAccountsAdmin();
 
 		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account added for Account Group.",
 			accountName = "Account for Account Group");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.addCP(
 			accountGroupDescription = "This is an Account Group.",
@@ -86,10 +77,7 @@ definition {
 			assigneeNames = "Account for Account Group",
 			assigneeType = "Accounts");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Test Account Group");
 
@@ -100,29 +88,20 @@ definition {
 	@priority = "4"
 	test CanManuallyAssignMultipleAccountsToGroup {
 		for (var accountNumber : list "1,2,3,4,5") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Applications",
-				portlet = "Accounts");
+			Accounts.openAccountsAdmin();
 
 			Accounts.addBusinessAccount(
 				accountDescription = "Accounts Name ${accountNumber} Description",
 				accountName = "Accounts ${accountNumber} for AG");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.addCP(
 			accountGroupDescription = "This is an Account Group with multiple accounts.",
 			accountGroupName = "Multiple Accounts AG");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Multiple Accounts AG");
 
@@ -133,10 +112,7 @@ definition {
 			assigneeNames = "Accounts 1 for AG",
 			assigneeType = "Accounts");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.viewEntry(
 			accountGroupAccount = "1",
@@ -151,10 +127,7 @@ definition {
 			assigneeNames = "Accounts ${accountNumber} for AG",
 			assigneeType = "Accounts");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.viewEntry(
 			accountGroupAccount = "5",
@@ -166,20 +139,14 @@ definition {
 	@priority = "4"
 	test CanRemoveAccountFromGroup {
 		for (var accountNumber : list "1,2,3") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Applications",
-				portlet = "Accounts");
+			Accounts.openAccountsAdmin();
 
 			Accounts.addBusinessAccount(
 				accountDescription = "Accounts Name ${accountNumber} Description",
 				accountName = "Delete Accounts ${accountNumber} from AG");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.addCP(
 			accountGroupDescription = "This is an Account Group to test remove account.",
@@ -195,10 +162,7 @@ definition {
 			assigneeNames = "Delete Accounts 1 from AG,Delete Accounts 2 from AG,Delete Accounts 3 from AG",
 			assigneeType = "Accounts");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account AG");
 
@@ -206,10 +170,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts 1 from AG");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account AG");
 
@@ -219,10 +180,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts 2 from AG");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account AG");
 
@@ -232,10 +190,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts 3 from AG");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Account Groups");
+		AccountGroups.openAccountGroupsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account AG");
 
@@ -247,10 +202,7 @@ definition {
 			LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts ${accountNumber} from AG");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Accounts");
+		Accounts.openAccountsAdmin();
 
 		for (var rowEntry : list "Delete Accounts 1 from AG,Delete Accounts 2 from AG,Delete Accounts 3 from AG") {
 			LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");

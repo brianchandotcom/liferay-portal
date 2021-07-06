@@ -588,6 +588,10 @@ message.
 			<arg value="configuration.java.files=${configuration.java.files}" />
 			<arg value="output.file=${project.dir}/portal-impl/src/portal.properties" />
 		</java>
+
+		<ant dir="portal-impl" inheritAll="false" target="format-source-files">
+			<property name="source.files" value="portal-impl/src/portal.properties" />
+		</ant>
 	</target>
 
 	<target name="install-portal-snapshots">

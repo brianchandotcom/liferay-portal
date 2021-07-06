@@ -39,10 +39,12 @@ public class JSONBatchEngineTaskProgressImpl
 	public int getTotalItemsCount(InputStream inputStream) {
 		int totalItemsCount = 0;
 
+		JsonParser jsonParser = null;
+
 		try {
 			inputStream = ZipInputStreamUtil.asZipInputStream(inputStream);
 
-			JsonParser jsonParser = _jsonFactory.createParser(inputStream);
+			jsonParser = _jsonFactory.createParser(inputStream);
 
 			jsonParser.nextToken();
 
@@ -60,10 +62,12 @@ public class JSONBatchEngineTaskProgressImpl
 		}
 		finally {
 			try {
-				inputStream.close();
+				if (jsonParser != null) {
+					jsonParser.close();
+				}
 			}
 			catch (IOException ioException) {
-				_log.error("Unable to close input stream", ioException);
+				_log.error(ioException, ioException);
 			}
 		}
 

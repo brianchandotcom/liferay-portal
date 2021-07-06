@@ -32,9 +32,11 @@ public class JSONLBatchEngineTaskProgressImpl
 	public int getTotalItemsCount(InputStream inputStream) {
 		int totalItemsCount = 0;
 
+		UnsyncBufferedReader unsyncBufferedReader = null;
+
 		try {
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(inputStream));
+			unsyncBufferedReader = new UnsyncBufferedReader(
+				new InputStreamReader(inputStream));
 
 			while (unsyncBufferedReader.readLine() != null) {
 				totalItemsCount++;
@@ -45,10 +47,12 @@ public class JSONLBatchEngineTaskProgressImpl
 		}
 		finally {
 			try {
-				inputStream.close();
+				if (unsyncBufferedReader != null) {
+					unsyncBufferedReader.close();
+				}
 			}
 			catch (IOException ioException) {
-				_log.error("Unable to close input stream", ioException);
+				_log.error(ioException, ioException);
 			}
 		}
 

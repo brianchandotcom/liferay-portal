@@ -765,6 +765,209 @@ definition {
 		Questions.viewSubscriptionStatusFromDetails(noSubscribedQuestion = "Questions Title");
 	}
 
+	@description = "Validate if the guest can check the canonical URL."
+	@priority = "4"
+	test CanViewCanonicalURL {
+		property test.name.skip.portal.instance = "QuestionsWidgetActions#CanViewCanonicalURL";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Questions.openToConfigInSystemSettings(portlet = "Questions");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Set Base Path for History Router",
+			settingValue = "/questions-page");
+
+		SystemSettings.saveConfiguration();
+
+		ServiceAccessPolicy.openToServiceAccessPolicy(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		ServiceAccessPolicy.addServiceAccessPolicy(
+			defaultSwitch = "true",
+			enabled = "true",
+			policyName = "QUESTIONS",
+			title = "QUESTIONS");
+
+		var allowedServiceSignature = '''
+			com.liferay.expando.kernel.service.ExpandoValueService#getData
+			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+			com.liferay.message.boards.service.MBCategoryService#getCategory
+			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+			com.liferay.message.boards.service.MBMessageService#getChildMessages
+			com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
+			com.liferay.message.boards.service.MBMessageService#getMessage
+			com.liferay.message.boards.service.MBThreadService#getThreads
+			com.liferay.message.boards.service.MBThreadService#getThreadsCount
+		''';
+
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			allowedServiceSignature = "${allowedServiceSignature}",
+			policyName = "QUESTIONS");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestion",
+			categoryName = "Category",
+			groupName = "Guest",
+			titleField = "Question");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page/questions/category/question");
+
+		Questions.assertCanonicalURL(
+			category = "category",
+			pageName = "Questions Page",
+			portalURL = "${portalURL}",
+			title = "question");
+	}
+
+	@description = "Validate if the guest can check the canonical URL for duplicated questions."
+	@priority = "4"
+	test CanViewCanonicalURLForDuplicatedQuestions {
+		property test.name.skip.portal.instance = "QuestionsWidgetActions#CanViewCanonicalURLForDuplicatedQuestions";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Questions.openToConfigInSystemSettings(portlet = "Questions");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Set Base Path for History Router",
+			settingValue = "/questions-page");
+
+		SystemSettings.saveConfiguration();
+
+		ServiceAccessPolicy.openToServiceAccessPolicy(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		ServiceAccessPolicy.addServiceAccessPolicy(
+			defaultSwitch = "true",
+			enabled = "true",
+			policyName = "QUESTIONS",
+			title = "QUESTIONS");
+
+		var allowedServiceSignature = '''
+			com.liferay.expando.kernel.service.ExpandoValueService#getData
+			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+			com.liferay.message.boards.service.MBCategoryService#getCategory
+			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+			com.liferay.message.boards.service.MBMessageService#getChildMessages
+			com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
+			com.liferay.message.boards.service.MBMessageService#getMessage
+			com.liferay.message.boards.service.MBThreadService#getThreads
+			com.liferay.message.boards.service.MBThreadService#getThreadsCount
+		''';
+
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			allowedServiceSignature = "${allowedServiceSignature}",
+			policyName = "QUESTIONS");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestion",
+			categoryName = "Category",
+			groupName = "Guest",
+			titleField = "Question");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestion Text",
+			categoryName = "Category",
+			groupName = "Guest",
+			titleField = "Question");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page/questions/category/question");
+
+		Questions.assertCanonicalURL(
+			category = "category",
+			pageName = "Questions Page",
+			portalURL = "${portalURL}",
+			title = "question");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page/questions/category/question-1");
+
+		Questions.assertCanonicalURL(
+			category = "category",
+			pageName = "Questions Page",
+			portalURL = "${portalURL}",
+			title = "question-1");
+	}
+
+	@description = "Validate if the guest can check the canonical URL with special characters."
+	@priority = "3"
+	test CanViewCanonicalURLWithSpecialCharacters {
+		property test.name.skip.portal.instance = "QuestionsWidgetActions#CanViewCanonicalURLWithSpecialCharacters";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Questions.openToConfigInSystemSettings(portlet = "Questions");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Set Base Path for History Router",
+			settingValue = "/questions-page");
+
+		SystemSettings.saveConfiguration();
+
+		ServiceAccessPolicy.openToServiceAccessPolicy(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		ServiceAccessPolicy.addServiceAccessPolicy(
+			defaultSwitch = "true",
+			enabled = "true",
+			policyName = "QUESTIONS",
+			title = "QUESTIONS");
+
+		var allowedServiceSignature = '''
+			com.liferay.expando.kernel.service.ExpandoValueService#getData
+			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+			com.liferay.message.boards.service.MBCategoryService#getCategory
+			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+			com.liferay.message.boards.service.MBMessageService#getChildMessages
+			com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
+			com.liferay.message.boards.service.MBMessageService#getMessage
+			com.liferay.message.boards.service.MBThreadService#getThreads
+			com.liferay.message.boards.service.MBThreadService#getThreadsCount
+		''';
+
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			allowedServiceSignature = "${allowedServiceSignature}",
+			policyName = "QUESTIONS");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestion",
+			categoryName = "Category",
+			groupName = "Guest",
+			titleField = "Question@#");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page/questions/category/question@#");
+
+		Questions.assertCanonicalURL(
+			category = "category",
+			pageName = "Questions Page",
+			portalURL = "${portalURL}",
+			title = "question@#");
+	}
+
 	@description = "Validate if the user can create the second answer to a question, it also covers LPS-125810."
 	@priority = "3"
 	@refactordone

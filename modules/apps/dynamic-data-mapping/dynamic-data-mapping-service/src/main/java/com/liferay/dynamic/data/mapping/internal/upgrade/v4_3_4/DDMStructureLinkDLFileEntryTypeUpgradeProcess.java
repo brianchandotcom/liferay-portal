@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_4;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -27,7 +28,14 @@ import java.sql.ResultSet;
 /**
  * @author Alicia Garcia
  */
-public class UpgradeDDMStructureLinkDLFileEntryType extends UpgradeProcess {
+public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
+	extends UpgradeProcess {
+
+	public DDMStructureLinkDLFileEntryTypeUpgradeProcess(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -120,5 +128,7 @@ public class UpgradeDDMStructureLinkDLFileEntryType extends UpgradeProcess {
 			}
 		}
 	}
+
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }

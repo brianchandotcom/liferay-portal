@@ -32,8 +32,6 @@ public class LayoutInfoItemFormProvider
 	public InfoForm getInfoForm() {
 		return InfoForm.builder(
 		).infoFieldSetEntry(
-			LayoutInfoItemFields.nameInfoField
-		).infoFieldSetEntry(
 			LayoutInfoItemFields.titleInfoField
 		).infoFieldSetEntry(
 			LayoutInfoItemFields.descriptionInfoField

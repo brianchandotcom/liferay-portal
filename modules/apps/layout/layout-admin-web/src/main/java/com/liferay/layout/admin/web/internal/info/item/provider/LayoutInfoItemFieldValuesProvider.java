@@ -37,21 +37,12 @@ public class LayoutInfoItemFieldValuesProvider
 		return InfoItemFieldValues.builder(
 		).infoFieldValue(
 			new InfoFieldValue<>(
-				LayoutInfoItemFields.nameInfoField,
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.fromLanguageId(layout.getDefaultLanguageId())
-				).values(
-					layout.getNameMap()
-				).build())
-		).infoFieldValue(
-			new InfoFieldValue<>(
 				LayoutInfoItemFields.titleInfoField,
 				InfoLocalizedValue.<String>builder(
 				).defaultLocale(
 					LocaleUtil.fromLanguageId(layout.getDefaultLanguageId())
 				).values(
-					layout.getTitleMap()
+					layout.getNameMap()
 				).build())
 		).infoFieldValue(
 			new InfoFieldValue<>(

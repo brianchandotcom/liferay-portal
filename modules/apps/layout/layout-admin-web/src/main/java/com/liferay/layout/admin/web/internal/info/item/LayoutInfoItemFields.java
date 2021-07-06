@@ -38,18 +38,6 @@ public class LayoutInfoItemFields {
 		).localizable(
 			true
 		).build();
-	public static final InfoField<TextInfoFieldType> nameInfoField =
-		InfoField.builder(
-		).infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).name(
-			"name"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				InfoItemFieldValuesProvider.class, "name")
-		).localizable(
-			true
-		).build();
 	public static final InfoField<TextInfoFieldType> titleInfoField =
 		InfoField.builder(
 		).infoFieldType(

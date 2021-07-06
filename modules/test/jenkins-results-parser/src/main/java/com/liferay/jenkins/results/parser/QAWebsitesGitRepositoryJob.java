@@ -128,7 +128,7 @@ public class QAWebsitesGitRepositoryJob
 			buildProperties, "qa.websites.repository", getBranchName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(qaWebsitesRepository)) {
-			throw new RuntimeException("Could not find QA Websites repository");
+			throw new RuntimeException("Unable to find QA Websites repository");
 		}
 
 		return qaWebsitesRepository;

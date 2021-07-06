@@ -2224,7 +2224,7 @@ public class GitWorkingDirectory {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Real .git directory could not be found", ioException);
+				"Unable to find real .git directory", ioException);
 		}
 
 		for (String line : gitFileContent.split("\n")) {
@@ -2238,7 +2238,7 @@ public class GitWorkingDirectory {
 		}
 
 		throw new IllegalArgumentException(
-			"Real Git directory could not be found in " + gitFile.getPath());
+			"Unable to find real Git directory in " + gitFile.getPath());
 	}
 
 	protected List<File> getSubdirectoriesContainingFiles(

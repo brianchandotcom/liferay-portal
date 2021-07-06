@@ -73,7 +73,7 @@ public class CucumberFeatureFile implements Serializable {
 			}
 		}
 
-		throw new RuntimeException("Could not find a matching file");
+		throw new RuntimeException("Unable to find a matching file");
 	}
 
 	private Set<String> _getFeaturePaths(String name) {

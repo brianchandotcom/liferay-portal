@@ -3647,7 +3647,7 @@ public class JenkinsResultsParserUtil {
 
 				if (expectResponse && (bytes == 0) && (i < 1)) {
 					System.out.println(
-						"Could not find response, retrying request");
+						"Unable to get response, retrying request");
 
 					continue;
 				}

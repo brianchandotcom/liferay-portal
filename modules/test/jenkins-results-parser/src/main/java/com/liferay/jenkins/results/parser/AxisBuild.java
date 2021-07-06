@@ -230,11 +230,11 @@ public class AxisBuild extends BaseBuild {
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(
-				"Could not encode " + buildURL, malformedURLException);
+				"Unable to encode " + buildURL, malformedURLException);
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			throw new RuntimeException(
-				"Could not encode " + buildURL, uriSyntaxException);
+				"Unable to encode " + buildURL, uriSyntaxException);
 		}
 	}
 

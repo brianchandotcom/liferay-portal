@@ -115,7 +115,7 @@ public class FixPackBuilderGitRepositoryJob
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(fixPackBuilderRepository)) {
 			throw new RuntimeException(
-				"Could not find Fix Pack Builder repository");
+				"Unable to find Fix Pack Builder repository");
 		}
 
 		return fixPackBuilderRepository;

@@ -303,7 +303,7 @@ definition {
 			assetType = "Web Content Article",
 			user = "Test Test");
 
-		Workflow.assignByDetails(user = "userfn userln");
+		Workflow.assignByDetails(user = "usersn (userfn userln)");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user1@liferay.com",
@@ -871,7 +871,7 @@ definition {
 			assetType = "Web Content Article",
 			user = "Test Test");
 
-		Workflow.assignByDetails(user = "userfn userln");
+		Workflow.assignByDetails(user = "usersn (userfn userln)");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user1@liferay.com",

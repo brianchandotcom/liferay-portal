@@ -83,6 +83,30 @@ public class BatchEngineExportTaskServiceSoap {
 		}
 	}
 
+	public static com.liferay.batch.engine.model.BatchEngineExportTaskSoap[]
+			getBatchEngineExportTasks(
+				long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.batch.engine.model.BatchEngineExportTask>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.engine.model.BatchEngineExportTask>
+				returnValue =
+					BatchEngineExportTaskServiceUtil.getBatchEngineExportTasks(
+						companyId, start, end, orderByComparator);
+
+			return com.liferay.batch.engine.model.BatchEngineExportTaskSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getBatchEngineExportTasksCount(long companyId)
 		throws RemoteException {
 

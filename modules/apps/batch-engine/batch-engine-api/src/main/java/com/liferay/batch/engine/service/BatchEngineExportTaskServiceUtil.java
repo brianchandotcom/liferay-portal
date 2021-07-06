@@ -16,6 +16,7 @@ package com.liferay.batch.engine.service;
 
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -43,6 +44,15 @@ public class BatchEngineExportTaskServiceUtil {
 		throws PortalException {
 
 		return getService().getBatchEngineExportTasks(companyId, start, end);
+	}
+
+	public static List<BatchEngineExportTask> getBatchEngineExportTasks(
+			long companyId, int start, int end,
+			OrderByComparator<BatchEngineExportTask> orderByComparator)
+		throws PortalException {
+
+		return getService().getBatchEngineExportTasks(
+			companyId, start, end, orderByComparator);
 	}
 
 	public static int getBatchEngineExportTasksCount(long companyId)

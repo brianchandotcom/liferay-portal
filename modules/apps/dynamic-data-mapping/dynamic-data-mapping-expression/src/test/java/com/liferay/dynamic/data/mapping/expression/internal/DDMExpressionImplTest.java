@@ -129,6 +129,14 @@ public class DDMExpressionImplTest extends PowerMockito {
 	}
 
 	@Test
+	public void testEquals2() throws Exception {
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
+			"2 == 2.0");
+
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
+	}
+
+	@Test
 	public void testExpressionVariableNames() throws Exception {
 		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"a - b");
@@ -505,7 +513,7 @@ public class DDMExpressionImplTest extends PowerMockito {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"2 != 2.0");
 
-		Assert.assertTrue(ddmExpressionImpl.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test(expected = IllegalArgumentException.class)

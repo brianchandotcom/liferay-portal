@@ -126,6 +126,15 @@ public class OrganizationScreenNavigationEntry
 			).setParameter(
 				"organizationId",
 				ParamUtil.getString(httpServletRequest, "organizationId")
+			).setParameter(
+				"screenNavigationCategoryKey",
+				ParamUtil.getString(
+					httpServletRequest, "screenNavigationCategoryKey",
+					UserScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL)
+			).setParameter(
+				"screenNavigationEntryKey",
+				ParamUtil.getString(
+					httpServletRequest, "screenNavigationEntryKey")
 			).buildString();
 		}
 

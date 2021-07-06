@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -211,7 +212,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_isShow(themeDisplay.getPlid()) ||
+		if (!_isShow(themeDisplay) ||
 			!_isShowPanel(httpServletRequest)) {
 
 			return false;
@@ -293,9 +294,17 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		return false;
 	}
 
-	private boolean _isShow(long plid) {
+	private boolean _isShow(ThemeDisplay themeDisplay) {
+
+		boolean webContentEditPermission = _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(),
+			themeDisplay.getScopeGroupId(), ActionKeys.UPDATE);
+
+		if (webContentEditPermission)
+			return true;
+
 		return Optional.ofNullable(
-			_layoutLocalService.fetchLayout(plid)
+			_layoutLocalService.fetchLayout(themeDisplay.getPlid())
 		).filter(
 			layout ->
 				layout.isTypeAssetDisplay() || layout.isTypeContent() ||
@@ -451,5 +460,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	@Reference
 	private ReactRenderer _reactRenderer;
+
+	@Reference
+	private PortletResourcePermission _portletResourcePermission;
 
 }

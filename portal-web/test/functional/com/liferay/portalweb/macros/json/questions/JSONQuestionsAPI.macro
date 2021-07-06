@@ -12,7 +12,8 @@ definition {
 			-u 'test@liferay.com:test' \
 			-d '{
 				"headline": "${titleField}",
-				"articleBody": "${bodyField}"
+				"articleBody": "${bodyField}",
+				"viewableBy": "Anyone"
 			}'
 		''';
 

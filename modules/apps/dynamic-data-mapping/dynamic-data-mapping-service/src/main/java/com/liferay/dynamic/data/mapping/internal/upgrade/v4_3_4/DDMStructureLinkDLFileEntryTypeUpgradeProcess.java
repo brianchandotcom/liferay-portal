@@ -19,6 +19,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -57,16 +59,11 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 				"select structureId FROM DDMStructure where groupId = ? AND " +
 					"classNameId = ? AND (structureKey = ? OR structureKey = " +
 						"? OR structureKey = ? ) ");
-			PreparedStatement preparedStatement3 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update DLFileEntryType set dataDefinitionId = ? " +
-							"where fileEntryTypeId = ? "));
-			PreparedStatement preparedStatement4 = connection.prepareStatement(
+			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				"select structureLinkId from DDMStructureLink where " +
 					"companyId = ? and classNameId = ? and classPK = ? and " +
 						"structureId = ?");
-			PreparedStatement preparedStatement5 =
+			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
 						"insert into DDMStructureLink (structureLinkId, " +
@@ -88,43 +85,56 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 					if (resultSet2.next()) {
-						preparedStatement3.setLong(1, resultSet2.getLong(1));
-						preparedStatement3.setLong(2, fileEntryTypeId);
+						long structureId = resultSet2.getLong(1);
 
-						preparedStatement3.addBatch();
+						ActionableDynamicQuery actionableDynamicQuery =
+							_dlFileEntryTypeLocalService.
+								getActionableDynamicQuery();
+
+						actionableDynamicQuery.setAddCriteriaMethod(
+							dynamicQuery -> dynamicQuery.add(
+								RestrictionsFactoryUtil.eq(
+									"fileEntryTypeId", fileEntryTypeId)));
+						actionableDynamicQuery.setPerformActionMethod(
+							(DLFileEntryType dlFileEntryType) -> {
+								dlFileEntryType.setDataDefinitionId(
+									structureId);
+
+								_dlFileEntryTypeLocalService.
+									updateDLFileEntryType(dlFileEntryType);
+							});
+						actionableDynamicQuery.performActions();
 					}
 				}
 
 				long companyId = resultSet1.getLong(4);
 
-				preparedStatement4.setLong(1, companyId);
+				preparedStatement3.setLong(1, companyId);
 
-				preparedStatement4.setLong(
+				preparedStatement3.setLong(
 					2, PortalUtil.getClassNameId(DLFileEntryType.class));
-				preparedStatement4.setLong(3, fileEntryTypeId);
+				preparedStatement3.setLong(3, fileEntryTypeId);
 
 				long dataDefinitionId = resultSet1.getLong(5);
 
-				preparedStatement4.setLong(4, dataDefinitionId);
+				preparedStatement3.setLong(4, dataDefinitionId);
 
-				try (ResultSet resultSet3 = preparedStatement4.executeQuery()) {
+				try (ResultSet resultSet3 = preparedStatement3.executeQuery()) {
 					if (resultSet3.next()) {
 						continue;
 					}
 
-					preparedStatement5.setLong(1, increment());
-					preparedStatement5.setLong(2, companyId);
-					preparedStatement5.setLong(
+					preparedStatement4.setLong(1, increment());
+					preparedStatement4.setLong(2, companyId);
+					preparedStatement4.setLong(
 						3, PortalUtil.getClassNameId(DLFileEntryType.class));
-					preparedStatement5.setLong(4, fileEntryTypeId);
-					preparedStatement5.setLong(5, dataDefinitionId);
+					preparedStatement4.setLong(4, fileEntryTypeId);
+					preparedStatement4.setLong(5, dataDefinitionId);
 
-					preparedStatement5.addBatch();
+					preparedStatement4.addBatch();
 				}
 
-				preparedStatement3.executeBatch();
-
-				preparedStatement5.executeBatch();
+				preparedStatement4.executeBatch();
 			}
 		}
 	}

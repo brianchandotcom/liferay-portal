@@ -168,11 +168,15 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 				return String.valueOf(companyIds.get(0));
 			}
 
-			StringBundler sb = new StringBundler(10);
+			StringBundler sb = new StringBundler(14);
 
 			sb.append("select max(companyId) from ");
 			sb.append(foreignTableName);
 			sb.append(" where ");
+			sb.append(foreignTableName);
+			sb.append(".");
+			sb.append(foreignColumnName);
+			sb.append(" > 0 and ");
 			sb.append(foreignTableName);
 			sb.append(".");
 			sb.append(foreignColumnName);

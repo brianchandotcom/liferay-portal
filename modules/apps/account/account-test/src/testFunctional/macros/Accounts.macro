@@ -1,5 +1,37 @@
 definition {
 
+	macro addAccountWithDomain {
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add Account");
+
+		PortletEntry.inputName(name = "${accountName}");
+
+		AssertClick(
+			locator1 = "Account#ACCOUNT_DOMAIN_ADD_LINK",
+			value1 = "Add");
+
+		SelectFrame(locator1 = "IFrame#ADD_DOMAIN");
+
+		PortletEntry.inputText(
+			fieldLabel = "Domain",
+			text = "${domainNames}");
+
+		Button.clickSave();
+
+		for (var domainName : list "${domainNames}") {
+			AssertElementPresent(
+				key_domainName = "${domainName}",
+				locator1 = "Account#DOMAIN_TABLE_NAME");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addAddress {
 		LexiconEntry.gotoAdd();
 
@@ -155,6 +187,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addInactiveBusinessAccount {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${accountName}");
+
+		if (isSet(accountDescription)) {
+			PortletEntry.inputDescription(description = "${accountDescription}");
+		}
+
+		Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addPersonAccount {
 		LexiconEntry.gotoAdd();
 
@@ -176,54 +224,6 @@ definition {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
 				text = "${accountTaxID}");
-		}
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro addInactiveBusinessAccount {
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "${accountName}");
-
-		if (isSet(accountDescription)) {
-			PortletEntry.inputDescription(description = "${accountDescription}");
-		}
-
-		Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro addAccountWithDomain {
-		LexiconEntry.gotoAdd();
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Add Account");
-
-		PortletEntry.inputName(name = "${accountName}");
-
-		AssertClick(
-			locator1 = "Account#ACCOUNT_DOMAIN_ADD_LINK",
-			value1 = "Add");
-
-		SelectFrame(locator1 = "IFrame#ADD_DOMAIN");
-
-		PortletEntry.inputText(
-			fieldLabel = "Domain",
-			text = "${domainNames}");
-
-		Button.clickSave();
-
-		for (var domainName : list "${domainNames}") {
-			AssertElementPresent(
-				key_domainName = "${domainName}",
-				locator1 = "Account#DOMAIN_TABLE_NAME");
 		}
 
 		Button.clickSave();

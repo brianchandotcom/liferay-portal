@@ -14,20 +14,37 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {ElementsSidebarPanel} from './ElementsSidebarPanel';
 import PropertiesSidebarPanel from './PropertiesSidebarPanel';
-
-const PANEL_IDS = {
-	elements: 'elements',
-	properties: 'properties',
-};
+import {PANEL_IDS} from './panelIds';
 
 export default function Sidebar({
 	selectedSidebarPanelId,
 	setSelectedSidebarPanelId,
 }) {
+	useEffect(() => {
+		const sideNavigation = Liferay.SideNavigation.instance(
+			document.querySelector('.product-menu-toggle')
+		);
+
+		if (sideNavigation) {
+			if (selectedSidebarPanelId && sideNavigation.visible()) {
+				sideNavigation.hide();
+			}
+
+			const sideNavigationListener = sideNavigation.on(
+				'openStart.lexicon.sidenav',
+				() => setSelectedSidebarPanelId(null)
+			);
+
+			return () => {
+				sideNavigationListener.removeListener();
+			};
+		}
+	}, [selectedSidebarPanelId, setSelectedSidebarPanelId]);
+
 	return (
 		<div className="ddm_template_editor__App-sidebar">
 			<div

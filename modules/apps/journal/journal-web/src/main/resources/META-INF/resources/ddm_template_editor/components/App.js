@@ -20,6 +20,7 @@ import {AppContextProvider} from './AppContext';
 import {ClosableAlert} from './ClosableAlert';
 import {Editor} from './Editor';
 import Sidebar from './Sidebar';
+import {PANEL_IDS} from './panelIds';
 
 export default function App({
 	editorAutocompleteData,
@@ -31,7 +32,9 @@ export default function App({
 	showLanguageChangeWarning,
 	templateVariableGroups,
 }) {
-	const [selectedSidebarPanelId, setSelectedSidebarPanelId] = useState(null);
+	const [selectedSidebarPanelId, setSelectedSidebarPanelId] = useState(
+		PANEL_IDS.elements
+	);
 
 	return (
 		<AppContextProvider

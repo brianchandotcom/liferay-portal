@@ -59,6 +59,10 @@ export default {
 		);
 	},
 
+	getCollectionFilters() {
+		return serviceFetch(config.getCollectionFiltersURL, {}, () => {});
+	},
+
 	/**
 	 * Get available collection mapping fields
 	 * @param {object} options

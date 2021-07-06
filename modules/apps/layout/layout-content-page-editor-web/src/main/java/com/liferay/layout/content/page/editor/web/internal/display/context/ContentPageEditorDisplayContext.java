@@ -397,6 +397,10 @@ public class ContentPageEditorDisplayContext {
 				getResourceURL(
 					"/layout_content_page_editor/get_collection_field")
 			).put(
+				"getCollectionFiltersURL",
+				getResourceURL(
+					"/layout_content_page_editor/get_collection_filters")
+			).put(
 				"getCollectionMappingFieldsURL",
 				getResourceURL(
 					"/layout_content_page_editor/get_collection_mapping_fields")

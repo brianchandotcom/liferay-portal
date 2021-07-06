@@ -98,6 +98,11 @@ export default function ItemActions({item}) {
 			<ClayDropDown
 				active={active}
 				alignmentPosition={Align.BottomRight}
+				menuElementAttrs={{
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton

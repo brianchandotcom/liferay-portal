@@ -27,6 +27,7 @@ import {
 	UPDATE_LAYOUT_DATA,
 	UPDATE_PREVIEW_IMAGE,
 } from '../actions/types';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 
 export const INITIAL_STATE = {};
 
@@ -288,13 +289,41 @@ export default function fragmentEntryLinksReducer(
 
 		case UPDATE_PREVIEW_IMAGE: {
 			const newFragmentEntryLinks = action.contents.map(
-				({content, fragmentEntryLinkId}) => [
-					fragmentEntryLinkId,
-					{
-						...fragmentEntryLinks[fragmentEntryLinkId],
-						content,
-					},
-				]
+				({content, fragmentEntryLinkId}) => {
+					const {editableValues} = fragmentEntryLinks[
+						fragmentEntryLinkId
+					];
+
+					const newEditableValues = Object.entries(
+						editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
+					).map(([key, value]) => [
+						key,
+						Object.fromEntries(
+							Object.entries(value).map(([key, value]) => [
+								key,
+								typeof value === 'object' &&
+								value.url &&
+								value.fileEntryId
+									? {...value, url: action.previewURL}
+									: value,
+							])
+						),
+					]);
+
+					return [
+						fragmentEntryLinkId,
+						{
+							...fragmentEntryLinks[fragmentEntryLinkId],
+							content,
+							editableValues: {
+								...editableValues,
+								[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Object.fromEntries(
+									newEditableValues
+								),
+							},
+						},
+					];
+				}
 			);
 
 			return {

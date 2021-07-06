@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	enabled = false, immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=5",
-		"commerce.product.type.name=diagram"
+		"commerce.product.type.name=" + DiagramCPType.NAME
 	},
 	service = CPType.class
 )

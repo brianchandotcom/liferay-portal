@@ -1,0 +1,15 @@
+.journal-ddm-template-editor-portlet-icon {
+	.dropdown-item {
+		align-items: center;
+		display: flex;
+
+		.c-inner {
+			flex-grow: 0;
+		}
+
+		.lexicon-icon {
+			margin-right: 0.5rem;
+			margin-top: 0;
+		}
+	}
+}

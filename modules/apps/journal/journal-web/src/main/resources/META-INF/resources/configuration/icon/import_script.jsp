@@ -17,7 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:icon
+	cssClass="journal-ddm-template-editor-portlet-icon"
+	icon="upload"
 	id="importScript"
+	markupView="lexicon"
 	message="import-script"
 	url="javascript:;"
 />

@@ -1,38 +1,38 @@
-@import 'atlas-variables';
-
 @import './variables';
 
-.page-editor__disabled-area {
-	cursor: not-allowed;
-	position: relative;
-	transition: padding-left ease $defaultTransitionDuration,
-		padding-right ease $defaultTransitionDuration;
-	will-change: padding-left, padding-right;
+html#{$cadmin-selector} {
+	.page-editor__disabled-area {
+		cursor: not-allowed;
+		position: relative;
+		transition: padding-left ease $defaultTransitionDuration,
+			padding-right ease $defaultTransitionDuration;
+		will-change: padding-left, padding-right;
 
-	&--padded {
-		padding-right: $sidebarButtonWidth;
-	}
+		&--padded {
+			padding-right: $sidebarButtonWidth;
+		}
 
-	&::after {
-		background-color: rgba(255, 255, 255, 0);
-		content: '';
-		display: block;
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		transition: background-color ease 0.3s;
-		width: 100%;
-		z-index: 10;
-	}
+		&::after {
+			background-color: rgba(255, 255, 255, 0);
+			content: '';
+			display: block;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			transition: background-color ease 0.3s;
+			width: 100%;
+			z-index: 10;
+		}
 
-	&:hover:after {
-		background-color: rgba(255, 255, 255, 0.4);
-	}
+		&:hover:after {
+			background-color: rgba(255, 255, 255, 0.4);
+		}
 
-	&.collapsed {
-		@include media-breakpoint-up(sm) {
-			padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+		&.collapsed {
+			@include media-breakpoint-up(sm) {
+				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+			}
 		}
 	}
 }

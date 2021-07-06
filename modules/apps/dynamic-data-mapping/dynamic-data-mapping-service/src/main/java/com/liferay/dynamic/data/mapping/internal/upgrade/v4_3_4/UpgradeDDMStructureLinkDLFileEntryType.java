@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.upgrade.v3_2_2;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_4;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;

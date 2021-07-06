@@ -179,7 +179,8 @@ public class OpenIdConnectServiceHandlerImpl
 			openIdConnectProvider.geTokenConnectionTimeout());
 
 		updateSessionTokens(
-			openIdConnectSessionImpl, tokens, System.currentTimeMillis());
+			openIdConnectSessionImpl, tokens, System.currentTimeMillis(),
+			false);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
@@ -459,7 +460,7 @@ public class OpenIdConnectServiceHandlerImpl
 			openIdConnectProvider.geTokenConnectionTimeout());
 
 		updateSessionTokens(
-			openIdConnectSessionImpl, tokens, System.currentTimeMillis());
+			openIdConnectSessionImpl, tokens, System.currentTimeMillis(), true);
 
 		return true;
 	}
@@ -619,10 +620,16 @@ public class OpenIdConnectServiceHandlerImpl
 
 	protected void updateSessionTokens(
 		OpenIdConnectSessionImpl openIdConnectSessionImpl, Tokens tokens,
-		long loginTime) {
+		long loginTime, boolean exchangeRefreshToken) {
 
 		openIdConnectSessionImpl.setAccessToken(tokens.getAccessToken());
-		openIdConnectSessionImpl.setRefreshToken(tokens.getRefreshToken());
+
+		if (!exchangeRefreshToken ||
+			(exchangeRefreshToken && (tokens.getRefreshToken() != null))) {
+
+			openIdConnectSessionImpl.setRefreshToken(tokens.getRefreshToken());
+		}
+
 		openIdConnectSessionImpl.setLoginTime(loginTime);
 	}
 

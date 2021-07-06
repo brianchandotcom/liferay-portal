@@ -20,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -53,6 +54,23 @@ public class BatchEngineImportTaskServiceImpl
 
 		return batchEngineImportTaskLocalService.getBatchEngineImportTasks(
 			companyId, start, end);
+	}
+
+	public List<BatchEngineImportTask> getBatchEngineImportTasks(
+			long companyId, int start, int end,
+			OrderByComparator<BatchEngineImportTask> orderByComparator)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if ((companyId != permissionChecker.getCompanyId()) &&
+			!permissionChecker.isOmniadmin()) {
+
+			throw new PrincipalException();
+		}
+
+		return batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+			companyId, start, end, orderByComparator);
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
@@ -72,6 +73,15 @@ public class BatchEngineExportTaskLocalServiceImpl
 
 		return batchEngineExportTaskPersistence.findByCompanyId(
 			companyId, start, end);
+	}
+
+	@Override
+	public List<BatchEngineExportTask> getBatchEngineExportTasks(
+		long companyId, int start, int end,
+		OrderByComparator<BatchEngineExportTask> orderByComparator) {
+
+		return batchEngineExportTaskPersistence.findByCompanyId(
+			companyId, start, end, orderByComparator);
 	}
 
 	@Override

@@ -135,8 +135,6 @@ definition {
 	}
 
 	macro mapEditableFieldToCollectionItems {
-		var lowerCase = StringUtil.lowerCase("${fragmentName}");
-
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
 		Click.clickNoWaitForVisible(
@@ -148,7 +146,7 @@ definition {
 
 		Click(
 			key_colPosition = "1",
-			key_element = "//*[contains(@data-lfr-editable-id,'${id}')]",
+			key_element = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'${fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]",
 			key_fragmentName = "Collection Display",
 			key_rowPosition = "1",
 			locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");

@@ -153,6 +153,19 @@ definition {
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 	}
 
+	macro assertCanonicalURL {
+		var HTML = '''<link href="''';
+		var HTML2 = '''" rel="canonical" data-react-helmet="true">''';
+
+		var portalURL = "${portalURL}/web/guest";
+
+		var pageName = StringUtil.lowerCase("${pageName}");
+		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
+		var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}/questions/${category}/${title}${HTML2}","");
+
+		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
+	}
+
 	macro changeDisplayStyle {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_DISPLAY_STYLE_SELECTOR");
 

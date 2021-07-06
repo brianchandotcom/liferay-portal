@@ -143,7 +143,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		Map<String, String> values = new HashMap<>();
 
-		if (_isPanelStateOpen(httpServletRequest)) {
+		if (isPanelStateOpen(httpServletRequest)) {
 			values.put("cssClass", "active");
 		}
 		else {
@@ -178,6 +178,18 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
 
 		return true;
+	}
+
+	public boolean isPanelStateOpen(HttpServletRequest httpServletRequest) {
+		String layoutReportsPanelState = SessionClicks.get(
+			httpServletRequest,
+			"com.liferay.layout.reports.web_layoutReportsPanelState", "closed");
+
+		if (Objects.equals(layoutReportsPanelState, "open")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -270,18 +282,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		return false;
 	}
 
-	private boolean _isPanelStateOpen(HttpServletRequest httpServletRequest) {
-		String layoutReportsPanelState = SessionClicks.get(
-			httpServletRequest,
-			"com.liferay.layout.reports.web_layoutReportsPanelState", "closed");
-
-		if (Objects.equals(layoutReportsPanelState, "open")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isShow(long plid) {
 		return Optional.ofNullable(
 			_layoutLocalService.fetchLayout(plid)
@@ -346,7 +346,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		sb.append("<div class=\"");
 
-		if (_isPanelStateOpen(httpServletRequest)) {
+		if (isPanelStateOpen(httpServletRequest)) {
 			sb.append("lfr-has-layout-reports-panel open-admin-panel ");
 		}
 
@@ -386,7 +386,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 					_npmResolver.resolveModuleName("layout-reports-web") +
 						"/js/App"),
 				HashMapBuilder.<String, Object>put(
-					"isPanelStateOpen", _isPanelStateOpen(httpServletRequest)
+					"isPanelStateOpen", isPanelStateOpen(httpServletRequest)
 				).put(
 					"layoutReportsDataURL",
 					_getLayoutReportsDataURL(httpServletRequest)

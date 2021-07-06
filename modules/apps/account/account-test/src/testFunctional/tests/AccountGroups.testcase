@@ -62,7 +62,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account added for Account Group.",
 			accountName = "Account for Account Group");
 
@@ -105,7 +105,7 @@ definition {
 				panel = "Applications",
 				portlet = "Accounts");
 
-			Accounts.addCP(
+			Accounts.addBusinessAccount(
 				accountDescription = "Accounts Name ${accountNumber} Description",
 				accountName = "Accounts ${accountNumber} for AG");
 		}
@@ -171,7 +171,7 @@ definition {
 				panel = "Applications",
 				portlet = "Accounts");
 
-			Accounts.addCP(
+			Accounts.addBusinessAccount(
 				accountDescription = "Accounts Name ${accountNumber} Description",
 				accountName = "Delete Accounts ${accountNumber} from AG");
 		}

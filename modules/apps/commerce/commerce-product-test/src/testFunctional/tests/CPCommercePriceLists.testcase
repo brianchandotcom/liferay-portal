@@ -628,13 +628,13 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account added for Account Group.",
 			accountName = "Account1");
 
 		Navigator.gotoBack();
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account added for Account Group.",
 			accountName = "Account2");
 

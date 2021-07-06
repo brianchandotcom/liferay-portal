@@ -32,7 +32,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
@@ -64,7 +64,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "Add account user via assign user.",
 			accountName = "Assign Account User");
 
@@ -100,7 +100,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an account with user.",
 			accountName = "Account Name");
 
@@ -123,10 +123,9 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addAccountWithDomain(
 			accountDescription = "This is a test for adding user to account.",
 			accountName = "Account with Exist User",
-			domainEnable = "true",
 			domainNames = "liferay.com");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
@@ -156,7 +155,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
@@ -196,7 +195,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
@@ -252,7 +251,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
@@ -299,17 +298,23 @@ definition {
 	@description = "This filters users by accounts, choosing a specific account to view"
 	@priority = "3"
 	test CanFilterByAccounts {
-		for (var accountType : list "Business,Person") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Applications",
-				portlet = "Accounts");
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
 
-			Accounts.addCP(
-				accountDescription = "This is a ${accountType} Account.",
-				accountName = "${accountType} Account",
-				accountType = "${accountType}");
-		}
+		Accounts.addBusinessAccount(
+			accountDescription = "This is a Business Account.",
+			accountName = "Business Account");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addPersonAccount(
+			accountDescription = "This is a Person Account.",
+			accountName = "Person Account");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -381,7 +386,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
@@ -434,7 +439,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "Filter AccountUser in Account By Navigation.",
 			accountName = "Filter Account User");
 
@@ -489,7 +494,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
@@ -525,7 +530,7 @@ definition {
 			panel = "Applications",
 			portlet = "Accounts");
 
-		Accounts.addCP(
+		Accounts.addBusinessAccount(
 			accountDescription = "This is a test to remove account user.",
 			accountName = "Remove Account User");
 

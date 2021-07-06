@@ -15,6 +15,7 @@
 package com.liferay.portal.dependency.manager.component.executor.factory.internal;
 
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSync;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,7 +45,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 
 	@Override
 	public void registerSyncCallable(Callable<Void> syncCallable) {
-		_syncDefaultNoticeableFuture.addFutureListener(
+		_addFutureListener(
 			future -> {
 				try {
 					syncCallable.call();
@@ -57,7 +58,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 
 	@Override
 	public void registerSyncFuture(Future<Void> syncFuture) {
-		_syncDefaultNoticeableFuture.addFutureListener(
+		_addFutureListener(
 			future -> {
 				try {
 					syncFuture.get(_syncTimeout, TimeUnit.SECONDS);
@@ -68,32 +69,10 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 			});
 	}
 
-	public void setDependencyManagerSyncServiceRegistration(
-		ServiceRegistration<?> dependencyManagerSyncServiceRegistration) {
-
-		_dependencyManagerSyncServiceRegistration =
-			dependencyManagerSyncServiceRegistration;
-	}
-
 	@Override
 	public void sync() {
-		ServiceRegistration<?> dependencyManagerSyncServiceRegistration =
-			_dependencyManagerSyncServiceRegistration;
-
-		if (dependencyManagerSyncServiceRegistration != null) {
-			try {
-				dependencyManagerSyncServiceRegistration.unregister();
-			}
-			catch (IllegalStateException illegalStateException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException, illegalStateException);
-				}
-
-				// Concurrent unregister, no need to do anything
-
-			}
-
-			_dependencyManagerSyncServiceRegistration = null;
+		if (_syncDefaultNoticeableFuture.isDone()) {
+			return;
 		}
 
 		try {
@@ -131,12 +110,24 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 		_syncDefaultNoticeableFuture.run();
 	}
 
+	private void _addFutureListener(FutureListener<Void> futureListener) {
+		_syncDefaultNoticeableFuture.addFutureListener(
+			new FutureListener<Void>() {
+
+				@Override
+				public void complete(Future<Void> future) {
+					futureListener.complete(future);
+
+					_syncDefaultNoticeableFuture.removeFutureListener(this);
+				}
+
+			});
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DependencyManagerSyncImpl.class);
 
 	private final ServiceRegistration<?> _componentExecutorFactoryRegistration;
-	private volatile ServiceRegistration<?>
-		_dependencyManagerSyncServiceRegistration;
 	private final ExecutorService _executorService;
 	private final DefaultNoticeableFuture<Void> _syncDefaultNoticeableFuture =
 		new DefaultNoticeableFuture<>();

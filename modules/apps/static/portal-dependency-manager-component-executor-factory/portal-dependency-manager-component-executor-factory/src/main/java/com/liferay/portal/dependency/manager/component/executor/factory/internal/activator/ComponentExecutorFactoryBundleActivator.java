@@ -64,16 +64,12 @@ public class ComponentExecutorFactoryBundleActivator
 			ComponentExecutorFactory.class,
 			new ComponentExecutorFactoryImpl(threadPoolExecutor), null);
 
-		DependencyManagerSyncImpl dependencyManagerSyncImpl =
-			new DependencyManagerSyncImpl(
-				threadPoolExecutor, _serviceRegistration, syncTimeout);
-
 		_dependencyManagerSyncServiceRegistration =
 			bundleContext.registerService(
-				DependencyManagerSync.class, dependencyManagerSyncImpl, null);
-
-		dependencyManagerSyncImpl.setDependencyManagerSyncServiceRegistration(
-			_dependencyManagerSyncServiceRegistration);
+				DependencyManagerSync.class,
+				new DependencyManagerSyncImpl(
+					threadPoolExecutor, _serviceRegistration, syncTimeout),
+				null);
 	}
 
 	@Override
@@ -94,17 +90,7 @@ public class ComponentExecutorFactoryBundleActivator
 
 		}
 
-		try {
-			_dependencyManagerSyncServiceRegistration.unregister();
-		}
-		catch (IllegalStateException illegalStateException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException, illegalStateException);
-			}
-
-			// Concurrent unregister, no need to do anything.
-
-		}
+		_dependencyManagerSyncServiceRegistration.unregister();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -47,12 +47,13 @@ public class TemplatesDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), _INFO_TEMPLATES));
+					Objects.equals(_getTabs1(), _INFORMATION_TEMPLATES));
 				navigationItem.setHref(
 					_liferayPortletResponse.createRenderURL(), "tabs1",
-					_INFO_TEMPLATES);
+					_INFORMATION_TEMPLATES);
 				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, _INFO_TEMPLATES));
+					LanguageUtil.get(
+						_httpServletRequest, _INFORMATION_TEMPLATES));
 			}
 		).add(
 			navigationItem -> {
@@ -73,12 +74,13 @@ public class TemplatesDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", _INFO_TEMPLATES);
+			_liferayPortletRequest, "tabs1", _INFORMATION_TEMPLATES);
 
 		return _tabs1;
 	}
 
-	private static final String _INFO_TEMPLATES = "info-templates";
+	private static final String _INFORMATION_TEMPLATES =
+		"information-templates";
 
 	private static final String _WIDGET_TEMPLATES = "widget-templates";
 

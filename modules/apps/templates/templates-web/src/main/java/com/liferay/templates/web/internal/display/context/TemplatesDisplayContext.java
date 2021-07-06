@@ -47,9 +47,6 @@ public class TemplatesDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
-
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -79,10 +76,6 @@ public class TemplatesDisplayContext {
 		).build();
 	}
 
-	public PortletURL getPortletURL() {
-		return getPortletURL(getTabs1());
-	}
-
 	public PortletURL getPortletURL(String tabs1) {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
@@ -109,6 +102,5 @@ public class TemplatesDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _tabs1;
-	private final ThemeDisplay _themeDisplay;
 
 }

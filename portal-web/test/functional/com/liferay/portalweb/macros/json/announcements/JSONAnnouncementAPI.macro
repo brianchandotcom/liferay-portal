@@ -23,22 +23,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
-	macro _deleteAnnouncement {
-		var entryId = JSONAnnouncementAPI._getEntryId(
-			siteURLKey = "${siteURLKey}",
-			groupName = "${groupName}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/api/jsonws/announcementsentry/delete-entry \
-				-u test@liferay.com:test \
-				-d entryId=${entryId} \
-		''';
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
-	}
-
 	macro _getEntryId {
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 

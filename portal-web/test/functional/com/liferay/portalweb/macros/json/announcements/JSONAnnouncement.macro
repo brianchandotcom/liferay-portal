@@ -65,9 +65,19 @@ definition {
 
 	@summary = "Delete a basic announcement"
 	macro deleteAnnouncement {
-		JSONAnnouncementAPI._deleteAnnouncement(
-			groupName = "${groupName}",
-			siteURLKey = "${siteURLKey}");
+		var entryId = JSONAnnouncementAPI._getEntryId(
+			siteURLKey = "${siteURLKey}",
+			groupName = "${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/announcementsentry/delete-entry \
+				-u test@liferay.com:test \
+				-d entryId=${entryId} \
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 }

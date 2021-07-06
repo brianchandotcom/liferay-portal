@@ -136,6 +136,13 @@ public class DDMExpressionEvaluatorVisitor
 		Object object1 = visitChild(context, 0);
 		Object object2 = visitChild(context, 2);
 
+		if ((object1 instanceof Number) && (object2 instanceof Number)) {
+			BigDecimal bigDecimal1 = (BigDecimal)object1;
+			BigDecimal bigDecimal2 = (BigDecimal)object2;
+
+			return bigDecimal1.compareTo(bigDecimal2) == 0;
+		}
+
 		return Objects.equals(object1, object2);
 	}
 
@@ -371,6 +378,13 @@ public class DDMExpressionEvaluatorVisitor
 
 		Object object1 = visitChild(context, 0);
 		Object object2 = visitChild(context, 2);
+
+		if ((object1 instanceof Number) && (object2 instanceof Number)) {
+			BigDecimal bigDecimal1 = (BigDecimal)object1;
+			BigDecimal bigDecimal2 = (BigDecimal)object2;
+
+			return bigDecimal1.compareTo(bigDecimal2) != 0;
+		}
 
 		return !Objects.equals(object1, object2);
 	}

@@ -79,7 +79,7 @@ public class CheckAvailableExtensionMVCResourceCommand
 						JSONUtil.put(
 							"fileEntryId", fileEntryId
 						).put(
-							"fileName", fileEntry.getFileName()
+							"fileName", fileEntry.getTitle()
 						));
 				}
 			}

@@ -25,6 +25,7 @@ import delegate from '../delegate/delegate.es';
 import navigate from '../util/navigate.es';
 
 const Modal = ({
+	status,
 	bodyHTML,
 	buttons,
 	customEvents,
@@ -173,6 +174,7 @@ const Modal = ({
 					id={id}
 					observer={observer}
 					size={url && !size ? 'full-screen' : size}
+					status={status}
 					zIndex={zIndex}
 				>
 					<ClayModal.Header>

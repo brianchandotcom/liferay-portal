@@ -68,7 +68,7 @@ export default function Sidebar({
 					})}
 				/>
 			</div>
-			<div className="ddm_template_editor__App-sidebar-buttons pt-1">
+			<div className="ddm_template_editor__App-sidebar-buttons pt-2">
 				<ClayButtonWithIcon
 					borderless
 					className="mb-2"

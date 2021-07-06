@@ -35,6 +35,10 @@ $toolbarHeight: 6.875rem;
 		);
 	}
 
+	.alert:first-of-type {
+		margin-top: 1rem;
+	}
+
 	.ddm_template_editor__App-content {
 		background: $white;
 		display: flex;
@@ -138,7 +142,12 @@ $toolbarHeight: 6.875rem;
 		}
 
 		&-button {
-			font-size: 0.875rem;
+			font-size: 0.75rem;
+			font-weight: 600;
+
+			&:hover {
+				background-color: $light-l1;
+			}
 		}
 	}
 }

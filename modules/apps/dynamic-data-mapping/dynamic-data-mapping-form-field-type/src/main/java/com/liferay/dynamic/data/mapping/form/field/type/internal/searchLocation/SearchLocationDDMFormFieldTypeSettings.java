@@ -34,7 +34,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			actions = {
 				"setVisible('dataType', false)",
 				"setVisible('layout', contains(getValue('visibleFields'), \"city\") OR contains(getValue('visibleFields'), \"country\") OR contains(getValue('visibleFields'), \"postal-code\") OR contains(getValue('visibleFields'), \"state\"))",
-				"setVisible('requiredErrorMessage', false)"
+				"setVisible('requiredErrorMessage', getValue('required'))"
 			},
 			condition = "TRUE"
 		)

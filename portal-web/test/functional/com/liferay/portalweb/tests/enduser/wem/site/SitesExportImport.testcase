@@ -469,4 +469,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-128151. The user can import a site with Home page into the default site."
+	@priority = "4"
+	test ImportSiteWithHomePageToDefaultSite {
+		task ("Add a Content Page via JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Home",
+				type = "content");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PortletEntry.publish();
+		}
+
+		task ("View friendly URL on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
+
+			AssertLocation.assertPartialLocation(value1 = "/home");
+		}
+
+		task ("View Button Fragment on content at view mode") {
+			AssertVisible(
+				id = "link",
+				key_position = "1",
+				key_text = "Go Somewhere",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+
+		task ("Export the created test site") {
+			LAR.exportSiteCP(siteScopeName = "Test Site Name");
+
+			var larFileName = LAR.getLarFileName();
+
+			LAR.downloadLar();
+		}
+
+		task ("Import the site into the default site") {
+			LAR.importSiteCP(
+				larFileName = "${larFileName}",
+				siteName = "Guest");
+		}
+
+		task ("View friendly URL on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Guest");
+
+			AssertLocation.assertPartialLocation(value1 = "/home");
+		}
+
+		task ("View Button Fragment on content page at view mode") {
+			AssertVisible(
+				id = "link",
+				key_position = "1",
+				key_text = "Go Somewhere",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+	}
+
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 
@@ -186,13 +187,13 @@ public class CompanyThreadLocal {
 	}
 
 	private static boolean _setCompanyId(Long companyId) {
-		if (_locked.equals(true)) {
-			throw new UnsupportedOperationException(
-				"CompanyThreadLocal modification is not allowed");
-		}
-
 		if (companyId.equals(_companyId.get())) {
 			return false;
+		}
+
+		if (GetterUtil.getBoolean(_locked.get())) {
+			throw new UnsupportedOperationException(
+				"CompanyThreadLocal modification is not allowed");
 		}
 
 		if (_log.isDebugEnabled()) {

@@ -365,30 +365,38 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 								<c:choose>
 									<c:when test='<%= curEntryColumn.equals("name") %>'>
 										<liferay-ui:search-container-column-text
-											cssClass="table-cell-expand table-cell-minw-200 table-title"
+											cssClass="table-cell-expand table-cell-minw-200"
 											name="name"
 										>
-											<clay:sticker
-												cssClass="sticker-document"
-												displayType="secondary"
-												icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
-											/>
+											<div class="autofit-row">
+												<div class="autofit-col">
+													<clay:sticker
+														cssClass="sticker-document"
+														displayType="secondary"
+														icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
+													/>
+												</div>
 
-											<aui:a
-												href='<%=
-													PortletURLBuilder.createRenderURL(
-														liferayPortletResponse
-													).setMVCRenderCommandName(
-														"/document_library/view_folder"
-													).setRedirect(
-														currentURL
-													).setParameter(
-														"folderId", curFolder.getFolderId()
-													).buildString()
-												%>'
-											>
-												<%= HtmlUtil.escape(curFolder.getName()) %>
-											</aui:a>
+												<div class="autofit-col autofit-col-expand">
+													<div class="table-title">
+														<aui:a
+															href='<%=
+																PortletURLBuilder.createRenderURL(
+																	liferayPortletResponse
+																).setMVCRenderCommandName(
+																	"/document_library/view_folder"
+																).setRedirect(
+																	currentURL
+																).setParameter(
+																	"folderId", curFolder.getFolderId()
+																).buildString()
+															%>'
+														>
+															<%= HtmlUtil.escape(curFolder.getName()) %>
+														</aui:a>
+													</div>
+												</div>
+											</div>
 										</liferay-ui:search-container-column-text>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("description") %>'>

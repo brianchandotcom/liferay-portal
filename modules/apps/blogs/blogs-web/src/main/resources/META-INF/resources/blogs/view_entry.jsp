@@ -121,10 +121,9 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		</c:if>
 	</c:if>
 
-	<clay:row
-		cssClass="justify-content-center"
-	>
+	<clay:row>
 		<clay:col
+			cssClass="offset-md-2"
 			md="8"
 		>
 			<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">

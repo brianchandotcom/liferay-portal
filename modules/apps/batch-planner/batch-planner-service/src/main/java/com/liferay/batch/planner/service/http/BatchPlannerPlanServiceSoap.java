@@ -65,13 +65,14 @@ public class BatchPlannerPlanServiceSoap {
 
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
 			addBatchPlannerPlan(
-				boolean export, String externalType, String name)
+				boolean export, String externalType, String externalURL,
+				String internalClassName, String name)
 		throws RemoteException {
 
 		try {
 			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
 				BatchPlannerPlanServiceUtil.addBatchPlannerPlan(
-					export, externalType, name);
+					export, externalType, externalURL, internalClassName, name);
 
 			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
 				toSoapModel(returnValue);

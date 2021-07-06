@@ -103,7 +103,7 @@ public class BatchPlannerPlanModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL VARCHAR(75) null,internalClassName VARCHAR(75) null,name VARCHAR(75) null)";
+		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPlan";
 

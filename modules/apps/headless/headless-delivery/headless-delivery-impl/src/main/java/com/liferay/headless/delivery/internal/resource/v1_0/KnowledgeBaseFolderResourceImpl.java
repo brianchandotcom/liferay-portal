@@ -23,7 +23,6 @@ import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
@@ -122,8 +121,9 @@ public class KnowledgeBaseFolderResourceImpl
 				Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		KBFolder kbFolder = _getKBFolderByExternalReferenceCode(
-			externalReferenceCode, siteId);
+		KBFolder kbFolder =
+			_kbFolderLocalService.getKBFolderByExternalReferenceCode(
+				siteId, externalReferenceCode);
 
 		String resourceName = getPermissionCheckerResourceName(
 			kbFolder.getKbFolderId());
@@ -279,23 +279,6 @@ public class KnowledgeBaseFolderResourceImpl
 			KBFolder.class.getName(), contextCompany.getCompanyId(),
 			knowledgeBaseFolder.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private KBFolder _getKBFolderByExternalReferenceCode(
-			String externalReferenceCode, long siteId)
-		throws Exception {
-
-		KBFolder kbFolder =
-			_kbFolderLocalService.fetchKBFolderByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		if (kbFolder == null) {
-			throw new NoSuchFolderException(
-				"No knowledge base folder exists with external reference " +
-					"code " + externalReferenceCode);
-		}
-
-		return kbFolder;
 	}
 
 	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)

@@ -583,11 +583,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			else if (formInstanceRecord.getStatus() ==
 						WorkflowConstants.STATUS_APPROVED) {
 
-				updateFormInstanceRecordVersion(
-					user, formInstanceRecordVersion,
-					WorkflowConstants.STATUS_APPROVED,
-					formInstanceRecordVersion.getVersion(), serviceContext);
-
 				formInstanceRecord.setVersion(
 					formInstanceRecordVersion.getVersion());
 

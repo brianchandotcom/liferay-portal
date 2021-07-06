@@ -67,7 +67,6 @@ html#{$cadmin-selector} {
 				}
 
 				small {
-					color: #a7a9bc;
 					margin: 4px 0 16px;
 				}
 			}
@@ -76,23 +75,16 @@ html#{$cadmin-selector} {
 				color: $gray-600;
 				max-width: 33.33%;
 
-				.icon {
-					color: $gray-600;
-				}
-
-				small {
-					color: $gray-600;
+				&:hover {
+					color: $gray-900;
 				}
 
 				&.selected {
+					color: $gray-900;
+
 					.icon {
 						background-color: $gray-200;
 						border-radius: 4px;
-						color: $gray-900;
-					}
-
-					small {
-						color: $gray-900;
 					}
 				}
 			}

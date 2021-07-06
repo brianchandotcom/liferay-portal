@@ -25,37 +25,47 @@
 				cssClass="default-devices"
 			>
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
+					<div class="c-inner px-0" tabindex="-1">
+						<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
-					<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
+						<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
+					</div>
 				</button>
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="tablet" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
+					<div class="c-inner px-0" tabindex="-1">
+						<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
 
-					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
+						<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
 
-					<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
+						<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
+					</div>
 				</button>
 
 				<button class="btn btn-unstyled col-4 lfr-device-item text-center" data-device="smartphone" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
+					<div class="c-inner px-0" tabindex="-1">
+						<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
 
-					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
+						<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
 
-					<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
+						<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
+					</div>
 				</button>
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
+					<div class="c-inner px-0" tabindex="-1">
+						<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
 
-					<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
+						<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
+					</div>
 				</button>
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom" type="button">
-					<aui:icon cssClass="icon icon-monospaced" image="custom-size" markupView="lexicon" />
+					<div class="c-inner px-0" tabindex="-1">
+						<aui:icon cssClass="icon icon-monospaced" image="custom-size" markupView="lexicon" />
 
-					<small><liferay-ui:message key="custom" /></small>
+						<small><liferay-ui:message key="custom" /></small>
+					</div>
 				</button>
 			</clay:row>
 

@@ -931,6 +931,7 @@
 				var name = config.name;
 				var label = config.label || "";
 				var title = config.title || "";
+				var icon = config.icon || "";
 				var requiredContent = config.requiredContent || "";
 				var panel = config.panel || {};
 
@@ -949,18 +950,19 @@
 				var panelBlock;
 
 				editor.ui.add(name, CKEDITOR.UI_PANELBUTTON, {
-					label: label,
-					title: title,
+					label,
+					title,
 					command: commandName,
-					editorFocus: editorFocus,
-					requiredContent: requiredContent,
-					panel: panel,
-					onBlock: function (panel, block) {
+					editorFocus,
+					requiredContent,
+					panel,
+					icon,
+					onBlock (panel, block) {
 						panelBlock = block;
 						block.autosize = true;
 						block.element.setHtml(renderPanel(config, clickFn));
 					},
-					onOpen: function () {
+					onOpen () {
 						return panelBlock;
 					},
 				});
@@ -1066,8 +1068,11 @@
 					editorFocus: 0,
 					label: "tableRow",
 					name: "TableRow",
+					icon: "add-row",
 					panel: {
-						css: CKEDITOR.skin.getPath("editor"),
+						css: [CKEDITOR.skin.getPath('editor')].concat(
+							editor.config.contentsCss
+						),
 						attributes: {
 							"aria-label": "tableRow",
 							role: "listbox",
@@ -1136,10 +1141,13 @@
 				{
 					commandName: "tableColumn",
 					editorFocus: 0,
+					icon: "add-column",
 					label: "tableColumn",
 					name: "TableColumn",
 					panel: {
-						css: CKEDITOR.skin.getPath("editor"),
+						css: [CKEDITOR.skin.getPath('editor')].concat(
+							editor.config.contentsCss
+						),
 						attributes: {
 							"aria-label": "tableColumn",
 							role: "listbox",
@@ -1212,9 +1220,12 @@
 					commandName: "tableCell",
 					editorFocus: 0,
 					label: "tableCell",
+					icon: "add-cell",
 					name: "TableCell",
 					panel: {
-						css: CKEDITOR.skin.getPath("editor"),
+						css: [CKEDITOR.skin.getPath('editor')].concat(
+							editor.config.contentsCss
+						),
 						attributes: {
 							"aria-label": "tableColumn",
 							role: "listbox",
@@ -1388,32 +1399,32 @@
 
 			setHtml: function (config) {
 				this.getElement().setHtml(
-					"<ul class='listbox' id='" +
+					"<ul class='cke_panel_list' id='" +
 						config.panelId +
-						"' role='listbox'>" +
-						"<li role='option'>" +
-						"<button aria-label='' class='container toolbar-element' onClick='CKEDITOR.tools.callFunction(" +
+						"' role='presentation'>" +
+						"<li class='cke_panel_listItem' role='presentation'>" +
+						"<a aria-label='' onClick='CKEDITOR.tools.callFunction(" +
 						config.panel.links[0].clickFn +
 						", this" +
-						"); return false;' tablIndex=''>" +
+						"); return false;' tablIndex='' role='option'>" +
 						config.panel.links[0].commandName +
-						"</button>" +
+						"</a>" +
 						"</li>" +
-						"<li role='option'>" +
-						"<button aria-label='' class='container toolbar-element' onClick='CKEDITOR.tools.callFunction(" +
+						"<li class='cke_panel_listItem' role='presentation'>" +
+						"<a aria-label='' onClick='CKEDITOR.tools.callFunction(" +
 						config.panel.links[1].clickFn +
 						", this" +
-						"); return false;' tablIndex=''>" +
+						"); return false;' tablIndex='' role='option'>" +
 						config.panel.links[1].commandName +
-						"</button>" +
+						"</a>" +
 						"</li>" +
-						"<li role='option'>" +
-						"<button aria-label='' class='container toolbar-element' onClick='CKEDITOR.tools.callFunction(" +
+						"<li class='cke_panel_listItem' role='presentation'>" +
+						"<a aria-label='' onClick='CKEDITOR.tools.callFunction(" +
 						config.panel.links[2].clickFn +
 						", this" +
-						"); return false;' tablIndex=''>" +
+						"); return false;' tablIndex='' role='option'>" +
 						config.panel.links[2].commandName +
-						"</button>" +
+						"</a>" +
 						"</li>" +
 						"</ul>"
 				);

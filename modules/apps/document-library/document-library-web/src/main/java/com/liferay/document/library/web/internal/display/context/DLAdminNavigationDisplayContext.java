@@ -94,8 +94,7 @@ public class DLAdminNavigationDisplayContext {
 
 		navigationItem.setLabel(
 			LanguageUtil.get(
-				_liferayPortletRequest.getHttpServletRequest(),
-				"documents-and-media"));
+				_liferayPortletRequest.getHttpServletRequest(), "files"));
 	}
 
 	private void _populateFileEntryTypesNavigationItem(

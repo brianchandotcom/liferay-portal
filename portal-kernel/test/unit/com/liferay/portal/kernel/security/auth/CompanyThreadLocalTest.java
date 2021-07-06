@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
+import java.util.function.Consumer;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,29 +64,21 @@ public class CompanyThreadLocalTest extends PowerMockito {
 
 	@Test
 	public void testLock() {
-		SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-			CompanyConstants.SYSTEM);
-
-		try {
-			CompanyThreadLocal.setCompanyId(1L);
-		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			return;
-		}
-		finally {
-			safeCloseable.close();
-		}
-
-		Assert.fail("Should throw UnsupportedOperationException");
+		_testLock(companyId -> CompanyThreadLocal.setCompanyId(companyId));
 	}
 
 	@Test
 	public void testLockWithSetWithSafeCloseable() {
+		_testLock(
+			companyId -> CompanyThreadLocal.setWithSafeCloseable(companyId));
+	}
+
+	private void _testLock(Consumer<Long> consumer) {
 		SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 			CompanyConstants.SYSTEM);
 
 		try {
-			CompanyThreadLocal.setWithSafeCloseable(1L);
+			consumer.accept(1L);
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			return;

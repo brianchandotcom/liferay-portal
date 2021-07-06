@@ -36,6 +36,7 @@ const Modal = ({
 	onClose,
 	onOpen,
 	size,
+	status,
 	title,
 	url,
 	zIndex,
@@ -173,6 +174,7 @@ const Modal = ({
 					id={id}
 					observer={observer}
 					size={url && !size ? 'full-screen' : size}
+					status={status}
 					zIndex={zIndex}
 				>
 					<ClayModal.Header>

@@ -16,8 +16,6 @@ package com.liferay.portal.settings.web.internal.portal.settings.configuration.a
 
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
 
 /**

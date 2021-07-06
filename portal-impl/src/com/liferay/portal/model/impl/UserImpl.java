@@ -71,7 +71,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UserInitialsGeneratorUtil;
 
@@ -616,11 +615,10 @@ public class UserImpl extends UserBaseImpl {
 		}
 
 		if (questions.isEmpty()) {
-			Set<String> defaultQuestions =
-				SetUtil.fromArray(
-					PrefsPropsUtil.getStringArray(getCompanyId(),
-						PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS,
-						StringPool.COMMA));
+			Set<String> defaultQuestions = SetUtil.fromArray(
+				PrefsPropsUtil.getStringArray(
+					getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS,
+					StringPool.COMMA));
 
 			questions.addAll(defaultQuestions);
 		}
@@ -840,8 +838,8 @@ public class UserImpl extends UserBaseImpl {
 			return true;
 		}
 
-		if (PrefsPropsUtil.getBoolean(getCompanyId(),
-				PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
+		if (PrefsPropsUtil.getBoolean(
+				getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
 				PropsValues.USERS_REMINDER_QUERIES_ENABLED) &&
 			(Validator.isNull(getReminderQueryQuestion()) ||
 			 Validator.isNull(getReminderQueryAnswer()))) {

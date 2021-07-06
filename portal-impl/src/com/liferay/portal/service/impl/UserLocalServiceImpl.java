@@ -7191,12 +7191,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			companyId, userId, password1, password2, passwordPolicy);
 	}
 
-	protected void validateReminderQuery(long companyId, String question,
-			String answer)
+	protected void validateReminderQuery(
+			long companyId, String question, String answer)
 		throws PortalException {
 
-		if (!PrefsPropsUtil.getBoolean(companyId,
-				PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
+		if (!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
 				PropsValues.USERS_REMINDER_QUERIES_ENABLED)) {
 
 			return;

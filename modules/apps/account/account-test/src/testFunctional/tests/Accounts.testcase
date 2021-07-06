@@ -1139,8 +1139,9 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
+	@description = "This test replaces user in Person Account with another existing user. It asserts that first user was replaced by the second user and isn't assigned to the account anymore."
 	@priority = "5"
-	test PersonAccountSmoke {
+	test SelectingUserWillReplaceExistingUserInPersonAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",

@@ -399,7 +399,7 @@ definition {
 			value1 = "Edit ${accountName}");
 	}
 
-	macro inactiveAccount {
+	macro deactivateAccount {
 		Search.searchCP(searchTerm = "${accountName}");
 
 		if ("${deactivateType}" == "Hide Icon") {
@@ -516,7 +516,7 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
-	macro setAddress {
+	macro setDefaultAddress {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SECTION");
 
 		if (IsElementPresent(key_addressDataType = "${addressDataType}",key_text = "Set Default Address", locator1 = "Account#SET_ACCOUNT_DEFAULT_ADDRESS")) {
@@ -573,7 +573,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro unassignAssignee {
+	macro removeAssignee {
 		var key_assigneeName = "${assigneeName}";
 
 		Search.searchCP(searchTerm = "${assigneeName}");

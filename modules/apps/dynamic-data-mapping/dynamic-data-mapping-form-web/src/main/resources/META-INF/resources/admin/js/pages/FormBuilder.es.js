@@ -34,11 +34,13 @@ import React, {
 
 import {FormInfo} from '../components/FormInfo.es';
 import {ManagementToolbar} from '../components/ManagementToolbar.es';
+import ModalObjectRestrictionsBody from '../components/ModalObjectRestrictionsBody';
 import {TranslationManager} from '../components/TranslationManager.es';
 import FormSettings from '../components/form-settings/FormSettings';
 import {ShareFormModalBody} from '../components/share-form/ShareFormModalBody.es';
 import {useAutoSave} from '../hooks/useAutoSave.es';
 import {useToast} from '../hooks/useToast.es';
+import {useValidateFormWithObjects} from '../hooks/useValidateFormWithObjects';
 import fieldDelete from '../thunks/fieldDelete.es';
 import {createFormURL} from '../util/form.es';
 import {submitEmailContent} from '../util/submitEmailContent.es';
@@ -88,6 +90,8 @@ export const FormBuilder = () => {
 	const {doSave, doSyncInput} = useAutoSave();
 
 	const addToast = useToast();
+
+	const validateFormWithObjects = useValidateFormWithObjects();
 
 	useEffect(() => {
 		const sessionLength = Liferay.Session
@@ -223,12 +227,66 @@ export const FormBuilder = () => {
 	);
 
 	const subtmitForm = useCallback(
-		(form) => {
+		async (form) => {
+			const openModalObjectRestrictions = (unsyncedFields) => {
+				const types = unsyncedFields.map(({type}) => type);
+				const uniqueTypes = types.filter(
+					(type, index) => types.indexOf(type) === index
+				);
+
+				const fieldsGroupedByType = uniqueTypes.map((uniqueTypes) => {
+					const fields = unsyncedFields.filter(
+						({type}) => uniqueTypes === type
+					);
+
+					return {
+						fields,
+						type: uniqueTypes,
+					};
+				});
+
+				modalDispatch({
+					payload: {
+						body: (
+							<ModalObjectRestrictionsBody
+								fieldsGroupedByType={fieldsGroupedByType}
+							/>
+						),
+						footer: [
+							null,
+							null,
+							<ClayButton.Group key={1} spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => onClose()}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+								<ClayButton disabled displayType="danger">
+									{Liferay.Language.get('done')}
+								</ClayButton>
+							</ClayButton.Group>,
+						],
+						header: Liferay.Language.get(
+							'object-required-fields-not-mapped'
+						),
+						status: 'danger',
+					},
+					type: 1,
+				});
+			};
+
 			doSyncInput();
 
-			window.submitForm(form);
+			const isValidToSaveForm = await validateFormWithObjects(
+				openModalObjectRestrictions
+			);
+
+			if (isValidToSaveForm) {
+				window.submitForm(form);
+			}
 		},
-		[doSyncInput]
+		[doSyncInput, modalDispatch, onClose, validateFormWithObjects]
 	);
 
 	const onPublishClick = useCallback(

@@ -16,20 +16,15 @@ package com.liferay.templates.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.templates.web.internal.constants.TemplatesWebKeys;
 
 import java.util.List;
 import java.util.Objects;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,7 +51,8 @@ public class TemplatesDisplayContext {
 					Objects.equals(
 						getTabs1(), TemplatesWebKeys.INFO_TEMPLATES));
 				navigationItem.setHref(
-					getPortletURL(TemplatesWebKeys.INFO_TEMPLATES));
+					_liferayPortletResponse.createRenderURL(),
+					"tabs1", TemplatesWebKeys.INFO_TEMPLATES);
 				navigationItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, TemplatesWebKeys.INFO_TEMPLATES));
@@ -67,20 +63,13 @@ public class TemplatesDisplayContext {
 					Objects.equals(
 						getTabs1(), TemplatesWebKeys.WIDGET_TEMPLATES));
 				navigationItem.setHref(
-					getPortletURL(TemplatesWebKeys.WIDGET_TEMPLATES));
+					_liferayPortletResponse.createRenderURL(),
+					"tabs1", TemplatesWebKeys.WIDGET_TEMPLATES);
 				navigationItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest,
 						TemplatesWebKeys.WIDGET_TEMPLATES));
 			}
-		).build();
-	}
-
-	public PortletURL getPortletURL(String tabs1) {
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setTabs1(
-			tabs1
 		).build();
 	}
 

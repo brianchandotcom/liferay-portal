@@ -49,7 +49,7 @@ public class TemplatesDisplayContext {
 			navigationItem -> {
 				navigationItem.setActive(
 					Objects.equals(
-						getTabs1(), TemplatesWebKeys.INFO_TEMPLATES));
+						_getTabs1(), TemplatesWebKeys.INFO_TEMPLATES));
 				navigationItem.setHref(
 					_liferayPortletResponse.createRenderURL(),
 					"tabs1", TemplatesWebKeys.INFO_TEMPLATES);
@@ -61,7 +61,7 @@ public class TemplatesDisplayContext {
 			navigationItem -> {
 				navigationItem.setActive(
 					Objects.equals(
-						getTabs1(), TemplatesWebKeys.WIDGET_TEMPLATES));
+						_getTabs1(), TemplatesWebKeys.WIDGET_TEMPLATES));
 				navigationItem.setHref(
 					_liferayPortletResponse.createRenderURL(),
 					"tabs1", TemplatesWebKeys.WIDGET_TEMPLATES);
@@ -73,7 +73,7 @@ public class TemplatesDisplayContext {
 		).build();
 	}
 
-	public String getTabs1() {
+	private String _getTabs1() {
 		if (_tabs1 != null) {
 			return _tabs1;
 		}

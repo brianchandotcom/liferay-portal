@@ -100,8 +100,10 @@ public interface UserLocalService
 	 * <code>admin.default.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default groups;
+	 <code>false</code> if user was already a member
 	 */
-	public void addDefaultGroups(long userId) throws PortalException;
+	public boolean addDefaultGroups(long userId) throws PortalException;
 
 	/**
 	 * Adds the user to the default regular roles, unless the user already has
@@ -110,8 +112,10 @@ public interface UserLocalService
 	 * <code>admin.default.role.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was given default roles;
+	 <code>false</code> if user already has default roles
 	 */
-	public void addDefaultRoles(long userId) throws PortalException;
+	public boolean addDefaultRoles(long userId) throws PortalException;
 
 	/**
 	 * Adds the user to the default user groups, unless the user is already in
@@ -120,8 +124,10 @@ public interface UserLocalService
 	 * <code>admin.default.user.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default user groups;
+	 <code>false</code> if user is already a user group member
 	 */
-	public void addDefaultUserGroups(long userId) throws PortalException;
+	public boolean addDefaultUserGroups(long userId) throws PortalException;
 
 	public void addGroupUser(long groupId, long userId);
 

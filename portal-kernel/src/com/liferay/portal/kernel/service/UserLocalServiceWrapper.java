@@ -63,12 +63,14 @@ public class UserLocalServiceWrapper
 	 * <code>admin.default.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default groups;
+	 <code>false</code> if user was already a member
 	 */
 	@Override
-	public void addDefaultGroups(long userId)
+	public boolean addDefaultGroups(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_userLocalService.addDefaultGroups(userId);
+		return _userLocalService.addDefaultGroups(userId);
 	}
 
 	/**
@@ -78,12 +80,14 @@ public class UserLocalServiceWrapper
 	 * <code>admin.default.role.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was given default roles;
+	 <code>false</code> if user already has default roles
 	 */
 	@Override
-	public void addDefaultRoles(long userId)
+	public boolean addDefaultRoles(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_userLocalService.addDefaultRoles(userId);
+		return _userLocalService.addDefaultRoles(userId);
 	}
 
 	/**
@@ -93,12 +97,14 @@ public class UserLocalServiceWrapper
 	 * <code>admin.default.user.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default user groups;
+	 <code>false</code> if user is already a user group member
 	 */
 	@Override
-	public void addDefaultUserGroups(long userId)
+	public boolean addDefaultUserGroups(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_userLocalService.addDefaultUserGroups(userId);
+		return _userLocalService.addDefaultUserGroups(userId);
 	}
 
 	@Override

@@ -76,9 +76,11 @@ public class UserLocalServiceUtil {
 	 * <code>admin.default.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default groups;
+	 <code>false</code> if user was already a member
 	 */
-	public static void addDefaultGroups(long userId) throws PortalException {
-		getService().addDefaultGroups(userId);
+	public static boolean addDefaultGroups(long userId) throws PortalException {
+		return getService().addDefaultGroups(userId);
 	}
 
 	/**
@@ -88,9 +90,11 @@ public class UserLocalServiceUtil {
 	 * <code>admin.default.role.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was given default roles;
+	 <code>false</code> if user already has default roles
 	 */
-	public static void addDefaultRoles(long userId) throws PortalException {
-		getService().addDefaultRoles(userId);
+	public static boolean addDefaultRoles(long userId) throws PortalException {
+		return getService().addDefaultRoles(userId);
 	}
 
 	/**
@@ -100,11 +104,13 @@ public class UserLocalServiceUtil {
 	 * <code>admin.default.user.group.names</code>.
 	 *
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if user was added to default user groups;
+	 <code>false</code> if user is already a user group member
 	 */
-	public static void addDefaultUserGroups(long userId)
+	public static boolean addDefaultUserGroups(long userId)
 		throws PortalException {
 
-		getService().addDefaultUserGroups(userId);
+		return getService().addDefaultUserGroups(userId);
 	}
 
 	public static void addGroupUser(long groupId, long userId) {

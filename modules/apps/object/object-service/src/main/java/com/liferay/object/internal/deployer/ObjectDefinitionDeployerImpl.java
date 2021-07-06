@@ -14,14 +14,16 @@
 
 package com.liferay.object.internal.deployer;
 
+import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.internal.info.list.provider.ObjectEntryInfoListProvider;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -39,14 +41,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		return Collections.singletonList(
+		return Arrays.asList(
 			_bundleContext.registerService(
 				WorkflowHandler.class,
 				new ObjectEntryWorkflowHandler(
 					objectDefinition, _objectEntryLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
-				).build()));
+				).build()),
+			_bundleContext.registerService(
+				InfoListProvider.class,
+				new ObjectEntryInfoListProvider(
+					objectDefinition, _objectEntryLocalService),
+				null));
 	}
 
 	@Activate

@@ -194,7 +194,10 @@ const DisabledArea = () => {
 
 	return (
 		show && (
-			<ReactPortal container={globalContext.document.body}>
+			<ReactPortal
+				className="cadmin"
+				container={globalContext.document.body}
+			>
 				<ClayPopover alignPosition={position} ref={popoverRef} show>
 					<div
 						dangerouslySetInnerHTML={{

@@ -112,7 +112,7 @@ definition {
 
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
-	
+
 	macro gotoDelete {
 		var key_ruleNumber = "${ruleNumber}";
 

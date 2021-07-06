@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.info.item.provider;
 
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.admin.web.internal.info.item.LayoutInfoItemFields;
@@ -61,6 +62,8 @@ public class LayoutInfoItemFieldValuesProvider
 				).values(
 					layout.getDescriptionMap()
 				).build())
+		).infoItemReference(
+			new InfoItemReference(Layout.class.getName(), layout.getPlid())
 		).build();
 	}
 

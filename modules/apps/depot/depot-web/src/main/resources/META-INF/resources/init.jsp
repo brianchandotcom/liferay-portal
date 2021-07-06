@@ -51,6 +51,7 @@ page import="com.liferay.depot.web.internal.display.context.DepotAdminSitesDispl
 page import="com.liferay.depot.web.internal.display.context.DepotAdminViewDepotDashboardDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotApplicationDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.util.DepotLanguageUtil" %><%@
+page import="com.liferay.document.library.kernel.exception.RequiredFileEntryTypeException" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupKeyException" %><%@

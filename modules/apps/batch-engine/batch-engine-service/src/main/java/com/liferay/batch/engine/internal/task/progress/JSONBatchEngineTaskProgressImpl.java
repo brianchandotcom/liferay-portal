@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.task;
+package com.liferay.batch.engine.internal.task.progress;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;

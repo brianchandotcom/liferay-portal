@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.task;
+package com.liferay.batch.engine.internal.task.progress;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;

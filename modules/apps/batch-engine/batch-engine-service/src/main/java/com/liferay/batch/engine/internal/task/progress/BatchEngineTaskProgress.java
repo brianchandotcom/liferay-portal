@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.task;
+package com.liferay.batch.engine.internal.task.progress;
 
 import java.io.InputStream;
 

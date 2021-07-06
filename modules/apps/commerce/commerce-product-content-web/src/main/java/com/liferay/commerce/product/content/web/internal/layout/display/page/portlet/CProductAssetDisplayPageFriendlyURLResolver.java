@@ -189,8 +189,9 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 					HtmlUtil.unescape(
 						HtmlUtil.stripHtml(
 							descriptionOptional.orElseGet(
-								() -> layoutDisplayPageObjectProvider.getDescription(
-									locale)))),
+								() ->
+									layoutDisplayPageObjectProvider.
+										getDescription(locale)))),
 					httpServletRequest);
 
 				portal.setPageKeywords(
@@ -198,8 +199,8 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 					httpServletRequest);
 
 				Optional<String> titleOptional = getMappedValueOptional(
-					layout.getTypeSettingsProperty("mapped-title"), infoItemFieldValues,
-					locale);
+					layout.getTypeSettingsProperty("mapped-title"),
+					infoItemFieldValues, locale);
 
 				portal.setPageTitle(
 					titleOptional.orElseGet(

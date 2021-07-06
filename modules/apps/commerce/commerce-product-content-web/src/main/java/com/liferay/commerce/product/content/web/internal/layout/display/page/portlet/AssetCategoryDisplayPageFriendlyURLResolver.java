@@ -159,9 +159,9 @@ public class AssetCategoryDisplayPageFriendlyURLResolver
 
 				InfoItemFieldValuesProvider<Object>
 					infoItemFieldValuesProvider =
-					infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemFieldValuesProvider.class,
-						infoItemClassName);
+						infoItemServiceTracker.getFirstInfoItemService(
+							InfoItemFieldValuesProvider.class,
+							infoItemClassName);
 
 				InfoItemFieldValues infoItemFieldValues =
 					infoItemFieldValuesProvider.getInfoItemFieldValues(
@@ -175,8 +175,9 @@ public class AssetCategoryDisplayPageFriendlyURLResolver
 					HtmlUtil.unescape(
 						HtmlUtil.stripHtml(
 							descriptionOptional.orElseGet(
-								() -> layoutDisplayPageObjectProvider.getDescription(
-									locale)))),
+								() ->
+									layoutDisplayPageObjectProvider.
+										getDescription(locale)))),
 					httpServletRequest);
 
 				portal.setPageKeywords(
@@ -184,8 +185,8 @@ public class AssetCategoryDisplayPageFriendlyURLResolver
 					httpServletRequest);
 
 				Optional<String> titleOptional = getMappedValueOptional(
-					layout.getTypeSettingsProperty("mapped-title"), infoItemFieldValues,
-					locale);
+					layout.getTypeSettingsProperty("mapped-title"),
+					infoItemFieldValues, locale);
 
 				portal.setPageTitle(
 					titleOptional.orElseGet(

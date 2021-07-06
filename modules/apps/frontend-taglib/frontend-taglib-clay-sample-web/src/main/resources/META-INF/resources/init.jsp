@@ -33,6 +33,8 @@ page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.contex
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.MultiselectDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarDelta" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarLabels" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %>
 
 <%@ page import="java.util.ArrayList" %><%@

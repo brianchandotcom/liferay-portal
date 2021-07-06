@@ -14,7 +14,9 @@
 
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -28,9 +30,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -212,9 +216,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_isShow(themeDisplay) ||
-			!_isShowPanel(httpServletRequest)) {
-
+		if (!_isShow(themeDisplay) || !_isShowPanel(httpServletRequest)) {
 			return false;
 		}
 
@@ -295,13 +297,29 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	}
 
 	private boolean _isShow(ThemeDisplay themeDisplay) {
-
 		boolean webContentEditPermission = _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroupId(), ActionKeys.UPDATE);
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.UPDATE);
 
-		if (webContentEditPermission)
+		PortletResourcePermission blogsResourcePermission =
+			_blogsEntryModelResourcePermission.getPortletResourcePermission();
+
+		boolean blogsEditPermission = blogsResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.UPDATE);
+
+		PortletResourcePermission fileResourcePermission =
+			_fileEntryModelResourcePermission.getPortletResourcePermission();
+
+		boolean documentEditPermission = fileResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.UPDATE);
+
+		if (webContentEditPermission || blogsEditPermission ||
+			documentEditPermission) {
+
 			return true;
+		}
 
 		return Optional.ofNullable(
 			_layoutLocalService.fetchLayout(themeDisplay.getPlid())
@@ -431,6 +449,16 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutReportsProductNavigationControlMenuEntry.class);
 
+	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
+	private ModelResourcePermission<BlogsEntry>
+		_blogsEntryModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -455,13 +483,15 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	private String _portletNamespace;
 
+	@Reference(
+		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
 	@Reference
 	private PortletURLFactory _portletURLFactory;
 
 	@Reference
 	private ReactRenderer _reactRenderer;
-
-	@Reference
-	private PortletResourcePermission _portletResourcePermission;
 
 }

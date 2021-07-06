@@ -176,9 +176,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SLA_PROCESS_DATE_MESSAGE</td>
-    <td>//span[@class='metrics-calculated-info']</td>
-    <td></td>
+	<td>SLA_PROCESS_DATE_MESSAGE</td>
+	<td>//span[@class='metrics-calculated-info']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SLA_RECORD_ELLIPSIS</td>

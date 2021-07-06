@@ -1,317 +1,320 @@
-@import 'atlas-variables';
-
 @import 'variables';
 
+$editablesBorderWidth: 1px;
 $emptyItemMinHeight: 180px;
 $emptyCollectionItemMinWidth: 124px;
 $emptyColumnMinWidth: 48px;
 $emptyContainerMinWidth: 180px;
 $dashedBorderWidth: 2px;
 
-.page-editor {
-	&__collection {
-		&__block {
-			box-shadow: inset 0 0 0 1px fade_out($purple, 0.7);
-		}
+html#{$cadmin-selector} {
+	.page-editor {
+		&__collection {
+			&__block {
+				box-shadow: inset 0 0 0 1px fade_out($cadmin-purple, 0.7);
+			}
 
-		&__message {
-			background-color: $gray-100;
-			box-shadow: inset 0 0 0 1px $primary-l2;
-			color: $gray-500;
-			font-family: $font-family-base;
-			font-size: 14px;
-			font-weight: 600;
-			margin-top: 0;
-			padding: 7em 1em;
-			text-align: center;
-		}
+			&__message {
+				background-color: $cadmin-gray-100;
+				box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
+				color: $cadmin-gray-500;
+				font-family: $cadmin-font-family-base;
+				font-size: 14px;
+				font-weight: 600;
+				margin-top: 0;
+				padding: 7em 1em;
+				text-align: center;
+			}
 
-		&-item {
-			border: 1px solid fade_out($purple, 0.9);
-			min-height: 80px;
+			&-item {
+				border: 1px solid fade_out($cadmin-purple, 0.9);
+				min-height: 80px;
 
-			&__title {
-				color: $purple;
-				font-size: 0.75rem;
-				font-style: italic;
-				padding-left: 8px;
-				padding-top: 8px;
+				&__title {
+					color: $cadmin-purple;
+					font-size: 12px;
+					font-style: italic;
+					padding-left: 8px;
+					padding-top: 8px;
+				}
 			}
 		}
-	}
 
-	&__col &__col__resizer {
-		background-color: $primary;
-		border-radius: 50%;
-		border-width: 0;
-		cursor: col-resize;
-		height: 16px;
-		left: 0;
-		outline: none;
-		padding: 0;
-		position: absolute;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		width: 16px;
-		z-index: 1;
-
-		html.rtl & {
-			transform: translate(50%, -50%);
-		}
-
-		&-first {
-			left: 13px;
-		}
-	}
-
-	&__collection-item__border {
-		height: 100%;
-		position: absolute;
-		width: 100%;
-	}
-
-	&__col__border {
-		.page-editor__col--master > & {
-			border: none;
-		}
-
-		border: 1px solid $primary-l2;
-		height: 100%;
-	}
-
-	&__container,
-	&__container:before,
-	&__row:before {
-		box-shadow: inset 0 0 0 1px $primary-l2;
-	}
-
-	&__col,
-	&__row,
-	&__collection-item {
-		position: relative;
-
-		&:before {
-			$spacingUnit: 12px;
-
-			content: '';
-			display: block;
-			height: 100%;
-			left: $spacingUnit;
-			pointer-events: none;
-			position: absolute;
-			top: 0;
-			width: calc(100% - #{$spacingUnit * 2});
-		}
-	}
-
-	&__row.align-bottom,
-	&__row.align-middle {
-		.page-editor__col .page-editor__col__border {
-			display: flex;
-			flex-direction: column;
-		}
-	}
-
-	&__row.align-middle .page-editor__col .page-editor__col__border {
-		justify-content: center;
-	}
-
-	&__row.align-bottom .page-editor__col .page-editor__col__border {
-		justify-content: flex-end;
-	}
-
-	&__row.align-top .page-editor__col .page-editor__col__border {
-		justify-content: flex-start;
-	}
-
-	&__collection-item {
-		&:before {
+		&__col .page-editor__col__resizer {
+			background-color: $cadmin-primary;
+			border-radius: 50%;
+			border-width: 0;
+			cursor: col-resize;
+			height: 16px;
 			left: 0;
+			outline: none;
+			padding: 0;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 16px;
+			z-index: 1;
+
+			&-first {
+				left: 13px;
+			}
+		}
+
+		&__collection-item__border {
+			height: 100%;
+			position: absolute;
 			width: 100%;
 		}
-	}
 
-	&__container.empty,
-	&__row {
-		&.empty {
-			min-height: $emptyItemMinHeight;
+		&__col__border {
+			border: 1px solid $cadmin-primary-l2;
+			height: 100%;
+		}
 
-			&.flex-column-reverse {
-				.page-editor__col {
-					flex: 1;
+		&__container,
+		&__container:before,
+		&__row:before {
+			box-shadow: inset 0 0 0 1px $cadmin-primary-l2;
+		}
 
-					&__border {
-						min-height: $emptyItemMinHeight / 2;
+		&__col,
+		&__row,
+		&__collection-item {
+			position: relative;
+
+			&:before {
+				$spacingUnit: 12px;
+
+				content: '';
+				display: block;
+				height: 100%;
+				left: $spacingUnit;
+				pointer-events: none;
+				position: absolute;
+				top: 0;
+				width: calc(100% - #{$spacingUnit * 2});
+			}
+		}
+
+		&__row.align-bottom,
+		&__row.align-middle {
+			.page-editor__col .page-editor__col__border {
+				display: flex;
+				flex-direction: column;
+			}
+		}
+
+		&__row.align-middle .page-editor__col .page-editor__col__border {
+			justify-content: center;
+		}
+
+		&__row.align-bottom .page-editor__col .page-editor__col__border {
+			justify-content: flex-end;
+		}
+
+		&__row.align-top .page-editor__col .page-editor__col__border {
+			justify-content: flex-start;
+		}
+
+		&__collection-item {
+			&:before {
+				left: 0;
+				width: 100%;
+			}
+		}
+
+		&__container.empty,
+		&__row {
+			&.empty {
+				min-height: $emptyItemMinHeight;
+
+				&.flex-column-reverse {
+					.page-editor__col {
+						flex: 1;
+
+						&__border {
+							min-height: $emptyItemMinHeight / 2;
+						}
 					}
 				}
-			}
 
-			.page-editor__col {
-				min-height: $emptyItemMinHeight / 2;
-			}
-		}
-	}
-
-	&__editable {
-		min-height: 1rem;
-		min-width: 3ch;
-		transition: box-shadow ease 0.3s;
-
-		$editablesBorderWidth: 1px;
-
-		&--hovered {
-			box-shadow: inset 0 0 0 $editablesBorderWidth $primary-l1;
-		}
-
-		&--content-hovered {
-			outline: $dashedBorderWidth dashed fade_out($purple, 0.5);
-			outline-offset: -$dashedBorderWidth;
-
-			&.page-editor__editable--active {
-				outline: 0;
+				.page-editor__col {
+					min-height: $emptyItemMinHeight / 2;
+				}
 			}
 		}
 
-		&--mapped {
-			box-shadow: inset 0 0 0 $editablesBorderWidth fade_out($purple, 0.7);
-
-			&.page-editor__editable--hovered {
-				box-shadow: inset 0 0 0 $editablesBorderWidth
-					fade_out($purple, 0.3);
-			}
-
-			&.page-editor__editable--active {
-				box-shadow: inset 0 0 0 $editablesBorderWidth $purple;
-			}
-		}
-
-		&--translated {
-			box-shadow: inset 0 0 0 $editablesBorderWidth
-				fade_out($success-l1, 0.7);
-
-			&.page-editor__editable--hovered {
-				box-shadow: inset 0 0 0 $editablesBorderWidth
-					fade_out($success-l1, 0.3);
-			}
-
-			&.page-editor__editable--active {
-				box-shadow: inset 0 0 0 $editablesBorderWidth $success-l1;
-			}
-		}
-
-		&--active {
-			box-shadow: inset 0 0 0 $editablesBorderWidth $primary;
-		}
-
-		@at-root img#{&} {
-			box-sizing: border-box;
-			outline-offset: -$editablesBorderWidth;
+		&__editable {
+			min-height: 16px;
+			min-width: 3ch;
+			transition: box-shadow ease 0.3s;
 
 			&--hovered {
-				outline: solid $editablesBorderWidth $primary-l1;
-			}
-
-			&--mapped {
-				outline: solid $editablesBorderWidth fade_out($purple, 0.7);
-
-				&.page-editor__editable--hovered {
-					outline: solid $editablesBorderWidth fade_out($purple, 0.3);
-				}
-
-				&.page-editor__editable--active {
-					outline: solid $editablesBorderWidth $purple;
-				}
+				box-shadow: inset 0 0 0 $editablesBorderWidth $cadmin-primary-l1;
 			}
 
 			&--content-hovered {
-				outline: $dashedBorderWidth dashed fade_out($purple, 0.5);
+				outline: $dashedBorderWidth dashed fade_out($cadmin-purple, 0.5);
 				outline-offset: -$dashedBorderWidth;
+
+				&.page-editor__editable--active {
+					outline: 0;
+				}
 			}
 
-			&--translated {
-				outline: solid $editablesBorderWidth fade_out($success-l1, 0.7);
+			&--mapped {
+				box-shadow: inset 0 0 0 $editablesBorderWidth
+					fade_out($cadmin-purple, 0.7);
 
 				&.page-editor__editable--hovered {
-					outline: solid $editablesBorderWidth
-						fade_out($success-l1, 0.3);
+					box-shadow: inset 0 0 0 $editablesBorderWidth
+						fade_out($cadmin-purple, 0.3);
 				}
 
 				&.page-editor__editable--active {
-					outline: solid $editablesBorderWidth $success-l1;
+					box-shadow: inset 0 0 0 $editablesBorderWidth $cadmin-purple;
+				}
+			}
+
+			&--translated {
+				box-shadow: inset 0 0 0 $editablesBorderWidth
+					fade_out($cadmin-success-l1, 0.7);
+
+				&.page-editor__editable--hovered {
+					box-shadow: inset 0 0 0 $editablesBorderWidth
+						fade_out($cadmin-success-l1, 0.3);
+				}
+
+				&.page-editor__editable--active {
+					box-shadow: inset 0 0 0 $editablesBorderWidth
+						$cadmin-success-l1;
 				}
 			}
 
 			&--active {
-				outline: solid $editablesBorderWidth $primary;
+				box-shadow: inset 0 0 0 $editablesBorderWidth $cadmin-primary;
+			}
+		}
+
+		&__row.no-gutters > .page-editor__col:before {
+			left: 0;
+			width: 100%;
+		}
+
+		&__row.no-gutters:before {
+			left: 0;
+			width: 100%;
+		}
+
+		&__row.no-gutters .page-editor__col__resizer-first {
+			left: 1px;
+		}
+
+		&__no-fragments-message {
+			background: $cadmin-primary-l3;
+			border: $dashedBorderWidth dashed $cadmin-primary-l2;
+			padding: 15vh 0;
+
+			&__title {
+				color: $cadmin-gray-500;
+				font-family: $cadmin-font-family-base;
+				font-size: 14px;
+				font-weight: 600;
+				margin-top: 0;
+				text-align: center;
+			}
+		}
+
+		&__conversion-messages {
+			padding-right: $sidebarButtonWidth;
+			transition: padding-right ease $defaultTransitionDuration;
+			will-change: padding-right;
+
+			&--with-sidebar-open {
+				@include media-breakpoint-up(sm) {
+					padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+				}
+			}
+		}
+
+		// LPS-103745
+		// Keep legacy lfr-editable tags
+		// stylelint-disable-next-line selector-type-no-unknown
+		lfr-editable {
+			cursor: pointer;
+			display: block;
+		}
+
+		.portlet-borderless .portlet-content {
+			padding: 0;
+		}
+
+		&__container.flex-row {
+			.page-editor__collection-item.empty {
+				min-width: $emptyCollectionItemMinWidth;
+			}
+
+			.page-editor__container.empty {
+				min-width: $emptyContainerMinWidth;
+			}
+
+			.page-editor__row.empty .page-editor__col {
+				min-height: $emptyItemMinHeight / 2;
+				min-width: $emptyColumnMinWidth;
 			}
 		}
 	}
 
-	&__row.no-gutters > .page-editor__col:before {
-		left: 0;
-		width: 100%;
+	.page-editor__col--master > .page-editor__col__border {
+		border: none;
 	}
 
-	&__row.no-gutters:before {
-		left: 0;
-		width: 100%;
-	}
+	img.page-editor__editable {
+		box-sizing: border-box;
+		outline-offset: -$editablesBorderWidth;
 
-	&__row.no-gutters .page-editor__col__resizer-first {
-		left: 1px;
-	}
-
-	&__no-fragments-message {
-		background: $primary-l3;
-		border: $dashedBorderWidth dashed $primary-l2;
-		padding: 15vh 0;
-
-		&__title {
-			color: $gray-500;
-			font-family: $font-family-base;
-			font-size: 14px;
-			font-weight: 600;
-			margin-top: 0;
-			text-align: center;
+		&--hovered {
+			outline: solid $editablesBorderWidth $cadmin-primary-l1;
 		}
-	}
 
-	&__conversion-messages {
-		padding-right: $sidebarButtonWidth;
-		transition: padding-right ease $defaultTransitionDuration;
-		will-change: padding-right;
+		&--mapped {
+			outline: solid $editablesBorderWidth fade_out($cadmin-purple, 0.7);
 
-		&--with-sidebar-open {
-			@include media-breakpoint-up(sm) {
-				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+			&.page-editor__editable--hovered {
+				outline: solid $editablesBorderWidth
+					fade_out($cadmin-purple, 0.3);
+			}
+
+			&.page-editor__editable--active {
+				outline: solid $editablesBorderWidth $cadmin-purple;
 			}
 		}
-	}
 
-	// LPS-103745
-	// Keep legacy lfr-editable tags
-	// stylelint-disable-next-line selector-type-no-unknown
-	lfr-editable {
-		cursor: pointer;
-		display: block;
-	}
-
-	.portlet-borderless .portlet-content {
-		padding: 0;
-	}
-
-	&__container.flex-row {
-		.page-editor__collection-item.empty {
-			min-width: $emptyCollectionItemMinWidth;
+		&--content-hovered {
+			outline: $dashedBorderWidth dashed fade_out($cadmin-purple, 0.5);
+			outline-offset: -$dashedBorderWidth;
 		}
 
-		.page-editor__container.empty {
-			min-width: $emptyContainerMinWidth;
+		&--translated {
+			outline: solid $editablesBorderWidth
+				fade_out($cadmin-success-l1, 0.7);
+
+			&.page-editor__editable--hovered {
+				outline: solid $editablesBorderWidth
+					fade_out($cadmin-success-l1, 0.3);
+			}
+
+			&.page-editor__editable--active {
+				outline: solid $editablesBorderWidth $cadmin-success-l1;
+			}
 		}
 
-		.page-editor__row.empty .page-editor__col {
-			min-height: $emptyItemMinHeight / 2;
-			min-width: $emptyColumnMinWidth;
+		&--active {
+			outline: solid $editablesBorderWidth $cadmin-primary;
 		}
+	}
+
+	&.rtl {
+		transform: translate(50%, -50%);
 	}
 }

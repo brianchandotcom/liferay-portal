@@ -1,16 +1,18 @@
-.page-editor__global-context-iframe {
-	border: none;
-	height: 100%;
-	width: 100%;
+html#{$cadmin-selector} {
+	.page-editor__global-context-iframe {
+		border: none;
+		height: 100%;
+		width: 100%;
 
-	&--loading {
-		opacity: 0.5;
-	}
+		&--loading {
+			opacity: 0.5;
+		}
 
-	&--hidden {
-		left: -99999px;
-		opacity: 0;
-		position: absolute;
-		top: -99999px;
+		&--hidden {
+			left: -99999px;
+			opacity: 0;
+			position: absolute;
+			top: -99999px;
+		}
 	}
 }

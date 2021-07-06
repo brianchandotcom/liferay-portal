@@ -30,10 +30,11 @@ export default function App({
 	script: initialScript,
 	showCacheableWarning,
 	showLanguageChangeWarning,
+	showPropertiesPanel,
 	templateVariableGroups,
 }) {
 	const [selectedSidebarPanelId, setSelectedSidebarPanelId] = useState(
-		PANEL_IDS.elements
+		showPropertiesPanel ? PANEL_IDS.properties : PANEL_IDS.elements
 	);
 
 	return (

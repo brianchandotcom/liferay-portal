@@ -169,6 +169,17 @@ public class JournalEditDDMTemplateDisplayContext {
 		).put(
 			"showLanguageChangeWarning", getShowLanguageChangeWarning()
 		).put(
+			"showPropertiesPanel",
+			() -> {
+				DDMTemplate ddmTemplate = getDDMTemplate();
+
+				if (ddmTemplate == null) {
+					return true;
+				}
+
+				return ddmTemplate.getClassPK() <= 0;
+			}
+		).put(
 			"templateVariableGroups", getTemplateVariableGroupJSONArray()
 		).build();
 	}

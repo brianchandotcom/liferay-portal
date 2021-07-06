@@ -166,15 +166,23 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 								<c:choose>
 									<c:when test='<%= curEntryColumn.equals("name") %>'>
 										<liferay-ui:search-container-column-text
-											cssClass="table-cell-expand table-cell-minw-200 table-title"
+											cssClass="table-cell-expand table-cell-minw-200"
 											name="title"
 										>
-											<liferay-document-library:mime-type-sticker
-												cssClass="sticker-secondary"
-												fileVersion="<%= latestFileVersion %>"
-											/>
+											<div class="autofit-row">
+												<div class="autofit-col">
+													<liferay-document-library:mime-type-sticker
+														cssClass="sticker-secondary"
+														fileVersion="<%= latestFileVersion %>"
+													/>
+												</div>
 
-											<aui:a href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"><%= latestFileVersion.getTitle() %></aui:a>
+												<div class="autofit-col autofit-col-expand">
+													<div class="table-title">
+														<aui:a href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"><%= latestFileVersion.getTitle() %></aui:a>
+													</div>
+												</div>
+											</div>
 
 											<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 												<span class="inline-item inline-item-after state-icon">

@@ -196,7 +196,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		Assert.assertEquals(
-			StringPool.BLANK,
+			StringPool.POUND,
 			siteNavigationMenuItemType.getRegularURL(
 				mockHttpServletRequest, siteNavigationMenuItem));
 	}

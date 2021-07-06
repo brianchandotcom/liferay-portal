@@ -90,13 +90,10 @@ public class TemplatesDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, _TABS1_PARAMETER_NAME,
-			TemplatesWebKeys.INFO_TEMPLATES);
+			_liferayPortletRequest, "tabs1", TemplatesWebKeys.INFO_TEMPLATES);
 
 		return _tabs1;
 	}
-
-	private static final String _TABS1_PARAMETER_NAME = "tabs1";
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

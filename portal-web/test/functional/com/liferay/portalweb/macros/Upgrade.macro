@@ -3311,6 +3311,8 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
 
+		WaitForPageLoad();
+
 		DataEngine.viewField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -3333,6 +3335,8 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = "Document Metadata Set Name");
 
 		MenuItem.click(menuItem = "Edit");
+
+		WaitForPageLoad();
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Boolean",

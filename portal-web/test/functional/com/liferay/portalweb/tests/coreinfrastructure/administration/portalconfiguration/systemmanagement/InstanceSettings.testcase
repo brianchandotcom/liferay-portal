@@ -395,6 +395,27 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Edit Google");
 	}
 
+	@description = "This test asserts that a user can reset the value of a single configuration."
+	@priority = "4"
+	test SingleConfigurationCanBeDeleted {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Email Domains",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertElementNotPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		PortalSettings.editConfigurationUsersPersonalMenuShowInControlMenu(toggleSwitchLabel = "Enable Email Domain Validation");
+
+		AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
+
+		PortalSettings.viewToggleSwitchNotChecked(portalSetting = "Enable Email Domain Validation");
+
+		AssertElementPresent(locator1 = "Button#SAVE");
+	}
+
 	@ignore = "true"
 	@priority = "4"
 	test SingleFactoryConfigurationCanBeExported {

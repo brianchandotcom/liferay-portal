@@ -438,7 +438,7 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
-		Accounts.unassignAssignee(
+		Accounts.removeAssignee(
 			assigneeName = "userfn",
 			assigneeType = "Users");
 

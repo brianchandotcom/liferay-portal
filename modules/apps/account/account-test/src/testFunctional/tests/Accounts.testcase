@@ -241,13 +241,13 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.inactiveAccount(accountName = "Accounts Name 1 for Test");
+		Accounts.deactivateAccount(accountName = "Accounts Name 1 for Test");
 
 		Accounts.viewInactiveAccount(accountName = "Accounts Name 1 for Test");
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.inactiveAccount(
+		Accounts.deactivateAccount(
 			accountName = "Accounts Name 2 for Test",
 			deactivateType = "Hide Icon");
 
@@ -255,7 +255,7 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Accounts.inactiveAccount(
+		Accounts.deactivateAccount(
 			accountName = "Accounts Name 3 for Test",
 			deactivateType = "Management Toolbar");
 
@@ -578,7 +578,7 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
 
 		for (var addressDataType : list "shipping,billing") {
-			Accounts.setAddress(
+			Accounts.setDefaultAddress(
 				addressDataType = "${addressDataType}",
 				addressName = "Liferay Dalian Software Co., Ltd.");
 
@@ -697,7 +697,7 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
 
-		Accounts.unassignAssignee(
+		Accounts.removeAssignee(
 			assigneeName = "Organization for Account",
 			assigneeType = "Organizations");
 
@@ -758,7 +758,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with Default Address");
 
-		Accounts.setAddress(
+		Accounts.setDefaultAddress(
 			addressDataType = "shipping",
 			addressName = "Liferay Japan K. K.");
 
@@ -773,7 +773,7 @@ definition {
 			addressStreet2 = "1-26-7 Ebisu Nishi",
 			phoneNumber = "+81 3-5456-5796");
 
-		Accounts.setAddress(
+		Accounts.setDefaultAddress(
 			addressDataType = "billing",
 			addressName = "Liferay, Inc.");
 
@@ -787,11 +787,11 @@ definition {
 			addressStreet1 = "1400 Montefino Ave",
 			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
 
-		Accounts.setAddress(
+		Accounts.setDefaultAddress(
 			addressDataType = "shipping",
 			addressName = "Liferay Dalian Software Co., Ltd.");
 
-		Accounts.setAddress(
+		Accounts.setDefaultAddress(
 			addressDataType = "billing",
 			addressName = "Liferay Dalian Software Co., Ltd.");
 

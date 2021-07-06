@@ -130,6 +130,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -432,11 +433,9 @@ public class WebServerServlet extends HttpServlet {
 		return null;
 	}
 
-	protected FileEntry getFileEntry(
+	private FileEntry _getFileEntry(
 			String[] pathArray, HttpServletRequest httpServletRequest)
 		throws Exception {
-
-		FileEntry fileEntry;
 
 		if (pathArray.length == 1) {
 			long fileShortcutId = GetterUtil.getLong(pathArray[0]);
@@ -444,14 +443,22 @@ public class WebServerServlet extends HttpServlet {
 			FileShortcut dlFileShortcut = DLAppServiceUtil.getFileShortcut(
 				fileShortcutId);
 
-			fileEntry = DLAppServiceUtil.getFileEntry(
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 				dlFileShortcut.getToFileEntryId());
+
+			_checkExpiredFileEntry(fileEntry, httpServletRequest);
+
+			return fileEntry;
 		}
 		else if (pathArray.length == 2) {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 
-			fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
 				pathArray[1], groupId);
+
+			_checkExpiredFileEntry(fileEntry, httpServletRequest);
+
+			return fileEntry;
 		}
 		else if (pathArray.length == 3) {
 			long groupId = GetterUtil.getLong(pathArray[0]);
@@ -465,8 +472,12 @@ public class WebServerServlet extends HttpServlet {
 			}
 
 			try {
-				fileEntry = DLAppServiceUtil.getFileEntryByFileName(
+				FileEntry fileEntry = DLAppServiceUtil.getFileEntryByFileName(
 					groupId, folderId, fileName);
+
+				_checkExpiredFileEntry(fileEntry, httpServletRequest);
+
+				return fileEntry;
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isDebugEnabled()) {
@@ -474,8 +485,12 @@ public class WebServerServlet extends HttpServlet {
 						noSuchFileEntryException, noSuchFileEntryException);
 				}
 
-				fileEntry = DLAppServiceUtil.getFileEntry(
+				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 					groupId, folderId, fileName);
+
+				_checkExpiredFileEntry(fileEntry, httpServletRequest);
+
+				return fileEntry;
 			}
 		}
 		else {
@@ -483,10 +498,18 @@ public class WebServerServlet extends HttpServlet {
 
 			String uuid = pathArray[3];
 
-			fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
 				uuid, groupId);
-		}
 
+			_checkExpiredFileEntry(fileEntry, httpServletRequest);
+
+			return fileEntry;
+		}
+	}
+
+	private void _checkExpiredFileEntry(
+		FileEntry fileEntry, HttpServletRequest httpServletRequest)
+		throws Exception {
 		if (fileEntry != null) {
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -766,7 +789,7 @@ public class WebServerServlet extends HttpServlet {
 				FileEntry fileEntry = null;
 
 				try {
-					fileEntry = getFileEntry(pathArray, httpServletRequest);
+					fileEntry = _getFileEntry(pathArray, httpServletRequest);
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
@@ -1035,7 +1058,7 @@ public class WebServerServlet extends HttpServlet {
 
 		// Retrieve file details
 
-		FileEntry fileEntry = getFileEntry(pathArray, httpServletRequest);
+		FileEntry fileEntry = _getFileEntry(pathArray, httpServletRequest);
 
 		if (_processCompanyInactiveRequest(
 				httpServletRequest, httpServletResponse,
@@ -1544,7 +1567,7 @@ public class WebServerServlet extends HttpServlet {
 
 			// Check for sendFile
 
-			FileEntry fileEntry = getFileEntry(pathArray, httpServletRequest);
+			FileEntry fileEntry = _getFileEntry(pathArray, httpServletRequest);
 
 			String portletId = _getPortletId(fileEntry, httpServletRequest);
 

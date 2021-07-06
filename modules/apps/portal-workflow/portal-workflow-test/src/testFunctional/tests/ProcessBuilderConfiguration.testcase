@@ -121,12 +121,35 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Resource"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderByResource {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68282 CanOrderByResource pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		Click(
+			key_menuItem = "Resource",
+			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
+
+		AssertTextEquals(
+			key_rowNumber = "1",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
+			value1 = "Blogs Entry");
+
+		AssertTextEquals(
+			key_rowNumber = "13",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
+			value1 = "Knowledge Base Article");
+
+		AssertTextEquals(
+			key_rowNumber = "19",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
+			value1 = "Wiki Page");
 	}
 
 	@description = "Verify that the user is able to order by Workflow"

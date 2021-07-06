@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>MODAL_DUPLICATE_BUTTON</td>
+	<td>//button[text()='Duplicate']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVISION_HISTORY_ITEM</td>
 	<td>//li[contains(@class,'list-group-item')][${key_ruleNumber}]</td>
 	<td></td>
@@ -23,6 +28,11 @@
 <tr>
 	<td>PROCESS_DETAILS</td>
 	<td>//dt[contains(text(), '${key_titleValue}')]/following::dd[contains(text(), '${key_infoValue}')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_DETAILS_ELLIPSIS</td>
+	<td>//*[contains(@class, 'ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

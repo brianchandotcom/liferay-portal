@@ -457,12 +457,54 @@ definition {
 	}
 
 	@description = "Verify that revision history is not copied to the duplicated definition"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test RevisionHistoryIsNotCopied {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#RevisionHistoryIsNotCopied";
 
-		// TODO LRQA-68337 RevisionHistoryIsNotCopied pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Click(locator1 = "Button#UPDATE");
+
+		Click(locator1 = "Icon#INFO");
+
+		Click(
+			key_tabName = "Revision History",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+
+		AssertElementPresent(
+			key_rowNumber = "1",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+
+		AssertElementPresent(
+			key_rowNumber = "2",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
+
+		Click(locator1 = "ProcessBuilderSource#PROCESS_DETAILS_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Duplicate");
+
+		Click(locator1 = "ProcessBuilderSource#MODAL_DUPLICATE_BUTTON");
+
+		Click(locator1 = "Icon#INFO");
+
+		Click(
+			key_tabName = "Revision History",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
+
+		AssertElementNotPresent(
+			key_rowNumber = "2",
+			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 	}
 
 	@description = "Verify that the time format in Details tab is following the system language"

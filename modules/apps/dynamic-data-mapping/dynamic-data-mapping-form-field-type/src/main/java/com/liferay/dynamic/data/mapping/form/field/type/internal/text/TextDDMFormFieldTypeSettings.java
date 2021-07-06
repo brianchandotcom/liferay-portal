@@ -82,7 +82,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setVisible('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\") and getValue('autocomplete'))",
 				"setVisible('direction', getValue('requireConfirmation'))",
 				"setVisible('options', contains(getValue('dataSourceType'), \"manual\") and getValue('autocomplete'))",
-				"setVisible('requiredErrorMessage', false)"
+				"setVisible('requiredErrorMessage', getValue('required'))"
 			},
 			condition = "TRUE"
 		),

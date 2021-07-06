@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 			actions = {
 				"setVisible('dataType', false)",
 				"setVisible('predefinedValue', false)",
-				"setVisible('requiredErrorMessage', false)",
+				"setVisible('requiredErrorMessage', getValue('required'))",
 				"setVisible('validation', false)"
 			},
 			condition = "TRUE"

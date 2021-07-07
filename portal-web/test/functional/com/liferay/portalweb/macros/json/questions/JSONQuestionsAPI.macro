@@ -43,7 +43,8 @@ definition {
 					"${tagField}"
 				],
 				"headline": "${titleField}",
-				"articleBody": "${bodyField}"
+				"articleBody": "${bodyField}",
+				"viewableBy": "Anyone"
 			}'
 		''';
 

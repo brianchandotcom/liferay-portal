@@ -353,12 +353,16 @@ public class TaskWorkflowMetricsIndexerImpl
 					ScriptType.INLINE
 				);
 
-				searchEngineAdapter.execute(
+				UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 					new UpdateByQueryDocumentRequest(
 						queries.nested(
 							"tasks", queries.term("tasks.taskId", taskId)),
 						scriptBuilder.build(),
-						_instanceWorkflowMetricsIndex.getIndexName(companyId)));
+						_instanceWorkflowMetricsIndex.getIndexName(companyId));
+
+				updateByQueryDocumentRequest.setRefresh(true);
+
+				searchEngineAdapter.execute(updateByQueryDocumentRequest);
 			});
 
 		return document;

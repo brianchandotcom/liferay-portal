@@ -32,8 +32,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		@DDMFormRule(
 			actions = {
 				"setVisible('indexType', false)",
-				"setVisible('predefinedValue', false)",
-				"setVisible('validation', false)"
+				"setVisible('predefinedValue', false)"
 			},
 			condition = "TRUE"
 		)
@@ -63,10 +62,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"predefinedValue", "placeholder",
-								"visibilityExpression", "validation",
-								"fieldNamespace", "indexType", "localizable",
-								"readOnly", "dataType", "type", "name",
-								"fieldReference", "showLabel", "repeatable"
+								"visibilityExpression", "fieldNamespace",
+								"indexType", "localizable", "readOnly",
+								"dataType", "type", "name", "fieldReference",
+								"showLabel", "repeatable"
 							}
 						)
 					}

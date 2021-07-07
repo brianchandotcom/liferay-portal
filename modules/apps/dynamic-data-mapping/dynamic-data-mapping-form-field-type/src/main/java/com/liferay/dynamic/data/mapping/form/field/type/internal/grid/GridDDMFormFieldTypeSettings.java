@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
@@ -36,8 +35,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setVisible('indexType', false)",
 				"setVisible('predefinedValue', false)",
 				"setVisible('repeatable', false)",
-				"setVisible('requiredErrorMessage', getValue('required'))",
-				"setVisible('validation', false)"
+				"setVisible('requiredErrorMessage', getValue('required'))"
 			},
 			condition = "TRUE"
 		)
@@ -74,8 +72,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 								"name", "fieldReference",
 								"visibilityExpression", "showLabel",
 								"repeatable", "fieldNamespace", "indexType",
-								"localizable", "readOnly", "dataType", "type",
-								"validation"
+								"localizable", "readOnly", "dataType", "type"
 							}
 						)
 					}
@@ -106,9 +103,5 @@ public interface GridDDMFormFieldTypeSettings
 		type = "options"
 	)
 	public DDMFormFieldOptions rows();
-
-	@DDMFormField
-	@Override
-	public DDMFormFieldValidation validation();
 
 }

@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
@@ -37,8 +36,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setVisible('predefinedValue', false)",
 				"setVisible('repeatable', false)",
 				"setVisible('required', false)",
-				"setVisible('showLabel', false)", "setVisible('tip', false)",
-				"setVisible('validation', false)"
+				"setVisible('showLabel', false)", "setVisible('tip', false)"
 			},
 			condition = "TRUE"
 		)
@@ -68,8 +66,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"name", "fieldReference", "validation",
-								"showLabel", "repeatable", "predefinedValue",
+								"name", "fieldReference", "showLabel",
+								"repeatable", "predefinedValue",
 								"visibilityExpression", "fieldNamespace",
 								"indexType", "localizable", "readOnly",
 								"dataType", "type"
@@ -100,11 +98,5 @@ public interface ParagraphDDMFormFieldTypeSettings
 		properties = "placeholder=%enter-body-text", type = "rich_text"
 	)
 	public LocalizedValue text();
-
-	@DDMFormField(
-		dataType = "string", type = "validation", visibilityExpression = "FALSE"
-	)
-	@Override
-	public DDMFormFieldValidation validation();
 
 }

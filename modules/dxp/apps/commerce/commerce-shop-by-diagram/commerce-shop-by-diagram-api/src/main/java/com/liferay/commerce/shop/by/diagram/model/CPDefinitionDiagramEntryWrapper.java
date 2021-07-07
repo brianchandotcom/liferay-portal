@@ -52,15 +52,13 @@ public class CPDefinitionDiagramEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPInstanceUuid", getCPInstanceUuid());
 		attributes.put("CProductId", getCProductId());
-		attributes.put("CPDefinitionId", getCPDefinitionId());
-		attributes.put("number", getNumber());
-		attributes.put("sku", getSku());
-		attributes.put("quantity", getQuantity());
-		attributes.put("positionX", getPositionX());
-		attributes.put("positionY", getPositionY());
 		attributes.put("diagram", isDiagram());
+		attributes.put("number", getNumber());
+		attributes.put("quantity", getQuantity());
+		attributes.put("sku", getSku());
 
 		return attributes;
 	}
@@ -104,6 +102,12 @@ public class CPDefinitionDiagramEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
+
+		if (CPDefinitionId != null) {
+			setCPDefinitionId(CPDefinitionId);
+		}
+
 		String CPInstanceUuid = (String)attributes.get("CPInstanceUuid");
 
 		if (CPInstanceUuid != null) {
@@ -116,10 +120,10 @@ public class CPDefinitionDiagramEntryWrapper
 			setCProductId(CProductId);
 		}
 
-		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
+		Boolean diagram = (Boolean)attributes.get("diagram");
 
-		if (CPDefinitionId != null) {
-			setCPDefinitionId(CPDefinitionId);
+		if (diagram != null) {
+			setDiagram(diagram);
 		}
 
 		Integer number = (Integer)attributes.get("number");
@@ -128,34 +132,16 @@ public class CPDefinitionDiagramEntryWrapper
 			setNumber(number);
 		}
 
-		String sku = (String)attributes.get("sku");
-
-		if (sku != null) {
-			setSku(sku);
-		}
-
 		Integer quantity = (Integer)attributes.get("quantity");
 
 		if (quantity != null) {
 			setQuantity(quantity);
 		}
 
-		Double positionX = (Double)attributes.get("positionX");
+		String sku = (String)attributes.get("sku");
 
-		if (positionX != null) {
-			setPositionX(positionX);
-		}
-
-		Double positionY = (Double)attributes.get("positionY");
-
-		if (positionY != null) {
-			setPositionY(positionY);
-		}
-
-		Boolean diagram = (Boolean)attributes.get("diagram");
-
-		if (diagram != null) {
-			setDiagram(diagram);
+		if (sku != null) {
+			setSku(sku);
 		}
 	}
 
@@ -247,26 +233,6 @@ public class CPDefinitionDiagramEntryWrapper
 	@Override
 	public int getNumber() {
 		return model.getNumber();
-	}
-
-	/**
-	 * Returns the position x of this cp definition diagram entry.
-	 *
-	 * @return the position x of this cp definition diagram entry
-	 */
-	@Override
-	public double getPositionX() {
-		return model.getPositionX();
-	}
-
-	/**
-	 * Returns the position y of this cp definition diagram entry.
-	 *
-	 * @return the position y of this cp definition diagram entry
-	 */
-	@Override
-	public double getPositionY() {
-		return model.getPositionY();
 	}
 
 	/**
@@ -432,26 +398,6 @@ public class CPDefinitionDiagramEntryWrapper
 	@Override
 	public void setNumber(int number) {
 		model.setNumber(number);
-	}
-
-	/**
-	 * Sets the position x of this cp definition diagram entry.
-	 *
-	 * @param positionX the position x of this cp definition diagram entry
-	 */
-	@Override
-	public void setPositionX(double positionX) {
-		model.setPositionX(positionX);
-	}
-
-	/**
-	 * Sets the position y of this cp definition diagram entry.
-	 *
-	 * @param positionY the position y of this cp definition diagram entry
-	 */
-	@Override
-	public void setPositionY(double positionY) {
-		model.setPositionY(positionY);
 	}
 
 	/**

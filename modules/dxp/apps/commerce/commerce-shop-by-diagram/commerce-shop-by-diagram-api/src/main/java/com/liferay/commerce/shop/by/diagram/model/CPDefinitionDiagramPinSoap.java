@@ -21,44 +21,40 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.shop.by.diagram.service.http.CPDefinitionDiagramEntryServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.shop.by.diagram.service.http.CPDefinitionDiagramPinServiceSoap}.
  *
  * @author Andrea Sbarra
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
 @Deprecated
-public class CPDefinitionDiagramEntrySoap implements Serializable {
+public class CPDefinitionDiagramPinSoap implements Serializable {
 
-	public static CPDefinitionDiagramEntrySoap toSoapModel(
-		CPDefinitionDiagramEntry model) {
+	public static CPDefinitionDiagramPinSoap toSoapModel(
+		CPDefinitionDiagramPin model) {
 
-		CPDefinitionDiagramEntrySoap soapModel =
-			new CPDefinitionDiagramEntrySoap();
+		CPDefinitionDiagramPinSoap soapModel = new CPDefinitionDiagramPinSoap();
 
-		soapModel.setCPDefinitionDiagramEntryId(
-			model.getCPDefinitionDiagramEntryId());
+		soapModel.setCPDefinitionDiagramPinId(
+			model.getCPDefinitionDiagramPinId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
-		soapModel.setCPInstanceUuid(model.getCPInstanceUuid());
-		soapModel.setCProductId(model.getCProductId());
-		soapModel.setDiagram(model.isDiagram());
 		soapModel.setNumber(model.getNumber());
-		soapModel.setQuantity(model.getQuantity());
-		soapModel.setSku(model.getSku());
+		soapModel.setPositionX(model.getPositionX());
+		soapModel.setPositionY(model.getPositionY());
 
 		return soapModel;
 	}
 
-	public static CPDefinitionDiagramEntrySoap[] toSoapModels(
-		CPDefinitionDiagramEntry[] models) {
+	public static CPDefinitionDiagramPinSoap[] toSoapModels(
+		CPDefinitionDiagramPin[] models) {
 
-		CPDefinitionDiagramEntrySoap[] soapModels =
-			new CPDefinitionDiagramEntrySoap[models.length];
+		CPDefinitionDiagramPinSoap[] soapModels =
+			new CPDefinitionDiagramPinSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -67,18 +63,17 @@ public class CPDefinitionDiagramEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPDefinitionDiagramEntrySoap[][] toSoapModels(
-		CPDefinitionDiagramEntry[][] models) {
+	public static CPDefinitionDiagramPinSoap[][] toSoapModels(
+		CPDefinitionDiagramPin[][] models) {
 
-		CPDefinitionDiagramEntrySoap[][] soapModels = null;
+		CPDefinitionDiagramPinSoap[][] soapModels = null;
 
 		if (models.length > 0) {
 			soapModels =
-				new CPDefinitionDiagramEntrySoap
-					[models.length][models[0].length];
+				new CPDefinitionDiagramPinSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CPDefinitionDiagramEntrySoap[0][0];
+			soapModels = new CPDefinitionDiagramPinSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -88,37 +83,37 @@ public class CPDefinitionDiagramEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPDefinitionDiagramEntrySoap[] toSoapModels(
-		List<CPDefinitionDiagramEntry> models) {
+	public static CPDefinitionDiagramPinSoap[] toSoapModels(
+		List<CPDefinitionDiagramPin> models) {
 
-		List<CPDefinitionDiagramEntrySoap> soapModels =
-			new ArrayList<CPDefinitionDiagramEntrySoap>(models.size());
+		List<CPDefinitionDiagramPinSoap> soapModels =
+			new ArrayList<CPDefinitionDiagramPinSoap>(models.size());
 
-		for (CPDefinitionDiagramEntry model : models) {
+		for (CPDefinitionDiagramPin model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
 		return soapModels.toArray(
-			new CPDefinitionDiagramEntrySoap[soapModels.size()]);
+			new CPDefinitionDiagramPinSoap[soapModels.size()]);
 	}
 
-	public CPDefinitionDiagramEntrySoap() {
+	public CPDefinitionDiagramPinSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _CPDefinitionDiagramEntryId;
+		return _CPDefinitionDiagramPinId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCPDefinitionDiagramEntryId(pk);
+		setCPDefinitionDiagramPinId(pk);
 	}
 
-	public long getCPDefinitionDiagramEntryId() {
-		return _CPDefinitionDiagramEntryId;
+	public long getCPDefinitionDiagramPinId() {
+		return _CPDefinitionDiagramPinId;
 	}
 
-	public void setCPDefinitionDiagramEntryId(long CPDefinitionDiagramEntryId) {
-		_CPDefinitionDiagramEntryId = CPDefinitionDiagramEntryId;
+	public void setCPDefinitionDiagramPinId(long CPDefinitionDiagramPinId) {
+		_CPDefinitionDiagramPinId = CPDefinitionDiagramPinId;
 	}
 
 	public long getCompanyId() {
@@ -169,34 +164,6 @@ public class CPDefinitionDiagramEntrySoap implements Serializable {
 		_CPDefinitionId = CPDefinitionId;
 	}
 
-	public String getCPInstanceUuid() {
-		return _CPInstanceUuid;
-	}
-
-	public void setCPInstanceUuid(String CPInstanceUuid) {
-		_CPInstanceUuid = CPInstanceUuid;
-	}
-
-	public long getCProductId() {
-		return _CProductId;
-	}
-
-	public void setCProductId(long CProductId) {
-		_CProductId = CProductId;
-	}
-
-	public boolean getDiagram() {
-		return _diagram;
-	}
-
-	public boolean isDiagram() {
-		return _diagram;
-	}
-
-	public void setDiagram(boolean diagram) {
-		_diagram = diagram;
-	}
-
 	public int getNumber() {
 		return _number;
 	}
@@ -205,34 +172,31 @@ public class CPDefinitionDiagramEntrySoap implements Serializable {
 		_number = number;
 	}
 
-	public int getQuantity() {
-		return _quantity;
+	public double getPositionX() {
+		return _positionX;
 	}
 
-	public void setQuantity(int quantity) {
-		_quantity = quantity;
+	public void setPositionX(double positionX) {
+		_positionX = positionX;
 	}
 
-	public String getSku() {
-		return _sku;
+	public double getPositionY() {
+		return _positionY;
 	}
 
-	public void setSku(String sku) {
-		_sku = sku;
+	public void setPositionY(double positionY) {
+		_positionY = positionY;
 	}
 
-	private long _CPDefinitionDiagramEntryId;
+	private long _CPDefinitionDiagramPinId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _CPDefinitionId;
-	private String _CPInstanceUuid;
-	private long _CProductId;
-	private boolean _diagram;
 	private int _number;
-	private int _quantity;
-	private String _sku;
+	private double _positionX;
+	private double _positionY;
 
 }

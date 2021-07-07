@@ -309,6 +309,66 @@ public class CPDefinitionDiagramEntryUtil {
 	}
 
 	/**
+	 * Returns the cp definition diagram entry where number = &#63; or throws a <code>NoSuchCPDefinitionDiagramEntryException</code> if it could not be found.
+	 *
+	 * @param number the number
+	 * @return the matching cp definition diagram entry
+	 * @throws NoSuchCPDefinitionDiagramEntryException if a matching cp definition diagram entry could not be found
+	 */
+	public static CPDefinitionDiagramEntry findByNumber(int number)
+		throws com.liferay.commerce.shop.by.diagram.exception.
+			NoSuchCPDefinitionDiagramEntryException {
+
+		return getPersistence().findByNumber(number);
+	}
+
+	/**
+	 * Returns the cp definition diagram entry where number = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param number the number
+	 * @return the matching cp definition diagram entry, or <code>null</code> if a matching cp definition diagram entry could not be found
+	 */
+	public static CPDefinitionDiagramEntry fetchByNumber(int number) {
+		return getPersistence().fetchByNumber(number);
+	}
+
+	/**
+	 * Returns the cp definition diagram entry where number = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param number the number
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp definition diagram entry, or <code>null</code> if a matching cp definition diagram entry could not be found
+	 */
+	public static CPDefinitionDiagramEntry fetchByNumber(
+		int number, boolean useFinderCache) {
+
+		return getPersistence().fetchByNumber(number, useFinderCache);
+	}
+
+	/**
+	 * Removes the cp definition diagram entry where number = &#63; from the database.
+	 *
+	 * @param number the number
+	 * @return the cp definition diagram entry that was removed
+	 */
+	public static CPDefinitionDiagramEntry removeByNumber(int number)
+		throws com.liferay.commerce.shop.by.diagram.exception.
+			NoSuchCPDefinitionDiagramEntryException {
+
+		return getPersistence().removeByNumber(number);
+	}
+
+	/**
+	 * Returns the number of cp definition diagram entries where number = &#63;.
+	 *
+	 * @param number the number
+	 * @return the number of matching cp definition diagram entries
+	 */
+	public static int countByNumber(int number) {
+		return getPersistence().countByNumber(number);
+	}
+
+	/**
 	 * Caches the cp definition diagram entry in the entity cache if it is enabled.
 	 *
 	 * @param cpDefinitionDiagramEntry the cp definition diagram entry

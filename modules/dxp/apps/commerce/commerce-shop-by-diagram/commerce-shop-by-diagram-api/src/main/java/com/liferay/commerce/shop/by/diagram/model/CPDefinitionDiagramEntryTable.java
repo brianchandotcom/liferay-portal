@@ -52,32 +52,26 @@ public class CPDefinitionDiagramEntryTable
 	public final Column<CPDefinitionDiagramEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionDiagramEntryTable, Long> CPDefinitionId =
+		createColumn(
+			"CPDefinitionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionDiagramEntryTable, String> CPInstanceUuid =
 		createColumn(
 			"CPInstanceUuid", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionDiagramEntryTable, Long> CProductId =
 		createColumn(
 			"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, Long> CPDefinitionId =
-		createColumn(
-			"CPDefinitionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, Integer> number =
-		createColumn(
-			"number_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, String> sku =
-		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, Integer> quantity =
-		createColumn(
-			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, Double> positionX =
-		createColumn(
-			"positionX", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, Double> positionY =
-		createColumn(
-			"positionY", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionDiagramEntryTable, Boolean> diagram =
 		createColumn(
 			"diagram", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionDiagramEntryTable, Integer> number =
+		createColumn(
+			"number_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionDiagramEntryTable, Integer> quantity =
+		createColumn(
+			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionDiagramEntryTable, String> sku =
+		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CPDefinitionDiagramEntryTable() {
 		super("CPDefinitionDiagramEntry", CPDefinitionDiagramEntryTable::new);

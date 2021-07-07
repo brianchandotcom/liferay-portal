@@ -170,6 +170,20 @@ public interface CPDefinitionDiagramEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the cp definition ID of this cp definition diagram entry.
+	 *
+	 * @return the cp definition ID of this cp definition diagram entry
+	 */
+	public long getCPDefinitionId();
+
+	/**
+	 * Sets the cp definition ID of this cp definition diagram entry.
+	 *
+	 * @param CPDefinitionId the cp definition ID of this cp definition diagram entry
+	 */
+	public void setCPDefinitionId(long CPDefinitionId);
+
+	/**
 	 * Returns the cp instance uuid of this cp definition diagram entry.
 	 *
 	 * @return the cp instance uuid of this cp definition diagram entry
@@ -199,91 +213,6 @@ public interface CPDefinitionDiagramEntryModel
 	public void setCProductId(long CProductId);
 
 	/**
-	 * Returns the cp definition ID of this cp definition diagram entry.
-	 *
-	 * @return the cp definition ID of this cp definition diagram entry
-	 */
-	public long getCPDefinitionId();
-
-	/**
-	 * Sets the cp definition ID of this cp definition diagram entry.
-	 *
-	 * @param CPDefinitionId the cp definition ID of this cp definition diagram entry
-	 */
-	public void setCPDefinitionId(long CPDefinitionId);
-
-	/**
-	 * Returns the number of this cp definition diagram entry.
-	 *
-	 * @return the number of this cp definition diagram entry
-	 */
-	public int getNumber();
-
-	/**
-	 * Sets the number of this cp definition diagram entry.
-	 *
-	 * @param number the number of this cp definition diagram entry
-	 */
-	public void setNumber(int number);
-
-	/**
-	 * Returns the sku of this cp definition diagram entry.
-	 *
-	 * @return the sku of this cp definition diagram entry
-	 */
-	@AutoEscape
-	public String getSku();
-
-	/**
-	 * Sets the sku of this cp definition diagram entry.
-	 *
-	 * @param sku the sku of this cp definition diagram entry
-	 */
-	public void setSku(String sku);
-
-	/**
-	 * Returns the quantity of this cp definition diagram entry.
-	 *
-	 * @return the quantity of this cp definition diagram entry
-	 */
-	public int getQuantity();
-
-	/**
-	 * Sets the quantity of this cp definition diagram entry.
-	 *
-	 * @param quantity the quantity of this cp definition diagram entry
-	 */
-	public void setQuantity(int quantity);
-
-	/**
-	 * Returns the position x of this cp definition diagram entry.
-	 *
-	 * @return the position x of this cp definition diagram entry
-	 */
-	public double getPositionX();
-
-	/**
-	 * Sets the position x of this cp definition diagram entry.
-	 *
-	 * @param positionX the position x of this cp definition diagram entry
-	 */
-	public void setPositionX(double positionX);
-
-	/**
-	 * Returns the position y of this cp definition diagram entry.
-	 *
-	 * @return the position y of this cp definition diagram entry
-	 */
-	public double getPositionY();
-
-	/**
-	 * Sets the position y of this cp definition diagram entry.
-	 *
-	 * @param positionY the position y of this cp definition diagram entry
-	 */
-	public void setPositionY(double positionY);
-
-	/**
 	 * Returns the diagram of this cp definition diagram entry.
 	 *
 	 * @return the diagram of this cp definition diagram entry
@@ -303,5 +232,48 @@ public interface CPDefinitionDiagramEntryModel
 	 * @param diagram the diagram of this cp definition diagram entry
 	 */
 	public void setDiagram(boolean diagram);
+
+	/**
+	 * Returns the number of this cp definition diagram entry.
+	 *
+	 * @return the number of this cp definition diagram entry
+	 */
+	public int getNumber();
+
+	/**
+	 * Sets the number of this cp definition diagram entry.
+	 *
+	 * @param number the number of this cp definition diagram entry
+	 */
+	public void setNumber(int number);
+
+	/**
+	 * Returns the quantity of this cp definition diagram entry.
+	 *
+	 * @return the quantity of this cp definition diagram entry
+	 */
+	public int getQuantity();
+
+	/**
+	 * Sets the quantity of this cp definition diagram entry.
+	 *
+	 * @param quantity the quantity of this cp definition diagram entry
+	 */
+	public void setQuantity(int quantity);
+
+	/**
+	 * Returns the sku of this cp definition diagram entry.
+	 *
+	 * @return the sku of this cp definition diagram entry
+	 */
+	@AutoEscape
+	public String getSku();
+
+	/**
+	 * Sets the sku of this cp definition diagram entry.
+	 *
+	 * @param sku the sku of this cp definition diagram entry
+	 */
+	public void setSku(String sku);
 
 }

@@ -187,12 +187,12 @@
 </tr>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_DATE_RANGE_DROPDOWN</td>
-	<td>xpath=(//button[contains(@class, 'dropdown-toggle filter-dropdown-button')])[6]</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle filter-dropdown-button')])[7]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN</td>
-	<td>xpath=(//button[contains(@class, 'dropdown-toggle filter-dropdown-button')])[5]</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle filter-dropdown-button')])[6]</td>
 	<td></td>
 </tr>
 <tr>
@@ -272,7 +272,7 @@
 </tr>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_RANGE_DROPDOWN</td>
-	<td>xpath=(//button[contains(@class, 'filter-dropdown-button')])[4]</td>
+	<td>xpath=(//button[contains(@class, 'filter-dropdown-button')])[5]</td>
 	<td></td>
 </tr>
 <tr>

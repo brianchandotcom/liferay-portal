@@ -186,7 +186,8 @@ const SelectionControls = ({
 									href={clearSelectionURL}
 									onClick={(event) => {
 										searchContainerRef.current?.select?.toggleAllRows(
-											false
+											false,
+											true
 										);
 
 										setActive(false);

@@ -60,6 +60,7 @@ page import="com.liferay.fragment.web.internal.display.context.RenderFragmentEnt
 page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCollectionDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCollectionManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission" %><%@
+page import="com.liferay.fragment.web.internal.servlet.taglib.clay.ContributedFragmentCompositionVerticalCard" %><%@
 page import="com.liferay.fragment.web.internal.servlet.taglib.clay.ContributedFragmentEntryVerticalCard" %><%@
 page import="com.liferay.fragment.web.internal.servlet.taglib.clay.FragmentCollectionNavigationCard" %><%@
 page import="com.liferay.fragment.web.internal.servlet.taglib.clay.FragmentCollectionResourceVerticalCard" %><%@

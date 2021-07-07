@@ -28,17 +28,25 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 
 <aui:form name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= fragmentDisplayContext.getContributedFragmentEntriesSearchContainer() %>"
+		searchContainer="<%= fragmentDisplayContext.getContributedEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.fragment.model.FragmentEntry"
-			keyProperty="fragmentEntryKey"
-			modelVar="fragmentEntry"
+			className="Object"
+			modelVar="object"
 		>
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					verticalCard="<%= new ContributedFragmentEntryVerticalCard(fragmentEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-				/>
+				<c:choose>
+					<c:when test="<%= object instanceof FragmentComposition %>">
+						<clay:vertical-card
+							verticalCard="<%= new ContributedFragmentCompositionVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<clay:vertical-card
+							verticalCard="<%= new ContributedFragmentEntryVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

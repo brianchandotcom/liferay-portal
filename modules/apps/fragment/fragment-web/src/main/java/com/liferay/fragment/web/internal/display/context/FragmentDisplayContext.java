@@ -22,6 +22,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
+import com.liferay.fragment.util.comparator.FragmentCompositionFragmentEntryNameComparator;
 import com.liferay.fragment.web.internal.constants.FragmentTypeConstants;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
@@ -168,43 +169,47 @@ public class FragmentDisplayContext {
 		).build();
 	}
 
-	public SearchContainer<FragmentEntry>
-		getContributedFragmentEntriesSearchContainer() {
-
-		if (_contributedFragmentEntriesSearchContainer != null) {
-			return _contributedFragmentEntriesSearchContainer;
+	public SearchContainer<Object> getContributedEntriesSearchContainer() {
+		if (_contributedEntriesSearchContainer != null) {
+			return _contributedEntriesSearchContainer;
 		}
 
-		SearchContainer<FragmentEntry>
-			contributedFragmentEntriesSearchContainer = new SearchContainer(
+		SearchContainer<Object> contributedEntriesSearchContainer =
+			new SearchContainer(
 				_renderRequest, _getPortletURL(), null,
 				"there-are-no-fragments");
 
-		contributedFragmentEntriesSearchContainer.setId(
+		contributedEntriesSearchContainer.setId(
 			"fragmentEntries" + getFragmentCollectionKey());
 
 		FragmentCollectionContributor fragmentCollectionContributor =
 			_getFragmentCollectionContributor();
 
-		List<FragmentEntry> fragmentEntries =
+		List<Object> contributedEntries = new ArrayList<>();
+
+		contributedEntries.addAll(
+			fragmentCollectionContributor.getFragmentCompositions(
+				_themeDisplay.getLocale()));
+		contributedEntries.addAll(
 			fragmentCollectionContributor.getFragmentEntries(
-				_themeDisplay.getLocale());
+				_themeDisplay.getLocale()));
 
-		contributedFragmentEntriesSearchContainer.setResults(
+		contributedEntries.sort(
+			new FragmentCompositionFragmentEntryNameComparator());
+
+		contributedEntriesSearchContainer.setResults(
 			ListUtil.subList(
-				fragmentEntries,
-				contributedFragmentEntriesSearchContainer.getStart(),
-				contributedFragmentEntriesSearchContainer.getEnd()));
+				contributedEntries,
+				contributedEntriesSearchContainer.getStart(),
+				contributedEntriesSearchContainer.getEnd()));
 
-		contributedFragmentEntriesSearchContainer.setRowChecker(
+		contributedEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		contributedFragmentEntriesSearchContainer.setTotal(
-			fragmentEntries.size());
+		contributedEntriesSearchContainer.setTotal(contributedEntries.size());
 
-		_contributedFragmentEntriesSearchContainer =
-			contributedFragmentEntriesSearchContainer;
+		_contributedEntriesSearchContainer = contributedEntriesSearchContainer;
 
-		return _contributedFragmentEntriesSearchContainer;
+		return _contributedEntriesSearchContainer;
 	}
 
 	public FragmentCollection getFragmentCollection() {
@@ -779,8 +784,7 @@ public class FragmentDisplayContext {
 		return true;
 	}
 
-	private SearchContainer<FragmentEntry>
-		_contributedFragmentEntriesSearchContainer;
+	private SearchContainer<Object> _contributedEntriesSearchContainer;
 	private FragmentCollection _fragmentCollection;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;

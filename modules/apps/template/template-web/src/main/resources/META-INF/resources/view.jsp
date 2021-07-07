@@ -29,49 +29,61 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 	managementToolbarDisplayContext="<%= templateManagementToolbarDisplayContext %>"
 />
 
-<clay:container-fluid
-	id='<%= liferayPortletResponse.getNamespace() + "templatesContainer" %>'
->
-	<liferay-ui:search-container
-		id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"
-		searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"
+<portlet:actionURL name="/template/delete_template" var="deleteTemplateURL" />
+
+<aui:form action="<%= deleteTemplateURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+	<clay:container-fluid
+		id='<%= liferayPortletResponse.getNamespace() + "templatesContainer" %>'
 	>
-		<liferay-ui:search-container-row
-			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
-			keyProperty="templateId"
-			modelVar="ddmTemplate"
+		<liferay-ui:search-container
+			id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"
+			searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"
 		>
-			<liferay-ui:search-container-column-text
-				name="id"
-				property="templateId"
-			/>
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
+				keyProperty="templateId"
+				modelVar="ddmTemplate"
+			>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="name"
-				value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
-			/>
+				<%
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", templateManagementToolbarDisplayContext.getAvailableActions(ddmTemplate)
+					).build());
+				%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="description"
-				value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= ddmTemplate.getModifiedDate() %>"
-			/>
-
-			<liferay-ui:search-container-column-text>
-				<clay:dropdown-actions
-					dropdownItems="<%= templateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+				<liferay-ui:search-container-column-text
+					name="id"
+					property="templateId"
 				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</clay:container-fluid>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="name"
+					value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="description"
+					value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					name="modified-date"
+					value="<%= ddmTemplate.getModifiedDate() %>"
+				/>
+
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						dropdownItems="<%= templateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+					/>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</clay:container-fluid>
+</aui:form>

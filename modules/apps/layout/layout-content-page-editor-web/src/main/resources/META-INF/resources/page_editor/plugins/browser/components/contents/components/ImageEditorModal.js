@@ -19,8 +19,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import updatePreviewImage from '../../../../../app/actions/updatePreviewImage';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {config} from '../../../../../app/config/index';
 import {
 	useDispatch,
@@ -50,17 +48,20 @@ export default function ImageEditorModal({
 
 			const fragmentsToUpdate = Object.values(fragmentEntryLinks).filter(
 				(fragmentEntryLink) => {
-					const editableValues = Object.entries(
-						fragmentEntryLink.editableValues[
-							EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-						]
+					const editableValues = Object.values(
+						fragmentEntryLink.editableValues
+					).reduce(
+						(acc, editable) => [
+							...acc,
+							...Object.entries(editable),
+						],
+						[]
 					);
 
 					return editableValues.some(
-						([key, value]) =>
-							fragmentEntryLink.editableTypes[key] ===
-								EDITABLE_TYPES.image &&
+						([, value]) =>
 							!fragmentEntryLink.removed &&
+							typeof value === 'object' &&
 							(value.classPK === fileEntryId ||
 								value[languageId]?.classPK === fileEntryId ||
 								value[config.defaultLanguageId]?.classPK ===

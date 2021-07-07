@@ -49,8 +49,7 @@ public class ContributedFragmentManagementToolbarDisplayContext
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			fragmentDisplayContext.
-				getContributedFragmentEntriesSearchContainer());
+			fragmentDisplayContext.getContributedEntriesSearchContainer());
 
 		_fragmentDisplayContext = fragmentDisplayContext;
 	}

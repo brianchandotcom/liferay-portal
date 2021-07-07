@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.templates.web.internal.util.TemplateActionDropdownItemsProvider;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,9 +52,14 @@ public class TemplateDisplayContext {
 	}
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
-		DDMTemplate ddmTemplate) {
+			DDMTemplate ddmTemplate)
+		throws Exception {
 
-		return Collections.emptyList();
+		TemplateActionDropdownItemsProvider ddmTemplateActionDropdownItems =
+			new TemplateActionDropdownItemsProvider(
+				ddmTemplate, _httpServletRequest, _liferayPortletResponse);
+
+		return ddmTemplateActionDropdownItems.getActionDropdownItems();
 	}
 
 	public List<NavigationItem> getNavigationItems() {

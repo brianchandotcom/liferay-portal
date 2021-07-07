@@ -301,12 +301,20 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			ActionKeys.UPDATE);
 
+		if (webContentEditPermission) {
+			return true;
+		}
+
 		PortletResourcePermission blogsResourcePermission =
 			_blogsEntryModelResourcePermission.getPortletResourcePermission();
 
 		boolean blogsEditPermission = blogsResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			ActionKeys.UPDATE);
+
+		if (blogsEditPermission) {
+			return true;
+		}
 
 		PortletResourcePermission fileResourcePermission =
 			_fileEntryModelResourcePermission.getPortletResourcePermission();
@@ -315,11 +323,10 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			ActionKeys.UPDATE);
 
-		if (webContentEditPermission || blogsEditPermission ||
-			documentEditPermission) {
-
+		if (documentEditPermission) {
 			return true;
 		}
+
 
 		return Optional.ofNullable(
 			_layoutLocalService.fetchLayout(themeDisplay.getPlid())

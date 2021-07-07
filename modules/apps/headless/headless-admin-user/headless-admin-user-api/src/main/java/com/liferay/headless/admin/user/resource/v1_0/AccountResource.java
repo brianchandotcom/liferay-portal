@@ -91,6 +91,29 @@ public interface AccountResource {
 	public Response putAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void patchOrganizationMoveAccounts(
+			Long sourceOrganizationId, Long targetOrganizationId, Long[] longs)
+		throws Exception;
+
+	public void patchOrganizationMoveAccountsByExternalReferenceCode(
+			Long sourceOrganizationId, Long targetOrganizationId,
+			String[] strings)
+		throws Exception;
+
+	public void deleteOrganizationAccounts(Long organizationId, Long[] longs)
+		throws Exception;
+
+	public void postOrganizationAccounts(Long organizationId, Long[] longs)
+		throws Exception;
+
+	public void deleteOrganizationAccountsByExternalReferenceCode(
+			Long organizationId, String[] strings)
+		throws Exception;
+
+	public void postOrganizationAccountsByExternalReferenceCode(
+			Long organizationId, String[] strings)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

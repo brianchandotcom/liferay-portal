@@ -59,13 +59,9 @@ definition {
 			accountDescription = "Add account user via assign user.",
 			accountName = "Assign Account User");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.addAssignee(
+		Accounts.addNewUserViaAssignUsers(
 			accountName = "Assign Account User",
-			addNewAssignee = "true",
 			assigneeName = "userfn",
-			assigneeType = "Users",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -107,12 +103,9 @@ definition {
 			accountName = "Account with Exist User",
 			domainNames = "liferay.com");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.addAssignee(
+		Accounts.assignUsers(
 			accountName = "Account with Exist User",
-			assigneeName = "userfn",
-			assigneeType = "Users");
+			assigneeName = "userfn");
 
 		Accounts.openAccountsAdmin();
 

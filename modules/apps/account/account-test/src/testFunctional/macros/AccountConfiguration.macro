@@ -34,12 +34,9 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
-
-		Accounts.addAssignee(
+		Accounts.assignOrganizations(
 			accountName = "${accountName}",
-			assigneeName = "${orgName}",
-			assigneeType = "Organizations");
+			assigneeName = "${orgName}");
 	}
 
 	macro addBlockedEmailDomain {

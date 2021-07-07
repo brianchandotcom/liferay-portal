@@ -141,12 +141,9 @@ definition {
 			accountDescription = "This is a test for adding organization to account.",
 			accountName = "Account with Organization");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
-
-		Accounts.addAssignee(
+		Accounts.assignOrganizations(
 			accountName = "Account with Organization",
-			assigneeName = "Organization for Account",
-			assigneeType = "Organizations");
+			assigneeName = "Organization for Account");
 
 		Accounts.openAccountsAdmin();
 
@@ -684,12 +681,9 @@ definition {
 			accountDescription = "This is a test for unassign organization from account.",
 			accountName = "Unassign Organization from Account");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
-
-		Accounts.addAssignee(
+		Accounts.assignOrganizations(
 			accountName = "Unassign Organization from Account",
-			assigneeName = "Organization for Account",
-			assigneeType = "Organizations");
+			assigneeName = "Organization for Account");
 
 		Accounts.openAccountsAdmin();
 
@@ -930,13 +924,9 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.addAssignee(
+		Accounts.addNewUserViaAssignUsers(
 			accountName = "AM Account",
-			addNewAssignee = "true",
 			assigneeName = "userfn",
-			assigneeType = "Users",
 			emailDomainName = "9teen.com",
 			userEmailAddress = "userea@9teen.com",
 			userFirstName = "userfn",
@@ -1151,13 +1141,9 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.addAssignee(
+		Accounts.addNewUserViaAssignUsers(
 			accountName = "AM Account",
-			addNewAssignee = "true",
 			assigneeName = "userfn",
-			assigneeType = "Users",
 			domainValidation = "Invalid",
 			emailDomainName = "nodomain.com",
 			userEmailAddress = "userea@nodomain.com",
@@ -1209,13 +1195,9 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.addAssignee(
+		Accounts.addNewUserViaAssignUsers(
 			accountName = "AM Account",
-			addNewAssignee = "true",
 			assigneeName = "userfn",
-			assigneeType = "Users",
 			domainValidation = "Blocked",
 			invalidDomainName = "blocked.com",
 			userEmailAddress = "userea@blocked.com",

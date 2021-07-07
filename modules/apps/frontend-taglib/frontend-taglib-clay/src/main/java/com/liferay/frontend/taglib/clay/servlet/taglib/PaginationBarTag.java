@@ -90,7 +90,6 @@ public class PaginationBarTag extends BaseContainerTag {
 	}
 
 	public void setDisabledPages(List<Integer> disabledPages) {
-		System.out.println("Disabled pages set");
 		_disabledPages = disabledPages;
 	}
 

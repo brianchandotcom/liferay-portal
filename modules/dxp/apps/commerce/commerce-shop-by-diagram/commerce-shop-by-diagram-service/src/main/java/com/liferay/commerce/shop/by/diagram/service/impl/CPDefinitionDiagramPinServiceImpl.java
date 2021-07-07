@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @see CPDefinitionDiagramPinServiceBaseImpl
  */
 @Component(
+	enabled = false,
 	property = {
 		"json.web.service.context.name=commerce",
 		"json.web.service.context.path=CPDefinitionDiagramPin"
@@ -42,9 +43,10 @@ import org.osgi.service.component.annotations.Component;
 public class CPDefinitionDiagramPinServiceImpl
 	extends CPDefinitionDiagramPinServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinServiceUtil</code> to access the cp definition diagram pin remote service.
 	 */
+
 }

@@ -26,7 +26,7 @@ package com.liferay.commerce.shop.by.diagram.model.impl;
 public class CPDefinitionDiagramSettingImpl
 	extends CPDefinitionDiagramSettingBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp definition diagram setting model instance should use the {@link com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting} interface instead.

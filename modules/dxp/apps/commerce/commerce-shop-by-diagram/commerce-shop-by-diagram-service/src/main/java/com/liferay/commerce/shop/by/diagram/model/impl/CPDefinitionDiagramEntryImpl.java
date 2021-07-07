@@ -26,7 +26,7 @@ package com.liferay.commerce.shop.by.diagram.model.impl;
 public class CPDefinitionDiagramEntryImpl
 	extends CPDefinitionDiagramEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp definition diagram entry model instance should use the {@link com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry} interface instead.

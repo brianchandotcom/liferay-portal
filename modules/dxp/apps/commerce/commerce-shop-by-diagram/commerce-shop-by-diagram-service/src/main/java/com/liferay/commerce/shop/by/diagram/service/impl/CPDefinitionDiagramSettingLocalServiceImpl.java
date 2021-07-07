@@ -33,15 +33,17 @@ import org.osgi.service.component.annotations.Component;
  * @see CPDefinitionDiagramSettingLocalServiceBaseImpl
  */
 @Component(
+	enabled = false,
 	property = "model.class.name=com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting",
 	service = AopService.class
 )
 public class CPDefinitionDiagramSettingLocalServiceImpl
 	extends CPDefinitionDiagramSettingLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingLocalServiceUtil</code>.
 	 */
+
 }

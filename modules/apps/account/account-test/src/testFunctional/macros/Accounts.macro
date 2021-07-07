@@ -114,55 +114,6 @@ definition {
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
-	macro addAssignee {
-		LexiconEntry.gotoAdd();
-
-		Pause(locator1 = "3000");
-
-		SelectFrame(
-			key_accountName = "${accountName}",
-			key_assigneeType = "${assigneeType}",
-			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
-
-		if (isSet(addNewAssignee)) {
-			LexiconEntry.gotoAdd();
-
-			AccountUsers.addUserInfos(
-				accountName = "${accountName}",
-				domainValidation = "${domainValidation}",
-				emailDomainName = "${emailDomainName}",
-				userEmailAddress = "${userEmailAddress}",
-				userFirstName = "${userFirstName}",
-				userLastName = "${userLastName}",
-				userScreenName = "${userScreenName}",
-				validDomainNames = "${validDomainNames}");
-
-			AssertClick(
-				locator1 = "Button#SAVE",
-				value1 = "Save");
-		}
-		else {
-			if (isSet(selectAll)) {
-				ManagementBar.setFilterAndOrder(filterBy = "All Users");
-
-				PortletEntry.selectAll();
-			}
-			else {
-				Search.searchCP(searchTerm = "${assigneeName}");
-
-				Check(
-					key_tableEntry = "${assigneeName}",
-					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-			}
-
-			SelectFrameTop();
-
-			Button.clickAssign();
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
 	macro addBusinessAccount {
 		LexiconEntry.gotoAdd();
 
@@ -203,6 +154,41 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addNewUserViaAssignUsers {
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_accountName = "${accountName}",
+			key_assigneeType = "Users",
+			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+
+		LexiconEntry.gotoAdd();
+
+		AccountUsers.addUserInfos(
+			accountName = "${accountName}",
+			domainValidation = "${domainValidation}",
+			emailDomainName = "${emailDomainName}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}",
+			validDomainNames = "${validDomainNames}");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		SelectFrameTop();
+
+		Button.clickAssign();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addPersonAccount {
 		LexiconEntry.gotoAdd();
 
@@ -227,6 +213,56 @@ definition {
 		}
 
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro assignOrganizations {
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_accountName = "${accountName}",
+			key_assigneeType = "Organizations",
+			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		Check(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.clickAssign();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro assignUsers {
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_accountName = "${accountName}",
+			key_assigneeType = "Users",
+			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		Check(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.clickAssign();
 
 		Alert.viewSuccessMessage();
 	}

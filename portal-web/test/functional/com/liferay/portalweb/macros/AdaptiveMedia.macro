@@ -155,13 +155,17 @@ definition {
 		}
 		else {
 			if (!(contains("${maxHeightEdit}", "{maxHeightEdit}"))) {
-				Type(
+				TripleClick(locator1 = "TextInput#MAX_HEIGHT");
+
+				Type.sendKeys(
 					locator1 = "TextInput#MAX_HEIGHT",
 					value1 = "${maxHeightEdit}");
 			}
 
 			if (!(contains("${maxWidthEdit}", "{maxWidthEdit}"))) {
-				Type(
+				TripleClick(locator1 = "TextInput#MAX_WIDTH");
+
+				Type.sendKeys(
 					locator1 = "TextInput#MAX_WIDTH",
 					value1 = "${maxWidthEdit}");
 			}

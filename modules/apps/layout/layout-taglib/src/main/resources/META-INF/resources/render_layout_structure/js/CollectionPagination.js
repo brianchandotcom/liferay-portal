@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
 import PropTypes from 'prop-types';
@@ -54,7 +55,7 @@ export default function CollectionPagination({
 
 	return (
 		<div>
-			{paginationType === 'regular' && (
+			{paginationType === 'regular' ? (
 				<ClayPaginationBar>
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
@@ -65,10 +66,37 @@ export default function CollectionPagination({
 
 					<ClayPaginationWithBasicItems
 						activePage={activePage}
-						onPageChange={(pageNumber) => onPageChange(pageNumber)}
+						onPageChange={onPageChange}
 						totalPages={totalPages}
 					/>
 				</ClayPaginationBar>
+			) : (
+				<div>
+					<ClayButton
+						disabled={activePage === 1}
+						displayType="unstyled"
+					>
+						<span
+							className="c-inner"
+							onClick={() => onPageChange(activePage - 1)}
+							tabIndex="-1"
+						>
+							{Liferay.Language.get('previous')}
+						</span>
+					</ClayButton>
+					<ClayButton
+						disabled={activePage === totalPages}
+						displayType="unstyled"
+					>
+						<span
+							className="c-inner"
+							onClick={() => onPageChange(activePage + 1)}
+							tabIndex="-1"
+						>
+							{Liferay.Language.get('next')}
+						</span>
+					</ClayButton>
+				</div>
 			)}
 		</div>
 	);

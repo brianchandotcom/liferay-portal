@@ -192,6 +192,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccount.setAlternateName(regex);
 		userAccount.setDashboardURL(regex);
 		userAccount.setEmailAddress(regex);
+		userAccount.setExternalReferenceCode(regex);
 		userAccount.setFamilyName(regex);
 		userAccount.setGivenName(regex);
 		userAccount.setHonorificPrefix(regex);
@@ -211,6 +212,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		Assert.assertEquals(regex, userAccount.getAlternateName());
 		Assert.assertEquals(regex, userAccount.getDashboardURL());
 		Assert.assertEquals(regex, userAccount.getEmailAddress());
+		Assert.assertEquals(regex, userAccount.getExternalReferenceCode());
 		Assert.assertEquals(regex, userAccount.getFamilyName());
 		Assert.assertEquals(regex, userAccount.getGivenName());
 		Assert.assertEquals(regex, userAccount.getHonorificPrefix());
@@ -580,7 +582,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				deleteAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
-					null, null));
+					userAccount.getExternalReferenceCode(), null));
 	}
 
 	protected UserAccount
@@ -603,13 +605,13 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				postAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
-					null, null));
+					userAccount.getExternalReferenceCode(), null));
 
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.
 				postAccountUsersByExternalReferenceCodeByEmailAddressHttpResponse(
-					null, null));
+					userAccount.getExternalReferenceCode(), null));
 	}
 
 	protected UserAccount
@@ -632,7 +634,8 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					null, userAccount.getEmailAddress()));
+					userAccount.getExternalReferenceCode(),
+					userAccount.getEmailAddress()));
 	}
 
 	protected UserAccount
@@ -655,13 +658,15 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					null, userAccount.getEmailAddress()));
+					userAccount.getExternalReferenceCode(),
+					userAccount.getEmailAddress()));
 
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.
 				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					null, userAccount.getEmailAddress()));
+					userAccount.getExternalReferenceCode(),
+					userAccount.getEmailAddress()));
 	}
 
 	protected UserAccount
@@ -2308,6 +2313,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (userAccount.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("familyName", additionalAssertFieldName)) {
 				if (userAccount.getFamilyName() == null) {
 					valid = false;
@@ -2601,6 +2616,19 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getEmailAddress(),
 						userAccount2.getEmailAddress())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getExternalReferenceCode(),
+						userAccount2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2997,6 +3025,14 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(userAccount.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("familyName")) {
 			sb.append("'");
 			sb.append(String.valueOf(userAccount.getFamilyName()));
@@ -3147,6 +3183,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				emailAddress =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				familyName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				givenName = StringUtil.toLowerCase(

@@ -192,11 +192,13 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		Assert.assertEquals(
-			StringPool.POUND,
+			themeDisplay.getURLCurrent() + StringPool.POUND,
 			siteNavigationMenuItemType.getRegularURL(
 				mockHttpServletRequest, siteNavigationMenuItem));
 	}

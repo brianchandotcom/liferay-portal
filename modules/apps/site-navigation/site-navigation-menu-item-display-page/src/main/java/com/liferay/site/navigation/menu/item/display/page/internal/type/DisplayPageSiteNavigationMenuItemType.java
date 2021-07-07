@@ -219,7 +219,7 @@ public class DisplayPageSiteNavigationMenuItemType
 			return friendlyURL;
 		}
 
-		return StringPool.POUND;
+		return themeDisplay.getURLCurrent() + StringPool.POUND;
 	}
 
 	@Override

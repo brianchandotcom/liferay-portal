@@ -281,7 +281,8 @@ public class NumericDDMFormFieldTypeSettingsTest
 			"setVisible('inputMaskFormat', getValue('inputMask'))",
 			actions.get(10));
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', false)", actions.get(11));
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(11));
 		Assert.assertEquals("setVisible('tooltip', false)", actions.get(12));
 	}
 

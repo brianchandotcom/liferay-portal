@@ -102,7 +102,8 @@ public class CheckboxMultipleDDMFormFieldTypeSettingsTest
 			actions.get(0));
 		Assert.assertEquals("setRequired('options', true)", actions.get(1));
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', false)", actions.get(2));
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(2));
 		Assert.assertEquals("setVisible('validation', false)", actions.get(3));
 	}
 

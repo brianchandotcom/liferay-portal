@@ -77,19 +77,20 @@ public class ContributedFragmentEntryActionDropdownItemsProvider {
 			).build();
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "copyToContributedFragmentEntry");
 			dropdownItem.putData(
-				"copyContributedFragmentEntryURL",
+				"action", "copyContributedEntryToFragmentCollection");
+			dropdownItem.putData(
+				"contributedEntryKey",
+				String.valueOf(_fragmentEntry.getFragmentEntryKey()));
+			dropdownItem.putData(
+				"copyContributedEntryURL",
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
-					"/fragment/copy_contributed_fragment_entry"
+					"/fragment/copy_contributed_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).buildString());
-			dropdownItem.putData(
-				"fragmentEntryKey",
-				String.valueOf(_fragmentEntry.getFragmentEntryKey()));
 			dropdownItem.putData(
 				"selectFragmentCollectionURL",
 				selectFragmentCollectionURL.toString());

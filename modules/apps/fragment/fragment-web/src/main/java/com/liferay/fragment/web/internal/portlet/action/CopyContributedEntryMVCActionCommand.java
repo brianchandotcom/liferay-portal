@@ -61,12 +61,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/copy_contributed_fragment_entry"
+		"mvc.command.name=/fragment/copy_contributed_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class CopyContributedFragmentEntryMVCActionCommand
-	extends BaseMVCActionCommand {
+public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -85,16 +84,16 @@ public class CopyContributedFragmentEntryMVCActionCommand
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				String[] fragmentEntryKeys = StringUtil.split(
-					ParamUtil.getString(actionRequest, "fragmentEntryKeys"));
+				String[] contributedEntryKeys = StringUtil.split(
+					ParamUtil.getString(actionRequest, "contributedEntryKeys"));
 
 				long fragmentCollectionId = ParamUtil.getLong(
 					actionRequest, "fragmentCollectionId");
 
-				for (String fragmentEntryKey : fragmentEntryKeys) {
+				for (String contributedEntryKey : contributedEntryKeys) {
 					FragmentEntry fragmentEntry =
 						_fragmentCollectionContributorTracker.getFragmentEntry(
-							fragmentEntryKey);
+							contributedEntryKey);
 
 					StringBundler sb = new StringBundler(5);
 
@@ -182,7 +181,7 @@ public class CopyContributedFragmentEntryMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CopyContributedFragmentEntryMVCActionCommand.class);
+		CopyContributedEntryMVCActionCommand.class);
 
 	@Reference
 	private FragmentCollectionContributorTracker

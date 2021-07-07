@@ -58,7 +58,7 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 </aui:form>
 
 <aui:form name="fragmentEntryFm">
-	<aui:input name="fragmentEntryKeys" type="hidden" />
+	<aui:input name="contributedEntryKeys" type="hidden" />
 	<aui:input name="fragmentCollectionId" type="hidden" />
 </aui:form>
 

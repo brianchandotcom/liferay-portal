@@ -67,7 +67,7 @@ public class ContributedFragmentManagementToolbarDisplayContext
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES),
 			dropdownItem -> {
 				dropdownItem.putData(
-					"action", "copyToSelectedContributedFragmentEntries");
+					"action", "copyContributedEntriesToFragmentCollection");
 				dropdownItem.setIcon("paste");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "make-a-copy"));
@@ -85,7 +85,7 @@ public class ContributedFragmentManagementToolbarDisplayContext
 
 	public Map<String, Object> getComponentContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"copyContributedFragmentEntryURL",
+			"copyContributedEntryURL",
 			() -> {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
@@ -94,7 +94,7 @@ public class ContributedFragmentManagementToolbarDisplayContext
 				return PortletURLBuilder.createActionURL(
 					liferayPortletResponse
 				).setActionName(
-					"/fragment/copy_contributed_fragment_entry"
+					"/fragment/copy_contributed_entry"
 				).setRedirect(
 					themeDisplay.getURLCurrent()
 				).buildString();

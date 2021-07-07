@@ -38,7 +38,7 @@ definition {
 			panel = "Applications",
 			portlet = "Account Users");
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account with User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -59,7 +59,7 @@ definition {
 			accountDescription = "Add account user via assign user.",
 			accountName = "Assign Account User");
 
-		Accounts.addNewUserViaAssignUsers(
+		Accounts.addNewUserToBusinessAccount(
 			accountName = "Assign Account User",
 			assigneeName = "userfn",
 			userEmailAddress = "userea@liferay.com",
@@ -87,7 +87,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -127,7 +127,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account with User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -158,7 +158,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account with User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -199,7 +199,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account with User",
 			userEmailAddress = "userac@liferay.com",
 			userFirstName = "userac",
@@ -248,7 +248,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Business Account",
 			userEmailAddress = "businessuser@liferay.com",
 			userFirstName = "business",
@@ -257,7 +257,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Business Account",
 			userEmailAddress = "userbusiness@liferay.com",
 			userFirstName = "user",
@@ -266,7 +266,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Person Account",
 			userEmailAddress = "personuser@liferay.com",
 			userFirstName = "person",
@@ -308,7 +308,7 @@ definition {
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
 
-			AccountUsers.addUsers(
+			AccountUsers.addUser(
 				accountName = "Account with User",
 				userEmailAddress = "userea${accountUser}@liferay.com",
 				userFirstName = "userfn${accountUser}",
@@ -349,7 +349,7 @@ definition {
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
 
-			AccountUsers.addUsers(
+			AccountUsers.addUser(
 				accountName = "Filter Account User",
 				userEmailAddress = "userea${accountUser}@liferay.com",
 				userFirstName = "userfn${accountUser}",
@@ -391,7 +391,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account with User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -418,7 +418,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Remove Account User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

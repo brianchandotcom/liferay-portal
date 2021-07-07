@@ -59,18 +59,16 @@ definition {
 			accountDescription = "This is a Person Account.",
 			accountName = "Person Account");
 
-		Accounts.selectUser(
+		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
 			accountUserName = "userfn1",
-			newUser = "Yes",
 			userEmailAddress = "userfn1@liferay.com",
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
-		Accounts.selectUser(
+		Accounts.addNewUserToPersonAccount(
 			accountName = "Person Account",
 			accountUserName = "userfn2",
-			newUser = "Yes",
 			userEmailAddress = "userfn2@liferay.com",
 			userLastName = "userln2",
 			userScreenName = "usersn2");
@@ -870,7 +868,7 @@ definition {
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
 
-			AccountUsers.addUsers(
+			AccountUsers.addUser(
 				accountName = "Business Account",
 				userEmailAddress = "userea${accountUser}@liferay.com",
 				userFirstName = "userfn${accountUser}",
@@ -924,7 +922,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
-		Accounts.addNewUserViaAssignUsers(
+		Accounts.addNewUserWithSameDomain(
 			accountName = "AM Account",
 			assigneeName = "userfn",
 			emailDomainName = "9teen.com",
@@ -961,7 +959,7 @@ definition {
 		for (var accountUser : list "1,2") {
 			AccountUsers.openAccountUsersAdmin();
 
-			AccountUsers.addUsers(
+			AccountUsers.addUser(
 				accountName = "Business Account",
 				userEmailAddress = "userea${accountUser}@liferay.com",
 				userFirstName = "userfn${accountUser}",
@@ -977,13 +975,13 @@ definition {
 
 		Accounts.viewNoAssigneeTab(navTab = "Users");
 
-		Accounts.selectUser(accountUserName = "userfn1");
+		Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn1");
 
 		Accounts.openAccountsAdmin();
 
 		Accounts.gotoEdit(accountName = "Person Account");
 
-		Accounts.selectUser(accountUserName = "userfn2");
+		Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn2");
 
 		AssertElementNotPresent(
 			key_userName = "userfn1",
@@ -1038,7 +1036,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account no Domain",
 			userEmailAddress = "userea1@different.com",
 			userFirstName = "userfn1",
@@ -1047,7 +1045,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		AccountUsers.addUsers(
+		AccountUsers.addUser(
 			accountName = "Account no Domain",
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
@@ -1140,10 +1138,9 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
-		Accounts.addNewUserViaAssignUsers(
+		Accounts.addNewUserWithInvalidDomain(
 			accountName = "AM Account",
 			assigneeName = "userfn",
-			domainValidation = "Invalid",
 			emailDomainName = "nodomain.com",
 			userEmailAddress = "userea@nodomain.com",
 			userFirstName = "userfn",
@@ -1194,11 +1191,10 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
-		Accounts.addNewUserViaAssignUsers(
+		Accounts.addNewUserWithBlockedDomain(
 			accountName = "AM Account",
 			assigneeName = "userfn",
-			domainValidation = "Blocked",
-			invalidDomainName = "blocked.com",
+			emailDomainName = "blocked.com",
 			userEmailAddress = "userea@blocked.com",
 			userFirstName = "userfn",
 			userLastName = "userln",

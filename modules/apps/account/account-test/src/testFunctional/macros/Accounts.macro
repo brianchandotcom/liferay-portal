@@ -183,7 +183,7 @@ definition {
 
 		SelectFrameTop();
 
-		Button.clickAssign();
+		Button.click(button = "Assign");
 
 		Alert.viewSuccessMessage();
 	}
@@ -235,7 +235,7 @@ definition {
 
 		SelectFrameTop();
 
-		Button.clickAssign();
+		Button.click(button = "Assign");
 
 		Alert.viewSuccessMessage();
 	}
@@ -259,7 +259,7 @@ definition {
 
 		SelectFrameTop();
 
-		Button.clickAssign();
+		Button.click(button = "Assign");
 
 		Alert.viewSuccessMessage();
 	}

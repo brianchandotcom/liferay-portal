@@ -239,6 +239,103 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean patchOrganizationMoveAccounts(
+			@GraphQLName("sourceOrganizationId") Long sourceOrganizationId,
+			@GraphQLName("targetOrganizationId") Long targetOrganizationId,
+			@GraphQLName("longs") Long[] longs)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.patchOrganizationMoveAccounts(
+				sourceOrganizationId, targetOrganizationId, longs));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean patchOrganizationMoveAccountsByExternalReferenceCode(
+			@GraphQLName("sourceOrganizationId") Long sourceOrganizationId,
+			@GraphQLName("targetOrganizationId") Long targetOrganizationId,
+			@GraphQLName("strings") String[] strings)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource ->
+				accountResource.
+					patchOrganizationMoveAccountsByExternalReferenceCode(
+						sourceOrganizationId, targetOrganizationId, strings));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean deleteOrganizationAccounts(
+			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("longs") Long[] longs)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.deleteOrganizationAccounts(
+				organizationId, longs));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean createOrganizationAccounts(
+			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("longs") Long[] longs)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.postOrganizationAccounts(
+				organizationId, longs));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean deleteOrganizationAccountsByExternalReferenceCode(
+			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("strings") String[] strings)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource ->
+				accountResource.
+					deleteOrganizationAccountsByExternalReferenceCode(
+						organizationId, strings));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean createOrganizationAccountsByExternalReferenceCode(
+			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("strings") String[] strings)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource ->
+				accountResource.postOrganizationAccountsByExternalReferenceCode(
+					organizationId, strings));
+
+		return true;
+	}
+
 	@GraphQLField(description = "Unassigns account users to the account role")
 	public boolean deleteAccountRoleUserAssociationByExternalReferenceCode(
 			@GraphQLName("accountExternalReferenceCode") String

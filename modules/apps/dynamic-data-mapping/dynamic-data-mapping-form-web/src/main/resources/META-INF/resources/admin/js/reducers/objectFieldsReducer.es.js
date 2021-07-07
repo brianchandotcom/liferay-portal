@@ -12,8 +12,18 @@
  * details.
  */
 
-export {default as elementSetReducer} from './elementSetReducer.es';
-export {default as formInfoReducer} from './formInfoReducer.es';
-export {default as objectFieldsReducer} from './objectFieldsReducer.es';
-export {default as rulesReducer} from './rulesReducer.es';
-export {default as sidebarReducer} from './sidebarReducer.es';
+import {EVENT_TYPES} from 'data-engine-js-components-web/js/custom/form/eventTypes.es';
+
+export default (state, action) => {
+	switch (action.type) {
+		case EVENT_TYPES.OBJECT_FIELDS.ADD: {
+			const {objectFields} = action.payload;
+
+			return {
+				objectFields,
+			};
+		}
+		default:
+			return state;
+	}
+};

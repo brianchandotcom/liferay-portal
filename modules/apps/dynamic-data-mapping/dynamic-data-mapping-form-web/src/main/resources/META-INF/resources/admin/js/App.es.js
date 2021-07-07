@@ -41,6 +41,7 @@ import {RuleBuilder} from './pages/RuleBuilder.es';
 import {
 	elementSetReducer,
 	formInfoReducer,
+	objectFieldsReducer,
 	rulesReducer,
 	sidebarReducer,
 } from './reducers/index.es';
@@ -68,6 +69,7 @@ export const App = ({autosaveInterval, autosaveURL, ...otherProps}) => {
 							fieldEditableReducer,
 							formInfoReducer,
 							languageReducer,
+							objectFieldsReducer,
 							pageReducer,
 							pagesStructureReducer,
 							rulesReducer,

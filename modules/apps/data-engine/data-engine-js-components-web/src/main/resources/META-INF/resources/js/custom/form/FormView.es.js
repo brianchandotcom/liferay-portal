@@ -53,6 +53,9 @@ const DDM_FORM_PORTLET_NAMESPACE =
 const useFormSubmit = ({apiRef, containerRef}) => {
 	const {activePage, pages} = useFormState();
 	const {portletNamespace, submittable, validateCSRFTokenURL} = useConfig();
+	const isDDMFormPortletNamespace = portletNamespace.includes(
+		DDM_FORM_PORTLET_NAMESPACE
+	);
 
 	const submitForm = useCallback(
 		(event) => {
@@ -103,7 +106,7 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 		(event) => {
 			event.preventDefault();
 
-			if (portletNamespace === DDM_FORM_PORTLET_NAMESPACE) {
+			if (isDDMFormPortletNamespace) {
 				fetch(validateCSRFTokenURL, {
 					method: 'GET',
 				})
@@ -124,7 +127,7 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 				submitForm(event);
 			}
 		},
-		[portletNamespace, submitForm, validateCSRFTokenURL]
+		[isDDMFormPortletNamespace, submitForm, validateCSRFTokenURL]
 	);
 
 	const showSessionExpiredModal = () => {

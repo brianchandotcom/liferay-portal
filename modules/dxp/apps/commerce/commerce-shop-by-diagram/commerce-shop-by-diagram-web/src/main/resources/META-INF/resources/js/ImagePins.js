@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-import { drag, event, select, zoom, zoomIdentity, zoomTransform } from 'd3';
+import {drag, event, select, zoom, zoomIdentity, zoomTransform} from 'd3';
 import PropTypes from 'prop-types';
-import React, { useLayoutEffect, useRef } from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 
 import NavigationButtons from './NavigationButtons';
-import { moveController, zoomIn, zoomOut } from './NavigationsUtils';
+import {moveController, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
 
 const PIN_ATTRIBUTES = [
@@ -102,9 +102,9 @@ const ImagePins = ({
 				.attr(
 					'transform',
 					`translate(${imageInfos.width / 2.0},${
-					imageInfos.height / 2.0
+						imageInfos.height / 2.0
 					}) scale(${selectedOption}) translate(-${
-					imageInfos.width / 2.0
+						imageInfos.width / 2.0
 					},-${imageInfos.height / 2.0})`
 				);
 		}

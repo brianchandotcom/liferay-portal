@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import { ClayIconSpriteContext } from '@clayui/icon';
+import {ClayIconSpriteContext} from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';

@@ -15,7 +15,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClaySlider from '@clayui/slider';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 const DiagramHeader = ({
 	addNewPinState,

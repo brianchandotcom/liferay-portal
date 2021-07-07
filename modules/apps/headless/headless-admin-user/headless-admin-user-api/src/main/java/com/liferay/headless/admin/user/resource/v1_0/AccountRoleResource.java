@@ -14,9 +14,8 @@
 
 package com.liferay.headless.admin.user.resource.v1_0;
 
-import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -30,7 +29,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -45,98 +43,45 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface UserAccountResource {
+public interface AccountRoleResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
-			String externalReferenceCode, String search, Filter filter,
+	public void deleteAccountRoleUserAssociationByExternalReferenceCode(
+			String accountExternalReferenceCode, Long accountRoleId,
+			String accountUserExternalReferenceCode)
+		throws Exception;
+
+	public void postAccountRoleUserAssociationByExternalReferenceCode(
+			String accountExternalReferenceCode, Long accountRoleId,
+			String accountUserExternalReferenceCode)
+		throws Exception;
+
+	public Page<AccountRole> getAccountRolesByExternalReferenceCodePage(
+			String externalReferenceCode, String keywords,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public UserAccount postAccountUserByExternalReferenceCode(
-			String externalReferenceCode, UserAccount userAccount)
+	public AccountRole postAccountRoleByExternalReferenceCode(
+			String externalReferenceCode, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] strings)
-		throws Exception;
-
-	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] strings)
-		throws Exception;
-
-	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String emailAddress)
-		throws Exception;
-
-	public void postAccountUserByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String emailAddress)
-		throws Exception;
-
-	public Page<UserAccount> getAccountUsersPage(
-			Long accountId, String search, Filter filter, Pagination pagination,
+	public Page<AccountRole> getAccountRolesPage(
+			Long accountId, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
-	public UserAccount postAccountUser(Long accountId, UserAccount userAccount)
+	public AccountRole postAccountRole(Long accountId, AccountRole accountRole)
 		throws Exception;
 
-	public void deleteAccountUsersByEmailAddress(
-			Long accountId, String[] strings)
+	public void deleteAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
 		throws Exception;
 
-	public void postAccountUsersByEmailAddress(Long accountId, String[] strings)
-		throws Exception;
-
-	public void deleteAccountUserByEmailAddress(
-			Long accountId, String emailAddress)
-		throws Exception;
-
-	public void postAccountUserByEmailAddress(
-			Long accountId, String emailAddress)
-		throws Exception;
-
-	public UserAccount getMyUserAccount() throws Exception;
-
-	public Page<UserAccount> getOrganizationUserAccountsPage(
-			String organizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Page<UserAccount> getSiteUserAccountsPage(
-			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception;
-
-	public Page<UserAccount> getUserAccountsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception;
-
-	public Response postUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteUserAccount(Long userAccountId) throws Exception;
-
-	public Response deleteUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public UserAccount getUserAccount(Long userAccountId) throws Exception;
-
-	public UserAccount patchUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception;
-
-	public UserAccount putUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception;
-
-	public Response putUserAccountBatch(String callbackURL, Object object)
+	public void postAccountRoleUserAssociation(
+			Long accountId, Long accountRoleId, Long accountUserId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -173,7 +118,7 @@ public interface UserAccountResource {
 	@ProviderType
 	public interface Builder {
 
-		public UserAccountResource build();
+		public AccountRoleResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

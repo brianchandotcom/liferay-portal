@@ -64,16 +64,6 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (organization.getAccountInformation() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"accountInformation\": ");
-
-			sb.append(String.valueOf(organization.getAccountInformation()));
-		}
-
 		if (organization.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -298,15 +288,6 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (organization.getAccountInformation() == null) {
-			map.put("accountInformation", null);
-		}
-		else {
-			map.put(
-				"accountInformation",
-				String.valueOf(organization.getAccountInformation()));
-		}
-
 		if (organization.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -438,14 +419,7 @@ public class OrganizationSerDes {
 			Organization organization, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "accountInformation")) {
-				if (jsonParserFieldValue != null) {
-					organization.setAccountInformation(
-						AccountInformationSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					organization.setActions(
 						(Map)OrganizationSerDes.toMap(

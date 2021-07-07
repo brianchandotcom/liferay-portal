@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -107,8 +108,10 @@ public class JSONLocalizer {
 					try {
 						map.put(
 							key,
-							ResourceBundleUtil.getString(
-								resourceBundle, value));
+							GetterUtil.getString(
+								ResourceBundleUtil.getString(
+									resourceBundle, value),
+								value));
 					}
 					catch (MissingResourceException missingResourceException) {
 						if (_log.isWarnEnabled()) {

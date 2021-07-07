@@ -2099,6 +2099,87 @@ paths:
                     description:
                         "Organizations successfully created"
             tags: ["Organization"]
+    "/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}":
+        patch:
+            operationId: patchOrganizationMoveAccounts
+            parameters:
+                - in: path
+                  name: sourceOrganizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: targetOrganizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                # @review
+                description:
+                    An array of accountIds to move from the source organization to the target organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Account"]
+    "/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}/by-external-reference-code":
+        patch:
+            operationId: patchOrganizationMoveAccountsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: sourceOrganizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: targetOrganizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                # @review
+                description:
+                    An array of account external reference codes to move from the source organization to the target
+                    organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Account"]
     "/organizations/{organizationId}":
         delete:
             # @review
@@ -2206,6 +2287,140 @@ paths:
                     description:
                         "Organization successfully replaced"
             tags: ["Organization"]
+    "/organizations/{organizationId}/accounts":
+        delete:
+            operationId: deleteOrganizationAccounts
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                # @review
+                description:
+                    An array of accountIds to remove from an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Account"]
+        post:
+            operationId: postOrganizationAccounts
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                # @review
+                description:
+                    An array of accountIds to add to an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Account"]
+    "/organizations/{organizationId}/accounts/by-external-reference-code":
+        delete:
+            operationId: deleteOrganizationAccountsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                # @review
+                description:
+                    An array of account external reference codes to remove from an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Account"]
+        post:
+            operationId: postOrganizationAccountsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                # @review
+                description:
+                    An array of account external reference codes to add to an organization
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Account"]
     "/organizations/{organizationId}/email-addresses":
         get:
             description:

@@ -64,7 +64,7 @@ definition {
 		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 
 		Type(
-			key_fieldName = "Numeric",
+			key_fieldLabel = "Numeric",
 			locator1 = "TextInput#NUMERIC",
 			value1 = "123");
 
@@ -170,7 +170,7 @@ definition {
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
 		Type(
-			key_fieldName = "Numeric",
+			key_fieldLabel = "Numeric",
 			locator1 = "TextInput#NUMERIC",
 			value1 = "123");
 

@@ -280,8 +280,6 @@ public class PortletTracker
 				return null;
 			});
 
-		DependencyManagerSyncUtil.registerSyncFuture(futureTask);
-
 		Thread serviceTrackerOpenerThread = new Thread(
 			futureTask,
 			PortletTracker.class.getName() + "-ServiceTrackerOpener");
@@ -289,6 +287,8 @@ public class PortletTracker
 		serviceTrackerOpenerThread.setDaemon(true);
 
 		serviceTrackerOpenerThread.start();
+
+		DependencyManagerSyncUtil.registerSyncFuture(futureTask);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Activated");

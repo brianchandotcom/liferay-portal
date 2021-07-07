@@ -19,7 +19,9 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
 			value1 = "\RETURN");
 
-		FormFields.enableCheckbox(fieldName = "${assetTitle}");
+		Check.checkNotVisible(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_CHECKBOX_LABEL");
 
 		Button.click(button = "Add");
 

@@ -22,6 +22,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_ADD_RESULT_CHECKBOX_LABEL</td>
+	<td>//li[contains(.,'${key_assetTitle}')]//label//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR</td>
 	<td>//div[@data-testid='add-result-modal']//input[contains(@aria-label,'Search')]</td>
 	<td></td>

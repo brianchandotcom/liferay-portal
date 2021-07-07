@@ -162,9 +162,8 @@ definition {
 		Pause(locator1 = "3000");
 
 		SelectFrame(
-			key_accountName = "${accountName}",
-			key_assigneeType = "Users",
-			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+			key_title = "Assign Users to ${accountName}",
+			locator1 = "IFrame#MODAL_ANY");
 
 		LexiconEntry.gotoAdd();
 
@@ -225,9 +224,8 @@ definition {
 		Pause(locator1 = "3000");
 
 		SelectFrame(
-			key_accountName = "${accountName}",
-			key_assigneeType = "Organizations",
-			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+			key_title = "Assign Organizations to ${accountName}",
+			locator1 = "IFrame#MODAL_ANY");
 
 		Search.searchCP(searchTerm = "${assigneeName}");
 
@@ -250,9 +248,8 @@ definition {
 		Pause(locator1 = "3000");
 
 		SelectFrame(
-			key_accountName = "${accountName}",
-			key_assigneeType = "Users",
-			locator1 = "IFrame#ADD_ASSIGNEE_TO_ACCOUNT");
+			key_title = "Assign Users to ${accountName}",
+			locator1 = "IFrame#MODAL_ANY");
 
 		Search.searchCP(searchTerm = "${assigneeName}");
 

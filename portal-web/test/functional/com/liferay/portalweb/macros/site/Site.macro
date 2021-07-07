@@ -212,9 +212,13 @@ definition {
 			locator1 = "SiteMembershipsViewMembershipRequests#USER_NAME",
 			value1 = "${userFirstName} ${userLastName}");
 
+		if (!(isSet(memebershipComment))) {
+			memebershipComment= "Please allow me to join the Restricted Site.";
+		}
+
 		AssertTextEquals(
 			locator1 = "SiteMembershipsViewMembershipRequests#USER_COMMENTS",
-			value1 = "Please allow me to join the Restricted Site.");
+			value1 = "${memebershipComment}");
 
 		LexiconTable.clickEllipsisItem(
 			item = "Reply",
@@ -826,9 +830,12 @@ definition {
 				listEntry = "${siteName}",
 				userRole = "${userRole}");
 
+			if (!(isSet(memebershipComment))) {
+				memebershipComment= "Please allow me to join the Restricted Site.";
+			}
 			Type(
 				locator1 = "TextArea#COMMENTS",
-				value1 = "Please allow me to join the Restricted Site.");
+				value1 = "${memebershipComment}");
 
 			Button.clickSave();
 

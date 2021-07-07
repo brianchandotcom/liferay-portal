@@ -156,11 +156,11 @@ public class DBUpgrader {
 
 		_upgradePortal();
 
-		DependencyManagerSyncUtil.sync();
-
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
 		_upgradeModules(applicationContext);
+
+		DependencyManagerSyncUtil.sync();
 	}
 
 	public static void verify() throws VerifyException {

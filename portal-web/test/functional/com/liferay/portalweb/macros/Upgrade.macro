@@ -1747,8 +1747,8 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title With DM Type",
 			dmDocumentTypeName = "DM Document Type Name",
-			fieldFieldLabel = "Number",
-			numericField = "1234");
+			numericField = "1234",
+			numericFieldFieldLabel = "Number");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

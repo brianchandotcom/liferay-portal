@@ -9,53 +9,36 @@
  * distribution rights of the Software.
  */
 
-export const moveController = (container, navigationController, where) => {
-	const diagramBackgroundImagePosition = container.attr('transform');
-
-	// this regex takes a string value from inline html to make the image zoom/translations working
-
-	const scale = diagramBackgroundImagePosition.match(/(-?[0-9]+[.,-\s]*)+/g);
-	const coordinates = scale[0].split(',').map((x) => parseFloat(x));
-	let newPosition;
-
-	if (where === 'right') {
-		newPosition = {
-			k: parseFloat(scale[1]),
-			x: coordinates[0] + navigationController.dragStep,
-			y: coordinates[1],
-		};
-	}
-	if (where === 'left') {
-		newPosition = {
-			k: parseFloat(scale[1]),
-			x: coordinates[0] - navigationController.dragStep,
-			y: coordinates[1],
-		};
-	}
-	if (where === 'up') {
-		newPosition = {
-			k: parseFloat(scale[1]),
-			x: coordinates[0],
-			y: coordinates[1] - navigationController.dragStep,
-		};
-	}
-	if (where === 'bottom') {
-		newPosition = {
-			k: parseFloat(scale[1]),
-			x: coordinates[0],
-			y: coordinates[1] + navigationController.dragStep,
-		};
+export const moveController = (container, navigationController, direction, zoom) => {
+	const position = {
+		x: 0,
+		y: 0,
 	}
 
-	container.attr(
-		'transform',
-		`translate(${newPosition.x},${newPosition.y}) scale(${newPosition.k})`
-	);
+	switch (direction) {
+		case 'right':
+			position.x = -navigationController.dragStep
+			break;
+		case 'left':
+			position.x = navigationController.dragStep
+			break;
+		case 'up':
+			position.y = navigationController.dragStep
+			break;
+		case 'down':
+			position.y = -navigationController.dragStep
+			break;
+		default:
+			break;
+	}
+
+	container.transition().duration(700).call(zoom.translateBy, position.x, position.y);
 };
 
-export const zoomIn = (container, panZoom) => {
-	container.transition().duration(700).call(panZoom.scaleBy, 1.2);
+export const zoomIn = (container, zoom) => {
+	container.transition().duration(700).call(zoom.scaleBy, 1.2);
 };
-export const zoomOut = (container, panZoom) => {
-	container.transition().duration(700).call(panZoom.scaleBy, 0.8);
+
+export const zoomOut = (container, zoom) => {
+	container.transition().duration(700).call(zoom.scaleBy, 0.8);
 };

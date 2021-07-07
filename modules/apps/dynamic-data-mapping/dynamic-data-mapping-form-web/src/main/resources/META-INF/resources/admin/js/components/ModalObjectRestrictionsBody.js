@@ -15,33 +15,78 @@
 import ClayPanel from '@clayui/panel';
 import React from 'react';
 
-const ModalObjectRestrictionsBody = ({fieldsGroupedByType}) => (
-	<>
-		<p>
-			{Liferay.Language.get(
-				'all-fields-in-this-form-must-be-mapped-to-a-field-in-the-object'
+import {getFieldsGroupedByTypes, normalizeDataType} from '../util/objectFields';
+
+const ObjectRestrictionSection = ({children, description, title}) => {
+	return (
+		<>
+			<p>{title}</p>
+
+			<ClayPanel displayTitle={description} displayType="secondary">
+				<ClayPanel.Body>{children}</ClayPanel.Body>
+			</ClayPanel>
+		</>
+	);
+};
+
+const ModalObjectRestrictionsBody = ({
+	unmappedFormFields,
+	unmappedRequiredObjectFields,
+}) => {
+	const formFieldsGroupedByType = getFieldsGroupedByTypes(unmappedFormFields);
+	const requiredObjectFieldsGroupedByType = getFieldsGroupedByTypes(
+		unmappedRequiredObjectFields
+	);
+
+	return (
+		<>
+			{!!unmappedRequiredObjectFields.length && (
+				<ObjectRestrictionSection
+					description={Liferay.Language.get(
+						'unmapped-object-required-fields'
+					)}
+					title={Liferay.Language.get(
+						'to-save-this-form-all-required-field-of-the-selected-object-as-storage-type-need-to-be-mapped'
+					)}
+				>
+					{requiredObjectFieldsGroupedByType.map(({fields, type}) => (
+						<div key={type}>
+							<strong className="text-capitalize">
+								{normalizeDataType(type)}
+							</strong>
+
+							<ol>
+								{fields.map(({name}) => (
+									<li key={name}>{name}</li>
+								))}
+							</ol>
+						</div>
+					))}
+				</ObjectRestrictionSection>
 			)}
-		</p>
 
-		<ClayPanel
-			displayTitle={Liferay.Language.get('form-fields-not-mapped')}
-			displayType="secondary"
-		>
-			<ClayPanel.Body>
-				{fieldsGroupedByType.map(({fields, type}) => (
-					<div key={type}>
-						<strong className="text-capitalize">{type}</strong>
+			{!!unmappedFormFields.length && (
+				<ObjectRestrictionSection
+					description={Liferay.Language.get('unmapped-form-fields')}
+					title={Liferay.Language.get(
+						'all-fields-in-this-form-must-be-mapped-to-a-field-in-the-object'
+					)}
+				>
+					{formFieldsGroupedByType.map(({fields, type}) => (
+						<div key={type}>
+							<strong className="text-capitalize">{type}</strong>
 
-						<ol>
-							{fields.map(({fieldName, label}) => (
-								<li key={fieldName}>{label}</li>
-							))}
-						</ol>
-					</div>
-				))}
-			</ClayPanel.Body>
-		</ClayPanel>
-	</>
-);
+							<ol>
+								{fields.map(({fieldName, label}) => (
+									<li key={fieldName}>{label}</li>
+								))}
+							</ol>
+						</div>
+					))}
+				</ObjectRestrictionSection>
+			)}
+		</>
+	);
+};
 
 export default ModalObjectRestrictionsBody;

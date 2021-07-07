@@ -16,29 +16,60 @@ import {useFormState} from 'data-engine-js-components-web';
 import {getFields} from 'data-engine-js-components-web/js/utils/fields.es';
 import {useCallback} from 'react';
 
-const getObjectDefinitionId = async () => {
-	const settingsDDMForm = await Liferay.componentReady('settingsDDMForm');
-	const fields = settingsDDMForm?.reactComponentRef.current?.getFields();
-	const getObjectDefinitionFieldName = ({fieldName}) =>
-		fieldName === 'objectDefinitionId';
+const getFieldsByColumn = (settingsContext, columnTitle) => {
+	const column = ({title}) => title.toLowerCase() === columnTitle;
 
-	return fields.find(getObjectDefinitionFieldName)?.value[0];
+	return settingsContext.pages.find(column).rows[0].columns[0].fields;
 };
 
-const getUnmappedFields = (fields) => {
-	const getAdvancedColumn = ({title}) => title.toLowerCase() === 'advanced';
-	const getObjectFieldName = ({fieldName}) => fieldName === 'objectFieldName';
+const getFieldProperty = (fields, fieldName) =>
+	fields.find((field) => field.fieldName === fieldName);
 
-	return fields.filter(({settingsContext}) => {
-		const fieldsFromAdvancedColumn = settingsContext.pages.find(
-			getAdvancedColumn
-		).rows[0].columns[0].fields;
-		const objectFieldName = fieldsFromAdvancedColumn.find(
-			getObjectFieldName
-		);
+const getSelectedValue = (value) => {
+	if (typeof value === 'string' && value !== '') {
+		const newValue = JSON.parse(value);
 
-		return objectFieldName && !objectFieldName.value;
+		return Array.isArray(newValue) ? newValue[0] : newValue;
+	}
+
+	return value[0];
+};
+
+const getObjectFieldName = (settingsContext) => {
+	const fieldsFromAdvancedColumn = getFieldsByColumn(
+		settingsContext,
+		'advanced'
+	);
+	const objectFieldName = getFieldProperty(
+		fieldsFromAdvancedColumn,
+		'objectFieldName'
+	);
+
+	return objectFieldName;
+};
+
+const getUnmappedFormFields = (formFields) => {
+	return formFields.filter(({settingsContext}) => {
+		const objectFieldName = getObjectFieldName(settingsContext);
+
+		return objectFieldName && !getSelectedValue(objectFieldName.value);
 	});
+};
+
+const getUnmappedRequiredObjectFields = (formFields, objectFields) => {
+	const requiredObjectFields = objectFields.filter(({required}) => required);
+	const formFieldNames = formFields
+		.map(({settingsContext}) => {
+			const objectFieldName = getObjectFieldName(settingsContext);
+
+			return objectFieldName && getSelectedValue(objectFieldName.value);
+		})
+		.filter(Boolean);
+	const unmappedRequiredObjectFields = requiredObjectFields.filter(
+		({name}) => formFieldNames.indexOf(name) === -1
+	);
+
+	return unmappedRequiredObjectFields;
 };
 
 /**
@@ -46,24 +77,44 @@ const getUnmappedFields = (fields) => {
  * and if any Forms field is not mapped with Object fields
  */
 export const useValidateFormWithObjects = () => {
-	const {pages} = useFormState();
+	const {objectFields, pages} = useFormState();
 
 	return useCallback(
 		async (callbackFn) => {
-			const objectDefinitionId = await getObjectDefinitionId();
+			const settingsDDMForm = await Liferay.componentReady(
+				'settingsDDMForm'
+			);
+			const objectDefinitionId = settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
 
 			if (objectDefinitionId) {
-				const unmappedFields = getUnmappedFields(getFields(pages));
+				const formFields = getFields(pages);
+				const unmappedFormFields = getUnmappedFormFields(formFields);
+				const unmappedRequiredObjectFields = getUnmappedRequiredObjectFields(
+					formFields,
+					objectFields
+				);
 
-				if (callbackFn && unmappedFields.length) {
-					callbackFn(unmappedFields);
+				if (
+					unmappedFormFields.length ||
+					unmappedRequiredObjectFields.length
+				) {
+					if (callbackFn) {
+						callbackFn({
+							unmappedFormFields,
+							unmappedRequiredObjectFields,
+						});
+					}
+
+					return false;
 				}
-
-				return false;
+				else {
+					return true;
+				}
 			}
-
-			return true;
+			else {
+				return true;
+			}
 		},
-		[pages]
+		[objectFields, pages]
 	);
 };

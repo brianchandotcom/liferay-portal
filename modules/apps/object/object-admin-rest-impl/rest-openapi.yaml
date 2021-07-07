@@ -50,6 +50,8 @@ components:
                     type: string
                 name:
                     type: string
+                required:
+                    type: boolean
                 type:
                     type: string
 info:

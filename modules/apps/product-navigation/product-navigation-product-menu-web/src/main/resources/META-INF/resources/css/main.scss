@@ -1,7 +1,8 @@
-@import 'NavigationMenuItemsTree';
-
 @import 'cadmin-variables';
+
 @import 'variables';
+
+@import 'NavigationMenuItemsTree';
 
 $product-menu-width: 320px;
 $product-menu-item-fixed-width: $product-menu-width;
@@ -191,6 +192,7 @@ html#{$cadmin-selector} {
 						background-color: $cadmin-gray-800;
 						border: 1px solid $cadmin-gray-800;
 						border-radius: 2px;
+						color: $cadmin-gray-400;
 						font-size: 6px;
 						height: 12px;
 						margin-right: 0;

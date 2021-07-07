@@ -1,70 +1,72 @@
-@import 'atlas-variables';
+html#{$cadmin-selector} {
+	.cadmin {
+		.navigation-menu-items-tree {
+			color: $cadmin-white;
+			font-size: 14px;
+			margin-left: 4px;
+			margin-top: 16px;
 
-.navigation-menu-items-tree {
-	color: $white;
-	font-size: 0.875rem;
-	margin-left: 4px;
-	margin-top: 16px;
+			.lfr-treeview-node-list {
+				border-left: none;
+				padding-left: 22px;
 
-	.lfr-treeview-node-list {
-		border-left: none;
-		padding-left: 22px;
+				.lfr-treeview-node-list {
+					border-left: 1px solid $cadmin-gray-800;
+					margin-bottom: 6px;
+					margin-top: 6px;
+				}
 
-		.lfr-treeview-node-list {
-			border-left: 1px solid $gray-800;
-			margin-bottom: 6px;
-			margin-top: 6px;
-		}
+				.lfr-treeview-node-list-item {
+					margin: 0;
+					margin-bottom: 4px;
+					margin-top: 4px;
+					padding-left: 16px;
 
-		.lfr-treeview-node-list-item {
-			margin: 0;
-			margin-bottom: 4px;
-			margin-top: 4px;
-			padding-left: 16px;
+					.lfr-treeview-node-list-item__node {
+						margin-left: 0;
+						padding-left: 4px;
+					}
 
-			.lfr-treeview-node-list-item__node {
-				margin-left: 0;
-				padding-left: 4px;
+					.lfr-treeview-node-list-item__button {
+						background-color: transparent;
+						margin-left: -5px;
+						margin-top: -3px;
+					}
+
+					.lfr-treeview-node-list-item__button-icon {
+						background-color: $cadmin-gray-800;
+						border-radius: 2px;
+						color: #999;
+						height: 12px;
+						width: 12px;
+					}
+				}
+
+				.lfr-treeview-node-list-item__children {
+					padding-left: 0;
+				}
 			}
 
-			.lfr-treeview-node-list-item__button {
-				background-color: transparent;
-				margin-left: -5px;
-				margin-top: -3px;
-			}
+			.navigation-menu-items-tree-node {
+				color: $cadmin-gray-500;
 
-			.lfr-treeview-node-list-item__button-icon {
-				background-color: $gray-800;
-				border-radius: 2px;
-				color: #999;
-				height: 12px;
-				width: 12px;
-			}
-		}
+				a {
+					color: $cadmin-gray-500;
 
-		.lfr-treeview-node-list-item__children {
-			padding-left: 0;
-		}
-	}
+					&:hover {
+						color: $cadmin-white;
+						text-decoration: none;
+					}
+				}
 
-	.navigation-menu-items-tree-node {
-		color: $gray-500;
+				&.selected {
+					color: $cadmin-white;
+					font-weight: 600;
 
-		a {
-			color: $gray-500;
-
-			&:hover {
-				color: $white;
-				text-decoration: none;
-			}
-		}
-
-		&.selected {
-			color: $white;
-			font-weight: 600;
-
-			a {
-				color: $white;
+					a {
+						color: $cadmin-white;
+					}
+				}
 			}
 		}
 	}

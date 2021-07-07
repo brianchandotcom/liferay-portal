@@ -25,7 +25,6 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,40 +55,6 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 			serviceContext);
 
 		_wikiPage = _addWikiPage(parentWikiNode.getNodeId());
-	}
-
-	@Override
-	@Test
-	public void testPutSiteWikiPageByExternalReferenceCode() throws Exception {
-
-		// Update
-
-		super.testPutSiteWikiPageByExternalReferenceCode();
-
-		// Add
-
-		WikiPage randomWikiPage = randomWikiPage();
-
-		randomWikiPage.setWikiNodeId(_wikiPage.getWikiNodeId());
-
-		WikiPage putWikiPage =
-			wikiPageResource.putSiteWikiPageByExternalReferenceCode(
-				testGroup.getGroupId(),
-				randomWikiPage.getExternalReferenceCode(), randomWikiPage);
-
-		assertEquals(randomWikiPage, putWikiPage);
-		assertValid(putWikiPage);
-
-		WikiPage getWikiPage =
-			wikiPageResource.getSiteWikiPageByExternalReferenceCode(
-				testGroup.getGroupId(), putWikiPage.getExternalReferenceCode());
-
-		assertEquals(randomWikiPage, getWikiPage);
-		assertValid(getWikiPage);
-
-		Assert.assertEquals(
-			randomWikiPage.getExternalReferenceCode(),
-			getWikiPage.getExternalReferenceCode());
 	}
 
 	@Test

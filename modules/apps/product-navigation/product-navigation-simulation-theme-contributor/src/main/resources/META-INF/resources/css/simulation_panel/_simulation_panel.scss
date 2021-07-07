@@ -20,7 +20,7 @@
 		padding-bottom: 6px;
 		padding-top: 6px;
 
-		.collapse-icon-closed, 
+		.collapse-icon-closed,
 		.collapse-icon-open {
 			color: $gray-600;
 			right: 0;
@@ -32,14 +32,6 @@
 	}
 
 	.custom-devices {
-		border-radius: 4px;
-		margin: 0 10px 20px;
-		padding: 8px 6px 16px;
-
-		label {
-			font-size: 12px;
-		}
-
 		.form-control {
 			border-radius: 4px;
 			padding: 8px 12px;
@@ -51,8 +43,6 @@
 	}
 
 	.default-devices {
-		margin-bottom: 24px;
-
 		.icon-monospaced {
 			height: 2.5rem;
 			width: 2.5rem;
@@ -71,12 +61,10 @@
 
 	.lfr-device-item {
 		color: $gray-600;
-		max-width: 33.33%;
 
 		&:hover {
 			color: $gray-900;
 		}
-
 
 		&.selected {
 			color: $gray-900;

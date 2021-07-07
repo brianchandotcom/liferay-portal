@@ -22,9 +22,9 @@
 			cssClass="devices"
 		>
 			<clay:row
-				cssClass="default-devices"
+				cssClass="default-devices mb-2"
 			>
-				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop" type="button">
+				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 selected text-center" data-device="desktop" type="button">
 					<div class="c-inner px-0" tabindex="-1">
 						<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
@@ -32,7 +32,7 @@
 					</div>
 				</button>
 
-				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="tablet" type="button">
+				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 text-center" data-device="tablet" type="button">
 					<div class="c-inner px-0" tabindex="-1">
 						<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
 
@@ -42,7 +42,7 @@
 					</div>
 				</button>
 
-				<button class="btn btn-unstyled col-4 lfr-device-item text-center" data-device="smartphone" type="button">
+				<button class="btn btn-unstyled col-4 lfr-device-item mb-3 text-center" data-device="smartphone" type="button">
 					<div class="c-inner px-0" tabindex="-1">
 						<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
 
@@ -70,12 +70,12 @@
 			</clay:row>
 
 			<clay:row
-				cssClass="custom-devices d-lg-flex d-none hide"
+				cssClass="custom-devices d-lg-flex d-none hide mt-3"
 				id='<%= liferayPortletResponse.getNamespace() + "customDeviceContainer" %>'
 			>
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="col-6" />
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="flex-grow-1 mr-3" />
 
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="col-6" />
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="flex-grow-1" />
 			</clay:row>
 		</clay:container-fluid>
 	</div>

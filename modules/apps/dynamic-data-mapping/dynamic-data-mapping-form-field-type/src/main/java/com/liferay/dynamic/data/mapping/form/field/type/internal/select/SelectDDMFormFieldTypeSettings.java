@@ -88,11 +88,12 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"name", "fieldReference", "predefinedValue",
-								"visibilityExpression", "fieldNamespace",
-								"indexType", "labelAtStructureLevel",
-								"localizable", "nativeField", "readOnly",
-								"dataType", "type", "showLabel", "repeatable",
-								"multiple", "alphabeticalOrder"
+								"objectFieldName", "visibilityExpression",
+								"fieldNamespace", "indexType",
+								"labelAtStructureLevel", "localizable",
+								"nativeField", "readOnly", "dataType", "type",
+								"showLabel", "repeatable", "multiple",
+								"alphabeticalOrder"
 							}
 						)
 					}

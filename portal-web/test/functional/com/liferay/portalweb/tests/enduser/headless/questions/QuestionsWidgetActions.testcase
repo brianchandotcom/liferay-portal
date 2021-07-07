@@ -790,20 +790,16 @@ definition {
 			policyName = "QUESTIONS",
 			title = "QUESTIONS");
 
-		var allowedServiceSignature = '''
-			com.liferay.expando.kernel.service.ExpandoValueService#getData
-			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
-			com.liferay.message.boards.service.MBCategoryService#getCategory
-			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
-			com.liferay.message.boards.service.MBMessageService#getChildMessages
-			com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
-			com.liferay.message.boards.service.MBMessageService#getMessage
-			com.liferay.message.boards.service.MBThreadService#getThreads
-			com.liferay.message.boards.service.MBThreadService#getThreadsCount
-		''';
-
 		ServiceAccessPolicy.editServiceAccessPolicy(
-			allowedServiceSignature = "${allowedServiceSignature}",
+			allowedServiceSignature = '''com.liferay.expando.kernel.service.ExpandoValueService#getData
+com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+com.liferay.message.boards.service.MBCategoryService#getCategory
+com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+com.liferay.message.boards.service.MBMessageService#getChildMessages
+com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
+com.liferay.message.boards.service.MBMessageService#getMessage
+com.liferay.message.boards.service.MBThreadService#getThreads
+com.liferay.message.boards.service.MBThreadService#getThreadsCount''',
 			policyName = "QUESTIONS");
 
 		JSONMBMessage.addCategory(
@@ -853,20 +849,16 @@ definition {
 			policyName = "QUESTIONS",
 			title = "QUESTIONS");
 
-		var allowedServiceSignature = '''
-			com.liferay.expando.kernel.service.ExpandoValueService#getData
-			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
-			com.liferay.message.boards.service.MBCategoryService#getCategory
-			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
-			com.liferay.message.boards.service.MBMessageService#getChildMessages
-			com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
-			com.liferay.message.boards.service.MBMessageService#getMessage
-			com.liferay.message.boards.service.MBThreadService#getThreads
-			com.liferay.message.boards.service.MBThreadService#getThreadsCount
-		''';
-
 		ServiceAccessPolicy.editServiceAccessPolicy(
-			allowedServiceSignature = "${allowedServiceSignature}",
+			allowedServiceSignature = '''com.liferay.expando.kernel.service.ExpandoValueService#getData
+com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+com.liferay.message.boards.service.MBCategoryService#getCategory
+com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+com.liferay.message.boards.service.MBMessageService#getChildMessages
+com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
+com.liferay.message.boards.service.MBMessageService#getMessage
+com.liferay.message.boards.service.MBThreadService#getThreads
+com.liferay.message.boards.service.MBThreadService#getThreadsCount''',
 			policyName = "QUESTIONS");
 
 		JSONMBMessage.addCategory(
@@ -930,20 +922,16 @@ definition {
 			policyName = "QUESTIONS",
 			title = "QUESTIONS");
 
-		var allowedServiceSignature = '''
-			com.liferay.expando.kernel.service.ExpandoValueService#getData
-			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
-			com.liferay.message.boards.service.MBCategoryService#getCategory
-			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
-			com.liferay.message.boards.service.MBMessageService#getChildMessages
-			com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
-			com.liferay.message.boards.service.MBMessageService#getMessage
-			com.liferay.message.boards.service.MBThreadService#getThreads
-			com.liferay.message.boards.service.MBThreadService#getThreadsCount
-		''';
-
 		ServiceAccessPolicy.editServiceAccessPolicy(
-			allowedServiceSignature = "${allowedServiceSignature}",
+			allowedServiceSignature = '''com.liferay.expando.kernel.service.ExpandoValueService#getData
+com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+com.liferay.message.boards.service.MBCategoryService#getCategory
+com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+com.liferay.message.boards.service.MBMessageService#getChildMessages
+com.liferay.message.boards.service.MBMessageService#getChildMessagesCount
+com.liferay.message.boards.service.MBMessageService#getMessage
+com.liferay.message.boards.service.MBThreadService#getThreads
+com.liferay.message.boards.service.MBThreadService#getThreadsCount''',
 			policyName = "QUESTIONS");
 
 		JSONMBMessage.addCategory(

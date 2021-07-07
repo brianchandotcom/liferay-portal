@@ -15,12 +15,11 @@
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.rest.dto.v1_0.Account;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.headless.admin.user.dto.v1_0.AccountInformation;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
@@ -116,26 +115,6 @@ public class OrganizationResourceDTOConverter
 
 		return new Organization() {
 			{
-				accountInformation = new AccountInformation() {
-					{
-						setAccounts(
-							TransformUtil.transformToArray(
-								_accountEntryOrganizationRelLocalService.
-									getAccountEntryOrganizationRelsByOrganizationId(
-										organization.getOrganizationId()),
-								accountEntryOrganizationRel ->
-									_accountResourceDTOConverter.toDTO(
-										_accountEntryLocalService.
-											getAccountEntry(
-												accountEntryOrganizationRel.
-													getAccountEntryId())),
-								Account.class));
-						setCount(
-							_accountEntryOrganizationRelLocalService.
-								getAccountEntryOrganizationRelsByOrganizationIdCount(
-									organization.getOrganizationId()));
-					}
-				};
 				actions = dtoConverterContext.getActions();
 				comment = organization.getComments();
 				customFields = CustomFieldsUtil.toCustomFields(

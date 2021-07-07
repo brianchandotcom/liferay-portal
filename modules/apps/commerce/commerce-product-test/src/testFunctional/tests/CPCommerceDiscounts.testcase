@@ -337,8 +337,8 @@ definition {
 			title = "Add Products");
 
 		Click(
-			key_toggleSwitch = "Coupon Code",
-			locator1 = "ToggleSwitch#ENABLE_TOGGLE_SWITCH_VIA_SPAN");
+			key_name = "Coupon Code",
+			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
 
 		Type(
 			key_fieldLabel = "Coupon Code",

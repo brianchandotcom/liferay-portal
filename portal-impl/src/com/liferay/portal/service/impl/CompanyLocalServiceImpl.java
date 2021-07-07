@@ -466,6 +466,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			UnsafeConsumer<Company, E> unsafeConsumer, List<Company> companies)
 		throws E {
 
+		if (CompanyThreadLocal.isLocked()) {
+			companies = new ArrayList<>();
+
+			companies.add(fetchCompanyById(CompanyThreadLocal.getCompanyId()));
+		}
+
 		for (Company company : companies) {
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(
@@ -494,6 +500,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public <E extends Exception> void forEachCompanyId(
 			UnsafeConsumer<Long, E> unsafeConsumer, long[] companyIds)
 		throws E {
+
+		if (CompanyThreadLocal.isLocked()) {
+			companyIds = new long[] {CompanyThreadLocal.getCompanyId()};
+		}
 
 		for (long companyId : companyIds) {
 			try (SafeCloseable safeCloseable =

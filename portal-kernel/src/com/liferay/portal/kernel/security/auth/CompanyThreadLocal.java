@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 
@@ -52,6 +51,10 @@ public class CompanyThreadLocal {
 
 	public static boolean isDeleteInProcess() {
 		return _deleteInProcess.get();
+	}
+
+	public static boolean isLocked() {
+		return _locked.get();
 	}
 
 	public static SafeCloseable lock(long companyId) {
@@ -191,7 +194,7 @@ public class CompanyThreadLocal {
 			return false;
 		}
 
-		if (GetterUtil.getBoolean(_locked.get())) {
+		if (isLocked()) {
 			throw new UnsupportedOperationException(
 				"CompanyThreadLocal modification is not allowed");
 		}

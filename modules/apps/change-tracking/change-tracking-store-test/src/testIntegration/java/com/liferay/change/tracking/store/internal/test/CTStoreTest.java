@@ -57,7 +57,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -88,11 +87,6 @@ public class CTStoreTest {
 		_companyId = TestPropsValues.getCompanyId();
 	}
 
-	@AfterClass
-	public static void tearDownClass() {
-		_methods.clear();
-	}
-
 	@Before
 	public void setUp() throws PortalException {
 		for (int i = 0; i < 4; i++) {
@@ -102,6 +96,8 @@ public class CTStoreTest {
 
 	@After
 	public void tearDown() {
+		_methods.clear();
+
 		_fileSystemStore.deleteDirectory(
 			_companyId, _REPOSITORY_ID, StringPool.BLANK);
 	}

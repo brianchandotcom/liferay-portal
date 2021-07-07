@@ -50,7 +50,7 @@ definition {
 	macro chooseSortOption {
 		Click(locator1 = "Search#SORT_PORTLET_DROPDOWN");
 
-		Click(
+		Click.clickNoMouseOver(
 			locator1 = "Search#SORT_PORTLET_SORT_OPTION",
 			sortOption = "${sortOption}");
 	}

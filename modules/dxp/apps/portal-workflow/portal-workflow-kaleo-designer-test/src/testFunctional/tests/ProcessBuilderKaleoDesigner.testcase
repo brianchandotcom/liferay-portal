@@ -1,0 +1,307 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Designer";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+			Workflow.tearDownWorkflowDefinitions();
+		}
+	}
+
+	@description = "Verify that Action can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddAction {
+
+		// TODO LRQA-68480 CanAddAction pending implementation
+
+	}
+
+	@description = "Verify that multiple Assignment can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddMultipleAssignment {
+
+		// TODO LRQA-68482 CanAddMultipleAssignment pending implementation
+
+	}
+
+	@description = "Verify that Notification can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddNotification {
+
+		// TODO LRQA-68479 CanAddNotification pending implementation
+
+	}
+
+	@description = "Verify that Timers can be added"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddTimers {
+
+		// TODO LRQA-68478 CanAddTimers pending implementation
+
+	}
+
+	@description = "Verify that the user can add translations"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddTranslations {
+
+		// TODO LRQA-68439 CanAddTranslations pending implementation
+
+	}
+
+	@description = "Verify that user can create transition between nodes from the edge of node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateTransition {
+
+		// TODO LRQA-68456 CanMovCanCreateTransitioneNode pending implementation
+
+	}
+
+	@description = "Verify that user can delete selected Node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteNode {
+
+		// TODO LRQA-68453 CanDeleteNode pending implementation
+
+	}
+
+	@description = "Verify that properties can be modified"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanModifyProperties {
+
+		// TODO LRQA-68451 CanModifyProperties pending implementation
+
+	}
+
+	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMoveNode {
+
+		// TODO LRQA-68455 CanMoveNode pending implementation
+
+	}
+
+	@description = "Verify that the user can rename a Node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanRenameNode {
+
+		// TODO LRQA-68449 CanRenameNode pending implementation
+
+	}
+
+	@description = "Verify that user can Save workflow as Draft"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSaveAsDraft {
+
+		// TODO LRQA-68470 CanSaveAsDraft pending implementation
+
+	}
+
+	@description = "Verify that the user can select each node in Diagram"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectNodeOnDiagram {
+
+		// TODO LRQA-68450 CanSelectNodeOnDiagram pending implementation
+
+	}
+
+	@description = "Verify that the user can set transition Default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetDefaultTransition {
+
+		// TODO LRQA-68484 CanSetDefaultTransition pending implementation
+
+	}
+
+	@description = "Verify that Condition Node do not have Timers property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ConditionHasNoTimersProperty {
+
+		// TODO LRQA-68475 ConditionHasNoTimersProperty pending implementation
+
+	}
+
+	@description = "Verify that the user can rename connector"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ConnectorCanBeRenamed {
+
+		// TODO LRQA-68483 ConnectorCanBeRenamed pending implementation
+
+	}
+
+	@description = "Verify that newly created transition has default name -connector#-"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ConnectorHasDefaultName {
+
+		// TODO LRQA-68460 ConnectorHasDefaultName pending implementation
+
+	}
+
+	@description = "Verify that default names for nodes are provided"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DefaultNamesAreProvided {
+
+		// TODO LRQA-68448 DefaultNamesAreProvided pending implementation
+
+	}
+
+	@description = "Verify that If user selects node, cross on top right appear"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DisplaysCrossOnTopRight {
+
+		// TODO LRQA-68452 DisplaysCrossOnTopRight pending implementation
+
+	}
+
+	@description = "Verify that a pop up message is displayed when deleting Node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaysMessageOnDeletingNode {
+
+		// TODO LRQA-68454 DisplaysMessageOnDeletingNode pending implementation
+
+	}
+
+	@description = "Verify that the Fork node must have at least two outgoing transitions."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ForkNodeMustHaveMoreThanOneTransition {
+
+		// TODO LRQA-68468 ForkNodeMustHaveMoreThanOneTransition pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Actions property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test HasActionsProperty {
+
+		// TODO LRQA-68477 HasActionsProperty pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Description property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test HasDescriptionProperty {
+
+		// TODO LRQA-68473 HasDescriptionProperty pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Name property"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test HasNameProperty {
+
+		// TODO LRQA-68471 HasNameProperty pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Notifications property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test HasNotificationsProperty {
+
+		// TODO LRQA-68476 HasNotificationsProperty pending implementation
+
+	}
+
+	@description = "Verify that the Task node has Timers property"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test HasTimersProperty {
+
+		// TODO LRQA-68474 HasTimersProperty pending implementation
+
+	}
+
+	@description = "Verify that each type of Node has Type property"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test HasTypeProperty {
+
+		// TODO LRQA-68472 HasTypeProperty pending implementation
+
+	}
+
+	@description = "Verify that the user can rename connector"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test NodeCanBeRenamed {
+
+		// TODO LRQA-68461 NodeCanBeRenamed pending implementation
+
+	}
+
+	@description = "Verify that the transition can be dropped on plain field, pop up menu will appear, user can select new node, new node is created correctly"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test NodeIsCreatedWhenTransitionIsDroppedOnPlainField {
+
+		// TODO LRQA-68459 NodeIsCreatedWhenTransitionIsDroppedOnPlainField pending implementation
+
+	}
+
+	@description = "Verify that the Start Node must have an outgoing transition"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StartNodeMustHaveOutgoingTransition {
+
+		// TODO LRQA-68464 StartNodeMustHaveOutgoingTransition pending implementation
+
+	}
+
+	@description = "Verify that the transition becomes yellow on mouse hoover"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TransitionBecamesYellowOnMouseHoover {
+
+		// TODO LRQA-68457 TransitionBecamesYellowOnMouseHoover pending implementation
+
+	}
+
+	@description = "Verify that transition can be connected to another edge of node, orange circle will appear"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TransitionCanBeConnectedToNode {
+
+		// TODO LRQA-68458 TransitionCanBeConnectedToNode pending implementation
+
+	}
+
+}

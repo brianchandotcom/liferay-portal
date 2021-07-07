@@ -88,13 +88,6 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals("rich_text", textDDMFormField.getType());
 
-		DDMFormField validationDDMFormField = ddmFormFieldsMap.get(
-			"validation");
-
-		Assert.assertNotNull(validationDDMFormField);
-		Assert.assertEquals("string", validationDDMFormField.getDataType());
-		Assert.assertEquals("validation", validationDDMFormField.getType());
-
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
 		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
@@ -105,7 +98,7 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 
 		List<String> actions = ddmFormRule.getActions();
 
-		Assert.assertEquals(actions.toString(), 9, actions.size());
+		Assert.assertEquals(actions.toString(), 8, actions.size());
 
 		Assert.assertTrue(
 			actions.toString(), actions.contains("setRequired('text', true)"));
@@ -129,9 +122,6 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 			actions.contains("setVisible('showLabel', false)"));
 		Assert.assertTrue(
 			actions.toString(), actions.contains("setVisible('tip', false)"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains("setVisible('validation', false)"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains("setVisible('indexType', false)"));

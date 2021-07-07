@@ -95,7 +95,7 @@ public class CheckboxMultipleDDMFormFieldTypeSettingsTest
 
 		List<String> actions = ddmFormRule.getActions();
 
-		Assert.assertEquals(actions.toString(), 4, actions.size());
+		Assert.assertEquals(actions.toString(), 3, actions.size());
 
 		Assert.assertEquals(
 			"setOptions('predefinedValue', getValue('options'))",
@@ -104,7 +104,6 @@ public class CheckboxMultipleDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"setVisible('requiredErrorMessage', getValue('required'))",
 			actions.get(2));
-		Assert.assertEquals("setVisible('validation', false)", actions.get(3));
 	}
 
 	@Override

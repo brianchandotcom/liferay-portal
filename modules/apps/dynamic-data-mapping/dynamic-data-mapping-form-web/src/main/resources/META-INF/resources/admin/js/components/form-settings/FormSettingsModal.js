@@ -63,7 +63,7 @@ const FormSettingsModal = ({
 				serializedSettingsContext.value = JSON.stringify({pages});
 			}
 
-			undoPagesRef.current = false;
+			undoPagesRef.current = true;
 			onCloseFormSettings();
 		},
 	});

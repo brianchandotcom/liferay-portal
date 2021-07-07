@@ -43,6 +43,7 @@ import {useToast} from '../hooks/useToast.es';
 import {useValidateFormWithObjects} from '../hooks/useValidateFormWithObjects';
 import fieldDelete from '../thunks/fieldDelete.es';
 import {createFormURL} from '../util/form.es';
+import {addObjectFields, updateObjectFields} from '../util/objectFields';
 import {submitEmailContent} from '../util/submitEmailContent.es';
 
 export const FormBuilder = () => {
@@ -65,6 +66,7 @@ export const FormBuilder = () => {
 		focusedField,
 		formSettingsContext,
 		localizedName,
+		objectFields,
 		pages,
 		rules,
 	} = useFormState();
@@ -228,30 +230,10 @@ export const FormBuilder = () => {
 
 	const subtmitForm = useCallback(
 		async (form) => {
-			const openModalObjectRestrictions = (unsyncedFields) => {
-				const types = unsyncedFields.map(({type}) => type);
-				const uniqueTypes = types.filter(
-					(type, index) => types.indexOf(type) === index
-				);
-
-				const fieldsGroupedByType = uniqueTypes.map((uniqueTypes) => {
-					const fields = unsyncedFields.filter(
-						({type}) => uniqueTypes === type
-					);
-
-					return {
-						fields,
-						type: uniqueTypes,
-					};
-				});
-
+			const openModalObjectRestrictions = (props) => {
 				modalDispatch({
 					payload: {
-						body: (
-							<ModalObjectRestrictionsBody
-								fieldsGroupedByType={fieldsGroupedByType}
-							/>
-						),
+						body: <ModalObjectRestrictionsBody {...props} />,
 						footer: [
 							null,
 							null,
@@ -370,6 +352,12 @@ export const FormBuilder = () => {
 		shareFormInstanceURL,
 	]);
 
+	useEffect(() => {
+		if (!objectFields.length) {
+			addObjectFields(dispatch);
+		}
+	}, [dispatch, objectFields]);
+
 	return (
 		<>
 			<ManagementToolbar
@@ -470,7 +458,10 @@ export const FormBuilder = () => {
 
 			<FormSettings
 				{...formSettingsContext}
-				onCloseFormSettings={() => setVisibleFormSettings(false)}
+				onCloseFormSettings={() => {
+					setVisibleFormSettings(false);
+					updateObjectFields(dispatch);
+				}}
 				visibleFormSettings={visibleFormSettings}
 			/>
 		</>

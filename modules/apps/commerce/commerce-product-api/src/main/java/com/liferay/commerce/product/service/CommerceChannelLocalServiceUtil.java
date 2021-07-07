@@ -276,6 +276,13 @@ public class CommerceChannelLocalServiceUtil {
 		return getService().fetchCommerceChannelBySiteGroupId(siteGroupId);
 	}
 
+	public static com.liferay.portal.kernel.model.Group
+			fetchCommerceChannelGroup(long commerceChannelId)
+		throws PortalException {
+
+		return getService().fetchCommerceChannelGroup(commerceChannelId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

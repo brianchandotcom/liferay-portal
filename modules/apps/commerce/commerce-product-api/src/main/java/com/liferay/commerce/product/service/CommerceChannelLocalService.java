@@ -246,6 +246,10 @@ public interface CommerceChannelLocalService
 	public CommerceChannel fetchCommerceChannelBySiteGroupId(long siteGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Group fetchCommerceChannelGroup(long commerceChannelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

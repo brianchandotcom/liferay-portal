@@ -199,9 +199,11 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
-				_groupLocalService.getGroup(
-					_portal.getScopeGroupId(httpServletRequest)))) {
+		long scopeGroupId = _portal.getScopeGroupId(httpServletRequest);
+
+		if ((scopeGroupId == 0) ||
+			!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
+				_groupLocalService.getGroup(scopeGroupId))) {
 
 			return false;
 		}

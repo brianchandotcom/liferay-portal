@@ -16,8 +16,10 @@ package com.liferay.fragment.contributor;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
@@ -162,21 +164,33 @@ public abstract class BaseFragmentCollectionContributor
 		try {
 			Map<Locale, String> names = _getContributedCollectionNames();
 
-			Enumeration<URL> enumeration = _bundle.findEntries(
+			Enumeration<URL> fragmentEntriesEnumeration = _bundle.findEntries(
 				StringPool.BLANK,
 				FragmentExportImportConstants.FILE_NAME_FRAGMENT, true);
 
+			Enumeration<URL> fragmentCompositionsEnumeration =
+				_bundle.findEntries(
+					StringPool.BLANK,
+					FragmentExportImportConstants.
+						FILE_NAME_FRAGMENT_COMPOSITION,
+					true);
+
+			_fragmentCompositionNames = new HashMap<>();
+			_fragmentCompositions = new ArrayList<>();
 			_fragmentEntries = new HashMap<>();
 			_fragmentEntryNames = new HashMap<>();
 
-			if (MapUtil.isEmpty(names) || !enumeration.hasMoreElements()) {
+			if (MapUtil.isEmpty(names) ||
+				(!fragmentEntriesEnumeration.hasMoreElements() &&
+				 !fragmentCompositionsEnumeration.hasMoreElements())) {
+
 				return;
 			}
 
 			_names = names;
 
-			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
+			while (fragmentEntriesEnumeration.hasMoreElements()) {
+				URL url = fragmentEntriesEnumeration.nextElement();
 
 				FragmentEntry fragmentEntry = _getFragmentEntry(url);
 
@@ -186,6 +200,12 @@ public abstract class BaseFragmentCollectionContributor
 
 				fragmentEntryList.add(fragmentEntry);
 			}
+
+			while (fragmentCompositionsEnumeration.hasMoreElements()) {
+				URL url = fragmentCompositionsEnumeration.nextElement();
+
+				_fragmentCompositions.add(_getFragmentComposition(url));
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -193,6 +213,9 @@ public abstract class BaseFragmentCollectionContributor
 			}
 		}
 	}
+
+	@Reference
+	protected FragmentCompositionLocalService fragmentCompositionLocalService;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x)
@@ -234,6 +257,47 @@ public abstract class BaseFragmentCollectionContributor
 		_setLocalizedNames(name, names, getResourceBundleLoader());
 
 		return names;
+	}
+
+	private FragmentComposition _getFragmentComposition(URL url)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			StreamUtil.toString(url.openStream()));
+
+		String fragmentCompositionKey = StringBundler.concat(
+			getFragmentCollectionKey(), "-composition-",
+			jsonObject.getString("fragmentCompositionKey"));
+
+		Map<Locale, String> names = _fragmentCompositionNames.getOrDefault(
+			fragmentCompositionKey, new HashMap<>());
+
+		String name = jsonObject.getString("name");
+
+		_setLocalizedNames(name, names, getResourceBundleLoader());
+
+		_fragmentCompositionNames.put(fragmentCompositionKey, names);
+
+		String definition = _read(
+			FileUtil.getPath(url.getPath()),
+			jsonObject.getString("fragmentCompositionDefinitionPath"),
+			"fragment-composition-definition.json");
+
+		String thumbnailURL = _getImagePreviewURL(
+			jsonObject.getString("thumbnail"));
+
+		FragmentComposition fragmentComposition =
+			fragmentCompositionLocalService.createFragmentComposition(0L);
+
+		fragmentComposition.setFragmentCompositionKey(fragmentCompositionKey);
+
+		fragmentComposition.setName(name);
+		fragmentComposition.setData(definition);
+		fragmentComposition.setIcon(
+			jsonObject.getString("icon", "edit-layout"));
+		fragmentComposition.setImagePreviewURL(thumbnailURL);
+
+		return fragmentComposition;
 	}
 
 	private List<FragmentEntry> _getFragmentEntries(
@@ -396,6 +460,8 @@ public abstract class BaseFragmentCollectionContributor
 		BaseFragmentCollectionContributor.class);
 
 	private Bundle _bundle;
+	private Map<String, Map<Locale, String>> _fragmentCompositionNames;
+	private List<FragmentComposition> _fragmentCompositions;
 	private Map<Integer, List<FragmentEntry>> _fragmentEntries;
 	private Map<String, Map<Locale, String>> _fragmentEntryNames;
 	private volatile boolean _initialized;

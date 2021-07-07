@@ -139,8 +139,12 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 			<if>
 				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
 				<then>
+					<local name="portal.gradlew" />
+
+					<property location="${project.dir}/gradlew" name="portal.gradlew" />
+
 					<execute dir="${analytics.cloud.faro.dir}">
-						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
+						${portal.gradlew} createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
 
 						docker rm ${analytics.cloud.faro.container.name}
 					</execute>

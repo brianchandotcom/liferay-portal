@@ -473,15 +473,7 @@ definition {
 	}
 
 	macro enableRedirectToLogin {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Message Boards",
-			configurationName = "Questions",
-			configurationScope = "Widget Scope");
+		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormFields#CHECKBOX", key_fieldName = "enableRedirectToLogin")) {
 			Check.checkNotVisible(

@@ -47,6 +47,35 @@ components:
                 status:
                     type: integer
             type: object
+        AccountRole:
+            # @review
+            description:
+                A role that belongs to an account
+            properties:
+                accountId:
+                    # @review
+                    description:
+                        The primary key of the account that owns this role.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                description:
+                    type: string
+                displayName:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                roleId:
+                    # @review
+                    description:
+                        The primary key of the underlying system role.
+                    format: int64
+                    readOnly: true
+                    type: integer
         Creator:
             description:
                 Represents the user who created/authored the content. Properties follow the

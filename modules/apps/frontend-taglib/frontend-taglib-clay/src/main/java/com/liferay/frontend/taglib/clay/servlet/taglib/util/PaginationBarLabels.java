@@ -21,6 +21,9 @@ import java.util.HashMap;
  */
 public class PaginationBarLabels extends HashMap<String, String> {
 
+	public PaginationBarLabels() {
+	}
+
 	public PaginationBarLabels(
 		String paginationResults, String perPageItems,
 		String selectPerPageItems) {

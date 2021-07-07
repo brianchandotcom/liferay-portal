@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarDelta;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarLabels;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,12 +39,60 @@ public class PaginationBarTag extends BaseContainerTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		PaginationBarLabels labels = getLabels();
+		if (_activeDelta == null) {
+			PaginationBarDelta paginationBarDelta = getDeltas().get(0);
 
-		if (labels == null) {
-			setLabels(
-				new PaginationBarLabels(
-					"Showing {0} to {1} of {2}", "{0} items", "{0} items"));
+			Integer label = (Integer)paginationBarDelta.get("label");
+
+			_activeDelta = label;
+		}
+
+		if (_activePage == null) {
+			_activePage = 1;
+		}
+
+		if (_ellipsisBuffer == null) {
+			_ellipsisBuffer = 2;
+		}
+
+		if (_labels == null) {
+			StringBundler sb = new StringBundler(11);
+
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
+			sb.append(LanguageUtil.get(resourceBundle, "showing"));
+
+			sb.append(StringPool.SPACE);
+			sb.append("{0}");
+			sb.append(StringPool.SPACE);
+
+			sb.append(
+				StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "to")));
+
+			sb.append(StringPool.SPACE);
+			sb.append("{1}");
+			sb.append(StringPool.SPACE);
+
+			sb.append(LanguageUtil.get(resourceBundle, "of"));
+
+			sb.append(StringPool.SPACE);
+			sb.append("{2}");
+
+			PaginationBarLabels paginationBarLabels = new PaginationBarLabels();
+
+			paginationBarLabels.setPaginationResults(sb.toString());
+
+			sb = new StringBundler(3);
+
+			sb.append("{0}");
+			sb.append(StringPool.SPACE);
+			sb.append(LanguageUtil.get(resourceBundle, "items"));
+
+			paginationBarLabels.setPerPageItems(sb.toString());
+			paginationBarLabels.setSelectPerPageItems(sb.toString());
+
+			setLabels(paginationBarLabels);
 		}
 
 		return super.doStartTag();
@@ -145,23 +194,13 @@ public class PaginationBarTag extends BaseContainerTag {
 		jspWriter.write("<div class=\"pagination-bar\"><div class=\"");
 		jspWriter.write("dropdown pagination-items-per-page\">");
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
-		Integer activeDelta = getActiveDelta();
-
-		if (activeDelta == null) {
-			PaginationBarDelta defaultDelta = getDeltas().get(0);
-
-			Integer label = (Integer)defaultDelta.get("label");
-
-			activeDelta = label;
-		}
-
 		jspWriter.write("<button class=\"dropdown-toggle btn btn-unstyled\"");
 		jspWriter.write(" type=\"button\">");
-		jspWriter.write(activeDelta.toString());
+		jspWriter.write(_activeDelta.toString());
 		jspWriter.write(StringPool.SPACE);
+
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
 
 		jspWriter.write(
 			StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "items")));
@@ -171,11 +210,6 @@ public class PaginationBarTag extends BaseContainerTag {
 		iconTag.setSymbol("caret-double-l");
 
 		iconTag.doTag(pageContext);
-
-		if (_labels == null) {
-			_labels = new PaginationBarLabels(
-				"Showing {0} to {1} of {2}", "{0} items", "{0} items");
-		}
 
 		jspWriter.write("</button></div><div class=\"pagination-results\">");
 
@@ -188,7 +222,7 @@ public class PaginationBarTag extends BaseContainerTag {
 			StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "to")));
 
 		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(activeDelta.toString());
+		jspWriter.write(_activeDelta.toString());
 		jspWriter.write(StringPool.SPACE);
 
 		jspWriter.write(
@@ -211,15 +245,7 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		jspWriter.write("</li>");
 
-		int totalPages = (int)Math.ceil(_totalItems / activeDelta);
-
-		if (_activePage == null) {
-			_activePage = 1;
-		}
-
-		if (_ellipsisBuffer == null) {
-			_ellipsisBuffer = 2;
-		}
+		int totalPages = (int)Math.ceil(_totalItems / _activeDelta);
 
 		int ellipsisCount = _activePage + _ellipsisBuffer;
 

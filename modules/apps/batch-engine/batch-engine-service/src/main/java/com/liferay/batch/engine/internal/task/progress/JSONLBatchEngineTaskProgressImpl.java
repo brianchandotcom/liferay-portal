@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.task.progress;
 
+import com.liferay.batch.engine.internal.ZipInputStreamUtil;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +37,8 @@ public class JSONLBatchEngineTaskProgressImpl
 
 		try {
 			unsyncBufferedReader = new UnsyncBufferedReader(
-				new InputStreamReader(inputStream));
+				new InputStreamReader(
+					ZipInputStreamUtil.asZipInputStream(inputStream)));
 
 			while (unsyncBufferedReader.readLine() != null) {
 				totalItemsCount++;

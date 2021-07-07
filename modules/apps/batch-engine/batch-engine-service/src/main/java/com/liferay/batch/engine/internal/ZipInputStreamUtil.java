@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.zip.ZipInputStream;
@@ -24,7 +25,7 @@ import java.util.zip.ZipInputStream;
 public class ZipInputStreamUtil {
 
 	public static InputStream asZipInputStream(InputStream inputStream)
-		throws Exception {
+		throws IOException {
 
 		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
 

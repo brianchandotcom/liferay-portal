@@ -14,16 +14,22 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,6 +74,32 @@ public class TemplateDisplayContext {
 		).build();
 	}
 
+	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
+		if (_ddmTemplateSearchContainer != null) {
+			return _ddmTemplateSearchContainer;
+		}
+
+		SearchContainer<DDMTemplate> ddmTemplateSearchContainer =
+			new SearchContainer(
+				_liferayPortletRequest, _getPortletURL(), null,
+				"there-are-no-templates");
+
+		ddmTemplateSearchContainer.setResults(Collections.emptyList());
+		ddmTemplateSearchContainer.setTotal(0);
+
+		_ddmTemplateSearchContainer = ddmTemplateSearchContainer;
+
+		return _ddmTemplateSearchContainer;
+	}
+
+	private PortletURL _getPortletURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setTabs1(
+			_getTabs1()
+		).build();
+	}
+
 	private String _getTabs1() {
 		if (_tabs1 != null) {
 			return _tabs1;
@@ -79,6 +111,7 @@ public class TemplateDisplayContext {
 		return _tabs1;
 	}
 
+	private SearchContainer<DDMTemplate> _ddmTemplateSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

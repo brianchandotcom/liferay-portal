@@ -19,10 +19,12 @@ import React from 'react';
 
 import {VIEWPORT_SIZES} from '../../app/config/constants/viewportSizes';
 import {useSelector} from '../../app/contexts/StoreContext';
+import {selectPageContents} from '../../app/selectors/selectPageContents';
 import {useId} from '../../app/utils/useId';
 import {openImageSelector} from '../../core/openImageSelector';
 
 export function ImageSelector({
+	fileEntryId,
 	imageTitle = '',
 	label,
 	onClearButtonPressed,
@@ -33,6 +35,12 @@ export function ImageSelector({
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+
+	const pageContents = useSelector(selectPageContents);
+
+	const selectedImageTitle =
+		pageContents.find((pageContent) => pageContent.classPK === fileEntryId)
+			?.title ?? imageTitle;
 
 	const hasImageTitle = !!imageTitle.length;
 
@@ -52,7 +60,7 @@ export function ImageSelector({
 						placeholder={Liferay.Language.get('select-image')}
 						readOnly
 						sizing="sm"
-						value={imageTitle}
+						value={selectedImageTitle}
 					/>
 					<ClayButtonWithIcon
 						className="ml-2 page-editor__item-selector__content-button"
@@ -92,6 +100,7 @@ export function ImageSelector({
 }
 
 ImageSelector.propTypes = {
+	fileEntryId: PropTypes.string,
 	imageTitle: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	onClearButtonPressed: PropTypes.func.isRequired,

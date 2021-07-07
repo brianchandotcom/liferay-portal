@@ -260,6 +260,7 @@ function DirectImagePanel({item}) {
 	return (
 		<>
 			<ImageSelector
+				fileEntryId={editableContent.fileEntryId}
 				imageTitle={imageTitle}
 				label={Liferay.Language.get('image')}
 				onClearButtonPressed={() => {

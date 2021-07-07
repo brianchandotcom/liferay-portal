@@ -85,6 +85,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 			{imageSource === IMAGE_SOURCES.direct.value ? (
 				<>
 					<ImageSelector
+						fileEntryId={value.fileEntryId}
 						imageTitle={value.title}
 						label={field.label}
 						onClearButtonPressed={() => handleImageChanged({})}

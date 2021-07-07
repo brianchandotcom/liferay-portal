@@ -1,0 +1,4 @@
+dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":core:petra:petra-string")
+}

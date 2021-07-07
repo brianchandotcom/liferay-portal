@@ -77,10 +77,18 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 			</c:if>
 		</div>
 
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/validate_csrf_token" var="validateCSRFTokenURL" />
+
 		<div id=<%= ddmFormDisplayContext.getContainerId() %>>
 			<react:component
 				module="admin/js/FormView.link.es"
-				props="<%= ddmFormDisplayContext.getDDMFormContext() %>"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"validateCSRFTokenURL", validateCSRFTokenURL.toString()
+					).putAll(
+						ddmFormDisplayContext.getDDMFormContext()
+					).build()
+				%>'
 			/>
 		</div>
 	</aui:form>

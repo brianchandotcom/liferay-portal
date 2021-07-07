@@ -91,6 +91,7 @@ public class ObjectDefinitionResourceImpl
 				indexedAsKeyword = objectField.getIndexedAsKeyword();
 				indexedLanguageId = objectField.getIndexedLanguageId();
 				name = objectField.getName();
+				required = objectField.isRequired();
 				type = objectField.getType();
 			}
 		};
@@ -127,6 +128,7 @@ public class ObjectDefinitionResourceImpl
 		serviceBuilderObjectField.setIndexedLanguageId(
 			objectField.getIndexedLanguageId());
 		serviceBuilderObjectField.setName(objectField.getName());
+		serviceBuilderObjectField.setRequired(objectField.getRequired());
 		serviceBuilderObjectField.setType(objectField.getType());
 
 		return serviceBuilderObjectField;

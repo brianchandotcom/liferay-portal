@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.graphql.query.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
@@ -789,6 +790,25 @@ public class Query {
 		}
 
 		private Site _site;
+
+	}
+
+	@GraphQLTypeExtension(AccountRole.class)
+	public class GetRoleTypeExtension {
+
+		public GetRoleTypeExtension(AccountRole accountRole) {
+			_accountRole = accountRole;
+		}
+
+		@GraphQLField(description = "Retrieves the role.")
+		public Role role() throws Exception {
+			return _applyComponentServiceObjects(
+				_roleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				roleResource -> roleResource.getRole(_accountRole.getRoleId()));
+		}
+
+		private AccountRole _accountRole;
 
 	}
 

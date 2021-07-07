@@ -86,6 +86,340 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Operation(description = "Gets the users assigned to an account")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "jobTitle": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a user and assigns them to the account")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users"
+	)
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public UserAccount postAccountUserByExternalReferenceCode(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			UserAccount userAccount)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address'  -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@DELETE
+	@Operation(
+		description = "Removes users from an account by their email addresses"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			String[] strings)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address'  -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Assigns users to an account by their email addresses"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address"
+	)
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			String[] strings)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Removes a user from an account by external reference code by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@Operation(
+		description = "Assigns a user to an account by external reference code by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
+		}
+	)
+	@Path(
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}"
+	)
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-users'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Operation(description = "Gets the users assigned to an account")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/accounts/{accountId}/account-users")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public Page<UserAccount> getAccountUsersPage(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-users' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "jobTitle": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a user and assigns them to the account")
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
+	@Path("/accounts/{accountId}/account-users")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public UserAccount postAccountUser(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			UserAccount userAccount)
+		throws Exception {
+
+		return new UserAccount();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address'  -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@DELETE
+	@Operation(
+		description = "Removes users from an account by their email addresses"
+	)
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
+	@Path("/accounts/{accountId}/account-users/by-email-address")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void deleteAccountUsersByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			String[] strings)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address'  -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Assigns users to an account by their email addresses"
+	)
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
+	@Path("/accounts/{accountId}/account-users/by-email-address")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void postAccountUsersByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			String[] strings)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Removes a user from an account by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
+		}
+	)
+	@Path("/accounts/{accountId}/account-users/by-email-address/{emailAddress}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void deleteAccountUserByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@Operation(
+		description = "Assigns a user to an account by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
+		}
+	)
+	@Path("/accounts/{accountId}/account-users/by-email-address/{emailAddress}")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public void postAccountUserByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/my-user-account'  -u 'test@liferay.com:test'
 	 */
 	@GET

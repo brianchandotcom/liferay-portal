@@ -51,6 +51,54 @@ public interface UserAccountResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public UserAccount postAccountUserByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
+		throws Exception;
+
+	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] strings)
+		throws Exception;
+
+	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] strings)
+		throws Exception;
+
+	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String emailAddress)
+		throws Exception;
+
+	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String emailAddress)
+		throws Exception;
+
+	public Page<UserAccount> getAccountUsersPage(
+			Long accountId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
+	public UserAccount postAccountUser(Long accountId, UserAccount userAccount)
+		throws Exception;
+
+	public void deleteAccountUsersByEmailAddress(
+			Long accountId, String[] strings)
+		throws Exception;
+
+	public void postAccountUsersByEmailAddress(Long accountId, String[] strings)
+		throws Exception;
+
+	public void deleteAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception;
+
+	public void postAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception;
+
 	public UserAccount getMyUserAccount() throws Exception;
 
 	public Page<UserAccount> getOrganizationUserAccountsPage(

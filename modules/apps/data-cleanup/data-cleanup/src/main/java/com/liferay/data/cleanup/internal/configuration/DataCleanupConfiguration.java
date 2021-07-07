@@ -70,6 +70,12 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpMailReaderModuleData();
 
 	@Meta.AD(
+		deflt = "false", name = "clean-up-open-social-gadget-module-data",
+		required = false
+	)
+	public boolean cleanUpOpenSocialGadgetModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "clean-up-private-messaging-module-data",
 		required = false
 	)

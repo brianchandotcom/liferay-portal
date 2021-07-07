@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import { event, select, zoom, zoomIdentity, zoomTransform } from 'd3';
+import { drag, event, select, zoom, zoomIdentity, zoomTransform } from 'd3';
 import PropTypes from 'prop-types';
 import React, { useLayoutEffect, useRef } from 'react';
 
@@ -17,19 +17,41 @@ import NavigationButtons from './NavigationButtons';
 import { moveController, zoomIn, zoomOut } from './NavigationsUtils';
 import ZoomController from './ZoomController';
 
+const PIN_ATTRIBUTES = [
+	'cx',
+	'cy',
+	'draggable',
+	'fill',
+	'id',
+	'label',
+	'linked_to_sku',
+	'quantity',
+	'r',
+	'sku',
+];
+
 const ImagePins = ({
+	addNewPinState,
+	addPinHandler,
+	cPins,
 	changedScale,
 	enablePanZoom,
 	execZoomIn,
+	handleAddPin,
 	imageSettings,
 	imageURL,
 	namespace,
 	navigationController,
+	removePinHandler,
 	resetZoom,
 	selectedOption,
+	setAddPinHandler,
 	setChangedScale,
+	setCpins,
+	setRemovePinHandler,
 	setResetZoom,
 	setSelectedOption,
+	setShowTooltip,
 	setZoomInHandler,
 	setZoomOutHandler,
 	zoomController,
@@ -87,6 +109,17 @@ const ImagePins = ({
 				);
 		}
 
+		handlers.current = {
+			moveController: (where) =>
+				moveController(
+					containerRef.current,
+					navigationController,
+					where
+				),
+			zoomIn: () => zoomIn(containerRef.current, panZoomRef.current),
+			zoomOut: () => zoomOut(containerRef.current, panZoomRef.current),
+		};
+
 		if (execZoomIn) {
 			handlers.current?.zoomIn();
 		}
@@ -100,31 +133,6 @@ const ImagePins = ({
 			setZoomInHandler(false);
 			zoomIn(containerRef.current, panZoomRef.current);
 		}
-
-		handlers.current = {
-			moveController: (where) =>
-				moveController(
-					containerRef.current,
-					navigationController,
-					where
-				),
-			zoomIn: () => zoomIn(containerRef.current, panZoomRef.current),
-			zoomOut: () => zoomOut(containerRef.current, panZoomRef.current),
-		}
-
-		const clickAction = (updatedPin) =>
-			setShowTooltip({
-				details: {
-					cx: updatedPin.cx,
-					cy: updatedPin.cy,
-					id: updatedPin.id,
-					label: updatedPin.label,
-					linked_to_sku: updatedPin.linked_to_sku,
-					quantity: updatedPin.quantity,
-					sku: updatedPin.sku,
-				},
-				tooltip: true,
-			});
 
 		function dragstarted() {
 			select(this).raise().classed('active', true);
@@ -293,29 +301,39 @@ const ImagePins = ({
 		select('#newPin').on('click', handleAddPin);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
+		addPinHandler,
+		removePinHandler,
+		changedScale,
+		cPins,
+		execZoomIn,
 		resetZoom,
 		selectedOption,
 		setResetZoom,
-		changedScale,
 		zoomOutHandler,
 		zoomInHandler,
 		enablePanZoom,
-		execZoomIn,
 		imageSettings,
 		navigationController,
 		setChangedScale,
 		setSelectedOption,
 		setZoomInHandler,
 		setZoomOutHandler,
+		handleAddPin,
+		setShowTooltip,
+		setCpins,
+		addNewPinState,
+		setRemovePinHandler,
+		setAddPinHandler,
 	]);
 
-	const diagramStyle = {
-		height: `${imageSettings.height}`,
-		width: `${imageSettings.width}`,
-	};
-
 	return (
-		<div className="diagram-pins-container" style={diagramStyle}>
+		<div
+			className="diagram-pins-container"
+			style={{
+				height: `${imageSettings.height}`,
+				width: `${imageSettings.width}`,
+			}}
+		>
 			<svg
 				height={imageSettings.height}
 				ref={svgRef}
@@ -360,6 +378,21 @@ ImagePins.default = {
 };
 
 ImagePins.propTypes = {
+	addPinHandler: PropTypes.bool,
+	cPins: PropTypes.arrayOf(
+		PropTypes.shape({
+			cx: PropTypes.double,
+			cy: PropTypes.double,
+			draggable: PropTypes.bool,
+			fill: PropTypes.string,
+			id: PropTypes.number,
+			label: PropTypes.string,
+			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
+			quantity: PropTypes.number,
+			r: PropTypes.number,
+			sku: PropTypes.string,
+		})
+	),
 	enableResetZoom: PropTypes.bool,
 	execResetZoom: PropTypes.bool,
 	handleZoomIn: PropTypes.func,
@@ -381,8 +414,28 @@ ImagePins.propTypes = {
 			top: PropTypes.string,
 		}),
 	}),
+	removePinHandler: PropTypes.shape({
+		handler: PropTypes.bool,
+		pin: PropTypes.number,
+	}),
+	setAddPinHandler: PropTypes.func,
+	setCpins: PropTypes.func,
+	setImageState: PropTypes.func,
+	setShowTooltip: PropTypes.func,
 	setZoomInHandler: PropTypes.func,
 	setZoomOutHandler: PropTypes.func,
+	showTooltip: PropTypes.shape({
+		details: PropTypes.shape({
+			cx: PropTypes.double,
+			cy: PropTypes.double,
+			id: PropTypes.number,
+			label: PropTypes.string,
+			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
+			quantity: PropTypes.number,
+			sku: PropTypes.string,
+		}),
+		tooltip: PropTypes.bool,
+	}),
 	zoomController: PropTypes.shape({
 		enable: PropTypes.bool,
 		position: PropTypes.shape({

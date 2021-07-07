@@ -15,7 +15,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClaySlider from '@clayui/slider';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 const DiagramHeader = ({
 	addNewPinState,
@@ -30,7 +30,6 @@ const DiagramHeader = ({
 		newPinSettings.colorPicker.defaultColors
 	);
 
-const DiagramHeader = () => {
 	return (
 		<div className="d-flex diagram diagram-header justify-content-between">
 			<div className="d-flex text-align-center">
@@ -138,10 +137,49 @@ const DiagramHeader = () => {
 				className="auto-mapping my-auto pull-right"
 				displayType="secondary"
 			>
-				Auto-mapping
+				{Liferay.Language.get('auto-mapping')}
 			</ClayButton>
 		</div>
 	);
+};
+
+DiagramHeader.defaultProps = {
+	radiusChoice: [
+		{
+			label: 'Small',
+			value: 10,
+		},
+		{
+			label: 'Medium',
+			value: 20,
+		},
+		{
+			label: 'Large',
+			value: 30,
+		},
+	],
+};
+
+DiagramHeader.propTypes = {
+	addNewPinState: PropTypes.shape({
+		fill: PropTypes.string,
+		radius: PropTypes.number,
+	}),
+	newPinSettings: PropTypes.shape({
+		colorPicker: PropTypes.shape({
+			defaultColors: PropTypes.array,
+			selectedColor: PropTypes.string,
+			useNative: PropTypes.bool,
+		}),
+		defautlRadius: PropTypes.number,
+	}),
+	radiusChoice: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string,
+			value: PropTypes.number,
+		})
+	),
+	setAddNewPinState: PropTypes.func,
 };
 
 export default DiagramHeader;

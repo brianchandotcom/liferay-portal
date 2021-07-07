@@ -53,7 +53,7 @@ public class ObjectEntryApplication extends Application {
 
 		objects.add(
 			new ObjectDefinitionIdContainerRequestFilter(
-				_applicationName, _objectDefinitionId));
+				_objectDefinitionDBTableName, _objectDefinitionId));
 		objects.add(
 			new OpenAPIResourceImpl(
 				_openAPIResource, _getOpenAPISchemaFilter(),
@@ -70,6 +70,9 @@ public class ObjectEntryApplication extends Application {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_applicationName = (String)properties.get("osgi.jaxrs.name");
+
+		_objectDefinitionDBTableName = (String)properties.get(
+			"liferay.object.definition.db.table.name");
 
 		_objectDefinitionId = (Long)properties.get(
 			"liferay.object.definition.id");
@@ -105,6 +108,7 @@ public class ObjectEntryApplication extends Application {
 	}
 
 	private String _applicationName;
+	private String _objectDefinitionDBTableName;
 	private Long _objectDefinitionId;
 
 	@Reference

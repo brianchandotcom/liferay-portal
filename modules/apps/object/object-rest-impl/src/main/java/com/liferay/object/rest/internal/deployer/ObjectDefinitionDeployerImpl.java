@@ -59,6 +59,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"liferay.object.definition.id",
 						objectDefinition.getObjectDefinitionId()
 					).put(
+						"liferay.object.definition.db.table.name",
+						objectDefinition.getDBTableName()
+					).put(
 						"osgi.jaxrs.application.base",
 						"/" + objectDefinition.getRESTContextPath()
 					).put(
@@ -74,7 +77,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"batch.engine.task.item.delegate", "true"
 					).put(
 						"batch.engine.task.item.delegate.name",
-						objectDefinition.getShortName()
+						objectDefinition.getDBTableName()
 					).put(
 						"osgi.jaxrs.resource", "true"
 					).put(

@@ -167,62 +167,6 @@ definition {
 			subTopicName = "SubTopicB");
 	}
 
-	@description = "Validate if the anonymous user can ask questions and redirected to login, it also covers LPS-129203."
-	@priority = "4"
-	@refactorneeded
-	test AskQuestionsThroughAnonymousUser {
-		property test.name.skip.portal.instance = "QuestionsWidgetActions#AskQuestionsThroughAnonymousUser";
-
-		Questions.enableRedirectToLogin();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Service Access Policy");
-
-		ServiceAccessPolicy.addServiceAccessPolicy(
-			defaultSwitch = "true",
-			enabled = "true",
-			policyName = "QUESTIONS",
-			title = "QUESTIONS");
-
-		var allowedServiceSignature = '''
-			com.liferay.expando.kernel.service.ExpandoValueService#getData
-			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
-			com.liferay.message.boards.service.MBCategoryService#getCategory
-			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
-			com.liferay.message.boards.service.MBMessageService#getMessage
-		''';
-
-		ServiceAccessPolicy.editServiceAccessPolicy(
-			allowedServiceSignature = "${allowedServiceSignature}",
-			policyName = "QUESTIONS");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.addCP(categoryName = "Questions Test Category");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		User.logoutPG();
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			anonymousUser = "true",
-			contentField = "Body Anonymous User Ask questions",
-			password = "test",
-			titleField = "Title Anonymous User Ask questions",
-			userEmailAddress = "test@liferay.com");
-
-		AssertTextEquals(
-			key_questionTitle = "Title Anonymous User Ask questions",
-			locator1 = "Questions#QUESTIONS_TITLE",
-			value1 = "Title Anonymous User Ask questions");
-	}
-
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "4"
 	@refactordone
@@ -318,6 +262,57 @@ definition {
 			topicName = "questions-test-category");
 
 		Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTags");
+	}
+
+	@description = "Validate if the anonymous user can ask questions and redirected to login, it also covers LPS-129203."
+	@priority = "4"
+	@refactordone
+	test CanAskQuestionsThroughAnonymousUser {
+		property test.name.skip.portal.instance = "QuestionsWidgetActions#AskQuestionsThroughAnonymousUser";
+
+		Questions.enableRedirectToLogin();
+
+		ServiceAccessPolicy.openToServiceAccessPolicy(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		ServiceAccessPolicy.addServiceAccessPolicy(
+			defaultSwitch = "true",
+			enabled = "true",
+			policyName = "QUESTIONS",
+			title = "QUESTIONS");
+
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			allowedServiceSignature = '''com.liferay.expando.kernel.service.ExpandoValueService#getData
+com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+com.liferay.message.boards.service.MBCategoryService#getCategory
+com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+com.liferay.message.boards.service.MBMessageService#getMessage''',
+			policyName = "QUESTIONS");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Category",
+			userEmailAddress = "test@liferay.com");
+
+		User.logoutPG();
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			anonymousUser = "true",
+			contentField = "Body Anonymous User Ask questions",
+			password = "test",
+			titleField = "Title Anonymous User Ask questions",
+			userEmailAddress = "test@liferay.com");
+
+		AssertTextEquals(
+			key_questionTitle = "Title Anonymous User Ask questions",
+			locator1 = "Questions#QUESTIONS_TITLE",
+			value1 = "Title Anonymous User Ask questions");
 	}
 
 	@description = "Validate if the user can cancel the deletions."

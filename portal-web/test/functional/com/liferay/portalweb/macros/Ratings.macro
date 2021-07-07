@@ -57,7 +57,7 @@ definition {
 	}
 
 	macro rateLike {
-		Click(locator1 = "Ratings#LIKE");
+		Click.clickNoMouseOver(locator1 = "Ratings#LIKE");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 	}
@@ -163,14 +163,14 @@ definition {
 		}
 
 		else if (isSet(replyRating)) {
-			Click.mouseOverClick(
+			Click.javaScriptClick(
 				key_ratingResult = "${ratingResult}",
 				key_threadSubject = "${threadSubject}",
 				locator1 = "Ratings#REPLY_RATING_THUMB");
 		}
 
 		else {
-			Click(
+			Click.javaScriptClick(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#THUMB");
 		}

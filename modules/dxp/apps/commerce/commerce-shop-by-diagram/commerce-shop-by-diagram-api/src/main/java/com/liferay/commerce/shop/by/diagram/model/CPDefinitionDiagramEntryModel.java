@@ -256,34 +256,6 @@ public interface CPDefinitionDiagramEntryModel
 	public void setQuantity(int quantity);
 
 	/**
-	 * Returns the position x of this cp definition diagram entry.
-	 *
-	 * @return the position x of this cp definition diagram entry
-	 */
-	public double getPositionX();
-
-	/**
-	 * Sets the position x of this cp definition diagram entry.
-	 *
-	 * @param positionX the position x of this cp definition diagram entry
-	 */
-	public void setPositionX(double positionX);
-
-	/**
-	 * Returns the position y of this cp definition diagram entry.
-	 *
-	 * @return the position y of this cp definition diagram entry
-	 */
-	public double getPositionY();
-
-	/**
-	 * Sets the position y of this cp definition diagram entry.
-	 *
-	 * @param positionY the position y of this cp definition diagram entry
-	 */
-	public void setPositionY(double positionY);
-
-	/**
 	 * Returns the diagram of this cp definition diagram entry.
 	 *
 	 * @return the diagram of this cp definition diagram entry

@@ -69,12 +69,6 @@ public class CPDefinitionDiagramEntryTable
 	public final Column<CPDefinitionDiagramEntryTable, Integer> quantity =
 		createColumn(
 			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, Double> positionX =
-		createColumn(
-			"positionX", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionDiagramEntryTable, Double> positionY =
-		createColumn(
-			"positionY", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionDiagramEntryTable, Boolean> diagram =
 		createColumn(
 			"diagram", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

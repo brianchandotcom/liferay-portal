@@ -58,8 +58,6 @@ public class CPDefinitionDiagramEntryWrapper
 		attributes.put("number", getNumber());
 		attributes.put("sku", getSku());
 		attributes.put("quantity", getQuantity());
-		attributes.put("positionX", getPositionX());
-		attributes.put("positionY", getPositionY());
 		attributes.put("diagram", isDiagram());
 
 		return attributes;
@@ -138,18 +136,6 @@ public class CPDefinitionDiagramEntryWrapper
 
 		if (quantity != null) {
 			setQuantity(quantity);
-		}
-
-		Double positionX = (Double)attributes.get("positionX");
-
-		if (positionX != null) {
-			setPositionX(positionX);
-		}
-
-		Double positionY = (Double)attributes.get("positionY");
-
-		if (positionY != null) {
-			setPositionY(positionY);
 		}
 
 		Boolean diagram = (Boolean)attributes.get("diagram");
@@ -247,26 +233,6 @@ public class CPDefinitionDiagramEntryWrapper
 	@Override
 	public int getNumber() {
 		return model.getNumber();
-	}
-
-	/**
-	 * Returns the position x of this cp definition diagram entry.
-	 *
-	 * @return the position x of this cp definition diagram entry
-	 */
-	@Override
-	public double getPositionX() {
-		return model.getPositionX();
-	}
-
-	/**
-	 * Returns the position y of this cp definition diagram entry.
-	 *
-	 * @return the position y of this cp definition diagram entry
-	 */
-	@Override
-	public double getPositionY() {
-		return model.getPositionY();
 	}
 
 	/**
@@ -432,26 +398,6 @@ public class CPDefinitionDiagramEntryWrapper
 	@Override
 	public void setNumber(int number) {
 		model.setNumber(number);
-	}
-
-	/**
-	 * Sets the position x of this cp definition diagram entry.
-	 *
-	 * @param positionX the position x of this cp definition diagram entry
-	 */
-	@Override
-	public void setPositionX(double positionX) {
-		model.setPositionX(positionX);
-	}
-
-	/**
-	 * Sets the position y of this cp definition diagram entry.
-	 *
-	 * @param positionY the position y of this cp definition diagram entry
-	 */
-	@Override
-	public void setPositionY(double positionY) {
-		model.setPositionY(positionY);
 	}
 
 	/**

@@ -143,11 +143,29 @@ $toolbarHeight: 6.875rem;
 		}
 
 		&-button {
+			align-items: center;
+			display: flex;
 			font-size: 0.75rem;
 			font-weight: 600;
+			height: 32px;
+			justify-content: space-between;
 
-			&:hover {
+			.preview-icon {
+				color: $secondary;
+				opacity: 0;
+
+				&:focus {
+					opacity: 1;
+				}
+			}
+
+			&:hover,
+			&:focus {
 				background-color: $light-l1;
+
+				.preview-icon {
+					opacity: 1;
+				}
 			}
 		}
 	}

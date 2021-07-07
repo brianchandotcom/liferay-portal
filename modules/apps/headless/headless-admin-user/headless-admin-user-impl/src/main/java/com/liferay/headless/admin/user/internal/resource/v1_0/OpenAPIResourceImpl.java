@@ -80,6 +80,10 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AccountResourceImpl.class);
+
+			add(AccountRoleResourceImpl.class);
+
 			add(EmailAddressResourceImpl.class);
 
 			add(OrganizationResourceImpl.class);

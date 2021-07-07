@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.user.resource.v1_0;
 
-import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -45,98 +45,50 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface UserAccountResource {
+public interface AccountResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
-			String externalReferenceCode, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+	public Page<Account> getAccountsPage(
+			String keywords, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public UserAccount postAccountUserByExternalReferenceCode(
-			String externalReferenceCode, UserAccount userAccount)
+	public Account postAccount(Account account) throws Exception;
+
+	public Response postAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] strings)
+	public void deleteAccountByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
-	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] strings)
+	public Account getAccountByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
-	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String emailAddress)
+	public Account patchAccountByExternalReferenceCode(
+			String externalReferenceCode, Account account)
 		throws Exception;
 
-	public void postAccountUserByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String emailAddress)
+	public Account putAccountByExternalReferenceCode(
+			String externalReferenceCode, Account account)
 		throws Exception;
 
-	public Page<UserAccount> getAccountUsersPage(
-			Long accountId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+	public void deleteAccount(Long accountId) throws Exception;
+
+	public Response deleteAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public UserAccount postAccountUser(Long accountId, UserAccount userAccount)
+	public Account getAccount(Long accountId) throws Exception;
+
+	public Account patchAccount(Long accountId, Account account)
 		throws Exception;
 
-	public void deleteAccountUsersByEmailAddress(
-			Long accountId, String[] strings)
-		throws Exception;
+	public Account putAccount(Long accountId, Account account) throws Exception;
 
-	public void postAccountUsersByEmailAddress(Long accountId, String[] strings)
-		throws Exception;
-
-	public void deleteAccountUserByEmailAddress(
-			Long accountId, String emailAddress)
-		throws Exception;
-
-	public void postAccountUserByEmailAddress(
-			Long accountId, String emailAddress)
-		throws Exception;
-
-	public UserAccount getMyUserAccount() throws Exception;
-
-	public Page<UserAccount> getOrganizationUserAccountsPage(
-			String organizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Page<UserAccount> getSiteUserAccountsPage(
-			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception;
-
-	public Page<UserAccount> getUserAccountsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public UserAccount postUserAccount(UserAccount userAccount)
-		throws Exception;
-
-	public Response postUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteUserAccount(Long userAccountId) throws Exception;
-
-	public Response deleteUserAccountBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public UserAccount getUserAccount(Long userAccountId) throws Exception;
-
-	public UserAccount patchUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception;
-
-	public UserAccount putUserAccount(
-			Long userAccountId, UserAccount userAccount)
-		throws Exception;
-
-	public Response putUserAccountBatch(String callbackURL, Object object)
+	public Response putAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -173,7 +125,7 @@ public interface UserAccountResource {
 	@ProviderType
 	public interface Builder {
 
-		public UserAccountResource build();
+		public AccountResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

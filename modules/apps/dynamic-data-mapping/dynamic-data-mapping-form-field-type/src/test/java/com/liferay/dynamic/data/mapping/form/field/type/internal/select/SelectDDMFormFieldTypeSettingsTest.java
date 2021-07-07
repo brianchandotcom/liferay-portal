@@ -182,7 +182,8 @@ public class SelectDDMFormFieldTypeSettingsTest
 				"contains(getValue('dataSourceType'), \"manual\"))",
 			actions.get(8));
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', false)", actions.get(9));
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(9));
 		Assert.assertEquals("setVisible('validation', false)", actions.get(10));
 
 		DDMFormRule ddmFormRule3 = ddmFormRules.get(2);

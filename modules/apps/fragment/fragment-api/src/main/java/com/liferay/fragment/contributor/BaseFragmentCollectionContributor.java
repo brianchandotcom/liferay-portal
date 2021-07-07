@@ -72,6 +72,18 @@ public abstract class BaseFragmentCollectionContributor
 	implements FragmentCollectionContributor {
 
 	@Override
+	public List<FragmentComposition> getFragmentCompositions() {
+		_initialize();
+
+		return Collections.unmodifiableList(_fragmentCompositions);
+	}
+
+	@Override
+	public List<FragmentComposition> getFragmentCompositions(Locale locale) {
+		return _getFragmentCompositions(getFragmentCompositions(), locale);
+	}
+
+	@Override
 	public List<FragmentEntry> getFragmentEntries() {
 		_initialize();
 
@@ -298,6 +310,32 @@ public abstract class BaseFragmentCollectionContributor
 		fragmentComposition.setImagePreviewURL(thumbnailURL);
 
 		return fragmentComposition;
+	}
+
+	private List<FragmentComposition> _getFragmentCompositions(
+		List<FragmentComposition> fragmentCompositions, Locale locale) {
+
+		Stream<FragmentComposition> stream = fragmentCompositions.stream();
+
+		return stream.map(
+			fragmentComposition -> {
+				Map<Locale, String> names =
+					_fragmentCompositionNames.getOrDefault(
+						fragmentComposition.getFragmentCompositionKey(),
+						Collections.emptyMap());
+
+				fragmentComposition.setName(
+					names.getOrDefault(
+						locale,
+						names.getOrDefault(
+							LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+							fragmentComposition.getName())));
+
+				return fragmentComposition;
+			}
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private List<FragmentEntry> _getFragmentEntries(

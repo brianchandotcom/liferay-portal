@@ -34,14 +34,6 @@ html#{$cadmin-selector} {
 			}
 
 			.custom-devices {
-				border-radius: 4px;
-				margin: 0 10px 20px;
-				padding: 8px 6px 16px;
-
-				label {
-					font-size: 12px;
-				}
-
 				.form-control {
 					border-radius: 4px;
 					padding: 8px 12px;
@@ -53,8 +45,6 @@ html#{$cadmin-selector} {
 			}
 
 			.default-devices {
-				margin-bottom: 24px;
-
 				.icon-monospaced {
 					height: 40px;
 					width: 40px;
@@ -73,7 +63,6 @@ html#{$cadmin-selector} {
 
 			.lfr-device-item {
 				color: $gray-600;
-				max-width: 33.33%;
 
 				&:hover {
 					color: $gray-900;

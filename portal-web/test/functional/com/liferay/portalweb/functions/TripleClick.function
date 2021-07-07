@@ -1,0 +1,18 @@
+@default = "tripleClick"
+definition {
+
+	function tripleClick {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible();
+
+		selenium.mouseOver();
+
+		selenium.tripleClick();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

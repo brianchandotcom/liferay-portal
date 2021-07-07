@@ -122,7 +122,7 @@ definition {
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		Open(locator1 = "${analyticsCloudURL}");
 
 		if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
 			ACLogin.loginAs();

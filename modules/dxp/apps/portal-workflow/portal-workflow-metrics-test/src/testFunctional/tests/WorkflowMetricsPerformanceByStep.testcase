@@ -487,7 +487,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "11_transitions_update.xml",
+			workflowDefinitionFile = "11-transitions-update.xml",
 			workflowDefinitionTitle = "11 Transitions Update");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "11 Transitions Update");

@@ -27,14 +27,18 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		PageAudit.setAPIViaSystemSettings(apiKey = " ");
 
-		PageAudit.deleteAPIViaSystemSettings();
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
+
+	@description = "LPS-119066: Given the Page Audit Panel
+	When the audit is launched (the API is called)
+	Then a progress bar shows and moves forward while retrieving the data until they can be shown"
 
 	@priority = "3"
 	@uitest
@@ -47,7 +51,7 @@ definition {
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setAPIViaSystemSettings();
+			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
 		}
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");

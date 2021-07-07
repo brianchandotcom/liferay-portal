@@ -25,7 +25,7 @@ package com.liferay.commerce.shop.by.diagram.model.impl;
  */
 public class CPDefinitionDiagramPinImpl extends CPDefinitionDiagramPinBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp definition diagram pin model instance should use the {@link com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin} interface instead.

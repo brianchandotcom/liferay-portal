@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @see CPDefinitionDiagramSettingServiceBaseImpl
  */
 @Component(
+	enabled = false,
 	property = {
 		"json.web.service.context.name=commerce",
 		"json.web.service.context.path=CPDefinitionDiagramSetting"
@@ -42,9 +43,10 @@ import org.osgi.service.component.annotations.Component;
 public class CPDefinitionDiagramSettingServiceImpl
 	extends CPDefinitionDiagramSettingServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingServiceUtil</code> to access the cp definition diagram setting remote service.
 	 */
+
 }

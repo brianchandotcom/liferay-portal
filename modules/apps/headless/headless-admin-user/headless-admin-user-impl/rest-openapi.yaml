@@ -736,6 +736,11 @@ components:
                     description:
                         The user's main email address.
                     type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The optional external key of this account user.
+                    type: string
                 familyName:
                     description:
                         The user's surname (last name).

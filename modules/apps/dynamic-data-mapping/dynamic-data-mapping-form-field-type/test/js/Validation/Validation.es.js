@@ -16,7 +16,7 @@ import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Validation from '../../../src/main/resources/META-INF/resources/Validation/Validation.es';
+import Validation from '../../../src/main/resources/META-INF/resources/Validation/Validation';
 
 const globalLanguageDirection = Liferay.Language.direction;
 

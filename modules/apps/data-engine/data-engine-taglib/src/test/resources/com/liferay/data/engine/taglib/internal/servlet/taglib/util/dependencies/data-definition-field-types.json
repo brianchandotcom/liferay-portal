@@ -14412,7 +14412,7 @@
 		"displayOrder": 2147483647,
 		"group": "",
 		"icon": "",
-		"javaScriptModule": "dynamic-data-mapping-form-field-type@6.0.23/Validation/Validation.es",
+		"javaScriptModule": "dynamic-data-mapping-form-field-type@6.0.23/Validation/Validation",
 		"label": "",
 		"name": "validation",
 		"scope": "",

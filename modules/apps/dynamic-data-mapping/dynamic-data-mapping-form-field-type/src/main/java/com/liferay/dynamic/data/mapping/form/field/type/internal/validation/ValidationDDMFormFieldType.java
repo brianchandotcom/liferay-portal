@@ -35,7 +35,7 @@ public class ValidationDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/Validation/Validation.es";
+		return "dynamic-data-mapping-form-field-type/Validation/Validation";
 	}
 
 	@Override

@@ -42,6 +42,7 @@ export const BUILDER_INITIAL_STATE = {
 			),
 		},
 	},
+	objectFields: [],
 	paginationMode: 'multi-pages',
 	rules: [],
 };

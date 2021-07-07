@@ -42,6 +42,7 @@ const StateSync = ({
 	defaultLanguageId,
 	editingLanguageId,
 	focusedField,
+	objectFields,
 	pages,
 	rules,
 }) => {
@@ -81,6 +82,13 @@ const StateSync = ({
 			type: CORE_EVENT_TYPES.LANGUAGE.CHANGE,
 		});
 	}, [dispatch, defaultLanguageId, editingLanguageId]);
+
+	useEffect(() => {
+		dispatch({
+			payload: {objectFields},
+			type: EVENT_TYPES.OBJECT_FIELDS.ADD,
+		});
+	}, [dispatch, objectFields]);
 
 	return null;
 };

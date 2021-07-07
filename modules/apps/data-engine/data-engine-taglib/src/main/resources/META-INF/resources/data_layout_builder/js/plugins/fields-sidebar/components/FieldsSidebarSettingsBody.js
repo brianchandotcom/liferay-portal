@@ -68,6 +68,7 @@ export default function FieldsSidebarSettingsBody() {
 		defaultLanguageId,
 		editingLanguageId,
 		focusedField,
+		objectFields,
 		rules,
 	} = useFormState();
 	const config = useConfig();
@@ -104,6 +105,7 @@ export default function FieldsSidebarSettingsBody() {
 				displayable={true}
 				editable={false}
 				editingLanguageId={editingLanguageId}
+				objectFields={objectFields}
 				onAction={({payload, type}) => {
 					switch (type) {
 						case CORE_EVENT_TYPES.PAGE.CHANGE:

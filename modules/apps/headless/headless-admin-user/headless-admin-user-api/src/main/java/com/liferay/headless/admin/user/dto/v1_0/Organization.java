@@ -60,36 +60,6 @@ public class Organization implements Serializable {
 		return ObjectMapperUtil.readValue(Organization.class, json);
 	}
 
-	@Schema(description = "The organization's account information.")
-	@Valid
-	public AccountInformation getAccountInformation() {
-		return accountInformation;
-	}
-
-	public void setAccountInformation(AccountInformation accountInformation) {
-		this.accountInformation = accountInformation;
-	}
-
-	@JsonIgnore
-	public void setAccountInformation(
-		UnsafeSupplier<AccountInformation, Exception>
-			accountInformationUnsafeSupplier) {
-
-		try {
-			accountInformation = accountInformationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The organization's account information.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AccountInformation accountInformation;
-
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
@@ -546,16 +516,6 @@ public class Organization implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (accountInformation != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"accountInformation\": ");
-
-			sb.append(String.valueOf(accountInformation));
-		}
 
 		if (actions != null) {
 			if (sb.length() > 1) {

@@ -36,28 +36,6 @@ public class Organization implements Cloneable, Serializable {
 		return OrganizationSerDes.toDTO(json);
 	}
 
-	public AccountInformation getAccountInformation() {
-		return accountInformation;
-	}
-
-	public void setAccountInformation(AccountInformation accountInformation) {
-		this.accountInformation = accountInformation;
-	}
-
-	public void setAccountInformation(
-		UnsafeSupplier<AccountInformation, Exception>
-			accountInformationUnsafeSupplier) {
-
-		try {
-			accountInformation = accountInformationUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected AccountInformation accountInformation;
-
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}

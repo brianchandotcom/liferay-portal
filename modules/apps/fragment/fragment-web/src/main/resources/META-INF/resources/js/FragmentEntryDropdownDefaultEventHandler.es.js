@@ -27,18 +27,18 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		submitForm(this.one('#fragmentEntryFm'), itemData.copyFragmentEntryURL);
 	}
 
-	copyToContributedFragmentEntry(itemData) {
+	copyContributedEntryToFragmentCollection(itemData) {
 		openSelectionModal({
 			id: this.ns('selectFragmentCollection'),
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
+					this.one('#contributedEntryKeys').value =
+						itemData.contributedEntryKey;
 					this.one('#fragmentCollectionId').value = selectedItem.id;
-					this.one('#fragmentEntryKeys').value =
-						itemData.fragmentEntryKey;
 
 					submitForm(
 						this.one('#fragmentEntryFm'),
-						itemData.copyContributedFragmentEntryURL
+						itemData.copyContributedEntryURL
 					);
 				}
 			},

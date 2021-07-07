@@ -15,21 +15,18 @@
 import {openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({
-	additionalProps: {
-		copyContributedFragmentEntryURL,
-		selectFragmentCollectionURL,
-	},
+	additionalProps: {copyContributedEntryURL, selectFragmentCollectionURL},
 	portletNamespace,
 	...otherProps
 }) {
-	const copyToSelectedContributedFragmentEntries = () => {
+	const copyContributedEntriesToFragmentCollection = () => {
 		const form = document.getElementById(`${portletNamespace}fm`);
 
 		if (!form) {
 			return;
 		}
 
-		const fragmentEntryKeys = Liferay.Util.listCheckedExcept(
+		const contributedEntryKeys = Liferay.Util.listCheckedExcept(
 			form,
 			`${portletNamespace}allRowIds`
 		);
@@ -49,14 +46,14 @@ export default function propsTransformer({
 						);
 					}
 
-					const fragmentEntryKeysElement = document.getElementById(
-						`${portletNamespace}fragmentEntryKeys`
+					const contributedEntryKeysElement = document.getElementById(
+						`${portletNamespace}contributedEntryKeys`
 					);
 
-					if (fragmentEntryKeysElement) {
-						fragmentEntryKeysElement.setAttribute(
+					if (contributedEntryKeysElement) {
+						contributedEntryKeysElement.setAttribute(
 							'value',
-							fragmentEntryKeys
+							contributedEntryKeys
 						);
 					}
 
@@ -65,7 +62,7 @@ export default function propsTransformer({
 					);
 
 					if (form) {
-						submitForm(form, copyContributedFragmentEntryURL);
+						submitForm(form, copyContributedEntryURL);
 					}
 				}
 			},
@@ -80,9 +77,9 @@ export default function propsTransformer({
 		onActionButtonClick(event, {item}) {
 			if (
 				item?.data?.action ===
-				'copyToSelectedContributedFragmentEntries'
+				'copyContributedEntriesToFragmentCollection'
 			) {
-				copyToSelectedContributedFragmentEntries();
+				copyContributedEntriesToFragmentCollection();
 			}
 		},
 	};

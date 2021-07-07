@@ -38,6 +38,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-116987 When the user makes a change on web content and creates a draft version, the Info panel shows the version for the last version approved and the version of the draft "
+	@priority = "5"
+	test ApprovedAndDraftStatus {
+		property portal.acceptance = "true";
+
+		task ("Create a Web Content and set a Display Page") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "WC Content");
+		}
+		task ("Navigate to the content Dashboard, click edit web content and save as draft") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+
+			Click(locator1 = "ContentDashboard#EDIT_OPTION");
+
+			CKEditor.addContentInWebContent(
+				content = "Web Content Content",
+				fieldLabel = "content");
+
+			Click(locator1 = "Button#SAVE_AS_DRAFT");
+
+			Click(locator1 = "Icon#BACK");
+		}
+		task ("go back to web content and check for approved and draft versions") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			AssertElementPresent(
+				key_status = "Approved",
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS");
+
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS");
+		}
+	}
+
 	@description = "LPS-114911 When the user selects vocabularies from the selection panel, vocabularies selected show in the table as headers and categories assigned to contents will show "
 	@priority = "5"
 	test CategorieShowInTable {
@@ -1327,6 +1372,60 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no tags.");
 	}
 
+	@description = "LPS-116987 When the user clicks on the eye icon in any of the translated into languages within the info panel, the user navigates to the VIEW version of the page in the matching language"
+	@priority = "5"
+	test LanguageVersion {
+		property portal.acceptance = "true";
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add Web Content and change the language") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				description = "Description",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "Test Site Name");
+
+			Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+			Translations.changeTargetLocale(
+				currentTargetLocale = "ar-SA",
+				newTargetLocale = "es-ES");
+
+			Button.clickPublish();
+		}
+		task ("Navigate to the content Dashboard and go to the page view in the corresponding language") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
+
+			Click(locator1 = "ContentDashboard#PANEL_INFO_VIEW");
+		}
+	}
+
 	@descrip	ion = "Validate if the user can order by Modification Date"
 	@priority = "5"
 	test OrderByModificationDate {
@@ -1786,111 +1885,6 @@ definition {
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WC Title");
-	}
-
-	@description = "LPS-116987 When the user makes a change on web content and creates a draft version, the Info panel shows the version for the last version approved and the version of the draft "
-	@priority = "5"
-	test ApprovedAndDraftStatus {
-		property portal.acceptance = "true";
-      
-	    task ("Create a Web Content and set a Display Page") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "WC Content");
-		}
-        task ("Navigate to the content Dashboard, click edit web content and save as draft") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-			Click(locator1 = "ContentDashboard#EDIT_OPTION");
-
-			CKEditor.addContentInWebContent(
-				content = "Web Content Content",
-				fieldLabel = "content");
-
-			Click(locator1 = "Button#SAVE_AS_DRAFT");
-			
-			Click(locator1 = "Icon#BACK");
-		}
-        task ("go back to web content and check for approved and draft versions") {
-	    	ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			AssertElementPresent(locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-				key_status = "Approved");
-
-			AssertElementPresent(locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-				key_status = "Draft");
-
-		}
-
-        
-
-	}	
-
-	@description = "LPS-116987 When the user clicks on the eye icon in any of the translated into languages within the info panel, the user navigates to the VIEW version of the page in the matching language"
-	@priority = "5"
-	test LanguageVersion {
-		property portal.acceptance = "true";
-
-        task ("Add Display Page and mark it as default") {	
-		   JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Add Web Content and change the language") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				description = "Description",
-				groupName = "Test Site Name",
-				title = "WC WebContent Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "Test Site Name");
-
-			Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
-
-			Translations.changeTargetLocale(
-				currentTargetLocale = "ar-SA",
-				newTargetLocale = "es-ES");	
-			
-			Button.clickPublish();	
-		}
-        task ("Navigate to the content Dashboard and go to the page view in the corresponding language") {
-			ApplicationsMenu.gotoPortlet(
-					category = "Content",
-					panel = "Applications",
-					portlet = "Content Dashboard");
-
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
-			Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
-
-            Click(locator1 = "ContentDashboard#PANEL_INFO_VIEW");
-
-          
-
-		}
-			
 	}
 
 }

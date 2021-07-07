@@ -227,7 +227,7 @@
 <tr>
 	<td>PANEL_INFO_VIEW</td>
 	<td>//*[contains(@title,'View')]</td>
-	<td></td> 
+	<td></td>
 </tr>
 <tr>
 	<td>MY_SITES_TAB</td>

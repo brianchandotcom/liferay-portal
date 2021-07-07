@@ -28,6 +28,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.batch.engine.web.internal.display.context.BatchEngineExportTaskDisplayContext" %><%@
 page import="com.liferay.batch.engine.web.internal.display.context.BatchEngineImportTaskDisplayContext" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
+page import="com.liferay.portal.kernel.model.User" %><%@
+page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.Objects" %>

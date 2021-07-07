@@ -34,9 +34,24 @@ BatchEngineImportTaskDisplayContext batchEngineImportTaskDisplayContext = (Batch
 			keyProperty="batchEngineImportTaskId"
 			modelVar="batchEngineImportTask"
 		>
+
+			<%
+			User importTaskUser = UserLocalServiceUtil.getUser(batchEngineImportTask.getUserId());
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="user"
+				value="<%= importTaskUser.getEmailAddress() %>"
+			/>
+
 			<liferay-ui:search-container-column-text
 				name="operation"
 				property="operation"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="entity"
+				value="<%= batchEngineImportTaskDisplayContext.getSimpleName(batchEngineImportTask.getClassName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

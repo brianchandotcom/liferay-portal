@@ -16,6 +16,7 @@ package com.liferay.batch.engine.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -83,6 +84,11 @@ public class BaseDisplayContext {
 	public String getOrderByType() {
 		return ParamUtil.getString(
 			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
+	}
+
+	public String getSimpleName(String className) {
+		return className.substring(
+			className.lastIndexOf(StringPool.PERIOD) + 1);
 	}
 
 	protected final long companyId;

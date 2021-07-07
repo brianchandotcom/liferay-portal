@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,43 +52,6 @@ public class KnowledgeBaseArticleResourceTest
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
-	}
-
-	@Override
-	@Test
-	public void testPutSiteKnowledgeBaseArticleByExternalReferenceCode()
-		throws Exception {
-
-		// Update
-
-		super.testPutSiteKnowledgeBaseArticleByExternalReferenceCode();
-
-		// Add
-
-		KnowledgeBaseArticle randomKnowledgeBaseArticle =
-			randomKnowledgeBaseArticle();
-
-		KnowledgeBaseArticle putKnowledgeBaseArticle =
-			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleByExternalReferenceCode(
-					testGroup.getGroupId(),
-					randomKnowledgeBaseArticle.getExternalReferenceCode(),
-					randomKnowledgeBaseArticle);
-
-		assertEquals(randomKnowledgeBaseArticle, putKnowledgeBaseArticle);
-		assertValid(putKnowledgeBaseArticle);
-
-		KnowledgeBaseArticle getKnowledgeBaseArticle =
-			knowledgeBaseArticleResource.
-				getSiteKnowledgeBaseArticleByExternalReferenceCode(
-					testGroup.getGroupId(),
-					putKnowledgeBaseArticle.getExternalReferenceCode());
-
-		assertEquals(randomKnowledgeBaseArticle, getKnowledgeBaseArticle);
-
-		Assert.assertEquals(
-			randomKnowledgeBaseArticle.getExternalReferenceCode(),
-			putKnowledgeBaseArticle.getExternalReferenceCode());
 	}
 
 	@Override

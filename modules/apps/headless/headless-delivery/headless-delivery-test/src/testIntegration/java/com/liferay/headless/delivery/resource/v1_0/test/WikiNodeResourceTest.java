@@ -20,9 +20,7 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -42,39 +40,6 @@ public class WikiNodeResourceTest extends BaseWikiNodeResourceTestCase {
 		for (WikiNode wikiNode : wikiNodes) {
 			WikiNodeLocalServiceUtil.deleteNode(wikiNode);
 		}
-	}
-
-	@Override
-	@Test
-	public void testPutSiteWikiNodeByExternalReferenceCode() throws Exception {
-
-		// Update
-
-		super.testPutSiteWikiNodeByExternalReferenceCode();
-
-		// Add
-
-		com.liferay.headless.delivery.client.dto.v1_0.WikiNode randomWikiNode =
-			randomWikiNode();
-
-		com.liferay.headless.delivery.client.dto.v1_0.WikiNode putWikiNode =
-			wikiNodeResource.putSiteWikiNodeByExternalReferenceCode(
-				testGroup.getGroupId(),
-				randomWikiNode.getExternalReferenceCode(), randomWikiNode);
-
-		assertEquals(randomWikiNode, putWikiNode);
-		assertValid(putWikiNode);
-
-		com.liferay.headless.delivery.client.dto.v1_0.WikiNode getWikiPage =
-			wikiNodeResource.getSiteWikiNodeByExternalReferenceCode(
-				testGroup.getGroupId(), putWikiNode.getExternalReferenceCode());
-
-		assertEquals(randomWikiNode, getWikiPage);
-		assertValid(getWikiPage);
-
-		Assert.assertEquals(
-			randomWikiNode.getExternalReferenceCode(),
-			putWikiNode.getExternalReferenceCode());
 	}
 
 	@Override

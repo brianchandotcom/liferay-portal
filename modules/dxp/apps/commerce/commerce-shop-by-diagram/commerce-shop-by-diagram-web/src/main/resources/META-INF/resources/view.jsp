@@ -33,9 +33,7 @@
 				"width", "100%"
 			)
 		).put(
-			"imageURL", "https://i0.wp.com/detoxicrecenze.com/wp-content/uploads/2018/05/straight-6-engine-diagram-460-ford-engine-diagram-wiring-info-e280a2-of-straight-6-engine-diagram.jpg"
-		).put(
-			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			"imageURL", StringPool.BLANK
 		).build()
 	%>'
 />

@@ -552,6 +552,119 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125802. View the hierarchy of items when change the order."
+	@priority = "4"
+	test ViewHierarchyOfItemsWhenChangeOrder {
+		task ("Add three Pages via JSON") {
+			for (var n : list "1,2,3") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}");
+			}
+		}
+
+		task ("Add three children in the pages via JSON") {
+			for (var n : list "1,2,3") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Child Page ${n}",
+					parentLayoutName = "Test Page Name ${n}");
+			}
+		}
+
+		task ("Add a Nagivation Menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add the parents pages to the navigation menu") {
+			for (var n : list "1,2,3") {
+				JSONSitenavigation.addSiteNavigationMenuItem(
+					groupName = "Test Site Name",
+					privateLayout = "false",
+					siteNavigationMenuItemName = "Test Page Name ${n}",
+					siteNavigationMenuName = "Navigation Menu Name",
+					type = "layout");
+			}
+		}
+
+		task ("Add the children pages to the navigation menu") {
+			var n = "1";
+
+			for (var layoutName : list "Test Page Name 1,Test Page Name 2,Test Page Name 3") {
+				JSONSitenavigation.addSiteNavigationMenuItem(
+					groupName = "Test Site Name",
+					parentSiteNavigationMenuItem = "${layoutName}",
+					privateLayout = "false",
+					siteNavigationMenuItemName = "Child Page ${n}",
+					siteNavigationMenuName = "Navigation Menu Name",
+					type = "layout");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Navigate to the navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+
+			Pause(locator1 = "2000");
+		}
+
+		task ("Change the order of the second parent page item and third parent page item") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_itemName = "Test Page Name 2",
+				key_sourceItemName = "Test Page Name 3",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				locator2 = "SiteNavigationMenu#ITEM_ENTRY");
+		}
+
+		task ("View the hierachy of page items") {
+			for (var n : list "1,2,3") {
+				NavigationMenusAdmin.viewItemNotNested(itemName = "Test Page Name ${n}");
+			}
+
+			for (var n : list "1,2,3") {
+				NavigationMenusAdmin.viewItemNested(
+					groupName = "Test Site Name",
+					itemName = "Child Page ${n}",
+					parentItemName = "Test Page Name ${n}",
+					site = "true",
+					siteNavigationMenuName = "Navigation Menu Name");
+			}
+		}
+
+		task ("Change back to the original order of the second parent page item and third parent page item") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_itemName = "Test Page Name 3",
+				key_sourceItemName = "Test Page Name 2",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				locator2 = "SiteNavigationMenu#ITEM_ENTRY");
+		}
+
+		task ("View the hierachy of page items") {
+			for (var n : list "1,2,3") {
+				NavigationMenusAdmin.viewItemNotNested(itemName = "Test Page Name ${n}");
+			}
+
+			for (var n : list "1,2,3") {
+				NavigationMenusAdmin.viewItemNested(
+					groupName = "Test Site Name",
+					itemName = "Child Page ${n}",
+					parentItemName = "Test Page Name ${n}",
+					site = "true",
+					siteNavigationMenuName = "Navigation Menu Name");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-67191."
 	@priority = "5"
 	test ViewNavigationMenuPropertiesSidebar {

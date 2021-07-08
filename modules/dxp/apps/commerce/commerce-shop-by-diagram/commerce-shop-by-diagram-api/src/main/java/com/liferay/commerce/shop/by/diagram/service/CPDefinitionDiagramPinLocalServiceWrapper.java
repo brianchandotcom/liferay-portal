@@ -54,6 +54,17 @@ public class CPDefinitionDiagramPinLocalServiceWrapper
 			cpDefinitionDiagramPin);
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+			addCPDefinitionDiagramPin(
+				long userId, long cpDefinitionId, int number, double positionX,
+				double positionY)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramPinLocalService.addCPDefinitionDiagramPin(
+			userId, cpDefinitionId, number, positionX, positionY);
+	}
+
 	/**
 	 * Creates a new cp definition diagram pin with the primary key. Does not add the cp definition diagram pin to the database.
 	 *
@@ -118,6 +129,12 @@ public class CPDefinitionDiagramPinLocalServiceWrapper
 
 		return _cpDefinitionDiagramPinLocalService.deleteCPDefinitionDiagramPin(
 			CPDefinitionDiagramPinId);
+	}
+
+	@Override
+	public void deleteCPDefinitionDiagramPins(long cpDefinitionId) {
+		_cpDefinitionDiagramPinLocalService.deleteCPDefinitionDiagramPins(
+			cpDefinitionId);
 	}
 
 	/**
@@ -287,6 +304,16 @@ public class CPDefinitionDiagramPinLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin>
+			getCPDefinitionDiagramPins(
+				long cpDefinitionId, int start, int end) {
+
+		return _cpDefinitionDiagramPinLocalService.getCPDefinitionDiagramPins(
+			cpDefinitionId, start, end);
+	}
+
 	/**
 	 * Returns the number of cp definition diagram pins.
 	 *
@@ -296,6 +323,12 @@ public class CPDefinitionDiagramPinLocalServiceWrapper
 	public int getCPDefinitionDiagramPinsCount() {
 		return _cpDefinitionDiagramPinLocalService.
 			getCPDefinitionDiagramPinsCount();
+	}
+
+	@Override
+	public int getCPDefinitionDiagramPinsCount(long cpDefinitionId) {
+		return _cpDefinitionDiagramPinLocalService.
+			getCPDefinitionDiagramPinsCount(cpDefinitionId);
 	}
 
 	@Override
@@ -346,6 +379,17 @@ public class CPDefinitionDiagramPinLocalServiceWrapper
 
 		return _cpDefinitionDiagramPinLocalService.updateCPDefinitionDiagramPin(
 			cpDefinitionDiagramPin);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+			updateCPDefinitionDiagramPin(
+				long cpDefinitionDiagramPinId, int number, double positionX,
+				double positionY)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramPinLocalService.updateCPDefinitionDiagramPin(
+			cpDefinitionDiagramPinId, number, positionX, positionY);
 	}
 
 	@Override

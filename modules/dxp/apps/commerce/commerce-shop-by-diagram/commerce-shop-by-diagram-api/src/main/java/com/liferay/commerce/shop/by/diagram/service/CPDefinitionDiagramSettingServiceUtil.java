@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.shop.by.diagram.service;
 
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for CPDefinitionDiagramSetting. This utility wraps
  * <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramSettingServiceImpl</code> and is an
@@ -33,14 +36,57 @@ public class CPDefinitionDiagramSettingServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramSettingServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CPDefinitionDiagramSetting addCPDefinitionDiagramSetting(
+			long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
+			String color, double radius, String type)
+		throws PortalException {
+
+		return getService().addCPDefinitionDiagramSetting(
+			userId, cpDefinitionId, cpAttachmentFileEntryId, color, radius,
+			type);
+	}
+
+	public static CPDefinitionDiagramSetting
+			fetchCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId)
+		throws PortalException {
+
+		return getService().fetchCPDefinitionDiagramSettingByCPDefinitionId(
+			cpDefinitionId);
+	}
+
+	public static CPDefinitionDiagramSetting getCPDefinitionDiagramSetting(
+			long cpDefinitionDiagramSettingId)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramSetting(
+			cpDefinitionDiagramSettingId);
+	}
+
+	public static CPDefinitionDiagramSetting
+			getCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramSettingByCPDefinitionId(
+			cpDefinitionId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CPDefinitionDiagramSetting updateCPDefinitionDiagramSetting(
+			long cpDefinitionDiagramSettingId, long cpAttachmentFileEntryId,
+			String color, double radius, String type)
+		throws PortalException {
+
+		return getService().updateCPDefinitionDiagramSetting(
+			cpDefinitionDiagramSettingId, cpAttachmentFileEntryId, color,
+			radius, type);
 	}
 
 	public static CPDefinitionDiagramSettingService getService() {

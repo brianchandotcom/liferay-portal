@@ -14,6 +14,11 @@
 
 package com.liferay.commerce.shop.by.diagram.service;
 
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for CPDefinitionDiagramEntry. This utility wraps
  * <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramEntryServiceImpl</code> and is an
@@ -33,14 +38,66 @@ public class CPDefinitionDiagramEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
+			long userId, long cpDefinitionId, String cpInstanceUuid,
+			long cProductId, boolean diagram, int number, int quantity,
+			String sku,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCPDefinitionDiagramEntry(
+			userId, cpDefinitionId, cpInstanceUuid, cProductId, diagram, number,
+			quantity, sku, serviceContext);
+	}
+
+	public static void deleteCPDefinitionDiagramEntry(
+			long cpDefinitionDiagramEntryId)
+		throws PortalException {
+
+		getService().deleteCPDefinitionDiagramEntry(cpDefinitionDiagramEntryId);
+	}
+
+	public static List<CPDefinitionDiagramEntry> getCPDefinitionDiagramEntries(
+			long cpDefinitionId, int start, int end)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramEntries(
+			cpDefinitionId, start, end);
+	}
+
+	public static int getCPDefinitionDiagramEntriesCount(long cpDefinitionId)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramEntriesCount(cpDefinitionId);
+	}
+
+	public static CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionDiagramEntryId)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntryId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
+			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
+			long cProductId, boolean diagram, int number, int quantity,
+			String sku,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntryId, cpInstanceUuid, cProductId, diagram,
+			number, quantity, sku, serviceContext);
 	}
 
 	public static CPDefinitionDiagramEntryService getService() {

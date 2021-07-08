@@ -612,29 +612,33 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 =
 		"cpDefinitionDiagramEntry.CPDefinitionId = ?";
 
-	private FinderPath _finderPathFetchByNumber;
-	private FinderPath _finderPathCountByNumber;
+	private FinderPath _finderPathFetchByC_N;
+	private FinderPath _finderPathCountByC_N;
 
 	/**
-	 * Returns the cp definition diagram entry where number = &#63; or throws a <code>NoSuchCPDefinitionDiagramEntryException</code> if it could not be found.
+	 * Returns the cp definition diagram entry where CPDefinitionId = &#63; and number = &#63; or throws a <code>NoSuchCPDefinitionDiagramEntryException</code> if it could not be found.
 	 *
+	 * @param CPDefinitionId the cp definition ID
 	 * @param number the number
 	 * @return the matching cp definition diagram entry
 	 * @throws NoSuchCPDefinitionDiagramEntryException if a matching cp definition diagram entry could not be found
 	 */
 	@Override
-	public CPDefinitionDiagramEntry findByNumber(int number)
+	public CPDefinitionDiagramEntry findByC_N(long CPDefinitionId, int number)
 		throws NoSuchCPDefinitionDiagramEntryException {
 
-		CPDefinitionDiagramEntry cpDefinitionDiagramEntry = fetchByNumber(
-			number);
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry = fetchByC_N(
+			CPDefinitionId, number);
 
 		if (cpDefinitionDiagramEntry == null) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("number=");
+			sb.append("CPDefinitionId=");
+			sb.append(CPDefinitionId);
+
+			sb.append(", number=");
 			sb.append(number);
 
 			sb.append("}");
@@ -650,55 +654,63 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the cp definition diagram entry where number = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cp definition diagram entry where CPDefinitionId = &#63; and number = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param CPDefinitionId the cp definition ID
 	 * @param number the number
 	 * @return the matching cp definition diagram entry, or <code>null</code> if a matching cp definition diagram entry could not be found
 	 */
 	@Override
-	public CPDefinitionDiagramEntry fetchByNumber(int number) {
-		return fetchByNumber(number, true);
+	public CPDefinitionDiagramEntry fetchByC_N(
+		long CPDefinitionId, int number) {
+
+		return fetchByC_N(CPDefinitionId, number, true);
 	}
 
 	/**
-	 * Returns the cp definition diagram entry where number = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cp definition diagram entry where CPDefinitionId = &#63; and number = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param CPDefinitionId the cp definition ID
 	 * @param number the number
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cp definition diagram entry, or <code>null</code> if a matching cp definition diagram entry could not be found
 	 */
 	@Override
-	public CPDefinitionDiagramEntry fetchByNumber(
-		int number, boolean useFinderCache) {
+	public CPDefinitionDiagramEntry fetchByC_N(
+		long CPDefinitionId, int number, boolean useFinderCache) {
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {number};
+			finderArgs = new Object[] {CPDefinitionId, number};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByNumber, finderArgs);
+			result = finderCache.getResult(_finderPathFetchByC_N, finderArgs);
 		}
 
 		if (result instanceof CPDefinitionDiagramEntry) {
 			CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
 				(CPDefinitionDiagramEntry)result;
 
-			if (number != cpDefinitionDiagramEntry.getNumber()) {
+			if ((CPDefinitionId !=
+					cpDefinitionDiagramEntry.getCPDefinitionId()) ||
+				(number != cpDefinitionDiagramEntry.getNumber())) {
+
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_SELECT_CPDEFINITIONDIAGRAMENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_NUMBER_NUMBER_2);
+			sb.append(_FINDER_COLUMN_C_N_CPDEFINITIONID_2);
+
+			sb.append(_FINDER_COLUMN_C_N_NUMBER_2);
 
 			String sql = sb.toString();
 
@@ -711,6 +723,8 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
+				queryPos.add(CPDefinitionId);
+
 				queryPos.add(number);
 
 				List<CPDefinitionDiagramEntry> list = query.list();
@@ -718,7 +732,7 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByNumber, finderArgs, list);
+							_finderPathFetchByC_N, finderArgs, list);
 					}
 				}
 				else {
@@ -747,41 +761,45 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the cp definition diagram entry where number = &#63; from the database.
+	 * Removes the cp definition diagram entry where CPDefinitionId = &#63; and number = &#63; from the database.
 	 *
+	 * @param CPDefinitionId the cp definition ID
 	 * @param number the number
 	 * @return the cp definition diagram entry that was removed
 	 */
 	@Override
-	public CPDefinitionDiagramEntry removeByNumber(int number)
+	public CPDefinitionDiagramEntry removeByC_N(long CPDefinitionId, int number)
 		throws NoSuchCPDefinitionDiagramEntryException {
 
-		CPDefinitionDiagramEntry cpDefinitionDiagramEntry = findByNumber(
-			number);
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry = findByC_N(
+			CPDefinitionId, number);
 
 		return remove(cpDefinitionDiagramEntry);
 	}
 
 	/**
-	 * Returns the number of cp definition diagram entries where number = &#63;.
+	 * Returns the number of cp definition diagram entries where CPDefinitionId = &#63; and number = &#63;.
 	 *
+	 * @param CPDefinitionId the cp definition ID
 	 * @param number the number
 	 * @return the number of matching cp definition diagram entries
 	 */
 	@Override
-	public int countByNumber(int number) {
-		FinderPath finderPath = _finderPathCountByNumber;
+	public int countByC_N(long CPDefinitionId, int number) {
+		FinderPath finderPath = _finderPathCountByC_N;
 
-		Object[] finderArgs = new Object[] {number};
+		Object[] finderArgs = new Object[] {CPDefinitionId, number};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_COUNT_CPDEFINITIONDIAGRAMENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_NUMBER_NUMBER_2);
+			sb.append(_FINDER_COLUMN_C_N_CPDEFINITIONID_2);
+
+			sb.append(_FINDER_COLUMN_C_N_NUMBER_2);
 
 			String sql = sb.toString();
 
@@ -793,6 +811,8 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(CPDefinitionId);
 
 				queryPos.add(number);
 
@@ -811,7 +831,10 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_NUMBER_NUMBER_2 =
+	private static final String _FINDER_COLUMN_C_N_CPDEFINITIONID_2 =
+		"cpDefinitionDiagramEntry.CPDefinitionId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_N_NUMBER_2 =
 		"cpDefinitionDiagramEntry.number = ?";
 
 	public CPDefinitionDiagramEntryPersistenceImpl() {
@@ -841,8 +864,11 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 			cpDefinitionDiagramEntry.getPrimaryKey(), cpDefinitionDiagramEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByNumber,
-			new Object[] {cpDefinitionDiagramEntry.getNumber()},
+			_finderPathFetchByC_N,
+			new Object[] {
+				cpDefinitionDiagramEntry.getCPDefinitionId(),
+				cpDefinitionDiagramEntry.getNumber()
+			},
 			cpDefinitionDiagramEntry);
 	}
 
@@ -920,12 +946,13 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 		CPDefinitionDiagramEntryModelImpl cpDefinitionDiagramEntryModelImpl) {
 
 		Object[] args = new Object[] {
+			cpDefinitionDiagramEntryModelImpl.getCPDefinitionId(),
 			cpDefinitionDiagramEntryModelImpl.getNumber()
 		};
 
-		finderCache.putResult(_finderPathCountByNumber, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByC_N, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByNumber, args, cpDefinitionDiagramEntryModelImpl);
+			_finderPathFetchByC_N, args, cpDefinitionDiagramEntryModelImpl);
 	}
 
 	/**
@@ -1431,15 +1458,15 @@ public class CPDefinitionDiagramEntryPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
 
-		_finderPathFetchByNumber = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByNumber",
-			new String[] {Integer.class.getName()}, new String[] {"number_"},
-			true);
+		_finderPathFetchByC_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"CPDefinitionId", "number_"}, true);
 
-		_finderPathCountByNumber = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNumber",
-			new String[] {Integer.class.getName()}, new String[] {"number_"},
-			false);
+		_finderPathCountByC_N = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"CPDefinitionId", "number_"}, false);
 	}
 
 	@Deactivate

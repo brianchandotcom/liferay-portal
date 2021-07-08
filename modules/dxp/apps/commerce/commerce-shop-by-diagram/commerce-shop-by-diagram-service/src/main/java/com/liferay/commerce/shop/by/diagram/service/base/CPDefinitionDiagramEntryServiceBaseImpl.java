@@ -180,4 +180,8 @@ public abstract class CPDefinitionDiagramEntryServiceBaseImpl
 	@Reference
 	protected com.liferay.portal.kernel.service.UserService userService;
 
+	@Reference
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
+		expandoRowLocalService;
+
 }

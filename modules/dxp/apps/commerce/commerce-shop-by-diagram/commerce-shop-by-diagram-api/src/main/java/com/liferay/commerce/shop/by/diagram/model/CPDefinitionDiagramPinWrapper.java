@@ -133,6 +133,13 @@ public class CPDefinitionDiagramPinWrapper
 		return model.getCompanyId();
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCPDefinition();
+	}
+
 	/**
 	 * Returns the cp definition diagram pin ID of this cp definition diagram pin.
 	 *

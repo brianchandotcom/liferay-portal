@@ -55,6 +55,19 @@ public class CPDefinitionDiagramSettingLocalServiceWrapper
 			addCPDefinitionDiagramSetting(cpDefinitionDiagramSetting);
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			addCPDefinitionDiagramSetting(
+				long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
+				String color, double radius, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingLocalService.
+			addCPDefinitionDiagramSetting(
+				userId, cpDefinitionId, cpAttachmentFileEntryId, color, radius,
+				type);
+	}
+
 	/**
 	 * Creates a new cp definition diagram setting with the primary key. Does not add the cp definition diagram setting to the database.
 	 *
@@ -119,6 +132,16 @@ public class CPDefinitionDiagramSettingLocalServiceWrapper
 
 		return _cpDefinitionDiagramSettingLocalService.
 			deleteCPDefinitionDiagramSetting(CPDefinitionDiagramSettingId);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			deleteCPDefinitionDiagramSettingByCPDefinitionId(
+				long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingLocalService.
+			deleteCPDefinitionDiagramSettingByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**
@@ -246,6 +269,14 @@ public class CPDefinitionDiagramSettingLocalServiceWrapper
 			fetchCPDefinitionDiagramSetting(CPDefinitionDiagramSettingId);
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+		fetchCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId) {
+
+		return _cpDefinitionDiagramSettingLocalService.
+			fetchCPDefinitionDiagramSettingByCPDefinitionId(cpDefinitionId);
+	}
+
 	/**
 	 * Returns the cp definition diagram setting with the matching UUID and company.
 	 *
@@ -284,6 +315,15 @@ public class CPDefinitionDiagramSettingLocalServiceWrapper
 
 		return _cpDefinitionDiagramSettingLocalService.
 			getCPDefinitionDiagramSetting(CPDefinitionDiagramSettingId);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			getCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingLocalService.
+			getCPDefinitionDiagramSettingByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**
@@ -394,6 +434,19 @@ public class CPDefinitionDiagramSettingLocalServiceWrapper
 
 		return _cpDefinitionDiagramSettingLocalService.
 			updateCPDefinitionDiagramSetting(cpDefinitionDiagramSetting);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			updateCPDefinitionDiagramSetting(
+				long cpDefinitionDiagramSettingId, long cpAttachmentFileEntryId,
+				String color, double radius, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingLocalService.
+			updateCPDefinitionDiagramSetting(
+				cpDefinitionDiagramSettingId, cpAttachmentFileEntryId, color,
+				radius, type);
 	}
 
 	@Override

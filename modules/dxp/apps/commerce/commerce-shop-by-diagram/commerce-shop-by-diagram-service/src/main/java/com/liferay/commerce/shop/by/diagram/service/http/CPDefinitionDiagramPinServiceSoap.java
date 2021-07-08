@@ -14,9 +14,15 @@
 
 package com.liferay.commerce.shop.by.diagram.service.http;
 
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinServiceUtil</code> service
+ * <code>CPDefinitionDiagramPinServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,133 @@ package com.liferay.commerce.shop.by.diagram.service.http;
  */
 @Deprecated
 public class CPDefinitionDiagramPinServiceSoap {
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPinSoap
+				addCPDefinitionDiagramPin(
+					long userId, long cpDefinitionId, int number,
+					double positionX, double positionY)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+				returnValue =
+					CPDefinitionDiagramPinServiceUtil.addCPDefinitionDiagramPin(
+						userId, cpDefinitionId, number, positionX, positionY);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramPinSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCPDefinitionDiagramPin(
+			long cpDefinitionDiagramPinId)
+		throws RemoteException {
+
+		try {
+			CPDefinitionDiagramPinServiceUtil.deleteCPDefinitionDiagramPin(
+				cpDefinitionDiagramPinId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPinSoap
+				getCPDefinitionDiagramPin(long cpDefinitionDiagramPinId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+				returnValue =
+					CPDefinitionDiagramPinServiceUtil.getCPDefinitionDiagramPin(
+						cpDefinitionDiagramPinId);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramPinSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPinSoap[]
+				getCPDefinitionDiagramPins(
+					long cpDefinitionId, int start, int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.shop.by.diagram.model.
+					CPDefinitionDiagramPin> returnValue =
+						CPDefinitionDiagramPinServiceUtil.
+							getCPDefinitionDiagramPins(
+								cpDefinitionId, start, end);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramPinSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCPDefinitionDiagramPinsCount(long cpDefinitionId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CPDefinitionDiagramPinServiceUtil.
+					getCPDefinitionDiagramPinsCount(cpDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPinSoap
+				updateCPDefinitionDiagramPin(
+					long cpDefinitionDiagramPinId, int number, double positionX,
+					double positionY)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+				returnValue =
+					CPDefinitionDiagramPinServiceUtil.
+						updateCPDefinitionDiagramPin(
+							cpDefinitionDiagramPinId, number, positionX,
+							positionY);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramPinSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CPDefinitionDiagramPinServiceSoap.class);
+
 }

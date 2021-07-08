@@ -160,6 +160,14 @@ public class CPDefinitionDiagramSettingWrapper
 		return model.getCompanyId();
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry
+			getCPAttachmentFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCPAttachmentFileEntry();
+	}
+
 	/**
 	 * Returns the cp attachment file entry ID of this cp definition diagram setting.
 	 *
@@ -168,6 +176,13 @@ public class CPDefinitionDiagramSettingWrapper
 	@Override
 	public long getCPAttachmentFileEntryId() {
 		return model.getCPAttachmentFileEntryId();
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCPDefinition();
 	}
 
 	/**

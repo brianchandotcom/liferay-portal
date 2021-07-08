@@ -155,6 +155,13 @@ public class CPDefinitionDiagramEntryWrapper
 		return model.getCompanyId();
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCPDefinition();
+	}
+
 	/**
 	 * Returns the cp definition diagram entry ID of this cp definition diagram entry.
 	 *

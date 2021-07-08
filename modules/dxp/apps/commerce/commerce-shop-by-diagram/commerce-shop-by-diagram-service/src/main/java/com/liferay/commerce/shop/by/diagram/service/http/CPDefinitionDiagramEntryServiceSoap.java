@@ -14,9 +14,15 @@
 
 package com.liferay.commerce.shop.by.diagram.service.http;
 
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryServiceUtil</code> service
+ * <code>CPDefinitionDiagramEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,142 @@ package com.liferay.commerce.shop.by.diagram.service.http;
  */
 @Deprecated
 public class CPDefinitionDiagramEntryServiceSoap {
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntrySoap
+				addCPDefinitionDiagramEntry(
+					long userId, long cpDefinitionId, String cpInstanceUuid,
+					long cProductId, boolean diagram, int number, int quantity,
+					String sku,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+				returnValue =
+					CPDefinitionDiagramEntryServiceUtil.
+						addCPDefinitionDiagramEntry(
+							userId, cpDefinitionId, cpInstanceUuid, cProductId,
+							diagram, number, quantity, sku, serviceContext);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCPDefinitionDiagramEntry(
+			long cpDefinitionDiagramEntryId)
+		throws RemoteException {
+
+		try {
+			CPDefinitionDiagramEntryServiceUtil.deleteCPDefinitionDiagramEntry(
+				cpDefinitionDiagramEntryId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.
+			CPDefinitionDiagramEntrySoap[] getCPDefinitionDiagramEntries(
+					long cpDefinitionId, int start, int end)
+				throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.shop.by.diagram.model.
+					CPDefinitionDiagramEntry> returnValue =
+						CPDefinitionDiagramEntryServiceUtil.
+							getCPDefinitionDiagramEntries(
+								cpDefinitionId, start, end);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCPDefinitionDiagramEntriesCount(long cpDefinitionId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CPDefinitionDiagramEntryServiceUtil.
+					getCPDefinitionDiagramEntriesCount(cpDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntrySoap
+				getCPDefinitionDiagramEntry(long cpDefinitionDiagramEntryId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+				returnValue =
+					CPDefinitionDiagramEntryServiceUtil.
+						getCPDefinitionDiagramEntry(cpDefinitionDiagramEntryId);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntrySoap
+				updateCPDefinitionDiagramEntry(
+					long cpDefinitionDiagramEntryId, String cpInstanceUuid,
+					long cProductId, boolean diagram, int number, int quantity,
+					String sku,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+				returnValue =
+					CPDefinitionDiagramEntryServiceUtil.
+						updateCPDefinitionDiagramEntry(
+							cpDefinitionDiagramEntryId, cpInstanceUuid,
+							cProductId, diagram, number, quantity, sku,
+							serviceContext);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CPDefinitionDiagramEntryServiceSoap.class);
+
 }

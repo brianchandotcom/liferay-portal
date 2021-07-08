@@ -60,4 +60,7 @@ public interface CPDefinitionDiagramPin
 
 			};
 
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

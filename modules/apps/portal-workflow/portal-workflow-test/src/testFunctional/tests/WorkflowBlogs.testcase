@@ -121,6 +121,51 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "Verify that a workflow can be assigned to Blog Entry in the Portal configurations"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAssignWorkflowThroughPortalConfiguration {
+
+		// TODO LRQA-68526 CanAssignWorkflowThroughPortalConfiguration pending implementation
+
+	}
+
+	@description = "Verify that the user can assign a Workflow to Blog Entry"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToBlogEntry {
+
+		// TODO LRQA-68523 CanAssignWorkflowToBlogEntry pending implementation
+
+	}
+
+	@description = "Verify that the user can modify the workflow of a Blog Entry"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanHaveDifferentBlogsWithDifferentWorkflows {
+
+		// TODO LRQA-68525 CanHaveDifferentBlogsWithDifferentWorkflows pending implementation
+
+	}
+
+	@description = "Verify that the user can publish a Blogs Entry with Workflow assigned"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishBlogsEntryWithWorkflowAssigned {
+
+		// TODO LRQA-68524 CanPublishBlogsEntryWithWorkflowAssigned pending implementation
+
+	}
+
+	@description = "Verify that a Blog Entry saved as draft is not submitted to the Workflow"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DraftBlogEntryIsNotSubmittedToWorkflow {
+
+		// TODO LRQA-68527 DraftBlogEntryIsNotSubmittedToWorkflow pending implementation
+
+	}
+
 	@priority = "4"
 	test RejectBlogsEntryCP {
 		Navigator.openURL();

@@ -33,16 +33,10 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
-import com.liferay.portal.kernel.model.LayoutTemplate;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -52,7 +46,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -84,7 +77,9 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(_getURLSeparatorLength());
+		String urlTitle = friendlyURL.substring(
+			_assetDisplayPageFriendlyURLResolverHelper.getURLSeparatorLength(
+				getURLSeparator()));
 
 		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
 
@@ -151,7 +146,9 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 
-		String urlTitle = friendlyURL.substring(_getURLSeparatorLength());
+		String urlTitle = friendlyURL.substring(
+			_assetDisplayPageFriendlyURLResolverHelper.getURLSeparatorLength(
+				getURLSeparator()));
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -226,8 +223,10 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		if ((cpDisplayLayout == null) ||
 			Validator.isNull(cpDisplayLayout.getLayoutUuid())) {
 
-			long plid = _getPlidFromPortletId(
-				groupId, privateLayout, CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
+			long plid =
+				_assetDisplayPageFriendlyURLResolverHelper.getPlidFromPortletId(
+					groupId, privateLayout,
+					CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
 
 			return _layoutLocalService.getLayout(plid);
 		}
@@ -309,106 +308,16 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 			infoItemReference);
 	}
 
-	private long _getPlidFromPortletId(
-		List<Layout> layouts, String portletId, long scopeGroupId) {
-
-		for (Layout layout : layouts) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			if (_hasNonstaticPortletId(layoutTypePortlet, portletId) &&
-				(_portal.getScopeGroupId(layout, portletId) == scopeGroupId)) {
-
-				return layout.getPlid();
-			}
-		}
-
-		return LayoutConstants.DEFAULT_PLID;
-	}
-
-	private long _getPlidFromPortletId(
-		long groupId, boolean privateLayout, String portletId) {
-
-		long scopeGroupId = groupId;
-
-		try {
-			Group group = _groupLocalService.getGroup(groupId);
-
-			if (group.isLayout()) {
-				Layout scopeLayout = _layoutLocalService.getLayout(
-					group.getClassPK());
-
-				groupId = scopeLayout.getGroupId();
-			}
-
-			String[] validLayoutTypes = {
-				LayoutConstants.TYPE_PORTLET,
-				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_CONTENT
-			};
-
-			for (String layoutType : validLayoutTypes) {
-				List<Layout> layouts = _layoutLocalService.getLayouts(
-					groupId, privateLayout, layoutType);
-
-				long plid = _getPlidFromPortletId(
-					layouts, portletId, scopeGroupId);
-
-				if (plid != LayoutConstants.DEFAULT_PLID) {
-					return plid;
-				}
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-		}
-
-		return LayoutConstants.DEFAULT_PLID;
-	}
-
-	private int _getURLSeparatorLength() {
-		String urlSeparator = getURLSeparator();
-
-		return urlSeparator.length();
-	}
-
-	private boolean _hasNonstaticPortletId(
-		LayoutTypePortlet layoutTypePortlet, String portletId) {
-
-		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
-
-		for (String columnId : layoutTemplate.getColumns()) {
-			String[] columnValues = StringUtil.split(
-				layoutTypePortlet.getTypeSettingsProperty(columnId));
-
-			for (String nonstaticPortletId : columnValues) {
-				if (nonstaticPortletId.equals(portletId)) {
-					return true;
-				}
-
-				String decodedNonstaticPortletName =
-					PortletIdCodec.decodePortletName(nonstaticPortletId);
-
-				if (decodedNonstaticPortletName.equals(portletId)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetCategoryAssetDisplayPageFriendlyURLResolver.class);
-
 	@Reference
 	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private AssetDisplayPageFriendlyURLResolverHelper
+		_assetDisplayPageFriendlyURLResolverHelper;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

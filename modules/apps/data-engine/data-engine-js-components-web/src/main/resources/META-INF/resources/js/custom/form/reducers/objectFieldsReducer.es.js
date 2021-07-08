@@ -12,7 +12,7 @@
  * details.
  */
 
-import {EVENT_TYPES} from 'data-engine-js-components-web/js/custom/form/eventTypes.es';
+import {EVENT_TYPES} from '../eventTypes.es';
 
 export default (state, action) => {
 	switch (action.type) {

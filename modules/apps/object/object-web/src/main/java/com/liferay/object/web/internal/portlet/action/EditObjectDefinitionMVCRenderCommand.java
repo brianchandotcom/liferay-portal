@@ -15,8 +15,12 @@
 package com.liferay.object.web.internal.portlet.action;
 
 import com.liferay.object.constants.ObjectsPortletKeys;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.web.internal.constants.ObjectWebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -42,10 +46,23 @@ public class EditObjectDefinitionMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		long objectDefinitionId = ParamUtil.getLong(
+			renderRequest, "objectDefinitionId");
+
+		try {
+			renderRequest.setAttribute(
+				ObjectWebKeys.OBJECT_DEFINITION,
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId));
+		}
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
+		}
+
 		return "/admin/edit_object_definition.jsp";
 	}
 
 	@Reference
-	private Portal _portal;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

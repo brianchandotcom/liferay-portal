@@ -16,4 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<h1> Hello Edit Page! </h1>
+<%
+ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
+%>
+
+<liferay-frontend:screen-navigation
+	context="<%= objectDefinition %>"
+	key="<%= ObjectDefinitionScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION %>"
+	portletURL='<%=
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/object_definitions_admin/edit_object_definition"
+		).setParameter(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+		).build()
+	%>'
+/>

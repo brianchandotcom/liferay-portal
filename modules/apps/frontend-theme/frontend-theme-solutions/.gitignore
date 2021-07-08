@@ -3,10 +3,9 @@
 /build_gradle
 /dist
 /liferay-theme.json
-/src/css
+/src
 !/src/css/_custom.scss
 !/src/css/clay.scss
-/src/images
-/src/js
-/src/templates
-/src/WEB-INF/src
+!/src/WEB-INF/frontend-token-definition.json
+!/src/WEB-INF/liferay-look-and-feel.xml
+!/src/WEB-INF/liferay-plugin-package.properties

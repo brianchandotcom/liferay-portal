@@ -152,7 +152,7 @@ export const collectDigitalSignature = async (
 	const response = await fetch(
 		createResourceURL(themeDisplay.getLayoutRelativeControlPanelURL(), {
 			p_p_id: digitalSignaturePortlet,
-			p_p_resource_id: '/digital_signature/check_available_extension',
+			p_p_resource_id: '/digital_signature/get_invalid_file_extensions',
 		}),
 		{
 			body: objectToFormData({
@@ -162,7 +162,7 @@ export const collectDigitalSignature = async (
 		}
 	);
 
-	const {invalidFileExtensions = []} = await response.json();
+	const invalidFileExtensions = await response.json();
 
 	const invalidFileExtensionEntryIds = invalidFileExtensions.map(
 		({fileEntryId}) => fileEntryId

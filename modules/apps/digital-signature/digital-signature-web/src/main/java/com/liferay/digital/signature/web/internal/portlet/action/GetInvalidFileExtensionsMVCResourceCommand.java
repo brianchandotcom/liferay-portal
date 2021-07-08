@@ -42,11 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE,
-		"mvc.command.name=/digital_signature/check_available_extension"
+		"mvc.command.name=/digital_signature/get_invalid_file_extensions"
 	},
 	service = MVCResourceCommand.class
 )
-public class CheckAvailableExtensionMVCResourceCommand
+public class GetInvalidFileExtensionsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -56,10 +56,8 @@ public class CheckAvailableExtensionMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			JSONUtil.put(
-				"invalidFileExtensions",
-				_toJSONArray(
-					ParamUtil.getLongValues(resourceRequest, "fileEntryIds"))));
+			_toJSONArray(
+				ParamUtil.getLongValues(resourceRequest, "fileEntryIds")));
 	}
 
 	private JSONArray _toJSONArray(long[] fileEntryIds) {
@@ -91,7 +89,7 @@ public class CheckAvailableExtensionMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CheckAvailableExtensionMVCResourceCommand.class);
+		GetInvalidFileExtensionsMVCResourceCommand.class);
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

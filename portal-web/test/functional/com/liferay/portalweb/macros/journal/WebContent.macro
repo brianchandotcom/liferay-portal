@@ -2890,4 +2890,26 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro saveAsDraft {
+		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+
+		Click(locator1 = "ContentDashboard#EDIT_OPTION");
+
+		CKEditor.addContentInWebContent(
+			content = "Web Content Content",
+			fieldLabel = "content");
+
+		Click(locator1 = "Button#SAVE_AS_DRAFT");
+
+		Click(locator1 = "Icon#BACK");
+	}
+
+	macro checkLanguage {
+		Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+		Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
+
+		Click(locator1 = "ContentDashboard#PANEL_INFO_VIEW");
+	}
+
 }

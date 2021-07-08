@@ -40,11 +40,10 @@ export default {
 	 * @param {function} options.dispatch
 	 */
 	createExperience({body, dispatch}) {
-		const {languageIds, name, segmentsEntryId} = body;
+		const {name, segmentsEntryId} = body;
 
 		const payload = {
 			active: true,
-			languageIds,
 			name,
 			segmentsEntryId,
 		};
@@ -87,9 +86,13 @@ export default {
 	removeExperience({body, dispatch}) {
 		const {segmentsExperienceId} = body;
 
+		const payload = {
+			segmentsExperienceId,
+		};
+
 		return serviceFetch(
 			config.deleteSegmentsExperienceURL,
-			{body: {segmentsExperienceId}},
+			{body: payload},
 			dispatch
 		);
 	},
@@ -113,18 +116,9 @@ export default {
 	 * @param {function} options.dispatch
 	 */
 	updateExperience({body, dispatch}) {
-		const {languageIds, name, segmentsEntryId, segmentsExperienceId} = body;
-
-		const payload = {
-			languageIds,
-			name,
-			segmentsEntryId,
-			segmentsExperienceId,
-		};
-
 		return serviceFetch(
 			config.updateSegmentsExperienceURL,
-			{body: payload},
+			{body},
 			dispatch
 		);
 	},

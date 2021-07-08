@@ -16,7 +16,6 @@ import ExperienceService from '../../../app/services/ExperienceService';
 import updateExperienceAction from '../actions/updateExperience';
 
 export default function updateExperience({
-	languageIds,
 	name,
 	segmentsEntryId,
 	segmentsExperienceId,
@@ -25,7 +24,6 @@ export default function updateExperience({
 		return ExperienceService.updateExperience({
 			body: {
 				active: true,
-				languageIds,
 				name,
 				segmentsEntryId,
 				segmentsExperienceId,
@@ -34,7 +32,6 @@ export default function updateExperience({
 		}).then(() => {
 			return dispatch(
 				updateExperienceAction({
-					languageIds,
 					name,
 					segmentsEntryId,
 					segmentsExperienceId,

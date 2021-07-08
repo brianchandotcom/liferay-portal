@@ -25,7 +25,7 @@ import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/r
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {defaultSegmentsExperienceId: '0'}})
+	() => ({config: {}})
 );
 
 jest.mock(

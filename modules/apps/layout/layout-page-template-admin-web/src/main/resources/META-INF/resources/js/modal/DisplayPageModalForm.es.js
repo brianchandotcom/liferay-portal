@@ -151,7 +151,7 @@ DisplayPageModalForm.propTypes = {
 		})
 	),
 	namespace: PropTypes.string.isRequired,
-	onSubmit: PropTypes.func.isRequired,
+	onSubmit: PropTypes.func.isRequire,
 };
 
 export {DisplayPageModalForm};

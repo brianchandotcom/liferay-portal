@@ -29,11 +29,8 @@ export interface Config {
 
 	availableLanguages: {
 		[key: string]: {
-			default: boolean;
-			displayName: string;
 			languageIcon: string;
-			languageId: string;
-			w3cLanguageId: string;
+			languageLabel: string;
 		};
 	};
 

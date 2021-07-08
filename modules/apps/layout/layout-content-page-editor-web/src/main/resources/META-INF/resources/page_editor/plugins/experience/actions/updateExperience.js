@@ -15,14 +15,12 @@
 import {UPDATE_SEGMENTS_EXPERIENCE} from '../actions';
 
 export default function updateExperience({
-	languageIds,
 	name,
 	segmentsEntryId,
 	segmentsExperienceId,
 }) {
 	return {
 		payload: {
-			languageIds,
 			name,
 			segmentsEntryId,
 			segmentsExperienceId,

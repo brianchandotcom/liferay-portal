@@ -86,7 +86,7 @@ const mockState = {
 		},
 		'test-experience-id-01': {
 			hasLockedSegmentsExperiment: false,
-			languageIds: ['es_ES', 'en_US'],
+			languageIds: ['en_US', 'es_ES'],
 			name: 'Experience #1',
 			priority: 3,
 			segmentsEntryId: 'test-segment-id-00',
@@ -96,7 +96,7 @@ const mockState = {
 		},
 		'test-experience-id-02': {
 			hasLockedSegmentsExperiment: false,
-			languageIds: ['es_ES', 'en_US', 'ar_SA'],
+			languageIds: ['en_US', 'es_ES', 'ar_SA'],
 			name: 'Experience #2',
 			priority: 1,
 			segmentsEntryId: 'test-segment-id-01',
@@ -262,7 +262,7 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('calls the backend to increase priority', async () => {
-		serviceFetch.mockImplementation((_, {body}) =>
+		serviceFetch.mockImplementation((url, {body}) =>
 			Promise.resolve({
 				priority: body.newPriority,
 				segmentsExperienceId: 'test-experience-id-02',
@@ -338,7 +338,7 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('calls the backend to decrease priority', async () => {
-		serviceFetch.mockImplementation((_, {body}) =>
+		serviceFetch.mockImplementation((url, {body}) =>
 			Promise.resolve({
 				priority: body.newPriority,
 				segmentsExperienceId: 'test-experience-id-01',
@@ -415,10 +415,10 @@ describe('ExperienceToolbarSection', () => {
 
 	it('calls the backend to create a new experience', async () => {
 		serviceFetch
-			.mockImplementationOnce((_, {body}) =>
+			.mockImplementationOnce((url, {body}) =>
 				Promise.resolve({
 					segmentsExperience: {
-						languageIds: body.languageIds,
+						active: true,
 						name: body.name,
 						priority: '1000',
 						segmentsEntryId: body.segmentsEntryId,
@@ -459,11 +459,12 @@ describe('ExperienceToolbarSection', () => {
 
 		await wait(() => getByLabelText('name'));
 
-		userEvent.type(getByLabelText('name'), 'New Experience #1');
+		const nameInput = getByLabelText('name');
+		const audienceInput = getByLabelText('audience');
 
-		userEvent.selectOptions(getByLabelText('audience'), 'A segment #1');
+		userEvent.type(nameInput, 'New Experience #1');
 
-		getByLabelText('languages');
+		userEvent.selectOptions(audienceInput, 'A segment #1');
 
 		// Grab parentElement here to work around jsdom v13 issue.
 		// "TypeError: Cannot read property '_defaultView' of undefined"
@@ -476,8 +477,6 @@ describe('ExperienceToolbarSection', () => {
 			expect.stringContaining(MOCK_CREATE_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
-					active: true,
-					languageIds: ['es_ES'],
 					name: 'New Experience #1',
 					segmentsEntryId: 'test-segment-id-00',
 				}),
@@ -493,12 +492,10 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('calls the backend to update the experience', async () => {
-		serviceFetch.mockImplementation((_, {body}) =>
+		serviceFetch.mockImplementation((url, {body}) =>
 			Promise.resolve({
-				languageIds: body.languageIds,
 				name: body.name,
 				segmentsEntryId: body.segmentsEntryId,
-				segmentsExperienceId: body.segmentsExperienceId,
 			})
 		);
 
@@ -562,7 +559,6 @@ describe('ExperienceToolbarSection', () => {
 			expect.stringContaining(MOCK_UPDATE_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
-					languageIds: ['en_US', 'es_ES'],
 					name: 'New Experience #1',
 					segmentsEntryId: 'test-segment-id-00',
 					segmentsExperienceId: 'test-experience-id-01',
@@ -726,11 +722,10 @@ describe('ExperienceToolbarSection', () => {
 
 	it('calls the backend to duplicate an experience', async () => {
 		serviceFetch
-			.mockImplementationOnce((_, {body}) =>
+			.mockImplementationOnce((url, {body}) =>
 				Promise.resolve({
 					segmentsExperience: {
 						active: true,
-						languageIds: body.languageIds,
 						name: body.name,
 						priority: '1000',
 						segmentsEntryId: body.segmentsEntryId,

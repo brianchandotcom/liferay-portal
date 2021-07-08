@@ -62,7 +62,7 @@ public class DefaultPortalJob
 				portalRepositoryName);
 
 		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			throw new RuntimeException("Invalid portal git working directory");
+			throw new RuntimeException("Invalid portal Git working directory");
 		}
 
 		_portalGitWorkingDirectory =

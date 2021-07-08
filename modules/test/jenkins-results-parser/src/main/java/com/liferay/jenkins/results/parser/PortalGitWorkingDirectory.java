@@ -236,7 +236,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		}
 
 		throw new RuntimeException(
-			"Unable to find a plugins git working directory");
+			"Unable to find a plugins Git working directory");
 	}
 
 	public Properties getReleaseProperties() {

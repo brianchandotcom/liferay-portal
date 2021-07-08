@@ -577,7 +577,7 @@ public class GitHubDevSyncUtil {
 		long duration = JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
 		System.out.println(
-			"Local git nodes cleaned in " +
+			"Local Git nodes cleaned in " +
 				JenkinsResultsParserUtil.toDurationString(duration));
 	}
 
@@ -617,7 +617,7 @@ public class GitHubDevSyncUtil {
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Deleted ", remoteGitBranchName, " on ",
-				String.valueOf(gitRemotes.size()), " git nodes in ",
+				String.valueOf(gitRemotes.size()), " Git nodes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
 	}
 
@@ -986,7 +986,7 @@ public class GitHubDevSyncUtil {
 			JenkinsResultsParserUtil.combine(
 				"Pushed ", localGitBranch.getName(), " to ",
 				remoteGitBranchName, " on ", String.valueOf(gitRemotes.size()),
-				" git nodes in ",
+				" Git nodes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
 	}
 

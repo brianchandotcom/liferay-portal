@@ -117,6 +117,12 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro openToAddResourceCustomField {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_expando_web_portlet_ExpandoPortlet&_com_liferay_expando_web_portlet_ExpandoPortlet_mvcPath=%2Fedit%2Fselect_field_type.jsp&_com_liferay_expando_web_portlet_ExpandoPortlet_modelResource=${modelResource}");
+	}
+
 	macro tearDownCP {
 		for (var resourceName : list "Blogs Entry,Calendar Event,Document,Documents Folder,Knowledge Base Article,Knowledge Base Folder,Message Boards Category,Message Boards Message,Organization,Page,Role,Site,User,User Group,Web Content Article,Web Content Folder,Wiki Page") {
 			ApplicationsMenu.gotoPortlet(

@@ -26,16 +26,16 @@ function Body({data, setRetry, tasks}) {
 
 		tasks.forEach((task) => {
 			if (
-				versions[task.workflowDefinitionVersion] &&
-				versions[task.workflowDefinitionVersion][task.name]
+				versions[task.processVersion] &&
+				versions[task.processVersion][task.name]
 			) {
-				versions[task.workflowDefinitionVersion][task.name].push(task);
+				versions[task.processVersion][task.name].push(task);
 			}
-			else if (versions[task.workflowDefinitionVersion]) {
-				versions[task.workflowDefinitionVersion][task.name] = [task];
+			else if (versions[task.processVersion]) {
+				versions[task.processVersion][task.name] = [task];
 			}
 			else {
-				versions[task.workflowDefinitionVersion] = {
+				versions[task.processVersion] = {
 					[task.name]: [task],
 				};
 			}

@@ -12,8 +12,9 @@
  * details.
  */
 
-import {EVENT_TYPES} from 'data-engine-js-components-web/js/custom/form/eventTypes.es';
 import {fetch} from 'frontend-js-web';
+
+import {EVENT_TYPES} from '../custom/form/eventTypes.es';
 
 const HEADERS = {
 	Accept: 'application/json',
@@ -98,7 +99,7 @@ export const updateObjectFields = async (dispatch) => {
 
 const DATA_TYPES = {
 	BigDecimal: 'double',
-	Blob: 'blob',
+	Blob: 'string',
 	Double: 'double',
 	Integer: 'integer',
 	Long: 'double',
@@ -107,4 +108,36 @@ const DATA_TYPES = {
 
 export const normalizeDataType = (type) => {
 	return DATA_TYPES[type] ?? type;
+};
+
+export const getSelectedValue = (value) => {
+	if (typeof value === 'string' && value !== '') {
+		const newValue = JSON.parse(value);
+
+		return Array.isArray(newValue) ? newValue[0] : newValue;
+	}
+
+	return value[0];
+};
+
+export const getObjectFieldName = (settingsContext) => {
+	const getFieldsByColumn = (settingsContext, columnTitle) => {
+		const column = ({title}) => title.toLowerCase() === columnTitle;
+
+		return settingsContext.pages.find(column).rows[0].columns[0].fields;
+	};
+	const getFieldProperty = (fields, fieldName) =>
+		fields.find((field) => field.fieldName === fieldName);
+
+	const fieldsFromAdvancedColumn = getFieldsByColumn(
+		settingsContext,
+		'advanced'
+	);
+
+	const objectFieldName = getFieldProperty(
+		fieldsFromAdvancedColumn,
+		'objectFieldName'
+	);
+
+	return objectFieldName;
 };

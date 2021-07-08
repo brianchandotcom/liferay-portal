@@ -151,6 +151,19 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 	}
 
 	@Override
+	protected WikiPage
+			testPutSiteWikiPageByExternalReferenceCode_createWikiPage()
+		throws Exception {
+
+		WikiPage wikiPage =
+			super.testPutSiteWikiPageByExternalReferenceCode_createWikiPage();
+
+		wikiPage.setWikiNodeId(_wikiNode.getNodeId());
+
+		return wikiPage;
+	}
+
+	@Override
 	protected WikiPage testPutWikiPage_addWikiPage() throws Exception {
 		return _addWikiPage(testGetWikiNodeWikiPagesPage_getWikiNodeId());
 	}

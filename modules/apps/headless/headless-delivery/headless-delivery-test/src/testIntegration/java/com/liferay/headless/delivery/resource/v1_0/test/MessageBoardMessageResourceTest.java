@@ -250,6 +250,21 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
+			testPutSiteMessageBoardMessageByExternalReferenceCode_createMessageBoardMessage()
+		throws Exception {
+
+		MessageBoardMessage messageBoardMessage =
+			super.
+				testPutSiteMessageBoardMessageByExternalReferenceCode_createMessageBoardMessage();
+
+		messageBoardMessage.setParentMessageBoardMessageId(
+			_mbThread.getRootMessageId());
+
+		return messageBoardMessage;
+	}
+
+	@Override
+	protected MessageBoardMessage
 			testPutSiteMessageBoardMessagePermission_addMessageBoardMessage()
 		throws Exception {
 

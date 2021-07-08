@@ -50,6 +50,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \
 				-u ${userEmailAddress}:${userPassword} \
+				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \
 				-d titleMap=${titleMap} \

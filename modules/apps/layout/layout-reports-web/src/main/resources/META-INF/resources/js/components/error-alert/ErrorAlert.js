@@ -18,10 +18,10 @@ import ClayLink from '@clayui/link';
 import React, {useContext, useState} from 'react';
 
 import {
-	GPS_API_KEY_ERROR_CODE,
-	GPS_API_KEY_INVALID_STATUS,
-	GPS_SERVER_ERROR_CODE,
-} from '../../constants/pageSpeed';
+	PAGE_SPEED_API_KEY_ERROR_CODE,
+	PAGE_SPEED_API_KEY_INVALID_STATUS,
+	PAGE_SPEED_SERVER_ERROR_CODE,
+} from '../../constants/googlePageSpeed';
 import {StoreStateContext} from '../../context/StoreContext';
 import ErrorAlertExtendedInfo from './ErrorAlertExtendedInfo';
 
@@ -33,10 +33,10 @@ const ErrorAlert = () => {
 	const {data, error} = useContext(StoreStateContext);
 
 	const apiKeyError =
-		error?.code === GPS_API_KEY_ERROR_CODE &&
-		error?.status === GPS_API_KEY_INVALID_STATUS;
+		error?.code === PAGE_SPEED_API_KEY_ERROR_CODE &&
+		error?.status === PAGE_SPEED_API_KEY_INVALID_STATUS;
 
-	const serverError = error?.code === GPS_SERVER_ERROR_CODE;
+	const serverError = error?.code === PAGE_SPEED_SERVER_ERROR_CODE;
 	const pageCanNotBeAudited = serverError || data?.privateLayout;
 
 	const unknownError = !apiKeyError && !pageCanNotBeAudited;

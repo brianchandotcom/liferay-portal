@@ -23,10 +23,10 @@ import BasicInformation from '../../../../src/main/resources/META-INF/resources/
 import SidebarHeader from '../../../../src/main/resources/META-INF/resources/js/components/SidebarHeader';
 import ErrorAlert from '../../../../src/main/resources/META-INF/resources/js/components/error-alert/ErrorAlert';
 import {
-	GPS_API_KEY_ERROR_CODE,
-	GPS_API_KEY_INVALID_STATUS,
-	GPS_SERVER_ERROR_CODE,
-} from '../../../../src/main/resources/META-INF/resources/js/constants/pageSpeed';
+	PAGE_SPEED_API_KEY_ERROR_CODE,
+	PAGE_SPEED_API_KEY_INVALID_STATUS,
+	PAGE_SPEED_SERVER_ERROR_CODE,
+} from '../../../../src/main/resources/META-INF/resources/js/constants/googlePageSpeed';
 import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 import {pageURLs} from '../../mocks';
 
@@ -92,8 +92,8 @@ describe('Error Alert', () => {
 							'a valid configureGooglePageSpeedURL',
 					},
 					error: {
-						code: GPS_API_KEY_ERROR_CODE,
-						status: GPS_API_KEY_INVALID_STATUS,
+						code: PAGE_SPEED_API_KEY_ERROR_CODE,
+						status: PAGE_SPEED_API_KEY_INVALID_STATUS,
 					},
 				})
 			);
@@ -118,8 +118,8 @@ describe('Error Alert', () => {
 						configureGooglePageSpeedURL: null,
 					},
 					error: {
-						code: GPS_API_KEY_ERROR_CODE,
-						status: GPS_API_KEY_INVALID_STATUS,
+						code: PAGE_SPEED_API_KEY_ERROR_CODE,
+						status: PAGE_SPEED_API_KEY_INVALID_STATUS,
 					},
 				})
 			);
@@ -140,8 +140,8 @@ describe('Error Alert', () => {
 							'a valid configureGooglePageSpeedURL',
 					},
 					error: {
-						code: GPS_API_KEY_ERROR_CODE,
-						status: GPS_API_KEY_INVALID_STATUS,
+						code: PAGE_SPEED_API_KEY_ERROR_CODE,
+						status: PAGE_SPEED_API_KEY_INVALID_STATUS,
 					},
 				})
 			);
@@ -150,7 +150,7 @@ describe('Error Alert', () => {
 			let hideButton = queryByText('hide-details');
 
 			expect(
-				queryByText(GPS_API_KEY_INVALID_STATUS)
+				queryByText(PAGE_SPEED_API_KEY_INVALID_STATUS)
 			).not.toBeInTheDocument();
 			expect(showButton).toBeInTheDocument();
 			expect(hideButton).not.toBeInTheDocument();
@@ -160,7 +160,9 @@ describe('Error Alert', () => {
 			showButton = queryByText('show-details');
 			hideButton = queryByText('hide-details');
 
-			expect(getByText(GPS_API_KEY_INVALID_STATUS)).toBeInTheDocument();
+			expect(
+				getByText(PAGE_SPEED_API_KEY_INVALID_STATUS)
+			).toBeInTheDocument();
 			expect(hideButton).toBeInTheDocument();
 			expect(showButton).not.toBeInTheDocument();
 		});
@@ -173,8 +175,8 @@ describe('Error Alert', () => {
 							'a valid configureGooglePageSpeedURL',
 					},
 					error: {
-						code: GPS_API_KEY_ERROR_CODE,
-						status: GPS_API_KEY_INVALID_STATUS,
+						code: PAGE_SPEED_API_KEY_ERROR_CODE,
+						status: PAGE_SPEED_API_KEY_INVALID_STATUS,
 					},
 				})
 			);
@@ -196,7 +198,7 @@ describe('Error Alert', () => {
 						validConnection: true,
 					},
 					error: {
-						code: GPS_SERVER_ERROR_CODE,
+						code: PAGE_SPEED_SERVER_ERROR_CODE,
 					},
 				})
 			);
@@ -240,7 +242,7 @@ describe('Error Alert', () => {
 						validConnection: true,
 					},
 					error: {
-						code: GPS_SERVER_ERROR_CODE,
+						code: PAGE_SPEED_SERVER_ERROR_CODE,
 					},
 				})
 			);

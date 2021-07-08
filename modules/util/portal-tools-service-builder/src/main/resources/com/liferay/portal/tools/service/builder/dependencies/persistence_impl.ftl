@@ -65,6 +65,10 @@ import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 	import ${packagePath}.service.persistence.impl.constants.${portletShortName}PersistenceConstants;
 </#if>
 
+<#if stringUtil.equals(entity.name, "Company")>
+	import com.liferay.petra.lang.SafeCloseable;
+</#if>
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -366,6 +370,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			</#if>
 
+			<#if stringUtil.equals(entity.name, "Company")>
+				try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(${entity.variableName}.getPrimaryKey())) {
+			</#if>
+
 			<#if (cacheFields?size > 0)>
 				${entity.name} cached${entity.name} = (${entity.name})${entityCache}.getResult(
 					<#if serviceBuilder.isVersionLTE_7_2_0()>
@@ -399,6 +408,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entity.variableName}.resetOriginalValues();
 					}
 				</#if>
+			</#if>
+
+			<#if stringUtil.equals(entity.name, "Company")>
+				}
 			</#if>
 		}
 	}

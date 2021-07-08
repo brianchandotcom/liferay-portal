@@ -14,13 +14,21 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal.layout.list.retriever;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.InfoRequestItemProvider;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.filter.PropertyInfoItemServiceFilter;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
@@ -28,11 +36,14 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +84,18 @@ public class InfoCollectionProviderLayoutListRetriever
 
 			if (relatedItem == null) {
 				return Collections.emptyList();
+			}
+
+			RelatedInfoItemCollectionProvider<Object, ?>
+				relatedInfoItemCollectionProvider =
+					(RelatedInfoItemCollectionProvider<Object, ?>)
+						infoCollectionProvider;
+
+			if (Objects.equals(
+					relatedInfoItemCollectionProvider.getSourceItemClass(),
+					AssetEntry.class)) {
+
+				relatedItem = _getAssetEntryOptional(relatedItem);
 			}
 
 			collectionQuery.setRelatedItemObject(relatedItem);
@@ -128,6 +151,18 @@ public class InfoCollectionProviderLayoutListRetriever
 				return 0;
 			}
 
+			RelatedInfoItemCollectionProvider<Object, ?>
+				relatedInfoItemCollectionProvider =
+					(RelatedInfoItemCollectionProvider<Object, ?>)
+						infoCollectionProvider;
+
+			if (Objects.equals(
+					relatedInfoItemCollectionProvider.getSourceItemClass(),
+					AssetEntry.class)) {
+
+				relatedItem = _getAssetEntryOptional(relatedItem);
+			}
+
 			collectionQuery.setRelatedItemObject(relatedItem);
 		}
 
@@ -147,6 +182,49 @@ public class InfoCollectionProviderLayoutListRetriever
 			collectionQuery);
 
 		return infoPage.getTotalCount();
+	}
+
+	private AssetEntry _getAssetEntryOptional(Object contextObject) {
+		if (contextObject instanceof AssetEntry) {
+			return (AssetEntry)contextObject;
+		}
+
+		if (!(contextObject instanceof ClassedModel)) {
+			return null;
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				_getModelClassName(contextObject));
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(contextObject);
+
+		InfoItemReference infoItemReference =
+			infoItemFieldValues.getInfoItemReference();
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return null;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+		String className = infoItemReference.getClassName();
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+
+			// LPS-111037
+
+			className = DLFileEntry.class.getName();
+		}
+
+		return _assetEntryLocalService.fetchEntry(
+			className, classPKInfoItemIdentifier.getClassPK());
 	}
 
 	private InfoFilter _getInfoFilter(
@@ -175,6 +253,19 @@ public class InfoCollectionProviderLayoutListRetriever
 
 		return infoRequestItemProvider.create(httpServletRequest);
 	}
+
+	private String _getModelClassName(Object contextObject) {
+		if (contextObject instanceof FileEntry) {
+			return FileEntry.class.getName();
+		}
+
+		ClassedModel classedModel = (ClassedModel)contextObject;
+
+		return classedModel.getModelClassName();
+	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

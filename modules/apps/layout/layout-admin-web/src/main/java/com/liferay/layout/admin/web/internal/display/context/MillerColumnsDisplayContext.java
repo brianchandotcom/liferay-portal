@@ -637,54 +637,6 @@ public class MillerColumnsDisplayContext {
 			}
 		}
 
-		if (_ffLayoutTranslationConfiguration.enabled()) {
-			jsonArray.put(
-				JSONUtil.put(
-					"id", "exportTranslation"
-				).put(
-					"label",
-					LanguageUtil.get(
-						_httpServletRequest, "export-for-translation")
-				).put(
-					"plid", layout.getPlid()
-				).put(
-					"url", "#enable"
-				));
-		}
-
-		if (_isShowImportTranslationAction(layout)) {
-			jsonArray.put(
-				JSONUtil.put(
-					"id", "importTranslation"
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "import-translation")
-				).put(
-					"url",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse,
-						TranslationPortletKeys.TRANSLATION
-					).setMVCRenderCommandName(
-						"/translation/import_translation"
-					).setRedirect(
-						PortalUtil.getCurrentURL(_httpServletRequest)
-					).setPortletResource(
-						() -> {
-							PortletDisplay portletDisplay =
-								_themeDisplay.getPortletDisplay();
-
-							return portletDisplay.getId();
-						}
-					).setParameter(
-						"classNameId", PortalUtil.getClassNameId(Layout.class)
-					).setParameter(
-						"classPK", layout.getPlid()
-					).setParameter(
-						"groupId", layout.getGroupId()
-					).build()
-				));
-		}
-
 		if (_isShowTranslateAction()) {
 			jsonArray.put(
 				JSONUtil.put(
@@ -774,6 +726,54 @@ public class MillerColumnsDisplayContext {
 					"id", "copyLayout"
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "copy-page")
+				));
+		}
+
+		if (_ffLayoutTranslationConfiguration.enabled()) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "exportTranslation"
+				).put(
+					"label",
+					LanguageUtil.get(
+						_httpServletRequest, "export-for-translation")
+				).put(
+					"plid", layout.getPlid()
+				).put(
+					"url", "#enable"
+				));
+		}
+
+		if (_isShowImportTranslationAction(layout)) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "importTranslation"
+				).put(
+					"label",
+					LanguageUtil.get(_httpServletRequest, "import-translation")
+				).put(
+					"url",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse,
+						TranslationPortletKeys.TRANSLATION
+					).setMVCRenderCommandName(
+						"/translation/import_translation"
+					).setRedirect(
+						PortalUtil.getCurrentURL(_httpServletRequest)
+					).setPortletResource(
+						() -> {
+							PortletDisplay portletDisplay =
+								_themeDisplay.getPortletDisplay();
+
+							return portletDisplay.getId();
+						}
+					).setParameter(
+						"classNameId", PortalUtil.getClassNameId(Layout.class)
+					).setParameter(
+						"classPK", layout.getPlid()
+					).setParameter(
+						"groupId", layout.getGroupId()
+					).build()
 				));
 		}
 

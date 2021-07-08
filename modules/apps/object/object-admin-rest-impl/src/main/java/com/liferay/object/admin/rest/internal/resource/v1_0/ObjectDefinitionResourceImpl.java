@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -110,6 +111,18 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getObjectDefinitionId()),
 					ObjectDefinitionResourceImpl::_toObjectField,
 					ObjectField.class);
+				status = new Status() {
+					{
+						code = objectDefinition.getStatus();
+						label = WorkflowConstants.getStatusLabel(
+							objectDefinition.getStatus());
+						label_i18n = LanguageUtil.get(
+							resourceBundle,
+							WorkflowConstants.getStatusLabel(
+								objectDefinition.getStatus()));
+					}
+				};
+				system = objectDefinition.isSystem();
 			}
 		};
 	}

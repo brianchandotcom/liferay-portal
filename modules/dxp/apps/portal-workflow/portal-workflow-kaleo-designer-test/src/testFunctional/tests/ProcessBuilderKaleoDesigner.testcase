@@ -144,12 +144,26 @@ definition {
 	}
 
 	@description = "Verify that the user can select each node in Diagram"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectNodeOnDiagram {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68450 CanSelectNodeOnDiagram pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Task Node Description",
+			nodeName = "Task",
+			nodeNodeLabel = "Task",
+			nodeType = "task");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
 	}
 
 	@description = "Verify that the user can set transition Default"

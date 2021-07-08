@@ -53,6 +53,32 @@ public class HeadlessUtilTest {
 	}
 
 	@Test
+	public void testUpdateWithQueryParameters() {
+		String url =
+			"https://localhost:1977/o/headless-commerce-admin-catalog/v1.0" +
+				"/product";
+
+		Map<String, String> parameters = new HashMap<>();
+
+		parameters.put("archive", "true");
+		parameters.put("id", "1977");
+		parameters.put("key", "197797");
+		parameters.put("subscription", "true");
+
+		String uriString = String.valueOf(
+			HeadlessUtil.updateWithQueryParameters(url, parameters));
+
+		Assert.assertTrue(
+			"URI has archive query parameter",
+			uriString.contains("archive=true"));
+		Assert.assertTrue(
+			"URI has archive key parameter", uriString.contains("key=197797"));
+		Assert.assertTrue(
+			"URI has archive subscription parameter",
+			uriString.contains("subscription=true"));
+	}
+
+	@Test
 	public void testValidateOpenAPISpecURL() {
 		HeadlessUtil.validateOpenAPISpecURL(
 			"http://localhost:8080/o/headless/v1.0/openapi.json");

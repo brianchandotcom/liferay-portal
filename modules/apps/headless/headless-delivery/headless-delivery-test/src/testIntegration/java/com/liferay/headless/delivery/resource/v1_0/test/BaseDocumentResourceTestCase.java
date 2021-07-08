@@ -1698,6 +1698,30 @@ public abstract class BaseDocumentResourceTestCase {
 		assertValid(getDocument);
 
 		assertValid(getDocument, multipartFiles);
+		Document newDocument =
+			testPutSiteDocumentByExternalReferenceCode_createDocument();
+
+		putDocument = documentResource.putSiteDocumentByExternalReferenceCode(
+			newDocument.getSiteId(), newDocument.getExternalReferenceCode(),
+			newDocument, getMultipartFiles());
+
+		assertEquals(newDocument, putDocument);
+		assertValid(putDocument);
+
+		getDocument = documentResource.getSiteDocumentByExternalReferenceCode(
+			putDocument.getSiteId(), putDocument.getExternalReferenceCode());
+
+		assertEquals(newDocument, getDocument);
+		Assert.assertEquals(
+			newDocument.getExternalReferenceCode(),
+			putDocument.getExternalReferenceCode());
+	}
+
+	protected Document
+			testPutSiteDocumentByExternalReferenceCode_createDocument()
+		throws Exception {
+
+		return randomDocument();
 	}
 
 	protected Document testPutSiteDocumentByExternalReferenceCode_addDocument()

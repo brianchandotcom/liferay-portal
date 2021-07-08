@@ -1,6 +1,6 @@
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_F6A157B1 on ObjectDefinition (companyId, objectDefinitionId);
-create index IX_CE84C4E8 on ObjectDefinition (system_);
+create index IX_55C39BCE on ObjectDefinition (system_, status);
 create index IX_B929D94C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_139200BA on ObjectEntry (objectDefinitionId);

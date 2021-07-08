@@ -67,6 +67,8 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean> system = createColumn(
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Integer> version = createColumn(
 		"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 

@@ -536,3 +536,38 @@ This change was made in order to deprecate class
 `com.liferay.portal.kernel.util.StringBundler`
 
 ---------------------------------------
+
+### UserLocalService related classes have modified public API
+- **Date:** 2021-Jul-7
+- **JIRA Ticket:** [LPS-134096](https://issues.liferay.com/browse/LPS-134096)
+
+#### What changed?
+
+A number of methods which normally return `void` now return a `boolean` value instead. This list includes:
+
+- com.liferay.portal.kernel.service.UserLocalService#addDefaultGroups
+- com.liferay.portal.kernel.service.UserLocalService#addDefaultRoles
+- com.liferay.portal.kernel.service.UserLocalService#addDefaultUserGroups
+- com.liferay.portal.kernel.service.UserLocalServiceUtil#addDefaultGroups
+- com.liferay.portal.kernel.service.UserLocalServiceUtil#addDefaultRoles
+- com.liferay.portal.kernel.service.UserLocalServiceUtil#addDefaultUserGroups
+- com.liferay.portal.kernel.service.UserLocalServiceWrapper#addDefaultGroups
+- com.liferay.portal.kernel.service.UserLocalServiceWrapper#addDefaultRoles
+- com.liferay.portal.kernel.service.UserLocalServiceWrapper#addDefaultUserGroups
+- com.liferay.portal.service.impl.UserLocalServiceImpl#addDefaultGroups
+- com.liferay.portal.service.impl.UserLocalServiceImpl#addDefaultRoles
+- com.liferay.portal.service.impl.UserLocalServiceImpl#addDefaultUserGroups
+
+#### Who is affected?
+
+Everyone calling one of these methods
+
+#### How should I update my code?
+
+No immediate action is needed, but it's important to note the return type has changed.
+
+#### Why was this change made?
+
+This change was made in order to check if default groups, roles, and/or user groups were added to the given user, or if the user already had these associations.
+
+---------------------------------------

@@ -96,7 +96,11 @@ public class RelatedAssetsInfoCollectionProvider
 				themeDisplay.getRefererPlid());
 		}
 
-		return layout.isTypeAssetDisplay();
+		if ((layout != null) && layout.isTypeAssetDisplay()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private long _getLayoutAssetEntryId() {

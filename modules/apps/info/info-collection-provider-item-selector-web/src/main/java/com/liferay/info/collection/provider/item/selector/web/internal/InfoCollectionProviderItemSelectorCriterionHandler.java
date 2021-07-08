@@ -18,7 +18,10 @@ import com.liferay.info.collection.provider.item.selector.criterion.InfoCollecti
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eudaldo Alonso
@@ -33,6 +36,18 @@ public class InfoCollectionProviderItemSelectorCriterionHandler
 		getItemSelectorCriterionClass() {
 
 		return InfoCollectionProviderItemSelectorCriterion.class;
+	}
+
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

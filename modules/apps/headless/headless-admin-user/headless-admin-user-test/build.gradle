@@ -7,7 +7,6 @@ dependencies {
 	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile project(":apps:account:account-api")
-	testIntegrationCompile project(":apps:account:account-rest-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

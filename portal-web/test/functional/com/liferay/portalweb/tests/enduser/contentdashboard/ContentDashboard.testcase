@@ -1388,46 +1388,45 @@ definition {
 			Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
 		}
 	}
-	 @description = "LPS-116840 When the user clicks on the view icon of a content with an associated display page, the user is led to the view mode of the page"
-     @priority = "5"
-     test IconView {
-        property portal.acceptance = "true";
 
-        task ("Add Display Page and mark it as default") {
-            JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-                contentType = "Web Content Article",
-                displayPageTemplateEntryName = "Display Page Name",
-                groupName = "Test Site Name",
-                subType = "Basic Web Content");
+	@description = "LPS-116840 When the user clicks on the view icon of a content with an associated display page, the user is led to the view mode of the page"
+	@priority = "5"
+	test IconView {
+		property portal.acceptance = "true";
 
-            DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
 
-            DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-            Button.clickPublish();
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-            DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			Button.clickPublish();
 
-            DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-        }
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-        task ("Add Web Content and check it in its display page and access the view") {
-            JSONWebcontent.addWebContent(
-                content = "WC Content",
-                groupName = "Test Site Name",
-                title = "WC");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
 
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
+		task ("Add Web Content and check it in its display page and access the view") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC");
 
-            Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
 
-            Click(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			
-        }
+			Click(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
+		}
 	}
 
 	@descrip	ion = "Validate if the user can order by Modification Date"

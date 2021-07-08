@@ -112,6 +112,46 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	@Test
+	public void testAddFragmentEntryWithFreemarkerVariable() throws Exception {
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_with_freemarker_variable.html", null);
+
+		Assert.assertNotNull(fragmentEntry);
+	}
+
+	@Test
+	public void testAddFragmentEntryWithInvalidFreemarkerVariable()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntry draftFragmentEntry =
+			_fragmentEntryService.addFragmentEntry(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "fragment-entry",
+				"Fragment Entry", null,
+				_readFileToString(
+					"fragment_entry_with_invalid_freemarker_variable.html"),
+				null, null, 0, 0, WorkflowConstants.STATUS_DRAFT,
+				serviceContext);
+
+		FragmentEntry publishedFragmentEntry =
+			_fragmentEntryService.publishDraft(draftFragmentEntry);
+
+		Assert.assertNull(publishedFragmentEntry);
+
+		expectedException.expect(FragmentEntryContentException.class);
+		expectedException.expectMessage("FreeMarker syntax is invalid");
+	}
+
+	@Test
 	public void testProcessFragmentEntryLinkHTML() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry.html", null);

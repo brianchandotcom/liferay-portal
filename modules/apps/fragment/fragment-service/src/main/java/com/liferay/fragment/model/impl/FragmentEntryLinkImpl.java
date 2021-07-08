@@ -17,7 +17,13 @@ package com.liferay.fragment.model.impl;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 
@@ -29,6 +35,24 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 	@Override
 	public boolean isCacheable() {
 		if (getFragmentEntryId() == 0) {
+			String editableValues = getEditableValues();
+
+			if (JSONUtil.isValid(editableValues)) {
+				try {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						editableValues);
+
+					String portletId = jsonObject.getString("portletId");
+
+					if (Validator.isNotNull(portletId)) {
+						return GetterUtil.getBoolean(
+							jsonObject.getBoolean("cacheable"));
+					}
+				}
+				catch (JSONException jsonException) {
+				}
+			}
+
 			return false;
 		}
 

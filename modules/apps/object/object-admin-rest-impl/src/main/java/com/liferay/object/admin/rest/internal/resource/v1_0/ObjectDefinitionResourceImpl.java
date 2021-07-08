@@ -16,13 +16,21 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,6 +88,15 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getObjectFields(), this::_toObjectField)));
 	}
 
+	protected Map<String, String> addAction(String actionKey) {
+
+		//TODO Replace this with proper logic using permission
+
+		return HashMapBuilder.put(
+			actionKey, ""
+		).build();
+	}
+
 	private static ObjectField _toObjectField(
 		com.liferay.object.model.ObjectField objectField) {
 
@@ -100,8 +117,23 @@ public class ObjectDefinitionResourceImpl
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 
+		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+			contextAcceptLanguage.getPreferredLocale());
+
+		HashMapBuilder.HashMapWrapper<String, Map<String, String>> mapBuilder =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"get", addAction(ActionKeys.VIEW)
+			).put(
+				"update", addAction(ActionKeys.UPDATE)
+			);
+
+		if (!objectDefinition.isSystem()) {
+			mapBuilder.put("delete", addAction(ActionKeys.DELETE));
+		}
+
 		return new ObjectDefinition() {
 			{
+				actions = mapBuilder.build();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
 				id = objectDefinition.getObjectDefinitionId();

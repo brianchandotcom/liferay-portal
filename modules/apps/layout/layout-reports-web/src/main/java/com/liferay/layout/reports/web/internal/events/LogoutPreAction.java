@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Component(
-	enabled = false, immediate = true, property = "key=logout.events.pre",
+	immediate = true, property = "key=logout.events.pre",
 	service = LifecycleAction.class
 )
 public class LogoutPreAction extends Action {
@@ -25,6 +25,5 @@ public class LogoutPreAction extends Action {
 		HttpServletResponse httpServletResponse) throws ActionException {
 
 		SessionClicks.put(httpServletRequest, "com.liferay.layout.reports.web_layoutReportsPanelState", "closed");
-
 	}
 }

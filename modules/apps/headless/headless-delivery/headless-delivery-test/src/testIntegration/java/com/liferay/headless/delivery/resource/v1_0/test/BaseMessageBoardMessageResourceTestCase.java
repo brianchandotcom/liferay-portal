@@ -1859,6 +1859,37 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
 		assertValid(getMessageBoardMessage);
+
+		MessageBoardMessage newMessageBoardMessage =
+			testPutSiteMessageBoardMessageByExternalReferenceCode_createMessageBoardMessage();
+
+		putMessageBoardMessage =
+			messageBoardMessageResource.
+				putSiteMessageBoardMessageByExternalReferenceCode(
+					newMessageBoardMessage.getSiteId(),
+					newMessageBoardMessage.getExternalReferenceCode(),
+					newMessageBoardMessage);
+
+		assertEquals(newMessageBoardMessage, putMessageBoardMessage);
+		assertValid(putMessageBoardMessage);
+
+		getMessageBoardMessage =
+			messageBoardMessageResource.
+				getSiteMessageBoardMessageByExternalReferenceCode(
+					putMessageBoardMessage.getSiteId(),
+					putMessageBoardMessage.getExternalReferenceCode());
+
+		assertEquals(newMessageBoardMessage, getMessageBoardMessage);
+		Assert.assertEquals(
+			newMessageBoardMessage.getExternalReferenceCode(),
+			putMessageBoardMessage.getExternalReferenceCode());
+	}
+
+	protected MessageBoardMessage
+			testPutSiteMessageBoardMessageByExternalReferenceCode_createMessageBoardMessage()
+		throws Exception {
+
+		return randomMessageBoardMessage();
 	}
 
 	protected MessageBoardMessage

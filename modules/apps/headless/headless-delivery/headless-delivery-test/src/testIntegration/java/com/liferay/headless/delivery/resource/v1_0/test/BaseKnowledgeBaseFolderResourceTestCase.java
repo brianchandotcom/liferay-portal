@@ -1000,6 +1000,37 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		assertEquals(randomKnowledgeBaseFolder, getKnowledgeBaseFolder);
 		assertValid(getKnowledgeBaseFolder);
+
+		KnowledgeBaseFolder newKnowledgeBaseFolder =
+			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_createKnowledgeBaseFolder();
+
+		putKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.
+				putSiteKnowledgeBaseFolderByExternalReferenceCode(
+					newKnowledgeBaseFolder.getSiteId(),
+					newKnowledgeBaseFolder.getExternalReferenceCode(),
+					newKnowledgeBaseFolder);
+
+		assertEquals(newKnowledgeBaseFolder, putKnowledgeBaseFolder);
+		assertValid(putKnowledgeBaseFolder);
+
+		getKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.
+				getSiteKnowledgeBaseFolderByExternalReferenceCode(
+					putKnowledgeBaseFolder.getSiteId(),
+					putKnowledgeBaseFolder.getExternalReferenceCode());
+
+		assertEquals(newKnowledgeBaseFolder, getKnowledgeBaseFolder);
+		Assert.assertEquals(
+			newKnowledgeBaseFolder.getExternalReferenceCode(),
+			putKnowledgeBaseFolder.getExternalReferenceCode());
+	}
+
+	protected KnowledgeBaseFolder
+			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_createKnowledgeBaseFolder()
+		throws Exception {
+
+		return randomKnowledgeBaseFolder();
 	}
 
 	protected KnowledgeBaseFolder

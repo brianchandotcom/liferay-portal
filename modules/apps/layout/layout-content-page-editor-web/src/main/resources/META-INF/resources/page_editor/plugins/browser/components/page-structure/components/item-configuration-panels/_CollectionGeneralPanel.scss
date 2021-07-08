@@ -1,12 +1,16 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.page-editor__collection-general-panel {
-	&__pagination-label {
-		color: $gray-600;
-		font-size: 0.75rem;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__collection-general-panel {
+			&__pagination-label {
+				color: $cadmin-gray-600;
+				font-size: 12px;
 
-		&.error {
-			color: $warning;
+				&.error {
+					color: $cadmin-warning;
+				}
+			}
 		}
 	}
 }

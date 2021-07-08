@@ -1,33 +1,37 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 @import '../../app/components/variables';
 
 $collapseMarginBottom: $pageEditorSpacing * 2;
 
-.page-editor__collapse {
-	cursor: pointer;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__collapse {
+			cursor: pointer;
 
-	.ellipsis {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
+			.ellipsis {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 
-	.collapse-icon {
-		background: none;
-		border-color: $secondary-l3;
-		font-size: 0.75rem;
-		margin-bottom: $collapseMarginBottom;
-		padding-left: 0;
-		text-align: left;
-		width: 100%;
-	}
+			.collapse-icon {
+				background: none;
+				border-color: $cadmin-secondary-l3;
+				font-size: 12px;
+				margin-bottom: $collapseMarginBottom;
+				padding-left: 0;
+				text-align: left;
+				width: 100%;
+			}
 
-	.page-editor__collapse {
-		margin-left: 1rem;
+			.page-editor__collapse {
+				margin-left: 16px;
 
-		& > &-content {
-			margin-left: 1rem;
+				> .page-editor__collapse-content {
+					margin-left: 16px;
+				}
+			}
 		}
 	}
 }

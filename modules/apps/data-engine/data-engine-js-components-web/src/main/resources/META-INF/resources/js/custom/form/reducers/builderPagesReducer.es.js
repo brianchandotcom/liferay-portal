@@ -12,7 +12,22 @@
  * details.
  */
 
-export {default as elementSetReducer} from './elementSetReducer.es';
-export {default as formInfoReducer} from './formInfoReducer.es';
-export {default as rulesReducer} from './rulesReducer.es';
-export {default as sidebarReducer} from './sidebarReducer.es';
+import {EVENT_TYPES} from '../eventTypes.es';
+
+/**
+ * This reducer was created to get pages
+ * from FormBuilder inside Data Engine sidebar
+ */
+export default (state, action) => {
+	switch (action.type) {
+		case EVENT_TYPES.BUILDER_PAGES.UPDATE: {
+			const {builderPages} = action.payload;
+
+			return {
+				builderPages,
+			};
+		}
+		default:
+			return state;
+	}
+};

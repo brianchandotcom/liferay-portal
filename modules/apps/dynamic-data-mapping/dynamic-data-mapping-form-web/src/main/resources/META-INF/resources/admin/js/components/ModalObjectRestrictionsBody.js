@@ -13,9 +13,11 @@
  */
 
 import ClayPanel from '@clayui/panel';
+import {
+	getFieldsGroupedByTypes,
+	normalizeDataType,
+} from 'data-engine-js-components-web/js/utils/objectFields';
 import React from 'react';
-
-import {getFieldsGroupedByTypes, normalizeDataType} from '../util/objectFields';
 
 const ObjectRestrictionSection = ({children, description, title}) => {
 	return (

@@ -342,13 +342,52 @@ definition {
 
 	}
 
-	@description = "LPS-77748"
+	@description = "This is a use case for LPS-77748. This test deletes multiple selected entries from a single application."
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteMultipleEntriesFromAnApplication {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50723 Data Erasure - Delete multiple entries from an Application (LPS-77748)
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		DMFolder.addCP(dmFolderName = "Folder1");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applications = "Documents and Media",
+			itemsCount = "5");
+
+		AssertTextPresent(value1 = "DLFOLDER");
+
+		AssertTextPresent(value1 = "DLFILEENTRY");
+
+		GDPR.deleteMultipleEntriesCP(rowEntry = "Folder1,Document_2.docx");
+
+		GDPR.filterByApplications(
+			applications = "Documents and Media",
+			itemsCount = "3");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		AssertTextNotPresent(value1 = "Folder1");
+
+		AssertTextNotPresent(value1 = "Document_2");
 	}
 
 	@description = "LRQA-50747"
@@ -432,48 +471,8 @@ definition {
 
 	}
 
-	@priority = "5"
-	test DeleteEntryFromApplication {
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByApplications(
-			applications = "Blogs",
-			itemsCount = "1");
-
-		GDPR.deleteEntryCP(rowEntry = "Blogs Entry Title");
-
-		GDPR.viewNoEntryInApplicationCP(applications = "Blogs");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
-	}
-
 	@priority = "4"
-	test DeleteEntryFromInstanceScope {
+	test DeleteAllEntriesFromInstanceScope {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Announcements Page");
@@ -517,7 +516,7 @@ definition {
 			applications = "All Applications",
 			itemsCount = "1");
 
-		GDPR.deleteEntryCP();
+		GDPR.deleteAllEntriesCP(anonymizeData = "true");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -525,7 +524,7 @@ definition {
 	}
 
 	@priority = "4"
-	test DeleteEntryFromPersonalSiteScope {
+	test DeleteAllEntriesFromPersonalSiteScope {
 		property test.name.skip.portal.instance = "GDPR#DeleteEntryFromPersonalSiteScope";
 
 		User.logoutPG();
@@ -583,13 +582,13 @@ definition {
 			applications = "All Applications",
 			itemsCount = "4");
 
-		GDPR.deleteEntryCP(anonymizeData = "true");
+		GDPR.deleteAllEntriesCP(anonymizeData = "true");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
 	}
 
 	@priority = "4"
-	test DeleteEntryFromRegularSitesScope {
+	test DeleteAllEntriesFromRegularSiteScope {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -622,9 +621,49 @@ definition {
 			applications = "All Applications",
 			itemsCount = "1");
 
-		GDPR.deleteEntryCP();
+		GDPR.deleteAllEntriesCP(anonymizeData = "true");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
+	}
+
+	@priority = "5"
+	test DeleteEntryFromApplication {
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applications = "Blogs",
+			itemsCount = "1");
+
+		GDPR.deleteSingleEntryCP(rowEntry = "Blogs Entry Title");
+
+		GDPR.viewNoEntryInApplicationCP(applications = "Blogs");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
 	}

@@ -14,13 +14,49 @@
 
 package com.liferay.commerce.shop.by.diagram.model.impl;
 
+import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.shop.by.diagram.constants.CPDefinitionDiagramSettingsConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
+
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 public class CPDefinitionDiagramSettingImpl
 	extends CPDefinitionDiagramSettingBaseImpl {
 
 	public CPDefinitionDiagramSettingImpl() {
+	}
+
+	@Override
+	public CPAttachmentFileEntry getCPAttachmentFileEntry()
+		throws PortalException {
+
+		CPDefinition cpDefinition =
+			CPDefinitionLocalServiceUtil.getCPDefinition(getCPDefinitionId());
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			cpDefinition.getCPAttachmentFileEntries(
+				CPDefinitionDiagramSettingsConstants.TYPE_DIAGRAM,
+				WorkflowConstants.STATUS_APPROVED);
+
+		if (cpAttachmentFileEntries.isEmpty()) {
+			throw new NoSuchCPAttachmentFileEntryException();
+		}
+
+		return cpAttachmentFileEntries.get(0);
+	}
+
+	@Override
+	public CPDefinition getCPDefinition() throws PortalException {
+		return CPDefinitionLocalServiceUtil.getCPDefinition(
+			getCPDefinitionId());
 	}
 
 }

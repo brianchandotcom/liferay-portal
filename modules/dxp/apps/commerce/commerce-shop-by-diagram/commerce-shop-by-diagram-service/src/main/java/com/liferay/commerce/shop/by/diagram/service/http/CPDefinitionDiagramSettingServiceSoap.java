@@ -14,9 +14,15 @@
 
 package com.liferay.commerce.shop.by.diagram.service.http;
 
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingServiceUtil</code> service
+ * <code>CPDefinitionDiagramSettingServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,131 @@ package com.liferay.commerce.shop.by.diagram.service.http;
  */
 @Deprecated
 public class CPDefinitionDiagramSettingServiceSoap {
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.
+			CPDefinitionDiagramSettingSoap addCPDefinitionDiagramSetting(
+					long userId, long cpDefinitionId,
+					long cpAttachmentFileEntryId, String color, double radius,
+					String type)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSetting returnValue =
+					CPDefinitionDiagramSettingServiceUtil.
+						addCPDefinitionDiagramSetting(
+							userId, cpDefinitionId, cpAttachmentFileEntryId,
+							color, radius, type);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSettingSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.
+			CPDefinitionDiagramSettingSoap
+					fetchCPDefinitionDiagramSettingByCPDefinitionId(
+						long cpDefinitionId)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSetting returnValue =
+					CPDefinitionDiagramSettingServiceUtil.
+						fetchCPDefinitionDiagramSettingByCPDefinitionId(
+							cpDefinitionId);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSettingSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.
+			CPDefinitionDiagramSettingSoap getCPDefinitionDiagramSetting(
+					long cpDefinitionDiagramSettingId)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSetting returnValue =
+					CPDefinitionDiagramSettingServiceUtil.
+						getCPDefinitionDiagramSetting(
+							cpDefinitionDiagramSettingId);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSettingSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.
+			CPDefinitionDiagramSettingSoap
+					getCPDefinitionDiagramSettingByCPDefinitionId(
+						long cpDefinitionId)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSetting returnValue =
+					CPDefinitionDiagramSettingServiceUtil.
+						getCPDefinitionDiagramSettingByCPDefinitionId(
+							cpDefinitionId);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSettingSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.
+			CPDefinitionDiagramSettingSoap updateCPDefinitionDiagramSetting(
+					long cpDefinitionDiagramSettingId,
+					long cpAttachmentFileEntryId, String color, double radius,
+					String type)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSetting returnValue =
+					CPDefinitionDiagramSettingServiceUtil.
+						updateCPDefinitionDiagramSetting(
+							cpDefinitionDiagramSettingId,
+							cpAttachmentFileEntryId, color, radius, type);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramSettingSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CPDefinitionDiagramSettingServiceSoap.class);
+
 }

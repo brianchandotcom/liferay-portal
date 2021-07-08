@@ -78,6 +78,11 @@ public interface CPDefinitionDiagramSettingLocalService
 	public CPDefinitionDiagramSetting addCPDefinitionDiagramSetting(
 		CPDefinitionDiagramSetting cpDefinitionDiagramSetting);
 
+	public CPDefinitionDiagramSetting addCPDefinitionDiagramSetting(
+			long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
+			String color, double radius, String type)
+		throws PortalException;
+
 	/**
 	 * Creates a new cp definition diagram setting with the primary key. Does not add the cp definition diagram setting to the database.
 	 *
@@ -122,6 +127,11 @@ public interface CPDefinitionDiagramSettingLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public CPDefinitionDiagramSetting deleteCPDefinitionDiagramSetting(
 			long CPDefinitionDiagramSettingId)
+		throws PortalException;
+
+	public CPDefinitionDiagramSetting
+			deleteCPDefinitionDiagramSettingByCPDefinitionId(
+				long cpDefinitionId)
 		throws PortalException;
 
 	/**
@@ -207,6 +217,10 @@ public interface CPDefinitionDiagramSettingLocalService
 	public CPDefinitionDiagramSetting fetchCPDefinitionDiagramSetting(
 		long CPDefinitionDiagramSettingId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionDiagramSetting
+		fetchCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId);
+
 	/**
 	 * Returns the cp definition diagram setting with the matching UUID and company.
 	 *
@@ -232,6 +246,11 @@ public interface CPDefinitionDiagramSettingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionDiagramSetting getCPDefinitionDiagramSetting(
 			long CPDefinitionDiagramSettingId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionDiagramSetting
+			getCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId)
 		throws PortalException;
 
 	/**
@@ -306,5 +325,10 @@ public interface CPDefinitionDiagramSettingLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionDiagramSetting updateCPDefinitionDiagramSetting(
 		CPDefinitionDiagramSetting cpDefinitionDiagramSetting);
+
+	public CPDefinitionDiagramSetting updateCPDefinitionDiagramSetting(
+			long cpDefinitionDiagramSettingId, long cpAttachmentFileEntryId,
+			String color, double radius, String type)
+		throws PortalException;
 
 }

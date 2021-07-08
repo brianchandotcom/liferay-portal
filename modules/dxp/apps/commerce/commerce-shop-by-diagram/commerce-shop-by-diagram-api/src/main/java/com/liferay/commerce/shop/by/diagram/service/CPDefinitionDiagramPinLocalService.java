@@ -76,6 +76,11 @@ public interface CPDefinitionDiagramPinLocalService
 	public CPDefinitionDiagramPin addCPDefinitionDiagramPin(
 		CPDefinitionDiagramPin cpDefinitionDiagramPin);
 
+	public CPDefinitionDiagramPin addCPDefinitionDiagramPin(
+			long userId, long cpDefinitionId, int number, double positionX,
+			double positionY)
+		throws PortalException;
+
 	/**
 	 * Creates a new cp definition diagram pin with the primary key. Does not add the cp definition diagram pin to the database.
 	 *
@@ -121,6 +126,8 @@ public interface CPDefinitionDiagramPinLocalService
 	public CPDefinitionDiagramPin deleteCPDefinitionDiagramPin(
 			long CPDefinitionDiagramPinId)
 		throws PortalException;
+
+	public void deleteCPDefinitionDiagramPins(long cpDefinitionId);
 
 	/**
 	 * @throws PortalException
@@ -235,6 +242,10 @@ public interface CPDefinitionDiagramPinLocalService
 	public List<CPDefinitionDiagramPin> getCPDefinitionDiagramPins(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionDiagramPin> getCPDefinitionDiagramPins(
+		long cpDefinitionId, int start, int end);
+
 	/**
 	 * Returns the number of cp definition diagram pins.
 	 *
@@ -242,6 +253,9 @@ public interface CPDefinitionDiagramPinLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionDiagramPinsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionDiagramPinsCount(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -274,5 +288,10 @@ public interface CPDefinitionDiagramPinLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
 		CPDefinitionDiagramPin cpDefinitionDiagramPin);
+
+	public CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
+			long cpDefinitionDiagramPinId, int number, double positionX,
+			double positionY)
+		throws PortalException;
 
 }

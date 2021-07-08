@@ -14,6 +14,11 @@
 
 package com.liferay.commerce.shop.by.diagram.service;
 
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for CPDefinitionDiagramPin. This utility wraps
  * <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramPinServiceImpl</code> and is an
@@ -33,14 +38,59 @@ public class CPDefinitionDiagramPinServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.shop.by.diagram.service.impl.CPDefinitionDiagramPinServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CPDefinitionDiagramPin addCPDefinitionDiagramPin(
+			long userId, long cpDefinitionId, int number, double positionX,
+			double positionY)
+		throws PortalException {
+
+		return getService().addCPDefinitionDiagramPin(
+			userId, cpDefinitionId, number, positionX, positionY);
+	}
+
+	public static void deleteCPDefinitionDiagramPin(
+			long cpDefinitionDiagramPinId)
+		throws PortalException {
+
+		getService().deleteCPDefinitionDiagramPin(cpDefinitionDiagramPinId);
+	}
+
+	public static CPDefinitionDiagramPin getCPDefinitionDiagramPin(
+			long cpDefinitionDiagramPinId)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramPin(cpDefinitionDiagramPinId);
+	}
+
+	public static List<CPDefinitionDiagramPin> getCPDefinitionDiagramPins(
+			long cpDefinitionId, int start, int end)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramPins(
+			cpDefinitionId, start, end);
+	}
+
+	public static int getCPDefinitionDiagramPinsCount(long cpDefinitionId)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramPinsCount(cpDefinitionId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
+			long cpDefinitionDiagramPinId, int number, double positionX,
+			double positionY)
+		throws PortalException {
+
+		return getService().updateCPDefinitionDiagramPin(
+			cpDefinitionDiagramPinId, number, positionX, positionY);
 	}
 
 	public static CPDefinitionDiagramPinService getService() {

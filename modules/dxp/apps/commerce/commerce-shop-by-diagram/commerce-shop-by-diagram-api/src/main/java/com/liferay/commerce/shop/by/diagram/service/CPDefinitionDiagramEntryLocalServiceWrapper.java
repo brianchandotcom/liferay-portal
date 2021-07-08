@@ -55,6 +55,21 @@ public class CPDefinitionDiagramEntryLocalServiceWrapper
 			addCPDefinitionDiagramEntry(cpDefinitionDiagramEntry);
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			addCPDefinitionDiagramEntry(
+				long userId, long cpDefinitionId, String cpInstanceUuid,
+				long cProductId, boolean diagram, int number, int quantity,
+				String sku,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryLocalService.
+			addCPDefinitionDiagramEntry(
+				userId, cpDefinitionId, cpInstanceUuid, cProductId, diagram,
+				number, quantity, sku, serviceContext);
+	}
+
 	/**
 	 * Creates a new cp definition diagram entry with the primary key. Does not add the cp definition diagram entry to the database.
 	 *
@@ -79,6 +94,12 @@ public class CPDefinitionDiagramEntryLocalServiceWrapper
 
 		return _cpDefinitionDiagramEntryLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteCPDefinitionDiagramEntries(long cpDefinitionId) {
+		_cpDefinitionDiagramEntryLocalService.deleteCPDefinitionDiagramEntries(
+			cpDefinitionId);
 	}
 
 	/**
@@ -273,6 +294,16 @@ public class CPDefinitionDiagramEntryLocalServiceWrapper
 			getCPDefinitionDiagramEntries(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry>
+			getCPDefinitionDiagramEntries(
+				long cpDefinitionId, int start, int end) {
+
+		return _cpDefinitionDiagramEntryLocalService.
+			getCPDefinitionDiagramEntries(cpDefinitionId, start, end);
+	}
+
 	/**
 	 * Returns the number of cp definition diagram entries.
 	 *
@@ -282,6 +313,12 @@ public class CPDefinitionDiagramEntryLocalServiceWrapper
 	public int getCPDefinitionDiagramEntriesCount() {
 		return _cpDefinitionDiagramEntryLocalService.
 			getCPDefinitionDiagramEntriesCount();
+	}
+
+	@Override
+	public int getCPDefinitionDiagramEntriesCount(long cpDefinitionId) {
+		return _cpDefinitionDiagramEntryLocalService.
+			getCPDefinitionDiagramEntriesCount(cpDefinitionId);
 	}
 
 	/**
@@ -348,6 +385,21 @@ public class CPDefinitionDiagramEntryLocalServiceWrapper
 
 		return _cpDefinitionDiagramEntryLocalService.
 			updateCPDefinitionDiagramEntry(cpDefinitionDiagramEntry);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			updateCPDefinitionDiagramEntry(
+				long cpDefinitionDiagramEntryId, String cpInstanceUuid,
+				long cProductId, boolean diagram, int number, int quantity,
+				String sku,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryLocalService.
+			updateCPDefinitionDiagramEntry(
+				cpDefinitionDiagramEntryId, cpInstanceUuid, cProductId, diagram,
+				number, quantity, sku, serviceContext);
 	}
 
 	@Override

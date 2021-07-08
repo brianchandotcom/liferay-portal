@@ -62,6 +62,16 @@ public class CPDefinitionDiagramSettingLocalServiceUtil {
 			cpDefinitionDiagramSetting);
 	}
 
+	public static CPDefinitionDiagramSetting addCPDefinitionDiagramSetting(
+			long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
+			String color, double radius, String type)
+		throws PortalException {
+
+		return getService().addCPDefinitionDiagramSetting(
+			userId, cpDefinitionId, cpAttachmentFileEntryId, color, radius,
+			type);
+	}
+
 	/**
 	 * Creates a new cp definition diagram setting with the primary key. Does not add the cp definition diagram setting to the database.
 	 *
@@ -119,6 +129,15 @@ public class CPDefinitionDiagramSettingLocalServiceUtil {
 
 		return getService().deleteCPDefinitionDiagramSetting(
 			CPDefinitionDiagramSettingId);
+	}
+
+	public static CPDefinitionDiagramSetting
+			deleteCPDefinitionDiagramSettingByCPDefinitionId(
+				long cpDefinitionId)
+		throws PortalException {
+
+		return getService().deleteCPDefinitionDiagramSettingByCPDefinitionId(
+			cpDefinitionId);
 	}
 
 	/**
@@ -223,6 +242,13 @@ public class CPDefinitionDiagramSettingLocalServiceUtil {
 			CPDefinitionDiagramSettingId);
 	}
 
+	public static CPDefinitionDiagramSetting
+		fetchCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId) {
+
+		return getService().fetchCPDefinitionDiagramSettingByCPDefinitionId(
+			cpDefinitionId);
+	}
+
 	/**
 	 * Returns the cp definition diagram setting with the matching UUID and company.
 	 *
@@ -257,6 +283,14 @@ public class CPDefinitionDiagramSettingLocalServiceUtil {
 
 		return getService().getCPDefinitionDiagramSetting(
 			CPDefinitionDiagramSettingId);
+	}
+
+	public static CPDefinitionDiagramSetting
+			getCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramSettingByCPDefinitionId(
+			cpDefinitionId);
 	}
 
 	/**
@@ -350,6 +384,16 @@ public class CPDefinitionDiagramSettingLocalServiceUtil {
 
 		return getService().updateCPDefinitionDiagramSetting(
 			cpDefinitionDiagramSetting);
+	}
+
+	public static CPDefinitionDiagramSetting updateCPDefinitionDiagramSetting(
+			long cpDefinitionDiagramSettingId, long cpAttachmentFileEntryId,
+			String color, double radius, String type)
+		throws PortalException {
+
+		return getService().updateCPDefinitionDiagramSetting(
+			cpDefinitionDiagramSettingId, cpAttachmentFileEntryId, color,
+			radius, type);
 	}
 
 	public static CPDefinitionDiagramSettingLocalService getService() {

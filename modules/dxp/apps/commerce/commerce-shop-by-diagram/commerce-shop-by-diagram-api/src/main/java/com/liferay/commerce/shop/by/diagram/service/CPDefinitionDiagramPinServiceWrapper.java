@@ -33,6 +33,53 @@ public class CPDefinitionDiagramPinServiceWrapper
 		_cpDefinitionDiagramPinService = cpDefinitionDiagramPinService;
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+			addCPDefinitionDiagramPin(
+				long userId, long cpDefinitionId, int number, double positionX,
+				double positionY)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramPinService.addCPDefinitionDiagramPin(
+			userId, cpDefinitionId, number, positionX, positionY);
+	}
+
+	@Override
+	public void deleteCPDefinitionDiagramPin(long cpDefinitionDiagramPinId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpDefinitionDiagramPinService.deleteCPDefinitionDiagramPin(
+			cpDefinitionDiagramPinId);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+			getCPDefinitionDiagramPin(long cpDefinitionDiagramPinId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramPinService.getCPDefinitionDiagramPin(
+			cpDefinitionDiagramPinId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin>
+				getCPDefinitionDiagramPins(
+					long cpDefinitionId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
+			cpDefinitionId, start, end);
+	}
+
+	@Override
+	public int getCPDefinitionDiagramPinsCount(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramPinService.getCPDefinitionDiagramPinsCount(
+			cpDefinitionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -41,6 +88,17 @@ public class CPDefinitionDiagramPinServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionDiagramPinService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin
+			updateCPDefinitionDiagramPin(
+				long cpDefinitionDiagramPinId, int number, double positionX,
+				double positionY)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramPinService.updateCPDefinitionDiagramPin(
+			cpDefinitionDiagramPinId, number, positionX, positionY);
 	}
 
 	@Override

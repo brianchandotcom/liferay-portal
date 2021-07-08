@@ -33,6 +33,56 @@ public class CPDefinitionDiagramEntryServiceWrapper
 		_cpDefinitionDiagramEntryService = cpDefinitionDiagramEntryService;
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			addCPDefinitionDiagramEntry(
+				long userId, long cpDefinitionId, String cpInstanceUuid,
+				long cProductId, boolean diagram, int number, int quantity,
+				String sku,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryService.addCPDefinitionDiagramEntry(
+			userId, cpDefinitionId, cpInstanceUuid, cProductId, diagram, number,
+			quantity, sku, serviceContext);
+	}
+
+	@Override
+	public void deleteCPDefinitionDiagramEntry(long cpDefinitionDiagramEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpDefinitionDiagramEntryService.deleteCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntryId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry>
+				getCPDefinitionDiagramEntries(
+					long cpDefinitionId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
+			cpDefinitionId, start, end);
+	}
+
+	@Override
+	public int getCPDefinitionDiagramEntriesCount(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryService.
+			getCPDefinitionDiagramEntriesCount(cpDefinitionId);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			getCPDefinitionDiagramEntry(long cpDefinitionDiagramEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -41,6 +91,20 @@ public class CPDefinitionDiagramEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionDiagramEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			updateCPDefinitionDiagramEntry(
+				long cpDefinitionDiagramEntryId, String cpInstanceUuid,
+				long cProductId, boolean diagram, int number, int quantity,
+				String sku,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryService.updateCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntryId, cpInstanceUuid, cProductId, diagram,
+			number, quantity, sku, serviceContext);
 	}
 
 	@Override

@@ -62,6 +62,18 @@ public class CPDefinitionDiagramEntryLocalServiceUtil {
 			cpDefinitionDiagramEntry);
 	}
 
+	public static CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
+			long userId, long cpDefinitionId, String cpInstanceUuid,
+			long cProductId, boolean diagram, int number, int quantity,
+			String sku,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCPDefinitionDiagramEntry(
+			userId, cpDefinitionId, cpInstanceUuid, cProductId, diagram, number,
+			quantity, sku, serviceContext);
+	}
+
 	/**
 	 * Creates a new cp definition diagram entry with the primary key. Does not add the cp definition diagram entry to the database.
 	 *
@@ -83,6 +95,10 @@ public class CPDefinitionDiagramEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteCPDefinitionDiagramEntries(long cpDefinitionId) {
+		getService().deleteCPDefinitionDiagramEntries(cpDefinitionId);
 	}
 
 	/**
@@ -246,6 +262,13 @@ public class CPDefinitionDiagramEntryLocalServiceUtil {
 		return getService().getCPDefinitionDiagramEntries(start, end);
 	}
 
+	public static List<CPDefinitionDiagramEntry> getCPDefinitionDiagramEntries(
+		long cpDefinitionId, int start, int end) {
+
+		return getService().getCPDefinitionDiagramEntries(
+			cpDefinitionId, start, end);
+	}
+
 	/**
 	 * Returns the number of cp definition diagram entries.
 	 *
@@ -253,6 +276,10 @@ public class CPDefinitionDiagramEntryLocalServiceUtil {
 	 */
 	public static int getCPDefinitionDiagramEntriesCount() {
 		return getService().getCPDefinitionDiagramEntriesCount();
+	}
+
+	public static int getCPDefinitionDiagramEntriesCount(long cpDefinitionId) {
+		return getService().getCPDefinitionDiagramEntriesCount(cpDefinitionId);
 	}
 
 	/**
@@ -310,6 +337,18 @@ public class CPDefinitionDiagramEntryLocalServiceUtil {
 
 		return getService().updateCPDefinitionDiagramEntry(
 			cpDefinitionDiagramEntry);
+	}
+
+	public static CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
+			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
+			long cProductId, boolean diagram, int number, int quantity,
+			String sku,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntryId, cpInstanceUuid, cProductId, diagram,
+			number, quantity, sku, serviceContext);
 	}
 
 	public static CPDefinitionDiagramEntryLocalService getService() {

@@ -61,6 +61,15 @@ public class CPDefinitionDiagramPinLocalServiceUtil {
 		return getService().addCPDefinitionDiagramPin(cpDefinitionDiagramPin);
 	}
 
+	public static CPDefinitionDiagramPin addCPDefinitionDiagramPin(
+			long userId, long cpDefinitionId, int number, double positionX,
+			double positionY)
+		throws PortalException {
+
+		return getService().addCPDefinitionDiagramPin(
+			userId, cpDefinitionId, number, positionX, positionY);
+	}
+
 	/**
 	 * Creates a new cp definition diagram pin with the primary key. Does not add the cp definition diagram pin to the database.
 	 *
@@ -118,6 +127,10 @@ public class CPDefinitionDiagramPinLocalServiceUtil {
 
 		return getService().deleteCPDefinitionDiagramPin(
 			CPDefinitionDiagramPinId);
+	}
+
+	public static void deleteCPDefinitionDiagramPins(long cpDefinitionId) {
+		getService().deleteCPDefinitionDiagramPins(cpDefinitionId);
 	}
 
 	/**
@@ -259,6 +272,13 @@ public class CPDefinitionDiagramPinLocalServiceUtil {
 		return getService().getCPDefinitionDiagramPins(start, end);
 	}
 
+	public static List<CPDefinitionDiagramPin> getCPDefinitionDiagramPins(
+		long cpDefinitionId, int start, int end) {
+
+		return getService().getCPDefinitionDiagramPins(
+			cpDefinitionId, start, end);
+	}
+
 	/**
 	 * Returns the number of cp definition diagram pins.
 	 *
@@ -266,6 +286,10 @@ public class CPDefinitionDiagramPinLocalServiceUtil {
 	 */
 	public static int getCPDefinitionDiagramPinsCount() {
 		return getService().getCPDefinitionDiagramPinsCount();
+	}
+
+	public static int getCPDefinitionDiagramPinsCount(long cpDefinitionId) {
+		return getService().getCPDefinitionDiagramPinsCount(cpDefinitionId);
 	}
 
 	public static
@@ -308,6 +332,15 @@ public class CPDefinitionDiagramPinLocalServiceUtil {
 
 		return getService().updateCPDefinitionDiagramPin(
 			cpDefinitionDiagramPin);
+	}
+
+	public static CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
+			long cpDefinitionDiagramPinId, int number, double positionX,
+			double positionY)
+		throws PortalException {
+
+		return getService().updateCPDefinitionDiagramPin(
+			cpDefinitionDiagramPinId, number, positionX, positionY);
 	}
 
 	public static CPDefinitionDiagramPinLocalService getService() {

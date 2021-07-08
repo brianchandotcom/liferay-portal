@@ -33,6 +33,45 @@ public class CPDefinitionDiagramSettingServiceWrapper
 		_cpDefinitionDiagramSettingService = cpDefinitionDiagramSettingService;
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			addCPDefinitionDiagramSetting(
+				long userId, long cpDefinitionId, long cpAttachmentFileEntryId,
+				String color, double radius, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingService.addCPDefinitionDiagramSetting(
+			userId, cpDefinitionId, cpAttachmentFileEntryId, color, radius,
+			type);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			fetchCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingService.
+			fetchCPDefinitionDiagramSettingByCPDefinitionId(cpDefinitionId);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			getCPDefinitionDiagramSetting(long cpDefinitionDiagramSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingService.getCPDefinitionDiagramSetting(
+			cpDefinitionDiagramSettingId);
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			getCPDefinitionDiagramSettingByCPDefinitionId(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingService.
+			getCPDefinitionDiagramSettingByCPDefinitionId(cpDefinitionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -41,6 +80,19 @@ public class CPDefinitionDiagramSettingServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionDiagramSettingService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting
+			updateCPDefinitionDiagramSetting(
+				long cpDefinitionDiagramSettingId, long cpAttachmentFileEntryId,
+				String color, double radius, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramSettingService.
+			updateCPDefinitionDiagramSetting(
+				cpDefinitionDiagramSettingId, cpAttachmentFileEntryId, color,
+				radius, type);
 	}
 
 	@Override

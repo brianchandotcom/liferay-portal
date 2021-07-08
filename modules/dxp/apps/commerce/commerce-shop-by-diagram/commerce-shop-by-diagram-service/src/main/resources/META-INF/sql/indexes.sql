@@ -1,5 +1,4 @@
-create index IX_FBD9E8B4 on CPDefinitionDiagramEntry (CPDefinitionId);
-create unique index IX_AB7E7C61 on CPDefinitionDiagramEntry (number_);
+create unique index IX_F7B5A9B2 on CPDefinitionDiagramEntry (CPDefinitionId, number_);
 
 create index IX_CD3A657 on CPDefinitionDiagramPin (CPDefinitionId);
 

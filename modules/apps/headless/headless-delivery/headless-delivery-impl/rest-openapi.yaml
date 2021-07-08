@@ -103,6 +103,10 @@ components:
                         The blog post's media format (e.g., HTML, BBCode, etc.).
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The blog post's external reference code.
+                    type: string
                 friendlyUrlPath:
                     description:
                         The blog post's relative URL.
@@ -9424,6 +9428,97 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/BlogPosting"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                    description:
+                        ""
+            tags: ["BlogPosting"]
+    "/sites/{siteId}/blog-postings/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the blog post by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["BlogPosting"]
+        get:
+            # @review
+            description:
+                Retrieves the site's blog post by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                    description:
+                        ""
+            tags: ["BlogPosting"]
+        put:
+            # @review
+            description:
+                Updates the site's blog post with the given external reference code, or creates it if it not exists.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BlogPosting"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BlogPosting"
+                description:
+                    ""
             responses:
                 200:
                     content:

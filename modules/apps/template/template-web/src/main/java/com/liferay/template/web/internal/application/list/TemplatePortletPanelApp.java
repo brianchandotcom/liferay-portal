@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"panel.app.order:Integer=350",
 		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_DESIGN

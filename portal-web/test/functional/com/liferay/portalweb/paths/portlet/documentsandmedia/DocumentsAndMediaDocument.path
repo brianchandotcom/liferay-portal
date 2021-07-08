@@ -37,6 +37,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_FIELD_LOCALIZATION_DROPDOWN_TOGGLE</td>
+	<td>//div[@class='dropdown']//button[contains(@class,'dropdown-toggle')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_FIELD_NAME</td>
 	<td>//div[contains(@class,'ddm-field-group')]//span[contains(.,'${customFieldName}')]</td>
 	<td></td>

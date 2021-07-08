@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.time.LocalDate;
@@ -45,7 +46,9 @@ public class FutureDatesFunctionTest {
 		Assert.assertFalse(
 			futureDatesFunction.apply(
 				yesterdayLocalDate.toString(),
-				"{'startsFrom': 'responseDate'}"));
+				JSONUtil.put(
+					"startsFrom", JSONUtil.put("type", "responseDate")
+				).toString()));
 	}
 
 	@Test
@@ -53,11 +56,15 @@ public class FutureDatesFunctionTest {
 		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
 
 		Assert.assertFalse(
-			futureDatesFunction.apply(null, "{'startsFrom': 'responseDate'}"));
+			futureDatesFunction.apply(
+				null,
+				JSONUtil.put(
+					"startsFrom", JSONUtil.put("type", "responseDate")
+				).toString()));
 	}
 
 	@Test
-	public void testApplyTrue1() {
+	public void testApplyTrue() {
 		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
 
 		LocalDate todayLocalDate = LocalDate.now();
@@ -67,7 +74,9 @@ public class FutureDatesFunctionTest {
 		Assert.assertTrue(
 			futureDatesFunction.apply(
 				tomorrowLocalDate.toString(),
-				"{'startsFrom': 'responseDate'}"));
+				JSONUtil.put(
+					"startsFrom", JSONUtil.put("type", "responseDate")
+				).toString()));
 	}
 
 }

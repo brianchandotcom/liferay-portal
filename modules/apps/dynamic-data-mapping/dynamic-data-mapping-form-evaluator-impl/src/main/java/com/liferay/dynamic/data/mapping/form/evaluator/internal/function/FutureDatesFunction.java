@@ -44,9 +44,15 @@ public class FutureDatesFunction
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				object2.toString());
 
-			if (jsonObject.has("startsFrom") &&
-				StringUtil.equals(
-					jsonObject.getString("startsFrom"), "responseDate")) {
+			JSONObject startsFromJSONObject = jsonObject.getJSONObject(
+				"startsFrom");
+
+			if (startsFromJSONObject == null) {
+				return false;
+			}
+
+			if (StringUtil.equals(
+					startsFromJSONObject.getString("type"), "responseDate")) {
 
 				LocalDate localDate = LocalDate.parse(
 					object1.toString(),

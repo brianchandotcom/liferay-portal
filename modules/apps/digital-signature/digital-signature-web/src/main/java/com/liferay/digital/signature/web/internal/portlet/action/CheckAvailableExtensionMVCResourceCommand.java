@@ -16,7 +16,6 @@ package com.liferay.digital.signature.web.internal.portlet.action;
 
 import com.liferay.digital.signature.constants.DigitalSignatureConstants;
 import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
-import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -84,9 +83,7 @@ public class CheckAvailableExtensionMVCResourceCommand
 				}
 			}
 			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
-				}
+				_log.error(exception, exception);
 			}
 		}
 
@@ -98,8 +95,5 @@ public class CheckAvailableExtensionMVCResourceCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private DSEnvelopeManager _dsEnvelopeManager;
 
 }

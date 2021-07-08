@@ -275,6 +275,37 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition publishObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		if (!objectDefinition.isSystem()) {
+			List<ObjectField> objectFields =
+				_objectFieldPersistence.findByObjectDefinitionId(
+					objectDefinitionId);
+
+			_createTable(objectDefinition, objectFields);
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					objectDefinitionLocalService.deployObjectDefinition(
+						objectDefinition);
+
+					return null;
+				});
+		}
+
+		return objectDefinition;
+	}
+
+	@Override
 	public void setAopProxy(Object aopProxy) {
 		super.setAopProxy(aopProxy);
 
@@ -463,27 +494,14 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition updatedObjectDefinition =
 			objectDefinitionPersistence.update(objectDefinition);
 
-		for (ObjectField objectField : objectFields) {
-			_objectFieldLocalService.addObjectField(
-				userId, objectDefinitionId, objectField.getDBColumnName(),
-				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
-				objectField.getIndexedLanguageId(), objectField.getName(),
-				objectField.isRequired(), objectField.getType());
-		}
-
-		objectFields = _objectFieldPersistence.findByObjectDefinitionId(
-			objectDefinitionId);
-
-		if (!objectDefinition.isSystem()) {
-			_createTable(updatedObjectDefinition, objectFields);
-
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					objectDefinitionLocalService.deployObjectDefinition(
-						updatedObjectDefinition);
-
-					return null;
-				});
+		if (objectDefinition == null) {
+			for (ObjectField objectField : objectFields) {
+				_objectFieldLocalService.addObjectField(
+					userId, objectDefinitionId, objectField.getDBColumnName(),
+					objectField.getIndexed(), objectField.getIndexedAsKeyword(),
+					objectField.getIndexedLanguageId(), objectField.getName(),
+					objectField.isRequired(), objectField.getType());
+			}
 		}
 
 		return updatedObjectDefinition;

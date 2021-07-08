@@ -17,6 +17,7 @@ package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.journal.constants.JournalConstants;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -297,31 +298,41 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	}
 
 	private boolean _isShow(ThemeDisplay themeDisplay) {
-		boolean webContentEditPermission = _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		boolean webContentEditPermission = permissionChecker.hasPermission(
+			themeDisplay.getScopeGroup(),
+			JournalArticle.class.getName(),
+			JournalArticle.class.getName(),
+			ActionKeys.UPDATE);
+
+		_portletResourcePermission.contains(
+			permissionChecker, themeDisplay.getScopeGroupId(),
 			ActionKeys.UPDATE);
 
 		if (webContentEditPermission) {
 			return true;
 		}
 
-		PortletResourcePermission blogsResourcePermission =
-			_blogsEntryModelResourcePermission.getPortletResourcePermission();
-
-		boolean blogsEditPermission = blogsResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			ActionKeys.UPDATE);
+		boolean blogsEditPermission =
+			permissionChecker.hasPermission(
+				themeDisplay.getScopeGroup(),
+				BlogsEntry.class.getName(),
+				BlogsEntry.class.getName(),
+				ActionKeys.UPDATE);
 
 		if (blogsEditPermission) {
 			return true;
 		}
 
-		PortletResourcePermission fileResourcePermission =
-			_fileEntryModelResourcePermission.getPortletResourcePermission();
-
-		boolean documentEditPermission = fileResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			ActionKeys.UPDATE);
+		boolean documentEditPermission =
+			permissionChecker.hasPermission(
+				themeDisplay.getScopeGroup(),
+				FileEntry.class.getName(),
+				FileEntry.class.getName(),
+				ActionKeys.UPDATE);
 
 		if (documentEditPermission) {
 			return true;
@@ -455,16 +466,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutReportsProductNavigationControlMenuEntry.class);
-
-	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private ModelResourcePermission<BlogsEntry>
-		_blogsEntryModelResourcePermission;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
-	)
-	private ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

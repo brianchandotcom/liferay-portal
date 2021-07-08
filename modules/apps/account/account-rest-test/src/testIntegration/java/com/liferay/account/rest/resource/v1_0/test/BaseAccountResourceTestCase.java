@@ -644,6 +644,29 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertEquals(randomAccount, getAccount);
 		assertValid(getAccount);
+
+		Account newAccount =
+			testPutAccountByExternalReferenceCode_createAccount();
+
+		putAccount = accountResource.putAccountByExternalReferenceCode(
+			newAccount.getExternalReferenceCode(), newAccount);
+
+		assertEquals(newAccount, putAccount);
+		assertValid(putAccount);
+
+		getAccount = accountResource.getAccountByExternalReferenceCode(
+			putAccount.getExternalReferenceCode());
+
+		assertEquals(newAccount, getAccount);
+		Assert.assertEquals(
+			newAccount.getExternalReferenceCode(),
+			putAccount.getExternalReferenceCode());
+	}
+
+	protected Account testPutAccountByExternalReferenceCode_createAccount()
+		throws Exception {
+
+		return randomAccount();
 	}
 
 	protected Account testPutAccountByExternalReferenceCode_addAccount()

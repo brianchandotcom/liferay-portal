@@ -179,19 +179,13 @@ public class AccountResourceImpl
 
 	@Override
 	public Account postAccount(Account account) throws Exception {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			contextUser.getUserId(), _getParentAccountId(account),
-			account.getName(), account.getDescription(), _getDomains(account),
-			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			_getStatus(account), null);
-
-		if (account.getExternalReferenceCode() != null) {
-			accountEntry.setExternalReferenceCode(
-				account.getExternalReferenceCode());
-
-			accountEntry = _accountEntryLocalService.updateAccountEntry(
-				accountEntry);
-		}
+		AccountEntry accountEntry =
+			_accountEntryLocalService.addOrUpdateAccountEntry(
+				account.getExternalReferenceCode(), contextUser.getUserId(),
+				_getParentAccountId(account), account.getName(),
+				account.getDescription(), _getDomains(account), null, null,
+				null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				_getStatus(account), null);
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(

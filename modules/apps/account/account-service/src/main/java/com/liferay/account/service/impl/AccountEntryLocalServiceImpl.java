@@ -260,6 +260,36 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
+	public AccountEntry addOrUpdateAccountEntry(
+			String externalReferenceCode, long userId,
+			long parentAccountEntryId, String name, String description,
+			String[] domains, String emailAddress, byte[] logoBytes,
+			String taxIdNumber, String type, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		AccountEntry accountEntry = fetchAccountEntryByReferenceCode(
+			user.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry != null) {
+			return updateAccountEntry(
+				accountEntry.getAccountEntryId(), parentAccountEntryId, name,
+				description, false, domains, emailAddress, logoBytes,
+				taxIdNumber, status, serviceContext);
+		}
+
+		accountEntry = addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains,
+			emailAddress, logoBytes, taxIdNumber, type, status, serviceContext);
+
+		accountEntry.setExternalReferenceCode(externalReferenceCode);
+
+		return accountEntryPersistence.update(accountEntry);
+	}
+
+	@Override
 	public void deactivateAccountEntries(long[] accountEntryIds)
 		throws PortalException {
 

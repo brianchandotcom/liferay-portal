@@ -107,13 +107,13 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			(HttpServletRequest)requestContext.get("request");
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			getLayoutDisplayPageProvider(friendlyURL);
+			_getLayoutDisplayPageProvider(friendlyURL);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			getLayoutDisplayPageObjectProvider(
+			_getLayoutDisplayPageObjectProvider(
 				layoutDisplayPageProvider, groupId, friendlyURL);
 
-		Object infoItem = getInfoItem(layoutDisplayPageObjectProvider, params);
+		Object infoItem = _getInfoItem(layoutDisplayPageObjectProvider, params);
 
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
 
@@ -140,10 +140,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			layoutDisplayPageProvider);
 		httpServletRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY,
-			getAssetEntry(layoutDisplayPageObjectProvider));
+			_getAssetEntry(layoutDisplayPageObjectProvider));
 
 		Locale locale = portal.getLocale(httpServletRequest);
-		Layout layout = getLayoutDisplayPageObjectProviderLayout(
+		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
 			layoutDisplayPageObjectProvider, layoutDisplayPageProvider);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
@@ -156,7 +156,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			infoItemFieldValuesProvider.getInfoItemFieldValues(
 				layoutDisplayPageObjectProvider.getDisplayObject());
 
-		Optional<String> descriptionOptional = getMappedValueOptional(
+		Optional<String> descriptionOptional = _getMappedValueOptional(
 			layout.getTypeSettingsProperty("mapped-description"),
 			infoItemFieldValues, locale);
 
@@ -172,7 +172,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			layoutDisplayPageObjectProvider.getKeywords(locale),
 			httpServletRequest);
 
-		Optional<String> titleOptional = getMappedValueOptional(
+		Optional<String> titleOptional = _getMappedValueOptional(
 			layout.getTypeSettingsProperty("mapped-title"), infoItemFieldValues,
 			locale);
 
@@ -193,17 +193,17 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		throws PortalException {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			getLayoutDisplayPageProvider(friendlyURL);
+			_getLayoutDisplayPageProvider(friendlyURL);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			getLayoutDisplayPageObjectProvider(
+			_getLayoutDisplayPageObjectProvider(
 				layoutDisplayPageProvider, groupId, friendlyURL);
 
 		if (layoutDisplayPageObjectProvider == null) {
 			throw new PortalException();
 		}
 
-		Layout layout = getLayoutDisplayPageObjectProviderLayout(
+		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
 			layoutDisplayPageObjectProvider, layoutDisplayPageProvider);
 
 		HttpServletRequest httpServletRequest =
@@ -225,7 +225,32 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return new LayoutFriendlyURLComposite(layout, friendlyURL);
 	}
 
-	protected AssetEntry getAssetEntry(
+	@Reference
+	protected AssetDisplayPageEntryLocalService
+		assetDisplayPageEntryLocalService;
+
+	@Reference
+	protected AssetEntryService assetEntryLocalService;
+
+	@Reference
+	protected InfoItemServiceTracker infoItemServiceTracker;
+
+	@Reference
+	protected LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker;
+
+	@Reference
+	protected LayoutLocalService layoutLocalService;
+
+	@Reference
+	protected LayoutPageTemplateEntryService layoutPageTemplateEntryService;
+
+	@Reference
+	protected LayoutSEOTemplateProcessor layoutSEOTemplateProcessor;
+
+	@Reference
+	protected Portal portal;
+
+	private AssetEntry _getAssetEntry(
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
 		long classNameId = layoutDisplayPageObjectProvider.getClassNameId();
@@ -269,7 +294,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return null;
 	}
 
-	protected Object getInfoItem(
+	private Object _getInfoItem(
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 			Map<String, String[]> params)
 		throws NoSuchInfoItemException {
@@ -296,8 +321,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 	}
 
-	protected LayoutDisplayPageObjectProvider<?>
-		getLayoutDisplayPageObjectProvider(
+	private LayoutDisplayPageObjectProvider<?>
+		_getLayoutDisplayPageObjectProvider(
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
 			long groupId, String friendlyURL) {
 
@@ -305,7 +330,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			groupId, _getUrlTitle(friendlyURL));
 	}
 
-	protected Layout getLayoutDisplayPageObjectProviderLayout(
+	private Layout _getLayoutDisplayPageObjectProviderLayout(
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
@@ -345,7 +370,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 								infoItemReference);
 
 				if (parentLayoutDisplayPageObjectProvider != null) {
-					return getLayoutDisplayPageObjectProviderLayout(
+					return _getLayoutDisplayPageObjectProviderLayout(
 						parentLayoutDisplayPageObjectProvider,
 						layoutDisplayPageProvider);
 				}
@@ -366,7 +391,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return null;
 	}
 
-	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
+	private LayoutDisplayPageProvider<?> _getLayoutDisplayPageProvider(
 			String friendlyURL)
 		throws PortalException {
 
@@ -385,7 +410,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return layoutDisplayPageProvider;
 	}
 
-	protected Optional<String> getMappedValueOptional(
+	private Optional<String> _getMappedValueOptional(
 		String template, InfoItemFieldValues infoItemFieldValues,
 		Locale locale) {
 
@@ -397,31 +422,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			layoutSEOTemplateProcessor.processTemplate(
 				template, infoItemFieldValues, locale));
 	}
-
-	@Reference
-	protected AssetDisplayPageEntryLocalService
-		assetDisplayPageEntryLocalService;
-
-	@Reference
-	protected AssetEntryService assetEntryLocalService;
-
-	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
-
-	@Reference
-	protected LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker;
-
-	@Reference
-	protected LayoutLocalService layoutLocalService;
-
-	@Reference
-	protected LayoutPageTemplateEntryService layoutPageTemplateEntryService;
-
-	@Reference
-	protected LayoutSEOTemplateProcessor layoutSEOTemplateProcessor;
-
-	@Reference
-	protected Portal portal;
 
 	private LayoutQueryStringComposite
 		_getPortletFriendlyURLMapperLayoutQueryStringComposite(

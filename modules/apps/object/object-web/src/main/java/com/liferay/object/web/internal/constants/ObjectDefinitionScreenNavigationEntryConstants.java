@@ -15,16 +15,22 @@
 package com.liferay.object.web.internal.constants;
 
 /**
- * @author Jorge Ferrer
+ * @author Marco Leo
  */
-public class ObjectWebKeys {
+public class ObjectDefinitionScreenNavigationEntryConstants {
 
-	public static final String OBJECT_DEFINITION = "OBJECT_DEFINITION";
+	public static final String CATEGORY_KEY_DETAILS = "details";
 
-	public static final String OBJECT_ENTRY = "OBJECT_ENTRY";
+	public static final String CATEGORY_KEY_FIELDS = "fields";
 
-	public static final String OBJECT_ENTRY_VALUES = "OBJECT_ENTRY_VALUES";
+	public static final String ENTRY_KEY_DETAILS = "details";
 
-	public static final String OBJECT_FIELD = "OBJECT_FIELD";
+	public static final String ENTRY_KEY_FIELDS = "fields";
+
+	public static final String SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION =
+		"edit.object.definition.form";
+
+	public static final String SCREEN_NAVIGATION_KEY_OBJECT_FIELD =
+		"edit.object.field.form";
 
 }

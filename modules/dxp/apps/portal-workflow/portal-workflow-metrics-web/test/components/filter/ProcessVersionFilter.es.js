@@ -39,6 +39,7 @@ describe('The process version filter component should', () => {
 				options={{
 					hideControl: true,
 					multiple: false,
+					withAllVersions: true,
 					withSelectionTitle: true,
 				}}
 				processId={12345}

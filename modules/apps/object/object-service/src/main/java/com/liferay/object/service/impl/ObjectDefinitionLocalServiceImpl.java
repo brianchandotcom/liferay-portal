@@ -300,10 +300,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 			_createTable(objectDefinition, objectFields);
 
+			ObjectDefinition finalObjectDefinition = objectDefinition;
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					objectDefinitionLocalService.deployObjectDefinition(
-						objectDefinition);
+						finalObjectDefinition);
 
 					return null;
 				});
@@ -502,7 +504,7 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition updatedObjectDefinition =
 			objectDefinitionPersistence.update(objectDefinition);
 
-		if (objectDefinition == null) {
+		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {
 				_objectFieldLocalService.addObjectField(
 					userId, objectDefinitionId, objectField.getDBColumnName(),

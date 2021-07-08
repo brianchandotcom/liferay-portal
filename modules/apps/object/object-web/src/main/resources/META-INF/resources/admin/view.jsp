@@ -42,7 +42,8 @@ ObjectDefinitionsAdminDisplayContext objectDefinitionsAdminDisplayContext = (Obj
 
 		openSimpleInputModal.default({
 			dialogTitle: '<liferay-ui:message key="name" />',
-			formSubmitURL: '<liferay-portlet:actionURL name="/object_definitions_admin/add_object_definition"><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
+			formSubmitURL:
+				'<liferay-portlet:actionURL name="/object_definitions_admin/add_object_definition"><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
 			mainFieldLabel: '<liferay-ui:message key="name" />',
 			mainFieldName: 'name',
 			mainFieldPlaceholder: '<liferay-ui:message key="name" />',

@@ -262,7 +262,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_UNSUBSCRIBE</td>
-	<td>//button[@type='button' and @title='Unsubscribe']</td>
+	<td>//button[@type='button' and @*='Unsubscribe']</td>
 	<td></td>
 </tr>
 <tr>

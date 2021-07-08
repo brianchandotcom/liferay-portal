@@ -41,7 +41,7 @@ const _invalidFileExtensionContent = (invalidFileExtensions) =>
 		_translatedStrongKeys(translatedKeys.deselected)
 	)}
 
-	<p>${Liferay.Util.sub(
+	<p class="mt-2">${Liferay.Util.sub(
 		Liferay.Language.get('please-x-or-x-to-choose-new-documents'),
 		_translatedStrongKeys(translatedKeys.continue),
 		_translatedStrongKeys(translatedKeys.cancel)
@@ -58,27 +58,22 @@ const _invalidFileExtensionContent = (invalidFileExtensions) =>
 const _invalidFileCountContent = (
 	extendedMessage
 ) => `<div class="alert alert-warning">
-		${
-			extendedMessage
-				? ''
-				: `<strong className="lead">
-					${translatedKeys.maximum_files_message}
-				</strong>`
-		}
-		
-		<span>${Liferay.Language.get(
-			'you-have-exceeded-the-amount-of-files-to-attach-to-the-digital-signature-envelope'
-		)}</span>
+		${Liferay.Util.sub(
+			Liferay.Language.get(
+				'you-have-exceeded-the-maximum-amount-of-x-files-to-attach-to-the-digital-signature-envelope'
+			),
+			MAXIMUM_SELECTED_FILES
+		)}
 
 		${
 			extendedMessage
-				? Liferay.Util.sub(
+				? `<div class="mt-2">${Liferay.Util.sub(
 						Liferay.Language.get(
 							'please-x-or-x-to-remove-files-in-your-envelope'
 						),
 						_translatedStrongKeys(translatedKeys.continue),
 						_translatedStrongKeys(translatedKeys.cancel)
-				  )
+				  )}</div>`
 				: ''
 		}
 	</div>`;
@@ -179,7 +174,7 @@ export const collectDigitalSignature = async (
 	);
 
 	const crossedFileCountLimit =
-		validFileExtensionEntryIds.length >= MAXIMUM_SELECTED_FILES;
+		validFileExtensionEntryIds.length > MAXIMUM_SELECTED_FILES;
 
 	if (invalidFileExtensions.length || crossedFileCountLimit) {
 		return _showWarningModal({

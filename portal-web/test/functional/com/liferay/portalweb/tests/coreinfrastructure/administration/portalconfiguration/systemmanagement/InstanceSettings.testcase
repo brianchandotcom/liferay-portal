@@ -708,6 +708,67 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that some of the fields in user creation can be diasabled."
+	@priority = "4"
+	test UserFieldsCanBeDisabled {
+		User.openUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD");
+		AssertElementNotPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT");
+		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Fields",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "autogenerate");
+
+		FormFields.disableCheckbox(fieldName = "birthday");
+
+		FormFields.enableCheckbox(fieldName = "male");
+
+		PortletEntry.save();
+
+		User.openUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementNotPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD");
+		AssertNotVisible(locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD");
+		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT");
+
+		User.openUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		for (var text : list "First Name,Last Name") {
+			var value1 = StringUtil.replace("${text}", " ", "");
+
+			Type(
+				key_text = "${text}",
+				locator1 = "TextInput#ANY",
+				value1 = "${value1}");
+		}
+
+		Type(
+			key_text = "Email Address",
+			locator1 = "TextInput#ANY",
+			value1 = "userEmailAddress@liferay.com");
+
+		PortletEntry.save();
+
+		User.openUsersAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "FirstName LastName");
+
+		AssertNotEditable(locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD");
+		AssertNotVisible(locator1 = "UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD");
+		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT");
+	}
+
 	@priority = "4"
 	test ViewContentSharingDisabledAcrossSitesViaAP {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

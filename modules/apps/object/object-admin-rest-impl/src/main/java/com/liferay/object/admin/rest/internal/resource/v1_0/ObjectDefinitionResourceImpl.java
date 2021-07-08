@@ -15,14 +15,11 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -83,9 +80,7 @@ public class ObjectDefinitionResourceImpl
 
 		return _toObjectDefinition(
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				contextUser.getUserId(), objectDefinition.getName(),
-				transformToList(
-					objectDefinition.getObjectFields(), this::_toObjectField)));
+				contextUser.getUserId(), objectDefinition.getName(), null));
 	}
 
 	protected Map<String, String> addAction(String actionKey) {
@@ -95,23 +90,6 @@ public class ObjectDefinitionResourceImpl
 		return HashMapBuilder.put(
 			actionKey, ""
 		).build();
-	}
-
-	private static ObjectField _toObjectField(
-		com.liferay.object.model.ObjectField objectField) {
-
-		return new ObjectField() {
-			{
-				dateCreated = objectField.getCreateDate();
-				dateModified = objectField.getModifiedDate();
-				id = objectField.getObjectFieldId();
-				indexed = objectField.getIndexed();
-				indexedAsKeyword = objectField.getIndexedAsKeyword();
-				indexedLanguageId = objectField.getIndexedLanguageId();
-				name = objectField.getName();
-				type = objectField.getType();
-			}
-		};
 	}
 
 	private ObjectDefinition _toObjectDefinition(
@@ -138,11 +116,6 @@ public class ObjectDefinitionResourceImpl
 				dateModified = objectDefinition.getModifiedDate();
 				id = objectDefinition.getObjectDefinitionId();
 				name = objectDefinition.getName();
-				objectFields = transformToArray(
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId()),
-					ObjectDefinitionResourceImpl::_toObjectField,
-					ObjectField.class);
 				status = new Status() {
 					{
 						code = objectDefinition.getStatus();
@@ -159,28 +132,7 @@ public class ObjectDefinitionResourceImpl
 		};
 	}
 
-	private com.liferay.object.model.ObjectField _toObjectField(
-		ObjectField objectField) {
-
-		com.liferay.object.model.ObjectField serviceBuilderObjectField =
-			_objectFieldLocalService.createObjectField(0L);
-
-		serviceBuilderObjectField.setIndexed(
-			GetterUtil.getBoolean(objectField.getIndexed()));
-		serviceBuilderObjectField.setIndexedAsKeyword(
-			GetterUtil.getBoolean(objectField.getIndexedAsKeyword()));
-		serviceBuilderObjectField.setIndexedLanguageId(
-			objectField.getIndexedLanguageId());
-		serviceBuilderObjectField.setName(objectField.getName());
-		serviceBuilderObjectField.setType(objectField.getType());
-
-		return serviceBuilderObjectField;
-	}
-
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

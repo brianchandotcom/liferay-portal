@@ -14,13 +14,12 @@
 
 package com.liferay.commerce.pricing.internal.upgrade.v2_0_1;
 
-import com.liferay.commerce.pricing.internal.upgrade.base.BaseCommercePricingUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommercePriceModifierUpgradeProcess
-	extends BaseCommercePricingUpgradeProcess {
+public class CommercePriceModifierUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

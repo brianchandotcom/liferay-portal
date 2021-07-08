@@ -14,24 +14,27 @@
 
 package com.liferay.commerce.pricing.internal.upgrade.v1_1_0;
 
-import com.liferay.commerce.pricing.internal.upgrade.base.BaseCommercePricingUpgradeProcess;
 import com.liferay.commerce.pricing.internal.upgrade.v1_1_0.util.CommercePricingClassTable;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Riccardo Alberti
  */
-public class CommercePricingClassUpgradeProcess
-	extends BaseCommercePricingUpgradeProcess {
+public class CommercePricingClassUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		changeColumnType(
-			CommercePricingClassTable.class,
-			CommercePricingClassTable.TABLE_NAME, "title", "TEXT");
+		if (hasColumn(CommercePricingClassTable.TABLE_NAME, "title")) {
+			alter(
+				CommercePricingClassTable.class,
+				new AlterColumnType("title", "TEXT"));
+		}
 
-		changeColumnType(
-			CommercePricingClassTable.class,
-			CommercePricingClassTable.TABLE_NAME, "description", "TEXT");
+		if (hasColumn(CommercePricingClassTable.TABLE_NAME, "description")) {
+			alter(
+				CommercePricingClassTable.class,
+				new AlterColumnType("description", "TEXT"));
+		}
 	}
 
 }

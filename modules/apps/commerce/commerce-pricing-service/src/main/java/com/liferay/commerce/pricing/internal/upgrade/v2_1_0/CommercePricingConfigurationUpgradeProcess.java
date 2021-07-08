@@ -16,8 +16,8 @@ package com.liferay.commerce.pricing.internal.upgrade.v2_1_0;
 
 import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
-import com.liferay.commerce.pricing.internal.upgrade.base.BaseCommercePricingUpgradeProcess;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -25,8 +25,7 @@ import java.util.Hashtable;
 /**
  * @author Riccardo Alberti
  */
-public class CommercePricingConfigurationUpgradeProcess
-	extends BaseCommercePricingUpgradeProcess {
+public class CommercePricingConfigurationUpgradeProcess extends UpgradeProcess {
 
 	public CommercePricingConfigurationUpgradeProcess(
 		ConfigurationProvider configurationProvider) {

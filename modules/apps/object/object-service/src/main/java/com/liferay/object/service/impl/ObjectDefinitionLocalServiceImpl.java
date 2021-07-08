@@ -256,6 +256,13 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectDefinition> getCustomObjectDefinitionsByStatus(
+		int status) {
+
+		return objectDefinitionPersistence.findByS_S(false, status);
+	}
+
+	@Override
 	public ObjectDefinition getObjectDefinition(long objectDefinitionId)
 		throws PortalException {
 
@@ -327,7 +334,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 					List<ObjectDefinition> objectDefinitions =
 						objectDefinitionLocalService.
-							getCustomObjectDefinitions();
+							getCustomObjectDefinitionsByStatus(
+								WorkflowConstants.STATUS_APPROVED);
 
 					for (ObjectDefinition objectDefinition :
 							objectDefinitions) {

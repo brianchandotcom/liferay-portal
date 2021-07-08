@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Info List Provider Item Selector Web
-Bundle-SymbolicName: com.liferay.info.list.provider.item.selector.web
-Bundle-Version: 2.0.10
-Web-ContextPath: /info-list-provider-item-selector-web

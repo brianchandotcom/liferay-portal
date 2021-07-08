@@ -39,9 +39,14 @@
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 		</finder>
-		<finder name="Number" return-type="CPDefinitionDiagramEntry" unique="true">
+		<finder name="C_N" return-type="CPDefinitionDiagramEntry" unique="true">
+			<finder-column name="CPDefinitionId" />
 			<finder-column name="number" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPDefinitionDiagramPin" remote-service="true">
 
@@ -104,4 +109,7 @@
 			<finder-column name="CPDefinitionId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>DuplicateCPDefinitionDiagramEntry</exception>
+	</exceptions>
 </service-builder>

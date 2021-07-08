@@ -3,11 +3,16 @@ definition {
 	macro addCP {
 		var key_resourceName = "${resourceName}";
 
-		AssertClick(
-			locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
-			value1 = "${resourceName}");
+		if (isSet(modelResource)) {
+			CustomFields.openToAddResourceCustomField(modelResource = "${modelResource}");
+		}
+		else {
+			AssertClick(
+				locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
+				value1 = "${resourceName}");
 
-		LexiconEntry.gotoAdd();
+			LexiconEntry.gotoAdd();
+		}
 
 		var key_customFieldType = "${customFieldType}";
 

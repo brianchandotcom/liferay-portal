@@ -17,6 +17,7 @@ package com.liferay.info.collection.provider.item.selector.web.internal.layout.l
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.InfoRequestItemProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -62,6 +63,21 @@ public class InfoCollectionProviderLayoutListRetriever
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 
+		if (infoCollectionProvider instanceof
+				RelatedInfoItemCollectionProvider) {
+
+			Optional<Object> contextObjectOptional =
+				layoutListRetrieverContext.getContextObjectOptional();
+
+			Object relatedItem = contextObjectOptional.orElse(null);
+
+			if (relatedItem == null) {
+				return Collections.emptyList();
+			}
+
+			collectionQuery.setRelatedItemObject(relatedItem);
+		}
+
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
 
@@ -99,6 +115,21 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		CollectionQuery collectionQuery = new CollectionQuery();
+
+		if (infoCollectionProvider instanceof
+				RelatedInfoItemCollectionProvider) {
+
+			Optional<Object> contextObjectOptional =
+				layoutListRetrieverContext.getContextObjectOptional();
+
+			Object relatedItem = contextObjectOptional.orElse(null);
+
+			if (relatedItem == null) {
+				return 0;
+			}
+
+			collectionQuery.setRelatedItemObject(relatedItem);
+		}
 
 		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
 			FilteredInfoCollectionProvider<Object, InfoFilter>

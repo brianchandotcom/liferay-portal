@@ -86,8 +86,6 @@ public class WikiPageAssetRenderer
 		_page = page;
 		_wikiEngineRenderer = wikiEngineRenderer;
 		_trashHelper = trashHelper;
-
-		_node = page.getNode();
 	}
 
 	@Override
@@ -230,7 +228,12 @@ public class WikiPageAssetRenderer
 		).setParameter(
 			"nodeId", _page.getNodeId()
 		).setParameter(
-			"nodeName", _node.getName()
+			"nodeName",
+			() -> {
+				WikiNode node = _page.getNode();
+
+				return node.getName();
+			}
 		).setParameter(
 			"title", _page.getTitle()
 		).setParameter(
@@ -417,7 +420,6 @@ public class WikiPageAssetRenderer
 
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final WikiNode _node;
 	private final WikiPage _page;
 	private final TrashHelper _trashHelper;
 	private final WikiEngineRenderer _wikiEngineRenderer;

@@ -102,6 +102,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -1090,6 +1091,46 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	@Test
+	public void testSearchWorkflowTasksByAssetTypesAndAssetPrimaryKeys()
+		throws Exception {
+
+		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
+		_activateSingleApproverWorkflow(DLFolder.class.getName(), 0, -1);
+
+		_addBlogsEntry();
+		_addFileVersion(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		BlogsEntry blogsEntry = _addBlogsEntry();
+
+		List<WorkflowTask> workflowTasks =
+			_searchByAssetTypesAndAssetPrimaryKeys(null, null);
+
+		Assert.assertEquals(workflowTasks.toString(), 3, workflowTasks.size());
+
+		workflowTasks = _searchByAssetTypesAndAssetPrimaryKeys(
+			new String[] {BlogsEntry.class.getName()}, null);
+
+		Assert.assertEquals(workflowTasks.toString(), 2, workflowTasks.size());
+
+		workflowTasks = _searchByAssetTypesAndAssetPrimaryKeys(
+			new String[] {BlogsEntry.class.getName()},
+			new Long[] {blogsEntry.getEntryId()});
+
+		Assert.assertEquals(workflowTasks.toString(), 1, workflowTasks.size());
+
+		WorkflowTask workflowTask = workflowTasks.get(0);
+
+		Assert.assertEquals(
+			blogsEntry.getEntryId(),
+			MapUtil.getLong(
+				workflowTask.getOptionalAttributes(),
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+
+		_deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
+		_deactivateWorkflow(DLFolder.class.getName(), 0, -1);
+	}
+
+	@Test
 	public void testSearchWorkflowTasksOrderByModifiedDate() throws Exception {
 		_activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
 
@@ -1704,6 +1745,17 @@ public class WorkflowTaskManagerImplTest {
 
 		return StringUtil.read(
 			clazz.getClassLoader(), _getBasePath() + fileName);
+	}
+
+	private List<WorkflowTask> _searchByAssetTypesAndAssetPrimaryKeys(
+			String[] assetTypes, Long[] assetPrimaryKeys)
+		throws Exception {
+
+		return _workflowTaskManager.search(
+			_adminUser.getCompanyId(), _adminUser.getUserId(), null, null,
+			assetTypes, assetPrimaryKeys, null, null, null, null, false, true,
+			null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(true));
 	}
 
 	private int _searchCount(String keywords) throws Exception {

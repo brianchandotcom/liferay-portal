@@ -384,7 +384,8 @@ public class ConfigurationModelRetrieverImpl
 
 		return getAndFilterString(
 			getPropertyFilterString(
-				ConfigurationAdmin.SERVICE_FACTORYPID, pid + ".scoped"),
+				ConfigurationAdmin.SERVICE_FACTORYPID,
+				getUnscopedPid(pid) + ".scoped"),
 			getPropertyFilterString(
 				scope.getPropertyKey(), String.valueOf(scopePK)));
 	}
@@ -397,6 +398,10 @@ public class ConfigurationModelRetrieverImpl
 		return StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, key, StringPool.EQUAL, value,
 			StringPool.CLOSE_PARENTHESIS);
+	}
+
+	protected String getUnscopedPid(String pid) {
+		return pid.replaceFirst("\\.scoped.*", StringPool.BLANK);
 	}
 
 	private BundleContext _bundleContext;

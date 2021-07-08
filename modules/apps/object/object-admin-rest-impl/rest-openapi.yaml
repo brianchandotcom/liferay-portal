@@ -36,6 +36,13 @@ components:
             type: object
         ObjectField:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 dateCreated:
                     format: date
                     readOnly: true
@@ -172,3 +179,37 @@ paths:
                     description:
                         ""
             tags: ["ObjectDefinition"]
+    "/object-definitions/{objectDefinitionId}/fields":
+        get:
+            operationId: getObjectDefinitionFieldsPage
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectField"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectField"
+                                type: array
+                    description:
+                        ""
+            tags: ["ObjectField"]

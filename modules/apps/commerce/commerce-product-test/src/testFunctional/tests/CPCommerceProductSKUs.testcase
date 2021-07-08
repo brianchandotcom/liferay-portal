@@ -210,7 +210,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveASKU {
 		property portal.acceptance = "false";

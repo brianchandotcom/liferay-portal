@@ -123,7 +123,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
-	@ignore = "true"
 	@priority = "3"
 	test DeactivateCurrency {
 		property portal.acceptance = "false";
@@ -198,7 +197,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
-	@ignore = "true"
 	@priority = "3"
 	test DeactivateCurrency {
 		property portal.acceptance = "false";
@@ -718,7 +716,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6214. Seller Order Acceptance Workflow"
-	@ignore = "true"
 	@priority = "3"
 	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
 		property portal.acceptance = "false";
@@ -923,7 +920,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"
-	@ignore = "true"
 	@priority = "3"
 	test SortOrdersByOrderDate {
 		property portal.acceptance = "false";
@@ -986,7 +982,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
-	@ignore = "true"
 	@priority = "3"
 	test ViewOrderSKU {
 		property portal.acceptance = "false";

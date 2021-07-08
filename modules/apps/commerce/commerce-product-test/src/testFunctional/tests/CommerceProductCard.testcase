@@ -27,7 +27,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"
-	@ignore = "true"
 	@priority = "3"
 	test AddProductToWishListFromProductCard {
 		property portal.acceptance = "false";
@@ -52,7 +51,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5859. As a buyer, I want to view the product price with the default channel currency"
-	@ignore = "true"
 	@priority = "3"
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
 		property portal.acceptance = "false";
@@ -532,7 +530,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5860. As a buyer, I want to change the channel currency and view the product price with the changed currency"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductCardCurrencyAfterChannelCurrencyChanged {
 		property portal.acceptance = "false";
@@ -1006,7 +1003,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5868. As a buyer, I want to be able to compare a product with other ones in a product comparison items list, by checking the product via checkbox"
-	@ignore = "true"
 	@priority = "3"
 	test CompareProductFromProductCard {
 		property portal.acceptance = "false";
@@ -1093,7 +1089,6 @@ definition {
 	}
 
 	@description = "COMMERCE-6193. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
-	@ignore = "true"
 	@priority = "3"
 	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
@@ -1188,7 +1183,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5864. As a buyer, I want to view the product price"
-	@ignore = "true"
 	@priority = "3"
 	test ViewProductCardPrice {
 		property portal.acceptance = "false";
@@ -1272,7 +1266,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5862. As a buyer, I want to view the product SKU, if set(single SKU)"
-	@ignore = "true"
 	@priority = "3"
 	test ViewProductCardSKU {
 		property portal.acceptance = "false";

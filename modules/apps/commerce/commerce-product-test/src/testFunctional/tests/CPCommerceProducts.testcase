@@ -693,7 +693,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5808. EditAProduct"
-	@ignore = "true"
 	@priority = "3"
 	test EditAProduct {
 		property portal.acceptance = "false";
@@ -731,7 +730,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
-	@ignore = "true"
 	@priority = "3"
 	test EditSkuAndDelete {
 		property portal.acceptance = "false";
@@ -881,7 +879,6 @@ definition {
 	}
 
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
-	@ignore = "true"
 	@priority = "3"
 	test UseFilters {
 		property portal.acceptance = "false";
@@ -1059,7 +1056,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5805. UseSearchBarAndPagination"
-	@ignore = "true"
 	@priority = "3"
 	test UseSearchBarAndPagination {
 		property portal.acceptance = "false";
@@ -1120,7 +1116,6 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5803. UseSortingByNameAndDate"
-	@ignore = "true"
 	@priority = "3"
 	test UseSortingByNameAndDate {
 		property portal.acceptance = "false";

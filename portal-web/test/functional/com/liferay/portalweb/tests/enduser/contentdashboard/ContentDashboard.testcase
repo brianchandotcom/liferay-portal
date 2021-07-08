@@ -1788,4 +1788,118 @@ definition {
 			title = "WC Title");
 	}
 
+	@description = "LPS-116840 When a user with update permissions clicks on the edit icon, the user is led to the web editor"
+	@priority = "5"
+	test IconEdit {
+		property portal.acceptance = "true";
+
+	  task ("Create a Web Content ") {
+        JSONWebcontent.addWebContent(
+            content = "Webcontent Content",
+            groupName = "Test Site Name",
+            title = "Webcontent Title");
+    }
+
+    task ("Check it in its display page and access the edit") {
+        ApplicationsMenu.gotoPortlet(
+            category = "Content",
+            panel = "Applications",
+            portlet = "Content Dashboard");
+
+        Click.clickNoMouseOver(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_MODIFIED_DATE");
+
+
+
+    }
+
+}
+
+	@description = "LPS-116840 When the user clicks on the info icon, the info panel displays"
+	@priority = "5"
+	test IconInfo {
+    	property portal.acceptance = "true";
+
+    	task ("Add Display Page and mark it as default") {
+         JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+            contentType = "Web Content Article",
+            displayPageTemplateEntryName = "Display Page Name",
+            groupName = "Test Site Name",
+            subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+        }
+
+       task ("Add Web Content and check it in its display page and access the info") {
+		 JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "teste");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
+
+
+
+	    }
+
+
+	}
+
+	@description = "LPS-116840 When the user clicks on the view icon of a content with an associated display page, the user is led to the view mode of the page"
+	@priority = "5"
+	test IconView {
+    	property portal.acceptance = "true";
+
+    	task ("Add Display Page and mark it as default") {
+        JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+            contentType = "Web Content Article",
+            displayPageTemplateEntryName = "Display Page Name",
+            groupName = "Test Site Name",
+            subType = "Basic Web Content");
+
+        DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+        DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+        Button.clickPublish();
+
+        DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+        DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+    }
+
+    task ("Add Web Content and check it in its display page and access the view") {
+        JSONWebcontent.addWebContent(
+            content = "WC Content",
+            groupName = "Test Site Name",
+            title = "WC");
+
+        ApplicationsMenu.gotoPortlet(
+            category = "Content",
+            panel = "Applications",
+            portlet = "Content Dashboard");
+
+        Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+        Click(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
+
+
+		
+    }
+  }
+
 }

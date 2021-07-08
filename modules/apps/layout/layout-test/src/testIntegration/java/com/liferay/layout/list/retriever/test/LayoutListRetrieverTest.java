@@ -21,13 +21,9 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.list.provider.InfoItemRelatedListProvider;
-import com.liferay.info.list.provider.InfoListProviderContext;
-import com.liferay.info.list.provider.item.selector.criterion.InfoItemRelatedListProviderItemSelectorReturnType;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
-import com.liferay.info.sort.Sort;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -55,6 +51,7 @@ import com.liferay.registry.ServiceRegistration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -91,28 +88,28 @@ public class LayoutListRetrieverTest {
 	}
 
 	@Test
-	public void testAssetInfoItemRelatedListProviderLayoutListRetriever()
+	public void testAssetRelatedInfoItemCollectionProviderLayoutListRetriever()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		ServiceRegistration<InfoItemRelatedListProvider<?, ?>>
+		ServiceRegistration<RelatedInfoItemCollectionProvider<?, ?>>
 			serviceRegistration = registry.registerService(
-				(Class<InfoItemRelatedListProvider<?, ?>>)
-					(Class<?>)InfoItemRelatedListProvider.class,
-				new AssetEntryInfoItemRelatedListProvider());
+				(Class<RelatedInfoItemCollectionProvider<?, ?>>)
+					(Class<?>)RelatedInfoItemCollectionProvider.class,
+				new AssetEntryRelatedInfoItemCollectionProvider());
 
 		LayoutListRetriever<?, KeyListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, KeyListObjectReference>)
 				_layoutListRetrieverTracker.getLayoutListRetriever(
-					InfoItemRelatedListProviderItemSelectorReturnType.class.
-						getName());
+					InfoListProviderItemSelectorReturnType.class.getName());
 
 		KeyListObjectReference keyListObjectReference =
 			new KeyListObjectReference(
 				JSONUtil.put(
 					"key",
-					AssetEntryInfoItemRelatedListProvider.class.getName()));
+					AssetEntryRelatedInfoItemCollectionProvider.class.
+						getName()));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -182,21 +179,32 @@ public class LayoutListRetrieverTest {
 	@Inject
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
 
-	private static class AssetEntryInfoItemRelatedListProvider
-		implements InfoItemRelatedListProvider<AssetEntry, AssetTag> {
+	private static class AssetEntryRelatedInfoItemCollectionProvider
+		implements RelatedInfoItemCollectionProvider<AssetEntry, AssetTag> {
+
+		@Override
+		public InfoPage<AssetTag> getCollectionInfoPage(
+			CollectionQuery collectionQuery) {
+
+			Optional<Object> relatedItemOptional =
+				collectionQuery.getRelatedItemObjectOptional();
+
+			Object relatedItem = relatedItemOptional.orElse(null);
+
+			if (!(relatedItem instanceof AssetEntry)) {
+				return InfoPage.of(
+					Collections.emptyList(), collectionQuery.getPagination(),
+					0);
+			}
+
+			AssetEntry assetEntry = (AssetEntry)relatedItem;
+
+			return InfoPage.of(assetEntry.getTags());
+		}
 
 		@Override
 		public String getLabel(Locale locale) {
 			return StringPool.BLANK;
-		}
-
-		@Override
-		public InfoPage<AssetTag> getRelatedItemsInfoPage(
-			AssetEntry assetEntry,
-			InfoListProviderContext infoListProviderContext,
-			Pagination pagination, Sort sort) {
-
-			return InfoPage.of(assetEntry.getTags());
 		}
 
 	}

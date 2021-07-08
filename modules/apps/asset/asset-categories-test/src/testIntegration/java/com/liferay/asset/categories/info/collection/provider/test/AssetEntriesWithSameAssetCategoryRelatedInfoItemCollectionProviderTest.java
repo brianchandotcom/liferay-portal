@@ -12,23 +12,21 @@
  * details.
  */
 
-package com.liferay.asset.categories.info.list.provider.test;
+package com.liferay.asset.categories.info.collection.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.list.provider.InfoItemRelatedListProvider;
 import com.liferay.info.pagination.InfoPage;
-import com.liferay.info.pagination.Pagination;
 import com.liferay.journal.constants.JournalFolderConstants;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,7 +52,8 @@ import org.junit.runner.RunWith;
  * @author Jürgen Kappler
  */
 @RunWith(Arquillian.class)
-public class AssetCategoriesForAssetEntryInfoItemRelatedListProviderTest {
+public class
+	AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProviderTest {
 
 	@ClassRule
 	@Rule
@@ -77,51 +76,46 @@ public class AssetCategoriesForAssetEntryInfoItemRelatedListProviderTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), serviceContext);
 
-		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
-			serviceContext);
-		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
 
 		serviceContext.setAssetCategoryIds(
-			new long[] {
-				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
-			});
+			new long[] {assetCategory.getCategoryId()});
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+		JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getResourcePrimKey());
+		StringBundler sb = new StringBundler(4);
 
-		String infoRelatedListProviderClassName =
-			"com.liferay.asset.categories.admin.web.internal.info.list." +
-				"provider." +
-					"AssetCategoriesForAssetEntryInfoItemRelatedListProvider";
+		sb.append("com.liferay.asset.categories.admin.web.internal.info.");
+		sb.append("collection.provider.");
+		sb.append("AssetEntriesWithSameAssetCategoryRelatedInfoItemCollection");
+		sb.append("Provider");
 
-		InfoItemRelatedListProvider<AssetEntry, AssetCategory>
-			infoItemRelatedListProvider =
+		RelatedInfoItemCollectionProvider<AssetCategory, AssetEntry>
+			relatedInfoItemCollectionProvider =
 				_infoItemServiceTracker.getInfoItemService(
-					InfoItemRelatedListProvider.class,
-					infoRelatedListProviderClassName);
+					RelatedInfoItemCollectionProvider.class, sb.toString());
 
-		Assert.assertNotNull(infoItemRelatedListProvider);
+		Assert.assertNotNull(relatedInfoItemCollectionProvider);
 
-		Pagination pagination = Pagination.of(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		CollectionQuery collectionQuery = new CollectionQuery();
 
-		InfoPage<? extends AssetCategory> relatedItemsInfoPage =
-			infoItemRelatedListProvider.getRelatedItemsInfoPage(
-				assetEntry, null, pagination, null);
+		collectionQuery.setRelatedItemObject(assetCategory);
+
+		InfoPage<? extends AssetEntry> relatedItemsInfoPage =
+			relatedInfoItemCollectionProvider.getCollectionInfoPage(
+				collectionQuery);
 
 		Assert.assertNotNull(relatedItemsInfoPage);
 
-		List<? extends AssetCategory> pageItems =
+		List<? extends AssetEntry> pageItems =
 			relatedItemsInfoPage.getPageItems();
 
 		Assert.assertEquals(pageItems.toString(), 2, pageItems.size());
@@ -129,9 +123,6 @@ public class AssetCategoriesForAssetEntryInfoItemRelatedListProviderTest {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

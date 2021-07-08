@@ -30,6 +30,25 @@ import org.osgi.service.component.annotations.Component;
 public class TranslationURLProviderImpl implements TranslationURLProvider {
 
 	@Override
+	public PortletURL getImportTranslationURL(
+		long groupId, long classNameId, long classPK,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				TranslationPortletKeys.TRANSLATION)
+		).setMVCRenderCommandName(
+			"/translation/import_translation"
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"classPK", classPK
+		).setParameter(
+			"groupId", groupId
+		).build();
+	}
+
+	@Override
 	public PortletURL getTranslateURL(
 		long classNameId, long classPK,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {

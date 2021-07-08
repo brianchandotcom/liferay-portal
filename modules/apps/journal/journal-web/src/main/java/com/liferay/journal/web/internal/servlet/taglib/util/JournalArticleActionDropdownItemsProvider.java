@@ -66,7 +66,6 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.translation.constants.TranslationActionKeys;
-import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 import com.liferay.trash.TrashHelper;
@@ -521,10 +520,13 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse, TranslationPortletKeys.TRANSLATION
-				).setMVCRenderCommandName(
-					"/translation/import_translation"
+				PortletURLBuilder.create(
+					_translationURLProvider.getImportTranslationURL(
+						_article.getGroupId(),
+						PortalUtil.getClassNameId(JournalArticle.class),
+						_article.getResourcePrimKey(),
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest))
 				).setRedirect(
 					_getRedirect()
 				).setPortletResource(
@@ -534,13 +536,6 @@ public class JournalArticleActionDropdownItemsProvider {
 
 						return portletDisplay.getId();
 					}
-				).setParameter(
-					"classNameId",
-					PortalUtil.getClassNameId(JournalArticle.class)
-				).setParameter(
-					"classPK", _article.getResourcePrimKey()
-				).setParameter(
-					"groupId", _article.getGroupId()
 				).build());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "import-translation"));

@@ -753,11 +753,13 @@ public class MillerColumnsDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "import-translation")
 				).put(
 					"url",
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse,
-						TranslationPortletKeys.TRANSLATION
-					).setMVCRenderCommandName(
-						"/translation/import_translation"
+					PortletURLBuilder.create(
+						_translationURLProvider.getImportTranslationURL(
+							layout.getGroupId(),
+							PortalUtil.getClassNameId(Layout.class.getName()),
+							layout.getPlid(),
+							RequestBackedPortletURLFactoryUtil.create(
+								_httpServletRequest))
 					).setRedirect(
 						PortalUtil.getCurrentURL(_httpServletRequest)
 					).setPortletResource(
@@ -767,12 +769,6 @@ public class MillerColumnsDisplayContext {
 
 							return portletDisplay.getId();
 						}
-					).setParameter(
-						"classNameId", PortalUtil.getClassNameId(Layout.class)
-					).setParameter(
-						"classPK", layout.getPlid()
-					).setParameter(
-						"groupId", layout.getGroupId()
 					).build()
 				));
 		}

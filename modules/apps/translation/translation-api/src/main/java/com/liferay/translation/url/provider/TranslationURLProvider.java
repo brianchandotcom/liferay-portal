@@ -23,6 +23,10 @@ import javax.portlet.PortletURL;
  */
 public interface TranslationURLProvider {
 
+	public PortletURL getImportTranslationURL(
+		long groupId, long classNameId, long classPK,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory);
+
 	public PortletURL getTranslateURL(
 		long classNameId, long classPK,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory);

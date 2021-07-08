@@ -412,6 +412,8 @@ definition {
 
 	@priority = "4"
 	test FactoryConfigurationAreInTheirProperScope {
+		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationAreInTheirProperScope";
+
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
 

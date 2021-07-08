@@ -18,6 +18,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.admin.web.internal.info.item.LayoutInfoItemFields;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 
@@ -44,12 +45,12 @@ public class LayoutInfoItemFieldValuesUpdater
 
 		layout.setDescriptionMap(
 			_getFieldMap(
-				"description", infoItemFieldValues,
-				layout.getDescriptionMap()));
+				LayoutInfoItemFields.descriptionInfoField.getName(),
+				infoItemFieldValues, layout.getDescriptionMap()));
 		layout.setNameMap(
-			_getFieldMap("name", infoItemFieldValues, layout.getNameMap()));
-		layout.setTitleMap(
-			_getFieldMap("title", infoItemFieldValues, layout.getTitleMap()));
+			_getFieldMap(
+				LayoutInfoItemFields.titleInfoField.getName(),
+				infoItemFieldValues, layout.getNameMap()));
 
 		return _layoutLocalService.updateLayout(layout);
 	}

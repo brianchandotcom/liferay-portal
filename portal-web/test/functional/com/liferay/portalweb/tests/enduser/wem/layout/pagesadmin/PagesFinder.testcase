@@ -401,7 +401,7 @@ definition {
 			DragAndDrop.dragAndDropReorganizeObjects(
 				locator1 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][2][contains(.,'Test Content Page')]",
 				locator2 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][1][contains(.,'Test Portlet Page')]",
-				position = "0,2");
+				position = "0,-3");
 		}
 
 		task ("Assert the order of Pages in Page Tree panel") {

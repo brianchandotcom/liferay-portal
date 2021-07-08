@@ -954,6 +954,14 @@ definition {
 		}
 	}
 
+	macro checkLanguage {
+		Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+		Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
+
+		Click(locator1 = "ContentDashboard#PANEL_INFO_VIEW");
+	}
+
 	macro clickMarginOfContentContainer {
 		var elementHeight = selenium.getElementHeight("WCEditWebContent#CONTENT_CONTAINER");
 		var offSetY = MathUtil.product("50","${elementHeight}");
@@ -1681,6 +1689,20 @@ definition {
 			key_fieldName = "FieldsGroup",
 			key_index = "${index}",
 			locator1 = "FormFields#FIELD_REMOVE");
+	}
+
+	macro saveAsDraft {
+		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+
+		Click(locator1 = "ContentDashboard#EDIT_OPTION");
+
+		CKEditor.addContentInWebContent(
+			content = "Web Content Content",
+			fieldLabel = "content");
+
+		Click(locator1 = "Button#SAVE_AS_DRAFT");
+
+		Click(locator1 = "Icon#BACK");
 	}
 
 	macro saveAsDraftViaAP {
@@ -2888,28 +2910,6 @@ definition {
 			value1 = "${webContentContent}");
 
 		SelectFrameTop();
-	}
-
-	macro saveAsDraft {
-		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
-
-		Click(locator1 = "ContentDashboard#EDIT_OPTION");
-
-		CKEditor.addContentInWebContent(
-			content = "Web Content Content",
-			fieldLabel = "content");
-
-		Click(locator1 = "Button#SAVE_AS_DRAFT");
-
-		Click(locator1 = "Icon#BACK");
-	}
-
-	macro checkLanguage {
-		Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
-		Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
-
-		Click(locator1 = "ContentDashboard#PANEL_INFO_VIEW");
 	}
 
 }

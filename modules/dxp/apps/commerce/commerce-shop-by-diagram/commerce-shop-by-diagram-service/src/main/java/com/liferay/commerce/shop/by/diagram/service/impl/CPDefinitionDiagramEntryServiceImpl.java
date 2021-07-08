@@ -14,13 +14,23 @@
 
 package com.liferay.commerce.shop.by.diagram.service.impl;
 
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.base.CPDefinitionDiagramEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -32,4 +42,102 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CPDefinitionDiagramEntryServiceImpl
 	extends CPDefinitionDiagramEntryServiceBaseImpl {
+
+	@Override
+	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
+			long userId, long cpDefinitionId, String cpInstanceUuid,
+			long cProductId, boolean diagram, int number, int quantity,
+			String sku, ServiceContext serviceContext)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionDiagramEntryLocalService.addCPDefinitionDiagramEntry(
+			userId, cpDefinitionId, cpInstanceUuid, cProductId, diagram, number,
+			quantity, sku, serviceContext);
+	}
+
+	@Override
+	public void deleteCPDefinitionDiagramEntry(long cpDefinitionDiagramEntryId)
+		throws PortalException {
+
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+			cpDefinitionDiagramEntryLocalService.getCPDefinitionDiagramEntry(
+				cpDefinitionDiagramEntryId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			cpDefinitionDiagramEntry.getCPDefinitionId(), ActionKeys.UPDATE);
+
+		cpDefinitionDiagramEntryLocalService.deleteCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntry);
+	}
+
+	@Override
+	public List<CPDefinitionDiagramEntry> getCPDefinitionDiagramEntries(
+			long cpDefinitionId, int start, int end)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionDiagramEntryLocalService.
+			getCPDefinitionDiagramEntries(cpDefinitionId, start, end);
+	}
+
+	@Override
+	public int getCPDefinitionDiagramEntriesCount(long cpDefinitionId)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionDiagramEntryLocalService.
+			getCPDefinitionDiagramEntriesCount(cpDefinitionId);
+	}
+
+	@Override
+	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionDiagramEntryId)
+		throws PortalException {
+
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+			cpDefinitionDiagramEntryLocalService.getCPDefinitionDiagramEntry(
+				cpDefinitionDiagramEntryId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			cpDefinitionDiagramEntry.getCPDefinitionId(), ActionKeys.UPDATE);
+
+		return cpDefinitionDiagramEntry;
+	}
+
+	@Override
+	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
+			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
+			long cProductId, boolean diagram, int number, int quantity,
+			String sku, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+			cpDefinitionDiagramEntryLocalService.getCPDefinitionDiagramEntry(
+				cpDefinitionDiagramEntryId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			cpDefinitionDiagramEntry.getCPDefinitionId(), ActionKeys.UPDATE);
+
+		return cpDefinitionDiagramEntryLocalService.
+			updateCPDefinitionDiagramEntry(
+				cpDefinitionDiagramEntryId, cpInstanceUuid, cProductId, diagram,
+				number, quantity, sku, serviceContext);
+	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPDefinitionDiagramEntryServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
+
 }

@@ -170,6 +170,106 @@ definition {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
+	@description = "This test asserts that a user can change the general authentication. Like user can change the authentication way to user ID and so."
+	@priority = "4"
+	test CanChangeUserGeneralAuthentication {
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By User ID");
+
+		Uncheck(
+			checkboxName = "Allow strangers to create accounts with a company email address?",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickSave();
+
+		User.logoutPG();
+
+		Navigator.openURL();
+
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		AssertElementPresent(
+			key_text = "ID",
+			locator1 = "TextInput#ANY");
+
+		SignInNavigator.gotoCreateAccount();
+
+		for (var text : list "Screen Name,First Name,Last Name,Password,Enter Again") {
+			var value1 = StringUtil.replace("${text}", " ", "");
+
+			Type(
+				key_text = "${text}",
+				locator1 = "TextInput#ANY",
+				value1 = "${value1}");
+		}
+
+		Type(
+			key_text = "Enter Again",
+			locator1 = "TextInput#ANY",
+			value1 = "Password");
+
+		Type(
+			key_text = "Email Address",
+			locator1 = "TextInput#ANY",
+			value1 = "userEmailAddress@liferay.com");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Error:The email address you requested is not valid because its domain is reserved.");
+
+		Navigator.openURL();
+
+		User.firstLoginUI(
+			authenticationMethod = "By User ID",
+			password = "test",
+			userID = "${userId}");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By Email Address");
+
+		Uncheck(
+			checkboxName = "Allow users to automatically log in?",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Uncheck(
+			checkboxName = "Allow users to request password reset links?",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Uncheck(
+			checkboxName = "Allow strangers to create accounts?",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickSave();
+
+		User.logoutPG();
+
+		Navigator.openURL();
+
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		AssertElementPresent(
+			key_text = "Email Address",
+			locator1 = "TextInput#ANY");
+
+		AssertElementNotPresent(locator1 = "Checkbox#REMEMBER_ME");
+		AssertElementNotPresent(locator1 = "Link#FORGOT_PASSWORD");
+		AssertElementNotPresent(locator1 = "Link#CREATE_ACCOUNT");
+	}
+
 	@description = "This test specify the Terms of Use content by web content posted in a new site and assert the Terms of Use content updated when a new user login."
 	@priority = "3"
 	test CanSpecifyTheTermsofUseWebContent {

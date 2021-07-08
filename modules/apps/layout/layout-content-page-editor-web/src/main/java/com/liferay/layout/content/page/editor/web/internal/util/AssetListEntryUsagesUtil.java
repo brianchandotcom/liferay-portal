@@ -469,10 +469,19 @@ public class AssetListEntryUsagesUtil {
 						assetListEntryUsage.getKey());
 
 				if (infoItemRelatedListProvider != null) {
+					Class<?> relatedItemClass =
+						infoItemRelatedListProvider.getRelatedItemClass();
+
 					mappedContentJSONObject.put(
+						"subtype",
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							relatedItemClass.getName())
+					).put(
 						"title",
 						infoItemRelatedListProvider.getLabel(
-							themeDisplay.getLocale()));
+							themeDisplay.getLocale())
+					);
 				}
 			}
 		}

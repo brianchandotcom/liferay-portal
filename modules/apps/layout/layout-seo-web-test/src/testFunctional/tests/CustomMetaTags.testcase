@@ -25,23 +25,20 @@ definition {
 
 	@description = "This ensures that the custom meta tag can be added with escape characters."
 	@priority = "3"
-	@refactorneeded
-	test AddTagWithEscapeCharacters {
+	@refactordone
+	test CanAddTagWithEscapeCharacters {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "&amp; content",
 			customProperty = "&amp; property");
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -50,17 +47,14 @@ definition {
 
 	@description = "This ensures that the custom meta tag can be cleared."
 	@priority = "5"
-	@refactorneeded
-	test ClearCustomTag {
+	@refactordone
+	test CanClearCustomTag {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -72,9 +66,7 @@ definition {
 			newCustomContent = "",
 			newCustomProperty = "");
 
-		Alert.viewSuccessMessage();
-
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -83,17 +75,14 @@ definition {
 
 	@description = "This ensures that the custom meta tag can be edited."
 	@priority = "5"
-	@refactorneeded
-	test EditTag {
+	@refactordone
+	test CanEditTag {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -105,7 +94,9 @@ definition {
 			newCustomContent = "custom meta content edit",
 			newCustomProperty = "custom meta property edit");
 
-		User.logoutPG();
+		Alert.viewSuccessMessage();
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -114,17 +105,14 @@ definition {
 
 	@description = "This ensures that users can add multiple translated custom meta tags."
 	@priority = "5"
-	@refactorneeded
-	test ViewMultipleTranslatedTags {
+	@refactordone
+	test CanViewMultipleTranslatedTags {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom Tag 1 content",
@@ -140,7 +128,7 @@ definition {
 
 		CustomMetaTags.removeTag(tagNum = "2");
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
 
@@ -151,23 +139,20 @@ definition {
 
 	@description = "This test covers LPS-125971. It ensures that the custom meta tag can be viewed in the HTML after editing and republishing the page."
 	@priority = "4"
-	@refactorneeded
-	test ViewTagAfterEditingPage {
+	@refactordone
+	test CanViewTagAfterEditingPage {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
 			customProperty = "custom meta property");
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -177,17 +162,13 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
 		PortletEntry.save();
 
-		Alert.viewSuccessMessage();
-
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -196,17 +177,14 @@ definition {
 
 	@description = "This ensures that the custom meta tag can not be generated without property or content."
 	@priority = "5"
-	@refactorneeded
-	test ViewTagWithoutPropertyOrContent {
+	@refactordone
+	test CanViewTagWithoutPropertyOrContent {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -218,9 +196,7 @@ definition {
 			newCustomContent = "custom meta content edit",
 			newCustomProperty = "");
 
-		Alert.viewSuccessMessage();
-
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -230,13 +206,10 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.editTag(
 			customContent = "custom meta content edit",
@@ -244,9 +217,7 @@ definition {
 			newCustomContent = "",
 			newCustomProperty = "custom meta property edit");
 
-		Alert.viewSuccessMessage();
-
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -255,17 +226,14 @@ definition {
 
 	@description = "This ensures that the translated tag inherits the default property and content."
 	@priority = "4"
-	@refactorneeded
-	test ViewTranslatedTagWithDefaultValue {
+	@refactordone
+	test CanViewTranslatedTagWithDefaultValue {
 		var portalURL = PropsUtil.get("portal.url");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+		CustomMetaTags.openToCustomMetaTags(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			siteURLKey = "test-site-name");
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",
@@ -273,13 +241,9 @@ definition {
 
 		CustomMetaTags.changeLocale(locale = "ca-ES");
 
-		AssertElementPresent(locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY_DISABLED");
+		CustomMetaTags.viewDisabledProperty(customContent = "custom meta content");
 
-		AssertElementPresent(
-			key_customContent = "custom meta content",
-			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT_EDITOR");
-
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
 

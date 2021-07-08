@@ -27,6 +27,12 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectField"
                     type: array
+                status:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+                system:
+                    readOnly: true
+                    type: boolean
             type: object
         ObjectField:
             properties:
@@ -52,6 +58,19 @@ components:
                     type: string
                 type:
                     type: string
+        Status:
+            properties:
+                code:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    example: black
+                    type: string
+                label_i18n:
+                    example: black
+                    type: string
+            type: object
 info:
     license:
         name: "Apache 2.0"

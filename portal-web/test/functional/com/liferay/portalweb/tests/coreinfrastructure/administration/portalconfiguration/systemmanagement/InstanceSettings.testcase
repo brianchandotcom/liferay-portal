@@ -816,6 +816,8 @@ definition {
 	@description = "This is a use case for LPS-97907."
 	@priority = "5"
 	test ViewSystemSettingsSavedByKeyboard {
+		property test.name.skip.portal.instance = "InstanceSettings#ViewSystemSettingsSavedByKeyboard";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

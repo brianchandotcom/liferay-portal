@@ -13,34 +13,45 @@
  */
 
 import {useFormState} from 'data-engine-js-components-web';
+import {getFields} from 'data-engine-js-components-web/js/utils/fields.es';
+import {
+	getObjectFieldName,
+	getSelectedValue,
+} from 'data-engine-js-components-web/js/utils/objectFields';
 import React, {useMemo} from 'react';
 
 import Select from '../Select/Select.es';
 
-const getSelectedValue = (value) => {
-	return typeof value === 'string' && value !== ''
-		? JSON.parse(value)
-		: value;
-};
-
 const ObjectField = ({
 	label,
+	objectFields,
 	onChange,
 	readOnly,
 	spritemap,
 	value = {},
 	visible,
 }) => {
-	const {objectFields} = useFormState();
-	const selectedValue = getSelectedValue(value);
+	const {builderPages} = useFormState();
 
 	const options = useMemo(() => {
-		return objectFields.map(({name}) => ({label: name, value: name}));
-	}, [objectFields]);
+		const mappedOptions = getFields(builderPages)
+			.map(({settingsContext}) => {
+				const objectFieldName = getObjectFieldName(settingsContext);
 
-	if (!objectFields.length) {
-		return null;
-	}
+				return (
+					objectFieldName && getSelectedValue(objectFieldName.value)
+				);
+			})
+			.filter(Boolean);
+
+		return objectFields.map(({name}) => {
+			return {
+				disabled: !!mappedOptions.includes(name),
+				label: name,
+				value: name,
+			};
+		});
+	}, [builderPages, objectFields]);
 
 	return (
 		<Select
@@ -51,10 +62,20 @@ const ObjectField = ({
 			placeholder={Liferay.Language.get('choose-an-option')}
 			readOnly={readOnly}
 			spritemap={spritemap}
-			value={selectedValue}
+			value={getSelectedValue(value)}
 			visible={visible}
 		/>
 	);
 };
 
-export default ObjectField;
+const ObjectFieldWrapper = (props) => {
+	const {objectFields} = useFormState();
+
+	if (!objectFields.length) {
+		return null;
+	}
+
+	return <ObjectField objectFields={objectFields} {...props} />;
+};
+
+export default ObjectFieldWrapper;

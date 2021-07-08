@@ -107,6 +107,18 @@ public interface BlogPostingResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public BlogPosting getSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public BlogPosting putSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode, BlogPosting blogPosting)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteBlogPostingPermissionsPage(Long siteId, String roleNames)
 		throws Exception;

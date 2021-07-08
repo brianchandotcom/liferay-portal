@@ -9426,6 +9426,7 @@ paths:
             # @review
             description:
                 Deletes the blog post by external reference code.
+            operationId: deleteSiteBlogPostingByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -9450,6 +9451,7 @@ paths:
             # @review
             description:
                 Retrieves the site's blog post by external reference code.
+            operationId: getSiteBlogPostingByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -9478,6 +9480,7 @@ paths:
             # @review
             description:
                 Updates the site's blog post with the given external reference code, or creates it if it not exists.
+            operationId: putSiteBlogPostingByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

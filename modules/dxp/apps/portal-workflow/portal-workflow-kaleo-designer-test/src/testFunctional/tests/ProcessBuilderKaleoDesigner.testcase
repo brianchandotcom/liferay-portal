@@ -116,12 +116,22 @@ definition {
 	}
 
 	@description = "Verify that user can Save workflow as Draft"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSaveAsDraft {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68470 CanSaveAsDraft pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		Workflow.saveDefinition();
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
+
+		ProcessBuilderKaleoDesigner.viewWorkflowStatus(
+			workflowDefinitionTitle = "New Workflow Title",
+			workflowStatus = "Not Published");
 	}
 
 	@description = "Verify that the user can select each node in Diagram"

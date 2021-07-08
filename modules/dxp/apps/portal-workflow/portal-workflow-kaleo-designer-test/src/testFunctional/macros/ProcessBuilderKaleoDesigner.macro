@@ -1,0 +1,13 @@
+definition {
+
+	macro viewWorkflowStatus {
+		AssertElementPresent(
+			key_workflowStatus = "${workflowStatus}",
+			locator1 = "ProcessBuilderKaleoDesigner#WORKFLOW_STATUS");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "${workflowDefinitionTitle}");
+	}
+
+}

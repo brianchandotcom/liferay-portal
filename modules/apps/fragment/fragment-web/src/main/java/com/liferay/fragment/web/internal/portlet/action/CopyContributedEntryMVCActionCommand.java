@@ -17,11 +17,14 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,40 +94,24 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "fragmentCollectionId");
 
 				for (String contributedEntryKey : contributedEntryKeys) {
+					FragmentComposition fragmentComposition =
+						_fragmentCollectionContributorTracker.
+							getFragmentComposition(contributedEntryKey);
+
 					FragmentEntry fragmentEntry =
 						_fragmentCollectionContributorTracker.getFragmentEntry(
 							contributedEntryKey);
 
-					StringBundler sb = new StringBundler(5);
-
-					sb.append(fragmentEntry.getName());
-					sb.append(StringPool.SPACE);
-					sb.append(StringPool.OPEN_PARENTHESIS);
-					sb.append(
-						LanguageUtil.get(
-							LocaleUtil.getMostRelevantLocale(), "copy"));
-					sb.append(StringPool.CLOSE_PARENTHESIS);
-
-					long previewFileEntryId = 0;
-
-					String imagePreviewURL = fragmentEntry.getImagePreviewURL(
-						themeDisplay);
-
-					if (Validator.isNotNull(imagePreviewURL)) {
-						previewFileEntryId = _getPreviewFileEntryId(
-							themeDisplay.getUserId(),
-							themeDisplay.getScopeGroupId(),
-							fragmentCollectionId,
-							themeDisplay.getPortalURL() + imagePreviewURL);
+					if (fragmentComposition != null) {
+						_addFragmentComposition(
+							fragmentCollectionId, fragmentComposition,
+							serviceContext, themeDisplay);
 					}
-
-					_fragmentEntryService.addFragmentEntry(
-						themeDisplay.getScopeGroupId(), fragmentCollectionId,
-						StringPool.BLANK, sb.toString(), fragmentEntry.getCss(),
-						fragmentEntry.getHtml(), fragmentEntry.getJs(),
-						fragmentEntry.getConfiguration(), previewFileEntryId,
-						fragmentEntry.getType(),
-						WorkflowConstants.STATUS_APPROVED, serviceContext);
+					else if (fragmentEntry != null) {
+						_addFragmentEntry(
+							fragmentCollectionId, fragmentEntry, serviceContext,
+							themeDisplay);
+					}
 				}
 
 				return fragmentCollectionId;
@@ -132,6 +119,71 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 		).build();
 
 		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
+	}
+
+	private void _addFragmentComposition(
+			long fragmentCollectionId, FragmentComposition fragmentComposition,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(fragmentComposition.getName());
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		long previewFileEntryId = 0;
+
+		String imagePreviewURL = fragmentComposition.getImagePreviewURL(
+			themeDisplay);
+
+		if (Validator.isNotNull(imagePreviewURL)) {
+			previewFileEntryId = _getPreviewFileEntryId(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				fragmentCollectionId,
+				themeDisplay.getPortalURL() + imagePreviewURL);
+		}
+
+		_fragmentCompositionService.addFragmentComposition(
+			themeDisplay.getScopeGroupId(), fragmentCollectionId,
+			StringPool.BLANK, sb.toString(), null,
+			fragmentComposition.getData(), previewFileEntryId,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private void _addFragmentEntry(
+			long fragmentCollectionId, FragmentEntry fragmentEntry,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(fragmentEntry.getName());
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "copy"));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		long previewFileEntryId = 0;
+
+		String imagePreviewURL = fragmentEntry.getImagePreviewURL(themeDisplay);
+
+		if (Validator.isNotNull(imagePreviewURL)) {
+			previewFileEntryId = _getPreviewFileEntryId(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				fragmentCollectionId,
+				themeDisplay.getPortalURL() + imagePreviewURL);
+		}
+
+		_fragmentEntryService.addFragmentEntry(
+			themeDisplay.getScopeGroupId(), fragmentCollectionId,
+			StringPool.BLANK, sb.toString(), fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(),
+			fragmentEntry.getConfiguration(), previewFileEntryId,
+			fragmentEntry.getType(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	private long _getPreviewFileEntryId(
@@ -186,6 +238,9 @@ public class CopyContributedEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentCompositionService _fragmentCompositionService;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

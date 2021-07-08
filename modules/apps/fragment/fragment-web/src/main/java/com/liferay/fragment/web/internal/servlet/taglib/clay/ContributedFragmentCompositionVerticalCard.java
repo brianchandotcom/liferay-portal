@@ -16,11 +16,17 @@ package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.fragment.web.internal.servlet.taglib.util.ContributedFragmentCompositionActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -43,6 +49,26 @@ public class ContributedFragmentCompositionVerticalCard
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		ContributedFragmentCompositionActionDropdownItemsProvider
+			contributedFragmentEntryActionDropdownItemsProvider =
+				new ContributedFragmentCompositionActionDropdownItemsProvider(
+					_fragmentComposition, _renderRequest, _renderResponse);
+
+		try {
+			return contributedFragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -74,6 +100,9 @@ public class ContributedFragmentCompositionVerticalCard
 	public String getTitle() {
 		return _fragmentComposition.getName();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContributedFragmentCompositionVerticalCard.class);
 
 	private final FragmentComposition _fragmentComposition;
 	private final RenderRequest _renderRequest;

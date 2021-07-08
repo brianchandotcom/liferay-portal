@@ -32,19 +32,16 @@ const ErrorAlert = () => {
 
 	const {data, error} = useContext(StoreStateContext);
 
-	const {configureGooglePageSpeedURL, privateLayout} = data;
-	const {code: statusCode, status} = error;
-
 	const apiKeyError =
-		statusCode === GPS_API_KEY_ERROR_CODE &&
-		status === GPS_API_KEY_INVALID_STATUS;
+		error?.code === GPS_API_KEY_ERROR_CODE &&
+		error?.status === GPS_API_KEY_INVALID_STATUS;
 
-	const serverError = statusCode === GPS_SERVER_ERROR_CODE;
-	const pageCanNotBeAudited = serverError || privateLayout;
+	const serverError = error?.code === GPS_SERVER_ERROR_CODE;
+	const pageCanNotBeAudited = serverError || data?.privateLayout;
 
 	const unknownError = !apiKeyError && !pageCanNotBeAudited;
 
-	const userHasNotPrivileges = !configureGooglePageSpeedURL;
+	const userHasNotPrivileges = !data?.configureGooglePageSpeedURL;
 
 	const title = apiKeyError
 		? Liferay.Language.get('invalid-api-key')
@@ -87,11 +84,11 @@ const ErrorAlert = () => {
 				)}
 			</p>
 			{showErrorInfo && <ErrorAlertExtendedInfo error={error} />}
-			{apiKeyError && configureGooglePageSpeedURL && (
+			{apiKeyError && data?.configureGooglePageSpeedURL && (
 				<ClayAlert.Footer>
 					<ClayLink
 						className="alert-btn btn btn-outline-danger"
-						href={configureGooglePageSpeedURL}
+						href={data?.configureGooglePageSpeedURL}
 					>
 						{Liferay.Language.get('set-api-key')}
 					</ClayLink>

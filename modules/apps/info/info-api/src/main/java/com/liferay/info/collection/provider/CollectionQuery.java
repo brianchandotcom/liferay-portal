@@ -38,6 +38,10 @@ public class CollectionQuery {
 		return _pagination;
 	}
 
+	public Optional<Object> getRelatedItemObjectOptional() {
+		return Optional.ofNullable(_relatedItemObject);
+	}
+
 	public Optional<Sort> getSortOptional() {
 		return Optional.ofNullable(_sort);
 	}
@@ -50,12 +54,17 @@ public class CollectionQuery {
 		_pagination = pagination;
 	}
 
+	public void setRelatedItemObject(Object relatedItemObject) {
+		_relatedItemObject = relatedItemObject;
+	}
+
 	public void setSort(Sort sort) {
 		_sort = sort;
 	}
 
 	private InfoFilter _infoFilter;
 	private Pagination _pagination;
+	private Object _relatedItemObject;
 	private Sort _sort;
 
 }

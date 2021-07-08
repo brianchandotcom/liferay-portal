@@ -40,6 +40,7 @@ export default function ProcessVersionFilter({
 }) {
 	options = {
 		requestUrl: `/processes/${processId}/process-versions?page=0&pageSize=0`,
+		withAllVersions: false,
 		withSelectionTitle: false,
 		withoutRouteParams: false,
 		...options,
@@ -50,7 +51,7 @@ export default function ProcessVersionFilter({
 		formatItem,
 		prefixKey,
 		propertyKey: 'name',
-		staticItems: [allVersionsItem],
+		staticItems: options.withAllVersions ? [allVersionsItem] : [],
 		...options,
 	});
 

@@ -38,6 +38,7 @@ function Header({disableFilters, prefixKey, processId}) {
 						options={{
 							hideControl: true,
 							multiple: false,
+							withAllVersions: true,
 							withSelectionTitle: true,
 						}}
 						prefixKey={prefixKey}
@@ -57,7 +58,7 @@ function Header({disableFilters, prefixKey, processId}) {
 
 function PerformanceByStepCard({routeParams}) {
 	const {processId} = routeParams;
-	const filterKeys = ['timeRange', 'processVersion'];
+	const filterKeys = ['processVersion', 'timeRange'];
 	const prefixKey = 'step';
 	const prefixKeys = [prefixKey];
 
@@ -74,7 +75,7 @@ function PerformanceByStepCard({routeParams}) {
 		prefixKeys,
 	});
 
-	const processVersion = version !== 'allVersions' ? version : undefined;
+	const processVersion = version !== 'allVersions' ? [version] : undefined;
 	const timeRange = useMemo(
 		() => getTimeRangeParams(stepDateStart, stepDateEnd),
 		[stepDateEnd, stepDateStart]

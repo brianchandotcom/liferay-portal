@@ -48,6 +48,10 @@ public interface GraphQLDTOContributor<D, R> {
 
 	public String getIdName();
 
+	public default String getNamespace() {
+		return "";
+	}
+
 	public String getResourceName();
 
 	public R updateDTO(D dto, DTOConverterContext dtoConverterContext, long id)

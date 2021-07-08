@@ -34,10 +34,12 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -650,6 +652,39 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
+		if (_isShowImportTranslationAction(layout)) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "importTranslation"
+				).put(
+					"label",
+					LanguageUtil.get(_httpServletRequest, "import-translation")
+				).put(
+					"url",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse,
+						TranslationPortletKeys.TRANSLATION
+					).setMVCRenderCommandName(
+						"/translation/import_translation"
+					).setRedirect(
+						PortalUtil.getCurrentURL(_httpServletRequest)
+					).setPortletResource(
+						() -> {
+							PortletDisplay portletDisplay =
+								_themeDisplay.getPortletDisplay();
+
+							return portletDisplay.getId();
+						}
+					).setParameter(
+						"classNameId", PortalUtil.getClassNameId(Layout.class)
+					).setParameter(
+						"classPK", layout.getPlid()
+					).setParameter(
+						"groupId", layout.getGroupId()
+					).build()
+				));
+		}
+
 		if (_isShowTranslateAction()) {
 			jsonArray.put(
 				JSONUtil.put(
@@ -933,6 +968,24 @@ public class MillerColumnsDisplayContext {
 		}
 
 		return false;
+	}
+
+	private boolean _isShowImportTranslationAction(Layout layout) {
+		try {
+			if (_ffLayoutTranslationConfiguration.enabled() &&
+				!_isSingleLanguageSite() &&
+				LayoutPermissionUtil.contains(
+					_themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.UPDATE)) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+			return false;
+		}
 	}
 
 	private boolean _isShowTranslateAction() {

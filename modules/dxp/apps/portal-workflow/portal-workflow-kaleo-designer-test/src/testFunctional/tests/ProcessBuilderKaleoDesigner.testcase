@@ -72,12 +72,27 @@ definition {
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateTransition {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68456 CanMovCanCreateTransitioneNode pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Task Node Description",
+			nodeName = "Task",
+			nodeNodeLabel = "Task",
+			nodeType = "task");
+
+		KaleoDesigner.addConnectorViaViewTab(
+			connectorName = "transition",
+			nodeType = "start",
+			nodeTypeDestination = "task");
+
+		KaleoDesigner.viewConnectorPresent(connectorLabel = "transition");
 	}
 
 	@description = "Verify that user can delete selected Node"

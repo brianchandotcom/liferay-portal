@@ -306,6 +306,19 @@ definition {
 			value1 = "Propagation is enabled. Connected sites will be updated once a site page is visited.");
 	}
 
+	macro getPageModificationDate {
+		Variables.assertDefined(parameterList = "${groupName},${pageNameFilter}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "true");
+
+		var mysqlStatement = "select modifiedDate from layout where name like '${pageNameFilter}' and groupId = '${groupId}' and hidden_ = 0;";
+
+		var sqlResults = SQL.executeMySQLStatement(
+			mysqlStatement = "${mysqlStatement}");
+
+		echo("## * Modification Date is: ${sqlResults}");
+	}
+
 	macro getSiteTemplateID {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage",

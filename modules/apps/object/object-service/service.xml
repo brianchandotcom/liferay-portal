@@ -26,6 +26,7 @@
 		<column method-name="PKObjectFieldName" name="pkObjectFieldName" type="String" />
 		<column name="system" type="boolean" />
 		<column name="version" type="int" />
+		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 

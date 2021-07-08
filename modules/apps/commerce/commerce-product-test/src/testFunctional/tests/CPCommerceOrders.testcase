@@ -306,7 +306,9 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Submit");
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
 
 		Pause(locator1 = "3000");
 

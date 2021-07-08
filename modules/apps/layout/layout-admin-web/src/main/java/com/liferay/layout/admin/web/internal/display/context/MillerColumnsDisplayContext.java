@@ -729,7 +729,7 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
-		if (_ffLayoutTranslationConfiguration.enabled()) {
+		if (_isShowExportTranslationAction()) {
 			jsonArray.put(
 				JSONUtil.put(
 					"id", "exportTranslation"
@@ -961,6 +961,16 @@ public class MillerColumnsDisplayContext {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isShowExportTranslationAction() {
+		if (_ffLayoutTranslationConfiguration.enabled() &&
+			!_isSingleLanguageSite()) {
+
+			return true;
 		}
 
 		return false;

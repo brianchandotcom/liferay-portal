@@ -365,6 +365,8 @@ public class DDMFormTemplateContextFactoryTest {
 		_assertValidations(
 			actualValidationsMap, "date",
 			HashMapBuilder.put(
+				"dateRange", "dateRange({name}, \"{parameter}\")"
+			).put(
 				"futureDates", "futureDates({name}, \"{parameter}\")"
 			).put(
 				"pastDates", "pastDates({name}, \"{parameter}\")"

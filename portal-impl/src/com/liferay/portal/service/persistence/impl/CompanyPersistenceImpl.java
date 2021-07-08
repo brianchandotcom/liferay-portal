@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1281,22 +1283,28 @@ public class CompanyPersistenceImpl
 	@Override
 	public void cacheResult(List<Company> companies) {
 		for (Company company : companies) {
-			Company cachedCompany = (Company)EntityCacheUtil.getResult(
-				CompanyImpl.class, company.getPrimaryKey());
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(
+						company.getPrimaryKey())) {
 
-			if (cachedCompany == null) {
-				cacheResult(company);
-			}
-			else {
-				CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
-				CompanyModelImpl cachedCompanyModelImpl =
-					(CompanyModelImpl)cachedCompany;
+				Company cachedCompany = (Company)EntityCacheUtil.getResult(
+					CompanyImpl.class, company.getPrimaryKey());
 
-				companyModelImpl.setCompanySecurityBag(
-					cachedCompanyModelImpl.getCompanySecurityBag());
+				if (cachedCompany == null) {
+					cacheResult(company);
+				}
+				else {
+					CompanyModelImpl companyModelImpl =
+						(CompanyModelImpl)company;
+					CompanyModelImpl cachedCompanyModelImpl =
+						(CompanyModelImpl)cachedCompany;
 
-				companyModelImpl.setVirtualHostname(
-					cachedCompanyModelImpl.getVirtualHostname());
+					companyModelImpl.setCompanySecurityBag(
+						cachedCompanyModelImpl.getCompanySecurityBag());
+
+					companyModelImpl.setVirtualHostname(
+						cachedCompanyModelImpl.getVirtualHostname());
+				}
 			}
 		}
 	}

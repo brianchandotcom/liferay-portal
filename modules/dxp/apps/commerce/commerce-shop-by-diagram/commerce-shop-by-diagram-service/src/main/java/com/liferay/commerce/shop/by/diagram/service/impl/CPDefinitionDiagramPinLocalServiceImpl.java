@@ -14,13 +14,19 @@
 
 package com.liferay.commerce.shop.by.diagram.service.impl;
 
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.base.CPDefinitionDiagramPinLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -29,4 +35,66 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CPDefinitionDiagramPinLocalServiceImpl
 	extends CPDefinitionDiagramPinLocalServiceBaseImpl {
+
+	@Override
+	public CPDefinitionDiagramPin addCPDefinitionDiagramPin(
+			long userId, long cpDefinitionId, int number, double positionX,
+			double positionY)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long cpDefinitionDiagramPinId = counterLocalService.increment();
+
+		CPDefinitionDiagramPin cpDefinitionDiagramPin =
+			cpDefinitionDiagramPinPersistence.create(cpDefinitionDiagramPinId);
+
+		cpDefinitionDiagramPin.setCompanyId(user.getCompanyId());
+		cpDefinitionDiagramPin.setUserId(user.getUserId());
+		cpDefinitionDiagramPin.setUserName(user.getFullName());
+		cpDefinitionDiagramPin.setCPDefinitionId(cpDefinitionId);
+		cpDefinitionDiagramPin.setNumber(number);
+		cpDefinitionDiagramPin.setPositionX(positionX);
+		cpDefinitionDiagramPin.setPositionY(positionY);
+
+		return cpDefinitionDiagramPinPersistence.update(cpDefinitionDiagramPin);
+	}
+
+	@Override
+	public void deleteCPDefinitionDiagramPins(long cpDefinitionId) {
+		cpDefinitionDiagramPinPersistence.removeByCPDefinitionId(
+			cpDefinitionId);
+	}
+
+	@Override
+	public List<CPDefinitionDiagramPin> getCPDefinitionDiagramPins(
+		long cpDefinitionId, int start, int end) {
+
+		return cpDefinitionDiagramPinPersistence.findByCPDefinitionId(
+			cpDefinitionId, start, end);
+	}
+
+	@Override
+	public int getCPDefinitionDiagramPinsCount(long cpDefinitionId) {
+		return cpDefinitionDiagramPinPersistence.countByCPDefinitionId(
+			cpDefinitionId);
+	}
+
+	@Override
+	public CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
+			long cpDefinitionDiagramPinId, int number, double positionX,
+			double positionY)
+		throws PortalException {
+
+		CPDefinitionDiagramPin cpDefinitionDiagramPin =
+			cpDefinitionDiagramPinLocalService.getCPDefinitionDiagramPin(
+				cpDefinitionDiagramPinId);
+
+		cpDefinitionDiagramPin.setNumber(number);
+		cpDefinitionDiagramPin.setPositionX(positionX);
+		cpDefinitionDiagramPin.setPositionY(positionY);
+
+		return cpDefinitionDiagramPinPersistence.update(cpDefinitionDiagramPin);
+	}
+
 }

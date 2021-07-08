@@ -212,12 +212,20 @@ definition {
 	}
 
 	@description = "Verify that If user selects node, cross on top right appear"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DisplaysCrossOnTopRight {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68452 DisplaysCrossOnTopRight pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		AssertElementPresent.assertVisible(
+			key_nodeNodeLabel = "StartNode",
+			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DELETE_ICON");
 	}
 
 	@description = "Verify that a pop up message is displayed when deleting Node"

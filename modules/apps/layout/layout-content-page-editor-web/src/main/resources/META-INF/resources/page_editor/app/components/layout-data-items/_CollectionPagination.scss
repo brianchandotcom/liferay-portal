@@ -1,24 +1,4 @@
 .page-editor__collection__pagination {
-	height: 64px;
-	padding: 15px 0;
-	position: relative;
-	text-align: center;
-
-	& &--simple {
-		display: flex;
-		height: 100%;
-		justify-content: space-between;
-		margin: auto;
-		width: 130px;
-
-		.btn {
-			color: $gray-600;
-			font-size: 0.875rem;
-			font-weight: 600;
-			width: 40px;
-		}
-	}
-
 	&__overlay:after {
 		content: '';
 		height: 100%;
@@ -26,10 +6,5 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-	}
-
-	.pagination-results,
-	.pagination.pagination-root {
-		margin-bottom: 0;
 	}
 }

@@ -49,14 +49,19 @@ export default function CollectionPagination({
 
 	return (
 		<div
-			className={classNames('page-editor__collection__pagination', {
-				'page-editor__collection__pagination__overlay': !isActive(
-					collectionId
-				),
-			})}
+			className={classNames(
+				'page-editor__collection__pagination d-flex',
+				{
+					'page-editor__collection__pagination__overlay': !isActive(
+						collectionId
+					),
+					'pt-3 pb-2': paginationType === 'regular',
+					'py-3': paginationType === 'simple',
+				}
+			)}
 		>
 			{paginationType === 'regular' ? (
-				<ClayPaginationBar>
+				<ClayPaginationBar className="flex-grow-1">
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
@@ -73,8 +78,9 @@ export default function CollectionPagination({
 					/>
 				</ClayPaginationBar>
 			) : (
-				<div className="page-editor__collection__pagination--simple">
+				<div className="d-flex flex-grow-1 h-100 justify-content-center">
 					<ClayButton
+						className="font-weight-semi-bold mr-3 text-secondary"
 						disabled={activePage === 1}
 						displayType="unstyled"
 					>
@@ -87,6 +93,7 @@ export default function CollectionPagination({
 						</span>
 					</ClayButton>
 					<ClayButton
+						className="font-weight-semi-bold ml-3 text-secondary"
 						disabled={activePage === totalPages}
 						displayType="unstyled"
 					>

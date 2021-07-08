@@ -134,9 +134,19 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		for (Long assetPrimaryKey : assetPrimaryKeys) {
-			booleanFilter.addTerm(Field.CLASS_PK, assetPrimaryKey);
-		}
+		TermsFilter assetPrimaryKeyTermsFilter = new TermsFilter(
+			Field.CLASS_PK);
+
+		assetPrimaryKeyTermsFilter.addValues(
+			Stream.of(
+				assetPrimaryKeys
+			).map(
+				String::valueOf
+			).toArray(
+				String[]::new
+			));
+
+		booleanFilter.add(assetPrimaryKeyTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendAssetTitleTerm(

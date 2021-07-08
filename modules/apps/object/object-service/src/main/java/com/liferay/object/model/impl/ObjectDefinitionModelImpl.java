@@ -82,7 +82,7 @@ public class ObjectDefinitionModelImpl
 		{"dbTableName", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"pkObjectFieldDBColumnName", Types.VARCHAR},
 		{"pkObjectFieldName", Types.VARCHAR}, {"system_", Types.BOOLEAN},
-		{"version", Types.INTEGER}
+		{"status", Types.INTEGER}, {"version", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -102,11 +102,12 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("pkObjectFieldDBColumnName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pkObjectFieldName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,name VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,system_ BOOLEAN,version INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,name VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,system_ BOOLEAN,status INTEGER,version INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -138,13 +139,19 @@ public class ObjectDefinitionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SYSTEM_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long SYSTEM_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -189,6 +196,7 @@ public class ObjectDefinitionModelImpl
 			soapModel.getPKObjectFieldDBColumnName());
 		model.setPKObjectFieldName(soapModel.getPKObjectFieldName());
 		model.setSystem(soapModel.isSystem());
+		model.setStatus(soapModel.getStatus());
 		model.setVersion(soapModel.getVersion());
 
 		return model;
@@ -414,6 +422,10 @@ public class ObjectDefinitionModelImpl
 		attributeSetterBiConsumers.put(
 			"system",
 			(BiConsumer<ObjectDefinition, Boolean>)ObjectDefinition::setSystem);
+		attributeGetterFunctions.put("status", ObjectDefinition::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<ObjectDefinition, Integer>)ObjectDefinition::setStatus);
 		attributeGetterFunctions.put("version", ObjectDefinition::getVersion);
 		attributeSetterBiConsumers.put(
 			"version",
@@ -719,6 +731,31 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalStatus() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
+	}
+
+	@JSON
+	@Override
 	public int getVersion() {
 		return _version;
 	}
@@ -808,6 +845,7 @@ public class ObjectDefinitionModelImpl
 			getPKObjectFieldDBColumnName());
 		objectDefinitionImpl.setPKObjectFieldName(getPKObjectFieldName());
 		objectDefinitionImpl.setSystem(isSystem());
+		objectDefinitionImpl.setStatus(getStatus());
 		objectDefinitionImpl.setVersion(getVersion());
 
 		objectDefinitionImpl.resetOriginalValues();
@@ -967,6 +1005,8 @@ public class ObjectDefinitionModelImpl
 
 		objectDefinitionCacheModel.system = isSystem();
 
+		objectDefinitionCacheModel.status = getStatus();
+
 		objectDefinitionCacheModel.version = getVersion();
 
 		return objectDefinitionCacheModel;
@@ -1056,6 +1096,7 @@ public class ObjectDefinitionModelImpl
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;
 	private boolean _system;
+	private int _status;
 	private int _version;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1101,6 +1142,7 @@ public class ObjectDefinitionModelImpl
 			"pkObjectFieldDBColumnName", _pkObjectFieldDBColumnName);
 		_columnOriginalValues.put("pkObjectFieldName", _pkObjectFieldName);
 		_columnOriginalValues.put("system_", _system);
+		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("version", _version);
 	}
 
@@ -1152,7 +1194,9 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("system_", 4096L);
 
-		columnBitmasks.put("version", 8192L);
+		columnBitmasks.put("status", 8192L);
+
+		columnBitmasks.put("version", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

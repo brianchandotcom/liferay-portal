@@ -286,6 +286,12 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getCustomObjectDefinitions();
 	}
 
+	public static List<ObjectDefinition> getCustomObjectDefinitionsByStatus(
+		int status) {
+
+		return getService().getCustomObjectDefinitionsByStatus(status);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -382,6 +388,13 @@ public class ObjectDefinitionLocalServiceUtil {
 
 	public static List<ObjectDefinition> getSystemObjectDefinitions() {
 		return getService().getSystemObjectDefinitions();
+	}
+
+	public static ObjectDefinition publishObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().publishObjectDefinition(userId, objectDefinitionId);
 	}
 
 	public static void undeployObjectDefinition(

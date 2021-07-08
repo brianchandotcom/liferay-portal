@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,6 +106,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(pkObjectFieldName);
 		sb.append(", system=");
 		sb.append(system);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append("}");
@@ -181,6 +183,7 @@ public class ObjectDefinitionCacheModel
 		}
 
 		objectDefinitionImpl.setSystem(system);
+		objectDefinitionImpl.setStatus(status);
 		objectDefinitionImpl.setVersion(version);
 
 		objectDefinitionImpl.resetOriginalValues();
@@ -207,6 +210,8 @@ public class ObjectDefinitionCacheModel
 		pkObjectFieldName = objectInput.readUTF();
 
 		system = objectInput.readBoolean();
+
+		status = objectInput.readInt();
 
 		version = objectInput.readInt();
 	}
@@ -268,6 +273,8 @@ public class ObjectDefinitionCacheModel
 
 		objectOutput.writeBoolean(system);
 
+		objectOutput.writeInt(status);
+
 		objectOutput.writeInt(version);
 	}
 
@@ -284,6 +291,7 @@ public class ObjectDefinitionCacheModel
 	public String pkObjectFieldDBColumnName;
 	public String pkObjectFieldName;
 	public boolean system;
+	public int status;
 	public int version;
 
 }

@@ -23,6 +23,10 @@ import {
 	useFormState,
 } from 'data-engine-js-components-web';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
+import {
+	addObjectFields,
+	updateObjectFields,
+} from 'data-engine-js-components-web/js/utils/objectFields';
 import {DragLayer, MultiPanelSidebar} from 'data-engine-taglib';
 import React, {
 	useCallback,
@@ -43,7 +47,6 @@ import {useToast} from '../hooks/useToast.es';
 import {useValidateFormWithObjects} from '../hooks/useValidateFormWithObjects';
 import fieldDelete from '../thunks/fieldDelete.es';
 import {createFormURL} from '../util/form.es';
-import {addObjectFields, updateObjectFields} from '../util/objectFields';
 import {submitEmailContent} from '../util/submitEmailContent.es';
 
 export const FormBuilder = () => {
@@ -250,7 +253,7 @@ export const FormBuilder = () => {
 							</ClayButton.Group>,
 						],
 						header: Liferay.Language.get(
-							'object-required-fields-not-mapped'
+							'unmapped-object-required-fields'
 						),
 						status: 'danger',
 					},

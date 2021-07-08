@@ -14,39 +14,11 @@
 
 import {useFormState} from 'data-engine-js-components-web';
 import {getFields} from 'data-engine-js-components-web/js/utils/fields.es';
+import {
+	getObjectFieldName,
+	getSelectedValue,
+} from 'data-engine-js-components-web/js/utils/objectFields';
 import {useCallback} from 'react';
-
-const getFieldsByColumn = (settingsContext, columnTitle) => {
-	const column = ({title}) => title.toLowerCase() === columnTitle;
-
-	return settingsContext.pages.find(column).rows[0].columns[0].fields;
-};
-
-const getFieldProperty = (fields, fieldName) =>
-	fields.find((field) => field.fieldName === fieldName);
-
-const getSelectedValue = (value) => {
-	if (typeof value === 'string' && value !== '') {
-		const newValue = JSON.parse(value);
-
-		return Array.isArray(newValue) ? newValue[0] : newValue;
-	}
-
-	return value[0];
-};
-
-const getObjectFieldName = (settingsContext) => {
-	const fieldsFromAdvancedColumn = getFieldsByColumn(
-		settingsContext,
-		'advanced'
-	);
-	const objectFieldName = getFieldProperty(
-		fieldsFromAdvancedColumn,
-		'objectFieldName'
-	);
-
-	return objectFieldName;
-};
 
 const getUnmappedFormFields = (formFields) => {
 	return formFields.filter(({settingsContext}) => {

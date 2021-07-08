@@ -69,6 +69,7 @@ export default function FieldsSidebarSettingsBody() {
 		editingLanguageId,
 		focusedField,
 		objectFields,
+		pages,
 		rules,
 	} = useFormState();
 	const config = useConfig();
@@ -100,6 +101,7 @@ export default function FieldsSidebarSettingsBody() {
 			<FormFieldSettings
 				{...filteredSettingsContext}
 				activePage={activePage}
+				builderPages={pages}
 				builderRules={rules}
 				defaultLanguageId={defaultLanguageId}
 				displayable={true}

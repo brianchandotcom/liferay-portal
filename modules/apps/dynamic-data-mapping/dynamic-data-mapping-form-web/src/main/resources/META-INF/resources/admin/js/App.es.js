@@ -24,7 +24,10 @@ import {
 	languageReducer,
 	pagesStructureReducer,
 } from 'data-engine-js-components-web/js/core/reducers/index.es';
-import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
+import {
+	objectFieldsReducer,
+	pageReducer,
+} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -41,7 +44,6 @@ import {RuleBuilder} from './pages/RuleBuilder.es';
 import {
 	elementSetReducer,
 	formInfoReducer,
-	objectFieldsReducer,
 	rulesReducer,
 	sidebarReducer,
 } from './reducers/index.es';

@@ -12,6 +12,10 @@
  * details.
  */
 
+const BUILDER_PAGES = {
+	UPDATE: 'builder_pages_update',
+};
+
 const OBJECT_FIELDS = {
 	ADD: 'object_fields_add',
 };
@@ -36,6 +40,7 @@ const RULES = {
 };
 
 export const EVENT_TYPES = {
+	BUILDER_PAGES,
 	OBJECT_FIELDS,
 	PAGE,
 	PAGINATION,

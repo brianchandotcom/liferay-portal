@@ -16,10 +16,10 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.validation;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -32,6 +32,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Carolina Barbosa
+ * @author Matheus Almeida
  */
 @RunWith(PowerMockRunner.class)
 public class ValidationDDMFormFieldTemplateContextContributorTest
@@ -43,32 +44,10 @@ public class ValidationDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetDataType() {
-		DDMFormField ddmFormField = new DDMFormField("field", "validation");
-
-		ddmFormField.setDataType("string");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setProperty(
-			"changedProperties",
-			HashMapBuilder.<String, Object>put(
-				"validationDataType", StringPool.BLANK
-			).build());
-
-		Map<String, Object> parameters =
-			_validationDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, ddmFormFieldRenderingContext);
-
-		Assert.assertEquals("string", parameters.get("dataType"));
-	}
-
-	@Test
 	public void testGetDataTypeChanged() {
-		DDMFormField ddmFormField = new DDMFormField("field", "validation");
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 
-		ddmFormField.setDataType("integer");
+		ddmFormField.setProperty("dataType", "integer");
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
@@ -79,11 +58,75 @@ public class ValidationDDMFormFieldTemplateContextContributorTest
 				"validationDataType", "double"
 			).build());
 
+		Assert.assertEquals(
+			"double",
+			_validationDDMFormFieldTemplateContextContributor.getDataType(
+				ddmFormField, ddmFormFieldRenderingContext));
+	}
+
+	@Test
+	public void testGetDataTypeDouble() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty("dataType", "double");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"changedProperties", new HashMap<String, Object>());
+
+		Assert.assertEquals(
+			"double",
+			_validationDDMFormFieldTemplateContextContributor.getDataType(
+				ddmFormField, ddmFormFieldRenderingContext));
+	}
+
+	@Test
+	public void testGetDataTypeInteger() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty("dataType", "integer");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"changedProperties", new HashMap<String, Object>());
+
+		Assert.assertEquals(
+			"integer",
+			_validationDDMFormFieldTemplateContextContributor.getDataType(
+				ddmFormField, ddmFormFieldRenderingContext));
+	}
+
+	@Test
+	public void testGetDataTypeString() {
+		DDMFormField ddmFormField = new DDMFormField("field", "text");
+
+		ddmFormField.setProperty("dataType", "string");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"changedProperties", new HashMap<String, Object>());
+
+		Assert.assertEquals(
+			"string",
+			_validationDDMFormFieldTemplateContextContributor.getDataType(
+				ddmFormField, ddmFormFieldRenderingContext));
+	}
+
+	@Test
+	public void testGetParameters() {
 		Map<String, Object> parameters =
 			_validationDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, ddmFormFieldRenderingContext);
+				new DDMFormField("field", "text"),
+				new DDMFormFieldRenderingContext());
 
-		Assert.assertEquals("double", parameters.get("dataType"));
+		Assert.assertTrue(parameters.containsKey("dataType"));
+		Assert.assertTrue(parameters.containsKey("value"));
 	}
 
 	private void _setUpJSONFactory() throws Exception {

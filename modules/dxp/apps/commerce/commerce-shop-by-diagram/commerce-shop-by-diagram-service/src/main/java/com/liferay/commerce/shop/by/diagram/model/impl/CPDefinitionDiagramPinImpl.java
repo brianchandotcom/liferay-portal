@@ -14,12 +14,23 @@
 
 package com.liferay.commerce.shop.by.diagram.model.impl;
 
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 public class CPDefinitionDiagramPinImpl extends CPDefinitionDiagramPinBaseImpl {
 
 	public CPDefinitionDiagramPinImpl() {
+	}
+
+	@Override
+	public CPDefinition getCPDefinition() throws PortalException {
+		return CPDefinitionLocalServiceUtil.getCPDefinition(
+			getCPDefinitionId());
 	}
 
 }

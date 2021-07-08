@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -75,7 +76,8 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, null, name, null, null, false, 0, objectFields);
+			userId, null, name, null, null, false, 0,
+			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	@Override
@@ -157,7 +159,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _addObjectDefinition(
 			userId, dbTableName, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, true, version, objectFields);
+			pkObjectFieldName, true, version, WorkflowConstants.STATUS_APPROVED,
+			objectFields);
 	}
 
 	@Override
@@ -222,6 +225,10 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public void deployObjectDefinition(ObjectDefinition objectDefinition) {
 		if (objectDefinition.isSystem()) {
+			return;
+		}
+
+		if (objectDefinition.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			return;
 		}
 
@@ -388,7 +395,8 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectDefinition _addObjectDefinition(
 			long userId, String dbTableName, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			boolean system, int version, List<ObjectField> objectFields)
+			boolean system, int version, int status,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -448,6 +456,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setSystem(system);
 		objectDefinition.setVersion(version);
+		objectDefinition.setStatus(status);
 
 		ObjectDefinition updatedObjectDefinition =
 			objectDefinitionPersistence.update(objectDefinition);

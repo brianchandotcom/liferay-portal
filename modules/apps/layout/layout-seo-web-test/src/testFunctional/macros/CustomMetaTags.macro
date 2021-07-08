@@ -78,12 +78,28 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	macro openToCustomMetaTags {
+		var plid = JSONLayout.getPlid(
+			groupName = "${groupName}",
+			layoutName = "${layoutName}");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=custom-meta-tags");
+	}
+
 	macro removeTag {
 		Click(
 			key_tagNum = "${tagNum}",
 			locator1 = "Icon#DELETE_CUSTOM_META_TAG");
 
 		Button.click(button = "Save");
+	}
+
+	macro viewDisabledProperty {
+		AssertElementPresent(locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY_DISABLED");
+
+		AssertElementPresent(
+			key_customContent = "${customContent}",
+			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT_EDITOR");
 	}
 
 	macro viewNoTags {

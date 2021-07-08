@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(enabled = false, service = FriendlyURLResolver.class)
-public class AssetCategoryDisplayPageFriendlyURLResolver
+public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
@@ -401,7 +401,7 @@ public class AssetCategoryDisplayPageFriendlyURLResolver
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetCategoryDisplayPageFriendlyURLResolver.class);
+		AssetCategoryAssetDisplayPageFriendlyURLResolver.class);
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;

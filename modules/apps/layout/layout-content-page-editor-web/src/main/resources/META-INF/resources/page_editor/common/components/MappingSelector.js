@@ -159,9 +159,8 @@ export default function MappingSelectorWrapper({
 			);
 
 			if (collection) {
-				const [typeLabel, subtypeLabel] = collection?.subtype?.split(
-					COLLECTION_TYPE_DIVIDER
-				);
+				const [typeLabel, subtypeLabel] =
+					collection?.subtype?.split(COLLECTION_TYPE_DIVIDER) || [];
 
 				setCollectionItemTypeLabels({
 					itemSubtype: subtypeLabel,

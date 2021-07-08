@@ -5,13 +5,16 @@ definition {
 			dmDocumentTypeDescription = "${dmDocumentTypeDescription}",
 			dmDocumentTypeFieldNames = "${dmDocumentTypeFieldNames}",
 			dmDocumentTypeName = "${dmDocumentTypeName}",
-			metadataSetName = "${metadataSetName}");
+			metadataSetName = "${metadataSetName}",
+			skipNavigation = "${skipNavigation}");
 
 		DDLDataDefinition.save();
 	}
 
 	macro addWithoutSave {
-		LexiconEntry.gotoAdd();
+		if (!(isSet(skipNavigation))) {
+			LexiconEntry.gotoAdd();
+		}
 
 		PortletEntry.inputName(name = "${dmDocumentTypeName}");
 

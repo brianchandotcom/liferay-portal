@@ -305,7 +305,8 @@ public class OrderResourceImpl
 				order.getPaymentMethod(), commerceShippingMethodId,
 				order.getShippingOption(), order.getPurchaseOrderNumber(),
 				order.getSubtotal(), order.getShippingAmount(),
-				order.getTaxAmount(), order.getTotal(), order.getSubtotalWithTaxAmount(),
+				order.getTaxAmount(), order.getTotal(),
+				order.getSubtotalWithTaxAmount(),
 				order.getShippingWithTaxAmount(), order.getTotalWithTaxAmount(),
 				GetterUtil.getInteger(
 					order.getPaymentStatus(),

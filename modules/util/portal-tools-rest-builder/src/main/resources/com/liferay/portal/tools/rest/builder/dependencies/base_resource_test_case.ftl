@@ -1272,7 +1272,57 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertValid(get${schemaName}, multipartFiles);
 					</#if>
 				</#if>
+				<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode") >
+					${schemaName} new${schemaName} = test${javaMethodSignature.methodName?cap_first}_create${schemaName}();
+
+                    put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+
+                    <#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+                        <#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+							new${schemaName}.getId()
+                        <#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+							new${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+                        <#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+							new${schemaName}
+                        <#else>
+							null
+                        </#if>
+                        <#sep>, </#sep>
+                    </#list>
+
+                    <#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
+						, getMultipartFiles()
+                    </#if>
+
+					);
+
+					assertEquals(new${schemaName}, put${schemaName});
+					assertValid(put${schemaName});
+
+                    get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "get")}(
+                    <#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+                        <#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+							put${schemaName}.getId()
+                        <#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+							put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+                        </#if>
+
+                        <#sep>, </#sep>
+                    </#list>
+					);
+
+					assertEquals(new${schemaName}, get${schemaName});
+					Assert.assertEquals(
+						new${schemaName}.getExternalReferenceCode(),
+						put${schemaName}.getExternalReferenceCode());
+				</#if>
 			}
+
+			<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode") >
+				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_create${schemaName}() throws Exception {
+					return random${schemaName}();
+				}
+			</#if>
 
 			<#if properties?keys?seq_contains("id")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {

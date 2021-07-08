@@ -2287,6 +2287,18 @@ definition {
 		}
 	}
 
+	macro viewCustomFieldLocalizableLanguages {
+		Panel.expandPanel(panel = "Custom Fields");
+
+		Click(locator1 = "Button#LOCALIZATION_GENERIC");
+
+		for (var language : list "${localizableLanguages}") {
+			AssertVisible(
+				key_menuItem = "${language}",
+				locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+		}
+	}
+
 	macro viewDefaultCP {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC");
 
@@ -3213,6 +3225,20 @@ definition {
 			AssertTextEquals(
 				locator1 = "DocumentsAndMedia#TAG",
 				value1 = "${tagName}");
+		}
+	}
+
+	macro viewTypeFieldLocalizableLanguages {
+		if (!(isSet(currentLocale))) {
+			var key_currentLocale = "en-us";
+		}
+
+		Click(locator1 = "DocumentsAndMediaDocument#CUSTOM_FIELD_LOCALIZATION_DROPDOWN_TOGGLE");
+
+		for (var language : list "${localizableLanguages}") {
+			AssertVisible(
+				key_locale = "${language}",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
 		}
 	}
 

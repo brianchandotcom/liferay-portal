@@ -15,7 +15,11 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		if ((contains("${id}", "image")) || (contains("${id}", "img")) || (contains("${id}", "banner-center"))) {
+		if (IsElementPresent(key_sidebarButton = "Comments", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE")) {
+			PageEditor.gotoTab(tabName = "Browser");
+		}
+
+		if ((contains("${id}", "image")) || (contains("${id}", "img"))) {
 			Navigator.gotoNavTab(navTab = "Image Source");
 
 			if (!(IsSelectedLabel(key_fieldLabel = "Source Selection", locator1 = "Select#GENERIC_SELECT_FIELD", value1 = "Mapping"))) {

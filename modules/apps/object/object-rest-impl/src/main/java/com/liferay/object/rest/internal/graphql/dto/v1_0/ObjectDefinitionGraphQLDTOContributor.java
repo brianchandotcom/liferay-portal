@@ -22,6 +22,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -67,6 +68,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		return new ObjectDefinitionGraphQLDTOContributor(
+			String.valueOf(objectDefinition.getCompanyId()),
 			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
 			objectDefinition.getPKObjectFieldName(),
 			objectDefinition.getObjectDefinitionId(), objectEntryManager,
@@ -141,6 +143,11 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
+	public String getNamespace() {
+		return "Object_" + StringUtil.upperCaseFirstLetter(_companyName);
+	}
+
+	@Override
 	public String getResourceName() {
 		return _resourceName;
 	}
@@ -158,10 +165,12 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	private ObjectDefinitionGraphQLDTOContributor(
-		EntityModel entityModel, List<GraphQLDTOProperty> graphQLDTOProperties,
-		String idName, long objectDefinitionId,
-		ObjectEntryManager objectEntryManager, String resourceName) {
+		String companyName, EntityModel entityModel,
+		List<GraphQLDTOProperty> graphQLDTOProperties, String idName,
+		long objectDefinitionId, ObjectEntryManager objectEntryManager,
+		String resourceName) {
 
+		_companyName = companyName;
 		_entityModel = entityModel;
 		_graphQLDTOProperties = graphQLDTOProperties;
 		_idName = idName;
@@ -211,6 +220,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 			"String", String.class
 		).build();
 
+	private final String _companyName;
 	private final EntityModel _entityModel;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;

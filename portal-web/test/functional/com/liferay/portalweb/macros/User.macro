@@ -1969,6 +1969,12 @@ definition {
 				locator1 = "TextInput#SCREEN_NAME",
 				value1 = "${userScreenName}");
 		}
+		else if ("${authenticationMethod}" == "By User ID") {
+			Type.typePause(
+				key_text = "ID",
+				locator1 = "TextInput#ANY",
+				value1 = "${userID}");
+		}
 		else {
 			Type.typePause(
 				locator1 = "TextInput#EMAIL_ADDRESS",

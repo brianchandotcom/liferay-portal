@@ -117,7 +117,9 @@ export default function ItemSelector({
 				const contentMenuItems = selectPageContentDropdownItems(
 					selectedItem.classPK,
 					label
-				)(state);
+				)(state)?.filter(
+					(item) => item.label !== Liferay.Language.get('edit-image')
+				);
 
 				if (contentMenuItems?.length) {
 					menuItems.push(...contentMenuItems, {type: 'divider'});

@@ -1,0 +1,28 @@
+{
+	"author": "Evan Thibodeau <evan.thibodeau@liferay.com > (https://github.com/ethib137)",
+	"bugs": {
+		"url": "https://issues.liferay.com/"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"license": "LGPL",
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"distName": "solutions-theme",
+		"rubySass": false,
+		"sassOptions": {
+			"dartSass": true
+		},
+		"version": "7.1"
+	},
+	"main": "package.json",
+	"name": "@liferay/solutions-theme",
+	"repository": "liferay/liferay-portal",
+	"scripts": {
+		"build": "liferay-npm-scripts theme build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "5.0.2"
+}

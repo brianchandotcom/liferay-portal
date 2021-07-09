@@ -1,0 +1,11 @@
+*.lar
+/.web_bundle_build
+/build_gradle
+/dist
+/liferay-theme.json
+/src
+!/src/css/_custom.scss
+!/src/css/clay.scss
+!/src/WEB-INF/frontend-token-definition.json
+!/src/WEB-INF/liferay-look-and-feel.xml
+!/src/WEB-INF/liferay-plugin-package.properties

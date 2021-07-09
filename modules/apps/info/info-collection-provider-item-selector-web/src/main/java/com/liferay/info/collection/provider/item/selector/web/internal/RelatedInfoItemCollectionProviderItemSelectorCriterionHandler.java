@@ -14,7 +14,7 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal;
 
-import com.liferay.info.list.provider.item.selector.criterion.InfoItemRelatedListProviderItemSelectorCriterion;
+import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 
@@ -26,13 +26,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ItemSelectorCriterionHandler.class)
 public class RelatedInfoItemCollectionProviderItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler
-		<InfoItemRelatedListProviderItemSelectorCriterion> {
+		<RelatedInfoItemCollectionProviderItemSelectorCriterion> {
 
 	@Override
-	public Class<InfoItemRelatedListProviderItemSelectorCriterion>
+	public Class<RelatedInfoItemCollectionProviderItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return InfoItemRelatedListProviderItemSelectorCriterion.class;
+		return RelatedInfoItemCollectionProviderItemSelectorCriterion.class;
 	}
 
 }

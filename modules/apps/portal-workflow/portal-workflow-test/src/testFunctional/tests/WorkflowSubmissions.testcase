@@ -313,12 +313,35 @@ definition {
 	}
 
 	@description = "Verify the kebab menu is not displayed when task is completed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CompletedTaskCannnotBeWithdrawn {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68561 CompletedTaskCannnotBeWithdrawn pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Workflow.completeWorkflowBlogInstance(key_workflowInstanceTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertElementNotPresent(locator1 = "WorkflowSubmissions#SUBMISSIONS_DETAILS_PAGE_ELLIPSIS");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		AssertElementNotPresent(locator1 = "WorkflowSubmissions#SUBMISSIONS_DETAILS_PAGE_ELLIPSIS");
 	}
 
 	@description = "Verify the kebab menu is not displayed on details page when task is completed"

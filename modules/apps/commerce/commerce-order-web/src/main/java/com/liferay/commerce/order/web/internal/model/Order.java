@@ -23,14 +23,14 @@ public class Order {
 
 	public Order(
 		String account, String accountCode, String amount, String channel,
-		String createDate, LabelField fulfillmentWorkflow, long orderId,
+		String createDateString, LabelField fulfillmentWorkflow, long orderId,
 		LabelField orderStatus) {
 
 		_account = account;
 		_accountCode = accountCode;
 		_amount = amount;
 		_channel = channel;
-		_createDate = createDate;
+		_createDateString = createDateString;
 		_fulfillmentWorkflow = fulfillmentWorkflow;
 		_orderId = orderId;
 		_orderStatus = orderStatus;
@@ -52,8 +52,8 @@ public class Order {
 		return _channel;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public LabelField getFulfillmentWorkflow() {
@@ -72,7 +72,7 @@ public class Order {
 	private final String _accountCode;
 	private final String _amount;
 	private final String _channel;
-	private final String _createDate;
+	private final String _createDateString;
 	private final LabelField _fulfillmentWorkflow;
 	private final long _orderId;
 	private final LabelField _orderStatus;

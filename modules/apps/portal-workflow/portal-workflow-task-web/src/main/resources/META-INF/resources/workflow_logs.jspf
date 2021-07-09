@@ -65,7 +65,7 @@
 					</td>
 					<td>
 						<div>
-							<%= workflowTaskDisplayContext.getCreateDate(workflowLog) %>
+							<%= workflowTaskDisplayContext.getCreateDateString(workflowLog) %>
 						</div>
 					</td>
 				</tr>

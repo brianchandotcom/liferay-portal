@@ -30,7 +30,7 @@ public interface Resource {
 
 	public String getContentType();
 
-	public String getCreateDate();
+	public String getCreateDateString();
 
 	public String getDisplayName();
 

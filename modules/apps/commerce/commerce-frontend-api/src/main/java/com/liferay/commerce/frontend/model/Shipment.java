@@ -22,15 +22,16 @@ public class Shipment {
 
 	public Shipment(
 		String accountName, String address, String channelName,
-		String createDate, String expectedDeliveryDate, String expectedShipDate,
-		long shipmentId, LabelField status, String tracking) {
+		String createDateString, String expectedDeliveryDateString,
+		String expectedShipDateString, long shipmentId, LabelField status,
+		String tracking) {
 
 		_accountName = accountName;
 		_address = address;
 		_channelName = channelName;
-		_createDate = createDate;
-		_expectedDeliveryDate = expectedDeliveryDate;
-		_expectedShipDate = expectedShipDate;
+		_createDateString = createDateString;
+		_expectedDeliveryDateString = expectedDeliveryDateString;
+		_expectedShipDateString = expectedShipDateString;
 		_shipmentId = shipmentId;
 		_status = status;
 		_tracking = tracking;
@@ -48,16 +49,16 @@ public class Shipment {
 		return _channelName;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
-	public String getExpectedDeliveryDate() {
-		return _expectedDeliveryDate;
+	public String getExpectedDeliveryDateString() {
+		return _expectedDeliveryDateString;
 	}
 
-	public String getExpectedShipDate() {
-		return _expectedShipDate;
+	public String getExpectedShipDateString() {
+		return _expectedShipDateString;
 	}
 
 	public long getShipmentId() {
@@ -75,9 +76,9 @@ public class Shipment {
 	private final String _accountName;
 	private final String _address;
 	private final String _channelName;
-	private final String _createDate;
-	private final String _expectedDeliveryDate;
-	private final String _expectedShipDate;
+	private final String _createDateString;
+	private final String _expectedDeliveryDateString;
+	private final String _expectedShipDateString;
 	private final long _shipmentId;
 	private final LabelField _status;
 	private final String _tracking;

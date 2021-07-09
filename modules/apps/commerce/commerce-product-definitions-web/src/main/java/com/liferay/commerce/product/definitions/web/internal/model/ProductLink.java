@@ -23,22 +23,22 @@ public class ProductLink {
 
 	public ProductLink(
 		long cpDefinitionLinkId, ImageField image, String name, String type,
-		double order, String createDate) {
+		double order, String createDateString) {
 
 		_cpDefinitionLinkId = cpDefinitionLinkId;
 		_image = image;
 		_name = name;
 		_type = type;
 		_order = order;
-		_createDate = createDate;
+		_createDateString = createDateString;
 	}
 
 	public long getCPDefinitionLinkId() {
 		return _cpDefinitionLinkId;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public ImageField getImage() {
@@ -58,7 +58,7 @@ public class ProductLink {
 	}
 
 	private final long _cpDefinitionLinkId;
-	private final String _createDate;
+	private final String _createDateString;
 	private final ImageField _image;
 	private final String _name;
 	private final double _order;

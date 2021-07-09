@@ -61,13 +61,13 @@ public class CommerceShipmentClayTableDataSetDisplayView
 			"tracking", "tracking-number");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"createDate", "create-date");
+			"createDateString", "create-date");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"expectedShipDate", "estimated-shipping-date");
+			"expectedShipDateString", "estimated-shipping-date");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"expectedDeliveryDate", "estimated-delivery-date");
+			"expectedDeliveryDateString", "estimated-delivery-date");
 
 		ClayTableSchemaField statusField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");

@@ -20,16 +20,17 @@ package com.liferay.commerce.pricing.web.internal.model;
 public class InstancePriceEntry {
 
 	public InstancePriceEntry(
-		long priceEntryId, String createDate, String name, String unitPrice) {
+		long priceEntryId, String createDateString, String name,
+		String unitPrice) {
 
 		_priceEntryId = priceEntryId;
-		_createDate = createDate;
+		_createDateString = createDateString;
 		_name = name;
 		_unitPrice = unitPrice;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public String getName() {
@@ -44,7 +45,7 @@ public class InstancePriceEntry {
 		return _unitPrice;
 	}
 
-	private final String _createDate;
+	private final String _createDateString;
 	private final String _name;
 	private final long _priceEntryId;
 	private final String _unitPrice;

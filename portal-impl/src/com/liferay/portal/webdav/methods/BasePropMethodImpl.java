@@ -136,7 +136,8 @@ public abstract class BasePropMethodImpl implements Method {
 			props.remove(CREATIONDATE);
 
 			DocUtil.add(
-				successPropElement, CREATIONDATE, resource.getCreateDate());
+				successPropElement, CREATIONDATE,
+				resource.getCreateDateString());
 
 			hasSuccess = true;
 		}

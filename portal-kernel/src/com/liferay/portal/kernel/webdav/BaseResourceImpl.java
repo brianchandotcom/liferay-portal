@@ -103,7 +103,7 @@ public class BaseResourceImpl implements Resource {
 	}
 
 	@Override
-	public String getCreateDate() {
+	public String getCreateDateString() {
 		return _createDateFormatter.format(_createDate);
 	}
 

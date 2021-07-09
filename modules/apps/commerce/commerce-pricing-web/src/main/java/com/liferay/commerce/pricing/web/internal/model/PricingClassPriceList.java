@@ -23,12 +23,12 @@ public class PricingClassPriceList {
 
 	public PricingClassPriceList(
 		long commercePriceListId, String name, String catalogName,
-		String createDate, LabelField status, String active) {
+		String createDateString, LabelField status, String active) {
 
 		_commercePriceListId = commercePriceListId;
 		_name = name;
 		_catalogName = catalogName;
-		_createDate = createDate;
+		_createDateString = createDateString;
 		_status = status;
 		_active = active;
 	}
@@ -45,8 +45,8 @@ public class PricingClassPriceList {
 		return _commercePriceListId;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public String getName() {
@@ -60,7 +60,7 @@ public class PricingClassPriceList {
 	private final String _active;
 	private final String _catalogName;
 	private final long _commercePriceListId;
-	private final String _createDate;
+	private final String _createDateString;
 	private final String _name;
 	private final LabelField _status;
 

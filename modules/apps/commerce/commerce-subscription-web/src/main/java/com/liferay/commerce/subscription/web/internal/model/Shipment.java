@@ -21,10 +21,10 @@ package com.liferay.commerce.subscription.web.internal.model;
 public class Shipment {
 
 	public Shipment(
-		String createDate, Link shipmentId, Label status, Link orderId,
+		String createDateString, Link shipmentId, Label status, Link orderId,
 		String receiver, Link tracking) {
 
-		_createDate = createDate;
+		_createDateString = createDateString;
 		_shipmentId = shipmentId;
 		_status = status;
 		_orderId = orderId;
@@ -32,8 +32,8 @@ public class Shipment {
 		_tracking = tracking;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public Link getOrderId() {
@@ -56,7 +56,7 @@ public class Shipment {
 		return _tracking;
 	}
 
-	private final String _createDate;
+	private final String _createDateString;
 	private final Link _orderId;
 	private final String _receiver;
 	private final Link _shipmentId;

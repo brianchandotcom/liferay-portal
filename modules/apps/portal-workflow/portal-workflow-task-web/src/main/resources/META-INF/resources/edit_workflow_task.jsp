@@ -128,7 +128,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 				>
 					<aui:field-wrapper label="create-date">
 						<aui:fieldset>
-							<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>
+							<%= workflowTaskDisplayContext.getCreateDateString(workflowTask) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 

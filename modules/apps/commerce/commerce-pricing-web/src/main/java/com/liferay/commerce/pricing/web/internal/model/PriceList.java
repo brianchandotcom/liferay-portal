@@ -22,13 +22,13 @@ import com.liferay.commerce.frontend.model.LabelField;
 public class PriceList {
 
 	public PriceList(
-		String active, String author, String catalog, String createDate,
+		String active, String author, String catalog, String createDateString,
 		String name, long priceListId, double priority, LabelField status) {
 
 		_active = active;
 		_author = author;
 		_catalog = catalog;
-		_createDate = createDate;
+		_createDateString = createDateString;
 		_name = name;
 		_priceListId = priceListId;
 		_priority = priority;
@@ -47,8 +47,8 @@ public class PriceList {
 		return _catalog;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public String getName() {
@@ -70,7 +70,7 @@ public class PriceList {
 	private final String _active;
 	private final String _author;
 	private final String _catalog;
-	private final String _createDate;
+	private final String _createDateString;
 	private final String _name;
 	private final long _priceListId;
 	private final double _priority;

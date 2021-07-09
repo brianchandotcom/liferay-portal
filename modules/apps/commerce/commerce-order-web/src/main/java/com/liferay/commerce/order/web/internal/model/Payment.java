@@ -22,13 +22,13 @@ import com.liferay.commerce.frontend.model.LabelField;
 public class Payment {
 
 	public Payment(
-		long paymentId, LabelField type, String amount, String createDate,
+		long paymentId, LabelField type, String amount, String createDateString,
 		String content) {
 
 		_paymentId = paymentId;
 		_type = type;
 		_amount = amount;
-		_createDate = createDate;
+		_createDateString = createDateString;
 		_content = content;
 	}
 
@@ -40,8 +40,8 @@ public class Payment {
 		return _content;
 	}
 
-	public String getCreateDate() {
-		return _createDate;
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public long getPaymentId() {
@@ -54,7 +54,7 @@ public class Payment {
 
 	private final String _amount;
 	private final String _content;
-	private final String _createDate;
+	private final String _createDateString;
 	private final long _paymentId;
 	private final LabelField _type;
 

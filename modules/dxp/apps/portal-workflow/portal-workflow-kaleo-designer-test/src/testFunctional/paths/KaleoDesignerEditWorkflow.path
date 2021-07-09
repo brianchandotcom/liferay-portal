@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CIRCLE_ORANGE_CONNECTOR</td>
+	<td>//*[name()='svg:circle' and @class = 'yui3-shape yui3-svgShape yui3-circle yui3-svgCircle']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//li[@class='nav-item']/a[contains(.,'Details')]</td>
 	<td></td>

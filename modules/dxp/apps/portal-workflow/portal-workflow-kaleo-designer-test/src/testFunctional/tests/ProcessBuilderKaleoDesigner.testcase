@@ -788,12 +788,33 @@ definition {
 	}
 
 	@description = "Verify that transition can be connected to another edge of node, orange circle will appear"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TransitionCanBeConnectedToNode {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68458 TransitionCanBeConnectedToNode pending implementation
+		LexiconEntry.gotoAdd();
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Task Node Description",
+			nodeName = "Task",
+			nodeNodeLabel = "Task",
+			nodeType = "task");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.addConnectorViaViewTab(
+			connectorName = "Connector 1",
+			nodeType = "start",
+			nodeTypeDestination = "task");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#CIRCLE_ORANGE_CONNECTOR");
 	}
 
 }

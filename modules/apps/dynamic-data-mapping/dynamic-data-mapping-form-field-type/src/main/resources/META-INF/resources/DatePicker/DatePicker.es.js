@@ -203,7 +203,9 @@ const DatePicker = ({
 				}
 			}
 			else if (initialValueMemoized) {
-				inputRef.current.value = initialValueMemoized;
+				inputRef.current.value = moment(initialValueMemoized).format(
+					dateMask.toUpperCase()
+				);
 			}
 			else {
 				inputRef.current.value = '';

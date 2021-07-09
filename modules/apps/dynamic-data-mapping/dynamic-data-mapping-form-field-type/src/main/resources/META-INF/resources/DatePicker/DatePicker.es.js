@@ -189,7 +189,11 @@ const DatePicker = ({
 			});
 
 			if (localizedValue[locale]) {
-				if (typeof localizedValue[locale] === 'string') {
+				if (
+					typeof localizedValue[locale] === 'string' &&
+					(localizedValue[locale].includes('/') ||
+						localizedValue[locale].includes('.'))
+				) {
 					inputRef.current.value = localizedValue[locale];
 				}
 				else {

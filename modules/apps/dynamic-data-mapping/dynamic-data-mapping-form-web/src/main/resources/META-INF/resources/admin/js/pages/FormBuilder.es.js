@@ -96,6 +96,9 @@ export const FormBuilder = () => {
 
 	const addToast = useToast();
 
+	// This hook is used to validate the Forms when the storage type object
+	// is selected in the Forms settings
+
 	const validateFormWithObjects = useValidateFormWithObjects();
 
 	useEffect(() => {
@@ -160,7 +163,7 @@ export const FormBuilder = () => {
 	const getFormUrl = useCallback(
 		async (path) => {
 			const settingsDDMForm = await Liferay.componentReady(
-				'settingsDDMForm'
+				'formSettingsAPI'
 			);
 
 			const fields = settingsDDMForm.reactComponentRef.current.getFields();
@@ -263,11 +266,15 @@ export const FormBuilder = () => {
 
 			doSyncInput();
 
-			const isValidToSaveForm = await validateFormWithObjects(
+			const isValidToSubmitForm = await validateFormWithObjects(
+
+				// This callback will be rendered when the Forms
+				// validation result is false
+
 				openModalObjectRestrictions
 			);
 
-			if (isValidToSaveForm) {
+			if (isValidToSubmitForm) {
 				window.submitForm(form);
 			}
 		},

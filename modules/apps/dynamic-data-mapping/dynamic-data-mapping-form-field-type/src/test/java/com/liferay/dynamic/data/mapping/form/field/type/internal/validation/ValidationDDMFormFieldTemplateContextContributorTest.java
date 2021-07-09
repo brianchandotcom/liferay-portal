@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.validation;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -127,6 +128,27 @@ public class ValidationDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertTrue(parameters.containsKey("dataType"));
 		Assert.assertTrue(parameters.containsKey("value"));
+	}
+
+	@Test
+	public void testValidationDataTypeEmpty() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty("dataType", "integer");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"changedProperties",
+			HashMapBuilder.<String, Object>put(
+				"validationDataType", StringPool.BLANK
+			).build());
+
+		Assert.assertEquals(
+			"integer",
+			_validationDDMFormFieldTemplateContextContributor.getDataType(
+				ddmFormField, ddmFormFieldRenderingContext));
 	}
 
 	private void _setUpJSONFactory() throws Exception {

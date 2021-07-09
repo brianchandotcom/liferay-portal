@@ -15,6 +15,7 @@
 package com.liferay.info.internal.item;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.exception.CapabilityVerificationException;
 import com.liferay.info.filter.InfoRequestItemProvider;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
@@ -260,7 +261,8 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			InfoItemPermissionProvider.class, InfoItemRelatedListProvider.class,
 			InfoItemRenderer.class, InfoItemSelector.class,
 			InfoItemWorkflowProvider.class, InfoListRenderer.class,
-			InfoListProvider.class, InfoRequestItemProvider.class
+			InfoListProvider.class, InfoRequestItemProvider.class,
+			RelatedInfoItemCollectionProvider.class
 		};
 
 		for (Class<?> serviceClass : serviceClasses) {

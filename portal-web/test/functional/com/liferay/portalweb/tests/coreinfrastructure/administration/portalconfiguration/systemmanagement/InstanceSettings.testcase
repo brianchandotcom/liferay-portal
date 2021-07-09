@@ -117,6 +117,91 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This test add the contact information via appearance in Instance Configuration."
+	@priority = "3"
+	test CanAddContactInformationInInstanceConfiguration {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "Contact Information",
+			configurationScope = "Virtual Instance Scope");
+
+		for (var text : list "Street 1,Street 2,Street 3,City") {
+			var value1 = StringUtil.replace("${text}", " ", "");
+
+			Type(
+				key_text = "${text}",
+				locator1 = "TextInput#ANY",
+				value1 = "${value1}");
+		}
+
+		Type(
+			key_text = "Postal Code",
+			locator1 = "TextInput#ANY",
+			value1 = "116023");
+
+		Type(
+			key_text = "Number",
+			locator1 = "TextInput#ANY",
+			value1 = "041188120855");
+
+		Type(
+			key_text = "Extension",
+			locator1 = "TextInput#ANY",
+			value1 = "86");
+
+		Type(
+			key_text = "Email Address",
+			locator1 = "TextInput#ANY",
+			value1 = "testsample@liferay.com");
+
+		Type(
+			key_text = "URL",
+			locator1 = "TextInput#ANY",
+			value1 = "http://liferay.com");
+
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "China");
+
+		Select(
+			locator1 = "Select#REGION",
+			value1 = "Liaoning Sheng");
+
+		Select(
+			locator1 = "Select#ADDRESS_TYPE",
+			value1 = "Shipping");
+
+		PortletEntry.save();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "Contact Information",
+			configurationScope = "Virtual Instance Scope");
+
+		for (var text : list "Street 1,Street 2,Street 3,City") {
+			var value1 = StringUtil.replace("${text}", " ", "");
+
+			AssertTextEquals(
+				key_text = "${text}",
+				locator1 = "TextInput#ANY",
+				value1 = "${value1}");
+		}
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Select#COUNTRY",
+			value1 = "China");
+
+		AssertTextEquals(
+			key_text = "Email Address",
+			locator1 = "TextInput#ANY",
+			value1 = "testsample@liferay.com");
+
+		AssertTextEquals(
+			key_text = "URL",
+			locator1 = "TextInput#ANY",
+			value1 = "http://liferay.com");
+	}
+
 	@description = "This test disable the Terms of Use via UI and assert the Terms of Use not required when a new user login."
 	@priority = "3"
 	test CanChangeTheTermsOfUseNotRequired {

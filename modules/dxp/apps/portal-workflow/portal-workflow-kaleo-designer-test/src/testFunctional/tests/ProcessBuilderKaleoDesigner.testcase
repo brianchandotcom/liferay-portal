@@ -45,12 +45,37 @@ definition {
 	}
 
 	@description = "Verify that Notification can be added"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddNotification {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68479 CanAddNotification pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "connector",
+			newNode = "Task",
+			newNodeDescription = "Task Node Description",
+			newNodeName = "Task",
+			newNodeType = "task",
+			nodeType = "start");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
+
+		KaleoDesigner.editNodeNotifications(
+			nodeNotificationsDescription = "Notification Description",
+			nodeNotificationsName = "Notification",
+			nodeNotificationsRecipientType = "Role Type",
+			roleTitle = "Administrator",
+			roleType = "Regular");
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NOTIFICATIONS",
+			value1 = "Notification");
 	}
 
 	@description = "Verify that Timers can be added"

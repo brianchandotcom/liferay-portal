@@ -35,6 +35,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 
@@ -55,6 +58,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -84,6 +88,12 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
+
+		Class<?> clazz = getClass();
+
+		_portalCache =
+			(PortalCache<DDMForm, String>)_singleVMPool.getPortalCache(
+				clazz.getName());
 	}
 
 	protected void addDLRawMetadataStructures(long companyId) throws Exception {
@@ -115,7 +125,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					_portal.getClassNameId(RawMetadataProcessor.class), name);
 
 			if (ddmStructure != null) {
-				String definition = _serializeJSONDDMForm(ddmForm);
+				String definition = _getDefinition(ddmForm);
 
 				if (!definition.equals(ddmStructure.getDefinition())) {
 					ddmStructure.setDDMForm(ddmForm);
@@ -144,6 +154,11 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_singleVMPool.removePortalCache(_portalCache.getPortalCacheName());
 	}
 
 	@Reference(unbind = "-")
@@ -234,6 +249,18 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		return ddmForm;
 	}
 
+	private String _getDefinition(DDMForm ddmForm) {
+		String definition = _portalCache.get(ddmForm);
+
+		if (Validator.isNull(definition)) {
+			definition = _serializeJSONDDMForm(ddmForm);
+
+			_portalCache.put(ddmForm, definition);
+		}
+
+		return definition;
+	}
+
 	private String _serializeJSONDDMForm(DDMForm ddmForm) {
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
@@ -258,6 +285,11 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 	@Reference
 	private Portal _portal;
+
+	private volatile PortalCache<DDMForm, String> _portalCache;
+
+	@Reference
+	private SingleVMPool _singleVMPool;
 
 	private UserLocalService _userLocalService;
 

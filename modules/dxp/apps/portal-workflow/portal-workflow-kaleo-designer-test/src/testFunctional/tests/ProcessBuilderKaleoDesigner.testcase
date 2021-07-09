@@ -36,12 +36,44 @@ definition {
 	}
 
 	@description = "Verify that multiple Assignment can be added"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddMultipleAssignment {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68482 CanAddMultipleAssignment pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "connector",
+			newNode = "Task",
+			newNodeDescription = "Task Node Description",
+			newNodeName = "Task",
+			newNodeType = "task",
+			nodeType = "start");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
+
+		KaleoDesigner.editNodeAssignments(
+			autoCreate = "true",
+			nodeAssignmentType = "Role Type",
+			roleName = "Test 1",
+			roleType = "Regular");
+
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
+
+		KaleoDesigner.addNodeSettingsSection();
+
+		KaleoDesigner.editNodeAssignments(
+			autoCreate = "true",
+			nodeAssignmentType = "Role Type",
+			roleName = "Test 2",
+			roleType = "Regular");
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS",
+			value1 = "Role Type");
 	}
 
 	@description = "Verify that Notification can be added"

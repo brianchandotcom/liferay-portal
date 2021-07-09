@@ -89,15 +89,17 @@ public class CommerceChannelRelServiceUtil {
 	 */
 	@Deprecated
 	public static List<CommerceChannelRel> getCommerceChannelRels(
-		String className, long classPK, int start, int end,
-		OrderByComparator<CommerceChannelRel> orderByComparator) {
+			String className, long classPK, int start, int end,
+			OrderByComparator<CommerceChannelRel> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceChannelRels(
 			className, classPK, start, end, orderByComparator);
 	}
 
 	public static List<CommerceChannelRel> getCommerceChannelRels(
-		String className, long classPK, String name, int start, int end) {
+			String className, long classPK, String name, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceChannelRels(
 			className, classPK, name, start, end);
@@ -122,13 +124,15 @@ public class CommerceChannelRelServiceUtil {
 	}
 
 	public static int getCommerceChannelRelsCount(
-		String className, long classPK) {
+			String className, long classPK)
+		throws PortalException {
 
 		return getService().getCommerceChannelRelsCount(className, classPK);
 	}
 
 	public static int getCommerceChannelRelsCount(
-		String className, long classPK, String name) {
+			String className, long classPK, String name)
+		throws PortalException {
 
 		return getService().getCommerceChannelRelsCount(
 			className, classPK, name);

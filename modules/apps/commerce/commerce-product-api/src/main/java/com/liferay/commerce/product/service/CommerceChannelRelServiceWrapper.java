@@ -98,9 +98,10 @@ public class CommerceChannelRelServiceWrapper
 	@Deprecated
 	@Override
 	public java.util.List<CommerceChannelRel> getCommerceChannelRels(
-		String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceChannelRel>
-			orderByComparator) {
+			String className, long classPK, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceChannelRel>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelRelService.getCommerceChannelRels(
 			className, classPK, start, end, orderByComparator);
@@ -108,7 +109,8 @@ public class CommerceChannelRelServiceWrapper
 
 	@Override
 	public java.util.List<CommerceChannelRel> getCommerceChannelRels(
-		String className, long classPK, String name, int start, int end) {
+			String className, long classPK, String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelRelService.getCommerceChannelRels(
 			className, classPK, name, start, end);
@@ -136,14 +138,17 @@ public class CommerceChannelRelServiceWrapper
 	}
 
 	@Override
-	public int getCommerceChannelRelsCount(String className, long classPK) {
+	public int getCommerceChannelRelsCount(String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _commerceChannelRelService.getCommerceChannelRelsCount(
 			className, classPK);
 	}
 
 	@Override
 	public int getCommerceChannelRelsCount(
-		String className, long classPK, String name) {
+			String className, long classPK, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelRelService.getCommerceChannelRelsCount(
 			className, classPK, name);

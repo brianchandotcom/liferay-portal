@@ -106,8 +106,10 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	private String _getAllowedContentTable() {
-		return "table[border, cellpadding, cellspacing] {width}; tbody td " +
-			"th[scope]; thead tr[scope];";
+		return StringBundler.concat(
+			"col[span]; colgroup[span]; table[border, cellpadding, ",
+			"cellspacing]{width}; tbody td[colspan, headers, rowspan]{*}; ",
+			"th[abbr, colspan, headers, rowspan, scope, sorted]{*}; thead tr;");
 	}
 
 	private String _getAllowedContentText() {

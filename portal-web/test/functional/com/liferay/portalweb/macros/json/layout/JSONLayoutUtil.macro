@@ -31,18 +31,15 @@ definition {
 		if ("${widgetName}" == "Announcements") {
 			var portletId = "com_liferay_announcements_web_portlet_AnnouncementsPortlet";
 		}
-
 		else if ("${widgetName}" == "Asset Publisher") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
 		}
 		else if ("${widgetName}" == "Blogs") {
 			var portletId = "com_liferay_blogs_web_portlet_BlogsPortlet";
 		}
-
 		else if ("${widgetName}" == "Blogs Aggregator") {
 			var portletId = "com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 		}
-
 		else if ("${widgetName}" == "Bookmarks") {
 			var portletId = "com_liferay_bookmarks_web_portlet_BookmarksPortlet";
 		}
@@ -79,6 +76,12 @@ definition {
 		else if ("${widgetName}" == "Knowledge Base Display") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_DisplayPortlet";
 		}
+		else if ("${widgetName}" == "Knowledge Base Search") {
+			var portletId = "com_liferay_knowledge_base_web_portlet_SearchPortlet";
+		}
+		else if ("${widgetName}" == "Knowledge Base Section") {
+			var portletId = "com_liferay_knowledge_base_web_portlet_SectionPortlet";
+		}
 		else if ("${widgetName}" == "Language Selector") {
 			var portletId = "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet";
 		}
@@ -90,6 +93,9 @@ definition {
 		}
 		else if ("${widgetName}" == "Message Boards") {
 			var portletId = "com_liferay_message_boards_web_portlet_MBPortlet";
+		}
+		else if ("${widgetName}" == "Microblogs") {
+			var portletId = "com_liferay_microblogs_web_portlet_MicroblogsPortlet";
 		}
 		else if ("${widgetName}" == "Most Viewed Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_MostViewedAssetsPortlet";
@@ -108,6 +114,9 @@ definition {
 		}
 		else if ("${widgetName}" == "Questions") {
 			var portletId = "com_liferay_questions_web_internal_portlet_QuestionsPortlet";
+		}
+		else if ("${widgetName}" == "Recent Bloggers") {
+			var portletId = "com_liferay_blogs_recent_bloggers_web_portlet_RecentBloggersPortlet";
 		}
 		else if ("${widgetName}" == "Related Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet";

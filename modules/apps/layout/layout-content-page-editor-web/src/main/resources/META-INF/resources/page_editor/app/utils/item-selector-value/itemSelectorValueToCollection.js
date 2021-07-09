@@ -15,8 +15,6 @@
 const RETURN_TYPES = {
 	assetList:
 		'com.liferay.item.selector.criteria.InfoListItemSelectorReturnType',
-	infoItemRelatedList:
-		'com.liferay.info.list.provider.item.selector.criterion.InfoItemRelatedListProviderItemSelectorReturnType',
 	infoList:
 		'com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType',
 };
@@ -43,20 +41,12 @@ export default function itemSelectorValueToCollection(collection) {
 				title,
 				type,
 			};
-
-		case RETURN_TYPES.infoItemRelatedList:
-			return {
-				itemType,
-				key,
-				sourceItemType,
-				title,
-				type,
-			};
 		case RETURN_TYPES.infoList:
 			return {
 				itemSubtype,
 				itemType,
 				key,
+				sourceItemType,
 				title,
 				type,
 			};

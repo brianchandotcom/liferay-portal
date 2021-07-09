@@ -220,4 +220,13 @@ definition {
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
+	@description = "Automation ID: LRAC-8133 | Test Summary: Create button shows option to create static or dynamic"
+	@ignore = "true"
+	@priority = "5"
+    test CanSeeOptionsToCreateStaticOrDynamicSegment {
+
+  		// TODO LRAC-8133 CanSeeOptionsToCreateStaticOrDynamicSegment pending implementation
+
+	}
+
 }

@@ -79,7 +79,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 
 		<div class="sidebar-header">
 			<h4>
-				<%= curUser.getFullName() %>
+				<%= HtmlUtil.escape(curUser.getFullName()) %>
 			</h4>
 
 			<h6>

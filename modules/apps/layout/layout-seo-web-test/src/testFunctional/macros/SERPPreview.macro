@@ -1,0 +1,21 @@
+definition {
+
+	macro addGeneralSettings {
+		if (isSet(htmlTitle)) {
+			PortletEntry.inputText(
+				fieldLabel = "HTML Title",
+				text = "${htmlTitle}");
+		}
+
+		if (isSet(description)) {
+			PortletEntry.inputText(
+				fieldLabel = "Description",
+				text = "${description}");
+		}
+	}
+
+	macro viewPreviewDefault {
+		AssertVisible(locator1 = "SitePagesEditPage#PREVIEW_SERP");
+	}
+
+}

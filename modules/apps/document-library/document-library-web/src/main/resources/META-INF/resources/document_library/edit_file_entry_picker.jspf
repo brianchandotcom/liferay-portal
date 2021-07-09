@@ -18,22 +18,31 @@
 DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(liferayPortletResponse.getNamespace() + "onFilePick");
 %>
 
+<label class="control-label">
+	<liferay-ui:message key="file-upload" />
+</label>
+
 <c:choose>
 	<c:when test="<%= dlFilePicker == null %>">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= liferayPortletResponse.getNamespace() + "updateFileNameAndTitle();" %>' type="file">
-			<aui:validator name="acceptFiles">
-				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
-			</aui:validator>
+		<div class="form-group">
+			<aui:button value="select-file" />
 
-			<aui:validator errorMessage='<%= LanguageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x", LanguageUtil.formatStorageSize(dlEditFileEntryDisplayContext.getMaximumUploadSize(), locale)) %>' name="maxFileSize"><%= dlEditFileEntryDisplayContext.getMaximumUploadSize() %></aui:validator>
-		</aui:input>
+			<react:component
+				module="document_library/js/FileEntryPicker.es"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"maxFileSize", dlEditFileEntryDisplayContext.getMaximumUploadSize()
+					).put(
+						"namespace", liferayPortletResponse.getNamespace()
+					).put(
+						"validExtensions", StringUtil.merge(dlConfiguration.fileExtensions())
+					).build()
+				%>'
+			/>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= dlFilePicker.isCustomizedFileButtonVisible() %>">
-			<label class="control-label">
-				<liferay-ui:message key="file-upload" />
-			</label>
-
 			<aui:field-wrapper>
 				<aui:button cssClass="customized-file-button disabled" disabled="<%= true %>" name="file" value="select-file" />
 

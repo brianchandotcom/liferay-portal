@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_ACTIONS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]//following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

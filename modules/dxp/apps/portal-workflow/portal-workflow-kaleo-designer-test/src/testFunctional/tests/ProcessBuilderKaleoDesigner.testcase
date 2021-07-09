@@ -350,12 +350,44 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Actions property"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test HasActionsProperty {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68477 HasActionsProperty pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
+
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Join Node Description",
+			nodeName = "Join",
+			nodeNodeLabel = "Join",
+			nodeType = "join");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Join");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "Submit",
+			newNode = "Join XOR",
+			newNodeDescription = "JoinXOR Description",
+			newNodeName = "JoinXOR",
+			newNodeType = "join-xor",
+			nodeType = "start");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "JoinXOR");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
 	}
 
 	@description = "Verify that each type of Node has Description property"

@@ -185,8 +185,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	public boolean isPanelStateOpen(HttpServletRequest httpServletRequest) {
 		String layoutReportsPanelState = SessionClicks.get(
-			httpServletRequest,
-			"com.liferay.layout.reports.web_layoutReportsPanelState", "closed");
+			httpServletRequest, _PANEL_STATE_SESSION_KEY, "closed");
 
 		if (Objects.equals(layoutReportsPanelState, "open")) {
 			return true;
@@ -219,6 +218,13 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		}
 
 		return super.isShow(httpServletRequest);
+	}
+
+	public void setPanelState(
+		HttpServletRequest httpServletRequest, String panelState) {
+
+		SessionClicks.put(
+			httpServletRequest, _PANEL_STATE_SESSION_KEY, panelState);
 	}
 
 	public static class ProcessBodyBottomTagBodyException
@@ -409,6 +415,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		LayoutReportsProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	private static final String _PANEL_STATE_SESSION_KEY =
+		"com.liferay.layout.reports.web_layoutReportsPanelState";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutReportsProductNavigationControlMenuEntry.class);

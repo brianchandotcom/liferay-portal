@@ -14,15 +14,16 @@
 
 package com.liferay.layout.reports.web.internal.events;
 
+import com.liferay.layout.reports.web.internal.product.navigation.control.menu.LayoutReportsProductNavigationControlMenuEntry;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
-import com.liferay.portal.kernel.util.SessionClicks;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Yurena Cabrera
@@ -39,9 +40,12 @@ public class LogoutPreAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
-		SessionClicks.put(
-			httpServletRequest,
-			"com.liferay.layout.reports.web_layoutReportsPanelState", "closed");
+		_layoutReportsProductNavigationControlMenuEntry.setPanelState(
+			httpServletRequest, "closed");
 	}
+
+	@Reference
+	private LayoutReportsProductNavigationControlMenuEntry
+		_layoutReportsProductNavigationControlMenuEntry;
 
 }

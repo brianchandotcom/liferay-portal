@@ -66,6 +66,12 @@
 	<td>//*[contains(@class, 'btn-primary')]</td>
 	<td></td>
 </tr>
+<!-- GENERIC CANCEL BUTTON -->
+<tr>
+	<td>AC_GENERIC_CANCEL_BUTTON</td>
+	<td>//*[contains(@class, 'btn-secondary')]</td>
+	<td></td>
+</tr>
 <!-- NEW PROPERTY SCREEN -->
 <tr>
 	<td>COMBINATED_PROPERTY_OPTION</td>

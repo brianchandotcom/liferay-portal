@@ -499,12 +499,38 @@ definition {
 	}
 
 	@description = "Verify that when having 5 tasks on the screen, a pagination bar is displayed"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PaginationBarIsDisplayed {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68558 PaginationBarIsDisplayed pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		var count = "0";
+
+		while ("${count}" != "5") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry B",
+				entryTitle = "Second Blogs Entry Title");
+			var count = ${count} + 1;
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
 	}
 
 	@description = "Verify that a task can be withdrawn"

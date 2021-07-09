@@ -57,7 +57,7 @@ definition {
 
 			var reindexElapsedTime = "0";
 
-			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP") || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]")) && ("${reindexElapsedTime}" != "480") && (maxIterations = "48")) {
+			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP") || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]")) && ("${reindexElapsedTime}" != "240") && (maxIterations = "24")) {
 				Pause.pauseNoSPARefresh(locator1 = "10000");
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 10;
@@ -70,8 +70,8 @@ definition {
 			if ("${reindexElapsedTime}" == "0") {
 				echo("Elasticsearch failed to receive reindex request.");
 			}
-			else if ("${reindexElapsedTime}" == "480") {
-				echo("Reindex timed out after 480 seconds.");
+			else if ("${reindexElapsedTime}" == "240") {
+				echo("Reindex timed out after 240 seconds.");
 
 				takeScreenshot();
 			}

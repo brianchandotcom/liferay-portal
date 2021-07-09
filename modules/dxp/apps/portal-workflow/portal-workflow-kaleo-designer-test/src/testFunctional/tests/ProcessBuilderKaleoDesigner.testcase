@@ -473,12 +473,48 @@ definition {
 	}
 
 	@description = "Verify that the Fork node must have at least two outgoing transitions."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ForkNodeMustHaveMoreThanOneTransition {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68468 ForkNodeMustHaveMoreThanOneTransition pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "Connector1",
+			newNode = "Fork",
+			newNodeDescription = "Fork Node Description",
+			newNodeName = "Fork",
+			newNodeType = "fork",
+			nodeType = "start");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "Connector2",
+			newNode = "Join",
+			newNodeDescription = "Join Node Description",
+			newNodeName = "Join",
+			newNodeType = "join",
+			nodeType = "fork");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "Connector2",
+			newNode = "End",
+			newNodeDescription = "End Node Description",
+			newNodeName = "End",
+			newNodeType = "end",
+			nodeType = "join");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialTextAceEditor(
+			locator1 = "Message#ERROR",
+			value1 = "node must have at least two outgoing transitions");
 	}
 
 	@description = "Verify that each type of Node has Actions property"

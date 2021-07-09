@@ -45,6 +45,15 @@ definition {
 
 	}
 
+	@description = "Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
+	@ignore = "true"
+	@priority = "5"
+    test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
+
+  		// TODO LRAC-8131 KnownIndividualsShowsWhichIndividualsInteractWithWebContent pending implementation
+
+	}
+
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {

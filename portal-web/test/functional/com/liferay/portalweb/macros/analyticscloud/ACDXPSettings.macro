@@ -19,9 +19,29 @@ definition {
 
 		ACDXPSettings.createCombinedProperties(siteName = "${siteName}");
 
-		ACDXPSettings.navToSyncedContactDataMenu();
+		ACDXPSettings.getAssignedPropertyName();
+
+		var assignedPropertyName = ACDXPSettings.navToSyncedContactDataMenu();
 
 		ACDXPSettings.syncContactData();
+
+		return "${assignedPropertyName}";
+	}
+
+	macro getAssignedPropertyName {
+
+		ACDXPSettings.navToSyncedSitesMenu();
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Pause(locator1 = "1000");
+
+		var assignedPropertyName = selenium.getText(locator1 = "//td[contains(@class,'lfr-assigned-property-column')]");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
+
+		return "${assignedPropertyName}";
+
 	}
 
 	macro createCombinedProperties {

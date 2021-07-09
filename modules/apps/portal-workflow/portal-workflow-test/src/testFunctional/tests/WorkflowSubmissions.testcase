@@ -192,12 +192,35 @@ definition {
 	}
 
 	@description = "Verify the kebab menu is not displayed on details page when task is completed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CompletedTaskCannnotBeWithdrawnThroughDetailsPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68562 CompletedTaskCannnotBeWithdrawnThroughDetailsPage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Workflow.completeWorkflowBlogInstance(key_workflowInstanceTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		Click(
+			key_taskName = "Blogs Entry Title",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
+
+		AssertElementNotPresent(locator1 = "WorkflowSubmissions#SUBMISSIONS_DETAILS_PAGE_ELLIPSIS");
 	}
 
 	@description = "Verify that clicking on the task name takes you to a details page"

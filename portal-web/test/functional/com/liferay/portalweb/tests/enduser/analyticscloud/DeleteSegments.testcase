@@ -81,9 +81,9 @@ definition {
 	@description = "Automation ID: LRAC-8138 | Test Summary: Delete a static segment"
 	@ignore = "true"
 	@priority = "5"
-    test CanDeleteStaticSegment {
+	test CanDeleteStaticSegment {
 
-  		// TODO LRAC-8138 CanDeleteStaticSegment pending implementation
+		// TODO LRAC-8138 CanDeleteStaticSegment pending implementation
 
 	}
 

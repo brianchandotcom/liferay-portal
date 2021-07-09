@@ -39,27 +39,27 @@ definition {
 	@description = "Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
 	@ignore = "true"
 	@priority = "5"
-    test CanNavigateToWebContentOverviewPage {
+	test CanNavigateToWebContentOverviewPage {
 
-  		// TODO LRAC-8130 CanNavigateToWebContentOverviewPage pending implementation
+		// TODO LRAC-8130 CanNavigateToWebContentOverviewPage pending implementation
 
 	}
 
 	@description = "Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
 	@ignore = "true"
 	@priority = "5"
-    test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
+	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
 
-  		// TODO LRAC-8131 KnownIndividualsShowsWhichIndividualsInteractWithWebContent pending implementation
+		// TODO LRAC-8131 KnownIndividualsShowsWhichIndividualsInteractWithWebContent pending implementation
 
 	}
 
 	@description = "Automation ID: LRAC-8125 | Test Summary: Web content list shows all web content in a list"
 	@ignore = "true"
 	@priority = "5"
-    test ViewAllWebContentShownInAssetList {
+	test ViewAllWebContentShownInAssetList {
 
-  		// TODO LRAC-8125 ViewAllWebContentShownInAssetList pending implementation
+		// TODO LRAC-8125 ViewAllWebContentShownInAssetList pending implementation
 
 	}
 

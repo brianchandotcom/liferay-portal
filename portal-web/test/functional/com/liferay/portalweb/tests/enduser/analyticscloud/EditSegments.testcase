@@ -143,21 +143,21 @@ definition {
 			value1 = "There are no items found.");
 	}
 
-	@description = "Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
-	@ignore = "true"
-	@priority = "5"
-    test CanRenameIndividualsSegment {
-
-  		// TODO LRAC-8136 CanRenameIndividualsSegment pending implementation
-
-	}
-
 	@description = "Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
 	@ignore = "true"
 	@priority = "5"
-    test CanEditStaticSegmentCheckEditSaved {
+	test CanEditStaticSegmentCheckEditSaved {
 
-  		// TODO LRAC-8135 CanEditStaticSegmentCheckEditSaved pending implementation
+		// TODO LRAC-8135 CanEditStaticSegmentCheckEditSaved pending implementation
+
+	}
+
+	@description = "Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
+	@ignore = "true"
+	@priority = "5"
+	test CanRenameIndividualsSegment {
+
+		// TODO LRAC-8136 CanRenameIndividualsSegment pending implementation
 
 	}
 

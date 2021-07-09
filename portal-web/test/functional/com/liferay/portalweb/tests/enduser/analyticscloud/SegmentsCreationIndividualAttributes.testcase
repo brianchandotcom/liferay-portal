@@ -32,9 +32,9 @@ definition {
 	@description = "Automation ID: LRAC-8134 | Test Summary: Create a Dynamic Individuals Segment"
 	@ignore = "true"
 	@priority = "5"
-    test CanCreateDynamicSegmentIndividualsAttributes {
+	test CanCreateDynamicSegmentIndividualsAttributes {
 
-  		// TODO LRAC-8134 CanCreateDynamicSegmentIndividualsAttributes pending implementation
+		// TODO LRAC-8134 CanCreateDynamicSegmentIndividualsAttributes pending implementation
 
 	}
 

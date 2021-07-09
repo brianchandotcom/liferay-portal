@@ -37,9 +37,9 @@ definition {
 	@description = "Automation ID: LRAC-8132 | Test Summary: Custom asset list shows a list of custom assets"
 	@ignore = "true"
 	@priority = "5"
-    test CanShowsCustomAssetList {
+	test CanShowsCustomAssetList {
 
-  		// TODO LRAC-8132 CanShowsCustomAssetList pending implementation
+		// TODO LRAC-8132 CanShowsCustomAssetList pending implementation
 
 	}
 

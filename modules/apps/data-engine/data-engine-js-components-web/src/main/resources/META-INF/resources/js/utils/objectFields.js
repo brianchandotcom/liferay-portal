@@ -62,8 +62,7 @@ export const getFieldsGroupedByTypes = (fields) => {
 };
 
 export const addObjectFields = async (dispatch) => {
-	const settingsDDMForm = await Liferay.componentReady('settingsDDMForm');
-
+	const settingsDDMForm = await Liferay.componentReady('formSettingsAPI');
 	const objectDefinitionId = settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
 
 	if (objectDefinitionId) {
@@ -77,8 +76,7 @@ export const addObjectFields = async (dispatch) => {
 };
 
 export const updateObjectFields = async (dispatch) => {
-	const settingsDDMForm = await Liferay.componentReady('settingsDDMForm');
-
+	const settingsDDMForm = await Liferay.componentReady('formSettingsAPI');
 	const objectDefinitionId = settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
 
 	if (objectDefinitionId) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useFormState} from 'data-engine-js-components-web';
+import {useConfig, useFormState} from 'data-engine-js-components-web';
 import {getFields} from 'data-engine-js-components-web/js/utils/fields.es';
 import {
 	getObjectFieldName,
@@ -45,16 +45,29 @@ const getUnmappedRequiredObjectFields = (formFields, objectFields) => {
 };
 
 /**
- * This hook returns false when there is no objectDefinitionId
- * and if any Forms field is not mapped with Object fields
+ * This hook is used to validate the Forms when the
+ * storage type object is selected in the Forms settings
  */
 export const useValidateFormWithObjects = () => {
+	const {portletNamespace} = useConfig();
 	const {objectFields, pages} = useFormState();
 
 	return useCallback(
 		async (callbackFn) => {
+
+			// Checks if managementToolbar exists because in some screens such as (elementSet)
+			// it does not exist and therefore saving is allowed
+
+			const managementToolbar = document.querySelector(
+				`#${portletNamespace}managementToolbar`
+			);
+
+			if (!managementToolbar) {
+				return true;
+			}
+
 			const settingsDDMForm = await Liferay.componentReady(
-				'settingsDDMForm'
+				'formSettingsAPI'
 			);
 			const objectDefinitionId = settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
 
@@ -87,6 +100,6 @@ export const useValidateFormWithObjects = () => {
 				return true;
 			}
 		},
-		[objectFields, pages]
+		[objectFields, pages, portletNamespace]
 	);
 };

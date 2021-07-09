@@ -143,4 +143,13 @@ definition {
 			value1 = "There are no items found.");
 	}
 
+	@description = "Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
+	@ignore = "true"
+	@priority = "5"
+    test CanRenameIndividualsSegment {
+
+  		// TODO LRAC-8136 CanRenameIndividualsSegment pending implementation
+
+	}
+
 }

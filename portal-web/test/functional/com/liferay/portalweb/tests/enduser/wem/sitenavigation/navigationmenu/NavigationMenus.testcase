@@ -595,18 +595,14 @@ definition {
 		}
 
 		task ("Add the child widget page as child page item under each parent page item") {
-			var n = "1";
-
-			for (var layoutName : list "Test Page Name 1,Test Page Name 2,Test Page Name 3") {
+			for (var n : list "1,2,3") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
 					groupName = "Test Site Name",
-					parentSiteNavigationMenuItem = "${layoutName}",
+					parentSiteNavigationMenuItem = "Test Page Name ${n}",
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Child Page ${n}",
 					siteNavigationMenuName = "Navigation Menu Name",
 					type = "layout");
-
-				var n = ${n} + 1;
 			}
 		}
 

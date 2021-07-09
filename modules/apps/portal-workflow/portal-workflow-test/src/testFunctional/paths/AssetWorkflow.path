@@ -109,6 +109,7 @@
 	<td>//p[@title="${key_title}"]</td>
 	<td></td>
 </tr>
+<!--BLOGS ENTRY-->
 <tr>
 	<td>BLOGS_ENTRY_STATUS_TABLE</td>
 	<td>//span[contains(@class, "label-item label-item-expand") and text()="${key_status}"]</td>

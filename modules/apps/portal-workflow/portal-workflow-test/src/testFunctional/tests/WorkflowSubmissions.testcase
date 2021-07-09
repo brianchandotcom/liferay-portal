@@ -1,0 +1,193 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownWorkflowDefinitions();
+
+			BlogsEntry.tearDownCP();
+		}
+	}
+
+	@description = "Verify can filter by completed tasks"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByCompletedTasks {
+
+		// TODO LRQA-68552 CanFilterByCompletedTasks pending implementation
+
+	}
+
+	@description = "Verify can filter by pending tasks"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByPendingTasks {
+
+		// TODO LRQA-68553 CanFilterByPendingTasks pending implementation
+
+	}
+
+	@description = "Verify if the Clear option cleans the search results"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ClearOptionCleanSearchResults {
+
+		// TODO LRQA-68565 ClearOptionCleanSearchResults pending implementation
+
+	}
+
+	@description = "Verify if the table is organized by Asset Title, Asset Type, Status, Definition, Last Activity Date and End Date columns"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ColumnsAreDisplayed {
+
+		// TODO LRQA-68563 ColumnsAreDisplayed pending implementation
+
+	}
+
+	@description = "Verify the kebab menu is not displayed when task is completed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompletedTaskCannnotBeWithdrawn {
+
+		// TODO LRQA-68561 CompletedTaskCannnotBeWithdrawn pending implementation
+
+	}
+
+	@description = "Verify the kebab menu is not displayed on details page when task is completed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompletedTaskCannnotBeWithdrawnThroughDetailsPage {
+
+		// TODO LRQA-68562 CompletedTaskCannnotBeWithdrawnThroughDetailsPage pending implementation
+
+	}
+
+	@description = "Verify that clicking on the task name takes you to a details page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DetailsPageIsDisplayeed {
+
+		// TODO LRQA-68554 DetailsPageIsDisplayeed pending implementation
+
+	}
+
+	@description = "Verify if when the task is pending, the "End Date" field is blank"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EndDateIsBlankWhenTaskPending {
+
+		// TODO LRQA-68556 EndDateIsBlankWhenTaskPending pending implementation
+
+	}
+
+	@description = "Verify if when the task is approved, the "End Date" field is filled"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EndDateIsFilledWhenTaskCompleted {
+
+		// TODO LRQA-68557 EndDateIsFilledWhenTaskCompleted pending implementation
+
+	}
+
+	@description = "Verify that when having 5 tasks on the screen, a pagination bar is displayed"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PaginationBarIsDisplayed {
+
+		// TODO LRQA-68558 PaginationBarIsDisplayed pending implementation
+
+	}
+
+	@description = "Verify that a task can be withdrawn"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TaskCanBeWithdrawn {
+
+		// TODO LRQA-68559 TaskCanBeWithdrawn pending implementation
+
+	}
+
+	@description = "Verify that a task can be withdrawn through details page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TaskCanBeWithdrawnThroughDetailsPage {
+
+		// TODO LRQA-68560 TaskCanBeWithdrawnThroughDetailsPage pending implementation
+
+	}
+
+	@description = "Verify that the task changes to approved"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TaskIsApprovedOnTheTable {
+
+		// TODO LRQA-68551 TaskIsApprovedOnTheTable pending implementation
+
+	}
+
+	@description = "Verify that the task is displayed on table"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TaskIsDisplayedOnTable {
+
+		// TODO LRQA-68550 TaskIsDisplayedOnTable pending implementation
+
+	}
+
+	@description = "Verify if the tasks are grouped into pending and completed"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TasksAreGroupedByPendingAndCompleted {
+
+		// TODO LRQA-68555 TasksAreGroupedByPendingAndCompleted pending implementation
+
+	}
+
+	@description = "Verify if clicking the arrow changes the order of the table (asc - desc)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewAscDescSequenceSubmissions {
+
+		// TODO LRQA-68564 ViewAscDescSequenceSubmissions pending implementation
+
+	}
+
+	@description = "Verify that the message 'There are no publication requested by me.' when there is no task"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ViewNoPublicationRequestedByMeMessage {
+
+		// TODO LRQA-68549 ViewNoPublicationRequestedByMeMessage pending implementation
+
+	}
+
+	@description = "Verify that the message 'There are no publication requests.' when there is no task"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ViewNoPublicationRequestsMessage {
+
+		// TODO LRQA-68548 ViewNoPublicationRequestsMessage pending implementation
+
+	}
+
+}

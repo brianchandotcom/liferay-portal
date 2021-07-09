@@ -427,9 +427,9 @@ definition {
 			rowIndexNumber = "2");
 
 		RSSPortlet.changeFeedsOrder(
-			fromRowNumber = "1",
-			rowLocation = "Title",
-			toRowNumber = "2");
+			fromRowNumber = "2",
+			offset = "0,-25",
+			toRowNumber = "1");
 
 		PortletEntry.save();
 

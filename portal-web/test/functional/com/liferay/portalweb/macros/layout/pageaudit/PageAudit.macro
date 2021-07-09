@@ -74,6 +74,10 @@ definition {
 		}
 	}
 
+	macro goToDetailView {
+		Click(locator1 = "PageAudit#FAILING_CHECK_NAME");
+	}
+
 	macro openPanelAfterConfiguration {
 		if (IsElementNotPresent(locator1 = "PageAudit#PANEL_PAGE_TITLE")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");

@@ -63,6 +63,57 @@ definition {
 		}
 	}
 
+	@description = "LPS-127668: Given the page audit panel
+	When the users access the second level
+	Then they can see the title of the issue, the description and tips sections"
+
+	@priority = "4"
+	@uitest
+	test NavigateToSecondLevel {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#NavigateToSecondLevel";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_CHECK_TITLE",
+				value1 = "Low Contrast Ratio");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_TITLE",
+				value1 = "DESCRIPTION");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_TITLE",
+				value1 = "TIPS");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#BADGE_NUMBER",
+				badgeValue = "1");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#FAILING_ELEMENT_NAME",
+				value1 = "color-contrast");
+		}
+	}
+
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
 	@priority = "3"
 	test PageAuditBackButton {

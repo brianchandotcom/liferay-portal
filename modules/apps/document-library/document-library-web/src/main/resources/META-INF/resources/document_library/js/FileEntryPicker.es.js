@@ -12,12 +12,18 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const FileNamePicker = ({namespace, validExtensions}) => {
 	const inputId = namespace + 'file';
 	const [inputValue, setInputValue] = useState('');
+	const [fileName, setFileName] = useState('');
+
+	useEffect(() => {
+		setFileName(inputValue ? inputValue.replace(/^.*[\\\/]/, '') : '');
+	}, [inputValue]);
 
 	const onInputChange = ({target}) => {
 		setInputValue(target.value);
@@ -30,6 +36,22 @@ const FileNamePicker = ({namespace, validExtensions}) => {
 			<label className="btn btn-secondary" htmlFor={inputId}>
 				{Liferay.Language.get('select-file')}
 			</label>
+
+			{fileName && (
+				<>
+					<small className="ml-2">
+						<strong>{fileName}</strong>
+					</small>
+
+					<ClayButtonWithIcon
+						borderless
+						displayType="secondary"
+						monospaced
+						onClick={() => setInputValue('')}
+						symbol="times-circle-full"
+					/>
+				</>
+			)}
 
 			<ClayInput
 				accept={validExtensions}

@@ -214,12 +214,32 @@ definition {
 	}
 
 	@description = "Verify that the user can rename connector"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ConnectorCanBeRenamed {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68483 ConnectorCanBeRenamed pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "connector",
+			newNode = "Task",
+			newNodeDescription = "Task Node Description",
+			newNodeName = "Task",
+			newNodeType = "task",
+			nodeType = "start");
+
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
+
+		KaleoDesigner.editConnectorName(connectorName = "test");
+
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#SETTINGS_NAME",
+			value1 = "test");
 	}
 
 	@description = "Verify that newly created transition has default name -connector#-"

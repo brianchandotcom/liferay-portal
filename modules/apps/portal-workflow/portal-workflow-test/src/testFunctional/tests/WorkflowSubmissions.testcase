@@ -764,12 +764,18 @@ definition {
 	}
 
 	@description = "Verify that the message 'There are no publication requests.' when there is no task"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test ViewNoPublicationRequestsMessage {
+		Navigator.openURL();
 
-		// TODO LRQA-68548 ViewNoPublicationRequestsMessage pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
 
+		AssertElementPresent(
+			key_emptyMessaage = "There are no publication requests.",
+			locator1 = "WorkflowSubmissions#EMPTY_MESSAGE");
 	}
 
 }

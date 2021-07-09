@@ -24,6 +24,8 @@ import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -44,6 +46,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -61,7 +66,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -101,20 +108,22 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				return;
 			}
 
+			Set<Locale> availableLocales = _getAvailableLocales(
+				layout, themeDisplay.getPlid(), themeDisplay.getSiteGroupId());
+
 			String completeURL = _portal.getCurrentCompleteURL(
 				httpServletRequest);
 
 			String canonicalURL = _portal.getCanonicalURL(
 				completeURL, themeDisplay, layout, false, false);
 
-			Map<Locale, String> alternateURLs = Collections.emptyMap();
+			Map<Locale, String> alternateURLs = new HashMap<>();
 
-			Set<Locale> availableLocales = _language.getAvailableLocales(
-				themeDisplay.getSiteGroupId());
-
-			if (availableLocales.size() > 1) {
-				alternateURLs = _portal.getAlternateURLs(
-					canonicalURL, themeDisplay, layout);
+			for (Locale availableLocale : availableLocales) {
+				alternateURLs.put(
+					availableLocale,
+					_portal.getAlternateURL(
+						canonicalURL, themeDisplay, availableLocale, layout));
 			}
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
@@ -333,6 +342,35 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return sb.toString();
 	}
 
+	private Set<Locale> _getAvailableLocales(
+			Layout layout, long plid, long siteGroupId)
+		throws JSONException {
+
+		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
+			siteGroupId);
+
+		Set<Locale> availableLocales = new HashSet<>();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				siteGroupId, plid);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			for (String translatableFragment : _TRANSLATABLE_FRAGMENTS) {
+				availableLocales.addAll(
+					_getLocaleOnEditableFragment(
+						editableValuesJSONObject, translatableFragment,
+						siteAvailableLocales));
+			}
+		}
+
+		return availableLocales;
+	}
+
 	private String _getDefaultDescriptionTemplate() {
 		if (_ffSEOInlineFieldMapping.enabled()) {
 			return "${description}";
@@ -379,6 +417,50 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return infoItemFieldValuesProvider.getInfoItemFieldValues(infoItem);
 	}
 
+	private Set<Locale> _getLocaleOnEditableFragment(
+		JSONObject jsonObject, String key, Set<Locale> siteAvailableLocales) {
+
+		Set<Locale> availableLocales = new HashSet<>();
+
+		JSONObject editableFragmentJSONObject = jsonObject.getJSONObject(key);
+
+		if (!(editableFragmentJSONObject instanceof JSONObject) ||
+			(editableFragmentJSONObject.length() <= 0)) {
+
+			return availableLocales;
+		}
+
+		Iterator<String> editableFragmentIterator =
+			editableFragmentJSONObject.keys();
+
+		while (editableFragmentIterator.hasNext()) {
+			Object editableValueObject = editableFragmentJSONObject.get(
+				editableFragmentIterator.next());
+
+			if (!(editableValueObject instanceof JSONObject)) {
+				continue;
+			}
+
+			JSONObject editableValueJSONObject =
+				(JSONObject)editableValueObject;
+
+			if (editableValueJSONObject.length() <= 0) {
+				continue;
+			}
+
+			for (Locale siteAvailableLocale : siteAvailableLocales) {
+				Object valueObject = editableValueJSONObject.get(
+					_language.getLanguageId(siteAvailableLocale));
+
+				if (valueObject != null) {
+					availableLocales.add(siteAvailableLocale);
+				}
+			}
+		}
+
+		return availableLocales;
+	}
+
 	private Optional<String> _getMappedValueOptional(
 		String template, InfoItemFieldValues infoItemFieldValues,
 		Locale locale) {
@@ -411,6 +493,13 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		}
 	}
 
+	private static final String[] _TRANSLATABLE_FRAGMENTS = {
+		"com.liferay.fragment.entry.processor.background.image." +
+			"BackgroundImageFragmentEntryProcessor",
+		"com.liferay.fragment.entry.processor.editable." +
+			"EditableFragmentEntryProcessor"
+	};
+
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
@@ -431,6 +520,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	private DLURLHelper _dlurlHelper;
 
 	private FFSEOInlineFieldMapping _ffSEOInlineFieldMapping;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

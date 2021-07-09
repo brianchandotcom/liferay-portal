@@ -308,10 +308,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			JournalArticle.class.getName(),
 			ActionKeys.UPDATE);
 
-		_portletResourcePermission.contains(
-			permissionChecker, themeDisplay.getScopeGroupId(),
-			ActionKeys.UPDATE);
-
 		if (webContentEditPermission) {
 			return true;
 		}

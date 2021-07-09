@@ -350,12 +350,32 @@ definition {
 	}
 
 	@description = "Verify that the user can rename connector"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test NodeCanBeRenamed {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68461 NodeCanBeRenamed pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "connector",
+			newNode = "Task",
+			newNodeDescription = "Task Node Description",
+			newNodeName = "Task",
+			newNodeType = "task",
+			nodeType = "start");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
+
+		KaleoDesigner.editNodeName(nodeName = "Test");
+
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#SETTINGS_NAME",
+			value1 = "Test");
 	}
 
 	@description = "Verify that the transition can be dropped on plain field, pop up menu will appear, user can select new node, new node is created correctly"

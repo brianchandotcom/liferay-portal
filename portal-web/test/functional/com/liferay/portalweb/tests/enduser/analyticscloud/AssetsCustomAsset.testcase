@@ -1,0 +1,46 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Automation ID: LRAC-8132 | Test Summary: Custom asset list shows a list of custom assets"
+	@ignore = "true"
+	@priority = "5"
+    test CanShowsCustomAssetList {
+
+  		// TODO LRAC-8132 CanShowsCustomAssetList pending implementation
+
+	}
+
+}

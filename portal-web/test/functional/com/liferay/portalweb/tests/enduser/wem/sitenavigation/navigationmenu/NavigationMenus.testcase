@@ -611,7 +611,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 
-			Pause(locator1 = "2000");
+			WaitForPageLoad();
 		}
 
 		task ("Change the order of the second parent page item and third parent page item") {

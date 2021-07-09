@@ -78,8 +78,7 @@ public class DataCleanup implements UpgradeStepRegistrator {
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpOpenSocialGadgetModuleData,
-				"com.liferay.opensocial.service",
-				OpenSocialGadgetUpgradeProcess::new);
+				"opensocial-portlet", OpenSocialGadgetUpgradeProcess::new);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpPrivateMessagingModuleData,

@@ -27,12 +27,30 @@ definition {
 	}
 
 	@description = "Verify that Action can be added"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddAction {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68480 CanAddAction pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Task Node Description",
+			nodeName = "Task",
+			nodeNodeLabel = "Task",
+			nodeType = "task");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
+
+		KaleoDesigner.editNodeActions(
+			actionDescription = "Node Actions Test Description",
+			actionName = "Node Actions Test");
+
+		AssertElementPresent(
+			key_actionsValue = "Node Actions Test",
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS_VALUE");
 	}
 
 	@description = "Verify that multiple Assignment can be added"

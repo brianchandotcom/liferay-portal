@@ -251,6 +251,46 @@ definition {
 			value1 = "${nodeExecutionType}");
 	}
 
+	macro editNodeActions {
+		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_NAME",
+			value1 = "${actionName}");
+
+		Type(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_DESCRIPTION",
+			value1 = "${actionDescription}");
+
+		if (isSet(actionScript)) {
+			Type(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCRIPT",
+				value1 = "${actionScript}");
+		}
+
+		if (isSet(scriptLanguage)) {
+			Select(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCRIPT_LANGUAGE_SELECT",
+				value1 = "${scriptLanguage}");
+		}
+
+		if (isSet(executionType)) {
+			Select(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT",
+				value1 = "${executionType}");
+		}
+
+		if (isSet(actionPriority)) {
+			Type(
+				locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_PRIORITY",
+				value1 = "${actionPriority}");
+		}
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+	}
+
 	macro editNodeAssignments {
 		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
 

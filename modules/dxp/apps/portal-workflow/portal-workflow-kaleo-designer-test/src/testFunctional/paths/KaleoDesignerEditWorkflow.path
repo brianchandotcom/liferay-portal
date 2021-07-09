@@ -94,6 +94,16 @@
 </tr>
 <!--SETTINGS-->
 <tr>
+	<td>SETTINGS_ACTIONS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]//following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_ACTIONS_VALUE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]//following-sibling::td[contains(.,'${key_actionsValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_SCRIPT</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Script')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
@@ -200,6 +210,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_CELL_EDITOR_PRIORITY</td>
+	<td>//input[@name='priority']m</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_CELL_EDITOR_SCALE_SELECT_2</td>
 	<td>xpath=(//select[@name='scale'])[2]</td>
 	<td></td>
@@ -207,6 +222,11 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_SCRIPT</td>
 	<td>//textarea[@name='script']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SCRIPT_LANGUAGE_SELECT</td>
+	<td>//select[@name='scriptLanguage']</td>
 	<td></td>
 </tr>
 <tr>

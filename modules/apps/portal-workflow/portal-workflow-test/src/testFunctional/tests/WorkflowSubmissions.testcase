@@ -20,13 +20,13 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
-		//else {
-		//	Workflow.tearDownPortalWorkflow();
+		else {
+			Workflow.tearDownPortalWorkflow();
 
-		//	Workflow.tearDownWorkflowDefinitions();
+			Workflow.tearDownWorkflowDefinitions();
 
-		//	BlogsEntry.tearDownCP();
-		//}
+			BlogsEntry.tearDownCP();
+		}
 
 	}
 
@@ -559,6 +559,10 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Test content",
 			entryTitle = "Test Blog 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Test content",
+			entryTitle = "Test Blog 2");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

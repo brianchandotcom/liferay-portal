@@ -32,8 +32,7 @@
 			"LayoutProvider/handlers/focusedFieldEvaluationEndedHandler",
 			"LayoutProvider/util",
 			"PageRenderer",
-			"RuleBuilder/RulesSupport.",
-			"Sidebar/Sidebar"
+			"RuleBuilder/RulesSupport."
 		]
 	},
 	"main": "js/index.es.js",

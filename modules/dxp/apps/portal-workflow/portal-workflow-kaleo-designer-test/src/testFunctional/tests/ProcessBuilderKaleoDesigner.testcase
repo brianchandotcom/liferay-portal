@@ -417,12 +417,24 @@ definition {
 	}
 
 	@description = "Verify that newly created transition has default name -connector#-"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ConnectorHasDefaultName {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68460 ConnectorHasDefaultName pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
 
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "Connector1",
+			newNode = "Fork",
+			newNodeDescription = "Fork Node Description",
+			newNodeName = "Fork",
+			newNodeType = "fork",
+			nodeType = "start");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
 	}
 
 	@description = "Verify that default names for nodes are provided"

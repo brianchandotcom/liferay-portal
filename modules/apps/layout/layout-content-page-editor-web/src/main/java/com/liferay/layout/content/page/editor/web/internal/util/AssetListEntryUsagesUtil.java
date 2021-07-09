@@ -27,8 +27,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.list.provider.InfoItemRelatedListProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceTrackerUtil;
@@ -447,12 +447,25 @@ public class AssetListEntryUsagesUtil {
 				infoItemServiceTracker.getInfoItemService(
 					InfoCollectionProvider.class, assetListEntryUsage.getKey());
 
+			if (infoCollectionProvider == null) {
+				infoCollectionProvider =
+					infoItemServiceTracker.getInfoItemService(
+						RelatedInfoItemCollectionProvider.class,
+						assetListEntryUsage.getKey());
+			}
+
 			if (infoCollectionProvider != null) {
+				if (!(infoCollectionProvider instanceof
+						RelatedInfoItemCollectionProvider)) {
+
+					mappedContentJSONObject.put(
+						"actions",
+						_getInfoCollectionProviderActionsJSONObject(
+							infoCollectionProvider, httpServletRequest,
+							redirect));
+				}
+
 				mappedContentJSONObject.put(
-					"actions",
-					_getInfoCollectionProviderActionsJSONObject(
-						infoCollectionProvider, httpServletRequest, redirect)
-				).put(
 					"subtype",
 					ResourceActionsUtil.getModelResource(
 						themeDisplay.getLocale(),
@@ -461,28 +474,6 @@ public class AssetListEntryUsagesUtil {
 					"title",
 					infoCollectionProvider.getLabel(themeDisplay.getLocale())
 				);
-			}
-			else {
-				InfoItemRelatedListProvider infoItemRelatedListProvider =
-					infoItemServiceTracker.getInfoItemService(
-						InfoItemRelatedListProvider.class,
-						assetListEntryUsage.getKey());
-
-				if (infoItemRelatedListProvider != null) {
-					Class<?> relatedItemClass =
-						infoItemRelatedListProvider.getRelatedItemClass();
-
-					mappedContentJSONObject.put(
-						"subtype",
-						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(),
-							relatedItemClass.getName())
-					).put(
-						"title",
-						infoItemRelatedListProvider.getLabel(
-							themeDisplay.getLocale())
-					);
-				}
 			}
 		}
 

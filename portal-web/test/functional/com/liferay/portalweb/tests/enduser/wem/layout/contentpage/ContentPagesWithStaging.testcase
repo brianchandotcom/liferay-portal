@@ -731,6 +731,146 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-133933. The user can resize the displayed image via image editor on Page Content panel in staging site."
+	@priority = "4"
+	test ResizeDisplayedImageViaImageEditorOnPageContentPanelInStagingSite {
+		task ("Add a content page based on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Directly select an image in editable field") {
+			PageEditor.editFragmentImage(
+				fileName = "analytics-cloud-hero-image.png",
+				fragmentName = "Image",
+				id = "image-square");
+		}
+
+		task ("View the selected image is shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "analytics-cloud-hero-image.png");
+		}
+
+		task ("Take down the naturalWidth and naturalHeight of image") {
+			var naturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalWidth");
+
+			var naturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalHeight");
+		}
+
+		task ("Edit the image via the image editor on Page Content panel") {
+			Navigator.gotoNavTab(navTab = "Page Content");
+
+			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
+				itemName = "analytics-cloud-hero-image.png",
+				menuItem = "Edit Image");
+
+			ImageEditor.resizeImage(dimension = "16:9");
+
+			ImageEditor.saveChanges();
+		}
+
+		task ("Take down the new naturalWidth and naturalHeight of image") {
+			Navigator.gotoNavTab(navTab = "Page Elements");
+
+			WaitForElementPresent(
+				key_resolutionLabel = "Width",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
+
+			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalWidth");
+
+			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalHeight");
+		}
+
+		task ("View the naturalWidth doesn't change") {
+			TestUtils.assertEquals(
+				actual = "${editedNaturalWidth}",
+				expected = "${naturalWidth}");
+		}
+
+		task ("View the naturalHeight becomes smaller") {
+			TestUtils.isGreaterThan(
+				actual = "${naturalHeight}",
+				expected = "${editedNaturalHeight}");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Take down the new naturalWidth and naturalHeight of image at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "analytics-cloud-hero-image.png");
+
+			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalWidth");
+
+			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalHeight");
+		}
+
+		task ("View the naturalWidth doesn't change") {
+			TestUtils.assertEquals(
+				actual = "${editedNaturalWidth}",
+				expected = "${naturalWidth}");
+		}
+
+		task ("View the naturalHeight becomes smaller") {
+			TestUtils.isGreaterThan(
+				actual = "${naturalHeight}",
+				expected = "${editedNaturalHeight}");
+		}
+
+		task ("Publish to Live via page") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Take down the new naturalWidth and naturalHeight of image at view mode in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "analytics-cloud-hero-image.png");
+
+			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalWidth");
+
+			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalHeight");
+		}
+
+		task ("View the naturalWidth doesn't change") {
+			TestUtils.assertEquals(
+				actual = "${editedNaturalWidth}",
+				expected = "${naturalWidth}");
+		}
+
+		task ("View the naturalHeight becomes smaller") {
+			TestUtils.isGreaterThan(
+				actual = "${naturalHeight}",
+				expected = "${editedNaturalHeight}");
+		}
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments back in Staging site."
 	@priority = "3"
 	test UndoDeletedFragmentInStagingSite {

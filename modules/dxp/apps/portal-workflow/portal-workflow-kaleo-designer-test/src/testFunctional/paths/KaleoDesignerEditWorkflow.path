@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TABLE</td>
+	<td>//table[contains(@class, "table-table table")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_SCRIPT_CONTENT</td>
 	<td>//div[contains(@class,'ace_editor')]/textarea</td>
 	<td></td>
@@ -111,6 +116,11 @@
 <tr>
 	<td>SETTINGS_DESCRIPTION</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Description')]//following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_NAME</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>

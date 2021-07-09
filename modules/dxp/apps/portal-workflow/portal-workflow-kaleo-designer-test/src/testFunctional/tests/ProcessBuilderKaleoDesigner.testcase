@@ -113,12 +113,26 @@ definition {
 	}
 
 	@description = "Verify that properties can be modified"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanModifyProperties {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68451 CanModifyProperties pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_TABLE");
+
+		AssertEditable(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NOTIFICATIONS");
+
+		AssertEditable(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION");
+
+		AssertEditable(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NAME");
+
+		AssertEditable(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_TYPE");
 	}
 
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"

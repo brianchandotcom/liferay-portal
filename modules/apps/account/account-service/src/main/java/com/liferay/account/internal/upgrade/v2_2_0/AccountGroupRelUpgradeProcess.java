@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.Date;
@@ -28,6 +28,12 @@ import java.sql.PreparedStatement;
  * @author Drew Brokke
  */
 public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
+
+	public AccountGroupRelUpgradeProcess(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -47,14 +53,15 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 			runSQL("alter table AccountGroupRel add modifiedDate DATE null");
 		}
 
-		for (Company company : CompanyLocalServiceUtil.getCompanies()) {
-			try {
-				_updateDefaultValues(company);
-			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
-			}
-		}
+		_companyLocalService.forEachCompany(
+			company -> {
+				try {
+					_updateDefaultValues(company);
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
+			});
 	}
 
 	private void _updateDefaultValues(Company company) throws Exception {
@@ -81,5 +88,7 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountGroupRelUpgradeProcess.class);
+
+	private final CompanyLocalService _companyLocalService;
 
 }

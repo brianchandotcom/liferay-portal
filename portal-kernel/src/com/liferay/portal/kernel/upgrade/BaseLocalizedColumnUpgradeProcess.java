@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -60,13 +61,6 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 			long[] companyIds)
 		throws SQLException {
 
-		Class<?> clazz = getClass();
-
-		resourceBundleLoader = new AggregateResourceBundleLoader(
-			new ClassResourceBundleLoader(
-				"content.Language", clazz.getClassLoader()),
-			resourceBundleLoader);
-
 		try {
 			String tableName = getTableName(tableClass);
 
@@ -80,12 +74,17 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 					tableName + StringPool.POUND + columnName);
 			}
 
-			for (long companyId : companyIds) {
-				_upgrade(
-					resourceBundleLoader, tableClass, columnName,
-					originalContent, localizationMapKey, localizationXMLKey,
-					companyId);
-			}
+			Class<?> clazz = getClass();
+
+			CompanyLocalServiceUtil.forEachCompanyId(
+				companyId -> _upgrade(
+					new AggregateResourceBundleLoader(
+						new ClassResourceBundleLoader(
+							"content.Language", clazz.getClassLoader()),
+						resourceBundleLoader),
+					tableClass, columnName, originalContent, localizationMapKey,
+					localizationXMLKey, companyId),
+				companyIds);
 		}
 		catch (Exception exception) {
 			throw new SQLException(exception);

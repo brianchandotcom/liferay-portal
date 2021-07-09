@@ -272,7 +272,14 @@
 						}
 					]
 				},
-				"validation": "",
+				"validation": {
+					"errorMessage": {
+					},
+					"expression": {
+					},
+					"parameter": {
+					}
+				},
 				"visibilityExpression": ""
 			},
 			"defaultValue": {

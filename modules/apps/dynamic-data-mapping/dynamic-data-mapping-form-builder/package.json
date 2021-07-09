@@ -21,14 +21,9 @@
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
 		],
-		"snapshotSerializers": [
-			"metal-jest-serializer"
-		],
 		"testPathIgnorePatterns": [
-			"Evaluator",
 			"fieldSupport",
 			"FormBuilder",
-			"FormRenderer",
 			"LayoutProvider/handlers/columnResizedHandler",
 			"LayoutProvider/handlers/fieldBlurredHandler",
 			"LayoutProvider/handlers/fieldDeletedHandler",
@@ -47,7 +42,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "metalsoy -s \"test/**/*.soy\" -d \"test\" && liferay-npm-scripts test"
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "4.0.6"
 }

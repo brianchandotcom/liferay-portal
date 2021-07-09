@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.layout.display.page.portlet;
+package com.liferay.commerce.product.content.web.internal.asset.display.page.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

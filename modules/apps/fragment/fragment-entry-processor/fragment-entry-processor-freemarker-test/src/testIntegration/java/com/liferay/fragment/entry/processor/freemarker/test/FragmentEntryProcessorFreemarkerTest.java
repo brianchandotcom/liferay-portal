@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -119,13 +120,15 @@ public class FragmentEntryProcessorFreemarkerTest {
 		Assert.assertNotNull(fragmentEntry);
 	}
 
-	@Test
+	@Test(expected = AssertionError.class)
 	public void testAddFragmentEntryWithInvalidFreemarkerVariable()
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setRequest(_getMockHttpServletRequest());
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
@@ -142,13 +145,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 				null, null, 0, 0, WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
 
-		FragmentEntry publishedFragmentEntry =
-			_fragmentEntryService.publishDraft(draftFragmentEntry);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		Assert.assertNull(publishedFragmentEntry);
-
-		expectedException.expect(FragmentEntryContentException.class);
-		expectedException.expectMessage("FreeMarker syntax is invalid");
+		_fragmentEntryService.publishDraft(draftFragmentEntry);
 	}
 
 	@Test

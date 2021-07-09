@@ -14,13 +14,9 @@
 
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.rest.dto.v1_0.Account;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.user.client.dto.v1_0.AccountInformation;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
@@ -28,17 +24,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Arrays;
@@ -131,48 +121,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				_userLocalService.hasOrganizationUser(
 					organizationId, user.getUserId()));
 		}
-	}
-
-	@Test
-	public void testGetOrganizationAccountInformation() throws Exception {
-		com.liferay.portal.kernel.model.Organization
-			serviceBuilderOrganization = OrganizationTestUtil.addOrganization();
-
-		Organization organization = organizationResource.getOrganization(
-			String.valueOf(serviceBuilderOrganization.getOrganizationId()));
-
-		AccountInformation accountInformation =
-			organization.getAccountInformation();
-
-		Assert.assertEquals(Integer.valueOf(0), accountInformation.getCount());
-		Assert.assertTrue(ArrayUtil.isEmpty(accountInformation.getAccounts()));
-
-		Account[] organizationAccounts = {
-			_addOrganizationAccount(
-				serviceBuilderOrganization.getOrganizationId()),
-			_addOrganizationAccount(
-				serviceBuilderOrganization.getOrganizationId())
-		};
-
-		organization = organizationResource.getOrganization(
-			String.valueOf(serviceBuilderOrganization.getOrganizationId()));
-
-		accountInformation = organization.getAccountInformation();
-
-		Assert.assertEquals(Integer.valueOf(2), accountInformation.getCount());
-
-		Account[] accountInformationAccounts = TransformUtil.transform(
-			accountInformation.getAccounts(),
-			account -> _accountResourceDTOConverter.toDTO(
-				_accountEntryLocalService.getAccountEntry(account.getId())),
-			Account.class);
-
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				organizationAccounts, accountInformationAccounts));
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				accountInformationAccounts, organizationAccounts));
 	}
 
 	@Override
@@ -346,23 +294,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			organization.getName(), true);
 	}
 
-	private Account _addOrganizationAccount(long organizationId)
-		throws Exception {
-
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry.getAccountEntryId(), organizationId);
-
-		return _accountResourceDTOConverter.toDTO(accountEntry);
-	}
-
 	private Organization _addUserOrganization(
 			Long userAccountId, Organization organization)
 		throws Exception {
@@ -402,9 +333,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	@Inject
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
-
-	@Inject(filter = "dto.class.name=com.liferay.account.model.AccountEntry")
-	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

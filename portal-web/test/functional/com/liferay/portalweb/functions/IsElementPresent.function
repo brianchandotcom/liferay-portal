@@ -13,6 +13,10 @@ definition {
 		selenium.isElementPresentAfterWait();
 	}
 
+	function isElementPresentNoSPARefresh {
+		selenium.isElementPresent();
+	}
+
 	function isVisible {
 		WaitForSPARefresh();
 

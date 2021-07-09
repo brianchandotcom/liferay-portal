@@ -122,12 +122,20 @@ definition {
 	}
 
 	@description = "Verify that a workflow can be assigned to Blog Entry in the Portal configurations"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAssignWorkflowThroughPortalConfiguration {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68526 CanAssignWorkflowThroughPortalConfiguration pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "Verify that the user can assign a Workflow to Blog Entry"

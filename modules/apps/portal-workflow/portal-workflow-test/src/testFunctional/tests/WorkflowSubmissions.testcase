@@ -485,12 +485,41 @@ definition {
 	}
 
 	@description = "Verify that the task is displayed on table"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TaskIsDisplayedOnTable {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		// TODO LRQA-68550 TaskIsDisplayedOnTable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertElementPresent(
+			key_workflowDefinitionTitle = "Blogs Entry Title",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review");
 	}
 
 	@description = "Verify if the tasks are grouped into pending and completed"

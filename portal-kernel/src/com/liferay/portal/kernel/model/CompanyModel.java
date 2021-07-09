@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 
+import java.util.Date;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -30,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CompanyModel extends BaseModel<Company>, MVCCModel {
+public interface CompanyModel
+	extends AuditedModel, BaseModel<Company>, MVCCModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -73,6 +76,7 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	 *
 	 * @return the company ID of this company
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -80,21 +84,89 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	 *
 	 * @param companyId the company ID of this company
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the account ID of this company.
+	 * Returns the user ID of this company.
 	 *
-	 * @return the account ID of this company
+	 * @return the user ID of this company
 	 */
-	public long getAccountId();
+	@Override
+	public long getUserId();
 
 	/**
-	 * Sets the account ID of this company.
+	 * Sets the user ID of this company.
 	 *
-	 * @param accountId the account ID of this company
+	 * @param userId the user ID of this company
 	 */
-	public void setAccountId(long accountId);
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this company.
+	 *
+	 * @return the user uuid of this company
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this company.
+	 *
+	 * @param userUuid the user uuid of this company
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this company.
+	 *
+	 * @return the user name of this company
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this company.
+	 *
+	 * @param userName the user name of this company
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this company.
+	 *
+	 * @return the create date of this company
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this company.
+	 *
+	 * @param createDate the create date of this company
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this company.
+	 *
+	 * @return the modified date of this company
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this company.
+	 *
+	 * @param modifiedDate the modified date of this company
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the web ID of this company.
@@ -210,5 +282,140 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	 * @param active the active of this company
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the name of this company.
+	 *
+	 * @return the name of this company
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this company.
+	 *
+	 * @param name the name of this company
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the legal name of this company.
+	 *
+	 * @return the legal name of this company
+	 */
+	@AutoEscape
+	public String getLegalName();
+
+	/**
+	 * Sets the legal name of this company.
+	 *
+	 * @param legalName the legal name of this company
+	 */
+	public void setLegalName(String legalName);
+
+	/**
+	 * Returns the legal ID of this company.
+	 *
+	 * @return the legal ID of this company
+	 */
+	@AutoEscape
+	public String getLegalId();
+
+	/**
+	 * Sets the legal ID of this company.
+	 *
+	 * @param legalId the legal ID of this company
+	 */
+	public void setLegalId(String legalId);
+
+	/**
+	 * Returns the legal type of this company.
+	 *
+	 * @return the legal type of this company
+	 */
+	@AutoEscape
+	public String getLegalType();
+
+	/**
+	 * Sets the legal type of this company.
+	 *
+	 * @param legalType the legal type of this company
+	 */
+	public void setLegalType(String legalType);
+
+	/**
+	 * Returns the sic code of this company.
+	 *
+	 * @return the sic code of this company
+	 */
+	@AutoEscape
+	public String getSicCode();
+
+	/**
+	 * Sets the sic code of this company.
+	 *
+	 * @param sicCode the sic code of this company
+	 */
+	public void setSicCode(String sicCode);
+
+	/**
+	 * Returns the ticker symbol of this company.
+	 *
+	 * @return the ticker symbol of this company
+	 */
+	@AutoEscape
+	public String getTickerSymbol();
+
+	/**
+	 * Sets the ticker symbol of this company.
+	 *
+	 * @param tickerSymbol the ticker symbol of this company
+	 */
+	public void setTickerSymbol(String tickerSymbol);
+
+	/**
+	 * Returns the industry of this company.
+	 *
+	 * @return the industry of this company
+	 */
+	@AutoEscape
+	public String getIndustry();
+
+	/**
+	 * Sets the industry of this company.
+	 *
+	 * @param industry the industry of this company
+	 */
+	public void setIndustry(String industry);
+
+	/**
+	 * Returns the type of this company.
+	 *
+	 * @return the type of this company
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this company.
+	 *
+	 * @param type the type of this company
+	 */
+	public void setType(String type);
+
+	/**
+	 * Returns the size of this company.
+	 *
+	 * @return the size of this company
+	 */
+	@AutoEscape
+	public String getSize();
+
+	/**
+	 * Sets the size of this company.
+	 *
+	 * @param size the size of this company
+	 */
+	public void setSize(String size);
 
 }

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -124,7 +125,13 @@ public class CompanyPersistenceTest {
 
 		newCompany.setMvccVersion(RandomTestUtil.nextLong());
 
-		newCompany.setAccountId(RandomTestUtil.nextLong());
+		newCompany.setUserId(RandomTestUtil.nextLong());
+
+		newCompany.setUserName(RandomTestUtil.randomString());
+
+		newCompany.setCreateDate(RandomTestUtil.nextDate());
+
+		newCompany.setModifiedDate(RandomTestUtil.nextDate());
 
 		newCompany.setWebId(RandomTestUtil.randomString());
 
@@ -140,6 +147,24 @@ public class CompanyPersistenceTest {
 
 		newCompany.setActive(RandomTestUtil.randomBoolean());
 
+		newCompany.setName(RandomTestUtil.randomString());
+
+		newCompany.setLegalName(RandomTestUtil.randomString());
+
+		newCompany.setLegalId(RandomTestUtil.randomString());
+
+		newCompany.setLegalType(RandomTestUtil.randomString());
+
+		newCompany.setSicCode(RandomTestUtil.randomString());
+
+		newCompany.setTickerSymbol(RandomTestUtil.randomString());
+
+		newCompany.setIndustry(RandomTestUtil.randomString());
+
+		newCompany.setType(RandomTestUtil.randomString());
+
+		newCompany.setSize(RandomTestUtil.randomString());
+
 		_companies.add(_persistence.update(newCompany));
 
 		Company existingCompany = _persistence.findByPrimaryKey(
@@ -150,7 +175,15 @@ public class CompanyPersistenceTest {
 		Assert.assertEquals(
 			existingCompany.getCompanyId(), newCompany.getCompanyId());
 		Assert.assertEquals(
-			existingCompany.getAccountId(), newCompany.getAccountId());
+			existingCompany.getUserId(), newCompany.getUserId());
+		Assert.assertEquals(
+			existingCompany.getUserName(), newCompany.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingCompany.getCreateDate()),
+			Time.getShortTimestamp(newCompany.getCreateDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingCompany.getModifiedDate()),
+			Time.getShortTimestamp(newCompany.getModifiedDate()));
 		Assert.assertEquals(existingCompany.getWebId(), newCompany.getWebId());
 		Assert.assertEquals(existingCompany.getMx(), newCompany.getMx());
 		Assert.assertEquals(
@@ -161,6 +194,21 @@ public class CompanyPersistenceTest {
 		Assert.assertEquals(
 			existingCompany.getMaxUsers(), newCompany.getMaxUsers());
 		Assert.assertEquals(existingCompany.isActive(), newCompany.isActive());
+		Assert.assertEquals(existingCompany.getName(), newCompany.getName());
+		Assert.assertEquals(
+			existingCompany.getLegalName(), newCompany.getLegalName());
+		Assert.assertEquals(
+			existingCompany.getLegalId(), newCompany.getLegalId());
+		Assert.assertEquals(
+			existingCompany.getLegalType(), newCompany.getLegalType());
+		Assert.assertEquals(
+			existingCompany.getSicCode(), newCompany.getSicCode());
+		Assert.assertEquals(
+			existingCompany.getTickerSymbol(), newCompany.getTickerSymbol());
+		Assert.assertEquals(
+			existingCompany.getIndustry(), newCompany.getIndustry());
+		Assert.assertEquals(existingCompany.getType(), newCompany.getType());
+		Assert.assertEquals(existingCompany.getSize(), newCompany.getSize());
 	}
 
 	@Test
@@ -220,9 +268,12 @@ public class CompanyPersistenceTest {
 
 	protected OrderByComparator<Company> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Company", "mvccVersion", true, "companyId", true, "accountId",
-			true, "webId", true, "mx", true, "homeURL", true, "logoId", true,
-			"system", true, "maxUsers", true, "active", true);
+			"Company", "mvccVersion", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "webId",
+			true, "mx", true, "homeURL", true, "logoId", true, "system", true,
+			"maxUsers", true, "active", true, "name", true, "legalName", true,
+			"legalId", true, "legalType", true, "sicCode", true, "tickerSymbol",
+			true, "industry", true, "type", true, "size", true);
 	}
 
 	@Test
@@ -503,7 +554,13 @@ public class CompanyPersistenceTest {
 
 		company.setMvccVersion(RandomTestUtil.nextLong());
 
-		company.setAccountId(RandomTestUtil.nextLong());
+		company.setUserId(RandomTestUtil.nextLong());
+
+		company.setUserName(RandomTestUtil.randomString());
+
+		company.setCreateDate(RandomTestUtil.nextDate());
+
+		company.setModifiedDate(RandomTestUtil.nextDate());
 
 		company.setWebId(RandomTestUtil.randomString());
 
@@ -518,6 +575,24 @@ public class CompanyPersistenceTest {
 		company.setMaxUsers(RandomTestUtil.nextInt());
 
 		company.setActive(RandomTestUtil.randomBoolean());
+
+		company.setName(RandomTestUtil.randomString());
+
+		company.setLegalName(RandomTestUtil.randomString());
+
+		company.setLegalId(RandomTestUtil.randomString());
+
+		company.setLegalType(RandomTestUtil.randomString());
+
+		company.setSicCode(RandomTestUtil.randomString());
+
+		company.setTickerSymbol(RandomTestUtil.randomString());
+
+		company.setIndustry(RandomTestUtil.randomString());
+
+		company.setType(RandomTestUtil.randomString());
+
+		company.setSize(RandomTestUtil.randomString());
 
 		_companies.add(_persistence.update(company));
 

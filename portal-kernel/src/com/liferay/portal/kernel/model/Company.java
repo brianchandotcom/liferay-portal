@@ -83,10 +83,6 @@ public interface Company extends CompanyModel, PersistedModel {
 	public java.util.Locale getLocale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@com.liferay.portal.kernel.bean.AutoEscape
-	public String getName()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public String getPortalURL(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

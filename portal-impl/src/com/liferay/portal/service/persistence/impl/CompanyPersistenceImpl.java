@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -45,6 +47,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1236,6 +1239,8 @@ public class CompanyPersistenceImpl
 
 		dbColumnNames.put("system", "system_");
 		dbColumnNames.put("active", "active_");
+		dbColumnNames.put("type", "type_");
+		dbColumnNames.put("size", "size_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -1486,6 +1491,29 @@ public class CompanyPersistenceImpl
 		}
 
 		CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (company.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				company.setCreateDate(date);
+			}
+			else {
+				company.setCreateDate(serviceContext.getCreateDate(date));
+			}
+		}
+
+		if (!companyModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				company.setModifiedDate(date);
+			}
+			else {
+				company.setModifiedDate(serviceContext.getModifiedDate(date));
+			}
+		}
 
 		Session session = null;
 
@@ -1864,7 +1892,7 @@ public class CompanyPersistenceImpl
 		CompanyPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"system", "active"});
+		new String[] {"system", "active", "type", "size"});
 
 	@Override
 	protected FinderCache getFinderCache() {

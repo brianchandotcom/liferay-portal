@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Company in entity cache.
  *
@@ -74,14 +76,20 @@ public class CompanyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", accountId=");
-		sb.append(accountId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", webId=");
 		sb.append(webId);
 		sb.append(", mx=");
@@ -96,6 +104,24 @@ public class CompanyCacheModel
 		sb.append(maxUsers);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", legalName=");
+		sb.append(legalName);
+		sb.append(", legalId=");
+		sb.append(legalId);
+		sb.append(", legalType=");
+		sb.append(legalType);
+		sb.append(", sicCode=");
+		sb.append(sicCode);
+		sb.append(", tickerSymbol=");
+		sb.append(tickerSymbol);
+		sb.append(", industry=");
+		sb.append(industry);
+		sb.append(", type=");
+		sb.append(type);
+		sb.append(", size=");
+		sb.append(size);
 		sb.append("}");
 
 		return sb.toString();
@@ -107,7 +133,28 @@ public class CompanyCacheModel
 
 		companyImpl.setMvccVersion(mvccVersion);
 		companyImpl.setCompanyId(companyId);
-		companyImpl.setAccountId(accountId);
+		companyImpl.setUserId(userId);
+
+		if (userName == null) {
+			companyImpl.setUserName("");
+		}
+		else {
+			companyImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			companyImpl.setCreateDate(null);
+		}
+		else {
+			companyImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			companyImpl.setModifiedDate(null);
+		}
+		else {
+			companyImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (webId == null) {
 			companyImpl.setWebId("");
@@ -135,6 +182,69 @@ public class CompanyCacheModel
 		companyImpl.setMaxUsers(maxUsers);
 		companyImpl.setActive(active);
 
+		if (name == null) {
+			companyImpl.setName("");
+		}
+		else {
+			companyImpl.setName(name);
+		}
+
+		if (legalName == null) {
+			companyImpl.setLegalName("");
+		}
+		else {
+			companyImpl.setLegalName(legalName);
+		}
+
+		if (legalId == null) {
+			companyImpl.setLegalId("");
+		}
+		else {
+			companyImpl.setLegalId(legalId);
+		}
+
+		if (legalType == null) {
+			companyImpl.setLegalType("");
+		}
+		else {
+			companyImpl.setLegalType(legalType);
+		}
+
+		if (sicCode == null) {
+			companyImpl.setSicCode("");
+		}
+		else {
+			companyImpl.setSicCode(sicCode);
+		}
+
+		if (tickerSymbol == null) {
+			companyImpl.setTickerSymbol("");
+		}
+		else {
+			companyImpl.setTickerSymbol(tickerSymbol);
+		}
+
+		if (industry == null) {
+			companyImpl.setIndustry("");
+		}
+		else {
+			companyImpl.setIndustry(industry);
+		}
+
+		if (type == null) {
+			companyImpl.setType("");
+		}
+		else {
+			companyImpl.setType(type);
+		}
+
+		if (size == null) {
+			companyImpl.setSize("");
+		}
+		else {
+			companyImpl.setSize(size);
+		}
+
 		companyImpl.resetOriginalValues();
 
 		companyImpl.setCompanySecurityBag(_companySecurityBag);
@@ -152,7 +262,10 @@ public class CompanyCacheModel
 
 		companyId = objectInput.readLong();
 
-		accountId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		webId = objectInput.readUTF();
 		mx = objectInput.readUTF();
 		homeURL = objectInput.readUTF();
@@ -164,6 +277,15 @@ public class CompanyCacheModel
 		maxUsers = objectInput.readInt();
 
 		active = objectInput.readBoolean();
+		name = objectInput.readUTF();
+		legalName = objectInput.readUTF();
+		legalId = objectInput.readUTF();
+		legalType = objectInput.readUTF();
+		sicCode = objectInput.readUTF();
+		tickerSymbol = objectInput.readUTF();
+		industry = objectInput.readUTF();
+		type = objectInput.readUTF();
+		size = objectInput.readUTF();
 
 		_companySecurityBag =
 			(CompanyImpl.CompanySecurityBag)objectInput.readObject();
@@ -176,7 +298,17 @@ public class CompanyCacheModel
 
 		objectOutput.writeLong(companyId);
 
-		objectOutput.writeLong(accountId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		if (webId == null) {
 			objectOutput.writeUTF("");
@@ -207,13 +339,79 @@ public class CompanyCacheModel
 
 		objectOutput.writeBoolean(active);
 
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (legalName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(legalName);
+		}
+
+		if (legalId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(legalId);
+		}
+
+		if (legalType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(legalType);
+		}
+
+		if (sicCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(sicCode);
+		}
+
+		if (tickerSymbol == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(tickerSymbol);
+		}
+
+		if (industry == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(industry);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		if (size == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(size);
+		}
+
 		objectOutput.writeObject(_companySecurityBag);
 		objectOutput.writeObject(_virtualHostname);
 	}
 
 	public long mvccVersion;
 	public long companyId;
-	public long accountId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public String webId;
 	public String mx;
 	public String homeURL;
@@ -221,6 +419,15 @@ public class CompanyCacheModel
 	public boolean system;
 	public int maxUsers;
 	public boolean active;
+	public String name;
+	public String legalName;
+	public String legalId;
+	public String legalType;
+	public String sicCode;
+	public String tickerSymbol;
+	public String industry;
+	public String type;
+	public String size;
 	public CompanyImpl.CompanySecurityBag _companySecurityBag;
 	public String _virtualHostname;
 

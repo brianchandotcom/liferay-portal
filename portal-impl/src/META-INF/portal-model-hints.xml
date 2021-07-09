@@ -547,7 +547,10 @@
 		</default-hints>
 		<field name="mvccVersion" type="long" />
 		<field name="companyId" type="long" />
-		<field name="accountId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="webId" type="String" />
 		<field name="mx" type="String">
 			<hint-collection name="HOSTNAME" />
@@ -560,6 +563,15 @@
 		<field name="system" type="boolean" />
 		<field name="maxUsers" type="int" />
 		<field name="active" type="boolean" />
+		<field name="name" type="String" />
+		<field name="legalName" type="String" />
+		<field name="legalId" type="String" />
+		<field name="legalType" type="String" />
+		<field name="sicCode" type="String" />
+		<field name="tickerSymbol" type="String" />
+		<field name="industry" type="String" />
+		<field name="type" type="String" />
+		<field name="size" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.CompanyInfo">
 		<field name="mvccVersion" type="long" />

@@ -19,6 +19,8 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 
 import java.sql.Types;
 
+import java.util.Date;
+
 /**
  * The table class for the &quot;Company&quot; database table.
  *
@@ -34,8 +36,14 @@ public class CompanyTable extends BaseTable<CompanyTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CompanyTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-	public final Column<CompanyTable, Long> accountId = createColumn(
-		"accountId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, Long> userId = createColumn(
+		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> userName = createColumn(
+		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, Date> createDate = createColumn(
+		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, Date> modifiedDate = createColumn(
+		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CompanyTable, String> webId = createColumn(
 		"webId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CompanyTable, String> mx = createColumn(
@@ -50,6 +58,24 @@ public class CompanyTable extends BaseTable<CompanyTable> {
 		"maxUsers", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CompanyTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> legalName = createColumn(
+		"legalName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> legalId = createColumn(
+		"legalId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> legalType = createColumn(
+		"legalType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> sicCode = createColumn(
+		"sicCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> tickerSymbol = createColumn(
+		"tickerSymbol", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> industry = createColumn(
+		"industry", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CompanyTable, String> size = createColumn(
+		"size_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CompanyTable() {
 		super("Company", CompanyTable::new);

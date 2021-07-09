@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +35,10 @@ public class CompanySoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setAccountId(model.getAccountId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setWebId(model.getWebId());
 		soapModel.setMx(model.getMx());
 		soapModel.setHomeURL(model.getHomeURL());
@@ -42,6 +46,15 @@ public class CompanySoap implements Serializable {
 		soapModel.setSystem(model.isSystem());
 		soapModel.setMaxUsers(model.getMaxUsers());
 		soapModel.setActive(model.isActive());
+		soapModel.setName(model.getName());
+		soapModel.setLegalName(model.getLegalName());
+		soapModel.setLegalId(model.getLegalId());
+		soapModel.setLegalType(model.getLegalType());
+		soapModel.setSicCode(model.getSicCode());
+		soapModel.setTickerSymbol(model.getTickerSymbol());
+		soapModel.setIndustry(model.getIndustry());
+		soapModel.setType(model.getType());
+		soapModel.setSize(model.getSize());
 
 		return soapModel;
 	}
@@ -111,12 +124,36 @@ public class CompanySoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public long getAccountId() {
-		return _accountId;
+	public long getUserId() {
+		return _userId;
 	}
 
-	public void setAccountId(long accountId) {
-		_accountId = accountId;
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public String getWebId() {
@@ -183,9 +220,84 @@ public class CompanySoap implements Serializable {
 		_active = active;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getLegalName() {
+		return _legalName;
+	}
+
+	public void setLegalName(String legalName) {
+		_legalName = legalName;
+	}
+
+	public String getLegalId() {
+		return _legalId;
+	}
+
+	public void setLegalId(String legalId) {
+		_legalId = legalId;
+	}
+
+	public String getLegalType() {
+		return _legalType;
+	}
+
+	public void setLegalType(String legalType) {
+		_legalType = legalType;
+	}
+
+	public String getSicCode() {
+		return _sicCode;
+	}
+
+	public void setSicCode(String sicCode) {
+		_sicCode = sicCode;
+	}
+
+	public String getTickerSymbol() {
+		return _tickerSymbol;
+	}
+
+	public void setTickerSymbol(String tickerSymbol) {
+		_tickerSymbol = tickerSymbol;
+	}
+
+	public String getIndustry() {
+		return _industry;
+	}
+
+	public void setIndustry(String industry) {
+		_industry = industry;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
+	public String getSize() {
+		return _size;
+	}
+
+	public void setSize(String size) {
+		_size = size;
+	}
+
 	private long _mvccVersion;
 	private long _companyId;
-	private long _accountId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private String _webId;
 	private String _mx;
 	private String _homeURL;
@@ -193,5 +305,14 @@ public class CompanySoap implements Serializable {
 	private boolean _system;
 	private int _maxUsers;
 	private boolean _active;
+	private String _name;
+	private String _legalName;
+	private String _legalId;
+	private String _legalType;
+	private String _sicCode;
+	private String _tickerSymbol;
+	private String _industry;
+	private String _type;
+	private String _size;
 
 }

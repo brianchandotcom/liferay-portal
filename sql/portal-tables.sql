@@ -203,14 +203,26 @@ create table ClassName_ (
 create table Company (
 	mvccVersion LONG default 0 not null,
 	companyId LONG not null primary key,
-	accountId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
 	webId VARCHAR(75) null,
 	mx VARCHAR(200) null,
 	homeURL STRING null,
 	logoId LONG,
 	system_ BOOLEAN,
 	maxUsers INTEGER,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	name VARCHAR(75) null,
+	legalName VARCHAR(75) null,
+	legalId VARCHAR(75) null,
+	legalType VARCHAR(75) null,
+	sicCode VARCHAR(75) null,
+	tickerSymbol VARCHAR(75) null,
+	industry VARCHAR(75) null,
+	type_ VARCHAR(75) null,
+	size_ VARCHAR(75) null
 );
 
 create table CompanyInfo (

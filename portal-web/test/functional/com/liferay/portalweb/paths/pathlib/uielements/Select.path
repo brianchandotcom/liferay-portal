@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>IMAGE_RATIO</td>
-	<td>//select[contains(@class,'form-control')]</td>
+	<td>//div[contains(@class,'image-editor')]//select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

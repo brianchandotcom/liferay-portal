@@ -149,12 +149,48 @@ definition {
 	}
 
 	@description = "Verify that the user can add translations"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddTranslations {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68439 CanAddTranslations pending implementation
+		LexiconEntry.gotoAdd();
 
+		Click(
+			key_icon = "en-us",
+			locator1 = "KaleoDesigner#ICON_COUNTRY");
+
+		Click(
+			key_icon = "pt-br",
+			locator1 = "KaleoDesigner#UNTRANSLATED_ICON_COUNTRY");
+
+		PortletEntry.inputTitle(title = "Test Title");
+
+		Click(
+			key_icon = "en-us",
+			locator1 = "KaleoDesigner#ICON_COUNTRY");
+
+		Click(
+			key_icon = "fr-fr",
+			locator1 = "KaleoDesigner#UNTRANSLATED_ICON_COUNTRY");
+
+		PortletEntry.inputTitle(title = "Test Title");
+
+		PortletEntry.save();
+
+		Click(
+			key_icon = "en-us",
+			locator1 = "KaleoDesigner#ICON_COUNTRY");
+
+		AssertElementPresent(
+			key_icon = "pt-br",
+			locator1 = "KaleoDesigner#TRANSLATED_ICON_COUNTRY");
+
+		AssertElementPresent(
+			key_icon = "fr-fr",
+			locator1 = "KaleoDesigner#TRANSLATED_ICON_COUNTRY");
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"

@@ -11,8 +11,23 @@
 
 <tbody>
 <tr>
+	<td>ICON_COUNTRY</td>
+	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-${key_icon}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save') and not (contains(@class,'toolbar'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATED_ICON_COUNTRY</td>
+	<td>//*[contains(@class,'lexicon-icon-${key_icon}')]/../../span//span[contains(text(),'Translated')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNTRANSLATED_ICON_COUNTRY</td>
+	<td>//*[contains(@class,'lexicon-icon-${key_icon}')]/../../span//span[contains(text(),'Untranslated')]</td>
 	<td></td>
 </tr>
 </tbody>

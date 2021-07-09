@@ -248,4 +248,19 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that the announcement widgets can be accessible."
+	@priority = "4"
+	test WidgetsCanBeAccessible {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Announcements Page",
+			widgetName = "Alerts");
+
+		Navigator.openSitePage(
+			pageName = "Announcements Page",
+			siteName = "Guest");
+
+		AssertAccessible();
+	}
+
 }

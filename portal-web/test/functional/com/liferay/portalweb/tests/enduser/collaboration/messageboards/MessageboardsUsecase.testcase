@@ -1209,4 +1209,24 @@ definition {
 			threadSubject = "Thread Subject");
 	}
 
+	@description = "This test ensures that the MB widget can be accessible."
+	@priority = "4"
+	test WidgetCanBeAccessible {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		Navigator.openSitePage(
+			pageName = "Message Boards Page",
+			siteName = "Guest");
+
+		AssertAccessible();
+	}
+
 }

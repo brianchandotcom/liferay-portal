@@ -232,4 +232,20 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This test ensures that the wiki widgets can be accessible."
+	@priority = "4"
+	test WidgetsCanBeAccessible {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Wiki Test Page",
+			widgetName = "Wiki Display");
+
+		Navigator.openSitePage(
+			pageName = "Wiki Test Page",
+			siteName = "Guest");
+
+		AssertAccessible();
+	}
+
 }

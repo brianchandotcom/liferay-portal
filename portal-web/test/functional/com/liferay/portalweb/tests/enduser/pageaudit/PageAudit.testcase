@@ -105,8 +105,8 @@ definition {
 				value1 = "TIPS");
 
 			AssertElementPresent(
-				locator1 = "PageAudit#BADGE_NUMBER",
-				badgeValue = "1");
+				badgeValue = "1",
+				locator1 = "PageAudit#BADGE_NUMBER");
 
 			AssertTextPresent(
 				locator1 = "PageAudit#FAILING_ELEMENT_NAME",

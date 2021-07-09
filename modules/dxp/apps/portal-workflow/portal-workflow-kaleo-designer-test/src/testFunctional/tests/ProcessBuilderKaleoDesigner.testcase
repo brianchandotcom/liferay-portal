@@ -314,12 +314,42 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Name property"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test HasNameProperty {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68471 HasNameProperty pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NAME");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NAME");
+
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Fork Node Description",
+			nodeName = "Fork",
+			nodeNodeLabel = "Fork",
+			nodeType = "fork");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Fork");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NAME");
+
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Condition Node Description",
+			nodeName = "Condition",
+			nodeNodeLabel = "Condition",
+			nodeType = "condition");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Condition");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NAME");
 	}
 
 	@description = "Verify that each type of Node has Notifications property"

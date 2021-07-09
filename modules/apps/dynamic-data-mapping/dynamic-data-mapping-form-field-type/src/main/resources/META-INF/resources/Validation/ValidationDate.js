@@ -26,7 +26,7 @@ const getSelectedParameter = (localizedValue, selectedParameterName) => {
 		catch (error) {}
 	}
 
-	return localizedValue?.[selectedParameterName];
+	return localizedValue?.[selectedParameterName]?.type;
 };
 
 const parameters = {
@@ -92,7 +92,9 @@ const ValidationDate = ({
 					dispatch({
 						payload: {
 							parameter: {
-								[selectedParameter.name]: value[0],
+								[selectedParameter.name]: {
+									type: value[0],
+								},
 							},
 						},
 						type: EVENT_TYPES.SET_PARAMETER,

@@ -13,26 +13,41 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-const FileNamePicker = ({namespace, validExtensions}) => {
+const FileNamePicker = ({maxFileSize, namespace, validExtensions}) => {
 	const inputId = namespace + 'file';
 	const [inputValue, setInputValue] = useState('');
 	const [fileName, setFileName] = useState('');
+	const [maxFileSizeError, setMaxFileSizeError] = useState(false);
 
 	useEffect(() => {
-		setFileName(inputValue ? inputValue.replace(/^.*[\\\/]/, '') : '');
+		setFileName(inputValue ? inputValue.replace(/^.*[\\]/, '') : '');
 	}, [inputValue]);
 
 	const onInputChange = ({target}) => {
-		setInputValue(target.value);
+		if (target.files[0].size > maxFileSize) {
+			setMaxFileSizeError(true);
+			setInputValue('');
+		}
+		else {
+			setMaxFileSizeError(false);
 
-		window[`${namespace}updateFileNameAndTitle`]();
+			setInputValue(target.value);
+
+			window[`${namespace}updateFileNameAndTitle`]();
+		}
 	};
 
 	return (
-		<div className="form-group">
+		<ClayForm.Group
+			className={classNames({
+				'has-error': maxFileSizeError,
+			})}
+		>
 			<label className="btn btn-secondary" htmlFor={inputId}>
 				{Liferay.Language.get('select-file')}
 			</label>
@@ -62,7 +77,21 @@ const FileNamePicker = ({namespace, validExtensions}) => {
 				type="file"
 				value={inputValue}
 			/>
-		</div>
+
+			{maxFileSizeError && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayIcon className="mr-1" symbol="exclamation-full" />
+						{Liferay.Util.sub(
+							Liferay.Language.get(
+								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+							),
+							Liferay.Util.formatStorage(maxFileSize)
+						)}
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
+		</ClayForm.Group>
 	);
 };
 

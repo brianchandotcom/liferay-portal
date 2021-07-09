@@ -159,12 +159,20 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a Blogs Entry with Workflow assigned"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishBlogsEntryWithWorkflowAssigned {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		// TODO LRQA-68524 CanPublishBlogsEntryWithWorkflowAssigned pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
 
+		AssertElementPresent(
+			key_title = "Blogs Entry Title",
+			locator1 = "AssetWorkflow#BLOGS_ENTRY_TITLE");
 	}
 
 	@description = "Verify that a Blog Entry saved as draft is not submitted to the Workflow"

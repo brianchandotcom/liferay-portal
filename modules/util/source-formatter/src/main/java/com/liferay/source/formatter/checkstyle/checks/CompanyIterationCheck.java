@@ -33,8 +33,9 @@ public class CompanyIterationCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
-		if (absolutePath.contains("/upgrade/") ||
-			absolutePath.contains("/verify/")) {
+		if (absolutePath.contains("com/liferay/portal/") &&
+			(absolutePath.contains("/upgrade/") ||
+			 absolutePath.contains("/verify/"))) {
 
 			return;
 		}

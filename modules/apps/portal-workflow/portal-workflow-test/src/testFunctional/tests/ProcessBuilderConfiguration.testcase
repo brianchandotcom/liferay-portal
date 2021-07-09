@@ -22,7 +22,6 @@ definition {
 
 			Workflow.tearDownWorkflowDefinitions();
 		}
-
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Knowledge Base Article"
@@ -48,8 +47,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToContentPage {
-			
-			ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
@@ -61,7 +59,6 @@ definition {
 			workflowResourceValue = "Content Page");
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow assigned to Content Page.");
-
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Message Boards Message"
@@ -85,8 +82,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToPageRevision {
-
-			ApplicationsMenu.gotoPortlet(
+		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Process Builder");
@@ -100,7 +96,6 @@ definition {
 		AssertElementPresent(
 			key_workflowResourceValue = "Single Approver",
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
-
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Translation"
@@ -278,7 +273,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchByAssetType {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -299,7 +293,6 @@ definition {
 		AssertElementPresent(
 			key_workflowResourceValue = "Web Content Article",
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
-
 	}
 
 	@description = "Verify that the user is able to search by Workflow Assigned"
@@ -391,7 +384,6 @@ definition {
 		AssertElementPresent(
 			key_workflowResourceValue = "No Workflow",
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
-
 	}
 
 	@description = "Verify that the Clear option cleans the search results"

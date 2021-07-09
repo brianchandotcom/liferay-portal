@@ -32,11 +32,11 @@ definition {
 	@description = "Total Individuals increase by one when a new individual is added via event"
 	@priority = "5"
 	test CanViewTotalIndividualsIncreaseByOne {
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToIndividuals();
 
@@ -62,7 +62,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToIndividuals();
 

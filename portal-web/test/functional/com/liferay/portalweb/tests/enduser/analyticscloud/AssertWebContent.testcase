@@ -39,7 +39,7 @@ definition {
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		for (var n : list "1,2,3,4") {
 			Navigator.gotoSitePage(
@@ -53,7 +53,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToAssets();
 

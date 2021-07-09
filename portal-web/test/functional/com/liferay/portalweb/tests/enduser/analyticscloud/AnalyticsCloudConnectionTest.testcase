@@ -38,7 +38,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		Navigator.openURL();
 
@@ -54,7 +54,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToIndividuals();
 
@@ -74,7 +74,7 @@ definition {
 	@description = "Validate if the user can connect AC to DXP"
 	@priority = "5"
 	test ConnectACtoDXP {
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 }

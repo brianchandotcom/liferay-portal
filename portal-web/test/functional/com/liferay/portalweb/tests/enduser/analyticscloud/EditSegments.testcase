@@ -41,7 +41,7 @@ definition {
 
 		Navigator.openURL();
 
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -55,7 +55,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToSegments();
 

@@ -41,7 +41,7 @@ definition {
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
 		Navigator.openURL();
 
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -67,7 +67,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToAssets();
 
@@ -95,7 +95,7 @@ definition {
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
 		Navigator.openURL();
 
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		for (var n : list "1,2,3,4") {
 			Navigator.gotoSitePage(
@@ -111,7 +111,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToAssets();
 

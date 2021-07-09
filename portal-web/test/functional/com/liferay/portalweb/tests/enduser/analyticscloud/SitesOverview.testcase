@@ -32,11 +32,11 @@ definition {
 	@description = "Sites Overview Cards appear on load"
 	@priority = "3"
 	test CanViewSitesOverviewDashboardCards {
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToSites();
 

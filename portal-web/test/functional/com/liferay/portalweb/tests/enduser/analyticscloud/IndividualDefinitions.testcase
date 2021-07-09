@@ -16,7 +16,6 @@ definition {
 
 		ACUtils.launchDXP();
 
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 	tearDown {
@@ -34,9 +33,15 @@ definition {
 	@description = "Assert a newly connected data source is listed as a source of individual attributes in Definitions > Individuals."
 	@priority = "5"
 	test AssertNewSourceInSourceListForIndividualAttribute {
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
 		ACUtils.launchAC();
 
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
 		ACNavigation.goToSettings();
+
 		ACSettings.goToDefinitions();
 
 		ACDefinitions.goToDefinitionType(definitionType = "Individuals");

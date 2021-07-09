@@ -437,12 +437,28 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Notifications property"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test HasNotificationsProperty {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68476 HasNotificationsProperty pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "connector",
+			newNode = "Task",
+			newNodeDescription = "Task Node Description",
+			newNodeName = "Task",
+			newNodeType = "task",
+			nodeType = "start");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_NOTIFICATIONS");
 	}
 
 	@description = "Verify that the Task node has Timers property"

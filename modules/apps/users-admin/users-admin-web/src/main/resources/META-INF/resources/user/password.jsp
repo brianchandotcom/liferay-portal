@@ -204,9 +204,7 @@ else {
 					if (reminderQueryCustomQuestionInput) {
 
 						<%
-						String[] questions = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS, StringPool.COMMA);
-
-						for (String question : questions) {
+						for (String question : PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS, StringPool.COMMA)) {
 						%>
 
 							if (

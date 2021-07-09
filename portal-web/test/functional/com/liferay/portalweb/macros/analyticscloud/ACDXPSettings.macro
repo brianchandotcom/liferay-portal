@@ -28,22 +28,6 @@ definition {
 		return "${assignedPropertyName}";
 	}
 
-	macro getAssignedPropertyName {
-
-		ACDXPSettings.navToSyncedSitesMenu();
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-		Pause(locator1 = "1000");
-
-		var assignedPropertyName = selenium.getText(locator1 = "ACDXPSettings#ASSIGNED_PROPERTY");
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
-
-		return "${assignedPropertyName}";
-
-	}
-
 	macro createCombinedProperties {
 		var siteName = "${siteName}";
 
@@ -88,6 +72,20 @@ definition {
 		ClickNoError(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?");
+	}
+
+	macro getAssignedPropertyName {
+		ACDXPSettings.navToSyncedSitesMenu();
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Pause(locator1 = "1000");
+
+		var assignedPropertyName = selenium.getText(locator1 = "ACDXPSettings#ASSIGNED_PROPERTY");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
+
+		return "${assignedPropertyName}";
 	}
 
 	macro goToInstanceSettingsAC {

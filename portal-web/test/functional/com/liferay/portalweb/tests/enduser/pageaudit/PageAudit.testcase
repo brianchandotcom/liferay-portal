@@ -18,10 +18,6 @@ definition {
 				layoutName = "Content Page",
 				type = "content");
 		}
-
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setSEOcanonicalURL();
-		}
 	}
 
 	tearDown {
@@ -45,6 +41,10 @@ definition {
 	test AssertProgressBar {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
@@ -376,6 +376,41 @@ definition {
 
 		task ("Assert the Page Audit panel is not shown") {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+	}
+
+	@description = "LPS-132232: Given the Page Audit Panel
+	When the user opens it and there are no failing elements retrieved for any of the checks
+	Then a message "Your page has no issues" and the matching image show, the two sections SEO and Accessibility show and they are collapsed by default"
+
+	@priority = "3"
+	@uitest
+	test PageWithNoIssues {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test-no-issues");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+		task ("Open Page Audit panel and assert there are no issues") {
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+
+			AssertElementPresent(locator1 = "PageAudit#SUCCESS_IMAGE");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#NO_ISSUES_MESSAGE",
+				value1 = "Your page has no issues.");
 		}
 	}
 

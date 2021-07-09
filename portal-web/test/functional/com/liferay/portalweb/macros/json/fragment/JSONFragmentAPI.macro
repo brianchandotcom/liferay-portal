@@ -46,7 +46,9 @@ definition {
 			-d status=${status}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var fragmentEntryId = JSONCurlUtil.post("${curl}", "$..fragmentEntryId");
+
+		return "${fragmentEntryId}";
 	}
 
 	@summary = "Directly calls the JSON WS API to delete a fragment collection"

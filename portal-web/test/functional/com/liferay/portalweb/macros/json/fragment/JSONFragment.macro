@@ -40,7 +40,7 @@ definition {
 		var type = JSONFragmentSetter.setType(
 			type = "${type}");
 
-		JSONFragmentAPI._addSection(
+		var fragmentEntryId = JSONFragmentAPI._addSection(
 			collectionId = "${collectionId}",
 			configuration = "${configuration}",
 			groupId = "${groupId}",
@@ -48,6 +48,8 @@ definition {
 			name = "${name}",
 			status = "${status}",
 			type = "${type}");
+
+		return "${fragmentEntryId}";
 	}
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"

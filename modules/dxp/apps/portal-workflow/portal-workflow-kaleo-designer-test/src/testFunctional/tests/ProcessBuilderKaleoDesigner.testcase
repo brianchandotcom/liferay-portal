@@ -267,12 +267,34 @@ definition {
 	}
 
 	@description = "Verify that the user can rename a Node"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanRenameNode {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68449 CanRenameNode pending implementation
+		LexiconEntry.gotoAdd();
 
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Condition Description",
+			nodeName = "Condition Update",
+			nodeNodeLabel = "Condition",
+			nodeType = "condition");
+
+		PortletEntry.inputTitle(title = "Test 1");
+
+		Workflow.saveDefinition();
+
+		Click(
+			key_nodeType = "Condition Update",
+			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+
+		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_NAME");
+
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#SETTINGS_NAME",
+			value1 = "Condition Update");
 	}
 
 	@description = "Verify that user can Save workflow as Draft"

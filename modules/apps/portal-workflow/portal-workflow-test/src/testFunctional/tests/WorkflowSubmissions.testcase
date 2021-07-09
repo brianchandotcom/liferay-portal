@@ -543,12 +543,39 @@ definition {
 	}
 
 	@description = "Verify that a task can be withdrawn through details page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TaskCanBeWithdrawnThroughDetailsPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68560 TaskCanBeWithdrawnThroughDetailsPage pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Test content",
+			entryTitle = "Test Blog 1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		Click(
+			key_taskName = "Test Blog 1",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
+
+		Click(locator1 = "WorkflowSubmissions#SUBMISSIONS_DETAILS_PAGE_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Withdraw Submission");
+
+		AssertElementNotPresent(
+			key_taskName = "Test Blog 1",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
 	}
 
 	@description = "Verify that the task changes to approved"

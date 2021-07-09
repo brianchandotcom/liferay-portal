@@ -41,6 +41,16 @@
 <tr>
 	<td>SUBMISSION_CLEAR_SEARCH_BUTTON</td>
 	<td>//div//a[text()='Clear']</td>
+
+<tbody>
+<tr>
+	<td>ENTRY_TASK_ROW_NUMBER_ELLIPSIS</td>
+	<td>xpath=(//*[@data-qa-id='row']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMISSIONS_DETAILS_PAGE_ELLIPSIS</td>
+	<td>//*[contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 </tbody>

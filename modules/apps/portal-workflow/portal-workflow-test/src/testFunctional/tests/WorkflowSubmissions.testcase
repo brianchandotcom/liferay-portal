@@ -111,9 +111,57 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByPendingTasks {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68553 CanFilterByPendingTasks pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		Workflow.completeWorkflowBlogInstance(key_workflowInstanceTitle = "Blogs Entry Title 1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Pending");
+
+		AssertElementPresent(
+			key_taskName = "Blogs Entry Title 2",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
+
+		AssertElementNotPresent(
+			key_taskName = "Blogs Entry Title 1",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Pending");
+
+		AssertElementPresent(
+			key_taskName = "Blogs Entry Title 2",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
+
+		AssertElementNotPresent(
+			key_taskName = "Blogs Entry Title 1",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
 	}
 
 	@description = "Verify if the Clear option cleans the search results"

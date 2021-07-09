@@ -128,7 +128,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-106813. Can set permissions for widgets in content page."
+	@description = "This is a test for LPS-106813. Can set permissions for widgets in content page."
 	@priority = "5"
 	test ConfigurePermissionsOfAssetPublisher {
 		property portal.acceptance = "true";

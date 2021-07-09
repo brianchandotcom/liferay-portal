@@ -230,6 +230,125 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
+	@description = "This is a use case for LPS-121139."
+	@priority = "4"
+	test AssertPartialSiteTemplatePropagation {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Widget Page Name",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Widget Page Name",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+
+		Site.openSitesAdmin();
+
+		Site.addCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template");
+
+		var homePageModificationDate1 = SiteTemplates.getPageModificationDate(
+			groupName = "Site Name",
+			pageNameFilter = "%Home%");
+
+		var widgetPageModificationDate1 = SiteTemplates.getPageModificationDate(
+			groupName = "Site Name",
+			pageNameFilter = "%Widget Page Name%");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Widget Page Name",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Refresh();
+
+		Navigator.gotoSitePage(
+			pageName = "Widget Page Name",
+			siteName = "Site Name");
+
+		Refresh();
+
+		Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
+
+		var homePageModificationDate2 = SiteTemplates.getPageModificationDate(
+			groupName = "Site Name",
+			pageNameFilter = "%Home%");
+
+		var widgetPageModificationDate2 = SiteTemplates.getPageModificationDate(
+			groupName = "Site Name",
+			pageNameFilter = "%Widget Page Name%");
+
+		if ("${widgetPageModificationDate2}" != "${widgetPageModificationDate1}") {
+			echo("The modification date of widget page is updated.");
+		}
+
+		if ("${homePageModificationDate2}" != "${homePageModificationDate1}") {
+			fail("The modification date of home page should not be updated.");
+		}
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Content Page Name",
+			sitePageType = "Content Page",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Content Page Name",
+			siteName = "${siteName}",
+			siteTemplateName = "Site Template Name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		PageEditor.clickPublish();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Refresh();
+
+		Navigator.gotoSitePage(
+			pageName = "Widget Page Name",
+			siteName = "Site Name");
+
+		Refresh();
+
+		Navigator.gotoSitePage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+
+		var homePageModificationDate3 = SiteTemplates.getPageModificationDate(
+			groupName = "Site Name",
+			pageNameFilter = "%Home%");
+
+		var widgetPageModificationDate3 = SiteTemplates.getPageModificationDate(
+			groupName = "Site Name",
+			pageNameFilter = "%Widget Page Name%");
+
+		if ("${widgetPageModificationDate3}" != "${widgetPageModificationDate2}") {
+			fail("The modification date of widget page should not be updated.");
+		}
+
+		if ("${homePageModificationDate3}" != "${homePageModificationDate1}") {
+			fail("The modification date of home page should not be updated.");
+		}
+	}
+
 	@description = "This is a use case for LPS-84497."
 	@priority = "3"
 	test DeactivateActivateSiteTemplate {

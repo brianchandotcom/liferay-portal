@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNED_PROPERTY</td>
+	<td>//td[contains(@class,'lfr-assigned-property-column')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SYNCED_SITES_SEARCH_FIELD</td>
 	<td>//input[contains(@class, 'input-group-inset-after')]</td>
 	<td></td>

@@ -36,7 +36,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		var assignedPropertyName = selenium.getText(locator1 = "//td[contains(@class,'lfr-assigned-property-column')]");
+		var assignedPropertyName = selenium.getText(locator1 = "ACDXPSettings#ASSIGNED_PROPERTY");
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
 

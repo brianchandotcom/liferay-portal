@@ -54,12 +54,41 @@ definition {
 	}
 
 	@description = "Verify that Timers can be added"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddTimers {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68478 CanAddTimers pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "connector",
+			newNode = "Task",
+			newNodeDescription = "Task Node Description",
+			newNodeName = "Task",
+			newNodeType = "task",
+			nodeType = "start");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Task");
+
+		KaleoDesigner.editNodeTimer(
+			blockerDescription = "Blocker Description",
+			blockerName = "Blocker Name",
+			blockerScript = "Test Script",
+			durationScale1 = "Hour",
+			durationScale2 = "Hour",
+			durationTime1 = "5",
+			durationTime2 = "6",
+			timerDescription = "Timer Description",
+			timerName = "Timer Name");
+
+		AssertTextEquals(
+			locator1 = "KaleoDesignerEditWorkflow#SETTINGS_TIMERS",
+			value1 = "Timer Name");
 	}
 
 	@description = "Verify that the user can add translations"

@@ -755,12 +755,26 @@ definition {
 	}
 
 	@description = "Verify that the transition can be dropped on plain field, pop up menu will appear, user can select new node, new node is created correctly"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test NodeIsCreatedWhenTransitionIsDroppedOnPlainField {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68459 NodeIsCreatedWhenTransitionIsDroppedOnPlainField pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
 
+		KaleoDesigner.addConnectorAndNodeViaViewTab(
+			connectorName = "Connector1",
+			newNode = "Task",
+			newNodeDescription = "Task Node Description",
+			newNodeName = "Task",
+			newNodeType = "task",
+			nodeType = "start");
+
+		KaleoDesigner.viewNodePresent(key_nodeNodeLabel = "Task");
+
+		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
 	}
 
 	@description = "Verify that the Start Node must have an outgoing transition"

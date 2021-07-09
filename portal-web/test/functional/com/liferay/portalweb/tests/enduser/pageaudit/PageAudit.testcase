@@ -50,7 +50,7 @@ definition {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task ("Set a custom page as canonical URL to have data already loaded") {
+		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
 		}
 
@@ -81,13 +81,15 @@ definition {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task ("Set a custom page as canonical URL to have data already loaded") {
-			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
 			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
 
 			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
@@ -448,7 +450,7 @@ definition {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task ("Set a custom page as canonical URL to have data already loaded") {
+		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
 		}
 

@@ -97,6 +97,31 @@ definition {
 		}
 	}
 
+	macro setAPIViaSiteSettings {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "Site Scope");
+
+		Click(locator1 = "PageAudit#API_FIELD");
+
+		Type(
+			locator1 = "PageAudit#API_FIELD",
+			value1 = "${apiKey}");
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+	}
+
 	macro setAPIViaSystemSettings {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

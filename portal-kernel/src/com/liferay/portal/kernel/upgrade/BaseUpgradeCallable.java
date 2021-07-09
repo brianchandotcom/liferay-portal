@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.concurrent.Callable;
@@ -29,9 +30,11 @@ public abstract class BaseUpgradeCallable<T> implements Callable<T> {
 
 	@Override
 	public T call() throws Exception {
-		CompanyThreadLocal.lock(_companyId);
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				_companyId)) {
 
-		return doCall();
+			return doCall();
+		}
 	}
 
 	protected abstract T doCall() throws Exception;

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>DATE_RANGE_DROPDOWN</td>
-	<td>//button[contains(@class, 'filter-dropdown-button')]</td>
+	<td>xpath=(//button[contains(@class, 'filter-dropdown-button')])[2]</td>
 	<td></td>
 </tr>
 <tr>

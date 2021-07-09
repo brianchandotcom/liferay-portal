@@ -9,9 +9,11 @@ definition {
 	setUp {
 		Navigator.openURL();
 
-		AssertClick(
-			locator1 = "UserBar#USER_SIGN_IN",
-			value1 = "Sign In");
+		if (IsElementNotPresent(locator1 = "TextInput#SCREEN_NAME")) {
+			AssertClick(
+				locator1 = "UserBar#USER_SIGN_IN",
+				value1 = "Sign In");
+		}
 
 		Type(
 			locator1 = "TextInput#SCREEN_NAME",

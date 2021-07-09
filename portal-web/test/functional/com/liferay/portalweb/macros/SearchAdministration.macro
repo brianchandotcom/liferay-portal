@@ -57,7 +57,7 @@ definition {
 
 			var reindexElapsedTime = "0";
 
-			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "480") && (maxIterations = "48")) {
+			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP") || IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]")) && ("${reindexElapsedTime}" != "480") && (maxIterations = "48")) {
 				Pause.pauseNoSPARefresh(locator1 = "10000");
 
 				var reindexElapsedTime = ${reindexElapsedTime} + 10;

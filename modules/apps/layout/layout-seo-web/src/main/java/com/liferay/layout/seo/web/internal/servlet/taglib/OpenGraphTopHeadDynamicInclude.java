@@ -349,6 +349,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
 			siteGroupId);
 
+		if (!layout.isTypeContent()) {
+			return siteAvailableLocales;
+		}
+
 		Set<Locale> availableLocales = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =

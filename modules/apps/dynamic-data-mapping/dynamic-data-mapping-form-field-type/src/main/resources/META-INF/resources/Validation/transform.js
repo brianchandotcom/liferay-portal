@@ -31,13 +31,15 @@ const getValidationFromExpression = (validations, validation) => {
 };
 
 const transformValidations = (validations, dataType) => {
-	return validations[normalizeDataType(dataType)].map((validation) => {
-		return {
-			...validation,
-			checked: false,
-			value: validation.name,
-		};
-	});
+	return validations[normalizeDataType(dataType)]
+		.filter(({name}) => name !== 'dateRange' && name !== 'pastDates')
+		.map((validation) => {
+			return {
+				...validation,
+				checked: false,
+				value: validation.name,
+			};
+		});
 };
 
 const getValidation = (validations, transformValidationFromExpression) => {

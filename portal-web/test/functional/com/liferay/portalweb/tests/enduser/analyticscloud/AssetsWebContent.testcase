@@ -54,6 +54,15 @@ definition {
 
 	}
 
+	@description = "Automation ID: LRAC-8125 | Test Summary: Web content list shows all web content in a list"
+	@ignore = "true"
+	@priority = "5"
+    test ViewAllWebContentShownInAssetList {
+
+  		// TODO LRAC-8125 ViewAllWebContentShownInAssetList pending implementation
+
+	}
+
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {

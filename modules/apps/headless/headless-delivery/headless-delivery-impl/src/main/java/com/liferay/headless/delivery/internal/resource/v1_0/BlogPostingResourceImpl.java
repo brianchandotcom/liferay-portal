@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -55,6 +57,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -95,6 +98,18 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
+	public void deleteSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		BlogsEntry blogsEntry =
+			_blogsEntryLocalService.getBlogsEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		_blogsEntryService.deleteEntry(blogsEntry.getEntryId());
+	}
+
+	@Override
 	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
@@ -130,6 +145,27 @@ public class BlogPostingResourceImpl
 				_portal.getClassNameId(BlogsEntry.class.getName()),
 				contextCompany.getCompanyId(), _expandoColumnLocalService,
 				_expandoTableLocalService));
+	}
+
+	@Override
+	public BlogPosting getSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		BlogsEntry blogsEntry =
+			_blogsEntryLocalService.getBlogsEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		String resourceName = getPermissionCheckerResourceName(
+			blogsEntry.getEntryId());
+		Long resourceId = getPermissionCheckerResourceId(
+			blogsEntry.getEntryId());
+
+		PermissionUtil.checkPermission(
+			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
+			getPermissionCheckerGroupId(blogsEntry.getEntryId()));
+
+		return _toBlogPosting(blogsEntry);
 	}
 
 	@Override
@@ -187,26 +223,8 @@ public class BlogPostingResourceImpl
 	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
 		throws Exception {
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			blogPosting.getDatePublished());
-		Image image = blogPosting.getImage();
-
-		return _toBlogPosting(
-			_blogsEntryService.addEntry(
-				null, blogPosting.getHeadline(),
-				blogPosting.getAlternativeHeadline(),
-				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0], _getCaption(image), _getImageSelector(image),
-				null,
-				ServiceContextRequestUtil.createServiceContext(
-					blogPosting.getTaxonomyCategoryIds(),
-					blogPosting.getKeywords(),
-					_getExpandoBridgeAttributes(blogPosting), siteId,
-					contextHttpServletRequest,
-					blogPosting.getViewableByAsString())));
+		return _addBlogPosting(
+			blogPosting.getExternalReferenceCode(), siteId, blogPosting);
 	}
 
 	@Override
@@ -214,27 +232,9 @@ public class BlogPostingResourceImpl
 			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			blogPosting.getDatePublished());
-		Image image = blogPosting.getImage();
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
-		return _toBlogPosting(
-			_blogsEntryService.updateEntry(
-				blogPostingId, blogPosting.getHeadline(),
-				blogPosting.getAlternativeHeadline(),
-				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0], _getCaption(image), _getImageSelector(image),
-				null,
-				ServiceContextRequestUtil.createServiceContext(
-					blogPosting.getTaxonomyCategoryIds(),
-					blogPosting.getKeywords(),
-					_getExpandoBridgeAttributes(blogPosting),
-					blogsEntry.getGroupId(), contextHttpServletRequest,
-					blogPosting.getViewableByAsString())));
+		return _updateBlogPosting(blogsEntry, blogPosting);
 	}
 
 	@Override
@@ -245,6 +245,22 @@ public class BlogPostingResourceImpl
 
 		return spiRatingResource.addOrUpdateRating(
 			rating.getRatingValue(), blogPostingId);
+	}
+
+	@Override
+	public BlogPosting putSiteBlogPostingByExternalReferenceCode(
+			Long siteId, String externalReferenceCode, BlogPosting blogPosting)
+		throws Exception {
+
+		BlogsEntry blogsEntry =
+			_blogsEntryLocalService.fetchBlogsEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (blogsEntry != null) {
+			return _updateBlogPosting(blogsEntry, blogPosting);
+		}
+
+		return _addBlogPosting(externalReferenceCode, siteId, blogPosting);
 	}
 
 	@Override
@@ -300,6 +316,35 @@ public class BlogPostingResourceImpl
 					TaxonomyCategoryBrief::getTaxonomyCategoryId,
 					Long[].class));
 		}
+	}
+
+	private BlogPosting _addBlogPosting(
+			String externalReferenceCode, long groupId, BlogPosting blogPosting)
+		throws Exception {
+
+		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+			blogPosting.getDatePublished());
+		Image image = blogPosting.getImage();
+
+		return _toBlogPosting(
+			_blogsEntryService.addEntry(
+				externalReferenceCode, blogPosting.getHeadline(),
+				blogPosting.getAlternativeHeadline(),
+				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0], _getCaption(image), _getImageSelector(image),
+				null, _createServiceContext(blogPosting, groupId)));
+	}
+
+	private ServiceContext _createServiceContext(
+		BlogPosting blogPosting, long groupId) {
+
+		return ServiceContextRequestUtil.createServiceContext(
+			blogPosting.getTaxonomyCategoryIds(), blogPosting.getKeywords(),
+			_getExpandoBridgeAttributes(blogPosting), groupId,
+			contextHttpServletRequest, blogPosting.getViewableByAsString());
 	}
 
 	private String _getCaption(Image image) {
@@ -402,8 +447,32 @@ public class BlogPostingResourceImpl
 				contextUser));
 	}
 
+	private BlogPosting _updateBlogPosting(
+			BlogsEntry blogsEntry, BlogPosting blogPosting)
+		throws Exception {
+
+		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+			blogPosting.getDatePublished());
+		Image image = blogPosting.getImage();
+
+		return _toBlogPosting(
+			_blogsEntryService.updateEntry(
+				blogsEntry.getEntryId(), blogPosting.getHeadline(),
+				blogPosting.getAlternativeHeadline(),
+				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), true, true,
+				new String[0], _getCaption(image), _getImageSelector(image),
+				null,
+				_createServiceContext(blogPosting, blogsEntry.getGroupId())));
+	}
+
 	@Reference
 	private BlogPostingDTOConverter _blogPostingDTOConverter;
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;

@@ -177,7 +177,11 @@ public class JournalEditDDMTemplateDisplayContext {
 					return true;
 				}
 
-				return ddmTemplate.getClassPK() <= 0;
+				if (ddmTemplate.getClassPK() <= 0) {
+					return true;
+				}
+
+				return false;
 			}
 		).put(
 			"templateVariableGroups", getTemplateVariableGroupJSONArray()

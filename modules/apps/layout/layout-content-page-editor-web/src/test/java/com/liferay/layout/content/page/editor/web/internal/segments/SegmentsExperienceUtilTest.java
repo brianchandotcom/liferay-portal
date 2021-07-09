@@ -17,8 +17,6 @@ package com.liferay.layout.content.page.editor.web.internal.segments;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.model.SegmentsExperience;
@@ -83,18 +81,9 @@ public class SegmentsExperienceUtilTest {
 			RandomTestUtil.randomLong()
 		);
 
-		Mockito.when(
-			segmentsExperience.getTypeSettingsUnicodeProperties()
-		).thenReturn(
-			new UnicodeProperties(true)
-		);
-
 		Assert.assertEquals(
 			JSONUtil.put(
 				"active", segmentsExperience.isActive()
-			).put(
-				"languageIds",
-				LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 			).put(
 				"name", segmentsExperience.getNameCurrentValue()
 			).put(

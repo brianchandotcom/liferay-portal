@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -74,19 +73,13 @@ import com.liferay.segments.service.SegmentsEntryServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.staging.StagingGroupHelper;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
@@ -146,7 +139,6 @@ public class ContentPageLayoutEditorDisplayContext
 			"addSegmentsExperienceURL",
 			getFragmentEntryActionURL(
 				"/layout_content_page_editor/add_segments_experience"));
-		configContext.put("availableLanguages", _getAvailableLanguages());
 		configContext.put(
 			"availableSegmentsEntries", _getAvailableSegmentsEntries());
 		configContext.put(
@@ -320,59 +312,6 @@ public class ContentPageLayoutEditorDisplayContext
 			).put(
 				"type", InfoListItemSelectorReturnType.class.getName()
 			));
-	}
-
-	private Map<String, Map<String, Object>> _getAvailableLanguages() {
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
-
-		Stream<Locale> stream = locales.stream();
-
-		return stream.map(
-			locale -> new AbstractMap.SimpleEntry<String, Map<String, Object>>(
-				LocaleUtil.toLanguageId(locale),
-				HashMapBuilder.<String, Object>put(
-					"default",
-					Objects.equals(LocaleUtil.getSiteDefault(), locale)
-				).put(
-					"displayName",
-					locale.getDisplayName(themeDisplay.getLocale())
-				).put(
-					"languageIcon",
-					StringUtil.toLowerCase(LocaleUtil.toW3cLanguageId(locale))
-				).put(
-					"languageId", LocaleUtil.toLanguageId(locale)
-				).put(
-					"w3cLanguageId", LocaleUtil.toW3cLanguageId(locale)
-				).build())
-		).sorted(
-			(Comparator<Map.Entry<String, Map<String, Object>>>)
-				(entry1, entry2) -> {
-					Map<String, Object> value1 = entry1.getValue();
-
-					if ((boolean)value1.get("default")) {
-						return -1;
-					}
-
-					Map<String, Object> value2 = entry2.getValue();
-
-					if ((boolean)value2.get("default")) {
-						return 1;
-					}
-
-					String displayName1 = String.valueOf(
-						value1.get("displayName"));
-
-					String displayName2 = String.valueOf(
-						value2.get("displayName"));
-
-					return displayName1.compareToIgnoreCase(displayName2);
-				}
-		).collect(
-			Collectors.toMap(
-				Map.Entry::getKey, Map.Entry::getValue,
-				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
-		);
 	}
 
 	private Map<String, Object> _getAvailableSegmentsEntries() {

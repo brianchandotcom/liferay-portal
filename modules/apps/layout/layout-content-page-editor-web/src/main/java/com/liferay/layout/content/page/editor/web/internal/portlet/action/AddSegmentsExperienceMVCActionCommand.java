@@ -43,9 +43,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -90,16 +87,12 @@ public class AddSegmentsExperienceMVCActionCommand
 		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
 			actionRequest);
 
-		String[] languageIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "languageIds"));
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience(
 			actionRequest, _portal.getClassNameId(Layout.class),
-			themeDisplay.getPlid(), languageIds, segmentsExperiment,
-			serviceContext);
+			themeDisplay.getPlid(), segmentsExperiment, serviceContext);
 
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			segmentsExperiment);
@@ -157,15 +150,9 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	private SegmentsExperience _addSegmentsExperience(
 			ActionRequest actionRequest, long classNameId, long classPK,
-			String[] languageIds, SegmentsExperiment segmentsExperiment,
+			SegmentsExperiment segmentsExperiment,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.setProperty(
-			PropsKeys.LOCALES, StringUtil.merge(languageIds));
 
 		if (segmentsExperiment != null) {
 			long segmentsEntryId = SegmentsEntryConstants.ID_DEFAULT;
@@ -185,7 +172,7 @@ public class AddSegmentsExperienceMVCActionCommand
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),
 					ParamUtil.getString(actionRequest, "name")),
-				false, typeSettingsUnicodeProperties, serviceContext);
+				false, serviceContext);
 		}
 
 		return _segmentsExperienceService.addSegmentsExperience(
@@ -195,7 +182,7 @@ public class AddSegmentsExperienceMVCActionCommand
 				LocaleUtil.getSiteDefault(),
 				ParamUtil.getString(actionRequest, "name")),
 			ParamUtil.getBoolean(actionRequest, "active", true),
-			typeSettingsUnicodeProperties, serviceContext);
+			serviceContext);
 	}
 
 	private SegmentsExperimentRel _addSegmentsExperimentRel(

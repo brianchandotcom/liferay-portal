@@ -36,6 +36,15 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
+	@ignore = "true"
+	@priority = "5"
+    test CanNavigateToWebContentOverviewPage {
+
+  		// TODO LRAC-8130 CanNavigateToWebContentOverviewPage pending implementation
+
+	}
+
 	@description = "Web content visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {

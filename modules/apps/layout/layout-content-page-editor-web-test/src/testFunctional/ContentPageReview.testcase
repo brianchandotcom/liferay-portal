@@ -36,11 +36,16 @@ definition {
 
 	@description = "This case ensures that the user can add a comment to a fragment of a content page."
 	@priority = "5"
-	@refactorneeded
-	test AddComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanAddComment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -58,11 +63,16 @@ definition {
 
 	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
 	@priority = "4"
-	@refactorneeded
-	test AddCommentWithEscapeCharacters {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanAddCommentWithEscapeCharacters {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -80,11 +90,16 @@ definition {
 
 	@description = "This case ensures a user can delete a fragment comment after publishing a content page."
 	@priority = "5"
-	@refactorneeded
-	test DeleteComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanDeleteComment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -99,17 +114,15 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "Lorem ipsum dolor sit amet",
-			key_fragmentClass = "header",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentName = "Title",
+			position = "1");
 
 		PageEditor.viewComment(fragmentComment = "This is a fragment comment.");
 
@@ -124,11 +137,16 @@ definition {
 
 	@description = "This case ensures a user can reopen a resolved comment after publishing a content page."
 	@priority = "4"
-	@refactorneeded
-	test ReopenResolvedComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanReopenResolvedComment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -147,17 +165,15 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "This is static text.",
-			key_fragmentClass = "static-text",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "This is static text.",
+			fragmentClass = "static-text",
+			fragmentName = "Static Text",
+			position = "1");
 
 		PageEditor.reopenResolvedComment(
 			commentReply = "Fragment Comment 1",
@@ -168,11 +184,16 @@ definition {
 
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = "4"
-	@refactorneeded
-	test ResolveComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanResolveComment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -187,43 +208,31 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "This is static text.",
-			key_fragmentClass = "static-text",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "This is static text.",
+			fragmentClass = "static-text",
+			fragmentName = "Static Text",
+			position = "1");
 
 		PageEditor.resolveComment(fragmentComment = "This is a fragment comment.");
 	}
 
-	@description = "This test ensures that Content Page Comments is being used once the proper configuration is enabled."
-	@priority = "5"
-	@refactorneeded
-	test Smoke {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		PageEditor.viewComment();
-
-		PageEditor.closeSidebar(tabName = "Comments");
-	}
-
 	@description = "This case ensures that the user can see a fragment comment after publishing a content page."
 	@priority = "5"
-	@refactorneeded
-	test ViewComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewComment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -238,17 +247,15 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			key_fragmentClass = "rich-text",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			fragmentClass = "rich-text",
+			fragmentName = "Rich Text",
+			position = "1");
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment!",
@@ -257,15 +264,19 @@ definition {
 
 	@description = "This test covers LPS-101027. It ensures that a published comment should remain if staging is deactivated."
 	@priority = "3"
-	@refactorneeded
-	test ViewCommentAfterDeactivatingStaging {
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewCommentAfterDeactivatingStaging {
+		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 
-		Staging.activateStagingCP(siteName = "Test Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name (Staging)",
+			layoutName = "Test Content Page Name",
+			site = "false",
+			type = "content");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name Staging");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -280,29 +291,19 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/test-content-page-name");
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging",
-			site = "Test Site Name");
+		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 		Staging.deactivateStagingCP(siteName = "Test Site Name");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
 			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -318,11 +319,16 @@ definition {
 
 	@description = "This test covers LPS-99643. It ensures that the comment on the content page is not removed after the draft is discarded."
 	@priority = "4"
-	@refactorneeded
-	test ViewCommentAfterDiscardedDraft {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewCommentAfterDiscardedDraft {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -337,9 +343,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -348,19 +354,18 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		PageEditor.clickDiscardDraft(pageName = "Test Content Page Name");
+		PageEditor.clickDiscardDraft(pageName = "Content Page Name");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			key_fragmentClass = "rich-text",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			fragmentClass = "rich-text",
+			fragmentComment = "This is a fragment comment!",
+			fragmentName = "Rich Text",
+			position = "1");
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment",
@@ -369,36 +374,33 @@ definition {
 
 	@description = "This test covers LPS-99063. It ensures that Edit and Delete actions should not appear for comment if a user did not create it."
 	@priority = "4"
-	@refactorneeded
-	test ViewCommentAsNonCreator {
+	@refactordone
+	test CanViewCommentAsNonCreator {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "user1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
 
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "user1@liferay.com",
-			userScreenName = "user1");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userScreenName = "user1");
+			userEmailAddress = "user1@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -413,23 +415,24 @@ definition {
 
 		PageEditor.clickPublish();
 
-		User.logoutPG();
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		User.loginUserPG(
 			password = "test",
 			userEmailAddress = "user1@liferay.com");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-			key_fragmentClass = "rich-text",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			fragmentClass = "rich-text",
+			fragmentComment = "This is a fragment comment!",
+			fragmentName = "Rich Text",
+			position = "1");
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment!",
@@ -440,11 +443,16 @@ definition {
 
 	@description = "This case ensures that users can view created comments when no fragment is selected and navigate to them."
 	@priority = "5"
-	@refactorneeded
-	test ViewCommentList {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewCommentList {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -468,9 +476,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -500,11 +508,16 @@ definition {
 
 	@description = "This case ensures that comment list can be viewed and accessed via site navigation."
 	@priority = "5"
-	@refactorneeded
-	test ViewCommentListNavigation {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewCommentListNavigation {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -519,11 +532,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Content Page Name",
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
 			siteName = "Test Site Name");
-
-		ContentPages.clickPencil();
 
 		PageEditor.gotoTab(tabName = "Comments");
 
@@ -537,29 +548,32 @@ definition {
 
 	@description = "This test covers LPS-100024. It ensures that comments from different experiences are independent from one another."
 	@priority = "4"
-	@refactorneeded
-	test ViewCommentOnDifferentExperience {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Segments");
+	@refactordone
+	test CanViewCommentOnDifferentExperience {
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoAdd();
 
 		Segmentation.addProperties(propertyOption = "Email Address");
+
 		Segmentation.fillTitle(titleField = "New Segment Title");
+
 		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
 		Segmentation.fillProperty(propertyField = "liferay");
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -580,13 +594,11 @@ definition {
 
 		PageEditor.removeFragment(fragmentName = "Title");
 
-		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
-			value1 = "There are no comments yet.");
+		PageEditor.viewComment();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.changeExperience(newExperience = "New Experience Name");
 
@@ -604,13 +616,38 @@ definition {
 			openComment = "true");
 	}
 
+	@description = "This test ensures that Content Page Comments is being used once the proper configuration is enabled."
+	@priority = "5"
+	@refactordone
+	test CanViewCommentsDefault {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		PageEditor.viewComment();
+
+		PageEditor.closeSidebar(tabName = "Comments");
+	}
+
 	@description = "This case ensures that a comment can be added and viewed using the icon in the fragment topper."
 	@priority = "5"
-	@refactorneeded
-	test ViewCommentViaFragment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewCommentViaFragment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -625,9 +662,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.gotoCommentViaFragment(
 			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -643,11 +680,16 @@ definition {
 
 	@description = "This case ensures that the user can see an edited fragment comment after publishing a content page."
 	@priority = "4"
-	@refactorneeded
-	test ViewEditedComment {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewEditedComment {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -664,28 +706,32 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
-
-		PageEditor.gotoTab(tabName = "Comments");
-
-		Click(
-			key_content = "This is static text.",
-			key_fragmentClass = "static-text",
-			key_position = "1",
-			locator1 = "Fragment#FRAGMENT");
+		PageEditor.gotoCommentViaFragment(
+			content = "This is static text.",
+			fragmentClass = "static-text",
+			fragmentComment = "This is a fragment comment edited.",
+			fragmentName = "Static Text",
+			position = "1");
 
 		PageEditor.viewComment(fragmentComment = "This is a fragment comment edited.");
 	}
 
 	@description = "This case ensures that multiple comments can be added, viewed and accessed in the fragment list."
 	@priority = "4"
-	@refactorneeded
-	test ViewMultipleCommentsList {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewMultipleCommentsList {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -716,11 +762,16 @@ definition {
 
 	@description = "This case ensures that multiple replies can be added and viewed in a comment."
 	@priority = "4"
-	@refactorneeded
-	test ViewMultipleReplies {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+	@refactordone
+	test CanViewMultipleReplies {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",

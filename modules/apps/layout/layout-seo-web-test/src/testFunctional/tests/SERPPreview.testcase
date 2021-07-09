@@ -18,14 +18,18 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
 		}
 	}
 
 	@description = "This test ensures that a SERP preview is shown correctly based on the meta tags."
 	@priority = "5"
-	@refactorneeded
-	test Smoke {
+	@refactordone
+	test CanViewPreview {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
@@ -36,93 +40,39 @@ definition {
 			groupName = "Guest",
 			layoutName = "Test Page");
 
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
-
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		AssertVisible(locator1 = "SitePagesEditPage#PREVIEW_SERP");
-
-		PortletEntry.inputText(
-			fieldLabel = "HTML Title",
-			text = "Page HTML Title");
-
-		PortletEntry.inputText(
-			fieldLabel = "Description",
-			text = "Description");
-
-		Page.viewPreview(
-			description = "Description",
-			htmlTitle = "Page HTML Title - ${siteName}",
-			pageName = "Test Page",
-			portalURL = "${portalURL}");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Page.viewPreview(
-			description = "Description",
-			htmlTitle = "Page HTML Title - ${siteName}",
-			pageName = "Test Page",
-			portalURL = "${portalURL}");
-	}
-
-	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
-	@priority = "5"
-	@refactorneeded
-	test ValidateLongInputs {
-		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		JSONLayout.addPublicLayout(
+		Navigator.openToGroupPagesPortlet(
 			groupName = "Guest",
-			layoutName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
+			layoutName = "Test Page",
+			portlet = "SEO",
+			siteURLKey = "guest");
 
-		Navigator.gotoPage(pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
+		SERPPreview.viewPreviewDefault();
 
-		Navigator.gotoEditPageViaControlMenu(pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
-
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		PortletEntry.inputText(
-			fieldLabel = "HTML Title",
-			text = "Liferay Portal provides an excellent platform for building web applications");
-
-		PortletEntry.inputText(
-			fieldLabel = "Description",
-			text = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications");
+		SERPPreview.addGeneralSettings(
+			description = "Description",
+			htmlTitle = "Page HTML Title");
 
 		Page.viewPreview(
-			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
-			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
-			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
-			portalURL = "${portalURL}",
-			truncatedHTMLTitle = "true",
-			truncatedURL = "true");
+			description = "Description",
+			htmlTitle = "Page HTML Title - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
 
-		Navigator.gotoNavTab(navTab = "SEO");
-
 		Page.viewPreview(
-			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
-			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
-			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
-			portalURL = "${portalURL}",
-			truncatedHTMLTitle = "true",
-			truncatedURL = "true");
+			description = "Description",
+			htmlTitle = "Page HTML Title - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
 	}
 
 	@description = "This test ensures that a SERP preview is refreshed when switching translations."
 	@priority = "4"
-	@refactorneeded
-	test ViewPreviewWhenSwitchingTranslations {
+	@refactordone
+	test CanViewPreviewWhenSwitchingTranslations {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -130,37 +80,23 @@ definition {
 			groupName = "Guest",
 			layoutName = "Test Page");
 
-		Navigator.gotoPage(pageName = "Test Page");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			portlet = "SEO",
+			siteURLKey = "guest");
 
-		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
-
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		PortletEntry.inputText(
-			fieldLabel = "HTML Title",
-			text = "Page HTML Title");
-
-		PortletEntry.inputText(
-			fieldLabel = "Description",
-			text = "Page Description");
-
-		Page.viewPreview(
+		SERPPreview.addGeneralSettings(
 			description = "Page Description",
-			htmlTitle = "Page HTML Title - ${siteName}",
-			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			htmlTitle = "Page HTML Title");
 
 		PortletEntry.changeLocale(
 			fieldName = "HTML Title",
 			locale = "zh-CN");
 
-		PortletEntry.inputText(
-			fieldLabel = "HTML Title",
-			text = "中文标题");
-
-		PortletEntry.inputText(
-			fieldLabel = "Description",
-			text = "中文描述");
+		SERPPreview.addGeneralSettings(
+			description = "中文描述",
+			htmlTitle = "中文标题");
 
 		Page.viewPreview(
 			description = "中文描述",
@@ -183,8 +119,6 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Navigator.gotoNavTab(navTab = "SEO");
-
 		Page.viewPreview(
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
@@ -203,10 +137,52 @@ definition {
 			portalURL = "${portalURL}");
 	}
 
+	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
+	@priority = "5"
+	@refactordone
+	test CanViewPreviewWithLongInputs {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview");
+
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Guest",
+			layoutName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
+			portlet = "SEO",
+			siteURLKey = "guest");
+
+		SERPPreview.addGeneralSettings(
+			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications",
+			htmlTitle = "Liferay Portal provides an excellent platform for building web applications");
+
+		Page.viewPreview(
+			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
+			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
+			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
+			portalURL = "${portalURL}",
+			truncatedHTMLTitle = "true",
+			truncatedURL = "true");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Page.viewPreview(
+			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
+			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - ${siteName}",
+			pageName = "Long Test Page Name To Check The Display Style Of The URL In The SERP Preview",
+			portalURL = "${portalURL}",
+			truncatedHTMLTitle = "true",
+			truncatedURL = "true");
+	}
+
 	@description = "This test ensures that a user can preview SEO tags with different languages."
 	@priority = "5"
-	@refactorneeded
-	test ViewTranslatedLanguages {
+	@refactordone
+	test CanViewTranslatedLanguages {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -216,25 +192,19 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Test Site Name");
-
-		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
-
-		Navigator.gotoNavTab(navTab = "SEO");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			portlet = "SEO",
+			siteURLKey = "test-site-name");
 
 		PortletEntry.changeLocale(
 			fieldName = "HTML Title",
 			locale = "ar-SA");
 
-		PortletEntry.inputText(
-			fieldLabel = "HTML Title",
-			text = "عنوان الاختبار");
-
-		PortletEntry.inputText(
-			fieldLabel = "Description",
-			text = "وصف الاختبار");
+		SERPPreview.addGeneralSettings(
+			description = "وصف الاختبار",
+			htmlTitle = "عنوان الاختبار");
 
 		Page.viewPreview(
 			description = "وصف الاختبار",
@@ -249,13 +219,9 @@ definition {
 			fieldName = "HTML Title",
 			locale = "ca-ES");
 
-		PortletEntry.inputText(
-			fieldLabel = "HTML Title",
-			text = "Título de la Prueba");
-
-		PortletEntry.inputText(
-			fieldLabel = "Description",
-			text = "Descripción de la Prueba");
+		SERPPreview.addGeneralSettings(
+			description = "Descripción de la Prueba",
+			htmlTitle = "Título de la Prueba");
 
 		Page.viewPreview(
 			description = "Descripción de la Prueba",

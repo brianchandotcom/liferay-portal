@@ -555,7 +555,7 @@ definition {
 	@description = "This is a test for LPS-125802. View the hierarchy of items when change the order."
 	@priority = "4"
 	test ViewHierarchyOfItemsWhenChangeOrder {
-		task ("Add three Pages via JSON") {
+		task ("Add three content pages") {
 			for (var n : list "1,2,3") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -568,7 +568,7 @@ definition {
 			}
 		}
 
-		task ("Add three children in the pages via JSON") {
+		task ("Add a child widget page for each content page") {
 			for (var n : list "1,2,3") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -577,13 +577,13 @@ definition {
 			}
 		}
 
-		task ("Add a Nagivation Menu") {
+		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
 				groupName = "Test Site Name",
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
-		task ("Add the parents pages to the navigation menu") {
+		task ("Add three content pages as parent page items to the navigation menu") {
 			for (var n : list "1,2,3") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
 					groupName = "Test Site Name",
@@ -594,7 +594,7 @@ definition {
 			}
 		}
 
-		task ("Add the children pages to the navigation menu") {
+		task ("Add the child widget page as child page item under each parent page item") {
 			var n = "1";
 
 			for (var layoutName : list "Test Page Name 1,Test Page Name 2,Test Page Name 3") {

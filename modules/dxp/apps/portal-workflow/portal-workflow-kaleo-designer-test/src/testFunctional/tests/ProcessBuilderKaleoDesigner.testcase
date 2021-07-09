@@ -259,12 +259,24 @@ definition {
 	}
 
 	@description = "Verify that Condition Node do not have Timers property"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ConditionHasNoTimersProperty {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68475 ConditionHasNoTimersProperty pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Condition Node Description",
+			nodeName = "Condition",
+			nodeNodeLabel = "Condition",
+			nodeType = "condition");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "Condition");
+
+		AssertElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_TIMERS");
 	}
 
 	@description = "Verify that the user can rename connector"

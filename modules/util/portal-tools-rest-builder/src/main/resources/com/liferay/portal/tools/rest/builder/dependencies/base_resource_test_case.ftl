@@ -1272,43 +1272,43 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertValid(get${schemaName}, multipartFiles);
 					</#if>
 				</#if>
-				<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode") >
+				<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode")>
 					${schemaName} new${schemaName} = test${javaMethodSignature.methodName?cap_first}_create${schemaName}();
 
-                    put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+					put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
-                    <#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-                        <#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 							new${schemaName}.getId()
-                        <#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 							new${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-                        <#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 							new${schemaName}
-                        <#else>
+						<#else>
 							null
-                        </#if>
-                        <#sep>, </#sep>
-                    </#list>
+						</#if>
+						<#sep>, </#sep>
+					</#list>
 
-                    <#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
+					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 						, getMultipartFiles()
-                    </#if>
+					</#if>
 
 					);
 
 					assertEquals(new${schemaName}, put${schemaName});
 					assertValid(put${schemaName});
 
-                    get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "get")}(
-                    <#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-                        <#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+					get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "get")}(
+					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 							put${schemaName}.getId()
-                        <#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 							put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-                        </#if>
+						</#if>
 
-                        <#sep>, </#sep>
-                    </#list>
+						<#sep>, </#sep>
+					</#list>
 					);
 
 					assertEquals(new${schemaName}, get${schemaName});
@@ -1318,7 +1318,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode") >
+			<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_create${schemaName}() throws Exception {
 					return random${schemaName}();
 				}

@@ -36,10 +36,10 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals.assertPartialText(
-				key_card = "${webContentTitle}",
+			AssertTextEquals(
+				key_card = "${webContentTitle} (${depotName})",
 				locator1 = "Card#CARD_TITLE",
-				value1 = "${webContentTitle}");
+				value1 = "${webContentTitle} (${depotName})");
 		}
 
 		PortletEntry.save();
@@ -368,10 +368,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextEquals.assertPartialText(
-			key_card = "${webContentTitle}",
+		AssertTextEquals(
+			key_card = "${webContentTitle} (${otherSiteName})",
 			locator1 = "Card#CARD_TITLE",
-			value1 = "${webContentTitle}");
+			value1 = "${webContentTitle} (${otherSiteName})");
 
 		PortletEntry.save();
 
@@ -420,10 +420,10 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals.assertPartialText(
-				key_card = "${webContentTitle}",
+			AssertTextEquals(
+				key_card = "${webContentTitle} (${depotName})",
 				locator1 = "Card#CARD_TITLE",
-				value1 = "${webContentTitle}");
+				value1 = "${webContentTitle} (${depotName})");
 		}
 
 		else {

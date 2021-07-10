@@ -23,10 +23,17 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import java.io.IOException;
+
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import org.apache.felix.cm.PersistenceManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,14 +51,16 @@ public class DataRemoval implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		try {
+			_resetConfiguration();
+
 			_removeModuleData(
 				_dataRemovalConfiguration::removeExpiredJournalArticles,
 				"com.liferay.journal.service",
 				() -> new ExpiredJournalArticleUpgradeProcess(
 					_journalArticleLocalService));
 		}
-		catch (UpgradeException upgradeException) {
-			ReflectionUtil.throwException(upgradeException);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -80,10 +89,36 @@ public class DataRemoval implements UpgradeStepRegistrator {
 		}
 	}
 
+	private void _resetConfiguration() throws IOException {
+		Dictionary<String, Object> properties = _persistenceManager.load(
+			DataRemovalConfiguration.class.getName());
+
+		if (properties == null) {
+			return;
+		}
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		for (Enumeration<String> enumeration = properties.keys();
+			 enumeration.hasMoreElements();) {
+
+			String key = enumeration.nextElement();
+
+			dictionary.put(
+				key, key.startsWith("remove") ? false : properties.get(key));
+		}
+
+		_persistenceManager.store(
+			DataRemovalConfiguration.class.getName(), dictionary);
+	}
+
 	private DataRemovalConfiguration _dataRemovalConfiguration;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private PersistenceManager _persistenceManager;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

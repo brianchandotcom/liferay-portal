@@ -69,6 +69,12 @@ public class InfoCollectionProviderLayoutListRetriever
 				InfoCollectionProvider.class, keyListObjectReference.getKey());
 
 		if (infoCollectionProvider == null) {
+			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				keyListObjectReference.getKey());
+		}
+
+		if (infoCollectionProvider == null) {
 			return Collections.emptyList();
 		}
 
@@ -132,6 +138,12 @@ public class InfoCollectionProviderLayoutListRetriever
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceTracker.getInfoItemService(
 				InfoCollectionProvider.class, keyListObjectReference.getKey());
+
+		if (infoCollectionProvider == null) {
+			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				keyListObjectReference.getKey());
+		}
 
 		if (infoCollectionProvider == null) {
 			return 0;

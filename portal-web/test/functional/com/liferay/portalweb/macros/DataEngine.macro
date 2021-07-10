@@ -1352,15 +1352,13 @@ definition {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+		Click(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldFieldLabel}");
 
 		AssertTextEquals(
 			locator1 = "Button#ANY",

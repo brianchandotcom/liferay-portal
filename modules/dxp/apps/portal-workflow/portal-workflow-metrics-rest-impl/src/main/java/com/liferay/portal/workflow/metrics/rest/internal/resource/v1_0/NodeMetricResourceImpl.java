@@ -220,30 +220,19 @@ public class NodeMetricResourceImpl
 				_queries.wildcard("name", "*" + key + "*"));
 		}
 
-		TermsQuery termsQuery = null;
+		TermsQuery termsQuery = _queries.terms("name");
 
-		if (!taskNames.isEmpty()) {
-			termsQuery = _queries.terms("name");
-
-			termsQuery.addValues(taskNames.toArray(new Object[0]));
-		}
+		termsQuery.addValues(taskNames.toArray(new Object[0]));
 
 		if (processVersion != null) {
-			if (!taskNames.isEmpty()) {
-				filterBooleanQuery.addMustQueryClauses(termsQuery);
-			}
-
 			filterBooleanQuery.addMustQueryClauses(
-				_queries.term("deleted", false),
+				termsQuery, _queries.term("deleted", false),
 				_queries.term("processId", processId),
 				_queries.term("version", processVersion));
 		}
 		else {
-			if (!taskNames.isEmpty()) {
-				filterBooleanQuery.addShouldQueryClauses(termsQuery);
-			}
-
 			filterBooleanQuery.addShouldQueryClauses(
+				termsQuery,
 				_createBooleanQuery(processId, latestProcessVersion));
 		}
 

@@ -365,9 +365,7 @@ definition {
 						value1 = "My Sites");
 				}
 
-				AssertClick.assertPartialTextClickAt(
-					locator1 = "Card#CARD_TITLE",
-					value1 = "${siteNameScope}");
+				Click(locator1 = "Card#CARD_TITLE");
 
 				var key_siteNameScope = "${siteNameScope}";
 				var permissionDefinitionKeySiteScope = StringUtil.replace("${permissionDefinitionKey}", "CHECKBOX", "SITE_SCOPE");

@@ -5,9 +5,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fields");
-		}
+		Navigator.gotoNavTab(navTab = "Fields");
 
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_fieldName = "${fieldName}";
@@ -29,9 +27,7 @@ definition {
 
 		WaitForVisible(locator1 = "Sidebar#BACK");
 
-		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Basic");
-		}
+		Navigator.gotoNavTab(navTab = "Basic");
 
 		Type(
 			key_fieldLabel = "Label",
@@ -150,9 +146,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fields");
-		}
+		Navigator.gotoNavTab(navTab = "Fields");
 
 		if (isSet(targetFieldGroupLabel)) {
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -173,9 +167,7 @@ definition {
 
 		WaitForVisible(locator1 = "Sidebar#BACK");
 
-		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Basic");
-		}
+		Navigator.gotoNavTab(navTab = "Basic");
 
 		Type(
 			key_fieldLabel = "Label",
@@ -258,9 +250,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fields");
-		}
+		Navigator.gotoNavTab(navTab = "Fields");
 
 		for (var fieldName : list "${fieldNameList}") {
 			var key_fieldName = "${fieldName}";
@@ -387,9 +377,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fieldsets");
-		}
+		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_fieldFieldLabel = "${targetFieldLabel}",
@@ -430,9 +418,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fieldsets");
-		}
+		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		DoubleClick(
 			key_fieldName = "${fieldsetName}",
@@ -450,9 +436,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fields");
-		}
+		Navigator.gotoNavTab(navTab = "Fields");
 
 		DragAndDrop.javaScriptDragAndDropToBottom(
 			key_fieldName = "${fieldName}",
@@ -462,9 +446,7 @@ definition {
 
 		WaitForVisible(locator1 = "Sidebar#BACK");
 
-		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Basic");
-		}
+		Navigator.gotoNavTab(navTab = "Basic");
 
 		Type(
 			key_fieldLabel = "Label",
@@ -691,9 +673,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${fieldFieldLabel}");
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
+		Navigator.gotoNavTab(navTab = "Advanced");
 
 		AssertElementPresent(
 			checkboxName = "Localizable",
@@ -830,9 +810,7 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
-			Navigator.gotoNavTab(navTab = "Basic");
-		}
+		Navigator.gotoNavTab(navTab = "Basic");
 
 		if ("${collapsible}" == "true") {
 			Check.checkToggleSwitch(
@@ -899,9 +877,7 @@ definition {
 				value1 = "${fieldFieldLabel}");
 		}
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
+		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Click.javaScriptClick(locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -972,9 +948,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${fieldFieldLabel}");
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
-			Navigator.gotoNavTab(navTab = "Basic");
-		}
+		Navigator.gotoNavTab(navTab = "Basic");
 
 		Check.checkToggleSwitch(
 			checkboxName = "Required Field",
@@ -989,9 +963,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${fieldFieldLabel}");
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
+		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Check.checkNotVisible(
 			key_fieldFieldLabel = "Searchable",
@@ -1049,9 +1021,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${fieldsGroupLabel}");
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
-			Navigator.gotoNavTab(navTab = "Basic");
-		}
+		Navigator.gotoNavTab(navTab = "Basic");
 
 		Check.checkToggleSwitch(
 			checkboxName = "Collapsible",
@@ -1156,9 +1126,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${fieldFieldLabel}");
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
+		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Click(locator1 = "FormFields#UPLOAD_PREDEFINED_VALUE");
 
@@ -1180,9 +1148,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fieldsets");
-		}
+		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
 	}
@@ -1198,9 +1164,7 @@ definition {
 			Navigator.gotoSidebarTab(tabName = "Builder");
 		}
 
-		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fieldsets");
-		}
+		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		Click(
 			key_fieldsetName = "${fieldsetName}",
@@ -1265,9 +1229,7 @@ definition {
 				value1 = "${fieldLabel}");
 		}
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "${tab}")) {
-			Navigator.gotoNavTab(navTab = "${tab}");
-		}
+		Navigator.gotoNavTab(navTab = "${tab}");
 
 		Check.checkToggleSwitch(
 			checkboxName = "Repeatable",
@@ -1330,9 +1292,7 @@ definition {
 			var tab = "Advanced";
 		}
 
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "${tab}")) {
-			Navigator.gotoNavTab(navTab = "${tab}");
-		}
+		Navigator.gotoNavTab(navTab = "${tab}");
 
 		if (IsChecked(checkboxName = "Show Label", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Uncheck.uncheckToggleSwitch(

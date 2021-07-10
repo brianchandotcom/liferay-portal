@@ -11676,10 +11676,15 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<mkdir dir="dist" />
 
-				<mirrors-get
-					dest="dist/liferay-portal-${lp.version}.war"
-					src="${test.build.portal.war.url}"
-				/>
+				<if>
+					<matches pattern="(file|https?)://" string="${test.build.portal.war.url}" />
+					<then>
+						<mirrors-get
+							dest="liferay-portal.war"
+							src="${test.build.portal.war.url}"
+						/>
+					</then>
+				</if>
 
 				<if>
 					<equals arg1="${app.server.type}" arg2="websphere" />
@@ -11692,7 +11697,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 						<unzip
 							dest="${tstamp.value}"
-							src="dist/liferay-portal-${lp.version}.war"
+							src="liferay-portal.war"
 						/>
 
 						<if>
@@ -11709,25 +11714,23 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 						<zip
 							basedir="${tstamp.value}"
-							destfile="dist/liferay-portal-${lp.version}.war"
+							destfile="liferay-portal.war"
 						/>
 
 						<delete dir="${tstamp.value}" />
 
 						<copy
-							file="dist/liferay-portal-${lp.version}.war"
+							file="liferay-portal.war"
 							tofile="${app.server.websphere.deploy.dir}/liferay-portal.war"
 						/>
 					</then>
 					<else>
 						<unzip
 							dest="${app.server.portal.dir}"
-							src="dist/liferay-portal-${lp.version}.war"
+							src="liferay-portal.war"
 						/>
 					</else>
 				</if>
-
-				<delete dir="dist" />
 
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
 
@@ -11761,21 +11764,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</if>
 
 				<if>
-					<or>
-						<matches pattern="file://" string="${test.build.portal.elasticsearch.zip.url}" />
-						<matches pattern="https?://" string="${test.build.portal.elasticsearch.zip.url}" />
-					</or>
+					<matches pattern="(file|https?)://" string="${test.build.portal.elasticsearch.zip.url}" />
 					<then>
-						<propertyregex
-							input="${test.build.portal.elasticsearch.zip.url}"
-							override="true"
-							property="test.build.portal.elasticsearch.zip.name"
-							regexp=".+/([^/]+)"
-							replace="\1"
-						/>
-
 						<mirrors-get
-							dest="${test.build.portal.elasticsearch.zip.name}"
+							dest="liferay-portal-elasticsearch.zip"
 							src="${test.build.portal.elasticsearch.zip.url}"
 						/>
 
@@ -11787,23 +11779,28 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 						<decompress
 							dest="${tstamp.value}"
-							src="${test.build.portal.elasticsearch.zip.name}"
+							src="liferay-portal-elasticsearch.zip"
 						/>
 
 						<execute>
 							cp -r ${tstamp.value}/*/elasticsearch7 ${liferay.home}/
 						</execute>
 
-						<delete file="${test.build.portal.elasticsearch.zip.name}" />
+						<delete file="liferay-portal-elasticsearch.zip" />
 
 						<delete dir="${tstamp.value}" />
 					</then>
 				</if>
 
-				<mirrors-get
-					dest="liferay-portal-osgi.zip"
-					src="${test.build.portal.osgi.zip.url}"
-				/>
+				<if>
+					<matches pattern="(file|https?)://" string="${test.build.portal.osgi.zip.url}" />
+					<then>
+						<mirrors-get
+							dest="liferay-portal-osgi.zip"
+							src="${test.build.portal.osgi.zip.url}"
+						/>
+					</then>
+				</if>
 
 				<unzip
 					dest="${liferay.home}/osgi"
@@ -11818,10 +11815,15 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<delete file="liferay-portal-osgi.zip" />
 
-				<mirrors-get
-					dest="liferay-portal-tools.zip"
-					src="${test.build.portal.tools.zip.url}"
-				/>
+				<if>
+					<matches pattern="(file|https?)://" string="${test.build.portal.tools.zip.url}" />
+					<then>
+						<mirrors-get
+							dest="liferay-portal-tools.zip"
+							src="${test.build.portal.tools.zip.url}"
+						/>
+					</then>
+				</if>
 
 				<local name="liferay.portal.tools.temp.dir" />
 

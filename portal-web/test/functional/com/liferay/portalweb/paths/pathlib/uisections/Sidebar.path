@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_OPEN</td>
+	<td>//div[contains(@class,'multi-panel-sidebar-content-open')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAB</td>
 	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}']</td>
 	<td></td>

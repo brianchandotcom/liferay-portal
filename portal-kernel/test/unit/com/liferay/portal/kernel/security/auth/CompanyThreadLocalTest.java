@@ -79,15 +79,14 @@ public class CompanyThreadLocalTest extends PowerMockito {
 
 		try {
 			consumer.accept(1L);
+
+			Assert.fail("Should throw UnsupportedOperationException");
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
-			return;
 		}
 		finally {
 			safeCloseable.close();
 		}
-
-		Assert.fail("Should throw UnsupportedOperationException");
 	}
 
 }

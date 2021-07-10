@@ -27,7 +27,7 @@ definition {
 				value1 = "${fieldName}");
 		}
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "Sidebar#BACK");
 
 		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Basic");
@@ -171,7 +171,7 @@ definition {
 				value1 = "${fieldName}");
 		}
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "Sidebar#BACK");
 
 		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Basic");
@@ -268,7 +268,7 @@ definition {
 
 			DoubleClick(locator1 = "Sidebar#ADD_FIELD_NAME");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(locator1 = "Sidebar#BACK");
 
 			AssertElementPresent(
 				key_fieldFieldLabel = "${fieldName}",
@@ -397,7 +397,7 @@ definition {
 			locator1 = "Sidebar#ADD_FIELD_NAME",
 			locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "Sidebar#BACK");
 
 		if (isSet(fieldsetLabel)) {
 			Type(
@@ -460,7 +460,7 @@ definition {
 			locator1 = "Sidebar#ADD_FIELD_NAME",
 			locator2 = "DDMEditStructure#FORM_FIELDS_GROUP_CONTAINER");
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "Sidebar#BACK");
 
 		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Basic");

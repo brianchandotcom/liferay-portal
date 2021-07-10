@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>CARD_TITLE</td>
-	<td>//*[contains(@class,'card-title')][contains(.,'${key_card}')]</td>
+	<td>//*[contains(@class,'card-title')][.//*[normalize-space(text())='${key_card}']]</td>
 	<td></td>
 </tr>
 <tr>

@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
@@ -287,28 +288,38 @@ public class FreeMarkerTool {
 	public String getGraphQLArguments(
 		List<JavaMethodParameter> javaMethodParameters, String schemaVarName) {
 
-		String arguments = OpenAPIParserUtil.getArguments(javaMethodParameters);
-
-		arguments = StringUtil.replace(
-			arguments, "aggregation",
+		Map<String, String> substitutions = HashMapBuilder.put(
+			"aggregation",
 			"_aggregationBiFunction.apply(" + schemaVarName +
-				"Resource, aggregations)");
-		arguments = StringUtil.replace(
-			arguments, "assetLibraryId", "Long.valueOf(assetLibraryId)");
-		arguments = StringUtil.replace(
-			arguments, "filter",
+				"Resource, aggregations)"
+		).put(
+			"assetLibraryId", "Long.valueOf(assetLibraryId)"
+		).put(
+			"filter",
 			"_filterBiFunction.apply(" + schemaVarName +
-				"Resource, filterString)");
-		arguments = StringUtil.replace(
-			arguments, "pageSize,page", "Pagination.of(page, pageSize)");
-		arguments = StringUtil.replace(
-			arguments, "siteId", "Long.valueOf(siteKey)");
-		arguments = StringUtil.replace(
-			arguments, "sorts",
-			"_sortsBiFunction.apply(" + schemaVarName +
-				"Resource, sortsString)");
+				"Resource, filterString)"
+		).put(
+			"siteId", "Long.valueOf(siteKey)"
+		).put(
+			"sorts",
+			"_sortsBiFunction.apply(" + schemaVarName + "Resource, sortsString)"
+		).build();
 
-		return arguments;
+		StringBuilder sb = new StringBuilder();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			sb.append(
+				_replaceGraphQLParameter(
+					javaMethodParameter.getParameterName(), substitutions));
+			sb.append(',');
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		return StringUtil.replace(
+			sb.toString(), "pageSize,page", "Pagination.of(page, pageSize)");
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
@@ -1195,6 +1206,18 @@ public class FreeMarkerTool {
 		}
 
 		return false;
+	}
+
+	private String _replaceGraphQLParameter(
+		String parameterName, Map<String, String> substitutions) {
+
+		for (Map.Entry<String, String> entry : substitutions.entrySet()) {
+			if (parameterName.equals(entry.getKey())) {
+				return entry.getValue();
+			}
+		}
+
+		return parameterName;
 	}
 
 	private static final FreeMarkerTool _freeMarkerTool = new FreeMarkerTool();

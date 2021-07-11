@@ -171,79 +171,87 @@ export default function ItemSelector({
 	);
 
 	return (
-		<ClayForm.Group className="mb-2" small>
+		<ClayForm.Group className="mb-2">
 			<label htmlFor={itemSelectorInputId}>{label}</label>
 
-			<div className="d-flex">
-				<ClayInput
-					className={classNames('mr-2', {
-						'page-editor__item-selector__content-input': showEditControls,
-					})}
-					id={itemSelectorInputId}
-					onClick={() => {
-						if (showEditControls) {
-							openModal();
-						}
-					}}
-					placeholder={Liferay.Util.sub(
-						Liferay.Language.get('select-x'),
-						label
-					)}
-					readOnly
-					sizing="sm"
-					type="text"
-					value={selectedItemTitle}
-				/>
+			<ClayInput.Group small>
+				<ClayInput.GroupItem>
+					<ClayInput
+						className={classNames({
+							'page-editor__item-selector__content-input': showEditControls,
+						})}
+						id={itemSelectorInputId}
+						onClick={() => {
+							if (showEditControls) {
+								openModal();
+							}
+						}}
+						placeholder={Liferay.Util.sub(
+							Liferay.Language.get('select-x'),
+							label
+						)}
+						readOnly
+						sizing="sm"
+						type="text"
+						value={selectedItemTitle}
+					/>
+				</ClayInput.GroupItem>
 
 				{showEditControls &&
 					(mappedItemsMenu.length > 0 ? (
-						<ClayDropDownWithItems
-							items={mappedItemsMenu}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={selectContentButtonLabel}
-									className="page-editor__item-selector__content-button"
-									displayType="secondary"
-									small
-									symbol={selectContentButtonIcon}
-									title={selectContentButtonLabel}
-								/>
-							}
-						/>
+						<ClayInput.GroupItem shrink>
+							<ClayDropDownWithItems
+								items={mappedItemsMenu}
+								trigger={
+									<ClayButtonWithIcon
+										aria-label={selectContentButtonLabel}
+										className="page-editor__item-selector__content-button"
+										displayType="secondary"
+										small
+										symbol={selectContentButtonIcon}
+										title={selectContentButtonLabel}
+									/>
+								}
+							/>
+						</ClayInput.GroupItem>
 					) : (
-						<ClayButtonWithIcon
-							aria-label={selectContentButtonLabel}
-							className="page-editor__item-selector__content-button"
-							displayType="secondary"
-							onClick={openModal}
-							small
-							symbol={selectContentButtonIcon}
-							title={selectContentButtonLabel}
-						/>
+						<ClayInput.GroupItem shrink>
+							<ClayButtonWithIcon
+								aria-label={selectContentButtonLabel}
+								className="page-editor__item-selector__content-button"
+								displayType="secondary"
+								onClick={openModal}
+								small
+								symbol={selectContentButtonIcon}
+								title={selectContentButtonLabel}
+							/>
+						</ClayInput.GroupItem>
 					))}
 
 				{showEditControls && selectedItem?.title && (
-					<ClayDropDownWithItems
-						items={optionsMenu}
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Util.sub(
-									Liferay.Language.get('view-x-options'),
-									label
-								)}
-								className="ml-2 page-editor__item-selector__content-button"
-								displayType="secondary"
-								small
-								symbol="ellipsis-v"
-								title={Liferay.Util.sub(
-									Liferay.Language.get('view-x-options'),
-									label
-								)}
-							/>
-						}
-					/>
+					<ClayInput.GroupItem shrink>
+						<ClayDropDownWithItems
+							items={optionsMenu}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Util.sub(
+										Liferay.Language.get('view-x-options'),
+										label
+									)}
+									className="page-editor__item-selector__content-button"
+									displayType="secondary"
+									small
+									symbol="ellipsis-v"
+									title={Liferay.Util.sub(
+										Liferay.Language.get('view-x-options'),
+										label
+									)}
+								/>
+							}
+						/>
+					</ClayInput.GroupItem>
 				)}
-			</div>
+			</ClayInput.Group>
 		</ClayForm.Group>
 	);
 }

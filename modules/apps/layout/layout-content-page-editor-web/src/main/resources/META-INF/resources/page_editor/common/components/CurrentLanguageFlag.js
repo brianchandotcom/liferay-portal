@@ -27,7 +27,7 @@ export default function CurrentLanguageFlag() {
 
 	return (
 		<div
-			className="align-self-end autofit-col ml-1 p-2"
+			className="link-monospaced"
 			data-title={Liferay.Language.get('localizable')}
 		>
 			<ClayIcon symbol={languages[languageId].languageIcon} />

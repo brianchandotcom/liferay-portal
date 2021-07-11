@@ -139,13 +139,13 @@ export default function LinkField({field, onValueSelect, value}) {
 			</ClayForm.Group>
 
 			{source === SOURCE_OPTION_MANUAL && (
-				<div className="autofit-row mb-3">
-					<div className="autofit-col autofit-col-expand">
-						<ClayForm.Group small>
-							<label htmlFor={hrefInputId}>
-								{Liferay.Language.get('url')}
-							</label>
+				<ClayForm.Group>
+					<label htmlFor={hrefInputId}>
+						{Liferay.Language.get('url')}
+					</label>
 
+					<ClayInput.Group small>
+						<ClayInput.GroupItem>
 							<ClayInput
 								id={hrefInputId}
 								onBlur={() => handleChange({href: nextHref})}
@@ -155,10 +155,12 @@ export default function LinkField({field, onValueSelect, value}) {
 								type="text"
 								value={nextHref || ''}
 							/>
-						</ClayForm.Group>
-					</div>
-					<CurrentLanguageFlag />
-				</div>
+						</ClayInput.GroupItem>
+						<ClayInput.GroupItem shrink>
+							<CurrentLanguageFlag />
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
 			)}
 
 			{source === SOURCE_OPTION_FROM_LAYOUT && (

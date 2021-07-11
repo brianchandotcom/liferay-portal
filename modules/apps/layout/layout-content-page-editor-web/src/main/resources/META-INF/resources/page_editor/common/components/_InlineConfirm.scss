@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 @keyframes inlineConfirmShow {
 	to {
@@ -7,20 +7,24 @@
 	}
 }
 
-.page-editor__inline-confirm {
-	align-items: center;
-	animation: inlineConfirmShow ease 0.3s;
-	animation-fill-mode: forwards;
-	background: fade_out($white, 0.1);
-	bottom: 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	left: 0;
-	opacity: 0;
-	padding-top: 20%;
-	position: absolute;
-	right: 0;
-	top: 0;
-	transform: translateY(-1em);
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__inline-confirm {
+			align-items: center;
+			animation: inlineConfirmShow ease 0.3s;
+			animation-fill-mode: forwards;
+			background: fade_out($cadmin-white, 0.1);
+			bottom: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			left: 0;
+			opacity: 0;
+			padding-top: 20%;
+			position: absolute;
+			right: 0;
+			top: 0;
+			transform: translateY(-1em);
+		}
+	}
 }

@@ -53,6 +53,7 @@ html#{$cadmin-selector} {
 
 					&__node {
 						flex-grow: 1;
+						flex-shrink: 0;
 
 						&:first-child {
 							padding-left: 16px;

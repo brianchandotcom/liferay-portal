@@ -1,1 +1,14 @@
 @import 'cadmin';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.form-control-sm[contenteditable] {
+			height: auto;
+			min-height: $cadmin-input-height-sm;
+
+			p {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

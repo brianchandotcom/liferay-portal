@@ -319,7 +319,14 @@ export default function Sidebar() {
 								setHasError(true);
 							}}
 						>
-							<Suspense fallback={<ClayLoadingIndicator />}>
+							<Suspense
+								fallback={
+									<ClayLoadingIndicator
+										className="my-4"
+										small
+									/>
+								}
+							>
 								<SidebarPanel
 									getInstance={getInstance}
 									pluginId={sidebarPanelId}

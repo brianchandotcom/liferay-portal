@@ -32,6 +32,7 @@
 
 	<div class="form-group">
 		<@liferay_ui["input-editor"]
+			configKey="rich_text"
 			contents="${fieldValue}"
 			contentsLanguageId="${requestedLocale}"
 			cssClass="${cssClass}"

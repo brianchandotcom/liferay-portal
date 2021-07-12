@@ -75,6 +75,8 @@ definition {
 	@description = "LPS-108138 - Verify that users can bulk-transition pending tasks assigned to themselves from more than 1 instance via Workflow Metrics"
 	@priority = "4"
 	test CanBulkTransitionPendingTasksFromMultipleInstances {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

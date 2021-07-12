@@ -361,9 +361,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 

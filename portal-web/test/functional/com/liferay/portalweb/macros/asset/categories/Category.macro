@@ -81,31 +81,35 @@ definition {
 
 			if ("${displayPageTemplateType}" != "Default") {
 				Select(
-					locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+					key_fieldName = "displayPageType",
+					locator1 = "Select#ANY_ID",
 					value1 = "${displayPageTemplateType}");
 			}
 
-			Pause(locator1 = "3000");
-
 			AssertSelectedLabel(
-				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				key_fieldName = "displayPageType",
+				locator1 = "Select#ANY_ID",
 				value1 = "${displayPageTemplateType}");
 
 			if ("${displayPageTemplateType}" != "None") {
 				if ("${displayPageTemplateType}" == "Default") {
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
+						key_fieldName = "defaultDisplayPageNameInput",
+						locator1 = "TextInput#ANY_ID",
 						value1 = "${displayPageName}");
 				}
 
 				if ("${displayPageTemplateType}" == "Specific") {
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						key_fieldName = "specificDisplayPageNameInput",
+						locator1 = "TextInput#ANY_ID",
 						value1 = "No Display Page Template Selected");
 
 					WaitForLiferayEvent.initializeLiferayEventLog();
 
-					Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
+					Click(
+						key_namespace = "chooseSpecificDisplayPage",
+						locator1 = "Button#ANY_ID");
 
 					SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -114,7 +118,8 @@ definition {
 					SelectFrameTop();
 
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						key_fieldName = "specificDisplayPageNameInput",
+						locator1 = "TextInput#ANY_ID",
 						value1 = "${displayPageName}");
 				}
 			}
@@ -317,19 +322,20 @@ definition {
 			Panel.expandPanel(panel = "Display Page");
 
 			Select(
-				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				key_fieldName = "displayPageType",
+				locator1 = "Select#ANY_ID",
 				value1 = "${displayPageTemplateType}");
 
-			Pause(locator1 = "3000");
-
 			AssertSelectedLabel(
-				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				key_fieldName = "displayPageType",
+				locator1 = "Select#ANY_ID",
 				value1 = "${displayPageTemplateType}");
 
 			if ("${displayPageTemplateType}" != "None") {
 				if ("${displayPageTemplateType}" == "Default") {
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
+						key_fieldName = "defaultDisplayPageNameInput",
+						locator1 = "TextInput#ANY_ID",
 						value1 = "${displayPageName}");
 				}
 
@@ -339,12 +345,15 @@ definition {
 					}
 
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						key_fieldName = "specificDisplayPageNameInput",
+						locator1 = "TextInput#ANY_ID",
 						value1 = "${selectedDisplayPageName}");
 
 					WaitForLiferayEvent.initializeLiferayEventLog();
 
-					Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
+					Click(
+						key_namespace = "chooseSpecificDisplayPage",
+						locator1 = "Button#ANY_ID");
 
 					SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -353,7 +362,8 @@ definition {
 					SelectFrameTop();
 
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						key_fieldName = "specificDisplayPageNameInput",
+						locator1 = "TextInput#ANY_ID",
 						value1 = "${displayPageName}");
 				}
 			}

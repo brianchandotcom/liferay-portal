@@ -1236,7 +1236,9 @@ definition {
 
 		PortletEntry.selectAll();
 
-		Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+		Click(
+			key_text = "ellipsis",
+			locator1 = "ManagementBar#ANY_ICON");
 
 		MenuItem.click(menuItem = "Checkout");
 

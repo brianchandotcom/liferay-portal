@@ -22,6 +22,8 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Validate Login User can view Sites Report page"

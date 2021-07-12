@@ -27,6 +27,8 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Assert an Individual's Segments"

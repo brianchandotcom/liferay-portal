@@ -316,7 +316,14 @@ definition {
 		var sqlResults = SQL.executeMySQLStatement(
 			mysqlStatement = "${mysqlStatement}");
 
-		echo("## * Modification Date is: ${sqlResults}");
+		echo("## * SQL Query Result is: ${sqlResults}");
+
+		var modifiedDate = StringUtil.regexReplaceAll("${sqlResults}", "[\r\n]", "");
+		var modifiedDate = StringUtil.extractDigits("${modifiedDate}");
+
+		echo("## * Modification Date is: ${modifiedDate}");
+
+		return "${modifiedDate}";
 	}
 
 	macro getSiteTemplateID {

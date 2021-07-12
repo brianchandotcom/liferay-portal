@@ -891,6 +891,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-126159. The new user can publish a content page without set permissions for custom field page."
+	@priority = "4"
+	test PublishContentPageWithoutCustomFieldsPermission {
+		task ("Add a custom field for Page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Text Field",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "Page");
+		}
+
+		task ("Define the permissions of site role") {
+			for (var resourceActionIndex : list "ADD_LAYOUT,UPDATE") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Roles Siterole Name",
+					roleType = "site");
+			}
+		}
+
+		task ("Assign the site role to new user") {
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Roles Siterole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Publish the page") {
+			PageEditor.clickPublish();
+		}
+	}
+
 	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
 	@priority = "4"
 	test ViewDisplayedWebContentInContentsPanelWithWebContentArticleUpdatePermission {

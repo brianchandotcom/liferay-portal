@@ -12,6 +12,11 @@
 <tbody>
 <!--MENU-->
 <tr>
+	<td>DROPDOWN_MENU_OPTION</td>
+	<td>//a[contains(@class,'dropdown-item') and contains(text(), '${key_selectOption}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENU_WITHDRAW_SUBMISSION</td>
 	<td>//a[contains(@id,'_menu_withdraw-submission_1')]</td>
 	<td></td>

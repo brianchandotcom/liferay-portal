@@ -29,12 +29,82 @@ definition {
 	}
 
 	@description = "Verify can filter by completed tasks"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByCompletedTasks {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68552 CanFilterByCompletedTasks pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry 1");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click(
+			key_selectOption = "Completed",
+			locator1 = "WorkflowSubmissionsTask#DROPDOWN_MENU_OPTION");
+
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry 1",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
+		AssertElementNotPresent(
+			key_workflowAssetTitle = "Blogs Entry 2",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click(
+			key_selectOption = "Completed",
+			locator1 = "WorkflowSubmissionsTask#DROPDOWN_MENU_OPTION");
+
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry 1",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
+		AssertElementNotPresent(
+			key_workflowAssetTitle = "Blogs Entry 2",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 	}
 
 	@description = "Verify can filter by pending tasks"

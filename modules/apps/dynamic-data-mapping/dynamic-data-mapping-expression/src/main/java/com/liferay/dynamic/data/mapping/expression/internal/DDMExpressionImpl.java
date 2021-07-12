@@ -107,7 +107,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		if (ddmExpressionDateValidation) {
 			String expressionSubstring = expressionString.substring(
 				expressionString.indexOf(CharPool.OPEN_CURLY_BRACE),
-				expressionString.indexOf(CharPool.CLOSE_CURLY_BRACE));
+				expressionString.lastIndexOf(CharPool.CLOSE_CURLY_BRACE));
 
 			expressionString = StringUtil.replace(
 				expressionString, expressionSubstring,

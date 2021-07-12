@@ -1,0 +1,13 @@
+definition {
+
+	macro viewSubmissionStatus {
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "${submissionStatus}");
+
+		AssertElementPresent(
+			key_taskName = "${submissionTitle}",
+			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
+	}
+
+}

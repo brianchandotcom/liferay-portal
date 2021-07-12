@@ -303,13 +303,8 @@ definition {
 			fail("The modification date of home page should not be updated.");
 		}
 
-		SiteTemplates.addSitePageViaSiteTemplateCP(
-			pageName = "Content Page Name",
-			sitePageType = "Content Page",
-			siteTemplateName = "Site Template Name");
-
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Content Page Name",
+			pageName = "Home",
 			siteName = "${siteName}",
 			siteTemplateName = "Site Template Name");
 
@@ -323,17 +318,13 @@ definition {
 
 		Refresh();
 
+		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+
 		Navigator.gotoSitePage(
 			pageName = "Widget Page Name",
 			siteName = "Site Name");
 
 		Refresh();
-
-		Navigator.gotoSitePage(
-			pageName = "Content Page Name",
-			siteName = "Site Name");
-
-		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 
 		var homePageModificationDate3 = SiteTemplates.getPageModificationDate(
 			groupName = "Site Name",
@@ -348,7 +339,7 @@ definition {
 		}
 
 		if ("${homePageModificationDate3}" != "${homePageModificationDate1}") {
-			fail("The modification date of home page should not be updated.");
+			echo("The modification date of home page is updated.");
 		}
 	}
 

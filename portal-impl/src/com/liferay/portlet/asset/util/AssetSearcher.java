@@ -538,8 +538,7 @@ public class AssetSearcher extends BaseSearcher {
 	}
 
 	private void _addSearchNotAllCategories(
-			BooleanFilter queryBooleanFilter, String... fieldNamesArray)
-		throws Exception {
+		BooleanFilter queryBooleanFilter, String... fieldNamesArray) {
 
 		BooleanFilter categoryIdsQueryBooleanFilter = new BooleanFilter();
 
@@ -565,8 +564,7 @@ public class AssetSearcher extends BaseSearcher {
 	}
 
 	private void _addSearchNotAnyCategories(
-			BooleanFilter queryBooleanFilter, String... fieldNamesArray)
-		throws Exception {
+		BooleanFilter queryBooleanFilter, String... fieldNamesArray) {
 
 		for (String fieldName : fieldNamesArray) {
 			long[] filteredNotAnyCategoryIds =

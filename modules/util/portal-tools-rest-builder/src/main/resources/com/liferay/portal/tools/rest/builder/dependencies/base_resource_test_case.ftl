@@ -1230,23 +1230,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 
 					${schemaName} put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-
-					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-							post${schemaName}.getId()
-						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-							post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-							random${schemaName}
-						<#else>
-							null
-						</#if>
-						<#sep>, </#sep>
-					</#list>
-
-					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
-						, multipartFiles
-					</#if>
+						<@getPutParameters
+							hasMultipartFiles=true
+							javaMethodSignature=javaMethodSignature
+							newSchemaVarNamePrefix="random"
+							schemaName=schemaName
+							schemaVarName=schemaVarName
+							schemaVarNamePrefix="post"
+						/>
 
 					);
 
@@ -1268,23 +1259,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaName} new${schemaName} = test${javaMethodSignature.methodName?cap_first}_create${schemaName}();
 
 					put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-
-					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-							new${schemaName}.getId()
-						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-							new${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-							new${schemaName}
-						<#else>
-							null
-						</#if>
-						<#sep>, </#sep>
-					</#list>
-
-					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
-						, getMultipartFiles()
-					</#if>
+						<@getPutParameters
+							hasMultipartFiles=false
+							javaMethodSignature=javaMethodSignature
+							newSchemaVarNamePrefix="new"
+							schemaName=schemaName
+							schemaVarName=schemaVarName
+							schemaVarNamePrefix="new"
+						/>
 
 					);
 
@@ -2527,6 +2509,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		null
 	</#if>
 </#macro>
+
 <#macro getGetterParameters
 	javaMethodSignature
 >
@@ -2539,4 +2522,32 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#sep>, </#sep>
 	</#list>
+</#macro>
+
+<#macro getPutParameters
+	hasMultipartFiles
+	javaMethodSignature
+	newSchemaVarNamePrefix
+	schemaName
+	schemaVarName
+	schemaVarNamePrefix
+>
+	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+			${schemaVarNamePrefix}${schemaName}.getId()
+		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+			${schemaVarNamePrefix}${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+			${newSchemaVarNamePrefix}${schemaName}
+		<#else>
+			null
+		</#if>
+		<#sep>, </#sep>
+	</#list>
+
+	<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && !hasMultipartFiles>
+		, getMultipartFiles()
+	<#elseif freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && hasMultipartFiles>
+		, multipartFiles
+	</#if>
 </#macro>

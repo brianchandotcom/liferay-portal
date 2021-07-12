@@ -160,7 +160,11 @@ const NumericInputMask: React.FC<IProps> = ({
 						onChange={(event: any, value: any) => {
 							handleChange('symbols', {
 								decimalSymbol: value[0],
-								thousandsSeparator: thousandsSeparator?.[0],
+								thousandsSeparator: thousandsSeparator?.includes(
+									'none'
+								)
+									? 'none'
+									: thousandsSeparator?.[0],
 							});
 
 							setDecimalSymbol(value[0]);

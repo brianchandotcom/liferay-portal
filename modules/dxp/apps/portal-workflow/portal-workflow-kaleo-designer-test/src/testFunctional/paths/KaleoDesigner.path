@@ -30,6 +30,11 @@
 	<td>//*[contains(@class,'lexicon-icon-${key_icon}')]/../../span//span[contains(text(),'Untranslated')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_VALUE_TRUE_DEFAULT_CONNECTORS</td>
+	<td>//td[contains(@class,'table-col-value') and contains(text(),'true')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

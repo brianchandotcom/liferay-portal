@@ -75,6 +75,16 @@
 </tr>
 <!--SETTINGS-->
 <tr>
+	<td>SETTINGS_EDIT_CONECTIONS_DEFAULT</td>
+	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_DEFAULT</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Default')]//following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_LINK</td>
 	<td>//*[contains(@class,'tab-label') and contains(.,'Settings')]</td>
 	<td></td>

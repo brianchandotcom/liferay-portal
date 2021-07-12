@@ -229,6 +229,16 @@ definition {
 		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "${nodeNodeLabel}");
 	}
 
+	macro editConnectorDefault {
+		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_DEFAULT");
+
+		Click(
+			locator1 = "DDMEditStructure#SETTINGS_EDIT_CONECTIONS_DEFAULT",
+			value1 = "${key_radioOption}");
+
+		Button.clickSave();
+	}
+
 	macro editConnectorName {
 		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_NAME");
 

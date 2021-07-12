@@ -358,12 +358,31 @@ definition {
 	}
 
 	@description = "Verify that the user can set transition Default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetDefaultTransition {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68484 CanSetDefaultTransition pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.addNodeViaViewTab(
+			nodeDescription = "Task Description",
+			nodeName = "Tast Name",
+			nodeNodeLabel = "Task",
+			nodeType = "task");
+
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.addConnectorViaViewTab(
+			connectorName = "Connection",
+			nodeType = "start",
+			nodeTypeDestination = "task");
+
+		KaleoDesigner.editConnectorDefault(key_radioOption = "true");
+
+		AssertElementPresent(locator1 = "KaleoDesigner#VIEW_VALUE_TRUE_DEFAULT_CONNECTORS");
 	}
 
 	@description = "Verify that Condition Node do not have Timers property"

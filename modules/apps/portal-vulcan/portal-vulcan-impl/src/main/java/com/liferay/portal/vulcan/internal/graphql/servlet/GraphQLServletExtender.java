@@ -1485,8 +1485,7 @@ public class GraphQLServletExtender {
 			Map<String, Serializable> attributes)
 		throws PortalException {
 
-		GraphQLContext graphQLContext =
-			dataFetchingEnvironment.getLocalContext();
+		GraphQLContext graphQLContext = dataFetchingEnvironment.getContext();
 
 		Optional<HttpServletRequest> httpServletRequestOptional =
 			graphQLContext.getHttpServletRequest();
@@ -1862,7 +1861,7 @@ public class GraphQLServletExtender {
 				FieldCoordinates.coordinates(queryParentType, listName),
 				(DataFetcher<Object>)dataFetchingEnvironment -> {
 					GraphQLContext graphQLContext =
-						dataFetchingEnvironment.getLocalContext();
+						dataFetchingEnvironment.getContext();
 
 					Optional<HttpServletRequest> httpServletRequestOptional =
 						graphQLContext.getHttpServletRequest();

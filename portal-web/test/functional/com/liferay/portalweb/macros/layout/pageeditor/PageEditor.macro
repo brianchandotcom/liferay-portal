@@ -2459,7 +2459,8 @@ definition {
 			}
 			else {
 				Type(
-					locator1 = "PageEditorEditableLink#URL",
+					key_text = "URL",
+					locator1 = "TextInput#ANY",
 					value1 = "${url}");
 
 				Click(

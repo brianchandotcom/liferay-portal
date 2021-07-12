@@ -39,7 +39,33 @@ if (siteNavigationMenuItem != null) {
 <aui:input label="url" name="TypeSettingsProperties--url--" placeholder="http://" value="<%= url %>">
 	<aui:validator name="required" />
 
-	<aui:validator name="url" />
+	<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-a-valid-absolute-or-relative-url") %>' name="custom">
+		function(val) {
+			if (!val) {
+				return false;
+			}
+
+			if (val.startsWith("/")) {
+				if (val.endsWith("/")) {
+					return false;
+				}
+
+				if (val.includes("//")) {
+					return false;
+				}
+
+				return true;
+			}
+
+			try {
+				const url = new URL(val);
+				return true;
+			}
+			catch (e) {}
+
+			return false;
+		}
+	</aui:validator>
 </aui:input>
 
 <aui:input checked="<%= useNewTab %>" label="open-in-a-new-tab" name="TypeSettingsProperties--useNewTab--" type="checkbox" />

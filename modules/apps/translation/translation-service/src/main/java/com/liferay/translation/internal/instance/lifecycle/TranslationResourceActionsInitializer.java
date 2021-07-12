@@ -30,16 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia Garcia
  */
 @Component(
-	immediate = true,
-	service = AddResourceActionsPortalInstanceLifecycleListener.class
+	immediate = true, service = TranslationResourceActionsInitializer.class
 )
-public class AddResourceActionsPortalInstanceLifecycleListener {
+public class TranslationResourceActionsInitializer {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
 		String xml = StringUtil.read(
-			AddResourceActionsPortalInstanceLifecycleListener.class.
-				getClassLoader(),
+			TranslationResourceActionsInitializer.class.getClassLoader(),
 			"/com/liferay/translation/internal/instance/lifecycle" +
 				"/dependencies/resource-actions.xml.tpl");
 

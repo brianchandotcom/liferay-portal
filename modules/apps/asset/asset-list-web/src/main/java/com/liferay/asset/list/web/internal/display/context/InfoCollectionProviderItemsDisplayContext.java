@@ -17,6 +17,8 @@ package com.liferay.asset.list.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.pagination.InfoPage;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -133,6 +136,39 @@ public class InfoCollectionProviderItemsDisplayContext {
 		searchContainer.setTotal(infoPage.getTotalCount());
 
 		return searchContainer;
+	}
+
+	public String getTitle(Object object) {
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			getInfoItemFieldValuesProvider();
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
+
+		InfoFieldValue<Object> titleInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("title");
+
+		if (titleInfoFieldValue != null) {
+			return String.valueOf(
+				titleInfoFieldValue.getValue(_themeDisplay.getLocale()));
+		}
+
+		InfoFieldValue<Object> nameInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("name");
+
+		if (nameInfoFieldValue != null) {
+			return String.valueOf(
+				nameInfoFieldValue.getValue(_themeDisplay.getLocale()));
+		}
+
+		if (object instanceof ClassedModel) {
+			ClassedModel classedModel = (ClassedModel)object;
+
+			return getInfoCollectionItemsType(object) +
+				StringPool.COMMA_AND_SPACE + classedModel.getPrimaryKeyObj();
+		}
+
+		return getInfoCollectionItemsType(object);
 	}
 
 	public boolean isShowActions() {

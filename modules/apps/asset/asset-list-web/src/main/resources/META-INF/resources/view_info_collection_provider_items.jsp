@@ -35,13 +35,6 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 				className="Object"
 				modelVar="result"
 			>
-
-				<%
-				InfoItemFieldValues infoItemFieldValues = infoItemFormProvider.getInfoItemFieldValues(result);
-
-				InfoFieldValue<Object> titleInfoFieldValue = infoItemFieldValues.getInfoFieldValue("title");
-				%>
-
 				<liferay-ui:search-container-column-text
 					name="title"
 				>
@@ -56,11 +49,11 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 
 					<c:choose>
 						<c:when test="<%= Validator.isNull(displayPageURL) %>">
-							<%= HtmlUtil.escape(String.valueOf(titleInfoFieldValue.getValue(locale))) %>
+							<%= HtmlUtil.escape(infoCollectionProviderItemsDisplayContext.getTitle(result)) %>
 						</c:when>
 						<c:otherwise>
 							<aui:a href="<%= displayPageURL %>" target="_top">
-								<%= HtmlUtil.escape(String.valueOf(titleInfoFieldValue.getValue(locale))) %>
+								<%= HtmlUtil.escape(infoCollectionProviderItemsDisplayContext.getTitle(result)) %>
 							</aui:a>
 						</c:otherwise>
 					</c:choose>
@@ -72,6 +65,8 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 				/>
 
 				<%
+				InfoItemFieldValues infoItemFieldValues = infoItemFormProvider.getInfoItemFieldValues(result);
+
 				InfoFieldValue<Object> userNameInfoFieldValue = infoItemFieldValues.getInfoFieldValue("userName");
 				%>
 

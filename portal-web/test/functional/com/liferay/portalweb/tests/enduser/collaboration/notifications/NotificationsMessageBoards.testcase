@@ -73,11 +73,13 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		for (var threadCount : list "1,2") {
-			MessageboardsThread.addPG(
-				layoutName = "message-boards-page",
-				siteURLKey = "guest",
+			JSONMBMessage.addMessage(
+				addGuestPermissions = "true",
+				groupName = "Guest",
 				threadBody = "MB Thread Message Body${threadCount}",
-				threadSubject = "MB Thread Message Subject${threadCount}");
+				threadSubject = "MB Thread Message Subject${threadCount}",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
 		}
 
 		User.logoutAndLoginPG(
@@ -231,13 +233,14 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		MessageboardsThread.addPG(
+		JSONMBMessage.addMessage(
+			addGuestPermissions = "true",
 			categoryName = "MB Category Name",
 			groupName = "Guest",
-			layoutName = "message-boards-page",
-			siteURLKey = "guest",
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
+			threadSubject = "MB Thread Message Subject",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 

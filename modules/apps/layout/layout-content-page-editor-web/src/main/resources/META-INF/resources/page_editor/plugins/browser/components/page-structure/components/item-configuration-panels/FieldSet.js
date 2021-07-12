@@ -104,7 +104,7 @@ export const FieldSet = ({
 								<div
 									className={classNames(
 										'autofit-row',
-										'page-editor__sidebar__fieldset__field',
+										'page-editor__sidebar__fieldset__field align-items-end',
 										{
 											'page-editor__sidebar__fieldset__field-small':
 												field.displaySize ===
@@ -126,7 +126,7 @@ export const FieldSet = ({
 									</div>
 
 									{field.localizable && (
-										<CurrentLanguageFlag />
+										<CurrentLanguageFlag className="ml-2" />
 									)}
 								</div>
 							)

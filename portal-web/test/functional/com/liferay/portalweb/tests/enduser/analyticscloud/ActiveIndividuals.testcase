@@ -153,7 +153,7 @@ definition {
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 	}
 
-	@description = "Automation ID: LRAC-8139 | Test Summary: Active individual graph shows activities from today when switched to the 24hr filter"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8139 | Test Summary: Active individual graph shows activities from today when switched to the 24hr filter"
 	@ignore = "true"
 	@priority = "5"
 	test GraphShowsActivitiesFromTodayWhenSwitchedTo24HrFilter {

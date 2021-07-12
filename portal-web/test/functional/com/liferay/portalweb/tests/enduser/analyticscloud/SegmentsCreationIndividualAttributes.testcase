@@ -29,7 +29,7 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Automation ID: LRAC-8134 | Test Summary: Create a Dynamic Individuals Segment"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8134 | Test Summary: Create a Dynamic Individuals Segment"
 	@ignore = "true"
 	@priority = "5"
 	test CanCreateDynamicSegmentIndividualsAttributes {

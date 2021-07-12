@@ -263,7 +263,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 				infoItem.classPK === selectedItem.classPK
 		);
 
-		const type = selectedItem?.itemType || mappedContent?.name;
+		const type = selectedItem?.itemType || mappedContent?.type;
 		const subtype = selectedItem?.itemSubtype || mappedContent?.subtype;
 
 		setTypeLabel(type);

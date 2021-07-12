@@ -60,6 +60,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"liferay.jackson", false
 					).put(
+						"liferay.object.definition.company.id",
+						objectDefinition.getCompanyId()
+					).put(
 						"liferay.object.definition.id",
 						objectDefinition.getObjectDefinitionId()
 					).put(

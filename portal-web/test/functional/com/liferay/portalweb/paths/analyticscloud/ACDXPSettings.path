@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>ASSIGNED_PROPERTY</td>
-	<td>//td[contains(@class,'lfr-assigned-property-column')]</td>
+	<td>//input[@disabled=""]//../following::td[contains(@class,'lfr-assigned-property-column')]</td>
 	<td></td>
 </tr>
 <tr>

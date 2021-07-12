@@ -128,6 +128,101 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125985. The Page Creater can configure configuration template of widget in page editor."
+	@priority = "5"
+	test ConfigureConfigurationTemplateOfAssetPublisherInPageEditor {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add an Asset Publisher widget to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("View the web content shown in Asset Publisher") {
+			AssertVisible(
+				key_assetTitle = "Web Content Title",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+			AssertTextEquals(
+				key_assetTitle = "Web Content Title",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "Web Content Content");
+		}
+
+		task ("View the rating star not shown in Asset Publisher") {
+			AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
+
+			AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR");
+		}
+
+		task ("Enable the Ratings in Asset Publisher") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the rating star shown in Asset Publisher") {
+			AssertVisible(locator1 = "Ratings#YOUR_RATING_STAR");
+
+			AssertVisible(locator1 = "Ratings#AVERAGE_STAR");
+		}
+
+		task ("Save the current configuration as template") {
+			AssetPublisherPortlet.saveConfigurationTemplatePG(configurationName = "Asset Publisher Configuration Template");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Remove the Asset Publisher") {
+			PageEditor.removeFragment(fragmentName = "Asset Publisher");
+		}
+
+		task ("Add an Asset Publisher widget to page") {
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("View the web content shown in Asset Publisher") {
+			AssertVisible(
+				key_assetTitle = "Web Content Title",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+			AssertTextEquals(
+				key_assetTitle = "Web Content Title",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "Web Content Content");
+		}
+
+		task ("View the rating star not shown in Asset Publisher") {
+			AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
+
+			AssertElementNotPresent(locator1 = "Ratings#AVERAGE_STAR");
+		}
+
+		task ("Apply the new configure template") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.restoreConfigurationTemplatePG(configurationName = "Asset Publisher Configuration Template");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the rating star shown in Asset Publisher") {
+			AssertVisible(locator1 = "Ratings#YOUR_RATING_STAR");
+
+			AssertVisible(locator1 = "Ratings#AVERAGE_STAR");
+		}
+	}
+
 	@description = "This is a test for LPS-106813. Can set permissions for widgets in content page."
 	@priority = "5"
 	test ConfigurePermissionsOfAssetPublisher {

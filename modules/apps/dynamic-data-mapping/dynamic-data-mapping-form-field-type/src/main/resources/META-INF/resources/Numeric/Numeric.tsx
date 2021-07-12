@@ -217,6 +217,27 @@ const Numeric: React.FC<IProps> = ({
 		}
 	};
 
+	const maskedPlaceholder = useMemo<string | undefined>(() => {
+		if (!inputMask) {
+			return undefined;
+		}
+
+		if (dataType === 'double') {
+			return getMaskedValue({
+				append,
+				appendType,
+				dataType,
+				inputMask,
+				inputMaskFormat,
+				symbols,
+				value: '0.00'.replace('.', symbols.decimalSymbol),
+			}).masked;
+		}
+		else {
+			return inputMaskFormat?.replace(/\d/g, '_');
+		}
+	}, [append, appendType, dataType, inputMask, inputMaskFormat, symbols]);
+
 	return (
 		<FieldBase
 			{...otherProps}
@@ -237,12 +258,7 @@ const Numeric: React.FC<IProps> = ({
 				onBlur={onBlur}
 				onChange={handleChange}
 				onFocus={onFocus}
-				placeholder={
-					placeholder ||
-					(inputMask
-						? inputMaskFormat?.replace(/\d/g, '_')
-						: undefined)
-				}
+				placeholder={placeholder || maskedPlaceholder}
 				type="text"
 				value={inputValue.masked}
 			/>

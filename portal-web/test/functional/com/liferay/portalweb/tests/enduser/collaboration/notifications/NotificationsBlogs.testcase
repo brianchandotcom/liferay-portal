@@ -70,15 +70,11 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		for (var entryCount : list "1,2") {
-			BlogsNavigator.openToAddEntry(
-				layoutName = "Blogs Page",
-				siteURLKey = "guest");
-
-			BlogsEntry.addEntryContent(
+			JSONBlog.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-
-			PortletEntry.publish();
+				entryTitle = "Blogs Entry${entryCount} Title",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
 		}
 
 		User.logoutAndLoginPG(
@@ -121,15 +117,11 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		for (var entryCount : list "1,2,3") {
-			BlogsNavigator.openToAddEntry(
-				layoutName = "Blogs Page",
-				siteURLKey = "guest");
-
-			BlogsEntry.addEntryContent(
+			JSONBlog.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-
-			PortletEntry.publish();
+				entryTitle = "Blogs Entry${entryCount} Title",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
@@ -161,15 +153,11 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		for (var entryCount : list "1,2,3") {
-			BlogsNavigator.openToAddEntry(
-				layoutName = "Blogs Page",
-				siteURLKey = "guest");
-
-			BlogsEntry.addEntryContent(
+			JSONBlog.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title");
-
-			PortletEntry.publish();
+				entryTitle = "Blogs Entry${entryCount} Title",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
@@ -362,15 +350,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		BlogsEntry.addEntryContent(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		PortletEntry.publish();
+			entryTitle = "Blogs Entry Title",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 

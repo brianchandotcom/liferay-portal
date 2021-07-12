@@ -1,5 +1,9 @@
-.page-editor__edit-mode-selector {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	width: 150px;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__edit-mode-selector {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 150px;
+		}
+	}
 }

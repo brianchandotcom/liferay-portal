@@ -1,37 +1,40 @@
 @import '../../../app/components/variables';
-@import 'atlas-variables';
 
-.page-editor__toolbar-experience {
-	// There could have been done with Bootstrap classes (eg. d-flex and
-	// align-items-center), but we're doing this in here so that we have an
-	// example of plug-in CSS.
-	align-items: center;
-	display: flex;
-	position: relative;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__toolbar-experience {
+			// There could have been done with Bootstrap classes (eg. d-flex and
+			// align-items-center), but we're doing this in here so that we have an
+			// example of plug-in CSS.
+			align-items: center;
+			display: flex;
+			position: relative;
 
-	> button {
-		display: inline-block;
-		max-width: 100%;
-		width: 12em;
-	}
-}
+			> button {
+				display: inline-block;
+				max-width: 100%;
+				width: 12em;
+			}
+		}
 
-.page-editor__toolbar-experience__dropdown-menu.toggled {
-	display: block;
-	left: 0;
-	max-width: 100vw;
-	position: absolute;
-	top: 0;
-	width: 808px;
-	z-index: $modalZIndex + 1;
+		.page-editor__toolbar-experience__dropdown-menu.toggled {
+			display: block;
+			left: 0;
+			max-width: 100vw;
+			position: absolute;
+			top: 0;
+			width: 808px;
+			z-index: $modalZIndex + 1;
 
-	li.dropdown-menu__experience {
-		cursor: pointer;
+			li.dropdown-menu__experience {
+				cursor: pointer;
 
-		&.dropdown-menu__experience--active,
-		&:focus {
-			background-color: $primary-l3;
-			border: 1px solid $primary-l1;
+				&.dropdown-menu__experience--active,
+				&:focus {
+					background-color: $cadmin-primary-l3;
+					border: 1px solid $cadmin-primary-l1;
+				}
+			}
 		}
 	}
 }

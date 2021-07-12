@@ -371,7 +371,7 @@ const ExperienceSelector = ({
 			</ClayButton>
 
 			{open && (
-				<ReactPortal>
+				<ReactPortal className="cadmin">
 					<div
 						className="dropdown-menu p-4 page-editor__toolbar-experience__dropdown-menu toggled"
 						onBlur={handleDropdownBlur}

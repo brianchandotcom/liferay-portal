@@ -1,107 +1,110 @@
-@import 'atlas-variables';
-
 @import './variables';
 
-.page-editor__toolbar {
-	background-color: $white;
-	border-bottom: $toolbarBorderWidth solid fade_out($secondary-l2, 0.5);
-	color: $secondary;
-	margin-bottom: 0;
-	width: 100%;
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__toolbar {
+			background-color: $cadmin-white;
+			border-bottom: $toolbarBorderWidth solid
+				fade_out($cadmin-secondary-l2, 0.5);
+			color: $cadmin-secondary;
+			margin-bottom: 0;
+			width: 100%;
 
-	&--master-layout {
-		background-color: $primary-l3;
-		border-bottom: 1px solid $primary-l1;
-	}
-
-	.btn-secondary:active,
-	.btn-secondary[aria-pressed='true'],
-	.btn-secondary[aria-pressed='true']:hover {
-		background-color: $gray-200;
-		border-color: $gray-400;
-	}
-
-	& > .container-fluid {
-		flex-direction: row;
-		justify-content: flex-start;
-		padding: 0;
-		white-space: nowrap;
-
-		> .navbar-nav {
-			display: flex;
-			flex-wrap: nowrap;
-			max-width: 100%;
-			padding: 12px;
-
-			&.start {
-				align-self: flex-start;
-				order: 1;
-				padding-right: 0;
-
-				> .nav-item {
-					margin-right: $pageEditorSpacing;
-				}
+			&--master-layout {
+				background-color: $cadmin-primary-l3;
+				border-bottom: 1px solid $cadmin-primary-l1;
 			}
 
-			&.middle {
+			.btn-secondary:active,
+			.btn-secondary[aria-pressed='true'],
+			.btn-secondary[aria-pressed='true']:hover {
+				background-color: $cadmin-gray-200;
+				border-color: $cadmin-gray-400;
+			}
+
+			& > .container-fluid {
+				flex-direction: row;
 				justify-content: flex-start;
-				order: 2;
 				padding: 0;
+				white-space: nowrap;
 
-				> .nav-item {
-					margin-right: $pageEditorSpacing;
-				}
-			}
+				> .navbar-nav {
+					display: flex;
+					flex-wrap: nowrap;
+					max-width: 100%;
+					padding: 12px;
 
-			&.end {
-				box-shadow: inset 0 -1px 0 0 fade-out($secondary-l2, 0.5);
-				flex-basis: 100%;
-				justify-content: flex-end;
-				order: 0;
+					&.start {
+						align-self: flex-start;
+						order: 1;
+						padding-right: 0;
 
-				> .nav-item {
-					margin-left: $pageEditorSpacing;
-				}
-			}
-		}
+						> .nav-item {
+							margin-right: $pageEditorSpacing;
+						}
+					}
 
-		@include media-breakpoint-up(sm) {
-			> .navbar-nav {
-				&.start > .nav-item {
-					margin-right: $pageEditorSpacing * 2;
-				}
+					&.middle {
+						justify-content: flex-start;
+						order: 2;
+						padding: 0;
 
-				&.middle > .nav-item {
-					margin-right: 0;
-				}
+						> .nav-item {
+							margin-right: $pageEditorSpacing;
+						}
+					}
 
-				&.end > .nav-item {
-					margin-left: $pageEditorSpacing * 2;
-				}
-			}
-		}
+					&.end {
+						box-shadow: inset 0 -1px 0 0 fade-out($cadmin-secondary-l2, 0.5);
+						flex-basis: 100%;
+						justify-content: flex-end;
+						order: 0;
 
-		@include media-breakpoint-up(xl) {
-			flex-wrap: nowrap;
-
-			> .navbar-nav {
-				padding: 16px 12px;
-
-				&.start {
-					order: 0;
+						> .nav-item {
+							margin-left: $pageEditorSpacing;
+						}
+					}
 				}
 
-				&.middle {
-					flex: 1;
-					justify-content: center;
-					order: 1;
-					padding-left: $pageEditorSpacing * 1.5;
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					> .navbar-nav {
+						&.start > .nav-item {
+							margin-right: $pageEditorSpacing * 2;
+						}
+
+						&.middle > .nav-item {
+							margin-right: 0;
+						}
+
+						&.end > .nav-item {
+							margin-left: $pageEditorSpacing * 2;
+						}
+					}
 				}
 
-				&.end {
-					box-shadow: none;
-					flex-basis: auto;
-					order: 2;
+				@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
+					flex-wrap: nowrap;
+
+					> .navbar-nav {
+						padding: 16px 12px;
+
+						&.start {
+							order: 0;
+						}
+
+						&.middle {
+							flex: 1;
+							justify-content: center;
+							order: 1;
+							padding-left: $pageEditorSpacing * 1.5;
+						}
+
+						&.end {
+							box-shadow: none;
+							flex-basis: auto;
+							order: 2;
+						}
+					}
 				}
 			}
 		}

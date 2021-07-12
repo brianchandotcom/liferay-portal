@@ -419,12 +419,37 @@ definition {
 	}
 
 	@description = "Verify if when the task is pending, the "End Date" field is blank"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EndDateIsBlankWhenTaskPending {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68556 EndDateIsBlankWhenTaskPending pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertElementPresent(
+			key_text = "",
+			locator1 = "WorkflowSubmissions#END_DATE_COLUMN_TEXT");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		AssertElementPresent(
+			key_text = "",
+			locator1 = "WorkflowSubmissions#END_DATE_COLUMN_TEXT");
 	}
 
 	@description = "Verify if when the task is approved, the "End Date" field is filled"

@@ -91,6 +91,15 @@ definition {
 		}
 	}
 
+	@description = "Verify that an approved Calendar Event can be deleted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ApprovedEventCanBeDeleted {
+
+		// TODO LRQA-68616 ApprovedEventCanBeDeleted pending implementation
+
+	}
+
 	@priority = "5"
 	test ApproveEventWithInvitedUser {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -140,6 +149,51 @@ definition {
 			eventTitle = "Calendar Event Title",
 			siteCalendarName = "${siteName}",
 			userCalendarName = "Test Test");
+	}
+
+	@description = "Verify that a calendar event created on the pop up can be approved"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CalendarPopUpCanBeApproved {
+
+		// TODO LRQA-68603 CalendarPopUpCanBeApproved pending implementation
+
+	}
+
+	@description = "Verify that a calendar event created on the pop up can be rejected"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CalendarPopUpCanBeRejected {
+
+		// TODO LRQA-68604 CalendarPopUpCanBeRejected pending implementation
+
+	}
+
+	@description = "Verify that a calendar event on draft can be approved"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CalendarWithDraftStatusCanBecomeApproved {
+
+		// TODO LRQA-68602 CalendarWithDraftStatusCanBecomeApproved pending implementation
+
+	}
+
+	@description = "Verify that the user can approve calendar events on Single Approver workflow"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanApproveCalendarEventOnSingleApprover {
+
+		// TODO LRQA-68594 CanApproveCalendarEventOnSingleApprover pending implementation
+
+	}
+
+	@description = "Verify that the user can assign a Workflow to Calendar Event"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignWorkflowToCalendarEvent {
+
+		// TODO LRQA-68593 CanAssignWorkflowToCalendarEvent pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-59572."
@@ -315,6 +369,42 @@ definition {
 			eventTitle = "Calendar Event Title",
 			siteCalendarName = "${siteName}",
 			userCalendarName = "Test Test");
+	}
+
+	@description = "Verify that the Calendar Event status become pending after submit"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StatusBecomePendingAfterSubmit {
+
+		// TODO LRQA-68601 StatusBecomePendingAfterSubmit pending implementation
+
+	}
+
+	@description = "Verify that the Calendar Event status changes when approved"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StatusChangesWhenApproved {
+
+		// TODO LRQA-68597 StatusChangesWhenApproved pending implementation
+
+	}
+
+	@description = "Verify that the Calendar Event status stay on pending when rejected after submitted"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test StatusStayPendingAfterRejected {
+
+		// TODO LRQA-68599 StatusStayPendingAfterRejected pending implementation
+
+	}
+
+	@description = "Verify that a Unpublish warning message appears when the user edit a approved event"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test UnpublishWarningMessageIsDisplayedOnEdit {
+
+		// TODO LRQA-68596 UnpublishWarningMessageIsDisplayedOnEdit pending implementation
+
 	}
 
 	@priority = "3"

@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
@@ -55,7 +56,8 @@ public class ObjectEntryApplication extends Application {
 				_applicationName, _objectDefinitionId));
 		objects.add(
 			new OpenAPIResourceImpl(
-				_openAPIResource, _getOpenAPISchemaFilter(),
+				_objectDefinitionCompanyId, _openAPIResource,
+				_getOpenAPISchemaFilter(),
 				new HashSet<Class<?>>() {
 					{
 						add(ObjectEntryResourceImpl.class);
@@ -69,6 +71,9 @@ public class ObjectEntryApplication extends Application {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_applicationName = (String)properties.get("osgi.jaxrs.name");
+
+		_objectDefinitionCompanyId = (Long)properties.get(
+			"liferay.object.definition.company.id");
 
 		_objectDefinitionName = (String)properties.get(
 			"liferay.object.definition.name");
@@ -107,7 +112,12 @@ public class ObjectEntryApplication extends Application {
 	}
 
 	private String _applicationName;
+	private Long _objectDefinitionCompanyId;
 	private Long _objectDefinitionId;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private String _objectDefinitionName;
 
 	@Reference

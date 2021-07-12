@@ -71,7 +71,9 @@ definition {
 	@summary = "Helper function to add a script to a template via file"
 	macro _inputTemplateFile {
 		if (isSet(templateFile)) {
-			UploadCommonFile(
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				key_fieldName = "importScript",
 				locator1 = "TextInput#ANY_ID",
 				value1 = "${templateFile}");

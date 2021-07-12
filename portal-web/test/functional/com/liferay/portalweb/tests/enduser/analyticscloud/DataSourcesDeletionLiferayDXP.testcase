@@ -1,0 +1,40 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8154 | Test Summary: Delete a Liferay DXP data source and ensure contacts and ensure analytics events are no longer being synced"
+    @ignore = "true"
+    @priority = "5"
+    test DeleteLiferayDXPDataSourceEnsureContactsAndEventsNoBeingSynced {
+
+        // TODO LRAC-8154 DeleteLiferayDXPDataSourceEnsureContactsAndEventsNoBeingSynced pending implementation
+    }
+
+}

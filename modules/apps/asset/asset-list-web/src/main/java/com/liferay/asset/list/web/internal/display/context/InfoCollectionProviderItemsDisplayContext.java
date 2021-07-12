@@ -73,8 +73,10 @@ public class InfoCollectionProviderItemsDisplayContext {
 			className = PortalUtil.getClassName(assetEntry.getClassNameId());
 		}
 		else {
-			className =
-				_getInfoCollectionProvider().getCollectionItemClassName();
+			InfoCollectionProvider infoCollectionProvider =
+				_getInfoCollectionProvider();
+
+			className = infoCollectionProvider.getCollectionItemClassName();
 		}
 
 		return ResourceActionsUtil.getModelResource(

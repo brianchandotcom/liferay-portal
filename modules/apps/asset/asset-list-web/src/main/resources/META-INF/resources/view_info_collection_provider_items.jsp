@@ -70,28 +70,34 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 				InfoFieldValue<Object> userNameInfoFieldValue = infoItemFieldValues.getInfoFieldValue("userName");
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="author"
-					value="<%= String.valueOf(userNameInfoFieldValue.getValue()) %>"
-				/>
+				<c:if test="<%= userNameInfoFieldValue != null %>">
+					<liferay-ui:search-container-column-text
+						name="author"
+						value="<%= String.valueOf(userNameInfoFieldValue.getValue()) %>"
+					/>
+				</c:if>
 
 				<%
 				InfoFieldValue<Object> modifiedDateInfoFieldValue = infoItemFieldValues.getInfoFieldValue("modifiedDate");
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="modified-date"
-					value="<%= String.valueOf(modifiedDateInfoFieldValue.getValue()) %>"
-				/>
+				<c:if test="<%= modifiedDateInfoFieldValue != null %>">
+					<liferay-ui:search-container-column-text
+						name="modified-date"
+						value="<%= String.valueOf(modifiedDateInfoFieldValue.getValue()) %>"
+					/>
+				</c:if>
 
 				<%
 				InfoFieldValue<Object> createDateInfoFieldValue = infoItemFieldValues.getInfoFieldValue("createDate");
 				%>
 
-				<liferay-ui:search-container-column-text
-					name="create-date"
-					value="<%= String.valueOf(createDateInfoFieldValue.getValue()) %>"
-				/>
+				<c:if test="<%= createDateInfoFieldValue != null %>">
+					<liferay-ui:search-container-column-text
+						name="create-date"
+						value="<%= String.valueOf(createDateInfoFieldValue.getValue()) %>"
+					/>
+				</c:if>
 
 				<c:if test="<%= infoCollectionProviderItemsDisplayContext.isShowActions() %>">
 					<liferay-ui:search-container-column-text>

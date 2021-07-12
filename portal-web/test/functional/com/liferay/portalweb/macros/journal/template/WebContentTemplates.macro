@@ -3,6 +3,8 @@ definition {
 	@summary = "Helper function to add fields '${templateFieldNames}' to the template"
 	macro _addFields {
 		if (isSet(templateFieldNames)) {
+			Navigator.gotoSidebarTab(tabName = "Elements");
+
 			for (var fieldName : list "${templateFieldNames}") {
 				var key_panelTitle = "Fields";
 				var key_variableName = "${fieldName}";
@@ -16,6 +18,8 @@ definition {
 
 	macro _addGeneralVariables {
 		if (isSet(generalVariables)) {
+			Navigator.gotoSidebarTab(tabName = "Elements");
+
 			for (var generalVariable : list "${generalVariables}") {
 				var key_panelTitle = "General Variables";
 				var key_variableName = "${generalVariable}";
@@ -39,9 +43,9 @@ definition {
 		if (isSet(structureName)) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			AssertClick(
-				locator1 = "DDMEditTemplate#DETAILS_SELECT_STRUCTURE",
-				value1 = "Select");
+			Click(
+				key_namespace = "selectDDMStructure",
+				locator1 = "Button#ANY_ID");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -68,7 +72,8 @@ definition {
 	macro _inputTemplateFile {
 		if (isSet(templateFile)) {
 			UploadCommonFile(
-				locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_FILE_FIELD",
+				key_fieldName = "importScript",
+				locator1 = "TextInput#ANY_ID",
 				value1 = "${templateFile}");
 		}
 	}
@@ -76,6 +81,8 @@ definition {
 	@summary = "Click on the add button to add a template named '${templateName}' for structure '${structureName}', input most basic fields and then save the template"
 	macro addCP {
 		LexiconEntry.gotoAdd();
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		WebContentTemplates.inputTemplateAddScreenFields(
 			generalVariables = "${generalVariables}",
@@ -94,6 +101,8 @@ definition {
 	@summary = "Attempt to add a blank template"
 	macro addNullCP {
 		LexiconEntry.gotoAdd();
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
@@ -221,6 +230,8 @@ definition {
 
 		WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
 
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "${templateName}");
@@ -245,6 +256,8 @@ definition {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Edit",
 			templateName = "${templatePreviousName}");
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		WebContentTemplates.inputTemplateAddScreenFields(
 			imageSourceURL = "${imageSourceURL}",
@@ -352,17 +365,22 @@ definition {
 		if ("${userEditPermission}" != "noEditPermission") {
 			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
 
+			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
 				value1 = "${templateName}");
+
+			Navigator.gotoSidebarTab(tabName = "Properties");
 
 			AssertTextEquals(
 				locator1 = "TextArea#DESCRIPTION",
 				value1 = "${templateDescription}");
 
 			if (isSet(structureName)) {
-				AssertTextEquals.assertValue(
-					locator1 = "DDMEditTemplate#DETAILS_STRUCTURE",
+				AssertTextEquals(
+					key_text = "Structure",
+					locator1 = "TextInput#ANY",
 					value1 = "${structureName}");
 			}
 

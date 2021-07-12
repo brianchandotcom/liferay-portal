@@ -1,0 +1,30 @@
+definition {
+
+	macro _getFormInstanceId {
+		Variables.assertDefined(parameterList = "${groupName},${formName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var groupId = JSONDDMFormSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddm.ddmforminstance/get-form-instances \
+			  -u test@liferay.com:test \
+			  -d companyId=${companyId} \
+			  -d groupId=${groupId} \
+			  -d "start=-1" \
+			  -d "end=-1"
+		''';
+
+		var formInstanceId = JSONCurlUtil.post("${curl}","$.[?(@['nameCurrentValue'] == '${formName}')]['formInstanceId']");
+
+		if ("${formInstanceId}" == "") {
+			fail("FAIL. Cannot find formInstanceId.");
+		}
+
+		return "${formInstanceId}";
+	}
+
+}

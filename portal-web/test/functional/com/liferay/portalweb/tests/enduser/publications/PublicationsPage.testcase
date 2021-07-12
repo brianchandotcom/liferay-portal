@@ -234,6 +234,17 @@ definition {
 
 		PortletEntry.save();
 
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Tag",
+			changeSite = "Guest",
+			changeTitle = "tag name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

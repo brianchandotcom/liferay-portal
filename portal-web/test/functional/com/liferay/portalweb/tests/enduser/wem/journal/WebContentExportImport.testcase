@@ -88,6 +88,8 @@ definition {
 		for (var templateName : list "Carousel Display,Thumbnail Display,Content List Display") {
 			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
 
+			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
 			WebContentTemplates.inputTemplateAddScreenFields(structureName = "Content List");
 
 			DDLDataDefinition.save();

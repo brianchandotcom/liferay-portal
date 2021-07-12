@@ -17,9 +17,7 @@ package com.liferay.journal.web.internal.editor.configuration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,16 +27,16 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pavel Savinov
+ * @author Fortunato Maldonado
  */
 @Component(
 	property = {
-		"editor.config.key=descriptionMapAsXMLEditor",
+		"editor.config.key=rich_text",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
 	},
 	service = EditorConfigContributor.class
 )
-public class JournalArticleDescriptionEditorConfigContributor
+public class JournalArticleContentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -47,17 +45,7 @@ public class JournalArticleDescriptionEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put(
-			"allowedContent", "p br strong i ol ul li u link pre em a[href]"
-		).put(
-			"height", "120"
-		).put(
-			"pasteFilter", "p br strong i ol ul li u link pre em a[href]"
-		).put(
-			"resize_enabled", true
-		).put(
-			"toolbar", getToolbarJSONArray()
-		);
+		jsonObject.put("resize_enabled", true);
 
 		String removePlugins = jsonObject.getString("removePlugins");
 
@@ -69,13 +57,6 @@ public class JournalArticleDescriptionEditorConfigContributor
 		}
 
 		jsonObject.put("removePlugins", removePlugins);
-	}
-
-	protected JSONArray getToolbarJSONArray() {
-		return JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', 'Underline']"),
-			toJSONArray("['NumberedList', 'BulletedList']"),
-			toJSONArray("['Link']"));
 	}
 
 }

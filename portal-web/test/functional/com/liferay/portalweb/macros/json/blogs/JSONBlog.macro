@@ -73,7 +73,7 @@ definition {
 
 		if (isSet(displayDate)) {
 			var displayDateMinute = DateUtil.getFormattedCurrentDate("m");
-			var displayDateHour = DateUtil.getCurrentHour();
+			var displayDateHour = DateUtil.getFormattedCurrentDate("H");
 			var displayDateDay = DateUtil.getCurrentDate();
 			var displayDateYear = DateUtil.getCurrentYear();
 			var displayDateMonth = DateUtil.getCurrentMonth();

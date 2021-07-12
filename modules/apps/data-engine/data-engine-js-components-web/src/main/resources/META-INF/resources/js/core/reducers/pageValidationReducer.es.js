@@ -29,6 +29,7 @@ export default (state, action) => {
 
 			let firstInvalidFieldLabel = null;
 			let firstInvalidFieldInput = null;
+			let firstInvalidFieldName;
 
 			const pages = visitor.mapFields(
 				(
@@ -51,6 +52,7 @@ export default (state, action) => {
 						firstInvalidFieldInput = document.querySelector(
 							`[name='${field.name}']`
 						);
+						firstInvalidFieldName = field.name;
 					}
 
 					return {
@@ -63,7 +65,20 @@ export default (state, action) => {
 			);
 
 			if (firstInvalidFieldInput) {
-				firstInvalidFieldInput.focus();
+				if (firstInvalidFieldInput.type !== 'hidden') {
+					firstInvalidFieldInput.focus();
+				}
+				else {
+					if (
+						document.getElementsByName(firstInvalidFieldName)[0] &&
+						document.getElementsByName(firstInvalidFieldName)[0]
+							.parentElement
+					) {
+						document
+							.getElementsByName(firstInvalidFieldName)[0]
+							.parentElement.scrollIntoView();
+					}
+				}
 			}
 
 			return {

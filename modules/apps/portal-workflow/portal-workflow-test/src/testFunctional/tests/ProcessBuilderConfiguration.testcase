@@ -337,6 +337,8 @@ definition {
 	@description = "Verify that search can be done using non-ASCII character"
 	@priority = "4"
 	test CanSearchNonAsciiChar {
+		property test.name.skip.portal.instance = "ProcessBuilderConfiguration#CanSearchNonAsciiChar";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
 
 		ApplicationsMenu.gotoPortlet(

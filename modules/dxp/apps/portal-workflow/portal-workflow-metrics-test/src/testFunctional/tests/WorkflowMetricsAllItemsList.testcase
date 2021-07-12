@@ -42,6 +42,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanOrderByAssignee {
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanOrderByAssignee";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
@@ -97,10 +99,12 @@ definition {
 	@description = "LPS-130218 - Verify that the user is able to click on the table header Created by to choose the items order (A-Z / Z-A)."
 	@priority = "5"
 	test CanOrderByCreatedBy {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -673,6 +677,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test DueDateHasIconSlaNameDueDateAndResolutionStatus {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -690,7 +696,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -886,10 +892,12 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test HoveringCursorDisplayTooltip {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -1373,10 +1381,12 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -1555,10 +1565,12 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test ReorderEntriesClickingDueDateColumn {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -1622,6 +1634,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px {
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -1721,10 +1735,12 @@ definition {
 	@description = "LPS-130216 - Verify that the Item Subject sort will only use the Asset Type information for sorting."
 	@priority = "4"
 	test SortOnlyUseAssetTypeInformation {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

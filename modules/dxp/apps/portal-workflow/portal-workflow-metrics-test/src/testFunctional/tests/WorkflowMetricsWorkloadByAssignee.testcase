@@ -190,6 +190,8 @@ definition {
 	@description = "LPS-97669 - Verify that when editing a user name with pending instances, the Workload by Assignee card is updated accordingly"
 	@priority = "3"
 	test CardIsUpdatedWhenUserNameIsEdited {
+		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserNameIsEdited";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
@@ -227,6 +229,8 @@ definition {
 	@description = "LPS-97669 - Verify that when deleting a user with pending instances, the Workload by Assignee card is updated accordingly"
 	@priority = "4"
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
+		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserWithPendingInstanceIsDeleted";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
@@ -602,6 +606,8 @@ definition {
 	@description = "LPS-98518 - Verify that a search bar is present in the step filter when the dropdown is higher than 496px"
 	@priority = "3"
 	test SearchBarIsPresentInStepFilter {
+		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SearchBarIsPresentInStepFilter";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

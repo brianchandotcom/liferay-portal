@@ -186,7 +186,8 @@ public class CommerceOrderServiceHttp {
 				long shippingAddressId, String commercePaymentMethodKey,
 				long commerceShippingMethodId, String shippingOptionName,
 				String purchaseOrderNumber, java.math.BigDecimal subtotal,
-				java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+				java.math.BigDecimal shippingAmount,
+				java.math.BigDecimal taxAmount, java.math.BigDecimal total,
 				java.math.BigDecimal subtotalWithTaxAmount,
 				java.math.BigDecimal shippingWithTaxAmount,
 				java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
@@ -207,7 +208,7 @@ public class CommerceOrderServiceHttp {
 				commerceAccountId, commerceCurrencyId, billingAddressId,
 				shippingAddressId, commercePaymentMethodKey,
 				commerceShippingMethodId, shippingOptionName,
-				purchaseOrderNumber, subtotal, shippingAmount, total,
+				purchaseOrderNumber, subtotal, shippingAmount, taxAmount, total,
 				subtotalWithTaxAmount, shippingWithTaxAmount,
 				totalWithTaxAmount, paymentStatus, orderDateMonth, orderDateDay,
 				orderDateYear, orderDateHour, orderDateMinute, orderStatus,
@@ -249,7 +250,8 @@ public class CommerceOrderServiceHttp {
 				long shippingAddressId, String commercePaymentMethodKey,
 				long commerceShippingMethodId, String shippingOptionName,
 				String purchaseOrderNumber, java.math.BigDecimal subtotal,
-				java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+				java.math.BigDecimal shippingAmount,
+				java.math.BigDecimal taxAmount, java.math.BigDecimal total,
 				java.math.BigDecimal subtotalWithTaxAmount,
 				java.math.BigDecimal shippingWithTaxAmount,
 				java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
@@ -268,7 +270,7 @@ public class CommerceOrderServiceHttp {
 				commerceAccountId, commerceCurrencyId, billingAddressId,
 				shippingAddressId, commercePaymentMethodKey,
 				commerceShippingMethodId, shippingOptionName,
-				purchaseOrderNumber, subtotal, shippingAmount, total,
+				purchaseOrderNumber, subtotal, shippingAmount, taxAmount, total,
 				subtotalWithTaxAmount, shippingWithTaxAmount,
 				totalWithTaxAmount, paymentStatus, orderStatus, advanceStatus,
 				commerceContext, serviceContext);
@@ -1730,7 +1732,7 @@ public class CommerceOrderServiceHttp {
 			String commercePaymentMethodKey, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			java.math.BigDecimal subtotal, java.math.BigDecimal shippingAmount,
-			java.math.BigDecimal total,
+			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
 			java.math.BigDecimal subtotalWithTaxAmount,
 			java.math.BigDecimal shippingWithTaxAmount,
 			java.math.BigDecimal totalWithTaxAmount, String advanceStatus,
@@ -1746,7 +1748,7 @@ public class CommerceOrderServiceHttp {
 				methodKey, externalReferenceCode, commerceOrderId,
 				billingAddressId, shippingAddressId, commercePaymentMethodKey,
 				commerceShippingMethodId, shippingOptionName,
-				purchaseOrderNumber, subtotal, shippingAmount, total,
+				purchaseOrderNumber, subtotal, shippingAmount, taxAmount, total,
 				subtotalWithTaxAmount, shippingWithTaxAmount,
 				totalWithTaxAmount, advanceStatus, commerceContext);
 
@@ -2628,9 +2630,9 @@ public class CommerceOrderServiceHttp {
 			String.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, String.class,
-			com.liferay.commerce.context.CommerceContext.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, int.class,
+			String.class, com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCommerceOrderParameterTypes4 =
@@ -2640,7 +2642,8 @@ public class CommerceOrderServiceHttp {
 			String.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, int.class, int.class, String.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
+			int.class, String.class,
 			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -2768,8 +2771,8 @@ public class CommerceOrderServiceHttp {
 			long.class, String.class, String.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, String.class,
-			com.liferay.commerce.context.CommerceContext.class
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			String.class, com.liferay.commerce.context.CommerceContext.class
 		};
 	private static final Class<?>[] _updateCommerceOrderParameterTypes40 =
 		new Class[] {

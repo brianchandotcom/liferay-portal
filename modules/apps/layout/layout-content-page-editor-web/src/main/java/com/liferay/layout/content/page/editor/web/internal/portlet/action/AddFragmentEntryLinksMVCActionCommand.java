@@ -100,13 +100,20 @@ public class AddFragmentEntryLinksMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String fragmentEntryKey = ParamUtil.getString(
 			actionRequest, "fragmentEntryKey");
 
 		FragmentComposition fragmentComposition =
-			_fragmentCompositionService.fetchFragmentComposition(
-				groupId, fragmentEntryKey);
+			_fragmentCollectionContributorTracker.getFragmentComposition(
+				fragmentEntryKey);
+
+		if (fragmentComposition == null) {
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+			fragmentComposition =
+				_fragmentCompositionService.fetchFragmentComposition(
+					groupId, fragmentEntryKey);
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

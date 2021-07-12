@@ -1181,16 +1181,25 @@ public class ContentPageEditorDisplayContext {
 		for (FragmentCollectionContributor fragmentCollectionContributor :
 				fragmentCollectionContributors) {
 
+			List<FragmentComposition> fragmentCompositions =
+				fragmentCollectionContributor.getFragmentCompositions(
+					themeDisplay.getLocale());
+
 			List<FragmentEntry> fragmentEntries =
 				fragmentCollectionContributor.getFragmentEntries(
 					themeDisplay.getLocale());
 
-			if (ListUtil.isEmpty(fragmentEntries)) {
+			if (ListUtil.isEmpty(fragmentCompositions) &&
+				ListUtil.isEmpty(fragmentEntries)) {
+
 				continue;
 			}
 
 			List<Map<String, Object>> filteredFragmentEntries =
 				_getFragmentEntries(fragmentEntries);
+
+			filteredFragmentEntries.addAll(
+				_getFragmentCompositions(fragmentCompositions));
 
 			if (ListUtil.isEmpty(filteredFragmentEntries)) {
 				continue;

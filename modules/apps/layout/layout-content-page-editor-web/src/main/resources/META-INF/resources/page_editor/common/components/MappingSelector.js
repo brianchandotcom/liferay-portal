@@ -434,6 +434,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 			{selectedSourceType === MAPPING_SOURCE_TYPES.content && (
 				<ItemSelector
+					className="mb-2"
 					label={Liferay.Language.get('item')}
 					onItemSelect={onInfoItemSelect}
 					selectedItem={selectedItem}

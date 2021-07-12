@@ -36,6 +36,7 @@ export default function ItemSelector({
 	showEditControls = true,
 	showMappedItems = true,
 	transformValueCallback,
+	className,
 }) {
 	const itemSelectorInputId = useId();
 
@@ -171,7 +172,7 @@ export default function ItemSelector({
 	);
 
 	return (
-		<ClayForm.Group className="mb-2">
+		<ClayForm.Group className={className} small>
 			<label htmlFor={itemSelectorInputId}>{label}</label>
 
 			<ClayInput.Group small>
@@ -257,6 +258,7 @@ export default function ItemSelector({
 }
 
 ItemSelector.propTypes = {
+	className: PropTypes.string,
 	eventName: PropTypes.string,
 	itemSelectorURL: PropTypes.string,
 	label: PropTypes.string.isRequired,

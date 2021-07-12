@@ -159,9 +159,13 @@ definition {
 	macro gotoSidebarTab {
 		var key_tabName = "${tabName}";
 
-		Click.clickNoMouseOver(locator1 = "Sidebar#TAB");
+		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB")) {
+			Click(locator1 = "Sidebar#TAB");
+		}
 
 		AssertElementPresent(locator1 = "Sidebar#ACTIVE_TAB");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro gotoSitePage {

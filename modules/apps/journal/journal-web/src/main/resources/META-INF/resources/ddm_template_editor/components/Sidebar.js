@@ -71,8 +71,10 @@ export default function Sidebar({
 			</div>
 			<div className="ddm_template_editor__App-sidebar-buttons pt-2">
 				<ClayButtonWithIcon
+					aria-pressed={PANEL_IDS.elements === selectedSidebarPanelId}
 					borderless
 					className="mb-2"
+					data-tooltip-align="left"
 					displayType="secondary"
 					monospaced
 					onClick={() => {
@@ -84,11 +86,16 @@ export default function Sidebar({
 					}}
 					outline
 					symbol="list-ul"
+					title={Liferay.Language.get('elements')}
 				/>
 
 				<ClayButtonWithIcon
+					aria-pressed={
+						PANEL_IDS.properties === selectedSidebarPanelId
+					}
 					borderless
 					className="mb-2"
+					data-tooltip-align="left"
 					displayType="secondary"
 					monospaced
 					onClick={() => {
@@ -100,6 +107,7 @@ export default function Sidebar({
 					}}
 					outline
 					symbol="cog"
+					title={Liferay.Language.get('properties')}
 				/>
 			</div>
 		</div>

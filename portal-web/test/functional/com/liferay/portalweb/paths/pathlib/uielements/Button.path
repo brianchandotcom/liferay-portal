@@ -572,7 +572,7 @@
 </tr>
 <tr>
 	<td>PROPAGATE</td>
-	<td>//button[contains(@title,'Propagate')]</td>
+	<td>//button[@*='Propagate']</td>
 	<td></td>
 </tr>
 <tr>

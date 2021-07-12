@@ -57,107 +57,107 @@ definition {
 
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	}
+}
+
+@summary = "Deletes a specific data source \
+@param dataSourceName the name of the data source you want to delete"
+macro deleteDataSource {
+	var itemName = "${dataSourceName}";
+
+	if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+		ACNavigation.goToSettings();
 	}
 
-	@summary = "Deletes a specific data source \
-	@param dataSourceName the name of the data source you want to delete"
-	macro deleteDataSource {
-		var itemName = "${dataSourceName}";
+	ACSettings.goToDataSources();
 
-		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-			ACNavigation.goToSettings();
-		}
+	Click(locator1 = "ACSettings#SEARCH_BAR");
 
-		ACSettings.goToDataSources();
+	Type(
+		locator1 = "ACSettings#SEARCH_BAR",
+		value1 = "${dataSourceName}");
 
-		Click(locator1 = "ACSettings#SEARCH_BAR");
+	KeyPress(
+		locator1 = "ACSettings#SEARCH_BAR",
+		value1 = "\ENTER");
 
-		Type(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "${dataSourceName}");
+	Click(locator1 = "ACSettings#ITEM_ON_LIST");
 
-		KeyPress(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "\ENTER");
+	Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 
-		Click(locator1 = "ACSettings#ITEM_ON_LIST");
+	Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
 
-		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+}
 
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+macro deleteKeywordCheckbox {
+	if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+		Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
 
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+		Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
+
+		Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 	}
+}
 
-	macro deleteKeywordCheckbox {
-		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
-			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
+macro deleteKeywordIcon {
+	if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+		Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
 
-			Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
-
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-		}
+		Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 	}
+}
 
-	macro deleteKeywordIcon {
-		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
-			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
+macro goToApis {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "apis");
+}
 
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-		}
-	}
+macro goToDataControlAndPrivacy {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "data-privacy");
+}
 
-	macro goToApis {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "apis");
-	}
+macro goToDataSources {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "data-source");
+}
 
-	macro goToDataControlAndPrivacy {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "data-privacy");
-	}
+macro goToDefinitions {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "definitions");
+}
 
-	macro goToDataSources {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "data-source");
-	}
+macro goToProperties {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
+}
 
-	macro goToDefinitions {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "definitions");
-	}
+macro goToSettingsNavigation {
+	var key_SettingsNavigation = "${settingsNavigation}";
 
-	macro goToProperties {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "properties");
-	}
+	Click(locator1 = "ACSettings#SETTINGS_NAVIGATION");
+}
 
-	macro goToSettingsNavigation {
-		var key_SettingsNavigation = "${settingsNavigation}";
+macro goToUsage {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "usage");
+}
 
-		Click(locator1 = "ACSettings#SETTINGS_NAVIGATION");
-	}
+macro goToUserManagement {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "users");
+}
 
-	macro goToUsage {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "usage");
-	}
+macro goToWorkspace {
+	ACSettings.goToSettingsNavigation(settingsNavigation = "settings/workspace");
+}
 
-	macro goToUserManagement {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "users");
-	}
+@summary = "Takes the token from Analytics Clouds to use on during the DXP connection process"
+macro takeTokenFromAnalyticsCloud {
+	ACSettings.goToDataSources();
 
-	macro goToWorkspace {
-		ACSettings.goToSettingsNavigation(settingsNavigation = "settings/workspace");
-	}
+	Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
-	@summary = "Takes the token from Analytics Clouds to use on during the DXP connection process"
-	macro takeTokenFromAnalyticsCloud {
-		ACSettings.goToDataSources();
+	Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
 
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-		Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
-
-		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
-	}
+	Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
+}
 
 }

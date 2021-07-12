@@ -222,7 +222,7 @@ public class LiferayRelengUtil {
 
 		String result = GitUtil.getGitResult(
 			project, artifactProjectDir, "log", "--format=%s",
-			artifactGitId + "..HEAD", ".");
+			artifactGitId + "..HEAD", ":(exclude)test", ".");
 
 		String[] lines = result.split("\\r?\\n");
 

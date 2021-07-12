@@ -15,6 +15,9 @@
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -22,13 +25,24 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -59,6 +73,9 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Before
 	public void setUp() throws Exception {
@@ -111,6 +128,96 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 					_getHttpServletRequest())));
 	}
 
+	@Test
+	public void testIsShowWithUserWithWebContentEditPermission() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long roleId = RoleTestUtil.addRegularRole(TestPropsValues.getGroupId());
+
+		try {
+			_resourcePermissionLocalService.addResourcePermission(
+				TestPropsValues.getCompanyId(),
+				JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				roleId,
+				ActionKeys.UPDATE);
+
+			_userLocalService.setRoleUsers(
+				roleId, new long[] {user.getUserId()});
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			Assert.assertTrue(
+				_productNavigationControlMenuEntry.isShow(_getHttpServletRequest(permissionChecker, user)));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+			_roleLocalService.deleteRole(roleId);
+		}
+	}
+
+	@Test
+	public void testIsShowWithUserWithBlogsEditPermission() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long roleId = RoleTestUtil.addRegularRole(TestPropsValues.getGroupId());
+
+		try {
+			_resourcePermissionLocalService.addResourcePermission(
+				TestPropsValues.getCompanyId(),
+				BlogsEntry.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				roleId,
+				ActionKeys.UPDATE);
+
+			_userLocalService.setRoleUsers(
+				roleId, new long[] {user.getUserId()});
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			Assert.assertTrue(
+				_productNavigationControlMenuEntry.isShow(_getHttpServletRequest(permissionChecker, user)));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+			_roleLocalService.deleteRole(roleId);
+		}
+	}
+
+	@Test
+	public void testIsShowWithUserDocumentEditPermission() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long roleId = RoleTestUtil.addRegularRole(TestPropsValues.getGroupId());
+
+		try {
+			_resourcePermissionLocalService.addResourcePermission(
+				TestPropsValues.getCompanyId(),
+				FileEntry.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				roleId,
+				ActionKeys.UPDATE);
+
+			_userLocalService.setRoleUsers(
+				roleId, new long[] {user.getUserId()});
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			Assert.assertTrue(
+				_productNavigationControlMenuEntry.isShow(_getHttpServletRequest(permissionChecker, user)));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+			_roleLocalService.deleteRole(roleId);
+		}
+	}
+
 	private HttpServletRequest _getHttpServletRequest() throws PortalException {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -124,6 +231,27 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setPlid(_layout.getPlid());
 		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
+	private HttpServletRequest _getHttpServletRequest(PermissionChecker permissionChecker, User user) throws PortalException {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPermissionChecker(permissionChecker);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -148,4 +276,9 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	private ProductNavigationControlMenuEntry
 		_productNavigationControlMenuEntry;
 
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 }

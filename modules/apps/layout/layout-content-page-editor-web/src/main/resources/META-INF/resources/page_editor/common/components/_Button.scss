@@ -1,7 +1,7 @@
 @import 'cadmin-variables';
 
 html#{$cadmin-selector} {
-	.page-editor__button .loading-animation {
+	.page-editor__button .loading-animation.loading-animation-sm {
 		font-size: 14.4px;
 	}
 }

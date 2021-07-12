@@ -46,9 +46,11 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 			<aui:field-wrapper>
 				<aui:button cssClass="customized-file-button disabled" disabled="<%= true %>" name="file" value="select-file" />
 
-				<small><strong id="<portlet:namespace />pickButtonTitle"><%= GetterUtil.getString(dlFilePicker.getCurrentTitle()) %></strong></small>
+				<span class="inline-item inline-item-middle">
+					<img id="<portlet:namespace />pickButtonIcon" src="<%= GetterUtil.getString(dlFilePicker.getCurrentIconURL()) %>" />
+				</span>
 
-				<img class="pick-button-icon" id="<portlet:namespace />pickButtonIcon" src="<%= GetterUtil.getString(dlFilePicker.getCurrentIconURL()) %>" />
+				<small><strong id="<portlet:namespace />pickButtonTitle"><%= GetterUtil.getString(dlFilePicker.getCurrentTitle()) %></strong></small>
 			</aui:field-wrapper>
 		</c:if>
 

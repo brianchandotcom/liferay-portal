@@ -27,4 +27,22 @@ definition {
 		return "${formInstanceId}";
 	}
 
+	macro _getFormInstanceRecordId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddm.ddmforminstancerecord/get-form-instance-records \
+			  -u test@liferay.com:test \
+			  -d ddmFormInstanceId=${formInstanceId}
+		''';
+
+		var formInstanceRecordId = JSONCurlUtil.post("${curl}","$.[?(@['formInstanceId'] == '${formInstanceId}')]['formInstanceRecordId']");
+
+		if ("${formInstanceRecordId}" == "") {
+			fail("FAIL. Cannot find formInstanceRecordId.");
+		}
+
+		return "${formInstanceRecordId}";
+	}
+
 }

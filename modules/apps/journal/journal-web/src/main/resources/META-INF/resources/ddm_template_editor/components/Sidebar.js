@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 
 import {ElementsSidebarPanel} from './ElementsSidebarPanel';
@@ -104,3 +105,8 @@ export default function Sidebar({
 		</div>
 	);
 }
+
+Sidebar.propTypes = {
+	selectedSidebarPanelId: PropTypes.string,
+	setSelectedSidebarPanelId: PropTypes.func.isRequired,
+};

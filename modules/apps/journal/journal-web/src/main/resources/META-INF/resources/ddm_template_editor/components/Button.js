@@ -45,7 +45,6 @@ export const Button = ({label, onClick = noop, tooltip}) => {
 						onFocus={() => setShowPreview(true)}
 						onMouseLeave={() => setShowPreview(false)}
 						onMouseOver={() => setShowPreview(true)}
-						small
 						symbol="info-circle-open"
 						tabIndex="0"
 					/>

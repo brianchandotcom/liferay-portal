@@ -102,10 +102,5 @@ export const ElementsSidebarPanel = ({className}) => {
 };
 
 ElementsSidebarPanel.propTypes = {
-	templateVariableGroups: PropTypes.arrayOf(
-		PropTypes.shape({
-			items: PropTypes.array.isRequired,
-			label: PropTypes.string.isRequired,
-		})
-	),
+	className: PropTypes.string,
 };

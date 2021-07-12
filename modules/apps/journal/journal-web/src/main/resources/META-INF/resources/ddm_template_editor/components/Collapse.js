@@ -61,7 +61,6 @@ const Collapse = ({children, label}) => {
 Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
 	label: PropTypes.string.isRequired,
-	open: PropTypes.bool,
 };
 
 export default Collapse;

@@ -19,13 +19,15 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			Workflow.tearDownPortalWorkflow();
 
-			Workflow.tearDownWorkflowDefinitions();
+		//else {
+		//	Workflow.tearDownPortalWorkflow();
 
-			BlogsEntry.tearDownCP();
-		}
+		//	Workflow.tearDownWorkflowDefinitions();
+
+		//	BlogsEntry.tearDownCP();
+		//}
+
 	}
 
 	@description = "Verify can filter by completed tasks"
@@ -174,12 +176,89 @@ definition {
 	}
 
 	@description = "Verify if the table is organized by Asset Title, Asset Type, Status, Definition, Last Activity Date and End Date columns"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ColumnsAreDisplayed {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68563 ColumnsAreDisplayed pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertTextEquals(
+			key_index = "1",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Asset Title");
+
+		AssertTextEquals(
+			key_index = "2",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Asset Type");
+
+		AssertTextEquals(
+			key_index = "3",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Status");
+
+		AssertTextEquals(
+			key_index = "4",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Definition");
+
+		AssertTextEquals(
+			key_index = "5",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Last Activity Date");
+
+		AssertTextEquals(
+			key_index = "6",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "End Date");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		AssertTextEquals(
+			key_index = "1",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Asset Title");
+
+		AssertTextEquals(
+			key_index = "2",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Asset Type");
+
+		AssertTextEquals(
+			key_index = "3",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Status");
+
+		AssertTextEquals(
+			key_index = "4",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Definition");
+
+		AssertTextEquals(
+			key_index = "5",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "Last Activity Date");
+
+		AssertTextEquals(
+			key_index = "6",
+			locator1 = "WorkflowSubmissions#HEADER_INDEX",
+			value1 = "End Date");
 	}
 
 	@description = "Verify the kebab menu is not displayed when task is completed"

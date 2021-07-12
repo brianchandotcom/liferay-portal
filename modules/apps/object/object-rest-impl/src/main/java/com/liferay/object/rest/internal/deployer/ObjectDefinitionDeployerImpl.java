@@ -18,6 +18,7 @@ import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
+import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectFieldExceptionMapper;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -28,6 +29,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.ext.ExceptionMapper;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
@@ -107,6 +110,18 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectDefinition.getObjectDefinitionId())),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"dto.name", objectDefinition.getDBTableName()
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class, new RequiredObjectFieldExceptionMapper(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + objectDefinition.getShortName() + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getRESTContextPath() +
+						"RequiredObjectFieldExceptionMapper"
 				).build()));
 	}
 

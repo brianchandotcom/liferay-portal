@@ -97,6 +97,9 @@ definition {
 		else if ("${widgetName}" == "Microblogs") {
 			var portletId = "com_liferay_microblogs_web_portlet_MicroblogsPortlet";
 		}
+		else if ("${widgetName}" == "Microblogs Status Update") {
+			var portletId = "com_liferay_microblogs_web_portlet_MicroblogsStatusUpdatePortlet";
+		}
 		else if ("${widgetName}" == "Most Viewed Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_MostViewedAssetsPortlet";
 		}

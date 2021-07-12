@@ -120,14 +120,10 @@ $toolbarHeight: 6.875rem;
 			cursor: pointer;
 
 			.collapse-icon {
-				background: none;
 				border: none;
 				color: $gray-600;
 				font-size: 0.7rem;
-				height: 2rem;
 				margin-bottom: 4px;
-				padding-left: 0;
-				text-align: left;
 				width: 100%;
 
 				&-closed {

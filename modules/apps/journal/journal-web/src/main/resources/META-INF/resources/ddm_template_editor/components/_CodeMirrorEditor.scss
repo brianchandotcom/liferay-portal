@@ -8,14 +8,5 @@
 
 	> .CodeMirror {
 		height: 100%;
-
-		.CodeMirror-scroll {
-			min-height: 400px;
-			padding-right: 42px;
-
-			.ddm_template_editor__App-content--sidebar-open & {
-				padding-right: 320px;
-			}
-		}
 	}
 }

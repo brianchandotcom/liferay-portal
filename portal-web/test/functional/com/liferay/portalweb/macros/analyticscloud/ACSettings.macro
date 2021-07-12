@@ -37,13 +37,26 @@ definition {
 	@summary = "Deletes all properties \
 	@param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {
-		if (!(isSet(propertyList))) {
-			var propertyList = "Liferay DXP,Liferay DXP Combined Property";
+		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+			ACNavigation.goToSettings();
 		}
 
-		for (var itemName : list "${propertyList}") {
-			ACSettings.deleteProperty(propertyName = "${itemName}");
-		}
+		ACSettings.goToProperties();
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+
+		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	}
 	}
 
 	@summary = "Deletes a specific data source \
@@ -69,7 +82,7 @@ definition {
 
 		Click(locator1 = "ACSettings#ITEM_ON_LIST");
 
-		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 
 		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
 
@@ -96,40 +109,6 @@ definition {
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 		}
-	}
-
-	@summary = "Deletes a specific property \
-	@param propertyName the name of the property you want to delete"
-	macro deleteProperty {
-		var itemName = "${propertyName}";
-
-		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-			ACNavigation.goToSettings();
-		}
-
-		ACSettings.goToProperties();
-
-		Click(locator1 = "ACSettings#SEARCH_BAR");
-
-		Type(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "${propertyName}");
-
-		KeyPress(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "\ENTER");
-
-		Click(locator1 = "ACSettings#ITEM_ON_LIST");
-
-		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
-
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	}
 
 	macro goToApis {

@@ -40,7 +40,7 @@ const Liferay = {
 		window.removeEventListener(name, fn);
 	},
 	fire: (name, payload) => {
-		var event = document.createEvent('CustomEvent');
+		const event = document.createEvent('CustomEvent');
 		event.initCustomEvent(name);
 		if (payload) {
 			Object.keys(payload).forEach((key) => {

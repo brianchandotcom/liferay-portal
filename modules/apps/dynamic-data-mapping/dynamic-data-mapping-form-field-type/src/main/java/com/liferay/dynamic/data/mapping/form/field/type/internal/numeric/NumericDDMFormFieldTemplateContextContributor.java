@@ -109,6 +109,11 @@ public class NumericDDMFormFieldTemplateContextContributor
 				ddmFormField, ddmFormFieldRenderingContext, locale,
 				"inputMaskFormat")
 		).put(
+			"numericInputMask",
+			_getPropertyValue(
+				ddmFormField, ddmFormFieldRenderingContext, locale,
+				"numericInputMask")
+		).put(
 			"placeholder",
 			DDMFormFieldTypeUtil.getPropertyValue(
 				ddmFormField, locale, "placeholder")

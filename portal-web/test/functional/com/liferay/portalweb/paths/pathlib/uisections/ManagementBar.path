@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ANY_ICON</td>
+	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ELLIPSIS_ICON</td>
 	<td>//nav[contains(@class,'management-bar')]//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

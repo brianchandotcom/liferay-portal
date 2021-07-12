@@ -23,9 +23,9 @@ definition {
 	macro selectStructure {
 		var key_ddlDataDefinitionName = "${structureName}";
 
-		AssertClick(
-			locator1 = "DDMEditTemplate#DETAILS_SELECT_STRUCTURE",
-			value1 = "Select");
+		Click(
+			key_namespace = "selectDDMStructure",
+			locator1 = "Button#ANY_ID");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

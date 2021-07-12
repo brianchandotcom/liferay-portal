@@ -307,7 +307,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
 			_dlFileEntryMetadataLocalService, _dlurlHelper,
-			_layoutSEOSiteLocalService, _portal, _storageEngine);
+			_layoutSEOSiteLocalService, _layoutSEOTemplateProcessor, _portal,
+			_storageEngine);
 		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
 	}
 

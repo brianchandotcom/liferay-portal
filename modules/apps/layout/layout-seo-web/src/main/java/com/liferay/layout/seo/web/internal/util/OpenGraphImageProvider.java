@@ -26,6 +26,7 @@ import com.liferay.info.type.WebImage;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -49,12 +50,14 @@ public class OpenGraphImageProvider {
 		DLAppLocalService dlAppLocalService,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLURLHelper dlurlHelper,
-		LayoutSEOSiteLocalService layoutSEOSiteLocalService, Portal portal,
+		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
+		LayoutSEOTemplateProcessor layoutSEOTemplateProcessor, Portal portal,
 		StorageEngine storageEngine) {
 
 		_dlAppLocalService = dlAppLocalService;
 		_dlurlHelper = dlurlHelper;
 		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
+		_layoutSEOTemplateProcessor = layoutSEOTemplateProcessor;
 
 		_fileEntryMetadataOpenGraphTagsProvider =
 			new FileEntryMetadataOpenGraphTagsProvider(
@@ -180,6 +183,14 @@ public class OpenGraphImageProvider {
 			(layoutSEOSite.getOpenGraphImageFileEntryId() > 0)) {
 
 			return layoutSEOSite.getOpenGraphImageAlt(locale);
+		}
+
+		String imageAltMappingFieldKey = layout.getTypeSettingsProperty(
+			"mapped-openGraphImageAlt", null);
+
+		if (Validator.isNotNull(imageAltMappingFieldKey)) {
+			return _layoutSEOTemplateProcessor.processTemplate(
+				imageAltMappingFieldKey, infoItemFieldValues, locale);
 		}
 
 		return null;
@@ -308,5 +319,6 @@ public class OpenGraphImageProvider {
 	private final FileEntryMetadataOpenGraphTagsProvider
 		_fileEntryMetadataOpenGraphTagsProvider;
 	private final LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
+	private final LayoutSEOTemplateProcessor _layoutSEOTemplateProcessor;
 
 }

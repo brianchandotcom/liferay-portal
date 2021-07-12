@@ -69,27 +69,20 @@ definition {
 
 		ACSettings.goToDataSources();
 
-		Click(locator1 = "ACSettings#SEARCH_BAR");
+		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
+		
+			Click(locator1 = "ACSettings#ITEM_TABLE");
 
-		Type(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "${dataSourceName}");
+			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 
-		KeyPress(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "\ENTER");
+			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
 
-		Click(locator1 = "ACSettings#ITEM_ON_LIST");
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+		}
 	}
 
 	macro deleteKeywordCheckbox {

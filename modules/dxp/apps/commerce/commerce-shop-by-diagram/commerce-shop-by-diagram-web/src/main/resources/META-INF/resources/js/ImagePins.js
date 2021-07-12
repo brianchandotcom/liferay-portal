@@ -12,6 +12,7 @@
 import {drag, event as d3event, select, zoom as d3zoom, zoomIdentity} from 'd3';
 import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef} from 'react';
+
 import NavigationButtons from './NavigationButtons';
 import {moveController, zoomIn, zoomOut} from './NavigationsUtils';
 import ZoomController from './ZoomController';
@@ -39,9 +40,9 @@ const ImagePins = ({
 	handleAddPin,
 	imageSettings,
 	imageURL,
+	isAdmin,
 	namespace,
 	navigationController,
-	isAdmin,
 	removePinHandler,
 	resetZoom,
 	selectedOption,
@@ -61,7 +62,7 @@ const ImagePins = ({
 	const handlers = useRef();
 	const containerRef = useRef();
 	const svgRef = useRef(null);
-	const transform = useRef({k: 1, x: 0, y: 0})
+	const transform = useRef({k: 1, x: 0, y: 0});
 
 	useLayoutEffect(() => {
 		const container = select(containerRef.current);
@@ -70,16 +71,18 @@ const ImagePins = ({
 		const zoom = d3zoom()
 			.scaleExtent([0.5, 40])
 			.on('zoom', () => {
-				transform.current = d3event.transform
-				container.attr('transform', transform.current)
+				transform.current = d3event.transform;
+				container.attr('transform', transform.current);
 			});
 
 		svg.call(zoom);
 
 		svg.on('dblclick.zoom', () => {
-			const x = (d3event.offsetX - transform.current.x) / transform.current.k;
-			const y = (d3event.offsetY - transform.current.y) / transform.current.k;
-			
+			const x =
+				(d3event.offsetX - transform.current.x) / transform.current.k;
+			const y =
+				(d3event.offsetY - transform.current.y) / transform.current.k;
+
 			setCpins(
 				cPins.concat({
 					cx: x,
@@ -94,26 +97,19 @@ const ImagePins = ({
 					sku: addNewPinState.sku,
 				})
 			);
-
-		})
+		});
 
 		if (resetZoom) {
 			setResetZoom(false);
 
-			svg
-				.transition()
-				.duration(700)
-				.call(
-					zoom.transform,
-					zoomIdentity
-				);
+			svg.transition().duration(700).call(zoom.transform, zoomIdentity);
 		}
 
 		if (changedScale) {
 			setChangedScale(false);
 
 			const imageInfos = container.node().getBBox();
-			
+
 			container
 				.transition()
 				.duration(700)
@@ -129,12 +125,7 @@ const ImagePins = ({
 
 		handlers.current = {
 			moveController: (direction) =>
-				moveController(
-					svg,
-					navigationController,
-					direction,
-					zoom
-				),
+				moveController(svg, navigationController, direction, zoom),
 			zoomIn: () => zoomIn(svg, zoom),
 			zoomOut: () => zoomOut(svg, zoom),
 		};
@@ -158,7 +149,10 @@ const ImagePins = ({
 		}
 
 		function dragged() {
-			select(this).attr('transform', `translate(${d3event.x},${d3event.y})`);
+			select(this).attr(
+				'transform',
+				`translate(${d3event.x},${d3event.y})`
+			);
 		}
 
 		function dragEnded() {
@@ -218,13 +212,13 @@ const ImagePins = ({
 			setCpins(newState);
 		}
 
-		const dragHandler = isAdmin ? 
-			drag()
-			.on('start', dragStarted)
-			.on('drag', dragged)
-			.on('end', dragEnded)
-		: drag()
-		
+		const dragHandler = isAdmin
+			? drag()
+					.on('start', dragStarted)
+					.on('drag', dragged)
+					.on('end', dragEnded)
+			: drag();
+
 		const addPin = () => {
 			setCpins(
 				cPins.concat({
@@ -365,10 +359,7 @@ const ImagePins = ({
 				ref={svgRef}
 				width={imageSettings.width}
 			>
-				<g
-					data-testid={`${namespace}container`}
-					ref={containerRef}
-				>
+				<g data-testid={`${namespace}container`} ref={containerRef}>
 					<image
 						height={imageSettings.height}
 						href={imageURL}

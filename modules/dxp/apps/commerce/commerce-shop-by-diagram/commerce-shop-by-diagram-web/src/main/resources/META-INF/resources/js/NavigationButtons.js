@@ -33,10 +33,7 @@ const NavigationButtons = ({moveController, position}) => {
 			<div className="box left" onClick={() => moveController('left')}>
 				<ClayIcon className="icon" symbol="angle-down" />
 			</div>
-			<div
-				className="bottom box"
-				onClick={() => moveController('bottom')}
-			>
+			<div className="bottom box" onClick={() => moveController('down')}>
 				<ClayIcon className="icon" symbol="angle-down" />
 			</div>
 		</div>

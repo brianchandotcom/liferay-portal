@@ -9,30 +9,38 @@
  * distribution rights of the Software.
  */
 
-export const moveController = (container, navigationController, direction, zoom) => {
+export const moveController = (
+	container,
+	navigationController,
+	direction,
+	zoom
+) => {
 	const position = {
 		x: 0,
 		y: 0,
-	}
+	};
 
 	switch (direction) {
 		case 'right':
-			position.x = -navigationController.dragStep
+			position.x = navigationController.dragStep;
 			break;
 		case 'left':
-			position.x = navigationController.dragStep
+			position.x = -navigationController.dragStep;
 			break;
 		case 'up':
-			position.y = navigationController.dragStep
+			position.y = -navigationController.dragStep;
 			break;
 		case 'down':
-			position.y = -navigationController.dragStep
+			position.y = navigationController.dragStep;
 			break;
 		default:
 			break;
 	}
 
-	container.transition().duration(700).call(zoom.translateBy, position.x, position.y);
+	container
+		.transition()
+		.duration(700)
+		.call(zoom.translateBy, position.x, position.y);
 };
 
 export const zoomIn = (container, zoom) => {

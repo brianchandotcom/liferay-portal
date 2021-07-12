@@ -550,6 +550,7 @@ definition {
 	@description = "LPS-103365 - Verify that when the filters inside (Workload by Assignee) page are higher than 496px, a search bar on it should be included"
 	@priority = "3"
 	test SearchBarIsIncludedWhenDropdownIsHigherThan496Px {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SearchBarIsIncludedWhenDropdownIsHigherThan496Px";
 
 		ApplicationsMenu.gotoPortlet(

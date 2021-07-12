@@ -153,12 +153,45 @@ definition {
 	}
 
 	@description = "Verify that clicking on the task name takes you to a details page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DetailsPageIsDisplayeed {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68554 DetailsPageIsDisplayeed pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		Click(
+			key_title = "Blogs Entry Title",
+			locator1 = "WorkflowSubmissions#TASK_NAME_COLUMN");
+
+		AssertElementPresent(
+			key_header = "Single Approver: Blogs Entry Title",
+			locator1 = "WorkflowSubmissions#DETAIL_PAGE_HEADER");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Click(
+			key_title = "Blogs Entry Title",
+			locator1 = "WorkflowSubmissions#TASK_NAME_COLUMN");
+
+		AssertElementPresent(
+			key_header = "Single Approver: Blogs Entry Title",
+			locator1 = "WorkflowSubmissions#DETAIL_PAGE_HEADER");
 	}
 
 	@description = "Verify if when the task is pending, the "End Date" field is blank"

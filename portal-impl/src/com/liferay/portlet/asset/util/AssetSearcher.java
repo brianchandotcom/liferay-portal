@@ -231,15 +231,12 @@ public class AssetSearcher extends BaseSearcher {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		String[] fieldNamesArray;
+		String[] fieldNamesArray = {Field.ASSET_CATEGORY_IDS};
 
 		if (searchContext.isIncludeInternalAssetCategories()) {
 			fieldNamesArray = new String[] {
 				Field.ASSET_CATEGORY_IDS, Field.ASSET_INTERNAL_CATEGORY_IDS
 			};
-		}
-		else {
-			fieldNamesArray = new String[] {Field.ASSET_CATEGORY_IDS};
 		}
 
 		_addSearchAllCategories(queryBooleanFilter, fieldNamesArray);

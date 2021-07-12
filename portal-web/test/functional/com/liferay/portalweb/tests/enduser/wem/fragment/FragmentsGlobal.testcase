@@ -248,7 +248,7 @@ definition {
 
 			Check(locator1 = "Fragment#FRAGMENT_SITE_USAGE_CHECKBOX");
 
-			Click.clickNoMouseOver(locator1 = "Button#PROPAGATE");
+			Click(locator1 = "Button#PROPAGATE");
 
 			Alert.viewSuccessMessage();
 		}

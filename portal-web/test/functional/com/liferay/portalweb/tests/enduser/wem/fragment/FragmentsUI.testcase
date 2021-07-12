@@ -232,7 +232,7 @@ definition {
 
 			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-			Click.clickNoMouseOver(locator1 = "Button#PROPAGATE");
+			Click(locator1 = "Button#PROPAGATE");
 
 			Alert.viewSuccessMessage();
 		}

@@ -135,13 +135,13 @@ const CriteriaSidebarCollapse = ({
 						</a>
 
 						{active && (
-							<div>
+							<div className="flex-grow-1 sidebar-collapse-body">
 								<p className="pt-3 px-4 text-secondary">
 									{Liferay.Language.get(
 										'inherited-attributes-are-not-taken-into-account-to-include-members-in-segments'
 									)}
 								</p>
-								<ul className="properties-list">
+								<ul className="pl-0">
 									{filteredProperties.length === 0 && (
 										<li className="empty-message">
 											{Liferay.Language.get(

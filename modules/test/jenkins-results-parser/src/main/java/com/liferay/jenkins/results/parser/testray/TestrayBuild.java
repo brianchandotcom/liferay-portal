@@ -266,6 +266,11 @@ public class TestrayBuild {
 		catch (IOException ioException) {
 			ioException.printStackTrace();
 		}
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
+			throwable.printStackTrace();
+		}
 		finally {
 			JenkinsResultsParserUtil.delete(jsonFile);
 			JenkinsResultsParserUtil.delete(jsonGzFile);

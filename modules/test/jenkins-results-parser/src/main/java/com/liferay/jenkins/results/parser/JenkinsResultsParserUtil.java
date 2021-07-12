@@ -3362,7 +3362,7 @@ public class JenkinsResultsParserUtil {
 					"Downloading ", url.toString(), " to ",
 					getCanonicalPath(file)));
 
-			FileUtils.copyURLToFile(url, file);
+			FileUtils.copyURLToFile(url, file, 10000, 10000);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

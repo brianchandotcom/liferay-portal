@@ -629,17 +629,17 @@ public class AssetSearcher extends BaseSearcher {
 
 		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
 
-		for (long allCategoryId : filteredCategoryIds) {
+		for (long categoryId : filteredCategoryIds) {
 			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				categoryIds.addAll(
 					AssetCategoryLocalServiceUtil.getSubcategoryIds(
-						allCategoryId));
+						categoryId));
 			}
 
 			if (categoryIds.isEmpty()) {
-				categoryIds.add(allCategoryId);
+				categoryIds.add(categoryId);
 			}
 
 			TermsFilter categoryIdTermsFilter = new TermsFilter(fieldName);
@@ -659,17 +659,17 @@ public class AssetSearcher extends BaseSearcher {
 
 		TermsFilter categoryIdsTermsFilter = new TermsFilter(fieldName);
 
-		for (long anyCategoryId : filteredCategoryIds) {
+		for (long categoryId : filteredCategoryIds) {
 			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				categoryIds.addAll(
 					AssetCategoryLocalServiceUtil.getSubcategoryIds(
-						anyCategoryId));
+						categoryId));
 			}
 
 			if (categoryIds.isEmpty()) {
-				categoryIds.add(anyCategoryId);
+				categoryIds.add(categoryId);
 			}
 
 			categoryIdsTermsFilter.addValues(

@@ -178,7 +178,7 @@ public class InfoCollectionProviderItemsDisplayContext {
 			return _showActions;
 		}
 
-		_showActions = ParamUtil.get(_renderRequest, "showActions", false);
+		_showActions = ParamUtil.getBoolean(_renderRequest, "showActions");
 
 		return _showActions;
 	}

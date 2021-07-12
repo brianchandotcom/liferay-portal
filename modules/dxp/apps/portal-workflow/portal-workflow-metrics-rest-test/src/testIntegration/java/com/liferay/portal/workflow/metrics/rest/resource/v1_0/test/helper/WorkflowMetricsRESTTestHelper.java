@@ -223,7 +223,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		String randomString = RandomTestUtil.randomString();
 
-		NodeMetric task = new NodeMetric() {
+		NodeMetric nodeMetric = new NodeMetric() {
 			{
 				durationAvg = Objects.equals(status, "COMPLETED") ? 1000L : 0L;
 				instanceCount = 1L;
@@ -240,8 +240,8 @@ public class WorkflowMetricsRESTTestHelper {
 		};
 
 		return addNodeMetric(
-			assignee, companyId, instanceSuplier, task, processId, status, user,
-			"1.0");
+			assignee, companyId, instanceSuplier, nodeMetric, processId, status,
+			user, "1.0");
 	}
 
 	public NodeMetric addNodeMetric(

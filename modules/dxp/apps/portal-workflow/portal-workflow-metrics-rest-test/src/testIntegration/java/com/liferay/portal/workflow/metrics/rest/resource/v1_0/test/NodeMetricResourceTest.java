@@ -514,11 +514,11 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 	}
 
 	protected NodeMetric testGetProcessNodeMetricsPage_addNodeMetric(
-			Long processId, NodeMetric task, String version)
+			Long processId, NodeMetric nodeMetric, String version)
 		throws Exception {
 
 		return testGetProcessNodeMetricsPage_addNodeMetric(
-			processId, "RUNNING", task, version);
+			processId, "RUNNING", nodeMetric, version);
 	}
 
 	protected NodeMetric testGetProcessNodeMetricsPage_addNodeMetric(

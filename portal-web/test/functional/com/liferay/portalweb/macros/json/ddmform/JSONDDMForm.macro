@@ -1,0 +1,11 @@
+definition {
+
+	macro getFormInstanceRecordId {
+		Variables.assertDefined(parameterList = "${groupName},${formName}");
+
+		var formInstanceId = JSONDDMFormAPI._getFormInstanceId(groupName = "${groupName}", formName = "${formName}");
+
+		JSONDDMFormAPI._getFormInstanceRecordId(formInstanceId = "${formInstanceId}");
+	}
+
+}

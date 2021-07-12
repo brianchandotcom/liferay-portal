@@ -15,6 +15,8 @@
 package com.liferay.headless.discovery.internal.jaxrs.application;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
@@ -73,6 +75,18 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 
 		for (ApplicationDTO applicationDTO : runtimeDTO.applicationDTOs) {
+			String name = applicationDTO.name;
+
+			if (StringUtil.startsWith(name, "O_")) {
+				String[] nameChunks = StringUtil.split(name, "_");
+
+				Long companyId = GetterUtil.getLong(nameChunks[1]);
+
+				if (_contextCompany.getCompanyId() != companyId) {
+					continue;
+				}
+			}
+
 			List<String> paths = new ArrayList<>();
 
 			String base = applicationDTO.base;
@@ -120,6 +134,9 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 			}
 		}
 	}
+
+	@Context
+	private Company _contextCompany;
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;

@@ -1254,15 +1254,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertValid(put${schemaName});
 
 					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "get")}(
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								put${schemaName}.getId()
-							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-								put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-							</#if>
-
-							<#sep>, </#sep>
-						</#list>
+						<@getGetterParameters javaMethodSignature=javaMethodSignature />
 					);
 
 					assertEquals(random${schemaName}, get${schemaName});
@@ -1272,7 +1264,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertValid(get${schemaName}, multipartFiles);
 					</#if>
 				</#if>
-				<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode")>
+				<#if javaMethodSignature.methodName?ends_with("ByExternalReferenceCode")>
 					${schemaName} new${schemaName} = test${javaMethodSignature.methodName?cap_first}_create${schemaName}();
 
 					put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
@@ -1300,15 +1292,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertValid(put${schemaName});
 
 					get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "get")}(
-					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-							put${schemaName}.getId()
-						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-							put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-						</#if>
-
-						<#sep>, </#sep>
-					</#list>
+						<@getGetterParameters javaMethodSignature=javaMethodSignature />
 					);
 
 					assertEquals(new${schemaName}, get${schemaName});
@@ -2542,4 +2526,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#else>
 		null
 	</#if>
+</#macro>
+<#macro getGetterParameters
+	javaMethodSignature
+>
+	<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+			put${schemaName}.getId()
+		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+			put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+		</#if>
+
+		<#sep>, </#sep>
+	</#list>
 </#macro>

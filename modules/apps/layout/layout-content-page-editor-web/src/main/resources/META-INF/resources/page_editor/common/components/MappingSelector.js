@@ -191,7 +191,15 @@ export default function MappingSelectorWrapper({
 	return collectionConfig ? (
 		<>
 			{collectionTypeLabels.itemType && (
-				<p className="mb-2 page-editor__mapping-panel__type-label">
+				<p
+					className={classNames(
+						'page-editor__mapping-panel__type-label',
+						{
+							'mb-0': collectionTypeLabels.itemSubtype,
+							'mb-2': !collectionTypeLabels.itemSubtype,
+						}
+					)}
+				>
 					<span className="mr-1">
 						{Liferay.Language.get('type')}:
 					</span>
@@ -434,7 +442,12 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			)}
 
 			{typeLabel && (
-				<p className="mb-2 mt-3 page-editor__mapping-panel__type-label">
+				<p
+					className={classNames(
+						'page-editor__mapping-panel__type-label',
+						{'mb-0': subtypeLabel, 'mb-2': !subtypeLabel}
+					)}
+				>
 					<span className="mr-1">
 						{Liferay.Language.get('type')}:
 					</span>

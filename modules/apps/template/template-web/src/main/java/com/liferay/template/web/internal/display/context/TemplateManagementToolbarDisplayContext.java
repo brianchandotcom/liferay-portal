@@ -96,4 +96,9 @@ public class TemplateManagementToolbarDisplayContext
 		return "ddmTemplates";
 	}
 
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"id", "modified-date"};
+	}
+
 }

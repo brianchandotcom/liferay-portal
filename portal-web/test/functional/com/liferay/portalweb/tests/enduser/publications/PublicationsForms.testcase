@@ -319,7 +319,7 @@ definition {
 
 	@description = "Assert the form with mutiple pages can be submited successfully within publications and the entry can be published to production."
 	@priority = "4"
-	test SubmitFormWithMultiplePagesWithinPublicationsAndPublishToProduction {
+	test SubmitFormWithMultiplePagesWithinPublications {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
@@ -472,6 +472,31 @@ definition {
 			fieldLabel = "Upload Field",
 			fieldValue = "Document_1.jpg");*/
 
+		var changeTitle = JSONDDMForm.getFormInstanceRecordId(
+			formName = "Created Form Name",
+			groupName = "Guest");
+
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Form Instance",
+			changeSite = "Guest",
+			changeTitle = "Created Form Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Form Record",
+			changeSite = "Guest",
+			changeTitle = "${changeTitle}",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Form Record",
+			changeDescription = "Test Test added a Form Record in Guest",
+			changeTitle = "${changeTitle}");
+
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
@@ -499,7 +524,7 @@ definition {
 
 	@description = "Assert the form with rule can be submited successfully within publications and published to production."
 	@priority = "4"
-	test SubmitFormWithRuleWithinPublicationsAndPublishToProduction {
+	test SubmitFormWithRuleWithinPublications {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

@@ -25,16 +25,6 @@
 	<td>//div[contains(@role,'tabpanel') and contains(@class,'active')]//label[contains(.,'Field')]/following-sibling::select</td>
 	<td></td>
 </tr>
-<tr>
-	<td>URL</td>
-	<td>//label[contains(.,'URL')]/following-sibling::input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_TYPE</td>
-	<td>//label[contains(.,'Link')]/following-sibling::select</td>
-	<td></td>
-</tr>
 <!--LAYOUT_BACKGROUND_IMAGE-->
 <tr>
 	<td>LAYOUT_BACKGROUND_IMAGE_FIELD</td>

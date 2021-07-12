@@ -14,27 +14,29 @@
 
 package com.liferay.translation.internal.instance.lifecycle;
 
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia Garcia
  */
-@Component(service = PortalInstanceLifecycleListener.class)
-public class AddResourceActionsPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+@Component(
+	immediate = true,
+	service = AddResourceActionsPortalInstanceLifecycleListener.class
+)
+public class AddResourceActionsPortalInstanceLifecycleListener {
 
-	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	@Activate
+	protected void activate(BundleContext bundleContext) throws Exception {
 		String xml = StringUtil.read(
 			AddResourceActionsPortalInstanceLifecycleListener.class.
 				getClassLoader(),
@@ -51,6 +53,11 @@ public class AddResourceActionsPortalInstanceLifecycleListener
 							xml, "[$LANGUAGE_ID$]", languageIds[i]),
 						"[$WEIGHT$]", String.valueOf(i))));
 		}
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference

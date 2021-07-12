@@ -233,6 +233,9 @@ definition {
 	@description = "This is a use case for LPS-121139."
 	@priority = "4"
 	test AssertPartialSiteTemplatePropagation {
+		property database.types = "mysql";
+		property test.name.skip.portal.instance = "CPSitetemplates#AssertPartialSiteTemplatePropagation";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");

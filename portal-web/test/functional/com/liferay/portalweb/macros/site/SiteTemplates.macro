@@ -311,7 +311,7 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "true");
 
-		var mysqlStatement = "select modifiedDate from layout where name like '${pageNameFilter}' and groupId = '${groupId}' and hidden_ = 0;";
+		var mysqlStatement = "SELECT modifiedDate FROM Layout WHERE name LIKE '${pageNameFilter}' AND groupId = '${groupId}' AND hidden_ = 0;";
 
 		var sqlResults = SQL.executeMySQLStatement(
 			mysqlStatement = "${mysqlStatement}");

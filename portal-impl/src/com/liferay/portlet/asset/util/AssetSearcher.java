@@ -231,23 +231,21 @@ public class AssetSearcher extends BaseSearcher {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		String[] assetCategoryFieldsArray;
+		String[] fieldNamesArray;
 
 		if (searchContext.isIncludeInternalAssetCategories()) {
-			assetCategoryFieldsArray = new String[] {
+			fieldNamesArray = new String[] {
 				Field.ASSET_CATEGORY_IDS, Field.ASSET_INTERNAL_CATEGORY_IDS
 			};
 		}
 		else {
-			assetCategoryFieldsArray = new String[] {Field.ASSET_CATEGORY_IDS};
+			fieldNamesArray = new String[] {Field.ASSET_CATEGORY_IDS};
 		}
 
-		_addSearchAllCategories(queryBooleanFilter, assetCategoryFieldsArray);
-		_addSearchAnyCategories(queryBooleanFilter, assetCategoryFieldsArray);
-		_addSearchNotAllCategories(
-			queryBooleanFilter, assetCategoryFieldsArray);
-		_addSearchNotAnyCategories(
-			queryBooleanFilter, assetCategoryFieldsArray);
+		_addSearchAllCategories(queryBooleanFilter, fieldNamesArray);
+		_addSearchAnyCategories(queryBooleanFilter, fieldNamesArray);
+		_addSearchNotAllCategories(queryBooleanFilter, fieldNamesArray);
+		_addSearchNotAnyCategories(queryBooleanFilter, fieldNamesArray);
 	}
 
 	@Override

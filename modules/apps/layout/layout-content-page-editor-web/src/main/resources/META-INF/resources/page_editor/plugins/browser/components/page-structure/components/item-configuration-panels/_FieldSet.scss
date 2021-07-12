@@ -17,7 +17,7 @@ html#{$cadmin-selector} {
 					width: calc(50% - 4px);
 				}
 
-				&:last-child {
+				&:last-child:not(.page-editor__sidebar__fieldset__field-small) {
 					margin-bottom: $pageEditorSpacing * 2.5;
 				}
 			}

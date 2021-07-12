@@ -1,9 +1,7 @@
 definition {
 
 	macro addField {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fields");
 
@@ -142,9 +140,7 @@ definition {
 	}
 
 	macro addFieldNested {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fields");
 
@@ -246,9 +242,7 @@ definition {
 	}
 
 	macro addFields {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fields");
 
@@ -373,9 +367,7 @@ definition {
 	}
 
 	macro addFieldsetNested {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
@@ -414,9 +406,7 @@ definition {
 	}
 
 	macro addFieldsetToBuilder {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
@@ -432,9 +422,7 @@ definition {
 	}
 
 	macro addFieldToFieldsGroup {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fields");
 
@@ -579,9 +567,7 @@ definition {
 	}
 
 	macro assertFieldOptionLabels {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
@@ -856,9 +842,7 @@ definition {
 	}
 
 	macro editFieldLabel {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		if (isSet(fieldsetModal)) {
 			Click(
@@ -1015,9 +999,7 @@ definition {
 	}
 
 	macro editFieldsetsLabel {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",
@@ -1060,9 +1042,7 @@ definition {
 	}
 
 	macro editFieldsGroupLabel {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		if (isSet(fieldsetModal)) {
 			Click(
@@ -1201,9 +1181,7 @@ definition {
 	}
 
 	macro gotoCreateNewFieldset {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
@@ -1217,9 +1195,7 @@ definition {
 	}
 
 	macro gotoFieldsetItemEllipsis {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
@@ -1397,9 +1373,7 @@ definition {
 			key_fieldFieldLabel = "${fieldFieldLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
+		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		AssertTextEquals(
 			key_text = "${fieldName}",

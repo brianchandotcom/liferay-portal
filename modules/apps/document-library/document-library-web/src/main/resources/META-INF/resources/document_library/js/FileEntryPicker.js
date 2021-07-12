@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 const FileNamePicker = ({maxFileSize, namespace, validExtensions}) => {
-	const inputId = namespace + 'file';
+	const inputId = `${namespace}file`;
 	const [inputValue, setInputValue] = useState('');
 	const [fileName, setFileName] = useState('');
 	const [maxFileSizeError, setMaxFileSizeError] = useState(false);
@@ -54,7 +54,7 @@ const FileNamePicker = ({maxFileSize, namespace, validExtensions}) => {
 
 			{fileName && (
 				<>
-					<small className="ml-2">
+					<small className="inline-item inline-item-after">
 						<strong>{fileName}</strong>
 					</small>
 

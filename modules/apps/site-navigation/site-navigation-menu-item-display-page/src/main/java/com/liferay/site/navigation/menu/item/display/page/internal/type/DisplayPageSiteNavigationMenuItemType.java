@@ -27,7 +27,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,13 +42,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
-import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemTypeConfiguration;
 import com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
-import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.io.IOException;
 
@@ -64,16 +61,13 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemTypeConfiguration",
 	immediate = true,
 	property = {
 		"service.ranking:Integer=300",
@@ -314,13 +308,6 @@ public class DisplayPageSiteNavigationMenuItemType
 	}
 
 	@Override
-	public boolean isAvailable(
-		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
-
-		return _ffDisplayPageSiteNavigationMenuItemTypeConfiguration.enabled();
-	}
-
-	@Override
 	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
 		return true;
 	}
@@ -364,15 +351,6 @@ public class DisplayPageSiteNavigationMenuItemType
 			"/edit_display_page.jsp");
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffDisplayPageSiteNavigationMenuItemTypeConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFDisplayPageSiteNavigationMenuItemTypeConfiguration.class,
-				properties);
-	}
-
 	private LayoutDisplayPageObjectProvider<?>
 		_getLayoutDisplayPageObjectProvider(
 			UnicodeProperties typeSettingsUnicodeProperties) {
@@ -403,9 +381,6 @@ public class DisplayPageSiteNavigationMenuItemType
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-
-	private volatile FFDisplayPageSiteNavigationMenuItemTypeConfiguration
-		_ffDisplayPageSiteNavigationMenuItemTypeConfiguration;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

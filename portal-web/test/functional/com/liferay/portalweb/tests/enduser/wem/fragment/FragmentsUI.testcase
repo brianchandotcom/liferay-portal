@@ -173,7 +173,7 @@ definition {
 				type = "content");
 		}
 
-		task ("Add the new fragment on the page") {
+		task ("Add a new fragment to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
@@ -183,7 +183,7 @@ definition {
 				fragmentName = "Test Fragment Name");
 		}
 
-		task ("View the new Fragment at edit mode") {
+		task ("View the inline text of new fragment at edit mode") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Example Rich Text",
 				fragmentName = "Test Fragment Name",
@@ -192,7 +192,7 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("View the new fragment shown in view mode") {
+		task ("View the inline text of new fragment at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
@@ -237,7 +237,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("View the propagate changes in view mode") {
+		task ("View the changes of fragment at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
@@ -251,7 +251,7 @@ definition {
 			}
 		}
 
-		task ("View the propagate changes at edit mode") {
+		task ("View the changes of fragment at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");

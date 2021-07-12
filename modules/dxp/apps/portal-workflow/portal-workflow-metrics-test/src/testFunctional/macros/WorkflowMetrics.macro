@@ -1492,6 +1492,12 @@ definition {
 		}
 	}
 
+	macro viewAllItemsItemSubject {
+		AssertElementPresent(
+			key_workflowItemSubject = "${workflowItemSubject}",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
+	}
+
 	macro viewCreatedBySort {
 		AssertElementPresent(
 			key_value = "${position}",

@@ -150,12 +150,43 @@ definition {
 	}
 
 	@description = "Verify that the user can modify the workflow of a Blog Entry"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanHaveDifferentBlogsWithDifferentWorkflows {
+		 property test.name.skip.portal.instance = "WorkflowBlogs#CanHaveDifferentBlogsWithDifferentWorkflows";
 
-		// TODO LRQA-68525 CanHaveDifferentBlogsWithDifferentWorkflows pending implementation
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs 1");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
+
+		ApplicationsMenu.gotoSite(site = "Liferay DXP");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Copy of Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs 2");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.viewAllItemsItemSubject(workflowItemSubject = "Blogs Entry: Blogs 1");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Copy of Single Approver");
+
+		WorkflowMetrics.viewAllItemsItemSubject(workflowItemSubject = "Blogs Entry: Blogs 2");
 	}
 
 	@description = "Verify that the user can publish a Blogs Entry with Workflow assigned"

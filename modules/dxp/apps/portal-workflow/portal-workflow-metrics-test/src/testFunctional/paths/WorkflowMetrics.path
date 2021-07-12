@@ -366,6 +366,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT</td>
+	<td>//td[contains(@title,'${key_workflowItemSubject}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS</td>
 	<td>//td[contains(@title,'${key_workflowAssetTitle}')]/following-sibling::td[contains(@class,'bounded-column') and contains(text(),'Update')]</td>
 	<td></td>

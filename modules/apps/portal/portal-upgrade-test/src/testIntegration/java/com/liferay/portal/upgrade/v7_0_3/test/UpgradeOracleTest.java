@@ -111,7 +111,7 @@ public class UpgradeOracleTest {
 
 	private static final String _FIELD_NAME = "INDUSTRY";
 
-	private static final String _TABLE_NAME = "ACCOUNT_";
+	private static final String _TABLE_NAME = "COMPANY";
 
 	private static DB _db;
 

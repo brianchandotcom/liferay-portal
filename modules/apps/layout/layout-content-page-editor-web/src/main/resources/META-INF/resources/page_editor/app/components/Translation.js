@@ -31,6 +31,7 @@ const getEditableValues = (fragmentEntryLinks) =>
 		.filter(
 			(fragmentEntryLink) =>
 				!fragmentEntryLink.masterLayout &&
+				!fragmentEntryLink.removed &&
 				fragmentEntryLink.editableValues
 		)
 		.map((fragmentEntryLink) => [

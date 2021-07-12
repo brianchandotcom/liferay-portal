@@ -92,6 +92,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_TABLE</td>
+	<td>//div/a[contains(@class,'text-truncate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERIC_DELETE_BUTTON</td>
 	<td>//button[contains(@class,'btn-outline-secondary') and contains(text(),'Delete')]</td>
 	<td></td>

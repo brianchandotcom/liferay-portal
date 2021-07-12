@@ -203,6 +203,22 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Category Vocabulary",
+			changeSite = "Guest",
+			changeTitle = "Vocabulary Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Category",
+			changeSite = "Guest",
+			changeTitle = "Category Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

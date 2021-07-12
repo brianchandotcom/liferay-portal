@@ -62,11 +62,6 @@
 </tr>
 <!--DETAILS-->
 <tr>
-	<td>DETAILS_SELECT_STRUCTURE</td>
-	<td>//button[contains(@id,'selectDDMStructure')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DETAILS_SMALL_IMAGE</td>
 	<td>//label[contains(@for,'smallImage')]/input[@type='checkbox']</td>
 	<td></td>
@@ -79,11 +74,6 @@
 <tr>
 	<td>DETAILS_SMALL_IMAGE_URL_INPUT</td>
 	<td>//div[contains(@class,'input-String-wrapper')]/input[contains(@id,'URL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DETAILS_STRUCTURE</td>
-	<td>//input[contains(@id,'structure') and contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,11 +106,6 @@
 <tr>
 	<td>CODE_MIRROR_EDITOR_CONTENT</td>
 	<td>//div[contains(@class,'CodeMirrorEditor')]//div[contains(@class,'CodeMirror-code')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_SCRIPT_FILE_FIELD</td>
-	<td>//div[contains(@class,'input-text-wrapper')]/input[contains(@id,'Script')]</td>
 	<td></td>
 </tr>
 <tr>

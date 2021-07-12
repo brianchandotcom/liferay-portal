@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -298,42 +297,32 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	}
 
 	private boolean _isShow(ThemeDisplay themeDisplay) {
-
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
 		boolean webContentEditPermission = permissionChecker.hasPermission(
-			themeDisplay.getScopeGroup(),
-			JournalArticle.class.getName(),
-			JournalArticle.class.getName(),
-			ActionKeys.UPDATE);
+			themeDisplay.getScopeGroup(), JournalArticle.class.getName(),
+			JournalArticle.class.getName(), ActionKeys.UPDATE);
 
 		if (webContentEditPermission) {
 			return true;
 		}
 
-		boolean blogsEditPermission =
-			permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(),
-				BlogsEntry.class.getName(),
-				BlogsEntry.class.getName(),
-				ActionKeys.UPDATE);
+		boolean blogsEditPermission = permissionChecker.hasPermission(
+			themeDisplay.getScopeGroup(), BlogsEntry.class.getName(),
+			BlogsEntry.class.getName(), ActionKeys.UPDATE);
 
 		if (blogsEditPermission) {
 			return true;
 		}
 
-		boolean documentEditPermission =
-			permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(),
-				FileEntry.class.getName(),
-				FileEntry.class.getName(),
-				ActionKeys.UPDATE);
+		boolean documentEditPermission = permissionChecker.hasPermission(
+			themeDisplay.getScopeGroup(), FileEntry.class.getName(),
+			FileEntry.class.getName(), ActionKeys.UPDATE);
 
 		if (documentEditPermission) {
 			return true;
 		}
-
 
 		return Optional.ofNullable(
 			_layoutLocalService.fetchLayout(themeDisplay.getPlid())

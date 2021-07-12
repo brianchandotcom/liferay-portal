@@ -15,7 +15,6 @@
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
@@ -74,9 +73,6 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Inject
-	private UserLocalService _userLocalService;
-
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(
@@ -129,18 +125,16 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
-	public void testIsShowWithUserWithWebContentEditPermission() throws Exception {
+	public void testIsShowWithUserDocumentEditPermission() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		long roleId = RoleTestUtil.addRegularRole(TestPropsValues.getGroupId());
 
 		try {
 			_resourcePermissionLocalService.addResourcePermission(
-				TestPropsValues.getCompanyId(),
-				JournalArticle.class.getName(),
+				TestPropsValues.getCompanyId(), FileEntry.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				roleId,
+				String.valueOf(TestPropsValues.getCompanyId()), roleId,
 				ActionKeys.UPDATE);
 
 			_userLocalService.setRoleUsers(
@@ -150,7 +144,8 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 				PermissionCheckerFactoryUtil.create(user);
 
 			Assert.assertTrue(
-				_productNavigationControlMenuEntry.isShow(_getHttpServletRequest(permissionChecker, user)));
+				_productNavigationControlMenuEntry.isShow(
+					_getHttpServletRequest(permissionChecker, user)));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
@@ -166,11 +161,9 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 		try {
 			_resourcePermissionLocalService.addResourcePermission(
-				TestPropsValues.getCompanyId(),
-				BlogsEntry.class.getName(),
+				TestPropsValues.getCompanyId(), BlogsEntry.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				roleId,
+				String.valueOf(TestPropsValues.getCompanyId()), roleId,
 				ActionKeys.UPDATE);
 
 			_userLocalService.setRoleUsers(
@@ -180,7 +173,8 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 				PermissionCheckerFactoryUtil.create(user);
 
 			Assert.assertTrue(
-				_productNavigationControlMenuEntry.isShow(_getHttpServletRequest(permissionChecker, user)));
+				_productNavigationControlMenuEntry.isShow(
+					_getHttpServletRequest(permissionChecker, user)));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
@@ -189,18 +183,18 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
-	public void testIsShowWithUserDocumentEditPermission() throws Exception {
+	public void testIsShowWithUserWithWebContentEditPermission()
+		throws Exception {
+
 		User user = UserTestUtil.addUser();
 
 		long roleId = RoleTestUtil.addRegularRole(TestPropsValues.getGroupId());
 
 		try {
 			_resourcePermissionLocalService.addResourcePermission(
-				TestPropsValues.getCompanyId(),
-				FileEntry.class.getName(),
+				TestPropsValues.getCompanyId(), JournalArticle.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				roleId,
+				String.valueOf(TestPropsValues.getCompanyId()), roleId,
 				ActionKeys.UPDATE);
 
 			_userLocalService.setRoleUsers(
@@ -210,7 +204,8 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 				PermissionCheckerFactoryUtil.create(user);
 
 			Assert.assertTrue(
-				_productNavigationControlMenuEntry.isShow(_getHttpServletRequest(permissionChecker, user)));
+				_productNavigationControlMenuEntry.isShow(
+					_getHttpServletRequest(permissionChecker, user)));
 		}
 		finally {
 			_userLocalService.deleteUser(user);
@@ -238,7 +233,10 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		return mockHttpServletRequest;
 	}
 
-	private HttpServletRequest _getHttpServletRequest(PermissionChecker permissionChecker, User user) throws PortalException {
+	private HttpServletRequest _getHttpServletRequest(
+			PermissionChecker permissionChecker, User user)
+		throws PortalException {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -281,4 +279,8 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
 }

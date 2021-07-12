@@ -19,9 +19,9 @@ definition {
 
 		ACDXPSettings.createCombinedProperties(siteName = "${siteName}");
 
-		ACDXPSettings.getAssignedPropertyName();
+		var assignedPropertyName = ACDXPSettings.getAssignedPropertyName();
 
-		var assignedPropertyName = ACDXPSettings.navToSyncedContactDataMenu();
+		ACDXPSettings.navToSyncedContactDataMenu();
 
 		ACDXPSettings.syncContactData();
 

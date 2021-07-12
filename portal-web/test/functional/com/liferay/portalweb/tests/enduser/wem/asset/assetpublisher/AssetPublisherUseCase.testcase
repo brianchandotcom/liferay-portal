@@ -823,7 +823,7 @@ definition {
 		}
 
 		task ("Add two documents based on new document type") {
-			Navigator.gotoNavTab(navTab = "Documents and Media");
+			Navigator.gotoNavTab(navTab = "Files");
 
 			for (var n : list "1,2") {
 				DMDocument.addCP(

@@ -70,7 +70,6 @@ definition {
 		ACSettings.goToDataSources();
 
 		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
-		
 			Click(locator1 = "ACSettings#ITEM_TABLE");
 
 			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");

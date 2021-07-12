@@ -29,20 +29,22 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
-    @ignore = "true"
-    @priority = "5"
-    test CurrentACPlanLevelShownInCard {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
+	@ignore = "true"
+	@priority = "5"
+	test CurrentACPlanLevelShownInCard {
 
-        // TODO LRAC-8156 CurrentACPlanLevelShownInCard pending implementation
-    }
+		// TODO LRAC-8156 CurrentACPlanLevelShownInCard pending implementation
+
+	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8157 | Test Summary: Current add-ons are displayed in a card"
-    @ignore = "true"
-    @priority = "5"
-    test CurrentAddonsDisplayedInCard {
+	@ignore = "true"
+	@priority = "5"
+	test CurrentAddonsDisplayedInCard {
 
-        // TODO LRAC-8157 CurrentAddonsDisplayedInCard pending implementation
-    }
+		// TODO LRAC-8157 CurrentAddonsDisplayedInCard pending implementation
+
+	}
 
 }

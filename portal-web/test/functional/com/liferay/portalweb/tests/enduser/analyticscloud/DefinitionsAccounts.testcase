@@ -29,12 +29,13 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8153 | Test Summary: Redirects to Accounts page"
-    @ignore = "true"
-    @priority = "5"
-    test CanRedirectsToAccountsPage {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8153 | Test Summary: Redirects to Accounts page"
+	@ignore = "true"
+	@priority = "5"
+	test CanRedirectsToAccountsPage {
 
-        // TODO LRAC-8153 CanRedirectsToAccountsPage pending implementation
-    }
+		// TODO LRAC-8153 CanRedirectsToAccountsPage pending implementation
+
+	}
 
 }

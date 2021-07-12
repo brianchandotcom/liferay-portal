@@ -29,12 +29,13 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8155 | Test Summary: Delete a CSV data source and assert that the details from that data source are removed"
-    @ignore = "true"
-    @priority = "5"
-    test DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8155 | Test Summary: Delete a CSV data source and assert that the details from that data source are removed"
+	@ignore = "true"
+	@priority = "5"
+	test DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved {
 
-        // TODO LRAC-8155 DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved pending implementation
-    }
+		// TODO LRAC-8155 DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved pending implementation
+
+	}
 
 }

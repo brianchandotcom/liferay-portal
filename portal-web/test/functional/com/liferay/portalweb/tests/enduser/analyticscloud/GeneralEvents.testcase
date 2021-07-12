@@ -29,12 +29,13 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8152 | Test Summary: Check all applicable events trigger for unknown users (Page, Blog, Form, Web Content, Documents & Media, Social)"
-    @ignore = "true"
-    @priority = "5"
-    test CheckGeneralEventsForUnknownUser {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8152 | Test Summary: Check all applicable events trigger for unknown users (Page, Blog, Form, Web Content, Documents & Media, Social)"
+	@ignore = "true"
+	@priority = "5"
+	test CheckGeneralEventsForUnknownUser {
 
-        // TODO LRAC-8152 CheckGeneralEventsForUnknownUser pending implementation
-    }
+		// TODO LRAC-8152 CheckGeneralEventsForUnknownUser pending implementation
+
+	}
 
 }

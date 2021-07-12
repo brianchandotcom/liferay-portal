@@ -29,12 +29,13 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"
-    @ignore = "true"
-    @priority = "5"
-    test PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"
+	@ignore = "true"
+	@priority = "5"
+	test PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace {
 
-        // TODO LRAC-8159 PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace pending implementation
-    }
+		// TODO LRAC-8159 PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace pending implementation
+
+	}
 
 }

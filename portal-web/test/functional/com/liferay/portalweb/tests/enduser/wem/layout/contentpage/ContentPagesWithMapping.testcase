@@ -109,7 +109,7 @@ definition {
 				id = "element-text");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "WebContent Title",
+				entryTitle = "WC WebContent Title",
 				navItem = "Web Content");
 
 			Select(

@@ -68,7 +68,6 @@ public class BlogEntriesManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
-		_httpServletRequest = httpServletRequest;
 		_trashHelper = trashHelper;
 		_displayStyle = displayStyle;
 
@@ -311,7 +310,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 	private boolean _isTrashEnabled() {
 		try {
 			return _trashHelper.isTrashEnabled(
-				PortalUtil.getScopeGroupId(_httpServletRequest));
+				PortalUtil.getScopeGroupId(httpServletRequest));
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
@@ -319,7 +318,6 @@ public class BlogEntriesManagementToolbarDisplayContext
 	}
 
 	private final String _displayStyle;
-	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

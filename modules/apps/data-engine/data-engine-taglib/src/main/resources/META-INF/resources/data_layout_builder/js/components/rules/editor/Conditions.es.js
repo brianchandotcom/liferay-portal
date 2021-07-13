@@ -201,6 +201,7 @@ function FieldRight({fields, left, right, roles, ...otherProps}) {
 			<FieldStateless
 				{...otherProps}
 				{...props}
+				dataType={left.field?.dataType}
 				showEmptyOption={false}
 				type={
 					left.type === 'user'

@@ -117,6 +117,15 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException {
+
+		return cpDefinitionDiagramEntryPersistence.findByC_N(
+			cpDefinitionId, number);
+	}
+
+	@Override
 	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
 			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
 			long cProductId, boolean diagram, int number, int quantity,

@@ -908,13 +908,41 @@ definition {
 		}
 
 		task ("Define the permissions of site role") {
-			for (var resourceActionIndex : list "ADD_LAYOUT,UPDATE") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
-					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = "Roles Siterole Name",
-					roleType = "site");
-			}
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.layout.seocom.liferay.layout.seo",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_LAYOUT",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {

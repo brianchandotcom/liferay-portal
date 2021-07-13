@@ -105,7 +105,6 @@ public class LayoutTypeSettingsUtil {
 
 				updatePreparedStatement.setString(
 					1, unicodeProperties.toString());
-
 				updatePreparedStatement.setLong(2, plid);
 
 				updatePreparedStatement.addBatch();

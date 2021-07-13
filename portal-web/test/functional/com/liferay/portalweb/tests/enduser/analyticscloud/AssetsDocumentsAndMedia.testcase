@@ -85,10 +85,9 @@ definition {
 
 		ACAssets.accessAssets(titleName = "DM AC Title");
 
-		AssertTextEquals(
-			locator1 = "ACAssets#MATRIC_VALUE",
-			matricTitle = "Previews",
-			value1 = "4");
+		ACAssets.viewVisitorsBehaviorMetric(
+			metricTitle = "Previews",
+			metricValue = "4");
 	}
 
 }

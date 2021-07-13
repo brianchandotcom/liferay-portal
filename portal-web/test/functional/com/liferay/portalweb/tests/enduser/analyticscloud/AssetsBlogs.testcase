@@ -124,10 +124,9 @@ definition {
 
 		ACAssets.accessAssets(titleName = "Blogs AC Title");
 
-		AssertTextEquals(
-			locator1 = "ACAssets#MATRIC_VALUE",
-			matricTitle = "Views",
-			value1 = "4");
+		ACAssets.viewVisitorsBehaviorMetric(
+			metricTitle = "Views",
+			metricValue = "4");
 	}
 
 }

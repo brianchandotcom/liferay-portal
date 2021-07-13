@@ -264,7 +264,7 @@ public class BlogEntriesDisplayContext {
 			}
 
 			String orderByCol = ParamUtil.getString(
-				_httpServletRequest, "orderByCol", "title");
+				_httpServletRequest, "orderByCol", "relevance");
 			String orderByType = ParamUtil.getString(
 				_httpServletRequest, "orderByType", "asc");
 
@@ -279,6 +279,9 @@ public class BlogEntriesDisplayContext {
 			if (Objects.equals(orderByCol, "display-date")) {
 				sort = new Sort(
 					Field.DISPLAY_DATE, Sort.LONG_TYPE, !orderByAsc);
+			}
+			else if (Objects.equals(orderByCol, "relevance")) {
+				sort = new Sort(null, Sort.SCORE_TYPE, !orderByAsc);
 			}
 			else {
 				sort = new Sort(orderByCol, !orderByAsc);

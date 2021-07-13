@@ -261,6 +261,16 @@ public class BlogEntriesManagementToolbarDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "display-date"));
 			}
+		).add(
+			this::_isSearch,
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "relevance"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "relevance");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "relevance"));
+			}
 		).build();
 	}
 
@@ -273,13 +283,29 @@ public class BlogEntriesManagementToolbarDisplayContext
 			SearchContainer.DEFAULT_CUR_PARAM, "0"
 		).build();
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			sortingURL.setParameter("keywords", keywords);
+		if (_isSearch()) {
+			sortingURL.setParameter("keywords", _getKeywords());
 		}
 
 		return sortingURL;
+	}
+
+	private String _getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
+
+		return _keywords;
+	}
+
+	private boolean _isSearch() {
+		if (Validator.isNull(_getKeywords())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isTrashEnabled() {
@@ -294,6 +320,7 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 	private final String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
+	private String _keywords;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

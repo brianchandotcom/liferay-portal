@@ -1,0 +1,533 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ValidationDate shows date range validation 1`] = `
+<div>
+  <div
+    class="form-group"
+    data-field-name="selectedValidation"
+  >
+    <label
+      class="ddm-label"
+      for="selectedValidation"
+      tabindex="0"
+    >
+      accepted-date
+    </label>
+    <select
+      aria-hidden="true"
+      class="form-control form-control"
+      hidden=""
+      id="selectedValidation_field"
+      multiple=""
+      name="selectedValidation_field"
+    >
+      <option
+        value="dateRange"
+      >
+        Range
+      </option>
+    </select>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected"
+        >
+          Range
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <input
+      class="form-control"
+      name="selectedValidation"
+      type="hidden"
+      value="dateRange"
+    />
+    <input
+      name="selectedValidation_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+  <label>
+    START-DATE
+  </label>
+  <div
+    class="separator"
+  />
+  <div
+    class="form-group"
+    data-field-name="selectedParameter"
+  >
+    <label
+      class="ddm-label"
+      for="selectedParameter"
+      tabindex="0"
+    >
+      starts-from
+    </label>
+    <select
+      aria-hidden="true"
+      class="form-control form-control"
+      hidden=""
+      id="selectedParameter_field"
+      multiple=""
+      name="selectedParameter_field"
+    >
+      <option
+        disabled=""
+        value=""
+      />
+    </select>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <input
+      class="form-control"
+      name="selectedParameter"
+      type="hidden"
+      value=""
+    />
+    <input
+      name="selectedParameter_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+  <label>
+    END-DATE
+  </label>
+  <div
+    class="separator"
+  />
+  <div
+    class="form-group"
+    data-field-name="selectedParameter"
+  >
+    <label
+      class="ddm-label"
+      for="selectedParameter"
+      tabindex="0"
+    >
+      ends-on
+    </label>
+    <select
+      aria-hidden="true"
+      class="form-control form-control"
+      hidden=""
+      id="selectedParameter_field"
+      multiple=""
+      name="selectedParameter_field"
+    >
+      <option
+        disabled=""
+        value=""
+      />
+    </select>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <input
+      class="form-control"
+      name="selectedParameter"
+      type="hidden"
+      value=""
+    />
+    <input
+      name="selectedParameter_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+</div>
+`;
+
+exports[`ValidationDate shows future dates validation 1`] = `
+<div>
+  <div
+    class="form-group"
+    data-field-name="selectedValidation"
+  >
+    <label
+      class="ddm-label"
+      for="selectedValidation"
+      tabindex="0"
+    >
+      accepted-date
+    </label>
+    <select
+      aria-hidden="true"
+      class="form-control form-control"
+      hidden=""
+      id="selectedValidation_field"
+      multiple=""
+      name="selectedValidation_field"
+    >
+      <option
+        value="futureDates"
+      >
+        Future Dates
+      </option>
+    </select>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected"
+        >
+          Future Dates
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <input
+      class="form-control"
+      name="selectedValidation"
+      type="hidden"
+      value="futureDates"
+    />
+    <input
+      name="selectedValidation_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+  <div
+    class="form-group"
+    data-field-name="selectedParameter"
+  >
+    <label
+      class="ddm-label"
+      for="selectedParameter"
+      tabindex="0"
+    >
+      starts-from
+    </label>
+    <select
+      aria-hidden="true"
+      class="form-control form-control"
+      hidden=""
+      id="selectedParameter_field"
+      multiple=""
+      name="selectedParameter_field"
+    >
+      <option
+        disabled=""
+        value=""
+      />
+    </select>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <input
+      class="form-control"
+      name="selectedParameter"
+      type="hidden"
+      value=""
+    />
+    <input
+      name="selectedParameter_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+  <div
+    class="form-group"
+    data-field-name="validationDate_errorMessage"
+  >
+    <label
+      class="ddm-label"
+      for="validationDate_errorMessage"
+      tabindex="0"
+    >
+      error-message
+    </label>
+    <input
+      aria-labelledby="validationDate_errorMessage_fieldDetails"
+      class="form-control ddm-field-text"
+      id="validationDate_errorMessage_fieldDetails"
+      name="validationDate_errorMessage"
+      placeholder="error-message"
+      type="text"
+      value=""
+    />
+    <input
+      name="validationDate_errorMessage_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+</div>
+`;
+
+exports[`ValidationDate shows past dates validation 1`] = `
+<div>
+  <div
+    class="form-group"
+    data-field-name="selectedValidation"
+  >
+    <label
+      class="ddm-label"
+      for="selectedValidation"
+      tabindex="0"
+    >
+      accepted-date
+    </label>
+    <select
+      aria-hidden="true"
+      class="form-control form-control"
+      hidden=""
+      id="selectedValidation_field"
+      multiple=""
+      name="selectedValidation_field"
+    >
+      <option
+        value="pastDates"
+      >
+        Past Dates
+      </option>
+    </select>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected"
+        >
+          Past Dates
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <input
+      class="form-control"
+      name="selectedValidation"
+      type="hidden"
+      value="pastDates"
+    />
+    <input
+      name="selectedValidation_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+  <div
+    class="form-group"
+    data-field-name="selectedParameter"
+  >
+    <label
+      class="ddm-label"
+      for="selectedParameter"
+      tabindex="0"
+    >
+      ends-on
+    </label>
+    <select
+      aria-hidden="true"
+      class="form-control form-control"
+      hidden=""
+      id="selectedParameter_field"
+      multiple=""
+      name="selectedParameter_field"
+    >
+      <option
+        disabled=""
+        value=""
+      />
+    </select>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <input
+      class="form-control"
+      name="selectedParameter"
+      type="hidden"
+      value=""
+    />
+    <input
+      name="selectedParameter_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+  <div
+    class="form-group"
+    data-field-name="validationDate_errorMessage"
+  >
+    <label
+      class="ddm-label"
+      for="validationDate_errorMessage"
+      tabindex="0"
+    >
+      error-message
+    </label>
+    <input
+      aria-labelledby="validationDate_errorMessage_fieldDetails"
+      class="form-control ddm-field-text"
+      id="validationDate_errorMessage_fieldDetails"
+      name="validationDate_errorMessage"
+      placeholder="error-message"
+      type="text"
+      value=""
+    />
+    <input
+      name="validationDate_errorMessage_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+</div>
+`;

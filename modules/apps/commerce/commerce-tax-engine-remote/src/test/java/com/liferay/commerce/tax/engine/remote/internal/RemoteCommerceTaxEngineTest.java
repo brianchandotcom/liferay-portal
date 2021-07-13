@@ -326,7 +326,7 @@ public class RemoteCommerceTaxEngineTest {
 				setCommerceTaxMethodId(3);
 				setPercentage(true);
 				setPrice(BigDecimal.valueOf(99));
-				setChannelGroupId(4);
+				setCommerceChannelGroupId(4);
 				setTaxCategoryId(5);
 			}
 		};

@@ -47,7 +47,7 @@ public class ProductEntityModel implements EntityModel {
 					locale -> Field.getSortableFieldName(
 						CPField.CHANNEL_GROUP_IDS),
 					locale -> CPField.CHANNEL_GROUP_IDS,
-					object -> _getChannelGroupId(object))),
+					object -> _getCommerceChannelGroupId(object))),
 			new CollectionEntityField(
 				new IntegerEntityField("statusCode", locale -> Field.STATUS)),
 			new DateTimeEntityField(
@@ -72,7 +72,7 @@ public class ProductEntityModel implements EntityModel {
 		return _entityFieldsMap;
 	}
 
-	private String _getChannelGroupId(Object channelId) {
+	private String _getCommerceChannelGroupId(Object channelId) {
 		CommerceChannel commerceChannel =
 			CommerceChannelLocalServiceUtil.fetchCommerceChannel(
 				GetterUtil.getLong(channelId));

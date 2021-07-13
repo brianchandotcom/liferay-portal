@@ -406,7 +406,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	@Override
 	public BaseModelSearchResult<CPDefinition>
 			searchCPDefinitionsByChannelGroupId(
-				long companyId, long channelGroupId, String keywords,
+				long companyId, long commerceChannelGroupId, String keywords,
 				int status, int start, int end, Sort sort)
 		throws PortalException {
 
@@ -421,8 +421,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		).toArray();
 
 		return cpDefinitionLocalService.searchCPDefinitionsByChannelGroupId(
-			companyId, groupIds, channelGroupId, keywords, status, start, end,
-			sort);
+			companyId, groupIds, commerceChannelGroupId, keywords, status,
+			start, end, sort);
 	}
 
 	@Override

@@ -151,13 +151,13 @@ public class PunchOutSessionHelper {
 	}
 
 	private PunchOutConfiguration _getPunchOutConfiguration(
-		long channelGroupId) {
+		long commerceChannelGroupId) {
 
 		try {
 			return _configurationProvider.getConfiguration(
 				PunchOutConfiguration.class,
 				new GroupServiceSettingsLocator(
-					channelGroupId, PunchOutConstants.SERVICE_NAME));
+					commerceChannelGroupId, PunchOutConstants.SERVICE_NAME));
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(

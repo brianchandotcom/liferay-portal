@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 public class TestCustomCommerceContext extends BaseCommerceContext {
 
 	public TestCustomCommerceContext(
-		long companyId, long channelGroupId, long orderId,
+		long companyId, long commerceChannelGroupId, long orderId,
 		long commerceAccountId, CommerceAccountHelper commerceAccountHelper,
 		CommerceAccountLocalService commerceAccountLocalService,
 		CommerceAccountService commerceAccountService,
@@ -42,7 +42,7 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 		ConfigurationProvider configurationProvider) {
 
 		super(
-			companyId, channelGroupId, orderId, commerceAccountId,
+			companyId, commerceChannelGroupId, orderId, commerceAccountId,
 			commerceAccountHelper, commerceAccountLocalService,
 			commerceAccountService, commerceChannelLocalService,
 			commerceCurrencyLocalService, commerceOrderService,

@@ -51,10 +51,10 @@ public class CommerceShippingMethodUpgradeProcess
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("groupId");
 
-				long channelGroupId = _getCommerceChannelGroupIdBySiteGroupId(
-					groupId);
+				long commerceChannelGroupId =
+					_getCommerceChannelGroupIdBySiteGroupId(groupId);
 
-				if (channelGroupId == 0) {
+				if (commerceChannelGroupId == 0) {
 					continue;
 				}
 
@@ -65,7 +65,7 @@ public class CommerceShippingMethodUpgradeProcess
 					"update CommerceShippingMethod set groupId = ? where " +
 						"commerceShippingMethodId = ?");
 
-				preparedStatement.setLong(1, channelGroupId);
+				preparedStatement.setLong(1, commerceChannelGroupId);
 				preparedStatement.setLong(2, commerceShippingMethodId);
 
 				preparedStatement.executeUpdate();

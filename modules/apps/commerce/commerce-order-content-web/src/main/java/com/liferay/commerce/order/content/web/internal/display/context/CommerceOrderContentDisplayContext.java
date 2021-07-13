@@ -178,7 +178,7 @@ public class CommerceOrderContentDisplayContext {
 			_httpServletRequest, "commerceOrderUuid");
 
 		return _commerceOrderService.fetchCommerceOrder(
-			commerceOrderUuid, _cpRequestHelper.getChannelGroupId());
+			commerceOrderUuid, _cpRequestHelper.getCommerceChannelGroupId());
 	}
 
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {
@@ -483,24 +483,24 @@ public class CommerceOrderContentDisplayContext {
 		if (isOpenOrderContentPortlet()) {
 			commerceOrders = _commerceOrderService.getUserPendingCommerceOrders(
 				_cpRequestHelper.getCompanyId(),
-				_cpRequestHelper.getChannelGroupId(), keywords,
+				_cpRequestHelper.getCommerceChannelGroupId(), keywords,
 				_searchContainer.getStart(), _searchContainer.getEnd());
 
 			commerceOrdersTotal =
 				_commerceOrderService.getUserPendingCommerceOrdersCount(
 					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getChannelGroupId(), keywords);
+					_cpRequestHelper.getCommerceChannelGroupId(), keywords);
 		}
 		else {
 			commerceOrders = _commerceOrderService.getUserPlacedCommerceOrders(
 				_cpRequestHelper.getCompanyId(),
-				_cpRequestHelper.getChannelGroupId(), keywords,
+				_cpRequestHelper.getCommerceChannelGroupId(), keywords,
 				_searchContainer.getStart(), _searchContainer.getEnd());
 
 			commerceOrdersTotal =
 				_commerceOrderService.getUserPlacedCommerceOrdersCount(
 					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getChannelGroupId(), keywords);
+					_cpRequestHelper.getCommerceChannelGroupId(), keywords);
 		}
 
 		_searchContainer.setResults(commerceOrders);
@@ -561,7 +561,7 @@ public class CommerceOrderContentDisplayContext {
 				ConfigurationProviderUtil.getConfiguration(
 					CommerceOrderFieldsConfiguration.class,
 					new GroupServiceSettingsLocator(
-						_cpRequestHelper.getChannelGroupId(),
+						_cpRequestHelper.getCommerceChannelGroupId(),
 						CommerceConstants.SERVICE_NAME_ORDER));
 
 			return commerceOrderFieldsConfiguration.showPurchaseOrderNumber();

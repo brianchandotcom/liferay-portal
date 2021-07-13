@@ -402,7 +402,8 @@ public class CommerceSubscriptionEntryDisplayContext {
 			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 				_commercePaymentMethodGroupRelLocalService.
 					fetchCommercePaymentMethodGroupRel(
-						_cpRequestHelper.getChannelGroupId(), engineKey);
+						_cpRequestHelper.getCommerceChannelGroupId(),
+						engineKey);
 
 			if (commercePaymentMethodGroupRel == null) {
 				return false;

@@ -52,10 +52,10 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("groupId");
 
-				long channelGroupId = _getCommerceChannelGroupIdBySiteGroupId(
-					groupId);
+				long commerceChannelGroupId =
+					_getCommerceChannelGroupIdBySiteGroupId(groupId);
 
-				if (channelGroupId == 0) {
+				if (commerceChannelGroupId == 0) {
 					continue;
 				}
 
@@ -66,7 +66,7 @@ public class CommercePaymentMethodGroupRelUpgradeProcess
 					"update CommercePaymentMethodGroupRel set groupId = ? " +
 						"where CPaymentMethodGroupRelId = ?");
 
-				preparedStatement.setLong(1, channelGroupId);
+				preparedStatement.setLong(1, commerceChannelGroupId);
 				preparedStatement.setLong(2, cPaymentMethodGroupRelId);
 
 				preparedStatement.executeUpdate();

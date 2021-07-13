@@ -98,21 +98,23 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 	@Override
 	public String getAvailabilityStatus(
-		long companyId, long channelGroupId, int minStockQuantity, String sku) {
+		long companyId, long commerceChannelGroupId, int minStockQuantity,
+		String sku) {
 
 		return _getAvailabilityStatus(
-			minStockQuantity, getStockQuantity(companyId, channelGroupId, sku));
+			minStockQuantity,
+			getStockQuantity(companyId, commerceChannelGroupId, sku));
 	}
 
 	@Override
 	public Map<String, Integer> getStockQuantities(
-		long companyId, long channelGroupId, List<String> skus) {
+		long companyId, long commerceChannelGroupId, List<String> skus) {
 
 		Map<String, Integer> results = new HashMap<>();
 
 		for (String sku : skus) {
 			int stockQuantity = getStockQuantity(
-				companyId, channelGroupId, sku);
+				companyId, commerceChannelGroupId, sku);
 
 			results.put(sku, stockQuantity);
 		}
@@ -122,11 +124,11 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 	@Override
 	public int getStockQuantity(
-		long companyId, long channelGroupId, String sku) {
+		long companyId, long commerceChannelGroupId, String sku) {
 
 		int stockQuantity =
 			_commerceInventoryWarehouseItemLocalService.getStockQuantity(
-				companyId, channelGroupId, sku);
+				companyId, commerceChannelGroupId, sku);
 
 		int commerceBookedQuantity =
 			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(

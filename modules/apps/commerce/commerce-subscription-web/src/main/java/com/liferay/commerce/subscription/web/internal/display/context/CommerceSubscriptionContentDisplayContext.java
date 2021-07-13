@@ -170,7 +170,7 @@ public class CommerceSubscriptionContentDisplayContext {
 		List<CommerceSubscriptionEntry> subscriptionEntries =
 			_commerceSubscriptionEntryService.getCommerceSubscriptionEntries(
 				_cpRequestHelper.getCompanyId(),
-				_cpRequestHelper.getChannelGroupId(),
+				_cpRequestHelper.getCommerceChannelGroupId(),
 				_cpRequestHelper.getUserId(), _searchContainer.getStart(),
 				_searchContainer.getEnd(), orderByComparator);
 
@@ -180,7 +180,7 @@ public class CommerceSubscriptionContentDisplayContext {
 			_commerceSubscriptionEntryService.
 				getCommerceSubscriptionEntriesCount(
 					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getChannelGroupId(),
+					_cpRequestHelper.getCommerceChannelGroupId(),
 					_cpRequestHelper.getUserId());
 
 		_searchContainer.setTotal(subscriptionEntriesCount);
@@ -209,7 +209,8 @@ public class CommerceSubscriptionContentDisplayContext {
 			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
 				_commercePaymentMethodGroupRelLocalService.
 					fetchCommercePaymentMethodGroupRel(
-						_cpRequestHelper.getChannelGroupId(), engineKey);
+						_cpRequestHelper.getCommerceChannelGroupId(),
+						engineKey);
 
 			if (commercePaymentMethodGroupRel == null) {
 				return false;

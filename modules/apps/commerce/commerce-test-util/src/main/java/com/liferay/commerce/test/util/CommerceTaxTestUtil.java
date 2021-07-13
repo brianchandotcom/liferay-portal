@@ -36,13 +36,14 @@ import java.util.List;
 public class CommerceTaxTestUtil {
 
 	public static CommerceTaxMethod addCommerceByAddressTaxMethod(
-			long userId, long channelGroupId, boolean percentage)
+			long userId, long commerceChannelGroupId, boolean percentage)
 		throws PortalException {
 
 		String commerceTaxMethodEngineKey = "by-address";
 
 		return CommerceTaxMethodLocalServiceUtil.addCommerceTaxMethod(
-			userId, channelGroupId, RandomTestUtil.randomLocaleStringMap(),
+			userId, commerceChannelGroupId,
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), commerceTaxMethodEngineKey,
 			percentage, true);
 	}
@@ -100,14 +101,14 @@ public class CommerceTaxTestUtil {
 	}
 
 	public static void setCommerceMethodTaxRate(
-			long userId, long channelGroupId, long cpTaxCategoryId,
+			long userId, long commerceChannelGroupId, long cpTaxCategoryId,
 			long commerceTaxMethodId, double rate)
 		throws PortalException {
 
 		CommerceTaxFixedRateAddressRelLocalServiceUtil.
 			addCommerceTaxFixedRateAddressRel(
-				userId, channelGroupId, commerceTaxMethodId, cpTaxCategoryId, 0,
-				0, StringPool.BLANK, rate);
+				userId, commerceChannelGroupId, commerceTaxMethodId,
+				cpTaxCategoryId, 0, 0, StringPool.BLANK, rate);
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = new BigDecimal("100");

@@ -102,7 +102,7 @@ public class CommerceAddressDisplayContext {
 
 	public CommerceAccount getCommerceAccount() throws PortalException {
 		return _commerceAccountHelper.getCurrentCommerceAccount(
-			_cpRequestHelper.getChannelGroupId(), _httpServletRequest);
+			_cpRequestHelper.getCommerceChannelGroupId(), _httpServletRequest);
 	}
 
 	public CommerceAddress getCommerceAddress() throws PortalException {

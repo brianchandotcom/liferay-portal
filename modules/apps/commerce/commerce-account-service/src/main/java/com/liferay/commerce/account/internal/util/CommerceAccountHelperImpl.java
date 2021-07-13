@@ -61,12 +61,13 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Override
-	public int countUserCommerceAccounts(long userId, long channelGroupId)
+	public int countUserCommerceAccounts(
+			long userId, long commerceChannelGroupId)
 		throws PortalException {
 
 		return _commerceAccountLocalService.getUserCommerceAccountsCount(
 			userId, CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-			_getCommerceSiteType(channelGroupId), StringPool.BLANK);
+			_getCommerceSiteType(commerceChannelGroupId), StringPool.BLANK);
 	}
 
 	@Override
@@ -114,7 +115,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), you must pass channelGroupId
+	 * @deprecated As of Mueller (7.2.x), you must pass commerceChannelGroupId
 	 */
 	@Deprecated
 	@Override
@@ -130,7 +131,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Override
 	public CommerceAccount getCurrentCommerceAccount(
-			long channelGroupId, HttpServletRequest httpServletRequest)
+			long commerceChannelGroupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		httpServletRequest = _portal.getOriginalServletRequest(
@@ -139,7 +140,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		CommerceAccount commerceAccount = null;
 
 		String curGroupCommerceAccountIdKey =
-			_CURRENT_COMMERCE_ACCOUNT_ID_KEY + channelGroupId;
+			_CURRENT_COMMERCE_ACCOUNT_ID_KEY + commerceChannelGroupId;
 
 		long currentCommerceAccountId = SessionParamUtil.getLong(
 			httpServletRequest, curGroupCommerceAccountIdKey);
@@ -151,15 +152,15 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 		if ((commerceAccount == null) || !commerceAccount.isActive()) {
 			commerceAccount = _getSingleCommerceAccount(
-				channelGroupId, httpServletRequest);
+				commerceChannelGroupId, httpServletRequest);
 
 			if (commerceAccount == null) {
 				setCurrentCommerceAccount(
-					httpServletRequest, channelGroupId, -1);
+					httpServletRequest, commerceChannelGroupId, -1);
 			}
 			else {
 				setCurrentCommerceAccount(
-					httpServletRequest, channelGroupId,
+					httpServletRequest, commerceChannelGroupId,
 					commerceAccount.getCommerceAccountId());
 			}
 		}
@@ -168,13 +169,14 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 	}
 
 	@Override
-	public long[] getUserCommerceAccountIds(long userId, long channelGroupId)
+	public long[] getUserCommerceAccountIds(
+			long userId, long commerceChannelGroupId)
 		throws PortalException {
 
 		List<CommerceAccount> commerceAccounts =
 			_commerceAccountLocalService.getUserCommerceAccounts(
 				userId, CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				_getCommerceSiteType(channelGroupId), StringPool.BLANK,
+				_getCommerceSiteType(commerceChannelGroupId), StringPool.BLANK,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return ListUtil.toLongArray(
@@ -183,16 +185,16 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Override
 	public void setCurrentCommerceAccount(
-			HttpServletRequest httpServletRequest, long channelGroupId,
+			HttpServletRequest httpServletRequest, long commerceChannelGroupId,
 			long commerceAccountId)
 		throws PortalException {
 
 		if (commerceAccountId > 0) {
-			_checkAccountType(channelGroupId, commerceAccountId);
+			_checkAccountType(commerceChannelGroupId, commerceAccountId);
 		}
 
 		String curGroupOrganizationIdKey =
-			_CURRENT_COMMERCE_ACCOUNT_ID_KEY + channelGroupId;
+			_CURRENT_COMMERCE_ACCOUNT_ID_KEY + commerceChannelGroupId;
 
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
@@ -202,10 +204,11 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		httpSession.setAttribute(curGroupOrganizationIdKey, commerceAccountId);
 	}
 
-	private void _checkAccountType(long channelGroupId, long commerceAccountId)
+	private void _checkAccountType(
+			long commerceChannelGroupId, long commerceAccountId)
 		throws PortalException {
 
-		int commerceSiteType = _getCommerceSiteType(channelGroupId);
+		int commerceSiteType = _getCommerceSiteType(commerceChannelGroupId);
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getCommerceAccount(commerceAccountId);
@@ -225,7 +228,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 	}
 
-	private int _getCommerceSiteType(long channelGroupId)
+	private int _getCommerceSiteType(long commerceChannelGroupId)
 		throws ConfigurationException {
 
 		CommerceAccountGroupServiceConfiguration
@@ -233,13 +236,14 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				_configurationProvider.getConfiguration(
 					CommerceAccountGroupServiceConfiguration.class,
 					new GroupServiceSettingsLocator(
-						channelGroupId, CommerceAccountConstants.SERVICE_NAME));
+						commerceChannelGroupId,
+						CommerceAccountConstants.SERVICE_NAME));
 
 		return commerceAccountGroupServiceConfiguration.commerceSiteType();
 	}
 
 	private CommerceAccount _getSingleCommerceAccount(
-			long channelGroupId, HttpServletRequest httpServletRequest)
+			long commerceChannelGroupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		User user = _portal.getUser(httpServletRequest);
@@ -249,7 +253,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				_portal.getCompanyId(httpServletRequest));
 		}
 
-		int commerceSiteType = _getCommerceSiteType(channelGroupId);
+		int commerceSiteType = _getCommerceSiteType(commerceChannelGroupId);
 
 		if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) ||
 			(commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X)) {

@@ -989,7 +989,8 @@ public class CommerceOrderTest {
 		).and(
 			"A User"
 		).when(
-			"I try to get pending orders by channelGroupId and the accountId"
+			"I try to get pending orders by commerceChannelGroupId and the " +
+				"accountId"
 		).then(
 			"I should have only 2 order"
 		);

@@ -164,14 +164,14 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 	}
 
 	protected RemoteCommerceTaxConfiguration getRemoteCommerceTaxConfiguration(
-			long channelGroupId)
+			long commerceChannelGroupId)
 		throws CommerceTaxEngineException {
 
 		try {
 			return _configurationProvider.getConfiguration(
 				RemoteCommerceTaxConfiguration.class,
 				new GroupServiceSettingsLocator(
-					channelGroupId,
+					commerceChannelGroupId,
 					RemoteCommerceTaxConfiguration.class.getName()));
 		}
 		catch (ConfigurationException configurationException) {
@@ -259,7 +259,7 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 
 		RemoteCommerceTaxConfiguration remoteCommerceTaxConfiguration =
 			getRemoteCommerceTaxConfiguration(
-				commerceTaxCalculateRequest.getChannelGroupId());
+				commerceTaxCalculateRequest.getCommerceChannelGroupId());
 
 		URIBuilder uriBuilder = new URIBuilder(
 			remoteCommerceTaxConfiguration.taxValueEndpointURL());

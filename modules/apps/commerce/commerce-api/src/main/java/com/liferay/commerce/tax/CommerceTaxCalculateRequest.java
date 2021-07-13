@@ -21,12 +21,12 @@ import java.math.BigDecimal;
  */
 public class CommerceTaxCalculateRequest {
 
-	public long getChannelGroupId() {
-		return _channelGroupId;
-	}
-
 	public long getCommerceBillingAddressId() {
 		return _commerceBillingAddressId;
+	}
+
+	public long getCommerceChannelGroupId() {
+		return _commerceChannelGroupId;
 	}
 
 	public long getCommerceShippingAddressId() {
@@ -61,12 +61,12 @@ public class CommerceTaxCalculateRequest {
 		return _includeTax;
 	}
 
-	public void setChannelGroupId(long channelGroupId) {
-		_channelGroupId = channelGroupId;
-	}
-
 	public void setCommerceBillingAddressId(long commerceBillingAddressId) {
 		_commerceBillingAddressId = commerceBillingAddressId;
+	}
+
+	public void setCommerceChannelGroupId(long commerceChannelGroupId) {
+		_commerceChannelGroupId = commerceChannelGroupId;
 	}
 
 	public void setCommerceShippingAddressId(long commerceShippingAddressId) {
@@ -101,8 +101,8 @@ public class CommerceTaxCalculateRequest {
 		_includeTax = includeTax;
 	}
 
-	private long _channelGroupId;
 	private long _commerceBillingAddressId;
+	private long _commerceChannelGroupId;
 	private long _commerceShippingAddressId;
 	private long _commerceTaxMethodId;
 	private boolean _includeTax;

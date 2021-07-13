@@ -106,13 +106,13 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private Availability _getAvailability(
-			long companyId, long channelGroupId, String sku,
+			long companyId, long commerceChannelGroupId, String sku,
 			CPInstance cpInstance, Locale locale)
 		throws Exception {
 
 		Availability availability = new Availability();
 		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			companyId, channelGroupId, sku);
+			companyId, commerceChannelGroupId, sku);
 
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
 			if (stockQuantity > 0) {

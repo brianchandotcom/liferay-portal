@@ -2087,14 +2087,14 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	protected void validateAccountOrdersLimit(
-			long channelGroupId, long commerceAccountId)
+			long commerceChannelGroupId, long commerceAccountId)
 		throws PortalException {
 
-		Group group = groupLocalService.getGroup(channelGroupId);
+		Group group = groupLocalService.getGroup(commerceChannelGroupId);
 
 		int pendingCommerceOrdersCount =
 			(int)commerceOrderLocalService.getCommerceOrdersCount(
-				group.getCompanyId(), channelGroupId,
+				group.getCompanyId(), commerceChannelGroupId,
 				new long[] {commerceAccountId}, StringPool.BLANK,
 				new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, false);
 
@@ -2102,7 +2102,7 @@ public class CommerceOrderLocalServiceImpl
 			_configurationProvider.getConfiguration(
 				CommerceOrderFieldsConfiguration.class,
 				new GroupServiceSettingsLocator(
-					channelGroupId,
+					commerceChannelGroupId,
 					CommerceConstants.SERVICE_NAME_ORDER_FIELDS));
 
 		if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() > 0) &&

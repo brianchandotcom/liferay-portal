@@ -47,7 +47,7 @@ public class CPRequestHelper extends BaseRequestHelper {
 		}
 	}
 
-	public long getChannelGroupId() throws PortalException {
+	public long getCommerceChannelGroupId() throws PortalException {
 		return CommerceChannelLocalServiceUtil.
 			getCommerceChannelGroupIdBySiteGroupId(getScopeGroupId());
 	}

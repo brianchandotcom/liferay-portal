@@ -83,11 +83,11 @@ public class CPDefinitionItemSelectorView
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
 
-		long channelGroupId = ParamUtil.getLong(
+		long commerceChannelGroupId = ParamUtil.getLong(
 			httpServletRequest, CPField.CHANNEL_GROUP_ID);
 
 		httpServletRequest.setAttribute(
-			CPField.CHANNEL_GROUP_ID, String.valueOf(channelGroupId));
+			CPField.CHANNEL_GROUP_ID, String.valueOf(commerceChannelGroupId));
 
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, CPField.CP_DEFINITION_ID);

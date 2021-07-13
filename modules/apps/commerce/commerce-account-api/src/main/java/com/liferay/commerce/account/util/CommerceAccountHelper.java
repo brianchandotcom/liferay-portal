@@ -25,7 +25,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface CommerceAccountHelper {
 
-	public int countUserCommerceAccounts(long userId, long channelGroupId)
+	public int countUserCommerceAccounts(
+			long userId, long commerceChannelGroupId)
 		throws PortalException;
 
 	public String getAccountManagementPortletURL(
@@ -42,7 +43,8 @@ public interface CommerceAccountHelper {
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public long[] getUserCommerceAccountIds(long userId, long channelGroupId)
+	public long[] getUserCommerceAccountIds(
+			long userId, long commerceChannelGroupId)
 		throws PortalException;
 
 	public void setCurrentCommerceAccount(

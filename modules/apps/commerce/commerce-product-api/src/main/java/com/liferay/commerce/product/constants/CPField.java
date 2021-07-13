@@ -37,7 +37,7 @@ public class CPField {
 
 	public static final String CHANNEL_GROUP_ID = "commerceChannelGroupId";
 
-	public static final String CHANNEL_GROUP_IDS = "channelGroupIds";
+	public static final String CHANNEL_GROUP_IDS = "commerceChannelGroupIds";
 
 	public static final String CHANNEL_IDS = "channelIds";
 

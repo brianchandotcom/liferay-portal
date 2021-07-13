@@ -52,10 +52,10 @@ public class CommerceNotificationTemplateGroupIdUpgradeProcess
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("groupId");
 
-				long channelGroupId = _getCommerceChannelGroupIdBySiteGroupId(
-					groupId);
+				long commerceChannelGroupId =
+					_getCommerceChannelGroupIdBySiteGroupId(groupId);
 
-				if (channelGroupId == 0) {
+				if (commerceChannelGroupId == 0) {
 					continue;
 				}
 
@@ -66,7 +66,7 @@ public class CommerceNotificationTemplateGroupIdUpgradeProcess
 					"update CommerceNotificationTemplate set groupId = ? " +
 						"where commerceNotificationTemplateId = ?");
 
-				preparedStatement.setLong(1, channelGroupId);
+				preparedStatement.setLong(1, commerceChannelGroupId);
 				preparedStatement.setLong(2, commerceNotificationTemplateId);
 
 				preparedStatement.executeUpdate();

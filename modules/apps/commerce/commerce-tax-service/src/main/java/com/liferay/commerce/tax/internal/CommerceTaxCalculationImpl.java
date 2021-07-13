@@ -230,7 +230,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 			commerceShippingAddressId);
 		commerceTaxCalculateRequest.setPrice(amount);
 		commerceTaxCalculateRequest.setIncludeTax(includeTax);
-		commerceTaxCalculateRequest.setChannelGroupId(groupId);
+		commerceTaxCalculateRequest.setCommerceChannelGroupId(groupId);
 		commerceTaxCalculateRequest.setTaxCategoryId(taxCategoryId);
 
 		List<CommerceTaxMethod> commerceTaxMethods =

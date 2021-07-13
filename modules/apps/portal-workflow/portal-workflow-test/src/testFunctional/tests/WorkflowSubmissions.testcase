@@ -244,12 +244,61 @@ definition {
 	}
 
 	@description = "Verify that the task changes to approved"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TaskIsApprovedOnTheTable {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68551 TaskIsApprovedOnTheTable pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content 1",
+			entryTitle = "Blogs Entry 1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertTextEquals(
+			key_submissionName = "Blogs Entry 1",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_STATUS",
+			value1 = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		AssertTextEquals(
+			key_submissionName = "Blogs Entry 1",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_STATUS",
+			value1 = "Approved");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertTextEquals(
+			key_submissionName = "Blogs Entry 1",
+			locator1 = "WorkflowSubmissions#SUBMISSION_BY_STATUS",
+			value1 = "Approved");
 	}
 
 	@description = "Verify that the task is displayed on table"

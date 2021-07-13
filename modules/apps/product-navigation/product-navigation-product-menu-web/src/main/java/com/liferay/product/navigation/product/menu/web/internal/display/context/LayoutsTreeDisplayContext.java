@@ -804,7 +804,9 @@ public class LayoutsTreeDisplayContext {
 			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
 				siteNavigationMenuId);
 
-		if (siteNavigationMenu != null) {
+		if ((siteNavigationMenu != null) &&
+			(siteNavigationMenu.getGroupId() == getGroupId())) {
+
 			return true;
 		}
 

@@ -126,6 +126,9 @@
 			</action>
 			<notification>
 				<name>Creator Modification Notification</name>
+				<description>
+					<![CDATA[Your submission was rejected by ${userName}]]>
+				</description>
 				<template>
 					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]>
 				</template>
@@ -164,8 +167,11 @@
 		<actions>
 			<notification>
 				<name>Review Notification</name>
+				<description>
+					<![CDATA[${userName} has sent you a ${entryType} for review]]>
+				</description>
 				<template>
-					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+					<![CDATA[${userName} has sent you a ${entryType} for review in the workflow.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -177,8 +183,11 @@
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
+				<description>
+					<![CDATA[Your submission was reviewed by ${userName}]]>
+				</description>
 				<template>
-					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]>
+					<![CDATA[Your submission was reviewed by ${userName}<#if taskComments?has_content> with the following comments: "${taskComments}"</#if>.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>

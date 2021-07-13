@@ -31,24 +31,16 @@ public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromPortletPreferences(_IMAGE_EDITOR_PORTLET_NAME);
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.frontend.image.editor.api'");
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.frontend.image.editor.integration.document." +
-					"library'");
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.frontend.image.editor.web'");
+		deleteFromRelease(
+			"com.liferay.frontend.image.editor.api",
+			"com.liferay.frontend.image.editor.integration.document.library",
+			"com.liferay.frontend.image.editor.web");
 
 		runSQL(
 			"delete from ResourceAction where name = " +
 				_QUOTED_IMAGE_EDITOR_PORTLET_NAME);
 
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				_QUOTED_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromResourcePermission(_IMAGE_EDITOR_PORTLET_NAME);
 	}
 
 	private static final String _IMAGE_EDITOR_PORTLET_NAME =

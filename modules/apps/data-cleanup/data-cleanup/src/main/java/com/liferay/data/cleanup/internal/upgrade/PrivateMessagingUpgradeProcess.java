@@ -50,12 +50,9 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 			"com_liferay_social_privatemessaging_web_portlet_" +
 				"PrivateMessagingPortlet");
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.social.privatemessaging.service'");
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.social.privatemessaging.web'");
+		deleteFromRelease(
+			"com.liferay.social.privatemessaging.service",
+			"com.liferay.social.privatemessaging.web");
 
 		runSQL("delete from ServiceComponent where buildNamespace = 'PM'");
 

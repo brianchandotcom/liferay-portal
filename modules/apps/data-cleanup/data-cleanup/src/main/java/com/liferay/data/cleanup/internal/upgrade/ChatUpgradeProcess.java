@@ -29,12 +29,7 @@ public class ChatUpgradeProcess extends BaseUpgradeProcess {
 		deleteFromPortletPreferences(
 			"com_liferay_chat_web_portlet_ChatPortlet");
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.chat.service'");
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.chat.web'");
+		deleteFromRelease("com.liferay.chat.service", "com.liferay.chat.web");
 
 		runSQL("delete from ServiceComponent where buildNamespace = 'Chat'");
 

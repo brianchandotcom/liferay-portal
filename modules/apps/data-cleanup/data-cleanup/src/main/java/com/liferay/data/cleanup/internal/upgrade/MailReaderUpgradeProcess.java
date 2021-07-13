@@ -37,25 +37,14 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 		deleteFromPortletPreferences(
 			"com_liferay_mail_reader_web_portlet_MailPortlet");
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.mail.reader.service'");
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.mail.reader.web'");
+		deleteFromRelease(
+			"com.liferay.mail.reader.service", "com.liferay.mail.reader.web");
 
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.mail.reader.model.Account'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.mail.reader.model.Attachment'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.mail.reader.model.Folder'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.mail.reader.model.Message'");
+		deleteFromResourcePermission(
+			"com.liferay.mail.reader.model.Account",
+			"com.liferay.mail.reader.model.Attachment",
+			"com.liferay.mail.reader.model.Folder",
+			"com.liferay.mail.reader.model.Message");
 
 		runSQL("delete from ServiceComponent where buildNamespace = 'Mail'");
 

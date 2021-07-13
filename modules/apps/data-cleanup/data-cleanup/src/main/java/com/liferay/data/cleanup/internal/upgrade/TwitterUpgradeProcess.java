@@ -33,16 +33,10 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 		deleteFromPortletPreferences(
 			"com_liferay_twitter_web_portlet_TwitterPortlet");
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.twitter.service'");
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.twitter.web'");
+		deleteFromRelease(
+			"com.liferay.twitter.service", "com.liferay.twitter.web");
 
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.twitter.model.Feed'");
+		deleteFromResourcePermission("com.liferay.twitter.model.Feed");
 
 		runSQL("delete from ServiceComponent where buildNamespace = 'Twitter'");
 

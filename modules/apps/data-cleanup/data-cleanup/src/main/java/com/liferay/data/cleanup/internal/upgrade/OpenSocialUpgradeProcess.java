@@ -38,9 +38,7 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 		_deleteResources();
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'opensocial-portlet'");
+		deleteFromRelease("opensocial-portlet");
 
 		runSQL(
 			"delete from ServiceComponent where buildNamespace = 'OpenSocial'");

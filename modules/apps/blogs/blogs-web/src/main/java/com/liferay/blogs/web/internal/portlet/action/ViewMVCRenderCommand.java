@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
-		"mvc.command.name=/", "mvc.command.name=/blogs/view"
+		"mvc.command.name=/", "mvc.command.name=/blogs/search",
+		"mvc.command.name=/blogs/view"
 	},
 	service = MVCRenderCommand.class
 )

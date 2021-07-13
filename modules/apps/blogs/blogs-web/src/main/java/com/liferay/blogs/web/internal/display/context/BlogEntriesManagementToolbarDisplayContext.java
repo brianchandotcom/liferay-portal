@@ -185,13 +185,33 @@ public class BlogEntriesManagementToolbarDisplayContext
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
-			"/blogs/view"
+			"/blogs/search"
 		).setNavigation(
 			navigation
 		).setParameter(
-			"orderByCol", getOrderByCol()
+			"orderByCol",
+			() -> {
+				String mvcRenderCommandName = ParamUtil.getString(
+					httpServletRequest, "mvcRenderCommandName");
+
+				if (mvcRenderCommandName.equals("/blogs/search")) {
+					return getOrderByCol();
+				}
+
+				return null;
+			}
 		).setParameter(
-			"orderByType", getOrderByType()
+			"orderByType",
+			() -> {
+				String mvcRenderCommandName = ParamUtil.getString(
+					httpServletRequest, "mvcRenderCommandName");
+
+				if (mvcRenderCommandName.equals("/blogs/search")) {
+					return getOrderByType();
+				}
+
+				return null;
+			}
 		).buildString();
 	}
 

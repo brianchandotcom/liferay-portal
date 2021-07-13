@@ -155,7 +155,7 @@ public class BlogEntriesDisplayContext {
 				"no-entries-were-found");
 
 		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "title");
+			_httpServletRequest, "orderByCol", _getDefaultOrderByCol());
 
 		entriesSearchContainer.setOrderByCol(orderByCol);
 
@@ -175,6 +175,17 @@ public class BlogEntriesDisplayContext {
 		_populateResults(entriesSearchContainer);
 
 		return entriesSearchContainer;
+	}
+
+	private String _getDefaultOrderByCol() {
+		String mvcRenderCommandName = ParamUtil.getString(
+			_httpServletRequest, "mvcRenderCommandName");
+
+		if (mvcRenderCommandName.equals("/blogs/search")) {
+			return "relevance";
+		}
+
+		return "title";
 	}
 
 	private void _populateResults(SearchContainer<BlogsEntry> searchContainer)

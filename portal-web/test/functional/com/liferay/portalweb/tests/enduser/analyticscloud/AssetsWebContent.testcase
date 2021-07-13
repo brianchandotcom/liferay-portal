@@ -58,8 +58,53 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewAllWebContentShownInAssetList {
+		for (var layoutName : list "AC Page 2,AC Page 3") {
+			ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+		}
 
-		// TODO LRAC-8125 ViewAllWebContentShownInAssetList pending implementation
+		for (var n : list "2,3") {
+			ACUtils.createWCAndAddToPage(
+				layoutName = "AC Page ${n}",
+				webContentTitle = "Web Content AC Title ${n}");
+		}
+
+		ACDXPSettings.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		ACDXPSettings.userLogin(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Site Name");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Web Content");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		for (var assetName : list "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3") {
+			ACAssets.viewAssets(assetName = "${assetName}");
+		}
 
 	}
 

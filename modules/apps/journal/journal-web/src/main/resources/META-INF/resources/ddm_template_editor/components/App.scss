@@ -90,6 +90,7 @@ $toolbarHeight: 6.875rem;
 			background-color: $white;
 			border-left: 1px solid $gray-300;
 			height: calc(100vh - #{$toolbarHeight} - #{$controlMenuHeight});
+			overflow-y: auto;
 			position: fixed;
 			right: 42px;
 			transform: translateX(100%);

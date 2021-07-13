@@ -32,22 +32,27 @@ public class UpgradeAccount extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CompanyTable.class, new AlterTableAddColumn("userId", "LONG"),
-			new AlterTableAddColumn("userName", "VARCHAR(75) null"),
-			new AlterTableAddColumn("createDate", "DATE null"),
-			new AlterTableAddColumn("modifiedDate", "DATE null"),
-			new AlterTableAddColumn("name", "VARCHAR(75) null"),
-			new AlterTableAddColumn("legalName", "VARCHAR(75) null"),
-			new AlterTableAddColumn("legalId", "VARCHAR(75) null"),
-			new AlterTableAddColumn("legalType", "VARCHAR(75) null"),
-			new AlterTableAddColumn("sicCode", "VARCHAR(75) null"),
-			new AlterTableAddColumn("tickerSymbol", "VARCHAR(75) null"),
-			new AlterTableAddColumn("industry", "VARCHAR(75) null"),
-			new AlterTableAddColumn("type_", "VARCHAR(75) null"),
-			new AlterTableAddColumn("size_", "VARCHAR(75) null"),
-			new AlterTableDropColumn("accountId"));
-		alter(ContactTable.class, new AlterTableDropColumn("accountId"));
+		_addColumnToCompanyTable("userId", "LONG");
+		_addColumnToCompanyTable("userName", "VARCHAR(75) null");
+		_addColumnToCompanyTable("createDate", "DATE null");
+		_addColumnToCompanyTable("modifiedDate", "DATE null");
+		_addColumnToCompanyTable("name", "VARCHAR(75) null");
+		_addColumnToCompanyTable("legalName", "VARCHAR(75) null");
+		_addColumnToCompanyTable("legalId", "VARCHAR(75) null");
+		_addColumnToCompanyTable("legalType", "VARCHAR(75) null");
+		_addColumnToCompanyTable("sicCode", "VARCHAR(75) null");
+		_addColumnToCompanyTable("tickerSymbol", "VARCHAR(75) null");
+		_addColumnToCompanyTable("industry", "VARCHAR(75) null");
+		_addColumnToCompanyTable("type_", "VARCHAR(75) null");
+		_addColumnToCompanyTable("size_", "VARCHAR(75) null");
+
+		if (hasColumn("Company", "accountId")) {
+			alter(CompanyTable.class, new AlterTableDropColumn("accountId"));
+		}
+
+		if (hasColumn("Contact", "accountId")) {
+			alter(ContactTable.class, new AlterTableDropColumn("accountId"));
+		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update ListType set type_ = ? where type_ = ?")) {
@@ -158,6 +163,16 @@ public class UpgradeAccount extends UpgradeProcess {
 		}
 
 		runSQL("drop table Account_");
+	}
+
+	private void _addColumnToCompanyTable(String columnName, String columnType)
+		throws Exception {
+
+		if (!hasColumn("Company", columnName)) {
+			alter(
+				CompanyTable.class,
+				new AlterTableAddColumn(columnName, columnType));
+		}
 	}
 
 	private String _getUpdateClassNameIdClassPKSQL(String tableName) {

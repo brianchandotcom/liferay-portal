@@ -14,17 +14,26 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -47,6 +56,18 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase
 		setUpLanguageUtil();
 		setUpPortalClassLoaderUtil();
 		setUpResourceBundleUtil();
+	}
+
+	protected void assertDDMFormLayout(
+		DDMFormLayout actualDDMFormLayout,
+		DDMFormLayout expectedDDMFormLayout) {
+
+		_assertDDMFormLayoutRelatedObject(
+			actualDDMFormLayout, expectedDDMFormLayout,
+			_getAssertDDMFormLayoutPagesFunction(), "getDDMFormLayoutPages",
+			() -> Assert.assertEquals(
+				expectedDDMFormLayout.getPaginationMode(),
+				actualDDMFormLayout.getPaginationMode()));
 	}
 
 	protected void setUpLanguageUtil() {
@@ -94,6 +115,77 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase
 
 	@Mock
 	protected Language language;
+
+	private void _assertDDMFormLayoutColumn(
+		DDMFormLayoutColumn actualDDMFormLayoutColumn,
+		DDMFormLayoutColumn expectedDDMFormLayoutColumn) {
+
+		Assert.assertEquals(
+			expectedDDMFormLayoutColumn.getDDMFormFieldNames(),
+			actualDDMFormLayoutColumn.getDDMFormFieldNames());
+		Assert.assertEquals(
+			expectedDDMFormLayoutColumn.getSize(),
+			actualDDMFormLayoutColumn.getSize());
+	}
+
+	private void _assertDDMFormLayoutRelatedObject(
+		Object actualDDMFormLayoutRelatedObject,
+		Object expectedDDMFormLayoutRelatedObject,
+		Function<List<Object>, Consumer<Object>> function, String methodName,
+		Runnable runnable) {
+
+		List<Object> expectedDDMFormLayoutRelatedObjects =
+			ReflectionTestUtil.invoke(
+				expectedDDMFormLayoutRelatedObject, methodName, null);
+
+		List<Object> actualDDMFormLayoutRelatedObjects =
+			ReflectionTestUtil.invoke(
+				actualDDMFormLayoutRelatedObject, methodName, null);
+
+		Stream<Object> stream = actualDDMFormLayoutRelatedObjects.stream();
+
+		stream.forEachOrdered(
+			function.apply(expectedDDMFormLayoutRelatedObjects));
+
+		Assert.assertEquals(
+			expectedDDMFormLayoutRelatedObjects.toString(), 0,
+			expectedDDMFormLayoutRelatedObjects.size());
+
+		Optional.ofNullable(
+			runnable
+		).ifPresent(
+			Runnable::run
+		);
+	}
+
+	private Function<List<Object>, Consumer<Object>>
+		_getAssertDDMFormLayoutColumnsFunction() {
+
+		return expectedDDMFormLayoutColumns ->
+			actualDDMFormLayoutColumn -> _assertDDMFormLayoutColumn(
+				(DDMFormLayoutColumn)actualDDMFormLayoutColumn,
+				(DDMFormLayoutColumn)expectedDDMFormLayoutColumns.remove(0));
+	}
+
+	private Function<List<Object>, Consumer<Object>>
+		_getAssertDDMFormLayoutPagesFunction() {
+
+		return expectedDDMFormLayoutPages ->
+			actualDDMFormLayoutPage -> _assertDDMFormLayoutRelatedObject(
+				actualDDMFormLayoutPage, expectedDDMFormLayoutPages.remove(0),
+				_getAssertDDMFormLayoutRowsFunction(), "getDDMFormLayoutRows",
+				null);
+	}
+
+	private Function<List<Object>, Consumer<Object>>
+		_getAssertDDMFormLayoutRowsFunction() {
+
+		return expectedDDMFormLayoutRows ->
+			actualDDMFormLayoutRow -> _assertDDMFormLayoutRelatedObject(
+				actualDDMFormLayoutRow, expectedDDMFormLayoutRows.remove(0),
+				_getAssertDDMFormLayoutColumnsFunction(),
+				"getDDMFormLayoutColumns", null);
+	}
 
 	@Mock
 	private ClassLoader _classLoader;

@@ -263,6 +263,11 @@ public interface CPDefinitionDiagramEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

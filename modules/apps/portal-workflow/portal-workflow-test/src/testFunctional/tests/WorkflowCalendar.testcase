@@ -432,12 +432,31 @@ definition {
 	}
 
 	@description = "Verify that a Unpublish warning message appears when the user edit a approved event"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test UnpublishWarningMessageIsDisplayedOnEdit {
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		// TODO LRQA-68596 UnpublishWarningMessageIsDisplayedOnEdit pending implementation
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
 
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Click(
+			key_userCalendarName = "Test Test",
+			locator1 = "Calendar#MY_CALENDARS_CALENDAR");
+
+		CalendarNavigator.gotoView(viewType = "Week");
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "This Calendar Event is approved. Publishing these changes will cause it to be unpublished and go through the approval process again.");
 	}
 
 	@priority = "3"

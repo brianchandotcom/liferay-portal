@@ -151,6 +151,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BUTTON_LABEL</td>
+	<td>//div[./label[normalize-space(text())='${fieldLabel}']]//button[normalize-space()='${text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL</td>
 	<td>//a[contains(@class,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')] | //a[contains(@class,'btn') and contains(.,'Cancel')]</td>
 	<td></td>

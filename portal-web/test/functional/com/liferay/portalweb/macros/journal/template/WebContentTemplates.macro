@@ -44,8 +44,8 @@ definition {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			Click(
-				key_namespace = "selectDDMStructure",
-				locator1 = "Button#ANY_ID");
+				buttonId = "selectDDMStructure",
+				locator1 = "Button#BUTTON_ID");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -74,8 +74,8 @@ definition {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				key_fieldName = "importScript",
-				locator1 = "TextInput#ANY_ID",
+				inputFieldId = "importScript",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${templateFile}");
 		}
 	}

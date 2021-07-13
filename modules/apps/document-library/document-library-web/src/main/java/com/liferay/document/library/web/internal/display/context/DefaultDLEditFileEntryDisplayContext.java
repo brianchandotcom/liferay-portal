@@ -187,20 +187,15 @@ public class DefaultDLEditFileEntryDisplayContext
 			return _neverExpire;
 		}
 
-		if (_fileEntry == null) {
-			_neverExpire = true;
-		}
-		else if ((_fileVersion != null) &&
-				 (_fileVersion.getExpirationDate() != null)) {
+		_neverExpire = ParamUtil.getBoolean(
+			_httpServletRequest, "neverExpire", true);
+
+		if (((_fileEntry != null) &&
+			 (_fileEntry.getExpirationDate() != null)) ||
+			((_fileVersion != null) &&
+			 (_fileVersion.getExpirationDate() != null))) {
 
 			_neverExpire = false;
-		}
-		else if (_fileEntry.getExpirationDate() != null) {
-			_neverExpire = false;
-		}
-		else {
-			_neverExpire = ParamUtil.getBoolean(
-				_httpServletRequest, "neverExpire", true);
 		}
 
 		return _neverExpire;
@@ -212,20 +207,14 @@ public class DefaultDLEditFileEntryDisplayContext
 			return _neverReview;
 		}
 
-		if (_fileEntry == null) {
-			_neverReview = true;
-		}
-		else if ((_fileVersion != null) &&
-				 (_fileVersion.getReviewDate() != null)) {
+		_neverReview = ParamUtil.getBoolean(
+			_httpServletRequest, "neverReview", true);
+
+		if (((_fileEntry != null) && (_fileEntry.getReviewDate() != null)) ||
+			((_fileVersion != null) &&
+			 (_fileVersion.getReviewDate() != null))) {
 
 			_neverReview = false;
-		}
-		else if (_fileEntry.getReviewDate() != null) {
-			_neverReview = false;
-		}
-		else {
-			_neverReview = ParamUtil.getBoolean(
-				_httpServletRequest, "neverReview", true);
 		}
 
 		return _neverReview;

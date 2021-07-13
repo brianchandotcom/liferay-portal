@@ -4,5 +4,6 @@ dependencies {
 	testIntegrationCompile project(":apps:petra:petra-encryptor")
 	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile project(":core:petra:petra-reflect")
+	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

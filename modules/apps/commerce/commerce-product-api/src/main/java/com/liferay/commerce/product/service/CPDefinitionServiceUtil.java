@@ -342,13 +342,14 @@ public class CPDefinitionServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDefinition> searchCPDefinitionsByChannelGroupId(
-				long companyId, long channelGroupId, String keywords,
+				long companyId, long commerceChannelGroupId, String keywords,
 				int status, int start, int end,
 				com.liferay.portal.kernel.search.Sort sort)
 			throws PortalException {
 
 		return getService().searchCPDefinitionsByChannelGroupId(
-			companyId, channelGroupId, keywords, status, start, end, sort);
+			companyId, commerceChannelGroupId, keywords, status, start, end,
+			sort);
 	}
 
 	public static CPDefinition updateCPDefinition(

@@ -955,8 +955,9 @@ public class CPDefinitionServiceHttp {
 		<com.liferay.commerce.product.model.CPDefinition>
 				searchCPDefinitionsByChannelGroupId(
 					HttpPrincipal httpPrincipal, long companyId,
-					long channelGroupId, String keywords, int status, int start,
-					int end, com.liferay.portal.kernel.search.Sort sort)
+					long commerceChannelGroupId, String keywords, int status,
+					int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -966,8 +967,8 @@ public class CPDefinitionServiceHttp {
 				_searchCPDefinitionsByChannelGroupIdParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, channelGroupId, keywords, status, start,
-				end, sort);
+				methodKey, companyId, commerceChannelGroupId, keywords, status,
+				start, end, sort);
 
 			Object returnObj = null;
 

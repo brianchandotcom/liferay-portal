@@ -578,7 +578,7 @@ public interface CPDefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinition>
 			searchCPDefinitionsByChannelGroupId(
-				long companyId, long[] groupIds, long channelGroupId,
+				long companyId, long[] groupIds, long commerceChannelGroupId,
 				String keywords, int status, int start, int end, Sort sort)
 		throws PortalException;
 

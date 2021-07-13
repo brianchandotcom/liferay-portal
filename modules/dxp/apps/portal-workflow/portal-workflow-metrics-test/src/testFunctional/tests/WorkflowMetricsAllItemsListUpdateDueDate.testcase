@@ -333,6 +333,8 @@ definition {
 	@description = "LPS-105498 - Verify that the message The due dates for theses tasks have been updated is displayed when the bulk update due date action is successful"
 	@priority = "3"
 	test MessageIsDisplayedWhenBulkUpdateActionIsSuccessful {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

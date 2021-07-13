@@ -264,6 +264,8 @@ definition {
 	@description = "LPS-86652 - Verify that every column displays the correct info for a item"
 	@priority = "5"
 	test ColumnsDiplayCorrectInfo {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -295,6 +297,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CorrectNumberOfEntriesDisplayedWhenPaginationEdited {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -969,6 +973,8 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed On Time, the icon on modal title will keep informing the SLA status but styled in grey color"
 	@priority = "3"
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOnTime {
+		property portal.upstream = "quarantine";
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");

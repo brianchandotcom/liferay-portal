@@ -21,6 +21,51 @@
 	navigationItems="<%= templateDisplayContext.getNavigationItems() %>"
 />
 
+<%
+TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext = new TemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext.getTemplateSearchContainer());
+%>
+
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new TemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext.getTemplateSearchContainer()) %>"
+	managementToolbarDisplayContext="<%= templateManagementToolbarDisplayContext %>"
 />
+
+<clay:container-fluid
+	id='<%= liferayPortletResponse.getNamespace() + "templatesContainer" %>'
+>
+	<liferay-ui:search-container
+		id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"
+		searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
+			keyProperty="templateId"
+			modelVar="ddmTemplate"
+		>
+			<liferay-ui:search-container-column-text
+				name="id"
+				property="templateId"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="name"
+				value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="description"
+				value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="modified-date"
+				value="<%= ddmTemplate.getModifiedDate() %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</clay:container-fluid>

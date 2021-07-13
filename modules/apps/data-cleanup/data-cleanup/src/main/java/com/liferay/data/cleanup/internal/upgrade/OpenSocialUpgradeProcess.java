@@ -15,7 +15,6 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-import com.liferay.petra.string.StringUtil;
 
 /**
  * @author Kevin Lee
@@ -36,7 +35,17 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromPortletPreferences("%_WAR_opensocialportlet%");
 
-		_deleteResources();
+		String[] names = {
+			"1_WAR_opensocialportlet", "2_WAR_opensocialportlet",
+			"3_WAR_opensocialportlet", "4_WAR_opensocialportlet",
+			"com.liferay.opensocial", "com.liferay.opensocial.model.Gadget",
+			"com.liferay.opensocial.model.OAuthConsumer",
+			"com.liferay.opensocial.model.OAuthToken"
+		};
+
+		deleteFromResourceAction(names);
+
+		deleteFromResourcePermission(names);
 
 		deleteFromRelease("opensocial-portlet");
 
@@ -45,21 +54,6 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 		dropTables(
 			"OpenSocial_Gadget", "OpenSocial_OAuthConsumer",
 			"OpenSocial_OAuthToken");
-	}
-
-	private void _deleteResources() throws Exception {
-		String[] names = {
-			"'1_WAR_opensocialportlet'", "'2_WAR_opensocialportlet'",
-			"'3_WAR_opensocialportlet'", "'4_WAR_opensocialportlet'",
-			"'com.liferay.opensocial'", "'com.liferay.opensocial.model.Gadget'",
-			"'com.liferay.opensocial.model.OAuthConsumer'",
-			"'com.liferay.opensocial.model.OAuthToken'"
-		};
-
-		String values = StringUtil.merge(names, ",");
-
-		runSQL("delete from ResourceAction where name in (" + values + ")");
-		runSQL("delete from ResourcePermission where name in (" + values + ")");
 	}
 
 }

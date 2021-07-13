@@ -74,4 +74,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"
+	@ignore = "true"
+	@priority = "5"
+	test TotalNumberOfPageViewsIsShown {
+
+		// TODO LRAC-8149 Usage#TotalNumberOfPageViewsIsShown pending implementation
+
+	}
+
 }

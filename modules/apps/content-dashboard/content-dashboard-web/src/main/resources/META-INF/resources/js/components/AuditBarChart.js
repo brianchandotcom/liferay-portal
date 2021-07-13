@@ -188,7 +188,11 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 											})
 										}
 									>
-										<span className="inline-item-after small text-secondary">
+										<span
+											className="content-dashboard-checkbox-label pl-1 small text-secondary text-truncate"
+											data-tooltip-align="bottom"
+											title={entry.value}
+										>
 											{entry.value}
 										</span>
 									</ClayCheckbox>

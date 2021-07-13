@@ -96,7 +96,6 @@ export interface Config {
 	deleteFragmentEntryLinkCommentURL: string;
 	deleteItemURL: string;
 	deleteSegmentsExperienceURL: string;
-	discardDraftRedirectURL: string;
 	discardDraftURL: string;
 	draft: boolean;
 	duplicateItemURL: string;

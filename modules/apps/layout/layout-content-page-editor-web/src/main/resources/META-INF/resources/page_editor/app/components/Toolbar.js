@@ -288,12 +288,6 @@ function ToolbarBody({className}) {
 				{config.singleSegmentsExperienceMode && (
 					<li className="nav-item">
 						<form action={config.discardDraftURL} method="POST">
-							<input
-								name={`${config.portletNamespace}redirect`}
-								type="hidden"
-								value={config.discardDraftRedirectURL}
-							/>
-
 							<ClayButton
 								className="btn btn-secondary"
 								displayType="secondary"

@@ -109,7 +109,7 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected void removeNoninstanceablePortlet(
-			String bundleSymbolicName, String[] oldPortletIds,
+			String[] bundleSymbolicNames, String[] oldPortletIds,
 			String[] portletIds)
 		throws Exception {
 
@@ -140,7 +140,7 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 			deleteFromResourcePermission(portletId);
 		}
 
-		deleteFromRelease(bundleSymbolicName);
+		deleteFromRelease(bundleSymbolicNames);
 	}
 
 }

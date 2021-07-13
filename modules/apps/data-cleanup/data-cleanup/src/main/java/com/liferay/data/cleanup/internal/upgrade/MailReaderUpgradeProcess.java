@@ -26,18 +26,11 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 		LayoutTypeSettingsUtil.removePortletId(
 			connection, "com_liferay_mail_reader_web_portlet_MailPortlet");
 
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.mail.reader.model.Account'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.mail.reader.model.Attachment'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.mail.reader.model.Folder'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.mail.reader.model.Message'");
+		deleteFromClassName(
+			"com.liferay.mail.reader.model.Account",
+			"com.liferay.mail.reader.model.Attachment",
+			"com.liferay.mail.reader.model.Folder",
+			"com.liferay.mail.reader.model.Message");
 
 		runSQL(
 			"delete from Portlet where portletId = " +

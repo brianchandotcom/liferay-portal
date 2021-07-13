@@ -26,9 +26,7 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 		LayoutTypeSettingsUtil.removePortletId(
 			connection, "com_liferay_twitter_web_portlet_TwitterPortlet");
 
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.twitter.model.Feed'");
+		deleteFromClassName("com.liferay.twitter.model.Feed");
 
 		runSQL(
 			"delete from Portlet where portletId = " +

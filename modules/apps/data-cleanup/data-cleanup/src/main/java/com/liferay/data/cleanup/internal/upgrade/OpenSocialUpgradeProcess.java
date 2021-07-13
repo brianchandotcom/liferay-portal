@@ -27,15 +27,10 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 		LayoutTypeSettingsUtil.removePortletId(
 			connection, "3_WAR_opensocialportlet");
 
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.opensocial.model.Gadget'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.opensocial.model.OAuthConsumer'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.opensocial.model.OAuthToken'");
+		deleteFromClassName(
+			"com.liferay.opensocial.model.Gadget",
+			"com.liferay.opensocial.model.OAuthConsumer",
+			"com.liferay.opensocial.model.OAuthToken");
 
 		runSQL(
 			"delete from Portlet where portletId like " +

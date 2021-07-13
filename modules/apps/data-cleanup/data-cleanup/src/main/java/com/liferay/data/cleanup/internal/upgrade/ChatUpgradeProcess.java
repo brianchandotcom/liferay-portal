@@ -21,12 +21,8 @@ public class ChatUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.chat.model.Entry'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.chat.model.Status'");
+		deleteFromClassName(
+			"com.liferay.chat.model.Entry", "com.liferay.chat.model.Status");
 
 		runSQL(
 			"delete from Portlet where portletId = " +

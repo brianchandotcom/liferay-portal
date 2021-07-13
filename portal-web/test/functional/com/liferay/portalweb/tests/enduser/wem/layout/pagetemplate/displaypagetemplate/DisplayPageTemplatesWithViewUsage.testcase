@@ -163,6 +163,8 @@ definition {
 				displayPageName = "Display Page Name 2",
 				item = "View Usages");
 
+			PortletEntry.selectAll();
+
 			Click(
 				key_text = "ellipsis",
 				locator1 = "ManagementBar#ANY_ICON");

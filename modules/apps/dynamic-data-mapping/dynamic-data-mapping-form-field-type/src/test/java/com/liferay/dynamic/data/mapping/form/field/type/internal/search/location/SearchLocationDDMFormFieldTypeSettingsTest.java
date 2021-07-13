@@ -19,8 +19,11 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.form.field.type.internal.searchLocation.SearchLocationDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -157,6 +160,22 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"setVisible('visibleFields', hasGooglePlacesAPIKey())",
 			actions.get(8));
+	}
+
+	@Test
+	public void testCreateSearchLocationDDMFormFieldTypeSettingsDDMFormLayout() {
+		assertDDMFormLayout(
+			DDMFormLayoutFactory.create(
+				SearchLocationDDMFormFieldTypeSettings.class),
+			DDMFormLayoutTestUtil.createDDMFormLayout(
+				DDMFormLayout.TABBED_MODE,
+				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+					"label", "placeholder", "tip", "required",
+					"requiredErrorMessage", "visibleFields", "layout",
+					"redirectButton"),
+				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+					"dataType", "name", "fieldReference", "showLabel",
+					"repeatable", "readOnly", "redirectButton")));
 	}
 
 	@Override

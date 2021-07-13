@@ -27,13 +27,9 @@ public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 		LayoutTypeSettingsUtil.removePortletId(
 			connection, _IMAGE_EDITOR_PORTLET_NAME);
 
-		runSQL(
-			"delete from Portlet where portletId = " +
-				_QUOTED_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromPortlet(_IMAGE_EDITOR_PORTLET_NAME);
 
-		runSQL(
-			"delete from PortletPreferences where portletId = " +
-				_QUOTED_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromPortletPreferences(_IMAGE_EDITOR_PORTLET_NAME);
 
 		runSQL(
 			"delete from Release_ where servletContextName = " +

@@ -38,4 +38,13 @@ definition {
 
 	}
 
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8143 | Test Summary: Owner can delete users"
+	@ignore = "true"
+	@priority = "5"
+	test ViewOwnerCanDeleteUser {
+
+		// TODO LRAC-8143 Automate UserManagement#ViewOwnerCanDeleteUser pending implementation
+
+	}
+
 }

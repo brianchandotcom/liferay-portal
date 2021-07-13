@@ -62,6 +62,12 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 				name="modified-date"
 				value="<%= ddmTemplate.getModifiedDate() %>"
 			/>
+
+			<liferay-ui:search-container-column-text>
+				<clay:dropdown-actions
+					dropdownItems="<%= templateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+				/>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

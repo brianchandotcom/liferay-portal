@@ -68,8 +68,9 @@ definition {
 		WebContent.addCP(webContentTitle = "English (United States) Title");
 
 		Click(
-			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#SELECT_BUTTON");
+			fieldLabel = "Image",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
 
 		ItemSelector.uploadFileWithSelectFrameNoLoading(
 			navTab = "Web Content Images",

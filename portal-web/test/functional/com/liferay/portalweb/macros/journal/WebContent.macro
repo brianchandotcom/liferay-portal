@@ -315,7 +315,7 @@ definition {
 			webContentTitle = "${webContentTitle}");
 
 		if (isSet(templateName)) {
-			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
 				WebContent.selectTemplateCP(
 					structureName = "Basic Web Content",
 					templateName = "${templateName}");
@@ -353,7 +353,7 @@ definition {
 		}
 
 		if (isSet(templateName)) {
-			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
 				WebContent.selectTemplateCP(
 					structureName = "${structureName}",
 					templateName = "${templateName}");
@@ -481,7 +481,7 @@ definition {
 			value1 = "${webContentContent}");
 
 		if (isSet(templateName)) {
-			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
 				WebContent.selectTemplateCP(
 					structureName = "${structureName}",
 					templateName = "${templateName}");
@@ -617,10 +617,10 @@ definition {
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			AssertClick(
-				key_fieldFieldLabel = "${webContentImageFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${webContentImageFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			if ("${navTab}" == "Documents and Media") {
 				if (isSet(depotName)) {
@@ -662,10 +662,10 @@ definition {
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			AssertClick(
-				key_fieldFieldLabel = "${webContentLinkToPageFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${webContentLinkToPageFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -779,10 +779,10 @@ definition {
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			AssertClick(
-				key_fieldFieldLabel = "${webContentUploadFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${webContentUploadFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			if ("${dmNavTab}" == "Documents and Media") {
 				if (isSet(depotName)) {
@@ -817,10 +817,10 @@ definition {
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			AssertClick(
-				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${webContentWebContentFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			if (isSet(depotName)) {
 				WebContent.selectRepositoryWC(
@@ -850,7 +850,7 @@ definition {
 		if (isSet(templateName)) {
 			Panel.expandPanel(panel = "Default Template");
 
-			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
 				WebContent.selectTemplateCP(
 					structureName = "${structureName}",
 					templateName = "${templateName}");
@@ -1066,10 +1066,10 @@ definition {
 				var webContentWebContentFieldLabel = "Web Content";
 			}
 
-			AssertClick(
-				key_fieldFieldLabel = "${webContentWebContentFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${webContentWebContentFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			if (isSet(depotName)) {
 				WebContent.selectRepositoryWC(
@@ -1095,10 +1095,10 @@ definition {
 				var webContentImageFieldLabel = "Image";
 			}
 
-			AssertClick(
-				key_fieldFieldLabel = "${webContentImageFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${webContentImageFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			if ("${navTab}" == "Documents and Media") {
 				if (isSet(depotName)) {
@@ -1285,10 +1285,10 @@ definition {
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 
 		if (isSet(webContentImage)) {
-			AssertClick(
-				key_fieldFieldLabel = "Image",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "Image",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			SelectFrameTop(value1 = "relative=top");
 
@@ -1802,9 +1802,9 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		AssertClick(
-			locator1 = "WCEditWebContent#SELECT_TEMPLATE",
-			value1 = "Select");
+		Click(
+			buttonId = "selectDDMTemplate",
+			locator1 = "Button#BUTTON_ID");
 
 		IFrame.selectTopFrame();
 
@@ -1826,7 +1826,8 @@ definition {
 		Panel.expandPanel(panel = "Default Template");
 
 		AssertTextEquals(
-			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
+			inputFieldId = "ddmTemplateName",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${templateName}");
 	}
 
@@ -2418,7 +2419,8 @@ definition {
 		Panel.expandPanel(panel = "Default Template");
 
 		AssertTextEquals(
-			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
+			inputFieldId = "ddmTemplateName",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${templateName}");
 	}
 
@@ -2466,7 +2468,8 @@ definition {
 			Panel.expandPanel(panel = "${panel}");
 
 			AssertTextEquals(
-				locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
+				inputFieldId = "ddmTemplateName",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${templateLocalizationName}");
 		}
 	}

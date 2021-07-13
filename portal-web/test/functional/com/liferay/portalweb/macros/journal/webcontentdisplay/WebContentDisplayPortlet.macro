@@ -140,7 +140,8 @@ definition {
 			Panel.expandPanel(panel = "Default Template");
 
 			AssertTextEquals(
-				locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
+				inputFieldId = "ddmTemplateName",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${templateName}");
 
 			AssertClick.pauseAssertTextClickAt(

@@ -185,8 +185,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		Click(
-			key_fieldFieldLabel = "Web Content",
-			locator1 = "WCEditWebContent#SELECT_BUTTON");
+			fieldLabel = "Web Content",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
 
 		ItemSelector.viewWCEverywhereFilterResults(webContentTitle = "Web Content From Depot,WC WebContent From Site");
 
@@ -549,10 +550,10 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		AssertClick(
-			key_fieldFieldLabel = "Web Content",
-			locator1 = "WCEditWebContent#SELECT_BUTTON",
-			value1 = "Select");
+		Click(
+			fieldLabel = "Web Content",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
 
 		ItemSelector.viewWCEverywhereFilterResults(
 			draft = "true",
@@ -1096,10 +1097,10 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		AssertClick(
-			key_fieldFieldLabel = "Web Content",
-			locator1 = "WCEditWebContent#SELECT_BUTTON",
-			value1 = "Select");
+		Click(
+			fieldLabel = "Web Content",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
 
 		ItemSelector.viewWCEverywhereFilterResults(
 			folderWebContentTitle = "WC WebContent From Depot",

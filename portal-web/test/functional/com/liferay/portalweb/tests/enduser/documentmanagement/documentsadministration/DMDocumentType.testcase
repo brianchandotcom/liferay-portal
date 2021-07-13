@@ -1023,10 +1023,10 @@ definition {
 
 		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 
-		AssertClick(
-			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#SELECT_BUTTON",
-			value1 = "Select");
+		Click(
+			fieldLabel = "Image",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
 
 		ItemSelector.uploadFile(uploadFileName = "Document_1.jpg");
 

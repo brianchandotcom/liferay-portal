@@ -109,9 +109,10 @@ definition {
 				var key_fieldFieldLabel = "Upload";
 			}
 
-			AssertClick(
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${key_fieldFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -134,10 +135,10 @@ definition {
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			AssertClick(
-				key_fieldFieldLabel = "${linkToPageFieldLabel}",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${linkToPageFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -159,9 +160,10 @@ definition {
 				var key_fieldFieldLabel = "Image";
 			}
 
-			AssertClick(
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${key_fieldFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			if ("${navTab}" == "Documents and Media") {
 				if (isSet(imageFileName)) {
@@ -416,10 +418,10 @@ definition {
 		}
 
 		if (isSet(webcontentField)) {
-			AssertClick(
-				key_fieldFieldLabel = "Web Content",
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "Web Content",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1349,9 +1351,10 @@ definition {
 				var key_fieldFieldLabel = "Image";
 			}
 
-			AssertClick(
-				locator1 = "WCEditWebContent#SELECT_BUTTON",
-				value1 = "Select");
+			Click(
+				fieldLabel = "${key_fieldFieldLabel}",
+				locator1 = "Button#BUTTON_LABEL",
+				text = "Select");
 
 			if ("${navTab}" == "Documents and Media") {
 				if (isSet(imageFileNameEdit)) {

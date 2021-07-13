@@ -4694,9 +4694,10 @@ definition {
 			actual = "${imageFieldValue}",
 			expected = "");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#CLEAR_BUTTON");
+		Click(
+			fieldLabel = "Image",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Clear");
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "Image",

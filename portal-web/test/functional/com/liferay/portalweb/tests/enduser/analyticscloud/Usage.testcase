@@ -29,6 +29,15 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8147 | Test Summary: Anonymous individuals are not counted towards usage"
+	@ignore = "true"
+	@priority = "5"
+	test AnonymousIndividualsDoNotCountAsIndividualsForUsage {
+
+		// TODO LRAC-8147 Usage#AnonymousIndividualsDoNotCountAsIndividualsForUsage pending implementation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
 	@ignore = "true"
 	@priority = "5"
@@ -44,6 +53,15 @@ definition {
 	test CurrentAddonsDisplayedInCard {
 
 		// TODO LRAC-8157 CurrentAddonsDisplayedInCard pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"
+	@ignore = "true"
+	@priority = "5"
+	test IndividualsUpdatesInRealTime {
+
+		// TODO LRAC-8148 Usage#IndividualsUpdatesInRealTime pending implementation
 
 	}
 

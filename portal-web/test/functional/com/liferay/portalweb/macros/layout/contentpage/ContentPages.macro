@@ -121,10 +121,6 @@ definition {
 
 		Button.clickAdd();
 
-		Pause(locator1 = "3000");
-
-		Refresh();
-
 		SelectFrame.selectFrameTop();
 
 		PageEditor.assertFragmentSidebarLoaded();

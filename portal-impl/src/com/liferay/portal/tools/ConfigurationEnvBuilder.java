@@ -88,22 +88,13 @@ public class ConfigurationEnvBuilder {
 
 		Path outputFile = Paths.get(arguments.get("output.file"));
 
-		StringBundler sb = new StringBundler();
+		String content = new String(Files.readAllBytes(outputFile));
 
-		for (String line : Files.readAllLines(outputFile)) {
-			if (line.equals("## Configuration Overrides")) {
-				sb.setIndex(sb.index() - 2);
+		int index = content.indexOf("##\n## Configuration Overrides");
 
-				break;
-			}
+		content = content.substring(0, index);
 
-			sb.append(line);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		sb.append(buildContent(configurationJavaFileNames));
-
-		String content = sb.toString();
+		content = content.concat(buildContent(configurationJavaFileNames));
 
 		Files.write(
 			Paths.get(arguments.get("output.file")), content.getBytes());

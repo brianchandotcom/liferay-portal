@@ -155,9 +155,31 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CalendarPopUpCanBeApproved {
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
-		// TODO LRQA-68603 CalendarPopUpCanBeApproved pending implementation
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
+		CalendarEvent.viewStatusViaDetails(status = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
+
+		CalendarScheduler.gotoDetailsViaDialogBox();
+
+		CalendarEvent.viewStatusViaDetails(status = "Approved");
 	}
 
 	@description = "Verify that a calendar event created on the pop up can be rejected"

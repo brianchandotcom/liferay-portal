@@ -60,4 +60,10 @@ definition {
 		Click(locator1 = "ACNavigation#TAB_NAME");
 	}
 
+	macro viewActiveSwitchTab {
+		AssertTextEquals(
+			locator1 = "ACNavigation#ACTIVE_TAB_NAME",
+			value1 = "${tabName}");
+	}
+
 }

@@ -32,6 +32,11 @@
 	<td>//ul[contains(@class,'nav-root')]//span[text()='${key_tabName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACTIVE_TAB_NAME</td>
+	<td>//li[@class='nav-item active']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

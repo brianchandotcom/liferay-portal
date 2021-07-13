@@ -413,6 +413,7 @@
 	</entity>
 	<exceptions>
 		<exception>AssetCategory</exception>
+		<exception>AssetCategoryLimit</exception>
 		<exception>AssetCategoryName</exception>
 		<exception>AssetLink</exception>
 		<exception>AssetTag</exception>

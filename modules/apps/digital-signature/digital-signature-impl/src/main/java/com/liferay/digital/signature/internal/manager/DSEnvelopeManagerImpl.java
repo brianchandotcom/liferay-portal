@@ -94,7 +94,9 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(companyId)) {
+		if ((permissionChecker == null) ||
+			!permissionChecker.isCompanyAdmin(companyId)) {
+
 			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
 		}
 

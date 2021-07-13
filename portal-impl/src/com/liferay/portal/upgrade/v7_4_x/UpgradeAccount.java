@@ -162,6 +162,10 @@ public class UpgradeAccount extends UpgradeProcess {
 			updateWebsitePreparedStatement.executeBatch();
 		}
 
+		runSQL(
+			"delete from ClassName_ where value = '" + _CLASS_NAME_ACCOUNT +
+				"'");
+
 		runSQL("drop table Account_");
 	}
 

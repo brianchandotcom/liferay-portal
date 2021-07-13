@@ -1514,6 +1514,22 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Loads a CSS resource using the AMD loader.</description>
+		<name>stylesheet</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.StylesheetTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>bundle</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>css</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a UI component for managing translations of associated content.</description>
 		<name>translation-manager</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.TranslationManagerTag</tag-class>

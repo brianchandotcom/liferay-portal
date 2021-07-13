@@ -14,7 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.test.util.TestDDMForm;
 
 import java.util.Map;
 
@@ -31,8 +32,22 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class DDMFormFieldFactoryHelperTest {
 
 	@Test
+	public void testCreateVoidDDMFormField() throws Exception {
+		Class<?> clazz = TestDDMForm.class;
+
+		DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
+			new DDMFormFieldFactoryHelper(
+				new DDMFormFactoryHelper(clazz), clazz.getMethod("voidField"));
+
+		DDMFormField ddmFormField =
+			ddmFormFieldFactoryHelper.createDDMFormField();
+
+		Assert.assertEquals("", ddmFormField.getDataType());
+	}
+
+	@Test
 	public void testGetLabelProperties() throws Exception {
-		Class<?> clazz = DefaultDDMFormFieldTypeSettings.class;
+		Class<?> clazz = TestDDMForm.class;
 
 		DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
 			new DDMFormFieldFactoryHelper(
@@ -54,7 +69,7 @@ public class DDMFormFieldFactoryHelperTest {
 
 	@Test
 	public void testGetReadOnlyProperties() throws Exception {
-		Class<?> clazz = DefaultDDMFormFieldTypeSettings.class;
+		Class<?> clazz = TestDDMForm.class;
 
 		DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
 			new DDMFormFieldFactoryHelper(

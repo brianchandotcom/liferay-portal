@@ -100,15 +100,6 @@ definition {
 
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete the selected items?");
 
-		if (isSet(anonymizeData)) {
-			AssertElementPresent(
-				key_tab = "Auto Anonymize Data",
-				locator1 = "NavTab#ACTIVE_TAB_LINK");
-		}
-		else {
-			AssertConfirm.assertConfirmationNoError(value1 = "All personal data associated with this user's applications has been deleted or anonymized. The user can now be deleted. Click OK to delete the user.");
-		}
-
 		Alert.viewSuccessMessage();
 	}
 

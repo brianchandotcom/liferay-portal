@@ -524,7 +524,7 @@ definition {
 			applications = "All Applications",
 			itemsCount = "1");
 
-		GDPR.deleteAllEntriesCP(anonymizeData = "true");
+		GDPR.deleteAllEntriesCP();
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -590,7 +590,7 @@ definition {
 			applications = "All Applications",
 			itemsCount = "4");
 
-		GDPR.deleteAllEntriesCP(anonymizeData = "true");
+		GDPR.deleteAllEntriesCP();
 
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
 	}
@@ -637,7 +637,7 @@ definition {
 			applications = "All Applications",
 			itemsCount = "1");
 
-		GDPR.deleteAllEntriesCP(anonymizeData = "true");
+		GDPR.deleteAllEntriesCP();
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 

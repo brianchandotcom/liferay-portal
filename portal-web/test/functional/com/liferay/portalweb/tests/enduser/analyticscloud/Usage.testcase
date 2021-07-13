@@ -47,4 +47,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
+	@ignore = "true"
+	@priority = "5"
+	test TotalNumberOfIndividualsIsShown {
+
+		// TODO LRAC-8146 Usage#TotalNumberOfIndividualsIsShown pending implementation
+
+	}
+
 }

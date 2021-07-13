@@ -184,8 +184,8 @@ definition {
 			value1 = "Italy");
 
 		Type(
-			key_fieldName = "date",
-			locator1 = "TextInput#ANY_ID",
+			inputFieldId = "date",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "06/11/2021");
 
 		Button.click(button = "Submit");
@@ -206,8 +206,8 @@ definition {
 			value1 = "15");
 
 		Type(
-			key_fieldName = "date",
-			locator1 = "TextInput#ANY_ID",
+			inputFieldId = "date",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "06/12/2021");
 
 		Button.clickSave();
@@ -226,8 +226,8 @@ definition {
 			value1 = "15");
 
 		AssertTextEquals(
-			key_fieldName = "date",
-			locator1 = "TextInput#ANY_ID",
+			inputFieldId = "date",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "06/12/2021");
 
 		Click(locator1 = "Icon#CLOSE");

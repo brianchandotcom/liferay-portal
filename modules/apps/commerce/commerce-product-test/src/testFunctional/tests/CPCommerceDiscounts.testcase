@@ -728,8 +728,8 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		Type(
-			key_fieldName = "expirationDateTime",
-			locator1 = "TextInput#ANY_ID",
+			inputFieldId = "expirationDateTime",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${hours}:${minutes} ${ampm}");
 
 		Button.clickPublish();

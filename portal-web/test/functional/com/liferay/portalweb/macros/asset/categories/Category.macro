@@ -81,35 +81,35 @@ definition {
 
 			if ("${displayPageTemplateType}" != "Default") {
 				Select(
-					key_fieldName = "displayPageType",
-					locator1 = "Select#ANY_ID",
+					locator1 = "Select#SELECT_ID",
+					selectFieldId = "displayPageType",
 					value1 = "${displayPageTemplateType}");
 			}
 
 			AssertSelectedLabel(
-				key_fieldName = "displayPageType",
-				locator1 = "Select#ANY_ID",
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "displayPageType",
 				value1 = "${displayPageTemplateType}");
 
 			if ("${displayPageTemplateType}" != "None") {
 				if ("${displayPageTemplateType}" == "Default") {
 					AssertTextEquals(
-						key_fieldName = "defaultDisplayPageNameInput",
-						locator1 = "TextInput#ANY_ID",
+						inputFieldId = "defaultDisplayPageNameInput",
+						locator1 = "TextInput#INPUT_ID",
 						value1 = "${displayPageName}");
 				}
 
 				if ("${displayPageTemplateType}" == "Specific") {
 					AssertTextEquals(
-						key_fieldName = "specificDisplayPageNameInput",
-						locator1 = "TextInput#ANY_ID",
+						inputFieldId = "specificDisplayPageNameInput",
+						locator1 = "TextInput#INPUT_ID",
 						value1 = "No Display Page Template Selected");
 
 					WaitForLiferayEvent.initializeLiferayEventLog();
 
 					Click(
-						key_namespace = "chooseSpecificDisplayPage",
-						locator1 = "Button#ANY_ID");
+						buttonId = "chooseSpecificDisplayPage",
+						locator1 = "Button#BUTTON_ID");
 
 					SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -118,8 +118,8 @@ definition {
 					SelectFrameTop();
 
 					AssertTextEquals(
-						key_fieldName = "specificDisplayPageNameInput",
-						locator1 = "TextInput#ANY_ID",
+						inputFieldId = "specificDisplayPageNameInput",
+						locator1 = "TextInput#INPUT_ID",
 						value1 = "${displayPageName}");
 				}
 			}
@@ -406,20 +406,20 @@ definition {
 
 	macro selectDisplayPageTemplate {
 		Select(
-			key_fieldName = "displayPageType",
-			locator1 = "Select#ANY_ID",
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "displayPageType",
 			value1 = "${displayPageTemplateType}");
 
 		AssertSelectedLabel(
-			key_fieldName = "displayPageType",
-			locator1 = "Select#ANY_ID",
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "displayPageType",
 			value1 = "${displayPageTemplateType}");
 
 		if ("${displayPageTemplateType}" != "None") {
 			if ("${displayPageTemplateType}" == "Default") {
 				AssertTextEquals(
-					key_fieldName = "defaultDisplayPageNameInput",
-					locator1 = "TextInput#ANY_ID",
+					inputFieldId = "defaultDisplayPageNameInput",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = "${displayPageName}");
 			}
 
@@ -429,15 +429,15 @@ definition {
 				}
 
 				AssertTextEquals(
-					key_fieldName = "specificDisplayPageNameInput",
-					locator1 = "TextInput#ANY_ID",
+					inputFieldId = "specificDisplayPageNameInput",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = "${selectedDisplayPageName}");
 
 				WaitForLiferayEvent.initializeLiferayEventLog();
 
 				Click(
-					key_namespace = "chooseSpecificDisplayPage",
-					locator1 = "Button#ANY_ID");
+					buttonId = "chooseSpecificDisplayPage",
+					locator1 = "Button#BUTTON_ID");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -446,8 +446,8 @@ definition {
 				SelectFrameTop();
 
 				AssertTextEquals(
-					key_fieldName = "specificDisplayPageNameInput",
-					locator1 = "TextInput#ANY_ID",
+					inputFieldId = "specificDisplayPageNameInput",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = "${displayPageName}");
 			}
 		}

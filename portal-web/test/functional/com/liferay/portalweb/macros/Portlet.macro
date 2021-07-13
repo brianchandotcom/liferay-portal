@@ -190,8 +190,8 @@ definition {
 				var value = StringUtil.extractLast("${borderWidthAttribute}", "-");
 
 				Type(
-					key_fieldName = "${fieldLabel}",
-					locator1 = "TextInput#ANY_ID",
+					inputFieldId = "${fieldLabel}",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = "${value}");
 			}
 		}
@@ -203,8 +203,8 @@ definition {
 				var value = StringUtil.extractLast("${borderWidthUnit}", "-");
 
 				Select(
-					key_fieldName = "${fieldLabel}",
-					locator1 = "Select#ANY_ID",
+					locator1 = "Select#SELECT_ID",
+					selectFieldId = "${fieldLabel}",
 					value1 = "${value}");
 			}
 		}
@@ -216,8 +216,8 @@ definition {
 				var value = StringUtil.extractLast("${borderStyleAttribute}", "-");
 
 				Select(
-					key_fieldName = "${fieldLabel}",
-					locator1 = "Select#ANY_ID",
+					locator1 = "Select#SELECT_ID",
+					selectFieldId = "${fieldLabel}",
 					value1 = "${value}");
 			}
 		}

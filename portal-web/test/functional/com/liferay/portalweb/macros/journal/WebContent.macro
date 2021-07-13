@@ -1196,16 +1196,16 @@ definition {
 		}
 
 		Select(
-			key_fieldName = "displayPageType",
-			locator1 = "Select#ANY_ID",
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "displayPageType",
 			value1 = "${displayPageTemplateType}");
 
 		if ("${displayPageTemplateType}" == "Specific") {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			Click(
-				key_namespace = "chooseSpecificDisplayPage",
-				locator1 = "Button#ANY_ID");
+				buttonId = "chooseSpecificDisplayPage",
+				locator1 = "Button#BUTTON_ID");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1232,23 +1232,23 @@ definition {
 
 			if ("${pageType}" == "Public Pages") {
 				AssertTextEquals(
-					key_fieldName = "specificDisplayPageNameInput",
-					locator1 = "TextInput#ANY_ID",
+					inputFieldId = "specificDisplayPageNameInput",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = "Public Pages > ${pageName}");
 			}
 
 			else {
 				AssertTextEquals(
-					key_fieldName = "specificDisplayPageNameInput",
-					locator1 = "TextInput#ANY_ID",
+					inputFieldId = "specificDisplayPageNameInput",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = "${pageName}");
 			}
 		}
 
 		if ("${displayPageTemplateType}" == "Default") {
 			AssertTextEquals(
-				key_fieldName = "defaultDisplayPageNameInput",
-				locator1 = "TextInput#ANY_ID",
+				inputFieldId = "defaultDisplayPageNameInput",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${pageName}");
 		}
 	}
@@ -1766,8 +1766,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals.assertValue(
-			key_fieldName = "folderName",
-			locator1 = "TextInput#ANY_ID",
+			inputFieldId = "folderName",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = "${folderName}");
 	}
 
@@ -2402,14 +2402,14 @@ definition {
 		Panel.expandPanel(panel = "Display Page");
 
 		AssertSelectedLabel(
-			key_fieldName = "displayPageType",
-			locator1 = "Select#ANY_ID",
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "displayPageType",
 			value1 = "${displayPageTemplateType}");
 
 		if (isSet(displayPageTemplateName)) {
 			AssertTextEquals(
-				key_fieldName = "defaultDisplayPageNameInput",
-				locator1 = "TextInput#ANY_ID",
+				inputFieldId = "defaultDisplayPageNameInput",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = "${displayPageTemplateName}");
 		}
 	}

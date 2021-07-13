@@ -153,23 +153,19 @@ definition {
 			category = "Product Management",
 			portlet = "Catalogs");
 
-		CommerceConfiguration.commerceCatalogsTearDown();
+		CommerceConfiguration.commerceTearDownExcludingMaster();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			portlet = "Price Lists");
 
-		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			CommerceEntry.deleteCommerceEntry();
-		}
+		CommerceConfiguration.commerceTearDownExcludingMaster();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			portlet = "Promotions");
 
-		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			CommerceEntry.deleteCommerceEntry();
-		}
+		CommerceConfiguration.commerceTearDownExcludingMaster();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
@@ -252,8 +248,9 @@ definition {
 		}
 	}
 
-	macro commerceCatalogsTearDown {
-		var catalogsList = "";
+	@summary = "Deletes if present, catalogs, price lists or promotions, excluding Master occurrencies"
+	macro commerceTearDownExcludingMaster {
+		var elementsList= "";
 
 		var count = "1";
 
@@ -262,15 +259,15 @@ definition {
 
 			var entryName = selenium.getText("CommerceNavigation#ENTRY_NAME_N");
 
-			if ("${entryName}" != "Master") {
-				catalogsList = StringUtil.add("${catalogsList}", "${entryName}");
+			if (("${entryName}" != "Master") && ("${entryName}" != "Master Base Price List") && ("${entryName}" != "Master Base Promotion")) {
+				elementsList = StringUtil.add("${elementsList}", "${entryName}");
 			}
 
 			var count = ${count} + 1;
 		}
 
-		if ("${catalogsList}" != "") {
-			for (var catalogName : list "${catalogsList}") {
+		if ("${elementsList}" != "") {
+			for (var catalogName : list "${elementsList}") {
 				ClickNoError(
 					key_entryName = "${catalogName}",
 					locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");

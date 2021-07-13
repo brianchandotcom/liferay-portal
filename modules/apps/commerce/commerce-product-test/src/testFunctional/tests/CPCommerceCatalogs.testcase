@@ -24,7 +24,7 @@ definition {
 				category = "Produt Management",
 				portlet = "Catalogs");
 
-			CommerceConfiguration.commerceCatalogsTearDown();
+			CommerceConfiguration.commerceTearDownExcludingMaster();
 		}
 	}
 

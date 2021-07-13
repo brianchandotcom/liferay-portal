@@ -19,7 +19,15 @@ import React from 'react';
 export default function NavigationMenuItemsTreeNode({node}) {
 	const Parent = ({children}) =>
 		node.url ? (
-			<a href={node.url}>{children}</a>
+			<a
+				className="d-block h-100 w-100"
+				href={node.url}
+				onMouseDownCapture={() => {
+					Liferay.Util.navigate(node.url);
+				}}
+			>
+				{children}
+			</a>
 		) : (
 			<p className="m-0">{children}</p>
 		);
@@ -29,12 +37,6 @@ export default function NavigationMenuItemsTreeNode({node}) {
 			className={classNames('navigation-menu-items-tree-node', {
 				selected: node.selected,
 			})}
-			onClick={(event) => {
-
-				// Disable default selected behaviour
-
-				event.stopPropagation();
-			}}
 		>
 			<Parent>
 				<ClayIcon

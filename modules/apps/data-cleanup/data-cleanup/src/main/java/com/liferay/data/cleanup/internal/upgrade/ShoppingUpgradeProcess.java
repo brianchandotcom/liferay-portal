@@ -18,7 +18,6 @@ import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.service.ImageLocalService;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +25,7 @@ import java.sql.ResultSet;
 /**
  * @author Preston Crary
  */
-public class ShoppingUpgradeProcess extends UpgradeProcess {
+public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 	public ShoppingUpgradeProcess(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;

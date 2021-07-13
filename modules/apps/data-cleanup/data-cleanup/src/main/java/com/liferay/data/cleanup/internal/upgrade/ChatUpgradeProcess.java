@@ -14,12 +14,10 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
 /**
  * @author Preston Crary
  */
-public class ChatUpgradeProcess extends UpgradeProcess {
+public class ChatUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

@@ -15,12 +15,11 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Preston Crary
  */
-public class MailReaderUpgradeProcess extends UpgradeProcess {
+public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

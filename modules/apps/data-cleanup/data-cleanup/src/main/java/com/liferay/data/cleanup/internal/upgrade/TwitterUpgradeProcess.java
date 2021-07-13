@@ -15,12 +15,11 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Alejandro Tardín
  */
-public class TwitterUpgradeProcess extends UpgradeProcess {
+public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

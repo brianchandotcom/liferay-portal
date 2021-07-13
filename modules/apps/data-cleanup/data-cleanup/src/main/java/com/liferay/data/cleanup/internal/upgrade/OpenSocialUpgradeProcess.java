@@ -16,12 +16,11 @@ package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Kevin Lee
  */
-public class OpenSocialUpgradeProcess extends UpgradeProcess {
+public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

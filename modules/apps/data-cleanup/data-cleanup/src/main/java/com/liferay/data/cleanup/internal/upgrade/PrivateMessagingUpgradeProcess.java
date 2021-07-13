@@ -17,7 +17,6 @@ package com.liferay.data.cleanup.internal.upgrade;
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +24,7 @@ import java.sql.ResultSet;
 /**
  * @author Alejandro Tardín
  */
-public class PrivateMessagingUpgradeProcess extends UpgradeProcess {
+public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
 	public PrivateMessagingUpgradeProcess(
 		MBThreadLocalService mbThreadLocalService) {

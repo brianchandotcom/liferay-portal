@@ -16,12 +16,11 @@ package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Adolfo Pérez
  */
-public class ImageEditorUpgradeProcess extends UpgradeProcess {
+public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

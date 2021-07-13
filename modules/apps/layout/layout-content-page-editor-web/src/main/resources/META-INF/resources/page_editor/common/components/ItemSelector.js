@@ -26,17 +26,17 @@ import {useId} from '../../app/utils/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
 export default function ItemSelector({
+	className,
 	eventName,
 	itemSelectorURL,
 	label,
+	modalProps,
 	onItemSelect,
 	quickMappedInfoItems = [],
-	modalProps,
 	selectedItem,
 	showEditControls = true,
 	showMappedItems = true,
 	transformValueCallback,
-	className,
 }) {
 	const itemSelectorInputId = useId();
 

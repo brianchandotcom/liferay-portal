@@ -34,8 +34,7 @@ public class CompanyIterationCheck extends BaseCheck {
 		String absolutePath = getAbsolutePath();
 
 		if (absolutePath.contains("com/liferay/portal/") &&
-			(absolutePath.contains("/upgrade/") ||
-			 absolutePath.contains("/verify/"))) {
+			absolutePath.contains("/upgrade/")) {
 
 			return;
 		}

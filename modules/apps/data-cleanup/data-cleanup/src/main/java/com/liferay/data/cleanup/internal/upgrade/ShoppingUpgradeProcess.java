@@ -132,18 +132,18 @@ public class ShoppingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _dropTables() throws Exception {
-		for (String tableName : _TABLE_NAMES) {
+		String[] tableNames = {
+			"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",
+			"ShoppingItem", "ShoppingItemField", "ShoppingItemPrice",
+			"ShoppingOrder", "ShoppingOrderItem"
+		};
+
+		for (String tableName : tableNames) {
 			if (hasTable(tableName)) {
 				runSQL("drop table " + tableName);
 			}
 		}
 	}
-
-	private static final String[] _TABLE_NAMES = {
-		"ShoppingCart", "ShoppingCategory", "ShoppingCoupon", "ShoppingItem",
-		"ShoppingItemField", "ShoppingItemPrice", "ShoppingOrder",
-		"ShoppingOrderItem"
-	};
 
 	private final ImageLocalService _imageLocalService;
 

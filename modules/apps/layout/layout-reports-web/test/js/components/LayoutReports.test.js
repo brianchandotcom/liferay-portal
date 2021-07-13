@@ -70,7 +70,7 @@ describe('LayoutReports renders proper component', () => {
 			})
 		);
 
-		expect(getByText("this-page-can't-be-audited")).toBeInTheDocument();
+		expect(getByText('this-page-cannot-be-audited')).toBeInTheDocument();
 		expect(getByText('show-details')).toBeInTheDocument();
 
 		languageSelectorIsInTheDocument({fn: getByText});
@@ -83,7 +83,7 @@ describe('LayoutReports renders proper component', () => {
 			})
 		);
 
-		expect(getByText("this-page-can't-be-audited")).toBeInTheDocument();
+		expect(getByText('this-page-cannot-be-audited')).toBeInTheDocument();
 		expect(queryByText('show-details')).not.toBeInTheDocument();
 
 		languageSelectorIsInTheDocument({fn: getByText});

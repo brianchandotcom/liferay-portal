@@ -44,9 +44,9 @@ const ErrorAlert = () => {
 	const userHasNotPrivileges = !data?.configureGooglePageSpeedURL;
 
 	const title = apiKeyError
-		? Liferay.Language.get('invalid-api-key')
+		? Liferay.Language.get('the-api-key-is-invalid')
 		: pageCanNotBeAudited
-		? Liferay.Language.get("this-page-can't-be-audited")
+		? Liferay.Language.get('this-page-cannot-be-audited')
 		: Liferay.Language.get('an-unexpected-error-occurred');
 
 	const actionTitle = showErrorInfo

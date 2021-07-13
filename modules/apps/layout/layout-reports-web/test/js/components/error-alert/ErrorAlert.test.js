@@ -98,7 +98,7 @@ describe('Error Alert', () => {
 				})
 			);
 
-			expect(getByText('invalid-api-key')).toBeInTheDocument();
+			expect(getByText('the-api-key-is-invalid')).toBeInTheDocument();
 			expect(getByText('set-api-key')).toBeInTheDocument();
 			expect(getByText('show-details')).toBeInTheDocument();
 			expect(
@@ -203,7 +203,9 @@ describe('Error Alert', () => {
 				})
 			);
 
-			expect(getByText("this-page-can't-be-audited")).toBeInTheDocument();
+			expect(
+				getByText('this-page-cannot-be-audited')
+			).toBeInTheDocument();
 			expect(getByText('show-details')).toBeInTheDocument();
 
 			const {className} = getByRole('alert');
@@ -225,7 +227,9 @@ describe('Error Alert', () => {
 				})
 			);
 
-			expect(getByText("this-page-can't-be-audited")).toBeInTheDocument();
+			expect(
+				getByText('this-page-cannot-be-audited')
+			).toBeInTheDocument();
 			expect(queryByText('show-details')).not.toBeInTheDocument();
 
 			const {className} = getByRole('alert');

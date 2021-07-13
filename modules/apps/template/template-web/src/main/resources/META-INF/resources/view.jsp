@@ -22,5 +22,5 @@
 />
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new TemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext.getTabs1(), templateDisplayContext.getTemplateSearchContainer()) %>"
+	managementToolbarDisplayContext="<%= new TemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templateDisplayContext.getTemplateSearchContainer()) %>"
 />

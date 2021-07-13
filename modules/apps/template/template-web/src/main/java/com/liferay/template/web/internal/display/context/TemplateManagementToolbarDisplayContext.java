@@ -35,14 +35,12 @@ public class TemplateManagementToolbarDisplayContext
 	public TemplateManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, String tabs1,
+		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<DDMTemplate> templateSearchContainer) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			templateSearchContainer);
-
-		_tabs1 = tabs1;
 	}
 
 	@Override
@@ -51,8 +49,6 @@ public class TemplateManagementToolbarDisplayContext
 			getPortletURL()
 		).setKeywords(
 			StringPool.BLANK
-		).setTabs1(
-			_tabs1
 		).buildString();
 	}
 
@@ -77,7 +73,5 @@ public class TemplateManagementToolbarDisplayContext
 	public String getSearchContainerId() {
 		return "ddmTemplates";
 	}
-
-	private final String _tabs1;
 
 }

@@ -4203,6 +4203,11 @@ components:
                     description:
                         The localized structured content's descriptions.
                     type: object
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The structured content's external reference code.
+                    type: string
                 friendlyUrlPath:
                     description:
                         A relative URL to the structured content's rendered content.
@@ -11516,6 +11521,98 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/StructuredContent"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                    description:
+                        ""
+            tags: ["StructuredContent"]
+    "/sites/{siteId}/structured-contents/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the site's structured content by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["StructuredContent"]
+        get:
+            # @review
+            description:
+                Retrieves the site's structured content by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                    description:
+                        ""
+            tags: ["StructuredContent"]
+        put:
+            # @review
+            description:
+                Updates the site's structured content with the given external reference code, or creates it if it not
+                exists.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
+                description:
+                    ""
             responses:
                 200:
                     content:

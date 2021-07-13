@@ -56,12 +56,12 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromServiceComponent("PM");
 
-		_deleteThreads();
+		_deleteMBThreads();
 
 		dropTables("PM_UserThread");
 	}
 
-	private void _deleteThreads() throws Exception {
+	private void _deleteMBThreads() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select mbThreadId from PM_UserThread"));

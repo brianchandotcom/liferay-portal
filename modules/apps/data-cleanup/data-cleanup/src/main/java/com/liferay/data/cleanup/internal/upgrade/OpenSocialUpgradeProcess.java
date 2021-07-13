@@ -24,6 +24,9 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		LayoutTypeSettingsUtil.removePortletId(
+			connection, "3_WAR_opensocialportlet");
+
 		runSQL(
 			"delete from ClassName_ where value = " +
 				"'com.liferay.opensocial.model.Gadget'");
@@ -33,9 +36,6 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 		runSQL(
 			"delete from ClassName_ where value = " +
 				"'com.liferay.opensocial.model.OAuthToken'");
-
-		LayoutTypeSettingsUtil.removePortletId(
-			connection, "3_WAR_opensocialportlet");
 
 		runSQL(
 			"delete from Portlet where portletId like " +

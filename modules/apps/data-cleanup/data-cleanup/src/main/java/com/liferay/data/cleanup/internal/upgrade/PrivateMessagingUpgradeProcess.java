@@ -34,6 +34,11 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		LayoutTypeSettingsUtil.removePortletId(
+			connection,
+			"com_liferay_social_privatemessaging_web_portlet_" +
+				"PrivateMessagingPortlet");
+
 		runSQL(
 			"delete from ClassName_ where value = " +
 				"'com.liferay.social.privatemessaging.model.UserThread'");
@@ -60,11 +65,6 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 		_deleteThreads();
 
 		runSQL("drop table PM_UserThread");
-
-		LayoutTypeSettingsUtil.removePortletId(
-			connection,
-			"com_liferay_social_privatemessaging_web_portlet_" +
-				"PrivateMessagingPortlet");
 	}
 
 	private void _deleteThreads() throws Exception {

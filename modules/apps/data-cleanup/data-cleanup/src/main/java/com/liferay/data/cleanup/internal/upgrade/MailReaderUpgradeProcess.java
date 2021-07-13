@@ -23,6 +23,9 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		LayoutTypeSettingsUtil.removePortletId(
+			connection, "com_liferay_mail_reader_web_portlet_MailPortlet");
+
 		runSQL(
 			"delete from ClassName_ where value = " +
 				"'com.liferay.mail.reader.model.Account'");
@@ -35,9 +38,6 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 		runSQL(
 			"delete from ClassName_ where value = " +
 				"'com.liferay.mail.reader.model.Message'");
-
-		LayoutTypeSettingsUtil.removePortletId(
-			connection, "com_liferay_mail_reader_web_portlet_MailPortlet");
 
 		runSQL(
 			"delete from Portlet where portletId = " +

@@ -24,6 +24,9 @@ public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		LayoutTypeSettingsUtil.removePortletId(
+			connection, _IMAGE_EDITOR_PORTLET_NAME);
+
 		runSQL(
 			"delete from Portlet where portletId = " +
 				_QUOTED_IMAGE_EDITOR_PORTLET_NAME);
@@ -50,9 +53,6 @@ public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 		runSQL(
 			"delete from ResourcePermission where name = " +
 				_QUOTED_IMAGE_EDITOR_PORTLET_NAME);
-
-		LayoutTypeSettingsUtil.removePortletId(
-			connection, _IMAGE_EDITOR_PORTLET_NAME);
 	}
 
 	private static final String _IMAGE_EDITOR_PORTLET_NAME =

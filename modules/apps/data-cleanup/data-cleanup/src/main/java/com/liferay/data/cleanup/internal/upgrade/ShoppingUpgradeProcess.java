@@ -33,6 +33,9 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		LayoutTypeSettingsUtil.removePortletId(
+			connection, "com_liferay_shopping_web_portlet_ShoppingPortlet");
+
 		deleteFromClassName(
 			"com.liferay.shopping.model.ShoppingCart",
 			"com.liferay.shopping.model.ShoppingCategory",
@@ -46,9 +49,6 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 		_deleteImages("smallImage");
 		_deleteImages("mediumImage");
 		_deleteImages("largeImage");
-
-		LayoutTypeSettingsUtil.removePortletId(
-			connection, "com_liferay_shopping_web_portlet_ShoppingPortlet");
 
 		deleteFromPortlet(
 			"com_liferay_shopping_web_portlet_ShoppingAdminPortlet",

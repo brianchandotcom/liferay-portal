@@ -16,9 +16,15 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-const FileNamePicker = ({maxFileSize, namespace, validExtensions}) => {
+const FileNamePicker = ({
+	maxFileSize: initialMaxFileSize,
+	namespace,
+	validExtensions,
+}) => {
+	const maxFileSize = Number(initialMaxFileSize);
 	const inputId = `${namespace}file`;
 	const [inputValue, setInputValue] = useState('');
 	const [fileName, setFileName] = useState('');
@@ -93,6 +99,13 @@ const FileNamePicker = ({maxFileSize, namespace, validExtensions}) => {
 			)}
 		</ClayForm.Group>
 	);
+};
+
+FileNamePicker.propTypes = {
+	maxFileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+		.isRequired,
+	namespace: PropTypes.string.isRequired,
+	validExtensions: PropTypes.string.isRequired,
 };
 
 export default FileNamePicker;

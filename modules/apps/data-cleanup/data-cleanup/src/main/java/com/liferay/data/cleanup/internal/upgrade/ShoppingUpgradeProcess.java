@@ -99,7 +99,10 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 		runSQL(
 			"delete from ServiceComponent where buildNamespace = 'Shopping'");
 
-		_dropTables();
+		dropTables(
+			"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",
+			"ShoppingItem", "ShoppingItemField", "ShoppingItemPrice",
+			"ShoppingOrder", "ShoppingOrderItem");
 	}
 
 	private void _deleteImages(String type) throws Exception {
@@ -112,20 +115,6 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 			while (resultSet.next()) {
 				_imageLocalService.deleteImage(resultSet.getLong(1));
-			}
-		}
-	}
-
-	private void _dropTables() throws Exception {
-		String[] tableNames = {
-			"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",
-			"ShoppingItem", "ShoppingItemField", "ShoppingItemPrice",
-			"ShoppingOrder", "ShoppingOrderItem"
-		};
-
-		for (String tableName : tableNames) {
-			if (hasTable(tableName)) {
-				runSQL("drop table " + tableName);
 			}
 		}
 	}

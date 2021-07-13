@@ -32,6 +32,14 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	protected void dropTables(String... tableNames) throws Exception {
+		for (String tableName : tableNames) {
+			if (hasTable(tableName)) {
+				runSQL("drop table " + tableName);
+			}
+		}
+	}
+
 	protected void removeNoninstanceablePortlet(
 			String bundleSymbolicName, String[] oldPortletIds,
 			String[] portletIds)

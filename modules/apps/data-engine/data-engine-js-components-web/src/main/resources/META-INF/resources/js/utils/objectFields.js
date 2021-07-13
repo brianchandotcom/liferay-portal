@@ -95,19 +95,6 @@ export const updateObjectFields = async (dispatch) => {
 	}
 };
 
-const DATA_TYPES = {
-	BigDecimal: 'double',
-	Blob: 'string',
-	Double: 'double',
-	Integer: 'integer',
-	Long: 'double',
-	String: 'string',
-};
-
-export const normalizeDataType = (type) => {
-	return DATA_TYPES[type] ?? type;
-};
-
 export const getSelectedValue = (value) => {
 	if (typeof value === 'string' && value !== '') {
 		const newValue = JSON.parse(value);

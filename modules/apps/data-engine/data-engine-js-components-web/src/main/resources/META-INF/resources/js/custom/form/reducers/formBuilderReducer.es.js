@@ -15,16 +15,29 @@
 import {EVENT_TYPES} from '../eventTypes.es';
 
 /**
- * This reducer was created to get pages
- * from FormBuilder inside Data Engine sidebar
+ * This reducer was created to consume datafrom
+ * FormBuilder inside FormFieldSettings
  */
 export default (state, action) => {
 	switch (action.type) {
-		case EVENT_TYPES.BUILDER_PAGES.UPDATE: {
-			const {builderPages} = action.payload;
+		case EVENT_TYPES.FORM_BUILDER.PAGES.UPDATE: {
+			const {pages} = action.payload;
 
 			return {
-				builderPages,
+				formBuilder: {
+					...state.formBuilder,
+					pages,
+				},
+			};
+		}
+		case EVENT_TYPES.FORM_BUILDER.FOCUSED_FIELD.CHANGE: {
+			const {focusedField} = action.payload;
+
+			return {
+				formBuilder: {
+					...state.formBuilder,
+					focusedField,
+				},
 			};
 		}
 		default:

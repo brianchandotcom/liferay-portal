@@ -12,8 +12,13 @@
  * details.
  */
 
-const BUILDER_PAGES = {
-	UPDATE: 'builder_pages_update',
+const FORM_BUILDER = {
+	FOCUSED_FIELD: {
+		CHANGE: 'form_builder_focused_field_change',
+	},
+	PAGES: {
+		UPDATE: 'form_builder_pages_update',
+	},
 };
 
 const OBJECT_FIELDS = {
@@ -40,7 +45,7 @@ const RULES = {
 };
 
 export const EVENT_TYPES = {
-	BUILDER_PAGES,
+	FORM_BUILDER,
 	OBJECT_FIELDS,
 	PAGE,
 	PAGINATION,

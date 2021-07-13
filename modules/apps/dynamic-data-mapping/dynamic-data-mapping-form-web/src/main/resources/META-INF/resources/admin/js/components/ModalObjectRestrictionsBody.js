@@ -13,10 +13,7 @@
  */
 
 import ClayPanel from '@clayui/panel';
-import {
-	getFieldsGroupedByTypes,
-	normalizeDataType,
-} from 'data-engine-js-components-web/js/utils/objectFields';
+import {getFieldsGroupedByTypes} from 'data-engine-js-components-web/js/utils/objectFields';
 import React from 'react';
 
 const ObjectRestrictionSection = ({children, description, title}) => {
@@ -53,9 +50,7 @@ const ModalObjectRestrictionsBody = ({
 				>
 					{requiredObjectFieldsGroupedByType.map(({fields, type}) => (
 						<div key={type}>
-							<strong className="text-capitalize">
-								{normalizeDataType(type)}
-							</strong>
+							<strong className="text-capitalize">{type}</strong>
 
 							<ol>
 								{fields.map(({name}) => (

@@ -12,7 +12,7 @@
  * details.
  */
 
-export {default as builderPagesReducer} from './builderPagesReducer.es';
+export {default as formBuilderReducer} from './formBuilderReducer.es';
 export {default as objectFieldsReducer} from './objectFieldsReducer.es';
 export {default as pageReducer} from './pageReducer.es';
 export {default as paginationReducer} from './paginationReducer.es';

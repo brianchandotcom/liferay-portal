@@ -22,6 +22,17 @@ import React, {useMemo} from 'react';
 
 import Select from '../Select/Select.es';
 
+const normalizeDataType = (type) => {
+	const dataTypes = {
+		double: ['double', 'bigdecimal'],
+		integer: ['integer', 'long'],
+		string: ['string', 'blob'],
+	};
+	const formattedType = type.toLowerCase();
+
+	return dataTypes[formattedType] ?? formattedType;
+};
+
 const ObjectField = ({
 	label,
 	objectFields,
@@ -31,27 +42,56 @@ const ObjectField = ({
 	value = {},
 	visible,
 }) => {
-	const {builderPages} = useFormState();
+	const {
+		formBuilder: {
+			focusedField: {dataType},
+			pages,
+		},
+	} = useFormState();
+
+	const normalizedDataType = useMemo(() => normalizeDataType(dataType), [
+		dataType,
+	]);
 
 	const options = useMemo(() => {
-		const mappedOptions = getFields(builderPages)
-			.map(({settingsContext}) => {
-				const objectFieldName = getObjectFieldName(settingsContext);
-
-				return (
-					objectFieldName && getSelectedValue(objectFieldName.value)
-				);
-			})
-			.filter(Boolean);
-
-		return objectFields.map(({name}) => {
-			return {
-				disabled: !!mappedOptions.includes(name),
-				label: name,
-				value: name,
-			};
+		const filteredObjectFields = objectFields.filter(({type}) => {
+			return normalizedDataType.includes(type.toLowerCase());
 		});
-	}, [builderPages, objectFields]);
+
+		if (filteredObjectFields.length) {
+			const mappedFields = getFields(pages)
+				.map(({settingsContext}) => {
+					const objectFieldName = getObjectFieldName(settingsContext);
+
+					return (
+						objectFieldName &&
+						getSelectedValue(objectFieldName.value)
+					);
+				})
+				.filter(Boolean);
+
+			return filteredObjectFields.map(({name}) => {
+				return {
+					disabled: !!mappedFields.includes(name),
+					label: name,
+					value: name,
+				};
+			});
+		}
+		else {
+			const emptyStateMessage = Liferay.Language.get(
+				'there-are-no-compatible-object-fields-to-map'
+			);
+
+			return [
+				{
+					disabled: true,
+					label: emptyStateMessage,
+					value: emptyStateMessage,
+				},
+			];
+		}
+	}, [normalizedDataType, objectFields, pages]);
 
 	return (
 		<Select
@@ -59,8 +99,8 @@ const ObjectField = ({
 			name="selectedObjectField"
 			onChange={onChange}
 			options={options}
-			placeholder={Liferay.Language.get('choose-an-option')}
 			readOnly={readOnly}
+			showEmptyOption={!!options.length}
 			spritemap={spritemap}
 			value={getSelectedValue(value)}
 			visible={visible}

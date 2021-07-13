@@ -107,6 +107,7 @@ export default function FieldsSidebarSettingsBody() {
 				displayable={true}
 				editable={false}
 				editingLanguageId={editingLanguageId}
+				focusedField={focusedField}
 				objectFields={objectFields}
 				onAction={({payload, type}) => {
 					switch (type) {

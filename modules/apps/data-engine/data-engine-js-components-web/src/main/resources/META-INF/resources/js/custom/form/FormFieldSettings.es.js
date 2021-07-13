@@ -32,7 +32,7 @@ import {parseProps} from '../../utils/parseProps.es';
 import {Form} from './FormView.es';
 import {EVENT_TYPES} from './eventTypes.es';
 import {
-	builderPagesReducer,
+	formBuilderReducer,
 	objectFieldsReducer,
 	paginationReducer,
 	rulesReducer,
@@ -98,10 +98,17 @@ const StateSync = ({
 
 	useEffect(() => {
 		dispatch({
-			payload: {builderPages},
-			type: EVENT_TYPES.BUILDER_PAGES.UPDATE,
+			payload: {pages: builderPages},
+			type: EVENT_TYPES.FORM_BUILDER.PAGES.UPDATE,
 		});
 	}, [dispatch, builderPages]);
+
+	useEffect(() => {
+		dispatch({
+			payload: {focusedField},
+			type: EVENT_TYPES.FORM_BUILDER.FOCUSED_FIELD.CHANGE,
+		});
+	}, [dispatch, focusedField]);
 
 	return null;
 };
@@ -117,10 +124,16 @@ export const FormFieldSettings = ({children, onAction, ...otherProps}) => {
 	return (
 		<ConfigProvider config={config} initialConfig={INITIAL_CONFIG_STATE}>
 			<FormProvider
-				initialState={INITIAL_STATE}
+				initialState={{
+					...INITIAL_STATE,
+					formBuilder: {
+						focusedField: {},
+						pages: [],
+					},
+				}}
 				onAction={onAction}
 				reducers={[
-					builderPagesReducer,
+					formBuilderReducer,
 					activePageReducer,
 					fieldReducer,
 					languageReducer,

@@ -327,8 +327,6 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/delete_item")
 			).put(
-				"discardDraftRedirectURL", themeDisplay.getURLCurrent()
-			).put(
 				"discardDraftURL", _getDiscardDraftURL()
 			).put(
 				"draft",

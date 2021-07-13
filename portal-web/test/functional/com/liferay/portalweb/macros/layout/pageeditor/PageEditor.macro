@@ -2058,16 +2058,9 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		if (isSet(imageDescription)) {
-			Pause(locator1 = "3000");
-
 			Type(
-				locator1 = "TextInput#IMAGE_DESCRIPTION",
-				value1 = "${imageDescription}");
-
-			Pause(locator1 = "3000");
-
-			AssertTextEquals.assertValue(
-				locator1 = "TextInput#IMAGE_DESCRIPTION",
+				key_text = "Image Description",
+				locator1 = "TextInput#ANY",
 				value1 = "${imageDescription}");
 
 			Click(
@@ -2075,6 +2068,11 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_text = "Image Description",
+				locator1 = "TextInput#ANY",
+				value1 = "${imageDescription}");
 		}
 	}
 

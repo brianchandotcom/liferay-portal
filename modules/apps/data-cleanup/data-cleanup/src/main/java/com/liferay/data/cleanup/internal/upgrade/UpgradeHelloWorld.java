@@ -23,14 +23,9 @@ public class UpgradeHelloWorld extends BaseUpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		removeNoninstanceablePortlet(
 			"com.liferay.hello.world.web", null,
-			new String[] {_HELLO_WORLD_PORTLET_NAME});
-
-		runSQL(
-			"delete from ResourceAction where name = '" +
-				_HELLO_WORLD_PORTLET_NAME + "'");
+			new String[] {
+				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
+			});
 	}
-
-	private static final String _HELLO_WORLD_PORTLET_NAME =
-		"com_liferay_hello_world_web_portlet_HelloWorldPortlet";
 
 }

@@ -135,6 +135,8 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 			deleteFromPortletPreferences(portletId);
 
+			deleteFromResourceAction(portletId);
+
 			deleteFromResourcePermission(portletId);
 		}
 

@@ -930,11 +930,13 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("Add a Heading fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Heading fragment to page") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Heading");

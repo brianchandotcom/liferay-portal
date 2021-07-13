@@ -33,10 +33,8 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteTemplateURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-	<clay:container-fluid
-		id='<%= liferayPortletResponse.getNamespace() + "templatesContainer" %>'
-	>
+<clay:container-fluid>
+	<aui:form action="<%= deleteTemplateURL %>" name="fm">
 		<liferay-ui:search-container
 			id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"
@@ -87,5 +85,5 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
-	</clay:container-fluid>
-</aui:form>
+	</aui:form>
+</clay:container-fluid>

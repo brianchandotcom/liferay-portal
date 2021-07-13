@@ -423,12 +423,33 @@ definition {
 	}
 
 	@description = "Verify that the Calendar Event status stay on pending when rejected after submitted"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test StatusStayPendingAfterRejected {
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		// TODO LRQA-68599 StatusStayPendingAfterRejected pending implementation
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
 
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Click(
+			key_eventTitle = "Calendar Event Title",
+			locator1 = "WorkflowCalendar#CALENDAR_EVENT_BY_TITLE");
+
+		Button.click(button = "View Details");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextEquals(
+			locator1 = "WorkflowCalendar#CALENDAR_EVENT_DETAILS_WORKFLOW_STATUS",
+			value1 = "PENDING");
 	}
 
 	@description = "Verify that a Unpublish warning message appears when the user edit a approved event"

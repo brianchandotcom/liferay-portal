@@ -264,12 +264,12 @@
 <!--ASSET_SELECTION_MANUAL_ASSET_ENTRIES-->
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON</td>
-	<td>//div[contains(.,'Asset Entries')]/following-sibling::div//a[@title='Select']</td>
+	<td>//fieldset[./*[normalize-space()='Asset Entries']]//a[normalize-space()='Select']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_IN_DEPOT</td>
-	<td>//div[contains(.,'Asset Entries')]/following-sibling::div//a[@title='Select in ${key_depotName}']</td>
+	<td>//fieldset[./*[normalize-space()='Asset Entries']]//a[normalize-space()='Select in ${key_depotName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -55,6 +55,10 @@ public class DefaultDDMExpressionParameterAccessor
 		_getCompanyIdSupplier = supplier;
 	}
 
+	protected void setGetGooglePlacesAPIKeySupplier(Supplier<String> supplier) {
+		_getGooglePlacesAPIKeySupplier = supplier;
+	}
+
 	protected void setGetGroupIdSupplier(Supplier<Long> supplier) {
 		_getGroupIdSupplier = supplier;
 	}
@@ -68,7 +72,7 @@ public class DefaultDDMExpressionParameterAccessor
 	}
 
 	private Supplier<Long> _getCompanyIdSupplier = () -> 0L;
-	private final Supplier<String> _getGooglePlacesAPIKeySupplier =
+	private Supplier<String> _getGooglePlacesAPIKeySupplier =
 		() -> StringPool.BLANK;
 	private Supplier<Long> _getGroupIdSupplier = () -> 0L;
 	private Supplier<Locale> _getLocaleSupplier = () -> new Locale("pt", "BR");

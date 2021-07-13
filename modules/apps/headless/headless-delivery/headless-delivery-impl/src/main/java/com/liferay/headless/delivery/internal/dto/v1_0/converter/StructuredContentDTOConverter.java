@@ -150,6 +150,8 @@ public class StructuredContentDTOConverter
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					_filterDescriptionMap(journalArticle.getDescriptionMap()));
+				externalReferenceCode =
+					journalArticle.getExternalReferenceCode();
 				friendlyUrlPath = journalArticle.getUrlTitle(
 					dtoConverterContext.getLocale());
 				friendlyUrlPath_i18n = LocalizedMapUtil.getI18nMap(

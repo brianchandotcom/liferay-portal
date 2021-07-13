@@ -17,12 +17,11 @@ package com.liferay.data.cleanup.internal.upgrade;
 /**
  * @author Sam Ziemer
  */
-public class DictionaryUpgradeProcess
-	extends BaseUpgradeNoninstanceablePortlet {
+public class DictionaryUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		removePortlet(
+		removeNoninstanceablePortlet(
 			"com.liferay.dictionary.web", new String[] {"23"},
 			new String[] {
 				"com_liferay_dictionary_web_portlet_DictionaryPortlet"

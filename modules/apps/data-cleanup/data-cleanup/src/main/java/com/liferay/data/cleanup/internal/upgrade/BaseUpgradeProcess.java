@@ -24,9 +24,9 @@ import java.sql.ResultSet;
 /**
  * @author Alberto Chaparro
  */
-public abstract class BaseUpgradeNoninstanceablePortlet extends UpgradeProcess {
+public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
-	protected void removePortlet(
+	protected void removeNoninstanceablePortlet(
 			String bundleSymbolicName, String[] oldPortletIds,
 			String[] portletIds)
 		throws Exception {

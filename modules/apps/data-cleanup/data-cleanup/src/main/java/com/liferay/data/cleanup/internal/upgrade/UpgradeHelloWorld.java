@@ -17,11 +17,11 @@ package com.liferay.data.cleanup.internal.upgrade;
 /**
  * @author Pei-Jung Lan
  */
-public class UpgradeHelloWorld extends BaseUpgradeNoninstanceablePortlet {
+public class UpgradeHelloWorld extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		removePortlet(
+		removeNoninstanceablePortlet(
 			"com.liferay.hello.world.web", null,
 			new String[] {_HELLO_WORLD_PORTLET_NAME});
 

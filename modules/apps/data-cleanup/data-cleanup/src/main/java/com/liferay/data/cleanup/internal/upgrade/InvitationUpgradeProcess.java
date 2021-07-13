@@ -17,12 +17,11 @@ package com.liferay.data.cleanup.internal.upgrade;
 /**
  * @author Adolfo Pérez
  */
-public class InvitationUpgradeProcess
-	extends BaseUpgradeNoninstanceablePortlet {
+public class InvitationUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		removePortlet(
+		removeNoninstanceablePortlet(
 			"com.liferay.invitation.web", null,
 			new String[] {
 				"com_liferay_invitation_web_portlet_InvitationPortlet"

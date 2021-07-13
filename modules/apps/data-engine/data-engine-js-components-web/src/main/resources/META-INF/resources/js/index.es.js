@@ -14,6 +14,7 @@
 
 // Utils
 
+import sectionAdded from './core/utils/sectionAddedHandler';
 export {default as compose} from './utils/compose.es';
 export {normalizeFieldName} from './utils/fields.es';
 export {
@@ -44,6 +45,7 @@ export {FormProvider, useForm, useFormState} from './core/hooks/useForm.es';
 export {ConfigProvider, useConfig} from './core/hooks/useConfig.es';
 export {Layout} from './core/components/PageRenderer/Layout.es';
 export * as DefaultVariant from './core/components/PageRenderer/DefaultVariant.es';
+export {sectionAdded};
 
 // Custom Form
 

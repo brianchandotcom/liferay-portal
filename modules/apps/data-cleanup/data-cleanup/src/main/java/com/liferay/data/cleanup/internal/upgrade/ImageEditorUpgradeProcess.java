@@ -23,24 +23,23 @@ public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(
-			connection, _IMAGE_EDITOR_PORTLET_NAME);
+		LayoutTypeSettingsUtil.removePortletId(connection, _PORTLET_ID);
 
-		deleteFromPortlet(_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromPortlet(_PORTLET_ID);
 
-		deleteFromPortletPreferences(_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromPortletPreferences(_PORTLET_ID);
 
 		deleteFromRelease(
 			"com.liferay.frontend.image.editor.api",
 			"com.liferay.frontend.image.editor.integration.document.library",
 			"com.liferay.frontend.image.editor.web");
 
-		deleteFromResourceAction(_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromResourceAction(_PORTLET_ID);
 
-		deleteFromResourcePermission(_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromResourcePermission(_PORTLET_ID);
 	}
 
-	private static final String _IMAGE_EDITOR_PORTLET_NAME =
+	private static final String _PORTLET_ID =
 		"com_liferay_image_editor_web_portlet_ImageEditorPortlet";
 
 }

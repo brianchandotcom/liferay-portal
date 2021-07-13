@@ -54,9 +54,7 @@ public class TranslationResourceActionsInitializer {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private ResourceActions _resourceActions;

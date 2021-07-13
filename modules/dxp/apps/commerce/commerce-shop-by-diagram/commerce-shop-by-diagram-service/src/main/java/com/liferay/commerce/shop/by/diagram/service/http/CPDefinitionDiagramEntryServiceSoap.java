@@ -170,6 +170,27 @@ public class CPDefinitionDiagramEntryServiceSoap {
 
 	public static
 		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntrySoap
+				getCPDefinitionDiagramEntry(long cpDefinitionId, int number)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+				returnValue =
+					CPDefinitionDiagramEntryServiceUtil.
+						getCPDefinitionDiagramEntry(cpDefinitionId, number);
+
+			return com.liferay.commerce.shop.by.diagram.model.
+				CPDefinitionDiagramEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntrySoap
 				updateCPDefinitionDiagramEntry(
 					long cpDefinitionDiagramEntryId, String cpInstanceUuid,
 					long cProductId, boolean diagram, int number, int quantity,

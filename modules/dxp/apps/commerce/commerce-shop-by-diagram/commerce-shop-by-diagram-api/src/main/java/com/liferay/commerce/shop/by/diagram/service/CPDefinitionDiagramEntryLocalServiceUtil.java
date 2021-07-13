@@ -297,6 +297,13 @@ public class CPDefinitionDiagramEntryLocalServiceUtil {
 			CPDefinitionDiagramEntryId);
 	}
 
+	public static CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramEntry(cpDefinitionId, number);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

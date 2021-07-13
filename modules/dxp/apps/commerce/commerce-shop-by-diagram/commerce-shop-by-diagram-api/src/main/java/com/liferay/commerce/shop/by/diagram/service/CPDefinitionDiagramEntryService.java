@@ -75,6 +75,11 @@ public interface CPDefinitionDiagramEntryService extends BaseService {
 			long cpDefinitionDiagramEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

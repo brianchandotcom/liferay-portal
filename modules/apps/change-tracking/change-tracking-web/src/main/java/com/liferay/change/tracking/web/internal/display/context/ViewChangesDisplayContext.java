@@ -36,7 +36,9 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
+import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -721,6 +723,16 @@ public class ViewChangesDisplayContext {
 		return jsonArray;
 	}
 
+	private String _getMissingModelMessage(
+		long classPK, long modelClassNameId) {
+
+		return StringBundler.concat(
+			"Missing model from ", _ctCollection.getName(),
+			": {ctCollectionId=", _ctCollection.getCtCollectionId(),
+			", classPK=", classPK, ", modelClassNameId=", modelClassNameId,
+			"}");
+	}
+
 	private Set<Long> _getRootClassNameIds(CTClosure ctClosure) {
 		if (ctClosure == null) {
 			return Collections.emptySet();
@@ -891,21 +903,47 @@ public class ViewChangesDisplayContext {
 
 				T model = null;
 
-				if ((ctCollectionId == _ctCollection.getCtCollectionId()) &&
-					(ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
+				try {
+					if ((ctCollectionId == _ctCollection.getCtCollectionId()) &&
+						(ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
 
-					if (ctModelMap == null) {
-						ctModelMap = _ctDisplayRendererRegistry.fetchCTModelMap(
-							_ctCollection.getCtCollectionId(),
-							CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-							modelClassNameId, classPKs);
+						if (ctModelMap == null) {
+							ctModelMap =
+								_ctDisplayRendererRegistry.fetchCTModelMap(
+									_ctCollection.getCtCollectionId(),
+									CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+									modelClassNameId, classPKs);
+						}
+
+						model = ctModelMap.get(classPK);
+					}
+					else {
+						model = _ctDisplayRendererRegistry.fetchCTModel(
+							ctCollectionId, ctSQLMode, modelClassNameId,
+							classPK);
+					}
+				}
+				catch (SystemException systemException) {
+					if (systemException.getCause() instanceof ORMException) {
+						if (_ctCollection.getStatus() !=
+								WorkflowConstants.STATUS_EXPIRED) {
+
+							_log.error(
+								_getMissingModelMessage(
+									classPK, modelClassNameId),
+								systemException.getCause());
+						}
+						else if (_log.isDebugEnabled()) {
+							_log.debug(
+								_getMissingModelMessage(
+									classPK, modelClassNameId),
+								systemException.getCause());
+						}
+
+						continue;
 					}
 
-					model = ctModelMap.get(classPK);
-				}
-				else {
-					model = _ctDisplayRendererRegistry.fetchCTModel(
-						ctCollectionId, ctSQLMode, modelClassNameId, classPK);
+					throw systemException;
 				}
 
 				if (model == null) {
@@ -914,12 +952,7 @@ public class ViewChangesDisplayContext {
 						_log.isWarnEnabled()) {
 
 						_log.warn(
-							StringBundler.concat(
-								"Missing model from ", _ctCollection.getName(),
-								": {ctCollectionId=",
-								_ctCollection.getCtCollectionId(), ", classPK=",
-								classPK, ", modelClassNameId=",
-								modelClassNameId, "}"));
+							_getMissingModelMessage(classPK, modelClassNameId));
 					}
 
 					continue;

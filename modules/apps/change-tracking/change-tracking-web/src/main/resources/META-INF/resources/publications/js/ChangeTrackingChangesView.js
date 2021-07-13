@@ -643,7 +643,7 @@ export default ({
 						rootClass.children[i].modelKey.toString()
 					];
 
-				if (!model.hideable) {
+				if (model && !model.hideable) {
 					hideable = false;
 
 					break;

@@ -1204,6 +1204,16 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
+			filteredFragmentEntries.sort(
+				(filteredFragmentEntry1, filteredFragmentEntry2) -> {
+					String name1 = String.valueOf(
+						filteredFragmentEntry1.get("name"));
+					String name2 = String.valueOf(
+						filteredFragmentEntry2.get("name"));
+
+					return name1.compareTo(name2);
+				});
+
 			fragmentCollectionContributorsMap.add(
 				HashMapBuilder.<String, Object>put(
 					"fragmentCollectionId",

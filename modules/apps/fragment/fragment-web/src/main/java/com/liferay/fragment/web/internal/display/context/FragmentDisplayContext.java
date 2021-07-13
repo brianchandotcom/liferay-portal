@@ -195,7 +195,7 @@ public class FragmentDisplayContext {
 				_themeDisplay.getLocale()));
 
 		contributedEntries.sort(
-			new FragmentCompositionFragmentEntryNameComparator());
+			new FragmentCompositionFragmentEntryNameComparator(true));
 
 		contributedEntriesSearchContainer.setResults(
 			ListUtil.subList(

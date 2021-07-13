@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Commerce Shop by Diagram Test
+Bundle-SymbolicName: com.liferay.commerce.shop.by.diagram.test
+Bundle-Version: 1.0.0
+-includeresource:\
+	test-classes/integration

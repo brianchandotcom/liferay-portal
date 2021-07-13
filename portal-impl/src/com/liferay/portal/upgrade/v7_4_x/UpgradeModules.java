@@ -37,6 +37,8 @@ public class UpgradeModules
 		"com.liferay.portal.search"
 	};
 
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
+	private static final String[][] _CONVERTED_LEGACY_MODULES = {
+		{"opensocial-portlet", "opensocial-portlet", "OpenSocial"}
+	};
 
 }

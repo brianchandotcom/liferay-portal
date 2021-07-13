@@ -151,6 +151,12 @@ public class NumericDDMFormFieldTypeSettingsTest
 			inputMaskFormatDDMFormField.getProperty("tooltip"));
 		Assert.assertNotNull(inputMaskFormatDDMFormField.getTip());
 
+		DDMFormField numericInputMaskDDMFormField = ddmFormFieldsMap.get(
+			"numericInputMask");
+
+		Assert.assertNotNull(numericInputMaskDDMFormField);
+		Assert.assertNotNull(numericInputMaskDDMFormField.getPredefinedValue());
+
 		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
 			"placeholder");
 

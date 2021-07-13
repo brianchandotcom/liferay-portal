@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -223,28 +222,6 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 				"thousandsSeparator", " "
 			).toString(),
 			String.valueOf(parameters.get("symbols")));
-	}
-
-	@Test
-	public void testGetNumericInputMaskDefaultProperties() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		ddmFormField.setProperty("dataType", "double");
-		ddmFormField.setProperty("inputMask", true);
-
-		Map<String, Object> parameters =
-			_numericDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, _createDDMFormFieldRenderingContext());
-
-		Assert.assertEquals(StringPool.BLANK, parameters.get("append"));
-		Assert.assertEquals(StringPool.BLANK, parameters.get("appendType"));
-		Assert.assertEquals(
-			HashMapBuilder.put(
-				"decimalSymbol", "."
-			).put(
-				"thousandsSeparator", ","
-			).build(),
-			parameters.get("symbols"));
 	}
 
 	@Test

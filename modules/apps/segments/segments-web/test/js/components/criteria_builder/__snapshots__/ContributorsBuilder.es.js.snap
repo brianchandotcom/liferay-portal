@@ -77,14 +77,16 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   </svg>
                 </span>
               </a>
-              <div>
+              <div
+                class="flex-grow-1 sidebar-collapse-body"
+              >
                 <p
                   class="pt-3 px-4 text-secondary"
                 >
                   inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
                 </p>
                 <ul
-                  class="properties-list"
+                  class="pl-0"
                 >
                   <li
                     class="criteria-sidebar-item-root color--user"
@@ -862,14 +864,16 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   </svg>
                 </span>
               </a>
-              <div>
+              <div
+                class="flex-grow-1 sidebar-collapse-body"
+              >
                 <p
                   class="pt-3 px-4 text-secondary"
                 >
                   inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
                 </p>
                 <ul
-                  class="properties-list"
+                  class="pl-0"
                 >
                   <li
                     class="criteria-sidebar-item-root color--user"

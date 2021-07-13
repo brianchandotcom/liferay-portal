@@ -33,30 +33,15 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingCart'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingCategory'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingCoupon'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingItem'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingItemField'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingItemPrice'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingOrder'");
-		runSQL(
-			"delete from ClassName_ where value = " +
-				"'com.liferay.shopping.model.ShoppingOrderItem'");
+		deleteFromClassName(
+			"com.liferay.shopping.model.ShoppingCart",
+			"com.liferay.shopping.model.ShoppingCategory",
+			"com.liferay.shopping.model.ShoppingCoupon",
+			"com.liferay.shopping.model.ShoppingItem",
+			"com.liferay.shopping.model.ShoppingItemField",
+			"com.liferay.shopping.model.ShoppingItemPrice",
+			"com.liferay.shopping.model.ShoppingOrder",
+			"com.liferay.shopping.model.ShoppingOrderItem");
 
 		_deleteImages("smallImage");
 		_deleteImages("mediumImage");

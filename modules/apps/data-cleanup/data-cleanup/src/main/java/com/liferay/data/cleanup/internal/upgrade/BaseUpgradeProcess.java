@@ -26,6 +26,12 @@ import java.sql.ResultSet;
  */
 public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
+	protected void deleteFromClassName(String... values) throws Exception {
+		for (String value : values) {
+			runSQL("delete from ClassName_ where value = '" + value + "'");
+		}
+	}
+
 	protected void removeNoninstanceablePortlet(
 			String bundleSymbolicName, String[] oldPortletIds,
 			String[] portletIds)

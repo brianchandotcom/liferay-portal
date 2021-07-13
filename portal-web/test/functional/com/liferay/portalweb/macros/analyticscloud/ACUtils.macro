@@ -3,15 +3,23 @@ definition {
 	macro addSiteAndPage {
 		JSONGroup.addGroup(groupName = "Site Name");
 
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
-			layoutName = "AC Page");
+			layoutName = "${layoutName}");
 	}
 
 	macro addWidgetToPage {
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
-			layoutName = "AC Page",
+			layoutName = "${layoutName}",
 			widgetName = "${widgetName}");
 	}
 
@@ -40,9 +48,17 @@ definition {
 	}
 
 	macro createBlogsAndAddToPage {
-		ACUtils.addWidgetToPage(widgetName = "Blogs");
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		ACUtils.addWidgetToPage(
+			layoutName = "${layoutName}",
+			widgetName = "Blogs");
+
+		Navigator.gotoSitePage(
+				pageName = "${layoutName}",
+				siteName = "Site Name");
 
 		if (!(isSet(entryTitle))) {
 			entryTitle = "Blogs AC Title";
@@ -58,15 +74,31 @@ definition {
 	}
 
 	macro createDMAndAddToPage {
-		ACUtils.addWidgetToPage(widgetName = "Documents and Media");
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		ACUtils.addWidgetToPage(
+			layoutName = "${layoutName}",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+				pageName = "${layoutName}",
+				siteName = "Site Name");
+
+		if (!(isSet(dmDocumentTitle))) {
+			dmDocumentTitle = "DM AC Title";
+		}
+
+		if (!(isSet(dmDocumentFile))) {
+			dmDocumentFile = "Document_1.jpg";
+		}
 
 		DMDocument.enableActionsMenuOnPortlet();
 
 		DMDocument.addPG(
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM AC Title");
+			dmDocumentFile = "${dmDocumentFile}",
+			dmDocumentTitle = "${dmDocumentTitle}");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -74,9 +106,17 @@ definition {
 	}
 
 	macro createFormAndAddToPage {
-		ACUtils.addWidgetToPage(widgetName = "Form");
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		ACUtils.addWidgetToPage(
+			layoutName = "${layoutName}",
+			widgetName = "Form");
+
+		Navigator.gotoSitePage(
+				pageName = "${layoutName}",
+				siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -104,13 +144,25 @@ definition {
 	}
 
 	macro createWCAndAddToPage {
-		ACUtils.addWidgetToPage(widgetName = "Web Content Display");
+		if (!(isSet(layoutName))) {
+			layoutName = "AC Page";
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		ACUtils.addWidgetToPage(
+			layoutName = "${layoutName}",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+				pageName = "${layoutName}",
+				siteName = "Site Name");
+
+		if (!(isSet(webContentTitle))) {
+			webContentTitle = "Web Content AC Title";
+		}
 
 		WebContent.addPGViaWCD(
 			webContentContent = "This is the web content test for AC",
-			webContentTitle = "Web Content AC Title");
+			webContentTitle = "${webContentTitle}");
 
 		Pause(locator1 = "500");
 

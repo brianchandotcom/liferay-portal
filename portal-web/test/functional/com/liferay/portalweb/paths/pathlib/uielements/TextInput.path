@@ -36,11 +36,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_ID</td>
-	<td>//input[contains(@id,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_PRIORITY</td>
 	<td>//input[contains(@id,'assetPriority')]</td>
 	<td></td>
@@ -323,6 +318,11 @@
 <tr>
 	<td>INITIAL_URL</td>
 	<td>//input[contains(@id,'_initUrl')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_ID</td>
+	<td>//input[contains(@id,'${inputFieldId}')]</td>
 	<td></td>
 </tr>
 <tr>

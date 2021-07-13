@@ -76,11 +76,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_ID</td>
-	<td>//*[contains(@class,'btn')][contains(@id,'${key_namespace}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ANY_N</td>
 	<td>xpath=(//*[contains(@class,'btn')][normalize-space(text())='${key_text}'])[${key_indexNumber}]</td>
 	<td></td>
@@ -148,6 +143,11 @@
 <tr>
 	<td>BROWSE_IMAGE</td>
 	<td>//button[contains(@class,'browse-image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_ID</td>
+	<td>//*[contains(@class,'btn')][contains(@id,'${buttonId}')]</td>
 	<td></td>
 </tr>
 <tr>

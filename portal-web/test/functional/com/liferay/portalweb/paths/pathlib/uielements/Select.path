@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_ID</td>
-	<td>//select[contains(@id,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>APPLICATION_DECORATORS</td>
 	<td>//div[label[contains(.,'Application Decorators')]]/select[contains(@id,'portletDecorator')]</td>
 	<td></td>
@@ -203,6 +198,11 @@
 <tr>
 	<td>SAML_NAME_IDENTIFIER_FORMAT_SELECT</td>
 	<td>//select[contains(@id,'SamlAdminPortlet_nameIdFormat')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ID</td>
+	<td>//select[contains(@id,'${selectFieldId}')]</td>
 	<td></td>
 </tr>
 <tr>

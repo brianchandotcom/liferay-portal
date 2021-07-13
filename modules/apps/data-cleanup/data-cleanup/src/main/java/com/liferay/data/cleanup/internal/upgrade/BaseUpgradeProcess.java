@@ -32,6 +32,51 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	protected void deleteFromPortlet(String... portletIds) throws Exception {
+		for (String portletId : portletIds) {
+			runSQL("delete from Portlet where portletId = '" + portletId + "'");
+		}
+	}
+
+	protected void deleteFromPortletPreferences(String... portletIds)
+		throws Exception {
+
+		for (String portletId : portletIds) {
+			runSQL(
+				"delete from PortletPreferences where portletId = '" +
+					portletId + "'");
+		}
+	}
+
+	protected void deleteFromRelease(String... servletContextNames)
+		throws Exception {
+
+		for (String servletContextName : servletContextNames) {
+			runSQL(
+				"delete from Release_ where servletContextName = '" +
+					servletContextName + "'");
+		}
+	}
+
+	protected void deleteFromResourcePermission(String... names)
+		throws Exception {
+
+		for (String name : names) {
+			runSQL(
+				"delete from ResourcePermission where name = '" + name + "'");
+		}
+	}
+
+	protected void deleteFromServiceComponent(String... buildNamespaces)
+		throws Exception {
+
+		for (String buildNamespace : buildNamespaces) {
+			runSQL(
+				"delete from ServiceComponent where buildNamespace = '" +
+					buildNamespace + "'");
+		}
+	}
+
 	protected void dropTables(String... tableNames) throws Exception {
 		for (String tableName : tableNames) {
 			if (hasTable(tableName)) {

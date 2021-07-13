@@ -50,54 +50,28 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 		LayoutTypeSettingsUtil.removePortletId(
 			connection, "com_liferay_shopping_web_portlet_ShoppingPortlet");
 
-		runSQL(
-			"delete from Portlet where portletId = " +
-				"'com_liferay_shopping_web_portlet_ShoppingAdminPortlet'");
-		runSQL(
-			"delete from Portlet where portletId = " +
-				"'com_liferay_shopping_web_portlet_ShoppingPortlet'");
+		deleteFromPortlet(
+			"com_liferay_shopping_web_portlet_ShoppingAdminPortlet",
+			"com_liferay_shopping_web_portlet_ShoppingPortlet");
 
-		runSQL(
-			"delete from PortletPreferences where portletId = " +
-				"'com_liferay_shopping_web_portlet_ShoppingAdminPortlet'");
-		runSQL(
-			"delete from PortletPreferences where portletId = " +
-				"'com_liferay_shopping_web_portlet_ShoppingPortlet'");
+		deleteFromPortletPreferences(
+			"com_liferay_shopping_web_portlet_ShoppingAdminPortlet",
+			"com_liferay_shopping_web_portlet_ShoppingPortlet");
 
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.shopping.service'");
-		runSQL(
-			"delete from Release_ where servletContextName = " +
-				"'com.liferay.shopping.web'");
+		deleteFromRelease(
+			"com.liferay.shopping.service", "com.liferay.shopping.web");
 
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingCart'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingCategory'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingCoupon'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingItem'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingItemField'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingItemPrice'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingOrder'");
-		runSQL(
-			"delete from ResourcePermission where name = " +
-				"'com.liferay.shopping.model.ShoppingOrderItem'");
+		deleteFromResourcePermission(
+			"com.liferay.shopping.model.ShoppingCart",
+			"com.liferay.shopping.model.ShoppingCategory",
+			"com.liferay.shopping.model.ShoppingCoupon",
+			"com.liferay.shopping.model.ShoppingItem",
+			"com.liferay.shopping.model.ShoppingItemField",
+			"com.liferay.shopping.model.ShoppingItemPrice",
+			"com.liferay.shopping.model.ShoppingOrder",
+			"com.liferay.shopping.model.ShoppingOrderItem");
 
-		runSQL(
-			"delete from ServiceComponent where buildNamespace = 'Shopping'");
+		deleteFromServiceComponent("Shopping");
 
 		dropTables(
 			"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",

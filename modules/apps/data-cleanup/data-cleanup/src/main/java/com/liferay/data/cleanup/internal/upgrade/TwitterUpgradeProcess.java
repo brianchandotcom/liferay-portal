@@ -28,13 +28,10 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromClassName("com.liferay.twitter.model.Feed");
 
-		runSQL(
-			"delete from Portlet where portletId = " +
-				"'com_liferay_twitter_web_portlet_TwitterPortlet'");
+		deleteFromPortlet("com_liferay_twitter_web_portlet_TwitterPortlet");
 
-		runSQL(
-			"delete from PortletPreferences where portletId = " +
-				"'com_liferay_twitter_web_portlet_TwitterPortlet'");
+		deleteFromPortletPreferences(
+			"com_liferay_twitter_web_portlet_TwitterPortlet");
 
 		runSQL(
 			"delete from Release_ where servletContextName = " +

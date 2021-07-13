@@ -24,13 +24,10 @@ public class ChatUpgradeProcess extends BaseUpgradeProcess {
 		deleteFromClassName(
 			"com.liferay.chat.model.Entry", "com.liferay.chat.model.Status");
 
-		runSQL(
-			"delete from Portlet where portletId = " +
-				"'com_liferay_chat_web_portlet_ChatPortlet'");
+		deleteFromPortlet("com_liferay_chat_web_portlet_ChatPortlet");
 
-		runSQL(
-			"delete from PortletPreferences where portletId =" +
-				"'com_liferay_chat_web_portlet_ChatPortlet'");
+		deleteFromPortletPreferences(
+			"com_liferay_chat_web_portlet_ChatPortlet");
 
 		runSQL(
 			"delete from Release_ where servletContextName = " +

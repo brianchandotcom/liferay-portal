@@ -32,13 +32,10 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 			"com.liferay.mail.reader.model.Folder",
 			"com.liferay.mail.reader.model.Message");
 
-		runSQL(
-			"delete from Portlet where portletId = " +
-				"'com_liferay_mail_reader_web_portlet_MailPortlet'");
+		deleteFromPortlet("com_liferay_mail_reader_web_portlet_MailPortlet");
 
-		runSQL(
-			"delete from PortletPreferences where portletId = " +
-				"'com_liferay_mail_reader_web_portlet_MailPortlet'");
+		deleteFromPortletPreferences(
+			"com_liferay_mail_reader_web_portlet_MailPortlet");
 
 		runSQL(
 			"delete from Release_ where servletContextName = " +

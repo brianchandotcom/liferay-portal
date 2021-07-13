@@ -42,15 +42,13 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 		deleteFromClassName(
 			"com.liferay.social.privatemessaging.model.UserThread");
 
-		runSQL(
-			"delete from Portlet where portletId = " +
-				"'com_liferay_social_privatemessaging_web_portlet_" +
-					"PrivateMessagingPortlet'");
+		deleteFromPortlet(
+			"com_liferay_social_privatemessaging_web_portlet_" +
+				"PrivateMessagingPortlet");
 
-		runSQL(
-			"delete from PortletPreferences where portletId =" +
-				"'com_liferay_social_privatemessaging_web_portlet_" +
-					"PrivateMessagingPortlet'");
+		deleteFromPortletPreferences(
+			"com_liferay_social_privatemessaging_web_portlet_" +
+				"PrivateMessagingPortlet");
 
 		runSQL(
 			"delete from Release_ where servletContextName = " +

@@ -213,19 +213,21 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		}
 	}
 
-	private HttpServletRequest _getHttpServletRequest() throws PortalException {
+	private HttpServletRequest _getHttpServletRequest() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		User user = TestPropsValues.getUser();
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+		themeDisplay.setPermissionChecker(PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setPlid(_layout.getPlid());
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

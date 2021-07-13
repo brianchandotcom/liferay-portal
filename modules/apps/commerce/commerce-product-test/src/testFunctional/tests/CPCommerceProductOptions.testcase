@@ -90,11 +90,8 @@ definition {
 	@priority = "3"
 	test EditAndRemoveAnOptionWithValues {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductOptions#EditAndRemoveAnOptionWithValues";
 
 		// TODO Review
-
-		CommerceConfiguration.reindexAllSearchIndexes();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

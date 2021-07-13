@@ -213,11 +213,8 @@ definition {
 	@priority = "3"
 	test RemoveASKU {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductSKUs#RemoveASKU";
 
 		// TODO Review
-
-		CommerceConfiguration.reindexAllSearchIndexes();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

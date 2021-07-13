@@ -44,16 +44,8 @@ definition {
 	@priority = "3"
 	test AddAChannelFilter {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductVisibility#AddAChannelFilter";
 
 		// TODO Review
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -165,9 +157,6 @@ definition {
 	@priority = "3"
 	test RemoveAChannelFilter {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAChannelFilter";
-
-		CommerceConfiguration.reindexAllSearchIndexes();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

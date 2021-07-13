@@ -31,13 +31,6 @@ definition {
 	test AssertAccountSelectorIsClosedAfterGlobalSearchIsOpened {
 		property test.name.skip.portal.instance = "CommerceAccountSelector#AssertAccountSelectorIsClosedAfterGlobalSearchIsOpened";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");

@@ -479,11 +479,8 @@ definition {
 	@priority = "3"
 	test AddTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#AddTaxRateSettingsFixedTaxRateTaxCalculation";
 
 		// TODO Review
-
-		CommerceConfiguration.reindexAllSearchIndexes();
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1969,16 +1966,8 @@ definition {
 	@priority = "3"
 	test RemoveTaxRateSettingsByAddressTaxCalculation {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#RemoveTaxRateSettingsByAddressTaxCalculation";
 
 		// TODO Review
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

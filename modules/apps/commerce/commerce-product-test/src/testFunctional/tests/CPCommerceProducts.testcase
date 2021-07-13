@@ -11,13 +11,6 @@ definition {
 		User.firstLoginPG();
 
 		CommerceConfiguration.commerceStoreFrontSetUp();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
 	tearDown {
@@ -151,16 +144,8 @@ definition {
 	@priority = "3"
 	test AddGroupedProduct {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CPCommerceProducts#AddGroupedProduct";
 
 		// TODO Review
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -188,16 +173,8 @@ definition {
 	@priority = "3"
 	test AddVirtualProduct {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CPCommerceProducts#AddVirtualProduct";
 
 		// TODO Review
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -1039,16 +1016,8 @@ definition {
 	@priority = "3"
 	test UseFriendlyURL {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CPCommerceProducts#UseFriendlyURL";
 
 		// TODO Review
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

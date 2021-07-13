@@ -54,7 +54,7 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 			"com.liferay.social.privatemessaging.service",
 			"com.liferay.social.privatemessaging.web");
 
-		runSQL("delete from ServiceComponent where buildNamespace = 'PM'");
+		deleteFromServiceComponent("PM");
 
 		_deleteThreads();
 

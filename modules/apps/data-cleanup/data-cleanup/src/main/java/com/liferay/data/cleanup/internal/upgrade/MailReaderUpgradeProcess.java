@@ -46,7 +46,7 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 			"com.liferay.mail.reader.model.Folder",
 			"com.liferay.mail.reader.model.Message");
 
-		runSQL("delete from ServiceComponent where buildNamespace = 'Mail'");
+		deleteFromServiceComponent("Mail");
 
 		dropTables(
 			"Mail_Account", "Mail_Attachment", "Mail_Folder", "Mail_Message");

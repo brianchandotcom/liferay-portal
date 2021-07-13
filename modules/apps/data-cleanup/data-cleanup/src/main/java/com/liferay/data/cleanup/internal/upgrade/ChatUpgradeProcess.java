@@ -31,7 +31,7 @@ public class ChatUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromRelease("com.liferay.chat.service", "com.liferay.chat.web");
 
-		runSQL("delete from ServiceComponent where buildNamespace = 'Chat'");
+		deleteFromServiceComponent("Chat");
 
 		runSQL("drop table Chat_Entry");
 		runSQL("drop table Chat_Status");

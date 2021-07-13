@@ -38,7 +38,7 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromResourcePermission("com.liferay.twitter.model.Feed");
 
-		runSQL("delete from ServiceComponent where buildNamespace = 'Twitter'");
+		deleteFromServiceComponent("Twitter");
 
 		runSQL("drop table Twitter_Feed");
 	}

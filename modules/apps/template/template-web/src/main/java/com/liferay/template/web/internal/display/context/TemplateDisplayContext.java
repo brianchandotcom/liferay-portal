@@ -80,7 +80,7 @@ public class TemplateDisplayContext {
 		}
 
 		SearchContainer<DDMTemplate> ddmTemplateSearchContainer =
-			new SearchContainer(
+			new SearchContainer<>(
 				_liferayPortletRequest, _getPortletURL(), null,
 				"there-are-no-templates");
 

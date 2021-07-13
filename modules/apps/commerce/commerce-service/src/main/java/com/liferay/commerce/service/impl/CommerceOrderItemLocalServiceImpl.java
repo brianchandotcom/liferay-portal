@@ -937,14 +937,6 @@ public class CommerceOrderItemLocalServiceImpl
 
 			if (commerceOrderItem == null) {
 				commerceOrderItems = null;
-
-				Indexer<CommerceOrderItem> indexer =
-					IndexerRegistryUtil.getIndexer(CommerceOrderItem.class);
-
-				long companyId = GetterUtil.getLong(
-					document.get(Field.COMPANY_ID));
-
-				indexer.delete(companyId, document.getUID());
 			}
 			else if (commerceOrderItems != null) {
 				commerceOrderItems.add(commerceOrderItem);

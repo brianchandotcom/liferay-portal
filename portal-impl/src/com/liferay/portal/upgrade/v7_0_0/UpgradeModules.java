@@ -201,6 +201,7 @@ public class UpgradeModules extends UpgradeProcess {
 			"Marketplace"
 		},
 		{"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"},
+		{"opensocial-portlet", "opensocial-portlet", "OpenSocial"},
 		{
 			"private-messaging-portlet",
 			"com.liferay.social.privatemessaging.service", "PM"

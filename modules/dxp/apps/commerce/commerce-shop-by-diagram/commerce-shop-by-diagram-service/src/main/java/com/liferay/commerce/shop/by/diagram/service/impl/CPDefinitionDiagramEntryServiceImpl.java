@@ -114,6 +114,18 @@ public class CPDefinitionDiagramEntryServiceImpl
 	}
 
 	@Override
+	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionDiagramEntryLocalService.getCPDefinitionDiagramEntry(
+			cpDefinitionId, number);
+	}
+
+	@Override
 	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
 			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
 			long cProductId, boolean diagram, int number, int quantity,

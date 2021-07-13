@@ -15,6 +15,7 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -34,7 +35,16 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 	protected void deleteFromPortlet(String... portletIds) throws Exception {
 		for (String portletId : portletIds) {
-			runSQL("delete from Portlet where portletId = '" + portletId + "'");
+			String operator = "=";
+
+			if (portletId.endsWith("%") || portletId.startsWith("%")) {
+				operator = "like";
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"delete from Portlet where portletId ", operator, " '",
+					portletId, "'"));
 		}
 	}
 
@@ -42,9 +52,16 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		for (String portletId : portletIds) {
+			String operator = "=";
+
+			if (portletId.endsWith("%") || portletId.startsWith("%")) {
+				operator = "like";
+			}
+
 			runSQL(
-				"delete from PortletPreferences where portletId = '" +
-					portletId + "'");
+				StringBundler.concat(
+					"delete from PortletPreferences where portletId ", operator,
+					" '", portletId, "'"));
 		}
 	}
 

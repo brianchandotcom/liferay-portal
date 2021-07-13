@@ -32,13 +32,9 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 			"com.liferay.opensocial.model.OAuthConsumer",
 			"com.liferay.opensocial.model.OAuthToken");
 
-		runSQL(
-			"delete from Portlet where portletId like " +
-				"'%_WAR_opensocialportlet%'");
+		deleteFromPortlet("%_WAR_opensocialportlet%");
 
-		runSQL(
-			"delete from PortletPreferences where portletId like " +
-				"'%_WAR_opensocialportlet%'");
+		deleteFromPortletPreferences("%_WAR_opensocialportlet%");
 
 		_deleteResources();
 

@@ -77,7 +77,6 @@ public class NumericDDMFormFieldTemplateContextContributor
 		if (inputMask && StringUtil.equals(dataType, "double")) {
 			parameters.putAll(
 				_getNumericInputMaskParameters(
-					locale,
 					_getPropertyValue(
 						ddmFormField, ddmFormFieldRenderingContext, locale,
 						"numericInputMask")));
@@ -206,7 +205,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 	}
 
 	private Map<String, Object> _getNumericInputMaskParameters(
-		Locale locale, String numericInputMask) {
+		String numericInputMask) {
 
 		try {
 			JSONObject numericInputMaskJSONObject =
@@ -217,17 +216,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 			).put(
 				"appendType", numericInputMaskJSONObject.getString("appendType")
 			).put(
-				"symbols",
-				() -> {
-					JSONObject symbolsJSONObject =
-						numericInputMaskJSONObject.getJSONObject("symbols");
-
-					if (symbolsJSONObject != null) {
-						return symbolsJSONObject;
-					}
-
-					return getSymbolsMap(locale);
-				}
+				"symbols", numericInputMaskJSONObject.getJSONObject("symbols")
 			).build();
 		}
 		catch (JSONException jsonException) {

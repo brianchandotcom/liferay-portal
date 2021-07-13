@@ -188,7 +188,10 @@ public interface NumericDDMFormFieldTypeSettings
 	)
 	public LocalizedValue inputMaskFormat();
 
-	@DDMFormField(type = "numeric_input_mask")
+	@DDMFormField(
+		predefinedValue = "%{\"append\": \"\", \"appendType\": \"prefix\", \"symbols\": {\"decimalSymbol\": \".\", \"thousandsSeparator\": \"none\"}}",
+		type = "numeric_input_mask"
+	)
 	public LocalizedValue numericInputMask();
 
 	@DDMFormField(

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
@@ -113,23 +114,26 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setAutoFix(autoFix);
 
-			String baseDirName = ArgumentsUtil.getString(
-				arguments, "source.base.dir",
-				SourceFormatterArgs.BASE_DIR_NAME);
+			String spacePlaceholder = ArgumentsUtil.getString(
+				arguments, "space.placeholder", null);
+
+			String baseDirName = _getArgument(
+				arguments, "source.base.dir", SourceFormatterArgs.BASE_DIR_NAME,
+				spacePlaceholder);
 
 			sourceFormatterArgs.setBaseDirName(baseDirName);
 
 			List<String> checkCategoryNames = ListUtil.fromString(
-				StringUtil.replace(
-					ArgumentsUtil.getString(
-						arguments, "source.check.category.names", null),
-					CharPool.UNDERLINE, CharPool.SPACE),
+				_getArgument(
+					arguments, "source.check.category.names", null,
+					spacePlaceholder),
 				StringPool.COMMA);
 
 			sourceFormatterArgs.setCheckCategoryNames(checkCategoryNames);
 
 			List<String> checkNames = ListUtil.fromString(
-				ArgumentsUtil.getString(arguments, "source.check.names", null),
+				_getArgument(
+					arguments, "source.check.names", null, spacePlaceholder),
 				StringPool.COMMA);
 
 			sourceFormatterArgs.setCheckNames(checkNames);
@@ -164,9 +168,9 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 
-			String gitWorkingBranchName = ArgumentsUtil.getString(
+			String gitWorkingBranchName = _getArgument(
 				arguments, "git.working.branch.name",
-				SourceFormatterArgs.GIT_WORKING_BRANCH_NAME);
+				SourceFormatterArgs.GIT_WORKING_BRANCH_NAME, spacePlaceholder);
 
 			sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
 
@@ -197,8 +201,8 @@ public class SourceFormatter {
 					baseDirName);
 			}
 
-			String fileNamesString = ArgumentsUtil.getString(
-				arguments, "source.files", StringPool.BLANK);
+			String fileNamesString = _getArgument(
+				arguments, "source.files", StringPool.BLANK, spacePlaceholder);
 
 			String[] fileNames = StringUtil.split(
 				fileNamesString, StringPool.COMMA);
@@ -207,8 +211,9 @@ public class SourceFormatter {
 				sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
 			}
 			else {
-				String fileExtensionsString = ArgumentsUtil.getString(
-					arguments, "source.file.extensions", StringPool.BLANK);
+				String fileExtensionsString = _getArgument(
+					arguments, "source.file.extensions", StringPool.BLANK,
+					spacePlaceholder);
 
 				String[] fileExtensions = StringUtil.split(
 					fileExtensionsString, StringPool.COMMA);
@@ -247,9 +252,9 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setMaxLineLength(maxLineLength);
 
-			String outputFileName = ArgumentsUtil.getString(
+			String outputFileName = _getArgument(
 				arguments, "output.file.name",
-				SourceFormatterArgs.OUTPUT_FILE_NAME);
+				SourceFormatterArgs.OUTPUT_FILE_NAME, spacePlaceholder);
 
 			sourceFormatterArgs.setMaxDirLevel(
 				Math.max(
@@ -288,8 +293,8 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setShowStatusUpdates(showStatusUpdates);
 
-			String skipCheckNamesString = ArgumentsUtil.getString(
-				arguments, "skip.check.names", null);
+			String skipCheckNamesString = _getArgument(
+				arguments, "skip.check.names", null, spacePlaceholder);
 
 			String[] skipCheckNames = StringUtil.split(
 				skipCheckNamesString, StringPool.COMMA);
@@ -498,6 +503,20 @@ public class SourceFormatter {
 
 	public List<SourceMismatchException> getSourceMismatchExceptions() {
 		return _sourceMismatchExceptions;
+	}
+
+	private static String _getArgument(
+		Map<String, String> arguments, String key, String defaultValue,
+		String spacePlaceholder) {
+
+		String value = ArgumentsUtil.getString(arguments, key, defaultValue);
+
+		if (Validator.isNotNull(spacePlaceholder)) {
+			return StringUtil.replace(
+				value, spacePlaceholder, StringPool.SPACE);
+		}
+
+		return value;
 	}
 
 	private static CheckstyleException _getNestedCheckstyleException(

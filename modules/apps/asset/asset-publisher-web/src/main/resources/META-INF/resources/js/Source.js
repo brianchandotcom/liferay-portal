@@ -30,6 +30,7 @@ export default function ({classTypes, namespace}) {
 	const ddmStructureFieldNameInput = document.getElementById(
 		`${namespace}ddmStructureFieldName`
 	);
+	const showSubtypeFieldsFilter = ddmStructureFieldNameInput;
 	const ddmStructureFieldValueInput = document.getElementById(
 		`${namespace}ddmStructureFieldValue`
 	);
@@ -258,25 +259,27 @@ export default function ({classTypes, namespace}) {
 		});
 
 		const onChangeSubtypeSelector = () => {
-			setDDMFields({className});
+			if (showSubtypeFieldsFilter) {
+				setDDMFields({className});
 
-			const enableCheckbox = document.getElementById(
-				`${namespace}subtypeFieldsFilterEnabled${className}`
-			);
+				const enableCheckbox = document.getElementById(
+					`${namespace}subtypeFieldsFilterEnabled${className}`
+				);
 
-			if (enableCheckbox) {
-				enableCheckbox.checked = false;
+				if (enableCheckbox) {
+					enableCheckbox.checked = false;
 
-				togglePopupButtons(enableCheckbox, false);
+					togglePopupButtons(enableCheckbox, false);
+				}
+
+				sourcePanel
+					.querySelectorAll('.asset-subtypefields')
+					.forEach((subtypeField) => {
+						subtypeField.classList.add('hide');
+					});
+
+				toggleSubclassesFields(true, className);
 			}
-
-			sourcePanel
-				.querySelectorAll('.asset-subtypefields')
-				.forEach((subtypeField) => {
-					subtypeField.classList.add('hide');
-				});
-
-			toggleSubclassesFields(true, className);
 		};
 
 		const changeSubtypeSelector = delegate(
@@ -292,28 +295,30 @@ export default function ({classTypes, namespace}) {
 	toggleSubclasses(assetSelector.value);
 
 	const onChangeAssetSelector = () => {
-		ddmStructureFieldNameInput.value = '';
-		ddmStructureFieldValueInput.value = '';
+		toggleSubclasses(assetSelector.value);
 
-		const classTypeSelected = classTypes.find(
-			({classNameId}) => classNameId === assetSelector.value
-		);
+		if (showSubtypeFieldsFilter) {
+			ddmStructureFieldNameInput.value = '';
+			ddmStructureFieldValueInput.value = '';
 
-		if (classTypeSelected) {
-			const enableCheckbox = document.getElementById(
-				`${namespace}subtypeFieldsFilterEnabled${classTypeSelected.className}`
+			const classTypeSelected = classTypes.find(
+				({classNameId}) => classNameId === assetSelector.value
 			);
 
-			if (enableCheckbox) {
-				togglePopupButtons(enableCheckbox, enableCheckbox.checked);
+			if (classTypeSelected) {
+				const enableCheckbox = document.getElementById(
+					`${namespace}subtypeFieldsFilterEnabled${classTypeSelected.className}`
+				);
+
+				if (enableCheckbox) {
+					togglePopupButtons(enableCheckbox, enableCheckbox.checked);
+				}
+			}
+
+			if (orderingPanel) {
+				removeOptionsOrderByFilter();
 			}
 		}
-
-		if (orderingPanel) {
-			removeOptionsOrderByFilter();
-		}
-
-		toggleSubclasses(assetSelector.value);
 	};
 
 	const changeAssetSelector = delegate(

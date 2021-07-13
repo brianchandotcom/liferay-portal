@@ -46,10 +46,6 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 			"com.liferay.shopping.model.ShoppingOrder",
 			"com.liferay.shopping.model.ShoppingOrderItem");
 
-		_deleteImages("smallImage");
-		_deleteImages("mediumImage");
-		_deleteImages("largeImage");
-
 		deleteFromPortlet(
 			"com_liferay_shopping_web_portlet_ShoppingAdminPortlet",
 			"com_liferay_shopping_web_portlet_ShoppingPortlet");
@@ -73,13 +69,17 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromServiceComponent("Shopping");
 
+		_deleteFromShoppingItem("smallImage");
+		_deleteFromShoppingItem("mediumImage");
+		_deleteFromShoppingItem("largeImage");
+
 		dropTables(
 			"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",
 			"ShoppingItem", "ShoppingItemField", "ShoppingItemPrice",
 			"ShoppingOrder", "ShoppingOrderItem");
 	}
 
-	private void _deleteImages(String type) throws Exception {
+	private void _deleteFromShoppingItem(String type) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(

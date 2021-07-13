@@ -236,6 +236,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_UNAVAILABLE_LABEL</td>
+	<td>//p[@title='${key_productName}']//..//..//..//span[contains(text(),'Unavailable')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLES_BUTTON</td>
 	<td>//button[contains(.,'Roles')]</td>
 	<td></td>

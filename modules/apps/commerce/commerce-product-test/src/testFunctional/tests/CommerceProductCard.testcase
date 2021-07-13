@@ -679,9 +679,9 @@ definition {
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "//main[contains(@class,'minium-frame')]");
-
-		AssertElementPresent(locator1 = "//p[contains(@title, ");
+		AssertElementPresent(
+			key_productName = "Catalytic Converters",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_UNAVAILABLE_LABEL");
 	}
 
 	@description = "COMMERCE-5861. As a buyer, I want to view the product name with the correct localization"

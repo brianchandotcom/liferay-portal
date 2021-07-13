@@ -58,7 +58,7 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
 		_deleteThreads();
 
-		runSQL("drop table PM_UserThread");
+		dropTables("PM_UserThread");
 	}
 
 	private void _deleteThreads() throws Exception {

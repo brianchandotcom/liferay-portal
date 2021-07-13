@@ -42,7 +42,9 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromServiceComponent("OpenSocial");
 
-		_dropTables();
+		dropTables(
+			"OpenSocial_Gadget", "OpenSocial_OAuthConsumer",
+			"OpenSocial_OAuthToken");
 	}
 
 	private void _deleteResources() throws Exception {
@@ -58,19 +60,6 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 		runSQL("delete from ResourceAction where name in (" + values + ")");
 		runSQL("delete from ResourcePermission where name in (" + values + ")");
-	}
-
-	private void _dropTables() throws Exception {
-		String[] tableNames = {
-			"OpenSocial_Gadget", "OpenSocial_OAuthConsumer",
-			"OpenSocial_OAuthToken"
-		};
-
-		for (String tableName : tableNames) {
-			if (doHasTable(tableName)) {
-				runSQL("drop table " + tableName);
-			}
-		}
 	}
 
 }

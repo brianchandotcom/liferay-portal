@@ -40,7 +40,7 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromServiceComponent("Twitter");
 
-		runSQL("drop table Twitter_Feed");
+		dropTables("Twitter_Feed");
 	}
 
 }

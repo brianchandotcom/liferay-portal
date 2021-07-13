@@ -33,8 +33,7 @@ public class ChatUpgradeProcess extends BaseUpgradeProcess {
 
 		deleteFromServiceComponent("Chat");
 
-		runSQL("drop table Chat_Entry");
-		runSQL("drop table Chat_Status");
+		dropTables("Chat_Entry", "Chat_Status");
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -26,6 +28,7 @@ import com.liferay.headless.admin.user.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
@@ -64,6 +67,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
@@ -103,6 +107,47 @@ public class UserAccountResourceImpl
 	extends BaseUserAccountResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception {
+
+		_accountEntryUserRelService.deleteAccountEntryUserRelByEmailAddress(
+			accountId, emailAddress);
+	}
+
+	@Override
+	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String emailAddress)
+		throws Exception {
+
+		deleteAccountUserByEmailAddress(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			emailAddress);
+	}
+
+	@Override
+	public void deleteAccountUsersByEmailAddress(
+			Long accountId, String[] emailAddresses)
+		throws Exception {
+
+		for (String emailAddress : emailAddresses) {
+			deleteAccountUserByEmailAddress(accountId, emailAddress);
+		}
+	}
+
+	@Override
+	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] emailAddresses)
+		throws Exception {
+
+		for (String emailAddress : emailAddresses) {
+			deleteAccountUserByExternalReferenceCodeByEmailAddress(
+				externalReferenceCode, emailAddress);
+		}
+	}
+
+	@Override
 	public void deleteUserAccount(Long userAccountId) throws Exception {
 		_userService.deleteUser(userAccountId);
 	}
@@ -116,6 +161,46 @@ public class UserAccountResourceImpl
 			contextCompany.getCompanyId(), externalReferenceCode);
 
 		deleteUserAccount(user.getUserId());
+	}
+
+	@Override
+	public Page<UserAccount> getAccountUsersByExternalReferenceCodePage(
+			String externalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return getAccountUsersPage(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			search, filter, pagination, sorts);
+	}
+
+	@Override
+	public Page<UserAccount> getAccountUsersPage(
+			Long accountId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"accountEntryIds", String.valueOf(accountId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter, User.class, search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toUserAccount(
+				_userLocalService.getUserById(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
@@ -216,6 +301,81 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
+	public UserAccount postAccountUser(Long accountId, UserAccount userAccount)
+		throws Exception {
+
+		userAccount = postUserAccount(userAccount);
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountId, userAccount.getId());
+
+		User user = _userLocalService.getUser(
+			accountEntryUserRel.getAccountUserId());
+
+		return _toUserAccount(user);
+	}
+
+	@Override
+	public void postAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setLanguageId(
+			contextAcceptLanguage.getPreferredLanguageId());
+		serviceContext.setUserId(contextUser.getUserId());
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			accountId, emailAddress, new long[0], null, serviceContext);
+	}
+
+	@Override
+	public UserAccount postAccountUserByExternalReferenceCode(
+			String externalReferenceCode, UserAccount userAccount)
+		throws Exception {
+
+		return postAccountUser(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			userAccount);
+	}
+
+	@Override
+	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String emailAddress)
+		throws Exception {
+
+		postAccountUserByEmailAddress(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			emailAddress);
+	}
+
+	@Override
+	public void postAccountUsersByEmailAddress(
+			Long accountId, String[] emailAddresses)
+		throws Exception {
+
+		for (String emailAddress : emailAddresses) {
+			postAccountUserByEmailAddress(accountId, emailAddress);
+		}
+	}
+
+	@Override
+	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
+			String externalReferenceCode, String[] emailAddresses)
+		throws Exception {
+
+		for (String emailAddress : emailAddresses) {
+			postAccountUserByExternalReferenceCodeByEmailAddress(
+				externalReferenceCode, emailAddress);
+		}
+	}
+
+	@Override
 	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception {
 
@@ -254,6 +414,13 @@ public class UserAccountResourceImpl
 			_contactLocalService.updateContact(contact);
 
 			user = _userService.getUserById(user.getUserId());
+		}
+
+		if (userAccount.getExternalReferenceCode() != null) {
+			user.setExternalReferenceCode(
+				userAccount.getExternalReferenceCode());
+
+			user = _userLocalService.updateUser(user);
 		}
 
 		return _toUserAccount(user);
@@ -736,6 +903,15 @@ public class UserAccountResourceImpl
 
 	private static final EntityModel _entityModel =
 		new UserAccountEntityModel();
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelService;
+
+	@Reference
+	private AccountResourceDTOConverter _accountResourceDTOConverter;
 
 	@Reference
 	private AnnouncementsDeliveryLocalService

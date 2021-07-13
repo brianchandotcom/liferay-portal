@@ -14,6 +14,7 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
+import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

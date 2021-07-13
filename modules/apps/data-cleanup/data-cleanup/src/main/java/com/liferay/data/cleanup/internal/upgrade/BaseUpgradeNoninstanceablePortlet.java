@@ -14,6 +14,7 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
+import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 

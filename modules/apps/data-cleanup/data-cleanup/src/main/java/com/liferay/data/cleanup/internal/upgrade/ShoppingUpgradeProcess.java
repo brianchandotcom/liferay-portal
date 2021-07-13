@@ -14,6 +14,7 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
+import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.service.ImageLocalService;

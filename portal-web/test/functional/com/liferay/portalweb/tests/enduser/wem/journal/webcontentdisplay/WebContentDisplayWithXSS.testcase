@@ -32,16 +32,18 @@ definition {
 	@priority = "4"
 	@uitest
 	test SelectWebContentBasedOnTemplateNameWithXSS {
-		var templateName = '''<script>alert(123);</script>''';
-
 		task ("Add a web content template with a XSS name") {
+			var actualScript = '''<script>alert(123);</script>''';
+
+			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
 
 			WebContentTemplates.addCP(
 				structureName = "Basic Web Content",
-				templateName = "${templateName}");
+				templateName = "${actualScript}");
 		}
 
 		task ("View the alert not shown") {
@@ -49,10 +51,6 @@ definition {
 		}
 
 		task ("View the XSS is escaped") {
-			var actualScript = '''<script>alert(123);</script>''';
-
-			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
 			LexiconCard.viewCardNotPresent(card = "${actualScript}");
 
 			WebContentTemplates.viewCardsEntryCP(templateName = "${escapedScript}");

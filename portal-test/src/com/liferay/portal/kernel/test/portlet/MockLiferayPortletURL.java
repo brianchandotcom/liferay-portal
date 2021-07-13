@@ -98,7 +98,7 @@ public class MockLiferayPortletURL implements LiferayPortletURL {
 
 	@Override
 	public String getPortletId() {
-		return null;
+		return _portletId;
 	}
 
 	@Override
@@ -237,6 +237,7 @@ public class MockLiferayPortletURL implements LiferayPortletURL {
 
 	@Override
 	public void setPortletId(String portletId) {
+		_portletId = portletId;
 	}
 
 	@Override
@@ -294,7 +295,8 @@ public class MockLiferayPortletURL implements LiferayPortletURL {
 		sb.append("//localhost/test?");
 
 		for (Map.Entry<String, String[]> entry : entries) {
-			sb.append("param_");
+			sb.append(_portletId);
+			sb.append("_");
 			sb.append(entry.getKey());
 			sb.append("=");
 			sb.append(entry.getValue()[0]);
@@ -321,5 +323,6 @@ public class MockLiferayPortletURL implements LiferayPortletURL {
 	}
 
 	private Map<String, String[]> _parameters = new ConcurrentHashMap<>();
+	private String _portletId = "param";
 
 }

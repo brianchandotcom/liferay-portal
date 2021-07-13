@@ -48,10 +48,8 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 
 		runSQL("delete from ServiceComponent where buildNamespace = 'Mail'");
 
-		runSQL("drop table Mail_Account");
-		runSQL("drop table Mail_Attachment");
-		runSQL("drop table Mail_Folder");
-		runSQL("drop table Mail_Message");
+		dropTables(
+			"Mail_Account", "Mail_Attachment", "Mail_Folder", "Mail_Message");
 	}
 
 }

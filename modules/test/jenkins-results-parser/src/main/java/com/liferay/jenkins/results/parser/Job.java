@@ -27,6 +27,8 @@ import java.util.Set;
  */
 public interface Job {
 
+	public int getAxisCount();
+
 	public List<AxisTestClassGroup> getAxisTestClassGroups();
 
 	public Set<String> getBatchNames();
@@ -36,6 +38,8 @@ public interface Job {
 	public List<Build> getBuildHistory(JenkinsMaster jenkinsMaster);
 
 	public BuildProfile getBuildProfile();
+
+	public List<String> getDistNodes();
 
 	public DistType getDistType();
 

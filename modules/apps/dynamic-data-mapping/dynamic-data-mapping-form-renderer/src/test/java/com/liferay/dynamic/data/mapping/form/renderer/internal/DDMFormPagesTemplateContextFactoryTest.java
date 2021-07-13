@@ -19,7 +19,9 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMFormEvaluatorImpl;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.HasGooglePlacesAPIKeyFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.JumpPageFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetVisibleFunction;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
@@ -28,15 +30,12 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.util.DDMFormFieldTemplateContextContributorTestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.google.places.util.GooglePlacesUtil;
@@ -51,6 +50,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -68,8 +68,8 @@ import com.liferay.portal.util.HtmlImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -148,18 +148,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTemplateContextContributorTestHelper.
 				createCheckboxMultipleDDMFormFieldTemplateContextContributor());
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				null, false, true, true);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -198,18 +194,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTemplateContextContributorTestHelper.
 				createDateDDMFormFieldTemplateContextContributor());
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				null, false, true, true);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -242,19 +234,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			DDMFormTestUtil.createDDMFormField(
 				"Field3", "Field3", "text", "string", false, false, false));
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 2", "Page 2 Description", "Field2");
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 3", "Page 3 Description", "Field3");
-
 		// Dynamic data mapping form values
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
@@ -276,7 +255,18 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, ddmFormValues, false, false, false);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 1 Description", "Page 1",
+						new String[] {"Field1"}),
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 2 Description", "Page 2",
+						new String[] {"Field2"}),
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 3 Description", "Page 3",
+						new String[] {"Field3"})),
+				ddmFormValues, false, false, false);
 
 		mockDDMFormFieldTypeServicesTracker(
 			"text",
@@ -326,13 +316,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTemplateContextContributorTestHelper.
 				createGridDDMFormFieldTemplateContextContributor());
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
 		// Template context
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
@@ -344,7 +327,10 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, ddmFormValues, false, true, true);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				ddmFormValues, false, true, true);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -371,6 +357,30 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	@Test
+	public void testInvisibleFieldByGooglePlacesAPIKey() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Field1");
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				Collections.singletonList(
+					"setVisible('Field1', hasGooglePlacesAPIKey())"),
+				"TRUE"));
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				null, false, true, true);
+
+		Map<String, Object> fieldTemplateContext = getFieldTemplateContext(
+			ddmFormPagesTemplateContextFactory.create());
+
+		Assert.assertFalse(
+			GetterUtil.getBoolean(fieldTemplateContext.get("visible")));
+	}
+
+	@Test
 	public void testNumericFieldTemplateContext() throws Exception {
 
 		// Dynamic data mapping form
@@ -393,18 +403,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTemplateContextContributorTestHelper.
 				createNumericDDMFormFieldTemplateContextContributor());
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				null, false, true, true);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -427,41 +433,21 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			"Field1", "Field2", "Field3", "Field4", "Field5");
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
-			"Page 1", "Page 1 Description");
-
-		DDMFormLayoutRow ddmFormLayoutRow1 = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow1.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field1", "Field2"));
-
-		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow1);
-
-		DDMFormLayoutRow ddmFormLayoutRow2 = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow2.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field3"));
-
-		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow2);
-
-		DDMFormLayoutRow ddmFormLayoutRow3 = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow3.addDDMFormLayoutColumn(
-			new DDMFormLayoutColumn(12, "Field4", "Field5"));
-
-		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow3);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, false);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 1 Description", "Page 1",
+						DDMFormLayoutTestUtil.createDDMFormLayoutRow(
+							DDMFormLayoutTestUtil.createDDMFormLayoutColumns(
+								"Field1", "Field2")),
+						DDMFormLayoutTestUtil.createDDMFormLayoutRow("Field3"),
+						DDMFormLayoutTestUtil.createDDMFormLayoutRow(
+							"Field4", "Field5"))),
+				null, false, true, false);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -509,23 +495,17 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
 		String descriptionPage = String.format(
 			_HTML_WRAPPER, "descriptionPage");
-
-		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
-			"titlePage", descriptionPage);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
 
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					descriptionPage, "titlePage", null),
+				null, false, true, true);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -543,22 +523,16 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
 		String pageTitle = String.format(_HTML_WRAPPER, "titlePage");
-
-		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
-			pageTitle, "descriptionPage");
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
 
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"descriptionPage", pageTitle, null),
+				null, false, true, true);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -593,18 +567,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTemplateContextContributorTestHelper.
 				createRadioDDMFormFieldTemplateContextContributor());
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, false);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				null, false, true, false);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -647,21 +617,20 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			DDMFormTestUtil.createDDMFormField(
 				"Field3", "Field3", "text", "string", false, false, false));
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1", "Field2");
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 2", "Page 2 Description", "Field3");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, false, false);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 1 Description", "Page 1",
+						DDMFormLayoutTestUtil.createDDMFormLayoutColumns(
+							"Field1", "Field2")),
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 2 Description", "Page 2",
+						new String[] {"Field3"})),
+				null, false, false, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -703,21 +672,20 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			DDMFormTestUtil.createDDMFormField(
 				"Field3", "Field3", "text", "string", false, false, false));
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1", "Field2");
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 2", "Page 2 Description", "Field3");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, false);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 1 Description", "Page 1",
+						DDMFormLayoutTestUtil.createDDMFormLayoutColumns(
+							"Field1", "Field2")),
+					DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+						"Page 2 Description", "Page 2",
+						new String[] {"Field3"})),
+				null, false, true, false);
 
 		List<Object> pagesTemplateContext =
 			ddmFormPagesTemplateContextFactory.create();
@@ -761,18 +729,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTemplateContextContributorTestHelper.
 				createSelectDDMFormFieldTemplateContextContributor());
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				null, false, true, true);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -818,18 +782,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormFieldTemplateContextContributorTestHelper.
 				createTextDDMFormFieldTemplateContextContributor());
 
-		// Dynamic data mapping form layout
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout = createDDMFormLayoutPage(
-			ddmFormLayout, "Page 1", "Page 1 Description", "Field1");
-
 		// Template context
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, false);
+				ddmForm,
+				DDMFormLayoutTestUtil.createDDMFormLayout(
+					"Page 1 Description", "Page 1", new String[] {"Field1"}),
+				null, false, true, false);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -860,68 +820,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		Assert.assertEquals(
 			expectedSize, MapUtil.getInteger(columnTemplateContex, "size"));
-	}
-
-	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
-		String ddmFormFieldName, int size) {
-
-		return new DDMFormLayoutColumn(size, ddmFormFieldName);
-	}
-
-	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(
-		String... ddmFormFieldNames) {
-
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
-
-		int ddmFormLayoutColumnSize =
-			DDMFormLayoutColumn.FULL / ddmFormFieldNames.length;
-
-		for (String ddmFormFieldName : ddmFormFieldNames) {
-			ddmFormLayoutColumns.add(
-				createDDMFormLayoutColumn(
-					ddmFormFieldName, ddmFormLayoutColumnSize));
-		}
-
-		return ddmFormLayoutColumns;
-	}
-
-	protected DDMFormLayout createDDMFormLayoutPage(
-		DDMFormLayout ddmFormLayout, String pageTitle, String pageDescription,
-		String... ddmFormFieldName) {
-
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
-			pageTitle, pageDescription);
-
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns(ddmFormFieldName));
-
-		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
-
-		return ddmFormLayout;
-	}
-
-	protected DDMFormLayoutPage createDDMFormLayoutPage(
-		String titleString, String descriptionString) {
-
-		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
-
-		LocalizedValue title = new LocalizedValue(_LOCALE);
-
-		title.addString(_LOCALE, titleString);
-
-		ddmFormLayoutPage.setTitle(title);
-
-		LocalizedValue description = new LocalizedValue(_LOCALE);
-
-		description.addString(_LOCALE, descriptionString);
-
-		ddmFormLayoutPage.setDescription(description);
-
-		return ddmFormLayoutPage;
 	}
 
 	protected DDMFormPagesTemplateContextFactory
@@ -979,7 +877,12 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		Map<String, DDMExpressionFunctionFactory>
 			ddmExpressionFunctionFactoryMap =
 				HashMapBuilder.<String, DDMExpressionFunctionFactory>put(
+					"hasGooglePlacesAPIKey",
+					() -> new HasGooglePlacesAPIKeyFunction()
+				).put(
 					"jumpPage", () -> new JumpPageFunction()
+				).put(
+					"setVisible", () -> new SetVisibleFunction()
 				).build();
 
 		DDMExpressionFunctionTracker ddmExpressionFunctionTracker = mock(

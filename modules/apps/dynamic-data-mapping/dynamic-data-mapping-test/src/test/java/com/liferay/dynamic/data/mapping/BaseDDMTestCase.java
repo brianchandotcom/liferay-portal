@@ -27,8 +27,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -53,16 +51,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.SAXReaderImpl;
 
@@ -71,7 +65,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -147,29 +140,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		}
 	}
 
-	protected Element addTextElement(
-		Element element, String name, String label, boolean localizable) {
-
-		Element dynamicElement = element.addElement("dynamic-element");
-
-		dynamicElement.addAttribute("dataType", "string");
-		dynamicElement.addAttribute("localizable", String.valueOf(localizable));
-		dynamicElement.addAttribute("name", name);
-		dynamicElement.addAttribute("type", "text");
-
-		Element metadataElement = dynamicElement.addElement("meta-data");
-
-		metadataElement.addAttribute(
-			"locale", LocaleUtil.toLanguageId(LocaleUtil.US));
-
-		Element entryElement = metadataElement.addElement("entry");
-
-		entryElement.addAttribute("name", "label");
-		entryElement.setText(label);
-
-		return dynamicElement;
-	}
-
 	protected Set<Locale> createAvailableLocales(Locale... locales) {
 		Set<Locale> availableLocales = new LinkedHashSet<>();
 
@@ -238,42 +208,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return createDDMFormFieldValue(StringUtil.randomString(), name, value);
 	}
 
-	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
-		int size, String... fieldNames) {
-
-		return new DDMFormLayoutColumn(size, fieldNames);
-	}
-
-	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(
-		String... fieldNames) {
-
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
-
-		int size = 12 / fieldNames.length;
-
-		for (String fieldName : fieldNames) {
-			ddmFormLayoutColumns.add(new DDMFormLayoutColumn(size, fieldName));
-		}
-
-		return ddmFormLayoutColumns;
-	}
-
-	protected DDMFormLayoutRow createDDMFormLayoutRow(
-		DDMFormLayoutColumn... ddmFormLayoutColumns) {
-
-		return createDDMFormLayoutRow(Arrays.asList(ddmFormLayoutColumns));
-	}
-
-	protected DDMFormLayoutRow createDDMFormLayoutRow(
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
-
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(ddmFormLayoutColumns);
-
-		return ddmFormLayoutRow;
-	}
-
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
 		return createDDMFormValues(
 			ddmForm, createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
@@ -288,28 +222,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		ddmFormValues.setDefaultLocale(defaultLocale);
 
 		return ddmFormValues;
-	}
-
-	protected Document createDocument(String... fieldNames) {
-		Document document = createEmptyDocument();
-
-		for (String fieldName : fieldNames) {
-			addTextElement(
-				document.getRootElement(), fieldName, fieldName, false);
-		}
-
-		return document;
-	}
-
-	protected Document createEmptyDocument() {
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute("available-locales", "en_US");
-		rootElement.addAttribute("default-locale", "en_US");
-
-		return document;
 	}
 
 	protected Field createField(
@@ -368,15 +280,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		localizedValue.addString(LocaleUtil.US, name);
 
 		return ddmFormField;
-	}
-
-	protected Document createSampleDocument() {
-		Document document = createEmptyDocument();
-
-		addTextElement(
-			document.getRootElement(), "Unlocalizable", "Text 2", false);
-
-		return document;
 	}
 
 	protected DDMFormField createSeparatorDDMFormField(
@@ -798,16 +701,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 				}
 
 			}
-		);
-	}
-
-	protected void setUpLocalizationUtil() {
-		spy(LocalizationUtil.class);
-
-		when(
-			LocalizationUtil.getLocalization()
-		).thenReturn(
-			new LocalizationImpl()
 		);
 	}
 

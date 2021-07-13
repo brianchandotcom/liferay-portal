@@ -30,7 +30,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.google.places.util.GooglePlacesUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.language.Language;
@@ -66,13 +65,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(GooglePlacesUtil.class)
 @RunWith(PowerMockRunner.class)
 public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 
@@ -84,7 +81,6 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 	@Before
 	public void setUp() {
 		setUpDDMFormTemplateContextFactoryUtil();
-		setUpGooglePlacesUtil();
 		setUpLanguageUtil();
 	}
 
@@ -428,18 +424,6 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 				WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
-		);
-	}
-
-	protected void setUpGooglePlacesUtil() {
-		mockStatic(GooglePlacesUtil.class);
-
-		when(
-			GooglePlacesUtil.getGooglePlacesAPIKey(
-				Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.any(GroupLocalService.class))
-		).thenReturn(
-			StringPool.BLANK
 		);
 	}
 

@@ -92,12 +92,35 @@ definition {
 	}
 
 	@description = "Verify that an approved Calendar Event can be deleted"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ApprovedEventCanBeDeleted {
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		// TODO LRQA-68616 ApprovedEventCanBeDeleted pending implementation
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
 
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Click(
+			key_eventTitle = "Calendar Event Title",
+			locator1 = "WorkflowCalendar#CALENDAR_EVENT_BY_TITLE");
+
+		Button.clickNoError(button = "Delete");
+
+		AssertConfirm(value1 = "Deleting this event will cancel the meeting with your guests. Would you like to delete?");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		AssertElementNotPresent(
+			key_eventTitle = "Calendar Event Title",
+			locator1 = "WorkflowCalendar#CALENDAR_EVENT_BY_TITLE");
 	}
 
 	@priority = "5"

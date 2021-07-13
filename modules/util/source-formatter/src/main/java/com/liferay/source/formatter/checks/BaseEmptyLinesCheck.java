@@ -97,9 +97,10 @@ public abstract class BaseEmptyLinesCheck extends BaseFileCheck {
 
 			String tagName2 = matcher.group(4);
 
-			if (!tagName1.equals(tagName2) &&
-				(!ArrayUtil.contains(_STYLING_TAG_NAMES, tagName1) ||
-				 !ArrayUtil.contains(_STYLING_TAG_NAMES, tagName2))) {
+			if ((!tagName1.equals(tagName2) &&
+				 (!ArrayUtil.contains(_STYLING_TAG_NAMES, tagName1) ||
+				  !ArrayUtil.contains(_STYLING_TAG_NAMES, tagName2))) ||
+				(tagName1.matches("h\\d") && tagName1.matches("h\\d"))) {
 
 				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
@@ -660,7 +661,7 @@ public abstract class BaseEmptyLinesCheck extends BaseFileCheck {
 	private static final Pattern _emptyLineInMultiLineTagsPattern2 =
 		Pattern.compile("\n(\t*)\\S*[^>]\n\n(\t*)(/?)>\n");
 	private static final Pattern _emptyLineInNestedTagsPattern1 =
-		Pattern.compile("\n(\t*)(?:<\\w.*[^/])?>\n(?=\n(\t*)(<.*)\n)");
+		Pattern.compile("(?:\\A|\n)(\t*)(?:<\\w.*[^/])?>\n(?=\n(\t*)(<.*)\n)");
 	private static final Pattern _emptyLineInNestedTagsPattern2 =
 		Pattern.compile("\n(\t*)(.*>)\n(?=\n(\t*)</.*(\n|$))");
 	private static final Pattern _incorrectCloseCurlyBracePattern1 =

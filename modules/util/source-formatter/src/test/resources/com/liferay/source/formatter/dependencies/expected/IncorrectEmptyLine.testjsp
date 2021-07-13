@@ -16,6 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<div>
+	<h1>This is header 1</h1>
+
+	<h1>This is header 2 </h1>
+</div>
+
 <%
 String s = "";
 

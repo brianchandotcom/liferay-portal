@@ -223,8 +223,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public void setPanelState(
 		HttpServletRequest httpServletRequest, String panelState) {
 
-		SessionClicks.put(
-			httpServletRequest, _SESSION_CLICKS_KEY, panelState);
+		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
 	}
 
 	public static class ProcessBodyBottomTagBodyException

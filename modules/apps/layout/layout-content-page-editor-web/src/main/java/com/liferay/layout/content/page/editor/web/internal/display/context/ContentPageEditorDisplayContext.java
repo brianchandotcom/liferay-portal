@@ -1058,7 +1058,7 @@ public class ContentPageEditorDisplayContext {
 			).setActionName(
 				"/layout_admin/discard_draft_layout"
 			).setRedirect(
-				themeDisplay.getURLCurrent()
+				_getRedirect()
 			).setParameter(
 				"selPlid", themeDisplay.getPlid()
 			).buildString();

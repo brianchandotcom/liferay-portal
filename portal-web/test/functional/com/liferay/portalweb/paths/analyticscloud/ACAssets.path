@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>ASSETS_TABLE</td>
-	<td>//a[@class='text-truncate']</td>
+	<td>//a[text()='${key_assetName}']</td>
 	<td></td>
 </tr>
 <tr>

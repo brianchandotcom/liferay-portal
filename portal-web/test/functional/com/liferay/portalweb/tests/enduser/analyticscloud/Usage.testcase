@@ -65,6 +65,15 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
+	@ignore = "true"
+	@priority = "5"
+	test PageViewsUpdateInRealTime {
+
+		// TODO LRAC-8150 Usage#PageViewsUpdateInRealTime pending implementation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
 	@ignore = "true"
 	@priority = "5"

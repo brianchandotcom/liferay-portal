@@ -6,11 +6,15 @@ definition {
 	property testray.main.component.name = "Web Content Display";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -24,13 +28,13 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-117985. View the Web Content Template with XSS name on WCD."
+	@description = "This is a test for LPS-117985. Select the web content based on template name with XSS on WCD."
 	@priority = "4"
 	@uitest
 	test SelectWebContentBasedOnTemplateNameWithXSS {
 		var templateName = '''<script>alert(123);</script>''';
 
-		task ("Add a web content Template with a XSS name") {
+		task ("Add a web content template with a XSS name") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoTemplates();
@@ -54,7 +58,7 @@ definition {
 			WebContentTemplates.viewCardsEntryCP(templateName = "${escapedScript}");
 		}
 
-		task ("Add a web content based on XSS Template") {
+		task ("Add a web content based on new template") {
 			NavItem.gotoWebContent();
 
 			WebContentNavigator.gotoAddCP();

@@ -16,6 +16,7 @@ package com.liferay.fragment.contributor;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
+import com.liferay.fragment.exception.InvalidFragmentCompositionKeyException;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -277,7 +278,14 @@ public abstract class BaseFragmentCollectionContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			StreamUtil.toString(url.openStream()));
 
-		String fragmentCompositionKey = StringBundler.concat(
+		String fragmentCompositionKey = jsonObject.getString(
+			"fragmentCompositionKey");
+
+		if (Validator.isNull(fragmentCompositionKey)) {
+			throw new InvalidFragmentCompositionKeyException();
+		}
+
+		fragmentCompositionKey = StringBundler.concat(
 			getFragmentCollectionKey(), "-composition-",
 			jsonObject.getString("fragmentCompositionKey"));
 

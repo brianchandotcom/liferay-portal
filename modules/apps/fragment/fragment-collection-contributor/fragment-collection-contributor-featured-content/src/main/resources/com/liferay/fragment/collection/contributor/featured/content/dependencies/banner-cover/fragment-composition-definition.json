@@ -1,0 +1,131 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"backgroundColor": "gray500Color",
+			"borderWidth": "0",
+			"minHeight": "100vh",
+			"paddingBottom": "10",
+			"paddingLeft": "3",
+			"paddingRight": "3",
+			"paddingTop": "10"
+		},
+		"fragmentViewports": [
+			{
+				"fragmentViewportStyle": {
+					"paddingLeft": "4",
+					"paddingRight": "4"
+				},
+				"id": "landscapeMobile"
+			},
+			{
+				"fragmentViewportStyle": {
+					"paddingLeft": "3",
+					"paddingRight": "3"
+				},
+				"id": "portraitMobile"
+			},
+			{
+				"fragmentViewportStyle": {
+					"paddingLeft": "5",
+					"paddingRight": "5"
+				},
+				"id": "tablet"
+			}
+		],
+		"layout": {
+			"align": "Center",
+			"borderWidth": 0,
+			"paddingBottom": 0,
+			"paddingLeft": 1,
+			"paddingRight": 1,
+			"paddingTop": 0,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"layout": {
+					"borderWidth": 0,
+					"widthType": "Fixed"
+				}
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-heading"
+						},
+						"fragmentConfig": {
+							"headingLevel": "h1"
+						},
+						"fragmentFields": [
+						],
+						"fragmentStyle": {
+							"marginBottom": "4",
+							"marginLeft": "0",
+							"marginRight": "0",
+							"textColor": "whiteColor"
+						},
+						"fragmentViewports": [
+							{
+								"fragmentViewportStyle": {
+									"marginRight": "0"
+								},
+								"id": "portraitMobile"
+							}
+						]
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-paragraph"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+						],
+						"fragmentStyle": {
+							"fontSize": "fontSizeLg",
+							"marginBottom": "4",
+							"marginLeft": "0",
+							"marginRight": "0",
+							"textColor": "whiteColor"
+						}
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-button"
+						},
+						"fragmentConfig": {
+							"buttonSize": "nm",
+							"buttonType": "primary"
+						},
+						"fragmentFields": [
+						],
+						"fragmentStyle": {
+							"marginLeft": "0",
+							"marginRight": "0"
+						},
+						"fragmentViewports": [
+							{
+								"fragmentViewportStyle": {
+									"marginRight": "0"
+								},
+								"id": "portraitMobile"
+							}
+						]
+					},
+					"type": "Fragment"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

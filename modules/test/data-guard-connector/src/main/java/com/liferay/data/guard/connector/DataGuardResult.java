@@ -39,7 +39,20 @@ public class DataGuardResult implements Serializable {
 
 	private DataGuardResult(long result, Throwable throwable) {
 		_result = result;
-		_throwable = throwable;
+
+		if (throwable != null) {
+			Class<? extends Throwable> clazz = throwable.getClass();
+
+			Throwable simpleThrowable = new Throwable(
+				clazz.getName() + ": " + throwable.getMessage());
+
+			simpleThrowable.setStackTrace(throwable.getStackTrace());
+
+			_throwable = simpleThrowable;
+		}
+		else {
+			_throwable = null;
+		}
 	}
 
 	private static final long serialVersionUID = 1L;

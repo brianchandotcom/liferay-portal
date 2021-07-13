@@ -22,8 +22,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MATRIC_VALUE</td>
-	<td>//span[@class='title'and text()='${matricTitle}']/..//div[@class='metric-value']</td>
+	<td>METRIC_VALUE</td>
+	<td>//span[@class='title'and text()='${key_metricTitle}']/..//div[@class='metric-value']</td>
 	<td></td>
 </tr>
 </tbody>

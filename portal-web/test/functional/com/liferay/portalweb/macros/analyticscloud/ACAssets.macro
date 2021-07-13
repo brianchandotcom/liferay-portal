@@ -14,4 +14,12 @@ definition {
 			value1 = "${assetName}");
 	}
 
+	macro viewVisitorsBehaviorMetric {
+		var key_metricTitle = "${metricTitle}";
+
+		AssertTextEquals(
+			locator1 = "ACAssets#METRIC_VALUE",
+			value1 = "${metricValue}");
+	}
+
 }

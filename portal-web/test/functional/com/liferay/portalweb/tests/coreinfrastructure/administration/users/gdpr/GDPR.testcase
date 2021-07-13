@@ -473,6 +473,10 @@ definition {
 
 	@priority = "4"
 	test DeleteAllEntriesFromInstanceScope {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Announcements Page");
@@ -500,6 +504,10 @@ definition {
 			distributionScope = "General",
 			entryContent = "This is an announcement added via json.",
 			entryTitle = "Announcement Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -588,7 +596,11 @@ definition {
 	}
 
 	@priority = "4"
-	test DeleteAllEntriesFromRegularSiteScope {
+	test DeleteAllEntriesFromRegularSitesScope {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -605,6 +617,10 @@ definition {
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

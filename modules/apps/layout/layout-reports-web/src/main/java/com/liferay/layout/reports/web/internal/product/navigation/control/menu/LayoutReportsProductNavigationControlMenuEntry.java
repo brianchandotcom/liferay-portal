@@ -15,6 +15,7 @@
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -88,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
+		"product.navigation.control.menu.category.key=" +
+		ProductNavigationControlMenuCategoryKeys.USER,
 		"product.navigation.control.menu.entry.order:Integer=550"
 	},
 	service = {
@@ -111,8 +113,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	@Override
 	public boolean includeBody(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		BodyBottomTag bodyBottomTag = new BodyBottomTag();
@@ -132,7 +134,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 				});
 		}
 		catch (ProcessBodyBottomTagBodyException
-					processBodyBottomTagBodyException) {
+			processBodyBottomTagBodyException) {
 
 			throw new IOException(processBodyBottomTagBodyException);
 		}
@@ -145,8 +147,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	@Override
 	public boolean includeIcon(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		Map<String, String> values = new HashMap<>();
@@ -213,7 +215,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		}
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
+			(ThemeDisplay) httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		if (!_isShow(themeDisplay) || !_isShowPanel(httpServletRequest)) {
@@ -258,7 +260,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			"plid",
 			() -> {
 				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
+					(ThemeDisplay) httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
 				return themeDisplay.getPlid();
@@ -267,11 +269,11 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	}
 
 	private boolean _hasEditPermission(
-			Layout layout, PermissionChecker permissionChecker)
+		Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		if (!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
+			permissionChecker, layout, ActionKeys.UPDATE)) {
 
 			return false;
 		}
@@ -317,8 +319,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		}
 
 		boolean documentEditPermission = permissionChecker.hasPermission(
-			themeDisplay.getScopeGroup(), FileEntry.class.getName(),
-			FileEntry.class.getName(), ActionKeys.UPDATE);
+			themeDisplay.getScopeGroup(), DLFileEntry.class.getName(),
+			DLFileEntry.class.getName(), ActionKeys.UPDATE);
 
 		if (documentEditPermission) {
 			return true;
@@ -374,7 +376,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		throws IOException, JspException {
 
 		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)pageContext.getRequest();
+			(HttpServletRequest) pageContext.getRequest();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_portal.getLocale(httpServletRequest), getClass());
@@ -425,7 +427,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
 					_npmResolver.resolveModuleName("layout-reports-web") +
-						"/js/App"),
+					"/js/App"),
 				HashMapBuilder.<String, Object>put(
 					"isPanelStateOpen", isPanelStateOpen(httpServletRequest)
 				).put(

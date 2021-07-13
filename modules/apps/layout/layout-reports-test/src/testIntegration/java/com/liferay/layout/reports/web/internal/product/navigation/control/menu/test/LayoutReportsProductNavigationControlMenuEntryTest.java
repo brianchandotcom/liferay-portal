@@ -16,6 +16,7 @@ package com.liferay.layout.reports.web.internal.product.navigation.control.menu.
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -132,7 +133,7 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 		try {
 			_resourcePermissionLocalService.addResourcePermission(
-				TestPropsValues.getCompanyId(), FileEntry.class.getName(),
+				TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(TestPropsValues.getCompanyId()), roleId,
 				ActionKeys.UPDATE);
@@ -222,7 +223,9 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		User user = TestPropsValues.getUser();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
-		themeDisplay.setPermissionChecker(PermissionCheckerFactoryUtil.create(user));
+
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);

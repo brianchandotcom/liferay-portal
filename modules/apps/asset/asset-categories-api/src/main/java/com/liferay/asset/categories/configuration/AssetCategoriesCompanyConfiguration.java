@@ -38,4 +38,14 @@ public interface AssetCategoriesCompanyConfiguration {
 	)
 	public String linkToDocumentationURL();
 
+	/**
+	 * Specifies the maximum number of categories that can be created per vocabulary.
+	 */
+	@Meta.AD(
+		deflt = "150",
+		description = "maximum-number-of-categories-per-vocabulary-description",
+		name = "maximum-number-of-categories-per-vocabulary", required = false
+	)
+	public int maximumNumberOfCategoriesPerVocabulary();
+
 }

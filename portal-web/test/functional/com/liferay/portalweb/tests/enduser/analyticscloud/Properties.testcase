@@ -41,7 +41,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
 	@ignore = "true"
 	@priority = "5"
-	test PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace {
+	test OwnerCanCreateNewProperty {
 
 		// TODO LRAC-8145 Properties#OwnerCanCreateNewProperty pending implementation
 

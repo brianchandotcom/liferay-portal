@@ -103,7 +103,7 @@ class TabsProvider {
 		if (activePanels.length) {
 			const activePanel = activePanels[0];
 
-			Liferay.on(this.EVENT_HIDDEN, (event) => {
+			Liferay.once(this.EVENT_HIDDEN, (event) => {
 				if (event.panel === activePanel) {
 					this.show({panel, trigger});
 				}

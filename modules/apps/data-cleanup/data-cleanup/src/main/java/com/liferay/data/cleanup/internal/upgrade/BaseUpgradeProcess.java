@@ -131,20 +131,14 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		for (String portletId : portletIds) {
 			LayoutTypeSettingsUtil.removePortletId(connection, portletId);
 
-			runSQL("delete from Portlet where portletId = '" + portletId + "'");
+			deleteFromPortlet(portletId);
 
-			runSQL(
-				"delete from PortletPreferences where portletId = '" +
-					portletId + "'");
+			deleteFromPortletPreferences(portletId);
 
-			runSQL(
-				"delete from ResourcePermission where name = '" + portletId +
-					"'");
+			deleteFromResourcePermission(portletId);
 		}
 
-		runSQL(
-			"delete from Release_ where servletContextName = '" +
-				bundleSymbolicName + "'");
+		deleteFromRelease(bundleSymbolicName);
 	}
 
 }

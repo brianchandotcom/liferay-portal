@@ -156,7 +156,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 										).put(
 											"title",
 											HashMapBuilder.<String, Object>put(
-												"defaultValue", layoutsSEODisplayContext.getDefaultPageTitleMap()
+												"defaultValue", layoutsSEODisplayContext.getDefaultPageTitleWithSuffixMap()
 											).put(
 												"id", "openGraphTitle"
 											).build()

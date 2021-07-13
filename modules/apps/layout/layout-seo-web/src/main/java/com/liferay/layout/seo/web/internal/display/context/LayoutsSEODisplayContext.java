@@ -65,13 +65,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
@@ -198,6 +201,27 @@ public class LayoutsSEODisplayContext {
 		).putAll(
 			_selLayout.getTitleMap()
 		).build();
+	}
+
+	public Map<Locale, String> getDefaultPageTitleWithSuffixMap()
+		throws PortalException {
+
+		Map<Locale, String> pageTitleMap = getDefaultPageTitleMap();
+
+		String pageTitleSuffix = getPageTitleSuffix();
+
+		if (Validator.isNull(pageTitleSuffix)) {
+			return pageTitleMap;
+		}
+
+		Set<Map.Entry<Locale, String>> set = pageTitleMap.entrySet();
+
+		Stream<Map.Entry<Locale, String>> stream = set.stream();
+
+		return stream.collect(
+			Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> entry.getValue() + " - " + pageTitleSuffix));
 	}
 
 	public PortletURL getEditCustomMetaTagsURL() {

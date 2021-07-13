@@ -29,7 +29,9 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 	managementToolbarDisplayContext="<%= templateManagementToolbarDisplayContext %>"
 />
 
-<portlet:actionURL name="/template/delete_template" var="deleteTemplateURL" />
+<portlet:actionURL name="/template/delete_template" var="deleteTemplateURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= deleteTemplateURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<clay:container-fluid

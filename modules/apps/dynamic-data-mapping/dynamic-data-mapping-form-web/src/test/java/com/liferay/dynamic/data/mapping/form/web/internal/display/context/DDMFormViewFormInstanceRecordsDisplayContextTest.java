@@ -15,19 +15,28 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
 
@@ -81,6 +90,24 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 	}
 
 	@Test
+	public void testGetColumnValue() {
+		Assert.assertEquals(
+			"mockedRenderResponse, mockedRenderResponse",
+			_ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(
+				_mockDDMFormField(DDMFormFieldTypeConstants.SEARCH_LOCATION),
+				"field",
+				Arrays.asList(
+					DDMFormValuesTestUtil.createDDMFormFieldValue(
+						"field",
+						DDMFormValuesTestUtil.createLocalizedValue(
+							StringUtil.randomString(), LocaleUtil.US)),
+					DDMFormValuesTestUtil.createDDMFormFieldValue(
+						"field",
+						DDMFormValuesTestUtil.createLocalizedValue(
+							StringUtil.randomString(), LocaleUtil.US)))));
+	}
+
+	@Test
 	public void testGetDefaultLocale() throws Exception {
 		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
 			DDMFormInstanceRecord.class);
@@ -106,6 +133,19 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 		Assert.assertEquals(LocaleUtil.US, defaultLocale);
 	}
 
+	@Test
+	public void testGetVisibleFields() {
+		Assert.assertEquals(
+			ListUtil.fromArray("city", "country"),
+			_ddmFormViewFormInstanceRecordsDisplayContext.getVisibleFields(
+				DDMFormTestUtil.createSearchLocationDDMFormField(
+					DDMFormValuesTestUtil.createLocalizedValue(
+						StringPool.BLANK, LocaleUtil.US),
+					"field",
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"[\"city\",\"country\"]", LocaleUtil.US))));
+	}
+
 	private DDMForm _mockDDMForm() {
 		DDMForm ddmForm = mock(DDMForm.class);
 
@@ -116,6 +156,52 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 		);
 
 		return ddmForm;
+	}
+
+	private DDMFormField _mockDDMFormField(String type) {
+		DDMFormField ddmFormField = mock(DDMFormField.class);
+
+		when(
+			ddmFormField.getType()
+		).thenReturn(
+			type
+		);
+
+		return ddmFormField;
+	}
+
+	private DDMFormFieldTypeServicesTracker
+		_mockDDMFormFieldTypeServicesTracker() {
+
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
+			DDMFormFieldTypeServicesTracker.class);
+
+		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
+			_mockDDMFormFieldValueRenderer();
+
+		when(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
+				Matchers.anyString())
+		).thenReturn(
+			ddmFormFieldValueRenderer
+		);
+
+		return ddmFormFieldTypeServicesTracker;
+	}
+
+	private DDMFormFieldValueRenderer _mockDDMFormFieldValueRenderer() {
+		DDMFormFieldValueRenderer ddmFormFieldValueRenderer = mock(
+			DDMFormFieldValueRenderer.class);
+
+		when(
+			ddmFormFieldValueRenderer.render(
+				Matchers.anyString(), Matchers.any(DDMFormFieldValue.class),
+				Matchers.any(Locale.class))
+		).thenReturn(
+			"mockedRenderResponse"
+		);
+
+		return ddmFormFieldValueRenderer;
 	}
 
 	private DDMFormInstance _mockDDMFormInstance() throws PortalException {
@@ -188,7 +274,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 				renderRequest, mock(RenderResponse.class),
 				_mockDDMFormInstance(),
 				mock(DDMFormInstanceRecordLocalService.class),
-				mock(DDMFormFieldTypeServicesTracker.class));
+				_mockDDMFormFieldTypeServicesTracker());
 	}
 
 	private void _setUpPortalUtil() {

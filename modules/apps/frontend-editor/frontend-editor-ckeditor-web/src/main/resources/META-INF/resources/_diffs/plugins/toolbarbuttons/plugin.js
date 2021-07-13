@@ -285,8 +285,6 @@
 					{label: '5.0x', value: '5.0x'},
 				],
 
-				name: Liferay.Language.get('line-height'),
-
 				onChange(key) {
 					this._applyStyle(
 						this._stylesFactory[key].style.attributes.class

@@ -1,0 +1,11 @@
+definition {
+
+	macro viewCards {
+		var key_cardTitle = "${cardTitle}";
+
+		AssertTextEquals(
+			locator1 = "ACCards#CARD_TITLE",
+			value1 = "${cardTitle}");
+	}
+
+}

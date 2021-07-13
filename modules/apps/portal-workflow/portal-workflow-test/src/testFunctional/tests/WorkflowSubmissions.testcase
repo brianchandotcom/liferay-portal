@@ -171,12 +171,49 @@ definition {
 	}
 
 	@description = "Verify if when the task is approved, the "End Date" field is filled"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EndDateIsFilledWhenTaskCompleted {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68557 EndDateIsFilledWhenTaskCompleted pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content 1",
+			entryTitle = "Blogs Entry 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		AssertElementPresent(
+			key_submissionName = "Blogs Entry 1",
+			locator1 = "WorkflowSubmissions#SUBMISSION_END_DATE");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Submissions");
+
+		AssertElementPresent(
+			key_submissionName = "Blogs Entry 1",
+			locator1 = "WorkflowSubmissions#SUBMISSION_END_DATE");
 	}
 
 	@description = "Verify that when having 5 tasks on the screen, a pagination bar is displayed"

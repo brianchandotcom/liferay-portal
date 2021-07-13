@@ -15,6 +15,36 @@
 	<td>//td[contains(@class,'table-cell')]//a[contains(.,'${key_taskName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUBMISSION_BY_NAME</td>
+	<td>//td//a[text()='${key_submissionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMISSION_BY_STATUS</td>
+	<td>//td//a[text()='${key_submissionName}']/../following-sibling::td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMISSION_END_DATE</td>
+	<td>//td//a[text()='${key_submissionName}']/../following-sibling::td[5]//a//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMISSION_SEARCH_BAR</td>
+	<td>//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMISSION_SEARCH_BUTTON</td>
+	<td>//button[contains(@type,'submit')]//*[contains(@class,'lexicon-icon-search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMISSION_CLEAR_SEARCH_BUTTON</td>
+	<td>//div//a[text()='Clear']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

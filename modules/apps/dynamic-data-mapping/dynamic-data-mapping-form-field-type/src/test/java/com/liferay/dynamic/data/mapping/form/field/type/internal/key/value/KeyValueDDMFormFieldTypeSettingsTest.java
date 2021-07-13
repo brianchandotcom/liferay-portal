@@ -17,8 +17,11 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.key.value;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,6 +105,21 @@ public class KeyValueDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(actions.toString(), 1, actions.size());
 
 		Assert.assertEquals("setVisible('indexType', false)", actions.get(0));
+	}
+
+	@Test
+	public void testCreateKeyValueDDMFormFieldTypeSettingsDDMFormLayout() {
+		assertDDMFormLayout(
+			DDMFormLayoutFactory.create(KeyValueDDMFormFieldTypeSettings.class),
+			DDMFormLayoutTestUtil.createDDMFormLayout(
+				DDMFormLayout.SETTINGS_MODE,
+				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+					"label", "tip", "required"),
+				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+					"showLabel", "repeatable", "placeholder",
+					"visibilityExpression", "predefinedValue", "fieldNamespace",
+					"indexType", "localizable", "readOnly", "dataType", "type",
+					"name", "fieldReference", "tooltip")));
 	}
 
 	@Override

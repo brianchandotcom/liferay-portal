@@ -17,7 +17,10 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.te
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -88,6 +91,22 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(tooltipDDMFormField);
 		Assert.assertEquals(
 			"FALSE", tooltipDDMFormField.getVisibilityExpression());
+	}
+
+	@Test
+	public void testCreateLocalizableTextDDMFormFieldTypeSettingsDDMFormLayout() {
+		assertDDMFormLayout(
+			DDMFormLayoutFactory.create(
+				LocalizableTextDDMFormFieldTypeSettings.class),
+			DDMFormLayoutTestUtil.createDDMFormLayout(
+				DDMFormLayout.TABBED_MODE,
+				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+					"label", "placeholder", "tip", "displayStyle", "required"),
+				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
+					"name", "fieldReference", "predefinedValue",
+					"visibilityExpression", "fieldNamespace", "indexType",
+					"localizable", "readOnly", "dataType", "type", "showLabel",
+					"repeatable", "tooltip")));
 	}
 
 	private void _setUpLanguageUtil() {

@@ -86,6 +86,11 @@ const getMaskedValue = ({
 			};
 
 			mask = createNumberMask(config);
+
+			value = value.replace(
+				new RegExp('[.,]', 'g'),
+				symbols.decimalSymbol
+			);
 		}
 		else {
 			mask = adaptiveMask(value, inputMaskFormat as string);
@@ -201,6 +206,13 @@ const Numeric: React.FC<IProps> = ({
 			(inputValue.raw?.length ?? 0) === rawValue.length
 		) {
 			value = inputValue.raw.slice(0, -1);
+		}
+
+		if (inputMask && dataType === 'double') {
+			value = value.replace(
+				new RegExp(`[${symbols.thousandsSeparator}]`, 'g'),
+				''
+			);
 		}
 
 		const newValue = getMaskedValue({

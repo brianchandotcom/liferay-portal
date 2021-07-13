@@ -891,7 +891,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126159. The new user can publish a content page without set permissions for custom field page."
+	@description = "This is a test for LPS-126159. The user can publish a content page without permissions for custom fields."
 	@priority = "4"
 	test PublishContentPageWithoutCustomFieldsPermission {
 		task ("Add a custom field for Page") {

@@ -15,7 +15,6 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-import com.liferay.petra.string.StringPool;
 
 /**
  * @author Adolfo Pérez
@@ -36,18 +35,12 @@ public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 			"com.liferay.frontend.image.editor.integration.document.library",
 			"com.liferay.frontend.image.editor.web");
 
-		runSQL(
-			"delete from ResourceAction where name = " +
-				_QUOTED_IMAGE_EDITOR_PORTLET_NAME);
+		deleteFromResourceAction(_IMAGE_EDITOR_PORTLET_NAME);
 
 		deleteFromResourcePermission(_IMAGE_EDITOR_PORTLET_NAME);
 	}
 
 	private static final String _IMAGE_EDITOR_PORTLET_NAME =
 		"com_liferay_image_editor_web_portlet_ImageEditorPortlet";
-
-	private static final String _QUOTED_IMAGE_EDITOR_PORTLET_NAME =
-		StringPool.APOSTROPHE + _IMAGE_EDITOR_PORTLET_NAME +
-			StringPool.APOSTROPHE;
 
 }

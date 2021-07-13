@@ -75,6 +75,12 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	protected void deleteFromResourceAction(String... names) throws Exception {
+		for (String name : names) {
+			runSQL("delete from ResourceAction where name = '" + name + "'");
+		}
+	}
+
 	protected void deleteFromResourcePermission(String... names)
 		throws Exception {
 

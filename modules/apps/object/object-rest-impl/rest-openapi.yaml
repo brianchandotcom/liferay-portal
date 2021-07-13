@@ -19,6 +19,8 @@ components:
                 dateModified:
                     format: date
                     type: string
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     type: integer
@@ -92,6 +94,71 @@ paths:
             tags: ["ObjectEntry"]
         post:
             operationId: postObjectEntry
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                    description:
+                        ""
+            tags: ["ObjectEntry"]
+    "/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteObjectEntry
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["ObjectEntry"]
+        get:
+            operationId: getObjectEntry
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                    description:
+                        ""
+            tags: ["ObjectEntry"]
+        put:
+            operationId: putObjectEntry
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

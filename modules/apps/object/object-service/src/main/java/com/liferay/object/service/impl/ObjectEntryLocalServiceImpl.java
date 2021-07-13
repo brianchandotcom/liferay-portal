@@ -149,12 +149,49 @@ public class ObjectEntryLocalServiceImpl
 		return objectEntry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectEntry addOrUpdateObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		ObjectEntry objectEntry = fetchObjectEntryByReferenceCode(
+			user.getCompanyId(), externalReferenceCode);
+
+		if (objectEntry != null) {
+			return updateObjectEntry(
+				userId, objectEntry.getObjectEntryId(), values, serviceContext);
+		}
+
+		objectEntry = addObjectEntry(
+			userId, groupId, objectDefinitionId, values, serviceContext);
+
+		objectEntry.setExternalReferenceCode(externalReferenceCode);
+
+		return objectEntryPersistence.update(objectEntry);
+	}
+
 	@Override
 	public ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
 			objectEntryId);
+
+		return objectEntryLocalService.deleteObjectEntry(objectEntry);
+	}
+
+	@Override
+	public ObjectEntry deleteObjectEntry(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryPersistence.findByC_ERC(
+			companyId, externalReferenceCode);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntry);
 	}

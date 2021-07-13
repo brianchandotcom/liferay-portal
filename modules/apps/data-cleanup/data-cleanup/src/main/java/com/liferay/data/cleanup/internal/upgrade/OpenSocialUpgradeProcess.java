@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Kevin Lee
  */
-public class OpenSocialGadgetUpgradeProcess extends UpgradeProcess {
+public class OpenSocialUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

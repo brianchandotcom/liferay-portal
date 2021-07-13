@@ -77,8 +77,8 @@ public class DataCleanup implements UpgradeStepRegistrator {
 				MailReaderUpgradeProcess::new);
 
 			_cleanUpModuleData(
-				_dataCleanupConfiguration::cleanUpOpenSocialGadgetModuleData,
-				"opensocial-portlet", OpenSocialGadgetUpgradeProcess::new);
+				_dataCleanupConfiguration::cleanUpOpenSocialModuleData,
+				"opensocial-portlet", OpenSocialUpgradeProcess::new);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpPrivateMessagingModuleData,

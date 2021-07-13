@@ -133,7 +133,7 @@ public class DataCleanupTest {
 		throws Exception {
 
 		_testDeprecatedModulesUpgrade(
-			"cleanUpOpenSocialGadgetModuleData", "opensocial-portlet",
+			"cleanUpOpenSocialModuleData", "opensocial-portlet",
 			"dependencies/opensocial-gadget-tables.sql",
 			"3_WAR_opensocialportlet");
 	}

@@ -38,7 +38,7 @@ public class SamlSpIdpConnectionTable {
 	public static final String TABLE_NAME = "SamlSpIdpConnection";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_61204DD on SamlSpIdpConnection (companyId, samlIdpEntityId)"
+		"create index IX_61204DD on SamlSpIdpConnection (companyId, samlIdpEntityId[$COLUMN_LENGTH:1024$])"
 	};
 
 	public static final String TABLE_SQL_CREATE =

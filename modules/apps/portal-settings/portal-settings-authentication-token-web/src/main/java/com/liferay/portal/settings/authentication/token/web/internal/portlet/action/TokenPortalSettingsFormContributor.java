@@ -72,7 +72,7 @@ public class TokenPortalSettingsFormContributor
 			actionRequest, this, "logoutRedirectURL");
 
 		if (Validator.isNotNull(logoutRedirectURL) &&
-			!Validator.isUrl(logoutRedirectURL)) {
+			!Validator.isUrl(logoutRedirectURL, true)) {
 
 			SessionErrors.add(actionRequest, "logoutRedirectURLInvalid");
 		}

@@ -110,6 +110,11 @@
 	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

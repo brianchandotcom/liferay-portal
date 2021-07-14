@@ -152,6 +152,10 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setFileEntryId(RandomTestUtil.nextLong());
 
+		newCPAttachmentFileEntry.setCdnURL(RandomTestUtil.randomString());
+
+		newCPAttachmentFileEntry.setCdn(RandomTestUtil.randomBoolean());
+
 		newCPAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCPAttachmentFileEntry.setExpirationDate(RandomTestUtil.nextDate());
@@ -220,6 +224,12 @@ public class CPAttachmentFileEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCPAttachmentFileEntry.getFileEntryId(),
 			newCPAttachmentFileEntry.getFileEntryId());
+		Assert.assertEquals(
+			existingCPAttachmentFileEntry.getCdnURL(),
+			newCPAttachmentFileEntry.getCdnURL());
+		Assert.assertEquals(
+			existingCPAttachmentFileEntry.isCdn(),
+			newCPAttachmentFileEntry.isCdn());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCPAttachmentFileEntry.getDisplayDate()),
@@ -314,6 +324,16 @@ public class CPAttachmentFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C() throws Exception {
+		_persistence.countByC_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_C_C(0L, 0L, "null");
+
+		_persistence.countByC_C_C(0L, 0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_C_LtD_S() throws Exception {
 		_persistence.countByC_C_LtD_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -381,10 +401,11 @@ public class CPAttachmentFileEntryPersistenceTest {
 			true, "CPAttachmentFileEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"fileEntryId", true, "displayDate", true, "expirationDate", true,
-			"title", true, "priority", true, "type", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"fileEntryId", true, "cdnURL", true, "cdn", true, "displayDate",
+			true, "expirationDate", true, "title", true, "priority", true,
+			"type", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -692,22 +713,6 @@ public class CPAttachmentFileEntryPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
-		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
-		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getFileEntryId()),
-			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "fileEntryId"));
-
-		Assert.assertEquals(
 			Long.valueOf(cpAttachmentFileEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				cpAttachmentFileEntry, "getColumnOriginalValue",
@@ -748,6 +753,10 @@ public class CPAttachmentFileEntryPersistenceTest {
 		cpAttachmentFileEntry.setClassPK(RandomTestUtil.nextLong());
 
 		cpAttachmentFileEntry.setFileEntryId(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setCdnURL(RandomTestUtil.randomString());
+
+		cpAttachmentFileEntry.setCdn(RandomTestUtil.randomBoolean());
 
 		cpAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
 

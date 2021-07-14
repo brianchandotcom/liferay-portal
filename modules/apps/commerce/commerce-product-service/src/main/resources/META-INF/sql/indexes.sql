@@ -1,5 +1,6 @@
+create index IX_4E725857 on CPAttachmentFileEntry (classNameId, classPK, cdnURL[$COLUMN_LENGTH:4000$]);
 create index IX_B2AFFCE5 on CPAttachmentFileEntry (classNameId, classPK, displayDate, status);
-create unique index IX_DD114140 on CPAttachmentFileEntry (classNameId, classPK, fileEntryId);
+create index IX_DD114140 on CPAttachmentFileEntry (classNameId, classPK, fileEntryId);
 create index IX_A6E0353A on CPAttachmentFileEntry (classNameId, classPK, type_, status);
 create index IX_59F57821 on CPAttachmentFileEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_A0B4C71A on CPAttachmentFileEntry (displayDate, status);

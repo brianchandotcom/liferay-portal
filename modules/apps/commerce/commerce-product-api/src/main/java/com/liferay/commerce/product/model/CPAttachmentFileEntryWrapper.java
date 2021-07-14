@@ -57,6 +57,8 @@ public class CPAttachmentFileEntryWrapper
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("fileEntryId", getFileEntryId());
+		attributes.put("cdnURL", getCdnURL());
+		attributes.put("cdn", isCdn());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("title", getTitle());
@@ -148,6 +150,18 @@ public class CPAttachmentFileEntryWrapper
 			setFileEntryId(fileEntryId);
 		}
 
+		String cdnURL = (String)attributes.get("cdnURL");
+
+		if (cdnURL != null) {
+			setCdnURL(cdnURL);
+		}
+
+		Boolean cdn = (Boolean)attributes.get("cdn");
+
+		if (cdn != null) {
+			setCdn(cdn);
+		}
+
 		Date displayDate = (Date)attributes.get("displayDate");
 
 		if (displayDate != null) {
@@ -216,8 +230,35 @@ public class CPAttachmentFileEntryWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry fetchFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.fetchFileEntry();
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the cdn of this cp attachment file entry.
+	 *
+	 * @return the cdn of this cp attachment file entry
+	 */
+	@Override
+	public boolean getCdn() {
+		return model.getCdn();
+	}
+
+	/**
+	 * Returns the cdn url of this cp attachment file entry.
+	 *
+	 * @return the cdn url of this cp attachment file entry
+	 */
+	@Override
+	public String getCdnURL() {
+		return model.getCdnURL();
 	}
 
 	/**
@@ -313,13 +354,6 @@ public class CPAttachmentFileEntryWrapper
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getFileEntry();
 	}
 
 	/**
@@ -579,6 +613,16 @@ public class CPAttachmentFileEntryWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this cp attachment file entry is cdn.
+	 *
+	 * @return <code>true</code> if this cp attachment file entry is cdn; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isCdn() {
+		return model.isCdn();
+	}
+
+	/**
 	 * Returns <code>true</code> if this cp attachment file entry is denied.
 	 *
 	 * @return <code>true</code> if this cp attachment file entry is denied; <code>false</code> otherwise
@@ -666,6 +710,26 @@ public class CPAttachmentFileEntryWrapper
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	/**
+	 * Sets whether this cp attachment file entry is cdn.
+	 *
+	 * @param cdn the cdn of this cp attachment file entry
+	 */
+	@Override
+	public void setCdn(boolean cdn) {
+		model.setCdn(cdn);
+	}
+
+	/**
+	 * Sets the cdn url of this cp attachment file entry.
+	 *
+	 * @param cdnURL the cdn url of this cp attachment file entry
+	 */
+	@Override
+	public void setCdnURL(String cdnURL) {
+		model.setCdnURL(cdnURL);
 	}
 
 	@Override

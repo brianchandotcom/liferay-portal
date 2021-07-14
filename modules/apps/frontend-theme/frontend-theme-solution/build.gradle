@@ -6,7 +6,6 @@ task copyClassicTheme(type: Copy)
 
 copyClassicTheme {
 	from("../frontend-theme-classic/src/") {
-		exclude "**/css/_custom.scss"
 		exclude "**/css/clay.scss"
 		exclude "**/WEB-INF/frontend-token-definition.json"
 		exclude "**/WEB-INF/liferay-look-and-feel.xml"
@@ -15,6 +14,8 @@ copyClassicTheme {
 
 	includeEmptyDirs = false
 	into file("src")
+
+	rename '_custom.scss', '_classic_custom.scss'
 }
 
 packageRunBuild {

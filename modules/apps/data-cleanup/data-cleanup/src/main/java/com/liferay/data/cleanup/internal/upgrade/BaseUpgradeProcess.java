@@ -15,7 +15,6 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -27,77 +26,58 @@ import java.sql.ResultSet;
  */
 public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
-	protected void deleteFromClassName(String... values) throws Exception {
-		for (String value : values) {
-			runSQL("delete from ClassName_ where value = '" + value + "'");
-		}
-	}
+	protected void deleteFrom(
+			String tableName, String fieldName, String... fieldValues)
+		throws Exception {
 
-	protected void deleteFromPortlet(String... portletIds) throws Exception {
-		for (String portletId : portletIds) {
+		for (String fieldValue : fieldValues) {
 			String operator = "=";
 
-			if (portletId.endsWith("%") || portletId.startsWith("%")) {
+			if (fieldValue.endsWith("%") || fieldValue.startsWith("%")) {
 				operator = "like";
 			}
 
 			runSQL(
-				StringBundler.concat(
-					"delete from Portlet where portletId ", operator, " '",
-					portletId, "'"));
+				String.format(
+					"delete from %s where %s %s '%s'", tableName, fieldName,
+					operator, fieldValue));
 		}
+	}
+
+	protected void deleteFromClassName(String... values) throws Exception {
+		deleteFrom("ClassName_", "value", values);
+	}
+
+	protected void deleteFromPortlet(String... portletIds) throws Exception {
+		deleteFrom("Portlet", "portletId", portletIds);
 	}
 
 	protected void deleteFromPortletPreferences(String... portletIds)
 		throws Exception {
 
-		for (String portletId : portletIds) {
-			String operator = "=";
-
-			if (portletId.endsWith("%") || portletId.startsWith("%")) {
-				operator = "like";
-			}
-
-			runSQL(
-				StringBundler.concat(
-					"delete from PortletPreferences where portletId ", operator,
-					" '", portletId, "'"));
-		}
+		deleteFrom("PortletPreferences", "portletId", portletIds);
 	}
 
 	protected void deleteFromRelease(String... servletContextNames)
 		throws Exception {
 
-		for (String servletContextName : servletContextNames) {
-			runSQL(
-				"delete from Release_ where servletContextName = '" +
-					servletContextName + "'");
-		}
+		deleteFrom("Release_", "servletContextName", servletContextNames);
 	}
 
 	protected void deleteFromResourceAction(String... names) throws Exception {
-		for (String name : names) {
-			runSQL("delete from ResourceAction where name = '" + name + "'");
-		}
+		deleteFrom("ResourceAction", "name", names);
 	}
 
 	protected void deleteFromResourcePermission(String... names)
 		throws Exception {
 
-		for (String name : names) {
-			runSQL(
-				"delete from ResourcePermission where name = '" + name + "'");
-		}
+		deleteFrom("ResourcePermission", "name", names);
 	}
 
 	protected void deleteFromServiceComponent(String... buildNamespaces)
 		throws Exception {
 
-		for (String buildNamespace : buildNamespaces) {
-			runSQL(
-				"delete from ServiceComponent where buildNamespace = '" +
-					buildNamespace + "'");
-		}
+		deleteFrom("ServiceComponent", "buildNamespace", buildNamespaces);
 	}
 
 	protected void dropTables(String... tableNames) throws Exception {

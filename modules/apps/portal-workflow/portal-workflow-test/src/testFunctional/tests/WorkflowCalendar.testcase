@@ -183,12 +183,31 @@ definition {
 	}
 
 	@description = "Verify that a calendar event created on the pop up can be rejected"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CalendarPopUpCanBeRejected {
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
 
-		// TODO LRQA-68604 CalendarPopUpCanBeRejected pending implementation
+		CalendarEvent.viewStatusViaDetails(status = "PENDING");
 
+		CalendarNavigator.closeModal(modalTitle = "View Event Details");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+
+		Workflow.confirmWorkflowAction();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.viewStatusViaDetails(status = "PENDING");
 	}
 
 	@description = "Verify that a calendar event on draft can be approved"

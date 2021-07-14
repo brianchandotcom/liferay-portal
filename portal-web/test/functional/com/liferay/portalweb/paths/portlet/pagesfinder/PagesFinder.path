@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_SELECTOR_ELLIPSIS_ICON</td>
-	<td>//div[contains(@class,'page-type-selector')]//button[contains(@class,'dropdown')]</td>
+	<td>//div[contains(@class,'page-type-selector')]//button[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>

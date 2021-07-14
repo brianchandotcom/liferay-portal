@@ -25,6 +25,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.NoSuchClassTypeException;
+import com.liferay.asset.kernel.exception.AssetCategoryLimitException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryPropertyException;
@@ -491,7 +492,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {
-		if (throwable instanceof AssetCategoryNameException ||
+		if (throwable instanceof AssetCategoryLimitException ||
+			throwable instanceof AssetCategoryNameException ||
 			throwable instanceof CategoryPropertyKeyException ||
 			throwable instanceof CategoryPropertyValueException ||
 			throwable instanceof DuplicateCategoryException ||

@@ -48,22 +48,27 @@ public class PinDTOConverter
 			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPin(
 				(Long)dtoConverterContext.getId());
 
-		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntry(
-				cpDefinitionDiagramPin.getCPDefinitionId(),
-				cpDefinitionDiagramPin.getNumber());
-
 		return new Pin() {
 			{
-				entry = _diagramEntryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionDiagramEntry.
-							getCPDefinitionDiagramEntryId(),
-						dtoConverterContext.getLocale()));
 				id = cpDefinitionDiagramPin.getCPDefinitionDiagramPinId();
 				number = cpDefinitionDiagramPin.getNumber();
 				positionX = cpDefinitionDiagramPin.getPositionX();
 				positionY = cpDefinitionDiagramPin.getPositionY();
+
+				setDiagramEntry(
+					() -> {
+						CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+							_cpDefinitionDiagramEntryService.
+								getCPDefinitionDiagramEntry(
+									cpDefinitionDiagramPin.getCPDefinitionId(),
+									cpDefinitionDiagramPin.getNumber());
+
+						return _diagramEntryDTOConverter.toDTO(
+							new DefaultDTOConverterContext(
+								cpDefinitionDiagramEntry.
+									getCPDefinitionDiagramEntryId(),
+								dtoConverterContext.getLocale()));
+					});
 			}
 		};
 	}

@@ -14,10 +14,7 @@
 
 package com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin;
 import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinService;
@@ -26,18 +23,12 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.DiagramEntry;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.Pin;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,98 +57,51 @@ public class DiagramDTOConverter
 			_cpDefinitionDiagramSettingService.getCPDefinitionDiagramSetting(
 				(Long)dtoConverterContext.getId());
 
-		final long cpDefinitionId =
-			cpDefinitionDiagramSetting.getCPDefinitionId();
-
-		Locale locale = dtoConverterContext.getLocale();
-
 		return new Diagram() {
 			{
 				color = cpDefinitionDiagramSetting.getColor();
-				diagramEntries = _getDiagramEntries(cpDefinitionId, locale);
+				diagramEntries = TransformUtil.transformToArray(
+					_cpDefinitionDiagramEntryService.
+						getCPDefinitionDiagramEntries(
+							cpDefinitionDiagramSetting.getCPDefinitionId(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					cpDefinitionDiagramEntry -> _diagramEntryDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							cpDefinitionDiagramEntry.
+								getCPDefinitionDiagramEntryId(),
+							dtoConverterContext.getLocale())),
+					DiagramEntry.class);
 				id =
 					cpDefinitionDiagramSetting.
 						getCPDefinitionDiagramSettingId();
-				imageUrl = _getImageURL(cpDefinitionDiagramSetting);
-				pins = _getPins(cpDefinitionId, locale);
+				pins = TransformUtil.transformToArray(
+					_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
+						cpDefinitionDiagramSetting.getCPDefinitionId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					cpDefinitionDiagramPin -> _pinDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							cpDefinitionDiagramPin.
+								getCPDefinitionDiagramPinId(),
+							dtoConverterContext.getLocale())),
+					Pin.class);
 				radius = cpDefinitionDiagramSetting.getRadius();
 				type = cpDefinitionDiagramSetting.getType();
+
+				setImageURL(
+					() -> {
+						CPAttachmentFileEntry cpAttachmentFileEntry =
+							cpDefinitionDiagramSetting.
+								getCPAttachmentFileEntry();
+
+						FileEntry fileEntry =
+							cpAttachmentFileEntry.getFileEntry();
+
+						return DLUtil.getDownloadURL(
+							fileEntry, fileEntry.getFileVersion(), null, null);
+					});
 			}
 		};
 	}
-
-	private DiagramEntry[] _getDiagramEntries(
-			long cpDefinitionId, Locale locale)
-		throws Exception {
-
-		List<DiagramEntry> diagramEntries = new ArrayList<>();
-
-		List<CPDefinitionDiagramEntry> cpDefinitionDiagramEntries =
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
-				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinitionDiagramEntry cpDefinitionDiagramEntry :
-				cpDefinitionDiagramEntries) {
-
-			diagramEntries.add(
-				_diagramEntryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionDiagramEntry.
-							getCPDefinitionDiagramEntryId(),
-						locale)));
-		}
-
-		return diagramEntries.toArray(new DiagramEntry[0]);
-	}
-
-	private String _getImageURL(
-			CPDefinitionDiagramSetting cpDefinitionDiagramSetting)
-		throws Exception {
-
-		try {
-			CPAttachmentFileEntry cpAttachmentFileEntry =
-				cpDefinitionDiagramSetting.getCPAttachmentFileEntry();
-
-			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
-
-			return DLUtil.getDownloadURL(
-				fileEntry, fileEntry.getFileVersion(), null, null);
-		}
-		catch (NoSuchCPAttachmentFileEntryException
-					noSuchCPAttachmentFileEntryException) {
-
-			_log.error(
-				noSuchCPAttachmentFileEntryException,
-				noSuchCPAttachmentFileEntryException);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private Pin[] _getPins(long cpDefinitionId, Locale locale)
-		throws Exception {
-
-		List<Pin> pins = new ArrayList<>();
-
-		List<CPDefinitionDiagramPin> cpDefinitionDiagramPins =
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
-				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinitionDiagramPin cpDefinitionDiagramPin :
-				cpDefinitionDiagramPins) {
-
-			pins.add(
-				_pinDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionDiagramPin.getCPDefinitionDiagramPinId(),
-						locale)));
-		}
-
-		return pins.toArray(new Pin[0]);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DiagramDTOConverter.class);
 
 	@Reference
 	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;

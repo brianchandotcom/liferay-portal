@@ -252,7 +252,18 @@ definition {
 	@priority = "4"
 	test CanSearchByTitle {
 
-		// TODO LRQA-68224 CanSearchByTitle pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
+
+		ProcessBuilderListView.validateIfSearchItem(
+			numberResults = "1",
+			workflowName = "Approver");
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 
 	}
 
@@ -261,7 +272,19 @@ definition {
 	@priority = "4"
 	test CanSearchNonAsciiChar {
 
-		// TODO LRQA-68225 CanSearchNonAsciiChar pending implementation
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		ProcessBuilderListView.searchForWorkflow(workflowName = "単一");
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
+			value1 = "単一承認者");
 
 	}
 

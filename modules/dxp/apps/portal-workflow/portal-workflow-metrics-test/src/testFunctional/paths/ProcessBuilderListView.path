@@ -70,17 +70,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[@placeholder='Search for']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VALIDATE_SEARCH_RESULTS_BAR</td>
-	<td>//span[contains(.,'Results') and @class='text-truncate']</td>
-	<td></td>
-</tr>
-
-<tr>
 	<td>PROCESS_NAME_IN_SECTION</td>
 	<td>//tr[contains(@class,'table-divider')]//td[contains(text(),'${key_section}')]/../../tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_processName}')]</td>
 	<td></td>

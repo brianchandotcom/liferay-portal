@@ -49,10 +49,22 @@ public class DeleteTemplateMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long deleteTemplateId = ParamUtil.getLong(actionRequest, "templateId");
+		long[] deleteTemplateIds = null;
+
+		long templateId = ParamUtil.getLong(actionRequest, "templateId");
+
+		if (templateId > 0) {
+			deleteTemplateIds = new long[] {templateId};
+		}
+		else {
+			deleteTemplateIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
 
 		try {
-			_ddmTemplateService.deleteTemplate(deleteTemplateId);
+			for (long deleteTemplateId : deleteTemplateIds) {
+				_ddmTemplateService.deleteTemplate(deleteTemplateId);
+			}
 
 			hideDefaultSuccessMessage(actionRequest);
 
@@ -61,7 +73,7 @@ public class DeleteTemplateMVCActionCommand extends BaseMVCActionCommand {
 				_language.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"you-successfully-deleted-x-templates",
-					new Object[] {1}));
+					new Object[] {deleteTemplateIds.length}));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(actionRequest, portalException.getClass());

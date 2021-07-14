@@ -121,7 +121,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.info.list.provider.item.selector.web)"
+		target = "(osgi.web.symbolicname=com.liferay.info.collection.provider.item.selector.web)"
 	)
 	private ServletContext _servletContext;
 

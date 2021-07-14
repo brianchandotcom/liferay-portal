@@ -354,9 +354,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	protected IndexWriterHelper indexWriterHelper;
 
 	@Reference
-	protected KeywordQueryContributorsHolder keywordQueryContributorsHolder;
-
-	@Reference
 	protected PreFilterContributorHelper preFilterContributorHelper;
 
 	@Reference

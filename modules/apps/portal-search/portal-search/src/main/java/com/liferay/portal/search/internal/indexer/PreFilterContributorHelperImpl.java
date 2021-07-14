@@ -23,10 +23,14 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
+import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -77,6 +81,15 @@ public class PreFilterContributorHelperImpl
 
 		_addModelProvidedPreFilters(
 			booleanFilter, modelSearchSettings, searchContext);
+	}
+
+	protected Collection<String> getStrings(
+		String string, SearchContext searchContext) {
+
+		return Arrays.asList(
+			SearchStringUtil.splitAndUnquote(
+				Optional.ofNullable(
+					(String)searchContext.getAttribute(string))));
 	}
 
 	@Reference
@@ -155,7 +168,16 @@ public class PreFilterContributorHelperImpl
 	private void _addPreFilters(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		queryPreFilterContributorsHolder.forEach(
+		Stream<QueryPreFilterContributor> stream =
+			queryPreFilterContributorsHolder.stream(
+				getStrings(
+					"search.full.query.clause.contributors.includes",
+					searchContext),
+				getStrings(
+					"search.full.query.clause.contributors.excludes",
+					searchContext));
+
+		stream.forEach(
 			queryPreFilterContributor -> queryPreFilterContributor.contribute(
 				booleanFilter, searchContext));
 	}

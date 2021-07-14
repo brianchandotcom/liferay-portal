@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.indexer;
 
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 
+import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
  */
 public interface ModelKeywordQueryContributorsHolder {
 
-	public Stream<KeywordQueryContributor> getAll();
+	public Stream<KeywordQueryContributor> stream(
+		Collection<String> includeIds, Collection<String> excludeIds);
 
 }

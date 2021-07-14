@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 
+import java.util.Collection;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -34,8 +35,15 @@ public class KeywordQueryContributorsHolderImpl
 	implements KeywordQueryContributorsHolder {
 
 	@Override
-	public Stream<KeywordQueryContributor> getAll() {
-		return StreamSupport.stream(_serviceTrackerList.spliterator(), false);
+	public Stream<KeywordQueryContributor> stream(
+		Collection<String> includeIds, Collection<String> excludeIds) {
+
+		Stream<KeywordQueryContributor> stream = StreamSupport.stream(
+			_serviceTrackerList.spliterator(), false);
+
+		return IncludeExcludeUtil.stream(
+			stream, includeIds, excludeIds,
+			keywordQueryContributor -> getClassName(keywordQueryContributor));
 	}
 
 	@Activate
@@ -48,6 +56,12 @@ public class KeywordQueryContributorsHolderImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerList.close();
+	}
+
+	protected String getClassName(Object object) {
+		Class<?> clazz = object.getClass();
+
+		return clazz.getName();
 	}
 
 	private ServiceTrackerList<KeywordQueryContributor, KeywordQueryContributor>

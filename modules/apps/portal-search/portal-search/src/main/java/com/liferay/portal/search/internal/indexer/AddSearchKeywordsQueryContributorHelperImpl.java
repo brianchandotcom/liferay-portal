@@ -22,9 +22,13 @@ import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,7 +70,13 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 		}
 
 		Stream<KeywordQueryContributor> stream =
-			keywordQueryContributorsHolder.getAll();
+			keywordQueryContributorsHolder.stream(
+				getStrings(
+					"search.full.query.clause.contributors.includes",
+					searchContext),
+				getStrings(
+					"search.full.query.clause.contributors.excludes",
+					searchContext));
 
 		stream.forEach(
 			keywordQueryContributor -> keywordQueryContributor.contribute(
@@ -103,6 +113,15 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 		catch (ParseException parseException) {
 			throw new RuntimeException(parseException);
 		}
+	}
+
+	protected Collection<String> getStrings(
+		String string, SearchContext searchContext) {
+
+		return Arrays.asList(
+			SearchStringUtil.splitAndUnquote(
+				Optional.ofNullable(
+					(String)searchContext.getAttribute(string))));
 	}
 
 	@Reference

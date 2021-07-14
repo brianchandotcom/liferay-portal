@@ -18,7 +18,9 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
-import java.util.function.Consumer;
+import java.util.Collection;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -33,8 +35,14 @@ public class QueryPreFilterContributorsHolderImpl
 	implements QueryPreFilterContributorsHolder {
 
 	@Override
-	public void forEach(Consumer<QueryPreFilterContributor> consumer) {
-		_serviceTrackerList.forEach(consumer);
+	public Stream<QueryPreFilterContributor> stream(
+		Collection<String> includeIds, Collection<String> excludeIds) {
+
+		Stream<QueryPreFilterContributor> stream = StreamSupport.stream(
+			_serviceTrackerList.spliterator(), false);
+
+		return IncludeExcludeUtil.stream(
+			stream, includeIds, excludeIds, object -> getClassName(object));
 	}
 
 	@Activate
@@ -47,6 +55,12 @@ public class QueryPreFilterContributorsHolderImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerList.close();
+	}
+
+	protected String getClassName(Object object) {
+		Class<?> clazz = object.getClass();
+
+		return clazz.getName();
 	}
 
 	private ServiceTrackerList

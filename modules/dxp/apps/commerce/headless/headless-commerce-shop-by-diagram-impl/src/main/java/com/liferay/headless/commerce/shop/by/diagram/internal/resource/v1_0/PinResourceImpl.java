@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -68,18 +68,15 @@ public class PinResourceImpl extends BasePinResourceImpl {
 					externalReferenceCode);
 		}
 
-		List<CPDefinitionDiagramPin> cpDefinitionDiagramPins =
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
-				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int cpDefinitionDiagramPinsCount =
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPinsCount(
-				cpDefinition.getCPDefinitionId());
-
 		return Page.of(
-			_toPins(cpDefinitionDiagramPins), pagination,
-			cpDefinitionDiagramPinsCount);
+			_toPins(
+				_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
+					cpDefinition.getCPDefinitionId(),
+					pagination.getStartPosition(),
+					pagination.getEndPosition())),
+			pagination,
+			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPinsCount(
+				cpDefinition.getCPDefinitionId()));
 	}
 
 	@Override
@@ -95,18 +92,15 @@ public class PinResourceImpl extends BasePinResourceImpl {
 				"Unable to find product with ID: " + id);
 		}
 
-		List<CPDefinitionDiagramPin> cpDefinitionDiagramPins =
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
-				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int cpDefinitionDiagramPinsCount =
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPinsCount(
-				cpDefinition.getCPDefinitionId());
-
 		return Page.of(
-			_toPins(cpDefinitionDiagramPins), pagination,
-			cpDefinitionDiagramPinsCount);
+			_toPins(
+				_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
+					cpDefinition.getCPDefinitionId(),
+					pagination.getStartPosition(),
+					pagination.getEndPosition())),
+			pagination,
+			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPinsCount(
+				cpDefinition.getCPDefinitionId()));
 	}
 
 	@Override
@@ -174,22 +168,14 @@ public class PinResourceImpl extends BasePinResourceImpl {
 	}
 
 	private List<Pin> _toPins(
-			List<CPDefinitionDiagramPin> cpDefinitionDiagramPins)
-		throws Exception {
+		List<CPDefinitionDiagramPin> cpDefinitionDiagramPins) {
 
-		List<Pin> pins = new ArrayList<>();
-
-		for (CPDefinitionDiagramPin cpDefinitionDiagramPin :
-				cpDefinitionDiagramPins) {
-
-			pins.add(
-				_pinDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionDiagramPin.getCPDefinitionDiagramPinId(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return pins;
+		return TransformUtil.transform(
+			cpDefinitionDiagramPins,
+			cpDefinitionDiagramPin -> _pinDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpDefinitionDiagramPin.getCPDefinitionDiagramPinId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Reference

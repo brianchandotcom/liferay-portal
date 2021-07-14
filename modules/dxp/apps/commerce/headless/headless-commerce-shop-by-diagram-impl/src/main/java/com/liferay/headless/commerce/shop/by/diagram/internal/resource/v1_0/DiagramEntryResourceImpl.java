@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -71,18 +71,15 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 					externalReferenceCode);
 		}
 
-		List<CPDefinitionDiagramEntry> cpDefinitionDiagramEntries =
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
-				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int cpDefinitionDiagramEntriesCount =
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntriesCount(
-				cpDefinition.getCPDefinitionId());
-
 		return Page.of(
-			_toDiagramEntries(cpDefinitionDiagramEntries), pagination,
-			cpDefinitionDiagramEntriesCount);
+			_toDiagramEntries(
+				_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
+					cpDefinition.getCPDefinitionId(),
+					pagination.getStartPosition(),
+					pagination.getEndPosition())),
+			pagination,
+			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntriesCount(
+				cpDefinition.getCPDefinitionId()));
 	}
 
 	@Override
@@ -98,18 +95,15 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 				"Unable to find product with ID: " + id);
 		}
 
-		List<CPDefinitionDiagramEntry> cpDefinitionDiagramEntries =
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
-				cpDefinition.getCPDefinitionId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int cpDefinitionDiagramEntriesCount =
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntriesCount(
-				cpDefinition.getCPDefinitionId());
-
 		return Page.of(
-			_toDiagramEntries(cpDefinitionDiagramEntries), pagination,
-			cpDefinitionDiagramEntriesCount);
+			_toDiagramEntries(
+				_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
+					cpDefinition.getCPDefinitionId(),
+					pagination.getStartPosition(),
+					pagination.getEndPosition())),
+			pagination,
+			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntriesCount(
+				cpDefinition.getCPDefinitionId()));
 	}
 
 	@Override
@@ -201,23 +195,14 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 	}
 
 	private List<DiagramEntry> _toDiagramEntries(
-			List<CPDefinitionDiagramEntry> cpDefinitionDiagramEntries)
-		throws Exception {
+		List<CPDefinitionDiagramEntry> cpDefinitionDiagramEntries) {
 
-		List<DiagramEntry> diagramEntries = new ArrayList<>();
-
-		for (CPDefinitionDiagramEntry cpDefinitionDiagramEntry :
-				cpDefinitionDiagramEntries) {
-
-			diagramEntries.add(
-				_diagramEntryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionDiagramEntry.
-							getCPDefinitionDiagramEntryId(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return diagramEntries;
+		return TransformUtil.transform(
+			cpDefinitionDiagramEntries,
+			cpDefinitionDiagramEntry -> _diagramEntryDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Reference

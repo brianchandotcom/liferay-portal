@@ -34,10 +34,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  * @author Ivica Cardic
  */
-public class XLSBatchEngineImportTaskItemReader
+public class XLSBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
 
-	public XLSBatchEngineImportTaskItemReader(InputStream inputStream)
+	public XLSBatchEngineImportTaskItemReaderImpl(InputStream inputStream)
 		throws IOException {
 
 		_inputStream = inputStream;

@@ -43,24 +43,24 @@ public class BatchEngineExportTaskItemWriterFactory {
 		Map<String, Field> fieldMap = ItemClassIndexUtil.index(itemClass);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
-			return new CSVBatchEngineExportTaskItemWriter(
+			return new CSVBatchEngineExportTaskItemWriterImpl(
 				_csvFileColumnDelimiter, fieldMap, fieldNames, outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineExportTaskItemWriter(
+			return new JSONBatchEngineExportTaskItemWriterImpl(
 				fieldMap.keySet(), fieldNames, outputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
-			return new JSONLBatchEngineExportTaskItemWriter(
+			return new JSONLBatchEngineExportTaskItemWriterImpl(
 				fieldMap.keySet(), fieldNames, outputStream);
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
-			return new XLSBatchEngineExportTaskItemWriter(
+			return new XLSBatchEngineExportTaskItemWriterImpl(
 				fieldMap, fieldNames, outputStream);
 		}
 

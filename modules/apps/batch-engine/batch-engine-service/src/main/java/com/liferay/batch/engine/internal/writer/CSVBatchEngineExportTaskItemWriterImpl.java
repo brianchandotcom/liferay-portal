@@ -14,31 +14,44 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.fasterxml.jackson.databind.ObjectWriter;
-
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.lang.reflect.Field;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * @author Ivica Cardic
  */
-public class JSONLBatchEngineExportTaskItemWriter
+public class CSVBatchEngineExportTaskItemWriterImpl
 	implements BatchEngineExportTaskItemWriter {
 
-	public JSONLBatchEngineExportTaskItemWriter(
-		Set<String> allFieldNames, List<String> includeFieldNames,
+	public CSVBatchEngineExportTaskItemWriterImpl(
+		String delimiter, Map<String, Field> fieldMap, List<String> fieldNames,
 		OutputStream outputStream) {
 
-		_objectWriter = ObjectWriterFactory.getObjectWriter(
-			allFieldNames, includeFieldNames);
+		if (fieldNames.isEmpty()) {
+			throw new IllegalArgumentException("Field names are not set");
+		}
+
+		_delimiter = delimiter;
+
+		_columnValuesExtractor = new ColumnValuesExtractor(
+			fieldMap, fieldNames);
+
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
+
+		_unsyncPrintWriter.println(StringUtil.merge(fieldNames, delimiter));
 	}
 
 	@Override
@@ -48,13 +61,30 @@ public class JSONLBatchEngineExportTaskItemWriter
 
 	@Override
 	public void write(Collection<?> items) throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
 		for (Object item : items) {
-			_unsyncPrintWriter.write(_objectWriter.writeValueAsString(item));
-			_unsyncPrintWriter.write(StringPool.NEW_LINE);
+			_write(dateFormat, _columnValuesExtractor.extractValues(item));
 		}
 	}
 
-	private final ObjectWriter _objectWriter;
+	private void _write(DateFormat dateFormat, Collection<?> values) {
+		_unsyncPrintWriter.println(
+			StringUtil.merge(
+				values,
+				value -> {
+					if (value instanceof Date) {
+						return dateFormat.format(value);
+					}
+
+					return String.valueOf(value);
+				},
+				_delimiter));
+	}
+
+	private final ColumnValuesExtractor _columnValuesExtractor;
+	private final String _delimiter;
 	private final UnsyncPrintWriter _unsyncPrintWriter;
 
 }

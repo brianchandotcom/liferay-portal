@@ -14,55 +14,52 @@
 
 package com.liferay.batch.engine.internal.reader;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.util.Map;
 
 /**
  * @author Ivica Cardic
  */
-public class JSONBatchEngineImportTaskItemReader
+public class JSONLBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
 
-	public JSONBatchEngineImportTaskItemReader(InputStream inputStream)
-		throws IOException {
-
+	public JSONLBatchEngineImportTaskItemReaderImpl(InputStream inputStream) {
 		_inputStream = inputStream;
 
-		_jsonParser = _jsonFactory.createParser(_inputStream);
-
-		_jsonParser.nextToken();
+		_unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(_inputStream));
 	}
 
 	@Override
 	public void close() throws IOException {
-		_inputStream.close();
-		_jsonParser.close();
+		_unsyncBufferedReader.close();
 	}
 
 	@Override
 	public Map<String, Object> read() throws Exception {
-		if (_jsonParser.nextToken() == JsonToken.START_OBJECT) {
-			return _objectMapper.readValue(
-				_jsonParser,
-				new TypeReference<Map<String, Object>>() {
-				});
+		String line = _unsyncBufferedReader.readLine();
+
+		if (line == null) {
+			return null;
 		}
 
-		return null;
+		return _objectMapper.readValue(
+			line,
+			new TypeReference<Map<String, Object>>() {
+			});
 	}
 
-	private static final JsonFactory _jsonFactory = new JsonFactory();
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final InputStream _inputStream;
-	private final JsonParser _jsonParser;
+	private final UnsyncBufferedReader _unsyncBufferedReader;
 
 }

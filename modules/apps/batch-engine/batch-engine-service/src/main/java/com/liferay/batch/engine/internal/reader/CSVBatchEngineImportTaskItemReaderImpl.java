@@ -27,10 +27,10 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public class CSVBatchEngineImportTaskItemReader
+public class CSVBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
 
-	public CSVBatchEngineImportTaskItemReader(
+	public CSVBatchEngineImportTaskItemReaderImpl(
 			String delimiter, InputStream inputStream)
 		throws IOException {
 

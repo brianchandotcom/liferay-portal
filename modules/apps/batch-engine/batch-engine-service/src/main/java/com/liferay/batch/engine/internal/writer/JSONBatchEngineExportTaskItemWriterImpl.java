@@ -27,10 +27,10 @@ import java.util.Set;
 /**
  * @author Ivica Cardic
  */
-public class JSONBatchEngineExportTaskItemWriter
+public class JSONBatchEngineExportTaskItemWriterImpl
 	implements BatchEngineExportTaskItemWriter {
 
-	public JSONBatchEngineExportTaskItemWriter(
+	public JSONBatchEngineExportTaskItemWriterImpl(
 			Set<String> allFieldNames, List<String> includeFieldNames,
 			OutputStream outputStream)
 		throws IOException {

@@ -39,22 +39,22 @@ public class BatchEngineImportTaskItemReaderFactory {
 		inputStream = ZipInputStreamUtil.asZipInputStream(inputStream);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
-			return new CSVBatchEngineImportTaskItemReader(
+			return new CSVBatchEngineImportTaskItemReaderImpl(
 				_csvFileColumnDelimiter, inputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineImportTaskItemReader(inputStream);
+			return new JSONBatchEngineImportTaskItemReaderImpl(inputStream);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
-			return new JSONLBatchEngineImportTaskItemReader(inputStream);
+			return new JSONLBatchEngineImportTaskItemReaderImpl(inputStream);
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
-			return new XLSBatchEngineImportTaskItemReader(inputStream);
+			return new XLSBatchEngineImportTaskItemReaderImpl(inputStream);
 		}
 
 		throw new IllegalArgumentException(

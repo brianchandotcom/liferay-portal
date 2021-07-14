@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>WorkflowCalendar</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowCalendar</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>CALENDAR_EVENT_BY_TITLE</td>
+	<td>//div[contains(@class, 'scheduler-event-content') and text()='${key_eventTitle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDAR_EVENT_DETAILS_WORKFLOW_STATUS</td>
+	<td>//div[contains(@class, 'panel-body')]//span[contains(@class, 'workflow-value')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

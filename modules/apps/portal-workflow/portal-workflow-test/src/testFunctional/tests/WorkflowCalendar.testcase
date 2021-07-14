@@ -179,12 +179,33 @@ definition {
 	}
 
 	@description = "Verify that the user can approve calendar events on Single Approver workflow"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanApproveCalendarEventOnSingleApprover {
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		// TODO LRQA-68594 CanApproveCalendarEventOnSingleApprover pending implementation
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
 
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Calendar Event Title",
+			workflowAssetType = "Calendar Event",
+			workflowTask = "Review");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Click(
+			key_eventTitle = "Calendar Event Title",
+			locator1 = "WorkflowCalendar#CALENDAR_EVENT_BY_TITLE");
+
+		Button.click(button = "View Details");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextEquals(
+			locator1 = "WorkflowCalendar#CALENDAR_EVENT_DETAILS_WORKFLOW_STATUS",
+			value1 = "Approved");
 	}
 
 	@description = "Verify that the user can assign a Workflow to Calendar Event"

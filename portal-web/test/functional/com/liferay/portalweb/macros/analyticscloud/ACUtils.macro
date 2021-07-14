@@ -57,8 +57,8 @@ definition {
 			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
-				pageName = "${layoutName}",
-				siteName = "Site Name");
+			pageName = "${layoutName}",
+			siteName = "Site Name");
 
 		if (!(isSet(entryTitle))) {
 			entryTitle = "Blogs AC Title";
@@ -83,8 +83,8 @@ definition {
 			widgetName = "Documents and Media");
 
 		Navigator.gotoSitePage(
-				pageName = "${layoutName}",
-				siteName = "Site Name");
+			pageName = "${layoutName}",
+			siteName = "Site Name");
 
 		if (!(isSet(dmDocumentTitle))) {
 			dmDocumentTitle = "DM AC Title";
@@ -115,8 +115,8 @@ definition {
 			widgetName = "Form");
 
 		Navigator.gotoSitePage(
-				pageName = "${layoutName}",
-				siteName = "Site Name");
+			pageName = "${layoutName}",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -153,8 +153,8 @@ definition {
 			widgetName = "Web Content Display");
 
 		Navigator.gotoSitePage(
-				pageName = "${layoutName}",
-				siteName = "Site Name");
+			pageName = "${layoutName}",
+			siteName = "Site Name");
 
 		if (!(isSet(webContentTitle))) {
 			webContentTitle = "Web Content AC Title";

@@ -105,7 +105,6 @@ definition {
 		for (var assetName : list "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3") {
 			ACAssets.viewAssets(assetName = "${assetName}");
 		}
-
 	}
 
 	@description = "Web content visitor behavior card shows expected amount of views"

@@ -182,7 +182,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment = randomAttachment();
 
 		attachment.setAttachment(regex);
-		attachment.setCdnUrl(regex);
+		attachment.setCdnURL(regex);
 		attachment.setExternalReferenceCode(regex);
 		attachment.setSrc(regex);
 
@@ -193,7 +193,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		attachment = AttachmentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, attachment.getAttachment());
-		Assert.assertEquals(regex, attachment.getCdnUrl());
+		Assert.assertEquals(regex, attachment.getCdnURL());
 		Assert.assertEquals(regex, attachment.getExternalReferenceCode());
 		Assert.assertEquals(regex, attachment.getSrc());
 	}
@@ -979,8 +979,8 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("cdnUrl", additionalAssertFieldName)) {
-				if (attachment.getCdnUrl() == null) {
+			if (Objects.equals("cdnURL", additionalAssertFieldName)) {
+				if (attachment.getCdnURL() == null) {
 					valid = false;
 				}
 
@@ -1180,9 +1180,9 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("cdnUrl", additionalAssertFieldName)) {
+			if (Objects.equals("cdnURL", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						attachment1.getCdnUrl(), attachment2.getCdnUrl())) {
+						attachment1.getCdnURL(), attachment2.getCdnURL())) {
 
 					return false;
 				}
@@ -1417,9 +1417,9 @@ public abstract class BaseAttachmentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("cdnUrl")) {
+		if (entityFieldName.equals("cdnURL")) {
 			sb.append("'");
-			sb.append(String.valueOf(attachment.getCdnUrl()));
+			sb.append(String.valueOf(attachment.getCdnURL()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1587,7 +1587,7 @@ public abstract class BaseAttachmentResourceTestCase {
 				attachment = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				cdn = RandomTestUtil.randomBoolean();
-				cdnUrl = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				cdnURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(

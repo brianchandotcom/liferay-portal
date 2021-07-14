@@ -76,26 +76,26 @@ public class Attachment implements Cloneable, Serializable {
 
 	protected Boolean cdn;
 
-	public String getCdnUrl() {
-		return cdnUrl;
+	public String getCdnURL() {
+		return cdnURL;
 	}
 
-	public void setCdnUrl(String cdnUrl) {
-		this.cdnUrl = cdnUrl;
+	public void setCdnURL(String cdnURL) {
+		this.cdnURL = cdnURL;
 	}
 
-	public void setCdnUrl(
-		UnsafeSupplier<String, Exception> cdnUrlUnsafeSupplier) {
+	public void setCdnURL(
+		UnsafeSupplier<String, Exception> cdnURLUnsafeSupplier) {
 
 		try {
-			cdnUrl = cdnUrlUnsafeSupplier.get();
+			cdnURL = cdnURLUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String cdnUrl;
+	protected String cdnURL;
 
 	public CustomField[] getCustomFields() {
 		return customFields;

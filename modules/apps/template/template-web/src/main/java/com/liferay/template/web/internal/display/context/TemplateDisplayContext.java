@@ -103,16 +103,6 @@ public class TemplateDisplayContext {
 		return templateHandler.getName(_themeDisplay.getLocale());
 	}
 
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
-
-		return _keywords;
-	}
-
 	public List<NavigationItem> getNavigationItems() {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
@@ -138,7 +128,60 @@ public class TemplateDisplayContext {
 		).build();
 	}
 
-	public String getOrderByCol() {
+	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
+		if (_ddmTemplateSearchContainer != null) {
+			return _ddmTemplateSearchContainer;
+		}
+
+		SearchContainer<DDMTemplate> ddmTemplateSearchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, _getPortletURL(), null,
+				"there-are-no-templates");
+
+		ddmTemplateSearchContainer.setOrderByCol(_getOrderByCol());
+		ddmTemplateSearchContainer.setOrderByComparator(
+			_getTemplateOrderByComparator());
+		ddmTemplateSearchContainer.setOrderByType(_getOrderByType());
+		ddmTemplateSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
+
+		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
+			_themeDisplay.getCompanyId(),
+			new long[] {_themeDisplay.getScopeGroupId()},
+			TemplateHandlerRegistryUtil.getClassNameIds(), null,
+			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
+			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+			WorkflowConstants.STATUS_ANY, ddmTemplateSearchContainer.getStart(),
+			ddmTemplateSearchContainer.getEnd(),
+			ddmTemplateSearchContainer.getOrderByComparator());
+
+		int total = DDMTemplateServiceUtil.searchCount(
+			_themeDisplay.getCompanyId(),
+			new long[] {_themeDisplay.getScopeGroupId()},
+			TemplateHandlerRegistryUtil.getClassNameIds(), null,
+			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
+			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+			WorkflowConstants.STATUS_ANY);
+
+		ddmTemplateSearchContainer.setResults(results);
+		ddmTemplateSearchContainer.setTotal(total);
+
+		_ddmTemplateSearchContainer = ddmTemplateSearchContainer;
+
+		return _ddmTemplateSearchContainer;
+	}
+
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		return _keywords;
+	}
+
+	private String _getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
@@ -150,7 +193,7 @@ public class TemplateDisplayContext {
 		return _orderByCol;
 	}
 
-	public String getOrderByType() {
+	private String _getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
@@ -160,49 +203,6 @@ public class TemplateDisplayContext {
 			"asc");
 
 		return _orderByType;
-	}
-
-	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
-		if (_ddmTemplateSearchContainer != null) {
-			return _ddmTemplateSearchContainer;
-		}
-
-		SearchContainer<DDMTemplate> ddmTemplateSearchContainer =
-			new SearchContainer<>(
-				_liferayPortletRequest, _getPortletURL(), null,
-				"there-are-no-templates");
-
-		ddmTemplateSearchContainer.setOrderByCol(getOrderByCol());
-		ddmTemplateSearchContainer.setOrderByComparator(
-			_getTemplateOrderByComparator());
-		ddmTemplateSearchContainer.setOrderByType(getOrderByType());
-		ddmTemplateSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
-
-		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
-			_themeDisplay.getCompanyId(),
-			new long[] {_themeDisplay.getScopeGroupId()},
-			TemplateHandlerRegistryUtil.getClassNameIds(), null,
-			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-			getKeywords(), StringPool.BLANK, StringPool.BLANK,
-			WorkflowConstants.STATUS_ANY, ddmTemplateSearchContainer.getStart(),
-			ddmTemplateSearchContainer.getEnd(),
-			ddmTemplateSearchContainer.getOrderByComparator());
-
-		int total = DDMTemplateServiceUtil.searchCount(
-			_themeDisplay.getCompanyId(),
-			new long[] {_themeDisplay.getScopeGroupId()},
-			TemplateHandlerRegistryUtil.getClassNameIds(), null,
-			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-			getKeywords(), StringPool.BLANK, StringPool.BLANK,
-			WorkflowConstants.STATUS_ANY);
-
-		ddmTemplateSearchContainer.setResults(results);
-		ddmTemplateSearchContainer.setTotal(total);
-
-		_ddmTemplateSearchContainer = ddmTemplateSearchContainer;
-
-		return _ddmTemplateSearchContainer;
 	}
 
 	private PortletURL _getPortletURL() {
@@ -227,16 +227,16 @@ public class TemplateDisplayContext {
 	private OrderByComparator<DDMTemplate> _getTemplateOrderByComparator() {
 		boolean orderByAsc = false;
 
-		if (Objects.equals(getOrderByType(), "asc")) {
+		if (Objects.equals(_getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
 
 		OrderByComparator<DDMTemplate> orderByComparator = null;
 
-		if (Objects.equals(getOrderByCol(), "id")) {
+		if (Objects.equals(_getOrderByCol(), "id")) {
 			orderByComparator = new TemplateIdComparator(orderByAsc);
 		}
-		else if (Objects.equals(getOrderByCol(), "modified-date")) {
+		else if (Objects.equals(_getOrderByCol(), "modified-date")) {
 			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);
 		}
 

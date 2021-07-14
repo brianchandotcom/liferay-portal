@@ -589,10 +589,6 @@ message.
 			<arg value="output.file=${project.dir}/portal-impl/src/portal.properties" />
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 		</java>
-
-		<ant dir="portal-impl" inheritAll="false" target="format-source-files">
-			<property name="source.files" value="portal-impl/src/portal.properties" />
-		</ant>
 	</target>
 
 	<target name="install-portal-snapshots">

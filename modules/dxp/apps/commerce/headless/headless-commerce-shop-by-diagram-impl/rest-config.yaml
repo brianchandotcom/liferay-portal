@@ -6,3 +6,4 @@ application:
     name: "Liferay.Headless.Commerce.Shop.By.Diagram"
 author: "Alessio Antonio Rendina"
 liferayEnterpriseApp: true
+resourceApplicationSelect: "(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)"

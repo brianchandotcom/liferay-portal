@@ -110,8 +110,9 @@ public class ObjectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long objectEntryId = counterLocalService.increment();
@@ -122,6 +123,7 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
 
+		objectEntry.setExternalReferenceCode(externalReferenceCode);
 		objectEntry.setGroupId(groupId);
 
 		User user = _userLocalService.getUser(userId);
@@ -164,13 +166,13 @@ public class ObjectEntryLocalServiceImpl
 
 		if (objectEntry != null) {
 			return updateObjectEntry(
-				userId, objectEntry.getObjectEntryId(), values, serviceContext);
+				externalReferenceCode, userId, objectEntry.getObjectEntryId(),
+				values, serviceContext);
 		}
 
 		objectEntry = addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
-
-		objectEntry.setExternalReferenceCode(externalReferenceCode);
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
 
 		return objectEntryPersistence.update(objectEntry);
 	}
@@ -416,8 +418,8 @@ public class ObjectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long objectEntryId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
@@ -428,6 +430,7 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectDefinitionId()),
 			objectEntryId, values);
 
+		objectEntry.setExternalReferenceCode(externalReferenceCode);
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
 		objectEntry = objectEntryPersistence.update(objectEntry);

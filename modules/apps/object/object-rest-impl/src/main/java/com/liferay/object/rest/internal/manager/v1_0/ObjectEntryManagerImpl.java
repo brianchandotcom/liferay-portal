@@ -67,7 +67,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.addObjectEntry(
-				userId, 0L, objectDefinitionId,
+				objectEntry.getExternalReferenceCode(), userId, 0L, objectDefinitionId,
 				_toObjectValues(
 					objectDefinitionId, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
@@ -170,7 +170,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.updateObjectEntry(
-				userId, objectEntryId,
+				objectEntry.getExternalReferenceCode(), userId, objectEntryId,
 				_toObjectValues(
 					serviceBuilderObjectEntry.getObjectDefinitionId(),
 					objectEntry.getProperties(),

@@ -108,10 +108,10 @@ public class SourceFormatter {
 		try {
 			SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
-			boolean autoFix = ArgumentsUtil.getBoolean(
-				arguments, "source.auto.fix", SourceFormatterArgs.AUTO_FIX);
-
-			sourceFormatterArgs.setAutoFix(autoFix);
+			sourceFormatterArgs.setAutoFix(
+				ArgumentsUtil.getBoolean(
+					arguments, "source.auto.fix",
+					SourceFormatterArgs.AUTO_FIX));
 
 			String baseDirName = ArgumentsUtil.getString(
 				arguments, "source.base.dir",
@@ -119,56 +119,40 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setBaseDirName(baseDirName);
 
-			List<String> checkCategoryNames = ListUtil.fromString(
-				StringUtil.replace(
+			sourceFormatterArgs.setCheckCategoryNames(
+				ListUtil.fromString(
 					ArgumentsUtil.getString(
 						arguments, "source.check.category.names", null),
-					CharPool.UNDERLINE, CharPool.SPACE),
-				StringPool.COMMA);
-
-			sourceFormatterArgs.setCheckCategoryNames(checkCategoryNames);
-
-			List<String> checkNames = ListUtil.fromString(
-				ArgumentsUtil.getString(arguments, "source.check.names", null),
-				StringPool.COMMA);
-
-			sourceFormatterArgs.setCheckNames(checkNames);
-
-			boolean failOnAutoFix = ArgumentsUtil.getBoolean(
-				arguments, "source.fail.on.auto.fix",
-				SourceFormatterArgs.FAIL_ON_AUTO_FIX);
-
-			sourceFormatterArgs.setFailOnAutoFix(failOnAutoFix);
-
-			boolean failOnHasWarning = ArgumentsUtil.getBoolean(
-				arguments, "source.fail.on.has.warning",
-				SourceFormatterArgs.FAIL_ON_HAS_WARNING);
-
-			sourceFormatterArgs.setFailOnHasWarning(failOnHasWarning);
-
-			boolean formatCurrentBranch = ArgumentsUtil.getBoolean(
-				arguments, "format.current.branch",
-				SourceFormatterArgs.FORMAT_CURRENT_BRANCH);
-
-			sourceFormatterArgs.setFormatCurrentBranch(formatCurrentBranch);
-
-			boolean formatLatestAuthor = ArgumentsUtil.getBoolean(
-				arguments, "format.latest.author",
-				SourceFormatterArgs.FORMAT_LATEST_AUTHOR);
-
-			sourceFormatterArgs.setFormatLatestAuthor(formatLatestAuthor);
-
-			boolean formatLocalChanges = ArgumentsUtil.getBoolean(
-				arguments, "format.local.changes",
-				SourceFormatterArgs.FORMAT_LOCAL_CHANGES);
-
-			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
-
-			String gitWorkingBranchName = ArgumentsUtil.getString(
-				arguments, "git.working.branch.name",
-				SourceFormatterArgs.GIT_WORKING_BRANCH_NAME);
-
-			sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
+					StringPool.COMMA));
+			sourceFormatterArgs.setCheckNames(
+				ListUtil.fromString(
+					ArgumentsUtil.getString(
+						arguments, "source.check.names", null),
+					StringPool.COMMA));
+			sourceFormatterArgs.setFailOnAutoFix(
+				ArgumentsUtil.getBoolean(
+					arguments, "source.fail.on.auto.fix",
+					SourceFormatterArgs.FAIL_ON_AUTO_FIX));
+			sourceFormatterArgs.setFailOnHasWarning(
+				ArgumentsUtil.getBoolean(
+					arguments, "source.fail.on.has.warning",
+					SourceFormatterArgs.FAIL_ON_HAS_WARNING));
+			sourceFormatterArgs.setFormatCurrentBranch(
+				ArgumentsUtil.getBoolean(
+					arguments, "format.current.branch",
+					SourceFormatterArgs.FORMAT_CURRENT_BRANCH));
+			sourceFormatterArgs.setFormatLatestAuthor(
+				ArgumentsUtil.getBoolean(
+					arguments, "format.latest.author",
+					SourceFormatterArgs.FORMAT_LATEST_AUTHOR));
+			sourceFormatterArgs.setFormatLocalChanges(
+				ArgumentsUtil.getBoolean(
+					arguments, "format.local.changes",
+					SourceFormatterArgs.FORMAT_LOCAL_CHANGES));
+			sourceFormatterArgs.setGitWorkingBranchName(
+				ArgumentsUtil.getString(
+					arguments, "git.working.branch.name",
+					SourceFormatterArgs.GIT_WORKING_BRANCH_NAME));
 
 			int commitCount = ArgumentsUtil.getInteger(
 				arguments, "commit.count", SourceFormatterArgs.COMMIT_COUNT);
@@ -180,28 +164,28 @@ public class SourceFormatter {
 					GitUtil.getModifiedFileNames(baseDirName, commitCount),
 					baseDirName);
 			}
-			else if (formatCurrentBranch) {
+			else if (sourceFormatterArgs.isFormatCurrentBranch()) {
 				sourceFormatterArgs.addRecentChangesFileNames(
 					GitUtil.getCurrentBranchFileNames(
-						baseDirName, gitWorkingBranchName, false),
+						baseDirName,
+						sourceFormatterArgs.getGitWorkingBranchName(), false),
 					baseDirName);
 			}
-			else if (formatLatestAuthor) {
+			else if (sourceFormatterArgs.isFormatLatestAuthor()) {
 				sourceFormatterArgs.addRecentChangesFileNames(
 					GitUtil.getLatestAuthorFileNames(baseDirName, false),
 					baseDirName);
 			}
-			else if (formatLocalChanges) {
+			else if (sourceFormatterArgs.isFormatLocalChanges()) {
 				sourceFormatterArgs.addRecentChangesFileNames(
 					GitUtil.getLocalChangesFileNames(baseDirName, false),
 					baseDirName);
 			}
 
-			String fileNamesString = ArgumentsUtil.getString(
-				arguments, "source.files", StringPool.BLANK);
-
 			String[] fileNames = StringUtil.split(
-				fileNamesString, StringPool.COMMA);
+				ArgumentsUtil.getString(
+					arguments, "source.files", StringPool.BLANK),
+				StringPool.COMMA);
 
 			if (ArrayUtil.isNotEmpty(fileNames)) {
 				sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
@@ -217,20 +201,18 @@ public class SourceFormatter {
 					Arrays.asList(fileExtensions));
 			}
 
-			boolean includeGeneratedFiles = ArgumentsUtil.getBoolean(
-				arguments, "include.generated.files",
-				SourceFormatterArgs.INCLUDE_GENERATED_FILES);
-
-			sourceFormatterArgs.setIncludeGeneratedFiles(includeGeneratedFiles);
+			sourceFormatterArgs.setIncludeGeneratedFiles(
+				ArgumentsUtil.getBoolean(
+					arguments, "include.generated.files",
+					SourceFormatterArgs.INCLUDE_GENERATED_FILES));
 
 			boolean includeSubrepositories = ArgumentsUtil.getBoolean(
 				arguments, "include.subrepositories",
 				SourceFormatterArgs.INCLUDE_SUBREPOSITORIES);
 
-			Set<String> recentChangesFileNames =
-				sourceFormatterArgs.getRecentChangesFileNames();
+			for (String recentChangesFileName :
+					sourceFormatterArgs.getRecentChangesFileNames()) {
 
-			for (String recentChangesFileName : recentChangesFileNames) {
 				if (recentChangesFileName.endsWith("ci-merge")) {
 					includeSubrepositories = true;
 
@@ -241,81 +223,63 @@ public class SourceFormatter {
 			sourceFormatterArgs.setIncludeSubrepositories(
 				includeSubrepositories);
 
-			int maxLineLength = ArgumentsUtil.getInteger(
-				arguments, "max.line.length",
-				SourceFormatterArgs.MAX_LINE_LENGTH);
-
-			sourceFormatterArgs.setMaxLineLength(maxLineLength);
-
-			String outputFileName = ArgumentsUtil.getString(
-				arguments, "output.file.name",
-				SourceFormatterArgs.OUTPUT_FILE_NAME);
-
+			sourceFormatterArgs.setMaxLineLength(
+				ArgumentsUtil.getInteger(
+					arguments, "max.line.length",
+					SourceFormatterArgs.MAX_LINE_LENGTH));
 			sourceFormatterArgs.setMaxDirLevel(
 				Math.max(
 					ToolsUtil.PORTAL_MAX_DIR_LEVEL,
 					StringUtil.count(baseDirName, CharPool.SLASH) + 1));
-
-			sourceFormatterArgs.setOutputFileName(outputFileName);
-
-			boolean printErrors = ArgumentsUtil.getBoolean(
-				arguments, "source.print.errors",
-				SourceFormatterArgs.PRINT_ERRORS);
-
-			sourceFormatterArgs.setPrintErrors(printErrors);
-
-			int processorThreadCount = ArgumentsUtil.getInteger(
-				arguments, "processor.thread.count",
-				SourceFormatterArgs.PROCESSOR_THREAD_COUNT);
-
-			sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
-
-			boolean showDebugInformation = ArgumentsUtil.getBoolean(
-				arguments, "show.debug.information",
-				SourceFormatterArgs.SHOW_DEBUG_INFORMATION);
-
-			sourceFormatterArgs.setShowDebugInformation(showDebugInformation);
-
-			boolean showDocumentation = ArgumentsUtil.getBoolean(
-				arguments, "show.documentation",
-				SourceFormatterArgs.SHOW_DOCUMENTATION);
-
-			sourceFormatterArgs.setShowDocumentation(showDocumentation);
-
-			boolean showStatusUpdates = ArgumentsUtil.getBoolean(
-				arguments, "show.status.updates",
-				SourceFormatterArgs.SHOW_STATUS_UPDATES);
-
-			sourceFormatterArgs.setShowStatusUpdates(showStatusUpdates);
-
-			String skipCheckNamesString = ArgumentsUtil.getString(
-				arguments, "skip.check.names", null);
+			sourceFormatterArgs.setOutputFileName(
+				ArgumentsUtil.getString(
+					arguments, "output.file.name",
+					SourceFormatterArgs.OUTPUT_FILE_NAME));
+			sourceFormatterArgs.setPrintErrors(
+				ArgumentsUtil.getBoolean(
+					arguments, "source.print.errors",
+					SourceFormatterArgs.PRINT_ERRORS));
+			sourceFormatterArgs.setProcessorThreadCount(
+				ArgumentsUtil.getInteger(
+					arguments, "processor.thread.count",
+					SourceFormatterArgs.PROCESSOR_THREAD_COUNT));
+			sourceFormatterArgs.setShowDebugInformation(
+				ArgumentsUtil.getBoolean(
+					arguments, "show.debug.information",
+					SourceFormatterArgs.SHOW_DEBUG_INFORMATION));
+			sourceFormatterArgs.setShowDocumentation(
+				ArgumentsUtil.getBoolean(
+					arguments, "show.documentation",
+					SourceFormatterArgs.SHOW_DOCUMENTATION));
+			sourceFormatterArgs.setShowStatusUpdates(
+				ArgumentsUtil.getBoolean(
+					arguments, "show.status.updates",
+					SourceFormatterArgs.SHOW_STATUS_UPDATES));
 
 			String[] skipCheckNames = StringUtil.split(
-				skipCheckNamesString, StringPool.COMMA);
+				ArgumentsUtil.getString(
+					arguments, "skip.check.names", StringPool.BLANK),
+				StringPool.COMMA);
 
 			if (ArrayUtil.isNotEmpty(skipCheckNames)) {
 				sourceFormatterArgs.setSkipCheckNames(
 					Arrays.asList(skipCheckNames));
 			}
 
-			String sourceFormatterPropertiesString = ArgumentsUtil.getString(
-				arguments, "source.formatter.properties", null);
-
 			String[] sourceFormatterProperties = StringUtil.split(
-				sourceFormatterPropertiesString, "\\n");
+				ArgumentsUtil.getString(
+					arguments, "source.formatter.properties", StringPool.BLANK),
+				"\\n");
 
 			if (ArrayUtil.isNotEmpty(sourceFormatterProperties)) {
 				sourceFormatterArgs.setSourceFormatterProperties(
 					Arrays.asList(sourceFormatterProperties));
 			}
 
-			boolean validateCommitMessages = ArgumentsUtil.getBoolean(
-				arguments, "validate.commit.messages",
-				SourceFormatterArgs.VALIDATE_COMMIT_MESSAGES);
-
 			sourceFormatterArgs.setValidateCommitMessages(
-				validateCommitMessages);
+				ArgumentsUtil.getBoolean(
+					arguments, "validate.commit.messages",
+					SourceFormatterArgs.VALIDATE_COMMIT_MESSAGES));
 
 			SourceFormatter sourceFormatter = new SourceFormatter(
 				sourceFormatterArgs);

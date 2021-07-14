@@ -14,13 +14,22 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.portal.instances.action.contributor.PortalInstanceActionContributor;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Pei-Jung Lan
@@ -39,7 +48,32 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		renderRequest.setAttribute(
+			PortalInstancesWebKeys.PORTAL_INSTANCE_ACTION_CONTRIBUTORS,
+			_portalInstanceActionContributor);
+
 		return "/view.jsp";
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setPortalInstanceActionContributor(
+		PortalInstanceActionContributor portalInstanceActionContributor) {
+
+		_portalInstanceActionContributor.add(portalInstanceActionContributor);
+	}
+
+	protected void unsetPortalInstanceActionContributor(
+		PortalInstanceActionContributor portalInstanceActionContributor) {
+
+		_portalInstanceActionContributor.remove(
+			portalInstanceActionContributor);
+	}
+
+	private final List<PortalInstanceActionContributor>
+		_portalInstanceActionContributor = new CopyOnWriteArrayList<>();
 
 }

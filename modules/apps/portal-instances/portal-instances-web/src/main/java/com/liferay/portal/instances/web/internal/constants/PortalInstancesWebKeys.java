@@ -19,6 +19,9 @@ package com.liferay.portal.instances.web.internal.constants;
  */
 public class PortalInstancesWebKeys {
 
+	public static final String PORTAL_INSTANCE_ACTION_CONTRIBUTORS =
+		"PORTAL_INSTANCE_ACTION_CONTRIBUTORS";
+
 	public static final String PORTAL_INSTANCE_INITIALIZER_REGISTRY =
 		"PORTAL_INSTANCE_INITIALIZER_REGISTRY";
 

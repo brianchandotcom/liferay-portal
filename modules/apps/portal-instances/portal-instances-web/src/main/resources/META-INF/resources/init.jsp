@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.instances.action.contributor.PortalInstanceActionContributor" %><%@
 page import="com.liferay.portal.instances.initializer.PortalInstanceInitializer" %><%@
 page import="com.liferay.portal.instances.initializer.PortalInstanceInitializerRegistry" %><%@
 page import="com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil" %><%@

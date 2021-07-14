@@ -51,4 +51,22 @@ Company companyObject = (Company)row.getObject();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<%
+	List<PortalInstanceActionContributor> portalInstanceActionContributors = (List<PortalInstanceActionContributor>)renderRequest.getAttribute(PortalInstancesWebKeys.PORTAL_INSTANCE_ACTION_CONTRIBUTORS);
+
+	for (PortalInstanceActionContributor portalInstanceActionContributor : portalInstanceActionContributors) {
+	%>
+
+		<c:if test="<%= portalInstanceActionContributor.isShow(companyObject, liferayPortletRequest) %>">
+			<liferay-ui:icon
+				message="<%= portalInstanceActionContributor.getMessage(liferayPortletRequest) %>"
+				url="<%= portalInstanceActionContributor.getURL(companyObject, liferayPortletRequest, liferayPortletResponse) %>"
+			/>
+		</c:if>
+
+	<%
+	}
+	%>
+
 </liferay-ui:icon-menu>

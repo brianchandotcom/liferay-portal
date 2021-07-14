@@ -225,8 +225,9 @@ definition {
 			userScreenName = "usersn");
 
 		JSONUser.setFirstPassword(
+			newPassword = "test",
 			requireReset = "false",
-			userEmailAddress = "userea1@liferay.com");
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 

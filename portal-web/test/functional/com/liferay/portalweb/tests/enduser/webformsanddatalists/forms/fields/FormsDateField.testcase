@@ -483,19 +483,11 @@ definition {
 
 		FormsAdminNavigator.gotoBack();
 
-		Click(
-			key_formName = "Form 1",
-			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
-
-		Click(
-			key_name = "Date",
-			locator1 = "FormFields#FIELD_TARGET_LABEL");
-
-		Form.gotoAdvancedTab();
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		Form.viewFieldReference(
 			fieldName = "Date",
-			fieldValue = "Date1234");
+			fieldReference = "Date1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

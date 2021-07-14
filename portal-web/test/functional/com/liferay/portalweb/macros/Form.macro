@@ -859,6 +859,7 @@ definition {
 
 	macro viewFieldReference {
 		key_fieldName = "${fieldName}";
+		key_fieldReference = "${fieldReference}";
 
 		Click(
 			key_fieldName = "${fieldName}",
@@ -868,7 +869,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
-			value1 = "${key_fieldReference}");
+			value1 = "${fieldReference}");
 	}
 
 	macro viewFieldReferenceFromTextField {

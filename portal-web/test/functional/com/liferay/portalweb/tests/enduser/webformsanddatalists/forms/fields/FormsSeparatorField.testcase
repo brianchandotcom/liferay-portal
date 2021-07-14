@@ -413,7 +413,7 @@ definition {
 
 		Form.viewFieldReference(
 			fieldName = "Separator",
-			key_fieldReference = "Separator1234");
+			fieldReference = "Separator1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

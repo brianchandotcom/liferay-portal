@@ -16,7 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.commerce.product.exception.CPAttachmentFileEntryCdnUrlException;
+import com.liferay.commerce.product.exception.CPAttachmentFileEntryCDNURLException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException;
@@ -137,7 +137,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	@Override
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
 			String externalReferenceCode, long userId, long groupId,
-			long classNameId, long classPK, long fileEntryId, String cdnUrl,
+			long classNameId, long classPK, long fileEntryId, String cdnURL,
 			boolean cdn, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
@@ -164,7 +164,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		_validate(
-			classNameId, classPK, fileEntryId, cdnUrl, cdn, 0, null, false);
+			classNameId, classPK, fileEntryId, cdnURL, cdn, 0, null, false);
 
 		Date expirationDate = null;
 		Date now = new Date();
@@ -212,7 +212,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setClassNameId(classNameId);
 		cpAttachmentFileEntry.setClassPK(classPK);
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
-		cpAttachmentFileEntry.setCdnUrl(cdnUrl);
+		cpAttachmentFileEntry.setCdnURL(cdnURL);
 		cpAttachmentFileEntry.setCdn(cdn);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
@@ -323,7 +323,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			String cdnUrl, boolean cdn, int displayDateMonth,
+			String cdnURL, boolean cdn, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -349,7 +349,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry =
 				cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
 					externalReferenceCode, serviceContext.getUserId(), groupId,
-					classNameId, classPK, fileEntryId, cdnUrl, cdn,
+					classNameId, classPK, fileEntryId, cdnURL, cdn,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -361,7 +361,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 					serviceContext.getUserId(),
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-					fileEntryId, cdnUrl, cdn, displayDateMonth, displayDateDay,
+					fileEntryId, cdnURL, cdn, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
@@ -455,7 +455,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					cpAttachmentFileEntryPersistence.findByC_C_C_First(
 						cpDefinitionClassNameId,
 						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getCdnUrl(), null);
+						cpAttachmentFileEntry.getCdnURL(), null);
 			}
 			else {
 				cpAttachmentFileEntry =
@@ -721,7 +721,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	@Override
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			String cdnUrl, boolean cdn, int displayDateMonth,
+			String cdnURL, boolean cdn, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -753,7 +753,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					cpAttachmentFileEntryPersistence.findByC_C_C_First(
 						cpDefinitionClassNameId,
 						newCPDefinition.getCPDefinitionId(),
-						cpAttachmentFileEntry.getCdnUrl(), null);
+						cpAttachmentFileEntry.getCdnURL(), null);
 			}
 			else {
 				cpAttachmentFileEntry =
@@ -777,9 +777,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		_validate(
 			cpAttachmentFileEntry.getClassNameId(),
-			cpAttachmentFileEntry.getClassPK(), fileEntryId, cdnUrl, cdn,
+			cpAttachmentFileEntry.getClassPK(), fileEntryId, cdnURL, cdn,
 			cpAttachmentFileEntry.getFileEntryId(),
-			cpAttachmentFileEntry.getCdnUrl(), true);
+			cpAttachmentFileEntry.getCdnURL(), true);
 
 		Date expirationDate = null;
 		Date now = new Date();
@@ -815,7 +815,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
-		cpAttachmentFileEntry.setCdnUrl(cdnUrl);
+		cpAttachmentFileEntry.setCdnURL(cdnURL);
 		cpAttachmentFileEntry.setCdn(cdn);
 		cpAttachmentFileEntry.setTitleMap(
 			_getValidLocalizedMap(
@@ -1010,8 +1010,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	private void _validate(
-			long classNameId, long classPK, long fileEntryId, String cdnUrl,
-			boolean cdn, long oldFileEntryId, String oldCdnUrl, boolean old)
+			long classNameId, long classPK, long fileEntryId, String cdnURL,
+			boolean cdn, long oldFileEntryId, String oldCdnURL, boolean old)
 		throws PortalException {
 
 		if (old) {
@@ -1020,10 +1020,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					return;
 				}
 			}
-			else if (Validator.isNull(cdnUrl) && Validator.isNull(oldCdnUrl)) {
-				throw new CPAttachmentFileEntryCdnUrlException();
+			else if (Validator.isNull(cdnURL) && Validator.isNull(oldCdnURL)) {
+				throw new CPAttachmentFileEntryCDNURLException();
 			}
-			else if (Objects.equals(cdnUrl, oldCdnUrl)) {
+			else if (Objects.equals(cdnURL, oldCdnURL)) {
 				return;
 			}
 		}
@@ -1031,13 +1031,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		CPAttachmentFileEntry existingCPAttachmentFileEntry = null;
 
 		if (cdn) {
-			if (Validator.isUrl(cdnUrl)) {
+			if (Validator.isUrl(cdnURL)) {
 				existingCPAttachmentFileEntry =
 					cpAttachmentFileEntryPersistence.fetchByC_C_C_First(
-						classNameId, classPK, cdnUrl, null);
+						classNameId, classPK, cdnURL, null);
 			}
 			else {
-				throw new CPAttachmentFileEntryCdnUrlException();
+				throw new CPAttachmentFileEntryCDNURLException();
 			}
 		}
 		else {

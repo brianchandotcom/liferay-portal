@@ -1,3 +1,80 @@
-.lfr-balloon-editor .cke_inner .cke_top {
-	display: none;
+.lfr-balloon-editor {
+	&.cke_balloon.cke_balloontoolbar {
+		z-index: 899;
+	}
+
+	.cke_inner .cke_top {
+		display: none;
+	}
+
+	.ui-numberinput {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		float: left;
+		padding: 4px;
+
+		input {
+			background: #f1f2f5;
+			border: 1px solid #e7e7ed;
+			border-radius: 4px;
+			max-width: 32px;
+			padding: 6px 12px;
+		}
+
+		label {
+			padding: 4px;
+		}
+	}
+
+	.ui-select {
+		border: none;
+		color: grey;
+		float: left;
+		line-height: 30px;
+		margin: 2px;
+		min-height: 30px;
+		outline: none;
+		padding: 6px;
+		width: auto;
+
+		option {
+			border: none;
+			color: grey;
+			float: left;
+			line-height: 30px;
+			outline: none;
+			padding: 6px;
+			width: auto;
+		}
+	}
+
+	.ui-select-wrapper {
+		position: relative;
+		top: -9px;
+	}
+
+	.ui-textinput {
+		background: white;
+		border-radius: 4px;
+		float: left;
+		height: 16px;
+		margin: 2px;
+		outline: none;
+		padding: 6px;
+	}
+}
+
+.lfr-ballon-editor-insert-button {
+	align-items: center;
+	background: white;
+	border: 0.75px solid #0b5fff;
+	border-radius: 3px;
+	color: #0b5fff;
+	display: flex;
+	flex-direction: row;
+	font-size: 1.1em;
+	font-weight: bolder;
+	height: 28px;
+	width: 28px;
 }

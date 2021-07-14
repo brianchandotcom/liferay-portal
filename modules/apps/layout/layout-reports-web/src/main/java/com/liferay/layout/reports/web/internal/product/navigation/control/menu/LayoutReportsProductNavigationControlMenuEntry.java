@@ -299,19 +299,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(), BlogsEntry.class.getName(),
-				BlogsEntry.class.getName(), ActionKeys.UPDATE) ||
-			permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(), DLFileEntry.class.getName(),
-				DLFileEntry.class.getName(), ActionKeys.UPDATE) ||
-			permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(), JournalArticle.class.getName(),
-				JournalArticle.class.getName(), ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
 		return Optional.ofNullable(
 			_layoutLocalService.fetchLayout(themeDisplay.getPlid())
 		).filter(
@@ -323,6 +310,23 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		).filter(
 			layout -> {
 				try {
+					if (permissionChecker.hasPermission(
+							themeDisplay.getScopeGroup(),
+							BlogsEntry.class.getName(),
+							BlogsEntry.class.getName(), ActionKeys.UPDATE) ||
+						permissionChecker.hasPermission(
+							themeDisplay.getScopeGroup(),
+							DLFileEntry.class.getName(),
+							DLFileEntry.class.getName(), ActionKeys.UPDATE) ||
+						permissionChecker.hasPermission(
+							themeDisplay.getScopeGroup(),
+							JournalArticle.class.getName(),
+							JournalArticle.class.getName(),
+							ActionKeys.UPDATE)) {
+
+						return true;
+					}
+
 					return _hasEditPermission(
 						layout, PermissionThreadLocal.getPermissionChecker());
 				}

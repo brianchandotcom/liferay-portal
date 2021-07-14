@@ -35,6 +35,8 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 
 <clay:container-fluid>
 	<aui:form action="<%= deleteTemplateURL %>" name="fm">
+		<liferay-ui:success key="templateDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "templateDeleted")) %>' />
+
 		<liferay-ui:search-container
 			id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"

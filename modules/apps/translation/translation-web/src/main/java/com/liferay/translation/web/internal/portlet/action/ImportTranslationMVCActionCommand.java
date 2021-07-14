@@ -22,6 +22,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -41,13 +42,16 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
+import com.liferay.translation.url.provider.TranslationURLProvider;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,7 +72,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
 
 		try {
 			ThemeDisplay themeDisplay =
@@ -127,8 +132,14 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
-			actionResponse.setRenderParameter(
-				"mvcPath", "/import_translation.jsp");
+			PortletURL portletURL =
+				_translationURLProvider.getImportTranslationURL(
+					ParamUtil.getLong(actionRequest, "groupId"),
+					ParamUtil.getLong(actionRequest, "classNameId"),
+					ParamUtil.getLong(actionRequest, "classPK"),
+					RequestBackedPortletURLFactoryUtil.create(actionRequest));
+
+			actionResponse.sendRedirect(portletURL.toString());
 
 			if (exception instanceof XLIFFFileException) {
 				hideDefaultErrorMessage(actionRequest);
@@ -199,5 +210,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private TranslationInfoItemFieldValuesImporter
 		_translationInfoItemFieldValuesImporter;
+
+	@Reference
+	private TranslationURLProvider _translationURLProvider;
 
 }

@@ -188,12 +188,24 @@ definition {
 	}
 
 	@description = "Verify that the user can assign a Workflow to Calendar Event"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignWorkflowToCalendarEvent {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68593 CanAssignWorkflowToCalendarEvent pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
+
+		Alert.viewSuccessMessage();
+
+		Workflow.viewConfigurationSelected(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Calendar Event");
 	}
 
 	@description = "This is a use case for LPS-59572."

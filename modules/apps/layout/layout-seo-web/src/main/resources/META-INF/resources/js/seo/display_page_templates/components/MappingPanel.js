@@ -129,6 +129,7 @@ function MappingPanel({
 						{ffSEOInlineFieldMappingEnabled && (
 							<ClayButton
 								block
+								disabled={initialField?.key === fieldValue}
 								displayType="primary"
 								onClick={handleOnSelect}
 							>

@@ -309,25 +309,16 @@ definition {
 		}
 
 		task ("Map web content image to background image field of Banner Center") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "banner-center");
-
-			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "Web Content Title",
-				navItem = "Web Content");
-
-			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Image");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				entryTitle = "WC WebContent Title",
+				fieldName = "Image",
+				navItem = "Web Content",
+				panel = "Styles");
 		}
 
 		task ("Assert the mapped image is shown in background image field") {
-			AssertVisible(
-				key_imageName = "Document_2.jpeg",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+			PageEditor.viewContainerStyle(backgroundImage = "Document_2.jpg");
 
 			PageEditor.clickPublish();
 		}

@@ -53,29 +53,20 @@ definition {
 		task ("View the Banner Center shown in page editor") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Banner Title Example",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Go Somewhere",
-				fragmentName = "Banner Center",
-				id = "03-link");
+				fragmentName = "Button",
+				id = "link");
 
-			var backgroundImage = Css.getCssValue(
-				attribute = "background-image",
-				element = "//div[contains(@data-lfr-background-image-id,'banner-center')]");
-
-			if (contains("${backgroundImage}","data:image/png")) {
-				echo("The image placeholder is shown in Banner Center");
-			}
-			else {
-				fail("The image placeholder is missing in Banner Center");
-			}
+			PageEditor.viewContainerStyle(backgroundColor = "gray-500");
 
 			PageEditor.clickPublish();
 		}
@@ -86,33 +77,27 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Banner Title Example",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "03-link",
+				id = "link",
 				key_position = "1",
 				key_text = "Go Somewhere",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
-			var backgroundImage = Css.getCssValue(
-				attribute = "background-image",
-				element = "//div[contains(@class,'banner')]");
-
-			if (contains("${backgroundImage}","data:image/png")) {
-				echo("The image placeholder is shown in Banner Center");
-			}
-			else {
-				fail("The image placeholder is missing in Banner Center");
-			}
+			AssertVisible(
+				backgroundImageStyle = "background-color: var(--gray-500)",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
+				position = "1");
 		}
 	}
 

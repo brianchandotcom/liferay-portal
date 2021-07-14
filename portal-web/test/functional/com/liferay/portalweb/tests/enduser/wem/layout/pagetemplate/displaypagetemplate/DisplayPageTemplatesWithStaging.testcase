@@ -329,15 +329,15 @@ definition {
 		task ("Map the Title to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Map the Content to subtitle editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Content",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 		}
@@ -373,8 +373,8 @@ definition {
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Author Name",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 		}
@@ -385,14 +385,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Test Test",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -403,14 +403,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Webcontent Content",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -427,14 +427,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Test Test",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -459,15 +459,15 @@ definition {
 		task ("Map the Title to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Map the Content to subtitle editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Content",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 		}
@@ -490,14 +490,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Webcontent Content",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -522,14 +522,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Webcontent Content",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -554,15 +554,15 @@ definition {
 		task ("Map the Title to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Map the Content to subtitle editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Content",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 		}
@@ -589,14 +589,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Webcontent Content",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -621,14 +621,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Webcontent Content",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -651,15 +651,15 @@ definition {
 		task ("Map the Title to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Map the Content to subtitle editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Content",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 		}
@@ -696,14 +696,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Title",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Webcontent Content",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}

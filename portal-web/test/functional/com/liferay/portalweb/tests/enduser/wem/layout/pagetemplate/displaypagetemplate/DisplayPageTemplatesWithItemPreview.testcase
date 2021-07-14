@@ -177,8 +177,8 @@ definition {
 		task ("Mapping the Title field to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Select the web content via preview item selector") {
@@ -190,36 +190,36 @@ definition {
 		task ("View title of web content shown in title editable field") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Web Content Title",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Mapping the Content field to subtitle editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Content",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 		}
 
 		task ("View content of web content shown in subtitle editable field") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Web Content Content",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 		}
 
 		task ("Edit inline content of link editable field") {
 			PageEditor.editFragmentText(
-				fragmentName = "Banner Center",
-				id = "03-link",
+				fragmentName = "Button",
+				id = "link",
 				text = "Edited Text");
 		}
 
 		task ("View the edited inline content of link editable field") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Edited Text",
-				fragmentName = "Banner Center",
-				id = "03-link");
+				fragmentName = "Button",
+				id = "link");
 		}
 	}
 

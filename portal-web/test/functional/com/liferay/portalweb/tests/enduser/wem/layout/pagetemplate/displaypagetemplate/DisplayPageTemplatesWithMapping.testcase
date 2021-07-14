@@ -58,15 +58,15 @@ definition {
 		task ("Map the Author Name to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Author Name",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Map the Author Profile Image to background image editable field") {
-			PageEditorMapping.mapEditableTextToField(
-				field = "Author Profile Image",
-				fragmentName = "Banner Center",
-				id = "banner-center");
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				fieldName = "Author Profile Image",
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -127,7 +127,7 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "userfn1 userln1",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
@@ -229,15 +229,15 @@ definition {
 		task ("Map the Last Editor Name to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Last Editor Name",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Map the Last Editor Profile Image to background image editable field") {
-			PageEditorMapping.mapEditableTextToField(
-				field = "Last Editor Profile Image",
-				fragmentName = "Banner Center",
-				id = "banner-center");
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				fieldName = "Last Editor Profile Image",
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}
@@ -270,7 +270,7 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Test Test",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
@@ -330,7 +330,7 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "userfn1 userln1",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
@@ -438,7 +438,7 @@ definition {
 
 		task ("Map the manual URL to link editable field") {
 			PageEditorEditableLink.gotoEditableFieldLink(
-				fragmentName = "Banner Center",
+				fragmentName = "Button",
 				id = "link");
 
 			PageEditorEditableLink.updateURL(url = "https://liferay.com");
@@ -565,15 +565,15 @@ definition {
 		task ("Map the Text to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Text",
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Map the Rich Text to subtitle editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Rich Text",
-				fragmentName = "Banner Center",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditor.clickPublish();
 		}
@@ -601,14 +601,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Webcontent Text",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
 			AssertVisible(
-				id = "02-subtitle",
-				key_position = "1",
+				id = "element-text",
+				key_position = "2",
 				key_text = "Webcontent Rich Text",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
@@ -981,10 +981,10 @@ definition {
 		}
 
 		task ("Map web content image to background image field of Banner Center") {
-			PageEditorMapping.mapEditableTextToField(
-				field = "Image",
-				fragmentName = "Banner Center",
-				id = "banner-center");
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
+				fieldName = "Image",
+				panel = "Styles");
 
 			PageEditor.clickPublish();
 		}

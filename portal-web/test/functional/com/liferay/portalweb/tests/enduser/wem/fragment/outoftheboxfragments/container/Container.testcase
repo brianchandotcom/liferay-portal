@@ -347,13 +347,13 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
 
 			DragAndDrop.javaScriptDragAndDropToUp(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Banner Center')]//div[@role='button'][@draggable='true']",
+				locator1 = "xpath=(//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true'])[2]",
 				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
 
 			Pause(locator1 = "3000");
 
 			AssertElementPresent(
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'Banner Center')]",
+				key_elementHeader = "//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='Banner Title Example']",
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

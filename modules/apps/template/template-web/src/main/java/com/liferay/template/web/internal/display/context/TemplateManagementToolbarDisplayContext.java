@@ -21,9 +21,14 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.template.web.internal.security.permissions.resource.TemplatePermission;
 
 import java.util.List;
 
@@ -46,6 +51,9 @@ public class TemplateManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			templateSearchContainer);
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -61,8 +69,17 @@ public class TemplateManagementToolbarDisplayContext
 		).build();
 	}
 
-	public String getAvailableActions(DDMTemplate ddmTemplate) {
-		return "deleteSelectedTemplates";
+	public String getAvailableActions(DDMTemplate ddmTemplate)
+		throws PortalException {
+
+		if (TemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ddmTemplate,
+				ActionKeys.DELETE)) {
+
+			return "deleteSelectedTemplates";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -100,5 +117,7 @@ public class TemplateManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date", "id"};
 	}
+
+	private final ThemeDisplay _themeDisplay;
 
 }

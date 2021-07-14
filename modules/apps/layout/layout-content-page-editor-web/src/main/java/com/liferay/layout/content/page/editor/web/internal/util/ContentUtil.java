@@ -703,6 +703,8 @@ public class ContentUtil {
 					layoutClassedModelUsage.getClassPK()));
 
 		return mappedContentJSONObject.put(
+			"classTypeId", layoutDisplayPageObjectProvider.getClassTypeId()
+		).put(
 			"status", _getStatusJSONObject(layoutClassedModelUsage)
 		).put(
 			"subtype",

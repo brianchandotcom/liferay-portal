@@ -20,8 +20,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.template.web.internal.security.permissions.resource.TemplatePermission;
 
 import java.util.List;
 
@@ -46,6 +48,9 @@ public class TemplateActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			() -> TemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), _ddmTemplate,
+				ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteTemplate");
 				dropdownItem.putData(

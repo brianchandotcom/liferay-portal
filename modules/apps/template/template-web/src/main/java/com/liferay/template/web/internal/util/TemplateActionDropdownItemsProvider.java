@@ -48,6 +48,18 @@ public class TemplateActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).build(),
+					"redirect", _themeDisplay.getURLCurrent(), "templateId",
+					_ddmTemplate.getTemplateId(), "mvcPath",
+					"/copy_template.jsp");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "copy"));
+			}
+		).add(
 			() -> TemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), _ddmTemplate,
 				ActionKeys.DELETE),

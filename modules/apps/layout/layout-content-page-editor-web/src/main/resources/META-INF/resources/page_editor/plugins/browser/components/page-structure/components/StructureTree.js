@@ -29,6 +29,7 @@ import {useActiveItemId} from '../../../../../app/contexts/ControlsContext';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
+import {selectPageContents} from '../../../../../app/selectors/selectPageContents';
 import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable-value/isMapped';
@@ -80,7 +81,8 @@ export default function PageStructureSidebar() {
 	);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
-	const mappedInfoItems = useSelector((state) => state.mappedInfoItems);
+	const pageContents = useSelector(selectPageContents);
+
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const masterLayoutData = useSelector(
 		(state) => state.masterLayout?.masterLayoutData
@@ -112,10 +114,10 @@ export default function PageStructureSidebar() {
 				fragmentEntryLinks,
 				isMasterPage,
 				layoutData,
-				mappedInfoItems,
 				mappingFields,
 				masterLayoutData,
 				onHoverNode,
+				pageContents,
 				selectedViewportSize,
 			}).children,
 		[
@@ -128,9 +130,9 @@ export default function PageStructureSidebar() {
 			fragmentEntryLinks,
 			isMasterPage,
 			layoutData,
-			mappedInfoItems,
 			mappingFields,
 			masterLayoutData,
+			pageContents,
 			onHoverNode,
 			selectedViewportSize,
 		]
@@ -184,10 +186,10 @@ function visit(
 		fragmentEntryLinks,
 		isMasterPage,
 		layoutData,
-		mappedInfoItems,
 		mappingFields,
 		masterLayoutData,
 		onHoverNode,
+		pageContents,
 		selectedViewportSize,
 	}
 ) {
@@ -246,7 +248,7 @@ function visit(
 					? getMappedFieldLabel(
 							editable,
 							collectionConfig,
-							mappedInfoItems,
+							pageContents,
 							mappingFields
 					  )
 					: null;
@@ -282,10 +284,10 @@ function visit(
 						fragmentEntryLinks,
 						isMasterPage,
 						layoutData,
-						mappedInfoItems,
 						mappingFields,
 						masterLayoutData,
 						onHoverNode,
+						pageContents,
 						selectedViewportSize,
 					}),
 
@@ -321,10 +323,10 @@ function visit(
 						fragmentEntryLinks,
 						isMasterPage,
 						layoutData,
-						mappedInfoItems,
 						mappingFields,
 						masterLayoutData,
 						onHoverNode,
+						pageContents,
 						selectedViewportSize,
 					}
 				).children;
@@ -340,10 +342,10 @@ function visit(
 					fragmentEntryLinks,
 					isMasterPage,
 					layoutData,
-					mappedInfoItems,
 					mappingFields,
 					masterLayoutData,
 					onHoverNode,
+					pageContents,
 					selectedViewportSize,
 				});
 
@@ -387,10 +389,10 @@ function getDocumentFragment(content) {
 function getMappedFieldLabel(
 	editable,
 	collectionConfig,
-	mappedInfoItems,
+	pageContents,
 	mappingFields
 ) {
-	const infoItem = mappedInfoItems.find(
+	const infoItem = pageContents.find(
 		({classNameId, classPK}) =>
 			editable.classNameId === classNameId && editable.classPK === classPK
 	);

@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {addMappedInfoItem, addMappingFields} from '../../app/actions/index';
+import {addMappingFields} from '../../app/actions/index';
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
 import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
@@ -243,7 +243,6 @@ export default function MappingSelectorWrapper({
 
 function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const dispatch = useDispatch();
-	const mappedInfoItems = useSelector((state) => state.mappedInfoItems);
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const pageContents = useSelector(selectPageContents);
 	const mappingSelectorSourceSelectId = useId();
@@ -297,18 +296,6 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 				: {mappedField: fieldValue};
 
 		if (selectedSourceType === MAPPING_SOURCE_TYPES.content) {
-			const mappedInfoItem = mappedInfoItems.find(
-				(item) =>
-					item.classNameId === selectedItem.classNameId &&
-					item.classPK === selectedItem.classPK
-			);
-
-			if (!mappedInfoItem) {
-				dispatch(
-					addMappedInfoItem({title: selectedItem.title, ...data})
-				);
-			}
-
 			setSelectedItem((selectedItem) => ({
 				...selectedItem,
 				fieldId: fieldValue,
@@ -326,18 +313,18 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 	useEffect(() => {
 		if (mappedItem.classNameId && mappedItem.classPK) {
-			const infoItem = mappedInfoItems.find(
-				(infoItem) =>
-					infoItem.classNameId === mappedItem.classNameId &&
-					infoItem.classPK === mappedItem.classPK
+			const pageContent = pageContents.find(
+				(pageContent) =>
+					pageContent.classNameId === mappedItem.classNameId &&
+					pageContent.classPK === mappedItem.classPK
 			);
 
 			setSelectedItem({
-				...infoItem,
+				...pageContent,
 				...mappedItem,
 			});
 		}
-	}, [mappedItem, mappedInfoItems, setSelectedItem]);
+	}, [mappedItem, pageContents, setSelectedItem]);
 
 	useEffect(() => {
 		if (
@@ -350,7 +337,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		}
 
 		const infoItem =
-			mappedInfoItems.find(
+			pageContents.find(
 				({classNameId, classPK}) =>
 					selectedItem.classNameId === classNameId &&
 					selectedItem.classPK === classPK
@@ -384,7 +371,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	}, [
 		dispatch,
 		fieldType,
-		mappedInfoItems,
+		pageContents,
 		mappingFields,
 		selectedItem,
 		selectedMappingTypes,

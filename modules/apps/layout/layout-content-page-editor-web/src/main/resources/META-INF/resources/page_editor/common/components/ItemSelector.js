@@ -78,8 +78,8 @@ export default function ItemSelector({
 					transformMappedItem
 				);
 			}
-			else if (state.mappedInfoItems?.length > 0) {
-				transformedMappedItems = state.mappedInfoItems.map(
+			else if (state.pageContents?.length > 0) {
+				transformedMappedItems = state.pageContents.map(
 					transformMappedItem
 				);
 			}
@@ -149,7 +149,7 @@ export default function ItemSelector({
 			return (
 				[
 					...(quickMappedInfoItems || []),
-					...(state.mappedInfoItems || []),
+					...(state.pageContents || []),
 				].find(
 					(item) =>
 						item.classNameId === selectedItem.classNameId &&

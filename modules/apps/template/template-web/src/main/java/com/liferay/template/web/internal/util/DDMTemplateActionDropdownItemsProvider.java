@@ -32,9 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Lourdes Fernández Besada
  */
-public class TemplateActionDropdownItemsProvider {
+public class DDMTemplateActionDropdownItemsProvider {
 
-	public TemplateActionDropdownItemsProvider(
+	public DDMTemplateActionDropdownItemsProvider(
 		DDMTemplate ddmTemplate, HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 

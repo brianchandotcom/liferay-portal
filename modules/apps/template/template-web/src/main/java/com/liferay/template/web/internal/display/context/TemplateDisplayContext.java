@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.template.web.internal.util.TemplateActionDropdownItemsProvider;
+import com.liferay.template.web.internal.util.DDMTemplateActionDropdownItemsProvider;
 
 import java.util.List;
 import java.util.Objects;
@@ -73,11 +73,12 @@ public class TemplateDisplayContext {
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
 		DDMTemplate ddmTemplate) {
 
-		TemplateActionDropdownItemsProvider ddmTemplateActionDropdownItems =
-			new TemplateActionDropdownItemsProvider(
-				ddmTemplate, _httpServletRequest, _liferayPortletResponse);
+		DDMTemplateActionDropdownItemsProvider
+			ddmTemplateActionDropdownItemsProvider =
+				new DDMTemplateActionDropdownItemsProvider(
+					ddmTemplate, _httpServletRequest, _liferayPortletResponse);
 
-		return ddmTemplateActionDropdownItems.getActionDropdownItems();
+		return ddmTemplateActionDropdownItemsProvider.getActionDropdownItems();
 	}
 
 	public String getDDMTemplateScope(DDMTemplate ddmTemplate)

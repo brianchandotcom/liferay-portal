@@ -16,8 +16,6 @@ package com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converte
 
 import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin;
 import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinService;
@@ -34,9 +32,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,8 +63,7 @@ public class DiagramDTOConverter
 			_cpDefinitionDiagramSettingService.getCPDefinitionDiagramSetting(
 				(Long)dtoConverterContext.getId());
 
-		final long cpDefinitionId =
-			cpDefinitionDiagramSetting.getCPDefinitionId();
+		long cpDefinitionId = cpDefinitionDiagramSetting.getCPDefinitionId();
 
 		Locale locale = dtoConverterContext.getLocale();
 
@@ -90,24 +86,14 @@ public class DiagramDTOConverter
 			long cpDefinitionId, Locale locale)
 		throws Exception {
 
-		List<DiagramEntry> diagramEntries = new ArrayList<>();
-
-		List<CPDefinitionDiagramEntry> cpDefinitionDiagramEntries =
+		return TransformUtil.transformToArray(
 			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
-				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinitionDiagramEntry cpDefinitionDiagramEntry :
-				cpDefinitionDiagramEntries) {
-
-			diagramEntries.add(
-				_diagramEntryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionDiagramEntry.
-							getCPDefinitionDiagramEntryId(),
-						locale)));
-		}
-
-		return diagramEntries.toArray(new DiagramEntry[0]);
+				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			cpDefinitionDiagramEntry -> _diagramEntryDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId(),
+					locale)),
+			DiagramEntry.class);
 	}
 
 	private String _getImageURL(
@@ -137,23 +123,14 @@ public class DiagramDTOConverter
 	private Pin[] _getPins(long cpDefinitionId, Locale locale)
 		throws Exception {
 
-		List<Pin> pins = new ArrayList<>();
-
-		List<CPDefinitionDiagramPin> cpDefinitionDiagramPins =
+		return TransformUtil.transformToArray(
 			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
-				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPDefinitionDiagramPin cpDefinitionDiagramPin :
-				cpDefinitionDiagramPins) {
-
-			pins.add(
-				_pinDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionDiagramPin.getCPDefinitionDiagramPinId(),
-						locale)));
-		}
-
-		return pins.toArray(new Pin[0]);
+				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			cpDefinitionDiagramPin -> _pinDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpDefinitionDiagramPin.getCPDefinitionDiagramPinId(),
+					locale)),
+			Pin.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

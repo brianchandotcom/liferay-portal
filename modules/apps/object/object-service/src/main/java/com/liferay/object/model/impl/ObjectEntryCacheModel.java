@@ -78,12 +78,14 @@ public class ObjectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", objectEntryId=");
 		sb.append(objectEntryId);
 		sb.append(", groupId=");
@@ -126,6 +128,13 @@ public class ObjectEntryCacheModel
 		}
 		else {
 			objectEntryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			objectEntryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		objectEntryImpl.setObjectEntryId(objectEntryId);
@@ -193,6 +202,7 @@ public class ObjectEntryCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		objectEntryId = objectInput.readLong();
 
@@ -226,6 +236,13 @@ public class ObjectEntryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(objectEntryId);
@@ -267,6 +284,7 @@ public class ObjectEntryCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long objectEntryId;
 	public long groupId;
 	public long companyId;

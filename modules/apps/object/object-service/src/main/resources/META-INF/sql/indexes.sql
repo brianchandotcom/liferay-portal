@@ -3,6 +3,7 @@ create index IX_F6A157B1 on ObjectDefinition (companyId, objectDefinitionId);
 create index IX_CE84C4E8 on ObjectDefinition (system_);
 create index IX_B929D94C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_5ACB2D2E on ObjectEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_139200BA on ObjectEntry (objectDefinitionId);
 create index IX_49B9450D on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_5AF9AACF on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], groupId);

@@ -277,6 +277,50 @@ public abstract class ObjectEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the object entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object entry's external reference code
+	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	@Override
+	public ObjectEntry fetchObjectEntryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return objectEntryPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchObjectEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public ObjectEntry fetchObjectEntryByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchObjectEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the object entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object entry's external reference code
+	 * @return the matching object entry
+	 * @throws PortalException if a matching object entry could not be found
+	 */
+	@Override
+	public ObjectEntry getObjectEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return objectEntryPersistence.findByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the object entry with the primary key.
 	 *
 	 * @param objectEntryId the primary key of the object entry
@@ -671,5 +715,9 @@ public abstract class ObjectEntryLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
 
 }

@@ -118,7 +118,7 @@ public class TemplateDisplayContext {
 
 		_orderByCol = ParamUtil.getString(
 			_httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"create-date");
+			"modified-date");
 
 		return _orderByCol;
 	}

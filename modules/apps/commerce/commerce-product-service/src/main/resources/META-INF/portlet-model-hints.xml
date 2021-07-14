@@ -60,8 +60,8 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="fileEntryId" type="long" />
-		<field name="cdnUrl" type="String">
-			<hint name="max-length">255</hint>
+		<field name="cdnURL" type="String">
+			<hint-collection name="URL" />
 		</field>
 		<field name="cdn" type="boolean" />
 		<field name="displayDate" type="Date" />

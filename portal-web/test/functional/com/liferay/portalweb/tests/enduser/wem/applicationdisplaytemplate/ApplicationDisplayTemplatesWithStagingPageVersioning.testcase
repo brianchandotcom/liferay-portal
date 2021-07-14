@@ -77,6 +77,8 @@ definition {
 		}
 
 		task ("Publish to Live") {
+			Staging.markAsReadyForPublication();
+
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();

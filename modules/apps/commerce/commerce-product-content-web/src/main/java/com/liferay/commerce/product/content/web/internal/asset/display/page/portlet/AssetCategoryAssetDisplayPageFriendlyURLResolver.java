@@ -21,9 +21,13 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -36,10 +40,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -223,6 +229,34 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		if ((cpDisplayLayout == null) ||
 			Validator.isNull(cpDisplayLayout.getLayoutUuid())) {
 
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+					groupId);
+
+			CPDisplayLayoutConfiguration cpDisplayLayoutConfiguration =
+				ConfigurationProviderUtil.getConfiguration(
+					CPDisplayLayoutConfiguration.class,
+					new GroupServiceSettingsLocator(
+						commerceChannel.getGroupId(),
+						CPConstants.RESOURCE_NAME_CP_DISPLAY_LAYOUT));
+
+			String layoutUuid =
+				cpDisplayLayoutConfiguration.assetCategoryLayoutUuid();
+
+			if (Validator.isNotNull(layoutUuid)) {
+				Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layoutUuid, groupId, false);
+
+				if (layout == null) {
+					layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+						layoutUuid, groupId, true);
+				}
+
+				if (layout != null) {
+					return layout;
+				}
+			}
+
 			long plid =
 				_assetDisplayPageFriendlyURLResolverHelper.getPlidFromPortletId(
 					groupId, privateLayout,
@@ -321,6 +355,9 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;

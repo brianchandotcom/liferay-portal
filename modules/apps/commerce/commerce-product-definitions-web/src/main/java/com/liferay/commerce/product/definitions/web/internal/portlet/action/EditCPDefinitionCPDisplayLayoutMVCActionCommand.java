@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDisplayLayoutEntryException;
 import com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException;
@@ -30,6 +31,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -92,6 +97,9 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPDisplayLayouts(actionRequest);
 			}
+			else if (cmd.equals("setDefaultLayout")) {
+				setDefaultLayout(actionRequest);
+			}
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCPDisplayLayoutException ||
@@ -119,6 +127,30 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 				throw exception;
 			}
 		}
+	}
+
+	protected void setDefaultLayout(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceChannelId = ParamUtil.getLong(
+			actionRequest, "commerceChannelId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CPConstants.RESOURCE_NAME_CP_DISPLAY_LAYOUT));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
+
+		modifiableSettings.setValue("productLayoutUuid", layoutUuid);
+
+		modifiableSettings.store();
 	}
 
 	protected void updateCPDisplayLayout(ActionRequest actionRequest)
@@ -160,5 +192,8 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 }

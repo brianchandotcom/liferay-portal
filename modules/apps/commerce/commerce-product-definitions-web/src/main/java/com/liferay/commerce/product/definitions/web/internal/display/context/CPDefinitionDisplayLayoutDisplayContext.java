@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
@@ -35,15 +37,19 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -131,6 +137,33 @@ public class CPDefinitionDisplayLayoutDisplayContext
 				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
+	}
+
+	public Layout getDefaultProductLayout() throws Exception {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CPDisplayLayoutConfiguration cpDisplayLayoutConfiguration =
+			ConfigurationProviderUtil.getConfiguration(
+				CPDisplayLayoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CPConstants.RESOURCE_NAME_CP_DISPLAY_LAYOUT));
+
+		String layoutUuid = cpDisplayLayoutConfiguration.productLayoutUuid();
+
+		Layout layout = null;
+
+		if (Validator.isNotNull(layoutUuid)) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, commerceChannel.getSiteGroupId(), false);
+
+			if (layout == null) {
+				layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					layoutUuid, commerceChannel.getSiteGroupId(), true);
+			}
+		}
+
+		return layout;
 	}
 
 	public String getDisplayPageItemSelectorUrl() throws PortalException {

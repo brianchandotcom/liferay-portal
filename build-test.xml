@@ -14573,6 +14573,28 @@ url=${short.hostname}:8080</echo>
 		</trycatch>
 	</target>
 
+	<target name="validate-dbpartition-schemas">
+		<sequential>
+			<gradle-execute dir="${project.dir}/modules/util/portal-tools-db-partition-schema-validator" task="deploy">
+				<arg value="clean" />
+			</gradle-execute>
+
+			<java
+				fork="true"
+				jar="${liferay.home}/tools/portal-tools-db-partition-schema-validator/com.liferay.portal.tools.db.partition.schema.validator.jar"
+				output="${liferay.home}/validateoutput.txt"
+			>
+				<arg line="-j ${database.mysql.url}" />
+				<arg line="-d ${database.mysql.schema}" />
+				<arg line="-s ${schema.name.prefix}" />
+				<arg line="-u ${database.mysql.username}" />
+				<arg line="-p ${database.mysql.password}" />
+			</java>
+
+			<print-file file.name="${liferay.home}/validateoutput.txt" />
+		</sequential>
+	</target>
+
 	<target name="wait-for-license-activation">
 		<wait-for-license-activation />
 	</target>

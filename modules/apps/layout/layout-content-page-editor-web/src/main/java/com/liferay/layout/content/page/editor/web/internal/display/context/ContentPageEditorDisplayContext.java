@@ -619,8 +619,6 @@ public class ContentPageEditorDisplayContext {
 					return layoutStructure.toJSONObject();
 				}
 			).put(
-				"mappedInfoItems", _getMappedInfoItems()
-			).put(
 				"mappingFields", _getMappingFieldsJSONObject()
 			).put(
 				"masterLayout", _getMasterLayoutJSONObject()

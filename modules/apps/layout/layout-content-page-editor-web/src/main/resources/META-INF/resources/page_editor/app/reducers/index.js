@@ -20,7 +20,6 @@ import fragmentEntryLinksReducer from './fragmentEntryLinksReducer';
 import fragmentsReducer from './fragmentsReducer';
 import languageIdReducer from './languageIdReducer';
 import layoutDataReducer from './layoutDataReducer';
-import mappedInfoItemsReducer from './mappedInfoItemsReducer';
 import mappingFieldsReducer from './mappingFieldsReducer';
 import masterLayoutReducer from './masterLayoutReducer';
 import networkReducer from './networkReducer';
@@ -39,7 +38,6 @@ const combinedReducer = (state, action) =>
 		fragments: fragmentsReducer,
 		languageId: languageIdReducer,
 		layoutData: layoutDataReducer,
-		mappedInfoItems: mappedInfoItemsReducer,
 		mappingFields: mappingFieldsReducer,
 		masterLayout: masterLayoutReducer,
 		network: networkReducer,

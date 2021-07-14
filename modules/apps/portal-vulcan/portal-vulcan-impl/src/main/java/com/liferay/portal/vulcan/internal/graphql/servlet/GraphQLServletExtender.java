@@ -1572,18 +1572,14 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
-		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
+		String name, List<GraphQLDTOProperty> properties) {
 
 		GraphQLInputObjectType.Builder builder =
 			new GraphQLInputObjectType.Builder();
 
-		builder.name(
-			graphQLDTOContributor.getNamespace() + "_Input" +
-				graphQLDTOContributor.getResourceName());
+		builder.name(name);
 
-		for (GraphQLDTOProperty graphQLDTOProperty :
-				graphQLDTOContributor.getGraphQLDTOProperties()) {
-
+		for (GraphQLDTOProperty graphQLDTOProperty : properties) {
 			GraphQLInputObjectField.Builder graphQLInputObjectFieldBuilder =
 				GraphQLInputObjectField.newInputObjectField();
 
@@ -1599,17 +1595,13 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLObjectType _getGraphQLObjectType(
-		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
+		String name, List<GraphQLDTOProperty> properties) {
 
 		GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
 
-		builder.name(
-			graphQLDTOContributor.getNamespace() + "_" +
-				graphQLDTOContributor.getResourceName());
+		builder.name(name);
 
-		for (GraphQLDTOProperty graphQLDTOProperty :
-				graphQLDTOContributor.getGraphQLDTOProperties()) {
-
+		for (GraphQLDTOProperty graphQLDTOProperty : properties) {
 			builder.field(
 				_addField(
 					_toGraphQLScalarType(graphQLDTOProperty.getTypeClass()),
@@ -1748,26 +1740,30 @@ public class GraphQLServletExtender {
 		Map<String, GraphQLObjectType.Builder> queryNamespaceBuilderMap,
 		Map<String, GraphQLObjectType.Builder> mutationNamespaceBuilderMap) {
 
-		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder = queryBuilder;
-		String queryParentType = "query";
+		String namespace = Optional.ofNullable(
+			graphQLDTOContributor.getNamespace()
+		).orElse(
+			""
+		);
+
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
 			mutationBuilder;
 		String mutationParentType = "mutation";
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder = queryBuilder;
+		String queryParentType = "query";
 
-		if (Validator.isNotNull(graphQLDTOContributor.getNamespace())) {
-			queryGraphQLObjectTypeBuilder = _createGraphQLObjectTypeBuilder(
-				graphQLDTOContributor.getNamespace(),
-				graphQLDTOContributor.getNamespace(), queryNamespaceBuilderMap);
-
-			queryParentType = graphQLDTOContributor.getNamespace();
-
+		if (Validator.isNotNull(namespace)) {
 			mutationGraphQLObjectTypeBuilder = _createGraphQLObjectTypeBuilder(
-				"Mutation" + graphQLDTOContributor.getNamespace(),
-				graphQLDTOContributor.getNamespace(),
-				mutationNamespaceBuilderMap);
+				"Mutation" + StringUtil.upperCaseFirstLetter(namespace),
+				namespace, mutationNamespaceBuilderMap);
 
 			mutationParentType =
-				"Mutation" + graphQLDTOContributor.getNamespace();
+				"Mutation" + StringUtil.upperCaseFirstLetter(namespace);
+
+			queryGraphQLObjectTypeBuilder = _createGraphQLObjectTypeBuilder(
+				namespace, namespace, queryNamespaceBuilderMap);
+
+			queryParentType = namespace;
 		}
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
@@ -1775,15 +1771,17 @@ public class GraphQLServletExtender {
 
 		// Create
 
-		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
-			graphQLDTOContributor);
-
 		String resourceName = graphQLDTOContributor.getResourceName();
+
+		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
+			namespace + resourceName,
+			graphQLDTOContributor.getGraphQLDTOProperties());
 
 		String createName = "create" + resourceName;
 
 		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
-			graphQLDTOContributor);
+			"Input" + namespace + resourceName,
+			graphQLDTOContributor.getGraphQLDTOProperties());
 
 		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
@@ -1846,7 +1844,7 @@ public class GraphQLServletExtender {
 			_addField(
 				_getPageGraphQLObjectType(
 					graphQLTypes.get("Facet"), graphQLObjectType,
-					graphQLDTOContributor.getNamespace() + "_" + resourceName),
+					namespace + resourceName),
 				listName,
 				_addArgument(
 					GraphQLList.list(Scalars.GraphQLString), "aggregation"),
@@ -1950,38 +1948,12 @@ public class GraphQLServletExtender {
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 			processingElementsContainer.getCodeRegistryBuilder();
 
-		// Register GraphQLDTOContributor namespaces
-
-		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
-				queryNamespaceBuilderMap.entrySet()) {
-
-			GraphQLObjectType.Builder queryNamespaceBuilder = entry.getValue();
-
-			queryBuilder.field(
-				_addField(queryNamespaceBuilder.build(), entry.getKey()));
-
-			schemaBuilder.codeRegistry(
-				graphQLCodeRegistryBuilder.dataFetcher(
-					FieldCoordinates.coordinates("query", entry.getKey()),
-					(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
-				).build());
-		}
-
-		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
-				mutationNamespaceBuilderMap.entrySet()) {
-
-			GraphQLObjectType.Builder mutationNamespaceBuilder =
-				entry.getValue();
-
-			mutationBuilder.field(
-				_addField(mutationNamespaceBuilder.build(), entry.getKey()));
-
-			schemaBuilder.codeRegistry(
-				graphQLCodeRegistryBuilder.dataFetcher(
-					FieldCoordinates.coordinates("mutation", entry.getKey()),
-					(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
-				).build());
-		}
+		_registerNamespaceBuilderFields(
+			graphQLCodeRegistryBuilder, queryNamespaceBuilderMap, queryBuilder,
+			"query", schemaBuilder);
+		_registerNamespaceBuilderFields(
+			graphQLCodeRegistryBuilder, mutationNamespaceBuilderMap,
+			mutationBuilder, "mutation", schemaBuilder);
 	}
 
 	private void _registerInterfaces(
@@ -2112,6 +2084,29 @@ public class GraphQLServletExtender {
 			graphQLSchemaBuilder.codeRegistry(
 				graphQLCodeRegistryBuilder.dataFetcher(
 					FieldCoordinates.coordinates(parentField, graphQLNamespace),
+					(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
+				).build());
+		}
+	}
+
+	private void _registerNamespaceBuilderFields(
+		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder,
+		Map<String, GraphQLObjectType.Builder> namespaceBuilderMap,
+		GraphQLObjectType.Builder parentBuilder, String parentName,
+		GraphQLSchema.Builder schemaBuilder) {
+
+		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
+				namespaceBuilderMap.entrySet()) {
+
+			String namespaceName = entry.getKey();
+			GraphQLObjectType.Builder namespaceBuilder = entry.getValue();
+
+			parentBuilder.field(
+				_addField(namespaceBuilder.build(), namespaceName));
+
+			schemaBuilder.codeRegistry(
+				graphQLCodeRegistryBuilder.dataFetcher(
+					FieldCoordinates.coordinates(parentName, namespaceName),
 					(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
 				).build());
 		}

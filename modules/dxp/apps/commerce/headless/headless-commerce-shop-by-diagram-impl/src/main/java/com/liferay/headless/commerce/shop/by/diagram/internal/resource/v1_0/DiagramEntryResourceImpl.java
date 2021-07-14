@@ -46,8 +46,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	property = {
-		"api.version=v1.0",
-		"batch.engine.task.item.delegate=true",
+		"api.version=v1.0", "batch.engine.task.item.delegate=true",
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.resource=true"
 	},

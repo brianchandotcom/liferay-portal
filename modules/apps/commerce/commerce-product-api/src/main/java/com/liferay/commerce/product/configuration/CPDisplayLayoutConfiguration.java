@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -37,8 +38,8 @@ public interface CPDisplayLayoutConfiguration {
 	public String assetCategoryLayoutUuid();
 
 	@Meta.AD(
-		description = "product-layout-uuid-help",
-		name = "product-layout-uuid", required = false
+		description = "product-layout-uuid-help", name = "product-layout-uuid",
+		required = false
 	)
 	public String productLayoutUuid();
 

@@ -15,34 +15,28 @@
 package com.liferay.commerce.product.content.web.internal.info.item.selector;
 
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.info.item.selector.InfoItemSelector;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Collections;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.portlet.PortletMode;
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 
 /**
  * @author Alec Sloan
  */
-@Component(service = InfoItemSelector.class)
-public class CProductInfoItemSelector
-	implements InfoItemSelector<CProduct> {
+@Component(enabled = false, service = InfoItemSelector.class)
+public class CProductInfoItemSelector implements InfoItemSelector<CProduct> {
 
 	@Override
 	public PortletURL getInfoItemSelectorPortletURL(
@@ -58,7 +52,6 @@ public class CProductInfoItemSelector
 		cpDefinitionItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
-
 
 		return _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "productDefinitionsSelectItem",

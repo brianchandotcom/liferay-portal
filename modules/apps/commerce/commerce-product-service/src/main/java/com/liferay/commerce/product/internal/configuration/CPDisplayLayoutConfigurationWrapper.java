@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.product.internal.configuration;
 
-import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
-
-import java.util.Map;
 
 /**
  * @author Alec Sloan
@@ -45,12 +45,10 @@ public class CPDisplayLayoutConfigurationWrapper {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_cpDisplayLayoutConfiguration =
-			ConfigurableUtil.createConfigurable(
-				CPDisplayLayoutConfiguration.class, properties);
+		_cpDisplayLayoutConfiguration = ConfigurableUtil.createConfigurable(
+			CPDisplayLayoutConfiguration.class, properties);
 	}
 
-	private volatile CPDisplayLayoutConfiguration
-		_cpDisplayLayoutConfiguration;
+	private volatile CPDisplayLayoutConfiguration _cpDisplayLayoutConfiguration;
 
 }

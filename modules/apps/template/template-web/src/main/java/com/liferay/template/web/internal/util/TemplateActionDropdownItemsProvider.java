@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.web.internal.constants.TemplatePortletKeys;
-import com.liferay.template.web.internal.security.permissions.resource.TemplatePermission;
+import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class TemplateActionDropdownItemsProvider {
 		return DropdownItemListBuilder.add(
 			() ->
 				_isAddEnable() &&
-				TemplatePermission.containsAddTemplatePermission(
+				DDMTemplatePermission.containsAddTemplatePermission(
 					_themeDisplay.getPermissionChecker(),
 					_themeDisplay.getScopeGroupId(),
 					_ddmTemplate.getClassNameId(),
@@ -62,14 +62,14 @@ public class TemplateActionDropdownItemsProvider {
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).build(),
-					"redirect", _themeDisplay.getURLCurrent(), "templateId",
+					"redirect", _themeDisplay.getURLCurrent(), "ddmTemplateId",
 					_ddmTemplate.getTemplateId(), "mvcPath",
-					"/copy_template.jsp");
+					"/copy_ddm_template.jsp");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "copy"));
 			}
 		).add(
-			() -> TemplatePermission.contains(
+			() -> DDMTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), _ddmTemplate,
 				ActionKeys.DELETE),
 			dropdownItem -> {
@@ -79,11 +79,11 @@ public class TemplateActionDropdownItemsProvider {
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(
-						"/template/delete_template"
+						"/template/delete_ddm_template"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"templateId", _ddmTemplate.getTemplateId()
+						"ddmTemplateId", _ddmTemplate.getTemplateId()
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));

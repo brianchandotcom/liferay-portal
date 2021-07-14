@@ -30,13 +30,13 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 	propsTransformer="js/TemplateManagementToolbarPropsTransformer"
 />
 
-<portlet:actionURL name="/template/delete_template" var="deleteTemplateURL">
+<portlet:actionURL name="/template/delete_ddm_template" var="deleteDDMTemplateURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
 <clay:container-fluid>
-	<aui:form action="<%= deleteTemplateURL %>" name="fm">
-		<liferay-ui:success key="templateDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "templateDeleted")) %>' />
+	<aui:form action="<%= deleteDDMTemplateURL %>" name="fm">
+		<liferay-ui:success key="ddmTemplateDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "ddmTemplateDeleted")) %>' />
 
 		<liferay-ui:search-container
 			id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"

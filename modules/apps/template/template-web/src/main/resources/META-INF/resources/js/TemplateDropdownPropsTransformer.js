@@ -13,13 +13,13 @@
  */
 
 const ACTIONS = {
-	deleteTemplate(itemData) {
+	deleteDDMTemplate(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(document.hrefFm, itemData.deleteTemplateURL);
+			submitForm(document.hrefFm, itemData.deleteDDMTemplateURL);
 		}
 	},
 };

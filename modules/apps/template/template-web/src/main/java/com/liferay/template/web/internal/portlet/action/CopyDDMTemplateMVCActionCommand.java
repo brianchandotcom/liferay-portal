@@ -40,18 +40,18 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
-		"mvc.command.name=/template/copy_template"
+		"mvc.command.name=/template/copy_ddm_template"
 	},
 	service = MVCActionCommand.class
 )
-public class CopyTemplateMVCActionCommand extends BaseMVCActionCommand {
+public class CopyDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long templateId = ParamUtil.getLong(actionRequest, "templateId");
+		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -62,7 +62,7 @@ public class CopyTemplateMVCActionCommand extends BaseMVCActionCommand {
 			DDMTemplate.class.getName(), actionRequest);
 
 		_ddmTemplateService.copyTemplate(
-			templateId, nameMap, descriptionMap, serviceContext);
+			ddmTemplateId, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Reference

@@ -21,11 +21,14 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -69,6 +73,12 @@ public class ObjectDefinitionGraphQLTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Company company = CompanyServiceUtil.getCompanyById(
+			TestPropsValues.getCompanyId());
+
+		_companyNamespace = CamelCaseUtil.toCamelCase(
+			company.getName(), CharPool.SPACE);
+
 		_objectDefinitionName = "A" + RandomTestUtil.randomString(5);
 		_objectFieldName = "a" + RandomTestUtil.randomString(5);
 
@@ -103,7 +113,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						"mutation",
 						new GraphQLField(
-							"Object_" + _objectDefinition.getCompanyId(),
+							_companyNamespace,
 							new GraphQLField(
 								"create" + _objectDefinitionName,
 								HashMapBuilder.<String, Object>put(
@@ -113,8 +123,7 @@ public class ObjectDefinitionGraphQLTest {
 										"\"}")
 								).build(),
 								new GraphQLField(_objectFieldName))))),
-				"JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/data", "JSONObject/" + _companyNamespace,
 				"JSONObject/create" + _objectDefinitionName,
 				"Object/" + _objectFieldName));
 	}
@@ -124,7 +133,7 @@ public class ObjectDefinitionGraphQLTest {
 		GraphQLField graphQLField = new GraphQLField(
 			"mutation",
 			new GraphQLField(
-				"Object_" + _objectDefinition.getCompanyId(),
+				_companyNamespace,
 				new GraphQLField(
 					"delete" + _objectDefinitionName,
 					HashMapBuilder.<String, Object>put(
@@ -137,7 +146,7 @@ public class ObjectDefinitionGraphQLTest {
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
 				jsonObject, "JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/" + _companyNamespace,
 				"Object/delete" + _objectDefinitionName));
 
 		jsonObject = _invoke(graphQLField);
@@ -145,7 +154,7 @@ public class ObjectDefinitionGraphQLTest {
 		Assert.assertFalse(
 			JSONUtil.getValueAsBoolean(
 				jsonObject, "JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/" + _companyNamespace,
 				"Object/delete" + _objectDefinitionName));
 	}
 
@@ -161,7 +170,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						"query",
 						new GraphQLField(
-							"Object_" + _objectDefinition.getCompanyId(),
+							_companyNamespace,
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
@@ -172,8 +181,7 @@ public class ObjectDefinitionGraphQLTest {
 								new GraphQLField(
 									"items",
 									new GraphQLField(_objectFieldName)))))),
-				"JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/data", "JSONObject/" + _companyNamespace,
 				"JSONObject/" + key, "Object/items", "Object/0",
 				"Object/" + _objectFieldName));
 		Assert.assertEquals(
@@ -183,7 +191,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						"query",
 						new GraphQLField(
-							"Object_" + _objectDefinition.getCompanyId(),
+							_companyNamespace,
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
@@ -194,8 +202,7 @@ public class ObjectDefinitionGraphQLTest {
 								new GraphQLField(
 									"items",
 									new GraphQLField(_objectFieldName)))))),
-				"JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/data", "JSONObject/" + _companyNamespace,
 				"JSONObject/" + key, "Object/items", "Object/0",
 				"Object/" + _objectFieldName));
 		Assert.assertEquals(
@@ -205,7 +212,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						"query",
 						new GraphQLField(
-							"Object_" + _objectDefinition.getCompanyId(),
+							_companyNamespace,
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
@@ -216,8 +223,7 @@ public class ObjectDefinitionGraphQLTest {
 								new GraphQLField(
 									"items",
 									new GraphQLField(_objectFieldName)))))),
-				"JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/data", "JSONObject/" + _companyNamespace,
 				"JSONObject/" + key, "Object/items", "Object/0",
 				"Object/" + _objectFieldName));
 	}
@@ -236,7 +242,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						"query",
 						new GraphQLField(
-							"Object_" + _objectDefinition.getCompanyId(),
+							_companyNamespace,
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
@@ -245,8 +251,7 @@ public class ObjectDefinitionGraphQLTest {
 										" ne 'peter@liferay.com'\""
 								).build(),
 								new GraphQLField("totalCount"))))),
-				"JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/data", "JSONObject/" + _companyNamespace,
 				"JSONObject/" + key, "Object/totalCount"));
 	}
 
@@ -261,7 +266,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						"query",
 						new GraphQLField(
-							"Object_" + _objectDefinition.getCompanyId(),
+							_companyNamespace,
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
@@ -269,8 +274,7 @@ public class ObjectDefinitionGraphQLTest {
 									_objectEntry.getObjectEntryId()
 								).build(),
 								new GraphQLField(_objectFieldName))))),
-				"JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/data", "JSONObject/" + _companyNamespace,
 				"JSONObject/" + key, "Object/" + _objectFieldName));
 	}
 
@@ -282,7 +286,7 @@ public class ObjectDefinitionGraphQLTest {
 			new GraphQLField(
 				"mutation",
 				new GraphQLField(
-					"Object_" + _objectDefinition.getCompanyId(),
+					_companyNamespace,
 					new GraphQLField(
 						"create" + _objectDefinitionName,
 						HashMapBuilder.<String, Object>put(
@@ -298,15 +302,14 @@ public class ObjectDefinitionGraphQLTest {
 			value,
 			JSONUtil.getValueAsString(
 				jsonObject, "JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/" + _companyNamespace,
 				"JSONObject/create" + _objectDefinitionName,
 				"Object/" + _objectFieldName));
 
 		value = RandomTestUtil.randomString();
 
 		Long objectEntryId = JSONUtil.getValueAsLong(
-			jsonObject, "JSONObject/data",
-			"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+			jsonObject, "JSONObject/data", "JSONObject/" + _companyNamespace,
 			"JSONObject/create" + _objectDefinitionName,
 			"Object/" + _objectDefinition.getPKObjectFieldName());
 
@@ -317,7 +320,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						"mutation",
 						new GraphQLField(
-							"Object_" + _objectDefinition.getCompanyId(),
+							_companyNamespace,
 							new GraphQLField(
 								"update" + _objectDefinitionName,
 								HashMapBuilder.<String, Object>put(
@@ -330,8 +333,7 @@ public class ObjectDefinitionGraphQLTest {
 									String.valueOf(objectEntryId)
 								).build(),
 								new GraphQLField(_objectFieldName))))),
-				"JSONObject/data",
-				"JSONObject/Object_" + _objectDefinition.getCompanyId(),
+				"JSONObject/data", "JSONObject/" + _companyNamespace,
 				"JSONObject/update" + _objectDefinitionName,
 				"Object/" + _objectFieldName));
 	}
@@ -368,6 +370,8 @@ public class ObjectDefinitionGraphQLTest {
 
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
+
+	private String _companyNamespace;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

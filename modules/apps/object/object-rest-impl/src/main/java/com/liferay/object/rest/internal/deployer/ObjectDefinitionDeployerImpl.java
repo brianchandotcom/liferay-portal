@@ -21,7 +21,13 @@ import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionC
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 
@@ -50,6 +56,21 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
+		String companyName = String.valueOf(objectDefinition.getCompanyId());
+
+		try {
+			Company company = _companyLocalService.getCompany(
+				objectDefinition.getCompanyId());
+
+			companyName = CamelCaseUtil.toCamelCase(
+				company.getName(), CharPool.SPACE);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
 		_componentInstancesMap.put(
 			objectDefinition.getObjectDefinitionId(),
 			Arrays.asList(
@@ -68,7 +89,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"osgi.jaxrs.application.base",
 						StringBundler.concat(
-							"/", objectDefinition.getCompanyId(), "/",
+							"/", companyName, "/",
 							objectDefinition.getRESTContextPath())
 					).put(
 						"osgi.jaxrs.extension.select",
@@ -112,7 +133,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
-					objectDefinition, _objectEntryManager,
+					companyName, objectDefinition, _objectEntryManager,
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())),
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -135,7 +156,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_bundleContext = bundleContext;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionDeployerImpl.class);
+
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	private final Map<Long, List<ComponentInstance>> _componentInstancesMap =
 		new HashMap<>();
 

@@ -22,7 +22,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -50,7 +49,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	implements GraphQLDTOContributor<Map<String, Object>, Map<String, Object>> {
 
 	public static ObjectDefinitionGraphQLDTOContributor of(
-		ObjectDefinition objectDefinition,
+		String namespace, ObjectDefinition objectDefinition,
 		ObjectEntryManager objectEntryManager, List<ObjectField> objectFields) {
 
 		List<GraphQLDTOProperty> graphQLDTOProperties = new ArrayList<>();
@@ -68,9 +67,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		return new ObjectDefinitionGraphQLDTOContributor(
-			String.valueOf(objectDefinition.getCompanyId()),
 			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
-			objectDefinition.getPKObjectFieldName(),
+			objectDefinition.getPKObjectFieldName(), namespace,
 			objectDefinition.getObjectDefinitionId(), objectEntryManager,
 			objectDefinition.getShortName());
 	}
@@ -144,7 +142,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	@Override
 	public String getNamespace() {
-		return "Object_" + StringUtil.upperCaseFirstLetter(_companyName);
+		return _namespace;
 	}
 
 	@Override
@@ -165,15 +163,14 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	private ObjectDefinitionGraphQLDTOContributor(
-		String companyName, EntityModel entityModel,
-		List<GraphQLDTOProperty> graphQLDTOProperties, String idName,
-		long objectDefinitionId, ObjectEntryManager objectEntryManager,
-		String resourceName) {
+		EntityModel entityModel, List<GraphQLDTOProperty> graphQLDTOProperties,
+		String idName, String namespace, long objectDefinitionId,
+		ObjectEntryManager objectEntryManager, String resourceName) {
 
-		_companyName = companyName;
 		_entityModel = entityModel;
 		_graphQLDTOProperties = graphQLDTOProperties;
 		_idName = idName;
+		_namespace = namespace;
 		_objectDefinitionId = objectDefinitionId;
 		_objectEntryManager = objectEntryManager;
 		_resourceName = resourceName;
@@ -220,10 +217,10 @@ public class ObjectDefinitionGraphQLDTOContributor
 			"String", String.class
 		).build();
 
-	private final String _companyName;
 	private final EntityModel _entityModel;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;
+	private final String _namespace;
 	private final long _objectDefinitionId;
 	private final ObjectEntryManager _objectEntryManager;
 	private final String _resourceName;

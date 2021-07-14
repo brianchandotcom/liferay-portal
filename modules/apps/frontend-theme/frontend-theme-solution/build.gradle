@@ -13,7 +13,7 @@ copyClassicTheme {
 	includeEmptyDirs = false
 	into file("src")
 
-	rename '_custom.scss', '_classic_custom.scss'
+	rename '^_custom.scss$', '_classic_custom.scss'
 }
 
 packageRunBuild {

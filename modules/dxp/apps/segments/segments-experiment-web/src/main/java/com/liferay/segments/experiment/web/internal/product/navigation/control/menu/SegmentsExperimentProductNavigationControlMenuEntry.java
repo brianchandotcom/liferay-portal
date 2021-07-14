@@ -193,8 +193,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 	public boolean isPanelStateOpen(HttpServletRequest httpServletRequest) {
 		String segmentsExperimentPanelState = SessionClicks.get(
-			httpServletRequest,
-			"com.liferay.segments.experiment.web_panelState", "closed");
+			httpServletRequest, _SESSION_CLICKS_KEY, "closed");
 
 		if (Objects.equals(segmentsExperimentPanelState, "open")) {
 			return true;
@@ -271,6 +270,12 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
+	public void setPanelState(
+		HttpServletRequest httpServletRequest, String panelState) {
+
+		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
+	}
+
 	@Activate
 	protected void activate() {
 		_portletNamespace = _portal.getPortletNamespace(
@@ -341,6 +346,9 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		SegmentsExperimentProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	private static final String _SESSION_CLICKS_KEY =
+		"com.liferay.segments.experiment.web_panelState";
 
 	@Reference
 	private Html _html;

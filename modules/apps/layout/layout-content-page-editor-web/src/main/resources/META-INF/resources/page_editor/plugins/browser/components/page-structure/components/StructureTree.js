@@ -400,6 +400,22 @@ function getMappedFieldLabel(
 	const {selectedMappingTypes} = config;
 
 	if (!infoItem && !selectedMappingTypes && !collectionConfig) {
+		for (const [key, value] of Object.entries(mappingFields)) {
+			if (key.startsWith(editable.classNameId)) {
+				const field = value
+					.flatMap((fieldSet) => fieldSet.fields)
+					.find(
+						(field) =>
+							field.key ===
+							(editable.mappedField ||
+								editable.fieldId ||
+								editable.collectionFieldId)
+					);
+
+				return field?.label;
+			}
+		}
+
 		return null;
 	}
 

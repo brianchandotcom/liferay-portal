@@ -6,16 +6,22 @@ definition {
 	property testray.main.component.name = "Content and Application Templates";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONStaging.enableLocalStaging(
-			branchingPrivate = "true",
-			branchingPublic = "true",
-			groupName = "Test Site Name");
+		task ("Enable local live with page versioning enabled") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -32,7 +38,7 @@ definition {
 	@description = "This is for LPS-130051. Widget templates can be used to modify the look of a specific application."
 	@priority = "4"
 	test CustomWidgetTemplateWithLocalLiveStaging {
-		task ("Add a content page based on Blank") {
+		task ("Add a content page") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			JSONLayout.addPublicLayout(
@@ -41,6 +47,7 @@ definition {
 				site = "false",
 				type = "content");
 		}
+
 		task ("Add a Navigation Menu widget to content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -48,39 +55,40 @@ definition {
 
 			PageEditor.addWidget(portletName = "Navigation Menu");
 		}
-		task ("Configure the Navigation Menu widget to use the List Menu Template") {
+
+		task ("Select the List Menu as display template in Navigation Menu") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "List Menu");
 
 			Portlet.saveAndCloseConfig();
-		}
-		task ("Wait for auto save and Publish the content page") {
+
 			PageEditor.waitForAutoSave();
 
 			PageEditor.clickPublish();
 		}
-		task ("Navigate to the content page") {
+
+		task ("View the List Menu is applied to Navigation Menu at view mode in staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
-		}
-		task ("View the widget template applied to Navigation Menu widget in staging site") {
+
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
 				value1 = "Test Page Name");
 		}
+
 		task ("Publish to Live") {
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();
 		}
-		task ("Navigate to the content page") {
+
+		task ("View the List Menu is applied to Navigation Menu at view mode in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
-		}
-		task ("View the widget template applied to Navigation Menu widget in live site") {
+
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
 				value1 = "Test Page Name");

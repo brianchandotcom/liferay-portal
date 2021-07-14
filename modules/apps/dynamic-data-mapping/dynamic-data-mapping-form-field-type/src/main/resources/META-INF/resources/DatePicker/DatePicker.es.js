@@ -136,6 +136,31 @@ const getValueForHidden = (value, locale) => {
 	return '';
 };
 
+const Months = [
+	Liferay.Language.get('january'),
+	Liferay.Language.get('february'),
+	Liferay.Language.get('march'),
+	Liferay.Language.get('april'),
+	Liferay.Language.get('may'),
+	Liferay.Language.get('june'),
+	Liferay.Language.get('july'),
+	Liferay.Language.get('august'),
+	Liferay.Language.get('september'),
+	Liferay.Language.get('october'),
+	Liferay.Language.get('november'),
+	Liferay.Language.get('december'),
+];
+
+const WeekdayShort = [
+	Liferay.Language.get('weekday-short-sunday'),
+	Liferay.Language.get('weekday-short-monday'),
+	Liferay.Language.get('weekday-short-tuesday'),
+	Liferay.Language.get('weekday-short-wednesday'),
+	Liferay.Language.get('weekday-short-thursday'),
+	Liferay.Language.get('weekday-short-friday'),
+	Liferay.Language.get('weekday-short-saturday'),
+];
+
 const DatePicker = ({
 	defaultLanguageId,
 	disabled,
@@ -246,6 +271,7 @@ const DatePicker = ({
 				disabled={disabled}
 				expanded={expanded}
 				initialMonth={getInitialMonth(value)}
+				months={Months}
 				onExpandedChange={(expand) => {
 					setExpand(expand);
 				}}
@@ -290,6 +316,7 @@ const DatePicker = ({
 				ref={inputRef}
 				spritemap={spritemap}
 				value={value}
+				weekdaysShort={WeekdayShort}
 				years={years}
 			/>
 		</>

@@ -105,6 +105,8 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
+		String cdnURL = ParamUtil.getString(actionRequest, "cdnURL");
+		boolean cdn = ParamUtil.getBoolean(actionRequest, "cdn");
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -151,11 +153,12 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 
 		if (cpAttachmentFileEntryId > 0) {
 			_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
-				cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, titleMap, null, priority, type, serviceContext);
+				serviceContext.getUserId(), cpAttachmentFileEntryId,
+				fileEntryId, cdnURL, cdn, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+				null, priority, type, serviceContext);
 		}
 		else {
 			long classNameId = _portal.getClassNameId(AssetCategory.class);
@@ -167,11 +170,12 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
 				serviceContext.getUserId(), assetCategory.getGroupId(),
-				classNameId, categoryId, fileEntryId, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, titleMap, null, priority, type, serviceContext);
+				classNameId, categoryId, fileEntryId, cdnURL, cdn,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, titleMap, null, priority,
+				type, serviceContext);
 		}
 	}
 

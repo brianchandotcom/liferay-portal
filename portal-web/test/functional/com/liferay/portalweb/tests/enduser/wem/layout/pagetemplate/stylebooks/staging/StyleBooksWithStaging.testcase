@@ -85,6 +85,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 		}
 
@@ -274,6 +275,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
@@ -584,6 +586,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 
 			PageEditor.clickPublish();
@@ -675,6 +678,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 		}
 

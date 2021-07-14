@@ -260,6 +260,7 @@ definition {
 		task ("Add a Banner Center fragment below the Container") {
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center",
 				targetFragmentName = "Container");
 		}
@@ -426,6 +427,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 		}
 

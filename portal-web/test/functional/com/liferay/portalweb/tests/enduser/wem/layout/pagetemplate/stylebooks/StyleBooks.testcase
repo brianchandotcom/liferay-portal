@@ -45,6 +45,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 
 			PageEditor.clickPublish();
@@ -678,6 +679,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 
 			PageEditor.clickPublish();

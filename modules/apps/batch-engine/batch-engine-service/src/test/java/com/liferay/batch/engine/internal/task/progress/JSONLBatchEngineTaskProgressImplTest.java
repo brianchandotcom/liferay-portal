@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Matija Petanjek
  */
-public class JSONBatchEngineTaskProgressTest
+public class JSONLBatchEngineTaskProgressImplTest
 	extends BaseBatchEngineTaskProgressTestCase {
 
 	@ClassRule
@@ -36,30 +36,22 @@ public class JSONBatchEngineTaskProgressTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetTotalItems() throws Exception {
-		_testGetTotalItemsCount(0, true);
-		_testGetTotalItemsCount(PRODUCTS_COUNT, false);
-		_testGetTotalItemsCount(PRODUCTS_COUNT, true);
+	public void testGetTotalItemsCount() throws Exception {
+		_testGetTotalItemsCount(0);
+		_testGetTotalItemsCount(PRODUCTS_COUNT);
 	}
 
-	private void _testGetTotalItemsCount(
-			int expectedTotalItemsCount, boolean invalidJSONSyntax)
+	private void _testGetTotalItemsCount(int expectedTotalItemsCount)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.OPEN_BRACKET);
 
 		for (int i = 0; i < expectedTotalItemsCount; i++) {
 			sb.append(PRODUCT_JSON);
 
 			if (i < (PRODUCTS_COUNT - 1)) {
-				sb.append(StringPool.COMMA);
+				sb.append(StringPool.NEW_LINE);
 			}
-		}
-
-		if (!invalidJSONSyntax) {
-			sb.append(StringPool.CLOSE_BRACKET);
 		}
 
 		Assert.assertEquals(
@@ -67,10 +59,10 @@ public class JSONBatchEngineTaskProgressTest
 			_batchEngineTaskProgress.getTotalItemsCount(
 				compress(
 					sb.toString(),
-					BatchEngineTaskContentType.JSON.toString())));
+					BatchEngineTaskContentType.JSONL.toString())));
 	}
 
 	private static final BatchEngineTaskProgress _batchEngineTaskProgress =
-		new JSONBatchEngineTaskProgressImpl();
+		new JSONLBatchEngineTaskProgressImpl();
 
 }

@@ -32,7 +32,7 @@ import org.junit.Test;
 /**
  * @author Ivica Cardic
  */
-public class JSONBatchEngineImportTaskItemReaderTest
+public class JSONBatchEngineImportTaskItemReaderImplTest
 	extends BaseBatchEngineImportTaskItemReaderTestCase {
 
 	@ClassRule
@@ -42,8 +42,8 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 	@Test
 	public void testColumnMapping() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						new String[] {
 							"createDate1", "description1", "id1", "name1"
@@ -67,7 +67,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 				).put(
 					"name1", "name"
 				).build(),
-				jsonBatchEngineImportTaskItemReader.read(),
+				jsonBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
@@ -78,8 +78,8 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 	@Test
 	public void testColumnMappingWithUndefinedColumn() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						new String[] {
 							"createDate1", "description1", "id1", "name1"
@@ -101,14 +101,14 @@ public class JSONBatchEngineImportTaskItemReaderTest
 				).put(
 					"id1", "id"
 				).build(),
-				jsonBatchEngineImportTaskItemReader.read(), null);
+				jsonBatchEngineImportTaskItemReaderImpl.read(), null);
 		}
 	}
 
 	@Test
 	public void testColumnMappingWithUndefinedTargetColumn() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						new String[] {
 							"createDate1", "description1", "id1", "name1"
@@ -131,14 +131,14 @@ public class JSONBatchEngineImportTaskItemReaderTest
 						put("name1", null);
 					}
 				},
-				jsonBatchEngineImportTaskItemReader.read(), null);
+				jsonBatchEngineImportTaskItemReaderImpl.read(), null);
 		}
 	}
 
 	@Test
 	public void testInvalidColumnMapping() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						new String[] {
 							"createDate1", "description1", "id1", "name1"
@@ -163,7 +163,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 					).put(
 						"name1", "name"
 					).build(),
-					jsonBatchEngineImportTaskItemReader.read(),
+					jsonBatchEngineImportTaskItemReaderImpl.read(),
 					HashMapBuilder.put(
 						"en", "sample name"
 					).put(
@@ -179,8 +179,8 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 	@Test
 	public void testReadInvalidRow() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						_FIELD_NAMES,
 						new Object[][] {
@@ -195,7 +195,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 				validate(
 					createDateString, "sample description", null,
 					Collections.emptyMap(),
-					jsonBatchEngineImportTaskItemReader.read(),
+					jsonBatchEngineImportTaskItemReaderImpl.read(),
 					HashMapBuilder.put(
 						"en", "sample name"
 					).put(
@@ -211,8 +211,8 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 	@Test
 	public void testReadMultipleRows() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						_FIELD_NAMES,
 						new Object[][] {
@@ -236,7 +236,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 				validate(
 					createDateString, "sample description " + rowCount,
 					rowCount, Collections.emptyMap(),
-					jsonBatchEngineImportTaskItemReader.read(),
+					jsonBatchEngineImportTaskItemReaderImpl.read(),
 					HashMapBuilder.put(
 						"en", "sample name " + rowCount
 					).put(
@@ -248,8 +248,8 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 	@Test
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						_FIELD_NAMES,
 						new Object[][] {
@@ -263,7 +263,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
 				Collections.emptyMap(),
-				jsonBatchEngineImportTaskItemReader.read(),
+				jsonBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(
 					"en", "sample name"
 				).put(
@@ -274,21 +274,21 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 	@Test
 	public void testReadRowsWithLessValues() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						_FIELD_NAMES, new Object[][] {{"null", "null", 1}})) {
 
 			validate(
 				null, null, 1L, Collections.emptyMap(),
-				jsonBatchEngineImportTaskItemReader.read(), null);
+				jsonBatchEngineImportTaskItemReaderImpl.read(), null);
 		}
 	}
 
 	@Test
 	public void testReadRowsWithNullValues() throws Exception {
-		try (JSONBatchEngineImportTaskItemReader
-				jsonBatchEngineImportTaskItemReader =
+		try (JSONBatchEngineImportTaskItemReaderImpl
+				jsonBatchEngineImportTaskItemReaderImpl =
 					_getJSONBatchEngineImportTaskItemReader(
 						_FIELD_NAMES,
 						new Object[][] {
@@ -306,7 +306,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
-				jsonBatchEngineImportTaskItemReader.read(),
+				jsonBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(
 					"hr", "naziv 1"
 				).build());
@@ -314,7 +314,7 @@ public class JSONBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, "sample description 2", 2L,
 				Collections.emptyMap(),
-				jsonBatchEngineImportTaskItemReader.read(),
+				jsonBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(
 					"en", "sample name 2"
 				).put(
@@ -353,12 +353,12 @@ public class JSONBatchEngineImportTaskItemReaderTest
 		return content.getBytes();
 	}
 
-	private JSONBatchEngineImportTaskItemReader
+	private JSONBatchEngineImportTaskItemReaderImpl
 			_getJSONBatchEngineImportTaskItemReader(
 				String[] cellNames, Object[][] rowValues)
 		throws IOException {
 
-		return new JSONBatchEngineImportTaskItemReader(
+		return new JSONBatchEngineImportTaskItemReaderImpl(
 			new ByteArrayInputStream(_getContent(cellNames, rowValues)));
 	}
 

@@ -49,7 +49,7 @@ import org.junit.Test;
 /**
  * @author Ivica Cardic
  */
-public class XLSBatchEngineExportTaskItemWriterTest
+public class XLSBatchEngineExportTaskItemWriterImplTest
 	extends BaseBatchEngineExportTaskItemWriterTestCase {
 
 	@ClassRule
@@ -187,13 +187,14 @@ public class XLSBatchEngineExportTaskItemWriterTest
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		try (XLSBatchEngineExportTaskItemWriter
-				xlsBatchEngineExportTaskItemWriter =
-					new XLSBatchEngineExportTaskItemWriter(
+		try (XLSBatchEngineExportTaskItemWriterImpl
+				xlsBatchEngineExportTaskItemWriterImpl =
+					new XLSBatchEngineExportTaskItemWriterImpl(
 						fieldMap, fieldNames, unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
-				xlsBatchEngineExportTaskItemWriter.write(Arrays.asList(items));
+				xlsBatchEngineExportTaskItemWriterImpl.write(
+					Arrays.asList(items));
 			}
 		}
 

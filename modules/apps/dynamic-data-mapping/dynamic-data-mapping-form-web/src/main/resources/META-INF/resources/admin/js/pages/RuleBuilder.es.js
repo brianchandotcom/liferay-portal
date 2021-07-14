@@ -80,13 +80,15 @@ export const RuleBuilder = ({history, location}) => {
 	}, [pages]);
 
 	const pageOptions = useMemo(() => {
-		return pages.map(({title}, index) => ({
-			label: `${index + 1} ${
-				title || Liferay.Language.get('page-title')
-			}`,
-			name: index.toString(),
-			value: index.toString(),
-		}));
+		return pages
+			.filter(({contentRenderer}) => contentRenderer !== 'success')
+			.map(({title}, index) => ({
+				label: `${index + 1} ${
+					title || Liferay.Language.get('page-title')
+				}`,
+				name: index.toString(),
+				value: index.toString(),
+			}));
 	}, [pages]);
 
 	const dataProvider = resourceDataProvider?.map((data) => ({

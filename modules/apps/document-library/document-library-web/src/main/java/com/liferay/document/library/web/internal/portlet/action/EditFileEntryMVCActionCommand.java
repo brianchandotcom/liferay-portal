@@ -875,7 +875,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		boolean neverExpire = ParamUtil.getBoolean(
-			uploadPortletRequest, "neverExpire");
+			uploadPortletRequest, "neverExpire", true);
 
 		if (!PropsValues.SCHEDULER_ENABLED || neverExpire) {
 			return null;
@@ -920,7 +920,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		boolean neverReview = ParamUtil.getBoolean(
-			uploadPortletRequest, "neverReview");
+			uploadPortletRequest, "neverReview", true);
 
 		if (!PropsValues.SCHEDULER_ENABLED || neverReview) {
 			return null;

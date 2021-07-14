@@ -87,7 +87,7 @@ definition {
 		task ("View the List Menu is applied to Navigation Menu at view mode in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
+				siteName = "Test Site Name");
 
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",

@@ -52,9 +52,16 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 		>
 
 			<%
-			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+			String thumbnailSrc = StringPool.BLANK;
 
-			String thumbnailSrc = CommerceMediaResolverUtil.getThumbnailURL(CommerceAccountConstants.ACCOUNT_ID_GUEST, cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+			if (fileEntry == null) {
+				thumbnailSrc = cpAttachmentFileEntry.getCdnUrl();
+			}
+			else {
+				thumbnailSrc = CommerceMediaResolverUtil.getThumbnailURL(CommerceAccountConstants.ACCOUNT_ID_GUEST, cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+			}
 			%>
 
 			<c:choose>

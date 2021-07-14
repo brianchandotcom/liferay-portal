@@ -3150,6 +3150,10 @@ definition {
 	}
 
 	macro viewContainerStyle {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
 		if (isSet(alignItems)) {
 			AssertElementPresent(
 				key_alignItems = "${alignItems}",

@@ -13,5 +13,7 @@
  */
 
 module.exports = {
-	bundling: false,
+	build: {
+		bundler: false,
+	},
 };

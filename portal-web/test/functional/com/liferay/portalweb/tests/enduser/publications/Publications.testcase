@@ -541,8 +541,8 @@ definition {
 		NavItem.gotoTemplates();
 
 		AssertElementNotPresent(
-			key_ddlTemplateName = "WC Template Name",
-			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME");
+			key_tableEntry = "WC Template Name",
+			locator1 = "LexiconTable#TABLE_ENTRY");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
@@ -567,8 +567,8 @@ definition {
 		NavItem.gotoTemplates();
 
 		AssertElementNotPresent(
-			key_ddlTemplateName = "WC Template Name",
-			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME");
+			key_tableEntry = "WC Template Name",
+			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
 	@priority = "5"

@@ -133,9 +133,9 @@ export const FormFieldSettings = ({children, onAction, ...otherProps}) => {
 				}}
 				onAction={onAction}
 				reducers={[
-					formBuilderReducer,
 					activePageReducer,
 					fieldReducer,
+					formBuilderReducer,
 					languageReducer,
 					objectFieldsReducer,
 					pagesStructureReducer,

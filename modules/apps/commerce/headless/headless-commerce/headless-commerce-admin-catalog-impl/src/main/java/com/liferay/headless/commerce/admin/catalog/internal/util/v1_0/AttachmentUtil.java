@@ -163,8 +163,8 @@ public class AttachmentUtil {
 		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			attachmentBase64.getExternalReferenceCode(),
 			serviceContext.getScopeGroupId(), classNameId, classPK,
-			GetterUtil.getLong(attachmentBase64.getId()), fileEntryId,
-			displayDateConfig.getMonth(), displayDateConfig.getDay(),
+			GetterUtil.getLong(attachmentBase64.getId()), fileEntryId, null,
+			false, displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
 			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
@@ -218,7 +218,7 @@ public class AttachmentUtil {
 		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			attachmentUrl.getExternalReferenceCode(),
 			serviceContext.getScopeGroupId(), classNameId, classPK,
-			GetterUtil.getLong(attachmentUrl.getId()), fileEntryId,
+			GetterUtil.getLong(attachmentUrl.getId()), fileEntryId, null, false,
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
 			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
@@ -274,7 +274,7 @@ public class AttachmentUtil {
 		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			attachment.getExternalReferenceCode(), groupId, classNameId,
 			classPK, GetterUtil.getLong(attachment.getId()), fileEntryId,
-			GetterUtil.getString(attachment.getCdnUrl()),
+			GetterUtil.getString(attachment.getCdnURL()),
 			GetterUtil.get(attachment.getCdn(), false),
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),

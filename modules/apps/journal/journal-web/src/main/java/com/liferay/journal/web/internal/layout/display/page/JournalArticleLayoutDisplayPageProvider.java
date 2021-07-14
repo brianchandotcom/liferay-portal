@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.layout.display.page;
 
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -63,15 +64,13 @@ public class JournalArticleLayoutDisplayPageProvider
 	public LayoutDisplayPageObjectProvider<JournalArticle>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
-		JournalArticle article =
-			journalArticleLocalService.fetchArticleByUrlTitle(
-				groupId, urlTitle);
-
-		if ((article == null) || article.isInTrash()) {
-			return null;
-		}
-
 		try {
+			JournalArticle article = _getArticle(groupId, urlTitle);
+
+			if ((article == null) || article.isInTrash()) {
+				return null;
+			}
+
 			return new JournalArticleLayoutDisplayPageObjectProvider(article);
 		}
 		catch (PortalException portalException) {
@@ -86,5 +85,27 @@ public class JournalArticleLayoutDisplayPageProvider
 
 	@Reference
 	protected JournalArticleLocalService journalArticleLocalService;
+
+	@Reference
+	protected SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider;
+
+	private JournalArticle _getArticle(long groupId, String urlTitle)
+		throws PortalException {
+
+		for (long connectedGroupId :
+				siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(groupId)) {
+
+			JournalArticle article =
+				journalArticleLocalService.fetchArticleByUrlTitle(
+					connectedGroupId, urlTitle);
+
+			if (article != null) {
+				return article;
+			}
+		}
+
+		return null;
+	}
 
 }

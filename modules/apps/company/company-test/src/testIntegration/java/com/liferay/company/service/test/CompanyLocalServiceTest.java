@@ -631,11 +631,10 @@ public class CompanyLocalServiceTest {
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		for (long companyId : PortalInstances.getCompanyIds()) {
-			Assert.assertNotEquals(
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> Assert.assertNotEquals(
 				"Company instance was not deleted", company.getCompanyId(),
-				companyId);
-		}
+				(long)companyId));
 	}
 
 	@Test

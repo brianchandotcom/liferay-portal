@@ -21,11 +21,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.util.JarUtil;
-import com.liferay.portal.util.PortalInstances;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,9 +45,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class TensorFlowModelUpgradeProcess extends UpgradeProcess {
 
 	public TensorFlowModelUpgradeProcess(
+		CompanyLocalService companyLocalService,
 		ConfigurationAdmin configurationAdmin,
 		ConfigurationProvider configurationProvider, Store store) {
 
+		_companyLocalService = companyLocalService;
 		_configurationAdmin = configurationAdmin;
 		_configurationProvider = configurationProvider;
 		_store = store;
@@ -55,48 +57,48 @@ public class TensorFlowModelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
-			TensorFlowImageAssetAutoTagProviderCompanyConfiguration
-				tensorFlowImageAssetAutoTagProviderCompanyConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						TensorFlowImageAssetAutoTagProviderCompanyConfiguration.
-							class,
-						companyId);
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				TensorFlowImageAssetAutoTagProviderCompanyConfiguration
+					tensorFlowImageAssetAutoTagProviderCompanyConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class,
+							companyId);
 
-			if (tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
-					enabled()) {
+				if (tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
+						enabled()) {
 
-				Configuration configuration =
-					_configurationAdmin.getConfiguration(
-						TensorFlowImageAssetAutoTagProviderDownloadConfiguration.class.
-							getName(),
-						StringPool.QUESTION);
+					Configuration configuration =
+						_configurationAdmin.getConfiguration(
+							TensorFlowImageAssetAutoTagProviderDownloadConfiguration.class.
+								getName(),
+							StringPool.QUESTION);
 
-				Dictionary<String, Object> dictionary =
-					configuration.getProperties();
+					Dictionary<String, Object> dictionary =
+						configuration.getProperties();
 
-				if (dictionary == null) {
-					dictionary = new HashMapDictionary<>();
+					if (dictionary == null) {
+						dictionary = new HashMapDictionary<>();
+					}
+
+					TensorFlowImageAssetAutoTagProviderDownloadConfiguration
+						tensorFlowImageAssetAutoTagProviderDownloadConfiguration =
+							ConfigurableUtil.createConfigurable(
+								TensorFlowImageAssetAutoTagProviderDownloadConfiguration.class,
+								dictionary);
+
+					_downloadFile(
+						"org.tensorflow.models.inception-5h.jar",
+						tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+							modelDownloadURL());
+					_downloadFile(
+						"libtensorflow_jni-1.15.0.jar",
+						tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+							nativeLibraryDownloadURL());
+
+					return;
 				}
-
-				TensorFlowImageAssetAutoTagProviderDownloadConfiguration
-					tensorFlowImageAssetAutoTagProviderDownloadConfiguration =
-						ConfigurableUtil.createConfigurable(
-							TensorFlowImageAssetAutoTagProviderDownloadConfiguration.class,
-							dictionary);
-
-				_downloadFile(
-					"org.tensorflow.models.inception-5h.jar",
-					tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-						modelDownloadURL());
-				_downloadFile(
-					"libtensorflow_jni-1.15.0.jar",
-					tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-						nativeLibraryDownloadURL());
-
-				break;
-			}
-		}
+			});
 	}
 
 	private void _downloadFile(String fileName, String url) throws Exception {
@@ -113,6 +115,7 @@ public class TensorFlowModelUpgradeProcess extends UpgradeProcess {
 			Store.VERSION_DEFAULT, new FileInputStream(tempFile));
 	}
 
+	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final ConfigurationProvider _configurationProvider;
 	private final Store _store;

@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
-import com.liferay.portal.util.PortalInstances;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,30 +53,29 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	public void verify(VerifiableResourcedModel... verifiableResourcedModels)
 		throws Exception {
 
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				Role role = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.OWNER);
 
-		for (long companyId : companyIds) {
-			Role role = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.OWNER);
+				List<VerifyResourcedModelUpgradeCallable>
+					verifyResourcedModelUpgradeCallables = new ArrayList<>(
+						verifiableResourcedModels.length);
 
-			List<VerifyResourcedModelUpgradeCallable>
-				verifyResourcedModelUpgradeCallables = new ArrayList<>(
-					verifiableResourcedModels.length);
+				for (VerifiableResourcedModel verifiableResourcedModel :
+						verifiableResourcedModels) {
 
-			for (VerifiableResourcedModel verifiableResourcedModel :
-					verifiableResourcedModels) {
+					VerifyResourcedModelUpgradeCallable
+						verifyResourcedModelUpgradeCallable =
+							new VerifyResourcedModelUpgradeCallable(
+								role, verifiableResourcedModel);
 
-				VerifyResourcedModelUpgradeCallable
-					verifyResourcedModelUpgradeCallable =
-						new VerifyResourcedModelUpgradeCallable(
-							role, verifiableResourcedModel);
+					verifyResourcedModelUpgradeCallables.add(
+						verifyResourcedModelUpgradeCallable);
+				}
 
-				verifyResourcedModelUpgradeCallables.add(
-					verifyResourcedModelUpgradeCallable);
-			}
-
-			doVerify(verifyResourcedModelUpgradeCallables);
-		}
+				doVerify(verifyResourcedModelUpgradeCallables);
+			});
 	}
 
 	@Override

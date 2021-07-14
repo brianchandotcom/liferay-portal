@@ -111,6 +111,7 @@ definition {
 		task ("Add a Banner Center below the Heading") {
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center",
 				targetFragmentName = "Heading");
 		}
@@ -124,15 +125,16 @@ definition {
 
 		task ("Edit the inline text of title field in Banner Center") {
 			PageEditor.editFragmentText(
-				fragmentName = "Banner Center",
-				id = "01-title",
+				fragmentName = "Heading",
+				id = "element-text",
+				index = "2",
 				text = "Edited Title");
 		}
 
 		task ("Edit the inline text of subtitle field in Banner Center") {
 			PageEditor.editFragmentText(
-				fragmentName = "Banner Center",
-				id = "02-subtitle",
+				fragmentName = "Paragraph",
+				id = "element-text",
 				text = "Edited Subtitle");
 		}
 
@@ -151,8 +153,9 @@ definition {
 
 		task ("Edit the localized inline text of title field in Banner Center") {
 			PageEditor.editFragmentText(
-				fragmentName = "Banner Center",
-				id = "01-title",
+				fragmentName = "Heading",
+				id = "element-text",
+				index = "2",
 				text = "Título editado");
 		}
 

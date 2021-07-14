@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>COMMENT_ACTIONS</td>
-	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_commentValue}')]//div//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//div[contains(@class,'autofit-row') and contains(.,'${key_commentValue}')]/preceding-sibling::div//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -22,7 +22,17 @@
 </tr>
 <tr>
 	<td>COMMENT_BODY_SPECIFIC</td>
-	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_userName}')]//div//textarea[contains(@aria-label,'Comment')]</td>
+	<td>//div[contains(@class,'autofit-col-expand')]//textarea[contains(@aria-label,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_BUTTON</td>
+	<td>//li[contains(@title,'Comments')]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETING_MESSAGE</td>
+	<td>//div[(@class='comment-deleting-title')]</td>
 	<td></td>
 </tr>
 <tr>

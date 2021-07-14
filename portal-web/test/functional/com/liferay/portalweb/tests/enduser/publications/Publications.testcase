@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "Assert we can add edit and delete comment for Pubhlication Review."
+	@description = "Assert we can add edit and delete comment for Publication Review."
 	@priority = "4"
 	test AddEditAndDeleteCommentForPublicationReview {
 		JSONPublications.addPublication(publicationName = "Publication Name");
@@ -44,6 +44,8 @@ definition {
 		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
+
+		PublicationsChanges.openCommentsSidebar();
 
 		PublicationsChanges.addComment(commentValue = "Good to Publish");
 

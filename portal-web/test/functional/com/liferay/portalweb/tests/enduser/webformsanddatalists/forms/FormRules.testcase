@@ -97,14 +97,62 @@ definition {
 	}
 
 	@description = "Verify that a Rule is autosaved when exiting the Form without saving the Rule"
-	@ignore = "True"
 	@priority = "5"
 	test AreSavedWhenExitingTheForm {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134377 AreSavedWhenExitingTheForm pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoRules();
+
+		Click(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
+
+		FormRules.viewRuleBuilderCondition(
+			positionNumber = "1",
+			value = "Text");
+
+		FormRules.viewRuleBuilderCondition(
+			positionNumber = "2",
+			value = "Is empty");
+
+		FormRules.viewRuleBuilderAction(
+			positionNumber = "1",
+			value = "Require");
+
+		FormRules.viewRuleBuilderAction(
+			positionNumber = "2",
+			value = "Text");
 	}
 
 	@description = "Verify that a Rule can be created"

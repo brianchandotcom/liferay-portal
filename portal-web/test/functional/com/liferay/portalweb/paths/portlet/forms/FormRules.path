@@ -194,6 +194,11 @@
 	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][2]//div[contains(@class,'select-field-trigger')]//div[contains(text(),"${key_selectActionTargetValue}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_RULE_BUILDER_ACTION_CONDITION</td>
+	<td>//div[@class='form-group-item'][${key_positionNumber}]//div[contains(@class,'form-control results-chosen select-field-trigger')]//div[text()='${key_value}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

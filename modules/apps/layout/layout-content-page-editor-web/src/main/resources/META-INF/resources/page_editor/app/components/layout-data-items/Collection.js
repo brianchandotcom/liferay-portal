@@ -180,8 +180,8 @@ const ColumnContext = ({
 	);
 };
 
-const Collection = React.forwardRef(
-	({children, item, withinTopper = false}, ref) => {
+const Collection = React.memo(
+	React.forwardRef(({children, item, withinTopper = false}, ref) => {
 		const child = React.Children.toArray(children)[0];
 		const collectionConfig = item.config;
 		const emptyCollection = useMemo(
@@ -347,7 +347,7 @@ const Collection = React.forwardRef(
 				)}
 			</div>
 		);
-	}
+	})
 );
 
 Collection.displayName = 'Collection';

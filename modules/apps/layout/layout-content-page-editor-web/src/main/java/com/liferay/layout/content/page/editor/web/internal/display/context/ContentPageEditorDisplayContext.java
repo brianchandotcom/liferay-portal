@@ -127,7 +127,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -153,7 +152,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1834,8 +1832,8 @@ public class ContentPageEditorDisplayContext {
 		).buildString();
 	}
 
-	private Set<Map<String, Object>> _getMappedInfoItems() throws Exception {
-		Set<Map<String, Object>> mappedInfoItems = new HashSet<>();
+	private JSONObject _getMappingFieldsJSONObject() throws Exception {
+		JSONObject mappingFieldsJSONObject = JSONFactoryUtil.createJSONObject();
 
 		Set<LayoutDisplayPageObjectProvider<?>>
 			layoutDisplayPageObjectProviders =
@@ -1854,40 +1852,10 @@ public class ContentPageEditorDisplayContext {
 				layoutDisplayPageObjectProvider :
 					layoutDisplayPageObjectProviders) {
 
-			mappedInfoItems.add(
-				HashMapBuilder.<String, Object>put(
-					"className",
-					PortalUtil.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId())
-				).put(
-					"classNameId",
-					layoutDisplayPageObjectProvider.getClassNameId()
-				).put(
-					"classPK", layoutDisplayPageObjectProvider.getClassPK()
-				).put(
-					"classTypeId",
-					layoutDisplayPageObjectProvider.getClassTypeId()
-				).put(
-					"title",
-					layoutDisplayPageObjectProvider.getTitle(
-						themeDisplay.getLocale())
-				).build());
-		}
-
-		return mappedInfoItems;
-	}
-
-	private JSONObject _getMappingFieldsJSONObject() throws Exception {
-		Set<Map<String, Object>> mappedInfoItems = _getMappedInfoItems();
-
-		JSONObject mappingFieldsJSONObject = JSONFactoryUtil.createJSONObject();
-
-		for (Map<String, Object> mappedInfoItem : mappedInfoItems) {
-			long classNameId = MapUtil.getLong(mappedInfoItem, "classNameId");
-			long classTypeId = MapUtil.getLong(mappedInfoItem, "classTypeId");
-
 			String uniqueMappingFieldKey =
-				classNameId + StringPool.DASH + classTypeId;
+				layoutDisplayPageObjectProvider.getClassNameId() +
+					StringPool.DASH +
+						layoutDisplayPageObjectProvider.getClassTypeId();
 
 			if (mappingFieldsJSONObject.has(uniqueMappingFieldKey)) {
 				continue;
@@ -1896,9 +1864,11 @@ public class ContentPageEditorDisplayContext {
 			mappingFieldsJSONObject.put(
 				uniqueMappingFieldKey,
 				MappingContentUtil.getMappingFieldsJSONArray(
-					String.valueOf(classTypeId), themeDisplay.getScopeGroupId(),
-					infoItemServiceTracker,
-					PortalUtil.getClassName(classNameId),
+					String.valueOf(
+						layoutDisplayPageObjectProvider.getClassTypeId()),
+					themeDisplay.getScopeGroupId(), infoItemServiceTracker,
+					PortalUtil.getClassName(
+						layoutDisplayPageObjectProvider.getClassNameId()),
 					themeDisplay.getLocale()));
 		}
 

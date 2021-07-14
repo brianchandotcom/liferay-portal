@@ -15,6 +15,8 @@
 package com.liferay.asset.categories.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
+import com.liferay.asset.kernel.exception.AssetCategoryLimitException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -24,12 +26,15 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -144,6 +149,43 @@ public class AssetCategoryLocalServiceTest {
 			assetCategory.getTitleMap());
 	}
 
+	@Test(expected = AssetCategoryLimitException.class)
+	public void testAssetCategoryLimitExceeded() throws PortalException {
+		try {
+			_configurationProvider.saveCompanyConfiguration(
+				AssetCategoriesCompanyConfiguration.class,
+				_group.getCompanyId(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"maximumNumberOfCategoriesPerVocabulary", 3
+				).build());
+
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				_assetVocabulary.getVocabularyId(), new ServiceContext());
+
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				_assetVocabulary.getVocabularyId(), new ServiceContext());
+
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				_assetVocabulary.getVocabularyId(), new ServiceContext());
+
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				_assetVocabulary.getVocabularyId(), new ServiceContext());
+		}
+		finally {
+			_configurationProvider.deleteCompanyConfiguration(
+				AssetCategoriesCompanyConfiguration.class,
+				_group.getCompanyId());
+		}
+	}
+
 	@Test
 	public void testUpdateAssetCategoryWithMissingTranslationInSiteDefaultLocale()
 		throws PortalException {
@@ -213,6 +255,9 @@ public class AssetCategoryLocalServiceTest {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@DeleteAfterTestRun
 	private Group _group;

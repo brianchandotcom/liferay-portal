@@ -39,7 +39,7 @@ public class JSONBatchEngineTaskProgressImplTest
 	public void testGetTotalItems() throws Exception {
 		_testGetTotalItemsCount(0, true);
 		_testGetTotalItemsCount(PRODUCTS_COUNT, false);
-		_testGetTotalItemsCount(PRODUCTS_COUNT, true);
+		_testGetTotalItemsCount(0, true);
 	}
 
 	private void _testGetTotalItemsCount(

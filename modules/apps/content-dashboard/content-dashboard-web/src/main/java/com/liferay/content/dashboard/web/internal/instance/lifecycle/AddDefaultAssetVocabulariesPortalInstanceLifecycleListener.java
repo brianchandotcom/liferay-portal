@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -56,15 +57,15 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		_addAssetVocabulary(
 			company, "audience",
 			AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
-			JournalArticle.class);
+			JournalArticle.class, DLFileEntry.class);
 		_addAssetVocabulary(
 			company, "stage", AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
-			JournalArticle.class);
+			JournalArticle.class, DLFileEntry.class);
 	}
 
 	private void _addAssetVocabulary(
 			Company company, String name, int visibilityType,
-			Class<?> assetVocabularyTypeClass)
+			Class<?>... assetVocabularyTypeClass)
 		throws Exception {
 
 		AssetVocabulary assetVocabulary =
@@ -94,10 +95,19 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			new AssetVocabularySettingsHelper();
 
 		if (assetVocabularyTypeClass != null) {
+			long[] classNameIds = new long[assetVocabularyTypeClass.length];
+			long[] classTypePKs = new long[assetVocabularyTypeClass.length];
+			boolean[] requireds = new boolean[assetVocabularyTypeClass.length];
+
+			for (int i = 0; i < assetVocabularyTypeClass.length; i++) {
+				classNameIds[i] = _portal.getClassNameId(
+					assetVocabularyTypeClass[i]);
+				classTypePKs[i] = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
+				requireds[i] = false;
+			}
+
 			assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-				new long[] {_portal.getClassNameId(assetVocabularyTypeClass)},
-				new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_PK},
-				new boolean[] {false});
+				classNameIds, classTypePKs, requireds);
 		}
 
 		ServiceContext serviceContext = new ServiceContext();

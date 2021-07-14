@@ -54,7 +54,9 @@ public abstract class BaseBatchEngineTaskProgressTestCase {
 		}
 	}
 
-	protected static final String PRODUCT_JSON = JSONUtil.put(
+	protected static final int PRODUCTS_COUNT = 10;
+
+	protected final String productJSON = JSONUtil.put(
 		"active", true
 	).put(
 		"catalogId", 111
@@ -67,7 +69,5 @@ public abstract class BaseBatchEngineTaskProgressTestCase {
 	).put(
 		"workflowStatusInfo", MapUtil.singletonDictionary("code", 0)
 	).toString();
-
-	protected static final int PRODUCTS_COUNT = 10;
 
 }

@@ -299,6 +299,17 @@ public class SourceFormatter {
 					Arrays.asList(skipCheckNames));
 			}
 
+			String sourceFormatterPropertiesString = ArgumentsUtil.getString(
+				arguments, "source.formatter.properties", null);
+
+			String[] sourceFormatterProperties = StringUtil.split(
+				sourceFormatterPropertiesString, "\\n");
+
+			if (ArrayUtil.isNotEmpty(sourceFormatterProperties)) {
+				sourceFormatterArgs.setSourceFormatterProperties(
+					Arrays.asList(sourceFormatterProperties));
+			}
+
 			boolean validateCommitMessages = ArgumentsUtil.getBoolean(
 				arguments, "validate.commit.messages",
 				SourceFormatterArgs.VALIDATE_COMMIT_MESSAGES);
@@ -1067,6 +1078,15 @@ public class SourceFormatter {
 					_sourceFormatterArgs.getBaseDirName()));
 		}
 
+		for (String sourceFormatterProperty :
+				_sourceFormatterArgs.getSourceFormatterProperties()) {
+
+			_readProperties(
+				sourceFormatterProperty,
+				SourceUtil.getAbsolutePath(
+					_sourceFormatterArgs.getBaseDirName()));
+		}
+
 		_addDependentFileNames();
 
 		_pluginsInsideModulesDirectoryNames =
@@ -1158,24 +1178,30 @@ public class SourceFormatter {
 
 		String value = properties.getProperty("source.formatter.excludes");
 
-		if (value == null) {
-			_propertiesMap.put(propertiesFileLocation, properties);
+		if (value != null) {
+			if (FileUtil.exists(propertiesFileLocation + "portal-impl")) {
+				_sourceFormatterExcludes.addDefaultExcludeSyntaxPatterns(
+					_getExcludeSyntaxPatterns(value));
+			}
+			else {
+				_sourceFormatterExcludes.addExcludeSyntaxPatterns(
+					propertiesFileLocation, _getExcludeSyntaxPatterns(value));
+			}
 
-			return;
+			properties.remove("source.formatter.excludes");
 		}
 
-		if (FileUtil.exists(propertiesFileLocation + "portal-impl")) {
-			_sourceFormatterExcludes.addDefaultExcludeSyntaxPatterns(
-				_getExcludeSyntaxPatterns(value));
+		Properties existingProperties = _propertiesMap.get(
+			propertiesFileLocation);
+
+		if (existingProperties == null) {
+			_propertiesMap.put(propertiesFileLocation, properties);
 		}
 		else {
-			_sourceFormatterExcludes.addExcludeSyntaxPatterns(
-				propertiesFileLocation, _getExcludeSyntaxPatterns(value));
+			existingProperties.putAll(properties);
+
+			_propertiesMap.put(propertiesFileLocation, existingProperties);
 		}
-
-		properties.remove("source.formatter.excludes");
-
-		_propertiesMap.put(propertiesFileLocation, properties);
 	}
 
 	private void _readProperties(String content, String propertiesFileLocation)

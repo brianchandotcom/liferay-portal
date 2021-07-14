@@ -135,6 +135,10 @@ public class SourceFormatterArgs {
 		return _skipCheckNames;
 	}
 
+	public List<String> getSourceFormatterProperties() {
+		return _sourceFormatterProperties;
+	}
+
 	public boolean isAutoFix() {
 		return _autoFix;
 	}
@@ -300,6 +304,12 @@ public class SourceFormatterArgs {
 		_skipCheckNames = skipCheckNames;
 	}
 
+	public void setSourceFormatterProperties(
+		List<String> sourceFormatterProperties) {
+
+		_sourceFormatterProperties = sourceFormatterProperties;
+	}
+
 	public void setValidateCommitMessages(boolean validateCommitMessages) {
 		_validateCommitMessages = validateCommitMessages;
 	}
@@ -329,6 +339,7 @@ public class SourceFormatterArgs {
 	private boolean _showDocumentation = SHOW_DOCUMENTATION;
 	private boolean _showStatusUpdates = SHOW_STATUS_UPDATES;
 	private List<String> _skipCheckNames = new ArrayList<>();
+	private List<String> _sourceFormatterProperties = new ArrayList<>();
 	private boolean _validateCommitMessages = VALIDATE_COMMIT_MESSAGES;
 
 }

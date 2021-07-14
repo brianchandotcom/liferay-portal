@@ -728,6 +728,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<arg value="source.fail.on.has.warning=${source.fail.on.has.warning}" />
 					<arg value="source.file.extensions=${source.file.extensions}" />
 					<arg value="source.files=${source.files}" />
+					<arg value="source.formatter.properties=${source.formatter.properties}" />
 					<arg value="source.print.errors=${source.print.errors}" />
 					<arg value="validate.commit.messages=${validate.commit.messages}" />
 				</java>

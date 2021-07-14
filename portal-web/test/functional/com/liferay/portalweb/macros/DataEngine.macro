@@ -880,6 +880,8 @@ definition {
 	}
 
 	macro editFieldLabel {
+		WaitForVisible(locator1 = "Sidebar#BACK");
+
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		if (isSet(fieldsetModal)) {

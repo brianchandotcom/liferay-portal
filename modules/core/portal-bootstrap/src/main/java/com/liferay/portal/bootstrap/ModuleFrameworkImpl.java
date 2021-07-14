@@ -282,7 +282,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Initializing the new OSGi framework instance");
 		}
 
-		_framework.init();
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		try {
+			_framework.init();
+		}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Binding the OSGi framework to the registry API");

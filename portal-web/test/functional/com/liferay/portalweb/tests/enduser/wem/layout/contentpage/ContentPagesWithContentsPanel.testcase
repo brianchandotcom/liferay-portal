@@ -481,14 +481,16 @@ definition {
 		task ("Add a Banner Center below the Heading") {
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center",
 				targetFragmentName = "Heading");
 		}
 
 		task ("Map the Title of web content to title editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text",
+				index = "2");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Web Content Title",
@@ -504,8 +506,8 @@ definition {
 
 		task ("Map the Content of blogs entry to link editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "03-link");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Blogs Entry Title",
@@ -520,27 +522,19 @@ definition {
 		}
 
 		task ("Map the Preview Image of document to background image editable field") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "banner-center");
-
-			PageEditorMapping.mapEditableFieldToAsset(
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
 				entryTitle = "Document Title",
-				navItem = "Documents and Media");
-
-			Select(
-				key_fieldLabel = "Field",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Preview Image");
-
-			PageEditor.waitForAutoSave();
+				fieldName = "Preview Image",
+				navItem = "Documents and Media",
+				panel = "Styles");
 		}
 
 		task ("Add the first Collection Display below the Banner Center") {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				fragmentName = "Collection Display",
-				targetFragmentName = "Banner Center");
+				targetFragmentName = "Container");
 		}
 
 		task ("Select the dynamic collection in the first Collection Display") {
@@ -755,37 +749,29 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 		}
 
 		task ("Map the Preview Image of an image to background image editable field") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "banner-center");
-
-			PageEditorMapping.mapEditableFieldToAsset(
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
 				entryTitle = "analytics-cloud-hero-image.png",
+				fieldName = "Preview Image",
 				navItem = "Documents and Media",
+				panel = "Styles",
 				uploadFileName = "analytics-cloud-hero-image.png");
-
-			Select(
-				key_fieldLabel = "Field",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Preview Image");
-
-			PageEditor.waitForAutoSave();
 		}
 
 		task ("View the mapped image is shown in Banner Center fragment") {
-			PageEditor.viewFragmentEditableImage(
-				id = "banner-center",
-				imageFileName = "analytics-cloud-hero-image.png");
+			PageEditor.viewContainerStyle(backgroundImage = "analytics-cloud-hero-image.png");
 		}
 
 		task ("View the version of mapped image") {
-			PageEditor.viewFragmentEditableImage(
-				id = "banner-center",
-				imageFileName = "version=1.0");
+			AssertVisible(
+				backgroundImageStyle = "version=1.0",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
+				position = "1");
 		}
 
 		task ("Edit the image via the image editor on Page Content panel") {
@@ -807,9 +793,10 @@ definition {
 				key_resolutionLabel = "Width",
 				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 
-			PageEditor.viewFragmentEditableImage(
-				id = "banner-center",
-				imageFileName = "version=2.0");
+			AssertVisible(
+				backgroundImageStyle = "version=2.0",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
+				position = "1");
 
 			PageEditor.clickPublish();
 		}
@@ -820,21 +807,15 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertVisible(
-				id = "01-title",
+				id = "element-text",
 				key_position = "1",
 				key_text = "Banner Title Example",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 
-			var backgroundImage = Css.getCssValue(
-				attribute = "background-image",
-				element = "//div[contains(@class,'banner')]");
-
-			if (contains("${backgroundImage}","version=2.0")) {
-				echo("The edited image is shown on Banner Center");
-			}
-			else {
-				fail("The original image is shown on Banner Center");
-			}
+			AssertVisible(
+				backgroundImageStyle = "version=2.0",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
+				position = "1");
 		}
 	}
 
@@ -905,14 +886,16 @@ definition {
 		task ("Add a Banner Center below the Heading") {
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center",
 				targetFragmentName = "Heading");
 		}
 
 		task ("Map the Title of web content to title editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text",
+				index = "2");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Web Content Title",
@@ -928,8 +911,8 @@ definition {
 
 		task ("Map the Content of blogs entry to link editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "03-link");
+				fragmentName = "Button",
+				id = "link");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Blogs Entry Title",
@@ -944,27 +927,19 @@ definition {
 		}
 
 		task ("Map the Preview Image of document to background image editable field") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "banner-center");
-
-			PageEditorMapping.mapEditableFieldToAsset(
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
 				entryTitle = "Document Title",
-				navItem = "Documents and Media");
-
-			Select(
-				key_fieldLabel = "Field",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Preview Image");
-
-			PageEditor.waitForAutoSave();
+				fieldName = "Preview Image",
+				navItem = "Documents and Media",
+				panel = "Styles");
 		}
 
 		task ("Add the first Collection Display below the Banner Center") {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				fragmentName = "Collection Display",
-				targetFragmentName = "Banner Center");
+				targetFragmentName = "Container");
 		}
 
 		task ("Select the dynamic collection in the first Collection Display") {
@@ -1274,13 +1249,14 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
+				composition = "true",
 				fragmentName = "Banner Center");
 		}
 
 		task ("Map the Title of web content to title editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Web Content Title",
@@ -1296,8 +1272,8 @@ definition {
 
 		task ("Map the Title of blogs entry to link editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "03-link");
+				fragmentName = "Button",
+				id = "link");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Blogs Entry Title",
@@ -1312,20 +1288,12 @@ definition {
 		}
 
 		task ("Map the Preview Image of document to background image editable field") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Banner Center",
-				id = "banner-center");
-
-			PageEditorMapping.mapEditableFieldToAsset(
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Mapping",
 				entryTitle = "Document Title",
-				navItem = "Documents and Media");
-
-			Select(
-				key_fieldLabel = "Field",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Preview Image");
-
-			PageEditor.waitForAutoSave();
+				fieldName = "Preview Image",
+				navItem = "Documents and Media",
+				panel = "Styles");
 
 			PageEditor.clickManagementBar();
 		}
@@ -1338,8 +1306,8 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
-				id = "01-title",
-				key_fragmentName = "Banner Center",
+				id = "element-text",
+				key_fragmentName = "Heading",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 				locator2 = "outline-style",
 				value1 = "dashed");
@@ -1353,8 +1321,8 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
-				id = "03-link",
-				key_fragmentName = "Banner Center",
+				id = "link",
+				key_fragmentName = "Button",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 				locator2 = "outline-style",
 				value1 = "dashed");
@@ -1368,9 +1336,8 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertCssValue(
-				id = "banner-center",
-				key_fragmentName = "Banner Center",
-				locator1 = "Fragment#BACKGROUND_IMAGE_EDITABLE_FIELD",
+				backgroundImageStyle = "Document_1.jpg",
+				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
 				locator2 = "outline-style",
 				value1 = "dashed");
 		}

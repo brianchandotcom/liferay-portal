@@ -41,7 +41,7 @@ public class ConfigurationEnvBuilder {
 		StringBundler sb = new StringBundler();
 
 		sb.append("##\n## Configuration Overrides\n## The following can be ");
-		sb.append("used to override OSGi configurations.\n##\n\n    #");
+		sb.append("used to override OSGi configurations.\n##\n");
 
 		Matcher matcher = _pattern.matcher("");
 
@@ -70,7 +70,14 @@ public class ConfigurationEnvBuilder {
 						"configuration.override.", fullyQualifiedName,
 						StringPool.UNDERLINE, matcher.group(1));
 
-					sb.append("\n    #");
+					sb.append("\n");
+					sb.append("    #\n");
+					sb.append("    # Env: ");
+					sb.append(
+						ToolsUtil.encodeEnvironmentProperty(configurationKey));
+					sb.append("\n");
+					sb.append("    #\n");
+					sb.append("    #");
 					sb.append(configurationKey);
 					sb.append(StringPool.EQUAL);
 				}

@@ -14,19 +14,14 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.IOException;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -105,27 +100,6 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 			getLineStartPos(content, lineNumber + 1));
 	}
 
-	private String _encode(String s) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(_ENV_OVERRIDE_PREFIX);
-
-		for (char c : s.toCharArray()) {
-			if (Character.isLowerCase(c)) {
-				sb.append(Character.toUpperCase(c));
-			}
-			else {
-				sb.append(CharPool.UNDERLINE);
-
-				sb.append(_charPoolChars.get(c));
-
-				sb.append(CharPool.UNDERLINE);
-			}
-		}
-
-		return sb.toString();
-	}
-
 	private String _formatPortalProperties(String content) {
 		StringBundler commentBlockSB = new StringBundler();
 		StringBundler environmentVariablesBlockSB = new StringBundler();
@@ -198,36 +172,12 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			environmentVariables.add(_encode(trimmedLine.substring(0, pos)));
+			environmentVariables.add(
+				ToolsUtil.encodeEnvironmentProperty(
+					trimmedLine.substring(0, pos)));
 		}
 
 		return environmentVariables;
 	}
-
-	private static final String _ENV_OVERRIDE_PREFIX = "LIFERAY_";
-
-	private static final Map<Character, String> _charPoolChars =
-		new HashMap<Character, String>() {
-			{
-				try {
-					for (Field field : CharPool.class.getFields()) {
-						if (Modifier.isStatic(field.getModifiers()) &&
-							(field.getType() == char.class)) {
-
-							put(
-								field.getChar(null),
-								StringUtil.removeChar(
-									field.getName(), CharPool.UNDERLINE));
-						}
-					}
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new ExceptionInInitializerError(
-						reflectiveOperationException);
-				}
-			}
-		};
 
 }

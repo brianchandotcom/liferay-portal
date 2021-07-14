@@ -398,7 +398,32 @@ definition {
 	@priority = "3"
 	test PaginationComponentIsDisplayed {
 
-		// TODO LRQA-68238 PaginationComponentIsDisplayed pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		var count = "2";
+
+		while ("${count}" != "6") {
+			Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver ${count}");
+
+			Navigator.gotoBack();
+
+			Type(
+				locator1 = "TextInput#SEARCH",
+				value1 = "Single Approver ${count}");
+
+			Click(locator1 = "WorkflowMetricsProcessListView#SEARCH_BUTTON");
+
+			var count = ${count} + 1;
+		}
+
+		AssertElementPresent(
+			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
+			value1 = "20 Entries");
+
+		Pagination.viewResults(results = "Showing 1 to 5 of 5 entries.");
 
 	}
 

@@ -154,11 +154,11 @@ request.setAttribute("view.jsp-eventName", eventName);
 		Liferay.Util.openSelectionModal({
 			eventName: '<%= eventName %>',
 			multiple: true,
-			onSelect: function (selectedItem) {
-				if (selectedItem) {
+			onSelect: function (selectedItems) {
+				if (selectedItems) {
 					var data = {
 						segmentsEntryId: segmentsEntryId,
-						siteRoleIds: selectedItem.value,
+						siteRoleIds: selectedItems.map((item) => item.value),
 					};
 
 					Liferay.Util.postForm(form, {data: data});

@@ -51,8 +51,8 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 	}
 
 	private String _addEnvVariables(
-		String content, String commentBlock, String variablesContent,
-		int lineNumber) {
+		String content, String commentsBlock, String environmentVariablesBlock,
+		String variablesContent, int lineNumber) {
 
 		Set<String> environmentVariables = _getEnvironmentVariables(
 			variablesContent);
@@ -63,7 +63,9 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 
 		StringBundler sb = new StringBundler();
 
-		if (Validator.isNull(commentBlock)) {
+		if (Validator.isNull(commentsBlock) &&
+			Validator.isNull(environmentVariablesBlock)) {
+
 			sb.append(StringPool.NEW_LINE);
 			sb.append(StringPool.FOUR_SPACES);
 			sb.append(StringPool.POUND);
@@ -83,8 +85,16 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 
 		String environmentVariablesComment = sb.toString();
 
-		if (commentBlock.endsWith(environmentVariablesComment)) {
+		if (environmentVariablesBlock.equals(environmentVariablesComment)) {
 			return content;
+		}
+
+		int pos = getLineStartPos(content, lineNumber + 1);
+
+		if (Validator.isNotNull(environmentVariablesBlock)) {
+			return StringUtil.replaceFirst(
+				content, environmentVariablesBlock, environmentVariablesComment,
+				pos);
 		}
 
 		variablesContent = StringUtil.replaceLast(variablesContent, "\n", "");
@@ -118,6 +128,7 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 
 	private String _formatPortalProperties(String content) {
 		StringBundler commentBlockSB = new StringBundler();
+		StringBundler environmentVariablesBlockSB = new StringBundler();
 		StringBundler variablesContentSB = new StringBundler();
 
 		int lineNumber = 0;
@@ -137,19 +148,27 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 			if (variablesContentSB.index() > 0) {
 				String newContent = _addEnvVariables(
 					content, commentBlockSB.toString(),
+					environmentVariablesBlockSB.toString(),
 					variablesContentSB.toString(), lineNumber);
 
 				if (!content.equals(newContent)) {
 					return newContent;
 				}
 
-				commentBlockSB = new StringBundler();
+				environmentVariablesBlockSB = new StringBundler();
 				variablesContentSB = new StringBundler();
 
 				lineNumber = i;
 			}
 
-			if (line.equals("    #") || line.startsWith("    # ")) {
+			if (line.startsWith("    # Env: ") ||
+				((environmentVariablesBlockSB.index() > 0) &&
+				 line.equals("    #"))) {
+
+				environmentVariablesBlockSB.append(line);
+				environmentVariablesBlockSB.append("\n");
+			}
+			else if (line.equals("    #") || line.startsWith("    # ")) {
 				commentBlockSB.append(line);
 				commentBlockSB.append("\n");
 			}
@@ -157,6 +176,7 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 
 		return _addEnvVariables(
 			content, commentBlockSB.toString(),
+			environmentVariablesBlockSB.toString(),
 			variablesContentSB.toString(), lineNumber);
 	}
 

@@ -79,6 +79,7 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
 						dropdownItems="<%= templateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+						propsTransformer="js/TemplateDropdownPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

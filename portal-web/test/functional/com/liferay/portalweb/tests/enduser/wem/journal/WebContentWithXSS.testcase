@@ -1,0 +1,65 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-117983."
+	@priority = "4"
+	test AddWebContentBasedOnStructureNameWithXSS {
+		task ("Create a structure named <script>alert(123)</script>") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = '''<script>alert(123);</script>''');
+		}
+
+		task ("Add a Text field") {
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+		}
+
+		task ("Save the Structure") {
+			WebContentStructures.saveCP(structureName = '''<script>alert(123);</script>''');
+		}
+
+		task ("View the Structure name") {
+			WebContentStructures.viewCP(structureName = '''<script>alert(123);</script>''');
+		}
+
+		task ("Add Web Content based on new Structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
+
+			WebContent.addWithStructureCP(
+				structureName = '''<script>alert(123);</script>''',
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+	}
+
+}

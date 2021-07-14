@@ -8,4 +8,11 @@
 /build_gradle
 /dist
 /liferay-theme.json
-/src
+
+/src/*
+
+!/src/css
+
+/src/css/*
+
+!/src/css/solution

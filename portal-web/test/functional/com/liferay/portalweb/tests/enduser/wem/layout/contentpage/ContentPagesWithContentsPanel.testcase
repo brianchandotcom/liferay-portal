@@ -242,7 +242,7 @@ definition {
 
 		task ("Map Title of the first web content to link editable field") {
 			PageEditorEditableLink.gotoEditableFieldLink(
-				fragmentName = "Banner",
+				fragmentName = "Button",
 				id = "link");
 
 			PageEditorEditableLink.mapURLToAsset(
@@ -254,8 +254,8 @@ definition {
 		task ("Map Title of the second web content to title editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
 				contributed = "true",
-				fragmentName = "Banner",
-				id = "01-title");
+				fragmentName = "Heading",
+				id = "element-text");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "WebContent Title 2",
@@ -269,8 +269,8 @@ definition {
 		task ("Map Title of the third web content to subtitle editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
 				contributed = "true",
-				fragmentName = "Banner",
-				id = "02-subtitle");
+				fragmentName = "Paragraph",
+				id = "element-text");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "WebContent Title 3",

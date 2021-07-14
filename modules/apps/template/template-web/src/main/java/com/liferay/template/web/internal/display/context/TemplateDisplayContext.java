@@ -162,30 +162,6 @@ public class TemplateDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getSearchURL() {
-		PortletURL portletURL = _getPortletURL();
-
-		String keywords = getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			portletURL.setParameter("keywords", keywords);
-		}
-
-		String orderByCol = getOrderByCol();
-
-		if (Validator.isNotNull(orderByCol)) {
-			portletURL.setParameter("orderByCol", orderByCol);
-		}
-
-		String orderByType = getOrderByType();
-
-		if (Validator.isNotNull(orderByType)) {
-			portletURL.setParameter("orderByType", orderByType);
-		}
-
-		return portletURL;
-	}
-
 	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
 		if (_ddmTemplateSearchContainer != null) {
 			return _ddmTemplateSearchContainer;

@@ -1,0 +1,9 @@
+apiDir: "../headless-commerce-shop-by-diagram-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.shop.by.diagram"
+application:
+    baseURI: "/headless-commerce-shop-by-diagram"
+    className: "HeadlessCommerceShopByDiagramApplication"
+    name: "Liferay.Headless.Commerce.Shop.By.Diagram"
+author: "Alessio Antonio Rendina"
+liferayEnterpriseApp: true
+resourceApplicationSelect: "(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)"

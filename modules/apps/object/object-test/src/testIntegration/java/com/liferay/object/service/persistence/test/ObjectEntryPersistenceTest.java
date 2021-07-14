@@ -128,6 +128,8 @@ public class ObjectEntryPersistenceTest {
 
 		newObjectEntry.setUuid(RandomTestUtil.randomString());
 
+		newObjectEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newObjectEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newObjectEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -162,6 +164,9 @@ public class ObjectEntryPersistenceTest {
 			newObjectEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingObjectEntry.getUuid(), newObjectEntry.getUuid());
+		Assert.assertEquals(
+			existingObjectEntry.getExternalReferenceCode(),
+			newObjectEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingObjectEntry.getObjectEntryId(),
 			newObjectEntry.getObjectEntryId());
@@ -233,6 +238,15 @@ public class ObjectEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectEntry newObjectEntry = addObjectEntry();
 
@@ -257,12 +271,12 @@ public class ObjectEntryPersistenceTest {
 
 	protected OrderByComparator<ObjectEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"ObjectEntry", "mvccVersion", true, "uuid", true, "objectEntryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectDefinitionId", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"ObjectEntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "objectEntryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "objectDefinitionId",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -537,6 +551,17 @@ public class ObjectEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				objectEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			Long.valueOf(objectEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				objectEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected ObjectEntry addObjectEntry() throws Exception {
@@ -547,6 +572,8 @@ public class ObjectEntryPersistenceTest {
 		objectEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		objectEntry.setUuid(RandomTestUtil.randomString());
+
+		objectEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		objectEntry.setGroupId(RandomTestUtil.nextLong());
 

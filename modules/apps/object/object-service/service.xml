@@ -51,7 +51,7 @@
 			<order-column name="name" />
 		</order>
 	</entity>
-	<entity local-service="true" name="ObjectEntry" remote-service="true" uuid="true">
+	<entity external-reference-code="true" local-service="true" name="ObjectEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -89,6 +89,10 @@
 		<order by="asc">
 			<order-column name="objectEntryId" />
 		</order>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="false" uuid="true">
 

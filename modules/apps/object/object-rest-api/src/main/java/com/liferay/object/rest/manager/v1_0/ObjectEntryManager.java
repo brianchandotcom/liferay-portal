@@ -32,7 +32,16 @@ public interface ObjectEntryManager {
 			long objectDefinitionId, ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry addOrUpdateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			ObjectEntry objectEntry)
+		throws Exception;
+
 	public void deleteObjectEntry(long objectEntryId) throws Exception;
+
+	public void deleteObjectEntry(long companyId, String externalReferenceCode)
+		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, long objectDefinitionId, Aggregation aggregation,
@@ -42,6 +51,11 @@ public interface ObjectEntryManager {
 
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext, long objectEntryId)
+		throws Exception;
+
+	public ObjectEntry getObjectEntry(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode)
 		throws Exception;
 
 	public ObjectEntry updateObjectEntry(

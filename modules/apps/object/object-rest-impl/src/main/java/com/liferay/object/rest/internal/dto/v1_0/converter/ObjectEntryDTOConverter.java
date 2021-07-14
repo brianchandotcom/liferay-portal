@@ -54,6 +54,7 @@ public class ObjectEntryDTOConverter
 					_userLocalService.fetchUser(objectEntry.getUserId()));
 				dateCreated = objectEntry.getCreateDate();
 				dateModified = objectEntry.getModifiedDate();
+				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
 				properties = (Map)objectEntry.getValues();
 			}

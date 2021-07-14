@@ -33,7 +33,7 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(
+		LayoutTypeSettingsUtil.removePortletIds(
 			connection, "com_liferay_shopping_web_portlet_ShoppingPortlet");
 
 		deleteFromClassName(

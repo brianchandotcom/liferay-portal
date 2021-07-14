@@ -34,7 +34,7 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(
+		LayoutTypeSettingsUtil.removePortletIds(
 			connection,
 			"com_liferay_social_privatemessaging_web_portlet_" +
 				"PrivateMessagingPortlet");

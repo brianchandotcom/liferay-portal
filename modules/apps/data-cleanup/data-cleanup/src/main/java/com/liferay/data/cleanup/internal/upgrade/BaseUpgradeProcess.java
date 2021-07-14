@@ -108,17 +108,15 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		for (String portletId : portletIds) {
-			LayoutTypeSettingsUtil.removePortletId(connection, portletId);
+		LayoutTypeSettingsUtil.removePortletIds(connection, portletIds);
 
-			deleteFromPortlet(portletId);
+		deleteFromPortlet(portletIds);
 
-			deleteFromPortletPreferences(portletId);
+		deleteFromPortletPreferences(portletIds);
 
-			deleteFromResourceAction(portletId);
+		deleteFromResourceAction(portletIds);
 
-			deleteFromResourcePermission(portletId);
-		}
+		deleteFromResourcePermission(portletIds);
 
 		deleteFromRelease(bundleSymbolicNames);
 	}

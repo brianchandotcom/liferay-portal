@@ -23,7 +23,7 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(
+		LayoutTypeSettingsUtil.removePortletIds(
 			connection, "com_liferay_twitter_web_portlet_TwitterPortlet");
 
 		deleteFromClassName("com.liferay.twitter.model.Feed");

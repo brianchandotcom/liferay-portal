@@ -23,7 +23,7 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(
+		LayoutTypeSettingsUtil.removePortletIds(
 			connection, "3_WAR_opensocialportlet");
 
 		deleteFromClassName(

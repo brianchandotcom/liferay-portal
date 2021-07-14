@@ -23,7 +23,7 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(
+		LayoutTypeSettingsUtil.removePortletIds(
 			connection, "com_liferay_mail_reader_web_portlet_MailPortlet");
 
 		deleteFromClassName(

@@ -84,55 +84,6 @@ import java.util.Objects;
 public class CPAttachmentFileEntryLocalServiceImpl
 	extends CPAttachmentFileEntryLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass userId and groupId directly
-	 */
-	@Deprecated
-	@Override
-	public CPAttachmentFileEntry addCPAttachmentFileEntry(
-			long classNameId, long classPK, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			classNameId, classPK, fileEntryId, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPAttachmentFileEntry addCPAttachmentFileEntry(
-			String externalReferenceCode, long userId, long groupId,
-			long classNameId, long classPK, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-			externalReferenceCode, userId, groupId, classNameId, classPK,
-			fileEntryId, null, false, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
@@ -241,82 +192,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		return startWorkflowInstance(
 			user.getUserId(), cpAttachmentFileEntry, serviceContext);
-	}
-
-	/**
-	 * @param      classNameId
-	 * @param      classPK
-	 * @param      fileEntryId
-	 * @param      displayDateMonth
-	 * @param      displayDateDay
-	 * @param      displayDateYear
-	 * @param      displayDateHour
-	 * @param      displayDateMinute
-	 * @param      expirationDateMonth
-	 * @param      expirationDateDay
-	 * @param      expirationDateYear
-	 * @param      expirationDateHour
-	 * @param      expirationDateMinute
-	 * @param      neverExpire
-	 * @param      titleMap
-	 * @param      json
-	 * @param      priority
-	 * @param      type
-	 * @param      externalReferenceCode
-	 * @param      serviceContext
-	 * @throws     PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             #addOrUpdateCPAttachmentFileEntry(long, long, long, long, int,
-	 *             int, int, int, int, int, int, int, int, int, boolean, Map,
-	 *             String, double, int, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long fileEntryId, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpAttachmentFileEntryLocalService.
-			addOrUpdateCPAttachmentFileEntry(
-				externalReferenceCode, groupId, classNameId, classPK, 0,
-				fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, json, priority,
-				type, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpAttachmentFileEntryLocalService.
-			addOrUpdateCPAttachmentFileEntry(
-				externalReferenceCode, groupId, classNameId, classPK, 0,
-				fileEntryId, null, false, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-				json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -669,52 +544,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		return cpAttachmentFileEntryPersistence.countByC_C_T_ST(
 			classNameId, classPK, type, status);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
-			long cpAttachmentFileEntryId, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-			serviceContext.getUserId(), cpAttachmentFileEntryId, fileEntryId,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
-			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-			userId, cpAttachmentFileEntryId, fileEntryId, null, false,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

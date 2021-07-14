@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_SELECTOR</td>
-	<td>//div[contains(@class,'page-type-selector')]//select[contains(@class,'form-control')]</td>
+	<td>//div[contains(@class,'page-type-selector')]//button[contains(@class,'form-control-select')]</td>
 	<td></td>
 </tr>
 <tr>

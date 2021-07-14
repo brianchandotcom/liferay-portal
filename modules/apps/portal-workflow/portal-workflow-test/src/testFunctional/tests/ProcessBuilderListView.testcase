@@ -31,7 +31,29 @@ definition {
 	@priority = "4"
 	test CanDuplicateNonPublishedProcess {
 
-		// TODO LRQA-68247 CanDuplicateNonPublishedProcess pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "Single Approver");
+
+		Workflow.duplicateNotPublishedWorkflow(
+			workflowCopyName = "Copy of Single Approver",
+			workflowName = "Single Approver");
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "Single Approver");
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "Copy of Single Approver");
 
 	}
 

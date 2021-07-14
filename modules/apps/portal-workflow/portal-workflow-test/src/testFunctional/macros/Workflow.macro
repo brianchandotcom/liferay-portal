@@ -516,6 +516,25 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro duplicateNotPublishedWorkflow {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Click(
+			key_workflowDefinitionTitle = "${workflowName}",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Duplicate");
+
+		Button.click(button = "Duplicate");
+
+		Type(
+			locator1 = "WorkflowDefinition#DEFINITION_TITLE",
+			value1 = "${workflowCopyName}");
+	}
+	
 	macro duplicateSingleApproverWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

@@ -14,6 +14,7 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.TemplateIdComparator;
@@ -25,9 +26,13 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -74,6 +79,29 @@ public class TemplateDisplayContext {
 				ddmTemplate, _httpServletRequest, _liferayPortletResponse);
 
 		return ddmTemplateActionDropdownItems.getActionDropdownItems();
+	}
+
+	public String getDDMTemplateScope(DDMTemplate ddmTemplate)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(ddmTemplate.getGroupId());
+
+		return LanguageUtil.get(
+			_httpServletRequest, group.getScopeLabel(_themeDisplay));
+	}
+
+	public String getDDMTemplateType(DDMTemplate ddmTemplate) {
+		String type = ddmTemplate.getType();
+
+		if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
+			return type;
+		}
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				ddmTemplate.getClassNameId());
+
+		return templateHandler.getName(_themeDisplay.getLocale());
 	}
 
 	public String getKeywords() {

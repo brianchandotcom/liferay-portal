@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.bundles.size = "1";
+	property custom.properties = "javascript.single.page.application.enabled=false";
 	property databases.size = "1";
 	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";

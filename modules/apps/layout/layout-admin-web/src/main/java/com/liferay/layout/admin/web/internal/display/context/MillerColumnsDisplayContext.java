@@ -637,7 +637,7 @@ public class MillerColumnsDisplayContext {
 			}
 		}
 
-		if (_isShowTranslateAction()) {
+		if (_isShowTranslateAction(layout)) {
 			jsonArray.put(
 				JSONUtil.put(
 					"id", "translate"
@@ -729,7 +729,7 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
-		if (_isShowExportTranslationAction()) {
+		if (_isShowExportTranslationAction(layout)) {
 			jsonArray.put(
 				JSONUtil.put(
 					"id", "exportTranslation"
@@ -966,8 +966,9 @@ public class MillerColumnsDisplayContext {
 		return false;
 	}
 
-	private boolean _isShowExportTranslationAction() {
-		if (_ffLayoutTranslationConfiguration.enabled() &&
+	private boolean _isShowExportTranslationAction(Layout layout) {
+		if (layout.isTypeContent() &&
+			_ffLayoutTranslationConfiguration.enabled() &&
 			!_isSingleLanguageSite()) {
 
 			return true;
@@ -978,7 +979,8 @@ public class MillerColumnsDisplayContext {
 
 	private boolean _isShowImportTranslationAction(Layout layout) {
 		try {
-			if (_ffLayoutTranslationConfiguration.enabled() &&
+			if (layout.isTypeContent() &&
+				_ffLayoutTranslationConfiguration.enabled() &&
 				!_isSingleLanguageSite() &&
 				LayoutPermissionUtil.contains(
 					_themeDisplay.getPermissionChecker(), layout,
@@ -994,8 +996,9 @@ public class MillerColumnsDisplayContext {
 		}
 	}
 
-	private boolean _isShowTranslateAction() {
-		if (_ffLayoutTranslationConfiguration.enabled() &&
+	private boolean _isShowTranslateAction(Layout layout) {
+		if (layout.isTypeContent() &&
+			_ffLayoutTranslationConfiguration.enabled() &&
 			_hasTranslatePermission() && !_isSingleLanguageSite()) {
 
 			return true;

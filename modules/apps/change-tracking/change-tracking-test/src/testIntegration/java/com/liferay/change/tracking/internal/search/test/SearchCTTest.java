@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -75,7 +76,7 @@ public class SearchCTTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_ctCollection = _ctCollectionLocalService.addCTCollection(
+		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			SearchCTTest.class.getName(), SearchCTTest.class.getName());
 		_group = GroupTestUtil.addGroup();
@@ -83,14 +84,14 @@ public class SearchCTTest {
 
 	@Test
 	public void testCollectionCTModelPreFilter() throws Exception {
-		UserGroup unmodifiedUserGroup = UserGroupTestUtil.addUserGroup(
+		_productionUserGroup = UserGroupTestUtil.addUserGroup(
 			_group.getGroupId());
 
 		UserGroup addedUserGroup = null;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			addedUserGroup = UserGroupTestUtil.addUserGroup(
 				_group.getGroupId());
@@ -99,15 +100,60 @@ public class SearchCTTest {
 		assertAllHits(
 			_USER_GROUP_CLASS,
 			getUIDs(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, unmodifiedUserGroup),
-			getUIDs(_ctCollection.getCtCollectionId(), addedUserGroup));
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, _productionUserGroup),
+			getUIDs(_ctCollection1.getCtCollectionId(), addedUserGroup));
 
-		assertProductionHits(_USER_GROUP_CLASS, unmodifiedUserGroup);
+		assertProductionHits(_USER_GROUP_CLASS, _productionUserGroup);
 
 		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _USER_GROUP_CLASS,
+			_ctCollection1.getCtCollectionId(), _USER_GROUP_CLASS,
 			new UserGroup[] {addedUserGroup},
-			new UserGroup[] {unmodifiedUserGroup});
+			new UserGroup[] {_productionUserGroup});
+	}
+
+	@Test
+	public void testCollectionCTModelPreFilterExclusion() throws Exception {
+		_productionUserGroup = UserGroupTestUtil.addUserGroup(
+			_group.getGroupId());
+
+		UserGroup modifiedUserGroup1 = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection1.getCtCollectionId())) {
+
+			_productionUserGroup.setName("P1 UserGroup");
+
+			modifiedUserGroup1 = _userGroupLocalService.updateUserGroup(
+				_productionUserGroup);
+		}
+
+		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			SearchCTTest.class.getSimpleName(),
+			SearchCTTest.class.getSimpleName());
+
+		UserGroup modifiedUserGroup2 = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection2.getCtCollectionId())) {
+
+			_productionUserGroup.setName("P2 UserGroup");
+
+			modifiedUserGroup2 = _userGroupLocalService.updateUserGroup(
+				_productionUserGroup);
+		}
+
+		assertProductionHits(_USER_GROUP_CLASS, _productionUserGroup);
+
+		assertCollectionHits(
+			_ctCollection1.getCtCollectionId(), _USER_GROUP_CLASS,
+			new UserGroup[] {modifiedUserGroup1}, new UserGroup[0]);
+
+		assertCollectionHits(
+			_ctCollection2.getCtCollectionId(), _USER_GROUP_CLASS,
+			new UserGroup[] {modifiedUserGroup2}, new UserGroup[0]);
 	}
 
 	@Test
@@ -131,7 +177,7 @@ public class SearchCTTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			addedJournalArticle = JournalTestUtil.addArticle(
 				_group.getGroupId(), RandomTestUtil.randomString(),
@@ -157,14 +203,14 @@ public class SearchCTTest {
 			modifiedJournalArticle1);
 
 		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _JOURNAL_ARTICLE_CLASS,
+			_ctCollection1.getCtCollectionId(), _JOURNAL_ARTICLE_CLASS,
 			new JournalArticle[] {addedJournalArticle, modifiedJournalArticle2},
-			new JournalArticle[] {modifiedJournalArticle1});
+			new JournalArticle[0]);
 
 		assertProductionHits(_LAYOUT_CLASS, deletedLayout, modifiedLayout);
 
 		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _LAYOUT_CLASS,
+			_ctCollection1.getCtCollectionId(), _LAYOUT_CLASS,
 			new Layout[] {addedLayout, modifiedLayout}, new Layout[0]);
 
 		assertAllHits(
@@ -173,7 +219,7 @@ public class SearchCTTest {
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, deletedJournalArticle,
 				deletedLayout, modifiedJournalArticle1, modifiedLayout),
 			getUIDs(
-				_ctCollection.getCtCollectionId(), addedJournalArticle,
+				_ctCollection1.getCtCollectionId(), addedJournalArticle,
 				addedLayout, modifiedJournalArticle2, modifiedLayout));
 	}
 
@@ -197,7 +243,7 @@ public class SearchCTTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			addedJournalArticle = JournalTestUtil.addArticle(
 				_group.getGroupId(), RandomTestUtil.randomString(),
@@ -215,15 +261,15 @@ public class SearchCTTest {
 			modifiedJournalArticle1, unmodifiedJournalArticle);
 
 		_ctProcessLocalService.addCTProcess(
-			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+			_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
 
 		assertProductionHits(
 			_JOURNAL_ARTICLE_CLASS, addedJournalArticle,
 			modifiedJournalArticle2, unmodifiedJournalArticle);
 
 		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
-			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
-			"(undo) " + _ctCollection.getName(), StringPool.BLANK);
+			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
+			"(undo) " + _ctCollection1.getName(), StringPool.BLANK);
 
 		_ctProcessLocalService.addCTProcess(
 			_undoCTCollection.getUserId(),
@@ -244,7 +290,7 @@ public class SearchCTTest {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			addedLayout = LayoutTestUtil.addLayout(_group);
 			deletedLayout = _layoutLocalService.deleteLayout(deletedLayout);
@@ -258,7 +304,7 @@ public class SearchCTTest {
 			_LAYOUT_CLASS, deletedLayout, modifiedLayout, unmodifiedLayout);
 
 		_ctProcessLocalService.addCTProcess(
-			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+			_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
 
 		assertProductionHits(
 			_LAYOUT_CLASS, addedLayout, modifiedLayout, unmodifiedLayout);
@@ -269,12 +315,12 @@ public class SearchCTTest {
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, addedLayout,
 				modifiedLayout, unmodifiedLayout),
 			getUIDs(
-				_ctCollection.getCtCollectionId(), addedLayout,
+				_ctCollection1.getCtCollectionId(), addedLayout,
 				modifiedLayout));
 
 		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
-			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
-			"(undo) " + _ctCollection.getName(), StringPool.BLANK);
+			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
+			"(undo) " + _ctCollection1.getName(), StringPool.BLANK);
 
 		_ctProcessLocalService.addCTProcess(
 			_undoCTCollection.getUserId(),
@@ -289,7 +335,8 @@ public class SearchCTTest {
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, deletedLayout,
 				modifiedLayout, unmodifiedLayout),
 			getUIDs(
-				_ctCollection.getCtCollectionId(), addedLayout, modifiedLayout),
+				_ctCollection1.getCtCollectionId(), addedLayout,
+				modifiedLayout),
 			getUIDs(
 				_undoCTCollection.getCtCollectionId(), deletedLayout,
 				modifiedLayout));
@@ -311,7 +358,7 @@ public class SearchCTTest {
 		assertHits(
 			ctCollectionId, classes,
 			ArrayUtil.append(
-				getUIDs(_ctCollection.getCtCollectionId(), collectionCtModels),
+				getUIDs(ctCollectionId, collectionCtModels),
 				getUIDs(
 					CTConstants.CT_COLLECTION_ID_PRODUCTION,
 					productionCtModels)),
@@ -431,11 +478,20 @@ public class SearchCTTest {
 	@Inject
 	private static UIDFactory _uidFactory;
 
+	@Inject
+	private static UserGroupLocalService _userGroupLocalService;
+
 	@DeleteAfterTestRun
-	private CTCollection _ctCollection;
+	private CTCollection _ctCollection1;
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection2;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private UserGroup _productionUserGroup;
 
 	@DeleteAfterTestRun
 	private CTCollection _undoCTCollection;

@@ -139,14 +139,6 @@ const renderComponent = ({
 							version: 1,
 						},
 
-						mappedInfoItems: [
-							{
-								classNameId: 'itemClassNameId',
-								classPK: 'itemClassPK',
-								classTypeId: 'itemClassTypeId',
-							},
-						],
-
 						mappingFields: {
 							'itemClassNameId-itemClassTypeId': [
 								{
@@ -192,6 +184,14 @@ const renderComponent = ({
 							},
 							masterLayoutPlid: '0',
 						},
+
+						pageContents: [
+							{
+								classNameId: 'itemClassNameId',
+								classPK: 'itemClassPK',
+								classTypeId: 'itemClassTypeId',
+							},
+						],
 
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,

@@ -39,13 +39,11 @@ jest.mock(
 );
 
 function renderItemSelector({
-	mappedInfoItems = [],
 	pageContents = [],
 	selectedItemClassPK = '',
 	selectedItemTitle = '',
 }) {
 	const state = {
-		mappedInfoItems,
 		pageContents,
 	};
 
@@ -134,12 +132,12 @@ describe('ItemSelector', () => {
 	});
 
 	it('shows recent items dropdown instead of calling openItemSelector when there are mapping items', () => {
-		const mappedInfoItems = [
+		const pageContents = [
 			{classNameId: '001', classPK: '002', title: 'Mapped Item Title'},
 		];
 
 		const {getByLabelText, getByText} = renderItemSelector({
-			mappedInfoItems,
+			pageContents,
 		});
 
 		fireEvent.click(getByLabelText('select-itemSelectorLabel'));

@@ -163,6 +163,8 @@ const renderComponent = ({
 							masterLayoutPlid: '0',
 						},
 
+						pageContents: [],
+
 						permissions: {
 							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
 							UPDATE: hasUpdatePermissions,

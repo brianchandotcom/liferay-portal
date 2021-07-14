@@ -76,7 +76,6 @@ function getStateWithConfig(config = {}) {
 			},
 		},
 		languageId: 'en_US',
-		mappedInfoItems: [],
 		mappingFields: [],
 		pageContents: [],
 		segmentsExperienceId: 0,

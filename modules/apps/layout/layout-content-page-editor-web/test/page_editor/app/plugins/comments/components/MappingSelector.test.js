@@ -164,7 +164,8 @@ function renderMappingSelector({
 				},
 			},
 		},
-		mappedInfoItems: [
+		mappingFields,
+		pageContents: [
 			{
 				classNameId: 'mappedItemClassNameId',
 				classPK: 'mappedItemClassPK',
@@ -174,8 +175,6 @@ function renderMappingSelector({
 				title: 'mappedItemTitle',
 			},
 		],
-		mappingFields,
-		pageContents: [],
 		segmentsExperienceId: 0,
 	};
 

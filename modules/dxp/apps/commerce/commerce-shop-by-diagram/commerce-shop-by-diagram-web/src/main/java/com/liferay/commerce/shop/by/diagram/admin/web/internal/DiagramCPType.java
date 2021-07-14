@@ -15,6 +15,9 @@
 package com.liferay.commerce.shop.by.diagram.admin.web.internal;
 
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryLocalService;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinLocalService;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -23,9 +26,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
@@ -41,6 +46,14 @@ public class DiagramCPType implements CPType {
 
 	@Override
 	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
+		_cpDefinitionDiagramEntryLocalService.deleteCPDefinitionDiagramEntries(
+			cpDefinitionId);
+
+		_cpDefinitionDiagramPinLocalService.deleteCPDefinitionDiagramPins(
+			cpDefinitionId);
+
+		_cpDefinitionDiagramSettingLocalService.
+			deleteCPDefinitionDiagramSettingByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override
@@ -55,5 +68,17 @@ public class DiagramCPType implements CPType {
 	public String getName() {
 		return NAME;
 	}
+
+	@Reference
+	private CPDefinitionDiagramEntryLocalService
+		_cpDefinitionDiagramEntryLocalService;
+
+	@Reference
+	private CPDefinitionDiagramPinLocalService
+		_cpDefinitionDiagramPinLocalService;
+
+	@Reference
+	private CPDefinitionDiagramSettingLocalService
+		_cpDefinitionDiagramSettingLocalService;
 
 }

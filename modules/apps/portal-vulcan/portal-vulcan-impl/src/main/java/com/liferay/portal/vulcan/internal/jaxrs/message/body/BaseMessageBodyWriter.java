@@ -15,16 +15,13 @@
 package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
 import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanPropertyFilter;
-import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -76,13 +73,6 @@ public abstract class BaseMessageBodyWriter
 		throws IOException, WebApplicationException {
 
 		ObjectMapper objectMapper = _getObjectMapper(clazz);
-
-		SimpleModule simpleModule = new SimpleModule();
-
-		simpleModule.addSerializer(
-			JSONArray.class, new JSONArrayStdSerializer(JSONArray.class));
-
-		objectMapper.registerModule(simpleModule);
 
 		objectMapper.writer(
 			_getSimpleFilterProvider()

@@ -18,7 +18,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
+import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONObjectStdSerializer;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -41,6 +49,25 @@ public class ObjectMapperContextResolver
 			enable(SerializationFeature.INDENT_OUTPUT);
 			setDateFormat(new ISO8601DateFormat());
 			setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+
+			SimpleModule simpleModule = new SimpleModule();
+
+			simpleModule.addSerializer(
+				JSONArray.class, new JSONArrayStdSerializer(JSONArray.class));
+
+			simpleModule.addSerializer(
+				JSONObject.class,
+				new JSONObjectStdSerializer(JSONObject.class));
+
+			registerModule(simpleModule);
+
+			SimpleFilterProvider simpleFilterProvider =
+				new SimpleFilterProvider();
+
+			simpleFilterProvider.addFilter(
+				"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+
+			setFilterProvider(simpleFilterProvider);
 		}
 	};
 

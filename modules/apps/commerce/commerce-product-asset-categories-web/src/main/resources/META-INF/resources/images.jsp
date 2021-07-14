@@ -57,7 +57,7 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
 
 			if (fileEntry == null) {
-				thumbnailSrc = cpAttachmentFileEntry.getCdnUrl();
+				thumbnailSrc = cpAttachmentFileEntry.getCdnURL();
 			}
 			else {
 				thumbnailSrc = CommerceMediaResolverUtil.getThumbnailURL(CommerceAccountConstants.ACCOUNT_ID_GUEST, cpAttachmentFileEntry.getCPAttachmentFileEntryId());

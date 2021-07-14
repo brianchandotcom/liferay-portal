@@ -171,8 +171,8 @@ public class CPAttachmentFileEntryCreator {
 			_friendlyURLNormalizer.normalize(fileName),
 			serviceContext.getUserId(), fileEntry.getGroupId(),
 			_portal.getClassNameId(classedModel.getModelClass()), classPK,
-			fileEntry.getFileEntryId(), displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			fileEntry.getFileEntryId(), null, false, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, true, titleMap, null,
 			priority, type, serviceContext);

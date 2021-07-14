@@ -181,7 +181,7 @@ public class TemplateDisplayContext {
 			new long[] {_themeDisplay.getScopeGroupId()},
 			TemplateHandlerRegistryUtil.getClassNameIds(), null,
 			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			getKeywords(), StringPool.BLANK, StringPool.BLANK,
 			WorkflowConstants.STATUS_ANY, ddmTemplateSearchContainer.getStart(),
 			ddmTemplateSearchContainer.getEnd(),
 			ddmTemplateSearchContainer.getOrderByComparator());
@@ -191,7 +191,7 @@ public class TemplateDisplayContext {
 			new long[] {_themeDisplay.getScopeGroupId()},
 			TemplateHandlerRegistryUtil.getClassNameIds(), null,
 			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			getKeywords(), StringPool.BLANK, StringPool.BLANK,
 			WorkflowConstants.STATUS_ANY);
 
 		ddmTemplateSearchContainer.setResults(results);

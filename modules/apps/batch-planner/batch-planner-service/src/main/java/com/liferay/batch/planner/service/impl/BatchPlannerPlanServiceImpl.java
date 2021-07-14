@@ -72,6 +72,23 @@ public class BatchPlannerPlanServiceImpl
 	}
 
 	@Override
+	public BatchPlannerPlan fetchBatchPlannerPlan(long batchPlannerPlanId)
+		throws PortalException {
+
+		BatchPlannerPlan batchPlannerPlan =
+			batchPlannerPlanPersistence.fetchByPrimaryKey(batchPlannerPlanId);
+
+		if (batchPlannerPlan == null) {
+			return null;
+		}
+
+		_batchPlannerPlanModelResourcePermission.check(
+			getPermissionChecker(), batchPlannerPlanId, ActionKeys.VIEW);
+
+		return batchPlannerPlan;
+	}
+
+	@Override
 	public BatchPlannerPlan getBatchPlannerPlan(long batchPlannerPlanId)
 		throws PortalException {
 

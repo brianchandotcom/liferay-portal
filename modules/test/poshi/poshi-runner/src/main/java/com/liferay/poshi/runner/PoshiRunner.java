@@ -238,6 +238,13 @@ public class PoshiRunner {
 			_dataGuardClient.endCapture(
 				_dataGuardId, _testNamespacedClassCommandName);
 		}
+		catch (Throwable throwable) {
+			System.out.println(throwable.getMessage());
+
+			throwable.printStackTrace();
+
+			throw throwable;
+		}
 		finally {
 			_dataGuardClient.close();
 		}

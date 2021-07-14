@@ -1,6 +1,3 @@
-!/src/WEB-INF/frontend-token-definition.json
-!/src/WEB-INF/liferay-look-and-feel.xml
-!/src/WEB-INF/liferay-plugin-package.properties
 !/src/css/_custom.scss
 !/src/css/clay.scss
 *.lar
@@ -12,6 +9,7 @@
 /src/*
 
 !/src/css
+!/src/WEB-INF
 
 /src/css/*
 

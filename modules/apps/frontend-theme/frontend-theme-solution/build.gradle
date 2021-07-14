@@ -7,9 +7,7 @@ task copyClassicTheme(type: Copy)
 copyClassicTheme {
 	from("../frontend-theme-classic/src/") {
 		exclude "**/css/clay.scss"
-		exclude "**/WEB-INF/frontend-token-definition.json"
-		exclude "**/WEB-INF/liferay-look-and-feel.xml"
-		exclude "**/WEB-INF/liferay-plugin-package.properties"
+		exclude "**/WEB-INF/**"
 	}
 
 	includeEmptyDirs = false

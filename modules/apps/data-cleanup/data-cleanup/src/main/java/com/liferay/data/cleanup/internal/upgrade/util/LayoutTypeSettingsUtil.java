@@ -35,79 +35,85 @@ import java.util.Set;
  */
 public class LayoutTypeSettingsUtil {
 
-	public static void removePortletId(Connection connection, String portletId)
+	public static void removePortletIds(
+			Connection connection, String... portletIds)
 		throws Exception {
 
-		try (PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					StringBundler.concat(
-						"select plid, typeSettings from Layout where ",
-						"typeSettings like '%", portletId, "%'"));
-			PreparedStatement updatePreparedStatement =
+		try (PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
-						"update Layout set typeSettings = ? where plid = ?"));
-			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+						"update Layout set typeSettings = ? where plid = ?"))) {
 
-			while (resultSet.next()) {
-				long plid = resultSet.getLong(1);
-				String typeSettings = resultSet.getString(2);
+			for (String portletId : portletIds) {
+				try (PreparedStatement selectPreparedStatement =
+						connection.prepareStatement(
+							StringBundler.concat(
+								"select plid, typeSettings from Layout where ",
+								"typeSettings like '%", portletId, "%'"));
+					ResultSet resultSet =
+						selectPreparedStatement.executeQuery()) {
 
-				UnicodeProperties unicodeProperties = new UnicodeProperties(
-					true);
+					while (resultSet.next()) {
+						long plid = resultSet.getLong(1);
+						String typeSettings = resultSet.getString(2);
 
-				unicodeProperties.fastLoad(typeSettings);
+						UnicodeProperties unicodeProperties =
+							new UnicodeProperties(true);
 
-				Set<Map.Entry<String, String>> entrySet =
-					unicodeProperties.entrySet();
+						unicodeProperties.fastLoad(typeSettings);
 
-				Iterator<Map.Entry<String, String>> iterator =
-					entrySet.iterator();
+						Set<Map.Entry<String, String>> entrySet =
+							unicodeProperties.entrySet();
 
-				while (iterator.hasNext()) {
-					Map.Entry<String, String> entry = iterator.next();
+						Iterator<Map.Entry<String, String>> iterator =
+							entrySet.iterator();
 
-					String value = entry.getValue();
+						while (iterator.hasNext()) {
+							Map.Entry<String, String> entry = iterator.next();
 
-					if (!value.contains(portletId)) {
-						continue;
-					}
+							String value = entry.getValue();
 
-					List<String> parts = StringUtil.split(
-						value, CharPool.COMMA);
+							if (!value.contains(portletId)) {
+								continue;
+							}
 
-					if (parts.size() <= 1) {
-						iterator.remove();
+							List<String> parts = StringUtil.split(
+								value, CharPool.COMMA);
 
-						continue;
-					}
+							if (parts.size() <= 1) {
+								iterator.remove();
 
-					StringBundler sb = new StringBundler(
-						(2 * parts.size()) - 2);
+								continue;
+							}
 
-					for (String part : parts) {
-						if (!part.startsWith(portletId)) {
-							sb.append(part);
-							sb.append(StringPool.COMMA);
+							StringBundler sb = new StringBundler(
+								(2 * parts.size()) - 2);
+
+							for (String part : parts) {
+								if (!part.startsWith(portletId)) {
+									sb.append(part);
+									sb.append(StringPool.COMMA);
+								}
+							}
+
+							if (sb.index() == 0) {
+								iterator.remove();
+
+								continue;
+							}
+
+							sb.setIndex(sb.index() - 1);
+
+							entry.setValue(sb.toString());
 						}
+
+						updatePreparedStatement.setString(
+							1, unicodeProperties.toString());
+						updatePreparedStatement.setLong(2, plid);
+
+						updatePreparedStatement.addBatch();
 					}
-
-					if (sb.index() == 0) {
-						iterator.remove();
-
-						continue;
-					}
-
-					sb.setIndex(sb.index() - 1);
-
-					entry.setValue(sb.toString());
 				}
-
-				updatePreparedStatement.setString(
-					1, unicodeProperties.toString());
-				updatePreparedStatement.setLong(2, plid);
-
-				updatePreparedStatement.addBatch();
 			}
 
 			updatePreparedStatement.executeBatch();

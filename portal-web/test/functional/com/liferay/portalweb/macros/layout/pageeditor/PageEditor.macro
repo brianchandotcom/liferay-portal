@@ -1128,17 +1128,22 @@ definition {
 	}
 
 	macro clickEditableField {
-		var key_fragmentName = "${fragmentName}";
+		if (!(isSet(index))) {
+			var index = "1";
+		}
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		var key_fragmentName = "${fragmentName}";
+		var key_index = "${index}";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER_ANY");
 		}
 
 		if ("${contributed}" == "false") {
-			Click(locator1 = "Fragment#EDITABLE_FIELD");
+			Click(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 		else {
-			Click(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD");
+			Click(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY");
 		}
 	}
 
@@ -2045,10 +2050,15 @@ definition {
 	}
 
 	macro editFragmentText {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		PageEditor.gotoEditableFieldEdit(
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
-			id = "${id}");
+			id = "${id}",
+			index = "${index}");
 
 		if (isSet(text)) {
 			Type(
@@ -2779,19 +2789,24 @@ definition {
 	}
 
 	macro gotoEditableFieldEdit {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		id = "${id}";
 		key_fragmentName = "${fragmentName}";
 
 		PageEditor.clickEditableField(
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
-			id = "${id}");
+			id = "${id}",
+			index = "${index}");
 
 		if ("${contributed}" == "false") {
-			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD");
+			DoubleClick(locator1 = "Fragment#EDITABLE_FIELD_ANY");
 		}
 		else {
-			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD");
+			DoubleClick(locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY");
 		}
 	}
 

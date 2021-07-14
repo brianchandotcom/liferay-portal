@@ -10,10 +10,15 @@ definition {
 	}
 
 	macro gotoEditableFieldMapping {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
 		PageEditor.clickEditableField(
 			contributed = "${contributed}",
 			fragmentName = "${fragmentName}",
-			id = "${id}");
+			id = "${id}",
+			index = "${index}");
 
 		if (IsElementPresent(key_sidebarButton = "Comments", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE")) {
 			PageEditor.gotoTab(tabName = "Browser");

@@ -816,7 +816,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(_targetCTCollectionId);
 
 		if (!maxColumnNames.isEmpty() || !minColumnNames.isEmpty()) {
-			sb.append(" group by ");
+			sb.append(" group by composite.");
 			sb.append(primaryKeyName);
 		}
 

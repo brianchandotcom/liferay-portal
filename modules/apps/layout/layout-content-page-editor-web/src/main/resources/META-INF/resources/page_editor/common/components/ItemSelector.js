@@ -172,7 +172,7 @@ export default function ItemSelector({
 	);
 
 	return (
-		<ClayForm.Group className={className} small>
+		<ClayForm.Group className={className}>
 			<label htmlFor={itemSelectorInputId}>{label}</label>
 
 			<ClayInput.Group small>

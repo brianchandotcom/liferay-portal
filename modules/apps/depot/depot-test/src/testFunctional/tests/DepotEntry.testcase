@@ -389,7 +389,7 @@ definition {
 
 		DepotNavigator.gotoDepotPortlet(
 			depotName = "Test Depot Name",
-			portlet = "Settings");
+			portlet = "Asset Library Settings");
 
 		Depot.editDepot(
 			depotDescriptionEdit = "This is an edited description of a depot",

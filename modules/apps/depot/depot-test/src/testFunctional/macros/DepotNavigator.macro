@@ -156,7 +156,7 @@ definition {
 			key_card = "${portlet}",
 			locator1 = "Card#CARD_TITLE");
 
-		if ("${portlet}" == "Settings") {
+		if ("${portlet}" == "Asset Library Settings") {
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
 				value1 = "${depotName}");

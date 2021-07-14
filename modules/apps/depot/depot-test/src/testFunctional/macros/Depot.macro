@@ -575,7 +575,7 @@ definition {
 
 		DepotNavigator.gotoDepotPortlet(
 			depotName = "${depotName}",
-			portlet = "Settings");
+			portlet = "Asset Library Settings");
 
 		var depotID = selenium.getElementValue("//input[contains(@id,'assetLibraryId')]");
 

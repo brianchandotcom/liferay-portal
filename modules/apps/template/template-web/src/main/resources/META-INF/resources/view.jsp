@@ -58,7 +58,7 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
+					cssClass="table-cell-expand table-title"
 					name="name"
 					value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
 				/>

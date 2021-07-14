@@ -535,6 +535,17 @@ public class AssetCategoriesDisplayContext {
 		return assetCategoriesCompanyConfiguration.linkToDocumentationURL();
 	}
 
+	public int getMaximumNumberOfCategoriesPerVocabulary() throws Exception {
+		AssetCategoriesCompanyConfiguration
+			assetCategoriesCompanyConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					AssetCategoriesCompanyConfiguration.class,
+					_themeDisplay.getCompanyId());
+
+		return assetCategoriesCompanyConfiguration.
+			maximumNumberOfCategoriesPerVocabulary();
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -793,6 +804,22 @@ public class AssetCategoriesDisplayContext {
 			_themeDisplay.getPermissionChecker(), vocabulary, actionId);
 	}
 
+	public boolean isAssetCategoriesLimitExceeded() throws Exception {
+		AssetVocabulary vocabulary = getVocabulary();
+
+		int vocabularyCategoriesCount =
+			AssetCategoryLocalServiceUtil.getVocabularyCategoriesCount(
+				vocabulary.getVocabularyId());
+
+		if (vocabularyCategoriesCount >=
+				getMaximumNumberOfCategoriesPerVocabulary()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isFlattenedNavigationAllowed() {
 		if (StringUtil.equals(
 				_assetCategoriesAdminWebConfiguration.
@@ -809,8 +836,42 @@ public class AssetCategoriesDisplayContext {
 		return Validator.isNotNull(getItemSelectorEventName());
 	}
 
+	public boolean isSaveAndAddNewButtonDisabled() throws Exception {
+		AssetVocabulary vocabulary = getVocabulary();
+
+		int vocabularyCategoriesCount =
+			AssetCategoryLocalServiceUtil.getVocabularyCategoriesCount(
+				vocabulary.getVocabularyId());
+
+		if (vocabularyCategoriesCount >=
+				(getMaximumNumberOfCategoriesPerVocabulary() - 1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSaveButtonDisabled() throws Exception {
+		AssetCategory category = getCategory();
+
+		if (category != null) {
+			return false;
+		}
+
+		if (isAssetCategoriesLimitExceeded()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowCategoriesAddButton() {
 		try {
+			if (isAssetCategoriesLimitExceeded()) {
+				return false;
+			}
+
 			AssetVocabulary vocabulary = getVocabulary();
 
 			if (vocabulary.getGroupId() != _themeDisplay.getScopeGroupId()) {

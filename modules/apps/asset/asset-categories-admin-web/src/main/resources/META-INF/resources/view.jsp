@@ -238,24 +238,26 @@
 						</clay:content-row>
 					</h2>
 
-					<%
-					String linkURL = assetCategoriesDisplayContext.getLinkURL();
-					%>
-
-					<c:if test="<%= Validator.isNotNull(linkURL) %>">
+					<p class="mb-5 text-secondary">
+						<liferay-ui:message arguments="<%= assetCategoriesDisplayContext.getMaximumNumberOfCategoriesPerVocabulary() %>" key="the-maximum-number-of-categories-per-vocabulary-is-x" />
 
 						<%
-						StringBundler sb = new StringBundler(3);
-
-						sb.append("<a href=\"");
-						sb.append(linkURL);
-						sb.append("\" target=\"_blank\">");
+						String linkURL = assetCategoriesDisplayContext.getLinkURL();
 						%>
 
-						<p class="mb-5 text-secondary">
-							<liferay-ui:message arguments='<%= new String[] {sb.toString(), "</a>"} %>' key="x-learn-how-x-to-tailor-categories-to-your-needs" />
-						</p>
-					</c:if>
+						<c:if test="<%= Validator.isNotNull(linkURL) %>">
+
+							<%
+							StringBundler sb = new StringBundler(3);
+
+							sb.append("<a href=\"");
+							sb.append(linkURL);
+							sb.append("\" target=\"_blank\">");
+							%>
+
+							&nbsp;<liferay-ui:message arguments='<%= new String[] {sb.toString(), "</a>"} %>' key="x-learn-how-x-to-tailor-categories-to-your-needs" />
+						</c:if>
+					</p>
 
 					<clay:sheet-section>
 						<liferay-util:include page="/view_categories.jsp" servletContext="<%= application %>" />

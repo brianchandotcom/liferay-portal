@@ -19,10 +19,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.template.web.internal.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.TemplatePermission;
 
 import java.util.List;
@@ -48,6 +50,13 @@ public class TemplateActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			() ->
+				_isAddEnable() &&
+				TemplatePermission.containsAddTemplatePermission(
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(),
+					_ddmTemplate.getClassNameId(),
+					_ddmTemplate.getResourceClassNameId()),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					PortletURLBuilder.createRenderURL(
@@ -80,6 +89,18 @@ public class TemplateActionDropdownItemsProvider {
 					LanguageUtil.get(_httpServletRequest, "delete"));
 			}
 		).build();
+	}
+
+	private boolean _isAddEnable() {
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final DDMTemplate _ddmTemplate;

@@ -40,7 +40,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanNavigateToWebContentOverviewPage {
-		ACDXPSettings.addUser(
+		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
 			userLastName = "ac",
@@ -48,7 +48,7 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		ACDXPSettings.userLogin(
+		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
@@ -112,7 +112,7 @@ definition {
 				webContentTitle = "Web Content AC Title ${n}");
 		}
 
-		ACDXPSettings.addUser(
+		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
 			userLastName = "ac",
@@ -120,7 +120,7 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		ACDXPSettings.userLogin(
+		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 

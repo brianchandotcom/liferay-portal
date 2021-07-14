@@ -367,7 +367,18 @@ definition {
 	@priority = "3"
 	test CanUnpublishDuplicatedDefinition {
 
-		// TODO LRQA-68249 CanUnpublishDuplicatedDefinition pending implementation
+			Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
+
+		Navigator.gotoBack();
+
+		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Copy of Single Approver");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "Copy of Single Approver");
 
 	}
 

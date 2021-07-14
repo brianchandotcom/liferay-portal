@@ -11747,8 +11747,16 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<if>
 					<matches pattern="(file|https?)://" string="${test.build.portal.elasticsearch.zip.url}" />
 					<then>
+						<propertyregex
+							input="${test.build.portal.elasticsearch.zip.url}"
+							override="true"
+							property="test.build.portal.elasticsearch.zip.name"
+							regexp=".+/([^/]+)"
+							replace="\1"
+						/>
+
 						<mirrors-get
-							dest="liferay-portal-elasticsearch.zip"
+							dest="${test.build.portal.elasticsearch.zip.name}"
 							src="${test.build.portal.elasticsearch.zip.url}"
 						/>
 
@@ -11760,14 +11768,14 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 						<decompress
 							dest="${tstamp.value}"
-							src="liferay-portal-elasticsearch.zip"
+							src="${test.build.portal.elasticsearch.zip.name}"
 						/>
 
 						<execute>
 							cp -r ${tstamp.value}/*/elasticsearch7 ${liferay.home}/
 						</execute>
 
-						<delete file="liferay-portal-elasticsearch.zip" />
+						<delete file="${test.build.portal.elasticsearch.zip.name}" />
 
 						<delete dir="${tstamp.value}" />
 					</then>

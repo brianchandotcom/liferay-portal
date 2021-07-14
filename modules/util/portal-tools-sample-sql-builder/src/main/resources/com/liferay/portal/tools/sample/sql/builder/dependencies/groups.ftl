@@ -1,7 +1,11 @@
 <#assign
 	globalGroupModel = dataFactory.newGlobalGroupModel()
 	guestGroupModel = dataFactory.newGuestGroupModel()
+
+	countryModel = dataFactory.newCountryModel()
 />
+
+${dataFactory.toInsertSQL(countryModel)}
 
 <#include "default_user.ftl">
 

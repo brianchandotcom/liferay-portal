@@ -83,6 +83,15 @@ public class CPDefinitionDiagramEntryServiceWrapper
 			cpDefinitionDiagramEntryId);
 	}
 
+	@Override
+	public com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry
+			getCPDefinitionDiagramEntry(long cpDefinitionId, int number)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntry(
+			cpDefinitionId, number);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

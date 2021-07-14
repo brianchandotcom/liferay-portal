@@ -79,6 +79,13 @@ public class CPDefinitionDiagramEntryServiceUtil {
 			cpDefinitionDiagramEntryId);
 	}
 
+	public static CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException {
+
+		return getService().getCPDefinitionDiagramEntry(cpDefinitionId, number);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

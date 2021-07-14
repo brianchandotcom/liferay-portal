@@ -120,6 +120,15 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 			cpDefinitionId);
 	}
 
+	@Override
+	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
+			long cpDefinitionId, int number)
+		throws PortalException {
+
+		return cpDefinitionDiagramEntryPersistence.fetchByCPDI_N(
+			cpDefinitionId, number);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(

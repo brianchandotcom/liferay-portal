@@ -15,10 +15,19 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
+import {useEvaluate} from '../../../core/hooks/useEvaluate.es';
 import {useForm} from '../../../core/hooks/useForm.es';
+import {usePage} from '../../../core/hooks/usePage.es';
+import {getFormId, getFormNode} from '../../../utils/formId.es';
+import nextPage from '../thunks/nextPage.es';
+import previousPage from '../thunks/previousPage.es';
 
 export const MultiStep = ({activePage, editable, pages}) => {
+	const {containerElement} = usePage();
+
+	const createPreviousPage = useEvaluate(previousPage);
+	const createNextPage = useEvaluate(nextPage);
+
 	const dispatch = useForm();
 
 	return (
@@ -33,12 +42,32 @@ export const MultiStep = ({activePage, editable, pages}) => {
 								index + 1 !== pages.length,
 						})}
 						key={index}
-						onClick={() =>
-							dispatch({
-								payload: {activePage: index},
-								type: CORE_EVENT_TYPES.PAGE.CHANGE,
-							})
-						}
+						onClick={() => {
+							if (index < activePage) {
+								dispatch(
+									createPreviousPage({
+										activePage,
+										formId: getFormId(
+											getFormNode(
+												containerElement.current
+											)
+										),
+									})
+								);
+							}
+							else if (index > activePage) {
+								dispatch(
+									createNextPage({
+										activePage,
+										formId: getFormId(
+											getFormNode(
+												containerElement.current
+											)
+										),
+									})
+								);
+							}
+						}}
 					>
 						<div className="multi-step-divider"></div>
 						<div className="multi-step-indicator">

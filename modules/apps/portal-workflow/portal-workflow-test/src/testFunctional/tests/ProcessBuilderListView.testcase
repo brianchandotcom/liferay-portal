@@ -223,7 +223,21 @@ definition {
 	@priority = "4"
 	test CanSelectEditOption {
 
-		// TODO LRQA-68240 CanSelectEditOption pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		Workflow.updateDefinition(workflowDefinitionTitle = "New Process Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Process Title");
 
 	}
 

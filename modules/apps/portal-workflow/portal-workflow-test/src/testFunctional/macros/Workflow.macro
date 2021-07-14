@@ -892,6 +892,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro updateDefinition {
+		PortletEntry.inputTitle(title = "${workflowDefinitionTitle}");
+
+		Button.click(button = "Update");
+	}
+
 	macro updateDueDateAssignedToMeTaskByActions {
 		Workflow.viewTaskAssignedToMe(
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",

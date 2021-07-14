@@ -242,9 +242,9 @@ definition {
 	}
 
 	macro selectPageType {
-		Select(
-			locator1 = "PagesFinder#PAGE_TYPE_SELECTOR",
-			value1 = "${optionValue}");
+		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR");
+
+		MenuItem.click(menuItem = "${optionValue}");
 	}
 
 	macro viewInPagesAdministration {

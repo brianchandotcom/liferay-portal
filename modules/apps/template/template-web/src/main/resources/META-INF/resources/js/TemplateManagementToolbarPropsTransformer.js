@@ -13,7 +13,7 @@
  */
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
-	const deleteSelectedTemplates = () => {
+	const deleteSelectedDDMTemplates = () => {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
@@ -34,8 +34,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 			const action = data?.action;
 
-			if (action === 'deleteSelectedTemplates') {
-				deleteSelectedTemplates();
+			if (action === 'deleteSelectedDDMTemplates') {
+				deleteSelectedDDMTemplates();
 			}
 		},
 	};

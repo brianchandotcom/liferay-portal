@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(immediate = true, service = {})
-public class TemplatePermission {
+public class DDMTemplatePermission {
 
 	public static void check(
 			PermissionChecker permissionChecker, long ddmTemplateId,

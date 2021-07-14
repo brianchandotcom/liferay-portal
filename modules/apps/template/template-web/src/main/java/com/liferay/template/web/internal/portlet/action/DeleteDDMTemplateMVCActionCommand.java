@@ -38,42 +38,42 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
-		"mvc.command.name=/template/delete_template"
+		"mvc.command.name=/template/delete_ddm_template"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteTemplateMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteTemplateIds = null;
+		long[] deleteDDMTemplateIds = null;
 
-		long templateId = ParamUtil.getLong(actionRequest, "templateId");
+		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
 
-		if (templateId > 0) {
-			deleteTemplateIds = new long[] {templateId};
+		if (ddmTemplateId > 0) {
+			deleteDDMTemplateIds = new long[] {ddmTemplateId};
 		}
 		else {
-			deleteTemplateIds = ParamUtil.getLongValues(
+			deleteDDMTemplateIds = ParamUtil.getLongValues(
 				actionRequest, "rowIds");
 		}
 
 		try {
-			for (long deleteTemplateId : deleteTemplateIds) {
-				_ddmTemplateService.deleteTemplate(deleteTemplateId);
+			for (long deleteDDMTemplateId : deleteDDMTemplateIds) {
+				_ddmTemplateService.deleteTemplate(deleteDDMTemplateId);
 			}
 
 			hideDefaultSuccessMessage(actionRequest);
 
 			MultiSessionMessages.add(
-				actionRequest, "templateDeleted",
+				actionRequest, "ddmTemplateDeleted",
 				_language.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"you-successfully-deleted-x-templates",
-					new Object[] {deleteTemplateIds.length}));
+					new Object[] {deleteDDMTemplateIds.length}));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(actionRequest, portalException.getClass());

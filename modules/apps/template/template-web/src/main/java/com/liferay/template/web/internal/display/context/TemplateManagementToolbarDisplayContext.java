@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.template.web.internal.security.permissions.resource.TemplatePermission;
+import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class TemplateManagementToolbarDisplayContext
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				dropdownItem.putData("action", "deleteSelectedTemplates");
+				dropdownItem.putData("action", "deleteSelectedDDMTemplates");
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
@@ -72,11 +72,11 @@ public class TemplateManagementToolbarDisplayContext
 	public String getAvailableActions(DDMTemplate ddmTemplate)
 		throws PortalException {
 
-		if (TemplatePermission.contains(
+		if (DDMTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), ddmTemplate,
 				ActionKeys.DELETE)) {
 
-			return "deleteSelectedTemplates";
+			return "deleteSelectedDDMTemplates";
 		}
 
 		return StringPool.BLANK;

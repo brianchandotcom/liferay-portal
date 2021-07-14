@@ -43,11 +43,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_NAME</td>
-	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//td[3]/a[contains(.,'${key_ddlTemplateName}')] | //div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[contains(.,'${key_ddlTemplateName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEMPLATE_TABLE_NAME_LINK</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[3]//a)[1]</td>
 	<td></td>
@@ -55,11 +50,6 @@
 <tr>
 	<td>TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[3]//a)[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_DESCRIPTION</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//td[4])[contains(.,'${key_ddlTemplateDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

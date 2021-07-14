@@ -68,11 +68,6 @@ public interface ObjectEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Adds the object entry to the database. Also notifies the appropriate model listeners.
@@ -86,6 +81,20 @@ public interface ObjectEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntry addObjectEntry(ObjectEntry objectEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectEntry addObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectEntry addOrUpdateObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
@@ -115,6 +124,10 @@ public interface ObjectEntryLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ObjectEntry deleteObjectEntry(long objectEntryId)
+		throws PortalException;
+
+	public ObjectEntry deleteObjectEntry(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**
@@ -216,6 +229,25 @@ public interface ObjectEntryLocalService
 	public ObjectEntry fetchObjectEntry(long objectEntryId);
 
 	/**
+	 * Returns the object entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object entry's external reference code
+	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntry fetchObjectEntryByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchObjectEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntry fetchObjectEntryByReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
 	 * Returns the object entry matching the UUID and group.
 	 *
 	 * @param uuid the object entry's UUID
@@ -304,6 +336,19 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	/**
+	 * Returns the object entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object entry's external reference code
+	 * @return the matching object entry
+	 * @throws PortalException if a matching object entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntry getObjectEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	/**
 	 * Returns the object entry matching the UUID and group.
 	 *
 	 * @param uuid the object entry's UUID
@@ -353,12 +398,6 @@ public interface ObjectEntryLocalService
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	 * Updates the object entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -371,6 +410,12 @@ public interface ObjectEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntry updateObjectEntry(ObjectEntry objectEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectEntry updateObjectEntry(
+			String externalReferenceCode, long userId, long objectEntryId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntry updateStatus(

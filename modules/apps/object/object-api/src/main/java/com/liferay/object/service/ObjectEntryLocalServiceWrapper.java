@@ -33,17 +33,6 @@ public class ObjectEntryLocalServiceWrapper
 		_objectEntryLocalService = objectEntryLocalService;
 	}
 
-	@Override
-	public com.liferay.object.model.ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
-			java.util.Map<String, java.io.Serializable> values,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectEntryLocalService.addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
-	}
-
 	/**
 	 * Adds the object entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -59,6 +48,32 @@ public class ObjectEntryLocalServiceWrapper
 		com.liferay.object.model.ObjectEntry objectEntry) {
 
 		return _objectEntryLocalService.addObjectEntry(objectEntry);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry addObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.addObjectEntry(
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry addOrUpdateObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.addOrUpdateObjectEntry(
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
 	}
 
 	/**
@@ -102,6 +117,15 @@ public class ObjectEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.deleteObjectEntry(objectEntryId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry deleteObjectEntry(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.deleteObjectEntry(
+			companyId, externalReferenceCode);
 	}
 
 	/**
@@ -244,6 +268,34 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the object entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object entry's external reference code
+	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	@Override
+	public com.liferay.object.model.ObjectEntry
+		fetchObjectEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _objectEntryLocalService.fetchObjectEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchObjectEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.object.model.ObjectEntry fetchObjectEntryByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return _objectEntryLocalService.fetchObjectEntryByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the object entry matching the UUID and group.
 	 *
 	 * @param uuid the object entry's UUID
@@ -377,6 +429,24 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the object entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object entry's external reference code
+	 * @return the matching object entry
+	 * @throws PortalException if a matching object entry could not be found
+	 */
+	@Override
+	public com.liferay.object.model.ObjectEntry
+			getObjectEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getObjectEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the object entry matching the UUID and group.
 	 *
 	 * @param uuid the object entry's UUID
@@ -462,17 +532,6 @@ public class ObjectEntryLocalServiceWrapper
 			assetLinkEntryIds, priority);
 	}
 
-	@Override
-	public com.liferay.object.model.ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId,
-			java.util.Map<String, java.io.Serializable> values,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectEntryLocalService.updateObjectEntry(
-			userId, objectEntryId, values, serviceContext);
-	}
-
 	/**
 	 * Updates the object entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -488,6 +547,18 @@ public class ObjectEntryLocalServiceWrapper
 		com.liferay.object.model.ObjectEntry objectEntry) {
 
 		return _objectEntryLocalService.updateObjectEntry(objectEntry);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry updateObjectEntry(
+			String externalReferenceCode, long userId, long objectEntryId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.updateObjectEntry(
+			externalReferenceCode, userId, objectEntryId, values,
+			serviceContext);
 	}
 
 	@Override

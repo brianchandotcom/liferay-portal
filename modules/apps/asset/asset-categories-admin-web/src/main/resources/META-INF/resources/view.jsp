@@ -261,6 +261,16 @@
 						</c:if>
 					</p>
 
+					<c:if test="<%= assetCategoriesDisplayContext.isAssetCategoriesLimitExceeded() %>">
+						<div class="alert alert-warning">
+							<span class="alert-indicator">
+								<aui:icon image="warning" markupView="lexicon" />
+							</span>
+
+							<liferay-ui:message arguments="<%= assetCategoriesDisplayContext.getMaximumNumberOfCategoriesPerVocabulary() %>" key="you-have-reached-the-limit-of-x-categories-for-this-vocabulary" />
+						</div>
+					</c:if>
+
 					<clay:sheet-section>
 						<liferay-util:include page="/view_categories.jsp" servletContext="<%= application %>" />
 					</clay:sheet-section>

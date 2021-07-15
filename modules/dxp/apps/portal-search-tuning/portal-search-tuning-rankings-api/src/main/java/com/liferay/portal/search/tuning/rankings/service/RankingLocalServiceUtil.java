@@ -24,6 +24,7 @@ import com.liferay.portal.search.tuning.rankings.model.Ranking;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for Ranking. This utility wraps
@@ -46,6 +47,21 @@ public class RankingLocalServiceUtil {
 	 */
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>RankingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RankingLocalServiceUtil</code>.
+	 */
+	public static Ranking addRanking(
+		List<String> aliases, List<String> hiddenDocumentIds, boolean inactive,
+		String indexName, String name, Map<Integer, String> documentIdsMap,
+		String queryString) {
+
+		return getService().addRanking(
+			aliases, hiddenDocumentIds, inactive, indexName, name,
+			documentIdsMap, queryString);
+	}
+
+	/**
 	 * Adds the ranking to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -57,6 +73,12 @@ public class RankingLocalServiceUtil {
 	 */
 	public static Ranking addRanking(Ranking ranking) {
 		return getService().addRanking(ranking);
+	}
+
+	public static Ranking addRanking(
+		String indexName, String name, String queryString) {
+
+		return getService().addRanking(indexName, name, queryString);
 	}
 
 	/**
@@ -264,6 +286,10 @@ public class RankingLocalServiceUtil {
 		return getService().getRankings(start, end);
 	}
 
+	public static List<Ranking> getRankingsByCompanyId(long companyId) {
+		return getService().getRankingsByCompanyId(companyId);
+	}
+
 	/**
 	 * Returns the number of rankings.
 	 *
@@ -271,6 +297,17 @@ public class RankingLocalServiceUtil {
 	 */
 	public static int getRankingsCount() {
 		return getService().getRankingsCount();
+	}
+
+	public static Ranking updateRanking(
+			long rankingId, List<String> aliases,
+			List<String> hiddenDocumentIds, boolean inactive, String name,
+			Map<Integer, String> documentIdsMap)
+		throws PortalException {
+
+		return getService().updateRanking(
+			rankingId, aliases, hiddenDocumentIds, inactive, name,
+			documentIdsMap);
 	}
 
 	/**

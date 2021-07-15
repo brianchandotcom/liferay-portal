@@ -35,6 +35,7 @@ import com.liferay.portal.search.tuning.rankings.model.Ranking;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +64,16 @@ public interface RankingLocalService
 	 */
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>RankingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RankingLocalServiceUtil</code>.
+	 */
+	public Ranking addRanking(
+		List<String> aliases, List<String> hiddenDocumentIds, boolean inactive,
+		String indexName, String name, Map<Integer, String> documentIdsMap,
+		String queryString);
+
+	/**
 	 * Adds the ranking to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -74,6 +85,9 @@ public interface RankingLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Ranking addRanking(Ranking ranking);
+
+	public Ranking addRanking(
+		String indexName, String name, String queryString);
 
 	/**
 	 * @throws PortalException
@@ -244,6 +258,9 @@ public interface RankingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Ranking> getRankings(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Ranking> getRankingsByCompanyId(long companyId);
+
 	/**
 	 * Returns the number of rankings.
 	 *
@@ -251,6 +268,12 @@ public interface RankingLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRankingsCount();
+
+	public Ranking updateRanking(
+			long rankingId, List<String> aliases,
+			List<String> hiddenDocumentIds, boolean inactive, String name,
+			Map<Integer, String> documentIdsMap)
+		throws PortalException;
 
 	/**
 	 * Updates the ranking in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

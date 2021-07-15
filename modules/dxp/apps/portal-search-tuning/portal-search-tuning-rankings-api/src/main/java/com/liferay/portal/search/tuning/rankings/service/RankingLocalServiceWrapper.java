@@ -31,6 +31,23 @@ public class RankingLocalServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>RankingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RankingLocalServiceUtil</code>.
+	 */
+	@Override
+	public com.liferay.portal.search.tuning.rankings.model.Ranking addRanking(
+		java.util.List<String> aliases,
+		java.util.List<String> hiddenDocumentIds, boolean inactive,
+		String indexName, String name,
+		java.util.Map<Integer, String> documentIdsMap, String queryString) {
+
+		return _rankingLocalService.addRanking(
+			aliases, hiddenDocumentIds, inactive, indexName, name,
+			documentIdsMap, queryString);
+	}
+
+	/**
 	 * Adds the ranking to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -45,6 +62,13 @@ public class RankingLocalServiceWrapper
 		com.liferay.portal.search.tuning.rankings.model.Ranking ranking) {
 
 		return _rankingLocalService.addRanking(ranking);
+	}
+
+	@Override
+	public com.liferay.portal.search.tuning.rankings.model.Ranking addRanking(
+		String indexName, String name, String queryString) {
+
+		return _rankingLocalService.addRanking(indexName, name, queryString);
 	}
 
 	/**
@@ -296,6 +320,14 @@ public class RankingLocalServiceWrapper
 		return _rankingLocalService.getRankings(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.portal.search.tuning.rankings.model.Ranking>
+			getRankingsByCompanyId(long companyId) {
+
+		return _rankingLocalService.getRankingsByCompanyId(companyId);
+	}
+
 	/**
 	 * Returns the number of rankings.
 	 *
@@ -304,6 +336,19 @@ public class RankingLocalServiceWrapper
 	@Override
 	public int getRankingsCount() {
 		return _rankingLocalService.getRankingsCount();
+	}
+
+	@Override
+	public com.liferay.portal.search.tuning.rankings.model.Ranking
+			updateRanking(
+				long rankingId, java.util.List<String> aliases,
+				java.util.List<String> hiddenDocumentIds, boolean inactive,
+				String name, java.util.Map<Integer, String> documentIdsMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _rankingLocalService.updateRanking(
+			rankingId, aliases, hiddenDocumentIds, inactive, name,
+			documentIdsMap);
 	}
 
 	/**

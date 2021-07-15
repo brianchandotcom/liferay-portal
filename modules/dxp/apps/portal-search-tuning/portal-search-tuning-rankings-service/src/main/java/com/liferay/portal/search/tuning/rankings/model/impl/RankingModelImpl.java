@@ -84,7 +84,7 @@ public class RankingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Ranking (mvccVersion LONG default 0 not null,rankingId LONG not null primary key,companyId LONG,json VARCHAR(75) null)";
+		"create table Ranking (mvccVersion LONG default 0 not null,rankingId LONG not null primary key,companyId LONG,json STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Ranking";
 

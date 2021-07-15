@@ -58,4 +58,20 @@ public interface Ranking extends PersistedModel, RankingModel {
 
 		};
 
+	public java.util.List<String> getAliases();
+
+	public java.util.List<String> getHiddenDocumentIds();
+
+	public boolean getInactive();
+
+	public String getIndexName();
+
+	public String getName();
+
+	public java.util.Map<Integer, String> getPinnedDocumentIds();
+
+	public String getQueryString();
+
+	public String getRankingDocumentId();
+
 }

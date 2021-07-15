@@ -68,13 +68,13 @@ public class DDMFormContextToDDMFormValues
 				"The property \"serializedFormContext\" is required");
 		}
 
-		if (Validator.isNull(serializedFormContext)) {
+		DDMForm ddmForm = ddmFormContextDeserializerRequest.getProperty(
+			"ddmForm");
+
+		if (ddmForm == null) {
 			throw new IllegalStateException(
 				"The property \"ddmForm\" is required");
 		}
-
-		DDMForm ddmForm = ddmFormContextDeserializerRequest.getProperty(
-			"ddmForm");
 
 		Locale currentLocale = ddmFormContextDeserializerRequest.getProperty(
 			"currentLocale");

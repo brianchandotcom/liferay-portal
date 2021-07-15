@@ -190,6 +190,19 @@ public class KeywordResourceImpl
 	}
 
 	@Override
+	public void putKeywordSubscribe(Long tagId) throws Exception {
+		AssetTag assetTag = _assetTagLocalService.getAssetTag(tagId);
+
+		_assetTagService.subscribeTag(
+			contextUser.getUserId(), assetTag.getGroupId(), tagId);
+	}
+
+	@Override
+	public void putKeywordUnsubscribe(Long tagId) throws Exception {
+		_assetTagService.unsubscribeTag(contextUser.getUserId(), tagId);
+	}
+
+	@Override
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		AssetTag assetTag = _assetTagService.getTag((Long)id);
 

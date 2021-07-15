@@ -224,19 +224,11 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		WebContentTemplates.gotoTemplateEllipsisItem(
-			item = "Edit",
-			templateName = "Basic Web Content");
-
-		PortletEntry.inputName(name = "Basic Web Content Edit");
-
-		PortletEntry.inputDescription(description = "Basic Web Content Description");
-
-		for (var templateFieldName : list "Date,Image") {
-			WebContentTemplates.inputTemplateAddScreenFields(templateFieldNames = "${templateFieldName}");
-		}
-
-		WebContentStructures.saveCP();
+		WebContentTemplates.modifyTemplate(
+			templateDescription = "Basic Web Content Description",
+			templateFieldNames = "Date,Image",
+			templateName = "Basic Web Content Edit",
+			templatePreviousName = "Basic Web Content");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 

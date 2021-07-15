@@ -378,7 +378,8 @@ public class MainServlet extends HttpServlet {
 
 		try {
 			String xml = StreamUtil.toString(
-				servletContext.getResourceAsStream("/WEB-INF/web.xml"));
+				servletContext.getResourceAsStream(
+					"/WEB-INF/shielded-container-web.xml"));
 
 			_checkWebSettings(xml);
 		}

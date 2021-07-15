@@ -119,7 +119,7 @@ public class AppServer {
 		String javaOpts = _project.getProperty("java.jdk.opts");
 
 		if (javaOpts == null) {
-			_project.getProperty("env.JAVA_OPTS");
+			javaOpts = _project.getProperty("env.JAVA_OPTS");
 		}
 
 		if (javaOpts == null) {

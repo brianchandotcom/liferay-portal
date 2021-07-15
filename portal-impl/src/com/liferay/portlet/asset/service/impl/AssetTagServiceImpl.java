@@ -267,6 +267,26 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
+	public void subscribeTag(long userId, long groupId, long tagId)
+		throws PortalException {
+
+		AssetTagsPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
+
+		assetTagLocalService.subscribeTag(userId, groupId, tagId);
+	}
+
+	@Override
+	public void unsubscribeTag(long userId, long tagId) throws PortalException {
+		AssetTag tag = assetTagLocalService.getTag(tagId);
+
+		AssetTagsPermission.check(
+			getPermissionChecker(), tag.getGroupId(), ActionKeys.SUBSCRIBE);
+
+		assetTagLocalService.unsubscribeTag(userId, tagId);
+	}
+
+	@Override
 	public AssetTag updateTag(
 			long tagId, String name, ServiceContext serviceContext)
 		throws PortalException {

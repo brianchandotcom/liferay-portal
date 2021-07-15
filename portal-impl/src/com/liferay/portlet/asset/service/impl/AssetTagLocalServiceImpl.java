@@ -677,6 +677,26 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		return searchTags(searchContext);
 	}
 
+	@Override
+	public void subscribeTag(long userId, long groupId, long tagId)
+		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			StringBundler.concat(
+				"This method is provided by the com.liferay.asset.tags.",
+				"internal.service.AssetTagLocalServiceWrapper in the ",
+				"asset-tags-service module"));
+	}
+
+	@Override
+	public void unsubscribeTag(long userId, long tagId) throws PortalException {
+		throw new UnsupportedOperationException(
+			StringBundler.concat(
+				"This method is provided by the com.liferay.asset.tags.",
+				"internal.service.AssetTagLocalServiceWrapper in the ",
+				"asset-tags-service module"));
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetTag updateTag(

@@ -54,7 +54,7 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 
 				setCssClass(CKEDITOR.env.cssClass);
 
-				CKEDITOR.env.cssClass = `${CKEDITOR.env.cssClass} lfr-balloon-editor`;
+				CKEDITOR.env.cssClass = `${CKEDITOR.env.cssClass} lfr-balloon-editor lfr-tooltip-scope`;
 
 				CKEDITOR.getNextZIndex = function () {
 					return CKEDITOR.dialog._.currentZIndex

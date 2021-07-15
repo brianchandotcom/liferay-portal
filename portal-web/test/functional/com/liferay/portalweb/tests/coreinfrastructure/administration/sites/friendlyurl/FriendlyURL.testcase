@@ -174,4 +174,19 @@ definition {
 		}
 	}
 
+	@description = "This test is created to cover LPS-135619. We should be able to translate pages through the Friendly URL without getting an error"
+	@priority = "5"
+	test ViewLocaleChangeThroughFriendlyURL {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/guest/home");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+
+		AssertTextPresent(value1 = "Bienvenido a Liferay");
+	}
+
 }

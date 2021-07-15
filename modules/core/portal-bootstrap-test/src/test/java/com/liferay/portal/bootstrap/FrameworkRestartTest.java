@@ -203,8 +203,19 @@ public class FrameworkRestartTest {
 		Class<?> clazz = classLoader.loadClass(
 			FrameworkRestartTest.class.getName());
 
-		ReflectionTestUtil.invoke(
-			clazz, "doTestFrameworkRestart", new Class<?>[0]);
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(classLoader);
+
+		try {
+			ReflectionTestUtil.invoke(
+				clazz, "doTestFrameworkRestart", new Class<?>[0]);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	private static InputStream _createJAR(

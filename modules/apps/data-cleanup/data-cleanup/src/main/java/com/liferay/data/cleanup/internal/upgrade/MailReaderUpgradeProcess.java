@@ -14,8 +14,6 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
-import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-
 /**
  * @author Preston Crary
  */
@@ -23,33 +21,21 @@ public class MailReaderUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletIds(
-			connection, "com_liferay_mail_reader_web_portlet_MailPortlet");
+		removePortletData(
+			new String[] {"com.liferay.mail.reader.web"}, null,
+			new String[] {"com_liferay_mail_reader_web_portlet_MailPortlet"});
 
-		deleteFromClassName(
-			"com.liferay.mail.reader.model.Account",
-			"com.liferay.mail.reader.model.Attachment",
-			"com.liferay.mail.reader.model.Folder",
-			"com.liferay.mail.reader.model.Message");
-
-		deleteFromPortlet("com_liferay_mail_reader_web_portlet_MailPortlet");
-
-		deleteFromPortletPreferences(
-			"com_liferay_mail_reader_web_portlet_MailPortlet");
-
-		deleteFromRelease(
-			"com.liferay.mail.reader.service", "com.liferay.mail.reader.web");
-
-		deleteFromResourcePermission(
-			"com.liferay.mail.reader.model.Account",
-			"com.liferay.mail.reader.model.Attachment",
-			"com.liferay.mail.reader.model.Folder",
-			"com.liferay.mail.reader.model.Message");
-
-		deleteFromServiceComponent("Mail");
-
-		dropTables(
-			"Mail_Account", "Mail_Attachment", "Mail_Folder", "Mail_Message");
+		removeServiceData(
+			"Mail", new String[] {"com.liferay.mail.reader.service"},
+			new String[] {
+				"com.liferay.mail.reader.model.Account",
+				"com.liferay.mail.reader.model.Attachment",
+				"com.liferay.mail.reader.model.Folder",
+				"com.liferay.mail.reader.model.Message"
+			},
+			new String[] {
+				"Mail_Account", "Mail_Attachment", "Mail_Folder", "Mail_Message"
+			});
 	}
 
 }

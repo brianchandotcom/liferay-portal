@@ -14,7 +14,6 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
-import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 
@@ -34,31 +33,21 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletIds(
-			connection,
-			"com_liferay_social_privatemessaging_web_portlet_" +
-				"PrivateMessagingPortlet");
-
-		deleteFromClassName(
-			"com.liferay.social.privatemessaging.model.UserThread");
-
-		deleteFromPortlet(
-			"com_liferay_social_privatemessaging_web_portlet_" +
-				"PrivateMessagingPortlet");
-
-		deleteFromPortletPreferences(
-			"com_liferay_social_privatemessaging_web_portlet_" +
-				"PrivateMessagingPortlet");
-
-		deleteFromRelease(
-			"com.liferay.social.privatemessaging.service",
-			"com.liferay.social.privatemessaging.web");
-
-		deleteFromServiceComponent("PM");
+		removePortletData(
+			new String[] {"com.liferay.social.privatemessaging.web"}, null,
+			new String[] {
+				"com_liferay_social_privatemessaging_web_portlet_" +
+					"PrivateMessagingPortlet"
+			});
 
 		_deleteMBThreads();
 
-		dropTables("PM_UserThread");
+		removeServiceData(
+			"PM", new String[] {"com.liferay.social.privatemessaging.service"},
+			new String[] {
+				"com.liferay.social.privatemessaging.model.UserThread"
+			},
+			new String[] {"PM_UserThread"});
 	}
 
 	private void _deleteMBThreads() throws Exception {

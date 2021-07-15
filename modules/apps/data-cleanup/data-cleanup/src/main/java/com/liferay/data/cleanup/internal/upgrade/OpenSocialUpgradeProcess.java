@@ -14,8 +14,6 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
-import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-
 /**
  * @author Kevin Lee
  */
@@ -23,37 +21,24 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletIds(
-			connection, "3_WAR_opensocialportlet");
+		removePortletData(
+			new String[] {"opensocial-portlet"}, null,
+			new String[] {
+				"1_WAR_opensocialportlet", "2_WAR_opensocialportlet",
+				"3_WAR_opensocialportlet", "4_WAR_opensocialportlet"
+			});
 
-		deleteFromClassName(
-			"com.liferay.opensocial.model.Gadget",
-			"com.liferay.opensocial.model.OAuthConsumer",
-			"com.liferay.opensocial.model.OAuthToken");
-
-		deleteFromPortlet("%_WAR_opensocialportlet%");
-
-		deleteFromPortletPreferences("%_WAR_opensocialportlet%");
-
-		String[] names = {
-			"1_WAR_opensocialportlet", "2_WAR_opensocialportlet",
-			"3_WAR_opensocialportlet", "4_WAR_opensocialportlet",
-			"com.liferay.opensocial", "com.liferay.opensocial.model.Gadget",
-			"com.liferay.opensocial.model.OAuthConsumer",
-			"com.liferay.opensocial.model.OAuthToken"
-		};
-
-		deleteFromResourceAction(names);
-
-		deleteFromResourcePermission(names);
-
-		deleteFromRelease("opensocial-portlet");
-
-		deleteFromServiceComponent("OpenSocial");
-
-		dropTables(
-			"OpenSocial_Gadget", "OpenSocial_OAuthConsumer",
-			"OpenSocial_OAuthToken");
+		removeServiceData(
+			"OpenSocial", new String[] {"opensocial-portlet"},
+			new String[] {
+				"com.liferay.opensocial", "com.liferay.opensocial.model.Gadget",
+				"com.liferay.opensocial.model.OAuthConsumer",
+				"com.liferay.opensocial.model.OAuthToken"
+			},
+			new String[] {
+				"OpenSocial_Gadget", "OpenSocial_OAuthConsumer",
+				"OpenSocial_OAuthToken"
+			});
 	}
 
 }

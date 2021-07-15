@@ -21,7 +21,7 @@ public class ImageEditorUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		removeNoninstanceablePortlet(
+		removePortletData(
 			new String[] {
 				"com.liferay.frontend.image.editor.api",
 				"com.liferay.frontend.image.editor.integration.document." +

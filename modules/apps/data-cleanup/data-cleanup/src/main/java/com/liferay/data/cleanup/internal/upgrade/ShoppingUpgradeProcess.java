@@ -14,7 +14,6 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
-import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -33,50 +32,31 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletIds(
-			connection, "com_liferay_shopping_web_portlet_ShoppingPortlet");
-
-		deleteFromClassName(
-			"com.liferay.shopping.model.ShoppingCart",
-			"com.liferay.shopping.model.ShoppingCategory",
-			"com.liferay.shopping.model.ShoppingCoupon",
-			"com.liferay.shopping.model.ShoppingItem",
-			"com.liferay.shopping.model.ShoppingItemField",
-			"com.liferay.shopping.model.ShoppingItemPrice",
-			"com.liferay.shopping.model.ShoppingOrder",
-			"com.liferay.shopping.model.ShoppingOrderItem");
-
-		deleteFromPortlet(
-			"com_liferay_shopping_web_portlet_ShoppingAdminPortlet",
-			"com_liferay_shopping_web_portlet_ShoppingPortlet");
-
-		deleteFromPortletPreferences(
-			"com_liferay_shopping_web_portlet_ShoppingAdminPortlet",
-			"com_liferay_shopping_web_portlet_ShoppingPortlet");
-
-		deleteFromRelease(
-			"com.liferay.shopping.service", "com.liferay.shopping.web");
-
-		deleteFromResourcePermission(
-			"com.liferay.shopping.model.ShoppingCart",
-			"com.liferay.shopping.model.ShoppingCategory",
-			"com.liferay.shopping.model.ShoppingCoupon",
-			"com.liferay.shopping.model.ShoppingItem",
-			"com.liferay.shopping.model.ShoppingItemField",
-			"com.liferay.shopping.model.ShoppingItemPrice",
-			"com.liferay.shopping.model.ShoppingOrder",
-			"com.liferay.shopping.model.ShoppingOrderItem");
-
-		deleteFromServiceComponent("Shopping");
+		removePortletData(
+			new String[] {"com.liferay.shopping.web"}, null,
+			new String[] {"com_liferay_shopping_web_portlet_ShoppingPortlet"});
 
 		_deleteFromShoppingItem("smallImage");
 		_deleteFromShoppingItem("mediumImage");
 		_deleteFromShoppingItem("largeImage");
 
-		dropTables(
-			"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",
-			"ShoppingItem", "ShoppingItemField", "ShoppingItemPrice",
-			"ShoppingOrder", "ShoppingOrderItem");
+		removeServiceData(
+			"Shopping", new String[] {"com.liferay.shopping.service"},
+			new String[] {
+				"com.liferay.shopping.model.ShoppingCart",
+				"com.liferay.shopping.model.ShoppingCategory",
+				"com.liferay.shopping.model.ShoppingCoupon",
+				"com.liferay.shopping.model.ShoppingItem",
+				"com.liferay.shopping.model.ShoppingItemField",
+				"com.liferay.shopping.model.ShoppingItemPrice",
+				"com.liferay.shopping.model.ShoppingOrder",
+				"com.liferay.shopping.model.ShoppingOrderItem"
+			},
+			new String[] {
+				"ShoppingCart", "ShoppingCategory", "ShoppingCoupon",
+				"ShoppingItem", "ShoppingItemField", "ShoppingItemPrice",
+				"ShoppingOrder", "ShoppingOrderItem"
+			});
 	}
 
 	private void _deleteFromShoppingItem(String type) throws Exception {

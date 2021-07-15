@@ -21,19 +21,16 @@ public class ChatUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		deleteFromClassName(
-			"com.liferay.chat.model.Entry", "com.liferay.chat.model.Status");
+		removePortletData(
+			new String[] {"com.liferay.chat.web"}, null,
+			new String[] {"com_liferay_chat_web_portlet_ChatPortlet"});
 
-		deleteFromPortlet("com_liferay_chat_web_portlet_ChatPortlet");
-
-		deleteFromPortletPreferences(
-			"com_liferay_chat_web_portlet_ChatPortlet");
-
-		deleteFromRelease("com.liferay.chat.service", "com.liferay.chat.web");
-
-		deleteFromServiceComponent("Chat");
-
-		dropTables("Chat_Entry", "Chat_Status");
+		removeServiceData(
+			"Chat", new String[] {"com.liferay.chat.service"},
+			new String[] {
+				"com.liferay.chat.model.Entry", "com.liferay.chat.model.Status"
+			},
+			new String[] {"Chat_Entry", "Chat_Status"});
 	}
 
 }

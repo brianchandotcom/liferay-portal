@@ -21,7 +21,7 @@ public class DirectoryUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		removeNoninstanceablePortlet(
+		removePortletData(
 			new String[] {"com.liferay.directory.web"},
 			new String[] {"11", "186", "187", "188"},
 			new String[] {

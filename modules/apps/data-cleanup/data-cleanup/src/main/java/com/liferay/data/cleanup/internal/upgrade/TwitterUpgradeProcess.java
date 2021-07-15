@@ -14,8 +14,6 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
-import com.liferay.data.cleanup.internal.upgrade.util.LayoutTypeSettingsUtil;
-
 /**
  * @author Alejandro Tardín
  */
@@ -23,24 +21,14 @@ public class TwitterUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletIds(
-			connection, "com_liferay_twitter_web_portlet_TwitterPortlet");
+		removePortletData(
+			new String[] {"com.liferay.twitter.web"}, null,
+			new String[] {"com_liferay_twitter_web_portlet_TwitterPortlet"});
 
-		deleteFromClassName("com.liferay.twitter.model.Feed");
-
-		deleteFromPortlet("com_liferay_twitter_web_portlet_TwitterPortlet");
-
-		deleteFromPortletPreferences(
-			"com_liferay_twitter_web_portlet_TwitterPortlet");
-
-		deleteFromRelease(
-			"com.liferay.twitter.service", "com.liferay.twitter.web");
-
-		deleteFromResourcePermission("com.liferay.twitter.model.Feed");
-
-		deleteFromServiceComponent("Twitter");
-
-		dropTables("Twitter_Feed");
+		removeServiceData(
+			"Twitter", new String[] {"com.liferay.twitter.service"},
+			new String[] {"com.liferay.twitter.model.Feed"},
+			new String[] {"Twitter_Feed"});
 	}
 
 }

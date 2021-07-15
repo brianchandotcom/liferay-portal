@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.search.tuning.rankings.model.STRankingsEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="STRankingsEntryId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+</model-hints>

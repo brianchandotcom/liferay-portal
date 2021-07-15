@@ -1,0 +1,1 @@
+create index IX_8DAADA8E on STRankingsEntry (companyId);

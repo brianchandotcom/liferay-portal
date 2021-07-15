@@ -406,10 +406,13 @@ public class DLReferencesExportImportContentProcessor
 
 				String path = ExportImportPathUtil.getModelPath(fileEntry);
 
-				StringBundler exportedReferenceSB = new StringBundler(6);
+				StringBundler exportedReferenceSB = new StringBundler(10);
 
 				exportedReferenceSB.append("[$dl-reference=");
 				exportedReferenceSB.append(path);
+				exportedReferenceSB.append("$,$include-uuid=");
+				exportedReferenceSB.append(
+					dlReferenceParameters.containsKey("uuid"));
 				exportedReferenceSB.append("$]");
 
 				if (fileEntry.isInTrash()) {
@@ -417,6 +420,9 @@ public class DLReferencesExportImportContentProcessor
 
 					exportedReferenceSB.append("[#dl-reference=");
 					exportedReferenceSB.append(originalReference);
+					exportedReferenceSB.append("#,#include-uuid=");
+					exportedReferenceSB.append(
+						dlReferenceParameters.containsKey("uuid"));
 					exportedReferenceSB.append("#]");
 				}
 

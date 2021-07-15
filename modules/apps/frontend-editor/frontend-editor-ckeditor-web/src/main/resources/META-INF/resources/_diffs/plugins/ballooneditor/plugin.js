@@ -364,15 +364,16 @@
 				}
 			};
 
+			const originalShowBlockFn = CKEDITOR.ui.panel.prototype.showBlock;
+
 			CKEDITOR.ui.panel.prototype.showBlock = function (name) {
 				if (!this.name) {
 					this.name = name;
+
+					return originalShowBlockFn.call(this, this.name);
 				}
 
-				return CKEDITOR.ui.panel.prototype.showBlock.call(
-					this,
-					this.name
-				);
+				return originalShowBlockFn.call(this, name);
 			};
 		},
 

@@ -102,17 +102,9 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 
 				balloonToolbars.create({
 					buttons: editorConfig.toolbarTable,
+					cssSelector: 'td',
 					priority:
 						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
-					refresh(editor, path) {
-						return (
-							!!path.contains('table') ||
-							!!path.contains('tbody') ||
-							!!path.contains('tr') ||
-							!!path.contains('td') ||
-							path.lastElement.getName() === 'td'
-						);
-					},
 				});
 
 				balloonToolbars.create({

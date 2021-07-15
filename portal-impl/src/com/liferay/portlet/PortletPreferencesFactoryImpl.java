@@ -330,7 +330,14 @@ public class PortletPreferencesFactoryImpl
 					Encryptor.decrypt(company.getKeyObj(), doAsUserId), userId);
 			}
 			catch (EncryptorException encryptorException) {
-				_log.error("Unable to decrypt user ID", encryptorException);
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to decrypt user ID from " + doAsUserId,
+						encryptorException);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn("Unable to decrypt user ID from " + doAsUserId);
+				}
 			}
 		}
 

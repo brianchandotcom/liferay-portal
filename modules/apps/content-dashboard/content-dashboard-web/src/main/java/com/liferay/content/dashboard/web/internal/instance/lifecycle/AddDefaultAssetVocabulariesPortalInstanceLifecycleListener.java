@@ -65,7 +65,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 	private void _addAssetVocabulary(
 			Company company, String name, int visibilityType,
-			Class<?>... assetVocabularyTypeClass)
+			Class<?>... assetVocabularyTypeClasses)
 		throws Exception {
 
 		AssetVocabulary assetVocabulary =
@@ -94,14 +94,15 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
-		if (assetVocabularyTypeClass != null) {
-			long[] classNameIds = new long[assetVocabularyTypeClass.length];
-			long[] classTypePKs = new long[assetVocabularyTypeClass.length];
-			boolean[] requireds = new boolean[assetVocabularyTypeClass.length];
+		if (assetVocabularyTypeClasses != null) {
+			long[] classNameIds = new long[assetVocabularyTypeClasses.length];
+			long[] classTypePKs = new long[assetVocabularyTypeClasses.length];
+			boolean[] requireds =
+				new boolean[assetVocabularyTypeClasses.length];
 
-			for (int i = 0; i < assetVocabularyTypeClass.length; i++) {
+			for (int i = 0; i < assetVocabularyTypeClasses.length; i++) {
 				classNameIds[i] = _portal.getClassNameId(
-					assetVocabularyTypeClass[i]);
+					assetVocabularyTypeClasses[i]);
 				classTypePKs[i] = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
 				requireds[i] = false;
 			}

@@ -34,7 +34,7 @@
 	<td>PROCESS_DETAILS_ELLIPSIS</td>
 	<td>//*[contains(@class, 'ellipsis')]</td>
 	<td></td>
-</tr> 
+</tr>
 <tr>
 	<td>PROCESS_DETAILS_REVISION_BY_ROW</td>
 	<td>//li[contains(@class, 'list-group-item list-group-item-flex')][${key_rowNumber}]</td>

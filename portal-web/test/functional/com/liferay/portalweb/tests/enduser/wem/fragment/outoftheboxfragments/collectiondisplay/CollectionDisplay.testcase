@@ -4645,7 +4645,7 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				infoListProviderName = "Related Assets");
+				infoItemRelatedListProviderName = "Related Assets");
 		}
 
 		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {

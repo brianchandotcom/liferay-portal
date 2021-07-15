@@ -87,11 +87,7 @@ export default function defaultComputeHover({
 		const targetIsEmpty =
 			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
 			0;
-		const allowedChild = checkAllowedChild(
-			sourceItem,
-			targetItem,
-			layoutDataRef
-		);
+		const allowedChild = checkAllowedChild(sourceItem, targetItem);
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITIONS.MIDDLE &&
@@ -105,7 +101,7 @@ export default function defaultComputeHover({
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
-			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
+			droppable: checkAllowedChild(sourceItem, targetItem),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -121,7 +117,7 @@ export default function defaultComputeHover({
 
 	if (
 		siblingItem &&
-		checkAllowedChild(sourceItem, targetItem, layoutDataRef) &&
+		checkAllowedChild(sourceItem, targetItem) &&
 		validElevation(siblingItem, orientation, layoutDataRef)
 	) {
 		return dispatch({
@@ -175,7 +171,7 @@ export default function defaultComputeHover({
 					(siblingPositionWithMiddle === targetPositionWithMiddle ||
 						parentPositionWithMiddle ===
 							targetPositionWithMiddle) &&
-					checkAllowedChild(sourceItem, parent, layoutDataRef)
+					checkAllowedChild(sourceItem, parent)
 				) {
 					if (maximumDepth > 1) {
 						const [

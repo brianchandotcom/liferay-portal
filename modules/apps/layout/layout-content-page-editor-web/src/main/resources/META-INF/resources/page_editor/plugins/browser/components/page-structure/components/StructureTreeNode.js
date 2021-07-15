@@ -412,7 +412,7 @@ function computeHover({
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
-			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
+			droppable: checkAllowedChild(sourceItem, targetItem),
 			elevate: null,
 			targetPositionWithMiddle,
 			targetPositionWithoutMiddle,
@@ -424,10 +424,7 @@ function computeHover({
 	// - dropItem should be child of dropTargetItem
 	// - dropItem should be sibling of siblingItem
 
-	if (
-		siblingItem &&
-		checkAllowedChild(sourceItem, targetItem, layoutDataRef)
-	) {
+	if (siblingItem && checkAllowedChild(sourceItem, targetItem)) {
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: siblingItem,
@@ -466,7 +463,7 @@ function computeHover({
 				if (
 					(targetPosition === targetPositionWithMiddle ||
 						parentPosition === targetPositionWithMiddle) &&
-					checkAllowedChild(sourceItem, parent, layoutDataRef)
+					checkAllowedChild(sourceItem, parent)
 				) {
 					return [parent, target];
 				}

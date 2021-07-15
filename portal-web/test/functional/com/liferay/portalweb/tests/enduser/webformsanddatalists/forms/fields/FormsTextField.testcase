@@ -260,10 +260,10 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
-	@description = "Verify that the "Does Not Match" option can be used to validate a Text Field"
+	@description = "Verify that the Does Not Match option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheDoesNotMatchOption {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -284,22 +284,10 @@ definition {
 			key_toggleSwitchLabel = "Validation",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		FormFields.selectSelectOption(
-			fieldName = "If Input",
-			selectOption = "Matches");
-
-		FormFields.editText(
-			fieldName = "parameter",
-			fieldValue = "Test");
-
-		FormFields.editText(
-			fieldName = "errorMessage",
-			fieldValue = "Test Error");
-
-		//FormFields.editValidation(
-		//	validationArgument = "Matches",
-		//	validationErrorMessage = "Test Error",
-		//	validationInput = "^Test\s?\w+");
+		FormFields.editValidation(
+			validationArgument = "Matches",
+			selectOption = "Test Error",
+			validationInput = "Test");
 
 		Click(locator1 = "Button#SAVE");
 
@@ -311,7 +299,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Liferay");
 
-		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -323,7 +311,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test");
 
-		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
 		Button.clickSubmitButton();
 

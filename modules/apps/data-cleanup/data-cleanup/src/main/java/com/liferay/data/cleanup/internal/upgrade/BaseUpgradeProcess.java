@@ -39,8 +39,8 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void deleteFromClassName(String... values) throws Exception {
-		deleteFrom("ClassName_", "value", values);
+	protected void deleteFromClassName(String... classNames) throws Exception {
+		deleteFrom("ClassName_", "value", classNames);
 	}
 
 	protected void deleteFromPortlet(String... portletIds) throws Exception {

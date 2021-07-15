@@ -46,7 +46,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -347,10 +346,16 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	private Set<Locale> _getAvailableLocales(
 			Layout layout, long plid, long siteGroupId)
-		throws JSONException {
+		throws PortalException {
 
 		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
 			siteGroupId);
+
+		if (!_openGraphConfiguration.isOnlyTranslatedHreflangEnabled(
+				layout.getGroup())) {
+
+			return siteAvailableLocales;
+		}
 
 		if (!layout.isTypeContent()) {
 			Stream<String> stream = Arrays.stream(

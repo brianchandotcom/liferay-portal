@@ -17,12 +17,17 @@ import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import ChartContext from './ChartContext';
 import D3OrganizationChart from './D3OrganizationChart';
 import ManagementBar from './ManagementBar/ManagementBar';
-import {getOrganization} from './data/organizations';
+import {getOrganization, getOrganizations} from './data/organizations';
 import MenuProvider from './menu/MenuProvider';
 import ModalProvider from './modals/ModalProvider';
 import {VIEWS} from './utils/constants';
 
-function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
+function OrganizationChartApp({
+	pageSize,
+	rootOrganizationId,
+	spritemap,
+	templatesURL,
+}) {
 	const [modalActive, updateModalActive] = useState(false);
 	const [modalData, updateModalData] = useState(null);
 	const [currentView, updateCurrentView] = useState(VIEWS[0]);
@@ -37,8 +42,15 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 	const zoomInRef = useRef(null);
 
 	useEffect(() => {
-		getOrganization(rootOrganizationId).then(updateRootData);
-	}, [rootOrganizationId]);
+		if (rootOrganizationId) {
+			getOrganization(rootOrganizationId).then(updateRootData);
+		}
+		else {
+			getOrganizations(pageSize).then((jsonResponse) =>
+				updateRootData(jsonResponse.items)
+			);
+		}
+	}, [rootOrganizationId, pageSize]);
 
 	useLayoutEffect(() => {
 		if (rootData && chartSVGRef.current) {
@@ -75,7 +87,7 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 		}
 
 		return () => chartInstanceRef.current?.cleanUp();
-	}, [rootData, spritemap]);
+	}, [pageSize, rootData, spritemap]);
 
 	return (
 		<ChartContext.Provider
@@ -133,8 +145,14 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 	);
 }
 
+OrganizationChartApp.defaultProps = {
+	pageSize: 10,
+	rootOrganizationId: 0
+};
+
 OrganizationChartApp.propTypes = {
-	rootOrganizationId: PropTypes.number.isRequired,
+	pageSize: PropTypes.number,
+	rootOrganizationId: PropTypes.number,
 	spritemap: PropTypes.string.isRequired,
 	templatesURL: PropTypes.shape({
 		accountsDetailsPage: PropTypes.string.isRequired,

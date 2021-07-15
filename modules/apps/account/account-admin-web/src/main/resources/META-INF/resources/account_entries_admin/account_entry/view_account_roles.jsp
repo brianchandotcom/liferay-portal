@@ -67,6 +67,13 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					value="<%= accountRole.getDescription(locale) %>"
 				/>
 
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
+					name="type"
+					value="<%= accountRole.getTypeLabel(locale) %>"
+				/>
+
 				<liferay-ui:search-container-column-jsp
 					path="/account_entries_admin/account_role_action.jsp"
 				/>

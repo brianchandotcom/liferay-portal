@@ -1,0 +1,53 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-121200. Can create a fragment collection in site named with XSS without receive an alert message."
+	@priority = "4"
+	@uitest
+	test AddFragmentCollectionWhenSiteNameWithXSS {
+		var siteName = '''<script>alert(123)</script>''';
+
+		task ("Add a site with XSS name") {
+			JSONGroup.addGroup(groupName = "${siteName}");
+		}
+
+		task ("Add a fragment collection") {
+			ApplicationsMenu.gotoSite(site = "${siteName}");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Fragments");
+
+			FragmentsAdmin.addCollection(collectionName = "Collection Name");
+		}
+
+		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+
+		task ("Delete the site") {
+			JSONGroup.deleteGroupByName(groupName = "${siteName}");
+		}
+	}
+
+}

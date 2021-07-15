@@ -40,9 +40,11 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -349,7 +351,7 @@ public class LanguageResources {
 	private static final Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<>();
 
-	private ServiceTracker<ResourceBundle, ResourceBundle> _serviceTracker;
+	private ServiceTracker<?, ?> _serviceTracker;
 
 	private static class LanguageResourcesBundle extends ResourceBundle {
 
@@ -403,10 +405,11 @@ public class LanguageResources {
 	}
 
 	private static class LanguageResourceServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<ResourceBundle, ResourceBundle> {
+		implements ServiceTrackerCustomizer
+			<ResourceBundle, ResourceBundleInfo> {
 
 		@Override
-		public ResourceBundle addingService(
+		public ResourceBundleInfo addingService(
 			ServiceReference<ResourceBundle> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
@@ -416,16 +419,90 @@ public class LanguageResources {
 
 			String languageId = GetterUtil.getString(
 				serviceReference.getProperty("language.id"));
-			Map<String, String> languageMap = new HashMap<>();
 			Locale locale = null;
 
 			if (Validator.isNotNull(languageId)) {
 				locale = LocaleUtil.fromLanguageId(languageId, true);
 			}
 			else {
+				languageId = StringPool.BLANK;
+
 				locale = new Locale(StringPool.BLANK);
 			}
 
+			Map<String, String> languageMap = _getLanguageMap(resourceBundle);
+
+			synchronized (languageId.intern()) {
+				Map<String, String> diffLanguageMap = _putLanguageMap(
+					locale, languageMap);
+
+				ResourceBundleInfo resourceBundleInfo = new ResourceBundleInfo(
+					diffLanguageMap, languageId, locale);
+
+				List<ResourceBundleInfo> resourceBundleInfos =
+					_languageResourceExtensions.computeIfAbsent(
+						languageId, key -> new ArrayList<>());
+
+				resourceBundleInfos.add(resourceBundleInfo);
+
+				return resourceBundleInfo;
+			}
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ResourceBundle> serviceReference,
+			ResourceBundleInfo resourceBundleInfo) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ResourceBundle> serviceReference,
+			ResourceBundleInfo resourceBundleInfo) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			String languageId = resourceBundleInfo._languageId;
+
+			synchronized (languageId.intern()) {
+				List<ResourceBundleInfo> resourceBundleInfos =
+					_languageResourceExtensions.get(languageId);
+
+				int index = resourceBundleInfos.indexOf(resourceBundleInfo);
+
+				Map<String, String> diffLanguageMap =
+					resourceBundleInfo._diffLanguageMap;
+
+				for (int i = index + 1; i < resourceBundleInfos.size(); i++) {
+					ResourceBundleInfo nextResourceBundleInfo =
+						resourceBundleInfos.get(i);
+
+					Map<String, String> nextDiffLanguageMap =
+						nextResourceBundleInfo._diffLanguageMap;
+
+					for (Map.Entry<String, String> entry :
+							nextDiffLanguageMap.entrySet()) {
+
+						String key = entry.getKey();
+
+						if (diffLanguageMap.containsKey(key)) {
+							entry.setValue(diffLanguageMap.remove(key));
+						}
+					}
+				}
+
+				_putLanguageMap(resourceBundleInfo._locale, diffLanguageMap);
+
+				resourceBundleInfos.remove(index);
+			}
+		}
+
+		private Map<String, String> _getLanguageMap(
+			ResourceBundle resourceBundle) {
+
+			Map<String, String> languageMap = new HashMap<>();
 			Enumeration<String> enumeration = resourceBundle.getKeys();
 
 			while (enumeration.hasMoreElements()) {
@@ -437,48 +514,28 @@ public class LanguageResources {
 				languageMap.put(key, value);
 			}
 
-			Map<String, String> diffLanguageMap = _putLanguageMap(
-				locale, languageMap);
-
-			_diffLanguageMap.put(serviceReference, diffLanguageMap);
-
-			return resourceBundle;
+			return languageMap;
 		}
 
-		@Override
-		public void modifiedService(
-			ServiceReference<ResourceBundle> serviceReference,
-			ResourceBundle resourceBundle) {
+		private final Map<String, List<ResourceBundleInfo>>
+			_languageResourceExtensions = new HashMap<>();
+
+	}
+
+	private static class ResourceBundleInfo {
+
+		private ResourceBundleInfo(
+			Map<String, String> diffLanguageMap, String languageId,
+			Locale locale) {
+
+			_diffLanguageMap = diffLanguageMap;
+			_languageId = languageId;
+			_locale = locale;
 		}
 
-		@Override
-		public void removedService(
-			ServiceReference<ResourceBundle> serviceReference,
-			ResourceBundle resourceBundle) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			String languageId = GetterUtil.getString(
-				serviceReference.getProperty("language.id"));
-			Locale locale = null;
-
-			if (Validator.isNotNull(languageId)) {
-				locale = LocaleUtil.fromLanguageId(languageId, true);
-			}
-			else {
-				locale = new Locale(StringPool.BLANK);
-			}
-
-			Map<String, String> languageMap = _diffLanguageMap.remove(
-				serviceReference);
-
-			_putLanguageMap(locale, languageMap);
-		}
-
-		private final Map<ServiceReference<?>, Map<String, String>>
-			_diffLanguageMap = new HashMap<>();
+		private final Map<String, String> _diffLanguageMap;
+		private final String _languageId;
+		private final Locale _locale;
 
 	}
 

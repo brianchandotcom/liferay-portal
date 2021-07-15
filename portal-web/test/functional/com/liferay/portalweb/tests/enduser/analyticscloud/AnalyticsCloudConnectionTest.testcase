@@ -32,13 +32,15 @@ definition {
 	@description = "Sync Liferay Data Source Contacts"
 	@priority = "5"
 	test CanSyncAllContactsFromDXPToAC {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		ACDXPSettings.syncNewContactData();
 
 		Navigator.openURL();
 

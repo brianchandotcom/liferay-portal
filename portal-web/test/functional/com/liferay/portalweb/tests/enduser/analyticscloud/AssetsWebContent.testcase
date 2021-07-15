@@ -40,13 +40,15 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanNavigateToWebContentOverviewPage {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.syncNewContactData();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",
@@ -112,13 +114,15 @@ definition {
 				webContentTitle = "Web Content AC Title ${n}");
 		}
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.syncNewContactData();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",

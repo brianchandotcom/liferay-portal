@@ -43,6 +43,18 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");
@@ -79,7 +91,7 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-		ACUtils.launchDXP();
+		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -108,7 +120,7 @@ definition {
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
@@ -121,7 +133,17 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -171,7 +193,7 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-		ACUtils.launchDXP();
+		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -204,7 +226,7 @@ definition {
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
@@ -216,6 +238,18 @@ definition {
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -251,7 +285,7 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-		ACUtils.launchDXP();
+		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		for (var n : list "1,2,3") {
 			Navigator.gotoSitePage(
@@ -274,7 +308,7 @@ definition {
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
@@ -286,6 +320,18 @@ definition {
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -320,10 +366,10 @@ definition {
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 
-		ACUtils.launchDXP();
+		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		for (var n : list "1,2,3") {
 			Navigator.gotoSitePage(
@@ -358,6 +404,18 @@ definition {
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -396,7 +454,7 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-		ACUtils.launchDXP();
+		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		for (var n : list "1,2,3") {
 			Navigator.gotoSitePage(
@@ -424,7 +482,7 @@ definition {
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
@@ -436,6 +494,18 @@ definition {
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -471,7 +541,7 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-		ACUtils.launchDXP();
+		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
 		for (var n : list "1,2,3") {
 			Navigator.gotoSitePage(
@@ -494,7 +564,7 @@ definition {
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 

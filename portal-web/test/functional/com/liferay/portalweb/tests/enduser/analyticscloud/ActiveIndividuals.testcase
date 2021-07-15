@@ -34,13 +34,15 @@ definition {
 	@description = "Assert an Individual's Segments"
 	@priority = "5"
 	test CanAssertIndividualSegment {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		ACDXPSettings.syncNewContactData();
 
 		Navigator.openURL();
 
@@ -79,6 +81,7 @@ definition {
 	@priority = "5"
 	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
 		ACUtils.createDMAndAddToPage();
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		for (var n : list "1,2,3,4") {
@@ -122,6 +125,7 @@ definition {
 	@priority = "5"
 	test CanSetEmptyDataCustomRangeOnIndividualActivitiesCard {
 		ACUtils.createDMAndAddToPage();
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		for (var n : list "1,2,3,4") {

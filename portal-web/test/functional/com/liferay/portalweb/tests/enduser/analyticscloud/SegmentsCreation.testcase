@@ -34,6 +34,18 @@ definition {
 	test CanCreateDynamicSegmentWithIndividuals {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
 		Navigator.openURL();
 
 		Pause(locator1 = "5000");
@@ -52,7 +64,7 @@ definition {
 
 		ACSegments.addSegmentField(segmentField = "email");
 
-		ACSegments.editTextCriterion(textInput = "test@liferay.com");
+		ACSegments.editTextCriterion(textInput = "ac@liferay.com");
 
 		ACSegments.saveSegment();
 
@@ -67,7 +79,7 @@ definition {
 			value1 = "DYNAMIC SEGMENT");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
@@ -75,6 +87,18 @@ definition {
 	@priority = "5"
 	test CanCreateDynamicSegmentWithIndividualsUseUnknown {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
 
 		Navigator.openURL();
 
@@ -111,7 +135,7 @@ definition {
 			value1 = "DYNAMIC SEGMENT");
 
 		AssertElementPresent(
-			key_userName = "Test Test",
+			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
@@ -120,19 +144,31 @@ definition {
 	test CanCreateSegmentWithAnonymousIndividuals {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
-
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
 			userLastName = "ac",
 			userScreenName = "ac");
 
+		ACDXPSettings.syncNewContactData();
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		JSONUser.addUser(
+			userEmailAddress = "liferay@liferay.com",
+			userFirstName = "liferay",
+			userLastName = "liferay",
+			userScreenName = "liferay");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "liferay@liferay.com",
+			userLoginFullName = "liferay liferay");
 
 		Navigator.openURL();
 
@@ -175,21 +211,23 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
+		ACDXPSettings.syncNewContactData();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
 
 		ACUtils.launchAC();
 

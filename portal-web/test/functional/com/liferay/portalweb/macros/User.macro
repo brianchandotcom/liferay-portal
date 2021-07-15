@@ -1535,36 +1535,26 @@ definition {
 		Button.clickSave();
 
 		if ("${changeable}" == "false") {
-			Alert.viewRequestFailedToComplete();
-
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "Passwords may not be changed under the current password policy.");
 		}
 		else if ("${passwordTooShort}" == "true") {
-			Alert.viewRequestFailedToComplete();
-
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "That password is too short. Please make sure your password is at least 6 characters long.");
 		}
 		else if (isSet(minimumNumbers)) {
-			Alert.viewRequestFailedToComplete();
-
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "That password must contain at least ${minimumNumbers} numbers.");
 		}
 		else if (isSet(regex)) {
-			Alert.viewRequestFailedToComplete();
-
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "That password does not comply with the regular expression ${regex}. Please enter a different password.");
 		}
 		else {
-			Alert.viewRequestFailedToComplete();
-
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "That password is invalid. Please enter in a different password.");

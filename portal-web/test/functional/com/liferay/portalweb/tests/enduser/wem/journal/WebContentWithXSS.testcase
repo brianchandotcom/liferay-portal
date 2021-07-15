@@ -6,11 +6,15 @@ definition {
 	property testray.main.component.name = "Web Content Administration";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -24,32 +28,28 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-117983."
+	@description = "This is a test for LPS-117983. No alert will popup when add a web content based on structure with XSS name."
 	@priority = "4"
 	test AddWebContentBasedOnStructureNameWithXSS {
-		task ("Create a structure named <script>alert(123)</script>") {
+		task ("Add a structure with XSS name") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
 			WebContentStructures.addCP(structureName = '''<script>alert(123);</script>''');
-		}
 
-		task ("Add a Text field") {
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
-		}
 
-		task ("Save the Structure") {
 			WebContentStructures.saveCP(structureName = '''<script>alert(123);</script>''');
 		}
 
-		task ("View the Structure name") {
+		task ("View the structure is shown") {
 			WebContentStructures.viewCP(structureName = '''<script>alert(123);</script>''');
 		}
 
-		task ("Add Web Content based on new Structure") {
+		task ("View no alert popup when add a web content based on new structure") {
 			NavItem.click(navItem = "Web Content");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = '''&lt;script&gt;alert(123);&lt;/script&gt;''');

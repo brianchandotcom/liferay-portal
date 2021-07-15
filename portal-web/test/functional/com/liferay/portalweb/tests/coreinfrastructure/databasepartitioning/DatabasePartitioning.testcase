@@ -81,6 +81,8 @@ definition {
 			databaseFilter = "testPartition%",
 			databaseSubstring = "testPartition",
 			expectedCount = "2");
+
+		DBPartition.validateSchemas(schemaNamePrefix = "testPartition");
 	}
 
 	@priority = "5"

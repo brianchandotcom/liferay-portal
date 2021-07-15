@@ -40,6 +40,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -67,6 +68,7 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -328,8 +330,16 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			actionRequest, "categoryIds");
 
 		for (long categoryId : categoryIds) {
+			AssetCategory category = _assetCategoryLocalService.getCategory(
+				categoryId);
+
 			_assetDisplayPageEntryFormProcessor.process(
-				AssetCategory.class.getName(), categoryId, actionRequest);
+				AssetCategory.class.getName(), category.getCategoryId(),
+				actionRequest);
+
+			category.setModifiedDate(new Date());
+
+			_assetCategoryLocalService.updateAssetCategory(category);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -515,6 +525,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 	private volatile AssetCategoriesAdminWebConfiguration
 		_assetCategoriesAdminWebConfiguration;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetCategoryPropertyLocalService

@@ -2744,6 +2744,9 @@ public class DLFileEntryLocalServiceImpl
 		entryURL = HttpUtil.addParameter(
 			entryURL, namespace + "fileEntryId",
 			String.valueOf(fileVersion.getFileEntryId()));
+		entryURL = HttpUtil.addParameter(
+			entryURL, namespace + "redirect",
+			_getRedirectURL(fileVersion, namespace, portletId));
 
 		return entryURL;
 	}
@@ -3098,6 +3101,17 @@ public class DLFileEntryLocalServiceImpl
 					DLFileEntryTable.INSTANCE.reviewDate.lte(reviewDateLT)
 				)
 			));
+	}
+
+	private String _getRedirectURL(
+			DLFileVersion fileVersion, String namespace, String portletId)
+		throws PortalException {
+
+		String redirectURL = PortalUtil.getControlPanelFullURL(
+			fileVersion.getGroupId(), portletId, null);
+
+		return HttpUtil.addParameter(
+			redirectURL, namespace + "folderId", fileVersion.getFolderId());
 	}
 
 	private boolean _isValidFileVersionNumber(String version) {

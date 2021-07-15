@@ -32,17 +32,17 @@
 </tr>
 <tr>
 	<td>PANEL</td>
-	<td>//*[contains(@class,'panel-group')]//*[normalize-space()='${key_panel}'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]</td>
+	<td>//*[contains(@class,'panel')]//*[normalize-space()='${key_panel}'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PANEL_COLLAPSED</td>
-	<td>//*[contains(@class,'panel-group')]//*[normalize-space()='${key_panel}'][@aria-expanded='false'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]</td>
+	<td>//*[contains(@class,'panel')]//*[normalize-space()='${key_panel}'][@aria-expanded='false'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PANEL_EXPANDED</td>
-	<td>//*[contains(@class,'panel-group')]//*[normalize-space()='${key_panel}'][@aria-expanded='true'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]</td>
+	<td>//*[contains(@class,'panel')]//*[normalize-space()='${key_panel}'][@aria-expanded='true'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]</td>
 	<td></td>
 </tr>
 <tr>

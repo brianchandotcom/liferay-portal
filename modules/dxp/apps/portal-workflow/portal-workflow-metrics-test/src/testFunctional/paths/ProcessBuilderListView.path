@@ -11,18 +11,8 @@
 
 <tbody>
 <tr>
-	<td>TOOLTIP_MESSAGE</td>
-	<td>//a[contains(@title,'${key_tooltip}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[@placeholder='Search for']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VALIDATE_SEARCH_RESULTS_BAR</td>
-	<td>//span[contains(.,'Results') and @class='text-truncate']</td>
+	<td>SUCCESS_MESSAGE_POPUP</td>
+	<td>//div[contains(@class,'alert')]//div[contains(text(),'${key_message}') and contains(*,'Success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,6 +30,7 @@
 	<td>//ul[@class='control-menu-nav']//span[@data-qa-id='headerTitle']</td>
 	<td></td>
 </tr>
+<tr>
 	<td>DROPDOWN_ITEM</td>
 	<td>//a[contains(@class,'dropdown-item') and contains(text(),'${key_value}')]</td>
 	<td></td>
@@ -70,8 +61,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATE_SEARCH_RESULTS_BAR</td>
+	<td>//span[contains(.,'Results') and @class='text-truncate']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_NAME_IN_SECTION</td>
 	<td>//tr[contains(@class,'table-divider')]//td[contains(text(),'${key_section}')]/../../tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_processName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLTIP_MESSAGE</td>
+	<td>//a[contains(@title,'${key_tooltip}')]</td>
 	<td></td>
 </tr>
 <tr>

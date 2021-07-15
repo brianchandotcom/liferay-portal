@@ -36,6 +36,7 @@ import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
+import com.liferay.layout.seo.web.internal.configuration.FFLayoutTranslatedLanguagesConfiguration;
 import com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
@@ -77,13 +78,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
  */
 @Component(
-	configurationPid = "com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping",
+	configurationPid = {
+		"com.liferay.layout.seo.web.internal.configuration.FFLayoutTranslatedLanguagesConfiguration",
+		"com.liferay.layout.seo.web.internal.configuration.FFSEOInlineFieldMapping"
+	},
 	service = DynamicInclude.class
 )
 public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
@@ -305,9 +310,13 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_ffSEOInlineFieldMapping = ConfigurableUtil.createConfigurable(
 			FFSEOInlineFieldMapping.class, properties);
+		_ffLayoutTranslatedLanguagesConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFLayoutTranslatedLanguagesConfiguration.class, properties);
 
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
@@ -344,7 +353,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
 			layout.getGroupId());
 
-		if (!_openGraphConfiguration.isLayoutTranslatedLanguagesEnabled(
+		if (!_ffLayoutTranslatedLanguagesConfiguration.
+				enableFFLayoutTranslatedLanguages() ||
+			!_openGraphConfiguration.isLayoutTranslatedLanguagesEnabled(
 				layout.getGroup())) {
 
 			return siteAvailableLocales;
@@ -463,7 +474,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private DLURLHelper _dlurlHelper;
 
-	private FFSEOInlineFieldMapping _ffSEOInlineFieldMapping;
+	private volatile FFLayoutTranslatedLanguagesConfiguration
+		_ffLayoutTranslatedLanguagesConfiguration;
+	private volatile FFSEOInlineFieldMapping _ffSEOInlineFieldMapping;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
@@ -486,7 +499,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private OpenGraphConfiguration _openGraphConfiguration;
 
-	private OpenGraphImageProvider _openGraphImageProvider;
+	private volatile OpenGraphImageProvider _openGraphImageProvider;
 
 	@Reference
 	private Portal _portal;
@@ -494,6 +507,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private StorageEngine _storageEngine;
 
-	private TitleProvider _titleProvider;
+	private volatile TitleProvider _titleProvider;
 
 }

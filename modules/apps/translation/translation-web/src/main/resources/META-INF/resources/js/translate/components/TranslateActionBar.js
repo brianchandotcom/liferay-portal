@@ -20,10 +20,12 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React from 'react';
 
+import ExperienceSelector from './ExperienceSelector';
 import TranslateLanguagesSelector from './TranslateLanguagesSelector';
 
 const TransLateActionBar = ({
 	autoTranslateEnabled,
+	experienceSelectorData,
 	fetchAutoTranslateFields,
 	fetchAutoTranslateStatus,
 	formHasChanges,
@@ -43,6 +45,11 @@ const TransLateActionBar = ({
 		<nav className="component-tbar subnav-tbar-light tbar">
 			<ClayLayout.ContainerFluid view>
 				<ul className="tbar-nav">
+					{experienceSelectorData && (
+						<li className="tbar-item">
+							<ExperienceSelector {...experienceSelectorData} />
+						</li>
+					)}
 					<li
 						className={classNames('tbar-item', {
 							'tbar-item-expand': !autoTranslateEnabled,

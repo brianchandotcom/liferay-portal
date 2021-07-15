@@ -257,6 +257,62 @@ definition {
 		Accounts.viewInactiveAccount(accountName = "Accounts Name 3 for Test");
 	}
 
+	@description = "This test deactivates and activates multiple entries via management toolbar"
+	@priority = "4"
+	test CanDeactivateAndActivateAccountsInBulk {
+		for (var accountNumber : list "1,2,3,4,5,6") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.addBusinessAccount(accountName = "Account ${accountNumber}");
+		}
+
+		Accounts.openAccountsAdmin();
+
+		for (var accountNumber : list "1,3,5") {
+			LexiconEntry.selectEntry(rowEntry = "Account ${accountNumber}");
+		}
+
+		ClickNoError(
+			key_text = "hidden",
+			locator1 = "Icon#ANY");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to deactivate this?");
+
+		Alert.viewSuccessMessage();
+
+		for (var accountNumber : list "1,3,5") {
+			LexiconEntry.viewNoEntry(rowEntry = "Account ${accountNumber}");
+		}
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		for (var accountNumber : list "1,3,5") {
+			LexiconEntry.viewEntryName(rowEntry = "Account ${accountNumber}");
+		}
+
+		for (var accountNumber : list "2,4,6") {
+			LexiconEntry.viewNoEntry(rowEntry = "Account ${accountNumber}");
+		}
+
+		for (var accountNumber : list "1,3,5") {
+			LexiconEntry.selectEntry(rowEntry = "Account ${accountNumber}");
+		}
+
+		ClickNoError(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No accounts were found.");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+		for (var accountNumber : list "1,3,5") {
+			LexiconEntry.viewEntryName(rowEntry = "Account ${accountNumber}");
+		}
+	}
+
 	@description = "This test asserts an account can be deleted successfully via management toolbar and menu item."
 	@priority = "5"
 	test CanDeleteAccount {

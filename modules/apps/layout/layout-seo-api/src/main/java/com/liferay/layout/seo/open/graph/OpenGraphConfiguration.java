@@ -23,6 +23,12 @@ import com.liferay.portal.kernel.model.Group;
  */
 public interface OpenGraphConfiguration {
 
+	public boolean isLayoutTranslatedLanguagesEnabled(Company company)
+		throws PortalException;
+
+	public boolean isLayoutTranslatedLanguagesEnabled(Group group)
+		throws PortalException;
+
 	public boolean isOpenGraphEnabled(Company company) throws PortalException;
 
 	public boolean isOpenGraphEnabled(Group group) throws PortalException;

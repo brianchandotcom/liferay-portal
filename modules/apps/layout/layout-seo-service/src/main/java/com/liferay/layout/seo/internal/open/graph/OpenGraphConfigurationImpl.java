@@ -34,6 +34,34 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
 	@Override
+	public boolean isLayoutTranslatedLanguagesEnabled(Company company)
+		throws PortalException {
+
+		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
+
+		if (!layoutSEOCompanyConfiguration.enableOpenGraph()) {
+			return false;
+		}
+
+		return layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages();
+	}
+
+	@Override
+	public boolean isLayoutTranslatedLanguagesEnabled(Group group)
+		throws PortalException {
+
+		if (!isLayoutTranslatedLanguagesEnabled(
+				_companyLocalService.getCompany(group.getCompanyId()))) {
+
+			return false;
+		}
+
+		return isOpenGraphEnabled(group);
+	}
+
+	@Override
 	public boolean isOpenGraphEnabled(Company company) throws PortalException {
 		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(

@@ -118,9 +118,16 @@ public abstract class BaseJob implements Job {
 					_getSlaveRAMMinimumDefault(), _getSlavesPerHostDefault(),
 					JenkinsResultsParserUtil.getCohortName());
 
-			int distNodeCount = Math.min(
-				jenkinsMasters.size(),
-				getAxisCount() / _getDistNodeAxisCount());
+			int axisCount = getAxisCount();
+			int distNodeAxisCount = _getDistNodeAxisCount();
+
+			int distNodeCount = axisCount / distNodeAxisCount;
+
+			if ((axisCount % distNodeAxisCount) > 0) {
+				distNodeCount++;
+			}
+
+			distNodeCount = Math.min(distNodeCount, jenkinsMasters.size());
 
 			distNodeCount = Math.max(distNodeCount, _getDistNodeCountMinimum());
 

@@ -2732,13 +2732,11 @@ public class DLFileEntryLocalServiceImpl
 		String entryURL = PortalUtil.getControlPanelFullURL(
 			fileVersion.getGroupId(), portletId, null);
 
-		entryURL = HttpUtil.addParameter(
-			entryURL,
-			PortalUtil.getPortletNamespace(portletId) + "mvcRenderCommandName",
-			"/document_library/edit_file_entry");
-
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
+		entryURL = HttpUtil.addParameter(
+			entryURL, namespace + "mvcRenderCommandName",
+			"/document_library/edit_file_entry");
 		entryURL = HttpUtil.addParameter(
 			entryURL, namespace + "groupId", fileVersion.getGroupId());
 		entryURL = HttpUtil.addParameter(

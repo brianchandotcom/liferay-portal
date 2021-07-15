@@ -2962,6 +2962,45 @@ public class Mutation {
 					Long.valueOf(siteKey), callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the site's structured content by external reference code."
+	)
+	public boolean deleteSiteStructuredContentByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					deleteSiteStructuredContentByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the site's structured content with the given external reference code, or creates it if it not exists."
+	)
+	public StructuredContent updateSiteStructuredContentByExternalReferenceCode(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					putSiteStructuredContentByExternalReferenceCode(
+						Long.valueOf(siteKey), externalReferenceCode,
+						structuredContent));
+	}
+
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateSiteStructuredContentPermission(

@@ -4745,7 +4745,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.5'."
+        'com.liferay.headless.delivery.client', and version '4.0.7'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -11538,6 +11538,7 @@ paths:
             # @review
             description:
                 Deletes the site's structured content by external reference code.
+            operationId: deleteSiteStructuredContentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -11562,6 +11563,7 @@ paths:
             # @review
             description:
                 Retrieves the site's structured content by external reference code.
+            operationId: getSiteStructuredContentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -11591,6 +11593,7 @@ paths:
             description:
                 Updates the site's structured content with the given external reference code, or creates it if it not
                 exists.
+            operationId: putSiteStructuredContentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

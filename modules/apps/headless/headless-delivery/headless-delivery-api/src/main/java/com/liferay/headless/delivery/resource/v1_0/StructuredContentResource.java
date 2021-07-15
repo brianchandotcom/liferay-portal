@@ -97,6 +97,19 @@ public interface StructuredContentResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteStructuredContentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public StructuredContent getSiteStructuredContentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public StructuredContent putSiteStructuredContentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			StructuredContent structuredContent)
+		throws Exception;
+
 	public StructuredContent getSiteStructuredContentByKey(
 			Long siteId, String key)
 		throws Exception;

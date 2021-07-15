@@ -360,6 +360,103 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-133709. The user can navigate to private and public pages defined in navigation menu via the Page Tree."
+	@priority = "4"
+	test NavigateToPrivateAndPublicPagesDefinedInNavigationMenuViaPageTree {
+		task ("Add a public content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page 1",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page 1");
+		}
+
+		task ("Add a child widget page under content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page 1",
+				parentPageName = "Test Parent Page 1");
+		}
+
+		task ("Add a private content page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page 2",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Parent Page 2",
+				privateLayout = "true");
+		}
+
+		task ("Add a child widget page under content page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Child Page 2",
+				parentPageName = "Test Parent Page 2");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add two content pages as parent page items to the navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				privateLayout = "false",
+				siteNavigationMenuItemName = "Test Parent Page 1",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "layout");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				privateLayout = "true",
+				siteNavigationMenuItemName = "Test Parent Page 2",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "layout");
+		}
+
+		task ("Add a child widget page item under each parent page item") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				parentSiteNavigationMenuItem = "Test Parent Page 1",
+				privateLayout = "false",
+				siteNavigationMenuItemName = "Test Child Page 1",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "layout");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				parentSiteNavigationMenuItem = "Test Parent Page 2",
+				privateLayout = "true",
+				siteNavigationMenuItemName = "Test Child Page 2",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "layout");
+		}
+
+		task ("Select the navigation menu in page type selctor of Page Tree") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToFindAPage();
+
+			PagesFinder.selectPageType(optionValue = "Navigation Menu Name");
+		}
+
+		task ("Navigate to each page via Page Tree") {
+			for (var pageName : list "Test Parent Page 1,Test Parent Page 2,Test Child Page 1,Test Child Page 2") {
+				Portlet.expandTree();
+
+				PagesFinder.navigateToPage(pageName = "${pageName}");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-133709. The user can navigate to public pages defined in navigation menu via the Page Tree."
 	@priority = "4"
 	test NavigateToPublicPagesDefinedInNavigationMenuViaPageTree {

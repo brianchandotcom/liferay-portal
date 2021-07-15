@@ -5,6 +5,8 @@
 		<field name="mvccVersion" type="long" />
 		<field name="rankingId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="json" type="String" />
+		<field name="json" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 </model-hints>

@@ -32,27 +32,31 @@ definition {
 	@priority = "4"
 	test AddWebContentBasedOnStructureNameWithXSS {
 		task ("Add a structure with XSS name") {
+			var actualScript = '''<script>alert(123);</script>''';
+
+			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = '''<script>alert(123);</script>''');
+			WebContentStructures.addCP(structureName = "${actualScript}");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
 
-			WebContentStructures.saveCP(structureName = '''<script>alert(123);</script>''');
+			WebContentStructures.saveCP();
 		}
 
 		task ("View the structure is shown") {
-			WebContentStructures.viewCP(structureName = '''<script>alert(123);</script>''');
+			WebContentStructures.viewCP(structureName = "${actualScript}");
 		}
 
 		task ("View no alert popup when add a web content based on new structure") {
 			NavItem.click(navItem = "Web Content");
 
-			WebContentNavigator.gotoAddWithStructureCP(structureName = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "${escapedScript}");
 		}
 	}
 

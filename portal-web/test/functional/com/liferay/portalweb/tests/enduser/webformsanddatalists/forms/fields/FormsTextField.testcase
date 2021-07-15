@@ -285,8 +285,8 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		FormFields.editValidation(
-			validationArgument = "Matches",
 			selectOption = "Test Error",
+			validationArgument = "Matches",
 			validationInput = "Test");
 
 		Click(locator1 = "Button#SAVE");
@@ -379,10 +379,10 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
-	@description = "Verify that the "Is Not URL" option can be used to validate a Text Field"
+	@description = "Verify that the Is Not URL option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotURLOption {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -403,11 +403,9 @@ definition {
 
 		FormFields.selectSelectOption(
 			fieldName = "If Input",
-			selectOption = "Is not URL");
+			selectOption = "Is a URL");
 
-		FormFields.viewTextFieldNotPresent(
-			key_fieldLabel = "The Value",
-			key_fieldName = "The Value");
+		FormFields.viewValueValidationFieldNotPresent(fieldLabel = "Value");
 
 		FormFields.editText(
 			fieldName = "errorMessage",

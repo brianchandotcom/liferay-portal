@@ -1237,7 +1237,11 @@ public class DDMFormAdminDisplayContext {
 			Map<String, DDMFormField> ddmFormFieldsMap =
 				ddmForm.getDDMFormFieldsMap(false);
 
-			DDMFormField ddmFormField = ddmFormFieldsMap.get("storageType");
+			DDMFormField ddmFormField = ddmFormFieldsMap.get("objectDefinitionId");
+
+			ddmFormField.setReadOnly(true);
+
+			ddmFormField = ddmFormFieldsMap.get("storageType");
 
 			ddmFormField.setReadOnly(true);
 		}

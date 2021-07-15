@@ -244,7 +244,7 @@ definition {
 	macro selectPageType {
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR");
 
-		MenuItem.click(menuItem = "${optionValue}");
+		DropdownMenuItem.click(menuItem = "${optionValue}");
 	}
 
 	macro viewInPagesAdministration {

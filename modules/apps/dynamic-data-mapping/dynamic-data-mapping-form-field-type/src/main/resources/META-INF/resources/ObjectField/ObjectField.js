@@ -111,7 +111,7 @@ const ObjectField = ({
 const ObjectFieldWrapper = (props) => {
 	const {objectFields} = useFormState();
 
-	if (!objectFields.length) {
+	if (!objectFields?.length) {
 		return null;
 	}
 

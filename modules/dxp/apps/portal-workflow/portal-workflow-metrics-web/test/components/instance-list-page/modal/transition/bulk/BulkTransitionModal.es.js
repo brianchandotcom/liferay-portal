@@ -43,7 +43,10 @@ const tasks = (range) =>
 		label: 'Review',
 		name: 'review',
 		processId: id + 1,
+		processVersion: '1.0',
 	}));
+
+const updateTaskItem = {...tasks(1)[0], label: 'Update', name: 'update'};
 
 const {data, items, processSteps} = {
 	data: {
@@ -125,7 +128,7 @@ const {data, items, processSteps} = {
 			},
 		],
 	},
-	items: tasks(13),
+	items: [...tasks(13), updateTaskItem],
 	lastPage: 9,
 	page: 1,
 	pageSize: 5,
@@ -456,8 +459,15 @@ describe('The BulkTransitionModal component should', () => {
 		fireEvent.click(nextBtn);
 	});
 
+	test('render a panel for each task names', () => {
+		const taskNamesPanel = document.querySelectorAll('.panel-header > h4');
+
+		expect(taskNamesPanel[0]).toHaveTextContent('Review');
+		expect(taskNamesPanel[1]).toHaveTextContent('Update');
+	});
+
 	test('Select a transition to "approve", click "Show All" button, add a comment and retry patch request successfully', async () => {
-		const addCommentButton = getByText('add-comment');
+		const addCommentButton = getAllByText('add-comment')[0];
 		const nextBtn = getByText('done');
 		const showAllButton = getByText('show-all');
 		const transitionSelect = document.querySelector('#transitionSelect0_0');

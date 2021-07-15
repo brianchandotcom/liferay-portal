@@ -340,7 +340,7 @@ Translate.propTypes = {
 					targetContentDir: PropTypes.string,
 				})
 			),
-			legend: PropTypes.string,
+			legend: PropTypes.string.isRequired,
 		})
 	),
 	portletNamespace: PropTypes.string.isRequired,

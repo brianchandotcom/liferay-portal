@@ -52,9 +52,11 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		// Workaround for LPS-135684
 
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+		/*DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");*/
 
 		User.firstLoginUI(
 			password = "test",
@@ -73,9 +75,11 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		// Workaround for LPS-135684
 
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+		/*DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");*/
 
 		SQL.assertDatabaseCount(
 			databaseFilter = "testPartition%",

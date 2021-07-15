@@ -238,7 +238,7 @@ export default withRouter(
 					!search &&
 					!keywords &&
 					!creatorId &&
-					!sort &&
+					(!sort || sort === 'dateCreated:desc') &&
 					!section.messageBoardSections.items.length &&
 					section.id !== 0
 				) {

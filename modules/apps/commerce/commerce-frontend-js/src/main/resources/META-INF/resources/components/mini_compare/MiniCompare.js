@@ -112,7 +112,7 @@ function MiniCompare(props) {
 
 	useEffect(() => {
 		Liferay.fire(PRODUCT_COMPARISON_TOGGLED, {
-			disabled: items.length < props.itemsLimit,
+			disabled: items.length > props.itemsLimit,
 		});
 	}, [items, props.itemsLimit]);
 

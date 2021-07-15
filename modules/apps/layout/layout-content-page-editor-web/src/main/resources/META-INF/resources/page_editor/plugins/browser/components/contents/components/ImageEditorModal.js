@@ -28,6 +28,58 @@ import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
 import FragmentService from '../../../../../app/services/FragmentService';
 import ImageService from '../../../../../app/services/ImageService';
 
+export const updateFragmentsPreviewImage = ({
+	dispatch,
+	fileEntryId,
+	fragmentEntryLinks,
+	languageId,
+}) => {
+	const fragmentsToUpdate = Object.values(fragmentEntryLinks).filter(
+		(fragmentEntryLink) => {
+			const editableValues = Object.values(
+				fragmentEntryLink.editableValues
+			).reduce(
+				(acc, editable) => [...acc, ...Object.entries(editable)],
+				[]
+			);
+
+			return editableValues.some(
+				([, value]) =>
+					!fragmentEntryLink.removed &&
+					typeof value === 'object' &&
+					(value.classPK === fileEntryId ||
+						value[languageId]?.classPK === fileEntryId ||
+						value[config.defaultLanguageId]?.classPK ===
+							fileEntryId)
+			);
+		}
+	);
+
+	const getFileEntryPromise = ImageService.getFileEntry({
+		fileEntryId,
+	});
+
+	const getFragmentEntryLinkContentPromises = fragmentsToUpdate.map(
+		({fragmentEntryLinkId}) =>
+			FragmentService.renderFragmentEntryLinkContent({
+				fragmentEntryLinkId,
+			}).then(({content}) => ({content, fragmentEntryLinkId}))
+	);
+
+	return Promise.all([
+		getFileEntryPromise,
+		...getFragmentEntryLinkContentPromises,
+	]).then(([{fileEntryURL}, ...contents]) => {
+		dispatch(
+			updatePreviewImage({
+				contents,
+				fileEntryId,
+				previewURL: fileEntryURL,
+			})
+		);
+	});
+};
+
 export default function ImageEditorModal({
 	editImageURL,
 	fileEntryId,
@@ -46,52 +98,11 @@ export default function ImageEditorModal({
 		if (response?.success) {
 			onClose();
 
-			const fragmentsToUpdate = Object.values(fragmentEntryLinks).filter(
-				(fragmentEntryLink) => {
-					const editableValues = Object.values(
-						fragmentEntryLink.editableValues
-					).reduce(
-						(acc, editable) => [
-							...acc,
-							...Object.entries(editable),
-						],
-						[]
-					);
-
-					return editableValues.some(
-						([, value]) =>
-							!fragmentEntryLink.removed &&
-							typeof value === 'object' &&
-							(value.classPK === fileEntryId ||
-								value[languageId]?.classPK === fileEntryId ||
-								value[config.defaultLanguageId]?.classPK ===
-									fileEntryId)
-					);
-				}
-			);
-
-			const getFileEntryPromise = ImageService.getFileEntry({
+			updateFragmentsPreviewImage({
+				dispatch,
 				fileEntryId,
-			});
-
-			const getFragmentEntryLinkContentPromises = fragmentsToUpdate.map(
-				({fragmentEntryLinkId}) =>
-					FragmentService.renderFragmentEntryLinkContent({
-						fragmentEntryLinkId,
-					}).then(({content}) => ({content, fragmentEntryLinkId}))
-			);
-
-			Promise.all([
-				getFileEntryPromise,
-				...getFragmentEntryLinkContentPromises,
-			]).then(([{fileEntryURL}, ...contents]) => {
-				dispatch(
-					updatePreviewImage({
-						contents,
-						fileEntryId,
-						previewURL: fileEntryURL,
-					})
-				);
+				fragmentEntryLinks,
+				languageId,
 			});
 		}
 	};

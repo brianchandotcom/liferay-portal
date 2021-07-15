@@ -12,7 +12,7 @@
  * details.
  */
 
-import {isModifyingKey} from '../../../src/main/resources/META-INF/resources/js/util/dom.es';
+import {isModifyingKey} from '../../../src/main/resources/META-INF/resources/admin/js/util/dom';
 
 describe('DOM Utilities', () => {
 	describe('isModifyingKey', () => {

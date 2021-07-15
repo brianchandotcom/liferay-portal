@@ -17,6 +17,12 @@ definition {
 		ACUtils.launchDXP();
 
 		ACUtils.addSiteAndPage();
+
+		ACUtils.createWCAndAddToPage(
+			webContentTitle = "Custom Asset AC Title",
+			webContentRichText = '''<div data-analytics-asset-type='custom' data-analytics-asset-id='analytics-portal' \
+			data-analytics-asset-category='AC' data-analytics-asset-title='Custom Asset Analytics Cloud'> \
+			<h1> What's your favorite portal? </h1> </div>''');
 	}
 
 	tearDown {
@@ -38,9 +44,54 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanShowsCustomAssetList {
+		for (var layoutName : list "AC Page 2,AC Page 3") {
+			ACUtils.addSiteAndPage(layoutName = "${layoutName}");
+		}
 
-		// TODO LRAC-8132 CanShowsCustomAssetList pending implementation
+		for (var n : list "2,3") {
+			ACUtils.createWCAndAddToPage(
+				layoutName = "AC Page ${n}",
+				webContentTitle = "Custom Asset AC Title ${n}",
+				webContentRichText = '''<div data-analytics-asset-type='custom' data-analytics-asset-id='analytics-portal-${n}' \
+				data-analytics-asset-category='AC' data-analytics-asset-title='Custom Asset Analytics Cloud ${n}'> \
+				<h1> What's your favorite portal ${n}? </h1> </div>''');
+		}
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Site Name");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Custom");
+
+		for (var assetName : list "Custom Asset Analytics Cloud,Custom Asset Analytics Cloud 2,Custom Asset Analytics Cloud 3") {
+			ACAssets.viewAssets(assetName = "${assetName}");
+		}
 	}
 
 }

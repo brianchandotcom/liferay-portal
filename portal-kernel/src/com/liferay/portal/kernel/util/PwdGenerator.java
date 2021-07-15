@@ -73,15 +73,7 @@ public class PwdGenerator {
 	public static String getPassword(String key, int length) {
 		int keysCount = 0;
 
-		if (key.contains(KEY1)) {
-			keysCount++;
-		}
-
-		if (key.contains(KEY2)) {
-			keysCount++;
-		}
-
-		if (key.contains(KEY3)) {
+		if (key.contains(KEY1) || key.contains(KEY2) || key.contains(KEY3)) {
 			keysCount++;
 		}
 
@@ -96,20 +88,12 @@ public class PwdGenerator {
 		while (true) {
 			String password = getPassword(length, key);
 
-			if (key.contains(KEY1) &&
-				Validator.isNull(StringUtil.extractDigits(password))) {
-
-				continue;
-			}
-
-			if (key.contains(KEY2) &&
-				password.equals(StringUtil.toLowerCase(password))) {
-
-				continue;
-			}
-
-			if (key.contains(KEY3) &&
-				password.equals(StringUtil.toUpperCase(password))) {
+			if ((key.contains(KEY1) &&
+				 Validator.isNull(StringUtil.extractDigits(password))) ||
+				(key.contains(KEY2) &&
+				 password.equals(StringUtil.toLowerCase(password))) ||
+				(key.contains(KEY3) &&
+				 password.equals(StringUtil.toUpperCase(password)))) {
 
 				continue;
 			}

@@ -165,11 +165,7 @@ public class StringUtil {
 	}
 
 	public static boolean endsWith(String s, String end) {
-		if ((s == null) || (end == null)) {
-			return false;
-		}
-
-		if (end.length() > s.length()) {
+		if ((s == null) || (end == null) || (end.length() > s.length())) {
 			return false;
 		}
 
@@ -187,11 +183,7 @@ public class StringUtil {
 			return true;
 		}
 
-		if ((s1 == null) || (s2 == null)) {
-			return false;
-		}
-
-		if (s1.length() != s2.length()) {
+		if ((s1 == null) || (s2 == null) || (s1.length() != s2.length())) {
 			return false;
 		}
 
@@ -849,11 +841,7 @@ public class StringUtil {
 	}
 
 	public static boolean startsWith(String s, String start) {
-		if ((s == null) || (start == null)) {
-			return false;
-		}
-
-		if (start.length() > s.length()) {
+		if ((s == null) || (start == null) || (start.length() > s.length())) {
 			return false;
 		}
 

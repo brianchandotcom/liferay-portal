@@ -391,15 +391,8 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		if (getItemsTotal() > 0) {
-			return false;
-		}
-
-		if (_journalDisplayContext.isSearch()) {
-			return false;
-		}
-
-		if (!_journalDisplayContext.isNavigationHome() ||
+		if ((getItemsTotal() > 0) || _journalDisplayContext.isSearch() ||
+			!_journalDisplayContext.isNavigationHome() ||
 			(_journalDisplayContext.getStatus() !=
 				WorkflowConstants.STATUS_ANY)) {
 

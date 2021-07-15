@@ -70,11 +70,8 @@ public class BatchPlannerPlanModelResourcePermission
 			BatchPlannerPlan batchPlannerPlan, String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isCompanyAdmin(batchPlannerPlan.getCompanyId())) {
-			return true;
-		}
-
-		if (permissionChecker.hasOwnerPermission(
+		if (permissionChecker.isCompanyAdmin(batchPlannerPlan.getCompanyId()) ||
+			permissionChecker.hasOwnerPermission(
 				batchPlannerPlan.getCompanyId(),
 				BatchPlannerPlan.class.getName(),
 				batchPlannerPlan.getBatchPlannerPlanId(),

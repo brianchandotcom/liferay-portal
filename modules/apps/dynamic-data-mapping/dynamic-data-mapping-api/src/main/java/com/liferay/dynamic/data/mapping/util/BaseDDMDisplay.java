@@ -355,11 +355,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			return false;
 		}
 
-		if (classPK == 0) {
-			return true;
-		}
-
-		if (structure.getParentStructureId() == 0) {
+		if ((classPK == 0) || (structure.getParentStructureId() == 0)) {
 			return true;
 		}
 

@@ -196,15 +196,10 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 	}
 
 	protected boolean isEnabled(ThemeDisplay themeDisplay) {
-		if (!_samlProviderConfigurationHelper.isEnabled()) {
-			return false;
-		}
+		if (!_samlProviderConfigurationHelper.isEnabled() ||
+			!_samlProviderConfigurationHelper.isRoleSp() ||
+			!themeDisplay.isSignedIn()) {
 
-		if (!_samlProviderConfigurationHelper.isRoleSp()) {
-			return false;
-		}
-
-		if (!themeDisplay.isSignedIn()) {
 			return false;
 		}
 

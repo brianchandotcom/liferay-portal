@@ -105,11 +105,7 @@ public class AssetRendererSharingEntryInterpreter
 		AssetRenderer<?> assetRenderer =
 			AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
 
-		if (assetRenderer == null) {
-			return false;
-		}
-
-		if (!assetRenderer.isDisplayable()) {
+		if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
 			return false;
 		}
 

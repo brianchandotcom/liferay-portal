@@ -71,11 +71,8 @@ public class ApplicationsMenuUtil {
 	public static boolean isApplicationsMenuApp(
 		PanelCategoryHelper panelCategoryHelper, ThemeDisplay themeDisplay) {
 
-		if (Validator.isNull(themeDisplay.getPpid())) {
-			return false;
-		}
-
-		if (!panelCategoryHelper.isApplicationsMenuApp(
+		if (Validator.isNull(themeDisplay.getPpid()) ||
+			!panelCategoryHelper.isApplicationsMenuApp(
 				themeDisplay.getPpid())) {
 
 			return false;

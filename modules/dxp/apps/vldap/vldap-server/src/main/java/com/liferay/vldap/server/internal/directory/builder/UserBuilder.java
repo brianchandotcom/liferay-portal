@@ -240,14 +240,10 @@ public class UserBuilder extends DirectoryBuilder {
 			}
 
 			for (User user : searchUsers) {
-				if ((screenName != null) &&
-					!screenName.equals(user.getScreenName())) {
-
-					continue;
-				}
-
-				if ((emailAddress != null) &&
-					!emailAddress.equals(user.getEmailAddress())) {
+				if (((screenName != null) &&
+					 !screenName.equals(user.getScreenName())) ||
+					((emailAddress != null) &&
+					 !emailAddress.equals(user.getEmailAddress()))) {
 
 					continue;
 				}

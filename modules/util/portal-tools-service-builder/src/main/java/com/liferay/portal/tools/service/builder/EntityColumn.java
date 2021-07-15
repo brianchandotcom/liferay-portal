@@ -391,11 +391,9 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public boolean isPrimitiveType(boolean includeWrappers) {
-		if (Character.isLowerCase(_type.charAt(0))) {
-			return true;
-		}
+		if (Character.isLowerCase(_type.charAt(0)) ||
+			(includeWrappers && isPrimitiveTypeWrapper())) {
 
-		if (includeWrappers && isPrimitiveTypeWrapper()) {
 			return true;
 		}
 

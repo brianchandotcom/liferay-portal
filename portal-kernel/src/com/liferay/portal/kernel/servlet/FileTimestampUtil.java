@@ -38,11 +38,7 @@ public class FileTimestampUtil {
 	public static long getTimestamp(
 		ServletContext servletContext, String path) {
 
-		if (Validator.isNull(path)) {
-			return 0;
-		}
-
-		if (path.charAt(0) != CharPool.SLASH) {
+		if (Validator.isNull(path) || (path.charAt(0) != CharPool.SLASH)) {
 			return 0;
 		}
 

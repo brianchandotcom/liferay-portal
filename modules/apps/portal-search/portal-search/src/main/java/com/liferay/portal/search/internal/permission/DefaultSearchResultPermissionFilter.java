@@ -205,11 +205,7 @@ public class DefaultSearchResultPermissionFilter
 		long groupId = GetterUtil.getLong(
 			searchContext.getAttribute(Field.GROUP_ID));
 
-		if (groupId == 0) {
-			return false;
-		}
-
-		if (!_permissionChecker.isGroupAdmin(groupId)) {
+		if ((groupId == 0) || !_permissionChecker.isGroupAdmin(groupId)) {
 			return false;
 		}
 
@@ -292,11 +288,7 @@ public class DefaultSearchResultPermissionFilter
 
 		Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 
-		if (indexer == null) {
-			return true;
-		}
-
-		if (!indexer.isFilterSearch()) {
+		if ((indexer == null) || !indexer.isFilterSearch()) {
 			return true;
 		}
 

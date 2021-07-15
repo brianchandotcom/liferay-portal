@@ -172,12 +172,8 @@ public class OAuth2ScopeGrantLocalServiceImpl
 
 		if (!Objects.equals(
 				oAuth2ScopeGrant.getApplicationName(),
-				liferayOAuth2Scope.getApplicationName())) {
-
-			return false;
-		}
-
-		if (!Objects.equals(
+				liferayOAuth2Scope.getApplicationName()) ||
+			!Objects.equals(
 				oAuth2ScopeGrant.getScope(), liferayOAuth2Scope.getScope())) {
 
 			return false;

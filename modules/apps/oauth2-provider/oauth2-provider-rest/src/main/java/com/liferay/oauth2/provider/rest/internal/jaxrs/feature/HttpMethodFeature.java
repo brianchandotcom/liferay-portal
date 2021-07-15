@@ -174,13 +174,10 @@ public class HttpMethodFeature implements Feature {
 
 			String requestMethod = request.getMethod();
 
-			if (!_scopes.contains(requestMethod) &&
-				_ignoreMissingScopes.contains(requestMethod)) {
+			if ((!_scopes.contains(requestMethod) &&
+				 _ignoreMissingScopes.contains(requestMethod)) ||
+				_scopeChecker.checkScope(requestMethod)) {
 
-				return true;
-			}
-
-			if (_scopeChecker.checkScope(requestMethod)) {
 				return true;
 			}
 

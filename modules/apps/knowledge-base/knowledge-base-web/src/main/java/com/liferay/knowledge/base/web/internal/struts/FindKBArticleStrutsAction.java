@@ -100,11 +100,9 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 
 		PortletURL portletURL = null;
 
-		if (kbArticle == null) {
-			portletURL = getDynamicPortletURL(plid, status, httpServletRequest);
-		}
+		if ((kbArticle == null) ||
+			(status != WorkflowConstants.STATUS_APPROVED)) {
 
-		if (status != WorkflowConstants.STATUS_APPROVED) {
 			portletURL = getDynamicPortletURL(plid, status, httpServletRequest);
 		}
 
@@ -203,11 +201,8 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		KBArticle kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
 			resourcePrimKey, status);
 
-		if (kbArticle == null) {
-			return null;
-		}
-
-		if (!KBArticlePermission.contains(
+		if ((kbArticle == null) ||
+			!KBArticlePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), kbArticle,
 				KBActionKeys.VIEW)) {
 

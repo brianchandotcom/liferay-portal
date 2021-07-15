@@ -104,11 +104,8 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		HttpAuthorizationHeader httpAuthorizationHeader =
 			HttpAuthManagerUtil.parse(httpServletRequest);
 
-		if (httpAuthorizationHeader == null) {
-			return 0;
-		}
-
-		if (!StringUtil.equalsIgnoreCase(
+		if ((httpAuthorizationHeader == null) ||
+			!StringUtil.equalsIgnoreCase(
 				httpAuthorizationHeader.getScheme(),
 				HttpAuthorizationHeader.SCHEME_BASIC)) {
 
@@ -125,11 +122,8 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		HttpAuthorizationHeader httpAuthorizationHeader =
 			HttpAuthManagerUtil.parse(httpServletRequest);
 
-		if (httpAuthorizationHeader == null) {
-			return 0;
-		}
-
-		if (!StringUtil.equalsIgnoreCase(
+		if ((httpAuthorizationHeader == null) ||
+			!StringUtil.equalsIgnoreCase(
 				httpAuthorizationHeader.getScheme(),
 				HttpAuthorizationHeader.SCHEME_DIGEST)) {
 
@@ -322,11 +316,9 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 				requestURI, StringPool.QUESTION, queryString);
 		}
 
-		if (!realm.equals(Portal.PORTAL_REALM) || !uri.equals(requestURI)) {
-			return userId;
-		}
+		if (!realm.equals(Portal.PORTAL_REALM) || !uri.equals(requestURI) ||
+			!NonceUtil.verify(nonce)) {
 
-		if (!NonceUtil.verify(nonce)) {
 			return userId;
 		}
 

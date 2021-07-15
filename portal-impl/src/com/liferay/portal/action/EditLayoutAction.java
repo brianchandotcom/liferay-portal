@@ -246,19 +246,12 @@ public class EditLayoutAction extends JSONAction {
 							"be-the-first-page");
 			}
 
-			if ((cmd.equals("display_order") || cmd.equals("priority")) &&
-				(layoutTypeException.getType() ==
-					LayoutTypeException.FIRST_LAYOUT)) {
-
-				return themeDisplay.translate(
-					"you-cannot-move-this-page-because-the-resulting-order-" +
-						"would-place-a-page-of-type-x-as-the-first-page",
-					"layout.types." + layoutTypeException.getLayoutType());
-			}
-
-			if (cmd.equals("parent_layout_id") &&
-				(layoutTypeException.getType() ==
-					LayoutTypeException.FIRST_LAYOUT)) {
+			if (((cmd.equals("display_order") || cmd.equals("priority")) &&
+				 (layoutTypeException.getType() ==
+					 LayoutTypeException.FIRST_LAYOUT)) ||
+				(cmd.equals("parent_layout_id") &&
+				 (layoutTypeException.getType() ==
+					 LayoutTypeException.FIRST_LAYOUT))) {
 
 				return themeDisplay.translate(
 					"you-cannot-move-this-page-because-the-resulting-order-" +

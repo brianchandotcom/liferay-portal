@@ -394,12 +394,8 @@ public class PoshiRunner {
 								throwable2.getClass())) {
 
 							if ((validRetryThrowableShortMessage == null) ||
-								validRetryThrowableShortMessage.isEmpty()) {
-
-								return true;
-							}
-
-							if (validRetryThrowableShortMessage.equals(
+								validRetryThrowableShortMessage.isEmpty() ||
+								validRetryThrowableShortMessage.equals(
 									_getShortMessage(throwable2))) {
 
 								return true;
@@ -427,13 +423,9 @@ public class PoshiRunner {
 			}
 
 			private boolean _isTestcaseRetryable() {
-				if (_testcaseRetryCount >=
-						PropsValues.TEST_TESTCASE_MAX_RETRIES) {
-
-					return false;
-				}
-
-				if (PropsValues.TEST_SKIP_TEAR_DOWN ||
+				if ((_testcaseRetryCount >=
+						PropsValues.TEST_TESTCASE_MAX_RETRIES) ||
+					PropsValues.TEST_SKIP_TEAR_DOWN ||
 					(PropsValues.TEST_TESTCASE_MAX_RETRIES == 0)) {
 
 					return false;

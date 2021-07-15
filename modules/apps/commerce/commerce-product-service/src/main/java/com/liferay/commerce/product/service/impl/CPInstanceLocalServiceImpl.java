@@ -2229,11 +2229,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.fetchByC_S(
 			cpDefinitionId, sku);
 
-		if (cpInstance == null) {
-			return;
-		}
+		if ((cpInstance == null) ||
+			(cpInstanceId == cpInstance.getCPInstanceId())) {
 
-		if (cpInstanceId == cpInstance.getCPInstanceId()) {
 			return;
 		}
 

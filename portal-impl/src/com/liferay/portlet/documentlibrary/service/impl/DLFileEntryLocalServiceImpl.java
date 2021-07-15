@@ -3138,14 +3138,10 @@ public class DLFileEntryLocalServiceImpl
 		DLGroupServiceSettings dlGroupServiceSettings =
 			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
-		if ((emailType == _EMAIL_TYPE_REVIEW) &&
-			!dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) {
-
-			return;
-		}
-
-		if ((emailType == _EMAIL_TYPE_EXPIRED) &&
-			!dlGroupServiceSettings.isEmailFileEntryExpiredEnabled()) {
+		if (((emailType == _EMAIL_TYPE_REVIEW) &&
+			 !dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) ||
+			((emailType == _EMAIL_TYPE_EXPIRED) &&
+			 !dlGroupServiceSettings.isEmailFileEntryExpiredEnabled())) {
 
 			return;
 		}
@@ -3289,14 +3285,10 @@ public class DLFileEntryLocalServiceImpl
 		DLGroupServiceSettings dlGroupServiceSettings =
 			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
-		if (Objects.equals(emailType, _EMAIL_TYPE_REVIEW) &&
-			!dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) {
-
-			return;
-		}
-
-		if (Objects.equals(emailType, _EMAIL_TYPE_EXPIRED) &&
-			!dlGroupServiceSettings.isEmailFileEntryExpiredEnabled()) {
+		if ((Objects.equals(emailType, _EMAIL_TYPE_REVIEW) &&
+			 !dlGroupServiceSettings.isEmailFileEntryReviewEnabled()) ||
+			(Objects.equals(emailType, _EMAIL_TYPE_EXPIRED) &&
+			 !dlGroupServiceSettings.isEmailFileEntryExpiredEnabled())) {
 
 			return;
 		}

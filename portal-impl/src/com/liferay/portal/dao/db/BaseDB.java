@@ -738,16 +738,12 @@ public abstract class BaseDB implements DB {
 			if (indexNames.contains(indexNameLowerCase)) {
 				boolean unique = index.isUnique();
 
-				if (unique &&
-					indexesSQLLowerCase.contains(
-						"create unique index " + indexNameLowerCase + " ")) {
-
-					continue;
-				}
-
-				if (!unique &&
-					indexesSQLLowerCase.contains(
-						"create index " + indexNameLowerCase + " ")) {
+				if ((unique &&
+					 indexesSQLLowerCase.contains(
+						 "create unique index " + indexNameLowerCase + " ")) ||
+					(!unique &&
+					 indexesSQLLowerCase.contains(
+						 "create index " + indexNameLowerCase + " "))) {
 
 					continue;
 				}

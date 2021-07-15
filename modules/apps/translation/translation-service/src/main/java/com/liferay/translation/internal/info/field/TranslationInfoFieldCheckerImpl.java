@@ -37,12 +37,8 @@ public class TranslationInfoFieldCheckerImpl
 		}
 
 		if (Objects.equals(
-				infoField.getInfoFieldType(), NumberInfoFieldType.INSTANCE)) {
-
-			return true;
-		}
-
-		if (Objects.equals(
+				infoField.getInfoFieldType(), NumberInfoFieldType.INSTANCE) ||
+			Objects.equals(
 				infoField.getInfoFieldType(), TextInfoFieldType.INSTANCE)) {
 
 			return true;

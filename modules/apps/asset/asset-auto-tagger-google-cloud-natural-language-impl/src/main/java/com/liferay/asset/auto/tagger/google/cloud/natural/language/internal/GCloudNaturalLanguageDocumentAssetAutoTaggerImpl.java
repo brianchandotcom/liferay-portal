@@ -127,14 +127,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		throws Exception {
 
 		if (!gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
-				classificationEndpointEnabled()) {
-
-			return Collections.emptySet();
-		}
-
-		if (Objects.nonNull(locale) &&
-			!Objects.equals(
-				locale.getLanguage(), LocaleUtil.ENGLISH.getLanguage())) {
+				classificationEndpointEnabled() ||
+			(Objects.nonNull(locale) &&
+			 !Objects.equals(
+				 locale.getLanguage(), LocaleUtil.ENGLISH.getLanguage()))) {
 
 			return Collections.emptySet();
 		}
@@ -175,13 +171,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		throws Exception {
 
 		if (!gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
-				entityEndpointEnabled()) {
-
-			return Collections.emptySet();
-		}
-
-		if (Objects.nonNull(locale) &&
-			!_supportedEntityLanguages.contains(locale.getLanguage())) {
+				entityEndpointEnabled() ||
+			(Objects.nonNull(locale) &&
+			 !_supportedEntityLanguages.contains(locale.getLanguage()))) {
 
 			return Collections.emptySet();
 		}

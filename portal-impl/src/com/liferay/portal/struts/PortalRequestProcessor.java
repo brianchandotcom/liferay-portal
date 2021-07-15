@@ -390,12 +390,8 @@ public class PortalRequestProcessor {
 		httpServletResponse.setContentType("text/html; charset=UTF-8");
 
 		if (!_processRoles(
-				httpServletRequest, httpServletResponse, actionMapping)) {
-
-			return;
-		}
-
-		if (!_processForward(
+				httpServletRequest, httpServletResponse, actionMapping) ||
+			!_processForward(
 				httpServletRequest, httpServletResponse, actionMapping)) {
 
 			return;

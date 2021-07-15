@@ -880,21 +880,13 @@ public class JournalEditArticleDisplayContext {
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
 				_themeDisplay.getCompanyId(), getGroupId(),
 				JournalFolder.class.getName(), getFolderId(),
-				ddmStructure.getStructureId())) {
-
-			return true;
-		}
-
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				ddmStructure.getStructureId()) ||
+			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
 				_themeDisplay.getCompanyId(), getGroupId(),
 				JournalFolder.class.getName(),
 				_getInheritedWorkflowDDMStructuresFolderId(),
-				ddmStructure.getStructureId())) {
-
-			return true;
-		}
-
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				ddmStructure.getStructureId()) ||
+			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
 				_themeDisplay.getCompanyId(), getGroupId(),
 				JournalFolder.class.getName(),
 				_getInheritedWorkflowDDMStructuresFolderId(),

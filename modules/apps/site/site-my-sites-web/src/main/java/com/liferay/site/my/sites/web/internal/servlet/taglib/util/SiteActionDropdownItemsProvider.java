@@ -198,19 +198,11 @@ public class SiteActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowLeaveAction() throws Exception {
-		if ((_group.getType() != GroupConstants.TYPE_SITE_OPEN) &&
-			(_group.getType() != GroupConstants.TYPE_SITE_RESTRICTED)) {
-
-			return false;
-		}
-
-		if (!GroupLocalServiceUtil.hasUserGroup(
-				_themeDisplay.getUserId(), _group.getGroupId(), false)) {
-
-			return false;
-		}
-
-		if (SiteMembershipPolicyUtil.isMembershipRequired(
+		if (((_group.getType() != GroupConstants.TYPE_SITE_OPEN) &&
+			 (_group.getType() != GroupConstants.TYPE_SITE_RESTRICTED)) ||
+			!GroupLocalServiceUtil.hasUserGroup(
+				_themeDisplay.getUserId(), _group.getGroupId(), false) ||
+			SiteMembershipPolicyUtil.isMembershipRequired(
 				_themeDisplay.getUserId(), _group.getGroupId())) {
 
 			return false;
@@ -220,18 +212,11 @@ public class SiteActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowMembershipRequestAction() throws Exception {
-		if (_group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) {
-			return false;
-		}
-
-		if (MembershipRequestLocalServiceUtil.hasMembershipRequest(
+		if ((_group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) ||
+			MembershipRequestLocalServiceUtil.hasMembershipRequest(
 				_themeDisplay.getUserId(), _group.getGroupId(),
-				MembershipRequestConstants.STATUS_PENDING)) {
-
-			return false;
-		}
-
-		if (!SiteMembershipPolicyUtil.isMembershipAllowed(
+				MembershipRequestConstants.STATUS_PENDING) ||
+			!SiteMembershipPolicyUtil.isMembershipAllowed(
 				_themeDisplay.getUserId(), _group.getGroupId())) {
 
 			return false;

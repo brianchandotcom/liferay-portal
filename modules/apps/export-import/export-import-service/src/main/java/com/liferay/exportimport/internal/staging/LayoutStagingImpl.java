@@ -91,11 +91,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 	@Override
 	public LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
-		if (layout == null) {
-			return null;
-		}
-
-		if (!ProxyUtil.isProxyClass(layout.getClass())) {
+		if ((layout == null) || !ProxyUtil.isProxyClass(layout.getClass())) {
 			return null;
 		}
 

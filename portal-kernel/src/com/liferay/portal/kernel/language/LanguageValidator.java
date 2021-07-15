@@ -80,20 +80,13 @@ public class LanguageValidator {
 	private static boolean _isValidUserNameFieldNamesValue(String value) {
 		String[] valueParts = StringUtil.split(value);
 
-		if (ArrayUtil.isEmpty(valueParts)) {
-			return false;
-		}
-
-		if (!ArrayUtil.contains(
+		if (ArrayUtil.isEmpty(valueParts) ||
+			!ArrayUtil.contains(
 				valueParts, LanguageConstants.VALUE_FIRST_NAME) ||
 			!ArrayUtil.contains(
-				valueParts, LanguageConstants.VALUE_LAST_NAME)) {
-
-			return false;
-		}
-
-		if (ArrayUtil.contains(valueParts, LanguageConstants.VALUE_PREFIX) &&
-			!valueParts[0].equals(LanguageConstants.VALUE_PREFIX)) {
+				valueParts, LanguageConstants.VALUE_LAST_NAME) ||
+			(ArrayUtil.contains(valueParts, LanguageConstants.VALUE_PREFIX) &&
+			 !valueParts[0].equals(LanguageConstants.VALUE_PREFIX))) {
 
 			return false;
 		}

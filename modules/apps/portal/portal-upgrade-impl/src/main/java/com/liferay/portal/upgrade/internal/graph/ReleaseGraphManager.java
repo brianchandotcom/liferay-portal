@@ -51,11 +51,9 @@ public class ReleaseGraphManager {
 	public List<UpgradeInfo> getUpgradeInfos(
 		String fromVersionString, String toVersionString) {
 
-		if (!_directedGraph.containsVertex(fromVersionString)) {
-			return Collections.emptyList();
-		}
+		if (!_directedGraph.containsVertex(fromVersionString) ||
+			!_directedGraph.containsVertex(toVersionString)) {
 
-		if (!_directedGraph.containsVertex(toVersionString)) {
 			return Collections.emptyList();
 		}
 

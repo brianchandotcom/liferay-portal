@@ -328,11 +328,9 @@ public class DLFolderFinderImpl
 
 			queryPos.add(groupId);
 
-			if (!showHiddenMountFolders || !includeMountFolders) {
-				queryPos.add(false);
-			}
+			if (!showHiddenMountFolders || !includeMountFolders ||
+				(!showHiddenMountFolders && !includeMountFolders)) {
 
-			if (!showHiddenMountFolders && !includeMountFolders) {
 				queryPos.add(false);
 			}
 
@@ -436,11 +434,9 @@ public class DLFolderFinderImpl
 
 			queryPos.add(groupId);
 
-			if (!showHiddenMountFolders || !includeMountFolders) {
-				queryPos.add(false);
-			}
+			if (!showHiddenMountFolders || !includeMountFolders ||
+				(!showHiddenMountFolders && !includeMountFolders)) {
 
-			if (!showHiddenMountFolders && !includeMountFolders) {
 				queryPos.add(false);
 			}
 
@@ -689,11 +685,9 @@ public class DLFolderFinderImpl
 
 			queryPos.add(groupId);
 
-			if (!showHiddenMountFolders || !includeMountFolders) {
-				queryPos.add(false);
-			}
+			if (!showHiddenMountFolders || !includeMountFolders ||
+				(!showHiddenMountFolders && !includeMountFolders)) {
 
-			if (!showHiddenMountFolders && !includeMountFolders) {
 				queryPos.add(false);
 			}
 
@@ -842,11 +836,9 @@ public class DLFolderFinderImpl
 
 			queryPos.add(groupId);
 
-			if (!showHiddenMountFolders || !includeMountFolders) {
-				queryPos.add(false);
-			}
+			if (!showHiddenMountFolders || !includeMountFolders ||
+				(!showHiddenMountFolders && !includeMountFolders)) {
 
-			if (!showHiddenMountFolders && !includeMountFolders) {
 				queryPos.add(false);
 			}
 
@@ -985,11 +977,9 @@ public class DLFolderFinderImpl
 
 			queryPos.add(groupId);
 
-			if (!showHiddenMountFolders || !includeMountFolders) {
-				queryPos.add(false);
-			}
+			if (!showHiddenMountFolders || !includeMountFolders ||
+				(!showHiddenMountFolders && !includeMountFolders)) {
 
-			if (!showHiddenMountFolders && !includeMountFolders) {
 				queryPos.add(false);
 			}
 
@@ -1132,11 +1122,9 @@ public class DLFolderFinderImpl
 
 			queryPos.add(groupId);
 
-			if (!showHiddenMountFolders || !includeMountFolders) {
-				queryPos.add(false);
-			}
+			if (!showHiddenMountFolders || !includeMountFolders ||
+				(!showHiddenMountFolders && !includeMountFolders)) {
 
-			if (!showHiddenMountFolders && !includeMountFolders) {
 				queryPos.add(false);
 			}
 

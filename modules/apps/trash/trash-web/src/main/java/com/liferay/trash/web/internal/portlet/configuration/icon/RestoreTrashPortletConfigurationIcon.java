@@ -129,11 +129,7 @@ public class RestoreTrashPortletConfigurationIcon
 
 		TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
-		if (trashHandler == null) {
-			return false;
-		}
-
-		if (trashHandler.isContainerModel()) {
+		if ((trashHandler == null) || trashHandler.isContainerModel()) {
 			return false;
 		}
 
@@ -141,15 +137,10 @@ public class RestoreTrashPortletConfigurationIcon
 
 		if (trashEntry != null) {
 			try {
-				if (!trashHandler.isMovable(trashEntry.getClassPK())) {
-					return false;
-				}
+				if (!trashHandler.isMovable(trashEntry.getClassPK()) ||
+					!trashHandler.isRestorable(trashEntry.getClassPK()) ||
+					!trashHandler.isInTrashContainer(trashEntry.getClassPK())) {
 
-				if (!trashHandler.isRestorable(trashEntry.getClassPK())) {
-					return false;
-				}
-
-				if (!trashHandler.isInTrashContainer(trashEntry.getClassPK())) {
 					return false;
 				}
 			}

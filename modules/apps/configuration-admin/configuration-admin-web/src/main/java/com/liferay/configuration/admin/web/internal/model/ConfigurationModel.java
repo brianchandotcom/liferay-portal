@@ -269,13 +269,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			properties.get(Scope.COMPANY.getPropertyKey()),
 			CompanyConstants.SYSTEM);
 
-		if ((companyId != CompanyConstants.SYSTEM) &&
-			Scope.COMPANY.equals(scope.getValue())) {
+		if (((companyId != CompanyConstants.SYSTEM) &&
+			 Scope.COMPANY.equals(scope.getValue())) ||
+			Scope.SYSTEM.equals(scope.getValue())) {
 
-			return true;
-		}
-
-		if (Scope.SYSTEM.equals(scope.getValue())) {
 			return true;
 		}
 

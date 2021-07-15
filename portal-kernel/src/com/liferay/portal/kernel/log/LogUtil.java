@@ -94,13 +94,9 @@ public class LogUtil {
 
 			boolean addElement = true;
 
-			if (REMOVE_UNKNOWN_SOURCE &&
-				(stackTraceElement.getLineNumber() < 0)) {
-
-				addElement = false;
-			}
-
-			if (className.startsWith("$") ||
+			if ((REMOVE_UNKNOWN_SOURCE &&
+				 (stackTraceElement.getLineNumber() < 0)) ||
+				className.startsWith("$") ||
 				className.startsWith("java.lang.reflect.") ||
 				className.startsWith("org.springframework.") ||
 				className.startsWith("sun.reflect.")) {

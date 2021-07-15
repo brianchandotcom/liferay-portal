@@ -330,11 +330,7 @@ public abstract class BaseClientTestCase {
 			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
 				uri.getQuery());
 
-			if (parameterMap.containsKey("error")) {
-				return response;
-			}
-
-			if (skipAuthorization) {
+			if (parameterMap.containsKey("error") || skipAuthorization) {
 				return response;
 			}
 

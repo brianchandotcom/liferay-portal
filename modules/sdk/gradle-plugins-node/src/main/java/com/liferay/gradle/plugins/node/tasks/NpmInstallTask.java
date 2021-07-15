@@ -77,11 +77,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 
 					File packageJsonFile = npmInstallTask.getPackageJsonFile();
 
-					if (!packageJsonFile.exists()) {
-						return false;
-					}
-
-					if (!isUseNpm()) {
+					if (!packageJsonFile.exists() || !isUseNpm()) {
 						return false;
 					}
 

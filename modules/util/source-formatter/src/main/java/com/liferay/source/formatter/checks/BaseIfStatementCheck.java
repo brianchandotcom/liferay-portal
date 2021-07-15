@@ -100,17 +100,11 @@ public abstract class BaseIfStatementCheck extends BaseFileCheck {
 
 				char nextChar = ifClause.charAt(y + 1);
 
-				if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
-					(nextChar == CharPool.CLOSE_PARENTHESIS)) {
-
-					addMessage(fileName, "Redundant parentheses", lineNumber);
-
-					return;
-				}
-
-				if (((nextChar == CharPool.CLOSE_PARENTHESIS) ||
-					 (nextChar == CharPool.SPACE)) &&
-					_hasRedundantParentheses(s)) {
+				if (((previousChar == CharPool.OPEN_PARENTHESIS) &&
+					 (nextChar == CharPool.CLOSE_PARENTHESIS)) ||
+					(((nextChar == CharPool.CLOSE_PARENTHESIS) ||
+					  (nextChar == CharPool.SPACE)) &&
+					 _hasRedundantParentheses(s))) {
 
 					addMessage(fileName, "Redundant parentheses", lineNumber);
 
@@ -229,16 +223,13 @@ public abstract class BaseIfStatementCheck extends BaseFileCheck {
 			containsMathOperator = true;
 		}
 
-		if (containsCompareOperator &&
-			(containsAndOperator || containsOrOperator ||
-			 (containsMathOperator && !s.contains(StringPool.OPEN_BRACKET)))) {
-
-			return true;
-		}
-
-		if (s.contains(" ? ") &&
-			(containsAndOperator || containsCompareOperator ||
-			 containsOrOperator)) {
+		if ((containsCompareOperator &&
+			 (containsAndOperator || containsOrOperator ||
+			  (containsMathOperator &&
+			   !s.contains(StringPool.OPEN_BRACKET)))) ||
+			(s.contains(" ? ") &&
+			 (containsAndOperator || containsCompareOperator ||
+			  containsOrOperator))) {
 
 			return true;
 		}

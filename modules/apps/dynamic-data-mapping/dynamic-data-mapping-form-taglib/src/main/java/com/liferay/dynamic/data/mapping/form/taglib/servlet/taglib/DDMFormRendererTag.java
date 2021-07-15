@@ -390,11 +390,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			Group group = DDMFormTaglibUtil.getGroup(
 				ddmFormInstance.getGroupId());
 
-			if ((group != null) && group.isStagingGroup()) {
-				return false;
-			}
+			if (((group != null) && group.isStagingGroup()) ||
+				!hasViewFormInstancePermission()) {
 
-			if (!hasViewFormInstancePermission()) {
 				return false;
 			}
 

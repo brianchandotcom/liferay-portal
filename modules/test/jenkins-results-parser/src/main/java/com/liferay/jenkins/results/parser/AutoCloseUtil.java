@@ -318,12 +318,9 @@ public class AutoCloseUtil {
 		for (Build downstreamBuild : downstreamBuilds) {
 			String batchName = downstreamBuild.getJobVariant();
 
-			if (batchName == null) {
-				continue;
-			}
-
-			if (!batchName.contains("integration") &&
-				!batchName.contains("unit")) {
+			if ((batchName == null) ||
+				(!batchName.contains("integration") &&
+				 !batchName.contains("unit"))) {
 
 				continue;
 			}
@@ -498,11 +495,9 @@ public class AutoCloseUtil {
 				testBatchNamesAutoClose, ",");
 
 			for (String autoCloseRuleData : autoCloseRuleDataArray) {
-				if (autoCloseRuleData.startsWith("#")) {
-					continue;
-				}
+				if (autoCloseRuleData.startsWith("#") ||
+					autoCloseRuleData.startsWith("static_")) {
 
-				if (autoCloseRuleData.startsWith("static_")) {
 					continue;
 				}
 

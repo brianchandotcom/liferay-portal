@@ -150,15 +150,9 @@ public class CORSSupport {
 		String accessControlAllowOrigin = _corsHeaders.get(
 			ACCESS_CONTROL_ALLOW_ORIGIN);
 
-		if (Validator.isBlank(accessControlAllowOrigin)) {
-			return true;
-		}
-
-		if (StringUtil.equals(accessControlAllowOrigin, StringPool.STAR)) {
-			return true;
-		}
-
-		if (ArrayUtil.contains(
+		if (Validator.isBlank(accessControlAllowOrigin) ||
+			StringUtil.equals(accessControlAllowOrigin, StringPool.STAR) ||
+			ArrayUtil.contains(
 				StringUtil.split(accessControlAllowOrigin), origin)) {
 
 			return true;

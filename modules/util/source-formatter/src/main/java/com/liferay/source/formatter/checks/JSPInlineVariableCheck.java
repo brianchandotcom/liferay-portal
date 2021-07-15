@@ -125,11 +125,9 @@ public class JSPInlineVariableCheck extends BaseJSPTermsCheck {
 			int z = StringUtil.indexOfAny(
 				s, new String[] {"{\n", "\n}", "\t}", "%>\n"});
 
-			if (z < x) {
-				continue;
-			}
+			if ((z < x) ||
+				hasVariableReference(s, variableValue, matcher.start(1))) {
 
-			if (hasVariableReference(s, variableValue, matcher.start(1))) {
 				continue;
 			}
 

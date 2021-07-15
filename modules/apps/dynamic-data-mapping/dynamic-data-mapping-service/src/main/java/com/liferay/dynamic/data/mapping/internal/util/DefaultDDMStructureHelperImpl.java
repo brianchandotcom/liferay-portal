@@ -94,12 +94,9 @@ public class DefaultDDMStructureHelperImpl
 				_ddmStructureLocalService.fetchStructure(
 					groupId, classNameId, ddmStructureKey);
 
-			if (ddmStructure != null) {
-				continue;
-			}
-
-			if (name.equals(DLFileEntryTypeConstants.NAME_IG_IMAGE) &&
-				!UpgradeProcessUtil.isCreateIGImageDocumentType()) {
+			if ((ddmStructure != null) ||
+				(name.equals(DLFileEntryTypeConstants.NAME_IG_IMAGE) &&
+				 !UpgradeProcessUtil.isCreateIGImageDocumentType())) {
 
 				continue;
 			}

@@ -194,12 +194,8 @@ public class SocialActivityCounterLocalServiceImpl
 		throws PortalException {
 
 		if (!socialActivitySettingLocalService.isEnabled(
-				activity.getGroupId(), activity.getClassNameId())) {
-
-			return;
-		}
-
-		if (!socialActivitySettingLocalService.isEnabled(
+				activity.getGroupId(), activity.getClassNameId()) ||
+			!socialActivitySettingLocalService.isEnabled(
 				activity.getGroupId(), activity.getClassNameId(),
 				activity.getClassPK())) {
 
@@ -1043,21 +1039,13 @@ public class SocialActivityCounterLocalServiceImpl
 		User user, User assetEntryUser, AssetEntry assetEntry,
 		SocialActivityCounterDefinition activityCounterDefinition) {
 
-		if ((user.isDefaultUser() || !user.isActive()) &&
-			(activityCounterDefinition.getOwnerType() !=
-				SocialActivityCounterConstants.TYPE_ASSET)) {
-
-			return false;
-		}
-
-		if ((assetEntryUser.isDefaultUser() || !assetEntryUser.isActive()) &&
-			(activityCounterDefinition.getOwnerType() !=
-				SocialActivityCounterConstants.TYPE_ACTOR)) {
-
-			return false;
-		}
-
-		if (!activityCounterDefinition.isEnabled() ||
+		if (((user.isDefaultUser() || !user.isActive()) &&
+			 (activityCounterDefinition.getOwnerType() !=
+				 SocialActivityCounterConstants.TYPE_ASSET)) ||
+			((assetEntryUser.isDefaultUser() || !assetEntryUser.isActive()) &&
+			 (activityCounterDefinition.getOwnerType() !=
+				 SocialActivityCounterConstants.TYPE_ACTOR)) ||
+			!activityCounterDefinition.isEnabled() ||
 			(activityCounterDefinition.getIncrement() == 0)) {
 
 			return false;
@@ -1065,16 +1053,12 @@ public class SocialActivityCounterLocalServiceImpl
 
 		String name = activityCounterDefinition.getName();
 
-		if ((user.getUserId() == assetEntryUser.getUserId()) &&
-			(name.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) ||
-			 name.equals(SocialActivityCounterConstants.NAME_POPULARITY))) {
-
-			return false;
-		}
-
-		if ((activityCounterDefinition.getOwnerType() ==
+		if (((user.getUserId() == assetEntryUser.getUserId()) &&
+			 (name.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) ||
+			  name.equals(SocialActivityCounterConstants.NAME_POPULARITY))) ||
+			((activityCounterDefinition.getOwnerType() ==
 				SocialActivityCounterConstants.TYPE_ASSET) &&
-			!assetEntry.isVisible()) {
+			 !assetEntry.isVisible())) {
 
 			return false;
 		}

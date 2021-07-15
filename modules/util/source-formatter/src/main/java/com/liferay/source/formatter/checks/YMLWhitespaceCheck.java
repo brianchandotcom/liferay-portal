@@ -262,11 +262,9 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 			String[] lines = s.split("\n");
 
-			if (lines.length <= 1) {
-				continue;
-			}
+			if ((lines.length <= 1) ||
+				StringUtil.startsWith(lines[0].trim(), "- '")) {
 
-			if (StringUtil.startsWith(lines[0].trim(), "- '")) {
 				continue;
 			}
 

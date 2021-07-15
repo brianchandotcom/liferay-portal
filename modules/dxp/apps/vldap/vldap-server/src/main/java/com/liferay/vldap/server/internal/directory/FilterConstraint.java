@@ -39,11 +39,7 @@ public class FilterConstraint {
 				FilterConstraint filterConstraint = merge(
 					leftFilterConstraint, rightFilterConstraint);
 
-				if (filterConstraint == null) {
-					continue;
-				}
-
-				if (filterConstraint.isEmpty()) {
+				if ((filterConstraint == null) || filterConstraint.isEmpty()) {
 					continue;
 				}
 

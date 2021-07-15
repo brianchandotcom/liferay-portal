@@ -44,11 +44,7 @@ public class DefaultDeviceCapabilityFilter implements DeviceCapabilityFilter {
 
 		capabilityValue = StringUtil.toLowerCase(capabilityValue);
 
-		if (capabilityValue.equals("false")) {
-			return false;
-		}
-
-		if (!accept(capabilityName)) {
+		if (capabilityValue.equals("false") || !accept(capabilityName)) {
 			return false;
 		}
 

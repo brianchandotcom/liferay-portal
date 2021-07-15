@@ -393,11 +393,9 @@ public class LayoutsAdminDisplayContext {
 			return _getDraftLayoutURL(layout);
 		}
 
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
-			return StringPool.BLANK;
-		}
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) ||
+			(layout.fetchDraftLayout() == null)) {
 
-		if (layout.fetchDraftLayout() == null) {
 			return StringPool.BLANK;
 		}
 
@@ -1421,15 +1419,9 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowConvertLayoutAction(Layout layout) {
-		if (_isLiveGroup()) {
-			return false;
-		}
+		if (_isLiveGroup() || !_layoutConverterConfiguration.enabled() ||
+			!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
-		if (!_layoutConverterConfiguration.enabled()) {
-			return false;
-		}
-
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 			return false;
 		}
 
@@ -1457,11 +1449,7 @@ public class LayoutsAdminDisplayContext {
 	public boolean isShowCopyLayoutAction(Layout layout)
 		throws PortalException {
 
-		if (!isShowAddRootLayoutButton()) {
-			return false;
-		}
-
-		if (!layout.isTypePortlet()) {
+		if (!isShowAddRootLayoutButton() || !layout.isTypePortlet()) {
 			return false;
 		}
 
@@ -1482,11 +1470,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowDeleteAction(Layout layout) throws PortalException {
-		if (StagingUtil.isIncomplete(layout)) {
-			return false;
-		}
-
-		if (!LayoutPermissionUtil.contains(
+		if (StagingUtil.isIncomplete(layout) ||
+			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.DELETE)) {
 
@@ -1539,15 +1524,10 @@ public class LayoutsAdminDisplayContext {
 	public boolean isShowOrphanPortletsAction(Layout layout)
 		throws PortalException {
 
-		if (StagingUtil.isIncomplete(layout)) {
-			return false;
-		}
+		if (StagingUtil.isIncomplete(layout) ||
+			!layout.isSupportsEmbeddedPortlets() ||
+			!isShowAddRootLayoutButton()) {
 
-		if (!layout.isSupportsEmbeddedPortlets()) {
-			return false;
-		}
-
-		if (!isShowAddRootLayoutButton()) {
 			return false;
 		}
 

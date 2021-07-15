@@ -63,11 +63,9 @@ public class JavaModuleJavaxPortletInitParamTemplatePathCheck
 
 		List<String> extendedClassNames = javaClass.getExtendedClassNames();
 
-		if (!extendedClassNames.contains("MVCPortlet")) {
-			return content;
-		}
+		if (!extendedClassNames.contains("MVCPortlet") ||
+			!absolutePath.contains("/src/")) {
 
-		if (!absolutePath.contains("/src/")) {
 			return content;
 		}
 

@@ -136,11 +136,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 	@Override
 	public void reindex(Collection<T> baseModels) {
-		if (!isEnabled()) {
-			return;
-		}
-
-		if ((baseModels == null) || baseModels.isEmpty()) {
+		if (!isEnabled() || (baseModels == null) || baseModels.isEmpty()) {
 			return;
 		}
 
@@ -151,11 +147,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 	@Override
 	public void reindex(long classPK) {
-		if (!isEnabled()) {
-			return;
-		}
-
-		if (classPK <= 0) {
+		if (!isEnabled() || (classPK <= 0)) {
 			return;
 		}
 
@@ -168,11 +160,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 	@Override
 	public void reindex(String[] ids) {
-		if (!isEnabled()) {
-			return;
-		}
-
-		if (ArrayUtil.isEmpty(ids)) {
+		if (!isEnabled() || ArrayUtil.isEmpty(ids)) {
 			return;
 		}
 
@@ -219,11 +207,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 	@Override
 	public void reindex(T baseModel) {
-		if (!isEnabled()) {
-			return;
-		}
-
-		if (baseModel == null) {
+		if (!isEnabled() || (baseModel == null)) {
 			return;
 		}
 

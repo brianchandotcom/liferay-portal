@@ -133,11 +133,9 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 		String importPackageImportString = importPackage.getImportString();
 
-		if (importPackageImportString.equals(StringPool.STAR)) {
-			return false;
-		}
+		if (importPackageImportString.equals(StringPool.STAR) ||
+			(_isStatic != importPackage.isStatic())) {
 
-		if (_isStatic != importPackage.isStatic()) {
 			return false;
 		}
 

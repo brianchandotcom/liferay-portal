@@ -70,12 +70,9 @@ public class ProcessSummaryDisplayContext {
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			groupId, privateLayout, selectedLayoutId);
 
-		if (layout == null) {
-			return;
-		}
-
-		if (LayoutStagingUtil.isBranchingLayout(layout) &&
-			!_hasApprovedLayoutRevision(layout)) {
+		if ((layout == null) ||
+			(LayoutStagingUtil.isBranchingLayout(layout) &&
+			 !_hasApprovedLayoutRevision(layout))) {
 
 			return;
 		}

@@ -394,11 +394,9 @@ public class CryptoHashTest {
 		}
 
 		try {
-			if (serviceReferences == null) {
-				return unsafeFunction.apply(null);
-			}
+			if ((serviceReferences == null) ||
+				ArrayUtil.isEmpty(serviceReferences)) {
 
-			if (ArrayUtil.isEmpty(serviceReferences)) {
 				return unsafeFunction.apply(null);
 			}
 		}

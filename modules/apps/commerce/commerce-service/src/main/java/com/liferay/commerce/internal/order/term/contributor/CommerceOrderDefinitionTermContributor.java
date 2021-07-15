@@ -177,12 +177,9 @@ public class CommerceOrderDefinitionTermContributor
 			addressSB.append("<br/>");
 		}
 
-		if (!Validator.isBlank(commerceAddress.getStreet3())) {
-			addressSB.append(commerceAddress.getStreet3());
-			addressSB.append("<br/>");
-		}
+		if (!Validator.isBlank(commerceAddress.getStreet3()) ||
+			!Validator.isBlank(commerceAddress.getStreet3())) {
 
-		if (!Validator.isBlank(commerceAddress.getStreet3())) {
 			addressSB.append(commerceAddress.getStreet3());
 			addressSB.append("<br/>");
 		}

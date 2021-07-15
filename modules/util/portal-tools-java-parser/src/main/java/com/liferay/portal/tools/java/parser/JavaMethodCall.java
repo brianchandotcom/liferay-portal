@@ -147,14 +147,11 @@ public class JavaMethodCall extends BaseJavaExpression {
 
 		int chainSize = getChainSize();
 
-		if (chainSize == 0) {
-			return false;
-		}
-
-		if ((chainSize == 1) &&
-			(_insideConstructorCall ||
-			 (_parameterValueJavaExpressions.isEmpty() &&
-			  _methodCallWithinClass))) {
+		if ((chainSize == 0) ||
+			((chainSize == 1) &&
+			 (_insideConstructorCall ||
+			  (_parameterValueJavaExpressions.isEmpty() &&
+			   _methodCallWithinClass)))) {
 
 			return false;
 		}

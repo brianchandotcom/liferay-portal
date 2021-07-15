@@ -678,11 +678,9 @@ public class PullRequest {
 
 		addLabel(testSuiteLabel);
 
-		if (targetURL == null) {
-			return;
-		}
+		if ((targetURL == null) ||
+			(testSuiteStatus == TestSuiteStatus.MISSING)) {
 
-		if (testSuiteStatus == TestSuiteStatus.MISSING) {
 			return;
 		}
 

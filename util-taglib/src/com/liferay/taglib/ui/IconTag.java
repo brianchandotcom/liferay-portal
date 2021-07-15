@@ -365,11 +365,7 @@ public class IconTag extends IncludeTag {
 	}
 
 	protected boolean isForcePost() {
-		if (StringUtil.equalsIgnoreCase(_target, "_blank")) {
-			return false;
-		}
-
-		if (_url == null) {
+		if (StringUtil.equalsIgnoreCase(_target, "_blank") || (_url == null)) {
 			return false;
 		}
 

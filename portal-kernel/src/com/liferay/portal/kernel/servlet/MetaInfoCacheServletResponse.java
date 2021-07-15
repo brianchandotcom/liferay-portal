@@ -461,11 +461,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setContentType(String contentType) {
-		if (isCommitted()) {
-			return;
-		}
-
-		if (contentType == null) {
+		if (isCommitted() || (contentType == null)) {
 			return;
 		}
 
@@ -656,11 +652,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	protected boolean calledGetWriter;
 
 	private void _setCharacterEncoding(String charsetName) {
-		if (calledGetWriter) {
-			return;
-		}
-
-		if (charsetName == null) {
+		if (calledGetWriter || (charsetName == null)) {
 			return;
 		}
 

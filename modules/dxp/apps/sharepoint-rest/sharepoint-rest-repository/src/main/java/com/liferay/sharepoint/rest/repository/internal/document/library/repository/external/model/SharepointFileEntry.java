@@ -93,11 +93,9 @@ public class SharepointFileEntry
 			bitIndex = 1;
 		}
 
-		if (bitIndex == 0) {
-			return false;
-		}
+		if ((bitIndex == 0) ||
+			((_effectiveBasePermissionsBits & (1 << (bitIndex - 1))) == 0)) {
 
-		if ((_effectiveBasePermissionsBits & (1 << (bitIndex - 1))) == 0) {
 			return false;
 		}
 

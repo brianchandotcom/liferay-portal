@@ -406,11 +406,9 @@ public class ReleaseVersionsTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (Objects.equals(dirName, "node_modules")) {
-						return FileVisitResult.SKIP_SUBTREE;
-					}
+					if (Objects.equals(dirName, "node_modules") ||
+						_hasGitCommitMarkerFile(dirPath)) {
 
-					if (_hasGitCommitMarkerFile(dirPath)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -423,19 +421,13 @@ public class ReleaseVersionsTest {
 					Path lfrbuildRelengIgnorePath = dirPath.resolve(
 						".lfrbuild-releng-ignore");
 
-					if (Files.exists(lfrbuildRelengIgnorePath)) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					if (dirName.endsWith("-test") ||
+					if (Files.exists(lfrbuildRelengIgnorePath) ||
+						dirName.endsWith("-test") ||
 						dirName.endsWith("-test-api") ||
 						dirName.endsWith("-test-impl") ||
-						dirName.endsWith("-test-service")) {
+						dirName.endsWith("-test-service") ||
+						_isInGitRepoReadOnly(dirPath)) {
 
-						return FileVisitResult.CONTINUE;
-					}
-
-					if (_isInGitRepoReadOnly(dirPath)) {
 						return FileVisitResult.CONTINUE;
 					}
 

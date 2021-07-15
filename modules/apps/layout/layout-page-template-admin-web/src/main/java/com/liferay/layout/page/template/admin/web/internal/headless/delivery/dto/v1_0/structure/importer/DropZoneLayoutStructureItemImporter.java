@@ -79,11 +79,8 @@ public class DropZoneLayoutStructureItemImporter
 		Map<String, Object> fragmentSettingsMap =
 			(Map<String, Object>)fragmentSettings;
 
-		if (fragmentSettingsMap == null) {
-			return dropZoneLayoutStructureItem;
-		}
-
-		if ((!fragmentSettingsMap.containsKey(_KEY_ALLOWED_FRAGMENTS) &&
+		if ((fragmentSettingsMap == null) ||
+			(!fragmentSettingsMap.containsKey(_KEY_ALLOWED_FRAGMENTS) &&
 			 !fragmentSettingsMap.containsKey(_KEY_UNALLOWED_FRAGMENTS)) ||
 			(fragmentSettingsMap.containsKey(_KEY_ALLOWED_FRAGMENTS) &&
 			 fragmentSettingsMap.containsKey(_KEY_UNALLOWED_FRAGMENTS))) {

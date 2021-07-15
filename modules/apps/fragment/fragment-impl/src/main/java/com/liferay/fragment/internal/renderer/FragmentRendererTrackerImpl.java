@@ -177,21 +177,17 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 
 			String fragmentCollectionKey = fragmentRenderer.getCollectionKey();
 
-			if (Validator.isNull(fragmentCollectionKey) &&
-				!StringUtil.equals(
-					fragmentRenderer.getKey(),
-					FragmentRendererConstants.
-						FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY) &&
-				!StringUtil.equals(
-					fragmentRenderer.getKey(),
-					FragmentRendererConstants.
-						FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT)) {
-
-				return false;
-			}
-
-			if (Validator.isNotNull(fragmentCollectionKey) &&
-				fragmentCollectionKey.contains(StringPool.SPACE)) {
+			if ((Validator.isNull(fragmentCollectionKey) &&
+				 !StringUtil.equals(
+					 fragmentRenderer.getKey(),
+					 FragmentRendererConstants.
+						 FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY) &&
+				 !StringUtil.equals(
+					 fragmentRenderer.getKey(),
+					 FragmentRendererConstants.
+						 FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT)) ||
+				(Validator.isNotNull(fragmentCollectionKey) &&
+				 fragmentCollectionKey.contains(StringPool.SPACE))) {
 
 				return false;
 			}

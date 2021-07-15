@@ -56,16 +56,9 @@ public class ControlPanelLayoutTypeAccessPolicy
 				WebKeys.THEME_DISPLAY);
 
 		if (PortletPermissionUtil.hasControlPanelAccessPermission(
-				permissionChecker, themeDisplay.getScopeGroupId(), portlet)) {
-
-			return;
-		}
-
-		if (isAccessGrantedByRuntimePortlet(httpServletRequest)) {
-			return;
-		}
-
-		if (isAccessGrantedByPortletAuthenticationToken(
+				permissionChecker, themeDisplay.getScopeGroupId(), portlet) ||
+			isAccessGrantedByRuntimePortlet(httpServletRequest) ||
+			isAccessGrantedByPortletAuthenticationToken(
 				httpServletRequest, layout, portlet)) {
 
 			return;

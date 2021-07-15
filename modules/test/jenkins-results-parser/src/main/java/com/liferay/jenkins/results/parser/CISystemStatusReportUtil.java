@@ -321,11 +321,9 @@ public class CISystemStatusReportUtil {
 
 				LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
 
-				if (startLocalDateTime.compareTo(localDateTime) >= 0) {
-					continue;
-				}
+				if ((startLocalDateTime.compareTo(localDateTime) >= 0) ||
+					(endLocalDateTime.compareTo(localDateTime) <= 0)) {
 
-				if (endLocalDateTime.compareTo(localDateTime) <= 0) {
 					continue;
 				}
 

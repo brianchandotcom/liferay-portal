@@ -408,11 +408,8 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 	private boolean _isAccountCompanyAdministrator() throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (permissionChecker.isOmniadmin()) {
-			return true;
-		}
-
-		if (permissionChecker.isCompanyAdmin(
+		if (permissionChecker.isOmniadmin() ||
+			permissionChecker.isCompanyAdmin(
 				permissionChecker.getCompanyId())) {
 
 			return true;

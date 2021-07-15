@@ -2268,38 +2268,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 				referencesElement.elements("reference")) {
 
 			if (!Objects.equals(
-					referenceElement.attributeValue("class-name"), className)) {
-
-				continue;
-			}
-
-			if ((groupId > 0) &&
-				!Objects.equals(
-					referenceElement.attributeValue("group-id"),
-					String.valueOf(groupId))) {
-
-				continue;
-			}
-
-			if (Validator.isNotNull(uuid) &&
-				!Objects.equals(
-					referenceElement.attributeValue("uuid"), uuid)) {
-
-				continue;
-			}
-
-			if (Validator.isNotNull(classPK) &&
-				!Objects.equals(
-					referenceElement.attributeValue("class-pk"),
-					String.valueOf(classPK))) {
-
-				continue;
-			}
-
-			if ((referenceType != null) &&
-				!Objects.equals(
-					referenceElement.attributeValue("type"),
-					String.valueOf(referenceType))) {
+					referenceElement.attributeValue("class-name"), className) ||
+				((groupId > 0) &&
+				 !Objects.equals(
+					 referenceElement.attributeValue("group-id"),
+					 String.valueOf(groupId))) ||
+				(Validator.isNotNull(uuid) &&
+				 !Objects.equals(
+					 referenceElement.attributeValue("uuid"), uuid)) ||
+				(Validator.isNotNull(classPK) &&
+				 !Objects.equals(
+					 referenceElement.attributeValue("class-pk"),
+					 String.valueOf(classPK))) ||
+				((referenceType != null) &&
+				 !Objects.equals(
+					 referenceElement.attributeValue("type"),
+					 String.valueOf(referenceType)))) {
 
 				continue;
 			}

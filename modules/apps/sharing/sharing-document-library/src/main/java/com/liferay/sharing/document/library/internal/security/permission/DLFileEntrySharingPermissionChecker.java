@@ -47,11 +47,8 @@ public class DLFileEntrySharingPermissionChecker
 		throws PortalException {
 
 		for (SharingEntryAction sharingEntryAction : sharingEntryActions) {
-			if (!_actionKeysSet.contains(sharingEntryAction)) {
-				return false;
-			}
-
-			if (!_dlFileEntryModelResourcePermission.contains(
+			if (!_actionKeysSet.contains(sharingEntryAction) ||
+				!_dlFileEntryModelResourcePermission.contains(
 					permissionChecker, classPK,
 					sharingEntryAction.getActionId())) {
 

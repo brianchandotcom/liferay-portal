@@ -103,13 +103,10 @@ public class FolderPermissionPortletConfigurationIcon
 			() -> {
 				Folder folder = ActionUtil.getFolder(portletRequest);
 
-				if (folder == null) {
-					return false;
-				}
-
-				if (!folder.isMountPoint() &&
-					RepositoryUtil.isExternalRepository(
-						folder.getRepositoryId())) {
+				if ((folder == null) ||
+					(!folder.isMountPoint() &&
+					 RepositoryUtil.isExternalRepository(
+						 folder.getRepositoryId()))) {
 
 					return false;
 				}

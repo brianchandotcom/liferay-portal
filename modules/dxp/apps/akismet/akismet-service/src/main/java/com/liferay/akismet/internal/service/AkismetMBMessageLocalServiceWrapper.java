@@ -165,11 +165,8 @@ public class AkismetMBMessageLocalServiceWrapper
 	private boolean _isCheckSpamEnabled(
 		long userId, long groupId, ServiceContext serviceContext) {
 
-		if (!_akismetServiceConfiguration.messageBoardsEnabled()) {
-			return false;
-		}
-
-		if (!_akismetClient.hasRequiredInfo(
+		if (!_akismetServiceConfiguration.messageBoardsEnabled() ||
+			!_akismetClient.hasRequiredInfo(
 				serviceContext.getRemoteAddr(), serviceContext.getHeaders())) {
 
 			return false;

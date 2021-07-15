@@ -226,14 +226,10 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 		JournalArticle article = _journalArticleLocalService.getLatestArticle(
 			classPK);
 
-		if ((article.getFolderId() > 0) &&
-			(_journalFolderLocalService.fetchFolder(article.getFolderId()) ==
-				null)) {
-
-			return false;
-		}
-
-		if (!hasTrashPermission(
+		if (((article.getFolderId() > 0) &&
+			 (_journalFolderLocalService.fetchFolder(article.getFolderId()) ==
+				 null)) ||
+			!hasTrashPermission(
 				PermissionThreadLocal.getPermissionChecker(),
 				article.getGroupId(), classPK, TrashActionKeys.RESTORE)) {
 

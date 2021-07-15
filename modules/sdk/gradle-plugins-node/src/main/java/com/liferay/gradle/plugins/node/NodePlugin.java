@@ -511,12 +511,9 @@ public class NodePlugin implements Plugin<Project> {
 					File moduleParentDir = moduleDir.getParentFile();
 
 					if (!moduleParentDir.equals(
-							npmInstallTask.getNodeModulesDir())) {
+							npmInstallTask.getNodeModulesDir()) ||
+						(packageJsonMap == null)) {
 
-						return true;
-					}
-
-					if (packageJsonMap == null) {
 						return true;
 					}
 

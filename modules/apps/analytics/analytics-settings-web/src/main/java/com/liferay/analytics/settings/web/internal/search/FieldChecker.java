@@ -55,15 +55,10 @@ public class FieldChecker extends EmptyOnClickRowChecker {
 	public boolean isChecked(Object object) {
 		Field field = (Field)object;
 
-		if (ArrayUtil.contains(_recommendedFieldNames, field.getName())) {
-			return true;
-		}
+		if (ArrayUtil.contains(_recommendedFieldNames, field.getName()) ||
+			ArrayUtil.contains(_requiredFieldNames, field.getName()) ||
+			ArrayUtil.contains(_selectedFieldNames, field.getName())) {
 
-		if (ArrayUtil.contains(_requiredFieldNames, field.getName())) {
-			return true;
-		}
-
-		if (ArrayUtil.contains(_selectedFieldNames, field.getName())) {
 			return true;
 		}
 

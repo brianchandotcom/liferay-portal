@@ -70,11 +70,9 @@ public class DeletedLayoutStructureItem {
 	}
 
 	public boolean containsItemId(String itemId) {
-		if (Objects.equals(itemId, _itemId)) {
-			return true;
-		}
+		if (Objects.equals(itemId, _itemId) ||
+			_childrenItemIds.contains(itemId)) {
 
-		if (_childrenItemIds.contains(itemId)) {
 			return true;
 		}
 

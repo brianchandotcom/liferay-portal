@@ -89,11 +89,9 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 					oAuth2Application.getCompanyId(),
 					oAuth2Application.getClientId());
 
-			if (bearerTokenProvider == null) {
-				return authVerifierResult;
-			}
+			if ((bearerTokenProvider == null) ||
+				!bearerTokenProvider.isValid(accessToken)) {
 
-			if (!bearerTokenProvider.isValid(accessToken)) {
 				return authVerifierResult;
 			}
 

@@ -1095,11 +1095,9 @@ public class ContentPageEditorDisplayContext {
 			_fragmentRendererTracker.getFragmentRenderers();
 
 		for (FragmentRenderer fragmentRenderer : fragmentRenderers) {
-			if (!fragmentRenderer.isSelectable(httpServletRequest)) {
-				continue;
-			}
+			if (!fragmentRenderer.isSelectable(httpServletRequest) ||
+				!_isAllowedFragmentEntryKey(fragmentRenderer.getKey())) {
 
-			if (!_isAllowedFragmentEntryKey(fragmentRenderer.getKey())) {
 				continue;
 			}
 
@@ -1266,13 +1264,10 @@ public class ContentPageEditorDisplayContext {
 			filteredFragmentEntries.addAll(
 				_getFragmentCompositions(fragmentCompositions));
 
-			if (!includeEmpty && ListUtil.isEmpty(filteredFragmentEntries)) {
-				continue;
-			}
-
-			if (!includeSystem &&
-				(fragmentCollection.getGroupId() !=
-					themeDisplay.getScopeGroupId())) {
+			if ((!includeEmpty && ListUtil.isEmpty(filteredFragmentEntries)) ||
+				(!includeSystem &&
+				 (fragmentCollection.getGroupId() !=
+					 themeDisplay.getScopeGroupId()))) {
 
 				continue;
 			}

@@ -121,13 +121,9 @@ public class ToggleControlsProductNavigationControlMenuEntry
 
 		Group group = layout.getGroup();
 
-		if (group.hasStagingGroup() && !group.isStagingGroup() &&
-			PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) {
-
-			return false;
-		}
-
-		if (!(hasUpdateLayoutPermission(themeDisplay) ||
+		if ((group.hasStagingGroup() && !group.isStagingGroup() &&
+			 PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
+			!(hasUpdateLayoutPermission(themeDisplay) ||
 			  hasCustomizePermission(themeDisplay) ||
 			  hasPortletConfigurationPermission(themeDisplay))) {
 
@@ -144,11 +140,8 @@ public class ToggleControlsProductNavigationControlMenuEntry
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
-		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
-			return false;
-		}
-
-		if (!layoutTypePortlet.isCustomizable() ||
+		if (!layout.isTypePortlet() || (layoutTypePortlet == null) ||
+			!layoutTypePortlet.isCustomizable() ||
 			!layoutTypePortlet.isCustomizedView()) {
 
 			return false;

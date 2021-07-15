@@ -670,11 +670,9 @@ public class WebServerServlet extends HttpServlet {
 
 				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
-				if (pathArray.length == 0) {
-					return -1;
-				}
+				if ((pathArray.length == 0) ||
+					pathArray[0].equals("language")) {
 
-				if (pathArray[0].equals("language")) {
 					return -1;
 				}
 
@@ -1230,11 +1228,8 @@ public class WebServerServlet extends HttpServlet {
 		FileEntry fileEntry = getPortletFileEntry(
 			httpServletRequest, pathArray);
 
-		if (fileEntry == null) {
-			return;
-		}
-
-		if (_processCompanyInactiveRequest(
+		if ((fileEntry == null) ||
+			_processCompanyInactiveRequest(
 				httpServletRequest, httpServletResponse,
 				fileEntry.getCompanyId())) {
 

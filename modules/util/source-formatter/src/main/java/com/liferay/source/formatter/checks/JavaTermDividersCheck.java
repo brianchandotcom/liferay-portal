@@ -92,11 +92,9 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 			return classContent;
 		}
 
-		if (!javaTerm.isJavaVariable() || !previousJavaTerm.isJavaVariable()) {
-			return _fixJavaTermDivider(classContent, javaTermContent, true);
-		}
+		if (!javaTerm.isJavaVariable() || !previousJavaTerm.isJavaVariable() ||
+			(previousJavaTerm.isStatic() ^ javaTerm.isStatic())) {
 
-		if (previousJavaTerm.isStatic() ^ javaTerm.isStatic()) {
 			return _fixJavaTermDivider(classContent, javaTermContent, true);
 		}
 
@@ -114,27 +112,15 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 		if ((StringUtil.isUpperCase(javaTermName) &&
 			 !StringUtil.isLowerCase(javaTermName)) ||
 			(StringUtil.isUpperCase(previousJavaTermName) &&
-			 !StringUtil.isLowerCase(previousJavaTermName))) {
-
-			return _fixJavaTermDivider(classContent, javaTermContent, true);
-		}
-
-		if (javaTermContent.matches("\\s*[/@*][\\S\\s]*") ||
-			previousJavaTermContent.matches("\\s*[/@*][\\S\\s]*")) {
-
-			return _fixJavaTermDivider(classContent, javaTermContent, true);
-		}
-
-		if (javaTermContent.contains("\n\n\t") ||
-			previousJavaTermContent.contains("\n\n\t")) {
-
-			return _fixJavaTermDivider(classContent, javaTermContent, true);
-		}
-
-		if (previousJavaTerm.isStatic() &&
-			(previousJavaTermName.equals("_instance") ||
-			 previousJavaTermName.equals("_log") ||
-			 previousJavaTermName.equals("_logger"))) {
+			 !StringUtil.isLowerCase(previousJavaTermName)) ||
+			javaTermContent.matches("\\s*[/@*][\\S\\s]*") ||
+			previousJavaTermContent.matches("\\s*[/@*][\\S\\s]*") ||
+			javaTermContent.contains("\n\n\t") ||
+			previousJavaTermContent.contains("\n\n\t") ||
+			(previousJavaTerm.isStatic() &&
+			 (previousJavaTermName.equals("_instance") ||
+			  previousJavaTermName.equals("_log") ||
+			  previousJavaTermName.equals("_logger")))) {
 
 			return _fixJavaTermDivider(classContent, javaTermContent, true);
 		}

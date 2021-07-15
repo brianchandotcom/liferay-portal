@@ -256,11 +256,7 @@ public class RankingPortletDisplayBuilder {
 	protected boolean isDisabledManagementBar(
 		SearchContainer<RankingEntryDisplayContext> searchContainer) {
 
-		if (_hasResults(searchContainer)) {
-			return false;
-		}
-
-		if (_isSearch(getKeywords())) {
+		if (_hasResults(searchContainer) || _isSearch(getKeywords())) {
 			return false;
 		}
 

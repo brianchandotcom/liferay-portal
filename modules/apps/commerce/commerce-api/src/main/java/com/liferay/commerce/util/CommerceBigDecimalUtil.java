@@ -54,11 +54,7 @@ public class CommerceBigDecimalUtil {
 	}
 
 	public static boolean isZero(BigDecimal value) {
-		if (value == null) {
-			return true;
-		}
-
-		if (value.compareTo(BigDecimal.ZERO) == 0) {
+		if ((value == null) || (value.compareTo(BigDecimal.ZERO) == 0)) {
 			return true;
 		}
 

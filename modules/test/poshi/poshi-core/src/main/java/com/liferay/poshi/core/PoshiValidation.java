@@ -1683,15 +1683,10 @@ public class PoshiValidation {
 				expectedAttributeCount = 0;
 			}
 
-			if (Validator.isNotNull(element.attributeValue("name"))) {
-				expectedAttributeCount++;
-			}
+			if (Validator.isNotNull(element.attributeValue("name")) ||
+				(PoshiGetterUtil.getLineNumber(element) != -1) ||
+				Validator.isNotNull(element.attributeValue("static"))) {
 
-			if (PoshiGetterUtil.getLineNumber(element) != -1) {
-				expectedAttributeCount++;
-			}
-
-			if (Validator.isNotNull(element.attributeValue("static"))) {
 				expectedAttributeCount++;
 			}
 

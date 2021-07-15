@@ -3731,11 +3731,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private synchronized void _initTestClassResults() {
-		if (!isCompleted()) {
-			return;
-		}
-
-		if (_testClassResults != null) {
+		if (!isCompleted() || (_testClassResults != null)) {
 			return;
 		}
 

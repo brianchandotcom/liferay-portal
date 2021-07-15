@@ -218,11 +218,7 @@ public class StagingImpl implements Staging {
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		if (group == null) {
-			return;
-		}
-
-		if (!_stagingGroupHelper.isStagingGroup(group)) {
+		if ((group == null) || !_stagingGroupHelper.isStagingGroup(group)) {
 			return;
 		}
 
@@ -2122,14 +2118,10 @@ public class StagingImpl implements Staging {
 			return true;
 		}
 
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			group.isStagingGroup()) {
-
-			return false;
-		}
-
-		if (group.hasStagingGroup() &&
-			fromGroup.equals(group.getStagingGroup())) {
+		if ((group.isStaged() && !group.isStagedRemotely() &&
+			 group.isStagingGroup()) ||
+			(group.hasStagingGroup() &&
+			 fromGroup.equals(group.getStagingGroup()))) {
 
 			return false;
 		}

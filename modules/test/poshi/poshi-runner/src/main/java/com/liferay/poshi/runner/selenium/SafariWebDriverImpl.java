@@ -79,11 +79,7 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 
 		scrollWebElementIntoView(webElement);
 
-		if (webElement.isDisplayed()) {
-			return true;
-		}
-
-		if (!isObscured(webElement)) {
+		if (webElement.isDisplayed() || !isObscured(webElement)) {
 			return true;
 		}
 

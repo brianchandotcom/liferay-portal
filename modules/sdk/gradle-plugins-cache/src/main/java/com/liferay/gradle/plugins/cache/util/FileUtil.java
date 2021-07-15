@@ -139,11 +139,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		StringBuilder sb = new StringBuilder();
 
 		for (File file : sortedFiles) {
-			if (!file.exists()) {
-				continue;
-			}
-
-			if (Objects.equals(file.getName(), ".DS_Store")) {
+			if (!file.exists() || Objects.equals(file.getName(), ".DS_Store")) {
 				continue;
 			}
 

@@ -43,11 +43,7 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 	public int getNumberOfCoveredBranches() {
 		int numberOfCoveredBranches = 0;
 
-		if (_trueHitCounter.get() > 0) {
-			numberOfCoveredBranches++;
-		}
-
-		if (_falseHitCounter.get() > 0) {
+		if ((_trueHitCounter.get() > 0) || (_falseHitCounter.get() > 0)) {
 			numberOfCoveredBranches++;
 		}
 

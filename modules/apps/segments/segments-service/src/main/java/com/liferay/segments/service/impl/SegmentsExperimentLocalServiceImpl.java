@@ -417,12 +417,8 @@ public class SegmentsExperimentLocalServiceImpl
 			ServiceContextThreadLocal.getServiceContext();
 
 		if ((serviceContext == null) ||
-			(serviceContext.getUserId() == segmentsExperiment.getUserId())) {
-
-			return;
-		}
-
-		if (!UserNotificationManagerUtil.isDeliver(
+			(serviceContext.getUserId() == segmentsExperiment.getUserId()) ||
+			!UserNotificationManagerUtil.isDeliver(
 				segmentsExperiment.getUserId(),
 				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0,
 				SegmentsExperimentConstants.NOTIFICATION_TYPE_UPDATE_STATUS,

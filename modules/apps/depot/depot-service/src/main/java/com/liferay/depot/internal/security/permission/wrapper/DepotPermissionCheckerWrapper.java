@@ -116,11 +116,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return false;
 			}
 
-			if (super.isContentReviewer(companyId, groupId)) {
-				return true;
-			}
+			if (super.isContentReviewer(companyId, groupId) ||
+				isGroupAdmin(groupId)) {
 
-			if (isGroupAdmin(groupId)) {
 				return true;
 			}
 

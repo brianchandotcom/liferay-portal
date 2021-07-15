@@ -125,11 +125,8 @@ public class ThreadPermissionsPortletConfigurationIcon
 
 			MBThread thread = message.getThread();
 
-			if (thread.isLocked()) {
-				return false;
-			}
-
-			if (!_messageModelResourcePermission.contains(
+			if (thread.isLocked() ||
+				!_messageModelResourcePermission.contains(
 					permissionChecker, message, ActionKeys.PERMISSIONS)) {
 
 				return false;

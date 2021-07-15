@@ -120,11 +120,8 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 			return true;
 		}
 
-		if (!layoutTypePortlet.isCustomizable()) {
-			return false;
-		}
-
-		if (!LayoutPermissionUtil.containsWithoutViewableGroup(
+		if (!layoutTypePortlet.isCustomizable() ||
+			!LayoutPermissionUtil.containsWithoutViewableGroup(
 				themeDisplay.getPermissionChecker(), layout, false,
 				ActionKeys.CUSTOMIZE)) {
 
@@ -143,15 +140,9 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
+		if (layout.isTypeControlPanel() || layout.isTypeContent() ||
+			!isCustomizableLayout(themeDisplay)) {
 
-		if (layout.isTypeContent()) {
-			return false;
-		}
-
-		if (!isCustomizableLayout(themeDisplay)) {
 			return false;
 		}
 

@@ -245,13 +245,10 @@ public class MembershipRequestLocalServiceImpl
 		for (Role role : roles) {
 			String roleName = role.getName();
 
-			if (roleName.equals(RoleConstants.OWNER)) {
-				continue;
-			}
-
-			if ((roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
-				 roleName.equals(RoleConstants.ORGANIZATION_OWNER)) &&
-				!group.isOrganization()) {
+			if (roleName.equals(RoleConstants.OWNER) ||
+				((roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
+				  roleName.equals(RoleConstants.ORGANIZATION_OWNER)) &&
+				 !group.isOrganization())) {
 
 				continue;
 			}

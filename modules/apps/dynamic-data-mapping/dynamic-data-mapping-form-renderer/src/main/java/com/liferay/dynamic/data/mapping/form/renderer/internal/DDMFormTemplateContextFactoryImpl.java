@@ -115,14 +115,11 @@ public class DDMFormTemplateContextFactoryImpl
 				Object value = ddmFormLayoutDDMFormField.getProperty(
 					visualPropertyDDMFormField.getName());
 
-				if (value == null) {
-					continue;
-				}
-
-				if (Objects.equals(
+				if ((value == null) ||
+					(Objects.equals(
 						visualPropertyDDMFormField.getName(), "label") &&
-					GetterUtil.getBoolean(
-						ddmFormField.getProperty("labelAtStructureLevel"))) {
+					 GetterUtil.getBoolean(
+						 ddmFormField.getProperty("labelAtStructureLevel")))) {
 
 					continue;
 				}

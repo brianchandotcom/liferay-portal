@@ -67,12 +67,8 @@ public class MentionsBlogsEntryServiceWrapper
 			userId, entryId, status, serviceContext, workflowContext);
 
 		if ((status != WorkflowConstants.STATUS_APPROVED) ||
-			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) {
-
-			return entry;
-		}
-
-		if (!MentionsUtil.isMentionsEnabled(
+			(oldStatus == WorkflowConstants.STATUS_IN_TRASH) ||
+			!MentionsUtil.isMentionsEnabled(
 				_portal.getSiteGroupId(entry.getGroupId()))) {
 
 			return entry;

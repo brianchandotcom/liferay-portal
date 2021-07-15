@@ -213,11 +213,10 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected void evaluateDDMFormPageChange() {
-		if (_ddmFormLayout == null) {
-			return;
-		}
+		if ((_ddmFormLayout == null) ||
+			(_ddmFormLayout.getNextPage() ==
+				_ddmFormLayout.getPreviousPage())) {
 
-		if (_ddmFormLayout.getNextPage() == _ddmFormLayout.getPreviousPage()) {
 			return;
 		}
 
@@ -697,26 +696,14 @@ public class DDMFormEvaluatorHelper {
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey =
 			entry.getKey();
 
-		if (isConfirmationValueInvalid(ddmFormEvaluatorFieldContextKey) &&
-			isFieldWithConfirmationFieldAndVisible(
-				ddmFormEvaluatorFieldContextKey)) {
+		if ((isConfirmationValueInvalid(ddmFormEvaluatorFieldContextKey) &&
+			 isFieldWithConfirmationFieldAndVisible(
+				 ddmFormEvaluatorFieldContextKey)) ||
+			isFieldEmpty(ddmFormEvaluatorFieldContextKey) ||
+			isFieldReadOnly(ddmFormEvaluatorFieldContextKey) ||
+			!isFieldVisible(ddmFormEvaluatorFieldContextKey) ||
+			isHideField(ddmFormEvaluatorFieldContextKey)) {
 
-			return;
-		}
-
-		if (isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
-			return;
-		}
-
-		if (isFieldReadOnly(ddmFormEvaluatorFieldContextKey)) {
-			return;
-		}
-
-		if (!isFieldVisible(ddmFormEvaluatorFieldContextKey)) {
-			return;
-		}
-
-		if (isHideField(ddmFormEvaluatorFieldContextKey)) {
 			return;
 		}
 

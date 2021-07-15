@@ -126,13 +126,10 @@ public abstract class PoshiElement
 
 		generatedPoshiScript = generatedPoshiScript.replaceAll("\\s+", "");
 
-		if ((elements().size() == 0) &&
-			!originalPoshiScript.equals(generatedPoshiScript)) {
+		if (((elements().size() == 0) &&
+			 !originalPoshiScript.equals(generatedPoshiScript)) ||
+			(originalPoshiScript.length() != generatedPoshiScript.length())) {
 
-			return false;
-		}
-
-		if (originalPoshiScript.length() != generatedPoshiScript.length()) {
 			return false;
 		}
 
@@ -670,15 +667,9 @@ public abstract class PoshiElement
 				storedIndices.clear();
 			}
 
-			if (skipBalanceCheck) {
-				continue;
-			}
+			if (skipBalanceCheck || ((c != '}') && (c != ';')) ||
+				(trimmedPoshiScriptSnippet.startsWith("var") && (c != ';'))) {
 
-			if ((c != '}') && (c != ';')) {
-				continue;
-			}
-
-			if (trimmedPoshiScriptSnippet.startsWith("var") && (c != ';')) {
 				continue;
 			}
 

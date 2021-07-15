@@ -39,14 +39,8 @@ public class PQLOperatorFactory {
 						properties);
 
 					if ((pqlResultObject1 == null) ||
-						(pqlResultObject2 == null)) {
-
-						throw new Exception(
-							"Operators must be surrounded by 2 boolean " +
-								"values: " + operator);
-					}
-
-					if (!(pqlResultObject1 instanceof Boolean) ||
+						(pqlResultObject2 == null) ||
+						!(pqlResultObject1 instanceof Boolean) ||
 						!(pqlResultObject2 instanceof Boolean)) {
 
 						throw new Exception(

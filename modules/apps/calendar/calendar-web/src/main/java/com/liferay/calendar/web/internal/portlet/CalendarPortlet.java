@@ -1477,11 +1477,9 @@ public class CalendarPortlet extends MVCPortlet {
 
 			CalendarResource calendarResource = calendar.getCalendarResource();
 
-			if (!calendarResource.isActive()) {
-				continue;
-			}
+			if (!calendarResource.isActive() ||
+				(calendarResource.isUser() && !showUserEvents)) {
 
-			if (calendarResource.isUser() && !showUserEvents) {
 				continue;
 			}
 

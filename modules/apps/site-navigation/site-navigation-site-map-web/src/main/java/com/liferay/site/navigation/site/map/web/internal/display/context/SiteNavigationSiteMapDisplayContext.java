@@ -223,14 +223,11 @@ public class SiteNavigationSiteMapDisplayContext {
 			StringBundler sb)
 		throws Exception {
 
-		if (layouts.isEmpty()) {
-			return;
-		}
-
-		if ((rootLayout != null) &&
-			!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), rootLayout,
-				ActionKeys.VIEW)) {
+		if (layouts.isEmpty() ||
+			((rootLayout != null) &&
+			 !LayoutPermissionUtil.contains(
+				 themeDisplay.getPermissionChecker(), rootLayout,
+				 ActionKeys.VIEW))) {
 
 			return;
 		}

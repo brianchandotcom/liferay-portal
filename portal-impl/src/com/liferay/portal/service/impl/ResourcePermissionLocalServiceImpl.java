@@ -2012,28 +2012,20 @@ public class ResourcePermissionLocalServiceImpl
 					0, guestRole.getRoleId(), Boolean.TRUE,
 					guestActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap)) {
-
-				modified = true;
-			}
-
-			if (_updateResourcePermission(
+					resourcePermissionsMap) ||
+				_updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
 					0, ownerRole.getRoleId(), Boolean.FALSE,
 					ownerActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap)) {
-
-				modified = true;
-			}
-
-			if ((groupActionIds != null) &&
-				_updateResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, siteMemberRole.getRoleId(), Boolean.FALSE,
-					groupActionIds.toArray(new String[0]),
-					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap)) {
+					resourcePermissionsMap) ||
+				((groupActionIds != null) &&
+				 _updateResourcePermission(
+					 companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
+					 0, siteMemberRole.getRoleId(), Boolean.FALSE,
+					 groupActionIds.toArray(new String[0]),
+					 ResourcePermissionConstants.OPERATOR_SET, true,
+					 resourcePermissionsMap))) {
 
 				modified = true;
 			}
@@ -2151,14 +2143,11 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		if (resourcePermission == null) {
-			if (((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
-				 (operator == ResourcePermissionConstants.OPERATOR_SET)) &&
-				(actionIds.length == 0)) {
+			if ((((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
+				  (operator == ResourcePermissionConstants.OPERATOR_SET)) &&
+				 (actionIds.length == 0)) ||
+				(operator == ResourcePermissionConstants.OPERATOR_REMOVE)) {
 
-				return false;
-			}
-
-			if (operator == ResourcePermissionConstants.OPERATOR_REMOVE) {
 				return false;
 			}
 

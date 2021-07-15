@@ -229,11 +229,9 @@ public class DocumentImpl implements Document {
 	}
 
 	private Collection<Object> _toCollection(Object[] values) {
-		if (ArrayUtil.isEmpty(values)) {
-			return null;
-		}
+		if (ArrayUtil.isEmpty(values) ||
+			((values.length == 1) && (values[0] == null))) {
 
-		if ((values.length == 1) && (values[0] == null)) {
 			return null;
 		}
 

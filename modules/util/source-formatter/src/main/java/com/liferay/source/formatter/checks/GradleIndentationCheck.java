@@ -140,11 +140,8 @@ public class GradleIndentationCheck extends BaseFileCheck {
 			}
 		}
 
-		if (insideQuotes && line.equals(text)) {
-			return tabCount;
-		}
-
-		if (text.matches("^\\s*Matcher\\s+.*") ||
+		if ((insideQuotes && line.equals(text)) ||
+			text.matches("^\\s*Matcher\\s+.*") ||
 			text.matches("^\\s*Pattern\\s+.*")) {
 
 			return tabCount;

@@ -87,11 +87,9 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 
-		if (!systemEvent.send()) {
-			return;
-		}
+		if (!systemEvent.send() ||
+			!isValid(aopMethodInvocation, arguments, _PHASE_AFTER_RETURNING)) {
 
-		if (!isValid(aopMethodInvocation, arguments, _PHASE_AFTER_RETURNING)) {
 			return;
 		}
 
@@ -152,11 +150,9 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 
-		if (!isValid(aopMethodInvocation, arguments, _PHASE_DURING_FINALLY)) {
-			return;
-		}
+		if (!isValid(aopMethodInvocation, arguments, _PHASE_DURING_FINALLY) ||
+			(systemEvent.action() == SystemEventConstants.ACTION_NONE)) {
 
-		if (systemEvent.action() == SystemEventConstants.ACTION_NONE) {
 			return;
 		}
 

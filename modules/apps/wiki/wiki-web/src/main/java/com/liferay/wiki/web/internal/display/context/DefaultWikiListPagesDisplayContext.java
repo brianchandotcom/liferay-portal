@@ -795,12 +795,8 @@ public class DefaultWikiListPagesDisplayContext
 
 		if (!WikiPagePermission.contains(
 				_wikiRequestHelper.getPermissionChecker(), wikiPage,
-				ActionKeys.UPDATE)) {
-
-			return false;
-		}
-
-		if (!WikiNodePermission.contains(
+				ActionKeys.UPDATE) ||
+			!WikiNodePermission.contains(
 				_wikiRequestHelper.getPermissionChecker(), wikiPage.getNodeId(),
 				ActionKeys.ADD_PAGE)) {
 

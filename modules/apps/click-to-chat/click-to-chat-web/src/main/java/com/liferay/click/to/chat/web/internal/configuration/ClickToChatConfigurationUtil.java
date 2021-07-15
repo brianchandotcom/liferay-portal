@@ -34,11 +34,8 @@ public class ClickToChatConfigurationUtil {
 				ConfigurationProviderUtil.getCompanyConfiguration(
 					ClickToChatConfiguration.class, companyId);
 
-			if (groupId == 0) {
-				return companyClickToChatConfiguration;
-			}
-
-			if (Objects.equals(
+			if ((groupId == 0) ||
+				Objects.equals(
 					companyClickToChatConfiguration.siteSettingsStrategy(),
 					"always-inherit")) {
 

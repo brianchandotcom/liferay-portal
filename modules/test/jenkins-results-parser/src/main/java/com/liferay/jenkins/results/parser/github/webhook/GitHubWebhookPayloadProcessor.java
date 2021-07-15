@@ -734,11 +734,9 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	protected boolean isLiferayUser(String gitHubUsername) {
-		if (gitHubUsername.equals("liferay")) {
-			return true;
-		}
+		if (gitHubUsername.equals("liferay") ||
+			_validLiferayUsers.contains(gitHubUsername)) {
 
-		if (_validLiferayUsers.contains(gitHubUsername)) {
 			return true;
 		}
 

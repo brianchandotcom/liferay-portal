@@ -87,12 +87,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 			layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
-		if (layoutPageTemplateEntry != null) {
-			return false;
-		}
-
-		if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
-			(layout.fetchDraftLayout() == null)) {
+		if ((layoutPageTemplateEntry != null) ||
+			((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
+			 (layout.fetchDraftLayout() == null))) {
 
 			return false;
 		}

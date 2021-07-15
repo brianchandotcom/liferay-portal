@@ -540,11 +540,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		LayoutStagingHandler layoutStagingHandler =
 			LayoutStagingUtil.getLayoutStagingHandler(layout);
 
-		if (layoutStagingHandler != null) {
-			return layout;
-		}
+		if ((layoutStagingHandler != null) ||
+			!LayoutStagingUtil.isBranchingLayout(layout)) {
 
-		if (!LayoutStagingUtil.isBranchingLayout(layout)) {
 			return layout;
 		}
 

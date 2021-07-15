@@ -168,12 +168,9 @@ public class QueryConfig implements Serializable {
 	public boolean isAllFieldsSelected() {
 		String[] selectedFieldNames = getSelectedFieldNames();
 
-		if (ArrayUtil.isEmpty(selectedFieldNames)) {
-			return true;
-		}
-
-		if ((selectedFieldNames.length == 1) &&
-			selectedFieldNames[0].equals(Field.ANY)) {
+		if (ArrayUtil.isEmpty(selectedFieldNames) ||
+			((selectedFieldNames.length == 1) &&
+			 selectedFieldNames[0].equals(Field.ANY))) {
 
 			return true;
 		}

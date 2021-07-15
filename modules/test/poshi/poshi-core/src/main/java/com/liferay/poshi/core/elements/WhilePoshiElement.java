@@ -132,14 +132,11 @@ public class WhilePoshiElement extends IfPoshiElement {
 	private boolean _isElementType(
 		PoshiElement parentPoshiElement, String poshiScript) {
 
-		if (WhilePoshiElement.class.equals(parentPoshiElement.getClass())) {
-			return false;
-		}
-
-		if (!(parentPoshiElement instanceof CommandPoshiElement) &&
-			!(parentPoshiElement instanceof ForPoshiElement) &&
-			!(parentPoshiElement instanceof TaskPoshiElement) &&
-			!(parentPoshiElement instanceof ThenPoshiElement)) {
+		if (WhilePoshiElement.class.equals(parentPoshiElement.getClass()) ||
+			(!(parentPoshiElement instanceof CommandPoshiElement) &&
+			 !(parentPoshiElement instanceof ForPoshiElement) &&
+			 !(parentPoshiElement instanceof TaskPoshiElement) &&
+			 !(parentPoshiElement instanceof ThenPoshiElement))) {
 
 			return false;
 		}

@@ -66,11 +66,8 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 
 	@Override
 	public boolean isEnabled() {
-		if (!DocumentConversionUtil.isEnabled()) {
-			return false;
-		}
-
-		if (!ArrayUtil.contains(
+		if (!DocumentConversionUtil.isEnabled() ||
+			!ArrayUtil.contains(
 				DocumentConversionUtil.getConversions("html"),
 				getExtension())) {
 

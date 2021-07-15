@@ -251,12 +251,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.CONTINUE;
 					}
 
-					if (excludedProjectDirTypes.contains(projectDirType)) {
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					if (!includedDirPaths.isEmpty() &&
-						!_startsWith(dirPath, includedDirPaths)) {
+					if (excludedProjectDirTypes.contains(projectDirType) ||
+						(!includedDirPaths.isEmpty() &&
+						 !_startsWith(dirPath, includedDirPaths))) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -288,11 +285,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 	}
 
 	private boolean _isPortalRootDirPath(Path dirPath) {
-		if (!Files.exists(dirPath.resolve("modules"))) {
-			return false;
-		}
+		if (!Files.exists(dirPath.resolve("modules")) ||
+			!Files.exists(dirPath.resolve("portal-impl"))) {
 
-		if (!Files.exists(dirPath.resolve("portal-impl"))) {
 			return false;
 		}
 

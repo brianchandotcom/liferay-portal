@@ -137,11 +137,9 @@ public class AnnotationFeature implements Feature {
 				throw new RuntimeException(sb.toString());
 			}
 
-			if (requiresNoScope != null) {
-				return true;
-			}
+			if ((requiresNoScope != null) ||
+				checkRequiresScope(requiresScope)) {
 
-			if (checkRequiresScope(requiresScope)) {
 				return true;
 			}
 
@@ -164,11 +162,9 @@ public class AnnotationFeature implements Feature {
 				throw new RuntimeException(sb.toString());
 			}
 
-			if (requiresNoScope != null) {
-				return true;
-			}
+			if ((requiresNoScope != null) ||
+				checkRequiresScope(requiresScope)) {
 
-			if (checkRequiresScope(requiresScope)) {
 				return true;
 			}
 

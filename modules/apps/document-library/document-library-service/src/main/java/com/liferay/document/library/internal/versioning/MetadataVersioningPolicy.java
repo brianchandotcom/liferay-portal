@@ -49,38 +49,19 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 
 		if (!Objects.equals(
 				previousDLFileVersion.getTitle(),
-				nextDLFileVersion.getTitle())) {
-
-			return Optional.of(DLVersionNumberIncrease.MINOR);
-		}
-
-		if (!Objects.equals(
+				nextDLFileVersion.getTitle()) ||
+			!Objects.equals(
 				previousDLFileVersion.getFileName(),
-				nextDLFileVersion.getFileName())) {
-
-			return Optional.of(DLVersionNumberIncrease.MINOR);
-		}
-
-		if (!Objects.equals(
+				nextDLFileVersion.getFileName()) ||
+			!Objects.equals(
 				previousDLFileVersion.getDescription(),
-				nextDLFileVersion.getDescription())) {
+				nextDLFileVersion.getDescription()) ||
+			(previousDLFileVersion.getFileEntryTypeId() !=
+				nextDLFileVersion.getFileEntryTypeId()) ||
+			_isDLFileEntryTypeUpdated(
+				previousDLFileVersion, nextDLFileVersion) ||
+			_isExpandoUpdated(previousDLFileVersion, nextDLFileVersion)) {
 
-			return Optional.of(DLVersionNumberIncrease.MINOR);
-		}
-
-		if (previousDLFileVersion.getFileEntryTypeId() !=
-				nextDLFileVersion.getFileEntryTypeId()) {
-
-			return Optional.of(DLVersionNumberIncrease.MINOR);
-		}
-
-		if (_isDLFileEntryTypeUpdated(
-				previousDLFileVersion, nextDLFileVersion)) {
-
-			return Optional.of(DLVersionNumberIncrease.MINOR);
-		}
-
-		if (_isExpandoUpdated(previousDLFileVersion, nextDLFileVersion)) {
 			return Optional.of(DLVersionNumberIncrease.MINOR);
 		}
 

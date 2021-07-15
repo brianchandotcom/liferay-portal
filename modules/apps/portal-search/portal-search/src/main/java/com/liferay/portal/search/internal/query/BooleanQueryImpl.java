@@ -107,19 +107,9 @@ public class BooleanQueryImpl extends BaseQueryImpl implements BooleanQuery {
 
 	@Override
 	public boolean hasClauses() {
-		if (!_filterQueryClauses.isEmpty()) {
-			return true;
-		}
+		if (!_filterQueryClauses.isEmpty() || !_mustQueryClauses.isEmpty() ||
+			!_mustNotQueryClauses.isEmpty() || !_shouldQueryClauses.isEmpty()) {
 
-		if (!_mustQueryClauses.isEmpty()) {
-			return true;
-		}
-
-		if (!_mustNotQueryClauses.isEmpty()) {
-			return true;
-		}
-
-		if (!_shouldQueryClauses.isEmpty()) {
 			return true;
 		}
 

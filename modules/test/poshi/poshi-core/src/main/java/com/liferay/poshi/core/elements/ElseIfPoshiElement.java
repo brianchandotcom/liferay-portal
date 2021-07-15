@@ -90,11 +90,9 @@ public class ElseIfPoshiElement extends IfPoshiElement {
 	private boolean _isElementType(
 		PoshiElement parentPoshiElement, String poshiScript) {
 
-		if (ElseIfPoshiElement.class.equals(parentPoshiElement.getClass())) {
-			return false;
-		}
+		if (ElseIfPoshiElement.class.equals(parentPoshiElement.getClass()) ||
+			!(parentPoshiElement instanceof IfPoshiElement)) {
 
-		if (!(parentPoshiElement instanceof IfPoshiElement)) {
 			return false;
 		}
 

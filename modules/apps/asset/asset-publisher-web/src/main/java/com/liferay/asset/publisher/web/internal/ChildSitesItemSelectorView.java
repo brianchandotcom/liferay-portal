@@ -83,11 +83,7 @@ public class ChildSitesItemSelectorView
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		if (siteGroup.isLayoutPrototype()) {
-			return false;
-		}
-
-		if (siteGroup.isLayoutSetPrototype()) {
+		if (siteGroup.isLayoutPrototype() || siteGroup.isLayoutSetPrototype()) {
 			return false;
 		}
 

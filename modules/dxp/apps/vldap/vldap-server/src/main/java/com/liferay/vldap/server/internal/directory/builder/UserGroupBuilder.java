@@ -112,12 +112,9 @@ public class UserGroupBuilder extends DirectoryBuilder {
 				}
 
 				for (UserGroup userGroup : user.getUserGroups()) {
-					if ((name != null) && !name.equals(userGroup.getName())) {
-						continue;
-					}
-
-					if ((description != null) &&
-						!description.equals(userGroup.getDescription())) {
+					if (((name != null) && !name.equals(userGroup.getName())) ||
+						((description != null) &&
+						 !description.equals(userGroup.getDescription()))) {
 
 						continue;
 					}

@@ -144,11 +144,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 				tag.putAttribute(attributeName, attributeValue);
 			}
 
-			if (attributeValue.matches("<%=.*%>")) {
-				continue;
-			}
-
-			if ((setMethodsMap == null) ||
+			if (attributeValue.matches("<%=.*%>") || (setMethodsMap == null) ||
 				(!isPortalSource() && !isSubrepository())) {
 
 				continue;

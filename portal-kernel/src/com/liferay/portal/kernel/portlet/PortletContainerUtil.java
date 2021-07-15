@@ -346,12 +346,9 @@ public class PortletContainerUtil {
 
 		int y2 = length + x2;
 
-		if (y2 > queryString2.length()) {
-			return false;
-		}
-
-		if ((y2 != queryString2.length()) &&
-			(queryString2.charAt(y2) != CharPool.AMPERSAND)) {
+		if ((y2 > queryString2.length()) ||
+			((y2 != queryString2.length()) &&
+			 (queryString2.charAt(y2) != CharPool.AMPERSAND))) {
 
 			return false;
 		}

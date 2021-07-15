@@ -102,11 +102,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 
 		Element rootElement = document.getRootElement();
 
-		if (rootElement == null) {
-			return null;
-		}
-
-		if (hasErrorMessage(rootElement)) {
+		if ((rootElement == null) || hasErrorMessage(rootElement)) {
 			return null;
 		}
 

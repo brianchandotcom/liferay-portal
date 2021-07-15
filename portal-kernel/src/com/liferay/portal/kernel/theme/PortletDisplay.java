@@ -469,11 +469,9 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	public boolean isShowPortletTitle() {
-		if (Validator.isNull(getPortletDecoratorId())) {
-			return false;
-		}
+		if (Validator.isNull(getPortletDecoratorId()) ||
+			StringUtil.equals(getPortletDecoratorId(), "barebone")) {
 
-		if (StringUtil.equals(getPortletDecoratorId(), "barebone")) {
 			return false;
 		}
 
@@ -504,14 +502,11 @@ public class PortletDisplay implements Cloneable, Serializable {
 		boolean showPortletTopper = GetterUtil.getBoolean(
 			httpServletRequest.getAttribute(WebKeys.SHOW_PORTLET_TOPPER));
 
-		if (layoutMode.equals(Constants.VIEW) &&
-			(layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
-			showPortletTopper) {
+		if ((layoutMode.equals(Constants.VIEW) &&
+			 (layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
+			 showPortletTopper) ||
+			layoutMode.equals(Constants.PREVIEW)) {
 
-			return false;
-		}
-
-		if (layoutMode.equals(Constants.PREVIEW)) {
 			return false;
 		}
 

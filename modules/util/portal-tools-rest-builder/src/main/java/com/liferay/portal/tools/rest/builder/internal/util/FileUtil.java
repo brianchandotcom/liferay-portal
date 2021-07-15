@@ -80,14 +80,10 @@ public class FileUtil {
 
 					String content = read(file);
 
-					if (StringUtil.endsWith(file.getName(), ".java") &&
-						!content.contains("@generated")) {
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					if (StringUtil.endsWith(file.getName(), ".properties") &&
-						!content.contains("# This is a generated file.")) {
+					if ((StringUtil.endsWith(file.getName(), ".java") &&
+						 !content.contains("@generated")) ||
+						(StringUtil.endsWith(file.getName(), ".properties") &&
+						 !content.contains("# This is a generated file."))) {
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -112,11 +108,7 @@ public class FileUtil {
 
 					String name = file.getName();
 
-					if (!name.startsWith(prefix)) {
-						return false;
-					}
-
-					if (!name.endsWith(suffix)) {
+					if (!name.startsWith(prefix) || !name.endsWith(suffix)) {
 						return false;
 					}
 

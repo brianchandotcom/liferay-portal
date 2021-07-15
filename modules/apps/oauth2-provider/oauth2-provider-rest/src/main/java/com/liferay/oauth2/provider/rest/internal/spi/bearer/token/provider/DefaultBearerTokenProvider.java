@@ -108,11 +108,9 @@ public class DefaultBearerTokenProvider implements BearerTokenProvider {
 
 		long issuedAtMillis = issuedAt * 1000;
 
-		if (issuedAtMillis > System.currentTimeMillis()) {
-			return false;
-		}
+		if ((issuedAtMillis > System.currentTimeMillis()) ||
+			((issuedAtMillis + expiresInMillis) < System.currentTimeMillis())) {
 
-		if ((issuedAtMillis + expiresInMillis) < System.currentTimeMillis()) {
 			return false;
 		}
 

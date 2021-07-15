@@ -290,11 +290,8 @@ public class OrganizationExpandoColumnModelListener
 		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
 			expandoColumn.getTableId());
 
-		if (expandoTable.getClassNameId() != organizationClassNameId) {
-			return false;
-		}
-
-		if (!ExpandoTableConstants.DEFAULT_TABLE_NAME.equals(
+		if ((expandoTable.getClassNameId() != organizationClassNameId) ||
+			!ExpandoTableConstants.DEFAULT_TABLE_NAME.equals(
 				expandoTable.getName())) {
 
 			return false;

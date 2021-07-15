@@ -522,11 +522,7 @@ public class ContentUtil {
 
 		long classPK = jsonObject.getLong("classPK");
 
-		if (classPK <= 0) {
-			return null;
-		}
-
-		if (mappedClassPKs.contains(classPK)) {
+		if ((classPK <= 0) || mappedClassPKs.contains(classPK)) {
 			return null;
 		}
 
@@ -563,12 +559,8 @@ public class ContentUtil {
 				layoutStructure.getLayoutStructureItems()) {
 
 			if (!(layoutStructureItem instanceof
-					ContainerStyledLayoutStructureItem)) {
-
-				continue;
-			}
-
-			if (ListUtil.exists(
+					ContainerStyledLayoutStructureItem) ||
+				ListUtil.exists(
 					layoutStructure.getDeletedLayoutStructureItems(),
 					deletedLayoutStructureItem ->
 						deletedLayoutStructureItem.containsItemId(

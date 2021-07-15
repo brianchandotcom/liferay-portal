@@ -219,11 +219,8 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 		JSONObject valueJSONObject = _getValueJSONObject(value);
 
-		if ((valueJSONObject == null) || (valueJSONObject.length() <= 0)) {
-			return StringPool.BLANK;
-		}
-
-		if (Validator.isNull(valueJSONObject.getString("uuid")) ||
+		if ((valueJSONObject == null) || (valueJSONObject.length() <= 0) ||
+			Validator.isNull(valueJSONObject.getString("uuid")) ||
 			Validator.isNull(valueJSONObject.getLong("groupId"))) {
 
 			return StringPool.BLANK;

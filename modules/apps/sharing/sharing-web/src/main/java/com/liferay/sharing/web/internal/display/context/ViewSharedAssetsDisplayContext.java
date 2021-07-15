@@ -281,11 +281,9 @@ public class ViewSharedAssetsDisplayContext {
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
-		if (sharingEntryInterpreter == null) {
-			return false;
-		}
+		if ((sharingEntryInterpreter == null) ||
+			!sharingEntryInterpreter.isVisible(sharingEntry)) {
 
-		if (!sharingEntryInterpreter.isVisible(sharingEntry)) {
 			return false;
 		}
 

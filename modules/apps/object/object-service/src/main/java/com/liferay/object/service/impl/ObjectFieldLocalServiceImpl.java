@@ -161,11 +161,8 @@ public class ObjectFieldLocalServiceImpl
 				"Names must be less than 41 characters");
 		}
 
-		if (_reservedNames.contains(StringUtil.toLowerCase(name))) {
-			throw new ReservedObjectFieldException("Reserved name " + name);
-		}
-
-		if (StringUtil.equalsIgnoreCase(
+		if (_reservedNames.contains(StringUtil.toLowerCase(name)) ||
+			StringUtil.equalsIgnoreCase(
 				objectDefinition.getPKObjectFieldName(), name)) {
 
 			throw new ReservedObjectFieldException("Reserved name " + name);

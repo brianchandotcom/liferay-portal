@@ -1198,13 +1198,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(name) || (name.indexOf(CharPool.COMMA) != -1) ||
-			(name.indexOf(CharPool.STAR) != -1)) {
-
-			throw new UserGroupNameException();
-		}
-
-		if (Validator.isNumber(name) &&
-			!PropsValues.USER_GROUPS_NAME_ALLOW_NUMERIC) {
+			(name.indexOf(CharPool.STAR) != -1) ||
+			(Validator.isNumber(name) &&
+			 !PropsValues.USER_GROUPS_NAME_ALLOW_NUMERIC)) {
 
 			throw new UserGroupNameException();
 		}

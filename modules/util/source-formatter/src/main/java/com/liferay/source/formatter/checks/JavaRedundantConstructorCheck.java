@@ -52,11 +52,8 @@ public class JavaRedundantConstructorCheck extends BaseJavaTermCheck {
 
 		JavaClass javaClass = javaTerm.getParentJavaClass();
 
-		if (_getConstructorCount(javaClass) > 1) {
-			return constructorContent;
-		}
-
-		if ((javaTerm.isPrivate() && !javaClass.isPrivate()) ||
+		if ((_getConstructorCount(javaClass) > 1) ||
+			(javaTerm.isPrivate() && !javaClass.isPrivate()) ||
 			(javaTerm.isProtected() && !javaClass.isPrivate() &&
 			 !javaClass.isProtected())) {
 

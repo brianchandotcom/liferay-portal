@@ -43,15 +43,10 @@ public class SecureRequestAction extends Action {
 		throws ActionException {
 
 		try {
-			if (httpServletRequest.isSecure()) {
-				return;
-			}
+			if (httpServletRequest.isSecure() ||
+				!isRequiresSecure(httpServletRequest) ||
+				httpServletResponse.isCommitted()) {
 
-			if (!isRequiresSecure(httpServletRequest)) {
-				return;
-			}
-
-			if (httpServletResponse.isCommitted()) {
 				return;
 			}
 

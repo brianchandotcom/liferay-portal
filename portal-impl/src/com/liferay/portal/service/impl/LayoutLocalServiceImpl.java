@@ -3758,15 +3758,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Group group = layout.getGroup();
 
-		if (MergeLayoutPrototypesThreadLocal.isMergeComplete(
+		if ((MergeLayoutPrototypesThreadLocal.isMergeComplete(
 				"getLayout", arguments) &&
-			!group.isUser()) {
-
-			return false;
-		}
-
-		if (Validator.isNull(layout.getLayoutPrototypeUuid()) &&
-			Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+			 !group.isUser()) ||
+			(Validator.isNull(layout.getLayoutPrototypeUuid()) &&
+			 Validator.isNull(layout.getSourcePrototypeLayoutUuid()))) {
 
 			return false;
 		}

@@ -52,11 +52,9 @@ public class ExpandoQueryContributorHelperImpl
 		String keywords, BooleanQuery booleanQuery,
 		Collection<String> classNames, SearchContext searchContext) {
 
-		if (IndexerProvidedClausesUtil.shouldSuppress(searchContext)) {
-			return;
-		}
+		if (IndexerProvidedClausesUtil.shouldSuppress(searchContext) ||
+			Validator.isBlank(keywords)) {
 
-		if (Validator.isBlank(keywords)) {
 			return;
 		}
 

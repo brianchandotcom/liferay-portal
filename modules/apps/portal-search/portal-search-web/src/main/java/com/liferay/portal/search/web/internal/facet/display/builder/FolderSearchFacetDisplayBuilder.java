@@ -303,11 +303,9 @@ public class FolderSearchFacetDisplayBuilder {
 		List<TermCollector> termCollectors,
 		List<FolderSearchFacetTermDisplayContext> termDisplayContexts) {
 
-		if (isNothingSelected() && ListUtil.isEmpty(termCollectors)) {
-			return true;
-		}
+		if ((isNothingSelected() && ListUtil.isEmpty(termCollectors)) ||
+			ListUtil.isEmpty(termDisplayContexts)) {
 
-		if (ListUtil.isEmpty(termDisplayContexts)) {
 			return true;
 		}
 

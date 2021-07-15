@@ -342,14 +342,10 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 			CPSpecificationOption cpSpecificationOption =
 				cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
-			if (categorized &&
-				(cpSpecificationOption.getCPOptionCategoryId() > 0)) {
-
-				cpSpecificationOptions.add(cpSpecificationOption);
-			}
-
-			if (!categorized &&
-				(cpSpecificationOption.getCPOptionCategoryId() == 0)) {
+			if ((categorized &&
+				 (cpSpecificationOption.getCPOptionCategoryId() > 0)) ||
+				(!categorized &&
+				 (cpSpecificationOption.getCPOptionCategoryId() == 0))) {
 
 				cpSpecificationOptions.add(cpSpecificationOption);
 			}

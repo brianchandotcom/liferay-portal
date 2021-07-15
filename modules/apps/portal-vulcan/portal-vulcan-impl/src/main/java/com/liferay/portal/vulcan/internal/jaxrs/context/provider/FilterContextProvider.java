@@ -64,11 +64,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 			_log.debug("Filter parameter value: " + filterString);
 		}
 
-		if (Validator.isNull(filterString)) {
-			return null;
-		}
-
-		if (entityModel == null) {
+		if (Validator.isNull(filterString) || (entityModel == null)) {
 			return null;
 		}
 

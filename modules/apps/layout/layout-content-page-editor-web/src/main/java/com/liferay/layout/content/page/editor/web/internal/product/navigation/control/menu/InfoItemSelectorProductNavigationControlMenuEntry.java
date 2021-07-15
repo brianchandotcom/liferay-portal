@@ -84,11 +84,7 @@ public class InfoItemSelectorProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		if (!layout.isTypeAssetDisplay()) {
+		if (layout.isTypeControlPanel() || !layout.isTypeAssetDisplay()) {
 			return false;
 		}
 

@@ -400,11 +400,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		for (long userId : userIds) {
-			if (userId == themeDisplay.getUserId()) {
-				continue;
-			}
-
-			if (socialRelationLocalService.hasRelation(
+			if ((userId == themeDisplay.getUserId()) ||
+				socialRelationLocalService.hasRelation(
 					userId, themeDisplay.getUserId(),
 					SocialRelationConstants.TYPE_BI_CONNECTION) ||
 				socialRelationLocalService.hasRelation(

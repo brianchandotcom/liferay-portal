@@ -133,12 +133,9 @@ public class StagingPortletConfigurationIcon
 			rootPortletId.equals(
 				StagingConfigurationPortletKeys.STAGING_CONFIGURATION) ||
 			rootPortletId.equals(
-				StagingProcessesPortletKeys.STAGING_PROCESSES)) {
+				StagingProcessesPortletKeys.STAGING_PROCESSES) ||
+			!portletDisplay.isShowStagingIcon()) {
 
-			return false;
-		}
-
-		if (!portletDisplay.isShowStagingIcon()) {
 			return false;
 		}
 

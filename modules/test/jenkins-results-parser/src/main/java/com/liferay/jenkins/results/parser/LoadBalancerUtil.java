@@ -75,15 +75,10 @@ public class LoadBalancerUtil {
 			allJenkinsMasters.size());
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
-			if (blacklist.contains(jenkinsMaster.getName())) {
-				continue;
-			}
+			if (blacklist.contains(jenkinsMaster.getName()) ||
+				(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
+				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
 
-			if (jenkinsMaster.getSlaveRAM() < minimumRAM) {
-				continue;
-			}
-
-			if (jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost) {
 				continue;
 			}
 

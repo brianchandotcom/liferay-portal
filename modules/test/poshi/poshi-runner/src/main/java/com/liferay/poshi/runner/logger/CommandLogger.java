@@ -614,17 +614,11 @@ public final class CommandLogger {
 	}
 
 	private boolean _isCommand(Element element) {
-		if (!Objects.equals(element.getName(), "condition") &&
-			!Objects.equals(element.getName(), "execute")) {
+		if ((!Objects.equals(element.getName(), "condition") &&
+			 !Objects.equals(element.getName(), "execute")) ||
+			Validator.isNull(element.attributeValue("function")) ||
+			(_commandElement != null)) {
 
-			return false;
-		}
-
-		if (Validator.isNull(element.attributeValue("function"))) {
-			return false;
-		}
-
-		if (_commandElement != null) {
 			return false;
 		}
 

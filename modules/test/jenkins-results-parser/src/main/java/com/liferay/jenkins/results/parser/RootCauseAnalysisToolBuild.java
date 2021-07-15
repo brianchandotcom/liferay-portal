@@ -145,11 +145,9 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 		LocalGitCommit localGitCommit, GitCommitGroup currentGitCommitGroup,
 		GitCommitGroup nextGitCommitGroup) {
 
-		if (nextGitCommitGroup == null) {
-			return getEmptyCellElement();
-		}
+		if ((nextGitCommitGroup == null) ||
+			(currentGitCommitGroup.size() <= 1)) {
 
-		if (currentGitCommitGroup.size() <= 1) {
 			return getEmptyCellElement();
 		}
 

@@ -1455,12 +1455,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		if (!ArrayUtil.contains(
 				AssetPublisherDisplayContext.PAGINATION_TYPES,
-				paginationType)) {
-
-			return true;
-		}
-
-		if (Objects.equals(
+				paginationType) ||
+			Objects.equals(
 				paginationType,
 				AssetPublisherDisplayContext.PAGINATION_TYPE_NONE)) {
 

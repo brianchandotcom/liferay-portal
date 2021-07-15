@@ -183,11 +183,9 @@ public class WorkflowMetricsSLAProcessor {
 		LocalDateTime createDateLocalDateTime = LocalDateTime.parse(
 			document.getDate("createDate"), _dateTimeFormatter);
 
-		if (createDateLocalDateTime.isAfter(overdueLocalDateTime)) {
-			return false;
-		}
+		if (createDateLocalDateTime.isAfter(overdueLocalDateTime) ||
+			Validator.isNull(document.getDate("completionDate"))) {
 
-		if (Validator.isNull(document.getDate("completionDate"))) {
 			return false;
 		}
 

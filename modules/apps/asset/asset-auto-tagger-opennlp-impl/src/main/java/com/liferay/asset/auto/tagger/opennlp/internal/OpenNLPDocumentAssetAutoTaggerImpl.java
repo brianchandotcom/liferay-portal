@@ -81,14 +81,11 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 			String mimeType)
 		throws Exception {
 
-		if (Objects.nonNull(locale) &&
-			!Objects.equals(
-				locale.getLanguage(), LocaleUtil.ENGLISH.getLanguage())) {
+		if ((Objects.nonNull(locale) &&
+			 !Objects.equals(
+				 locale.getLanguage(), LocaleUtil.ENGLISH.getLanguage())) ||
+			!_supportedContentTypes.contains(mimeType)) {
 
-			return Collections.emptyList();
-		}
-
-		if (!_supportedContentTypes.contains(mimeType)) {
 			return Collections.emptyList();
 		}
 

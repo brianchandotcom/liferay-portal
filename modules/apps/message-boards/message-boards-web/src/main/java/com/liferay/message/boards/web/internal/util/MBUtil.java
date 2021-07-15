@@ -247,22 +247,15 @@ public class MBUtil {
 			themeDisplay.getPermissionChecker();
 
 		if (!MBMessagePermission.contains(
-				permissionChecker, parentMessage, ActionKeys.VIEW)) {
-
-			return false;
-		}
-
-		if ((message.getMessageId() != parentMessage.getMessageId()) &&
-			!MBMessagePermission.contains(
-				permissionChecker, message, ActionKeys.VIEW)) {
-
-			return false;
-		}
-
-		if (!message.isApproved() &&
-			(message.getUserId() != themeDisplay.getUserId()) &&
-			!permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+				permissionChecker, parentMessage, ActionKeys.VIEW) ||
+			((message.getMessageId() != parentMessage.getMessageId()) &&
+			 !MBMessagePermission.contains(
+				 permissionChecker, message, ActionKeys.VIEW)) ||
+			(!message.isApproved() &&
+			 (message.getUserId() != themeDisplay.getUserId()) &&
+			 !permissionChecker.isContentReviewer(
+				 themeDisplay.getCompanyId(),
+				 themeDisplay.getScopeGroupId()))) {
 
 			return false;
 		}

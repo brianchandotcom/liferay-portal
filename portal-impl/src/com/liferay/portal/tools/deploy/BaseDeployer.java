@@ -1574,11 +1574,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		Properties properties = getPluginPackageProperties(srcFile);
 
-		if (properties == null) {
-			return StringPool.BLANK;
-		}
-
-		if (!GetterUtil.getBoolean(
+		if ((properties == null) ||
+			!GetterUtil.getBoolean(
 				properties.getProperty(
 					"servlet-context-include-filters-enabled"),
 				true)) {

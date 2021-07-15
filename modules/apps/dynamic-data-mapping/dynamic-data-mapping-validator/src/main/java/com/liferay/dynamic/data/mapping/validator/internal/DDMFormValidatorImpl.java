@@ -218,15 +218,11 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 				ddmFormDefaultLocale);
 		}
 
-		if (!fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) &&
-			!fieldType.equals(DDMFormFieldType.RADIO) &&
-			!fieldType.equals(DDMFormFieldType.SELECT)) {
-
-			return;
-		}
-
-		if (!Validator.isBlank(ddmFormField.getDataSourceType()) &&
-			!Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
+		if ((!fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) &&
+			 !fieldType.equals(DDMFormFieldType.RADIO) &&
+			 !fieldType.equals(DDMFormFieldType.SELECT)) ||
+			(!Validator.isBlank(ddmFormField.getDataSourceType()) &&
+			 !Objects.equals(ddmFormField.getDataSourceType(), "manual"))) {
 
 			return;
 		}

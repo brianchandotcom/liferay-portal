@@ -233,11 +233,8 @@ public class MenuItemProvider {
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		if (folder != null) {
-			return null;
-		}
-
-		if (!_hasPermission(
+		if ((folder != null) ||
+			!_hasPermission(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,

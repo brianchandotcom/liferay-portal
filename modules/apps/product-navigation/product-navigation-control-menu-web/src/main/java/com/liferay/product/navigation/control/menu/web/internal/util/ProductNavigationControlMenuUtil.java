@@ -44,15 +44,9 @@ public class ProductNavigationControlMenuUtil {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isTypePortlet()) {
-			return false;
-		}
+		if (!layout.isTypePortlet() || layout.isTypeAssetDisplay() ||
+			layout.isTypeContent() || StagingUtil.isIncomplete(layout)) {
 
-		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
-			return false;
-		}
-
-		if (StagingUtil.isIncomplete(layout)) {
 			return false;
 		}
 
@@ -62,15 +56,9 @@ public class ProductNavigationControlMenuUtil {
 		LayoutTypeController layoutTypeController =
 			layoutTypePortlet.getLayoutTypeController();
 
-		if (layoutTypeController.isFullPageDisplayable()) {
-			return false;
-		}
-
-		if (!_hasAddContentOrApplicationPermission(themeDisplay)) {
-			return false;
-		}
-
-		if (!(_hasUpdateLayoutPermission(themeDisplay) ||
+		if (layoutTypeController.isFullPageDisplayable() ||
+			!_hasAddContentOrApplicationPermission(themeDisplay) ||
+			!(_hasUpdateLayoutPermission(themeDisplay) ||
 			  _hasCustomizePermission(themeDisplay))) {
 
 			return false;
@@ -98,11 +86,8 @@ public class ProductNavigationControlMenuUtil {
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
-		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
-			return false;
-		}
-
-		if (!layoutTypePortlet.isCustomizable() ||
+		if (!layout.isTypePortlet() || (layoutTypePortlet == null) ||
+			!layoutTypePortlet.isCustomizable() ||
 			!layoutTypePortlet.isCustomizedView()) {
 
 			return false;

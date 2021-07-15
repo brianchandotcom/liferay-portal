@@ -169,11 +169,7 @@ public class DefaultSearchResponseTranslator
 
 		Field uidField = document.getField(Field.UID);
 
-		if (uidField != null) {
-			return;
-		}
-
-		if (Validator.isNull(alternateUidFieldName)) {
+		if ((uidField != null) || Validator.isNull(alternateUidFieldName)) {
 			return;
 		}
 

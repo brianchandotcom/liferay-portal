@@ -38,15 +38,10 @@ public class DocumentFieldsTranslator {
 		Map<String, DocumentField> documentFieldsMap,
 		DocumentBuilder documentBuilder, String alternateUidFieldName) {
 
-		if (MapUtil.isEmpty(documentFieldsMap)) {
-			return;
-		}
+		if (MapUtil.isEmpty(documentFieldsMap) ||
+			documentFieldsMap.containsKey(_UID_FIELD_NAME) ||
+			Validator.isBlank(alternateUidFieldName)) {
 
-		if (documentFieldsMap.containsKey(_UID_FIELD_NAME)) {
-			return;
-		}
-
-		if (Validator.isBlank(alternateUidFieldName)) {
 			return;
 		}
 

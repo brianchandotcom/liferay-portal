@@ -95,11 +95,9 @@ public class RepositorySearchQueryBuilderImpl
 
 		long[] folderIds = searchContext.getFolderIds();
 
-		if (ArrayUtil.isEmpty(folderIds)) {
-			return;
-		}
+		if (ArrayUtil.isEmpty(folderIds) ||
+			(folderIds[0] == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-		if (folderIds[0] == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return;
 		}
 

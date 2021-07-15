@@ -135,11 +135,9 @@ public class OrphanPortletsDisplayContext {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
 
-			if (portlet.isSystem()) {
-				continue;
-			}
+			if (portlet.isSystem() ||
+				explicitlyAddedPortletIds.contains(portletId)) {
 
-			if (explicitlyAddedPortletIds.contains(portletId)) {
 				continue;
 			}
 

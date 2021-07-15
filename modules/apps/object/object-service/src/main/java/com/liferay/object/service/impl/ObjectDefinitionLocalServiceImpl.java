@@ -551,11 +551,7 @@ public class ObjectDefinitionLocalServiceImpl
 	private void _validateName(long companyId, String name, boolean system)
 		throws PortalException {
 
-		if (Validator.isNull(name)) {
-			throw new ObjectDefinitionNameException("Name is null");
-		}
-
-		if (!system && name.equals("C_")) {
+		if (Validator.isNull(name) || (!system && name.equals("C_"))) {
 			throw new ObjectDefinitionNameException("Name is null");
 		}
 

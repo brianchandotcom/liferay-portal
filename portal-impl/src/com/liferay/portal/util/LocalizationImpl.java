@@ -222,11 +222,8 @@ public class LocalizationImpl implements Localization {
 		String defaultValue) {
 
 		if (!Validator.isXml(xml)) {
-			if (useDefault) {
-				return xml;
-			}
-
-			if (requestedLanguageId.equals(
+			if (useDefault ||
+				requestedLanguageId.equals(
 					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()))) {
 
 				return xml;

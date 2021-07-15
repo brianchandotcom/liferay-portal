@@ -1112,15 +1112,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isShowInfoButton() {
-		if (isNavigationMine()) {
-			return false;
-		}
-
-		if (isNavigationRecent()) {
-			return false;
-		}
-
-		if (isSearch()) {
+		if (isNavigationMine() || isNavigationRecent() || isSearch()) {
 			return false;
 		}
 

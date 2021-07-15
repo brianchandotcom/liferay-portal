@@ -217,13 +217,9 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		Set<String> bundleSymbolicNames = publishedMajorVersionsMap.keySet();
 
 		if (!dependencyName.startsWith("com.liferay.") ||
-			!bundleSymbolicNames.contains(dependencyName)) {
-
-			return true;
-		}
-
-		if (GetterUtil.getInteger(_getMajorVersion(dependencyVersion)) ==
-				publishedMajorVersionsMap.get(dependencyName)) {
+			!bundleSymbolicNames.contains(dependencyName) ||
+			(GetterUtil.getInteger(_getMajorVersion(dependencyVersion)) ==
+				publishedMajorVersionsMap.get(dependencyName))) {
 
 			return true;
 		}

@@ -1168,12 +1168,10 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		for (String userType : PropsValues.FIELD_EDITABLE_USER_TYPES) {
-			if (userType.equals("user-with-mx") && updatedUser.hasCompanyMx()) {
-				return true;
-			}
-
-			if (userType.equals("user-without-mx") &&
-				!updatedUser.hasCompanyMx()) {
+			if ((userType.equals("user-with-mx") &&
+				 updatedUser.hasCompanyMx()) ||
+				(userType.equals("user-without-mx") &&
+				 !updatedUser.hasCompanyMx())) {
 
 				return true;
 			}

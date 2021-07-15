@@ -39,11 +39,9 @@ public class SearchResultPreferencesImpl implements SearchResultPreferences {
 
 	@Override
 	public boolean isDisplayResultsInDocumentForm() {
-		if (!_searchResultsPortletPreferences.isDisplayInDocumentForm()) {
-			return false;
-		}
+		if (!_searchResultsPortletPreferences.isDisplayInDocumentForm() ||
+			!_documentFormPermissionChecker.hasPermission()) {
 
-		if (!_documentFormPermissionChecker.hasPermission()) {
 			return false;
 		}
 

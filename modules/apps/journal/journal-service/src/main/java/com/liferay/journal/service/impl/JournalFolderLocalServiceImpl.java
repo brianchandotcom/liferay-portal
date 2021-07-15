@@ -559,11 +559,9 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderLocalService.fetchFolder(
 			groupId, parentFolderId, name);
 
-		if (folder == null) {
-			return name;
-		}
+		if ((folder == null) ||
+			(Validator.isNotNull(uuid) && uuid.equals(folder.getUuid()))) {
 
-		if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
 			return name;
 		}
 

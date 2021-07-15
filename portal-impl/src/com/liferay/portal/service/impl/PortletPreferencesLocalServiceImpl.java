@@ -726,12 +726,9 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	private boolean _exists(long plid, long companyId, String portletId) {
-		if (plid == PortletKeys.PREFS_PLID_SHARED) {
-			return true;
-		}
-
-		if (portletLocalService.fetchPortletById(companyId, portletId) !=
-				null) {
+		if ((plid == PortletKeys.PREFS_PLID_SHARED) ||
+			(portletLocalService.fetchPortletById(companyId, portletId) !=
+				null)) {
 
 			return true;
 		}

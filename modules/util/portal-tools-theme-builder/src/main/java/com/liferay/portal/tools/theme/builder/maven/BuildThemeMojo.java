@@ -92,12 +92,8 @@ public class BuildThemeMojo extends AbstractMojo {
 					String artifactId = componentDependency.getArtifactId();
 
 					if (!artifactId.equals(
-							"com.liferay.frontend.theme.styled")) {
-
-						continue;
-					}
-
-					if (!ThemeBuilder.STYLED.equals(
+							"com.liferay.frontend.theme.styled") ||
+						!ThemeBuilder.STYLED.equals(
 							_themeBuilderArgs.getParentName())) {
 
 						continue;

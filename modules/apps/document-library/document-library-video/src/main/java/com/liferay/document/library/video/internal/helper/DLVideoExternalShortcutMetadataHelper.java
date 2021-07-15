@@ -216,11 +216,7 @@ public class DLVideoExternalShortcutMetadataHelper {
 	}
 
 	private void _initDLFileEntryMetadataAndFields() {
-		if (_fieldsMap != null) {
-			return;
-		}
-
-		if (_dlFileVersion == null) {
+		if ((_fieldsMap != null) || (_dlFileVersion == null)) {
 			return;
 		}
 

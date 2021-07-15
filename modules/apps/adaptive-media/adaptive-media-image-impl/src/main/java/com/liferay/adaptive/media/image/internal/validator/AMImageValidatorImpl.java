@@ -55,11 +55,8 @@ public class AMImageValidatorImpl implements AMImageValidator {
 
 	@Override
 	public boolean isProcessingSupported(FileVersion fileVersion) {
-		if (!isValid(fileVersion)) {
-			return false;
-		}
-
-		if (Objects.equals(
+		if (!isValid(fileVersion) ||
+			Objects.equals(
 				fileVersion.getMimeType(), ContentTypes.IMAGE_SVG_XML)) {
 
 			return false;
@@ -81,20 +78,13 @@ public class AMImageValidatorImpl implements AMImageValidator {
 	public boolean isValid(FileVersion fileVersion) {
 		long imageMaxSize = _amImageSizeProvider.getImageMaxSize();
 
-		if ((imageMaxSize != -1) &&
-			((imageMaxSize == 0) || (fileVersion.getSize() == 0) ||
-			 (fileVersion.getSize() >= imageMaxSize))) {
+		if (((imageMaxSize != -1) &&
+			 ((imageMaxSize == 0) || (fileVersion.getSize() == 0) ||
+			  (fileVersion.getSize() >= imageMaxSize))) ||
+			!_amImageMimeTypeProvider.isMimeTypeSupported(
+				fileVersion.getMimeType()) ||
+			!_isFileVersionStoredMetadataSupported(fileVersion)) {
 
-			return false;
-		}
-
-		if (!_amImageMimeTypeProvider.isMimeTypeSupported(
-				fileVersion.getMimeType())) {
-
-			return false;
-		}
-
-		if (!_isFileVersionStoredMetadataSupported(fileVersion)) {
 			return false;
 		}
 

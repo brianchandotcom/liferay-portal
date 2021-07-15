@@ -1049,24 +1049,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 									taskName.equals("eclipseProject") ||
 									taskName.equals("ideaModule") ||
 									(task instanceof DownloadNodeModuleTask) ||
-									(task instanceof NpmInstallTask)) {
-
-									continue;
-								}
-
-								if (GradleUtil.hasPlugin(
+									(task instanceof NpmInstallTask) ||
+									(GradleUtil.hasPlugin(
 										project, _CACHE_PLUGIN_ID) &&
-									taskName.startsWith("save") &&
-									taskName.endsWith("Cache")) {
-
-									continue;
-								}
-
-								if (GradleUtil.hasPlugin(
+									 taskName.startsWith("save") &&
+									 taskName.endsWith("Cache")) ||
+									(GradleUtil.hasPlugin(
 										project, WSDLBuilderPlugin.class) &&
-									taskName.startsWith(
-										WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME +
-											"Generate")) {
+									 taskName.startsWith(
+										 WSDLBuilderPlugin.
+											 BUILD_WSDL_TASK_NAME +
+												 "Generate"))) {
 
 									continue;
 								}

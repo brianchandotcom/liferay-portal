@@ -60,21 +60,11 @@ public class FragmentMappedValueUtil {
 			return false;
 		}
 
-		if (jsonObject.has("classNameId") && jsonObject.has("classPK") &&
-			jsonObject.has("fieldId")) {
+		if ((jsonObject.has("classNameId") && jsonObject.has("classPK") &&
+			 jsonObject.has("fieldId")) ||
+			jsonObject.has("collectionFieldId") || jsonObject.has("layout") ||
+			jsonObject.has("mappedField")) {
 
-			return true;
-		}
-
-		if (jsonObject.has("collectionFieldId")) {
-			return true;
-		}
-
-		if (jsonObject.has("layout")) {
-			return true;
-		}
-
-		if (jsonObject.has("mappedField")) {
 			return true;
 		}
 

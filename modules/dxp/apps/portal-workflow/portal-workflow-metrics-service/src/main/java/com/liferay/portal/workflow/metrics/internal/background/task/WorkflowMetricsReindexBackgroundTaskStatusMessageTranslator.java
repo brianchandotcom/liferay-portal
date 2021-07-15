@@ -106,11 +106,7 @@ public class WorkflowMetricsReindexBackgroundTaskStatusMessageTranslator
 	private int _getPercentage(
 		long count, int indexerCount, int indexerTotal, long total) {
 
-		if (total <= 0) {
-			return 100;
-		}
-
-		if (indexerTotal <= 0) {
+		if ((total <= 0) || (indexerTotal <= 0)) {
 			return 100;
 		}
 

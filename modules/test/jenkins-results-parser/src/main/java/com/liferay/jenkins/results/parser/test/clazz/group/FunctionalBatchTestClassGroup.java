@@ -314,11 +314,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				File functionalRequiredModuleDir = new File(
 					modulesBaseDir, functionalRequiredModuleDirPath);
 
-				if (!functionalRequiredModuleDir.exists()) {
-					continue;
-				}
-
-				if (functionalRequiredModuleDirs.contains(
+				if (!functionalRequiredModuleDir.exists() ||
+					functionalRequiredModuleDirs.contains(
 						functionalRequiredModuleDir)) {
 
 					continue;

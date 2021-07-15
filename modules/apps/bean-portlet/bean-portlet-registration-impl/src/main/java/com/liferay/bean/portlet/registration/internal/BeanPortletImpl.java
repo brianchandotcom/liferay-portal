@@ -616,13 +616,9 @@ public class BeanPortletImpl implements BeanPortlet {
 					qName.getLocalPart(), qName.getNamespaceURI()));
 		}
 
-		if (!supportedPublishingEvents.isEmpty()) {
-			dictionary.put(
-				"javax.portlet.supported-publishing-event",
-				supportedPublishingEvents);
-		}
+		if (!supportedPublishingEvents.isEmpty() ||
+			!supportedPublishingEvents.isEmpty()) {
 
-		if (!supportedPublishingEvents.isEmpty()) {
 			dictionary.put(
 				"javax.portlet.supported-publishing-event",
 				supportedPublishingEvents);

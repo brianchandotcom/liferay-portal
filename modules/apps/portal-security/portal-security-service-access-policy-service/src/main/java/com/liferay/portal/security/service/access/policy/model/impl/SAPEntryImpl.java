@@ -63,18 +63,11 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 					getCompanyId(), SAPConstants.SERVICE_NAME));
 
 		if (Objects.equals(
-				getName(), sapConfiguration.systemDefaultSAPEntryName())) {
+				getName(), sapConfiguration.systemDefaultSAPEntryName()) ||
+			Objects.equals(
+				getName(), sapConfiguration.systemUserPasswordSAPEntryName()) ||
+			SAPSystemEntriesHolder.contains(getName())) {
 
-			return true;
-		}
-
-		if (Objects.equals(
-				getName(), sapConfiguration.systemUserPasswordSAPEntryName())) {
-
-			return true;
-		}
-
-		if (SAPSystemEntriesHolder.contains(getName())) {
 			return true;
 		}
 

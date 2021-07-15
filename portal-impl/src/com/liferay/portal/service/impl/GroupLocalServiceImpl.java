@@ -4822,11 +4822,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (company.isSystem()) {
-			return;
-		}
-
-		if (Validator.isNull(friendlyURL)) {
+		if (company.isSystem() || Validator.isNull(friendlyURL)) {
 			return;
 		}
 

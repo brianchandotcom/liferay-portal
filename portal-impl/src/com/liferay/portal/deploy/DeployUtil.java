@@ -161,14 +161,11 @@ public class DeployUtil {
 		boolean undeployEnabled = PrefsPropsUtil.getBoolean(
 			PropsKeys.HOT_UNDEPLOY_ENABLED, PropsValues.HOT_UNDEPLOY_ENABLED);
 
-		if (!undeployEnabled) {
-			return;
-		}
-
-		if (!appServerType.equals(ServerDetector.JBOSS_ID) &&
-			!appServerType.equals(ServerDetector.TOMCAT_ID) &&
-			!appServerType.equals(ServerDetector.WEBLOGIC_ID) &&
-			!appServerType.equals(ServerDetector.WILDFLY_ID)) {
+		if (!undeployEnabled ||
+			(!appServerType.equals(ServerDetector.JBOSS_ID) &&
+			 !appServerType.equals(ServerDetector.TOMCAT_ID) &&
+			 !appServerType.equals(ServerDetector.WEBLOGIC_ID) &&
+			 !appServerType.equals(ServerDetector.WILDFLY_ID))) {
 
 			return;
 		}

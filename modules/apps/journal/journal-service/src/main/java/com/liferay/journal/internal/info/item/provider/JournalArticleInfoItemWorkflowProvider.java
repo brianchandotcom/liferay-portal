@@ -58,22 +58,14 @@ public class JournalArticleInfoItemWorkflowProvider
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				article.getCompanyId(), article.getGroupId(),
 				JournalFolder.class.getName(), article.getFolderId(),
-				ddmStructure.getStructureId())) {
-
-			return true;
-		}
-
-		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				ddmStructure.getStructureId()) ||
+			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				article.getCompanyId(), article.getGroupId(),
 				JournalFolder.class.getName(),
 				_journalFolderLocalService.getInheritedWorkflowFolderId(
 					article.getFolderId()),
-				ddmStructure.getStructureId())) {
-
-			return true;
-		}
-
-		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				ddmStructure.getStructureId()) ||
+			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				article.getCompanyId(), article.getGroupId(),
 				JournalFolder.class.getName(),
 				_journalFolderLocalService.getInheritedWorkflowFolderId(

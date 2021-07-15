@@ -189,13 +189,10 @@ public class LayoutPermissionImpl
 			boolean checkLayoutUpdateable, String actionId)
 		throws PortalException {
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		if (checkLayoutUpdateable && !actionId.equals(ActionKeys.CUSTOMIZE) &&
-			!actionId.equals(ActionKeys.VIEW) &&
-			(layout instanceof VirtualLayout)) {
+		if (layout.isTypeControlPanel() ||
+			(checkLayoutUpdateable && !actionId.equals(ActionKeys.CUSTOMIZE) &&
+			 !actionId.equals(ActionKeys.VIEW) &&
+			 (layout instanceof VirtualLayout))) {
 
 			return false;
 		}
@@ -279,20 +276,13 @@ public class LayoutPermissionImpl
 			}
 		}
 
-		if (layout.isDraftLayout() &&
+		if ((layout.isDraftLayout() &&
+			 permissionChecker.hasPermission(
+				 group, Layout.class.getName(), layout.getClassPK(),
+				 actionId)) ||
 			permissionChecker.hasPermission(
-				group, Layout.class.getName(), layout.getClassPK(), actionId)) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasPermission(
-				group, Layout.class.getName(), layout.getPlid(), actionId)) {
-
-			return true;
-		}
-
-		if (GroupPermissionUtil.contains(
+				group, Layout.class.getName(), layout.getPlid(), actionId) ||
+			GroupPermissionUtil.contains(
 				permissionChecker, group, ActionKeys.MANAGE_LAYOUTS)) {
 
 			return true;

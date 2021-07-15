@@ -548,14 +548,11 @@ public class CTCollectionLocalServiceImpl
 					CTEntry ctEntry = ctEntryPersistence.fetchByC_MCNI_MCPK(
 						ctCollectionId, backtraceClassNameId, backtraceClassPK);
 
-					if (ctEntry == null) {
-						break;
-					}
-
-					if ((ctEntry.getChangeType() !=
+					if ((ctEntry == null) ||
+						((ctEntry.getChangeType() !=
 							CTConstants.CT_CHANGE_TYPE_DELETION) &&
-						_tableReferenceDefinitionManager.isChildModelOptional(
-							previousModelClassNameId, backtraceClassNameId)) {
+						 _tableReferenceDefinitionManager.isChildModelOptional(
+							 previousModelClassNameId, backtraceClassNameId))) {
 
 						break;
 					}

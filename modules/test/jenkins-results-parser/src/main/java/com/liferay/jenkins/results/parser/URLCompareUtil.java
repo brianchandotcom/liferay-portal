@@ -28,26 +28,14 @@ import java.util.regex.Pattern;
 public class URLCompareUtil {
 
 	public static boolean matches(URL url1, URL url2) {
-		if (!Objects.equals(url1.getProtocol(), url2.getProtocol())) {
-			return false;
-		}
-
-		if (!Objects.equals(url1.getHost(), url2.getHost())) {
-			return false;
-		}
-
-		if (!Objects.equals(_getPort(url1), _getPort(url2))) {
-			return false;
-		}
-
-		if (!Objects.equals(
+		if (!Objects.equals(url1.getProtocol(), url2.getProtocol()) ||
+			!Objects.equals(url1.getHost(), url2.getHost()) ||
+			!Objects.equals(_getPort(url1), _getPort(url2)) ||
+			!Objects.equals(
 				_normalizePath(url1.getPath()),
-				_normalizePath(url2.getPath()))) {
+				_normalizePath(url2.getPath())) ||
+			!Objects.equals(_getQueryMap(url1), _getQueryMap(url2))) {
 
-			return false;
-		}
-
-		if (!Objects.equals(_getQueryMap(url1), _getQueryMap(url2))) {
 			return false;
 		}
 

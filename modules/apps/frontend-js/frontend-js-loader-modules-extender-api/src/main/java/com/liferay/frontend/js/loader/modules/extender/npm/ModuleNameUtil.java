@@ -199,11 +199,7 @@ public class ModuleNameUtil {
 	 *         reserved or local one
 	 */
 	public static String getPackageName(String moduleName) {
-		if (isLocalModuleName(moduleName)) {
-			return null;
-		}
-
-		if (isReservedModuleName(moduleName)) {
+		if (isLocalModuleName(moduleName) || isReservedModuleName(moduleName)) {
 			return null;
 		}
 

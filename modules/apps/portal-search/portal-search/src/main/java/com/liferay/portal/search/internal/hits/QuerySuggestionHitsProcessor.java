@@ -39,12 +39,9 @@ public class QuerySuggestionHitsProcessor implements HitsProcessor {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		if (!queryConfig.isQuerySuggestionEnabled()) {
-			return true;
-		}
-
-		if (hits.getLength() >=
-				queryConfig.getQuerySuggestionScoresThreshold()) {
+		if (!queryConfig.isQuerySuggestionEnabled() ||
+			(hits.getLength() >=
+				queryConfig.getQuerySuggestionScoresThreshold())) {
 
 			return true;
 		}

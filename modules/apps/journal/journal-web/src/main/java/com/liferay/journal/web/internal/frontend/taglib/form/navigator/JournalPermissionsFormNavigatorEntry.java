@@ -60,11 +60,9 @@ public class JournalPermissionsFormNavigatorEntry
 		long classNameId = BeanParamUtil.getLong(
 			article, portletRequest, "classNameId");
 
-		if (classNameId > JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
-			return false;
-		}
+		if ((classNameId > JournalArticleConstants.CLASS_NAME_ID_DEFAULT) ||
+			((article != null) && (article.getId() > 0))) {
 
-		if ((article != null) && (article.getId() > 0)) {
 			return false;
 		}
 

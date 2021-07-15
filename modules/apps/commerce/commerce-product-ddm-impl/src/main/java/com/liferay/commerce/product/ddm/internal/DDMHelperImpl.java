@@ -435,11 +435,9 @@ public class DDMHelperImpl implements DDMHelper {
 					curLocalizedValue.getDefaultLocale(), entry.getKey());
 			}
 
-			if (Validator.isNull(optionValueKey)) {
-				return localizedValue;
-			}
+			if (Validator.isNull(optionValueKey) ||
+				Objects.equals(optionValueKey, entry.getKey())) {
 
-			if (Objects.equals(optionValueKey, entry.getKey())) {
 				return localizedValue;
 			}
 		}

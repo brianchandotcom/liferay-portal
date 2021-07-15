@@ -97,12 +97,9 @@ public class BillingAddressCommerceCheckoutStep
 		CommerceOrder commerceOrder =
 			billingAddressCheckoutStepDisplayContext.getCommerceOrder();
 
-		if (commerceOrder == null) {
-			return false;
-		}
-
-		if (commerceOrder.getBillingAddressId() ==
-				commerceOrder.getShippingAddressId()) {
+		if ((commerceOrder == null) ||
+			(commerceOrder.getBillingAddressId() ==
+				commerceOrder.getShippingAddressId())) {
 
 			return false;
 		}

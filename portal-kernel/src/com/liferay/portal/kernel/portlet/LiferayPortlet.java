@@ -85,11 +85,9 @@ public class LiferayPortlet extends GenericPortlet {
 		throws IOException, PortletException {
 
 		try {
-			if (!callActionMethod(actionRequest, actionResponse)) {
-				return;
-			}
+			if (!callActionMethod(actionRequest, actionResponse) ||
+				!SessionErrors.isEmpty(actionRequest)) {
 
-			if (!SessionErrors.isEmpty(actionRequest)) {
 				return;
 			}
 
@@ -142,15 +140,10 @@ public class LiferayPortlet extends GenericPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		if (!callResourceMethod(resourceRequest, resourceResponse)) {
-			return;
-		}
+		if (!callResourceMethod(resourceRequest, resourceResponse) ||
+			!SessionErrors.isEmpty(resourceRequest) ||
+			!SessionMessages.isEmpty(resourceRequest)) {
 
-		if (!SessionErrors.isEmpty(resourceRequest)) {
-			return;
-		}
-
-		if (!SessionMessages.isEmpty(resourceRequest)) {
 			return;
 		}
 

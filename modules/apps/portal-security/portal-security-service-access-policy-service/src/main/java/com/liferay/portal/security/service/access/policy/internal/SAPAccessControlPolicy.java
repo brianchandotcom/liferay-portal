@@ -87,11 +87,9 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		Set<String> allowedServiceSignatures, String className,
 		String methodName) {
 
-		if (allowedServiceSignatures.contains(StringPool.STAR)) {
-			return;
-		}
+		if (allowedServiceSignatures.contains(StringPool.STAR) ||
+			allowedServiceSignatures.contains(className)) {
 
-		if (allowedServiceSignatures.contains(className)) {
 			return;
 		}
 

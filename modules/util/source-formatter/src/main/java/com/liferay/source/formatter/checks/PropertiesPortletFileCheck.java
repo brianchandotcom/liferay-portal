@@ -64,11 +64,7 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
 
-				if (lineNumber == 1) {
-					continue;
-				}
-
-				if (line.startsWith(StringPool.POUND) ||
+				if ((lineNumber == 1) || line.startsWith(StringPool.POUND) ||
 					line.startsWith(StringPool.SPACE) ||
 					line.startsWith(StringPool.TAB)) {
 

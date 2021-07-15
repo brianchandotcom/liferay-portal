@@ -107,11 +107,8 @@ public class PermissionsPortletConfigurationIcon
 
 		User user = themeDisplay.getUser();
 
-		if (user.isDefaultUser()) {
-			return false;
-		}
-
-		if (!MBResourcePermission.contains(
+		if (user.isDefaultUser() ||
+			!MBResourcePermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.PERMISSIONS)) {
 

@@ -732,27 +732,17 @@ public final class SummaryLogger {
 	private static boolean _isMajorStep(Element element) throws Exception {
 		String summary = _getSummary(element);
 
-		if (summary == null) {
-			return false;
-		}
+		if ((summary == null) ||
+			(!Objects.equals(element.getName(), "condition") &&
+			 !Objects.equals(element.getName(), "execute") &&
+			 !Objects.equals(element.getName(), "task")) ||
+			(Validator.isNull(element.attributeValue("function")) &&
+			 Validator.isNull(element.attributeValue("function-summary")) &&
+			 Validator.isNull(element.attributeValue("macro")) &&
+			 Validator.isNull(element.attributeValue("macro-summary")) &&
+			 Validator.isNull(element.attributeValue("summary"))) ||
+			(_majorStepElement != null)) {
 
-		if (!Objects.equals(element.getName(), "condition") &&
-			!Objects.equals(element.getName(), "execute") &&
-			!Objects.equals(element.getName(), "task")) {
-
-			return false;
-		}
-
-		if (Validator.isNull(element.attributeValue("function")) &&
-			Validator.isNull(element.attributeValue("function-summary")) &&
-			Validator.isNull(element.attributeValue("macro")) &&
-			Validator.isNull(element.attributeValue("macro-summary")) &&
-			Validator.isNull(element.attributeValue("summary"))) {
-
-			return false;
-		}
-
-		if (_majorStepElement != null) {
 			return false;
 		}
 
@@ -762,23 +752,12 @@ public final class SummaryLogger {
 	private static boolean _isMinorStep(Element element) throws Exception {
 		String summary = _getSummary(element);
 
-		if (summary == null) {
-			return false;
-		}
+		if ((summary == null) ||
+			!Objects.equals(element.getName(), "execute") ||
+			Validator.isNull(element.attributeValue("function")) ||
+			(_minorStepElement != null) ||
+			Validator.isNotNull(_majorStepElement.attributeValue("function"))) {
 
-		if (!Objects.equals(element.getName(), "execute")) {
-			return false;
-		}
-
-		if (Validator.isNull(element.attributeValue("function"))) {
-			return false;
-		}
-
-		if (_minorStepElement != null) {
-			return false;
-		}
-
-		if (Validator.isNotNull(_majorStepElement.attributeValue("function"))) {
 			return false;
 		}
 

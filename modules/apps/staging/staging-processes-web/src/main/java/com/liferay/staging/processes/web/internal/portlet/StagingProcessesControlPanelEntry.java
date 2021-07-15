@@ -42,28 +42,16 @@ public class StagingProcessesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED &&
-			group.hasLocalOrRemoteStagingGroup()) {
-
-			return true;
-		}
-
-		if (group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
-			group.isUser() || group.isUserGroup()) {
-
-			return true;
-		}
-
-		if (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup() &&
-			(!GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.MANAGE_STAGING) ||
-			 !GroupPermissionUtil.contains(
-				 permissionChecker, group, ActionKeys.VIEW_STAGING))) {
-
-			return true;
-		}
-
-		if (!GroupPermissionUtil.contains(
+		if ((!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED &&
+			 group.hasLocalOrRemoteStagingGroup()) ||
+			group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
+			group.isUser() || group.isUserGroup() ||
+			(!group.isStaged() && !group.hasLocalOrRemoteStagingGroup() &&
+			 (!GroupPermissionUtil.contains(
+				 permissionChecker, group, ActionKeys.MANAGE_STAGING) ||
+			  !GroupPermissionUtil.contains(
+				  permissionChecker, group, ActionKeys.VIEW_STAGING))) ||
+			!GroupPermissionUtil.contains(
 				permissionChecker, group, ActionKeys.VIEW_STAGING)) {
 
 			return true;

@@ -248,11 +248,8 @@ public class ChainingCheck extends BaseCheck {
 
 		DetailAST methodCallDetailAST = dotDetailAST.getParent();
 
-		if (methodCallDetailAST.getType() != TokenTypes.METHOD_CALL) {
-			return;
-		}
-
-		if ((detailAST.findFirstToken(TokenTypes.ARRAY_DECLARATOR) != null) ||
+		if ((methodCallDetailAST.getType() != TokenTypes.METHOD_CALL) ||
+			(detailAST.findFirstToken(TokenTypes.ARRAY_DECLARATOR) != null) ||
 			(detailAST.findFirstToken(TokenTypes.OBJBLOCK) != null)) {
 
 			return;
@@ -648,15 +645,11 @@ public class ChainingCheck extends BaseCheck {
 		DetailAST globalVariableDefinitonDetailAST =
 			_getGlobalVariableDefinitonDetailAST(methodCallDetailAST);
 
-		if ((globalVariableDefinitonDetailAST != null) &&
-			((detailAST.getType() != TokenTypes.CLASS_DEF) ||
-			 _isInsideInnerClass(
-				 globalVariableDefinitonDetailAST, detailAST))) {
-
-			return true;
-		}
-
-		if (_isInsideConstructorThisCall(methodCallDetailAST) ||
+		if (((globalVariableDefinitonDetailAST != null) &&
+			 ((detailAST.getType() != TokenTypes.CLASS_DEF) ||
+			  _isInsideInnerClass(
+				  globalVariableDefinitonDetailAST, detailAST))) ||
+			_isInsideConstructorThisCall(methodCallDetailAST) ||
 			hasParentWithTokenType(
 				methodCallDetailAST, TokenTypes.SUPER_CTOR_CALL)) {
 

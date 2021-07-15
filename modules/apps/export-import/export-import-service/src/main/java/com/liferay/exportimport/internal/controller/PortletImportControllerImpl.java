@@ -498,20 +498,12 @@ public class PortletImportControllerImpl implements PortletImportController {
 				element.attributeValue("owner-type"));
 
 			if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) ||
-				!importPortletSetup) {
-
-				continue;
-			}
-
-			if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) &&
-				!importPortletArchivedSetups) {
-
-				continue;
-			}
-
-			if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) &&
-				(ownerId != PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
-				!importPortletUserPreferences) {
+				!importPortletSetup ||
+				((ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) &&
+				 !importPortletArchivedSetups) ||
+				((ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) &&
+				 (ownerId != PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
+				 !importPortletUserPreferences)) {
 
 				continue;
 			}

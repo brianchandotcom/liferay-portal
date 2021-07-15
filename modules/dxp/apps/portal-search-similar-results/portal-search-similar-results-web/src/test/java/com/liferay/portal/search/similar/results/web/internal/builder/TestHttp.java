@@ -260,11 +260,9 @@ public class TestHttp {
 			sb.toString(), StringPool.AMPERSAND + StringPool.AMPERSAND,
 			StringPool.AMPERSAND);
 
-		if (url.endsWith(StringPool.AMPERSAND)) {
-			url = url.substring(0, url.length() - 1);
-		}
+		if (url.endsWith(StringPool.AMPERSAND) ||
+			url.endsWith(StringPool.QUESTION)) {
 
-		if (url.endsWith(StringPool.QUESTION)) {
 			url = url.substring(0, url.length() - 1);
 		}
 

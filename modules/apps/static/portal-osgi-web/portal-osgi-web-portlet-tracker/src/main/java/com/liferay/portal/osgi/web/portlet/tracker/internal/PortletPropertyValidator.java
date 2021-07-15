@@ -28,13 +28,10 @@ import java.util.Set;
 public class PortletPropertyValidator {
 
 	public boolean validate(String key) {
-		if (!StringUtil.startsWith(key, "com.liferay.portlet.") &&
-			!StringUtil.startsWith(key, "javax.portlet.")) {
+		if ((!StringUtil.startsWith(key, "com.liferay.portlet.") &&
+			 !StringUtil.startsWith(key, "javax.portlet.")) ||
+			_validKeys.contains(key)) {
 
-			return true;
-		}
-
-		if (_validKeys.contains(key)) {
 			return true;
 		}
 

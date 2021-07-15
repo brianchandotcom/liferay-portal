@@ -141,12 +141,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		long fileEntryPreviewableProcessorMaxSize =
 			_dlFileEntryConfiguration.previewableProcessorMaxSize();
 
-		if (fileEntryPreviewableProcessorMaxSize == 0) {
-			return false;
-		}
-
-		if ((fileEntryPreviewableProcessorMaxSize > 0) &&
-			(fileVersion.getSize() > fileEntryPreviewableProcessorMaxSize)) {
+		if ((fileEntryPreviewableProcessorMaxSize == 0) ||
+			((fileEntryPreviewableProcessorMaxSize > 0) &&
+			 (fileVersion.getSize() > fileEntryPreviewableProcessorMaxSize))) {
 
 			return false;
 		}
@@ -184,11 +181,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	public void trigger(
 		FileEntry fileEntry, FileVersion fileVersion, boolean trusted) {
 
-		if (!DLProcessorThreadLocal.isEnabled()) {
-			return;
-		}
+		if (!DLProcessorThreadLocal.isEnabled() || (fileEntry == null) ||
+			(fileEntry.getSize() == 0)) {
 
-		if ((fileEntry == null) || (fileEntry.getSize() == 0)) {
 			return;
 		}
 

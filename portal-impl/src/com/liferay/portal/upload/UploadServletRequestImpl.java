@@ -697,11 +697,9 @@ public class UploadServletRequestImpl
 				return 0;
 			}
 
-			if (_key.equals(groupedFileItems._key)) {
-				return 1;
-			}
+			if (_key.equals(groupedFileItems._key) ||
+				(getFileItemsSize() >= groupedFileItems.getFileItemsSize())) {
 
-			if (getFileItemsSize() >= groupedFileItems.getFileItemsSize()) {
 				return 1;
 			}
 

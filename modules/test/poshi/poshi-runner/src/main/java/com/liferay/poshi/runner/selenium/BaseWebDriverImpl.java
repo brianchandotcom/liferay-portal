@@ -456,13 +456,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			for (JavaScriptError javaScriptError : javaScriptErrors) {
 				String javaScriptErrorValue = javaScriptError.toString();
 
-				if (Validator.isNotNull(ignoreJavaScriptError) &&
-					javaScriptErrorValue.contains(ignoreJavaScriptError)) {
-
-					continue;
-				}
-
-				if (LiferaySeleniumUtil.isInIgnoreErrorsFile(
+				if ((Validator.isNotNull(ignoreJavaScriptError) &&
+					 javaScriptErrorValue.contains(ignoreJavaScriptError)) ||
+					LiferaySeleniumUtil.isInIgnoreErrorsFile(
 						javaScriptErrorValue, "javascript")) {
 
 					continue;

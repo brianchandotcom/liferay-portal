@@ -826,11 +826,9 @@ public class PoshiContext {
 				ignoreCommandNamesString.split(","));
 		}
 
-		if (ignorableCommandNames.contains(commandName)) {
-			return true;
-		}
+		if (ignorableCommandNames.contains(commandName) ||
+			(rootElement.attributeValue("ignore") != null)) {
 
-		if (rootElement.attributeValue("ignore") != null) {
 			return true;
 		}
 

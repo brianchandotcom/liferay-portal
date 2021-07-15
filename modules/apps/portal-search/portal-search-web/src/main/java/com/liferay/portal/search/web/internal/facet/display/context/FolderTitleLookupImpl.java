@@ -82,11 +82,7 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 	protected boolean isTitleFieldEntry(Map.Entry<String, Field> entry) {
 		String key = entry.getKey();
 
-		if (!key.startsWith(Field.TITLE)) {
-			return false;
-		}
-
-		if (key.endsWith("_sortable")) {
+		if (!key.startsWith(Field.TITLE) || key.endsWith("_sortable")) {
 			return false;
 		}
 

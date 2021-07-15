@@ -42,11 +42,9 @@ public class BNDImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
-		if (line.endsWith(StringPool.BACK_SLASH)) {
-			line = line.substring(0, line.length() - 1);
-		}
+		if (line.endsWith(StringPool.BACK_SLASH) ||
+			line.endsWith(StringPool.COMMA)) {
 
-		if (line.endsWith(StringPool.COMMA)) {
 			line = line.substring(0, line.length() - 1);
 		}
 

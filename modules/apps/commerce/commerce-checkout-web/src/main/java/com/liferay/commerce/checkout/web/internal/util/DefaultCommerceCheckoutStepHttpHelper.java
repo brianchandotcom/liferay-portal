@@ -240,11 +240,8 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			commerceAddress = commerceOrder.getShippingAddress();
 		}
 
-		if (commerceAddress == null) {
-			return;
-		}
-
-		if (commercePaymentMethodKey.equals(
+		if ((commerceAddress == null) ||
+			commercePaymentMethodKey.equals(
 				commerceOrder.getCommercePaymentMethodKey())) {
 
 			return;

@@ -443,11 +443,7 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public boolean isDisabledManagementBar() throws PortalException {
-		if (hasResults()) {
-			return false;
-		}
-
-		if (isSearch()) {
+		if (hasResults() || isSearch()) {
 			return false;
 		}
 

@@ -62,11 +62,7 @@ public class CodeCoverageAssertor implements TestRule {
 	public Statement apply(
 		final Statement statement, final Description description) {
 
-		if (_skip) {
-			return statement;
-		}
-
-		if (description.getMethodName() != null) {
+		if (_skip || (description.getMethodName() != null)) {
 			return statement;
 		}
 

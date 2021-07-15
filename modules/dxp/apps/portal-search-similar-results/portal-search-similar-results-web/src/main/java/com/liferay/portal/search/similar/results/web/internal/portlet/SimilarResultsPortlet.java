@@ -244,15 +244,10 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		List<Document> legacyDocuments = new ArrayList<>(documents71.size());
 
 		for (Document legacyDocument : documents71) {
-			if (uid.equals(legacyDocument.getUID())) {
-				continue;
-			}
+			if (uid.equals(legacyDocument.getUID()) ||
+				_isReplyMBMessageDocument(legacyDocument) ||
+				!_isSupportedDocument(uid, legacyDocument)) {
 
-			if (_isReplyMBMessageDocument(legacyDocument)) {
-				continue;
-			}
-
-			if (!_isSupportedDocument(uid, legacyDocument)) {
 				continue;
 			}
 

@@ -583,12 +583,8 @@ public class LiferaySeleniumUtil {
 
 			if (line.contains(
 					"com.liferay.portal.kernel.search.SearchException: " +
-						"java.nio.channels.ClosedByInterruptException")) {
-
-				return true;
-			}
-
-			if (line.contains(
+						"java.nio.channels.ClosedByInterruptException") ||
+				line.contains(
 					"org.apache.lucene.store.AlreadyClosedException")) {
 
 				return true;

@@ -199,11 +199,8 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			Portlet portlet = _portletLocalService.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
 
-			if (portlet == null) {
-				continue;
-			}
-
-			if (ArrayUtil.contains(
+			if ((portlet == null) ||
+				ArrayUtil.contains(
 					_UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName())) {
 
 				continue;

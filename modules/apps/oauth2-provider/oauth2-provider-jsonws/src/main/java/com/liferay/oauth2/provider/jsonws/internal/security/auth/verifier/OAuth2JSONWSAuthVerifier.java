@@ -105,11 +105,9 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 				_bearerTokenProviderAccessor.getBearerTokenProvider(
 					companyId, oAuth2Application.getClientId());
 
-			if (bearerTokenProvider == null) {
-				return authVerifierResult;
-			}
+			if ((bearerTokenProvider == null) ||
+				!bearerTokenProvider.isValid(accessToken)) {
 
-			if (!bearerTokenProvider.isValid(accessToken)) {
 				return authVerifierResult;
 			}
 

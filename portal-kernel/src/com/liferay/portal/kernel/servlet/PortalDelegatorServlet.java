@@ -37,11 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PortalDelegatorServlet extends HttpServlet {
 
 	public static void addDelegate(String subcontext, HttpServlet delegate) {
-		if (subcontext == null) {
-			throw new IllegalArgumentException();
-		}
-
-		if (delegate == null) {
+		if ((subcontext == null) || (delegate == null)) {
 			throw new IllegalArgumentException();
 		}
 

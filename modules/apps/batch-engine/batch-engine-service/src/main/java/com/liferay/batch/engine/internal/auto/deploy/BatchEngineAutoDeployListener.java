@@ -97,11 +97,8 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 					_objectMapper.readValue(
 						inputStream, BatchEngineImportConfiguration.class);
 
-				if (batchEngineImportConfiguration == null) {
-					return false;
-				}
-
-				if ((batchEngineImportConfiguration.companyId == 0) ||
+				if ((batchEngineImportConfiguration == null) ||
+					(batchEngineImportConfiguration.companyId == 0) ||
 					(batchEngineImportConfiguration.userId == 0) ||
 					Validator.isNull(
 						batchEngineImportConfiguration.className) ||

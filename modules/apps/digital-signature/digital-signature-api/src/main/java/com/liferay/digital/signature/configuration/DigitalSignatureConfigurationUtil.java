@@ -34,11 +34,8 @@ public class DigitalSignatureConfigurationUtil {
 				ConfigurationProviderUtil.getCompanyConfiguration(
 					DigitalSignatureConfiguration.class, companyId);
 
-			if (groupId == 0) {
-				return companyDigitalSignatureConfiguration;
-			}
-
-			if (Objects.equals(
+			if ((groupId == 0) ||
+				Objects.equals(
 					companyDigitalSignatureConfiguration.siteSettingsStrategy(),
 					"always-inherit")) {
 

@@ -492,11 +492,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 		}
 
 		private void _logDebug(String method, Serializable key, Object value) {
-			if (!_log.isDebugEnabled()) {
-				return;
-			}
-
-			if (!(value instanceof OAuthAccessor)) {
+			if (!_log.isDebugEnabled() || !(value instanceof OAuthAccessor)) {
 				return;
 			}
 

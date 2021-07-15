@@ -169,23 +169,15 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout == null) {
-			return false;
-		}
-
-		if (layout.isTypeControlPanel()) {
+		if ((layout == null) || layout.isTypeControlPanel()) {
 			return false;
 		}
 
 		Company company = themeDisplay.getCompany();
 
 		if (Validator.isNull(_getLiferayAnalyticsDataSourceId(company)) ||
-			Validator.isNull(_getLiferayAnalyticsEndpointURL(company))) {
-
-			return false;
-		}
-
-		if (Objects.equals(
+			Validator.isNull(_getLiferayAnalyticsEndpointURL(company)) ||
+			Objects.equals(
 				httpServletRequest.getRequestURI(), "/c/portal/api/jsonws")) {
 
 			return false;

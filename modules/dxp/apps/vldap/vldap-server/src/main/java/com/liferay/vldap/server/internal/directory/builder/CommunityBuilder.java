@@ -110,12 +110,9 @@ public class CommunityBuilder extends DirectoryBuilder {
 				}
 
 				for (Group group : user.getGroups()) {
-					if ((name != null) && !name.equals(group.getName())) {
-						continue;
-					}
-
-					if ((description != null) &&
-						!description.equals(group.getDescription())) {
+					if (((name != null) && !name.equals(group.getName())) ||
+						((description != null) &&
+						 !description.equals(group.getDescription()))) {
 
 						continue;
 					}

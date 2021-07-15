@@ -64,11 +64,8 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				infoItemReference);
 
-		if (layoutDisplayPageObjectProvider == null) {
-			return null;
-		}
-
-		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
+		if ((layoutDisplayPageObjectProvider == null) ||
+			!AssetDisplayPageUtil.hasAssetDisplayPage(
 				layoutDisplayPageObjectProvider.getGroupId(),
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),

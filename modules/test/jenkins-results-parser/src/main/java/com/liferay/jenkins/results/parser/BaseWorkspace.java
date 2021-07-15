@@ -21,11 +21,9 @@ public abstract class BaseWorkspace implements Workspace {
 
 	@Override
 	public void addJenkinsWorkspaceGitRepository(String jenkinsGitHubURL) {
-		if (!JenkinsResultsParserUtil.isCINode()) {
-			return;
-		}
+		if (!JenkinsResultsParserUtil.isCINode() ||
+			(jenkinsGitHubURL == null)) {
 
-		if (jenkinsGitHubURL == null) {
 			return;
 		}
 

@@ -225,16 +225,12 @@ public class LibraryReferenceTest {
 		}
 
 		for (String jar : libJars) {
-			if ((fileName.equals(_ECLIPSE_FILE_NAME) ||
-				 fileName.equals(_NETBEANS_PROPERTIES_FILE_NAME)) &&
-				_ideExcludeJars.contains(jar)) {
-
-				continue;
-			}
-
-			if (fileName.equals(_VERSIONS_FILE_NAME) &&
-				(_excludeJars.contains(jar) ||
-				 _libDependencyJars.contains(jar))) {
+			if (((fileName.equals(_ECLIPSE_FILE_NAME) ||
+				  fileName.equals(_NETBEANS_PROPERTIES_FILE_NAME)) &&
+				 _ideExcludeJars.contains(jar)) ||
+				(fileName.equals(_VERSIONS_FILE_NAME) &&
+				 (_excludeJars.contains(jar) ||
+				  _libDependencyJars.contains(jar)))) {
 
 				continue;
 			}

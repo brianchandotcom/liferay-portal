@@ -267,14 +267,10 @@ public class MergeCentralGitSubrepositoryUtil {
 		for (String upstreamRemoteGitBranchName :
 				_upstreamRemoteGitBranchNames) {
 
-			if (upstreamRemoteGitBranchName.equals(mergeBranchName) &&
-				!centralGitSubrepository.
-					isGitSubrepositoryUpstreamCommitMerged()) {
-
-				continue;
-			}
-
-			if (!upstreamRemoteGitBranchName.startsWith(
+			if ((upstreamRemoteGitBranchName.equals(mergeBranchName) &&
+				 !centralGitSubrepository.
+					 isGitSubrepositoryUpstreamCommitMerged()) ||
+				!upstreamRemoteGitBranchName.startsWith(
 					mergeBranchNamePrefix)) {
 
 				continue;
@@ -335,14 +331,11 @@ public class MergeCentralGitSubrepositoryUtil {
 
 			String refName = headJSONObject.getString("ref");
 
-			if (refName.equals(mergeBranchName) &&
-				!centralGitSubrepository.
-					isGitSubrepositoryUpstreamCommitMerged()) {
+			if ((refName.equals(mergeBranchName) &&
+				 !centralGitSubrepository.
+					 isGitSubrepositoryUpstreamCommitMerged()) ||
+				!refName.startsWith(mergeBranchNamePrefix)) {
 
-				continue;
-			}
-
-			if (!refName.startsWith(mergeBranchNamePrefix)) {
 				continue;
 			}
 

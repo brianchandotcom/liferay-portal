@@ -151,11 +151,9 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 
 	protected boolean isSupported(String mimeType) {
 		if (XugglerUtil.isEnabled()) {
-			if (AudioProcessorUtil.isAudioSupported(mimeType)) {
-				return true;
-			}
+			if (AudioProcessorUtil.isAudioSupported(mimeType) ||
+				VideoProcessorUtil.isVideoSupported(mimeType)) {
 
-			if (VideoProcessorUtil.isVideoSupported(mimeType)) {
 				return true;
 			}
 		}

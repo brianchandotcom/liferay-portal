@@ -357,11 +357,9 @@ public abstract class BaseEmptyLinesCheck extends BaseFileCheck {
 		Matcher matcher1 = _setVariablePattern.matcher(content);
 
 		while (matcher1.find()) {
-			if (!isJavaSource(content, matcher1.start())) {
-				continue;
-			}
+			if (!isJavaSource(content, matcher1.start()) ||
+				(content.charAt(matcher1.end()) == CharPool.NEW_LINE)) {
 
-			if (content.charAt(matcher1.end()) == CharPool.NEW_LINE) {
 				continue;
 			}
 

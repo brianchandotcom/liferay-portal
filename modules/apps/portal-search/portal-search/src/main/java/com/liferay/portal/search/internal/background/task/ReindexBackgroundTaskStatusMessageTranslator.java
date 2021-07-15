@@ -117,11 +117,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		int companyCount, int companyTotal, int indexerCount, int indexerTotal,
 		long documentCount, long documentTotal) {
 
-		if (companyTotal <= 0) {
-			return 100;
-		}
-
-		if (indexerTotal <= 0) {
+		if ((companyTotal <= 0) || (indexerTotal <= 0)) {
 			return 100;
 		}
 

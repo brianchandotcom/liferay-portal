@@ -81,21 +81,13 @@ public class CommerceVirtualOrderItemModelResourcePermissionLogic
 
 		Date date = new Date();
 
-		if ((commerceVirtualOrderItem.getStartDate() != null) &&
-			date.before(commerceVirtualOrderItem.getStartDate())) {
-
-			return false;
-		}
-
-		if ((commerceVirtualOrderItem.getEndDate() != null) &&
-			date.after(commerceVirtualOrderItem.getEndDate())) {
-
-			return false;
-		}
-
-		if ((commerceVirtualOrderItem.getMaxUsages() > 0) &&
-			(commerceVirtualOrderItem.getUsages() >=
-				commerceVirtualOrderItem.getMaxUsages())) {
+		if (((commerceVirtualOrderItem.getStartDate() != null) &&
+			 date.before(commerceVirtualOrderItem.getStartDate())) ||
+			((commerceVirtualOrderItem.getEndDate() != null) &&
+			 date.after(commerceVirtualOrderItem.getEndDate())) ||
+			((commerceVirtualOrderItem.getMaxUsages() > 0) &&
+			 (commerceVirtualOrderItem.getUsages() >=
+				 commerceVirtualOrderItem.getMaxUsages()))) {
 
 			return false;
 		}

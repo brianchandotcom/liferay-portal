@@ -239,12 +239,8 @@ public class SearchBarPortletSharedSearchContributor
 
 		if (!SearchBarPortletDestinationUtil.isSameDestination(
 				searchBarPortletPreferences,
-				portletSharedSearchSettings.getThemeDisplay())) {
-
-			return false;
-		}
-
-		if (searchBarPrecedenceHelper.
+				portletSharedSearchSettings.getThemeDisplay()) ||
+			searchBarPrecedenceHelper.
 				isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(
 					portletSharedSearchSettings.getThemeDisplay(),
 					portletSharedSearchSettings.getPortletId())) {

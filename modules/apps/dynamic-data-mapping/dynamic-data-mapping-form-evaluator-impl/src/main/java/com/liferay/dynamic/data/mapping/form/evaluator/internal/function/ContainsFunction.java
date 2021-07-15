@@ -70,11 +70,9 @@ public class ContainsFunction
 		for (String key : keys) {
 			String value = jsonObject1.getString(key);
 
-			if (value == null) {
-				return false;
-			}
+			if ((value == null) ||
+				!Objects.equals(value, jsonObject2.get(key))) {
 
-			if (!Objects.equals(value, jsonObject2.get(key))) {
 				return false;
 			}
 		}

@@ -148,12 +148,9 @@ public class SystemEventLocalServiceImpl
 		if (groupId > 0) {
 			Group group = groupLocalService.getGroup(groupId);
 
-			if (group.hasStagingGroup() && !group.isStagedRemotely()) {
-				return false;
-			}
-
-			if (group.hasRemoteStagingGroup() &&
-				!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED) {
+			if ((group.hasStagingGroup() && !group.isStagedRemotely()) ||
+				(group.hasRemoteStagingGroup() &&
+				 !PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED)) {
 
 				return false;
 			}

@@ -319,11 +319,9 @@ public class AssetVocabularyStagedModelDataHandler
 		AssetVocabulary vocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(groupId, name);
 
-		if (vocabulary == null) {
-			return name;
-		}
+		if ((vocabulary == null) ||
+			(Validator.isNotNull(uuid) && uuid.equals(vocabulary.getUuid()))) {
 
-		if (Validator.isNotNull(uuid) && uuid.equals(vocabulary.getUuid())) {
 			return name;
 		}
 

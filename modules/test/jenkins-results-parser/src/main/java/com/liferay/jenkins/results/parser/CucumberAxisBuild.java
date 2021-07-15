@@ -81,11 +81,8 @@ public class CucumberAxisBuild extends AxisBuild {
 		List<CucumberTestResult> cucumberTestResults = new ArrayList<>();
 
 		for (TestResult testResult : getTestResults()) {
-			if (!(testResult instanceof CucumberTestResult)) {
-				continue;
-			}
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(testStatus) ||
+			if (!(testResult instanceof CucumberTestResult) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(testStatus) ||
 				!testStatus.equals(testResult.getStatus())) {
 
 				continue;

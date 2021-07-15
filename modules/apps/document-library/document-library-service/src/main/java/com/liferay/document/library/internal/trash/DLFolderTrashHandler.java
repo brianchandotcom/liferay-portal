@@ -238,12 +238,8 @@ public class DLFolderTrashHandler extends BaseDLTrashHandler {
 		if ((dlFolder == null) ||
 			((dlFolder.getParentFolderId() > 0) &&
 			 (_dlFolderLocalService.fetchFolder(dlFolder.getParentFolderId()) ==
-				 null))) {
-
-			return false;
-		}
-
-		if (!hasTrashPermission(
+				 null)) ||
+			!hasTrashPermission(
 				PermissionThreadLocal.getPermissionChecker(),
 				dlFolder.getGroupId(), classPK, TrashActionKeys.RESTORE)) {
 

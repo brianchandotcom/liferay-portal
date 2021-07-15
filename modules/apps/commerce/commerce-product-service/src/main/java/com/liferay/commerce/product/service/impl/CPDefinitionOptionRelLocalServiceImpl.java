@@ -343,12 +343,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 					fetchCPDefinitionOptionRelByKey(
 						cpDefinitionId, jsonObject.getString("key"));
 
-			if (cpDefinitionOptionRel == null) {
-				continue;
-			}
-
-			if (skuContributorsOnly &&
-				!cpDefinitionOptionRel.isSkuContributor()) {
+			if ((cpDefinitionOptionRel == null) ||
+				(skuContributorsOnly &&
+				 !cpDefinitionOptionRel.isSkuContributor())) {
 
 				continue;
 			}
@@ -965,19 +962,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		if (cpDefinitionOptionRel.isNew() ||
 			!cpDefinitionOptionRel.isPriceContributor() ||
-			Objects.equals(cpDefinitionOptionRel.getPriceType(), priceType)) {
-
-			return;
-		}
-
-		if (!cpDefinitionOptionValueRelLocalService.
+			Objects.equals(cpDefinitionOptionRel.getPriceType(), priceType) ||
+			!cpDefinitionOptionValueRelLocalService.
 				hasCPDefinitionOptionValueRels(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId())) {
-
-			return;
-		}
-
-		if (Objects.equals(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId()) ||
+			Objects.equals(
 				priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
 
 			return;

@@ -99,11 +99,9 @@ public class AutoFillDDMFormRuleActionFactory {
 	}
 
 	protected static boolean isValidExpression(String[] tokens) {
-		if (tokens.length < 2) {
-			return false;
-		}
+		if ((tokens.length < 2) || Validator.isNull(tokens[0]) ||
+			Validator.isNull(tokens[1])) {
 
-		if (Validator.isNull(tokens[0]) || Validator.isNull(tokens[1])) {
 			return false;
 		}
 

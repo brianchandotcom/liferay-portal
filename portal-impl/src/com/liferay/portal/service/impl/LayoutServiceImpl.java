@@ -536,12 +536,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			}
 
 			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
+					permissionChecker, layout, ActionKeys.VIEW) ||
+				!layout.isTypePortlet()) {
 
-				continue;
-			}
-
-			if (!layout.isTypePortlet()) {
 				continue;
 			}
 

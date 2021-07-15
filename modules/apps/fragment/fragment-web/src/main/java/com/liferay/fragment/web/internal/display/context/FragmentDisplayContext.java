@@ -529,15 +529,12 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean hasDeletePermission() {
-		if (hasUpdatePermission()) {
-			return true;
-		}
-
-		if (FragmentPermission.contains(
+		if (hasUpdatePermission() ||
+			(FragmentPermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) &&
-			!isLocked(getFragmentCollection())) {
+			 !isLocked(getFragmentCollection()))) {
 
 			return true;
 		}
@@ -773,11 +770,7 @@ public class FragmentDisplayContext {
 	}
 
 	private boolean _isShowResourcesTab() {
-		if (isSelectedFragmentCollectionContributor()) {
-			return false;
-		}
-
-		if (!_isScopeGroup()) {
+		if (isSelectedFragmentCollectionContributor() || !_isScopeGroup()) {
 			return false;
 		}
 

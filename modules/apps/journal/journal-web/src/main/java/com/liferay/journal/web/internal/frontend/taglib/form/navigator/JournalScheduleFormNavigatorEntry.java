@@ -41,11 +41,7 @@ public class JournalScheduleFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		if (!PropsValues.SCHEDULER_ENABLED) {
-			return false;
-		}
-
-		if (isEditDefaultValues(article)) {
+		if (!PropsValues.SCHEDULER_ENABLED || isEditDefaultValues(article)) {
 			return false;
 		}
 

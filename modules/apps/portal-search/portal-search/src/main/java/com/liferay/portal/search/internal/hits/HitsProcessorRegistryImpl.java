@@ -43,11 +43,9 @@ public class HitsProcessorRegistryImpl implements HitsProcessorRegistry {
 	public boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		if (_hitsProcessors.isEmpty()) {
-			return false;
-		}
+		if (_hitsProcessors.isEmpty() ||
+			Validator.isNull(searchContext.getKeywords())) {
 
-		if (Validator.isNull(searchContext.getKeywords())) {
 			return false;
 		}
 

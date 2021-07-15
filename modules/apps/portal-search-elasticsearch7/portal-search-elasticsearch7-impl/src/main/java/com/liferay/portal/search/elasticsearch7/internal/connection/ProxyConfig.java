@@ -114,11 +114,7 @@ public class ProxyConfig {
 		}
 
 		protected boolean hasHostAndPort() {
-			if (Validator.isBlank(_host)) {
-				return false;
-			}
-
-			if (_port <= 0) {
+			if (Validator.isBlank(_host) || (_port <= 0)) {
 				return false;
 			}
 
@@ -138,15 +134,9 @@ public class ProxyConfig {
 		}
 
 		protected boolean shouldApplyCredentials() {
-			if (!shouldApplyConfig()) {
-				return false;
-			}
+			if (!shouldApplyConfig() || Validator.isBlank(_password) ||
+				Validator.isBlank(_userName)) {
 
-			if (Validator.isBlank(_password)) {
-				return false;
-			}
-
-			if (Validator.isBlank(_userName)) {
 				return false;
 			}
 

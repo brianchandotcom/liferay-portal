@@ -101,11 +101,9 @@ public abstract class BaseIndexSearcher
 	protected void populateUID(Document document, QueryConfig queryConfig) {
 		Field uidField = document.getField(Field.UID);
 
-		if (uidField != null) {
-			return;
-		}
+		if ((uidField != null) ||
+			Validator.isNull(queryConfig.getAlternateUidFieldName())) {
 
-		if (Validator.isNull(queryConfig.getAlternateUidFieldName())) {
 			return;
 		}
 

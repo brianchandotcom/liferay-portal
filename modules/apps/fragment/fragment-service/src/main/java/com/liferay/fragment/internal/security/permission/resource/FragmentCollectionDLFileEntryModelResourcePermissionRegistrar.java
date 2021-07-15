@@ -56,11 +56,8 @@ public class FragmentCollectionDLFileEntryModelResourcePermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
 					(permissionChecker, name, model, actionId) -> {
-						if (actionId.equals(ActionKeys.VIEW)) {
-							return true;
-						}
-
-						if (_portletResourcePermission.contains(
+						if (actionId.equals(ActionKeys.VIEW) ||
+							_portletResourcePermission.contains(
 								permissionChecker, model.getGroupId(),
 								FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 

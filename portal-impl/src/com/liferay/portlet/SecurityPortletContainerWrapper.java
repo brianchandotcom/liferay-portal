@@ -372,19 +372,12 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		for (int i = 0; i < portletId.length(); i++) {
 			char c = portletId.charAt(i);
 
-			if ((c >= CharPool.LOWER_CASE_A) && (c <= CharPool.LOWER_CASE_Z)) {
-				continue;
-			}
-
-			if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_Z)) {
-				continue;
-			}
-
-			if ((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_9)) {
-				continue;
-			}
-
-			if ((c == CharPool.DOLLAR) || (c == CharPool.POUND) ||
+			if (((c >= CharPool.LOWER_CASE_A) &&
+				 (c <= CharPool.LOWER_CASE_Z)) ||
+				((c >= CharPool.UPPER_CASE_A) &&
+				 (c <= CharPool.UPPER_CASE_Z)) ||
+				((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_9)) ||
+				(c == CharPool.DOLLAR) || (c == CharPool.POUND) ||
 				(c == CharPool.UNDERLINE)) {
 
 				continue;

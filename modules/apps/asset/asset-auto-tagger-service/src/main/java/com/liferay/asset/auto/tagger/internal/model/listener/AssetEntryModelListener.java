@@ -77,12 +77,9 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 			TransactionCommitCallbackUtil.registerCallback(
 				(Callable<Void>)() -> {
 					if ((assetEntry.getPublishDate() == null) ||
-						!ListUtil.isEmpty(assetEntry.getTags())) {
+						!ListUtil.isEmpty(assetEntry.getTags()) ||
+						!_assetAutoTaggerHelper.isAutoTaggable(assetEntry)) {
 
-						return null;
-					}
-
-					if (!_assetAutoTaggerHelper.isAutoTaggable(assetEntry)) {
 						return null;
 					}
 

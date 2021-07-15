@@ -346,12 +346,9 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 	private boolean _isShowSearch(String mvcRenderCommandName) {
 		if (Validator.isNotNull(
-				ParamUtil.getString(_httpServletRequest, "keywords"))) {
+				ParamUtil.getString(_httpServletRequest, "keywords")) ||
+			mvcRenderCommandName.equals("/message_boards/search")) {
 
-			return true;
-		}
-
-		if (mvcRenderCommandName.equals("/message_boards/search")) {
 			return true;
 		}
 

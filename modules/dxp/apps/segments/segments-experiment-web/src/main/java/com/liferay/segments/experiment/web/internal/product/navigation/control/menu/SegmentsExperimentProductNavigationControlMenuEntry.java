@@ -226,19 +226,10 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		if (isEmbeddedPersonalApplicationLayout(layout)) {
-			return false;
-		}
-
-		if (!layout.isTypeContent()) {
-			return false;
-		}
-
-		if (!LayoutPermissionUtil.contains(
+		if (layout.isTypeControlPanel() ||
+			isEmbeddedPersonalApplicationLayout(layout) ||
+			!layout.isTypeContent() ||
+			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.UPDATE)) {
 

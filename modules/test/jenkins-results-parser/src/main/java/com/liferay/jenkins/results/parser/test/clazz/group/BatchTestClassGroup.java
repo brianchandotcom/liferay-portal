@@ -495,11 +495,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected void setSegmentTestClassGroups() {
-		if (!_segmentTestClassGroups.isEmpty()) {
-			return;
-		}
+		if (!_segmentTestClassGroups.isEmpty() ||
+			axisTestClassGroups.isEmpty()) {
 
-		if (axisTestClassGroups.isEmpty()) {
 			return;
 		}
 
@@ -633,11 +631,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				File requiredModuleDir = new File(
 					modulesBaseDir, requiredModuleDirPath);
 
-				if (!requiredModuleDir.exists()) {
-					continue;
-				}
+				if (!requiredModuleDir.exists() ||
+					requiredModuleDirs.contains(requiredModuleDir)) {
 
-				if (requiredModuleDirs.contains(requiredModuleDir)) {
 					continue;
 				}
 

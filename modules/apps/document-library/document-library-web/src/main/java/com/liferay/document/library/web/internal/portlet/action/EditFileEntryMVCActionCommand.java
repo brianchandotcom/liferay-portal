@@ -1296,12 +1296,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		throws FileNameExtensionException {
 
 		if (Validator.isNotNull(extension)) {
-			if (Validator.isNull(sourceFileName)) {
-				throw new FileNameExtensionException(
-					"The file name cannot be empty or without extension");
-			}
+			if (Validator.isNull(sourceFileName) ||
+				Validator.isNull(FileUtil.getExtension(sourceFileName))) {
 
-			if (Validator.isNull(FileUtil.getExtension(sourceFileName))) {
 				throw new FileNameExtensionException(
 					"The file name cannot be empty or without extension");
 			}

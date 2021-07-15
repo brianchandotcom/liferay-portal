@@ -271,11 +271,7 @@ public class LayoutSetPrototypeDisplayContext {
 	}
 
 	public boolean isDisabledManagementBar() {
-		if (getTotal() > 0) {
-			return false;
-		}
-
-		if (!Objects.equals(getNavigation(), "all")) {
+		if ((getTotal() > 0) || !Objects.equals(getNavigation(), "all")) {
 			return false;
 		}
 

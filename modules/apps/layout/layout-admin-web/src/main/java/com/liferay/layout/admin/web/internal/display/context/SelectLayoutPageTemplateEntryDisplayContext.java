@@ -209,11 +209,9 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public boolean isBasicTemplates() {
-		if (getLayoutPageTemplateCollectionId() != 0) {
-			return false;
-		}
+		if ((getLayoutPageTemplateCollectionId() != 0) ||
+			!Objects.equals(getSelectedTab(), "basic-templates")) {
 
-		if (!Objects.equals(getSelectedTab(), "basic-templates")) {
 			return false;
 		}
 
@@ -229,11 +227,9 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public boolean isGlobalTemplates() {
-		if (getLayoutPageTemplateCollectionId() != 0) {
-			return false;
-		}
+		if ((getLayoutPageTemplateCollectionId() != 0) ||
+			!Objects.equals(getSelectedTab(), "global-templates")) {
 
-		if (!Objects.equals(getSelectedTab(), "global-templates")) {
 			return false;
 		}
 

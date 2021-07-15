@@ -42,15 +42,10 @@ public class FormResourceTest extends BaseFormResourceTestCase {
 	protected void assertValid(Form form) {
 		boolean valid = true;
 
-		if (Validator.isNull(form.getDateCreated())) {
-			valid = false;
-		}
+		if (Validator.isNull(form.getDateCreated()) ||
+			Validator.isNull(form.getDateModified()) ||
+			Validator.isNull(form.getId())) {
 
-		if (Validator.isNull(form.getDateModified())) {
-			valid = false;
-		}
-
-		if (Validator.isNull(form.getId())) {
 			valid = false;
 		}
 

@@ -324,11 +324,9 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
 
-			if (jsonObject.has("latitude") && jsonObject.has("longitude")) {
-				return data;
-			}
+			if ((jsonObject.has("latitude") && jsonObject.has("longitude")) ||
+				!jsonObject.has("lat") || !jsonObject.has("lng")) {
 
-			if (!jsonObject.has("lat") || !jsonObject.has("lng")) {
 				return data;
 			}
 

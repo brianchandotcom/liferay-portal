@@ -2104,14 +2104,11 @@ public class TestrayImporter {
 		String branchName = topLevelBuild.getBranchName();
 		String jobName = topLevelBuild.getJobName();
 
-		if (!branchName.startsWith("ee-") && !branchName.endsWith("-private") &&
-			jobName.contains("environment")) {
-
-			setupProfileDXP = true;
-		}
-
-		if (!branchName.startsWith("ee-") &&
-			(jobName.contains("fixpack") || jobName.contains("hotfix"))) {
+		if ((!branchName.startsWith("ee-") &&
+			 !branchName.endsWith("-private") &&
+			 jobName.contains("environment")) ||
+			(!branchName.startsWith("ee-") &&
+			 (jobName.contains("fixpack") || jobName.contains("hotfix")))) {
 
 			setupProfileDXP = true;
 		}

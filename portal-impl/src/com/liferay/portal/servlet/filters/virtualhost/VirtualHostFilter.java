@@ -142,12 +142,9 @@ public class VirtualHostFilter extends BasePortalFilter {
 			friendlyURL.startsWith(_PATH_MODULE_SLASH) ||
 			friendlyURL.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING_SLASH) ||
 			friendlyURL.startsWith(_PRIVATE_USER_SERVLET_MAPPING_SLASH) ||
-			friendlyURL.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING_SLASH)) {
+			friendlyURL.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING_SLASH) ||
+			LayoutImpl.hasFriendlyURLKeyword(friendlyURL)) {
 
-			return false;
-		}
-
-		if (LayoutImpl.hasFriendlyURLKeyword(friendlyURL)) {
 			return false;
 		}
 

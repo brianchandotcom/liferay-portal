@@ -398,11 +398,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 					assetListEntryAssetEntryRel.getAssetEntryId());
 
-				if (assetEntry == null) {
-					return false;
-				}
-
-				if (!assetEntry.isVisible()) {
+				if ((assetEntry == null) || !assetEntry.isVisible()) {
 					return false;
 				}
 

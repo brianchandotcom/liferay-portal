@@ -57,12 +57,9 @@ public class ThumbnailBuilder {
 			boolean overwrite)
 		throws Exception {
 
-		if (!originalFile.exists()) {
-			return;
-		}
-
-		if (!overwrite &&
-			(thumbnailFile.lastModified() > originalFile.lastModified())) {
+		if (!originalFile.exists() ||
+			(!overwrite &&
+			 (thumbnailFile.lastModified() > originalFile.lastModified()))) {
 
 			return;
 		}

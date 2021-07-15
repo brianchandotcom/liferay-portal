@@ -852,13 +852,10 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isSetupComplete() {
-		if (isDefaultUser()) {
-			return true;
-		}
-
-		if (isEmailAddressComplete() && isEmailAddressVerificationComplete() &&
-			!_isRequirePasswordReset() && isReminderQueryComplete() &&
-			isTermsOfUseComplete()) {
+		if (isDefaultUser() ||
+			(isEmailAddressComplete() && isEmailAddressVerificationComplete() &&
+			 !_isRequirePasswordReset() && isReminderQueryComplete() &&
+			 isTermsOfUseComplete())) {
 
 			return true;
 		}

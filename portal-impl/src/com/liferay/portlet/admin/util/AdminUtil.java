@@ -49,11 +49,9 @@ public class AdminUtil {
 
 		String password = PortalUtil.getUserPassword(httpServletRequest);
 
-		if (userId != PortalUtil.getUserId(httpServletRequest)) {
-			password = StringPool.BLANK;
-		}
+		if ((userId != PortalUtil.getUserId(httpServletRequest)) ||
+			(password == null)) {
 
-		if (password == null) {
 			password = StringPool.BLANK;
 		}
 

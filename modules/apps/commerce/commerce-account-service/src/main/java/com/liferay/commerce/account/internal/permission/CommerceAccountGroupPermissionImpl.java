@@ -118,18 +118,14 @@ public class CommerceAccountGroupPermissionImpl
 
 		if (permissionChecker.isCompanyAdmin(
 				commerceAccountGroup.getCompanyId()) ||
-			permissionChecker.isOmniadmin()) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasOwnerPermission(
+			permissionChecker.isOmniadmin() ||
+			(permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(),
 				CommerceAccountGroup.class.getName(),
 				commerceAccountGroup.getCommerceAccountGroupId(),
 				permissionChecker.getUserId(), actionId) &&
-			(commerceAccountGroup.getUserId() ==
-				permissionChecker.getUserId())) {
+			 (commerceAccountGroup.getUserId() ==
+				 permissionChecker.getUserId()))) {
 
 			return true;
 		}

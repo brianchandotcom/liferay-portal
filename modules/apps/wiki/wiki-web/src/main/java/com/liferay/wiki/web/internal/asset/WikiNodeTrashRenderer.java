@@ -69,11 +69,7 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getTitle(Locale locale) {
-		if (!_node.isInTrash()) {
-			return _node.getName();
-		}
-
-		if (_trashHelper == null) {
+		if (!_node.isInTrash() || (_trashHelper == null)) {
 			return _node.getName();
 		}
 

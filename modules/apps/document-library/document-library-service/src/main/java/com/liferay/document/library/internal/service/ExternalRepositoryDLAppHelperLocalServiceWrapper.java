@@ -124,11 +124,9 @@ public class ExternalRepositoryDLAppHelperLocalServiceWrapper
 	}
 
 	private boolean _isEnabled(FileEntry fileEntry) {
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return false;
-		}
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 
-		if (RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 			return false;
 		}
 
@@ -136,12 +134,9 @@ public class ExternalRepositoryDLAppHelperLocalServiceWrapper
 	}
 
 	private boolean _isEnabled(Folder folder) {
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return false;
-		}
-
-		if (!folder.isMountPoint() &&
-			RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
+		if (!DLAppHelperThreadLocal.isEnabled() ||
+			(!folder.isMountPoint() &&
+			 RepositoryUtil.isExternalRepository(folder.getRepositoryId()))) {
 
 			return false;
 		}

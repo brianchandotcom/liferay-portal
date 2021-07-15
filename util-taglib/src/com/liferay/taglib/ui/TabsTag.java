@@ -131,16 +131,9 @@ public class TabsTag extends IncludeTag {
 					httpServletRequest, _param, _tabsValues[0]);
 			}
 
-			if (Validator.isNull(_value)) {
-				if (_tabsValues.length > 0) {
-					_value = _tabsValues[0];
-				}
-				else {
-					_value = StringPool.BLANK;
-				}
-			}
+			if (Validator.isNull(_value) ||
+				!ArrayUtil.contains(_tabsValues, _value)) {
 
-			if (!ArrayUtil.contains(_tabsValues, _value)) {
 				if (_tabsValues.length > 0) {
 					_value = _tabsValues[0];
 				}

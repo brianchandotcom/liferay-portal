@@ -1757,11 +1757,9 @@ public class CMISRepository extends BaseCmisRepository {
 		for (QueryResult queryResult : queryResults) {
 			total++;
 
-			if (total <= start) {
-				continue;
-			}
+			if ((total <= start) ||
+				((total > end) && (end != QueryUtil.ALL_POS))) {
 
-			if ((total > end) && (end != QueryUtil.ALL_POS)) {
 				continue;
 			}
 

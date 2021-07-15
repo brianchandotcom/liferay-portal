@@ -178,19 +178,9 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		if (_isMasterLayout(layout)) {
-			return false;
-		}
-
-		if (isEmbeddedPersonalApplicationLayout(layout)) {
-			return false;
-		}
-
-		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
+		if (layout.isTypeControlPanel() || _isMasterLayout(layout) ||
+			isEmbeddedPersonalApplicationLayout(layout) ||
+			!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon())) {
 
 			return false;

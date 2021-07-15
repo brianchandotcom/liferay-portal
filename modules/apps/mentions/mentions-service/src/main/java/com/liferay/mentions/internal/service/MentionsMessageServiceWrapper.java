@@ -72,12 +72,8 @@ public class MentionsMessageServiceWrapper
 			userId, messageId, status, serviceContext, workflowContext);
 
 		if ((status != WorkflowConstants.STATUS_APPROVED) ||
-			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) {
-
-			return message;
-		}
-
-		if (!MentionsUtil.isMentionsEnabled(
+			(oldStatus == WorkflowConstants.STATUS_IN_TRASH) ||
+			!MentionsUtil.isMentionsEnabled(
 				_portal.getSiteGroupId(message.getGroupId()))) {
 
 			return message;

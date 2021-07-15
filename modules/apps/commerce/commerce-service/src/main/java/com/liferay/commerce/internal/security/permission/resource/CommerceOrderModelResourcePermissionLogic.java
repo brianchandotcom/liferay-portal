@@ -251,11 +251,9 @@ public class CommerceOrderModelResourcePermissionLogic
 			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (_hasOwnerPermission(permissionChecker, commerceOrder)) {
-			return true;
-		}
+		if (_hasOwnerPermission(permissionChecker, commerceOrder) ||
+			commerceOrder.isGuestOrder()) {
 
-		if (commerceOrder.isGuestOrder()) {
 			return true;
 		}
 

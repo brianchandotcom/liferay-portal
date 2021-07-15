@@ -155,12 +155,8 @@ public class SharingModelResourcePermissionConfiguratorImpl
 					model.getCompanyId(), name, primaryKey, model.getUserId(),
 					actionId) ||
 				permissionChecker.hasPermission(
-					model.getGroupId(), name, primaryKey, actionId)) {
-
-				return null;
-			}
-
-			if (!_sharingEntryLocalService.hasSharingPermission(
+					model.getGroupId(), name, primaryKey, actionId) ||
+				!_sharingEntryLocalService.hasSharingPermission(
 					permissionChecker.getUserId(), _classNameId, primaryKey,
 					sharingEntryAction)) {
 

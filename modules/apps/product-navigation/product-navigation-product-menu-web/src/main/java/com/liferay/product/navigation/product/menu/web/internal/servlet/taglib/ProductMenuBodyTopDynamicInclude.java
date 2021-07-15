@@ -81,13 +81,10 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if ((_isApplicationsMenuApp(themeDisplay) || scopeGroup.isDepot()) &&
-			_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
+		if (((_isApplicationsMenuApp(themeDisplay) || scopeGroup.isDepot()) &&
+			 _isEnableApplicationsMenu(themeDisplay.getCompanyId())) ||
+			!_hasPanelCategories(themeDisplay)) {
 
-			return;
-		}
-
-		if (!_hasPanelCategories(themeDisplay)) {
 			return;
 		}
 

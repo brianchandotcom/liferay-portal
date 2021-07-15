@@ -42,12 +42,9 @@ public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 		sb.append(commerceAddress.getStreet1());
 		sb.append(StringPool.NEW_LINE);
 
-		if (Validator.isNotNull(commerceAddress.getStreet2())) {
-			sb.append(commerceAddress.getStreet2());
-			sb.append(StringPool.NEW_LINE);
-		}
+		if (Validator.isNotNull(commerceAddress.getStreet2()) ||
+			Validator.isNotNull(commerceAddress.getStreet3())) {
 
-		if (Validator.isNotNull(commerceAddress.getStreet3())) {
 			sb.append(commerceAddress.getStreet2());
 			sb.append(StringPool.NEW_LINE);
 		}

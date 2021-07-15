@@ -141,11 +141,9 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (!_isAccessAllowed(httpServletRequest, httpServletResponse)) {
-			return;
-		}
+		if (!_isAccessAllowed(httpServletRequest, httpServletResponse) ||
+			_isApplySSL(httpServletRequest, httpServletResponse)) {
 
-		if (_isApplySSL(httpServletRequest, httpServletResponse)) {
 			return;
 		}
 

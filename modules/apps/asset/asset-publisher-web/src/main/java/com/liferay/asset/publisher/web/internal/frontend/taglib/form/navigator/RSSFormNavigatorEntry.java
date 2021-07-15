@@ -45,11 +45,7 @@ public class RSSFormNavigatorEntry extends BaseConfigurationFormNavigatorEntry {
 
 	@Override
 	public boolean isVisible(User user, Object formModelBean) {
-		if (!_portal.isRSSFeedsEnabled()) {
-			return false;
-		}
-
-		if (!isDynamicAssetSelection()) {
+		if (!_portal.isRSSFeedsEnabled() || !isDynamicAssetSelection()) {
 			return false;
 		}
 

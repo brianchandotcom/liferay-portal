@@ -132,14 +132,10 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 			return true;
 		}
 
-		if (!_samlProviderConfigurationHelper.isRoleIdp() &&
-			samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP)) {
-
-			return false;
-		}
-
-		if (!_samlProviderConfigurationHelper.isEnabled() && enabled &&
-			samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP)) {
+		if ((!_samlProviderConfigurationHelper.isRoleIdp() &&
+			 samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP)) ||
+			(!_samlProviderConfigurationHelper.isEnabled() && enabled &&
+			 samlRole.equals(SamlProviderConfigurationKeys.SAML_ROLE_IDP))) {
 
 			return false;
 		}

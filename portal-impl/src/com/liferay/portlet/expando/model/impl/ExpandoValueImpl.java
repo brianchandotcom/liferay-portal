@@ -617,11 +617,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 	protected void validate(int type) throws PortalException {
 		ExpandoColumn column = getColumn();
 
-		if (column == null) {
-			return;
-		}
-
-		if (column.getType() == type) {
+		if ((column == null) || (column.getType() == type)) {
 			return;
 		}
 

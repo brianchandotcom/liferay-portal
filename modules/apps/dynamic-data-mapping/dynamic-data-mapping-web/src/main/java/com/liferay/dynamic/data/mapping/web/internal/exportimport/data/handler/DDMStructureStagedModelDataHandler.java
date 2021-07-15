@@ -725,32 +725,17 @@ public class DDMStructureStagedModelDataHandler
 		// Check other attributes
 
 		if (!Objects.equals(
-				existingStructure.getDefinition(), structure.getDefinition())) {
-
-			return true;
-		}
-
-		if (!Objects.equals(
+				existingStructure.getDefinition(), structure.getDefinition()) ||
+			!Objects.equals(
 				existingStructure.getDescriptionMap(),
-				structure.getDescriptionMap())) {
-
-			return true;
-		}
-
-		if (!Objects.equals(
-				existingStructure.getNameMap(), structure.getNameMap())) {
-
-			return true;
-		}
-
-		if (!Objects.equals(
+				structure.getDescriptionMap()) ||
+			!Objects.equals(
+				existingStructure.getNameMap(), structure.getNameMap()) ||
+			!Objects.equals(
 				existingStructure.getStorageType(),
-				structure.getStorageType())) {
+				structure.getStorageType()) ||
+			!Objects.equals(existingStructure.getType(), structure.getType())) {
 
-			return true;
-		}
-
-		if (!Objects.equals(existingStructure.getType(), structure.getType())) {
 			return true;
 		}
 

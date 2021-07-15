@@ -236,14 +236,10 @@ public class ThemeBuilder {
 	private boolean _isIgnoredFile(String fileName) {
 		String extension = FileUtil.getExtension(fileName);
 
-		if ((extension.equalsIgnoreCase("ftl") ||
-			 extension.equalsIgnoreCase("vm")) &&
-			!extension.equalsIgnoreCase(_templateExtension)) {
-
-			return true;
-		}
-
-		if (fileName.endsWith("aui.css") || fileName.endsWith("main.css") ||
+		if (((extension.equalsIgnoreCase("ftl") ||
+			  extension.equalsIgnoreCase("vm")) &&
+			 !extension.equalsIgnoreCase(_templateExtension)) ||
+			fileName.endsWith("aui.css") || fileName.endsWith("main.css") ||
 			fileName.endsWith("rtl.css")) {
 
 			return true;

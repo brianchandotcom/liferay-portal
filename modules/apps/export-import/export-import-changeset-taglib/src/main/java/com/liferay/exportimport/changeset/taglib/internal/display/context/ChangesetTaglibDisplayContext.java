@@ -30,12 +30,9 @@ public class ChangesetTaglibDisplayContext {
 
 	public static boolean isShowExportMenuItem(Group group, String portletId) {
 		try {
-			if (group.isLayout()) {
-				return false;
-			}
-
-			if ((group.isStagingGroup() || group.isStagedRemotely()) &&
-				group.isStagedPortlet(portletId)) {
+			if (group.isLayout() ||
+				((group.isStagingGroup() || group.isStagedRemotely()) &&
+				 group.isStagedPortlet(portletId))) {
 
 				return false;
 			}

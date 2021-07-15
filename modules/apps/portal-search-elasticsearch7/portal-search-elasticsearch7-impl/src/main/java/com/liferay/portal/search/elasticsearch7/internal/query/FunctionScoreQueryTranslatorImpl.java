@@ -70,12 +70,9 @@ public class FunctionScoreQueryTranslatorImpl
 				functionScoreQuery.getMinScore());
 		}
 
-		if (functionScoreQuery.getMaxBoost() != null) {
-			functionScoreQueryBuilder.maxBoost(
-				functionScoreQuery.getMaxBoost());
-		}
+		if ((functionScoreQuery.getMaxBoost() != null) ||
+			(functionScoreQuery.getMaxBoost() != null)) {
 
-		if (functionScoreQuery.getMaxBoost() != null) {
 			functionScoreQueryBuilder.maxBoost(
 				functionScoreQuery.getMaxBoost());
 		}

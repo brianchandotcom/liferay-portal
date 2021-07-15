@@ -79,11 +79,9 @@ public class OrganizationTypeConfigurationModelListener
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		if (properties == null) {
-			return;
-		}
+		if ((properties == null) ||
+			Objects.equals(properties.get("name"), name)) {
 
-		if (Objects.equals(properties.get("name"), name)) {
 			return;
 		}
 

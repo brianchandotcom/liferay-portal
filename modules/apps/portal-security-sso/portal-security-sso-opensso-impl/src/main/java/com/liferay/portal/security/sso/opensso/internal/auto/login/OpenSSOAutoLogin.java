@@ -146,11 +146,8 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
 			companyId);
 
-		if (!openSSOConfiguration.enabled()) {
-			return null;
-		}
-
-		if (!_openSSO.isAuthenticated(
+		if (!openSSOConfiguration.enabled() ||
+			!_openSSO.isAuthenticated(
 				httpServletRequest, openSSOConfiguration.serviceURL())) {
 
 			return null;

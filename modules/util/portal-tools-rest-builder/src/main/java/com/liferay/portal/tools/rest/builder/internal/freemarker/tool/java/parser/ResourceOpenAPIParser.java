@@ -493,15 +493,11 @@ public class ResourceOpenAPIParser {
 			if (StringUtil.equals(parameterName, "Accept-Language") ||
 				StringUtil.equals(parameterName, "aggregationTerms") ||
 				StringUtil.equals(parameterName, "filter") ||
-				StringUtil.equals(parameterName, "sort")) {
-
-				continue;
-			}
-
-			if ((StringUtil.equals(parameterName, "page") ||
-				 StringUtil.equals(parameterName, "pageSize")) &&
-				parameterNames.contains("page") &&
-				parameterNames.contains("pageSize")) {
+				StringUtil.equals(parameterName, "sort") ||
+				((StringUtil.equals(parameterName, "page") ||
+				  StringUtil.equals(parameterName, "pageSize")) &&
+				 parameterNames.contains("page") &&
+				 parameterNames.contains("pageSize"))) {
 
 				continue;
 			}
@@ -791,27 +787,15 @@ public class ResourceOpenAPIParser {
 
 		String parameterType = javaMethodParameter.getParameterType();
 
-		if (Objects.equals(parameterType, Aggregation.class.getName()) &&
-			parameterNames.contains("aggregationTerms")) {
-
-			return "@Context";
-		}
-
-		if (Objects.equals(parameterType, Filter.class.getName()) &&
-			parameterNames.contains("filter")) {
-
-			return "@Context";
-		}
-
-		if (Objects.equals(parameterType, Pagination.class.getName()) &&
-			parameterNames.contains("page") &&
-			parameterNames.contains("pageSize")) {
-
-			return "@Context";
-		}
-
-		if (Objects.equals(parameterType, Sort[].class.getName()) &&
-			parameterNames.contains("sort")) {
+		if ((Objects.equals(parameterType, Aggregation.class.getName()) &&
+			 parameterNames.contains("aggregationTerms")) ||
+			(Objects.equals(parameterType, Filter.class.getName()) &&
+			 parameterNames.contains("filter")) ||
+			(Objects.equals(parameterType, Pagination.class.getName()) &&
+			 parameterNames.contains("page") &&
+			 parameterNames.contains("pageSize")) ||
+			(Objects.equals(parameterType, Sort[].class.getName()) &&
+			 parameterNames.contains("sort"))) {
 
 			return "@Context";
 		}

@@ -81,20 +81,13 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			if (illegalAPIServiceParameterTypes.contains(parameterType) &&
-				!absolutePath.contains("-service/") &&
-				!_matches(_SERVICE_PACKAGE_NAME_WHITELIST, packageName)) {
-
-				addMessage(
-					fileName,
-					"Do not use type '" + parameterType +
-						"' in API method signature");
-			}
-
-			if (illegalAPIParameterTypes.contains(parameterType) &&
-				!_matches(_CLASS_NAME_WHITELIST, className) &&
-				!_matches(_METHOD_NAME_WHITELIST, javaTerm.getName()) &&
-				!_matches(_PACKAGE_NAME_WHITELIST, packageName)) {
+			if ((illegalAPIServiceParameterTypes.contains(parameterType) &&
+				 !absolutePath.contains("-service/") &&
+				 !_matches(_SERVICE_PACKAGE_NAME_WHITELIST, packageName)) ||
+				(illegalAPIParameterTypes.contains(parameterType) &&
+				 !_matches(_CLASS_NAME_WHITELIST, className) &&
+				 !_matches(_METHOD_NAME_WHITELIST, javaTerm.getName()) &&
+				 !_matches(_PACKAGE_NAME_WHITELIST, packageName))) {
 
 				addMessage(
 					fileName,

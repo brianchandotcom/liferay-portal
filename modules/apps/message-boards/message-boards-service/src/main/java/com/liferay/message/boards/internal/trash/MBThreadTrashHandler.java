@@ -213,14 +213,10 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	public boolean isRestorable(long classPK) throws PortalException {
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		if ((thread.getCategoryId() > 0) &&
-			(_mbCategoryLocalService.fetchMBCategory(thread.getCategoryId()) ==
-				null)) {
-
-			return false;
-		}
-
-		if (!hasTrashPermission(
+		if (((thread.getCategoryId() > 0) &&
+			 (_mbCategoryLocalService.fetchMBCategory(thread.getCategoryId()) ==
+				 null)) ||
+			!hasTrashPermission(
 				PermissionThreadLocal.getPermissionChecker(),
 				thread.getGroupId(), classPK, TrashActionKeys.RESTORE)) {
 

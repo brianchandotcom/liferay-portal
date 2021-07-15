@@ -189,11 +189,9 @@ public class FragmentEntryProcessorHelperImpl
 	public long getFileEntryId(
 		Object displayObject, String fieldId, Locale locale) {
 
-		if (Validator.isNull(fieldId)) {
-			return 0;
-		}
+		if (Validator.isNull(fieldId) ||
+			!(displayObject instanceof ClassedModel)) {
 
-		if (!(displayObject instanceof ClassedModel)) {
 			return 0;
 		}
 

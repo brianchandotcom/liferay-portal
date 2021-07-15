@@ -127,11 +127,9 @@ public class RenderContentLayoutDisplayContext {
 				_themeDisplay.getCompanyId(),
 				portletPreferences.getPortletId());
 
-			if (portlet == null) {
-				continue;
-			}
+			if ((portlet == null) || !portlet.isActive() ||
+				portlet.isUndeployedPortlet()) {
 
-			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
 				continue;
 			}
 

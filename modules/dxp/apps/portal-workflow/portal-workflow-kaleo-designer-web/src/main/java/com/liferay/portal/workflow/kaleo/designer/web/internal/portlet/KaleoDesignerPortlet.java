@@ -249,11 +249,9 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	}
 
 	protected boolean isRedirectToAnotherPortlet(String portletId) {
-		if (Validator.isNull(portletId)) {
-			return false;
-		}
+		if (Validator.isNull(portletId) ||
+			portletId.contains(KaleoDesignerPortletKeys.KALEO_DESIGNER)) {
 
-		if (portletId.contains(KaleoDesignerPortletKeys.KALEO_DESIGNER)) {
 			return false;
 		}
 

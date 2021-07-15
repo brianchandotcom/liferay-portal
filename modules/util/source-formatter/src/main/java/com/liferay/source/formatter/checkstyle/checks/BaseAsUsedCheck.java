@@ -62,12 +62,8 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 						getEndLineNumber(assignExpressionDetailAST)) ||
 					(_isInsideStatementClause(identDetailAST) &&
 					 hasParentWithTokenType(
-						 identDetailAST, RELATIONAL_OPERATOR_TOKEN_TYPES))) {
-
-					return;
-				}
-
-				if (!_matchesGetOrSetCall(
+						 identDetailAST, RELATIONAL_OPERATOR_TOKEN_TYPES)) ||
+					!_matchesGetOrSetCall(
 						assignExpressionDetailAST, identDetailAST,
 						variableName)) {
 

@@ -363,15 +363,11 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		if ((StringUtil.isUpperCase(previousVariableName) &&
 			 !StringUtil.isLowerCase(previousVariableName)) ||
 			(StringUtil.isUpperCase(variableName) &&
-			 !StringUtil.isLowerCase(variableName))) {
-
-			return DOUBLE_LINE_BREAK_REQUIRED;
-		}
-
-		if (previousContent.matches("(?s).*\\sstatic\\s.*") &&
-			(previousVariableName.equals("_instance") ||
-			 previousVariableName.equals("_log") ||
-			 previousVariableName.equals("_logger"))) {
+			 !StringUtil.isLowerCase(variableName)) ||
+			(previousContent.matches("(?s).*\\sstatic\\s.*") &&
+			 (previousVariableName.equals("_instance") ||
+			  previousVariableName.equals("_log") ||
+			  previousVariableName.equals("_logger")))) {
 
 			return DOUBLE_LINE_BREAK_REQUIRED;
 		}

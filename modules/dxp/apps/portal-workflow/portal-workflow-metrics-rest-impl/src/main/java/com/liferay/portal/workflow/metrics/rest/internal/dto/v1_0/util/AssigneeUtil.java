@@ -40,11 +40,7 @@ public class AssigneeUtil {
 
 				setImage(
 					() -> {
-						if (user == null) {
-							return null;
-						}
-
-						if (user.getPortraitId() == 0) {
+						if ((user == null) || (user.getPortraitId() == 0)) {
 							return null;
 						}
 

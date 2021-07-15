@@ -118,12 +118,8 @@ public class UserPermissionImpl
 				if (permissionChecker.hasOwnerPermission(
 						permissionChecker.getCompanyId(), User.class.getName(),
 						userId, contact.getUserId(), actionId) ||
-					(permissionChecker.getUserId() == userId)) {
-
-					return true;
-				}
-
-				if (permissionChecker.hasPermission(
+					(permissionChecker.getUserId() == userId) ||
+					permissionChecker.hasPermission(
 						null, User.class.getName(), userId, actionId)) {
 
 					return true;

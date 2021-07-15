@@ -172,11 +172,7 @@ public class Validator {
 	}
 
 	public static boolean isBlank(String s) {
-		if (s == null) {
-			return true;
-		}
-
-		if (s.length() == 0) {
+		if ((s == null) || (s.length() == 0)) {
 			return true;
 		}
 

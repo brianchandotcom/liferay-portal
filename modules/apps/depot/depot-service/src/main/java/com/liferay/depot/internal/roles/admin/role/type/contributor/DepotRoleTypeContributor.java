@@ -85,11 +85,8 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAllowDelete(Role role) {
-		if (role == null) {
-			return false;
-		}
-
-		if (Objects.equals(
+		if ((role == null) ||
+			Objects.equals(
 				role.getName(),
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR) ||
 			Objects.equals(

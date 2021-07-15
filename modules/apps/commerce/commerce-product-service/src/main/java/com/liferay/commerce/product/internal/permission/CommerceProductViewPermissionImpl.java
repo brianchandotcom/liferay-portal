@@ -93,12 +93,9 @@ public class CommerceProductViewPermissionImpl
 			cpDefinitionId);
 
 		if (_viewCatalog(
-				permissionChecker, cpDefinition.getCommerceCatalog())) {
+				permissionChecker, cpDefinition.getCommerceCatalog()) ||
+			_accountEnabled(commerceAccountId, cpDefinition)) {
 
-			return true;
-		}
-
-		if (_accountEnabled(commerceAccountId, cpDefinition)) {
 			return true;
 		}
 
@@ -119,12 +116,9 @@ public class CommerceProductViewPermissionImpl
 		}
 
 		if (_viewCatalog(
-				permissionChecker, cpDefinition.getCommerceCatalog())) {
+				permissionChecker, cpDefinition.getCommerceCatalog()) ||
+			_accountEnabled(commerceAccountId, cpDefinition)) {
 
-			return true;
-		}
-
-		if (_accountEnabled(commerceAccountId, cpDefinition)) {
 			return true;
 		}
 

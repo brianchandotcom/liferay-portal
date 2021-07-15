@@ -164,12 +164,9 @@ public class DLOpenerGoogleDriveManager
 
 		Credential credential = _oAuth2Manager.getCredential(companyId, userId);
 
-		if (credential == null) {
-			return false;
-		}
-
-		if ((credential.getExpiresInSeconds() <= 0) &&
-			!credential.refreshToken()) {
+		if ((credential == null) ||
+			((credential.getExpiresInSeconds() <= 0) &&
+			 !credential.refreshToken())) {
 
 			return false;
 		}

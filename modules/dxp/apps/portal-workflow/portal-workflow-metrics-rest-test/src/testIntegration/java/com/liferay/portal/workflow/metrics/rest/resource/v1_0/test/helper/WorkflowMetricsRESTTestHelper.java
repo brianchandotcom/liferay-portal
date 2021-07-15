@@ -742,11 +742,7 @@ public class WorkflowMetricsRESTTestHelper {
 			String indexName, Object... parameters)
 		throws Exception {
 
-		if (_searchEngineAdapter == null) {
-			return;
-		}
-
-		if (parameters == null) {
+		if ((_searchEngineAdapter == null) || (parameters == null)) {
 			return;
 		}
 

@@ -318,11 +318,9 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 		}
 
 		protected boolean requiresNoScope(String[] scopes) {
-			if (ArrayUtil.isEmpty(scopes)) {
-				return true;
-			}
+			if (ArrayUtil.isEmpty(scopes) ||
+				((scopes.length == 1) && Validator.isNull(scopes[0]))) {
 
-			if ((scopes.length == 1) && Validator.isNull(scopes[0])) {
 				return true;
 			}
 

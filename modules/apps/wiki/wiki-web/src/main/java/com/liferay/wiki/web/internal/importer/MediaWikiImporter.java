@@ -253,11 +253,9 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected boolean isValidImage(String[] paths, InputStream inputStream) {
-		if (_specialMediaWikiDirs.contains(paths[0])) {
-			return false;
-		}
+		if (_specialMediaWikiDirs.contains(paths[0]) ||
+			((paths.length > 1) && _specialMediaWikiDirs.contains(paths[1]))) {
 
-		if ((paths.length > 1) && _specialMediaWikiDirs.contains(paths[1])) {
 			return false;
 		}
 

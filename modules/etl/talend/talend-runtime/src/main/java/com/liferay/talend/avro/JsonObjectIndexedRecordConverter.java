@@ -228,11 +228,9 @@ public class JsonObjectIndexedRecordConverter {
 	}
 
 	private String _getValueFinderPath(String name) {
-		if (name.indexOf("_") == -1) {
-			return name;
-		}
+		if ((name.indexOf("_") == -1) ||
+			(_isI18nFieldName(name) && !_isI18nFieldNameNested(name))) {
 
-		if (_isI18nFieldName(name) && !_isI18nFieldNameNested(name)) {
 			return name;
 		}
 

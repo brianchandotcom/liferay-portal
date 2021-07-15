@@ -69,11 +69,9 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 			return _serviceTrackerMap.getService("simple");
 		}
 
-		if (Validator.isNull(editorName)) {
-			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
-		}
+		if (Validator.isNull(editorName) ||
+			!_serviceTrackerMap.containsKey(editorName)) {
 
-		if (!_serviceTrackerMap.containsKey(editorName)) {
 			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
 		}
 

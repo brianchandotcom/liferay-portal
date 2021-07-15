@@ -39,11 +39,9 @@ public class ServiceReferenceServiceTuple<S, T>
 
 	@Override
 	public boolean equals(Object object) {
-		if (object == null) {
-			return false;
-		}
+		if ((object == null) ||
+			!(object instanceof ServiceReferenceServiceTuple)) {
 
-		if (!(object instanceof ServiceReferenceServiceTuple)) {
 			return false;
 		}
 

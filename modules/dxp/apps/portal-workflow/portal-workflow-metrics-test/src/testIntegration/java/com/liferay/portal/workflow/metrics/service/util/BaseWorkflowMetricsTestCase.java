@@ -85,11 +85,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 			String indexName, String indexType, Object... parameters)
 		throws Exception {
 
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (parameters == null) {
+		if ((searchEngineAdapter == null) || (parameters == null)) {
 			return;
 		}
 
@@ -133,11 +129,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 			Object... parameters)
 		throws Exception {
 
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (parameters == null) {
+		if ((searchEngineAdapter == null) || (parameters == null)) {
 			return;
 		}
 

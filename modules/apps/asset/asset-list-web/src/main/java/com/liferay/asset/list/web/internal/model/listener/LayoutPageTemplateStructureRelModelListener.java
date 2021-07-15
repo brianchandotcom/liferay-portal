@@ -103,12 +103,8 @@ public class LayoutPageTemplateStructureRelModelListener
 
 		if ((collectionJSONObject == null) ||
 			(!collectionJSONObject.has("classPK") &&
-			 !collectionJSONObject.has("key"))) {
-
-			return false;
-		}
-
-		if (ListUtil.exists(
+			 !collectionJSONObject.has("key")) ||
+			ListUtil.exists(
 				layoutStructure.getDeletedLayoutStructureItems(),
 				deletedLayoutStructureItem ->
 					deletedLayoutStructureItem.containsItemId(itemId))) {

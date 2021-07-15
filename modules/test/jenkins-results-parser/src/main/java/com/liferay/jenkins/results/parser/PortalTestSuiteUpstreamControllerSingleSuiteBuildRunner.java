@@ -35,13 +35,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	public void run() {
 		retirePreviousBuilds();
 
-		if (_allowConcurrentBuilds()) {
-			super.run();
-
-			return;
-		}
-
-		if (_expirePreviousBuild()) {
+		if (_allowConcurrentBuilds() || _expirePreviousBuild()) {
 			super.run();
 
 			return;

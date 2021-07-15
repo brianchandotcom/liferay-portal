@@ -36,11 +36,9 @@ public abstract class BaseURLPatternMapper<T> implements URLPatternMapper<T> {
 		}
 
 		for (int i = 2; i < urlPattern.length(); ++i) {
-			if (urlPattern.charAt(i) == '/') {
-				return false;
-			}
+			if ((urlPattern.charAt(i) == '/') ||
+				(urlPattern.charAt(i) == '.')) {
 
-			if (urlPattern.charAt(i) == '.') {
 				return false;
 			}
 		}

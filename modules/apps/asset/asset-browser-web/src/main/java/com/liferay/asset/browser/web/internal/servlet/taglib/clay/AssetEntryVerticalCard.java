@@ -73,12 +73,9 @@ public class AssetEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public Map<String, String> getDynamicAttributes() {
-		if (_assetBrowserDisplayContext.isMultipleSelection()) {
-			return null;
-		}
-
-		if (_assetEntry.getEntryId() ==
-				_assetBrowserDisplayContext.getRefererAssetEntryId()) {
+		if (_assetBrowserDisplayContext.isMultipleSelection() ||
+			(_assetEntry.getEntryId() ==
+				_assetBrowserDisplayContext.getRefererAssetEntryId())) {
 
 			return null;
 		}

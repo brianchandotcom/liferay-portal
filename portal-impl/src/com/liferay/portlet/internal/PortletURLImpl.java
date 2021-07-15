@@ -1462,20 +1462,13 @@ public class PortletURLImpl
 						namespace.length());
 				}
 
-				if (resourceParameterNames.contains(renderParameterName)) {
-					continue;
-				}
-
-				if (_lifecycle.equals(PortletRequest.RESOURCE_PHASE) &&
-					_mutableRenderParametersImpl.isPublic(
-						renderParameterName)) {
-
-					continue;
-				}
-
-				if (!_lifecycle.equals(PortletRequest.RESOURCE_PHASE) &&
-					(_removedParameterNames != null) &&
-					_removedParameterNames.contains(renderParameterName)) {
+				if (resourceParameterNames.contains(renderParameterName) ||
+					(_lifecycle.equals(PortletRequest.RESOURCE_PHASE) &&
+					 _mutableRenderParametersImpl.isPublic(
+						 renderParameterName)) ||
+					(!_lifecycle.equals(PortletRequest.RESOURCE_PHASE) &&
+					 (_removedParameterNames != null) &&
+					 _removedParameterNames.contains(renderParameterName))) {
 
 					continue;
 				}

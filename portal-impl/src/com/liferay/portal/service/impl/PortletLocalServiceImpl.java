@@ -521,11 +521,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public Portlet getPortletById(long companyId, String portletId) {
 		Portlet portlet = fetchPortletById(companyId, portletId);
 
-		if (portlet != null) {
-			return portlet;
-		}
-
-		if (portletId.equals(PortletKeys.LIFERAY_PORTAL)) {
+		if ((portlet != null) || portletId.equals(PortletKeys.LIFERAY_PORTAL)) {
 			return portlet;
 		}
 

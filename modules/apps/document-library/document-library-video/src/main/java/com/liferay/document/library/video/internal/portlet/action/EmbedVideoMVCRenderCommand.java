@@ -175,12 +175,9 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 	private boolean _isPreviewFailure(FileVersion fileVersion) {
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				DLFileVersionPreviewConstants.STATUS_FAILURE)) {
+				DLFileVersionPreviewConstants.STATUS_FAILURE) ||
+			!_videoProcessor.isVideoSupported(fileVersion)) {
 
-			return true;
-		}
-
-		if (!_videoProcessor.isVideoSupported(fileVersion)) {
 			return true;
 		}
 

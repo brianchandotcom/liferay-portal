@@ -49,12 +49,9 @@ public class TestUtil {
 			}
 
 			if (!threadPoolExecutor.awaitTermination(
-					LONG_WAIT, TimeUnit.MILLISECONDS)) {
+					LONG_WAIT, TimeUnit.MILLISECONDS) ||
+				!threadPoolExecutor.isTerminated()) {
 
-				throw new IllegalStateException();
-			}
-
-			if (!threadPoolExecutor.isTerminated()) {
 				throw new IllegalStateException();
 			}
 		}

@@ -252,13 +252,10 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 		@Override
 		public void performAction(Role role) throws PortalException {
-			if (!_export) {
-				return;
-			}
-
-			if (!_portletDataContext.getBooleanParameter(
+			if (!_export ||
+				(!_portletDataContext.getBooleanParameter(
 					NAMESPACE, "system-roles") &&
-				_allSystemRoleNames.contains(role.getName())) {
+				 _allSystemRoleNames.contains(role.getName()))) {
 
 				return;
 			}

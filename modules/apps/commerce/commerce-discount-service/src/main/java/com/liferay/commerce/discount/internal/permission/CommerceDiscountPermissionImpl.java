@@ -118,17 +118,13 @@ public class CommerceDiscountPermissionImpl
 		String actionId) {
 
 		if (permissionChecker.isCompanyAdmin(commerceDiscount.getCompanyId()) ||
-			permissionChecker.isOmniadmin()) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasOwnerPermission(
+			permissionChecker.isOmniadmin() ||
+			(permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(),
 				CommerceDiscount.class.getName(),
 				commerceDiscount.getCommerceDiscountId(),
 				permissionChecker.getUserId(), actionId) &&
-			(commerceDiscount.getUserId() == permissionChecker.getUserId())) {
+			 (commerceDiscount.getUserId() == permissionChecker.getUserId()))) {
 
 			return true;
 		}

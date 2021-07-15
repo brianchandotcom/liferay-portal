@@ -1113,12 +1113,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			Alias alias1 = table.getAlias();
 			Alias alias2 = _table.getAlias();
 
-			if (alias1 == alias2) {
-				return true;
-			}
-
-			if ((alias1 != null) && (alias2 != null) &&
-				Objects.equals(alias1.getName(), alias2.getName())) {
+			if ((alias1 == alias2) ||
+				((alias1 != null) && (alias2 != null) &&
+				 Objects.equals(alias1.getName(), alias2.getName()))) {
 
 				return true;
 			}
@@ -1229,12 +1226,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 					new LongValue(ctCollectionId));
 			}
 
-			if (ctCollectionId == 0) {
-				return equalsTo(
-					new Column(table, "ctCollectionId"), new LongValue("0"));
-			}
+			if ((ctCollectionId == 0) ||
+				(_releaseServiceTracker.getService() == null)) {
 
-			if (_releaseServiceTracker.getService() == null) {
 				return equalsTo(
 					new Column(table, "ctCollectionId"), new LongValue("0"));
 			}

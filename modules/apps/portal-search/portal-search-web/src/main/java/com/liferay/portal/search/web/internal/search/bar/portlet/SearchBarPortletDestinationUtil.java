@@ -30,11 +30,8 @@ public class SearchBarPortletDestinationUtil {
 		Optional<String> optional =
 			searchBarPortletPreferences.getDestination();
 
-		if (!optional.isPresent()) {
-			return true;
-		}
-
-		if (isSameDestination(
+		if (!optional.isPresent() ||
+			isSameDestination(
 				optional.get(),
 				themeDisplay.getLayoutFriendlyURL(themeDisplay.getLayout()))) {
 

@@ -199,15 +199,9 @@ public class DefaultLayoutTypeAccessPolicyImpl
 	protected boolean isAccessAllowedToLayoutPortlet(
 		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
-		if (isAccessGrantedByRuntimePortlet(httpServletRequest)) {
-			return true;
-		}
-
-		if (isAccessGrantedByPortletOnPage(layout, portlet)) {
-			return true;
-		}
-
-		if (isAccessGrantedByPortletAuthenticationToken(
+		if (isAccessGrantedByRuntimePortlet(httpServletRequest) ||
+			isAccessGrantedByPortletOnPage(layout, portlet) ||
+			isAccessGrantedByPortletAuthenticationToken(
 				httpServletRequest, layout, portlet)) {
 
 			return true;
@@ -223,11 +217,8 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			return false;
 		}
 
-		if (!_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
-			return true;
-		}
-
-		if (AuthTokenUtil.isValidPortletInvocationToken(
+		if (!_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED ||
+			AuthTokenUtil.isValidPortletInvocationToken(
 				httpServletRequest, layout, portlet)) {
 
 			return true;

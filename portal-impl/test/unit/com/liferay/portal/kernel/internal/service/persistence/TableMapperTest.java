@@ -2465,12 +2465,9 @@ public class TableMapperTest {
 					StringBundler.concat(
 						"DELETE FROM ", _TABLE_NAME, " WHERE ",
 						_RIGHT_COLUMN_NAME, " = ? AND ", _LEFT_COLUMN_NAME,
-						" = ?"))) {
+						" = ?")) ||
+				sql.contains("ctCollectionId")) {
 
-				return null;
-			}
-
-			if (sql.contains("ctCollectionId")) {
 				return null;
 			}
 

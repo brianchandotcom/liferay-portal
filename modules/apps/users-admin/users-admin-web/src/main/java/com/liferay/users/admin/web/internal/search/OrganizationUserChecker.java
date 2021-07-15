@@ -59,16 +59,12 @@ public class OrganizationUserChecker extends EmptyOnClickRowChecker {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			if ((organization != null) &&
-				!OrganizationPermissionUtil.contains(
-					permissionChecker, organization, ActionKeys.DELETE)) {
-
-				return true;
-			}
-
-			if ((user != null) &&
-				!UserPermissionUtil.contains(
-					permissionChecker, user.getUserId(), ActionKeys.DELETE)) {
+			if (((organization != null) &&
+				 !OrganizationPermissionUtil.contains(
+					 permissionChecker, organization, ActionKeys.DELETE)) ||
+				((user != null) &&
+				 !UserPermissionUtil.contains(
+					 permissionChecker, user.getUserId(), ActionKeys.DELETE))) {
 
 				return true;
 			}

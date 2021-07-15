@@ -90,11 +90,9 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isValidSharedSecret(String sharedSecret) {
-		if (Validator.isNull(sharedSecret)) {
-			return false;
-		}
+		if (Validator.isNull(sharedSecret) ||
+			Validator.isNull(PropsValues.AUTH_TOKEN_SHARED_SECRET)) {
 
-		if (Validator.isNull(PropsValues.AUTH_TOKEN_SHARED_SECRET)) {
 			return false;
 		}
 

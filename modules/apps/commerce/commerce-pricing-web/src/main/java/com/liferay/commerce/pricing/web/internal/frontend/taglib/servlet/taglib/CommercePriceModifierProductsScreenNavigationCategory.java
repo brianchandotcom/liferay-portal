@@ -89,11 +89,8 @@ public class CommercePriceModifierProductsScreenNavigationCategory
 	public boolean isVisible(
 		User user, CommercePriceModifier commercePriceModifier) {
 
-		if (commercePriceModifier == null) {
-			return false;
-		}
-
-		if (!CommercePriceModifierConstants.TARGET_PRODUCTS.equals(
+		if ((commercePriceModifier == null) ||
+			!CommercePriceModifierConstants.TARGET_PRODUCTS.equals(
 				commercePriceModifier.getTarget())) {
 
 			return false;

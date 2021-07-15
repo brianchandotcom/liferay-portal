@@ -177,16 +177,10 @@ public class DefaultSortTranslator implements SortTranslator {
 	protected String getSortFieldName(Sort sort, String scoreFieldName) {
 		String sortFieldName = sort.getFieldName();
 
-		if (Objects.equals(sortFieldName, Field.PRIORITY)) {
-			return sortFieldName;
-		}
-
-		if (Objects.equals(sortFieldName, "_score")) {
-			return sortFieldName;
-		}
-
-		if ((sortFieldName != null) &&
-			sortFieldName.startsWith("nestedFieldArray.")) {
+		if (Objects.equals(sortFieldName, Field.PRIORITY) ||
+			Objects.equals(sortFieldName, "_score") ||
+			((sortFieldName != null) &&
+			 sortFieldName.startsWith("nestedFieldArray."))) {
 
 			return sortFieldName;
 		}

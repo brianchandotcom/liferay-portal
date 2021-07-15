@@ -152,15 +152,9 @@ public class BrowserMetadata {
 	}
 
 	public boolean isMozilla() {
-		if (isEdge()) {
-			return false;
-		}
+		if (isEdge() || _userAgent.contains("compatible") ||
+			_userAgent.contains("webkit")) {
 
-		if (_userAgent.contains("compatible")) {
-			return false;
-		}
-
-		if (_userAgent.contains("webkit")) {
 			return false;
 		}
 
@@ -180,25 +174,15 @@ public class BrowserMetadata {
 	}
 
 	public boolean isRtf(String version) {
-		if (isAndroid()) {
-			return true;
-		}
-
-		if (isChrome()) {
-			return true;
-		}
-
-		if (isEdge()) {
+		if (isAndroid() || isChrome() || isEdge()) {
 			return true;
 		}
 
 		float majorVersion = GetterUtil.getFloat(version);
 
-		if (isIe() && (majorVersion >= 5.5)) {
-			return true;
-		}
+		if ((isIe() && (majorVersion >= 5.5)) ||
+			(isMozilla() && (majorVersion >= 1.3))) {
 
-		if (isMozilla() && (majorVersion >= 1.3)) {
 			return true;
 		}
 

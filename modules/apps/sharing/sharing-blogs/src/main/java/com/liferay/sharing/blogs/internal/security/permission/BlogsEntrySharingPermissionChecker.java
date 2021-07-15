@@ -47,11 +47,8 @@ public class BlogsEntrySharingPermissionChecker
 		throws PortalException {
 
 		for (SharingEntryAction sharingEntryAction : sharingEntryActions) {
-			if (!_actionKeysSet.contains(sharingEntryAction)) {
-				return false;
-			}
-
-			if (!_blogsEntryModelResourcePermission.contains(
+			if (!_actionKeysSet.contains(sharingEntryAction) ||
+				!_blogsEntryModelResourcePermission.contains(
 					permissionChecker, classPK,
 					sharingEntryAction.getActionId())) {
 

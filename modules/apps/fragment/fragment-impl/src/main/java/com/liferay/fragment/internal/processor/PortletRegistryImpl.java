@@ -154,11 +154,9 @@ public class PortletRegistryImpl implements PortletRegistry {
 				fragmentEntryLinkPortletId)
 		).filter(
 			portlet -> {
-				if (portlet == null) {
-					return false;
-				}
+				if ((portlet == null) || !portlet.isActive() ||
+					portlet.isUndeployedPortlet()) {
 
-				if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
 					return false;
 				}
 

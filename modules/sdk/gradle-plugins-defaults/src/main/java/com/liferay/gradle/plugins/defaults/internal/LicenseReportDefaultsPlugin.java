@@ -392,14 +392,11 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			String group = moduleData.getGroup();
 			String name = moduleData.getName();
 
-			if ((group.equals("com.liferay") ||
-				 group.startsWith("com.liferay.")) &&
-				name.startsWith("com.liferay.")) {
+			if (((group.equals("com.liferay") ||
+				  group.startsWith("com.liferay.")) &&
+				 name.startsWith("com.liferay.")) ||
+				Validator.isNull(getLicenseName(moduleFileName, moduleData))) {
 
-				return true;
-			}
-
-			if (Validator.isNull(getLicenseName(moduleFileName, moduleData))) {
 				return true;
 			}
 

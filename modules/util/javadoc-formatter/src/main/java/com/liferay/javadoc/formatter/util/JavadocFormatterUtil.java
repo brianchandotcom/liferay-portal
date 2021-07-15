@@ -285,12 +285,8 @@ public class JavadocFormatterUtil {
 				(List<Element>)rootElement.elements("deprecated")) {
 
 			if (!annotatedElementName.equals(
-					deprecatedElement.attributeValue("name"))) {
-
-				continue;
-			}
-
-			if (!fullyQualifiedName.equals(
+					deprecatedElement.attributeValue("name")) ||
+				!fullyQualifiedName.equals(
 					deprecatedElement.attributeValue("fullyQualifiedName"))) {
 
 				continue;

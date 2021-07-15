@@ -51,11 +51,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		if (ExportImportThreadLocal.isStagingInProcess()) {
-			return;
-		}
+		if (ExportImportThreadLocal.isStagingInProcess() ||
+			!_isVisible(layout, false)) {
 
-		if (!_isVisible(layout, false)) {
 			return;
 		}
 

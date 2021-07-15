@@ -1480,14 +1480,10 @@ public class JavadocFormatter {
 		sb.append(indent);
 		sb.append(" */\n");
 
-		if (!_initializeMissingJavadocs && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
-
-			return null;
-		}
-
-		if (!_hasPublicModifier(javaClass) && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
+		if ((!_initializeMissingJavadocs && Validator.isNull(comment) &&
+			 Validator.isNull(docletTags)) ||
+			(!_hasPublicModifier(javaClass) && Validator.isNull(comment) &&
+			 Validator.isNull(docletTags))) {
 
 			return null;
 		}
@@ -1663,14 +1659,10 @@ public class JavadocFormatter {
 		sb.append(indent);
 		sb.append(" */\n");
 
-		if (!_initializeMissingJavadocs && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
-
-			return null;
-		}
-
-		if (!_hasPublicModifier(javaExecutable) && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
+		if ((!_initializeMissingJavadocs && Validator.isNull(comment) &&
+			 Validator.isNull(docletTags)) ||
+			(!_hasPublicModifier(javaExecutable) && Validator.isNull(comment) &&
+			 Validator.isNull(docletTags))) {
 
 			return null;
 		}
@@ -1717,14 +1709,10 @@ public class JavadocFormatter {
 		sb.append(indent);
 		sb.append(" */\n");
 
-		if (!_initializeMissingJavadocs && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
-
-			return null;
-		}
-
-		if (!_hasPublicModifier(javaField) && Validator.isNull(comment) &&
-			Validator.isNull(docletTags)) {
+		if ((!_initializeMissingJavadocs && Validator.isNull(comment) &&
+			 Validator.isNull(docletTags)) ||
+			(!_hasPublicModifier(javaField) && Validator.isNull(comment) &&
+			 Validator.isNull(docletTags))) {
 
 			return null;
 		}

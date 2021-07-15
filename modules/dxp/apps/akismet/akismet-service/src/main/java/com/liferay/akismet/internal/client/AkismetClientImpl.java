@@ -66,11 +66,7 @@ public class AkismetClientImpl implements AkismetClient {
 		String userAgent = headers.get(
 			StringUtil.toLowerCase(HttpHeaders.USER_AGENT));
 
-		if (Validator.isNull(userAgent)) {
-			return false;
-		}
-
-		if (Validator.isNull(userIP)) {
+		if (Validator.isNull(userAgent) || Validator.isNull(userIP)) {
 			return false;
 		}
 

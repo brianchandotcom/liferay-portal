@@ -139,18 +139,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					" for method argument ", argumentPos));
 		}
 
-		if (parameterType.isPrimitive()) {
-			return;
-		}
-
-		if (parameterTypeName.equals(
+		if (parameterType.isPrimitive() ||
+			parameterTypeName.equals(
 				_jsonWebServiceNaming.convertModelClassToImplClassName(
-					targetClass))) {
-
-			return;
-		}
-
-		if (ArrayUtil.contains(
+					targetClass)) ||
+			ArrayUtil.contains(
 				_JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES,
 				parameterTypeName)) {
 
@@ -429,11 +422,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	}
 
 	private List<?> _generifyList(List<?> list, Class<?>[] types) {
-		if (types == null) {
-			return list;
-		}
-
-		if (types.length != 1) {
+		if ((types == null) || (types.length != 1)) {
 			return list;
 		}
 
@@ -451,11 +440,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	}
 
 	private Map<?, ?> _generifyMap(Map<?, ?> map, Class<?>[] types) {
-		if (types == null) {
-			return map;
-		}
-
-		if (types.length != 2) {
+		if ((types == null) || (types.length != 2)) {
 			return map;
 		}
 

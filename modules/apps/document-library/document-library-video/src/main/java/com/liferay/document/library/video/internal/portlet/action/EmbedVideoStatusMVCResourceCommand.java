@@ -97,12 +97,9 @@ public class EmbedVideoStatusMVCResourceCommand extends BaseMVCResourceCommand {
 	private boolean _isPreviewFailure(FileVersion fileVersion) {
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				DLFileVersionPreviewConstants.STATUS_FAILURE)) {
+				DLFileVersionPreviewConstants.STATUS_FAILURE) ||
+			!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 
-			return true;
-		}
-
-		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 			return true;
 		}
 

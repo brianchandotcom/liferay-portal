@@ -68,11 +68,9 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isEnablePermissions(HttpServletRequest httpServletRequest) {
-		if (assetPublisherWebConfiguration.searchWithIndex()) {
-			return true;
-		}
+		if (assetPublisherWebConfiguration.searchWithIndex() ||
+			!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
 
-		if (!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
 			return true;
 		}
 

@@ -176,14 +176,11 @@ public class IfPoshiElement extends PoshiElement {
 	private boolean _isElementType(
 		PoshiElement parentPoshiElement, String poshiScript) {
 
-		if (IfPoshiElement.class.equals(parentPoshiElement.getClass())) {
-			return false;
-		}
-
-		if (!(parentPoshiElement instanceof CommandPoshiElement) &&
-			!(parentPoshiElement instanceof ForPoshiElement) &&
-			!(parentPoshiElement instanceof TaskPoshiElement) &&
-			!(parentPoshiElement instanceof ThenPoshiElement)) {
+		if (IfPoshiElement.class.equals(parentPoshiElement.getClass()) ||
+			(!(parentPoshiElement instanceof CommandPoshiElement) &&
+			 !(parentPoshiElement instanceof ForPoshiElement) &&
+			 !(parentPoshiElement instanceof TaskPoshiElement) &&
+			 !(parentPoshiElement instanceof ThenPoshiElement))) {
 
 			return false;
 		}

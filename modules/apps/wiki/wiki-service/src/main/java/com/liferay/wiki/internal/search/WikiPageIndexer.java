@@ -334,12 +334,9 @@ public class WikiPageIndexer
 	@Override
 	protected void doReindex(WikiPage wikiPage) throws Exception {
 		if (!wikiPage.isHead() ||
-			(!wikiPage.isApproved() && !wikiPage.isInTrash())) {
+			(!wikiPage.isApproved() && !wikiPage.isInTrash()) ||
+			Validator.isNotNull(wikiPage.getRedirectTitle())) {
 
-			return;
-		}
-
-		if (Validator.isNotNull(wikiPage.getRedirectTitle())) {
 			return;
 		}
 

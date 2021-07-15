@@ -89,11 +89,7 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 	}
 
 	protected boolean hasPermission(String actionId) {
-		if (signedIn) {
-			return true;
-		}
-
-		if (actionId.equals(ActionKeys.VIEW)) {
+		if (signedIn || actionId.equals(ActionKeys.VIEW)) {
 			return true;
 		}
 

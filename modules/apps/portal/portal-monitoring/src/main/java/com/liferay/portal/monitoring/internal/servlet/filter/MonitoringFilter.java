@@ -72,16 +72,13 @@ public class MonitoringFilter
 
 	@Override
 	public boolean isFilterEnabled() {
-		if (!super.isFilterEnabled()) {
-			return false;
-		}
-
-		if (!_monitorPortalRequest &&
-			!_portletMonitoringControl.isMonitorPortletActionRequest() &&
-			!_portletMonitoringControl.isMonitorPortletEventRequest() &&
-			!_portletMonitoringControl.isMonitorPortletRenderRequest() &&
-			!_portletMonitoringControl.isMonitorPortletResourceRequest() &&
-			!_serviceMonitoringControl.isMonitorServiceRequest()) {
+		if (!super.isFilterEnabled() ||
+			(!_monitorPortalRequest &&
+			 !_portletMonitoringControl.isMonitorPortletActionRequest() &&
+			 !_portletMonitoringControl.isMonitorPortletEventRequest() &&
+			 !_portletMonitoringControl.isMonitorPortletRenderRequest() &&
+			 !_portletMonitoringControl.isMonitorPortletResourceRequest() &&
+			 !_serviceMonitoringControl.isMonitorServiceRequest())) {
 
 			return false;
 		}

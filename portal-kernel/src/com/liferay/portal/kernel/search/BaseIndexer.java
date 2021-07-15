@@ -532,12 +532,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		try {
 			if (IndexWriterHelperUtil.isIndexReadOnly() ||
 				IndexWriterHelperUtil.isIndexReadOnly(getClassName()) ||
-				!isIndexerEnabled()) {
+				!isIndexerEnabled() || (object == null)) {
 
-				return;
-			}
-
-			if (object == null) {
 				return;
 			}
 
@@ -1535,11 +1531,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		for (String entryClassName : entryClassNames) {
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
-			if (indexer == null) {
-				continue;
-			}
+			if ((indexer == null) ||
+				!searchEngineId.equals(indexer.getSearchEngineId())) {
 
-			if (!searchEngineId.equals(indexer.getSearchEngineId())) {
 				continue;
 			}
 

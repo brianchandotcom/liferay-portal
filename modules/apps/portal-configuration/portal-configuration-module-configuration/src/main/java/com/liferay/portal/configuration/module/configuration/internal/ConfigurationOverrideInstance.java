@@ -93,11 +93,9 @@ public class ConfigurationOverrideInstance {
 		Settings.OverrideClass overrideClass = clazz.getAnnotation(
 			Settings.OverrideClass.class);
 
-		if (overrideClass == null) {
-			return null;
-		}
+		if ((overrideClass == null) ||
+			(overrideClass.value() == Object.class)) {
 
-		if (overrideClass.value() == Object.class) {
 			return null;
 		}
 

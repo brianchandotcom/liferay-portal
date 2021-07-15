@@ -64,20 +64,14 @@ public class AnnouncementsEntryServiceImpl
 		else {
 			String className = PortalUtil.getClassName(classNameId);
 
-			if (className.equals(Group.class.getName()) &&
-				!GroupPermissionUtil.contains(
-					permissionChecker, classPK,
-					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-
-				throw new PrincipalException.MustHavePermission(
-					permissionChecker, className, classPK,
-					ActionKeys.MANAGE_ANNOUNCEMENTS);
-			}
-
-			if (className.equals(Organization.class.getName()) &&
-				!OrganizationPermissionUtil.contains(
-					permissionChecker, classPK,
-					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+			if ((className.equals(Group.class.getName()) &&
+				 !GroupPermissionUtil.contains(
+					 permissionChecker, classPK,
+					 ActionKeys.MANAGE_ANNOUNCEMENTS)) ||
+				(className.equals(Organization.class.getName()) &&
+				 !OrganizationPermissionUtil.contains(
+					 permissionChecker, classPK,
+					 ActionKeys.MANAGE_ANNOUNCEMENTS))) {
 
 				throw new PrincipalException.MustHavePermission(
 					permissionChecker, className, classPK,

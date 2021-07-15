@@ -112,11 +112,10 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
+		if (layout.isTypeControlPanel() ||
+			(!isLinkedLayout(themeDisplay) &&
+			 !isModifiedLayout(themeDisplay))) {
 
-		if (!isLinkedLayout(themeDisplay) && !isModifiedLayout(themeDisplay)) {
 			return false;
 		}
 
@@ -164,12 +163,9 @@ public class InformationMessagesProductNavigationControlMenuEntry
 		LayoutSet layoutSet = layout.getLayoutSet();
 
 		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
-			!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+			!SitesUtil.isLayoutModifiedSinceLastMerge(layout) ||
+			!hasUpdateLayoutPermission(themeDisplay)) {
 
-			return false;
-		}
-
-		if (!hasUpdateLayoutPermission(themeDisplay)) {
 			return false;
 		}
 

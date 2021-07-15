@@ -96,11 +96,9 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 
 	@Override
 	public String getImageSrc() {
-		if (_siteInitializerItem.isCreationTypeSiteTemplate()) {
-			return null;
-		}
+		if (_siteInitializerItem.isCreationTypeSiteTemplate() ||
+			Validator.isNull(_siteInitializerItem.getIcon())) {
 
-		if (Validator.isNull(_siteInitializerItem.getIcon())) {
 			return null;
 		}
 

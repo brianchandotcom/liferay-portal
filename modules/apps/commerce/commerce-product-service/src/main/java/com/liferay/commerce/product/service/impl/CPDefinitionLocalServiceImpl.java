@@ -1359,11 +1359,8 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
 				cpDefinitionId);
 
-		if (count <= 0) {
-			return false;
-		}
-
-		if (!cpDefinitionOptionRelLocalService.
+		if ((count <= 0) ||
+			!cpDefinitionOptionRelLocalService.
 				hasLinkedCPInstanceCPDefinitionOptionRels(cpDefinitionId)) {
 
 			return false;

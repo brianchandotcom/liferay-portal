@@ -83,15 +83,9 @@ public class ParentSitesItemSelectorView
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		if (siteGroup.isLayoutPrototype()) {
-			return false;
-		}
+		if (siteGroup.isLayoutPrototype() || siteGroup.isLayoutSetPrototype() ||
+			siteGroup.isRoot()) {
 
-		if (siteGroup.isLayoutSetPrototype()) {
-			return false;
-		}
-
-		if (siteGroup.isRoot()) {
 			return false;
 		}
 

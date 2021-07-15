@@ -874,31 +874,10 @@ public class JournalContentDisplayContext {
 
 		JournalArticleDisplay articleDisplay = getArticleDisplay();
 
-		if (articleDisplay == null) {
-			_showArticle = false;
+		if ((articleDisplay == null) || !hasViewPermission() || isExpired() ||
+			(article.isScheduled() && !isPreview()) ||
+			(article.isPending() && !isPreview())) {
 
-			return _showArticle;
-		}
-
-		if (!hasViewPermission()) {
-			_showArticle = false;
-
-			return _showArticle;
-		}
-
-		if (isExpired()) {
-			_showArticle = false;
-
-			return _showArticle;
-		}
-
-		if (article.isScheduled() && !isPreview()) {
-			_showArticle = false;
-
-			return _showArticle;
-		}
-
-		if (article.isPending() && !isPreview()) {
 			_showArticle = false;
 
 			return _showArticle;

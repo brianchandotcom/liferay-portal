@@ -352,11 +352,9 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 	}
 
 	protected boolean isNothingSelected() {
-		if (!_selectedRanges.isEmpty()) {
-			return false;
-		}
+		if (!_selectedRanges.isEmpty() ||
+			(!Validator.isBlank(_from) && !Validator.isBlank(_to))) {
 
-		if (!Validator.isBlank(_from) && !Validator.isBlank(_to)) {
 			return false;
 		}
 

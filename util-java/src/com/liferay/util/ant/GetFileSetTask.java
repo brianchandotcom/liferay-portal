@@ -222,12 +222,9 @@ public class GetFileSetTask extends Task {
 	}
 
 	private boolean _isClass(String className, String fileName) {
-		if (fileName.equals(className.concat(".class"))) {
-			return true;
-		}
-
-		if (fileName.startsWith(className.concat("$")) &&
-			fileName.endsWith(".class")) {
+		if (fileName.equals(className.concat(".class")) ||
+			(fileName.startsWith(className.concat("$")) &&
+			 fileName.endsWith(".class"))) {
 
 			return true;
 		}

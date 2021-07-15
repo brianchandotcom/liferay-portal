@@ -1766,14 +1766,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
 			getKBGroupServiceConfiguration(kbArticle.getGroupId());
 
-		if (serviceContext.isCommandAdd() &&
-			!kbGroupServiceConfiguration.emailKBArticleAddedEnabled()) {
-
-			return;
-		}
-
-		if (serviceContext.isCommandUpdate() &&
-			!kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled()) {
+		if ((serviceContext.isCommandAdd() &&
+			 !kbGroupServiceConfiguration.emailKBArticleAddedEnabled()) ||
+			(serviceContext.isCommandUpdate() &&
+			 !kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled())) {
 
 			return;
 		}

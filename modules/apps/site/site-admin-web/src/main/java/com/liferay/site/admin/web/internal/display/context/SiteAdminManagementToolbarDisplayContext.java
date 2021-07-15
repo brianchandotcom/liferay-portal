@@ -223,12 +223,9 @@ public class SiteAdminManagementToolbarDisplayContext
 
 		if (!GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), group,
-				ActionKeys.DELETE)) {
+				ActionKeys.DELETE) ||
+			PortalUtil.isSystemGroup(group.getGroupKey())) {
 
-			return false;
-		}
-
-		if (PortalUtil.isSystemGroup(group.getGroupKey())) {
 			return false;
 		}
 

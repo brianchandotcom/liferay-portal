@@ -72,11 +72,10 @@ public class IndividualSegmentsChecker {
 	public void checkIndividualSegments(long companyId, String individualPK)
 		throws PortalException {
 
-		if (_asahSegmentsEntryCache.getSegmentsEntryIds(individualPK) != null) {
-			return;
-		}
+		if ((_asahSegmentsEntryCache.getSegmentsEntryIds(individualPK) !=
+				null) ||
+			!AsahUtil.isAnalyticsEnabled(companyId)) {
 
-		if (!AsahUtil.isAnalyticsEnabled(companyId)) {
 			return;
 		}
 

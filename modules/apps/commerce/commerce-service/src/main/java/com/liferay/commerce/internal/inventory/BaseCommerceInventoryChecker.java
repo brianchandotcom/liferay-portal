@@ -35,11 +35,8 @@ public abstract class BaseCommerceInventoryChecker<T>
 			return false;
 		}
 
-		if (isBackOrderAllowed(cpInstance)) {
-			return true;
-		}
-
-		if (commerceInventoryEngine.hasStockQuantity(
+		if (isBackOrderAllowed(cpInstance) ||
+			commerceInventoryEngine.hasStockQuantity(
 				cpInstance.getCompanyId(), cpInstance.getSku(), quantity)) {
 
 			return true;

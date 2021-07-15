@@ -66,11 +66,9 @@ public class VirtualCPTypeHelperImpl implements VirtualCPTypeHelper {
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting(cpDefinitionId, cpInstanceId);
 
-		if (cpDefinitionVirtualSetting == null) {
-			return StringPool.BLANK;
-		}
+		if ((cpDefinitionVirtualSetting == null) ||
+			!cpDefinitionVirtualSetting.isUseSample()) {
 
-		if (!cpDefinitionVirtualSetting.isUseSample()) {
 			return StringPool.BLANK;
 		}
 

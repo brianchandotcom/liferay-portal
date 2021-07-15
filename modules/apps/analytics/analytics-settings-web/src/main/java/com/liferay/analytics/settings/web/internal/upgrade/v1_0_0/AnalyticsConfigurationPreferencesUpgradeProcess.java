@@ -56,11 +56,8 @@ public class AnalyticsConfigurationPreferencesUpgradeProcess
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
 
-			if (properties == null) {
-				continue;
-			}
-
-			if (ArrayUtil.isNotEmpty(
+			if ((properties == null) ||
+				ArrayUtil.isNotEmpty(
 					GetterUtil.getStringValues(
 						properties.get("syncedContactFieldNames"))) ||
 				ArrayUtil.isNotEmpty(

@@ -134,14 +134,11 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 				int status = message.getInteger("status");
 
-				if ((status != BackgroundTaskConstants.STATUS_CANCELLED) &&
-					(status != BackgroundTaskConstants.STATUS_FAILED) &&
-					(status != BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+				if (((status != BackgroundTaskConstants.STATUS_CANCELLED) &&
+					 (status != BackgroundTaskConstants.STATUS_FAILED) &&
+					 (status != BackgroundTaskConstants.STATUS_SUCCESSFUL)) ||
+					!jobName.equals(message.getString("name"))) {
 
-					return;
-				}
-
-				if (!jobName.equals(message.getString("name"))) {
 					return;
 				}
 

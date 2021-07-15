@@ -70,12 +70,8 @@ public class RsyncTestrayAttachmentUploader
 				sourceTestrayLogsFile.getParentFile();
 
 			if ((sourceTestrayLogsParentDir == null) ||
-				!sourceTestrayLogsParentDir.isDirectory()) {
-
-				continue;
-			}
-
-			if (sourceTestrayLogsParentDirs.contains(
+				!sourceTestrayLogsParentDir.isDirectory() ||
+				sourceTestrayLogsParentDirs.contains(
 					sourceTestrayLogsParentDir)) {
 
 				continue;

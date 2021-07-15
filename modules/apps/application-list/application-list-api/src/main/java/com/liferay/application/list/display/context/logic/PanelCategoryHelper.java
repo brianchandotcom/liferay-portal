@@ -44,11 +44,9 @@ public class PanelCategoryHelper {
 				_panelCategoryRegistry.getChildPanelCategories(
 					panelCategoryKey)) {
 
-			if (hasPortlet(portletId, curPanelCategory.getKey())) {
-				return true;
-			}
+			if (hasPortlet(portletId, curPanelCategory.getKey()) ||
+				containsPortlet(portletId, curPanelCategory.getKey())) {
 
-			if (containsPortlet(portletId, curPanelCategory.getKey())) {
 				return true;
 			}
 		}
@@ -66,12 +64,8 @@ public class PanelCategoryHelper {
 
 			if (hasPortlet(
 					portletId, curPanelCategory.getKey(), permissionChecker,
-					group)) {
-
-				return true;
-			}
-
-			if (containsPortlet(
+					group) ||
+				containsPortlet(
 					portletId, curPanelCategory.getKey(), permissionChecker,
 					group)) {
 

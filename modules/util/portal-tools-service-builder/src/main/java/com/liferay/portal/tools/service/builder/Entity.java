@@ -1112,13 +1112,9 @@ public class Entity implements Comparable<Entity> {
 
 		if (_name.equals("Group") || _name.equals("User") ||
 			entityFinderName.equals("UUID_G") || !entityFinder.isCollection() ||
-			!hasPrimitivePK() || !resourceActionModel) {
-
-			return false;
-		}
-
-		if (hasEntityColumn("groupId") &&
-			!entityFinder.hasEntityColumn("groupId")) {
+			!hasPrimitivePK() || !resourceActionModel ||
+			(hasEntityColumn("groupId") &&
+			 !entityFinder.hasEntityColumn("groupId"))) {
 
 			return false;
 		}

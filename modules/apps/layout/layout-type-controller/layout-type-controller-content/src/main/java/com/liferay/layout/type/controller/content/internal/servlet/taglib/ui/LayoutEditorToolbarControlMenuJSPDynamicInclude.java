@@ -90,19 +90,16 @@ public class LayoutEditorToolbarControlMenuJSPDynamicInclude
 		String mode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
-		if (!Objects.equals(mode, Constants.EDIT)) {
-			return false;
-		}
-
-		if (!LayoutPermissionUtil.contains(
+		if (!Objects.equals(mode, Constants.EDIT) ||
+			(!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.UPDATE) &&
-			!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
-			!_modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), layout.getPlid(),
-				ActionKeys.UPDATE)) {
+			 !LayoutPermissionUtil.contains(
+				 themeDisplay.getPermissionChecker(), layout,
+				 ActionKeys.UPDATE_LAYOUT_CONTENT) &&
+			 !_modelResourcePermission.contains(
+				 themeDisplay.getPermissionChecker(), layout.getPlid(),
+				 ActionKeys.UPDATE))) {
 
 			return false;
 		}

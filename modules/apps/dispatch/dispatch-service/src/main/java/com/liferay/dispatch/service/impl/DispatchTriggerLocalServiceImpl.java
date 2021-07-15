@@ -331,12 +331,9 @@ public class DispatchTriggerLocalServiceImpl
 		DispatchTrigger dispatchTrigger = dispatchTriggerPersistence.fetchByC_N(
 			companyId, name);
 
-		if (dispatchTrigger == null) {
-			return;
-		}
-
-		if ((dispatchTriggerId > 0) &&
-			(dispatchTrigger.getDispatchTriggerId() == dispatchTriggerId)) {
+		if ((dispatchTrigger == null) ||
+			((dispatchTriggerId > 0) &&
+			 (dispatchTrigger.getDispatchTriggerId() == dispatchTriggerId))) {
 
 			return;
 		}

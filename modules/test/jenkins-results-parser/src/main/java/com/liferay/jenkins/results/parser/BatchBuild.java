@@ -356,11 +356,9 @@ public class BatchBuild extends BaseBuild {
 			for (ReinvokeRule reinvokeRule : reinvokeRules) {
 				String buildResult = build.getResult();
 
-				if ((buildResult == null) || buildResult.equals("SUCCESS")) {
-					continue;
-				}
+				if ((buildResult == null) || buildResult.equals("SUCCESS") ||
+					!reinvokeRule.matches(build)) {
 
-				if (!reinvokeRule.matches(build)) {
 					continue;
 				}
 

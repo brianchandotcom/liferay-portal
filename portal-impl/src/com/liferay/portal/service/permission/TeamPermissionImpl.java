@@ -77,12 +77,8 @@ public class TeamPermissionImpl implements TeamPermission {
 
 		if (GroupPermissionUtil.contains(
 				permissionChecker, team.getGroupId(),
-				ActionKeys.MANAGE_TEAMS)) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasOwnerPermission(
+				ActionKeys.MANAGE_TEAMS) ||
+			permissionChecker.hasOwnerPermission(
 				team.getCompanyId(), Team.class.getName(), team.getTeamId(),
 				team.getUserId(), actionId)) {
 

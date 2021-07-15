@@ -135,11 +135,9 @@ public class ModulesStructureTest {
 
 					String fileName = String.valueOf(path.getFileName());
 
-					if (!StringUtil.startsWith(fileName, ".lfrbuild-portal")) {
-						return FileVisitResult.CONTINUE;
-					}
+					if (!StringUtil.startsWith(fileName, ".lfrbuild-portal") ||
+						StringUtil.endsWith(fileName, "-deprecated")) {
 
-					if (StringUtil.endsWith(fileName, "-deprecated")) {
 						return FileVisitResult.CONTINUE;
 					}
 
@@ -382,11 +380,8 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (_excludedDirNames.contains(dirName)) {
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					if (dirName.equals("archetype-resources") ||
+					if (_excludedDirNames.contains(dirName) ||
+						dirName.equals("archetype-resources") ||
 						dirName.equals("gradleTest")) {
 
 						return FileVisitResult.SKIP_SUBTREE;
@@ -436,12 +431,9 @@ public class ModulesStructureTest {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if (dirName.equals("gradleTest") ||
-						dirName.equals("project-templates")) {
+						dirName.equals("project-templates") ||
+						_excludedDirNames.contains(dirName)) {
 
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					if (_excludedDirNames.contains(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -739,11 +731,9 @@ public class ModulesStructureTest {
 
 				String fileName = String.valueOf(path.getFileName());
 
-				if (!fileName.endsWith(".gradle")) {
-					continue;
-				}
+				if (!fileName.endsWith(".gradle") ||
+					!fileName.startsWith("build-ext-")) {
 
-				if (!fileName.startsWith("build-ext-")) {
 					continue;
 				}
 
@@ -939,20 +929,12 @@ public class ModulesStructureTest {
 		String configuration, boolean hasSrcTestDir,
 		boolean hasSrcTestIntegrationDir) {
 
-		if (configuration.equals("testCompile") && !hasSrcTestDir &&
-			!hasSrcTestIntegrationDir) {
-
-			return true;
-		}
-
-		if (configuration.equals("testRuntime") && !hasSrcTestDir &&
-			!hasSrcTestIntegrationDir) {
-
-			return true;
-		}
-
-		if (configuration.startsWith("testIntegration") &&
-			!hasSrcTestIntegrationDir) {
+		if ((configuration.equals("testCompile") && !hasSrcTestDir &&
+			 !hasSrcTestIntegrationDir) ||
+			(configuration.equals("testRuntime") && !hasSrcTestDir &&
+			 !hasSrcTestIntegrationDir) ||
+			(configuration.startsWith("testIntegration") &&
+			 !hasSrcTestIntegrationDir)) {
 
 			return true;
 		}
@@ -995,12 +977,8 @@ public class ModulesStructureTest {
 			name.equals("com.liferay.portal.cache.test.util") ||
 			name.equals("com.liferay.poshi.core") ||
 			name.equals("com.liferay.whip") ||
-			!name.startsWith("com.liferay.")) {
-
-			return false;
-		}
-
-		if (_isInModulesRootDir(dirPath, "sdk", "third-party", "util") ||
+			!name.startsWith("com.liferay.") ||
+			_isInModulesRootDir(dirPath, "sdk", "third-party", "util") ||
 			Files.exists(dirPath.resolve(".lfrbuild-ci")) ||
 			_hasGitCommitMarkerFile(dirPath) || _isInGitRepoReadOnly(dirPath) ||
 			_isInPrivateModulesCheckoutDir(dirPath)) {
@@ -1412,13 +1390,9 @@ public class ModulesStructureTest {
 
 		boolean mainConfigurationsAllowed = false;
 
-		if ((_branchName.startsWith("7.0") || _branchName.startsWith("7.1")) &&
-			content.contains("copyLibs {\n\tenabled = true")) {
-
-			mainConfigurationsAllowed = true;
-		}
-
-		if (hasSrcMainDir ||
+		if (((_branchName.startsWith("7.0") || _branchName.startsWith("7.1")) &&
+			 content.contains("copyLibs {\n\tenabled = true")) ||
+			hasSrcMainDir ||
 			(!hasSrcMainDir && !hasSrcTestDir && !hasSrcTestIntegrationDir)) {
 
 			mainConfigurationsAllowed = true;

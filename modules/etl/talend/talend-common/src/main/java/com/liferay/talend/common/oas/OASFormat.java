@@ -39,13 +39,11 @@ public enum OASFormat {
 				continue;
 			}
 
-			if ((openAPIFormatDefinition == null) && oasFormat._defaultFormat) {
-				return oasFormat;
-			}
-
-			if ((openAPIFormatDefinition != null) &&
-				openAPIFormatDefinition.equals(
-					oasFormat._openAPIFormatDefinition)) {
+			if (((openAPIFormatDefinition == null) &&
+				 oasFormat._defaultFormat) ||
+				((openAPIFormatDefinition != null) &&
+				 openAPIFormatDefinition.equals(
+					 oasFormat._openAPIFormatDefinition))) {
 
 				return oasFormat;
 			}

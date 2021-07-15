@@ -929,11 +929,7 @@ public class JournalArticleActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowViewContentURL() throws Exception {
-		if (_article == null) {
-			return false;
-		}
-
-		if (!_article.hasApprovedVersion()) {
+		if ((_article == null) || !_article.hasApprovedVersion()) {
 			return false;
 		}
 
@@ -950,12 +946,9 @@ public class JournalArticleActionDropdownItemsProvider {
 			JournalArticleAssetRenderer.getClassPK(curArticle));
 
 		if (AssetDisplayPageUtil.hasAssetDisplayPage(
-				_themeDisplay.getScopeGroupId(), assetEntry)) {
+				_themeDisplay.getScopeGroupId(), assetEntry) ||
+			Validator.isNotNull(_article.getLayoutUuid())) {
 
-			return true;
-		}
-
-		if (Validator.isNotNull(_article.getLayoutUuid())) {
 			return true;
 		}
 

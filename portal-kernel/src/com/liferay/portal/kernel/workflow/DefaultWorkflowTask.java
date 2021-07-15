@@ -110,11 +110,9 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 
 	@Override
 	public boolean isAssignedToSingleUser() {
-		if (_workflowTaskAssignees == null) {
-			return false;
-		}
+		if ((_workflowTaskAssignees == null) ||
+			(_workflowTaskAssignees.size() != 1)) {
 
-		if (_workflowTaskAssignees.size() != 1) {
 			return false;
 		}
 

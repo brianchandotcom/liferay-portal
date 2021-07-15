@@ -76,11 +76,8 @@ public class KBServicePreAction extends Action {
 
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
-		if (Validator.isNull(portletId)) {
-			return;
-		}
-
-		if (!portletId.equals(
+		if (Validator.isNull(portletId) ||
+			!portletId.equals(
 				KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
 
 			return;

@@ -481,12 +481,9 @@ public class XLIFFInfoFormTranslationImporter
 		Locale targetLocale = LocaleUtil.fromLanguageId(
 			targetLanguage, true, false);
 
-		if (targetLocale == null) {
-			throw new XLIFFFileException.MustBeSupportedLanguage(
-				targetLanguage);
-		}
+		if ((targetLocale == null) ||
+			!availableLocales.contains(targetLocale)) {
 
-		if (!availableLocales.contains(targetLocale)) {
 			throw new XLIFFFileException.MustBeSupportedLanguage(
 				targetLanguage);
 		}

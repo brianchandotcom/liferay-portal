@@ -202,11 +202,9 @@ public class SuggestionsPortletDisplayBuilder {
 	}
 
 	private boolean _isValidSuggestion(String suggestion) {
-		if (Objects.equals(_keywords, suggestion)) {
-			return false;
-		}
+		if (Objects.equals(_keywords, suggestion) ||
+			Validator.isNull(suggestion)) {
 
-		if (Validator.isNull(suggestion)) {
 			return false;
 		}
 

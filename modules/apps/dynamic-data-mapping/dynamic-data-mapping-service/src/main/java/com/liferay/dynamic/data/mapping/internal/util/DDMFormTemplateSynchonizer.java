@@ -161,11 +161,9 @@ public class DDMFormTemplateSynchonizer {
 		DDMFormField structureDDMFormField, DDMFormField templateDDMFormField,
 		String templateMode) {
 
-		if (structureDDMFormField == null) {
-			return;
-		}
+		if ((structureDDMFormField == null) ||
+			!templateMode.equals(DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
 
-		if (!templateMode.equals(DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
 			return;
 		}
 

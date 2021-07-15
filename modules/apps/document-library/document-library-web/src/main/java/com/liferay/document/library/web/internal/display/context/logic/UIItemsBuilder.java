@@ -264,11 +264,8 @@ public class UIItemsBuilder {
 			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
 				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
 
-		if (!digitalSignatureConfiguration.enabled()) {
-			return;
-		}
-
-		if (!ArrayUtil.contains(
+		if (!digitalSignatureConfiguration.enabled() ||
+			!ArrayUtil.contains(
 				DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS,
 				_fileEntry.getExtension())) {
 
@@ -580,12 +577,8 @@ public class UIItemsBuilder {
 
 		if ((_fileShortcut != null) ||
 			!_fileEntryDisplayContextHelper.
-				isCheckoutDocumentActionAvailable()) {
-
-			return;
-		}
-
-		if (!ArrayUtil.contains(
+				isCheckoutDocumentActionAvailable() ||
+			!ArrayUtil.contains(
 				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
 				_fileVersion.getMimeType())) {
 
@@ -811,14 +804,11 @@ public class UIItemsBuilder {
 
 		String portletName = portletDisplay.getPortletName();
 
-		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-			return;
-		}
-
-		if (((_fileEntry == null) ||
-			 !_fileEntryDisplayContextHelper.hasExportImportPermission()) &&
-			((_fileShortcut == null) ||
-			 _fileShortcutDisplayContextHelper.hasExportImportPermission())) {
+		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			(((_fileEntry == null) ||
+			  !_fileEntryDisplayContextHelper.hasExportImportPermission()) &&
+			 ((_fileShortcut == null) ||
+			  _fileShortcutDisplayContextHelper.hasExportImportPermission()))) {
 
 			return;
 		}

@@ -172,11 +172,7 @@ public class JournalEditDDMTemplateDisplayContext {
 			() -> {
 				DDMTemplate ddmTemplate = getDDMTemplate();
 
-				if (ddmTemplate == null) {
-					return true;
-				}
-
-				if (ddmTemplate.getClassPK() <= 0) {
+				if ((ddmTemplate == null) || (ddmTemplate.getClassPK() <= 0)) {
 					return true;
 				}
 

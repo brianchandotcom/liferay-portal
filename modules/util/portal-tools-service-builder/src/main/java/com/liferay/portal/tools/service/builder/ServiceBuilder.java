@@ -1687,15 +1687,10 @@ public class ServiceBuilder {
 	}
 
 	public boolean hasEntityByGenericsName(String genericsName) {
-		if (Validator.isNull(genericsName)) {
-			return false;
-		}
+		if (Validator.isNull(genericsName) ||
+			!genericsName.contains(".model.") ||
+			(getEntityByGenericsName(genericsName) == null)) {
 
-		if (!genericsName.contains(".model.")) {
-			return false;
-		}
-
-		if (getEntityByGenericsName(genericsName) == null) {
 			return false;
 		}
 
@@ -1703,15 +1698,10 @@ public class ServiceBuilder {
 	}
 
 	public boolean hasEntityByParameterTypeValue(String parameterTypeValue) {
-		if (Validator.isNull(parameterTypeValue)) {
-			return false;
-		}
+		if (Validator.isNull(parameterTypeValue) ||
+			!parameterTypeValue.contains(".model.") ||
+			(getEntityByParameterTypeValue(parameterTypeValue) == null)) {
 
-		if (!parameterTypeValue.contains(".model.")) {
-			return false;
-		}
-
-		if (getEntityByParameterTypeValue(parameterTypeValue) == null) {
 			return false;
 		}
 
@@ -1813,13 +1803,10 @@ public class ServiceBuilder {
 
 		String packageName = javaClass.getPackageName();
 
-		if (!packageName.endsWith(".service.base")) {
-			return true;
-		}
-
-		if (!methodName.endsWith("Finder") &&
-			!methodName.endsWith("Persistence") &&
-			!methodName.endsWith("Service")) {
+		if (!packageName.endsWith(".service.base") ||
+			(!methodName.endsWith("Finder") &&
+			 !methodName.endsWith("Persistence") &&
+			 !methodName.endsWith("Service"))) {
 
 			return true;
 		}
@@ -1863,11 +1850,9 @@ public class ServiceBuilder {
 	}
 
 	public boolean isDSLEnabled() {
-		if (isVersionGTE_7_4_0()) {
-			return true;
-		}
+		if (isVersionGTE_7_4_0() ||
+			ArrayUtil.contains(_incubationFeatures, "DSL")) {
 
-		if (ArrayUtil.contains(_incubationFeatures, "DSL")) {
 			return true;
 		}
 
@@ -2444,14 +2429,11 @@ public class ServiceBuilder {
 							).put(
 								"flag",
 								() -> {
-									if (entityColumn.isPrimary()) {
-										return "FLAG_PRIMARY";
-									}
-
-									if (changeTrackingEnabled &&
-										Objects.equals(
-											entityColumn.getName(),
-											"ctCollectionId")) {
+									if (entityColumn.isPrimary() ||
+										(changeTrackingEnabled &&
+										 Objects.equals(
+											 entityColumn.getName(),
+											 "ctCollectionId"))) {
 
 										return "FLAG_PRIMARY";
 									}
@@ -4013,19 +3995,10 @@ public class ServiceBuilder {
 		// indexes.sql appending
 
 		for (Entity entity : _entities) {
-			if (!_isTargetEntity(entity)) {
-				continue;
-			}
+			if (!_isTargetEntity(entity) || !entity.isDefaultDataSource() ||
+				entity.isDeprecated() ||
+				(!entity.hasFinderClassName() && !entity.hasPersistence())) {
 
-			if (!entity.isDefaultDataSource()) {
-				continue;
-			}
-
-			if (entity.isDeprecated()) {
-				continue;
-			}
-
-			if (!entity.hasFinderClassName() && !entity.hasPersistence()) {
 				continue;
 			}
 
@@ -4230,15 +4203,9 @@ public class ServiceBuilder {
 		}
 
 		for (Entity entity : _entities) {
-			if (!_isTargetEntity(entity)) {
-				continue;
-			}
+			if (!_isTargetEntity(entity) || !entity.isDefaultDataSource() ||
+				(!entity.hasFinderClassName() && !entity.hasPersistence())) {
 
-			if (!entity.isDefaultDataSource()) {
-				continue;
-			}
-
-			if (!entity.hasFinderClassName() && !entity.hasPersistence()) {
 				continue;
 			}
 
@@ -4295,19 +4262,10 @@ public class ServiceBuilder {
 		}
 
 		for (Entity entity : _entities) {
-			if (!_isTargetEntity(entity)) {
-				continue;
-			}
+			if (!_isTargetEntity(entity) || !entity.isDefaultDataSource() ||
+				entity.isDeprecated() ||
+				(!entity.hasFinderClassName() && !entity.hasPersistence())) {
 
-			if (!entity.isDefaultDataSource()) {
-				continue;
-			}
-
-			if (entity.isDeprecated()) {
-				continue;
-			}
-
-			if (!entity.hasFinderClassName() && !entity.hasPersistence()) {
 				continue;
 			}
 
@@ -5225,13 +5183,10 @@ public class ServiceBuilder {
 				sb.append(" IDENTITY");
 			}
 
-			if (entity.isChangeTrackingEnabled() &&
-				Objects.equals(entityColumn.getName(), "ctCollectionId")) {
+			if ((entity.isChangeTrackingEnabled() &&
+				 Objects.equals(entityColumn.getName(), "ctCollectionId")) ||
+				Objects.equals(entityColumn.getName(), "mvccVersion")) {
 
-				sb.append(" default 0 not null");
-			}
-
-			if (Objects.equals(entityColumn.getName(), "mvccVersion")) {
 				sb.append(" default 0 not null");
 			}
 
@@ -5839,11 +5794,8 @@ public class ServiceBuilder {
 		List<JavaType> actualTypeArguments =
 			defaultJavaParameterizedType.getActualTypeArguments();
 
-		if (actualTypeArguments.size() != 2) {
-			return false;
-		}
-
-		if (!_isTypeValue(actualTypeArguments.get(0), Locale.class.getName()) ||
+		if ((actualTypeArguments.size() != 2) ||
+			!_isTypeValue(actualTypeArguments.get(0), Locale.class.getName()) ||
 			!_isTypeValue(actualTypeArguments.get(1), String.class.getName())) {
 
 			return false;

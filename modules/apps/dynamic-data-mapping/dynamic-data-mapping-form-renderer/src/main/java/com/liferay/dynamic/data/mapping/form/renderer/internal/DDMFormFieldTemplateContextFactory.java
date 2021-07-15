@@ -112,11 +112,9 @@ public class DDMFormFieldTemplateContextFactory {
 	protected boolean addProperty(
 		Map<String, Object> changedProperties, String propertyName) {
 
-		if (_ddmFormRenderingContext.isReturnFullContext()) {
-			return true;
-		}
+		if (_ddmFormRenderingContext.isReturnFullContext() ||
+			changedProperties.containsKey(propertyName)) {
 
-		if (changedProperties.containsKey(propertyName)) {
 			return true;
 		}
 

@@ -113,12 +113,9 @@ public class RoleBuilder extends DirectoryBuilder {
 				}
 
 				for (Role role : user.getRoles()) {
-					if ((name != null) && !name.equals(role.getName())) {
-						continue;
-					}
-
-					if ((description != null) &&
-						!description.equals(role.getDescription())) {
+					if (((name != null) && !name.equals(role.getName())) ||
+						((description != null) &&
+						 !description.equals(role.getDescription()))) {
 
 						continue;
 					}

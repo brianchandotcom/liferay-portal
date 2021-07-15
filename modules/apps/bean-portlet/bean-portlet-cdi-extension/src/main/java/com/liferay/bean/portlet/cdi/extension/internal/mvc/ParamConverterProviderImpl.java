@@ -40,15 +40,12 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 	public <T> ParamConverter<T> getConverter(
 		Class<T> rawType, Type genericType, Annotation[] annotations) {
 
-		if (rawType == null) {
-			return null;
-		}
-
-		if (!rawType.equals(Integer.class) && !rawType.equals(Integer.TYPE) &&
-			!rawType.equals(Long.class) && !rawType.equals(Long.TYPE) &&
-			!rawType.equals(Double.class) && !rawType.equals(Double.TYPE) &&
-			!rawType.equals(Float.class) && !rawType.equals(Float.TYPE) &&
-			!rawType.equals(Boolean.class) && !rawType.equals(Boolean.TYPE)) {
+		if ((rawType == null) ||
+			(!rawType.equals(Integer.class) && !rawType.equals(Integer.TYPE) &&
+			 !rawType.equals(Long.class) && !rawType.equals(Long.TYPE) &&
+			 !rawType.equals(Double.class) && !rawType.equals(Double.TYPE) &&
+			 !rawType.equals(Float.class) && !rawType.equals(Float.TYPE) &&
+			 !rawType.equals(Boolean.class) && !rawType.equals(Boolean.TYPE))) {
 
 			return null;
 		}

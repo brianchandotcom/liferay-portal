@@ -85,15 +85,11 @@ public class SearchAdminDisplayBuilder {
 		String selectedTab = ParamUtil.getString(
 			_renderRequest, "tabs1", "connections");
 
-		if (!Objects.equals(selectedTab, "field-mappings") &&
-			!Objects.equals(selectedTab, "index-actions") &&
-			!Objects.equals(selectedTab, "connections")) {
-
-			return "connections";
-		}
-
-		if (Objects.equals(selectedTab, "field-mappings") &&
-			!isIndexInformationAvailable()) {
+		if ((!Objects.equals(selectedTab, "field-mappings") &&
+			 !Objects.equals(selectedTab, "index-actions") &&
+			 !Objects.equals(selectedTab, "connections")) ||
+			(Objects.equals(selectedTab, "field-mappings") &&
+			 !isIndexInformationAvailable())) {
 
 			return "connections";
 		}

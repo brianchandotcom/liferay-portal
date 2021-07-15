@@ -50,13 +50,9 @@ public class StripDoctypeFilter {
 			buffer[0] = readFromSource();
 			buffer[1] = readFromSource();
 
-			if (buffer[0] == '?') {
-				setBuffer(buffer);
+			if ((buffer[0] == '?') ||
+				((buffer[0] == '!') && (buffer[1] == '-'))) {
 
-				return c;
-			}
-
-			if ((buffer[0] == '!') && (buffer[1] == '-')) {
 				setBuffer(buffer);
 
 				return c;

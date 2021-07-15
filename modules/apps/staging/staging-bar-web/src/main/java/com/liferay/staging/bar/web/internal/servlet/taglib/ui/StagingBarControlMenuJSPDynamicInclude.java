@@ -115,11 +115,7 @@ public class StagingBarControlMenuJSPDynamicInclude
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		if (!themeDisplay.isShowStagingIcon()) {
+		if (layout.isTypeControlPanel() || !themeDisplay.isShowStagingIcon()) {
 			return false;
 		}
 

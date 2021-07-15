@@ -172,11 +172,7 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		if (!_page.isInTrash()) {
-			return _page.getTitle();
-		}
-
-		if (_trashHelper == null) {
+		if (!_page.isInTrash() || (_trashHelper == null)) {
 			return _page.getTitle();
 		}
 

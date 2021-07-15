@@ -155,15 +155,10 @@ public class PortletPermissionsPortletConfigurationIcon
 			}
 		}
 
-		if (layout.isLayoutPrototypeLinkActive()) {
-			showPermissionsIcon = false;
-		}
+		if (layout.isLayoutPrototypeLinkActive() ||
+			layout.isTypeControlPanel() ||
+			isEmbeddedPersonalApplicationLayout(layout)) {
 
-		if (layout.isTypeControlPanel()) {
-			showPermissionsIcon = false;
-		}
-
-		if (isEmbeddedPersonalApplicationLayout(layout)) {
 			showPermissionsIcon = false;
 		}
 

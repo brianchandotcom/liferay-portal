@@ -138,12 +138,9 @@ public class CommerceOrderItemLocalServiceImpl
 				cpInstance.getCPDefinitionId(), json);
 
 		for (CommerceOptionValue commerceOptionValue : commerceOptionValues) {
-			if (Validator.isNull(commerceOptionValue.getPriceType())) {
-				continue;
-			}
-
-			if (_isStaticPriceType(commerceOptionValue.getPriceType()) &&
-				(commerceOptionValue.getCPInstanceId() <= 0)) {
+			if (Validator.isNull(commerceOptionValue.getPriceType()) ||
+				(_isStaticPriceType(commerceOptionValue.getPriceType()) &&
+				 (commerceOptionValue.getCPInstanceId() <= 0))) {
 
 				continue;
 			}
@@ -1305,14 +1302,10 @@ public class CommerceOrderItemLocalServiceImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		if (cpDefinition.isSubscriptionEnabled() ||
-			cpDefinition.isDeliverySubscriptionEnabled()) {
-
-			return true;
-		}
-
-		if (cpInstance.isOverrideSubscriptionInfo() &&
-			(cpInstance.isSubscriptionEnabled() ||
-			 cpInstance.isDeliverySubscriptionEnabled())) {
+			cpDefinition.isDeliverySubscriptionEnabled() ||
+			(cpInstance.isOverrideSubscriptionInfo() &&
+			 (cpInstance.isSubscriptionEnabled() ||
+			  cpInstance.isDeliverySubscriptionEnabled()))) {
 
 			return true;
 		}

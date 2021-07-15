@@ -955,11 +955,9 @@ public class SearchResultSummaryDisplayBuilder {
 			return false;
 		}
 
-		if (ArrayUtil.isNotEmpty(assetEntry.getCategoryIds())) {
-			return true;
-		}
+		if (ArrayUtil.isNotEmpty(assetEntry.getCategoryIds()) ||
+			ArrayUtil.isNotEmpty(assetEntry.getTagNames())) {
 
-		if (ArrayUtil.isNotEmpty(assetEntry.getTagNames())) {
 			return true;
 		}
 
@@ -969,11 +967,9 @@ public class SearchResultSummaryDisplayBuilder {
 	protected boolean hasAssetRendererURLDownload(
 		AssetRenderer<?> assetRenderer) {
 
-		if (assetRenderer == null) {
-			return false;
-		}
+		if ((assetRenderer == null) ||
+			Validator.isNull(assetRenderer.getURLDownload(_themeDisplay))) {
 
-		if (Validator.isNull(assetRenderer.getURLDownload(_themeDisplay))) {
 			return false;
 		}
 

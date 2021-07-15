@@ -8357,11 +8357,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected JournalArticle setArticlesExpirationDate(JournalArticle article) {
-		if (ExportImportThreadLocal.isImportInProcess()) {
-			return article;
-		}
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			!article.isApproved() || (article.getExpirationDate() == null)) {
 
-		if (!article.isApproved() || (article.getExpirationDate() == null)) {
 			return article;
 		}
 
@@ -8781,12 +8779,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private boolean _addDraftAssetEntry(JournalArticle journalArticle) {
-		if (journalArticle.isApproved()) {
-			return false;
-		}
-
-		if (journalArticle.getVersion() ==
-				JournalArticleConstants.VERSION_DEFAULT) {
+		if (journalArticle.isApproved() ||
+			(journalArticle.getVersion() ==
+				JournalArticleConstants.VERSION_DEFAULT)) {
 
 			return false;
 		}

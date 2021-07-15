@@ -73,39 +73,16 @@ public class CookieUtil {
 	}
 
 	public static boolean equals(Cookie cookie1, Cookie cookie2) {
-		if (!Objects.equals(cookie1.getComment(), cookie2.getComment())) {
-			return false;
-		}
+		if (!Objects.equals(cookie1.getComment(), cookie2.getComment()) ||
+			!Objects.equals(cookie1.getDomain(), cookie2.getDomain()) ||
+			(cookie1.getMaxAge() != cookie2.getMaxAge()) ||
+			!Objects.equals(cookie1.getName(), cookie2.getName()) ||
+			!Objects.equals(cookie1.getPath(), cookie2.getPath()) ||
+			(cookie1.getSecure() != cookie2.getSecure()) ||
+			!Objects.equals(cookie1.getValue(), cookie2.getValue()) ||
+			(cookie1.getVersion() != cookie2.getVersion()) ||
+			(cookie1.isHttpOnly() != cookie2.isHttpOnly())) {
 
-		if (!Objects.equals(cookie1.getDomain(), cookie2.getDomain())) {
-			return false;
-		}
-
-		if (cookie1.getMaxAge() != cookie2.getMaxAge()) {
-			return false;
-		}
-
-		if (!Objects.equals(cookie1.getName(), cookie2.getName())) {
-			return false;
-		}
-
-		if (!Objects.equals(cookie1.getPath(), cookie2.getPath())) {
-			return false;
-		}
-
-		if (cookie1.getSecure() != cookie2.getSecure()) {
-			return false;
-		}
-
-		if (!Objects.equals(cookie1.getValue(), cookie2.getValue())) {
-			return false;
-		}
-
-		if (cookie1.getVersion() != cookie2.getVersion()) {
-			return false;
-		}
-
-		if (cookie1.isHttpOnly() != cookie2.isHttpOnly()) {
 			return false;
 		}
 

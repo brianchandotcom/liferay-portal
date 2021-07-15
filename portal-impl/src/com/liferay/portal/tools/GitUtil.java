@@ -532,11 +532,9 @@ public class GitUtil {
 		int gitLevel = getGitLevel(baseDirName);
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (StringUtil.count(line, CharPool.SLASH) < gitLevel) {
-				continue;
-			}
+			if ((StringUtil.count(line, CharPool.SLASH) < gitLevel) ||
+				Validator.isNull(command) || !line.startsWith(command + " '")) {
 
-			if (Validator.isNull(command) || !line.startsWith(command + " '")) {
 				continue;
 			}
 

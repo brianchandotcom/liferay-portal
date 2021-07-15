@@ -169,11 +169,9 @@ public class SimulationProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
+		if (layout.isTypeControlPanel() ||
+			isEmbeddedPersonalApplicationLayout(layout)) {
 
-		if (isEmbeddedPersonalApplicationLayout(layout)) {
 			return false;
 		}
 

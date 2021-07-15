@@ -36,11 +36,10 @@ public class GeoLocationPoint {
 
 		GeoLocationPoint geoLocationPoint = (GeoLocationPoint)object;
 
-		if (Double.compare(geoLocationPoint.getLatitude(), _latitude) != 0) {
-			return false;
-		}
+		if ((Double.compare(geoLocationPoint.getLatitude(), _latitude) != 0) ||
+			(Double.compare(geoLocationPoint.getLongitude(), _longitude) !=
+				0)) {
 
-		if (Double.compare(geoLocationPoint.getLongitude(), _longitude) != 0) {
 			return false;
 		}
 

@@ -107,17 +107,10 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 				StringBundler.concat("Sanitizing ", className, "#", classPK));
 		}
 
-		if (Validator.isNull(content)) {
-			return content;
-		}
+		if (Validator.isNull(content) || Validator.isNull(contentType) ||
+			!contentType.equals(ContentTypes.TEXT_HTML) ||
+			isWhitelisted(className, classPK)) {
 
-		if (Validator.isNull(contentType) ||
-			!contentType.equals(ContentTypes.TEXT_HTML)) {
-
-			return content;
-		}
-
-		if (isWhitelisted(className, classPK)) {
 			return content;
 		}
 

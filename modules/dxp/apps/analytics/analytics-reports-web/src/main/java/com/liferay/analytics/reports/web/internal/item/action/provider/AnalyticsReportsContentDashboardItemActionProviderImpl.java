@@ -114,11 +114,9 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
 					infoItemReference.getClassName());
 
-		if (analyticsReportsInfoItem == null) {
-			return false;
-		}
+		if ((analyticsReportsInfoItem == null) ||
+			!analyticsReportsInfoItem.isShow(analyticsReportsInfoItemObject)) {
 
-		if (!analyticsReportsInfoItem.isShow(analyticsReportsInfoItemObject)) {
 			return false;
 		}
 

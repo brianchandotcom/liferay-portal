@@ -246,13 +246,10 @@ public class Baseline {
 			}
 
 			if (!warning) {
-				if (!mismatchPackageNames.isEmpty() &&
-					ignoredPackageNames.containsAll(mismatchPackageNames)) {
+				if ((!mismatchPackageNames.isEmpty() &&
+					 ignoredPackageNames.containsAll(mismatchPackageNames)) ||
+					(mismatchPackageNames.isEmpty() && !bundleInfo.mismatch)) {
 
-					return true;
-				}
-
-				if (mismatchPackageNames.isEmpty() && !bundleInfo.mismatch) {
 					return true;
 				}
 			}

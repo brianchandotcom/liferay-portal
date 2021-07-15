@@ -1596,11 +1596,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = userPersistence.fetchByPrimaryKey(GetterUtil.getLong(login));
 		}
 
-		if (user == null) {
-			return 0;
-		}
-
-		if (!isUserAllowedToAuthenticate(user)) {
+		if ((user == null) || !isUserAllowedToAuthenticate(user)) {
 			return 0;
 		}
 
@@ -1670,11 +1666,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				GetterUtil.getLong(userName));
 		}
 
-		if (user == null) {
-			return 0;
-		}
-
-		if (!isUserAllowedToAuthenticate(user)) {
+		if ((user == null) || !isUserAllowedToAuthenticate(user)) {
 			return 0;
 		}
 

@@ -279,11 +279,10 @@ public class ConfigurationModelRetrieverImpl
 			extendedMetaTypeInformation.getObjectClassDefinition(pid, locale),
 			factory);
 
-		if (scope.equals(scope.COMPANY) && configurationModel.isSystemScope()) {
-			return null;
-		}
+		if ((scope.equals(scope.COMPANY) &&
+			 configurationModel.isSystemScope()) ||
+			(scope.equals(scope.GROUP) && !configurationModel.isGroupScope())) {
 
-		if (scope.equals(scope.GROUP) && !configurationModel.isGroupScope()) {
 			return null;
 		}
 

@@ -42,11 +42,9 @@ public class DDMFormFieldFreeMarkerRendererUtil {
 			return _editors.get("simple");
 		}
 
-		if (Validator.isNull(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT)) {
-			return _editors.get(_EDITOR_WYSIWYG_DEFAULT);
-		}
+		if (Validator.isNull(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT) ||
+			!_editors.containsKey(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT)) {
 
-		if (!_editors.containsKey(_TEXT_HTML_EDITOR_WYSIWYG_DEFAULT)) {
 			return _editors.get(_EDITOR_WYSIWYG_DEFAULT);
 		}
 

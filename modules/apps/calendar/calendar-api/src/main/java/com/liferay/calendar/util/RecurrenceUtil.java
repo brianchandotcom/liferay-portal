@@ -281,11 +281,9 @@ public class RecurrenceUtil {
 	}
 
 	protected static boolean hasLimit(Recurrence recurrence) {
-		if (recurrence.getUntilJCalendar() != null) {
-			return true;
-		}
+		if ((recurrence.getUntilJCalendar() != null) ||
+			(recurrence.getCount() != 0)) {
 
-		if (recurrence.getCount() != 0) {
 			return true;
 		}
 

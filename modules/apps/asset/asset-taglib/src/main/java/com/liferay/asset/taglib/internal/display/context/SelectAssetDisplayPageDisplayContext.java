@@ -380,11 +380,8 @@ public class SelectAssetDisplayPageDisplayContext {
 				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 					infoItemReference);
 
-			if (layoutDisplayPageObjectProvider == null) {
-				return false;
-			}
-
-			if (!AssetDisplayPageUtil.hasAssetDisplayPage(
+			if ((layoutDisplayPageObjectProvider == null) ||
+				!AssetDisplayPageUtil.hasAssetDisplayPage(
 					themeDisplay.getScopeGroupId(),
 					layoutDisplayPageObjectProvider.getClassNameId(),
 					layoutDisplayPageObjectProvider.getClassPK(),
@@ -403,12 +400,9 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	public boolean isURLViewInContext() throws Exception {
-		if (_classPK == 0) {
-			return false;
-		}
-
-		if (Validator.isNull(getLayoutUuid()) &&
-			Validator.isNull(getURLViewInContext())) {
+		if ((_classPK == 0) ||
+			(Validator.isNull(getLayoutUuid()) &&
+			 Validator.isNull(getURLViewInContext()))) {
 
 			return false;
 		}

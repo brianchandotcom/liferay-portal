@@ -33,11 +33,7 @@ public class GetValueFunction
 
 	@Override
 	public Object apply(String field) {
-		if (_ddmExpressionFieldAccessor == null) {
-			return StringPool.BLANK;
-		}
-
-		if (!_isFieldVisible(field)) {
+		if ((_ddmExpressionFieldAccessor == null) || !_isFieldVisible(field)) {
 			return StringPool.BLANK;
 		}
 

@@ -48,12 +48,9 @@ public class RoleModelListener extends BaseModelListener<Role> {
 	public void onAfterCreate(Role role) throws ModelListenerException {
 		if (!Objects.equals(
 				role.getClassNameId(),
-				_portal.getClassNameId(AccountRole.class))) {
+				_portal.getClassNameId(AccountRole.class)) ||
+			!Objects.equals(role.getType(), RoleConstants.TYPE_ACCOUNT)) {
 
-			return;
-		}
-
-		if (!Objects.equals(role.getType(), RoleConstants.TYPE_ACCOUNT)) {
 			return;
 		}
 

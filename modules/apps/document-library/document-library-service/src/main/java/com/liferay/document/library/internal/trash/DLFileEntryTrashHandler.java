@@ -247,12 +247,8 @@ public class DLFileEntryTrashHandler extends BaseDLTrashHandler {
 		if ((dlFileEntry == null) ||
 			((dlFileEntry.getFolderId() > 0) &&
 			 (_dlFolderLocalService.fetchFolder(dlFileEntry.getFolderId()) ==
-				 null))) {
-
-			return false;
-		}
-
-		if (!hasTrashPermission(
+				 null)) ||
+			!hasTrashPermission(
 				PermissionThreadLocal.getPermissionChecker(),
 				dlFileEntry.getGroupId(), classPK, TrashActionKeys.RESTORE)) {
 

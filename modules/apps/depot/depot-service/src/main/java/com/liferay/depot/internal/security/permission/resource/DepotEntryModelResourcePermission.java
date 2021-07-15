@@ -100,13 +100,9 @@ public class DepotEntryModelResourcePermission
 		if (permissionChecker.hasOwnerPermission(
 				depotEntry.getCompanyId(), DepotEntry.class.getName(),
 				depotEntry.getDepotEntryId(), depotEntry.getUserId(),
-				actionId)) {
-
-			return true;
-		}
-
-		if (permissionChecker.isGroupMember(depotEntry.getGroupId()) &&
-			actionId.equals(ActionKeys.VIEW)) {
+				actionId) ||
+			(permissionChecker.isGroupMember(depotEntry.getGroupId()) &&
+			 actionId.equals(ActionKeys.VIEW))) {
 
 			return true;
 		}

@@ -67,10 +67,8 @@ public class DepotRoleContributor implements RoleContributor {
 
 			if (_userGroupRoleLocalService.hasUserGroupRole(
 					user.getUserId(), group.getGroupId(),
-					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
-			}
-
-			if (_userGroupRoleLocalService.hasUserGroupRole(
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true) ||
+				_userGroupRoleLocalService.hasUserGroupRole(
 					user.getUserId(), group.getGroupId(),
 					DepotRolesConstants.ASSET_LIBRARY_OWNER, true) ||
 				_userGroupRoleLocalService.hasUserGroupRole(

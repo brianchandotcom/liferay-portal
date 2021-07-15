@@ -43,12 +43,8 @@ public class SocialActivityPermissionImpl implements SocialActivityPermission {
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		if (permissionChecker.isGroupAdmin(groupId) ||
-			permissionChecker.isGroupOwner(groupId)) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasPermission(
+			permissionChecker.isGroupOwner(groupId) ||
+			permissionChecker.hasPermission(
 				groupId, getPortletId(), getPortletId(), actionId)) {
 
 			return true;

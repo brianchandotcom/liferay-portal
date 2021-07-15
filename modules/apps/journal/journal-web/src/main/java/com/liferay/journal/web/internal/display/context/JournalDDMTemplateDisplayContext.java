@@ -77,11 +77,7 @@ public class JournalDDMTemplateDisplayContext {
 	}
 
 	public DDMStructure getDDMStructure() {
-		if (_ddmStructure != null) {
-			return _ddmStructure;
-		}
-
-		if (getClassPK() <= 0) {
+		if ((_ddmStructure != null) || (getClassPK() <= 0)) {
 			return _ddmStructure;
 		}
 

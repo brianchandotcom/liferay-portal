@@ -71,11 +71,8 @@ public class AccountEntryUsersScreenNavigationCategory
 	public boolean isVisible(
 		User user, AccountEntryDisplay accountEntryDisplay) {
 
-		if (accountEntryDisplay.getAccountEntryId() == 0) {
-			return false;
-		}
-
-		if (!Objects.equals(
+		if ((accountEntryDisplay.getAccountEntryId() == 0) ||
+			!Objects.equals(
 				accountEntryDisplay.getType(),
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
 

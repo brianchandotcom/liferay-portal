@@ -183,11 +183,9 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 				(dir, name) -> {
 					File file = new File(dir, name);
 
-					if (!file.isDirectory()) {
-						return false;
-					}
+					if (!file.isDirectory() ||
+						commonConfigDirNames.contains(name)) {
 
-					if (commonConfigDirNames.contains(name)) {
 						return false;
 					}
 

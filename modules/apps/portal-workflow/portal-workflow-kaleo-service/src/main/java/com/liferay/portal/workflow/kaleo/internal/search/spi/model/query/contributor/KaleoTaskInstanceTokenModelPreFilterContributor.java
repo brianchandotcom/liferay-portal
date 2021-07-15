@@ -449,20 +449,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
 		if (ArrayUtil.isNotEmpty(
-				kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys())) {
+				kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) ||
+			ArrayUtil.isNotEmpty(kaleoTaskInstanceTokenQuery.getAssetTypes()) ||
+			(kaleoTaskInstanceTokenQuery.getDueDateGT() != null) ||
+			(kaleoTaskInstanceTokenQuery.getDueDateLT() != null)) {
 
-			return true;
-		}
-
-		if (ArrayUtil.isNotEmpty(kaleoTaskInstanceTokenQuery.getAssetTypes())) {
-			return true;
-		}
-
-		if (kaleoTaskInstanceTokenQuery.getDueDateGT() != null) {
-			return true;
-		}
-
-		if (kaleoTaskInstanceTokenQuery.getDueDateLT() != null) {
 			return true;
 		}
 

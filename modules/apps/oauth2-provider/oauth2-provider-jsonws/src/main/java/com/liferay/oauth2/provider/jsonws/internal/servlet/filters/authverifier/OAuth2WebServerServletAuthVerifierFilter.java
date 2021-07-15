@@ -62,11 +62,9 @@ public class OAuth2WebServerServletAuthVerifierFilter
 		String authorization = httpServletRequest.getHeader(
 			HttpHeaders.AUTHORIZATION);
 
-		if (Validator.isBlank(authorization)) {
-			return false;
-		}
+		if (Validator.isBlank(authorization) ||
+			!StringUtil.startsWith(authorization, "Bearer")) {
 
-		if (!StringUtil.startsWith(authorization, "Bearer")) {
 			return false;
 		}
 

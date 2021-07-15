@@ -728,11 +728,9 @@ public class AutoBatchPreparedStatementUtilTest {
 
 			_methods.add(method);
 
-			if (method.equals(PreparedStatement.class.getMethod("addBatch"))) {
-				return null;
-			}
+			if (method.equals(PreparedStatement.class.getMethod("addBatch")) ||
+				method.equals(PreparedStatement.class.getMethod("close"))) {
 
-			if (method.equals(PreparedStatement.class.getMethod("close"))) {
 				return null;
 			}
 

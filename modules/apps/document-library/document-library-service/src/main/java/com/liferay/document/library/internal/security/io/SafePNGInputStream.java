@@ -118,11 +118,7 @@ public class SafePNGInputStream extends InputStream {
 
 		int n = _bufferedInputStream.read(bytes);
 
-		if (n != _CHUNK_ID_SIZE) {
-			return PNGChunkType.OTHER;
-		}
-
-		if ((bytes[0] != 'i') && (bytes[0] != 'z')) {
+		if ((n != _CHUNK_ID_SIZE) || ((bytes[0] != 'i') && (bytes[0] != 'z'))) {
 			return PNGChunkType.OTHER;
 		}
 

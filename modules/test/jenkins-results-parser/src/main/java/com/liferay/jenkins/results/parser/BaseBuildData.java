@@ -311,11 +311,7 @@ public abstract class BaseBuildData implements BuildData {
 	protected static boolean isValidJSONObject(
 		JSONObject jsonObject, String type) {
 
-		if (jsonObject == null) {
-			return false;
-		}
-
-		if (type == null) {
+		if ((jsonObject == null) || (type == null)) {
 			return false;
 		}
 

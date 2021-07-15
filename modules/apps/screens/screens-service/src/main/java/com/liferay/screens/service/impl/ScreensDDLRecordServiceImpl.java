@@ -198,11 +198,7 @@ public class ScreensDDLRecordServiceImpl
 
 		String fieldValueString = value.getString(locale);
 
-		if (fieldValueString == null) {
-			return null;
-		}
-
-		if (fieldValueString.isEmpty()) {
+		if ((fieldValueString == null) || fieldValueString.isEmpty()) {
 			return null;
 		}
 

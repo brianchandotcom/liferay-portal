@@ -349,15 +349,10 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return false;
 		}
 
-		if (MultiSessionErrors.contains(portletRequest, "warning")) {
-			return true;
-		}
+		if (MultiSessionErrors.contains(portletRequest, "warning") ||
+			(_key == null) ||
+			MultiSessionErrors.contains(portletRequest, _key)) {
 
-		if (_key == null) {
-			return true;
-		}
-
-		if (MultiSessionErrors.contains(portletRequest, _key)) {
 			return true;
 		}
 

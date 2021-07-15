@@ -465,14 +465,10 @@ public class MapUtil {
 
 			String keyString = String.valueOf(entry.getKey());
 
-			if ((hideIncludesRegex != null) &&
-				!keyString.matches(hideIncludesRegex)) {
-
-				value = "********";
-			}
-
-			if ((hideExcludesRegex != null) &&
-				keyString.matches(hideExcludesRegex)) {
+			if (((hideIncludesRegex != null) &&
+				 !keyString.matches(hideIncludesRegex)) ||
+				((hideExcludesRegex != null) &&
+				 keyString.matches(hideExcludesRegex))) {
 
 				value = "********";
 			}

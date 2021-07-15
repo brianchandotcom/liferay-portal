@@ -44,6 +44,15 @@ jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext'
 );
 
+jest.mock(
+	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			contentBrowsingEnabled: true,
+		},
+	})
+);
+
 const contents = [
 	{
 		actions: {
@@ -72,6 +81,19 @@ const contents = [
 		classPK: '11112',
 		subtype: 'Collection',
 		title: 'Test Collection',
+	},
+	{
+		actions: {
+			editImage: {
+				editImageURL: '/editImageURL',
+				fileEntryId: '40571',
+				previewURL: '/previewURL',
+			},
+		},
+		classPK: '40571',
+		subtype: 'Basic Document',
+		title: 'image.png',
+		type: 'Document',
 	},
 ];
 
@@ -131,6 +153,19 @@ describe('PageContent', () => {
 		expect(
 			queryByText('Basic Web Content to be added')
 		).toBeInTheDocument();
+	});
+
+	it('open image editor modal when the Edit Image action is clicked', async () => {
+		const {baseElement, queryByText} = renderPageContent(contents[2]);
+
+		fireEvent.click(queryByText('open-actions-menu'));
+		fireEvent.click(queryByText('edit-image'));
+
+		await wait(() => {
+			expect(
+				baseElement.querySelector('.image-editor-modal')
+			).toBeInTheDocument();
+		});
 	});
 
 	it('shows the edit button if the content is inline text', () => {

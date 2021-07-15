@@ -15,6 +15,7 @@
 import {
 	FormSupport,
 	PagesVisitor,
+	StringUtils,
 	generateInstanceId,
 	normalizeFieldName,
 } from 'data-engine-js-components-web';
@@ -23,7 +24,6 @@ import {
 	getDefaultFieldName,
 	localizeField,
 } from '../../../util/fieldSupport.es';
-import {sub} from '../../../util/strings.es';
 import {
 	getSettingsContextProperty,
 	updateField,
@@ -141,7 +141,9 @@ export const getLabel = (
 		return;
 	}
 
-	return sub(Liferay.Language.get('copy-of-x'), [labelFieldLocalizedValue]);
+	return StringUtils.sub(Liferay.Language.get('copy-of-x'), [
+		labelFieldLocalizedValue,
+	]);
 };
 
 export const updateFieldValidationProperty = (

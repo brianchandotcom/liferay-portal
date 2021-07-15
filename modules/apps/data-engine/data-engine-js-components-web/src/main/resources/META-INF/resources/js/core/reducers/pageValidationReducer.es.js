@@ -12,8 +12,7 @@
  * details.
  */
 
-import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
-
+import {sub} from '../../utils/strings';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 

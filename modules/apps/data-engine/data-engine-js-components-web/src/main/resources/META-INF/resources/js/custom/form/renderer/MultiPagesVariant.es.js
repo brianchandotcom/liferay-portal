@@ -15,12 +15,12 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
-import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 import React from 'react';
 
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
 import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {usePage} from '../../../core/hooks/usePage.es';
+import {sub} from '../../../utils/strings';
 import {EVENT_TYPES} from '../eventTypes.es';
 
 export const Container = ({children, empty, pageIndex, pages}) => {

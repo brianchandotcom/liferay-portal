@@ -12,11 +12,8 @@
  * details.
  */
 
-import './Field.scss';
-
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 import MetalComponent from 'metal-component';
 import React, {
 	Suspense,
@@ -27,11 +24,14 @@ import React, {
 	useState,
 } from 'react';
 
+import {sub} from '../../../utils/strings';
 import {useFormState} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import {useStorage} from '../../hooks/useStorage.es';
 import {AutoFocus} from '../AutoFocus.es';
 import {ErrorBoundary} from '../ErrorBoundary.es';
+
+import './Field.scss';
 import {MetalComponentAdapter} from './MetalComponentAdapter.es';
 import {ParentFieldContext} from './ParentFieldContext.es';
 

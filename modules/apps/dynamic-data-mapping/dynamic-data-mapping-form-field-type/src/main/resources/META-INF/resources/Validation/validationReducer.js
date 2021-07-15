@@ -12,7 +12,7 @@
  * details.
  */
 
-import {subWords} from '../util/strings.es';
+import {StringUtils} from 'data-engine-js-components-web';
 
 export const EVENT_TYPES = {
 	CHANGE_ERROR_MESSAGE: 'changeErrorMessage',
@@ -35,7 +35,7 @@ const reducer = ({editingLanguageId, fieldName, onChange}) => (
 		if (state.enableValidation) {
 			expression = {
 				name: state.selectedValidation.name,
-				value: subWords(state.selectedValidation.template, {
+				value: StringUtils.subWords(state.selectedValidation.template, {
 					name: fieldName,
 				}),
 			};

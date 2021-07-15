@@ -15,12 +15,12 @@
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {
 	FormSupport,
+	StringUtils,
 	convertToFormData,
 	makeFetch,
 	useConfig,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import objectHash from 'object-hash';
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 
@@ -76,7 +76,7 @@ const updateAutoSaveMessage = ({
 		`#${portletNamespace}autosaveMessage`
 	);
 
-	autoSaveMessageNode.innerHTML = sub(
+	autoSaveMessageNode.innerHTML = StringUtils.sub(
 		saveAsDraft
 			? Liferay.Language.get('draft-x')
 			: Liferay.Language.get('saved-x'),

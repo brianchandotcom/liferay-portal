@@ -90,15 +90,15 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _deleteFromClassName(String... classNames) throws Exception {
+	private void _deleteFromClassName(String[] classNames) throws Exception {
 		_deleteFrom("ClassName_", "value", classNames);
 	}
 
-	private void _deleteFromPortlet(String... portletIds) throws Exception {
+	private void _deleteFromPortlet(String[] portletIds) throws Exception {
 		_deleteFrom("Portlet", "portletId", portletIds);
 	}
 
-	private void _deleteFromPortletPreferences(String... portletIds)
+	private void _deleteFromPortletPreferences(String[] portletIds)
 		throws Exception {
 
 		for (String portletId : portletIds) {
@@ -109,29 +109,29 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _deleteFromRelease(String... servletContextNames)
+	private void _deleteFromRelease(String[] servletContextNames)
 		throws Exception {
 
 		_deleteFrom("Release_", "servletContextName", servletContextNames);
 	}
 
-	private void _deleteFromResourceAction(String... names) throws Exception {
+	private void _deleteFromResourceAction(String[] names) throws Exception {
 		_deleteFrom("ResourceAction", "name", names);
 	}
 
-	private void _deleteFromResourcePermission(String... names)
+	private void _deleteFromResourcePermission(String[] names)
 		throws Exception {
 
 		_deleteFrom("ResourcePermission", "name", names);
 	}
 
-	private void _deleteFromServiceComponent(String... buildNamespaces)
+	private void _deleteFromServiceComponent(String buildNamespace)
 		throws Exception {
 
-		_deleteFrom("ServiceComponent", "buildNamespace", buildNamespaces);
+		_deleteFrom("ServiceComponent", "buildNamespace", buildNamespace);
 	}
 
-	private void _dropTables(String... tableNames) throws Exception {
+	private void _dropTables(String[] tableNames) throws Exception {
 		for (String tableName : tableNames) {
 			if (hasTable(tableName)) {
 				runSQL("drop table " + tableName);

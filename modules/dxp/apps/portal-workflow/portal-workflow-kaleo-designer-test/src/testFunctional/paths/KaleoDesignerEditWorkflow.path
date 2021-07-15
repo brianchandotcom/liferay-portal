@@ -93,6 +93,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_BY_TITLE</td>
+	<td>//ul//li[@title='${key_nodeNodeTitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

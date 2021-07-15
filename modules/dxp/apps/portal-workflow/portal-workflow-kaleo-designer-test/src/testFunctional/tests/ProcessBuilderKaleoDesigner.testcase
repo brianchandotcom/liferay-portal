@@ -473,12 +473,18 @@ definition {
 	}
 
 	@description = "Verify that default names for nodes are provided"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DefaultNamesAreProvided {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68448 DefaultNamesAreProvided pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
+		ProcessBuilderKaleoDesigner.addNodesByDragging(nodeTitleAndPositionList = "Condition;300.100,End;180.70,Fork;280.100,Join;280.270,Join XOR;360.200,Start;360.70,State;390.250,Task;400.100");
+
+		ProcessBuilderKaleoDesigner.assertDefaultNodesOnForm(nodesList = "condition,end,fork,join,join-xor,start,state,task");
 	}
 
 	@description = "Verify that If user selects node, cross on top right appear"

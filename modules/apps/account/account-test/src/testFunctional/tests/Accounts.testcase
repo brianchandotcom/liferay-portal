@@ -700,6 +700,40 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+	@description = "This test removes a user from a person account"
+	@priority = "4"
+	test CanRemoveUserFromPersonAccount {
+		Accounts.openAccountsAdmin();
+
+		Accounts.addPersonAccount(
+			accountDescription = "This is a Person Account.",
+			accountName = "Person Account");
+
+		Accounts.addNewUserToPersonAccount(
+			accountName = "Person Account",
+			accountUserName = "userfn1",
+			userEmailAddress = "userfn1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		Click(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY");
+
+		Alert.viewMutedMessage(muteMessage = "Assign a user to this person account.");
+
+		Button.clickSave();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Person Account");
+
+		AssertElementNotPresent(
+			key_userName = "userfn1",
+			locator1 = "Account#USER_TABLE_NAME");
+	}
+
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {

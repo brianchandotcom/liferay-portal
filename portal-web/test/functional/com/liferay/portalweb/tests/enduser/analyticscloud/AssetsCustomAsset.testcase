@@ -19,10 +19,10 @@ definition {
 		ACUtils.addSiteAndPage();
 
 		ACUtils.createWCAndAddToPage(
-			webContentTitle = "Custom Asset AC Title",
 			webContentRichText = '''<div data-analytics-asset-type='custom' data-analytics-asset-id='analytics-portal' \
 			data-analytics-asset-category='AC' data-analytics-asset-title='Custom Asset Analytics Cloud'> \
-			<h1> What's your favorite portal? </h1> </div>''');
+			<h1> What's your favorite portal? </h1> </div>''',
+			webContentTitle = "Custom Asset AC Title");
 	}
 
 	tearDown {
@@ -51,10 +51,10 @@ definition {
 		for (var n : list "2,3") {
 			ACUtils.createWCAndAddToPage(
 				layoutName = "AC Page ${n}",
-				webContentTitle = "Custom Asset AC Title ${n}",
 				webContentRichText = '''<div data-analytics-asset-type='custom' data-analytics-asset-id='analytics-portal-${n}' \
 				data-analytics-asset-category='AC' data-analytics-asset-title='Custom Asset Analytics Cloud ${n}'> \
-				<h1> What's your favorite portal ${n}? </h1> </div>''');
+				<h1> What's your favorite portal ${n}? </h1> </div>''',
+				webContentTitle = "Custom Asset AC Title ${n}");
 		}
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

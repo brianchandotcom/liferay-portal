@@ -790,6 +790,55 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
+	@description = "This test removes multiple users from an account in bulk via management toolbar"
+	@priority = "3"
+	test CanRemoveUsersFromAccountsInBulk {
+		Accounts.openAccountsAdmin();
+
+		Accounts.addBusinessAccount(accountName = "Business Account");
+
+		for (var accountUser : list "1,2,3,4") {
+			AccountUsers.openAccountUsersAdmin();
+
+			AccountUsers.addUser(
+				accountName = "Business Account",
+				userEmailAddress = "userea${accountUser}@liferay.com",
+				userFirstName = "userfn${accountUser}",
+				userLastName = "userln${accountUser}",
+				userScreenName = "usersn${accountUser}");
+		}
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		for (var accountUser : list "1,3,4") {
+			LexiconEntry.selectEntry(rowEntry = "userfn${accountUser} userln${accountUser}");
+		}
+
+		ClickNoError(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected users?");
+
+		Alert.viewSuccessMessage();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		for (var accountUser : list "1,3,4") {
+			LexiconEntry.viewNoEntry(rowEntry = "userfn${accountUser} userln${accountUser}");
+		}
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+	}
+
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = "3"
 	test CanSetDefaultAddresses {

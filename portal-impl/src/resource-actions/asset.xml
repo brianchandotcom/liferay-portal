@@ -83,11 +83,13 @@
 		<permissions>
 			<supports>
 				<action-key>MANAGE_TAG</action-key>
+				<action-key>SUBSCRIBE</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>MANAGE_TAG</action-key>
+				<action-key>SUBSCRIBE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

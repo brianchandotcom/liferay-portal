@@ -447,6 +447,40 @@ public abstract class BaseKeywordResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "keywordId")})
+	@Path("/keywords/{keywordId}/subscribe")
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "Keyword")})
+	public void putKeywordSubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
+				keywordId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "keywordId")})
+	@Path("/keywords/{keywordId}/unsubscribe")
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "Keyword")})
+	public void putKeywordUnsubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
+				keywordId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords'  -u 'test@liferay.com:test'
 	 */
 	@GET

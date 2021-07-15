@@ -314,7 +314,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.taxonomy.client', and version '4.0.3'."
+        'com.liferay.headless.admin.taxonomy.client', and version '4.0.5'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -664,6 +664,7 @@ paths:
             tags: ["Keyword"]
     "/keywords/{keywordId}/subscribe":
         put:
+            operationId: putKeywordSubscribe
             parameters:
                 - in: path
                   name: keywordId
@@ -681,6 +682,7 @@ paths:
             tags: ["Keyword"]
     "/keywords/{keywordId}/unsubscribe":
         put:
+            operationId: putKeywordUnsubscribe
             parameters:
                 - in: path
                   name: keywordId

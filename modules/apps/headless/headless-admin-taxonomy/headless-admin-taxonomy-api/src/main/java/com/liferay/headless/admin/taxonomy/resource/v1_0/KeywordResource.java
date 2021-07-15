@@ -90,6 +90,10 @@ public interface KeywordResource {
 	public Response putKeywordBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void putKeywordSubscribe(Long keywordId) throws Exception;
+
+	public void putKeywordUnsubscribe(Long keywordId) throws Exception;
+
 	public Page<Keyword> getSiteKeywordsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

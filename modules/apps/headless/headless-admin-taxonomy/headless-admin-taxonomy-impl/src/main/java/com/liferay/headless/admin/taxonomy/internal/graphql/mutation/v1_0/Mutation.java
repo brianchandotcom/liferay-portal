@@ -177,6 +177,33 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean updateKeywordSubscribe(
+			@GraphQLName("keywordId") Long keywordId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.putKeywordSubscribe(keywordId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateKeywordUnsubscribe(
+			@GraphQLName("keywordId") Long keywordId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.putKeywordUnsubscribe(
+				keywordId));
+
+		return true;
+	}
+
 	@GraphQLField(description = "Inserts a new keyword in a Site.")
 	public Keyword createSiteKeyword(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,

@@ -794,6 +794,42 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testPutKeywordSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword = testPutKeywordSubscribe_addKeyword();
+
+		assertHttpResponseStatusCode(
+			204,
+			keywordResource.putKeywordSubscribeHttpResponse(keyword.getId()));
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.putKeywordSubscribeHttpResponse(0L));
+	}
+
+	protected Keyword testPutKeywordSubscribe_addKeyword() throws Exception {
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testPutKeywordUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword = testPutKeywordUnsubscribe_addKeyword();
+
+		assertHttpResponseStatusCode(
+			204,
+			keywordResource.putKeywordUnsubscribeHttpResponse(keyword.getId()));
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.putKeywordUnsubscribeHttpResponse(0L));
+	}
+
+	protected Keyword testPutKeywordUnsubscribe_addKeyword() throws Exception {
+		return keywordResource.postSiteKeyword(
+			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
 	public void testGetSiteKeywordsPage() throws Exception {
 		Page<Keyword> page = keywordResource.getSiteKeywordsPage(
 			testGetSiteKeywordsPage_getSiteId(), RandomTestUtil.randomString(),

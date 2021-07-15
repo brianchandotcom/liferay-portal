@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactory;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactoryTracker;
@@ -24,6 +25,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -32,15 +34,21 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Map;
 import java.util.Optional;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(service = ContentDashboardItemFactory.class)
+@Component(
+	configurationPid = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration",
+	service = ContentDashboardItemFactory.class
+)
 public class FileEntryContentDashboardItemFactory
 	implements ContentDashboardItemFactory<FileEntry> {
 
@@ -84,6 +92,19 @@ public class FileEntryContentDashboardItemFactory
 			infoItemFieldValuesProvider, fileEntry, _language, _portal);
 	}
 
+	@Override
+	public boolean isEnabled() {
+		return _ffContentDashboardDocumentConfiguration.enabled();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ffContentDashboardDocumentConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FFContentDashboardDocumentConfiguration.class, properties);
+	}
+
 	@Reference
 	protected InfoItemServiceTracker infoItemServiceTracker;
 
@@ -100,6 +121,9 @@ public class FileEntryContentDashboardItemFactory
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	private volatile FFContentDashboardDocumentConfiguration
+		_ffContentDashboardDocumentConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

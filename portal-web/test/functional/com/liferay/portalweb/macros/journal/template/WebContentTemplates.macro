@@ -34,6 +34,8 @@ definition {
 	@summary = "Helper function to add description '${description}' to the template"
 	macro _inputDescription {
 		if (isSet(templateDescription)) {
+			Navigator.gotoSidebarTab(tabName = "Properties");
+
 			PortletEntry.inputDescription(description = "${templateDescription}");
 		}
 	}
@@ -41,6 +43,8 @@ definition {
 	@summary = "Helper function to link structure '${structureName}' to the template"
 	macro _inputStructure {
 		if (isSet(structureName)) {
+			Navigator.gotoSidebarTab(tabName = "Properties");
+
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			Click(
@@ -207,6 +211,8 @@ definition {
 		WebContentTemplates._inputDescription(templateDescription = "${templateDescription}");
 
 		if (isSet(imageSourceURL)) {
+			Navigator.gotoSidebarTab(tabName = "Properties");
+
 			WebContent.addFeaturedImageFromURL(imageSourceURL = "${imageSourceURL}");
 		}
 

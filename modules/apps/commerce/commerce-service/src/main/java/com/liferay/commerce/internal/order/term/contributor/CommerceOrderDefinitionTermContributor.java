@@ -182,11 +182,6 @@ public class CommerceOrderDefinitionTermContributor
 			addressSB.append("<br/>");
 		}
 
-		if (!Validator.isBlank(commerceAddress.getStreet3())) {
-			addressSB.append(commerceAddress.getStreet3());
-			addressSB.append("<br/>");
-		}
-
 		addressSB.append(commerceAddress.getCity());
 		addressSB.append(StringPool.COMMA_AND_SPACE);
 		addressSB.append(commerceAddress.getZip());

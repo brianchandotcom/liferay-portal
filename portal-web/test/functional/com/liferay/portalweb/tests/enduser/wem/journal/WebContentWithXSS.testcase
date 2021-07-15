@@ -57,6 +57,8 @@ definition {
 			NavItem.click(navItem = "Web Content");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "${escapedScript}");
+
+			AssertAlertNotPresent();
 		}
 	}
 

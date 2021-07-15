@@ -460,7 +460,7 @@ definition {
 			key_oldFriendlyURL = "${activeURL}",
 			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
 
-		Click(locator1 = "Icon#TIMES");
+		Click(locator1 = "Modal#CLOSE_BUTTON");
 
 		AssertVisible(
 			locator1 = "TextInput#FRIENDLY_URL",

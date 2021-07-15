@@ -534,9 +534,6 @@ definition {
 	@description = "This is a test for LPS-132081. View mapped content of assets in display page template for Category when apply the Items with This Category to Collection Display."
 	@priority = "5"
 	test ViewMappedContentInCollectionDisplayWithItemsWithThisCategory {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",

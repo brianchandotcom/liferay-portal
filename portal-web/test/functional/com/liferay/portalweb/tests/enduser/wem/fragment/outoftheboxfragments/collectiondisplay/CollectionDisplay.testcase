@@ -152,9 +152,6 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Categories for This Item into another Collection Display with a dynamic collection."
 	@priority = "5"
 	test AddCollectionDisplayWithCategoriesForThisItemToAnotherCollectionDisplayWithDynamicCollection {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -392,9 +389,6 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Items with This Category into another Collection Display with Categories for This Item."
 	@priority = "4"
 	test AddCollectionDisplayWithItemsWithThisCategoryToAnotherCollectionDisplayWithCategoriesForThisItem {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -577,9 +571,6 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with a manual collection into another Collection Display with Recent Content."
 	@priority = "5"
 	test AddCollectionDisplayWithManualCollectionToAnotherCollectionDisplayWithRecentContent {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a web content,a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -730,9 +721,6 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with a Most Viewed Assets into another Collection Display with a manual collection."
 	@priority = "4"
 	test AddCollectionDisplayWithMostViewedAssetsToAnotherCollectionDisplayWithManualCollection {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a web content,a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -888,9 +876,6 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with the Highest Rated Assets."
 	@priority = "5"
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithHighestRatedAssets {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a web content,a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -1128,9 +1113,6 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with Items with This Category."
 	@priority = "4"
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithItemsWithThisCategory {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
@@ -4754,8 +4736,6 @@ definition {
 	@description = "This is a use case for LPS-127023. The related assets should be in Collection Display when select Related Assets as Related Items Collection Provider."
 	@priority = "5"
 	test ViewRelatedAssetsInCollectionDisplayWithNewRelatedAssets {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
 		property testray.main.component.name = "Display Pages";
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
@@ -5007,9 +4987,6 @@ definition {
 	@description = "This is a test for LPS-132081. View related categories shown in display page template for non-category assets when apply Categories for This Item to Collection Display."
 	@priority = "5"
 	test ViewRelatedCategoriesInCollectionDisplayWithCategoriesForThisItem {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

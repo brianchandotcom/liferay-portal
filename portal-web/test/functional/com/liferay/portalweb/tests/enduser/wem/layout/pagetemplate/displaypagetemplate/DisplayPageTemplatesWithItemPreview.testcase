@@ -559,9 +559,6 @@ definition {
 	@description = "This is a test for LPS-132081. View mapped content in Collection Display with Items with This Category when select preview category item in display page template for Category."
 	@priority = "4"
 	test ViewMappedContentOfPreviewCategoryItemInCollectionDisplayWithItemsWithThisCategory {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -1137,9 +1134,6 @@ definition {
 	@description = "This is a test for LPS-132081. View related categories when select preview item in display page template for non-category assets."
 	@priority = "4"
 	test ViewRelatedCategoriesOfPreviewItemInCollectionDisplayWithCategoriesForThisItem {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

@@ -129,13 +129,10 @@ public class DataCleanupTest {
 	}
 
 	@Test
-	public void testDeprecatedModulesUpgradeOpenSocial()
-		throws Exception {
-
+	public void testDeprecatedModulesUpgradeOpenSocial() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpOpenSocialModuleData", "opensocial-portlet",
-			"dependencies/opensocial-tables.sql",
-			"3_WAR_opensocialportlet");
+			"dependencies/opensocial-tables.sql", "3_WAR_opensocialportlet");
 	}
 
 	@Test

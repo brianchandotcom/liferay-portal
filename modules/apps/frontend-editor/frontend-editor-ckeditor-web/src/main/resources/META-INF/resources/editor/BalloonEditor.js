@@ -50,6 +50,10 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 			data={contents}
 			name={name}
 			onBeforeLoad={(CKEDITOR) => {
+				CKEDITOR.ADDITIONAL_RESOURCE_PARAMS = {
+					languageId: themeDisplay.getLanguageId(),
+				};
+
 				CKEDITOR.disableAutoInline = true;
 
 				setCssClass(CKEDITOR.env.cssClass);

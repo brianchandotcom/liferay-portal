@@ -70,11 +70,33 @@ public class TestrayBuild {
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults() {
-		if (_testrayCaseResults == null) {
-			_initTestrayCaseResults();
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+
+		String urlString = String.valueOf(getURL());
+
+		String caseResultsAPIURLString = urlString.replace(
+			"runs", "case_results.json");
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				caseResultsAPIURLString);
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			for (int i = 0; i < dataJSONArray.length(); i++) {
+				JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
+
+				TestrayCaseResult testrayCaseResult = new TestrayCaseResult(
+					this, dataJSONObject);
+
+				testrayCaseResults.add(testrayCaseResult);
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
-		return _testrayCaseResults;
+		return testrayCaseResults;
 	}
 
 	public TestrayProductVersion getTestrayProductVersion() {
@@ -439,34 +461,6 @@ public class TestrayBuild {
 			buildResultJSONObject);
 	}
 
-	private void _initTestrayCaseResults() {
-		_testrayCaseResults = new ArrayList<>();
-
-		String urlString = String.valueOf(getURL());
-
-		String caseResultsAPIURLString = urlString.replace(
-			"runs", "case_results.json");
-
-		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				caseResultsAPIURLString);
-
-			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
-
-			for (int i = 0; i < dataJSONArray.length(); i++) {
-				JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
-
-				TestrayCaseResult testrayCaseResult = new TestrayCaseResult(
-					this, dataJSONObject);
-
-				_testrayCaseResults.add(testrayCaseResult);
-			}
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-	}
-
 	private boolean _buildResultDataPopulated;
 	private JSONObject _buildResultJSONObject;
 	private URL _buildResultURL;
@@ -474,7 +468,6 @@ public class TestrayBuild {
 	private final JSONObject _jsonObject;
 	private String _result;
 	private int _startTimestamp;
-	private List<TestrayCaseResult> _testrayCaseResults;
 	private final TestrayProductVersion _testrayProductVersion;
 	private final TestrayProject _testrayProject;
 	private final TestrayRoutine _testrayRoutine;

@@ -50,6 +50,10 @@
 		<order by="asc">
 			<order-column name="name" />
 		</order>
+
+		<!-- References -->
+
+		<reference entity="Resource" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="ObjectEntry" remote-service="true" uuid="true">
 

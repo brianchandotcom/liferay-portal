@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -220,6 +221,11 @@ public class ObjectDefinitionLocalServiceImpl
 					return null;
 				});
 		}
+
+		resourceLocalService.deleteResource(
+			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			objectDefinition.getObjectDefinitionId());
 
 		return objectDefinition;
 	}
@@ -511,6 +517,11 @@ public class ObjectDefinitionLocalServiceImpl
 					objectField.isRequired(), objectField.getType());
 			}
 		}
+
+		resourceLocalService.addResources(
+			objectDefinition.getCompanyId(), 0, objectDefinition.getUserId(),
+			ObjectDefinition.class.getName(),
+			objectDefinition.getObjectDefinitionId(), false, true, true);
 
 		return objectDefinition;
 	}

@@ -24,6 +24,7 @@ import com.liferay.search.tuning.rankings.model.STRankingsEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for STRankingsEntry. This utility wraps
@@ -44,6 +45,15 @@ public class STRankingsEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.tuning.rankings.service.impl.STRankingsEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static STRankingsEntry addSTRankingsEntry(
+		List<String> aliases, List<String> hiddenDocumentIds, boolean inactive,
+		String indexName, String name, Map<Integer, String> documentIdsMap,
+		String queryString) {
+
+		return getService().addSTRankingsEntry(
+			aliases, hiddenDocumentIds, inactive, indexName, name,
+			documentIdsMap, queryString);
+	}
 
 	/**
 	 * Adds the st rankings entry to the database. Also notifies the appropriate model listeners.
@@ -59,6 +69,12 @@ public class STRankingsEntryLocalServiceUtil {
 		STRankingsEntry stRankingsEntry) {
 
 		return getService().addSTRankingsEntry(stRankingsEntry);
+	}
+
+	public static STRankingsEntry addSTRankingsEntry(
+		String indexName, String name, String queryString) {
+
+		return getService().addSTRankingsEntry(indexName, name, queryString);
 	}
 
 	/**
@@ -263,6 +279,12 @@ public class STRankingsEntryLocalServiceUtil {
 		return getService().getSTRankingsEntries(start, end);
 	}
 
+	public static List<STRankingsEntry> getSTRankingsEntriesByCompanyId(
+		long companyId) {
+
+		return getService().getSTRankingsEntriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Returns the number of st rankings entries.
 	 *
@@ -283,6 +305,17 @@ public class STRankingsEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getSTRankingsEntry(STRankingsEntryId);
+	}
+
+	public static STRankingsEntry updateSTRankingsEntry(
+			long stRankingsEntryId, List<String> aliases,
+			List<String> hiddenDocumentIds, boolean inactive, String name,
+			Map<Integer, String> documentIdsMap)
+		throws PortalException {
+
+		return getService().updateSTRankingsEntry(
+			stRankingsEntryId, aliases, hiddenDocumentIds, inactive, name,
+			documentIdsMap);
 	}
 
 	/**

@@ -35,6 +35,7 @@ import com.liferay.search.tuning.rankings.model.STRankingsEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -61,6 +62,10 @@ public interface STRankingsEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.search.tuning.rankings.service.impl.STRankingsEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the st rankings entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link STRankingsEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public STRankingsEntry addSTRankingsEntry(
+		List<String> aliases, List<String> hiddenDocumentIds, boolean inactive,
+		String indexName, String name, Map<Integer, String> documentIdsMap,
+		String queryString);
 
 	/**
 	 * Adds the st rankings entry to the database. Also notifies the appropriate model listeners.
@@ -74,6 +79,9 @@ public interface STRankingsEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public STRankingsEntry addSTRankingsEntry(STRankingsEntry stRankingsEntry);
+
+	public STRankingsEntry addSTRankingsEntry(
+		String indexName, String name, String queryString);
 
 	/**
 	 * @throws PortalException
@@ -236,6 +244,10 @@ public interface STRankingsEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<STRankingsEntry> getSTRankingsEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<STRankingsEntry> getSTRankingsEntriesByCompanyId(
+		long companyId);
+
 	/**
 	 * Returns the number of st rankings entries.
 	 *
@@ -253,6 +265,12 @@ public interface STRankingsEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public STRankingsEntry getSTRankingsEntry(long STRankingsEntryId)
+		throws PortalException;
+
+	public STRankingsEntry updateSTRankingsEntry(
+			long stRankingsEntryId, List<String> aliases,
+			List<String> hiddenDocumentIds, boolean inactive, String name,
+			Map<Integer, String> documentIdsMap)
 		throws PortalException;
 
 	/**

@@ -58,4 +58,22 @@ public interface STRankingsEntry extends PersistedModel, STRankingsEntryModel {
 
 		};
 
+	public java.util.List<String> getAliases();
+
+	public java.util.List<String> getHiddenDocumentIds();
+
+	public boolean getInactive();
+
+	public String getIndexName();
+
+	public String getJSON();
+
+	public String getName();
+
+	public java.util.Map<Integer, String> getPinnedDocumentIds();
+
+	public String getQueryString();
+
+	public String getRankingDocumentId();
+
 }

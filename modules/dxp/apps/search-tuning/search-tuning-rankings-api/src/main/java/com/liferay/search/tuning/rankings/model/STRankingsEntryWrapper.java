@@ -69,6 +69,11 @@ public class STRankingsEntryWrapper
 		}
 	}
 
+	@Override
+	public java.util.List<String> getAliases() {
+		return model.getAliases();
+	}
+
 	/**
 	 * Returns the company ID of this st rankings entry.
 	 *
@@ -77,6 +82,26 @@ public class STRankingsEntryWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	@Override
+	public java.util.List<String> getHiddenDocumentIds() {
+		return model.getHiddenDocumentIds();
+	}
+
+	@Override
+	public boolean getInactive() {
+		return model.getInactive();
+	}
+
+	@Override
+	public String getIndexName() {
+		return model.getIndexName();
+	}
+
+	@Override
+	public String getJSON() {
+		return model.getJSON();
 	}
 
 	/**
@@ -89,6 +114,16 @@ public class STRankingsEntryWrapper
 		return model.getMvccVersion();
 	}
 
+	@Override
+	public String getName() {
+		return model.getName();
+	}
+
+	@Override
+	public Map<Integer, String> getPinnedDocumentIds() {
+		return model.getPinnedDocumentIds();
+	}
+
 	/**
 	 * Returns the primary key of this st rankings entry.
 	 *
@@ -97,6 +132,16 @@ public class STRankingsEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	@Override
+	public String getQueryString() {
+		return model.getQueryString();
+	}
+
+	@Override
+	public String getRankingDocumentId() {
+		return model.getRankingDocumentId();
 	}
 
 	/**

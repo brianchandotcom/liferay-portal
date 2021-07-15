@@ -33,6 +33,19 @@ public class STRankingsEntryLocalServiceWrapper
 		_stRankingsEntryLocalService = stRankingsEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.search.tuning.rankings.model.STRankingsEntry
+		addSTRankingsEntry(
+			java.util.List<String> aliases,
+			java.util.List<String> hiddenDocumentIds, boolean inactive,
+			String indexName, String name,
+			java.util.Map<Integer, String> documentIdsMap, String queryString) {
+
+		return _stRankingsEntryLocalService.addSTRankingsEntry(
+			aliases, hiddenDocumentIds, inactive, indexName, name,
+			documentIdsMap, queryString);
+	}
+
 	/**
 	 * Adds the st rankings entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -50,6 +63,14 @@ public class STRankingsEntryLocalServiceWrapper
 				stRankingsEntry) {
 
 		return _stRankingsEntryLocalService.addSTRankingsEntry(stRankingsEntry);
+	}
+
+	@Override
+	public com.liferay.search.tuning.rankings.model.STRankingsEntry
+		addSTRankingsEntry(String indexName, String name, String queryString) {
+
+		return _stRankingsEntryLocalService.addSTRankingsEntry(
+			indexName, name, queryString);
 	}
 
 	/**
@@ -295,6 +316,15 @@ public class STRankingsEntryLocalServiceWrapper
 		return _stRankingsEntryLocalService.getSTRankingsEntries(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.search.tuning.rankings.model.STRankingsEntry>
+			getSTRankingsEntriesByCompanyId(long companyId) {
+
+		return _stRankingsEntryLocalService.getSTRankingsEntriesByCompanyId(
+			companyId);
+	}
+
 	/**
 	 * Returns the number of st rankings entries.
 	 *
@@ -319,6 +349,19 @@ public class STRankingsEntryLocalServiceWrapper
 
 		return _stRankingsEntryLocalService.getSTRankingsEntry(
 			STRankingsEntryId);
+	}
+
+	@Override
+	public com.liferay.search.tuning.rankings.model.STRankingsEntry
+			updateSTRankingsEntry(
+				long stRankingsEntryId, java.util.List<String> aliases,
+				java.util.List<String> hiddenDocumentIds, boolean inactive,
+				String name, java.util.Map<Integer, String> documentIdsMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _stRankingsEntryLocalService.updateSTRankingsEntry(
+			stRankingsEntryId, aliases, hiddenDocumentIds, inactive, name,
+			documentIdsMap);
 	}
 
 	/**

@@ -80,14 +80,10 @@ definition {
 			key_label = "Regular Select Element",
 			locator1 = "ClaySamplePortlet#SELECTOR");
 
-		Click(
+		Select(
 			key_label = "Regular Select Element",
-			key_option = "Sample 1",
-			locator1 = "ClaySamplePortlet#SELECTOR_OPTION");
-
-		Click(
-			key_label = "Regular Select Element",
-			locator1 = "ClaySamplePortlet#SELECTOR");
+			locator1 = "ClaySamplePortlet#SELECTOR",
+			value1 = "Sample 1");
 
 		takeScreenshot();
 

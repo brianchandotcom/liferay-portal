@@ -511,7 +511,11 @@ definition {
 	}
 
 	macro uncheckCheckbox {
-		ClickNoError(locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX");
+		var checkboxLabel = "${auditGraphCheckboxName}";
+
+		Click.javaScriptClick(
+				checkboxName = "Stage 1",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 }

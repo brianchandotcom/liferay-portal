@@ -253,7 +253,6 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	);
 
 	return {
-		canDropOverTarget: state.droppable,
 		isOverTarget,
 		sourceItem: state.dropItem,
 		targetPosition: state.targetPositionWithMiddle,

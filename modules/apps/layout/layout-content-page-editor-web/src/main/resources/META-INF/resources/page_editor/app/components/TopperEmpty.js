@@ -20,7 +20,6 @@ import {useSelector} from '../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
 import {useDropTarget} from '../utils/drag-and-drop/useDragAndDrop';
-import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 
 export default function ({children, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
@@ -34,29 +33,11 @@ export default function ({children, ...props}) {
 
 function TopperEmpty({children, item}) {
 	const containerRef = useRef(null);
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 
-	const {
-		canDropOverTarget,
-		isOverTarget,
-		sourceItem,
-		targetPosition,
-		targetRef,
-	} = useDropTarget(item);
+	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 
 	const isFragment = children.type === React.Fragment;
 	const realChildren = isFragment ? children.props.children : children;
-
-	const notDroppableMessage =
-		isOverTarget && !canDropOverTarget
-			? Liferay.Util.sub(
-					Liferay.Language.get('a-x-cannot-be-dropped-inside-a-x'),
-					[
-						getLayoutDataItemLabel(sourceItem, fragmentEntryLinks),
-						getLayoutDataItemLabel(item, fragmentEntryLinks),
-					]
-			  )
-			: null;
 
 	return React.Children.map(realChildren, (child) => {
 		if (!child) {
@@ -77,10 +58,8 @@ function TopperEmpty({children, item}) {
 						'drag-over-top':
 							isOverTarget &&
 							targetPosition === TARGET_POSITIONS.TOP,
-						'not-droppable': !!notDroppableMessage,
 						'page-editor__topper': true,
 					}),
-					'data-not-droppable-message': notDroppableMessage,
 					ref: (node) => {
 						containerRef.current = node;
 						targetRef(node);

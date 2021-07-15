@@ -115,13 +115,7 @@ function TopperContent({
 
 	const selectItem = useSelectItem();
 
-	const {
-		canDropOverTarget,
-		isOverTarget,
-		sourceItem,
-		targetPosition,
-		targetRef,
-	} = useDropTarget(item);
+	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 
 	const name =
 		getLayoutDataItemLabel(item, fragmentEntryLinks) ||
@@ -145,17 +139,6 @@ function TopperContent({
 
 	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
 
-	const notDroppableMessage =
-		isOverTarget && !canDropOverTarget
-			? Liferay.Util.sub(
-					Liferay.Language.get('a-x-cannot-be-dropped-inside-a-x'),
-					[
-						getLayoutDataItemLabel(sourceItem, fragmentEntryLinks),
-						getLayoutDataItemLabel(item, fragmentEntryLinks),
-					]
-			  )
-			: null;
-
 	return (
 		<div
 			className={classNames(className, 'page-editor__topper', {
@@ -172,7 +155,6 @@ function TopperContent({
 					isOverTarget && targetPosition === TARGET_POSITIONS.TOP,
 				dragged: isDraggingSource,
 				hovered: isHovered,
-				'not-droppable': !!notDroppableMessage,
 			})}
 			onClick={(event) => {
 				event.stopPropagation();
@@ -255,16 +237,7 @@ function TopperContent({
 			</TopperLabel>
 
 			<div className="page-editor__topper__content" ref={targetRef}>
-				<TopperErrorBoundary>
-					{React.cloneElement(children, {
-						data: notDroppableMessage
-							? {
-									'data-not-droppable-message': notDroppableMessage,
-							  }
-							: null,
-						withinTopper: true,
-					})}
-				</TopperErrorBoundary>
+				<TopperErrorBoundary>{children}</TopperErrorBoundary>
 			</div>
 		</div>
 	);

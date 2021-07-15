@@ -53,12 +53,6 @@ definition {
 			NavItem.click(navItem = "Web Content");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
-
-			WebContent.addWithStructureCP(
-				structureName = '''<script>alert(123);</script>''',
-				webContentTitle = "Web Content Title");
-
-			PortletEntry.publish();
 		}
 	}
 

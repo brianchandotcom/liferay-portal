@@ -30,7 +30,8 @@ export default function ({classTypes, namespace}) {
 	const ddmStructureFieldNameInput = document.getElementById(
 		`${namespace}ddmStructureFieldName`
 	);
-	const showSubtypeFieldsFilter = ddmStructureFieldNameInput;
+	const showSubtypeFieldsFilter = ddmStructureFieldNameInput !== null;
+
 	const ddmStructureFieldValueInput = document.getElementById(
 		`${namespace}ddmStructureFieldValue`
 	);

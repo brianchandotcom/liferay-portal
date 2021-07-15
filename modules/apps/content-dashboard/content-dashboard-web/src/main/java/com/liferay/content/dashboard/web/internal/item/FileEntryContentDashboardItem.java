@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -318,22 +319,38 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public List<Version> getVersions(Locale locale) {
-		List<FileVersion> fileVersions = _fileEntry.getFileVersions(
-			WorkflowConstants.STATUS_ANY);
+		try {
+			FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
+			FileVersion latestTrustedFileVersion =
+				_fileEntry.getLatestFileVersion(true);
 
-		Stream<FileVersion> stream = fileVersions.stream();
+			List<FileVersion> fileVersions = new ArrayList<>();
 
-		return stream.map(
-			fileVersion -> _toVersionOptional(fileVersion, locale)
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).sorted(
-			Comparator.comparing(Version::getVersion)
-		).collect(
-			Collectors.toList()
-		);
+			fileVersions.add(latestTrustedFileVersion);
+
+			if (!latestFileVersion.equals(latestTrustedFileVersion)) {
+				fileVersions.add(latestFileVersion);
+			}
+
+			Stream<FileVersion> stream = fileVersions.stream();
+
+			return stream.map(
+				fileVersion -> _toVersionOptional(fileVersion, locale)
+			).filter(
+				Optional::isPresent
+			).map(
+				Optional::get
+			).sorted(
+				Comparator.comparing(Version::getVersion)
+			).collect(
+				Collectors.toList()
+			);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return Collections.emptyList();
+		}
 	}
 
 	@Override

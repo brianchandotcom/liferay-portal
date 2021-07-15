@@ -405,12 +405,13 @@ definition {
 	}
 
 	@description = "Verify that the Calendar Event status become pending after submit"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StatusBecomePendingAfterSubmit {
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
-		// TODO LRQA-68601 StatusBecomePendingAfterSubmit pending implementation
+		CalendarScheduler.gotoDetailsViaDialogBox();
 
+		CalendarEvent.viewStatusViaDetails(status = "Pending");
 	}
 
 	@description = "Verify that the Calendar Event status changes when approved"

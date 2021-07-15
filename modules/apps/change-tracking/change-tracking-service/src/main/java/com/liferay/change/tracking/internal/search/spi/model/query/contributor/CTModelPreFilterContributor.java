@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
@@ -74,6 +74,8 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 			return;
 		}
 
+		BooleanFilter ctBooleanFilter = new BooleanFilter();
+
 		long ctCollectionId = GetterUtil.getLong(
 			ctCollectionIdString, CTCollectionThreadLocal.getCTCollectionId());
 
@@ -81,14 +83,11 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 			if (!GetterUtil.getBoolean(
 					searchContext.getAttribute("relatedClassName"))) {
 
-				booleanFilter.add(
-					_CT_COLLECTION_ID_EXISTS_FILTER,
-					BooleanClauseOccur.MUST_NOT);
+				ctBooleanFilter.add(
+					_CT_COLLECTION_ID_MISSING_FILTER, BooleanClauseOccur.MUST);
 			}
 		}
 		else {
-			boolean added = false;
-
 			List<Long> excludeModelClassPKs = new ArrayList<>();
 
 			for (CTEntry ctEntry :
@@ -98,45 +97,43 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 
 				int changeType = ctEntry.getChangeType();
 
-				if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-					added = true;
-				}
-				else {
-					if (changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
-						added = true;
-					}
+				if ((changeType == CTConstants.CT_CHANGE_TYPE_DELETION) ||
+					(changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION)) {
 
 					excludeModelClassPKs.add(ctEntry.getModelClassPK());
 				}
 			}
 
-			if (added) {
-				booleanFilter.addTerm(
-					_CT_COLLECTION_ID, String.valueOf(ctCollectionId),
-					BooleanClauseOccur.SHOULD);
-				booleanFilter.addTerm(
-					_CT_COLLECTION_ID,
-					String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION),
-					BooleanClauseOccur.SHOULD);
-			}
-			else {
-				booleanFilter.add(
-					_CT_COLLECTION_ID_EXISTS_FILTER,
-					BooleanClauseOccur.MUST_NOT);
-			}
+			ctBooleanFilter.add(
+				_CT_COLLECTION_ID_MISSING_FILTER, BooleanClauseOccur.SHOULD);
+
+			TermsFilter ctCollectionIdTermsFilter = new TermsFilter(
+				_CT_COLLECTION_ID);
+
+			ctCollectionIdTermsFilter.addValue(String.valueOf(ctCollectionId));
+			ctCollectionIdTermsFilter.addValue(
+				String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION));
+
+			ctBooleanFilter.add(
+				ctCollectionIdTermsFilter, BooleanClauseOccur.SHOULD);
 
 			if (!excludeModelClassPKs.isEmpty()) {
-				TermsFilter termsFilter = new TermsFilter(Field.UID);
+				TermsFilter uidTermsFilter = new TermsFilter(Field.UID);
 
 				for (Long classPK : excludeModelClassPKs) {
-					termsFilter.addValue(
+					uidTermsFilter.addValue(
 						_uidFactory.getUID(
 							className, String.valueOf(classPK),
 							CTConstants.CT_COLLECTION_ID_PRODUCTION));
 				}
 
-				booleanFilter.add(termsFilter, BooleanClauseOccur.MUST_NOT);
+				ctBooleanFilter.add(
+					uidTermsFilter, BooleanClauseOccur.MUST_NOT);
 			}
+		}
+
+		if (ctBooleanFilter.hasClauses()) {
+			booleanFilter.add(ctBooleanFilter, BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -161,8 +158,8 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 
 	private static final String _CT_COLLECTION_ID = "ctCollectionId";
 
-	private static final Filter _CT_COLLECTION_ID_EXISTS_FILTER =
-		new ExistsFilter(_CT_COLLECTION_ID);
+	private static final Filter _CT_COLLECTION_ID_MISSING_FILTER =
+		new MissingFilter(_CT_COLLECTION_ID);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

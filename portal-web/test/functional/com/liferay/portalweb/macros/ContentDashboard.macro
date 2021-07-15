@@ -514,8 +514,8 @@ definition {
 		var checkboxLabel = "${auditGraphCheckboxName}";
 
 		Click.javaScriptClick(
-				checkboxName = "Stage 1",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			checkboxName = "Stage 1",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 }

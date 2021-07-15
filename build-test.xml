@@ -14588,7 +14588,8 @@ url=${short.hostname}:8080</echo>
 				<arg line="-d ${database.mysql.schema}" />
 				<arg line="-s ${schema.name.prefix}" />
 				<arg line="-u ${database.mysql.username}" />
-				<arg line="-p ${database.mysql.password}" />
+				<arg value="-p" />
+				<arg value="&quot;${database.mysql.password}&quot;" />
 			</java>
 
 			<print-file file.name="${liferay.home}/validateoutput.txt" />

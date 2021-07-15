@@ -114,11 +114,11 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 		deleteFromPortletPreferences(portletIds);
 
+		deleteFromRelease(bundleSymbolicNames);
+
 		deleteFromResourceAction(portletIds);
 
 		deleteFromResourcePermission(portletIds);
-
-		deleteFromRelease(bundleSymbolicNames);
 	}
 
 	protected void removeServiceData(

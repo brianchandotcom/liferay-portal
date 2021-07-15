@@ -1997,11 +1997,11 @@ definition {
 			locator1 = "Form#FIELD_LABEL",
 			value1 = "${fieldLabel}");
 	}
-	macro viewValueValidationFieldNotPresent {
-       var key_fieldLabel = "${fieldLabel}";
- 
-       AssertElementNotPresent(locator1 = "FormFields#FIELD_VALIDATION_VALUE");
-   }
 
+	macro viewValueValidationFieldNotPresent {
+		var key_fieldLabel = "${fieldLabel}";
+
+		AssertElementNotPresent(locator1 = "FormFields#FIELD_VALIDATION_VALUE");
+	}
 
 }

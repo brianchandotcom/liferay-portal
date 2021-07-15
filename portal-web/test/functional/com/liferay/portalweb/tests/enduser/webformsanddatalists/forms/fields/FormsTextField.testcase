@@ -320,10 +320,10 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
-	@description = "Verify that the "Is Not Email" option can be used to validate a Text Field"
+	@description = "Verify that the Is Not Email option can be used to validate a Text Field"
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotEmailOption {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -346,9 +346,9 @@ definition {
 
 		FormFields.selectSelectOption(
 			fieldName = "If Input",
-			selectOption = "Is not email");
+			selectOption = "Is an email");
 
-		FormFields.viewTextFieldNotPresent(fieldLabel = "The Value");
+		FormFields.viewValueValidationFieldNotPresent(fieldLabel = "Value");
 
 		FormFields.editText(
 			fieldName = "errorMessage",

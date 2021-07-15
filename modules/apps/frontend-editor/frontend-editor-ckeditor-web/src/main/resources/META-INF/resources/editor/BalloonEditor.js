@@ -42,6 +42,7 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 		...config,
 		extraAllowedContent: '*',
 		extraPlugins: `${extraPlugins}${defaultExtraPlugins}`,
+		title: false,
 	};
 
 	return (

@@ -1,6 +1,17 @@
 @import 'cadmin';
 @import 'sidebar';
 
+$user-icon-color-0: $cadmin-secondary !default;
+$user-icon-color-1: $cadmin-blue !default;
+$user-icon-color-2: $cadmin-orange !default;
+$user-icon-color-3: $cadmin-red !default;
+$user-icon-color-4: $cadmin-teal !default;
+$user-icon-color-5: $cadmin-pink !default;
+$user-icon-color-6: $cadmin-green !default;
+$user-icon-color-7: $cadmin-purple !default;
+$user-icon-color-8: $cadmin-yellow !default;
+$user-icon-color-9: $cadmin-cyan !default;
+
 html#{$cadmin-selector} {
 	.cadmin {
 		.form-control-sm[contenteditable] {
@@ -10,6 +21,46 @@ html#{$cadmin-selector} {
 			p {
 				margin-bottom: 0;
 			}
+		}
+
+		.user-icon-color-0 {
+			color: $user-icon-color-0;
+		}
+
+		.user-icon-color-1 {
+			color: $user-icon-color-1;
+		}
+
+		.user-icon-color-2 {
+			color: $user-icon-color-2;
+		}
+
+		.user-icon-color-3 {
+			color: $user-icon-color-3;
+		}
+
+		.user-icon-color-4 {
+			color: $user-icon-color-4;
+		}
+
+		.user-icon-color-5 {
+			color: $user-icon-color-5;
+		}
+
+		.user-icon-color-6 {
+			color: $user-icon-color-6;
+		}
+
+		.user-icon-color-7 {
+			color: $user-icon-color-7;
+		}
+
+		.user-icon-color-8 {
+			color: $user-icon-color-8;
+		}
+
+		.user-icon-color-9 {
+			color: $user-icon-color-9;
 		}
 	}
 }

@@ -48,13 +48,13 @@ export const RECT_SIZES = {
 		height: 64,
 		width: 260,
 	},
+	fakeRoot: {
+		height: 56,
+		width: 240,
+	},
 	organization: {
 		height: 72,
 		width: 280,
-	},
-	root: {
-		height: 56,
-		width: 240,
 	},
 	user: {
 		height: 56,

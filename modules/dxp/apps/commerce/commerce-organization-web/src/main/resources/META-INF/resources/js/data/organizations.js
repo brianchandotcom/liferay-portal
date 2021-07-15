@@ -57,6 +57,17 @@ export function getOrganization(id) {
 	return fetchFromHeadless(url);
 }
 
+export function getOrganizations(pageSize) {
+	const url = new URL(
+		ORGANIZATIONS_ROOT_ENDPOINT,
+		themeDisplay.getPortalURL()
+	);
+
+	url.searchParams.append('pageSize', pageSize);
+
+	return fetchFromHeadless(url);
+}
+
 export function deleteOrganization(id) {
 	const url = new URL(
 		`${ORGANIZATIONS_ROOT_ENDPOINT}/${id}`,

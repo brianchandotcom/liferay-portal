@@ -50,8 +50,13 @@ public class ContentDashboardItemTypeFactoryTracker {
 			bundleContext, ContentDashboardItemTypeFactory.class, null,
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
-				(contentDashboardItem, emitter) -> emitter.emit(
-					GenericUtil.getGenericClassName(contentDashboardItem))));
+				(contentDashboardItem, emitter) -> {
+					if (contentDashboardItem.isEnabled()) {
+						emitter.emit(
+							GenericUtil.getGenericClassName(
+								contentDashboardItem));
+					}
+				}));
 	}
 
 	@Deactivate

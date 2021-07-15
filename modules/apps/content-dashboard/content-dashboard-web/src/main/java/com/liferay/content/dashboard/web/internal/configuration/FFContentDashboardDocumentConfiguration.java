@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item;
+package com.liferay.content.dashboard.web.internal.configuration;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Cristina González
+ * @author Alejandro Tardín
  */
-public interface ContentDashboardItemFactory<T> {
+@ExtendedObjectClassDefinition(generateUI = false)
+@Meta.OCD(
+	id = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration"
+)
+public @interface FFContentDashboardDocumentConfiguration {
 
-	public ContentDashboardItem<T> create(long classPK) throws PortalException;
-
-	public default boolean isEnabled() {
-		return true;
-	}
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enabled();
 
 }

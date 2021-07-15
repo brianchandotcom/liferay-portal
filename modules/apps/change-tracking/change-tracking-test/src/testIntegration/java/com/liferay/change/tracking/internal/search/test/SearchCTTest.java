@@ -122,10 +122,13 @@ public class SearchCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			_productionUserGroup.setName("P1 UserGroup");
+			UserGroup productionUserGroup = _userGroupLocalService.getUserGroup(
+				_productionUserGroup.getUserGroupId());
+
+			productionUserGroup.setName("P1 UserGroup");
 
 			modifiedUserGroup1 = _userGroupLocalService.updateUserGroup(
-				_productionUserGroup);
+				productionUserGroup);
 		}
 
 		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
@@ -139,10 +142,13 @@ public class SearchCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection2.getCtCollectionId())) {
 
-			_productionUserGroup.setName("P2 UserGroup");
+			UserGroup productionUserGroup = _userGroupLocalService.getUserGroup(
+				_productionUserGroup.getUserGroupId());
+
+			productionUserGroup.setName("P2 UserGroup");
 
 			modifiedUserGroup2 = _userGroupLocalService.updateUserGroup(
-				_productionUserGroup);
+				productionUserGroup);
 		}
 
 		assertProductionHits(_USER_GROUP_CLASS, _productionUserGroup);

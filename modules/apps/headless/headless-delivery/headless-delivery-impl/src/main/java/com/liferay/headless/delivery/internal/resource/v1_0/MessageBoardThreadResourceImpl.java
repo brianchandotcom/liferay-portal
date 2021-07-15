@@ -40,6 +40,7 @@ import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
+import com.liferay.message.boards.util.comparator.ThreadCreateDateComparator;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -190,7 +191,8 @@ public class MessageBoardThreadResourceImpl
 						new QueryDefinition<>(
 							status, contextUser.getUserId(), true,
 							pagination.getStartPosition(),
-							pagination.getEndPosition(), null)),
+							pagination.getEndPosition(),
+							new ThreadCreateDateComparator())),
 					this::_toMessageBoardThread),
 				pagination,
 				_mbThreadService.getThreadsCount(

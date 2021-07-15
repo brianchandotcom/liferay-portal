@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
-import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.web.internal.configuration.CommerceOrganizationPortletInstanceConfiguration;
 import com.liferay.commerce.organization.web.internal.display.context.util.CommerceOrganizationRequestHelper;
 import com.liferay.petra.string.StringPool;
@@ -186,12 +185,6 @@ public class CommerceOrganizationDisplayContext {
 		}
 
 		return _commerceOrganizationRequestHelper.getUserId();
-	}
-
-	public String getViewMode() {
-		return ParamUtil.getString(
-			_commerceOrganizationRequestHelper.getRequest(), "viewMode",
-			CommerceOrganizationConstants.LIST_VIEW_MODE);
 	}
 
 	public boolean hasAddOrganizationPermissions() throws PortalException {

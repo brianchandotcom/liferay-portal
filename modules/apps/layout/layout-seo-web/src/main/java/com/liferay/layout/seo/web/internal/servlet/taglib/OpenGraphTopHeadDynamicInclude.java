@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -74,6 +75,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -350,7 +353,13 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			siteGroupId);
 
 		if (!layout.isTypeContent()) {
-			return siteAvailableLocales;
+			Stream<String> stream = Arrays.stream(
+				layout.getAvailableLanguageIds());
+
+			Stream<Locale> localeStream = stream.map(
+				LocaleUtil::fromLanguageId);
+
+			return localeStream.collect(Collectors.toSet());
 		}
 
 		Set<Locale> availableLocales = new HashSet<>();

@@ -1,0 +1,1 @@
+create index IX_343C784C on Ranking (companyId);

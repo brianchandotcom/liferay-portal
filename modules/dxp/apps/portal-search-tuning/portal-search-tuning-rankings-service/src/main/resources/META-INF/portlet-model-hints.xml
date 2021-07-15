@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.search.tuning.rankings.model.Ranking">
+		<field name="mvccVersion" type="long" />
+		<field name="rankingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="json" type="String" />
+	</model>
+</model-hints>

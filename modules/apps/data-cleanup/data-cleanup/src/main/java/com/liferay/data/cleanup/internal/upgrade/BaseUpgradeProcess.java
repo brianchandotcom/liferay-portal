@@ -27,67 +27,6 @@ import java.sql.ResultSet;
  */
 public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
-	protected void deleteFrom(
-			String tableName, String fieldName, String... fieldValues)
-		throws Exception {
-
-		for (String fieldValue : fieldValues) {
-			runSQL(
-				String.format(
-					"delete from %s where %s = '%s'", tableName, fieldName,
-					fieldValue));
-		}
-	}
-
-	protected void deleteFromClassName(String... classNames) throws Exception {
-		deleteFrom("ClassName_", "value", classNames);
-	}
-
-	protected void deleteFromPortlet(String... portletIds) throws Exception {
-		deleteFrom("Portlet", "portletId", portletIds);
-	}
-
-	protected void deleteFromPortletPreferences(String... portletIds)
-		throws Exception {
-
-		for (String portletId : portletIds) {
-			runSQL(
-				StringBundler.concat(
-					"delete from PortletPreferences where portletId like '",
-					portletId, "%'"));
-		}
-	}
-
-	protected void deleteFromRelease(String... servletContextNames)
-		throws Exception {
-
-		deleteFrom("Release_", "servletContextName", servletContextNames);
-	}
-
-	protected void deleteFromResourceAction(String... names) throws Exception {
-		deleteFrom("ResourceAction", "name", names);
-	}
-
-	protected void deleteFromResourcePermission(String... names)
-		throws Exception {
-
-		deleteFrom("ResourcePermission", "name", names);
-	}
-
-	protected void deleteFromServiceComponent(String... buildNamespaces)
-		throws Exception {
-
-		deleteFrom("ServiceComponent", "buildNamespace", buildNamespaces);
-	}
-
-	protected void dropTables(String... tableNames) throws Exception {
-		for (String tableName : tableNames) {
-			if (hasTable(tableName)) {
-				runSQL("drop table " + tableName);
-			}
-		}
-	}
-
 	protected void removePortletData(
 			String[] bundleSymbolicNames, String[] oldPortletIds,
 			String[] portletIds)
@@ -110,15 +49,15 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 		LayoutTypeSettingsUtil.removePortletIds(connection, portletIds);
 
-		deleteFromPortlet(portletIds);
+		_deleteFromPortlet(portletIds);
 
-		deleteFromPortletPreferences(portletIds);
+		_deleteFromPortletPreferences(portletIds);
 
-		deleteFromRelease(bundleSymbolicNames);
+		_deleteFromRelease(bundleSymbolicNames);
 
-		deleteFromResourceAction(portletIds);
+		_deleteFromResourceAction(portletIds);
 
-		deleteFromResourcePermission(portletIds);
+		_deleteFromResourcePermission(portletIds);
 	}
 
 	protected void removeServiceData(
@@ -126,17 +65,78 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 			String[] classNames, String[] tables)
 		throws Exception {
 
-		deleteFromClassName(classNames);
+		_deleteFromClassName(classNames);
 
-		deleteFromRelease(bundleSymbolicNames);
+		_deleteFromRelease(bundleSymbolicNames);
 
-		deleteFromResourceAction(classNames);
+		_deleteFromResourceAction(classNames);
 
-		deleteFromResourcePermission(classNames);
+		_deleteFromResourcePermission(classNames);
 
-		deleteFromServiceComponent(buildNamespace);
+		_deleteFromServiceComponent(buildNamespace);
 
-		dropTables(tables);
+		_dropTables(tables);
+	}
+
+	private void _deleteFrom(
+			String tableName, String fieldName, String... fieldValues)
+		throws Exception {
+
+		for (String fieldValue : fieldValues) {
+			runSQL(
+				String.format(
+					"delete from %s where %s = '%s'", tableName, fieldName,
+					fieldValue));
+		}
+	}
+
+	private void _deleteFromClassName(String... classNames) throws Exception {
+		_deleteFrom("ClassName_", "value", classNames);
+	}
+
+	private void _deleteFromPortlet(String... portletIds) throws Exception {
+		_deleteFrom("Portlet", "portletId", portletIds);
+	}
+
+	private void _deleteFromPortletPreferences(String... portletIds)
+		throws Exception {
+
+		for (String portletId : portletIds) {
+			runSQL(
+				StringBundler.concat(
+					"delete from PortletPreferences where portletId like '",
+					portletId, "%'"));
+		}
+	}
+
+	private void _deleteFromRelease(String... servletContextNames)
+		throws Exception {
+
+		_deleteFrom("Release_", "servletContextName", servletContextNames);
+	}
+
+	private void _deleteFromResourceAction(String... names) throws Exception {
+		_deleteFrom("ResourceAction", "name", names);
+	}
+
+	private void _deleteFromResourcePermission(String... names)
+		throws Exception {
+
+		_deleteFrom("ResourcePermission", "name", names);
+	}
+
+	private void _deleteFromServiceComponent(String... buildNamespaces)
+		throws Exception {
+
+		_deleteFrom("ServiceComponent", "buildNamespace", buildNamespaces);
+	}
+
+	private void _dropTables(String... tableNames) throws Exception {
+		for (String tableName : tableNames) {
+			if (hasTable(tableName)) {
+				runSQL("drop table " + tableName);
+			}
+		}
 	}
 
 }

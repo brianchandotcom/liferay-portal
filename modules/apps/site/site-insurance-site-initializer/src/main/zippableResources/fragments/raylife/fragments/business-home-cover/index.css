@@ -1,0 +1,47 @@
+.business-home-cover .business-home-cover-box {
+	background-color: var(--white);
+	border-radius: 8px;
+	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
+	font-size: var(--font-size-lg);
+	max-width: 100%;
+	padding: var(--spacer-6);
+	position: absolute;
+	right: 0;
+	top: 100px;
+	width: 700px;
+}
+
+.business-home-cover .business-home-cover-box #zip {
+	margin-right: 20px;
+	width: 120px;
+}
+
+.business-home-cover .business-home-cover-box #product {
+	flex: 1;
+	margin-right: 20px;
+}
+
+.business-home-cover .business-home-cover-box .business-home-cover-box-title {
+	font-size: var(--display4-size);
+	font-weight: var(--display3-weight);
+	line-height: var(--display-line-height);
+	margin-bottom: var(--spacer-4);
+}
+
+.business-home-cover .business-home-cover-box .business-home-cover-box-title .title-highlight {
+	color: var(--primary);
+	display: block;
+}
+
+.business-home-cover .business-home-cover-box p {
+	margin-bottom: calc(var(--spacer-1)*10);
+}
+
+.business-home-cover .business-home-cover-image {
+	max-width: 100%;
+	width: 900px;
+}
+
+.page-editor__layout-viewport .business-home-cover .business-home-cover-box {
+	top: 144px;
+}

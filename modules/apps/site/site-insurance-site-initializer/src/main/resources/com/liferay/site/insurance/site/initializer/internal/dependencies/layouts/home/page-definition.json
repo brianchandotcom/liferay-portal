@@ -4,42 +4,11 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "home-cover"
+						"key": "business-home-cover"
 					},
 					"fragmentConfig": {
 					},
 					"fragmentFields": [
-						{
-							"id": "cover-image",
-							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								}
-							}
-						},
-						{
-							"id": "action-button",
-							"value": {
-								"fragmentLink": {
-									"href": {
-										"value": "#"
-									}
-								}
-							}
-						},
-						{
-							"id": "home-cover-title",
-							"value": {
-							}
-						},
-						{
-							"id": "home-cover-subtitle",
-							"value": {
-							}
-						}
 					],
 					"fragmentStyle": {
 						"backgroundFragmentImage": {

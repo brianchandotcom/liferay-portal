@@ -918,6 +918,8 @@ definition {
 	}
 
 	macro editFieldLabel {
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		if (isSet(fieldsetModal)) {

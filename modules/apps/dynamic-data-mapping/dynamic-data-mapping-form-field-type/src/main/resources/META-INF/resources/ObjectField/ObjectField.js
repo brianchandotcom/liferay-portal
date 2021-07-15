@@ -22,12 +22,13 @@ import React, {useMemo} from 'react';
 
 import Select from '../Select/Select.es';
 
+const dataTypes = {
+	double: ['double', 'bigdecimal'],
+	integer: ['integer', 'long'],
+	string: ['string', 'blob'],
+};
+
 const normalizeDataType = (type) => {
-	const dataTypes = {
-		double: ['double', 'bigdecimal'],
-		integer: ['integer', 'long'],
-		string: ['string', 'blob'],
-	};
 	const formattedType = type.toLowerCase();
 
 	return dataTypes[formattedType] ?? formattedType;

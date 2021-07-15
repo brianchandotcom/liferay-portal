@@ -243,17 +243,13 @@ export const FormBuilder = () => {
 						footer: [
 							null,
 							null,
-							<ClayButton.Group key={1} spaced>
-								<ClayButton
-									displayType="secondary"
-									onClick={() => onClose()}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-								<ClayButton disabled displayType="danger">
-									{Liferay.Language.get('done')}
-								</ClayButton>
-							</ClayButton.Group>,
+							<ClayButton
+								displayType="secondary"
+								key={1}
+								onClick={() => onClose()}
+							>
+								{Liferay.Language.get('close')}
+							</ClayButton>,
 						],
 						header: Liferay.Language.get(
 							'unmapped-object-required-fields'

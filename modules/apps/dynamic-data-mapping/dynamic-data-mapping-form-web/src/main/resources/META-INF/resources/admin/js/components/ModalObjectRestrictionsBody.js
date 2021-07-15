@@ -16,7 +16,7 @@ import ClayPanel from '@clayui/panel';
 import {getFieldsGroupedByTypes} from 'data-engine-js-components-web/js/utils/objectFields';
 import React from 'react';
 
-const ObjectRestrictionSection = ({children, description, title}) => {
+const ModalObjectRestrictionsSection = ({children, description, title}) => {
 	return (
 		<>
 			<p>{title}</p>
@@ -28,62 +28,116 @@ const ObjectRestrictionSection = ({children, description, title}) => {
 	);
 };
 
+const UnmappedRequiredObjectFields = ({fields}) => {
+	const fieldsTypeString = [
+		Liferay.Language.get('checkbox-multiple-field-type-label'),
+		Liferay.Language.get('color-field-type-label'),
+		Liferay.Language.get('grid-field-type-label'),
+		Liferay.Language.get('radio-field-type-label'),
+		Liferay.Language.get('rich-text-field-type-label'),
+		Liferay.Language.get('select-field-type-label'),
+		Liferay.Language.get('text-field-type-label'),
+	];
+
+	const fieldTypeDecimalNumeric = Liferay.Util.sub(
+		Liferay.Language.get('decimal-x'),
+		Liferay.Language.get('numeric-field-type-label')
+	);
+
+	const fieldTypeIntegerNumeric = Liferay.Util.sub(
+		Liferay.Language.get('integer-x'),
+		Liferay.Language.get('numeric-field-type-label')
+	);
+
+	const fieldTypes = {
+		bigdecimal: fieldTypeDecimalNumeric,
+		blob: fieldsTypeString,
+		double: fieldTypeDecimalNumeric,
+		integer: fieldTypeIntegerNumeric,
+		long: fieldTypeIntegerNumeric,
+		string: fieldsTypeString,
+	};
+
+	const requiredObjectFieldsGroupedByType = getFieldsGroupedByTypes(fields);
+
+	return (
+		<ModalObjectRestrictionsSection
+			description={Liferay.Language.get(
+				'unmapped-object-required-fields'
+			)}
+			title={Liferay.Language.get(
+				'to-save-this-form-all-required-field-of-the-selected-object-need-to-be-mapped'
+			)}
+		>
+			{requiredObjectFieldsGroupedByType.map(({fields, type}) => {
+				const fieldType = fieldTypes[type.toLowerCase()];
+
+				return (
+					<div key={type}>
+						<strong className="text-capitalize">{type}</strong>
+
+						{fieldType && (
+							<span className="text-muted">
+								{` (${
+									Array.isArray(fieldType)
+										? fieldType.join(', ')
+										: fieldType
+								})`}
+							</span>
+						)}
+
+						<ol>
+							{fields.map(({name}) => (
+								<li key={name}>{name}</li>
+							))}
+						</ol>
+					</div>
+				);
+			})}
+		</ModalObjectRestrictionsSection>
+	);
+};
+
+const UnmappedFormFields = ({fields}) => {
+	const formFieldsGroupedByType = getFieldsGroupedByTypes(fields);
+
+	return (
+		<ModalObjectRestrictionsSection
+			description={Liferay.Language.get('unmapped-form-fields')}
+			title={Liferay.Language.get(
+				'all-fields-in-this-form-must-be-mapped-to-a-field-in-the-object'
+			)}
+		>
+			{formFieldsGroupedByType.map(({fields, type}) => (
+				<div key={type}>
+					<strong className="text-capitalize">{type}</strong>
+
+					<ol>
+						{fields.map(({fieldName, label}) => (
+							<li key={fieldName}>{label}</li>
+						))}
+					</ol>
+				</div>
+			))}
+		</ModalObjectRestrictionsSection>
+	);
+};
+
 const ModalObjectRestrictionsBody = ({
 	unmappedFormFields,
 	unmappedRequiredObjectFields,
-}) => {
-	const formFieldsGroupedByType = getFieldsGroupedByTypes(unmappedFormFields);
-	const requiredObjectFieldsGroupedByType = getFieldsGroupedByTypes(
-		unmappedRequiredObjectFields
-	);
+}) => (
+	<>
+		{!!unmappedRequiredObjectFields.length && (
+			<UnmappedRequiredObjectFields
+				fields={unmappedRequiredObjectFields}
+			/>
+		)}
 
-	return (
-		<>
-			{!!unmappedRequiredObjectFields.length && (
-				<ObjectRestrictionSection
-					description={Liferay.Language.get(
-						'unmapped-object-required-fields'
-					)}
-					title={Liferay.Language.get(
-						'to-save-this-form-all-required-field-of-the-selected-object-need-to-be-mapped'
-					)}
-				>
-					{requiredObjectFieldsGroupedByType.map(({fields, type}) => (
-						<div key={type}>
-							<strong className="text-capitalize">{type}</strong>
-
-							<ol>
-								{fields.map(({name}) => (
-									<li key={name}>{name}</li>
-								))}
-							</ol>
-						</div>
-					))}
-				</ObjectRestrictionSection>
-			)}
-
-			{!!unmappedFormFields.length && (
-				<ObjectRestrictionSection
-					description={Liferay.Language.get('unmapped-form-fields')}
-					title={Liferay.Language.get(
-						'all-fields-in-this-form-must-be-mapped-to-a-field-in-the-object'
-					)}
-				>
-					{formFieldsGroupedByType.map(({fields, type}) => (
-						<div key={type}>
-							<strong className="text-capitalize">{type}</strong>
-
-							<ol>
-								{fields.map(({fieldName, label}) => (
-									<li key={fieldName}>{label}</li>
-								))}
-							</ol>
-						</div>
-					))}
-				</ObjectRestrictionSection>
-			)}
-		</>
-	);
-};
+		{!!unmappedFormFields.length && (
+			<UnmappedFormFields fields={unmappedFormFields} />
+		)}
+	</>
+);
 
 export default ModalObjectRestrictionsBody;

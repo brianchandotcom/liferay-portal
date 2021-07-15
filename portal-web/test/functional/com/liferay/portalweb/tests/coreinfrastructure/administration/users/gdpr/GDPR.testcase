@@ -473,9 +473,11 @@ definition {
 
 	@priority = "4"
 	test DeleteAllEntriesFromInstanceScope {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -597,9 +599,11 @@ definition {
 
 	@priority = "4"
 	test DeleteAllEntriesFromRegularSitesScope {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

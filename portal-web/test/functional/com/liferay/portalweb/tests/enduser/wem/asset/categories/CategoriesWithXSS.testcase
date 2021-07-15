@@ -1,0 +1,77 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Categories";
+	property testray.main.component.name = "Categories";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-123823. The user can add a category with XSS name on the page settings."
+	@priority = "4"
+	@uitest
+	test SelectCategoryWithXSSNameInPageConfiguration {
+		var categoryName = '''><img src=xss onerror=alert(1)>''';
+
+		task ("Add a global category with XSS name in Topic") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "${categoryName}",
+				vocabularyName = "Topic");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Select the category in page configuration") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Click(
+				key_vocabularyName = "Topic",
+				locator1 = "AssetCategorization#CATEGORY_SELECT");
+
+			AssetCategorization.selectCategory(categoryName = "${categoryName}");
+		}
+
+		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+
+		task ("Delete the global category") {
+			JSONCategory.deleteCategory(
+				categoryName = "${categoryName}",
+				groupName = "Global",
+				vocabularyName = "Topic");
+		}
+	}
+
+}

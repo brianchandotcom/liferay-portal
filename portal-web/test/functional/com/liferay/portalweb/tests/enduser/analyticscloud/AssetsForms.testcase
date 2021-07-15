@@ -52,35 +52,39 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
+		for (var name : list "ac,liferay,dxp") {
+			JSONUser.addUser(
+				userEmailAddress = "${name}@liferay.com",
+				userFirstName = "${name}",
+				userLastName = "${name}",
+				userScreenName = "${name}");
+		}
 
 		ACDXPSettings.syncNewContactData();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
+		for (var name : list "ac,liferay,dxp") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${name}@liferay.com",
+				userLoginFullName = "${name} ${name}");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
-		FormPortlet.waitFormRenderer(text = "Submit");
+			FormPortlet.waitFormRenderer(text = "Submit");
 
-		FormFields.viewTextLabel(
-			fieldLabel = "Text",
-			fieldName = "Text");
+			FormFields.viewTextLabel(
+				fieldLabel = "Text",
+				fieldName = "Text");
 
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "Test Assets");
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Assets");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 
-		Pause(locator1 = "10000");
+			Pause(locator1 = "10000");
+		}
 
 		ACUtils.closeAllSessions();
 
@@ -106,9 +110,11 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		AssertElementPresent(
-			key_userName = "ac ac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		for (var name : list "ac,liferay,dxp") {
+			AssertElementPresent(
+				key_userName = "${name} ${name}",
+				locator1 = "ACSegments#SEGMENT_MEMBERS");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"

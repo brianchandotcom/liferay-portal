@@ -93,7 +93,7 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 					"<script data-senna-track=\"permanent\" src=\"");
 
 				printWriter.print(
-					absolutePortalURLBuilder.forModule(
+					absolutePortalURLBuilder.forModuleScript(
 						_bundleContext.getBundle(), jsFileName
 					).build());
 

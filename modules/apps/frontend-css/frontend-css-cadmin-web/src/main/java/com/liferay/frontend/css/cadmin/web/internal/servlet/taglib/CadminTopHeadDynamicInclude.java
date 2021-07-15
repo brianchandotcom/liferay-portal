@@ -61,7 +61,7 @@ public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest);
 
 		printWriter.print(
-			absolutePortalURLBuilder.forModule(
+			absolutePortalURLBuilder.forModuleStylesheet(
 				_bundleContext.getBundle(), "main.css"
 			).build());
 

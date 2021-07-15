@@ -92,18 +92,43 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 			@Override
 			public String build() {
-				Dictionary<String, String> headers = bundle.getHeaders(
-					StringPool.BLANK);
-
-				String webContextPath = headers.get("Web-ContextPath");
-
-				if (!webContextPath.endsWith(StringPool.SLASH)) {
-					webContextPath += StringPool.SLASH;
-				}
-
 				return _build(
 					_ignoreCDNHost, _ignorePathProxy,
-					_pathModule + webContextPath, relativeURL);
+					_getBundlePathPrefix(bundle), relativeURL);
+			}
+
+		};
+	}
+
+	@Override
+	public ModuleAbsolutePortalURLBuilder forModuleScript(
+		Bundle bundle, String relativeURL) {
+
+		return new ModuleAbsolutePortalURLBuilder() {
+
+			@Override
+			public String build() {
+				return _build(
+					_ignoreCDNHost, _ignorePathProxy,
+					_getBundlePathPrefix(bundle), relativeURL);
+			}
+
+		};
+	}
+
+	@Override
+	public ModuleAbsolutePortalURLBuilder forModuleStylesheet(
+		Bundle bundle, String relativeURL) {
+
+		return new ModuleAbsolutePortalURLBuilder() {
+
+			@Override
+			public String build() {
+				return _build(
+					_ignoreCDNHost, _ignorePathProxy,
+					_getBundlePathPrefix(bundle),
+					_portal.getStaticResourceURL(
+						_httpServletRequest, relativeURL));
 			}
 
 		};
@@ -254,6 +279,19 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		sb.append(relativeURL);
 
 		return sb.toString();
+	}
+
+	private String _getBundlePathPrefix(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String webContextPath = headers.get("Web-ContextPath");
+
+		if (!webContextPath.endsWith(StringPool.SLASH)) {
+			webContextPath += StringPool.SLASH;
+		}
+
+		return _pathModule + webContextPath;
 	}
 
 	private String _getCDNHost(HttpServletRequest httpServletRequest) {

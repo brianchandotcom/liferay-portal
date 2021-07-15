@@ -68,6 +68,12 @@ public interface AbsolutePortalURLBuilder {
 	 * web context path.
 	 *
 	 * <p>
+	 * If the requested module resource is a JavaScript file or a stylesheet,
+	 * better use {@link #forModuleScript(Bundle, String)} or {@link
+	 * #forModuleStylesheet(Bundle, String)} instead.
+	 * </p>
+	 *
+	 * <p>
 	 * Module resources are retrieved from a CDN host if present or from the
 	 * Portal otherwise.
 	 * </p>
@@ -77,6 +83,46 @@ public interface AbsolutePortalURLBuilder {
 	 * @return a URL builder for module resources
 	 */
 	public ModuleAbsolutePortalURLBuilder forModule(
+		Bundle bundle, String relativeURL);
+
+	/**
+	 * Returns a URL builder for module JavaScript files. Module scripts live in
+	 * {@code com.liferay.portal.kernel.util.Portal#PATH_MODULE} + the bundle's
+	 * web context path.
+	 *
+	 * <p>
+	 * Module scripts are retrieved from a CDN host if present or from the
+	 * Portal otherwise.
+	 * </p>
+	 *
+	 * @param  bundle the bundle that contains the resource
+	 * @param  relativeURL the JavaScript file relative URL
+	 * @return a URL builder for module scripts
+	 */
+	public ModuleAbsolutePortalURLBuilder forModuleScript(
+		Bundle bundle, String relativeURL);
+
+	/**
+	 * Returns a URL builder for module stylesheets. Module stylesheets live in
+	 * {@code com.liferay.portal.kernel.util.Portal#PATH_MODULE} + the bundle's
+	 * web context path.
+	 *
+	 * <p>
+	 * Module stylesheets are retrieved from a CDN host if present or from the
+	 * Portal otherwise.
+	 * </p>
+	 *
+	 * <p>
+	 * Module stylesheets are retrieved as standard module resources, but
+	 * additional parameters to account for RTL support, cache, etc. are added
+	 * to the request.
+	 * </p>
+	 *
+	 * @param  bundle the bundle that contains the resource
+	 * @param  relativeURL the stylesheets relative URL
+	 * @return a URL builder for module stylesheets
+	 */
+	public ModuleAbsolutePortalURLBuilder forModuleStylesheet(
 		Bundle bundle, String relativeURL);
 
 	/**

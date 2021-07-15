@@ -160,8 +160,17 @@ definition {
 			webContentTitle = "Web Content AC Title";
 		}
 
+		if (!(isSet(webContentRichText))) {
+			webContentRichText = "This is the web content test for AC";
+		}
+
+		if (isSet(webContentRichText)) {
+			webContentRichText = "${webContentRichText}";
+		}
+
 		WebContent.addPGViaWCD(
-			webContentContent = "This is the web content test for AC",
+			fieldFieldLabel = "content",
+			webContentRichText = "${webContentRichText}",
 			webContentTitle = "${webContentTitle}");
 
 		Pause(locator1 = "500");
@@ -186,8 +195,12 @@ definition {
 	macro launchDXP {
 		Navigator.openURL();
 
+		if (!(isSet(userEmailAddress))) {
+			userEmailAddress = "test@liferay.com";
+		}
+
 		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
-			User.firstLoginPG();
+			User.firstLoginPG(userEmailAddress = "${userEmailAddress}");
 		}
 	}
 

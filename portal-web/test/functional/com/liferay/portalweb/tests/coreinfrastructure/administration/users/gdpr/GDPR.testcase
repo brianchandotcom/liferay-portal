@@ -238,9 +238,44 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAnonymizeAllEntriesFromAnApplication {
+		User.logoutPG();
 
-		// TODO LRQA-50727 Anonymize all entries from an Application
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.anonymizeDataViaReviewData(application = "Documents and Media");
+
+		GDPR.viewNoEntryInApplicationCP(applications = "Documents and Media");
+
+		for (var entryTitle : list "Document_1,Document_2,Document_3") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${entryTitle}");
+
+			DMDocument.expandInfo();
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
+				value1 = "Anonymous Anonymous");
+		}
 	}
 
 	@description = "This test anonymizes all staged data from an application"

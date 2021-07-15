@@ -205,6 +205,11 @@ html#{$cadmin-selector} {
 						}
 					}
 
+					.tree-node-hidden-hitarea {
+						opacity: 0;
+						pointer-events: none;
+					}
+
 					.tree-label > span a.layout-tree {
 						color: $cadmin-gray-500;
 						padding-left: 1px;

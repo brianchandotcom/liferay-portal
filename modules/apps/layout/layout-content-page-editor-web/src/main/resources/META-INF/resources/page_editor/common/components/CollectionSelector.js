@@ -34,8 +34,7 @@ export default function CollectionSelector({
 		<ItemSelector
 			eventName={eventName}
 			itemSelectorURL={
-				(config.relatedItemCollectionProvidersEnabled &&
-					customCollectionSelectorURL) ||
+				customCollectionSelectorURL ||
 				itemSelectorURL ||
 				config.infoListSelectorURL
 			}

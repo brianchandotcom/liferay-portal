@@ -155,10 +155,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		List<ItemSelectorCriterion> collectionItemSelectorCriterions =
 			super.getCollectionItemSelectorCriterions();
 
-		if (!_pageIsDisplayPage ||
-			!_ffLayoutContentPageEditorConfiguration.
-				relatedItemCollectionProvidersEnabled()) {
-
+		if (!_pageIsDisplayPage) {
 			return collectionItemSelectorCriterions;
 		}
 

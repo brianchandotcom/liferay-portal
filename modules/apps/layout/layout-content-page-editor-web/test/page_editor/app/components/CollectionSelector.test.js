@@ -22,15 +22,6 @@ import CollectionSelector from '../../../../src/main/resources/META-INF/resource
 import {openItemSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/core/openItemSelector';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
-	() => ({
-		config: {
-			relatedItemCollectionProvidersEnabled: true,
-		},
-	})
-);
-
-jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/core/openItemSelector',
 	() => ({
 		openItemSelector: jest.fn(() => {}),

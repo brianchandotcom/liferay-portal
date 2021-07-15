@@ -156,7 +156,6 @@ export interface Config {
 	previewPageURL: string;
 	publishURL: string;
 	redirectURL: string;
-	relatedItemCollectionProvidersEnabled: boolean;
 	renderFragmentEntryURL: string;
 	selectedSegmentsEntryId: string;
 

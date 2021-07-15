@@ -13,7 +13,6 @@
  */
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {config} from '../../config/index';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: [
@@ -63,25 +62,6 @@ const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
  * @param {{current: object}} layoutDataRef
  * @return {boolean}
  */
-export default function checkAllowedChild(child, parent, layoutDataRef) {
-	const parentIsInsideCollection = (function checkItemInsideCollection(item) {
-		if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-			return true;
-		}
-		else if (item.parentId) {
-			return checkItemInsideCollection(
-				layoutDataRef.current.items[item.parentId]
-			);
-		}
-	})(parent);
-
-	if (
-		!config.relatedItemCollectionProvidersEnabled &&
-		parentIsInsideCollection &&
-		child.type === LAYOUT_DATA_ITEM_TYPES.collection
-	) {
-		return false;
-	}
-
+export default function checkAllowedChild(child, parent) {
 	return LAYOUT_DATA_ALLOWED_CHILDREN_TYPES[parent.type].includes(child.type);
 }

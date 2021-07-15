@@ -88,7 +88,7 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	protected void removeNoninstanceablePortlet(
+	protected void removePortletData(
 			String[] bundleSymbolicNames, String[] oldPortletIds,
 			String[] portletIds)
 		throws Exception {
@@ -119,6 +119,24 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 		deleteFromResourcePermission(portletIds);
 
 		deleteFromRelease(bundleSymbolicNames);
+	}
+
+	protected void removeServiceData(
+			String buildNamespace, String[] bundleSymbolicNames,
+			String[] classNames, String[] tables)
+		throws Exception {
+
+		deleteFromClassName(classNames);
+
+		deleteFromRelease(bundleSymbolicNames);
+
+		deleteFromResourceAction(classNames);
+
+		deleteFromResourcePermission(classNames);
+
+		deleteFromServiceComponent(buildNamespace);
+
+		dropTables(tables);
 	}
 
 }

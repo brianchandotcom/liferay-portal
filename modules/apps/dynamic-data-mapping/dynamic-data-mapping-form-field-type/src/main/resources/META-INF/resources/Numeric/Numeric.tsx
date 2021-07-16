@@ -130,7 +130,13 @@ const getMaskedValue = ({
 	});
 	const regex = new RegExp(`[^${symbols.decimalSymbol}|\\d]`, 'g');
 
-	return {masked, raw: inputMask ? masked.replace(regex, '') : masked};
+	return {
+		masked:
+			!inputMask && dataType === 'double' && masked !== value
+				? value
+				: masked,
+		raw: inputMask ? masked.replace(regex, '') : masked,
+	};
 };
 
 const Numeric: React.FC<IProps> = ({

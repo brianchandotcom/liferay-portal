@@ -14,7 +14,12 @@
 
 package com.liferay.fragment.collection.filter;
 
+import com.liferay.fragment.renderer.FragmentRendererContext;
+
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Pablo Molina
@@ -22,5 +27,10 @@ import java.util.Locale;
 public interface FragmentCollectionFilter {
 
 	public String getLabel(Locale locale);
+
+	public void render(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

@@ -46,12 +46,12 @@ public class TableTest extends PoshiRunnerTestCase {
 	}
 
 	@Test
-	public void testEchoTablesPoshiScript() throws Throwable {
+	public void testEchoTablesPoshiScript() throws Exception {
 		runPoshiTest("TableTest#echoTablePoshiScript");
 	}
 
 	@Test
-	public void testEchoTablesXML() throws Throwable {
+	public void testEchoTablesXML() throws Exception {
 		runPoshiTest("TableTest#echoTableXML");
 	}
 

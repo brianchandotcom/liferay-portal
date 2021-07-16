@@ -94,6 +94,8 @@ public class DataGuardConnectorThread extends Thread {
 						objectOutputStream.writeObject(new DataGuardResult(id));
 					}
 					catch (Throwable throwable) {
+						_logger.error("Error encountered", throwable);
+
 						objectOutputStream.writeObject(
 							new DataGuardResult(throwable));
 					}

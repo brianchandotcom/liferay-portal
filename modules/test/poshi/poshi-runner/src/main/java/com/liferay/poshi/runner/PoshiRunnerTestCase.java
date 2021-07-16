@@ -33,7 +33,7 @@ import org.junit.After;
  */
 public abstract class PoshiRunnerTestCase extends TestCase {
 
-	public void runPoshiTest(String testName) throws Throwable {
+	public void runPoshiTest(String testName) throws Exception {
 		PoshiRunner poshiRunner = new PoshiRunner("LocalFile." + testName);
 
 		poshiRunner.setUp();

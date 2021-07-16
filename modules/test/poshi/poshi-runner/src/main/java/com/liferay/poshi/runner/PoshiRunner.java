@@ -155,15 +155,7 @@ public class PoshiRunner {
 	}
 
 	@Before
-	public void setUp() throws Throwable {
-		if (PropsValues.LIFERAY_DATA_GUARD_ENABLED) {
-			_dataGuardClient = new DataGuardClient();
-
-			_dataGuardClient.connect();
-
-			_dataGuardId = _dataGuardClient.startCapture();
-		}
-
+	public void setUp() throws Exception {
 		System.out.println();
 		System.out.println("###");
 		System.out.println("### " + _testNamespacedClassCommandName);
@@ -178,6 +170,14 @@ public class PoshiRunner {
 		FileUtil.delete(new File(PropsValues.OUTPUT_DIR_NAME));
 
 		try {
+			if (PropsValues.LIFERAY_DATA_GUARD_ENABLED) {
+				_dataGuardClient = new DataGuardClient();
+
+				_dataGuardClient.connect();
+
+				_dataGuardId = _dataGuardClient.startCapture();
+			}
+
 			SummaryLogger.startRunning();
 
 			SeleniumUtil.startSelenium();

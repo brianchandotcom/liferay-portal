@@ -81,6 +81,7 @@ public interface AbsolutePortalURLBuilder {
 	 * @param  bundle the bundle that contains the resource
 	 * @param  relativeURL the resource's relative URL
 	 * @return a URL builder for module resources
+	 * @review
 	 */
 	public ModuleAbsolutePortalURLBuilder forModule(
 		Bundle bundle, String relativeURL);
@@ -98,6 +99,7 @@ public interface AbsolutePortalURLBuilder {
 	 * @param  bundle the bundle that contains the resource
 	 * @param  relativeURL the JavaScript file relative URL
 	 * @return a URL builder for module scripts
+	 * @review
 	 */
 	public ModuleAbsolutePortalURLBuilder forModuleScript(
 		Bundle bundle, String relativeURL);
@@ -121,6 +123,7 @@ public interface AbsolutePortalURLBuilder {
 	 * @param  bundle the bundle that contains the resource
 	 * @param  relativeURL the stylesheets relative URL
 	 * @return a URL builder for module stylesheets
+	 * @review
 	 */
 	public ModuleAbsolutePortalURLBuilder forModuleStylesheet(
 		Bundle bundle, String relativeURL);

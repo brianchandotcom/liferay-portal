@@ -68,9 +68,9 @@ public class DDMTemplateActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), _ddmTemplate,
 				ActionKeys.DELETE),
 			dropdownItem -> {
-				dropdownItem.putData("action", "deleteTemplate");
+				dropdownItem.putData("action", "deleteDDMTemplate");
 				dropdownItem.putData(
-					"deleteTemplateURL",
+					"deleteDDMTemplateURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(

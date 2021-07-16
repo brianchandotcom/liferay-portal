@@ -168,6 +168,11 @@ public interface PortletLocalService
 			Portlet portlet, String[] categoryNames, boolean eagerDestroy)
 		throws PortalException;
 
+	public Portlet deployRemotePortlet(
+			Portlet portlet, String[] categoryNames, boolean eagerDestroy,
+			boolean clearCache, long[] companyIds)
+		throws PortalException;
+
 	@Transactional(enabled = false)
 	public void destroyPortlet(Portlet portlet);
 

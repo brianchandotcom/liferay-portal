@@ -183,6 +183,15 @@ public class PortletLocalServiceUtil {
 			portlet, categoryNames, eagerDestroy);
 	}
 
+	public static Portlet deployRemotePortlet(
+			Portlet portlet, String[] categoryNames, boolean eagerDestroy,
+			boolean clearCache, long[] companyIds)
+		throws PortalException {
+
+		return getService().deployRemotePortlet(
+			portlet, categoryNames, eagerDestroy, clearCache, companyIds);
+	}
+
 	public static void destroyPortlet(Portlet portlet) {
 		getService().destroyPortlet(portlet);
 	}

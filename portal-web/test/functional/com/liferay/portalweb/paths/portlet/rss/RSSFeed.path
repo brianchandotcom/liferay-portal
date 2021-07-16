@@ -104,7 +104,7 @@
 </tr>
 <tr>
 	<td>FEED_PANEL_HEADING</td>
-	<td>//fieldset[contains(@aria-labelledby,'feed_0_panelId_0Title')]//a[contains(.,'${key_feedHeading}')]</td>
+	<td>//fieldset[contains(@id,'feed_0_panelId_0')]//a[contains(.,'${key_feedHeading}')]</td>
 	<td></td>
 </tr>
 </tbody>

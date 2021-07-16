@@ -167,7 +167,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
-		Click(locator1 = "Icon#TOOLTIP");
+		MouseOver(locator1 = "Icon#TOOLTIP");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#TOOLTIP",

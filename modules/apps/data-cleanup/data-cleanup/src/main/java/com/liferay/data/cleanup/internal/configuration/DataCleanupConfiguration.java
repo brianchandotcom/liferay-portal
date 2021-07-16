@@ -82,6 +82,12 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpPrivateMessagingModuleData();
 
 	@Meta.AD(
+		deflt = "false", name = "clean-up-software-catalog-module-data",
+		required = false
+	)
+	public boolean cleanUpSoftwareCatalogModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "clean-up-shopping-module-data",
 		required = false
 	)

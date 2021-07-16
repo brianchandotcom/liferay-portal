@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.portal.security.sso.openid.connect.persistence">
+	<author>Arthur Chan</author>
+	<namespace>OpenIdConnect</namespace>
+	<entity local-service="true" name="OpenIdConnectSession" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="openIdConnectSessionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="accessToken" type="String" />
+		<column name="idToken" type="String" />
+		<column name="providerName" type="String" />
+		<column name="refreshToken" type="String" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateOpenIdConnectSession</exception>
+	</exceptions>
+</service-builder>

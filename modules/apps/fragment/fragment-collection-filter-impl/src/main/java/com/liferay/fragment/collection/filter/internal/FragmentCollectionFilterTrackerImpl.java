@@ -35,6 +35,11 @@ public class FragmentCollectionFilterTrackerImpl
 	implements FragmentCollectionFilterTracker {
 
 	@Override
+	public FragmentCollectionFilter getFragmentCollectionFilter(String key) {
+		return _serviceTrackerMap.getService(key);
+	}
+
+	@Override
 	public List<FragmentCollectionFilter> getFragmentCollectionFilters() {
 		return new ArrayList<>(_serviceTrackerMap.values());
 	}

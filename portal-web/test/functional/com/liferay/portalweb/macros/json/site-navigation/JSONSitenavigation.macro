@@ -22,6 +22,7 @@ definition {
 
 		var siteNavigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
 			groupName = "${groupName}",
+			site = "${site}",
 			siteNavigationMenuName = "${siteNavigationMenuName}");
 
 		if (isSet(parentSiteNavigationMenuItem)) {

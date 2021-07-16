@@ -36,8 +36,6 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 
 <clay:container-fluid>
 	<aui:form action="<%= deleteDDMTemplateURL %>" name="fm">
-		<liferay-ui:success key="ddmTemplateDeleted" message="your-request-completed-successfully" />
-
 		<liferay-ui:search-container
 			id="<%= templateManagementToolbarDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= templateDisplayContext.getTemplateSearchContainer() %>"

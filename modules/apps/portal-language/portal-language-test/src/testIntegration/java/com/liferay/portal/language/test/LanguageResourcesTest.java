@@ -17,8 +17,8 @@ package com.liferay.portal.language.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -38,6 +38,7 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
@@ -74,23 +75,52 @@ public class LanguageResourcesTest {
 	public void testLanguageResourceServiceTrackerCustomizer() {
 		_assertValue(null);
 
-		_serviceRegistration1 = _register(_VALUE_1);
+		_serviceRegistration1 = _register(_VALUE_1, 0);
 
 		_assertValue(_VALUE_1);
 
-		_serviceRegistration2 = _register(_VALUE_2);
+		_serviceRegistration2 = _register(_VALUE_2, 0);
+
+		_assertValue(_VALUE_1);
+
+		_serviceRegistration3 = _register(_VALUE_3, 0);
+
+		_assertValue(_VALUE_1);
+
+		_serviceRegistration1 = _unregister(_serviceRegistration1);
 
 		_assertValue(_VALUE_2);
-
-		_serviceRegistration3 = _register(_VALUE_3);
-
-		_assertValue(_VALUE_3);
 
 		_serviceRegistration2 = _unregister(_serviceRegistration2);
 
 		_assertValue(_VALUE_3);
 
 		_serviceRegistration3 = _unregister(_serviceRegistration3);
+
+		_assertValue(null);
+	}
+
+	@Test
+	public void testLanguageResourceServiceTrackerCustomizerServiceRanking() {
+		_assertValue(null);
+
+		_serviceRegistration2 = _register(_VALUE_2, 2);
+
+		_assertValue(_VALUE_2);
+
+		_serviceRegistration3 = _register(_VALUE_3, 3);
+
+		_assertValue(_VALUE_3);
+
+		_serviceRegistration1 = _register(_VALUE_1, 1);
+
+		_assertValue(_VALUE_3);
+
+		_serviceRegistration3 = _unregister(_serviceRegistration3);
+
+		_assertValue(_VALUE_2);
+
+		_serviceRegistration2 = _unregister(_serviceRegistration2);
 
 		_assertValue(_VALUE_1);
 
@@ -105,10 +135,14 @@ public class LanguageResourcesTest {
 			_language.get(_locale, TestResourceBundle.class.getName(), null));
 	}
 
-	private ServiceRegistration<?> _register(String value) {
+	private ServiceRegistration<?> _register(String value, int serviceRanking) {
 		return _bundleContext.registerService(
 			ResourceBundle.class, new TestResourceBundle(value),
-			MapUtil.singletonDictionary("language.id", _languageId));
+			HashMapDictionaryBuilder.<String, Object>put(
+				"language.id", _languageId
+			).put(
+				Constants.SERVICE_RANKING, serviceRanking
+			).build());
 	}
 
 	private ServiceRegistration<?> _unregister(

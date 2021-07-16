@@ -15,7 +15,6 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -139,9 +138,6 @@ public class DataCleanup implements UpgradeStepRegistrator {
 
 	@Reference
 	private ImageLocalService _imageLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

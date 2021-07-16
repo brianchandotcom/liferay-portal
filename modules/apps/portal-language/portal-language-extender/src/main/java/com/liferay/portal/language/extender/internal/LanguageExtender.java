@@ -36,10 +36,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class LanguageExtender
-	implements BundleTrackerCustomizer<LanguageExtension> {
+	implements BundleTrackerCustomizer<BundleCapabilityLanguageExtension> {
 
 	@Override
-	public LanguageExtension addingBundle(
+	public BundleCapabilityLanguageExtension addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
@@ -51,33 +51,34 @@ public class LanguageExtender
 			return null;
 		}
 
-		LanguageExtension languageExtension = new LanguageExtension(
-			_bundleContext, bundle, bundleCapabilities);
+		BundleCapabilityLanguageExtension bundleCapabilityLanguageExtension =
+			new BundleCapabilityLanguageExtension(
+				_bundleContext, bundle, bundleCapabilities);
 
 		try {
-			languageExtension.start();
+			bundleCapabilityLanguageExtension.start();
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
-			languageExtension.destroy();
+			bundleCapabilityLanguageExtension.destroy();
 
 			throw new RuntimeException(invalidSyntaxException);
 		}
 
-		return languageExtension;
+		return bundleCapabilityLanguageExtension;
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		LanguageExtension languageExtension) {
+		BundleCapabilityLanguageExtension bundleCapabilityLanguageExtension) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		LanguageExtension languageExtension) {
+		BundleCapabilityLanguageExtension bundleCapabilityLanguageExtension) {
 
-		languageExtension.destroy();
+		bundleCapabilityLanguageExtension.destroy();
 	}
 
 	@Activate

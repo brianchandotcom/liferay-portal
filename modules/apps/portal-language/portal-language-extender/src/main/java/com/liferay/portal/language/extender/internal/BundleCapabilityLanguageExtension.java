@@ -44,9 +44,9 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Carlos Sierra Andrés
  */
-public class LanguageExtension {
+public class BundleCapabilityLanguageExtension {
 
-	public LanguageExtension(
+	public BundleCapabilityLanguageExtension(
 		BundleContext bundleContext, Bundle bundle,
 		List<BundleCapability> bundleCapabilities) {
 
@@ -162,7 +162,7 @@ public class LanguageExtension {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LanguageExtension.class);
+		BundleCapabilityLanguageExtension.class);
 
 	private static final AtomicInteger _atomicInteger = new AtomicInteger();
 

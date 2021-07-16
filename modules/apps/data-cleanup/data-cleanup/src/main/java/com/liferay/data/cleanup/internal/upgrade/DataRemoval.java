@@ -15,6 +15,7 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration;
+import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationPersistenceManagerUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

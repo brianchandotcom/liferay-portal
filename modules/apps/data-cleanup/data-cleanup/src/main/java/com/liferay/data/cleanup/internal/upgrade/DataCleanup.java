@@ -15,6 +15,7 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
+import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationPersistenceManagerUtil;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;

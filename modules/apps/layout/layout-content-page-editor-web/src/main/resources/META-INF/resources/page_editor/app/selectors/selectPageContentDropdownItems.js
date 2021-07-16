@@ -14,7 +14,6 @@
 
 import {openModal} from 'frontend-js-web';
 
-import {config} from '../config/index';
 import {selectPageContents} from './selectPageContents';
 
 export const selectPageContentDropdownItems = (classPK, label = '') => (
@@ -48,7 +47,7 @@ export const selectPageContentDropdownItems = (classPK, label = '') => (
 		});
 	}
 
-	if (config.contentBrowsingEnabled && editImage) {
+	if (editImage) {
 		dropdownItems.push({
 			...editImage,
 			label: Liferay.Language.get('edit-image'),

@@ -283,9 +283,6 @@ public class ContentPageEditorDisplayContext {
 					_resourceBundleLoader.loadResourceBundle(
 						themeDisplay.getLocale()))
 			).put(
-				"contentBrowsingEnabled",
-				_ffLayoutContentPageEditorConfiguration.contentBrowsingEnabled()
-			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(
 				"defaultLanguageId",

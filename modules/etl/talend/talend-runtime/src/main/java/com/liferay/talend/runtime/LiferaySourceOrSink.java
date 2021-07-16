@@ -90,6 +90,15 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 			liferayClient.executePostRequest(resourceURL, jsonValue));
 	}
 
+	public Optional<JsonObject> doPutRequest(
+		String resourceURL, JsonValue jsonValue) {
+
+		LiferayClient liferayClient = getLiferayClient();
+
+		return _getResponseContentJsonObjectOptional(
+			liferayClient.executePutRequest(resourceURL, jsonValue));
+	}
+
 	@Override
 	public Schema getEndpointSchema(
 		RuntimeContainer runtimeContainer, String endpoint) {

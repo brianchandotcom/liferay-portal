@@ -22,8 +22,8 @@ import com.liferay.talend.common.oas.constants.OASConstants;
 public enum Operation {
 
 	Delete(OASConstants.OPERATION_DELETE), Get(OASConstants.OPERATION_GET),
-	Insert(OASConstants.OPERATION_POST), Unavailable("noop"),
-	Update(OASConstants.OPERATION_PATCH);
+	Insert(OASConstants.OPERATION_POST), Replace(OASConstants.OPERATION_PUT),
+	Unavailable("noop"), Update(OASConstants.OPERATION_PATCH);
 
 	public static Operation toOperation(String methodName) {
 		for (Operation operation : values()) {

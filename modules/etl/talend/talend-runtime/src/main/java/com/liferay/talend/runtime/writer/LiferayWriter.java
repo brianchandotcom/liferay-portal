@@ -118,6 +118,22 @@ public class LiferayWriter
 				jsonObjectOptional.get()));
 	}
 
+	public void doReplace(IndexedRecord indexedRecord) throws IOException {
+		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPutRequest(
+			_getEndpointUrl(),
+			_indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
+
+		if (!jsonObjectOptional.isPresent()) {
+			_handleSuccessRecord(indexedRecord);
+
+			return;
+		}
+
+		_handleSuccessRecord(
+			_jsonObjectIndexedRecordConverter.toIndexedRecord(
+				jsonObjectOptional.get()));
+	}
+
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
 		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPatchRequest(
 			_getEndpointUrl(),
@@ -172,6 +188,9 @@ public class LiferayWriter
 			}
 			else if (Operation.Insert == operation) {
 				doInsert(indexedRecord);
+			}
+			else if (Operation.Replace == operation) {
+				doReplace(indexedRecord);
 			}
 			else if (Operation.Update == operation) {
 				doUpdate(indexedRecord);

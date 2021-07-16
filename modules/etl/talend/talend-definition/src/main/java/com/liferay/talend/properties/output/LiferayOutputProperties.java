@@ -87,7 +87,7 @@ public class LiferayOutputProperties
 
 		resource.setAllowedOperations(
 			OASConstants.OPERATION_DELETE, OASConstants.OPERATION_PATCH,
-			OASConstants.OPERATION_POST);
+			OASConstants.OPERATION_POST, OASConstants.OPERATION_PUT);
 
 		return super.init();
 	}

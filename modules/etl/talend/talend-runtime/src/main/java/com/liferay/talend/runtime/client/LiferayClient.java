@@ -109,12 +109,12 @@ public class LiferayClient {
 	}
 
 	public Response executePutRequest(
-			String targetURIString, JsonObject jsonObject)
+			String targetURIString, JsonValue jsonValue)
 		throws ClientException {
 
 		return _execute(
 			HttpMethod.PUT, _createBuilder(_toURI(targetURIString)),
-			Entity.json(_jsonObjectToPrettyString(jsonObject)));
+			Entity.json(_jsonObjectToPrettyString(jsonValue)));
 	}
 
 	public static class Builder {

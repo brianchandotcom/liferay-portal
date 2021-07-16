@@ -70,6 +70,8 @@ public class OASConstants {
 
 	public static final String OPERATION_POST = "post";
 
+	public static final String OPERATION_PUT = "put";
+
 	public static final String PATH_SCHEMA_REFERENCE = "#/components/schemas/";
 
 	public static final String PATHS = "paths";

@@ -265,10 +265,10 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 			modifiableSettings.setValues("hiddenNodes", hiddenNodes);
 		}
 
-		if (hiddenNodes != null) {
-			String[] visibleNodes = modifiableSettings.getValues(
-				"visibleNodes", null);
+		String[] visibleNodes = modifiableSettings.getValues(
+			"visibleNodes", null);
 
+		if (visibleNodes != null) {
 			if (newName.isEmpty()) {
 				ArrayUtil.remove(visibleNodes, oldName);
 			}

@@ -4602,9 +4602,9 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-127023. The related assets should be in Collection Display when select Related Assets as Related Items Collection Provider."
+	@description = "This is a use case for LPS-127023. The related assets should be in Collection Display when select Related Assets from Related Items Collection Provider."
 	@priority = "5"
-	test ViewRelatedAssetsInCollectionDisplayWithNewRelatedAssets {
+	test ViewRelatedAssetsInCollectionDisplay {
 		property testray.main.component.name = "Display Pages";
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {

@@ -940,6 +940,73 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Back Icon Account");
 	}
 
+	@description = "This test removes domain set to an account."
+	@priority = "4"
+	test DisablingDomainValidationRemovesWarningMessages {
+		AccountConfiguration.enableAccountEmailDomain();
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.addAccountWithDomain(
+			accountName = "Business Account",
+			domainNames = "liferay.com");
+
+		Accounts.addNewUserWithSameDomain(
+			accountName = "Business Account",
+			assigneeName = "userfn",
+			emailDomainName = "liferay.com",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn",
+			validDomainNames = "liferay.com");
+
+		AccountConfiguration.disableAccountEmailDomain();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+		AssertElementNotPresent(locator1 = "Account#DOMAIN_SECTION");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(
+			key_title = "Assign Users to Business Account",
+			locator1 = "IFrame#MODAL_ANY");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementNotPresent(
+			key_text = "View Valid Domains",
+			locator1 = "Button#ANY",
+			value1 = "View Valid Domains");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "usersn1");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "userea1@liferay.com");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+			value1 = "userfn1");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+			value1 = "userln1");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+	}
+
 	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
 	@priority = "3"
 	test NoFilterByNavigationForPersonAccount {

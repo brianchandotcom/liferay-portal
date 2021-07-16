@@ -469,6 +469,32 @@ public class AssetTagServiceSoap {
 		}
 	}
 
+	public static void subscribeTag(long userId, long groupId, long tagId)
+		throws RemoteException {
+
+		try {
+			AssetTagServiceUtil.subscribeTag(userId, groupId, tagId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void unsubscribeTag(long userId, long tagId)
+		throws RemoteException {
+
+		try {
+			AssetTagServiceUtil.unsubscribeTag(userId, tagId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.asset.kernel.model.AssetTagSoap updateTag(
 			long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

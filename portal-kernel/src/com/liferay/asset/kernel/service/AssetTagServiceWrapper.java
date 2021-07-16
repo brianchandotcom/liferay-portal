@@ -211,6 +211,20 @@ public class AssetTagServiceWrapper
 	}
 
 	@Override
+	public void subscribeTag(long userId, long groupId, long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetTagService.subscribeTag(userId, groupId, tagId);
+	}
+
+	@Override
+	public void unsubscribeTag(long userId, long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetTagService.unsubscribeTag(userId, tagId);
+	}
+
+	@Override
 	public AssetTag updateTag(
 			long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

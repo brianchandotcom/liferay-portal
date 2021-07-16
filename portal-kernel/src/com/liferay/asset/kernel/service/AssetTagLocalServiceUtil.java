@@ -836,6 +836,18 @@ public class AssetTagLocalServiceUtil {
 		getService().setAssetEntryAssetTags(entryId, tagIds);
 	}
 
+	public static void subscribeTag(long userId, long groupId, long tagId)
+		throws PortalException {
+
+		getService().subscribeTag(userId, groupId, tagId);
+	}
+
+	public static void unsubscribeTag(long userId, long tagId)
+		throws PortalException {
+
+		getService().unsubscribeTag(userId, tagId);
+	}
+
 	/**
 	 * Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

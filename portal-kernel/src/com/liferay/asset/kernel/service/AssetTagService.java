@@ -146,6 +146,11 @@ public interface AssetTagService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONArray search(long[] groupIds, String name, int start, int end);
 
+	public void subscribeTag(long userId, long groupId, long tagId)
+		throws PortalException;
+
+	public void unsubscribeTag(long userId, long tagId) throws PortalException;
+
 	public AssetTag updateTag(
 			long tagId, String name, ServiceContext serviceContext)
 		throws PortalException;

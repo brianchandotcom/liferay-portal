@@ -183,6 +183,18 @@ public class AssetTagServiceUtil {
 		return getService().search(groupIds, name, start, end);
 	}
 
+	public static void subscribeTag(long userId, long groupId, long tagId)
+		throws PortalException {
+
+		getService().subscribeTag(userId, groupId, tagId);
+	}
+
+	public static void unsubscribeTag(long userId, long tagId)
+		throws PortalException {
+
+		getService().unsubscribeTag(userId, tagId);
+	}
+
 	public static AssetTag updateTag(
 			long tagId, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

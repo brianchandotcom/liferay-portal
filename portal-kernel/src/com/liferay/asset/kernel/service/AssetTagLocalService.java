@@ -714,6 +714,11 @@ public interface AssetTagLocalService
 
 	public void setAssetEntryAssetTags(long entryId, long[] tagIds);
 
+	public void subscribeTag(long userId, long groupId, long tagId)
+		throws PortalException;
+
+	public void unsubscribeTag(long userId, long tagId) throws PortalException;
+
 	/**
 	 * Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

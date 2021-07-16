@@ -933,6 +933,20 @@ public class AssetTagLocalServiceWrapper
 		_assetTagLocalService.setAssetEntryAssetTags(entryId, tagIds);
 	}
 
+	@Override
+	public void subscribeTag(long userId, long groupId, long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetTagLocalService.subscribeTag(userId, groupId, tagId);
+	}
+
+	@Override
+	public void unsubscribeTag(long userId, long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetTagLocalService.unsubscribeTag(userId, tagId);
+	}
+
 	/**
 	 * Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

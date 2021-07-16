@@ -28,6 +28,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121450.  Can add a vocabulary without receive an alert after set DM Type and WC Strucutre with XSS name."
+	@priority = "4"
+	test AddVocabularyWhenExistingStructureAndDocumentTypeWithXSSName {
+		var documentName = '''<script>alert(123)</script>''';
+
+		var structureName = '''<script>alert(456)</script>''';
+
+		task ("Add a document type with XSS name") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "${documentName}");
+		}
+
+		task ("View the XSS is not escaped") {
+			LexiconEntry.viewEntryName(rowEntry = "${documentName}");
+		}
+
+		task ("Add a web content structure with XSS name") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "${structureName}");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("View the XSS is not escaped") {
+			WebContentStructures.viewCP(structureName = "${structureName}");
+		}
+
+		task ("View no alert shown when create a vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+		}
+
+		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+	}
+
 	@description = "This is a test for LPS-123823. The user can select a category with XSS name on the page settings."
 	@priority = "4"
 	@uitest

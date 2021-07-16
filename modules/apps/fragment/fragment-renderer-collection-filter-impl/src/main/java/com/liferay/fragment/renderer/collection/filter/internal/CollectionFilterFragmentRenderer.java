@@ -14,6 +14,8 @@
 
 package com.liferay.fragment.renderer.collection.filter.internal;
 
+import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -123,6 +125,13 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		FragmentCollectionFilter fragmentCollectionFilter =
+			_fragmentCollectionFilterTracker.getFragmentCollectionFilter(
+				"category");
+
+		fragmentCollectionFilter.render(
+			fragmentRendererContext, httpServletRequest, httpServletResponse);
 	}
 
 	@Modified
@@ -197,6 +206,9 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 
 	private volatile FFFragmentRendererCollectionFilterConfiguration
 		_ffFragmentRendererCollectionFilterConfiguration;
+
+	@Reference
+	private FragmentCollectionFilterTracker _fragmentCollectionFilterTracker;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

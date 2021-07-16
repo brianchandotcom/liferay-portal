@@ -69,3 +69,24 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 		<div class="col-md-4" />
 	</aui:form>
 </div>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectType',
+		() => {
+			var A = AUI();
+
+			var type = A.one('#<portlet:namespace />type').val();
+
+			var portletURL = new Liferay.PortletURL.createURL(
+				'<%= currentURLObj %>'
+			);
+
+			portletURL.setParameter('type', type);
+
+			window.location.replace(portletURL.toString());
+		},
+		['liferay-portlet-url']
+	);
+</aui:script>

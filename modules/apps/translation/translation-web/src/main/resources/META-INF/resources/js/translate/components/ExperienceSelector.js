@@ -17,7 +17,12 @@ import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ExperienceSelector = ({confirmChangesBeforeReload, label, options}) => {
+const ExperienceSelector = ({
+	confirmChangesBeforeReload,
+	label,
+	options,
+	value = '',
+}) => {
 	const selectorId = 'experience-selector';
 
 	const changePage = (event) => {
@@ -36,6 +41,7 @@ const ExperienceSelector = ({confirmChangesBeforeReload, label, options}) => {
 					id={selectorId}
 					onChange={changePage}
 					options={options}
+					value={value}
 				/>
 			</ClayLayout.ContentCol>
 		</ClayLayout.ContentRow>
@@ -51,6 +57,7 @@ ExperienceSelector.propTypes = {
 			value: PropTypes.string.isRequired,
 		})
 	).isRequired,
+	value: PropTypes.string,
 };
 
 export default ExperienceSelector;

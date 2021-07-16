@@ -992,7 +992,7 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the new Related Assets in inner Collection Display") {
+		task ("Select the Related Assets in inner Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				index = "3",
@@ -1187,7 +1187,7 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the new Related Assets in inner Collection Display") {
+		task ("Select the Related Assets in inner Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				index = "3",

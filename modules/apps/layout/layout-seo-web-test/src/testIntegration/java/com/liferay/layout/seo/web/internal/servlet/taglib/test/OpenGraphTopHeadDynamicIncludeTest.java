@@ -23,8 +23,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -55,8 +53,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -94,15 +90,13 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
+import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -1329,39 +1323,20 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	private Set<Locale> _getAvailableLocalesLayoutTranslatedLanguages()
 		throws Exception {
 
-		if (!_layout.isTypeContent()) {
-			Stream<String> stream = Arrays.stream(
-				_layout.getAvailableLanguageIds());
+		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemLanguagesProvider.class, Layout.class.getName());
 
-			Stream<Locale> localeStream = stream.map(
-				LocaleUtil::fromLanguageId);
-
-			return localeStream.collect(Collectors.toSet());
+		if (infoItemLanguagesProvider == null) {
+			return _language.getAvailableLocales(_group.getGroupId());
 		}
 
-		Set<Locale> availableLocales = new HashSet<>();
+		Stream<String> stream = Arrays.stream(
+			infoItemLanguagesProvider.getAvailableLanguageIds(_layout));
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				_group.getGroupId(), _layout.getPlid());
+		Stream<Locale> localeStream = stream.map(LocaleUtil::fromLanguageId);
 
-		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
-			_group.getGroupId());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
-			for (String translatableFragment : _TRANSLATABLE_FRAGMENTS) {
-				availableLocales.addAll(
-					_getLocaleOnEditableFragment(
-						editableValuesJSONObject, translatableFragment,
-						siteAvailableLocales));
-			}
-		}
-
-		return availableLocales;
+		return localeStream.collect(Collectors.toSet());
 	}
 
 	private long _getDDMStructureId() throws Exception {
@@ -1399,50 +1374,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				_group.getFriendlyURL() + _layout.getFriendlyURL());
 
 		return mockHttpServletRequest;
-	}
-
-	private Set<Locale> _getLocaleOnEditableFragment(
-		JSONObject jsonObject, String key, Set<Locale> siteAvailableLocales) {
-
-		Set<Locale> availableLocales = new HashSet<>();
-
-		JSONObject editableFragmentJSONObject = jsonObject.getJSONObject(key);
-
-		if (!(editableFragmentJSONObject instanceof JSONObject) ||
-			(editableFragmentJSONObject.length() <= 0)) {
-
-			return availableLocales;
-		}
-
-		Iterator<String> editableFragmentIterator =
-			editableFragmentJSONObject.keys();
-
-		while (editableFragmentIterator.hasNext()) {
-			Object editableValueObject = editableFragmentJSONObject.get(
-				editableFragmentIterator.next());
-
-			if (!(editableValueObject instanceof JSONObject)) {
-				continue;
-			}
-
-			JSONObject editableValueJSONObject =
-				(JSONObject)editableValueObject;
-
-			if (editableValueJSONObject.length() <= 0) {
-				continue;
-			}
-
-			for (Locale siteAvailableLocale : siteAvailableLocales) {
-				Object valueObject = editableValueJSONObject.get(
-					_language.getLanguageId(siteAvailableLocale));
-
-				if (valueObject != null) {
-					availableLocales.add(siteAvailableLocale);
-				}
-			}
-		}
-
-		return availableLocales;
 	}
 
 	private HttpServletRequest _getSignedInHttpServletRequest()
@@ -1570,13 +1501,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		"com.liferay.layout.seo.web.internal.configuration." +
 			"FFSEOInlineFieldMapping";
 
-	private static final String[] _TRANSLATABLE_FRAGMENTS = {
-		"com.liferay.fragment.entry.processor.background.image." +
-			"BackgroundImageFragmentEntryProcessor",
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor"
-	};
-
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
@@ -1604,9 +1528,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		filter = "component.name=com.liferay.layout.seo.web.internal.servlet.taglib.OpenGraphTopHeadDynamicInclude"
 	)
 	private DynamicInclude _dynamicInclude;
-
-	@Inject
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

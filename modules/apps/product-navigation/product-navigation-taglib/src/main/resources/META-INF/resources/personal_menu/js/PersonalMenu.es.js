@@ -58,7 +58,9 @@ function PersonalMenu({
 						onFocus={preloadItems}
 						onMouseOver={preloadItems}
 					>
-						<span className={`sticker sticker-user-icon sticker-${size}`}>
+						<span
+							className={`sticker sticker-user-icon sticker-${size}`}
+						>
 							<ClaySticker
 								className={`user-icon-color-${color}`}
 								shape="circle"

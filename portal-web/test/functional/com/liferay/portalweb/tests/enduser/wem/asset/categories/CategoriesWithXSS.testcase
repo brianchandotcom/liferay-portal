@@ -35,9 +35,10 @@ definition {
 		var categoryName = '''><img src=xss onerror=alert(1)>''';
 
 		task ("Add a global category with XSS name in Topic") {
-			JSONCategory.addCategory(
-				groupName = "Global",
-				title = "${categoryName}",
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			Category.addCP(
+				categoryName = "${categoryName}",
 				vocabularyName = "Topic");
 		}
 

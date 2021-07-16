@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.shop.by.diagram.admin.web.internal;
+package com.liferay.commerce.shop.by.diagram.admin.web.internal.product.type;
 
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryLocalService;

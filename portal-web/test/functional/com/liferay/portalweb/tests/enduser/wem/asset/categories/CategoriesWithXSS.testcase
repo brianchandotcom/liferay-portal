@@ -54,10 +54,6 @@ definition {
 		task ("View the alert not shown") {
 			AssertAlertNotPresent();
 		}
-
-		task ("Delete the site") {
-			JSONGroup.deleteGroupByName(groupName = "${siteName}");
-		}
 	}
 
 	@description = "This is a test for LPS-121450. No alert shown when add a vocabulary in site where existing structure and document type have XSS name."

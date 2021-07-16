@@ -19,11 +19,14 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.List;
@@ -47,7 +50,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return DropdownItemListBuilder.add(
 			() -> DDMTemplatePermission.containsAddTemplatePermission(
 				_themeDisplay.getPermissionChecker(),
@@ -59,6 +62,11 @@ public class DDMTemplateActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), _ddmTemplate,
 				ActionKeys.DELETE),
 			_getDeleteDDMTemplateActionUnsafeConsumer()
+		).add(
+			() -> DDMTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), _ddmTemplate,
+				ActionKeys.PERMISSIONS),
+			_getPermissionsDDMTemplateActionUnsafeConsumer()
 		).build();
 	}
 
@@ -98,6 +106,25 @@ public class DDMTemplateActionDropdownItemsProvider {
 				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getPermissionsDDMTemplateActionUnsafeConsumer()
+		throws Exception {
+
+		String permissionsDisplayPageURL = PermissionsURLTag.doTag(
+			StringPool.BLANK, DDMTemplate.class.getName(),
+			_ddmTemplate.getName(), null,
+			String.valueOf(_ddmTemplate.getTemplateId()),
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "permissionsDDMTemplate");
+			dropdownItem.putData(
+				"permissionsDDMTemplateURL", permissionsDisplayPageURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 

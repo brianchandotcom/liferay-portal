@@ -70,7 +70,8 @@ public class TemplateDisplayContext {
 	}
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
-		DDMTemplate ddmTemplate) {
+			DDMTemplate ddmTemplate)
+		throws Exception {
 
 		DDMTemplateActionDropdownItemsProvider
 			ddmTemplateActionDropdownItemsProvider =

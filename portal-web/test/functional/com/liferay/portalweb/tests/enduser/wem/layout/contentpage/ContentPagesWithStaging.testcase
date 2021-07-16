@@ -311,7 +311,7 @@ definition {
 		task ("Map web content image to background image field of Banner Center") {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
-				entryTitle = "WC WebContent Title",
+				entryTitle = "Web Content Title",
 				fieldName = "Image",
 				navItem = "Web Content",
 				panel = "Styles");

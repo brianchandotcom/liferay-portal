@@ -13,6 +13,7 @@
  */
 
 import {openModal} from 'frontend-js-web';
+
 const ACTIONS = {
 	deleteDDMTemplate(itemData) {
 		if (
@@ -23,6 +24,7 @@ const ACTIONS = {
 			submitForm(document.hrefFm, itemData.deleteDDMTemplateURL);
 		}
 	},
+
 	permissionsDDMTemplate({permissionsDDMTemplateURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

@@ -4,4 +4,7 @@
 	<checkstyle>
 		<suppress checks="AppendCheck" files="portal-language-servlet-filter/src/main/java/com/liferay/portal/language/servlet/filter/internal/LanguageFilterTracker\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="ResourceBundleCheck" files="portal-language-extender/src/main/java/com/liferay/portal/language/extender/internal/LanguageResourcesExtender\.java" />
+	</source-check>
 </suppressions>

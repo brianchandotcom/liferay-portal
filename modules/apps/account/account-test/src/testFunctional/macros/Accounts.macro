@@ -427,6 +427,30 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
+	macro assignMultipleOrganizations {
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_title = "Assign Organizations to ${accountName}",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Search.searchCP(searchTerm = "Organization ${organizationNumber}");
+
+		for (var organizationNumber : list "${organizationNumber}") {
+			LexiconEntry.selectEntry(rowEntry = "Organization ${organizationNumber}");
+		}
+
+		SelectFrameTop();
+
+		Button.click(button = "Assign");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro assignOrganizations {
 		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
 

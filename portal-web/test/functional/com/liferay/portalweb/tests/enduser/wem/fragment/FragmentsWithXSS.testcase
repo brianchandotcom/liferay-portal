@@ -21,10 +21,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-121200. Can create a fragment collection in site named with XSS without receive an alert message."
+	@description = "This is a test for LPS-121200. No alert popup when add a fragment collection in site with XSS name."
 	@priority = "4"
 	@uitest
-	test AddFragmentCollectionWhenSiteNameWithXSS {
+	test AddFragmentCollectionInSiteWithXSSName {
 		var siteName = '''<script>alert(123)</script>''';
 
 		task ("Add a site with XSS name") {

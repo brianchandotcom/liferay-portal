@@ -46,13 +46,16 @@ public class LanguageExtender
 		List<BundleCapability> bundleCapabilities =
 			bundleWiring.getCapabilities("liferay.resource.bundle");
 
-		if ((bundleCapabilities == null) || bundleCapabilities.isEmpty()) {
-			return null;
-		}
+		LanguageExtension languageExtension = null;
 
-		LanguageExtension languageExtension =
-			new BundleCapabilityLanguageExtension(
+		if ((bundleCapabilities == null) || bundleCapabilities.isEmpty()) {
+			languageExtension = new DefaultLanguageExtension(
+				bundle, _bundleContext);
+		}
+		else {
+			languageExtension = new BundleCapabilityLanguageExtension(
 				_bundleContext, bundle, bundleCapabilities);
+		}
 
 		try {
 			languageExtension.start();

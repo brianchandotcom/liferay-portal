@@ -39,6 +39,10 @@ public class LayoutTypeSettingsUtil {
 			Connection connection, String... portletIds)
 		throws Exception {
 
+		if (portletIds == null) {
+			return;
+		}
+
 		try (PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(

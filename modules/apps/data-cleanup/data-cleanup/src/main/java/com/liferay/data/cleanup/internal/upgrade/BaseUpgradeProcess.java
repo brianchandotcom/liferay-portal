@@ -82,6 +82,10 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 			String tableName, String columnName, String... columnValues)
 		throws Exception {
 
+		if (columnValues == null) {
+			return;
+		}
+
 		for (String columnValue : columnValues) {
 			runSQL(
 				StringBundler.concat(
@@ -100,6 +104,10 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 	private void _deleteFromPortletPreferences(String[] portletIds)
 		throws Exception {
+
+		if (portletIds == null) {
+			return;
+		}
 
 		for (String portletId : portletIds) {
 			runSQL(
@@ -132,6 +140,10 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _dropTables(String[] tableNames) throws Exception {
+		if (tableNames == null) {
+			return;
+		}
+
 		for (String tableName : tableNames) {
 			if (hasTable(tableName)) {
 				runSQL("drop table " + tableName);

@@ -14,11 +14,14 @@
 
 package com.liferay.fragment.collection.filter;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 
 /**
  * @author Pablo Molina
  */
+@ProviderType
 public interface FragmentCollectionFilterTracker {
 
 	public FragmentCollectionFilter getFragmentCollectionFilter(String key);

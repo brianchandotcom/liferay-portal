@@ -1962,7 +1962,10 @@ definition {
 			Navigator.openURL();
 		}
 
-		User._clickSignInLink(localization = "${localization}");
+		User._clickSignInLink(
+			idpName = "${idpName}",
+			localization = "${localization}",
+			samlMultiIdPs = "${samlMultiIdPs}");
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			Type(

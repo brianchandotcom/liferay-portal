@@ -15,13 +15,18 @@
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.DiagramCPType;
+import com.liferay.commerce.product.portlet.action.ActionHelper;
+import com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CPDefinitionDiagramSettingDisplayContext;
+import com.liferay.commerce.shop.by.diagram.admin.web.internal.product.type.DiagramCPType;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
+import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramTypeRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -93,10 +98,31 @@ public class CPDefinitionCPTypeDiagramScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		CPDefinitionDiagramSettingDisplayContext
+			cpDefinitionDiagramSettingDisplayContext =
+				new CPDefinitionDiagramSettingDisplayContext(
+					_actionHelper, httpServletRequest,
+					_cpDefinitionDiagramSettingService,
+					_cpDefinitionDiagramTypeRegistry);
+
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			cpDefinitionDiagramSettingDisplayContext);
+
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/view.jsp");
+			"/edit_cp_definition_diagram_setting.jsp");
 	}
+
+	@Reference
+	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPDefinitionDiagramSettingService
+		_cpDefinitionDiagramSettingService;
+
+	@Reference
+	private CPDefinitionDiagramTypeRegistry _cpDefinitionDiagramTypeRegistry;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

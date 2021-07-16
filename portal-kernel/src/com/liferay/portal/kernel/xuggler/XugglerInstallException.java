@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Andrew Betts
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class XugglerInstallException extends PortalException {
 
 	public static class MustBeURLClassLoader extends XugglerInstallException {

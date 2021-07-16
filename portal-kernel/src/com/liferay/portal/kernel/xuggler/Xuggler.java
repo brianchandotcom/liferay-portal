@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.xuggler;
 
 /**
  * @author Alexander Chow
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public interface Xuggler {
 
 	public void installNativeLibraries(String name) throws Exception;

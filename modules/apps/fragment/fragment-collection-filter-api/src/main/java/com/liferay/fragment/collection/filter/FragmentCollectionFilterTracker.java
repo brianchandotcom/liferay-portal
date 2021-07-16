@@ -21,6 +21,8 @@ import java.util.List;
  */
 public interface FragmentCollectionFilterTracker {
 
+	public FragmentCollectionFilter getFragmentCollectionFilter(String key);
+
 	public List<FragmentCollectionFilter> getFragmentCollectionFilters();
 
 }

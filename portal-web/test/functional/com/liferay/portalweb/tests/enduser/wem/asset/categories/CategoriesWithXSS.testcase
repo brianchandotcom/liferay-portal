@@ -65,13 +65,6 @@ definition {
 		task ("View the alert not shown") {
 			AssertAlertNotPresent();
 		}
-
-		task ("Delete the global category") {
-			JSONCategory.deleteCategory(
-				categoryName = "${categoryName}",
-				groupName = "Global",
-				vocabularyName = "Topic");
-		}
 	}
 
 }

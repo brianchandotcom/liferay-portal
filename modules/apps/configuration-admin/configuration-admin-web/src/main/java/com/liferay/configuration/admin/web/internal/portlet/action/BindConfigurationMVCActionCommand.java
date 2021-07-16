@@ -27,6 +27,7 @@ import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderPro
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
@@ -115,24 +116,37 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			configurationModel = configurationModels.get(pid);
 		}
 
-		Configuration configuration =
+		configurationModel = _getConfigurationModel(
 			_configurationModelRetriever.getConfiguration(
 				pid, configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK());
+				configurationScopeDisplayContext.getScopePK()),
+			configurationModel);
 
-		if ((configurationModel.isFactory() && pid.equals(factoryPid)) ||
-			!configurationModel.hasScopeConfiguration(
-				configurationScopeDisplayContext.getScope())) {
+		if (configurationModel.isFactory() && pid.equals(factoryPid)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Writing a new factory instance for service " + pid);
+			}
 
-			configuration = null;
+			configurationModel = _getConfigurationModel(
+				null, configurationModel);
 		}
 
-		configurationModel = new ConfigurationModel(
-			configurationModel.getBundleLocation(),
-			configurationModel.getBundleSymbolicName(),
-			configurationModel.getClassLoader(), configuration,
-			configurationModel.getExtendedObjectClassDefinition(),
-			configurationModel.isFactory());
+		if (!configurationModel.hasScopeConfiguration(
+				configurationScopeDisplayContext.getScope())) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Writing a new scoped instance for service ", pid,
+						" at scope ",
+						configurationScopeDisplayContext.getScope(),
+						" for scope ID ",
+						configurationScopeDisplayContext.getScopePK()));
+			}
+
+			configurationModel = _getConfigurationModel(
+				null, configurationModel);
+		}
 
 		Dictionary<String, Object> properties = null;
 
@@ -163,7 +177,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 		try {
 			configureTargetService(
-				configurationModel, configuration, properties,
+				configurationModel, properties,
 				configurationScopeDisplayContext.getScope(),
 				configurationScopeDisplayContext.getScopePK());
 
@@ -192,7 +206,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 	}
 
 	protected void configureTargetService(
-			ConfigurationModel configurationModel, Configuration configuration,
+			ConfigurationModel configurationModel,
 			Dictionary<String, Object> properties,
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws ConfigurationModelListenerException, PortletException {
@@ -202,6 +216,8 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		try {
+			Configuration configuration = configurationModel.getConfiguration();
+
 			boolean scoped = !scope.equals(
 				ExtendedObjectClassDefinition.Scope.SYSTEM.getValue());
 
@@ -340,6 +356,17 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		return properties;
+	}
+
+	private ConfigurationModel _getConfigurationModel(
+		Configuration configuration, ConfigurationModel configurationModel) {
+
+		return new ConfigurationModel(
+			configurationModel.getBundleLocation(),
+			configurationModel.getBundleSymbolicName(),
+			configurationModel.getClassLoader(), configuration,
+			configurationModel.getExtendedObjectClassDefinition(),
+			configurationModel.isFactory());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

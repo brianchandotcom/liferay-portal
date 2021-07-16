@@ -12,8 +12,10 @@
  * details.
  */
 
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import {setURLParameters} from './../utils';
 import LanguageSelector from './LanguageSelector';
 
 const TranslateLanguagesSelector = ({
@@ -25,21 +27,11 @@ const TranslateLanguagesSelector = ({
 	targetAvailableLanguages,
 	targetLanguageId,
 }) => {
-	const refreshPage = (sourceId, targetId) => {
-		const url = new URL(currentUrl);
-		const search_params = url.searchParams;
-
-		search_params.set(`${portletNamespace}sourceLanguageId`, sourceId);
-		search_params.set(`${portletNamespace}targetLanguageId`, targetId);
-
-		url.search = search_params.toString();
-
-		location.href = url.toString();
-	};
-
 	const changePage = (sourceId, targetId) => {
+		let navigation = false;
+
 		if (!formHasChanges) {
-			refreshPage(sourceId, targetId);
+			navigation = true;
 		}
 		else if (
 			confirm(
@@ -48,7 +40,19 @@ const TranslateLanguagesSelector = ({
 				)
 			)
 		) {
-			refreshPage(sourceId, targetId);
+			navigation = true;
+		}
+
+		if (navigation) {
+			const url = setURLParameters(
+				{
+					[`${portletNamespace}sourceLanguageId`]: sourceId,
+					[`${portletNamespace}targetLanguageId`]: targetId,
+				},
+				currentUrl
+			);
+
+			navigate(url);
 		}
 	};
 

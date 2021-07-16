@@ -15,12 +15,10 @@
 package com.liferay.template.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
-import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.web.internal.constants.TemplatePortletKeys;
@@ -61,25 +59,13 @@ public class DeleteDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "rowIds");
 		}
 
-		try {
-			for (long deleteDDMTemplateId : deleteDDMTemplateIds) {
-				_ddmTemplateService.deleteTemplate(deleteDDMTemplateId);
-			}
-
-			hideDefaultSuccessMessage(actionRequest);
-
-			MultiSessionMessages.add(
-				actionRequest, "ddmTemplateDeleted",
-				_language.format(
-					_portal.getHttpServletRequest(actionRequest),
-					"you-successfully-deleted-x-templates",
-					new Object[] {deleteDDMTemplateIds.length}));
+		for (long deleteDDMTemplateId : deleteDDMTemplateIds) {
+			_ddmTemplateService.deleteTemplate(deleteDDMTemplateId);
 		}
-		catch (PortalException portalException) {
-			SessionErrors.add(actionRequest, portalException.getClass());
 
-			hideDefaultErrorMessage(actionRequest);
-		}
+		hideDefaultSuccessMessage(actionRequest);
+
+		SessionMessages.add(actionRequest, "ddmTemplateDeleted");
 	}
 
 	@Reference

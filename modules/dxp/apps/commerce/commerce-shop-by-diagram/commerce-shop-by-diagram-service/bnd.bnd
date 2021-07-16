@@ -7,3 +7,4 @@ Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\
 		filter:="(&(liferay.extender=spring.extender)(version>=2.0)(!(version>=4.0)))"
+-dsannotations-options: inherit

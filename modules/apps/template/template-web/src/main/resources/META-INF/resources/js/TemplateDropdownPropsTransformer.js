@@ -15,13 +15,13 @@
 import {openModal} from 'frontend-js-web';
 
 const ACTIONS = {
-	deleteDDMTemplate(itemData) {
+	deleteDDMTemplate({deleteDDMTemplateURL}) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(document.hrefFm, itemData.deleteDDMTemplateURL);
+			submitForm(document.hrefFm, deleteDDMTemplateURL);
 		}
 	},
 

@@ -17,6 +17,7 @@ package com.liferay.template.web.internal.util;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -52,38 +53,52 @@ public class DDMTemplateActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), _ddmTemplate.getClassNameId(),
 				_ddmTemplate.getResourceClassNameId()),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).build(),
-					"redirect", _themeDisplay.getURLCurrent(), "ddmTemplateId",
-					_ddmTemplate.getTemplateId(), "mvcPath",
-					"/copy_ddm_template.jsp");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "copy"));
-			}
+			_getCopyDDMTemplateActionUnsafeConsumer()
 		).add(
 			() -> DDMTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), _ddmTemplate,
 				ActionKeys.DELETE),
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteDDMTemplate");
-				dropdownItem.putData(
-					"deleteDDMTemplateURL",
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/template/delete_ddm_template"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"ddmTemplateId", _ddmTemplate.getTemplateId()
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
-			}
+			_getDeleteDDMTemplateActionUnsafeConsumer()
 		).build();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getCopyDDMTemplateActionUnsafeConsumer()
+		throws Exception {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).build(),
+				"redirect", _themeDisplay.getURLCurrent(), "ddmTemplateId",
+				_ddmTemplate.getTemplateId(), "mvcPath",
+				"/copy_ddm_template.jsp");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "copy"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getDeleteDDMTemplateActionUnsafeConsumer()
+		throws Exception {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteDDMTemplate");
+			dropdownItem.putData(
+				"deleteDDMTemplateURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/template/delete_ddm_template"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ddmTemplateId", _ddmTemplate.getTemplateId()
+				).buildString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
+		};
 	}
 
 	private final DDMTemplate _ddmTemplate;

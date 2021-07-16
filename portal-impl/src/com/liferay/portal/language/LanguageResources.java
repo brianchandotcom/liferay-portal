@@ -433,17 +433,51 @@ public class LanguageResources {
 			Map<String, String> languageMap = _getLanguageMap(resourceBundle);
 
 			synchronized (languageId.intern()) {
-				Map<String, String> diffLanguageMap = _putLanguageMap(
-					locale, languageMap);
-
-				ResourceBundleInfo resourceBundleInfo = new ResourceBundleInfo(
-					diffLanguageMap, languageId, locale);
-
 				List<ResourceBundleInfo> resourceBundleInfos =
 					_languageResourceExtensions.computeIfAbsent(
 						languageId, key -> new ArrayList<>());
 
-				resourceBundleInfos.add(resourceBundleInfo);
+				ResourceBundleInfo resourceBundleInfo = new ResourceBundleInfo(
+					languageId, locale, serviceReference);
+
+				int index = Collections.binarySearch(
+					resourceBundleInfos, resourceBundleInfo);
+
+				index = -index - 1;
+
+				resourceBundleInfos.add(index, resourceBundleInfo);
+
+				Map<String, String> diffLanguageMap = new HashMap<>();
+
+				for (int i = index + 1; i < resourceBundleInfos.size(); i++) {
+					ResourceBundleInfo nextResourceBundleInfo =
+						resourceBundleInfos.get(i);
+
+					Map<String, String> nextDiffLanguageMap =
+						nextResourceBundleInfo._diffLanguageMap;
+
+					for (Map.Entry<String, String> entry :
+							nextDiffLanguageMap.entrySet()) {
+
+						String key = entry.getKey();
+
+						if (languageMap.containsKey(key)) {
+							diffLanguageMap.put(key, entry.getValue());
+
+							entry.setValue(languageMap.remove(key));
+						}
+					}
+				}
+
+				if (diffLanguageMap.isEmpty()) {
+					diffLanguageMap = _putLanguageMap(locale, languageMap);
+				}
+				else {
+					diffLanguageMap.putAll(
+						_putLanguageMap(locale, languageMap));
+				}
+
+				resourceBundleInfo._diffLanguageMap = diffLanguageMap;
 
 				return resourceBundleInfo;
 			}
@@ -470,7 +504,8 @@ public class LanguageResources {
 				List<ResourceBundleInfo> resourceBundleInfos =
 					_languageResourceExtensions.get(languageId);
 
-				int index = resourceBundleInfos.indexOf(resourceBundleInfo);
+				int index = Collections.binarySearch(
+					resourceBundleInfos, resourceBundleInfo);
 
 				Map<String, String> diffLanguageMap =
 					resourceBundleInfo._diffLanguageMap;
@@ -522,20 +557,28 @@ public class LanguageResources {
 
 	}
 
-	private static class ResourceBundleInfo {
+	private static class ResourceBundleInfo
+		implements Comparable<ResourceBundleInfo> {
 
-		private ResourceBundleInfo(
-			Map<String, String> diffLanguageMap, String languageId,
-			Locale locale) {
-
-			_diffLanguageMap = diffLanguageMap;
-			_languageId = languageId;
-			_locale = locale;
+		@Override
+		public int compareTo(ResourceBundleInfo resourceBundleInfo) {
+			return _serviceReference.compareTo(
+				resourceBundleInfo._serviceReference);
 		}
 
-		private final Map<String, String> _diffLanguageMap;
+		private ResourceBundleInfo(
+			String languageId, Locale locale,
+			ServiceReference<?> serviceReference) {
+
+			_languageId = languageId;
+			_locale = locale;
+			_serviceReference = serviceReference;
+		}
+
+		private Map<String, String> _diffLanguageMap;
 		private final String _languageId;
 		private final Locale _locale;
+		private final ServiceReference<?> _serviceReference;
 
 	}
 

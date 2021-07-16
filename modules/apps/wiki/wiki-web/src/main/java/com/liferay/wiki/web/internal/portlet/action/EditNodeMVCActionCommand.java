@@ -255,31 +255,31 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 			"hiddenNodes", null);
 
 		if (hiddenNodes != null) {
-			if (newName.isEmpty()) {
-				ArrayUtil.remove(hiddenNodes, oldName);
-			}
-			else {
-				ArrayUtil.replace(hiddenNodes, oldName, newName);
-			}
-
-			modifiableSettings.setValues("hiddenNodes", hiddenNodes);
+			modifiableSettings.setValues(
+				"hiddenNodes", _replace(hiddenNodes, oldName, newName));
 		}
 
 		String[] visibleNodes = modifiableSettings.getValues(
 			"visibleNodes", null);
 
 		if (visibleNodes != null) {
-			if (newName.isEmpty()) {
-				ArrayUtil.remove(visibleNodes, oldName);
-			}
-			else {
-				ArrayUtil.replace(visibleNodes, oldName, newName);
-			}
-
-			modifiableSettings.setValues("visibleNodes", visibleNodes);
+			modifiableSettings.setValues(
+				"visibleNodes", _replace(visibleNodes, oldName, newName));
 		}
 
 		modifiableSettings.store();
+	}
+
+	private String[] _replace(
+		String[] values, String oldValue, String newValue) {
+
+		if (newValue.isEmpty()) {
+			return ArrayUtil.remove(values, oldValue);
+		}
+
+		ArrayUtil.replace(values, oldValue, newValue);
+
+		return values;
 	}
 
 	@Reference

@@ -44,7 +44,7 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Carlos Sierra Andrés
  */
-public class BundleCapabilityLanguageExtension {
+public class BundleCapabilityLanguageExtension implements LanguageExtension {
 
 	public BundleCapabilityLanguageExtension(
 		BundleContext bundleContext, Bundle bundle,
@@ -55,6 +55,7 @@ public class BundleCapabilityLanguageExtension {
 		_bundleCapabilities = bundleCapabilities;
 	}
 
+	@Override
 	public void destroy() {
 		for (ServiceTrackerResourceBundleLoader
 				serviceTrackerResourceBundleLoader :
@@ -70,6 +71,7 @@ public class BundleCapabilityLanguageExtension {
 		}
 	}
 
+	@Override
 	public void start() throws InvalidSyntaxException {
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 

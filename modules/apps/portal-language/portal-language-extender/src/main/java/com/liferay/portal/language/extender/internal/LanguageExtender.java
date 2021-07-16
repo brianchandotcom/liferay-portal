@@ -21,7 +21,6 @@ import java.util.List;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
@@ -36,10 +35,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class LanguageExtender
-	implements BundleTrackerCustomizer<BundleCapabilityLanguageExtension> {
+	implements BundleTrackerCustomizer<LanguageExtension> {
 
 	@Override
-	public BundleCapabilityLanguageExtension addingBundle(
+	public LanguageExtension addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
@@ -51,34 +50,37 @@ public class LanguageExtender
 			return null;
 		}
 
-		BundleCapabilityLanguageExtension bundleCapabilityLanguageExtension =
+		LanguageExtension languageExtension =
 			new BundleCapabilityLanguageExtension(
 				_bundleContext, bundle, bundleCapabilities);
 
 		try {
-			bundleCapabilityLanguageExtension.start();
+			languageExtension.start();
 		}
-		catch (InvalidSyntaxException invalidSyntaxException) {
-			bundleCapabilityLanguageExtension.destroy();
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
+		}
+		catch (Exception exception) {
+			languageExtension.destroy();
 
-			throw new RuntimeException(invalidSyntaxException);
+			throw new RuntimeException(exception);
 		}
 
-		return bundleCapabilityLanguageExtension;
+		return languageExtension;
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		BundleCapabilityLanguageExtension bundleCapabilityLanguageExtension) {
+		LanguageExtension languageExtension) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		BundleCapabilityLanguageExtension bundleCapabilityLanguageExtension) {
+		LanguageExtension languageExtension) {
 
-		bundleCapabilityLanguageExtension.destroy();
+		languageExtension.destroy();
 	}
 
 	@Activate

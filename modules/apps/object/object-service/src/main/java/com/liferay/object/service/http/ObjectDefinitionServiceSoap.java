@@ -14,9 +14,15 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectDefinitionServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.object.service.ObjectDefinitionServiceUtil</code> service
+ * <code>ObjectDefinitionServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,101 @@ package com.liferay.object.service.http;
  */
 @Deprecated
 public class ObjectDefinitionServiceSoap {
+
+	public static com.liferay.object.model.ObjectDefinitionSoap
+			addCustomObjectDefinition(long userId, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectDefinition returnValue =
+				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
+					userId, name);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectDefinitionSoap
+			deleteObjectDefinition(long objectDefinitionId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectDefinition returnValue =
+				ObjectDefinitionServiceUtil.deleteObjectDefinition(
+					objectDefinitionId);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectDefinitionSoap
+			getObjectDefinition(long objectDefinitionId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectDefinition returnValue =
+				ObjectDefinitionServiceUtil.getObjectDefinition(
+					objectDefinitionId);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectDefinitionSoap[]
+			getObjectDefinitions(int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.object.model.ObjectDefinition>
+				returnValue = ObjectDefinitionServiceUtil.getObjectDefinitions(
+					start, end);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getObjectDefinitionsCount(long companyId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				ObjectDefinitionServiceUtil.getObjectDefinitionsCount(
+					companyId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionServiceSoap.class);
+
 }

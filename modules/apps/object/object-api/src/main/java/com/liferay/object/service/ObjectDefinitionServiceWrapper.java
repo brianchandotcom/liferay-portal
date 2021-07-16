@@ -33,6 +33,45 @@ public class ObjectDefinitionServiceWrapper
 		_objectDefinitionService = objectDefinitionService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
+			long userId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.addCustomObjectDefinition(userId, name);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition deleteObjectDefinition(
+			long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.deleteObjectDefinition(
+			objectDefinitionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition getObjectDefinition(
+			long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.getObjectDefinition(objectDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getObjectDefinitions(int start, int end) {
+
+		return _objectDefinitionService.getObjectDefinitions(start, end);
+	}
+
+	@Override
+	public int getObjectDefinitionsCount(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.getObjectDefinitionsCount(companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

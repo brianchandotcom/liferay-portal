@@ -14,6 +14,11 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for ObjectDefinition. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectDefinitionServiceImpl</code> and is an
@@ -33,13 +38,44 @@ public class ObjectDefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectDefinition addCustomObjectDefinition(
+			long userId, String name)
+		throws PortalException {
+
+		return getService().addCustomObjectDefinition(userId, name);
+	}
+
+	public static ObjectDefinition deleteObjectDefinition(
+			long objectDefinitionId)
+		throws PortalException {
+
+		return getService().deleteObjectDefinition(objectDefinitionId);
+	}
+
+	public static ObjectDefinition getObjectDefinition(long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getObjectDefinition(objectDefinitionId);
+	}
+
+	public static List<ObjectDefinition> getObjectDefinitions(
+		int start, int end) {
+
+		return getService().getObjectDefinitions(start, end);
+	}
+
+	public static int getObjectDefinitionsCount(long companyId)
+		throws PortalException {
+
+		return getService().getObjectDefinitionsCount(companyId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

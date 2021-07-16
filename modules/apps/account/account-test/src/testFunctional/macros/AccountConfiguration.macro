@@ -52,6 +52,19 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro disableAccountEmailDomain {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Email Domains",
+			configurationScope = "Virtual Instance Scope");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Enable Email Domain Validation",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		PortletEntry.update();
+	}
+
 	macro enableAccountEmailDomain {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",

@@ -51,6 +51,27 @@ definition {
 		AccountGroups.viewDefault(tabName = "Account Groups");
 	}
 
+	@description = "This test edit an account group name and description."
+	@priority = "4"
+	test CanEditAnAccountGroup {
+		AccountGroups.openAccountGroupsAdmin();
+
+		AccountGroups.addCP(
+			accountGroupDescription = "Account Group Description",
+			accountGroupName = "Account Group Name");
+
+		AccountGroups.editCP(
+			accountGroupDescriptionEdit = "Edited Description",
+			accountGroupName = "Account Group Name",
+			accountGroupNameEdit = "Edited Account Group Name");
+
+		AccountGroups.openAccountGroupsAdmin();
+
+		AccountGroups.viewEntry(
+			accountGroupDescription = "Edited Description",
+			accountGroupName = "Edited Account Group Name");
+	}
+
 	@description = "This test assigns an account to Account Group"
 	@priority = "4"
 	test CanManuallyAssignAccountToGroup {

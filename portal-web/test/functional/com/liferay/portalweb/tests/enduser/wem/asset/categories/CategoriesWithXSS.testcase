@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-121450.  Can add a vocabulary without receive an alert after set DM Type and WC Strucutre with XSS name."
+	@description = "This is a test for LPS-121450. No alert shown when add a vocabulary in site where existing structure and document type have XSS name."
 	@priority = "4"
 	test AddVocabularyWhenExistingStructureAndDocumentTypeWithXSSName {
 		var documentName = '''<script>alert(123)</script>''';
@@ -71,9 +71,7 @@ definition {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.gotoAddVocabulary();
-		}
 
-		task ("View the alert not shown") {
 			AssertAlertNotPresent();
 		}
 	}

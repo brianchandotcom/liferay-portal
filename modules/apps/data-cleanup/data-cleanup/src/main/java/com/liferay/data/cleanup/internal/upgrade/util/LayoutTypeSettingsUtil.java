@@ -53,10 +53,8 @@ public class LayoutTypeSettingsUtil {
 					ResultSet resultSet =
 						selectPreparedStatement.executeQuery()) {
 
-					while (resultSet.next()) {
-						_removePortletId(
-							portletId, resultSet, updatePreparedStatement);
-					}
+					_removePortletId(
+						portletId, resultSet, updatePreparedStatement);
 				}
 			}
 
@@ -69,60 +67,62 @@ public class LayoutTypeSettingsUtil {
 			PreparedStatement updatePreparedStatement)
 		throws Exception {
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+		while (resultSet.next()) {
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-		String typeSettings = resultSet.getString(2);
+			String typeSettings = resultSet.getString(2);
 
-		unicodeProperties.fastLoad(typeSettings);
+			unicodeProperties.fastLoad(typeSettings);
 
-		Set<Map.Entry<String, String>> set = unicodeProperties.entrySet();
+			Set<Map.Entry<String, String>> set = unicodeProperties.entrySet();
 
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
+			Iterator<Map.Entry<String, String>> iterator = set.iterator();
 
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> entry = iterator.next();
+			while (iterator.hasNext()) {
+				Map.Entry<String, String> entry = iterator.next();
 
-			String value = entry.getValue();
+				String value = entry.getValue();
 
-			if (!value.contains(portletId)) {
-				continue;
-			}
-
-			List<String> parts = StringUtil.split(value, CharPool.COMMA);
-
-			if (parts.size() <= 1) {
-				iterator.remove();
-
-				continue;
-			}
-
-			StringBundler sb = new StringBundler((2 * parts.size()) - 2);
-
-			for (String part : parts) {
-				if (!part.startsWith(portletId)) {
-					sb.append(part);
-					sb.append(StringPool.COMMA);
+				if (!value.contains(portletId)) {
+					continue;
 				}
+
+				List<String> parts = StringUtil.split(value, CharPool.COMMA);
+
+				if (parts.size() <= 1) {
+					iterator.remove();
+
+					continue;
+				}
+
+				StringBundler sb = new StringBundler((2 * parts.size()) - 2);
+
+				for (String part : parts) {
+					if (!part.startsWith(portletId)) {
+						sb.append(part);
+						sb.append(StringPool.COMMA);
+					}
+				}
+
+				if (sb.index() == 0) {
+					iterator.remove();
+
+					continue;
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				entry.setValue(sb.toString());
 			}
 
-			if (sb.index() == 0) {
-				iterator.remove();
+			updatePreparedStatement.setString(1, unicodeProperties.toString());
 
-				continue;
-			}
+			long plid = resultSet.getLong(1);
 
-			sb.setIndex(sb.index() - 1);
+			updatePreparedStatement.setLong(2, plid);
 
-			entry.setValue(sb.toString());
+			updatePreparedStatement.addBatch();
 		}
-
-		updatePreparedStatement.setString(1, unicodeProperties.toString());
-
-		long plid = resultSet.getLong(1);
-
-		updatePreparedStatement.setLong(2, plid);
-
-		updatePreparedStatement.addBatch();
 	}
 
 }

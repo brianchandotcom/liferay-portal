@@ -71,8 +71,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getCopyDDMTemplateActionUnsafeConsumer()
-		throws Exception {
+		_getCopyDDMTemplateActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -88,8 +87,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getDeleteDDMTemplateActionUnsafeConsumer()
-		throws Exception {
+		_getDeleteDDMTemplateActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "deleteDDMTemplate");

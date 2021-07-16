@@ -156,6 +156,14 @@ public class DataCleanupTest {
 	}
 
 	@Test
+	public void testDeprecatedModulesUpgradeSoftwareCatalog() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"cleanUpSoftwareCatalogModuleData",
+			"com.liferay.softwarecatalog.service",
+			"dependencies/software-catalog-tables.sql", "98");
+	}
+
+	@Test
 	public void testDeprecatedModulesUpgradeTwitter() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpTwitterModuleData", "com.liferay.twitter.service",
@@ -255,7 +263,8 @@ public class DataCleanupTest {
 		"com.liferay.hello.world.web", "com.liferay.invitation.web",
 		"com.liferay.mail.reader.service", "com.liferay.shopping.service",
 		"com.liferay.social.privatemessaging.service",
-		"com.liferay.twitter.service", "opensocial-portlet"
+		"com.liferay.twitter.service", "com.liferay.softwarecatalog.service",
+		"opensocial-portlet"
 	};
 
 	@Inject

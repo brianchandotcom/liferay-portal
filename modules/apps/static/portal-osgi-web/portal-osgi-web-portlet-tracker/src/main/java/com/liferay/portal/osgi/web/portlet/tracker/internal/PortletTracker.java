@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.EventDefinition;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -1274,8 +1275,15 @@ public class PortletTracker
 			categoryNames.add("category.undefined");
 		}
 
-		_portletLocalService.deployRemotePortlet(
-			portletModel, ArrayUtil.toStringArray(categoryNames), false);
+		List<Company> companies = _companyLocalService.getCompanies(false);
+
+		_portletLocalService.clearCache();
+
+		for (Company company : companies) {
+			_portletLocalService.deployRemotePortlet(
+				portletModel, ArrayUtil.toStringArray(categoryNames), false,
+				false, new long[] {company.getCompanyId()});
+		}
 	}
 
 	protected Object get(

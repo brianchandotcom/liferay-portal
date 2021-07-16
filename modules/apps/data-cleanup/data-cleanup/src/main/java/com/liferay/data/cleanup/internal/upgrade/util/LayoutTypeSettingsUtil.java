@@ -85,7 +85,7 @@ public class LayoutTypeSettingsUtil {
 			String value = entry.getValue();
 
 			if (!value.contains(portletId)) {
-				return;
+				continue;
 			}
 
 			List<String> parts = StringUtil.split(value, CharPool.COMMA);
@@ -93,7 +93,7 @@ public class LayoutTypeSettingsUtil {
 			if (parts.size() <= 1) {
 				iterator.remove();
 
-				return;
+				continue;
 			}
 
 			StringBundler sb = new StringBundler((2 * parts.size()) - 2);
@@ -108,7 +108,7 @@ public class LayoutTypeSettingsUtil {
 			if (sb.index() == 0) {
 				iterator.remove();
 
-				return;
+				continue;
 			}
 
 			sb.setIndex(sb.index() - 1);

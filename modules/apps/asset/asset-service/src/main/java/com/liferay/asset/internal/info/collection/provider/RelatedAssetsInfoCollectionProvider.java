@@ -23,16 +23,18 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -89,18 +91,15 @@ public class RelatedAssetsInfoCollectionProvider
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		Layout layout = themeDisplay.getLayout();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		if (layout.isTypeControlPanel()) {
-			layout = _layoutLocalService.fetchLayout(
-				themeDisplay.getRefererPlid());
+		if (Objects.equals(
+				portletDisplay.getPortletName(), PortletKeys.ITEM_SELECTOR)) {
+
+			return false;
 		}
 
-		if ((layout != null) && layout.isTypeAssetDisplay()) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	private long _getLayoutAssetEntryId() {

@@ -3,15 +3,6 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor {
-			&__contents__page-content {
-				border-top: solid thin $cadmin-secondary-l2;
-
-				&--mapped-item-hovered {
-					background-color: fade_out($cadmin-purple, 0.9);
-					transition: background-color ease 0.3s;
-				}
-			}
-
 			&__page-contents {
 				padding: 0 16px;
 

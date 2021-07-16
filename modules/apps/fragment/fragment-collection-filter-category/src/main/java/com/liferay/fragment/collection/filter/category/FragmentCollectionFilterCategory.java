@@ -15,9 +15,13 @@
 package com.liferay.fragment.collection.filter.category;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
+import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,6 +38,13 @@ public class FragmentCollectionFilterCategory
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "category");
+	}
+
+	@Override
+	public void render(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 	}
 
 }

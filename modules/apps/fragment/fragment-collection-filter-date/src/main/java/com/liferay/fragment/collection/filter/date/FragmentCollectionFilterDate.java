@@ -15,9 +15,13 @@
 package com.liferay.fragment.collection.filter.date;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
+import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,6 +37,13 @@ public class FragmentCollectionFilterDate implements FragmentCollectionFilter {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "date");
+	}
+
+	@Override
+	public void render(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 	}
 
 }

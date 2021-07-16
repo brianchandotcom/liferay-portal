@@ -28,7 +28,7 @@
 					<div class="c-inner px-0" tabindex="-1">
 						<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
-						<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
+						<small><liferay-ui:message key="desktop" /></small>
 					</div>
 				</button>
 
@@ -38,7 +38,7 @@
 
 						<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
 
-						<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
+						<small><liferay-ui:message key="tablet" /></small>
 					</div>
 				</button>
 
@@ -48,7 +48,7 @@
 
 						<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
 
-						<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
+						<small><liferay-ui:message key="mobile" /></small>
 					</div>
 				</button>
 
@@ -56,7 +56,7 @@
 					<div class="c-inner px-0" tabindex="-1">
 						<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
 
-						<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
+						<small><liferay-ui:message key="autosize" /></small>
 					</div>
 				</button>
 

@@ -13,7 +13,6 @@
  */
 
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
-import {config} from '../config/index';
 
 /**
  * @param {Array<Array<string>>} panels
@@ -24,9 +23,7 @@ export default function selectAvailablePanels(panels) {
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportSize: string }} state
 	 */
 	return function ({permissions, selectedViewportSize}) {
-		const availablePanels = config.contentBrowsingEnabled
-			? ['comments', 'browser']
-			: ['comments', 'contents', 'page-structure'];
+		const availablePanels = ['comments', 'browser'];
 
 		if (permissions.LOCKED_SEGMENTS_EXPERIMENT || !permissions.UPDATE) {
 			return panels

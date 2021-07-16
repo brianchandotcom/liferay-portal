@@ -78,8 +78,6 @@ export interface Config {
 		}>;
 	}>;
 
-	contentBrowsingEnabled: boolean;
-
 	defaultEditorConfigurations: Record<
 		'comment' | 'rich-text' | 'text',
 		{

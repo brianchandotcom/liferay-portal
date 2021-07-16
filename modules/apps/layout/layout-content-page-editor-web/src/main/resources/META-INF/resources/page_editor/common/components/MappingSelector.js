@@ -24,7 +24,6 @@ import {config} from '../../app/config/index';
 import {useCollectionConfig} from '../../app/contexts/CollectionItemContext';
 import {useDispatch, useSelector} from '../../app/contexts/StoreContext';
 import {selectPageContents} from '../../app/selectors/selectPageContents';
-import CollectionService from '../../app/services/CollectionService';
 import InfoItemService from '../../app/services/InfoItemService';
 import isMapped from '../../app/utils/editable-value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable-value/isMappedToInfoItem';
@@ -144,47 +143,27 @@ export default function MappingSelectorWrapper({
 			return;
 		}
 
-		if (config.contentBrowsingEnabled) {
-			const {
-				classNameId,
-				classPK,
-				key: collectionKey,
-			} = collectionConfig.collection;
+		const {
+			classNameId,
+			classPK,
+			key: collectionKey,
+		} = collectionConfig.collection;
 
-			const collection = pageContents.find((content) =>
-				collectionKey
-					? content.classPK === collectionKey
-					: content.classNameId === classNameId &&
-					  content.classPK === classPK
-			);
+		const collection = pageContents.find((content) =>
+			collectionKey
+				? content.classPK === collectionKey
+				: content.classNameId === classNameId &&
+				  content.classPK === classPK
+		);
 
-			if (collection) {
-				const [typeLabel, subtypeLabel] =
-					collection?.subtype?.split(COLLECTION_TYPE_DIVIDER) || [];
+		if (collection) {
+			const [typeLabel, subtypeLabel] =
+				collection?.subtype?.split(COLLECTION_TYPE_DIVIDER) || [];
 
-				setCollectionItemTypeLabels({
-					itemSubtype: subtypeLabel,
-					itemType: typeLabel,
-				});
-			}
-		}
-		else {
-			CollectionService.getCollectionMappingFields({
-				itemSubtype: collectionConfig.collection.itemSubtype || '',
-				itemType: collectionConfig.collection.itemType,
-				onNetworkStatus: () => {},
-			})
-				.then((response) => {
-					setCollectionItemTypeLabels({
-						itemSubtype: response.itemSubtypeLabel,
-						itemType: response.itemTypeLabel,
-					});
-				})
-				.catch((error) => {
-					if (process.env.NODE_ENV === 'development') {
-						console.error(error);
-					}
-				});
+			setCollectionItemTypeLabels({
+				itemSubtype: subtypeLabel,
+				itemType: typeLabel,
+			});
 		}
 	}, [collectionConfig, pageContents]);
 

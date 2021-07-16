@@ -15,8 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
-import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,17 +24,14 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration",
 	immediate = true, property = "service.ranking:Integer=700",
 	service = ContentPageEditorSidebarPanel.class
 )
@@ -66,9 +61,7 @@ public class BrowserContentPageEditorSidebarPanel
 		PermissionChecker permissionChecker, long plid, int layoutType) {
 
 		try {
-			if (_ffLayoutContentPageEditorConfiguration.
-					contentBrowsingEnabled() &&
-				LayoutPermissionUtil.contains(
+			if (LayoutPermissionUtil.contains(
 					permissionChecker, plid,
 					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
 
@@ -84,17 +77,7 @@ public class BrowserContentPageEditorSidebarPanel
 		return false;
 	}
 
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffLayoutContentPageEditorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFLayoutContentPageEditorConfiguration.class, properties);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BrowserContentPageEditorSidebarPanel.class);
-
-	private volatile FFLayoutContentPageEditorConfiguration
-		_ffLayoutContentPageEditorConfiguration;
 
 }

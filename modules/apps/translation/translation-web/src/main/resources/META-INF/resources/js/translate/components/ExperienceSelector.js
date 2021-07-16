@@ -14,10 +14,15 @@
 
 import {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-const ExperienceSelector = ({label, options}) => {
-	const selectorId = 'experience-select';
+const ExperienceSelector = ({confirmChangesBeforeReload, label, options}) => {
+	const selectorId = 'experience-selector';
+
+	const changePage = (event) => {
+		confirmChangesBeforeReload({experienceId: event.target.value});
+	};
 
 	return (
 		<ClayLayout.ContentRow verticalAlign="center">
@@ -27,10 +32,25 @@ const ExperienceSelector = ({label, options}) => {
 				</label>
 			</ClayLayout.ContentCol>
 			<ClayLayout.ContentCol>
-				<ClaySelectWithOption id={selectorId} options={options} />
+				<ClaySelectWithOption
+					id={selectorId}
+					onChange={changePage}
+					options={options}
+				/>
 			</ClayLayout.ContentCol>
 		</ClayLayout.ContentRow>
 	);
+};
+
+ExperienceSelector.propTypes = {
+	confirmChangesBeforeReload: PropTypes.func.isRequired,
+	label: PropTypes.string.isRequired,
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string.isRequired,
+			value: PropTypes.string.isRequired,
+		})
+	).isRequired,
 };
 
 export default ExperienceSelector;

@@ -46,7 +46,12 @@ const TransLateActionBar = ({
 				<ul className="tbar-nav">
 					{experienceSelectorData && (
 						<li className="tbar-item">
-							<ExperienceSelector {...experienceSelectorData} />
+							<ExperienceSelector
+								{...experienceSelectorData}
+								confirmChangesBeforeReload={
+									confirmChangesBeforeReload
+								}
+							/>
 						</li>
 					)}
 					<li

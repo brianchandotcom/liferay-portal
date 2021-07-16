@@ -318,7 +318,7 @@ definition {
 		}
 
 		task ("Assert the mapped image is shown in background image field") {
-			PageEditor.viewContainerStyle(backgroundImage = "Document_2.jpg");
+			PageEditor.viewContainerStyle(backgroundImage = "Document_2.jpeg");
 
 			PageEditor.clickPublish();
 		}

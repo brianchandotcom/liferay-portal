@@ -28,6 +28,35 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121449. No alert shown when add a vocabulary in site with XSS name."
+	@priority = "4"
+	@uitest
+	test AddVocabularyInSiteWithXSSName {
+		var siteName = '''<script>alert(123)</script>''';
+
+		task ("Add a site with XSS name") {
+			JSONGroup.addGroup(groupName = "${siteName}");
+		}
+
+		task ("Add a vocabulary") {
+			ApplicationsMenu.gotoSite(site = "${siteName}");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "Categories");
+
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+
+		task ("Delete the site") {
+			JSONGroup.deleteGroupByName(groupName = "${siteName}");
+		}
+	}
+
 	@description = "This is a test for LPS-121450. No alert shown when add a vocabulary in site where existing structure and document type have XSS name."
 	@priority = "4"
 	@uitest

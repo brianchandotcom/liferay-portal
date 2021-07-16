@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.image.SpriteProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.EventDefinition;
 import com.liferay.portal.kernel.model.Portlet;
@@ -342,6 +343,21 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			Portlet portlet, String[] categoryNames, boolean eagerDestroy)
 		throws PortalException {
 
+		long[] companyIds = ListUtil.toLongArray(
+			companyLocalService.getCompanies(false), Company::getCompanyId);
+
+		deployRemotePortlet(
+			portlet, categoryNames, eagerDestroy, true, companyIds);
+
+		return portlet;
+	}
+
+	@Override
+	public Portlet deployRemotePortlet(
+			Portlet portlet, String[] categoryNames, boolean eagerDestroy,
+			boolean clearCache, long[] companyIds)
+		throws PortalException {
+
 		_portletsMap.put(portlet.getRootPortletId(), portlet);
 
 		if (eagerDestroy) {
@@ -350,14 +366,17 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			PortletConfigFactoryUtil.destroy(portlet);
 		}
 
-		clearCache();
+		if (clearCache) {
+			clearCache();
+		}
 
 		companyLocalService.forEachCompanyId(
 			companyId -> {
 				_deployRemotePortlet(portlet, categoryNames, companyId);
 
 				portletPersistence.flush();
-			});
+			},
+			companyIds);
 
 		return portlet;
 	}

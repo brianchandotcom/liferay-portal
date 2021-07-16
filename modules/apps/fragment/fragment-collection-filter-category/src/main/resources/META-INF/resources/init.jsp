@@ -23,5 +23,5 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <%
-FragmentCollectionFilterCategoryDisplayContext fragmentCollectionFilterCategoryDisplayContext = new FragmentCollectionFilterCategoryDisplayContext(request);
+FragmentCollectionFilterCategoryDisplayContext fragmentCollectionFilterCategoryDisplayContext = (FragmentCollectionFilterCategoryDisplayContext)request.getAttribute(FragmentCollectionFilterCategoryDisplayContext.class.getName());
 %>

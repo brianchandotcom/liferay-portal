@@ -17,11 +17,17 @@ package com.liferay.fragment.collection.filter.category.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.fragment.collection.filter.category.constants.FragmentCollectionFilterCategoryWebKeys;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -50,7 +57,12 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentCollectionFilterCategoryDisplayContext {
 
 	public FragmentCollectionFilterCategoryDisplayContext(
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest) {
+
+		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+		_fragmentEntryLink = fragmentEntryLink;
 
 		_httpServletRequest = httpServletRequest;
 
@@ -58,32 +70,37 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAssetCategoryTreeNodeTitle() {
-		AssetCategory assetCategory =
-			(AssetCategory)_httpServletRequest.getAttribute(
-				FragmentCollectionFilterCategoryWebKeys.ASSET_CATEGORY);
+	public String getAssetCategoryTreeNodeTitle() throws PortalException {
+		long assetCategoryTreeNodeId = _getAssetCategoryTreeNodeId();
 
-		AssetVocabulary assetVocabulary =
-			(AssetVocabulary)_httpServletRequest.getAttribute(
-				FragmentCollectionFilterCategoryWebKeys.ASSET_VOCABULARY);
-
-		if ((assetCategory == null) && (assetVocabulary == null)) {
+		if (assetCategoryTreeNodeId == 0) {
 			return StringPool.BLANK;
 		}
 
-		if (assetVocabulary != null) {
+		String assetCategoryTreeNodeType = _getAssetCategoryTreeNodeType();
+
+		if (assetCategoryTreeNodeType.equals("Category")) {
+			AssetCategory assetCategory =
+				AssetCategoryServiceUtil.fetchCategory(assetCategoryTreeNodeId);
+
+			return assetCategory.getTitle(_themeDisplay.getLanguageId());
+		}
+		else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyServiceUtil.fetchVocabulary(
+					assetCategoryTreeNodeId);
+
 			return assetVocabulary.getTitle(_themeDisplay.getLanguageId());
 		}
 
-		return assetCategory.getTitle(_themeDisplay.getLanguageId());
+		return StringPool.BLANK;
 	}
 
-	public List<DropdownItem> getDropdownItems() {
-		String urlCurrent = _themeDisplay.getURLCurrent();
-
+	public List<DropdownItem> getDropdownItems() throws PortalException {
 		String parameterName = _getParameterName();
 
-		String url = HttpUtil.removeParameter(urlCurrent, parameterName);
+		String url = HttpUtil.removeParameter(
+			_themeDisplay.getURLCurrent(), parameterName);
 
 		DropdownItemListBuilder.DropdownItemListWrapper
 			dropdownItemListWrapper = DropdownItemListBuilder.add(
@@ -93,15 +110,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 						LanguageUtil.get(_httpServletRequest, "all"));
 				});
 
-		List<AssetCategory> assetCategories =
-			(List<AssetCategory>)_httpServletRequest.getAttribute(
-				FragmentCollectionFilterCategoryWebKeys.ASSET_CATEGORIES);
-
-		if (assetCategories == null) {
-			return dropdownItemListWrapper.build();
-		}
-
-		for (AssetCategory assetCategory : assetCategories) {
+		for (AssetCategory assetCategory : _getAssetCategories()) {
 			dropdownItemListWrapper.add(
 				dropdownItem -> {
 					if (!Objects.equals(
@@ -123,10 +132,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 		return dropdownItemListWrapper.build();
 	}
 
-	public String getLabel() {
-		String label = GetterUtil.getString(
-			_httpServletRequest.getAttribute(
-				FragmentCollectionFilterCategoryWebKeys.LABEL));
+	public String getLabel() throws PortalException {
+		String label = GetterUtil.getString(_getFieldValue("label"));
 
 		if (Validator.isNotNull(label)) {
 			return label;
@@ -143,10 +150,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 		_props = HashMapBuilder.<String, Object>put(
 			"assetCategories",
 			() -> {
-				List<AssetCategory> assetCategories =
-					(List<AssetCategory>)_httpServletRequest.getAttribute(
-						FragmentCollectionFilterCategoryWebKeys.
-							ASSET_CATEGORIES);
+				List<AssetCategory> assetCategories = _getAssetCategories();
 
 				if (assetCategories == null) {
 					return new ArrayList<>();
@@ -167,23 +171,12 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			}
 		).put(
 			"fragmentEntryLinkId",
-			String.valueOf(
-				GetterUtil.getLong(
-					_httpServletRequest.getAttribute(
-						FragmentCollectionFilterCategoryWebKeys.
-							FRAGMENT_ENTRY_LINK_ID)))
+			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId())
 		).put(
 			"selectedAssetCategoryIds",
-			() -> {
-				long fragmentEntryLinkId = GetterUtil.getLong(
-					_httpServletRequest.getAttribute(
-						FragmentCollectionFilterCategoryWebKeys.
-							FRAGMENT_ENTRY_LINK_ID));
-
-				return ParamUtil.getStringValues(
-					PortalUtil.getOriginalServletRequest(_httpServletRequest),
-					"categoryId_" + fragmentEntryLinkId);
-			}
+			ParamUtil.getStringValues(
+				PortalUtil.getOriginalServletRequest(_httpServletRequest),
+				"categoryId_" + _fragmentEntryLink.getFragmentEntryLinkId())
 		).put(
 			"showSearch", _isShowSearch()
 		).build();
@@ -216,36 +209,121 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	}
 
 	public boolean isShowLabel() {
-		return GetterUtil.getBoolean(
-			_httpServletRequest.getAttribute(
-				FragmentCollectionFilterCategoryWebKeys.SHOW_LABEL));
+		return GetterUtil.getBoolean(_getFieldValue("showLabel"));
 	}
 
 	public boolean isSingleSelection() {
-		return GetterUtil.getBoolean(
-			_httpServletRequest.getAttribute(
-				FragmentCollectionFilterCategoryWebKeys.SINGLE_SELECTION));
+		return GetterUtil.getBoolean(_getFieldValue("singleSelection"));
+	}
+
+	private List<AssetCategory> _getAssetCategories() throws PortalException {
+		if (_assetCategories != null) {
+			return _assetCategories;
+		}
+
+		long assetCategoryTreeNodeId = _getAssetCategoryTreeNodeId();
+
+		_assetCategories = Collections.emptyList();
+
+		if (assetCategoryTreeNodeId == 0) {
+			return _assetCategories;
+		}
+
+		if (Objects.equals(_getAssetCategoryTreeNodeType(), "Category")) {
+			_assetCategories = AssetCategoryServiceUtil.getChildCategories(
+				assetCategoryTreeNodeId);
+		}
+		else if (Objects.equals(
+					_getAssetCategoryTreeNodeType(), "Vocabulary")) {
+
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyServiceUtil.fetchVocabulary(
+					assetCategoryTreeNodeId);
+
+			_assetCategories =
+				AssetCategoryServiceUtil.getVocabularyRootCategories(
+					assetVocabulary.getGroupId(), assetCategoryTreeNodeId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
+
+		return _assetCategories;
+	}
+
+	private long _getAssetCategoryTreeNodeId() {
+		if (_assetCategoryTreeNodeId != null) {
+			return _assetCategoryTreeNodeId;
+		}
+
+		JSONObject sourceJSONObject = _getSourceJSONObject();
+
+		_assetCategoryTreeNodeId = sourceJSONObject.getLong(
+			"categoryTreeNodeId", 0);
+
+		return _assetCategoryTreeNodeId;
+	}
+
+	private String _getAssetCategoryTreeNodeType() {
+		if (_assetCategoryTreeNodeType != null) {
+			return _assetCategoryTreeNodeType;
+		}
+
+		_assetCategoryTreeNodeType = StringPool.BLANK;
+
+		JSONObject sourceJSONObject = _getSourceJSONObject();
+
+		if (sourceJSONObject != null) {
+			_assetCategoryTreeNodeType = sourceJSONObject.getString(
+				"categoryTreeNodeType");
+		}
+
+		return _assetCategoryTreeNodeType;
+	}
+
+	private Object _getFieldValue(String fieldName) {
+		return _fragmentEntryConfigurationParser.getFieldValue(
+			_fragmentEntryLink.getConfiguration(),
+			_fragmentEntryLink.getEditableValues(), _themeDisplay.getLocale(),
+			fieldName);
 	}
 
 	private String _getParameterName() {
-		Long fragmentEntryLinkId = (Long)_httpServletRequest.getAttribute(
-			FragmentCollectionFilterCategoryWebKeys.FRAGMENT_ENTRY_LINK_ID);
+		return "categoryId_" + _fragmentEntryLink.getFragmentEntryLinkId();
+	}
 
-		return FragmentCollectionFilterCategoryWebKeys.CATEGORY_ID + "_" +
-			fragmentEntryLinkId;
+	private JSONObject _getSourceJSONObject() {
+		if (_sourceJSONObject != null) {
+			return _sourceJSONObject;
+		}
+
+		Object sourceObject = _getFieldValue("source");
+
+		try {
+			_sourceJSONObject = JSONFactoryUtil.createJSONObject(
+				sourceObject.toString());
+		}
+		catch (JSONException jsonException) {
+			_sourceJSONObject = JSONFactoryUtil.createJSONObject();
+		}
+
+		return _sourceJSONObject;
 	}
 
 	private boolean _isShowSearch() {
-		return GetterUtil.getBoolean(
-			_httpServletRequest.getAttribute(
-				FragmentCollectionFilterCategoryWebKeys.SHOW_SEARCH));
+		return GetterUtil.getBoolean(_getFieldValue("showSearch"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionFilterCategoryDisplayContext.class);
 
+	private List<AssetCategory> _assetCategories;
+	private Long _assetCategoryTreeNodeId;
+	private String _assetCategoryTreeNodeType;
+	private final FragmentEntryConfigurationParser
+		_fragmentEntryConfigurationParser;
+	private final FragmentEntryLink _fragmentEntryLink;
 	private final HttpServletRequest _httpServletRequest;
 	private Map<String, Object> _props;
+	private JSONObject _sourceJSONObject;
 	private final ThemeDisplay _themeDisplay;
 
 }

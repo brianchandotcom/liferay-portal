@@ -44,10 +44,6 @@ definition {
 		task ("View the alert not shown") {
 			AssertAlertNotPresent();
 		}
-
-		task ("Delete the site") {
-			JSONGroup.deleteGroupByName(groupName = "${siteName}");
-		}
 	}
 
 }

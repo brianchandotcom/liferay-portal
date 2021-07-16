@@ -528,7 +528,7 @@ definition {
 
 		PageEditor.viewFragmentEditableText(
 			editableText = "Edited Banner Title",
-			fragmentName = "Banner Center",
+			fragmentName = "Element",
 			id = "01-title");
 	}
 
@@ -551,7 +551,7 @@ definition {
 
 		PageEditor.viewFragmentEditableText(
 			editableText = "Edited Banner Title",
-			fragmentName = "Banner Center",
+			fragmentName = "Element",
 			id = "01-title");
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.renderer.collection.filter.internal.constants;
+package com.liferay.fragment.collection.filter.category.constants;
 
 /**
  * @author Rubén Pulido

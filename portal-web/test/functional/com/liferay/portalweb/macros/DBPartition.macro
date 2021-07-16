@@ -5,7 +5,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "validate-dbpartition-schemas -Dschema.name.prefix=${schemaNamePrefix}");
+			value1 = "validate-db-partition-schemas -Dschema.name.prefix=${schemaNamePrefix}");
 
 		var result = FileUtil.read("${liferayHome}/validateoutput.txt");
 

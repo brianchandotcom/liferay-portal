@@ -14614,7 +14614,7 @@ url=${short.hostname}:8080</echo>
 		</trycatch>
 	</target>
 
-	<target name="validate-dbpartition-schemas">
+	<target name="validate-db-partition-schemas">
 		<sequential>
 			<gradle-execute dir="${project.dir}/modules/util/portal-tools-db-partition-schema-validator" task="deploy">
 				<arg value="clean" />

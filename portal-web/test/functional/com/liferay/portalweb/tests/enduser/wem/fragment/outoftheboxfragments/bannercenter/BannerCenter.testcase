@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-95042, LPS-108339 and LPS-122017. View the Banner Center in content page. Can add fragments directly without Container to page."
+	@description = "This is a test for LPS-95042, LPS-108339 and LPS-122017. View the Banner Center in content page. Can add Banner Center directly without Container to page."
 	@priority = "4"
 	test ViewBannerCenterInContentPage {
 		task ("Add a Banner Center to page") {
@@ -45,9 +45,9 @@ definition {
 
 		task ("View the Banner Center is not inside of Container element") {
 			AssertElementNotPresent(
-				key_elementType = "Container",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'bg-gray500Color')][contains(@class,'page-editor__container')]",
 				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("View the Banner Center shown in page editor") {

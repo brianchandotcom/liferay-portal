@@ -17,7 +17,7 @@ package com.liferay.fragment.collection.filter.category.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.fragment.collection.filter.category.constants.CollectionFilterFragmentRendererWebKeys;
+import com.liferay.fragment.collection.filter.category.constants.FragmentCollectionFilterCategoryWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
@@ -47,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Rubén Pulido
  */
-public class CollectionFilterFragmentRendererDisplayContext {
+public class FragmentCollectionFilterCategoryDisplayContext {
 
-	public CollectionFilterFragmentRendererDisplayContext(
+	public FragmentCollectionFilterCategoryDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
@@ -61,11 +61,11 @@ public class CollectionFilterFragmentRendererDisplayContext {
 	public String getAssetCategoryTreeNodeTitle() {
 		AssetCategory assetCategory =
 			(AssetCategory)_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY);
+				FragmentCollectionFilterCategoryWebKeys.ASSET_CATEGORY);
 
 		AssetVocabulary assetVocabulary =
 			(AssetVocabulary)_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
+				FragmentCollectionFilterCategoryWebKeys.ASSET_VOCABULARY);
 
 		if ((assetCategory == null) && (assetVocabulary == null)) {
 			return StringPool.BLANK;
@@ -95,7 +95,7 @@ public class CollectionFilterFragmentRendererDisplayContext {
 
 		List<AssetCategory> assetCategories =
 			(List<AssetCategory>)_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES);
+				FragmentCollectionFilterCategoryWebKeys.ASSET_CATEGORIES);
 
 		if (assetCategories == null) {
 			return dropdownItemListWrapper.build();
@@ -126,7 +126,7 @@ public class CollectionFilterFragmentRendererDisplayContext {
 	public String getLabel() {
 		String label = GetterUtil.getString(
 			_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.LABEL));
+				FragmentCollectionFilterCategoryWebKeys.LABEL));
 
 		if (Validator.isNotNull(label)) {
 			return label;
@@ -145,7 +145,7 @@ public class CollectionFilterFragmentRendererDisplayContext {
 			() -> {
 				List<AssetCategory> assetCategories =
 					(List<AssetCategory>)_httpServletRequest.getAttribute(
-						CollectionFilterFragmentRendererWebKeys.
+						FragmentCollectionFilterCategoryWebKeys.
 							ASSET_CATEGORIES);
 
 				if (assetCategories == null) {
@@ -170,14 +170,14 @@ public class CollectionFilterFragmentRendererDisplayContext {
 			String.valueOf(
 				GetterUtil.getLong(
 					_httpServletRequest.getAttribute(
-						CollectionFilterFragmentRendererWebKeys.
+						FragmentCollectionFilterCategoryWebKeys.
 							FRAGMENT_ENTRY_LINK_ID)))
 		).put(
 			"selectedAssetCategoryIds",
 			() -> {
 				long fragmentEntryLinkId = GetterUtil.getLong(
 					_httpServletRequest.getAttribute(
-						CollectionFilterFragmentRendererWebKeys.
+						FragmentCollectionFilterCategoryWebKeys.
 							FRAGMENT_ENTRY_LINK_ID));
 
 				return ParamUtil.getStringValues(
@@ -218,31 +218,31 @@ public class CollectionFilterFragmentRendererDisplayContext {
 	public boolean isShowLabel() {
 		return GetterUtil.getBoolean(
 			_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.SHOW_LABEL));
+				FragmentCollectionFilterCategoryWebKeys.SHOW_LABEL));
 	}
 
 	public boolean isSingleSelection() {
 		return GetterUtil.getBoolean(
 			_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.SINGLE_SELECTION));
+				FragmentCollectionFilterCategoryWebKeys.SINGLE_SELECTION));
 	}
 
 	private String _getParameterName() {
 		Long fragmentEntryLinkId = (Long)_httpServletRequest.getAttribute(
-			CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID);
+			FragmentCollectionFilterCategoryWebKeys.FRAGMENT_ENTRY_LINK_ID);
 
-		return CollectionFilterFragmentRendererWebKeys.CATEGORY_ID + "_" +
+		return FragmentCollectionFilterCategoryWebKeys.CATEGORY_ID + "_" +
 			fragmentEntryLinkId;
 	}
 
 	private boolean _isShowSearch() {
 		return GetterUtil.getBoolean(
 			_httpServletRequest.getAttribute(
-				CollectionFilterFragmentRendererWebKeys.SHOW_SEARCH));
+				FragmentCollectionFilterCategoryWebKeys.SHOW_SEARCH));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CollectionFilterFragmentRendererDisplayContext.class);
+		FragmentCollectionFilterCategoryDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private Map<String, Object> _props;

@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
-import com.liferay.fragment.collection.filter.category.constants.CollectionFilterFragmentRendererWebKeys;
+import com.liferay.fragment.collection.filter.category.constants.FragmentCollectionFilterCategoryWebKeys;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -82,7 +82,7 @@ public class FragmentCollectionFilterCategory
 				"label"));
 
 		httpServletRequest.setAttribute(
-			CollectionFilterFragmentRendererWebKeys.LABEL, label);
+			FragmentCollectionFilterCategoryWebKeys.LABEL, label);
 
 		boolean showLabel = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
@@ -91,7 +91,7 @@ public class FragmentCollectionFilterCategory
 				"showLabel"));
 
 		httpServletRequest.setAttribute(
-			CollectionFilterFragmentRendererWebKeys.SHOW_LABEL, showLabel);
+			FragmentCollectionFilterCategoryWebKeys.SHOW_LABEL, showLabel);
 
 		boolean showSearch = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
@@ -100,7 +100,7 @@ public class FragmentCollectionFilterCategory
 				"showSearch"));
 
 		httpServletRequest.setAttribute(
-			CollectionFilterFragmentRendererWebKeys.SHOW_SEARCH, showSearch);
+			FragmentCollectionFilterCategoryWebKeys.SHOW_SEARCH, showSearch);
 
 		boolean singleSelection = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
@@ -109,7 +109,7 @@ public class FragmentCollectionFilterCategory
 				"singleSelection"));
 
 		httpServletRequest.setAttribute(
-			CollectionFilterFragmentRendererWebKeys.SINGLE_SELECTION,
+			FragmentCollectionFilterCategoryWebKeys.SINGLE_SELECTION,
 			singleSelection);
 
 		Object sourceObject = _fragmentEntryConfigurationParser.getFieldValue(
@@ -167,11 +167,11 @@ public class FragmentCollectionFilterCategory
 						assetCategoryTreeNodeId);
 
 				httpServletRequest.setAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY,
+					FragmentCollectionFilterCategoryWebKeys.ASSET_CATEGORY,
 					assetCategory);
 
 				httpServletRequest.removeAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY);
+					FragmentCollectionFilterCategoryWebKeys.ASSET_VOCABULARY);
 			}
 			else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
 				AssetVocabulary assetVocabulary =
@@ -188,19 +188,19 @@ public class FragmentCollectionFilterCategory
 						null);
 
 				httpServletRequest.setAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_VOCABULARY,
+					FragmentCollectionFilterCategoryWebKeys.ASSET_VOCABULARY,
 					assetVocabulary);
 
 				httpServletRequest.removeAttribute(
-					CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORY);
+					FragmentCollectionFilterCategoryWebKeys.ASSET_CATEGORY);
 			}
 
 			httpServletRequest.setAttribute(
-				CollectionFilterFragmentRendererWebKeys.ASSET_CATEGORIES,
+				FragmentCollectionFilterCategoryWebKeys.ASSET_CATEGORIES,
 				assetCategories);
 
 			httpServletRequest.setAttribute(
-				CollectionFilterFragmentRendererWebKeys.FRAGMENT_ENTRY_LINK_ID,
+				FragmentCollectionFilterCategoryWebKeys.FRAGMENT_ENTRY_LINK_ID,
 				fragmentEntryLink.getFragmentEntryLinkId());
 
 			RequestDispatcher requestDispatcher =

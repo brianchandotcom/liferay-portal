@@ -17,7 +17,7 @@ package com.liferay.fragment.collection.filter.category.constants;
 /**
  * @author Rubén Pulido
  */
-public class CollectionFilterFragmentRendererWebKeys {
+public class FragmentCollectionFilterCategoryWebKeys {
 
 	public static final String ASSET_CATEGORIES = "ASSET_CATEGORIES";
 

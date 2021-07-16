@@ -16,18 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
-<p class="font-weight-bold mb-1 <%= collectionFilterFragmentRendererDisplayContext.isShowLabel() ? "" : "sr-only" %>">
-	<%= collectionFilterFragmentRendererDisplayContext.getLabel() %>
+<p class="font-weight-bold mb-1 <%= fragmentCollectionFilterCategoryDisplayContext.isShowLabel() ? "" : "sr-only" %>">
+	<%= fragmentCollectionFilterCategoryDisplayContext.getLabel() %>
 </p>
 
 <c:choose>
-	<c:when test="<%= collectionFilterFragmentRendererDisplayContext.isSingleSelection() %>">
+	<c:when test="<%= fragmentCollectionFilterCategoryDisplayContext.isSingleSelection() %>">
 		<clay:dropdown-menu
 			cssClass="form-control form-control-select form-control-sm text-left w-100"
 			displayType="secondary"
-			dropdownItems="<%= collectionFilterFragmentRendererDisplayContext.getDropdownItems() %>"
-			label="<%= collectionFilterFragmentRendererDisplayContext.getSelectedAssetCategoryTitle() %>"
-			title="<%= collectionFilterFragmentRendererDisplayContext.getAssetCategoryTreeNodeTitle() %>"
+			dropdownItems="<%= fragmentCollectionFilterCategoryDisplayContext.getDropdownItems() %>"
+			label="<%= fragmentCollectionFilterCategoryDisplayContext.getSelectedAssetCategoryTitle() %>"
+			title="<%= fragmentCollectionFilterCategoryDisplayContext.getAssetCategoryTreeNodeTitle() %>"
 		/>
 	</c:when>
 	<c:otherwise>
@@ -42,7 +42,7 @@
 
 			<react:component
 				module="js/MultiSelectCategory.es"
-				props="<%= collectionFilterFragmentRendererDisplayContext.getProps() %>"
+				props="<%= fragmentCollectionFilterCategoryDisplayContext.getProps() %>"
 			/>
 		</div>
 	</c:otherwise>

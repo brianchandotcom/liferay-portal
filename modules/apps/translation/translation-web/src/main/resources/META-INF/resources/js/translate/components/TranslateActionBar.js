@@ -25,12 +25,11 @@ import TranslateLanguagesSelector from './TranslateLanguagesSelector';
 
 const TransLateActionBar = ({
 	autoTranslateEnabled,
+	confirmChangesBeforeReload,
 	experienceSelectorData,
 	fetchAutoTranslateFields,
 	fetchAutoTranslateStatus,
-	formHasChanges,
 	onSaveButtonClick,
-	portletNamespace,
 	publishButtonDisabled,
 	publishButtonLabel,
 	redirectURL,
@@ -57,8 +56,9 @@ const TransLateActionBar = ({
 					>
 						<TranslateLanguagesSelector
 							{...translateLanguagesSelectorData}
-							formHasChanges={formHasChanges}
-							portletNamespace={portletNamespace}
+							confirmChangesBeforeReload={
+								confirmChangesBeforeReload
+							}
 						/>
 					</li>
 					{autoTranslateEnabled && (

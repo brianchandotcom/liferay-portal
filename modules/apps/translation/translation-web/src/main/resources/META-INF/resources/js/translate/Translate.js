@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useReducer, useState} from 'react';
 
@@ -23,6 +23,7 @@ import TranslateActionBar from './components/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
 import {FETCH_STATUS} from './constants';
+import {setURLParameters} from './utils';
 
 const ACTION_TYPES = {
 	UPDATE_FETCH_STATUS: 'UPDATE_FETCH_STATUS',
@@ -118,6 +119,26 @@ const Translate = ({
 		fields: targetFields,
 		formHasChanges: false,
 	});
+
+	const confirmChangesBeforeReload = (parameters = {}) => {
+		const url = setURLParameters(
+			Liferay.Util.ns(portletNamespace, parameters),
+			translateLanguagesSelectorData.currentUrl
+		);
+
+		if (!state.formHasChanges) {
+			navigate(url);
+		}
+		else if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-leave-the-page-you-may-lose-your-changes'
+				)
+			)
+		) {
+			navigate(url);
+		}
+	};
 
 	const handleOnSaveDraft = () => {
 		setWorkflowAction(workflowActions.SAVE_DRAFT);
@@ -276,9 +297,9 @@ const Translate = ({
 
 			<TranslateActionBar
 				autoTranslateEnabled={autoTranslateEnabled}
+				confirmChangesBeforeReload={confirmChangesBeforeReload}
 				fetchAutoTranslateFields={fetchAutoTranslateFieldsBulk}
 				fetchAutoTranslateStatus={state.fetchAutoTranslateStatus}
-				formHasChanges={state.formHasChanges}
 				onSaveButtonClick={handleOnSaveDraft}
 				portletNamespace={portletNamespace}
 				publishButtonDisabled={publishButtonDisabled}

@@ -14,12 +14,14 @@
 
 package com.liferay.translation.info.item.provider;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Alicia García
  */
 public interface InfoItemLanguagesProvider<T> {
 
-	public String[] getAvailableLanguageIds(T t);
+	public String[] getAvailableLanguageIds(T t) throws PortalException;
 
 	public String getDefaultLanguageId(T t);
 

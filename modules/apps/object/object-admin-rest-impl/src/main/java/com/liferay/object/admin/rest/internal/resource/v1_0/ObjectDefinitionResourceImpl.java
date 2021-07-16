@@ -126,7 +126,8 @@ public class ObjectDefinitionResourceImpl
 		serviceBuilderObjectField.setIndexedLanguageId(
 			objectField.getIndexedLanguageId());
 		serviceBuilderObjectField.setName(objectField.getName());
-		serviceBuilderObjectField.setRequired(objectField.getRequired());
+		serviceBuilderObjectField.setRequired(
+			GetterUtil.getBoolean(objectField.getRequired()));
 		serviceBuilderObjectField.setType(objectField.getType());
 
 		return serviceBuilderObjectField;

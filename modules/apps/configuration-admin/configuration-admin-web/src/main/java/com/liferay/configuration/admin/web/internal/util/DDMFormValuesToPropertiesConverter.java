@@ -166,6 +166,9 @@ public class DDMFormValuesToPropertiesConverter {
 				if (jsonArray.length() == 1) {
 					valueString = jsonArray.getString(0);
 				}
+				else if (jsonArray.length() == 0) {
+					valueString = StringPool.BLANK;
+				}
 			}
 			catch (JSONException jsonException) {
 				ReflectionUtil.throwException(jsonException);

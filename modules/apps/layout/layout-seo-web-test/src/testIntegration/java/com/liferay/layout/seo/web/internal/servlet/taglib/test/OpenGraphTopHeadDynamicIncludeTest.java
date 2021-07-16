@@ -650,6 +650,40 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeLinkAssetDisplayPageLayoutTranslatedLanguagesContentLayout()
+		throws Exception {
+
+		_layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry fileEntry = _getFileEntry();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					_getAssetDisplayPageHttpServletRequest(fileEntry),
+					mockHttpServletResponse, RandomTestUtil.randomString()),
+				false, true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertCanonicalLinkTag(
+			document,
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				FileEntry.class.getName(), fileEntry.getFileEntryId(),
+				_getThemeDisplay()));
+		_assertAlternateLinkTagAssetDisplayPage(
+			document, fileEntry,
+			_getAvailableLocalesLayoutTranslatedLanguages());
+	}
+
+	@Test
 	public void testIncludeLinkAssetDisplayPageLayoutTranslatedLanguagesOpenGraphDisabled()
 		throws Exception {
 
@@ -681,6 +715,35 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeLinkLayoutTranslatedLanguages() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					_getHttpServletRequest(), mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				true, true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertCanonicalLinkTag(
+			document,
+			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
+		_assertAlternateLinkTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
+	}
+
+	@Test
+	public void testIncludeLinkLayoutTranslatedLanguagesContentLayout()
+		throws Exception {
+
+		_layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -748,6 +811,33 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeLocalesLayoutTranslatedLanguages() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithActiveFFLayoutTranslatedLanguagesConfiguration(
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					_getHttpServletRequest(), mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				true, true),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
+		_assertAlternateLocalesTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
+	}
+
+	@Test
+	public void testIncludeLocalesLayoutTranslatedLanguagesContentLayout()
+		throws Exception {
+
+		_layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 

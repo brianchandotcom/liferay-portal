@@ -81,13 +81,18 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
 		}
 
-		return _accountEntryLocalService.addAccountEntry(
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			name, description, domains, emailAddress,
 			_getLogoBytes(actionRequest), taxIdNumber, type,
 			_getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
+
+		accountEntry.setExternalReferenceCode(
+			ParamUtil.getString(actionRequest, "externalReferenceCode"));
+
+		return _accountEntryLocalService.updateAccountEntry(accountEntry);
 	}
 
 	@Override
@@ -155,6 +160,13 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			_getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
+
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
+
+		accountEntry.setExternalReferenceCode(externalReferenceCode);
+
+		_accountEntryLocalService.updateAccountEntry(accountEntry);
 
 		if (Objects.equals(
 				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,

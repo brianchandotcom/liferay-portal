@@ -1,4 +1,6 @@
 .page-editor__collection__pagination {
+	position: relative;
+
 	&__overlay:after {
 		content: '';
 		height: 100%;

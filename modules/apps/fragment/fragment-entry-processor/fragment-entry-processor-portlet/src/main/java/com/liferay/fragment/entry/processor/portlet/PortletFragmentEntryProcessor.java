@@ -173,15 +173,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			if (Validator.isNull(portletName)) {
-				String alias = tagName.substring(11);
-
-				throw new FragmentEntryContentException(
-					LanguageUtil.format(
-						_resourceBundle,
-						"there-is-no-widget-available-for-alias-x", alias));
-			}
-
 			if ((originalFragmentEntryLink == null) &&
 				(fragmentEntryLink.getOriginalFragmentEntryLinkId() > 0)) {
 

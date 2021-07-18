@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -325,6 +326,12 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 						accountEntry.getAccountEntryId(),
 						organization.getOrganizationId()));
 		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutAccountByExternalReferenceCode() {
 	}
 
 	@Override

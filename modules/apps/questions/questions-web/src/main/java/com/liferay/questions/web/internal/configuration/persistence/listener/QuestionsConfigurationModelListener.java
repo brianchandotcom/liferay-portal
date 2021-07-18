@@ -20,12 +20,18 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
 import com.liferay.questions.web.internal.asset.model.MBCategoryAssetRendererFactory;
 import com.liferay.questions.web.internal.asset.model.MBMessageAssetRendererFactory;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
@@ -73,9 +79,13 @@ public class QuestionsConfigurationModelListener
 
 			Stream<String> stream = keys.stream();
 
-			_enableAssetRenderer(
-				stream.collect(
-					Collectors.toMap(Function.identity(), properties::get)));
+			Map<String, Object> propertiesMap = stream.collect(
+				Collectors.toMap(Function.identity(), properties::get));
+
+			_enableAssetRenderer(propertiesMap);
+
+			_enableServiceAccessPolicy(
+				GetterUtil.getBoolean(properties.get("enableAnonymousRead")));
 
 			ComponentDescriptionDTO componentDescriptionDTO =
 				_serviceComponentRuntime.getComponentDescriptionDTO(
@@ -183,6 +193,38 @@ public class QuestionsConfigurationModelListener
 		}
 	}
 
+	private void _enableServiceAccessPolicy(boolean enableAnonymousRead)
+		throws Exception {
+
+		String name = "QUESTIONS_SERVICE_ACCESS_POLICY";
+
+		if (!enableAnonymousRead) {
+			SAPEntry sapEntry = _sapEntryService.getSAPEntry(
+				CompanyThreadLocal.getCompanyId(), name);
+
+			_sapEntryService.deleteSAPEntry(sapEntry);
+		}
+		else {
+			String mbPackage = "com.liferay.message.boards.service.";
+
+			_sapEntryService.addSAPEntry(
+				StringBundler.concat(
+					"com.liferay.expando.kernel.service.",
+					"ExpandoValueService#getData\n", mbPackage,
+					"MBCategoryService#getCategory\n", mbPackage,
+					"MBCategoryService#getCategoriesCount\n", mbPackage,
+					"MBMessageService#fetchMBMessageByUrlSubject\n", mbPackage,
+					"MBMessageService#getChildMessages\n", mbPackage,
+					"MBMessageService#getMessage\n", mbPackage,
+					"MBThreadService#getThreads\n", mbPackage,
+					"MBThreadService#getThreadsCount\n"),
+				true, true, name,
+				Collections.singletonMap(
+					LocaleThreadLocal.getDefaultLocale(), name),
+				new ServiceContext());
+		}
+	}
+
 	private Configuration _getConfiguration() throws Exception {
 		return _configurationAdmin.getConfiguration(
 			"com.liferay.layout.seo.web.internal.servlet.taglib." +
@@ -230,6 +272,9 @@ public class QuestionsConfigurationModelListener
 	)
 	private ModelResourcePermission<MBMessage>
 		_mbMessageModelResourcePermission;
+
+	@Reference
+	private SAPEntryService _sapEntryService;
 
 	@Reference
 	private ServiceComponentRuntime _serviceComponentRuntime;

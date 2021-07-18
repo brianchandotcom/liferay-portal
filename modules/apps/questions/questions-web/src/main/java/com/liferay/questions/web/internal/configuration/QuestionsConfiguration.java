@@ -41,6 +41,9 @@ public interface QuestionsConfiguration {
 	)
 	public boolean enableCustomAssetRenderer();
 
+	@Meta.AD(deflt = "false", name = "enable-anonymous-read", required = false)
+	public boolean enableAnonymousRead();
+
 	@Meta.AD(
 		deflt = "true", name = "show-cards-for-topic-navigation",
 		required = false

@@ -295,7 +295,7 @@
 </tr>
 <tr>
 	<td>ADD_MEMBERS_BUTTON</td>
-	<td>//ul/li/button[contains(@class,'btn-primary')]</td>
+	<td>//ul/li/button[contains(@class,'btn-primary')]|//ul/li/button[contains(@class,'btn-secondary')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -46,6 +47,26 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = InfoItemFormVariationsProvider.class)
 public class FileEntryInfoItemFormVariationsProvider
 	implements InfoItemFormVariationsProvider<FileEntry> {
+
+	@Override
+	public InfoItemFormVariation getInfoItemFormVariation(
+		long groupId, String formVariationKey) {
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				GetterUtil.getLong(formVariationKey));
+
+		if (dlFileEntryType == null) {
+			return null;
+		}
+
+		return new InfoItemFormVariation(
+			String.valueOf(dlFileEntryType.getFileEntryTypeId()),
+			InfoLocalizedValue.<String>builder(
+			).values(
+				dlFileEntryType.getNameMap()
+			).build());
+	}
 
 	@Override
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(

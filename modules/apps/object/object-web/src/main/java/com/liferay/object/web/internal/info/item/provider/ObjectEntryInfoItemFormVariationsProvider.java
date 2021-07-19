@@ -17,9 +17,11 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collection;
@@ -33,6 +35,21 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = InfoItemFormVariationsProvider.class)
 public class ObjectEntryInfoItemFormVariationsProvider
 	implements InfoItemFormVariationsProvider<ObjectEntry> {
+
+	@Override
+	public InfoItemFormVariation getInfoItemFormVariation(
+		long groupId, String formVariationKey) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				GetterUtil.getLong(formVariationKey));
+
+		return new InfoItemFormVariation(
+			String.valueOf(objectDefinition.getObjectDefinitionId()),
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFormVariationsProvider.class,
+				objectDefinition.getName()));
+	}
 
 	@Override
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(

@@ -25,6 +25,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -43,6 +44,25 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = InfoItemFormVariationsProvider.class)
 public class JournalArticleInfoItemFormVariationsProvider
 	implements InfoItemFormVariationsProvider<JournalArticle> {
+
+	@Override
+	public InfoItemFormVariation getInfoItemFormVariation(
+		long groupId, String formVariationKey) {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			GetterUtil.getLong(formVariationKey));
+
+		if (ddmStructure == null) {
+			return null;
+		}
+
+		return new InfoItemFormVariation(
+			String.valueOf(ddmStructure.getStructureId()),
+			InfoLocalizedValue.<String>builder(
+			).values(
+				ddmStructure.getNameMap()
+			).build());
+	}
 
 	@Override
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(

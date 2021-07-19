@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.template.web.internal.constants.TemplatePortletKeys;
+import com.liferay.template.constants.TemplatePortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

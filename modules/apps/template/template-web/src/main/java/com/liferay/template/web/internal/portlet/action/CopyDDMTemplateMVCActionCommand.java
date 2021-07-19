@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.template.web.internal.constants.TemplatePortletKeys;
+import com.liferay.template.constants.TemplatePortletKeys;
 
 import java.util.Locale;
 import java.util.Map;

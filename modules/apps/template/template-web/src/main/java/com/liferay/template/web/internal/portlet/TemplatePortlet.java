@@ -17,7 +17,7 @@ package com.liferay.template.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.template.web.internal.constants.TemplatePortletKeys;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.display.context.TemplateDisplayContext;
 
 import java.io.IOException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.template.web.internal.constants;
+package com.liferay.template.constants;
 
 /**
  * @author Lourdes Fernández Besada

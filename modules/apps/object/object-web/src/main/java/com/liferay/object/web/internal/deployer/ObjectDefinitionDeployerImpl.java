@@ -24,6 +24,10 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.application.list.ObjectDefinitionPanelApp;
 import com.liferay.object.web.internal.frontend.taglib.clay.data.set.view.table.ObjectDefinitionTableClayDataSetDisplayView;
 import com.liferay.object.web.internal.portlet.ObjectDefinitionPortlet;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -48,6 +52,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
+		String restContextPath = objectDefinition.getRESTContextPath();
+
+		if (_companyLocalService.getCompaniesCount() > 1) {
+			String companyName = "o_" + objectDefinition.getCompanyId();
+
+			try {
+				Company company = _companyLocalService.getCompany(
+					objectDefinition.getCompanyId());
+
+				companyName = company.getWebId();
+				companyName = companyName.replaceAll("\\.", "_");
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+
+			restContextPath = companyName + "/" + restContextPath;
+		}
+
 		return Arrays.asList(
 			_bundleContext.registerService(
 				ClayDataSetDisplayView.class,
@@ -68,8 +93,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				Portlet.class,
-				new ObjectDefinitionPortlet(
-					_portal, objectDefinition.getRESTContextPath()),
+				new ObjectDefinitionPortlet(_portal, restContextPath),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.display-category", "category.hidden"
 				).put(
@@ -87,10 +111,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_bundleContext = bundleContext;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionDeployerImpl.class);
+
 	private BundleContext _bundleContext;
 
 	@Reference
 	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

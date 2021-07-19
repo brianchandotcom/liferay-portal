@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
@@ -628,6 +629,18 @@ public class PortalImplCanonicalURLTest {
 				_generateURL(
 					portalDomain, port, i18nPath, group.getFriendlyURL(),
 					layout.getFriendlyURL(), secure),
+				_createThemeDisplay(
+					portalDomain, group, Http.HTTP_PORT, secure),
+				layout, forceLayoutFriendlyURL));
+
+		Assert.assertEquals(
+			_generateURL(
+				expectedPortalDomain, port, StringPool.BLANK,
+				expectedGroupFriendlyURL, expectedLayoutFriendlyURL, secure),
+			_portal.getCanonicalURL(
+				_generateURL(
+					portalDomain, port, i18nPath, group.getFriendlyURL(),
+					StringUtil.upperCase(layout.getFriendlyURL()), secure),
 				_createThemeDisplay(
 					portalDomain, group, Http.HTTP_PORT, secure),
 				layout, forceLayoutFriendlyURL));

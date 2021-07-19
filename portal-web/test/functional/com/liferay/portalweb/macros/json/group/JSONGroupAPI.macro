@@ -146,7 +146,7 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}')]['classPK']");
+		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}' && @['companyId'] == '${companyId}')]['classPK']");
 
 		if ("${depotId}" == "") {
 			fail("FAIL. Cannot find group.");

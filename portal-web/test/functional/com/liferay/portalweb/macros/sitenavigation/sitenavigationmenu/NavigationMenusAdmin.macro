@@ -1,5 +1,35 @@
 definition {
 
+	macro _addItemDisplayPage {
+		NavItem.click(navItem = "${navItem}");
+
+		if ("${navItem}" == "Documents and Media") {
+			LexiconCard.clickCard(card = "${assetTitle}");
+		}
+
+		if ("${navItem}" == "Web Content") {
+			Click(
+				key_listEntry = "${assetTitle}",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+		}
+
+		if ("${navItem}" == "Blogs") {
+			LexiconCard.clickCard(card = "${assetTitle}");
+		}
+
+		if ("${navItem}" == "Categories") {
+			Portlet.expandTree();
+
+			AssertVisible(
+				key_nodeName = "${assetTitle}",
+				locator1 = "Treeview#NODE_ITEM");
+
+			Click(
+				key_nodeName = "${assetTitle}",
+				locator1 = "Treeview#NODE_UNSELECTED");
+		}
+	}
+
 	macro _addItemPage {
 		IFrame.selectConfigurationFrame();
 

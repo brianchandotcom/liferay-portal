@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.portlet.PortletRequest;
 
@@ -100,12 +99,7 @@ public class CalendarCTDisplayRenderer extends BaseCTDisplayRenderer<Calendar> {
 		).display(
 			"default-calendar", calendar.isDefaultCalendar()
 		).display(
-			"time-zone",
-			() -> {
-				TimeZone timeZone = calendar.getTimeZone();
-
-				return timeZone.getID();
-			}
+			"time-zone", calendar.getTimeZoneId()
 		);
 	}
 

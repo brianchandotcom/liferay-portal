@@ -15,7 +15,7 @@
 package com.liferay.commerce.account.internal.upgrade.v7_0_0;
 
 import com.liferay.account.model.AccountGroupRel;
-import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
@@ -25,6 +25,12 @@ import java.sql.Statement;
  * @author Drew Brokke
  */
 public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
+
+	public CommerceAccountGroupRelUpgradeProcess(
+		AccountGroupRelLocalService accountGroupRelLocalService) {
+
+		_accountGroupRelLocalService = accountGroupRelLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -41,7 +47,7 @@ public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
 					"commerceAccountGroupRelId");
 
 				AccountGroupRel accountGroupRel =
-					AccountGroupRelLocalServiceUtil.createAccountGroupRel(
+					_accountGroupRelLocalService.createAccountGroupRel(
 						accountGroupRelId);
 
 				accountGroupRel.setCompanyId(resultSet.getLong("companyId"));
@@ -56,12 +62,14 @@ public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
 					resultSet.getLong("classNameId"));
 				accountGroupRel.setClassPK(resultSet.getLong("classPK"));
 
-				AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+				_accountGroupRelLocalService.addAccountGroupRel(
 					accountGroupRel);
 			}
 
 			runSQL("drop table CommerceAccountGroupRel");
 		}
 	}
+
+	private final AccountGroupRelLocalService _accountGroupRelLocalService;
 
 }

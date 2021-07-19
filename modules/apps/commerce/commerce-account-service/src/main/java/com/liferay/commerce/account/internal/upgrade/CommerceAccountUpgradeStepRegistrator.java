@@ -14,6 +14,11 @@
 
 package com.liferay.commerce.account.internal.upgrade;
 
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.internal.upgrade.v1_1_0.CommerceAccountUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupCommerceAccountRelUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupRelUpgradeProcess;
@@ -23,9 +28,16 @@ import com.liferay.commerce.account.internal.upgrade.v1_4_0.CommerceAccountDefau
 import com.liferay.commerce.account.internal.upgrade.v2_0_0.CommerceAccountGroupSystemUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v4_0_0.CommerceAccountOrganizationRelUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v5_0_0.CommerceAccountUserRelUpgradeProcess;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -71,24 +83,33 @@ public class CommerceAccountUpgradeStepRegistrator
 		registry.register(
 			"2.0.0", "3.0.0",
 			new com.liferay.commerce.account.internal.upgrade.v3_0_0.
-				CommerceAccountUpgradeProcess());
+				CommerceAccountUpgradeProcess(
+					_accountEntryLocalService, _classNameLocalService,
+					_expandoTableLocalService, _expandoValueLocalService,
+					_groupLocalService, _resourceLocalService,
+					_workflowDefinitionLinkLocalService,
+					_workflowInstanceLinkLocalService));
 
 		registry.register(
 			"3.0.0", "4.0.0",
-			new CommerceAccountOrganizationRelUpgradeProcess());
+			new CommerceAccountOrganizationRelUpgradeProcess(
+				_accountEntryOrganizationRelLocalService));
 
 		registry.register(
-			"4.0.0", "5.0.0", new CommerceAccountUserRelUpgradeProcess());
+			"4.0.0", "5.0.0",
+			new CommerceAccountUserRelUpgradeProcess(
+				_accountEntryUserRelLocalService));
 
 		registry.register(
 			"5.0.0", "6.0.0",
 			new com.liferay.commerce.account.internal.upgrade.v6_0_0.
-				CommerceAccountGroupUpgradeProcess());
+				CommerceAccountGroupUpgradeProcess(_accountGroupLocalService));
 
 		registry.register(
 			"6.0.0", "7.0.0",
 			new com.liferay.commerce.account.internal.upgrade.v7_0_0.
-				CommerceAccountGroupRelUpgradeProcess());
+				CommerceAccountGroupRelUpgradeProcess(
+					_accountGroupRelLocalService));
 
 		registry.register(
 			"7.0.0", "8.0.0",
@@ -103,9 +124,47 @@ public class CommerceAccountUpgradeStepRegistrator
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAccountUpgradeStepRegistrator.class);
 
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.account.service)(release.schema.version>=2.1.0))"
 	)
 	private Release _release;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

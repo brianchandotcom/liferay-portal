@@ -15,22 +15,22 @@
 package com.liferay.commerce.account.internal.upgrade.v3_0_0;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalServiceUtil;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
-import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.TypedModel;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -43,6 +43,27 @@ import java.util.function.UnaryOperator;
  * @author Drew Brokke
  */
 public class CommerceAccountUpgradeProcess extends UpgradeProcess {
+
+	public CommerceAccountUpgradeProcess(
+		AccountEntryLocalService accountEntryLocalService,
+		ClassNameLocalService classNameLocalService,
+		ExpandoTableLocalService expandoTableLocalService,
+		ExpandoValueLocalService expandoValueLocalService,
+		GroupLocalService groupLocalService,
+		ResourceLocalService resourceLocalService,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
+		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
+
+		_accountEntryLocalService = accountEntryLocalService;
+		_classNameLocalService = classNameLocalService;
+		_expandoTableLocalService = expandoTableLocalService;
+		_expandoValueLocalService = expandoValueLocalService;
+		_groupLocalService = groupLocalService;
+		_resourceLocalService = resourceLocalService;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -57,7 +78,7 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 				long accountEntryId = resultSet.getLong("commerceAccountId");
 
 				AccountEntry accountEntry =
-					AccountEntryLocalServiceUtil.createAccountEntry(
+					_accountEntryLocalService.createAccountEntry(
 						accountEntryId);
 
 				accountEntry.setExternalReferenceCode(
@@ -93,44 +114,43 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 					CommerceAccountImpl.toAccountEntryStatus(
 						resultSet.getBoolean("active_")));
 
-				AccountEntryLocalServiceUtil.addAccountEntry(accountEntry);
+				_accountEntryLocalService.addAccountEntry(accountEntry);
 
-				ResourceLocalServiceUtil.addResources(
+				_resourceLocalService.addResources(
 					companyId, 0, userId, AccountEntry.class.getName(),
 					accountEntryId, false, false, false);
 
-				WorkflowDefinitionLinkLocalServiceUtil.
+				_workflowDefinitionLinkLocalService.
 					deleteWorkflowDefinitionLink(
 						companyId, WorkflowConstants.DEFAULT_GROUP_ID,
 						CommerceAccount.class.getName(), accountEntryId, 0);
-				WorkflowInstanceLinkLocalServiceUtil.
-					deleteWorkflowInstanceLinks(
-						companyId, WorkflowConstants.DEFAULT_GROUP_ID,
-						CommerceAccount.class.getName(), accountEntryId);
+				_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+					companyId, WorkflowConstants.DEFAULT_GROUP_ID,
+					CommerceAccount.class.getName(), accountEntryId);
 			}
 
 			runSQL("truncate table CommerceAccount");
 		}
 
-		long accountEntryClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+		long accountEntryClassNameId = _classNameLocalService.getClassNameId(
 			AccountEntry.class);
-		long commerceAccountClassNameId =
-			ClassNameLocalServiceUtil.getClassNameId(CommerceAccount.class);
+		long commerceAccountClassNameId = _classNameLocalService.getClassNameId(
+			CommerceAccount.class);
 
 		_updateClassNameId(
-			ExpandoTableLocalServiceUtil.getActionableDynamicQuery(),
+			_expandoTableLocalService.getActionableDynamicQuery(),
 			accountEntryClassNameId, commerceAccountClassNameId,
-			typedModel -> ExpandoTableLocalServiceUtil.updateExpandoTable(
+			typedModel -> _expandoTableLocalService.updateExpandoTable(
 				(ExpandoTable)typedModel));
 		_updateClassNameId(
-			ExpandoValueLocalServiceUtil.getActionableDynamicQuery(),
+			_expandoValueLocalService.getActionableDynamicQuery(),
 			accountEntryClassNameId, commerceAccountClassNameId,
-			typedModel -> ExpandoValueLocalServiceUtil.updateExpandoValue(
+			typedModel -> _expandoValueLocalService.updateExpandoValue(
 				(ExpandoValue)typedModel));
 		_updateClassNameId(
-			GroupLocalServiceUtil.getActionableDynamicQuery(),
+			_groupLocalService.getActionableDynamicQuery(),
 			accountEntryClassNameId, commerceAccountClassNameId,
-			typedModel -> GroupLocalServiceUtil.updateGroup((Group)typedModel));
+			typedModel -> _groupLocalService.updateGroup((Group)typedModel));
 	}
 
 	private void _updateClassNameId(
@@ -150,5 +170,16 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final ClassNameLocalService _classNameLocalService;
+	private final ExpandoTableLocalService _expandoTableLocalService;
+	private final ExpandoValueLocalService _expandoValueLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final ResourceLocalService _resourceLocalService;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+	private final WorkflowInstanceLinkLocalService
+		_workflowInstanceLinkLocalService;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.account.internal.upgrade.v4_0_0;
 
-import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -26,6 +26,14 @@ import java.sql.Statement;
  */
 public class CommerceAccountOrganizationRelUpgradeProcess
 	extends UpgradeProcess {
+
+	public CommerceAccountOrganizationRelUpgradeProcess(
+		AccountEntryOrganizationRelLocalService
+			accountEntryOrganizationRelLocalService) {
+
+		_accountEntryOrganizationRelLocalService =
+			accountEntryOrganizationRelLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -45,7 +53,7 @@ public class CommerceAccountOrganizationRelUpgradeProcess
 
 				CompanyThreadLocal.setCompanyId(resultSet.getLong("companyId"));
 
-				AccountEntryOrganizationRelLocalServiceUtil.
+				_accountEntryOrganizationRelLocalService.
 					addAccountEntryOrganizationRel(
 						accountEntryId, organizationId);
 			}
@@ -56,5 +64,8 @@ public class CommerceAccountOrganizationRelUpgradeProcess
 			CompanyThreadLocal.setCompanyId(oldCompanyId);
 		}
 	}
+
+	private final AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
 
 }

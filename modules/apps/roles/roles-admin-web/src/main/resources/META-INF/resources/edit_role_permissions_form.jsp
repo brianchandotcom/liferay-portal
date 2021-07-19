@@ -121,7 +121,7 @@ if (Validator.isNotNull(portletResource)) {
 			</clay:sheet-section>
 		</c:if>
 
-		<c:if test="<%= portletResource.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATE) %>">
+		<c:if test="<%= portletResource.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATE) || portletResource.equals(TemplatePortletKeys.TEMPLATE) %>">
 			<clay:sheet-section>
 				<h4 class="sheet-subtitle"><liferay-ui:message key="related-application-permissions" /></h4>
 

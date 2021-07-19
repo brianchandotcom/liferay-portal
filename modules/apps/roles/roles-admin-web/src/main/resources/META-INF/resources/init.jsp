@@ -138,6 +138,7 @@ page import="com.liferay.roles.admin.web.internal.role.type.contributor.util.Rol
 page import="com.liferay.roles.admin.web.internal.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
+page import="com.liferay.template.constants.TemplatePortletKeys" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 

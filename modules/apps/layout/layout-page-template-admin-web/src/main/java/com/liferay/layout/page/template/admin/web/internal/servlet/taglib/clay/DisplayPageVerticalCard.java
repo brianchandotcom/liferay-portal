@@ -184,7 +184,7 @@ public class DisplayPageVerticalCard
 	}
 
 	private String _getSubtypeLabel() {
-		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				_layoutPageTemplateEntry.getClassName());

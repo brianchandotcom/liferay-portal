@@ -289,7 +289,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				layoutPageTemplateEntry.getClassName());

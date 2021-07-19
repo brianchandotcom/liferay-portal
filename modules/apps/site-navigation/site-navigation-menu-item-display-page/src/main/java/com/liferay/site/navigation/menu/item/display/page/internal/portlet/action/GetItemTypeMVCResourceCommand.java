@@ -111,7 +111,7 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String className = _portal.getClassName(classNameId);
 
-		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
@@ -124,7 +124,7 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 				return null;
 			}
 
-			LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 					new InfoItemReference(className, classPK));
 

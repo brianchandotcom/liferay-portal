@@ -77,7 +77,7 @@ public class DisplayPageTemplateSettingsUtil {
 		InfoItemServiceTracker infoItemServiceTracker,
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				layoutPageTemplateEntry.getClassName());

@@ -109,7 +109,7 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 		typeSettingsUnicodeProperties.fastLoad(
 			_siteNavigationMenuItem.getTypeSettings());
 
-		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(typeSettingsUnicodeProperties);
 
 		if (layoutDisplayPageObjectProvider != null) {
@@ -124,7 +124,7 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 	}
 
 	public String getItemSubtype() {
-		InfoItemFormVariationsProvider infoItemFormVariationsProvider =
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				PortalUtil.getClassName(getClassNameId()));
@@ -136,7 +136,7 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 			typeSettingsUnicodeProperties.fastLoad(
 				_siteNavigationMenuItem.getTypeSettings());
 
-			LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				_getLayoutDisplayPageObjectProvider(
 					typeSettingsUnicodeProperties);
 
@@ -206,7 +206,7 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 		typeSettingsUnicodeProperties.fastLoad(
 			_siteNavigationMenuItem.getTypeSettings());
 
-		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(typeSettingsUnicodeProperties);
 
 		if (layoutDisplayPageObjectProvider == null) {
@@ -256,8 +256,9 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 		return _type;
 	}
 
-	private LayoutDisplayPageObjectProvider _getLayoutDisplayPageObjectProvider(
-		UnicodeProperties typeSettingsUnicodeProperties) {
+	private LayoutDisplayPageObjectProvider<?>
+		_getLayoutDisplayPageObjectProvider(
+			UnicodeProperties typeSettingsUnicodeProperties) {
 
 		if (_layoutDisplayPageObjectProvider != null) {
 			return _layoutDisplayPageObjectProvider;
@@ -287,7 +288,7 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 	private Long _classPK;
 	private Long _classTypeId;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
-	private LayoutDisplayPageObjectProvider _layoutDisplayPageObjectProvider;
+	private LayoutDisplayPageObjectProvider<?> _layoutDisplayPageObjectProvider;
 	private final LayoutDisplayPageProviderTracker
 		_layoutDisplayPageProviderTracker;
 	private String _originalTitle;

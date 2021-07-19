@@ -289,11 +289,21 @@ export class A11yChecker {
 			reporter: 'v2',
 		} as const;
 
-		this.axeOptions = {...defaultOptions, ...axeOptions};
+		const {runOnly, ...options} = axeOptions ?? {};
+
+		const runOnlyArray = Array.isArray(runOnly)
+			? runOnly.filter(Boolean)
+			: undefined;
+
+		this.axeOptions = {
+			...defaultOptions,
+			...options,
+			runOnly: runOnlyArray?.length ? runOnlyArray : undefined,
+		};
 
 		this.callback = callback;
 		this.denylist = denylist
-			? denylist.map((selector) => [selector])
+			? denylist.filter(Boolean).map((selector) => [selector])
 			: denylist;
 
 		// Scheduler can be a singleton to allow multiple instances of

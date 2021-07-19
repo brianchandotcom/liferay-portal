@@ -857,7 +857,7 @@ public class LayoutReferencesExportImportContentProcessor
 				continue;
 			}
 
-			String url = content.substring(beginPos + offset, endPos);
+			String url = content.substring(beginPos + offset, endPos + 1);
 
 			if (url.contains("/c/document_library/get_file?") ||
 				url.contains("/documents/") ||
@@ -865,6 +865,8 @@ public class LayoutReferencesExportImportContentProcessor
 
 				continue;
 			}
+
+			url = content.substring(beginPos + offset, endPos);
 
 			endPos = StringUtil.indexOfAny(url, friendlyURLSeparators);
 

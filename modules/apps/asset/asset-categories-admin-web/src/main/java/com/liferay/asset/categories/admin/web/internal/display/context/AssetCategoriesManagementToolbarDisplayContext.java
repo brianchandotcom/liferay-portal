@@ -68,42 +68,60 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			this::_isSetDisplayPageTemplateEnabled,
-			dropdownItem -> {
-				PortletURL setCategoryDisplayPageTemplateURL =
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/set_category_display_page_template.jsp"
-					).setRedirect(
-						currentURLObj
-					).setParameter(
-						"parentCategoryId",
-						_assetCategoriesDisplayContext.getCategoryId()
-					).setParameter(
-						"vocabularyId",
-						_assetCategoriesDisplayContext.getVocabularyId()
-					).build();
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						this::_isSetDisplayPageTemplateEnabled,
+						dropdownItem -> {
+							PortletURL setCategoryDisplayPageTemplateURL =
+								PortletURLBuilder.createRenderURL(
+									liferayPortletResponse
+								).setMVCPath(
+									"/set_category_display_page_template.jsp"
+								).setRedirect(
+									currentURLObj
+								).setParameter(
+									"parentCategoryId",
+									_assetCategoriesDisplayContext.
+										getCategoryId()
+								).setParameter(
+									"vocabularyId",
+									_assetCategoriesDisplayContext.
+										getVocabularyId()
+								).build();
 
-				dropdownItem.putData(
-					"action", "setCategoryDisplayPageTemplate");
-				dropdownItem.putData(
-					"setCategoryDisplayPageTemplateURL",
-					setCategoryDisplayPageTemplateURL.toString());
-				dropdownItem.setIcon("page");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "assign-display-page-template"));
-				dropdownItem.setQuickAction(true);
+							dropdownItem.putData(
+								"action", "setCategoryDisplayPageTemplate");
+							dropdownItem.putData(
+								"setCategoryDisplayPageTemplateURL",
+								setCategoryDisplayPageTemplateURL.toString());
+							dropdownItem.setIcon("page");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest,
+									"assign-display-page-template"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteSelectedCategories");
-				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "deleteSelectedCategories");
+							dropdownItem.setIcon("times-circle");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

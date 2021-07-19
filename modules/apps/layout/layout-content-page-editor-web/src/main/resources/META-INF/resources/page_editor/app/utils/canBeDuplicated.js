@@ -14,6 +14,7 @@
 
 import hasDropZoneChild from '../components/layout-data-items/hasDropZoneChild';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import getWidget from '../utils/getWidget';
 
 export default function canBeDuplicated(
 	fragmentEntryLinks,
@@ -46,24 +47,4 @@ export default function canBeDuplicated(
 		default:
 			return false;
 	}
-}
-
-function getWidget(widgets, portletId) {
-	let widget = null;
-
-	for (let i = 0; i < widgets.length; i++) {
-		const {categories = [], portlets = []} = widgets[i];
-		const categoryPortlet = portlets.find(
-			(portlet) => portlet.portletId === portletId
-		);
-		const subCategoryPortlet = getWidget(categories, portletId);
-
-		widget = subCategoryPortlet || categoryPortlet;
-
-		if (widget) {
-			return widget;
-		}
-	}
-
-	return widget;
 }

@@ -32,10 +32,13 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.google.places.util.GooglePlacesUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -347,11 +351,11 @@ public class DDMFormPagesTemplateContextFactory {
 			long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 			DDMFormEvaluatorEvaluateRequest.Builder
-				formEvaluatorEvaluateRequestBuilder =
+				ddmFormEvaluatorEvaluateRequestBuilder =
 					DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
 						_ddmForm, _ddmFormValues, _locale);
 
-			formEvaluatorEvaluateRequestBuilder.withCompanyId(
+			ddmFormEvaluatorEvaluateRequestBuilder.withCompanyId(
 				companyId
 			).withDDMFormInstanceId(
 				_ddmFormRenderingContext.getDDMFormInstanceId()
@@ -365,6 +369,8 @@ public class DDMFormPagesTemplateContextFactory {
 					_groupLocalService)
 			).withGroupId(
 				_ddmFormRenderingContext.getGroupId()
+			).withTimeZoneId(
+				_getTimeZoneId(httpServletRequest)
 			).withUserId(
 				PortalUtil.getUserId(httpServletRequest)
 			).withViewMode(
@@ -372,7 +378,7 @@ public class DDMFormPagesTemplateContextFactory {
 			);
 
 			_ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
-				formEvaluatorEvaluateRequestBuilder.build());
+				ddmFormEvaluatorEvaluateRequestBuilder.build());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to evaluate the form", exception);
@@ -380,6 +386,20 @@ public class DDMFormPagesTemplateContextFactory {
 			throw new IllegalStateException(
 				"Unexpected error occurred during form evaluation", exception);
 		}
+	}
+
+	private String _getTimeZoneId(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
+		User user = themeDisplay.getUser();
+
+		return user.getTimeZoneId();
 	}
 
 	private boolean _isViewMode() {

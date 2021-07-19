@@ -35,9 +35,12 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -107,6 +110,8 @@ public class AddFormInstanceRecordMVCCommandHelper {
 				ParamUtil.getLong(actionRequest, "formInstanceId")
 			).withGroupId(
 				ParamUtil.getLong(actionRequest, "groupId")
+			).withTimeZoneId(
+				_getTimeZoneId(actionRequest)
 			).withUserId(
 				_portal.getUserId(actionRequest)
 			).build());
@@ -284,6 +289,19 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		else {
 			ddmFormFieldValue.setValue(new UnlocalizedValue(StringPool.BLANK));
 		}
+	}
+
+	private String _getTimeZoneId(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
+		User user = themeDisplay.getUser();
+
+		return user.getTimeZoneId();
 	}
 
 	@Reference

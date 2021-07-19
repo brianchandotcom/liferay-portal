@@ -61,36 +61,60 @@ public class AssetEntryListActionDropdownItems {
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		boolean liveGroup = _isLiveGroup();
 
-		return DropdownItemListBuilder.add(
-			() ->
-				!liveGroup &&
-				AssetListEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _assetListEntry,
-					ActionKeys.UPDATE),
-			_getEditAssetListEntryActionUnsafeConsumer()
-		).add(
-			() ->
-				!liveGroup &&
-				AssetListEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _assetListEntry,
-					ActionKeys.UPDATE),
-			_getRenameAssetListEntryActionUnsafeConsumer()
-		).add(
-			() ->
-				!liveGroup &&
-				AssetListEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _assetListEntry,
-					ActionKeys.PERMISSIONS),
-			_getPermissionsAssetListEntryActionUnsafeConsumer()
-		).add(
-			_getViewAssetListEntryUsagesActionUnsafeConsumer()
-		).add(
-			() ->
-				!liveGroup &&
-				AssetListEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _assetListEntry,
-					ActionKeys.DELETE),
-			_getDeleteAssetListEntryActionUnsafeConsumer()
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							!liveGroup &&
+							AssetListEntryPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_assetListEntry, ActionKeys.UPDATE),
+						_getEditAssetListEntryActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							!liveGroup &&
+							AssetListEntryPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_assetListEntry, ActionKeys.UPDATE),
+						_getRenameAssetListEntryActionUnsafeConsumer()
+					).add(
+						_getViewAssetListEntryUsagesActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							!liveGroup &&
+							AssetListEntryPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_assetListEntry, ActionKeys.PERMISSIONS),
+						_getPermissionsAssetListEntryActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							!liveGroup &&
+							AssetListEntryPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_assetListEntry, ActionKeys.DELETE),
+						_getDeleteAssetListEntryActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

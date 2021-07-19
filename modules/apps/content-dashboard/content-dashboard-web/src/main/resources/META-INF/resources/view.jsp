@@ -167,12 +167,18 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						</span>
 					</liferay-ui:search-container-column-text>
 
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller text-truncate"
+						name="type"
+						value="Web Content"
+					/>
+
 					<%
 					ContentDashboardItemType contentDashboardItemType = contentDashboardItem.getContentDashboardItemType();
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smaller"
+						cssClass="table-cell-expand-smaller text-truncate"
 						name="subtype"
 						value="<%= HtmlUtil.escape(contentDashboardItemType.getLabel(locale)) %>"
 					/>

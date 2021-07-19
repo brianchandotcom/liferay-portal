@@ -15,6 +15,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -25,6 +27,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -32,7 +37,7 @@ definition {
 	@description = "Total Individuals increase by one when a new individual is added via event"
 	@priority = "5"
 	test CanViewTotalIndividualsIncreaseByOne {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.launchAC();
 
@@ -42,9 +47,7 @@ definition {
 
 		ACIndividualsDashboard.viewTotalIndividualsCount(individualCount = "0");
 
-		Navigator.openURL();
-
-		Pause(locator1 = "5000");
+		ACUtils.launchDXP();
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -52,11 +55,15 @@ definition {
 			userLastName = "ac",
 			userScreenName = "ac");
 
+		ACDXPSettings.syncNewContactData();
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.openURL();
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		Pause(locator1 = "5000");
 

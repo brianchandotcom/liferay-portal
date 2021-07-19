@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.cas.web.internal.portlet.action;
+package com.liferay.portal.security.sso.cas.settings.authentication.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -69,7 +69,7 @@ public class TestCASMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.cas.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas.settings.authentication.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.cas.web.internal.portlet.action;
+package com.liferay.portal.security.sso.cas.settings.authentication.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
-import com.liferay.portal.settings.authentication.cas.web.internal.constants.PortalSettingsCASConstants;
+import com.liferay.portal.security.sso.cas.settings.authentication.web.internal.constants.PortalSettingsCASConstants;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 

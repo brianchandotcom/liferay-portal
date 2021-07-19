@@ -27,7 +27,7 @@ page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
 page import="com.liferay.portal.security.sso.cas.configuration.CASConfiguration" %><%@
 page import="com.liferay.portal.security.sso.cas.constants.CASConstants" %><%@
-page import="com.liferay.portal.settings.authentication.cas.web.internal.constants.PortalSettingsCASConstants" %>
+page import="com.liferay.portal.security.sso.cas.settings.authentication.web.internal.constants.PortalSettingsCASConstants" %>
 
 <liferay-theme:defineObjects />
 

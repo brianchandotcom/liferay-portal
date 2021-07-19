@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.cas.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.portal.security.sso.cas.settings.authentication.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -86,7 +86,7 @@ public class CASPortalSettingsConfigurationScreenContributor
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.cas.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas.settings.authentication.web)",
 		unbind = "-"
 	)
 	private ServletContext _servletContext;

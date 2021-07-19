@@ -139,6 +139,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 								boolean html = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
 								String label = translateDisplayContext.getInfoFieldLabel(infoField);
 								boolean multiline = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
+								String name = infoField.getName();
 							%>
 
 								<c:choose>

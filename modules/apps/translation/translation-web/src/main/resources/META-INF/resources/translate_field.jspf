@@ -35,7 +35,7 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
+				<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= name %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
 			</c:otherwise>
 		</c:choose>
 	</clay:col>

@@ -202,7 +202,7 @@ public class GetCollectionFieldMVCResourceCommand
 				int listCount = layoutListRetriever.getListCount(
 					listObjectReference, defaultLayoutListRetrieverContext);
 
-				if (Objects.equals(paginationType, "regular") ||
+				if (Objects.equals(paginationType, "numeric") ||
 					Objects.equals(paginationType, "simple")) {
 
 					if (activePage < 1) {

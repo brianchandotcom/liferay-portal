@@ -42,7 +42,7 @@ const LAYOUT_OPTIONS = [
 
 const PAGINATION_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('none'), value: ''},
-	{label: Liferay.Language.get('regular'), value: 'regular'},
+	{label: Liferay.Language.get('numeric'), value: 'numeric'},
 	{label: Liferay.Language.get('simple'), value: 'simple'},
 ];
 

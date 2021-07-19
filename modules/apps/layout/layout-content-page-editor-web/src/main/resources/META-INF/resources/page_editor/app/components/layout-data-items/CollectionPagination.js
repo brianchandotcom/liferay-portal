@@ -36,7 +36,7 @@ export default function CollectionPagination({
 		paginationType,
 	} = collectionConfig;
 
-	const regularPaginationLabel = [
+	const numericPaginationLabel = [
 		numberOfItemsPerPage && numberOfItems && totalNumberOfItems
 			? (activePage - 1) * numberOfItemsPerPage + 1
 			: 0,
@@ -55,17 +55,17 @@ export default function CollectionPagination({
 					'page-editor__collection__pagination__overlay': !isActive(
 						collectionId
 					),
-					'pt-3 pb-2': paginationType === 'regular',
+					'pt-3 pb-2': paginationType === 'numeric',
 					'py-3': paginationType === 'simple',
 				}
 			)}
 		>
-			{paginationType === 'regular' ? (
+			{paginationType === 'numeric' ? (
 				<ClayPaginationBar className="flex-grow-1">
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
-							regularPaginationLabel
+							numericPaginationLabel
 						)}
 					</ClayPaginationBar.Results>
 

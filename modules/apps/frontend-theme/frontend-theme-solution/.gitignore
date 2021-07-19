@@ -5,12 +5,6 @@
 /build_gradle
 /dist
 /liferay-theme.json
-
-/src/*
-
-!/src/css
+/src
 !/src/WEB-INF
-
-/src/css/*
-
 !/src/css/solution

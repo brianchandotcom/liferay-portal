@@ -135,13 +135,22 @@ public class JournalArticleLocalServiceTest {
 	public void testCopyArticle() throws Exception {
 		JournalArticle oldArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test-1",
+			"SomeContent");
+
+		JournalArticle thirdArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test-2",
+			oldArticle.getContent());
 
 		JournalArticle newArticle = _journalArticleLocalService.copyArticle(
 			oldArticle.getUserId(), oldArticle.getGroupId(),
 			oldArticle.getArticleId(), null, true, oldArticle.getVersion());
 
 		Assert.assertNotEquals(oldArticle, newArticle);
+
+		Assert.assertNotEquals(
+			thirdArticle.getUrlTitle(), newArticle.getUrlTitle());
 
 		List<ResourcePermission> oldResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(

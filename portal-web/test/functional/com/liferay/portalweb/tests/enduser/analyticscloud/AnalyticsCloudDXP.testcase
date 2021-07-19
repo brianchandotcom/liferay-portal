@@ -8,16 +8,19 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		ACUtils.launchAC();
 
-		ACLogin.loginAs();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
-		ACWorkspace.openWorkspace();
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -29,6 +32,12 @@ definition {
 	@description = "Validate Login User can view Sites Report page"
 	@priority = "5"
 	test CanViewSiteReportUponLogin {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
 		ACNavigation.assertPageHeader(headerTitle = "Sites");
 	}
 

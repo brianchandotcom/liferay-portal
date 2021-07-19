@@ -1981,10 +1981,10 @@ definition {
 	@priority = "3"
 	test CheckDefaultLanguageTag {
 		var defaultLanguage = Segmentation.getPortalInstanceDefaultLanguageId();
-		
+
 		task ("Go to add segment screen") {
 			LexiconEntry.gotoAdd();
-		}	
+		}
 
 		task ("Validate tag name") {
 			Segmentation.assetLanguageTag(
@@ -2003,7 +2003,7 @@ definition {
 				operator = "contains",
 				segmentName = "Original Segment",
 				text = "Test");
-			
+
 			Refresh();
 		}
 
@@ -2011,7 +2011,7 @@ definition {
 			Segmentation.editSegment(entry = "Original Segment");
 
 			Segmentation.changeLocale(locale = "pt-BR");
-			
+
 			Segmentation.fillTitle(titleField = "Segmento Traduzido");
 
 			Button.clickSave();
@@ -2042,7 +2042,7 @@ definition {
 				operator = "contains",
 				segmentName = "Original Segment",
 				text = "Test");
-			
+
 			Refresh();
 		}
 
@@ -2052,7 +2052,7 @@ definition {
 			Segmentation.assetLanguageTag(
 				locale = "en-US",
 				tagName = "Default Value");
-			
+
 			Button.clickCancel();
 		}
 
@@ -2060,7 +2060,7 @@ definition {
 			Segmentation.editSegment(entry = "Original Segment");
 
 			Segmentation.changeLocale(locale = "pt-BR");
-			
+
 			Segmentation.fillTitle(titleField = "Segmento Traduzido");
 
 			Button.clickSave();

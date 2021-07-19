@@ -19,70 +19,7 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
-function addSeparators(items) {
-	if (items.length < 2) {
-		return items;
-	}
-
-	const separatedItems = [items[0]];
-
-	for (let i = 1; i < items.length; i++) {
-		const item = items[i];
-
-		if (item.type === 'group' && item.separator) {
-			separatedItems.push({type: 'divider'});
-		}
-
-		separatedItems.push(item);
-	}
-
-	return separatedItems.map((item) => {
-		if (item.type === 'group') {
-			return {
-				...item,
-				items: addSeparators(item.items),
-			};
-		}
-
-		return item;
-	});
-}
-
-function filterEmptyGroups(items) {
-	return items
-		.filter(
-			(item) =>
-				item.type !== 'group' ||
-				(Array.isArray(item.items) && item.items.length)
-		)
-		.map((item) =>
-			item.type === 'group'
-				? {...item, items: filterEmptyGroups(item.items)}
-				: item
-		);
-}
-
-function spreadDataAttributes(item) {
-	const {data, ...rest} = item;
-
-	const dataAttributes = data
-		? Object.entries(data).reduce((acc, [key, value]) => {
-				acc[`data-${key}`] = value;
-
-				return acc;
-		  }, {})
-		: {};
-
-	const items = Array.isArray(item.items)
-		? item.items.map(spreadDataAttributes)
-		: item.items;
-
-	return {
-		...dataAttributes,
-		...rest,
-		items,
-	};
-}
+import normalizeDropdownItems from './normalize_dropdown_items';
 
 export default function DropdownMenu({
 	actionsDropdown = false,
@@ -103,9 +40,7 @@ export default function DropdownMenu({
 				className={classNames({
 					'dropdown-action': actionsDropdown,
 				})}
-				items={addSeparators(
-					filterEmptyGroups(items).map(spreadDataAttributes)
-				)}
+				items={normalizeDropdownItems(items)}
 				trigger={
 					<ClayButton
 						className={classNames(cssClass, {

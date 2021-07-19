@@ -637,8 +637,9 @@ public class StructuredContentResourceImpl
 
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
-				null, siteId, parentStructuredContentFolderId, 0, 0, null, true,
-				titleMap, descriptionMap, friendlyUrlMap,
+				structuredContent.getExternalReferenceCode(), siteId,
+				parentStructuredContentFolderId, 0, 0, null, true, titleMap,
+				descriptionMap, friendlyUrlMap,
 				StructuredContentUtil.getJournalArticleContent(
 					_ddm,
 					DDMFormValuesUtil.toDDMFormValues(

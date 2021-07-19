@@ -27,6 +27,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TranslationURLProvider {
 
+	public PortletURL getExportTranslationURL(
+		long groupId, long classNameId, long classPK,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory);
+
 	public PortletURL getImportTranslationURL(
 			long groupId, long classNameId, long classPK,
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory)

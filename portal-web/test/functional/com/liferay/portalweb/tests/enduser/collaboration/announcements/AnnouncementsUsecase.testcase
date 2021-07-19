@@ -205,7 +205,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = "4");
 
 		for (var viewEntryCount : list "1,2,3,4") {
 			AnnouncementsEntry.viewList(

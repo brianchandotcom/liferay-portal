@@ -42,6 +42,7 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 
 	public List<String> getModifiedFilenames() {
 		if (modifiedFilenames == null) {
+			init();
 		}
 
 		return modifiedFilenames;

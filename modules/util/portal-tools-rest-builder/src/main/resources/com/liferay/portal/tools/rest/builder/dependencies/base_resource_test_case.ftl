@@ -1238,7 +1238,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 							schemaVarName=schemaVarName
 							schemaVarNamePrefix="post"
 						/>
-
 					);
 
 					assertEquals(random${schemaName}, put${schemaName});
@@ -1267,7 +1266,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 							schemaVarName=schemaVarName
 							schemaVarNamePrefix="new"
 						/>
-
 					);
 
 					assertEquals(new${schemaName}, put${schemaName});
@@ -1278,6 +1276,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					);
 
 					assertEquals(new${schemaName}, get${schemaName});
+
 					Assert.assertEquals(
 						new${schemaName}.getExternalReferenceCode(),
 						put${schemaName}.getExternalReferenceCode());
@@ -2477,6 +2476,20 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#if>
 </#macro>
 
+<#macro getGetterParameters
+	javaMethodSignature
+>
+	<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+			put${schemaName}.getId()
+		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+			put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+		</#if>
+
+		<#sep>, </#sep>
+	</#list>
+</#macro>
+
 <#macro getPermissionParameter
 	javaMethodParameter
 	javaMethodSignature
@@ -2508,20 +2521,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#else>
 		null
 	</#if>
-</#macro>
-
-<#macro getGetterParameters
-	javaMethodSignature
->
-	<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-			put${schemaName}.getId()
-		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-			put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-		</#if>
-
-		<#sep>, </#sep>
-	</#list>
 </#macro>
 
 <#macro getPutParameters

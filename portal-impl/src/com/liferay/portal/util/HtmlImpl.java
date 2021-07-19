@@ -772,6 +772,9 @@ public class HtmlImpl implements Html {
 			else if (isTag(_TAG_STYLE, text, y + 1)) {
 				y = stripTag(_TAG_STYLE, text, y);
 			}
+			else if (isTag(_TAG_NOSCRIPT, text, y + 1)) {
+				y = stripTag(_TAG_NOSCRIPT, text, y);
+			}
 
 			x = text.indexOf(">", y);
 
@@ -1011,6 +1014,10 @@ public class HtmlImpl implements Html {
 	private static final char[] _HEX_DIGITS = {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
 		'e', 'f'
+	};
+
+	private static final char[] _TAG_NOSCRIPT = {
+		'n', 'o', 's', 'c', 'r', 'i', 'p', 't'
 	};
 
 	private static final char[] _TAG_SCRIPT = {'s', 'c', 'r', 'i', 'p', 't'};

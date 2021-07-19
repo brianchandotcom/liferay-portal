@@ -210,10 +210,6 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 			_getLayoutDisplayPageObjectProvider(typeSettingsUnicodeProperties);
 
 		if (layoutDisplayPageObjectProvider == null) {
-			return StringPool.BLANK;
-		}
-
-		if (layoutDisplayPageObjectProvider == null) {
 			_originalTitle = typeSettingsUnicodeProperties.getProperty("title");
 		}
 		else {

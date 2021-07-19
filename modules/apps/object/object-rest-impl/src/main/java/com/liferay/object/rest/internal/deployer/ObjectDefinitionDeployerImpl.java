@@ -22,13 +22,10 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectFie
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 
@@ -59,19 +56,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		String companyName = String.valueOf(objectDefinition.getCompanyId());
+		String namespace = "";
+		String restContextPath = objectDefinition.getRESTContextPath();
 
-		try {
-			Company company = _companyLocalService.getCompany(
-				objectDefinition.getCompanyId());
+		if (_companyLocalService.getCompaniesCount() > 1) {
+			String companyName = "o_" + objectDefinition.getCompanyId();
 
-			companyName = CamelCaseUtil.toCamelCase(
-				company.getName(), CharPool.SPACE);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+			try {
+				Company company = _companyLocalService.getCompany(
+					objectDefinition.getCompanyId());
+
+				companyName = company.getWebId();
+				companyName = companyName.replaceAll("\\.", "_");
 			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+
+			namespace = companyName;
+			restContextPath = companyName + "/" + restContextPath;
 		}
 
 		_componentInstancesMap.put(
@@ -90,10 +95,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"liferay.object.definition.name",
 						objectDefinition.getShortName()
 					).put(
-						"osgi.jaxrs.application.base",
-						StringBundler.concat(
-							"/", companyName, "/",
-							objectDefinition.getRESTContextPath())
+						"osgi.jaxrs.application.base", restContextPath
 					).put(
 						"osgi.jaxrs.extension.select",
 						"(osgi.jaxrs.name=Liferay.Vulcan)"
@@ -142,13 +144,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"osgi.jaxrs.extension", "true"
 				).put(
 					"osgi.jaxrs.name",
-					objectDefinition.getRESTContextPath() +
-						"RequiredObjectFieldExceptionMapper"
+					restContextPath + "RequiredObjectFieldExceptionMapper"
 				).build()),
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
-					companyName, objectDefinition, _objectEntryManager,
+					namespace, objectDefinition, _objectEntryManager,
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())),
 				HashMapDictionaryBuilder.<String, Object>put(

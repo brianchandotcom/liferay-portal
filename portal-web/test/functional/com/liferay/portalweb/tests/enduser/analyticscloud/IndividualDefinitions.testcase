@@ -34,6 +34,8 @@ definition {
 	test AssertNewSourceInSourceListForIndividualAttribute {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
+		var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -45,8 +47,8 @@ definition {
 		ACDefinitions.goToDefinitionType(definitionType = "Individuals");
 
 		ACDefinitions.assertIndividualAttributesSource(
-			attributeList = "additionalName,address,birthDate,classPK,contactId,createDate,email,familyName,gender,givenName,jobTitle,modifiedDate,telephone,timeZoneId,userId,uuid",
-			dataSourceName = "Liferay DXP");
+			attributeList = "additionalName,address,birthDate,email,familyName,gender,givenName,jobTitle,telephone",
+			dataSourceName = "${dataSource}");
 	}
 
 }

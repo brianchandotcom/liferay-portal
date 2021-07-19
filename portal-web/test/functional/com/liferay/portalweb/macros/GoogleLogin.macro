@@ -16,8 +16,6 @@ definition {
 
 			Button.click(button = "Save");
 		}
-
-		SelectWindow.selectWindowTopNoSPARefresh();
 	}
 
 	macro accountSignIn {

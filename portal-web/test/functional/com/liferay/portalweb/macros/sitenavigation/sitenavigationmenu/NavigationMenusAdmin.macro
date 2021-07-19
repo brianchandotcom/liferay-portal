@@ -31,8 +31,6 @@ definition {
 	}
 
 	macro _addItemPage {
-		IFrame.selectConfigurationFrame();
-
 		if (contains("${privacy}", "{privacy}")) {
 			var privacy = "Public Pages";
 		}

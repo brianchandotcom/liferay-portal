@@ -26,7 +26,11 @@
 			>
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 selected text-center" data-device="desktop" type="button">
 					<div class="c-inner px-0" tabindex="-1">
-						<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
+						<span class="icon icon-monospaced">
+							<clay:icon
+								symbol="desktop"
+							/>
+						</span>
 
 						<small><liferay-ui:message key="desktop" /></small>
 					</div>
@@ -34,9 +38,16 @@
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item mb-3 text-center" data-device="tablet" type="button">
 					<div class="c-inner px-0" tabindex="-1">
-						<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
-
-						<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
+						<span class="icon icon-monospaced">
+							<clay:icon
+								symbol="tablet-portrait"
+							/>
+						</span>
+						<span class="hide icon icon-monospaced icon-rotate">
+							<clay:icon
+								symbol="tablet-landscape"
+							/>
+						</span>
 
 						<small><liferay-ui:message key="tablet" /></small>
 					</div>
@@ -44,9 +55,16 @@
 
 				<button class="btn btn-unstyled col-4 lfr-device-item mb-3 text-center" data-device="smartphone" type="button">
 					<div class="c-inner px-0" tabindex="-1">
-						<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
-
-						<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
+						<span class="icon icon-monospaced">
+							<clay:icon
+								symbol="mobile-portrait"
+							/>
+						</span>
+						<span class="hide icon icon-monospaced icon-rotate">
+							<clay:icon
+								symbol="mobile-landscape"
+							/>
+						</span>
 
 						<small><liferay-ui:message key="mobile" /></small>
 					</div>
@@ -54,7 +72,11 @@
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize" type="button">
 					<div class="c-inner px-0" tabindex="-1">
-						<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
+						<span class="icon icon-monospaced">
+							<clay:icon
+								symbol="autosize"
+							/>
+						</span>
 
 						<small><liferay-ui:message key="autosize" /></small>
 					</div>
@@ -62,7 +84,11 @@
 
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom" type="button">
 					<div class="c-inner px-0" tabindex="-1">
-						<aui:icon cssClass="icon icon-monospaced" image="custom-size" markupView="lexicon" />
+						<span class="icon icon-monospaced">
+							<clay:icon
+								symbol="custom-size"
+							/>
+						</span>
 
 						<small><liferay-ui:message key="custom" /></small>
 					</div>

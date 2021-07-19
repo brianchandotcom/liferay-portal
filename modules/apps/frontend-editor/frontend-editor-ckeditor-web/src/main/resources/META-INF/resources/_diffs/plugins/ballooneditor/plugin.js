@@ -15,12 +15,14 @@
 (function () {
 	const pluginName = 'ballooneditor';
 
-	CKEDITOR.SELECTION_TOP_TO_BOTTOM = 0;
-	CKEDITOR.SELECTION_BOTTOM_TO_TOP = 1;
-
 	if (CKEDITOR.plugins.get(pluginName)) {
 		return;
 	}
+
+	const SELECTION_DIRECTION = {
+		BOTTOM_TO_TOP: 1,
+		TOP_TO_BOTTOM: 0,
+	};
 
 	CKEDITOR.plugins.add(pluginName, {
 		init(editor) {
@@ -69,12 +71,12 @@
 			CKEDITOR.ui.balloonPanel.DEFAULT_PANEL_PADDING = 14;
 
 			const getSelectionDirection = (selection) => {
-				let direction = CKEDITOR.SELECTION_TOP_TO_BOTTOM;
+				let direction = SELECTION_DIRECTION.TOP_TO_BOTTOM;
 
 				const nativeSelection = selection.getNative();
 
 				if (!nativeSelection) {
-					return CKEDITOR.SELECTION_TOP_TO_BOTTOM;
+					return SELECTION_DIRECTION.TOP_TO_BOTTOM;
 				}
 
 				const anchorNode = nativeSelection.anchorNode;
@@ -90,7 +92,7 @@
 								nativeSelection.focusOffset) ||
 						position === Node.DOCUMENT_POSITION_PRECEDING
 					) {
-						direction = CKEDITOR.SELECTION_BOTTOM_TO_TOP;
+						direction = SELECTION_DIRECTION.BOTTOM_TO_TOP;
 					}
 				}
 
@@ -117,53 +119,67 @@
 
 				this.fire('attach');
 
-				const editable = this.editor.editable();
-
-				const editableClientRect = editable.getClientRect(true);
-				const panelClientRect = this.parts.panel.getClientRect(true);
+				const panelRect = this.parts.panel.getClientRect(true);
 
 				const ranges = elementOrSelection.getRanges();
 				const type = elementOrSelection.getType();
 
-				let clientRect;
+				let triangleSide = 'bottom';
 				let x = 0;
 				let y = 0;
 
 				if (type === CKEDITOR.SELECTION_TEXT) {
-					let rangeClientRects;
+					let selectedRects;
 
 					try {
-						rangeClientRects = ranges[0].getClientRects(true);
+						selectedRects = ranges[0].getClientRects(true);
 					}
 					catch (error) {
 						return;
 					}
 
-					const firstClientRect = rangeClientRects[0];
-					const lastClientRect =
-						rangeClientRects[rangeClientRects.length - 1];
+					const firstSelectedRect = selectedRects[0];
+					const lastSelectedRect =
+						selectedRects[selectedRects.length - 1];
 
-					let direction = CKEDITOR.SELECTION_BOTTOM_TO_TOP;
+					let selectionDirection = SELECTION_DIRECTION.TOP_TO_BOTTOM;
 
-					if (firstClientRect !== lastClientRect) {
-						direction = getSelectionDirection(
+					if (firstSelectedRect !== lastSelectedRect) {
+						selectionDirection = getSelectionDirection(
 							this.editor.getSelection()
 						);
 					}
 
-					const rangeHeight =
-						lastClientRect.bottom - firstClientRect.top;
+					if (firstSelectedRect === lastSelectedRect) {
+						x =
+							firstSelectedRect.x +
+							firstSelectedRect.width / 2 -
+							panelRect.width / 2;
+						y = firstSelectedRect.y - panelRect.height - padding;
 
-					clientRect = rangeClientRects[0];
+						triangleSide = 'bottom';
+					}
+					else if (
+						selectionDirection === SELECTION_DIRECTION.BOTTOM_TO_TOP
+					) {
+						x = firstSelectedRect.x - panelRect.width / 2;
+						y = firstSelectedRect.y - panelRect.height - padding;
 
-					x =
-						clientRect.x +
-						clientRect.width / 2 -
-						panelClientRect.width / 2;
-					y = clientRect.y - panelClientRect.height - padding;
+						triangleSide = 'bottom';
+					}
+					else if (
+						selectionDirection === SELECTION_DIRECTION.TOP_TO_BOTTOM
+					) {
+						x =
+							lastSelectedRect.x +
+							lastSelectedRect.width -
+							panelRect.width / 2;
+						y =
+							lastSelectedRect.y +
+							lastSelectedRect.height +
+							padding;
 
-					if (direction === CKEDITOR.SELECTION_TOP_TO_BOTTOM) {
-						y = clientRect.y + rangeHeight + padding;
+						triangleSide = 'top';
 					}
 				}
 				else if (type === CKEDITOR.SELECTION_ELEMENT) {
@@ -180,25 +196,37 @@
 					x =
 						selectedElementClientRect.x +
 						selectedElementClientRect.width / 2 -
-						panelClientRect.width / 2;
+						panelRect.width / 2;
 					y =
 						selectedElementClientRect.y -
-						panelClientRect.height -
+						panelRect.height -
 						padding;
 				}
 
-				if (x < editableClientRect.x) {
-					x = editableClientRect.x + padding;
-				}
-				if (x + panelClientRect.width > editableClientRect.width) {
-					x -= x + panelClientRect.width - editableClientRect.width;
-				}
+				const editable = this.editor.editable();
 
-				if (y < editableClientRect.y) {
-					y = clientRect.bottom + padding;
+				const editableRect = editable.getClientRect(true);
+
+				if (editableRect.width < panelRect.width + padding) {
+					x = editableRect.x + padding;
+				}
+				else if (x < editableRect.x) {
+					x = editableRect.x + padding;
+				}
+				else if (
+					x + panelRect.width >
+					editableRect.x + editableRect.width
+				) {
+					x =
+						editableRect.x +
+						editableRect.width -
+						panelRect.width -
+						padding;
 				}
 
 				this.move(y, x);
+
+				this.setTriangle(triangleSide, 'hcenter');
 
 				if (options.focusElement !== false) {
 					(options.focusElement || this.parts.panel).focus();

@@ -95,9 +95,8 @@ public class CommercePaymentServlet extends HttpServlet {
 
 			_commerceOrderId = commerceOrder.getCommerceOrderId();
 
-			if (!_commerceCheckoutStepHttpHelper.
-					isActivePaymentMethodCommerceCheckoutStep(
-						httpServletRequest, commerceOrder)) {
+			if (_commerceCheckoutStepHttpHelper.isCommercePaymentComplete(
+					httpServletRequest, commerceOrder)) {
 
 				_commercePaymentEngine.completePayment(
 					_commerceOrderId, null, httpServletRequest);

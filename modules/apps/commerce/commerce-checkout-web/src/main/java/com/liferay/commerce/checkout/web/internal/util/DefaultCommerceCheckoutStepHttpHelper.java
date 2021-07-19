@@ -203,6 +203,18 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		return true;
 	}
 
+	@Override
+	public boolean isCommercePaymentComplete(
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (CommerceBigDecimalUtil.isZero(commerceOrder.getTotal())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _updateCommerceOrder(
 			CommerceContext commerceContext, CommerceOrder commerceOrder,
 			long commerceShippingMethodId,

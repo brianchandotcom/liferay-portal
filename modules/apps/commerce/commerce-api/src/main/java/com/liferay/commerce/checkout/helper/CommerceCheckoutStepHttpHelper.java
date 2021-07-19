@@ -40,4 +40,8 @@ public interface CommerceCheckoutStepHttpHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public boolean isCommercePaymentComplete(
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
+		throws PortalException;
+
 }

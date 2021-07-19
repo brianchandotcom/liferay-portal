@@ -137,11 +137,21 @@
 </tr>
 <tr>
 	<td>GENERAL_SELECT</td>
-	<td>//select[contains(@id,':select')]//option[contains(.,'${key_opt}')]</td>
+	<td>//select[contains(@id,':select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GENERAL_SELECT_2</td>
+	<td>xpath=(//select[contains(@id,':select')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_SELECT_OPTION</td>
+	<td>//select[contains(@id,':select')]//option[contains(.,'${key_opt}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_SELECT_OPTION_2</td>
 	<td>xpath=(//select[contains(@id,':select')]//option[contains(.,'${key_opt}')])[2]</td>
 	<td></td>
 </tr>
@@ -217,7 +227,7 @@
 </tr>
 <tr>
 	<td>OUTPUTLINK_SELECT</td>
-	<td>//select[contains(@id,':selectOneMenuId')]//option[contains(.,'${key_opt}')]</td>
+	<td>//select[contains(@id,':selectOneMenuId')]</td>
 	<td></td>
 </tr>
 <tr>

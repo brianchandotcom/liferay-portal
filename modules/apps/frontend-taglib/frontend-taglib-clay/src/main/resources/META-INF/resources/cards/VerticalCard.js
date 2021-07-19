@@ -19,6 +19,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import getDataAttributes from '../get_data_attributes';
+import normalizeDropdownItems from '../normalize_dropdown_items';
 
 export default function VerticalCard({
 	actions,
@@ -109,14 +110,7 @@ export default function VerticalCard({
 
 	return (
 		<ClayCardWithInfo
-			actions={actions?.map(({data, ...rest}) => {
-				const dataAttributes = getDataAttributes(data);
-
-				return {
-					...dataAttributes,
-					...rest,
-				};
-			})}
+			actions={normalizeDropdownItems(actions)}
 			checkboxProps={{
 				name: inputName ?? '',
 				value: inputValue ?? '',

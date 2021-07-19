@@ -16,7 +16,7 @@ import {ClayCardWithHorizontal} from '@clayui/card';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
-import getDataAttributes from '../get_data_attributes';
+import normalizeDropdownItems from '../normalize_dropdown_items';
 
 export default function HorizontalCard({
 	actions,
@@ -61,14 +61,7 @@ export default function HorizontalCard({
 
 	return (
 		<ClayCardWithHorizontal
-			actions={actions?.map(({data, ...rest}) => {
-				const dataAttributes = getDataAttributes(data);
-
-				return {
-					...dataAttributes,
-					...rest,
-				};
-			})}
+			actions={normalizeDropdownItems(actions)}
 			checkboxProps={{
 				name: inputName ?? '',
 				value: inputValue ?? '',

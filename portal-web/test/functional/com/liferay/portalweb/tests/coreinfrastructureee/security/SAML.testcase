@@ -2,7 +2,7 @@
 definition {
 
 	property app.server.bundles.size = "1";
-	property custom.properties = "javascript.single.page.application.enabled=false";
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property databases.size = "1";
 	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";
@@ -797,6 +797,153 @@ definition {
 		AssertConsoleTextPresent(value1 = "org.opensaml.messaging.handler.MessageHandlerException: Message context was not authenticated");
 	}
 
+	@description = "This is a use case for LPS-105170 TC-5: Verification for portal User Attributes when they are duplicated in the mapping  when saving the SAML configuration - Using virtual instances"
+	@priority = "3"
+	test AssertVerificationForDuplicatedUserAttributeMappingSAML {
+		property app.server.bundles.size = "0";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "SAML#AssertVerificationForDuplicatedUserAttributeMappingSAML";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		// Add new virtual instance to be the SP site
+
+		SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+		// Setup localhost as IDP role
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.addIdentityProviderConnection(
+			idpAttributeMapping = "UUID,UUID,lastName,lastName",
+			idpAttributeMappingText = "UUID,UUID,lastName,lastName",
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpNameID = "samlidp",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Unspecified",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "1",
+			userResolution = "attribute");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Basic User Fields: Each user field can only be mapped to one SAML attribute.");
+
+		Click(
+			key_rowIndexNumber = "4",
+			locator1 = "Button#DELETE_ROW_N");
+
+		PortletEntry.save();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Basic User Fields: Each user field can only be mapped to one SAML attribute.");
+
+		PortletEntry.save();
+
+		Click(
+			key_rowIndexNumber = "2",
+			locator1 = "Button#DELETE_ROW_N");
+
+		PortletEntry.save();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Basic User Fields: Each user field can only be mapped to one SAML attribute.");
+
+		PortletEntry.save();
+
+		Click(locator1 = "Button#DELETE_ROW_LAST");
+
+		PortletEntry.save();
+	}
+
+	@description = "This is a use case for LPS-105170 TC-4: Verification for portal User Attributes when they are without SAML attribute value in the mapping when saving the SAML configuration - Using virtual instances"
+	@priority = "3"
+	test AssertVerificationForEmptyUserAttributeMappingSAML {
+		property app.server.bundles.size = "0";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "SAML#AssertVerificationForEmptyUserAttributeMappingSAML";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		// Add new virtual instance to be the SP site
+
+		SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+		// Setting up IDP and SP connection
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		// Test starts here
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.addIdentityProviderConnection(
+			idpAttributeMapping = "screenName,screenName,UUID,UUID",
+			idpAttributeMappingText = ",,,,",
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpMetadataURL = "http://localhost:8080/c/portal/saml/metadata",
+			idpNameID = "samlidp",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Unspecified",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "3",
+			userResolution = "attribute");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Basic User Fields: All attribute mappings must specify a SAML attribute.");
+	}
+
 	@description = "This is a use case for LPS-129373"
 	@priority = "4"
 	test ConfigureSAMLToImportUsersFromLDAP {
@@ -923,6 +1070,482 @@ definition {
 			userFirstName = "ldapusergivenname",
 			userLastName = "ldapusersn",
 			userScreenName = "ldapusercn");
+	}
+
+	@description = "This is a use case for LPS-105170 TC-2: User creation and sync after SAML setup, using email Address for IdP Identifier and screenName for Attribute matching - Using virtual instances"
+	@priority = "3"
+	test CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute {
+		property app.server.bundles.size = "0";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		// Add new virtual instance to be the SP site
+
+		SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+		User.logoutPG();
+
+		// Setting up IDP and SP role
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		// Setting up IDP and SP connection
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Email Address",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "4",
+			userResolution = "attribute");
+
+		SAML.enableSPRoles(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "http://localhost:8080",
+			nameIdentifierAttributeName = "emailAddress",
+			nameIdentifierFormat = "Email Address",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@liferay.com");
+
+		// Test starts here
+
+		SAML.addAndSyncNewUser(
+			creatorEmailAddress = "test@liferay.com",
+			creatorPassword = "test",
+			newUserEmailAddress = "tester@localhost.com",
+			newUserFirstName = "first",
+			newUserLastName = "tester",
+			newUserPortalURL = "http://localhost:8080",
+			newUserScreenName = "tester",
+			portalInstanceName = "localhost",
+			spURL = "www.able.com:8080");
+
+		// Verify IdP is also logged in
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG();
+	}
+
+	@description = "This is a use case for LPS-105170 TC-3: User creation and sync after SAML setup, using screenName for IdP Identifier and UUID for Attribute matching - Using virtual instances"
+	@priority = "3"
+	test CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute {
+		property app.server.bundles.size = "0";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		// Add new virtual instance to be the SP site
+
+		SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+		User.logoutPG();
+
+		// Setting up IDP and SP connection
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		// Setting up IDP and SP connection
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpAttributeMapping = "screenName,emailAddress,firstName,lastName,UUID",
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Unspecified",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "4",
+			userResolution = "attribute");
+
+		SAML.enableSPRoles(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "http://localhost:8080",
+			nameIdentifierAttributeName = "screenName",
+			nameIdentifierFormat = "Unspecified",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@liferay.com");
+
+		// Test starts here
+
+		SAML.addAndSyncNewUser(
+			creatorEmailAddress = "test@liferay.com",
+			creatorPassword = "test",
+			newUserEmailAddress = "tester@localhost.com",
+			newUserFirstName = "first",
+			newUserLastName = "tester",
+			newUserPortalURL = "http://localhost:8080",
+			newUserScreenName = "tester",
+			portalInstanceName = "localhost",
+			spURL = "www.able.com:8080");
+
+		// Verify IdP is also logged in
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG();
+	}
+
+	@description = "This is a use case for LPS-105170 TC-1: User creation and sync after SAML setup, using screenName field both for User Matching and IdP Identifier - Using virtual instances"
+	@priority = "5"
+	test CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute {
+		property app.server.bundles.size = "0";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupwithMatchingScreenNameAttribute";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		// Add new virtual instance to be the SP site
+
+		SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+		User.logoutPG();
+
+		// Setting up IDP and SP role
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		// Setting up IDP and SP connection
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Unspecified",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "4",
+			userResolution = "attribute");
+
+		SAML.enableSPRoles(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "http://localhost:8080",
+			nameIdentifierAttributeName = "screenName",
+			nameIdentifierFormat = "Unspecified",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@liferay.com");
+
+		// Test starts here
+
+		SAML.addAndSyncNewUser(
+			creatorEmailAddress = "test@liferay.com",
+			creatorPassword = "test",
+			newUserEmailAddress = "tester@localhost.com",
+			newUserFirstName = "first",
+			newUserLastName = "tester",
+			newUserPortalURL = "http://localhost:8080",
+			newUserScreenName = "tester",
+			portalInstanceName = "localhost",
+			spURL = "www.able.com:8080");
+
+		// Verify IdP is also logged in
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG();
+	}
+
+	@description = "This is a use case for LPS-105170 TC-7: User creation and sync after SAML setup with 2 IdP portal - Using virtual instances"
+	@priority = "3"
+	test CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs {
+		property app.server.bundles.size = "0";
+		property portal.upstream = "true";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		// Add 2 virtual instance
+
+		SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+		User.firstLoginUI();
+
+		SAML.addVirtualInstances(virtualHosts = "www.baker.com");
+
+		// Setting up the 2 IDP and SP connection
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp1",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupIDP(
+			idpURL = "www.baker.com:8080",
+			samlEntityID = "samlidp2",
+			userEmailAddress = "test@www.baker.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpAttributeMapping = "screenName,emailAddress,firstName,lastName,UUID",
+			idpEntityID = "samlidp1",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpURL = "http://localhost:8080",
+			nameIdentifierFormat = "Unspecified",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "1",
+			userResolution = "attribute");
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpAttributeMapping = "screenName,UUID,firstName,lastName,emailAddress",
+			idpEntityID = "samlidp2",
+			idpKeepAliveURL = "www.baker.com:8080/c/portal/saml/keep_alive",
+			idpURL = "http://www.baker.com:8080",
+			nameIdentifierFormat = "Unspecified",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "4",
+			userResolution = "attribute");
+
+		SAML.enableSPRoles(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "http://localhost:8080",
+			nameIdentifierAttributeName = "screenName",
+			nameIdentifierFormat = "Unspecified",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "www.baker.com:8080",
+			nameIdentifierAttributeName = "emailAddress",
+			nameIdentifierFormat = "Email Address",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.baker.com");
+
+		// Test starts here
+
+		SAML.addAndSyncNewUser(
+			creatorEmailAddress = "test@liferay.com",
+			creatorPassword = "test",
+			idpName = "samlidp1",
+			newUserEmailAddress = "user1@liferay.com",
+			newUserFirstName = "first",
+			newUserLastName = "tester",
+			newUserPortalURL = "http://localhost:8080",
+			newUserScreenName = "user1",
+			portalInstanceName = "localhost",
+			samlMultiIdPs = "true",
+			spURL = "www.able.com:8080");
+
+		User.logoutPG(specificURL = "http://www.able.com:8080");
+
+		SAML.addAndSyncNewUser(
+			creatorEmailAddress = "test@www.baker.com",
+			creatorPassword = "test",
+			idpName = "samlidp2",
+			newUserEmailAddress = "user2@www.baker.com",
+			newUserFirstName = "second",
+			newUserLastName = "tester",
+			newUserPortalURL = "http://www.baker.com:8080",
+			newUserScreenName = "user2",
+			portalInstanceName = "www.baker.com",
+			samlMultiIdPs = "true",
+			spURL = "www.able.com:8080");
+
+		// Verify IdP is also logged in
+
+		Navigator.openURL(baseURL = "http://www.baker.com:8080");
+
+		User.viewLoggedInPG();
+	}
+
+	@description = "This is a use case for LPS-105170 TC-8: Verifying that deleting a User will sync with the SP site - Using virtual instances"
+	@priority = "3"
+	test DeleteUserAfterSAMLSetupAndVerify {
+		property app.server.bundles.size = "0";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "SAML#DeleteUserAfterSAMLSetupAndVerify";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		// Add new virtual instance to be the SP site
+
+		SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+		User.logoutPG();
+
+		// Setup localhost as IDP role
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpAttributeMapping = "screenName,emailAddress,firstName,lastName,UUID",
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Unspecified",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userMatchingAttributeIndex = "4",
+			userResolution = "attribute");
+
+		SAML.enableSPRoles(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "http://localhost:8080",
+			nameIdentifierAttributeName = "screenName",
+			nameIdentifierFormat = "Unspecified",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:8080",
+			userEmailAddress = "test@liferay.com");
+
+		// Test starts here
+
+		SAML.addAndSyncNewUser(
+			creatorEmailAddress = "test@liferay.com",
+			creatorPassword = "test",
+			newUserEmailAddress = "user1@localhost.com",
+			newUserFirstName = "first",
+			newUserLastName = "tester",
+			newUserPortalURL = "http://localhost:8080",
+			newUserScreenName = "user1",
+			portalInstanceName = "localhost",
+			spURL = "http://www.able.com:8080");
+
+		User.logoutPG(specificURL = "http://www.able.com:8080");
+
+		User.firstLoginUI();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.singleDeactivateCP(userFirstName = "first");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Inactive");
+
+		User.singleDeleteCP(userFirstName = "first");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			emailPassword = "test",
+			specificURL = "http://www.able.com:8080/",
+			userEmailAddress = "user1@liferay.com");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Authentication failed. Please try again.");
 	}
 
 	@priority = "5"
@@ -1252,12 +1875,11 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	@description = "This is a use case for LPS-129934"
+	@description = "This is a use case for LPS-129934 - Using virtual instances"
 	@priority = "4"
 	test ViewIdPSingleLogoutWithMultipleSPs {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "SAML#ViewIdPSingleLogoutWithMultipleSPs";
-		property using.virtualInstances = "true";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

@@ -39,14 +39,13 @@ public class EditFileEntryContentDashboardItemAction
 	implements ContentDashboardItemAction {
 
 	public EditFileEntryContentDashboardItemAction(
-		InfoEditURLProvider<FileEntry> infoEditURLProvider,
-		HttpServletRequest httpServletRequest, FileEntry fileEntry,
-		Language language, Portal portal,
-		PortletLocalService portletLocalService) {
+		FileEntry fileEntry, HttpServletRequest httpServletRequest,
+		InfoEditURLProvider<FileEntry> infoEditURLProvider, Language language,
+		Portal portal, PortletLocalService portletLocalService) {
 
-		_infoEditURLProvider = infoEditURLProvider;
-		_httpServletRequest = httpServletRequest;
 		_fileEntry = fileEntry;
+		_httpServletRequest = httpServletRequest;
+		_infoEditURLProvider = infoEditURLProvider;
 		_language = language;
 		_portal = portal;
 		_portletLocalService = portletLocalService;

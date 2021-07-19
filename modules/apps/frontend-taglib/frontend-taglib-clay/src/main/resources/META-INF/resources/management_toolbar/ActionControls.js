@@ -17,8 +17,30 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import React from 'react';
 
-import getDataAttributes from '../get_data_attributes';
+import normalizeDropdownItems from '../normalize_dropdown_items';
 import LinkOrButton from './LinkOrButton';
+
+function addAction(item, onActionButtonClick) {
+	if (item.type === 'group') {
+		return {
+			...item,
+			items: item.items?.map((child) =>
+				addAction(child, onActionButtonClick)
+			),
+		};
+	}
+
+	const clone = {
+		onClick: (event) => {
+			onActionButtonClick(event, {item});
+		},
+		...item,
+	};
+
+	delete clone.quickAction;
+
+	return clone;
+}
 
 const ActionControls = ({
 	actionDropdownItems,
@@ -30,6 +52,9 @@ const ActionControls = ({
 			{actionDropdownItems && (
 				<>
 					{actionDropdownItems
+						.flatMap((item) =>
+							item.type === 'group' ? item.items : [item]
+						)
 						.filter((item) => item.quickAction && item.icon)
 						.map((item, index) => (
 							<ClayManagementToolbar.Item
@@ -54,23 +79,11 @@ const ActionControls = ({
 
 					<ClayManagementToolbar.Item>
 						<ClayDropDownWithItems
-							items={actionDropdownItems?.map((item) => {
-								const {data, ...rest} = item;
-
-								const dataAttributes = getDataAttributes(data);
-
-								const clone = {
-									onClick: (event) => {
-										onActionButtonClick(event, {item});
-									},
-									...dataAttributes,
-									...rest,
-								};
-
-								delete clone.quickAction;
-
-								return clone;
-							})}
+							items={normalizeDropdownItems(
+								actionDropdownItems?.map((item) =>
+									addAction(item, onActionButtonClick)
+								)
+							)}
 							trigger={
 								<ClayButtonWithIcon
 									className="nav-link nav-link-monospaced"

@@ -19,6 +19,24 @@ import React, {useEffect, useRef, useState} from 'react';
 import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import LinkOrButton from './LinkOrButton';
 
+function disableActionIfNeeded(item, event, bulkSelection) {
+	if (item.type === 'group') {
+		return {
+			...item,
+			items: item.items?.map((child) =>
+				disableActionIfNeeded(child, event, bulkSelection)
+			),
+		};
+	}
+
+	return {
+		...item,
+		disabled:
+			event.actions?.indexOf(item.data.action) === -1 &&
+			(!bulkSelection || !item.data.enableOnBulk),
+	};
+}
+
 const SelectionControls = ({
 	actionDropdownItems,
 	active,
@@ -100,14 +118,9 @@ const SelectionControls = ({
 				});
 
 				setActionDropdownItems(
-					actionDropdownItems?.map((item) => {
-						return Object.assign(item, {
-							disabled:
-								event.actions?.indexOf(item.data.action) ===
-									-1 &&
-								(!bulkSelection || !item.data.enableOnBulk),
-						});
-					})
+					actionDropdownItems?.map((item) =>
+						disableActionIfNeeded(item, event, bulkSelection)
+					)
 				);
 			});
 

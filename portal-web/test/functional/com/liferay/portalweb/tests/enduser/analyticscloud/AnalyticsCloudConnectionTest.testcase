@@ -29,18 +29,31 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Automation ID: LRAC-8108 | Test Summary: Add date source page that allows user to choose type of data source"
+	@ignore = "true"
+	@priority = "5"
+	test AddDataSourcePageAllowsUserToChooseWhatKind {
+		// TODO LRAC-8108 AddDataSourcePageAllowsUserToChooseWhatKind
+
+	}
+
+	@description = "Automation ID: LRAC-8107 | Test Summary: Navigates to data source page"
+	@ignore = "true"
+	@priority = "5"
+	test CanNavigatesToDataSourcePage {
+		// TODO LRAC-8107 CanNavigatesToDataSourcePage
+	}
+
 	@description = "Sync Liferay Data Source Contacts"
 	@priority = "5"
 	test CanSyncAllContactsFromDXPToAC {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ACDXPSettings.syncNewContactData();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		Navigator.openURL();
 
@@ -77,6 +90,22 @@ definition {
 	@priority = "5"
 	test ConnectACtoDXP {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+	}
+
+	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
+	@ignore = "true"
+	@priority = "5"
+	test ViewAssetAddedByDXPDataSource {
+		// TODO LRAC-8128 ViewAssetAddedByDXPDataSource
+
+	}
+
+	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
+	@ignore = "true"
+	@priority = "5"
+	test ViewPageAddedByDXPDataSource {
+		// TODO LRAC-8127 ViewPageAddedByDXPDataSource
+
 	}
 
 }

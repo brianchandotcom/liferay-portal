@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
@@ -98,6 +99,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -152,10 +154,14 @@ public class DefaultExportImportContentProcessorTest {
 
 		_liveGroup = GroupTestUtil.addGroup();
 
+		GroupTestUtil.addLayoutSetVirtualHosts(_liveGroup);
+
 		GroupTestUtil.enableLocalStaging(
 			_liveGroup, TestPropsValues.getUserId());
 
 		_stagingGroup = _liveGroup.getStagingGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHosts(_stagingGroup);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -1071,12 +1077,19 @@ public class DefaultExportImportContentProcessorTest {
 		content = replaceExternalGroupFriendlyURLs(content);
 		content = replaceMultiLocaleLayoutFriendlyURLs(content);
 
+		LayoutSet stagingPrivateLayoutSet = _stagingGroup.getPrivateLayoutSet();
+		LayoutSet stagingPublicLayoutSet = _stagingGroup.getPublicLayoutSet();
+
 		Map<Locale, String> livePublicLayoutFriendlyURLMap =
 			_livePublicLayout.getFriendlyURLMap();
 		Map<Locale, String> stagingPrivateLayoutFriendlyURLMap =
 			_stagingPrivateLayout.getFriendlyURLMap();
 		Map<Locale, String> stagingPublicLayoutFriendlyURLMap =
 			_stagingPublicLayout.getFriendlyURLMap();
+		TreeMap<String, String> stagingPrivateVirtualHostnames =
+			stagingPrivateLayoutSet.getVirtualHostnames();
+		TreeMap<String, String> stagingPublicVirtualHostnames =
+			stagingPublicLayoutSet.getVirtualHostnames();
 
 		content = StringUtil.replace(
 			content,
@@ -1089,11 +1102,15 @@ public class DefaultExportImportContentProcessorTest {
 				"[$EXTERNAL_PRIVATE_LAYOUT_FRIENDLY_URL$]",
 				"[$EXTERNAL_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 				"[$FRIENDLY_URL_SEPARATOR$]", "[$GROUP_FRIENDLY_URL$]",
-				"[$GROUP_ID$]", "[$IMAGE_ID$]", "[$LIVE_GROUP_FRIENDLY_URL$]",
-				"[$LIVE_GROUP_ID$]", "[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
+				"[$GROUP_ID$]", "[$GROUP_PRIVATE_PAGES_VIRTUAL_HOST$]",
+				"[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]", "[$IMAGE_ID$]",
+				"[$LIVE_GROUP_FRIENDLY_URL$]", "[$LIVE_GROUP_ID$]",
+				"[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 				"[$NON_DEFAULT_LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 				"[$NON_DEFAULT_PRIVATE_LAYOUT_FRIENDLY_URL$]",
 				"[$NON_DEFAULT_PUBLIC_LAYOUT_FRIENDLY_URL$]",
+				"[$NON_REPLACEABLE_PRIVATE_LAYOUT_FRIENDLY_URL$]",
+				"[$NON_REPLACEABLE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 				"[$PATH_CONTEXT$]", "[$PATH_FRIENDLY_URL_PRIVATE_GROUP$]",
 				"[$PATH_FRIENDLY_URL_PRIVATE_USER$]",
 				"[$PATH_FRIENDLY_URL_PUBLIC$]",
@@ -1110,6 +1127,8 @@ public class DefaultExportImportContentProcessorTest {
 				_externalPublicLayout.getFriendlyURL(),
 				Portal.FRIENDLY_URL_SEPARATOR, _stagingGroup.getFriendlyURL(),
 				String.valueOf(fileEntry.getGroupId()),
+				stagingPrivateVirtualHostnames.firstKey(),
+				stagingPublicVirtualHostnames.firstKey(),
 				String.valueOf(fileEntry.getFileEntryId()),
 				_liveGroup.getFriendlyURL(),
 				String.valueOf(_liveGroup.getGroupId()),
@@ -1117,6 +1136,8 @@ public class DefaultExportImportContentProcessorTest {
 				livePublicLayoutFriendlyURLMap.get(_nondefaultLocale),
 				stagingPrivateLayoutFriendlyURLMap.get(_nondefaultLocale),
 				stagingPublicLayoutFriendlyURLMap.get(_nondefaultLocale),
+				_stagingPrivateLayout.getFriendlyURL(),
+				_stagingPublicLayout.getFriendlyURL(),
 				PortalUtil.getPathContext(),
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING,

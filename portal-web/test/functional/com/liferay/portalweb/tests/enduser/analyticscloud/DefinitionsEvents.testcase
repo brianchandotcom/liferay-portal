@@ -47,7 +47,6 @@ definition {
 	@priority = "5"
 	test CustomEventShownInAC {
 		// TODO LRAC-8123 CustomEventShownInAC
-
 	}
 
 }

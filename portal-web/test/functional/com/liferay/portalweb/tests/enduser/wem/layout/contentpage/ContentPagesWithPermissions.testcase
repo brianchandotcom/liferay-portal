@@ -787,6 +787,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125388. The new user can edit specific content page as site member with update permission."
+	@priority = "4"
+	test EditSpecificContentPageAsSiteMemberWithUpdatePermission {
+		task ("Grant Update permission of specific content page to Site Member") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Content Page Name");
+
+			IFrame.selectPermissionsFrame();
+
+			Check(
+				key_actionName = "UPDATE",
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#PERMISSIONS_MODAL_CHECKBOX");
+
+			PortletEntry.save();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Add a Paragraph fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.clickPublish();
+		}
+	}
+
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
 	@priority = "5"
 	test MapContentWithUpdatePageContentPermission {

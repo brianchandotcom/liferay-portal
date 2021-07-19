@@ -233,7 +233,15 @@
 							<clay:content-col
 								cssClass="component-action inline-item-after justify-content-end"
 							>
-								<liferay-util:include page="/vocabulary_action.jsp" servletContext="<%= application %>" />
+
+								<%
+								AssetVocabularyActionDropdownItemsProvider assetVocabularyActionDropdownItemsProvider = new AssetVocabularyActionDropdownItemsProvider(request, renderResponse);
+								%>
+
+								<clay:dropdown-actions
+									dropdownItems="<%= assetVocabularyActionDropdownItemsProvider.getActionDropdownItems(vocabulary) %>"
+									propsTransformer="js/VocabularyActionDropdownPropsTransformer"
+								/>
 							</clay:content-col>
 						</clay:content-row>
 					</h2>

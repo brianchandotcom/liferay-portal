@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
-import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
@@ -783,25 +782,6 @@ public class AssetCategoriesDisplayContext {
 
 		return AssetCategoryPermission.contains(
 			_themeDisplay.getPermissionChecker(), category, actionId);
-	}
-
-	public boolean hasPermission(AssetVocabulary vocabulary, String actionId) {
-		if (vocabulary.getGroupId() != _themeDisplay.getScopeGroupId()) {
-			return false;
-		}
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			_themeDisplay.getPermissionChecker(),
-			_themeDisplay.getScopeGroupId(), AssetVocabulary.class.getName(),
-			vocabulary.getVocabularyId(),
-			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		return AssetVocabularyPermission.contains(
-			_themeDisplay.getPermissionChecker(), vocabulary, actionId);
 	}
 
 	public boolean isAssetCategoriesLimitExceeded() throws Exception {

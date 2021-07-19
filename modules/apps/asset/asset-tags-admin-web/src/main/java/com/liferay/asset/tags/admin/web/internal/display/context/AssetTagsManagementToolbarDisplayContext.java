@@ -58,31 +58,43 @@ public class AssetTagsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			_assetTagsDisplayContext::isShowTagsActions,
-			dropdownItem -> {
-				dropdownItem.putData("action", "mergeTags");
-				dropdownItem.putData(
-					"mergeTagsURL",
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/merge_tag.jsp"
-					).setParameter(
-						"mergeTagIds", "[$MERGE_TAGS_IDS$]"
-					).buildString());
-				dropdownItem.setIcon("merge");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "merge"));
-				dropdownItem.setQuickAction(true);
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						_assetTagsDisplayContext::isShowTagsActions,
+						dropdownItem -> {
+							dropdownItem.putData("action", "mergeTags");
+							dropdownItem.putData(
+								"mergeTagsURL",
+								PortletURLBuilder.createRenderURL(
+									liferayPortletResponse
+								).setMVCPath(
+									"/merge_tag.jsp"
+								).setParameter(
+									"mergeTagIds", "[$MERGE_TAGS_IDS$]"
+								).buildString());
+							dropdownItem.setIcon("merge");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "merge"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteTags");
-				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteTags");
+							dropdownItem.setIcon("times-circle");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

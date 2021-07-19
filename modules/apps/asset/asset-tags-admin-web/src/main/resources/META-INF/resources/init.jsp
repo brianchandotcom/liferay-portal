@@ -34,13 +34,11 @@ page import="com.liferay.asset.tags.admin.web.internal.display.context.AssetTags
 page import="com.liferay.asset.tags.admin.web.internal.display.context.AssetTagsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.util.AssetHelper" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Objects" %>
 

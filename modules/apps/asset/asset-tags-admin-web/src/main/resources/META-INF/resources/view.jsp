@@ -63,9 +63,12 @@
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/tag_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							dropdownItems="<%= assetTagsDisplayContext.getAssetTagActionDropdownItems(tag) %>"
+							propsTransformer="js/AssetTagActionDropdownPropsTransformer"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
@@ -80,9 +83,12 @@
 						value="<%= String.valueOf(fullTagsCount) %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/tag_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							dropdownItems="<%= assetTagsDisplayContext.getAssetTagActionDropdownItems(tag) %>"
+							propsTransformer="js/AssetTagActionDropdownPropsTransformer"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>

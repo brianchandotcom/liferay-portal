@@ -19,6 +19,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -66,6 +69,78 @@ public class AssetTagsDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public List<DropdownItem> getAssetTagActionDropdownItems(AssetTag tag) {
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						this::isShowTagsActions,
+						dropdownItem -> {
+							dropdownItem.setHref(
+								PortletURLBuilder.createRenderURL(
+									_renderResponse
+								).setMVCPath(
+									"/edit_tag.jsp"
+								).setParameter(
+									"tagId", tag.getTagId()
+								).buildString());
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "edit"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						this::isShowTagsActions,
+						dropdownItem -> {
+							dropdownItem.setHref(
+								PortletURLBuilder.createRenderURL(
+									_renderResponse
+								).setMVCPath(
+									"/merge_tag.jsp"
+								).setParameter(
+									"mergeTagIds", tag.getTagId()
+								).buildString());
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "merge"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteTag");
+
+							dropdownItem.putData(
+								"deleteTagURL",
+								PortletURLBuilder.createActionURL(
+									_renderResponse
+								).setActionName(
+									"deleteTag"
+								).setRedirect(
+									_themeDisplay.getURLCurrent()
+								).setParameter(
+									"tagId", tag.getTagId()
+								).buildString());
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
 	}
 
 	public String getAssetTitle() {

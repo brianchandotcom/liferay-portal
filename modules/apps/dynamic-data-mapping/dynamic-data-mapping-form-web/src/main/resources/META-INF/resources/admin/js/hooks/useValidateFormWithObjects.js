@@ -21,8 +21,8 @@ import {
 import {useCallback} from 'react';
 
 const getUnmappedFormFields = (formFields) => {
-	return formFields.filter(({settingsContext}) => {
-		const objectFieldName = getObjectFieldName(settingsContext);
+	return formFields.filter((field) => {
+		const objectFieldName = getObjectFieldName(field);
 
 		return objectFieldName && !getSelectedValue(objectFieldName.value);
 	});
@@ -31,8 +31,8 @@ const getUnmappedFormFields = (formFields) => {
 const getUnmappedRequiredObjectFields = (formFields, objectFields) => {
 	const requiredObjectFields = objectFields.filter(({required}) => required);
 	const formFieldNames = formFields
-		.map(({settingsContext}) => {
-			const objectFieldName = getObjectFieldName(settingsContext);
+		.map((field) => {
+			const objectFieldName = getObjectFieldName(field);
 
 			return objectFieldName && getSelectedValue(objectFieldName.value);
 		})

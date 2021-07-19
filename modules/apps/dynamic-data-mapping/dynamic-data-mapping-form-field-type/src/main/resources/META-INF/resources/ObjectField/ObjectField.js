@@ -61,8 +61,8 @@ const ObjectField = ({
 
 		if (filteredObjectFields.length) {
 			const mappedFields = getFields(pages)
-				.map(({settingsContext}) => {
-					const objectFieldName = getObjectFieldName(settingsContext);
+				.map((field) => {
+					const objectFieldName = getObjectFieldName(field);
 
 					return (
 						objectFieldName &&
@@ -71,13 +71,11 @@ const ObjectField = ({
 				})
 				.filter(Boolean);
 
-			return filteredObjectFields.map(({name}) => {
-				return {
-					disabled: !!mappedFields.includes(name),
-					label: name,
-					value: name,
-				};
-			});
+			return filteredObjectFields.map(({name}) => ({
+				disabled: !!mappedFields.includes(name),
+				label: name,
+				value: name,
+			}));
 		}
 		else {
 			const emptyStateMessage = Liferay.Language.get(

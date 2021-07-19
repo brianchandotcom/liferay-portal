@@ -105,7 +105,11 @@ export const getSelectedValue = (value) => {
 	return value[0];
 };
 
-export const getObjectFieldName = (settingsContext) => {
+export const getObjectFieldName = ({settingsContext}) => {
+	if (settingsContext.type === 'fieldset') {
+		return;
+	}
+
 	const getFieldsByColumn = (settingsContext, columnTitle) => {
 		const column = ({title}) => title.toLowerCase() === columnTitle;
 

@@ -88,6 +88,10 @@ public class LayoutCrawler {
 		HttpGet httpGet = new HttpGet(
 			_portal.getLayoutFullURL(layout, themeDisplay));
 
+		String companyVirtualHost = company.getVirtualHostname();
+
+		httpGet.setHeader("Host", companyVirtualHost);
+
 		HttpClientContext httpClientContext = new HttpClientContext();
 
 		CookieStore cookieStore = new BasicCookieStore();

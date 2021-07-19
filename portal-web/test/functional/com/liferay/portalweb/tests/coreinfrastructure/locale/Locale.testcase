@@ -380,32 +380,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134072. View the Home page when start up with Spanish as the default instance language."
 	@priority = "5"
 	test RestrictDefaultLocale {
 		property custom.properties = "company.default.locale=es_ES";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Locale#RestrictDefaultLocale";
 
-		User.firstLoginPG(
-			localization = "ES",
-			localizedAgree = "Acepto",
-			localizedAnswer = "Respuesta",
-			localizedSaveButton = "Guardar");
+		task ("Sign in") {
+			User.firstLoginPG(
+				localization = "ES",
+				localizedAgree = "Acepto",
+				localizedAnswer = "Respuesta",
+				localizedSaveButton = "Guardar");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuración",
-			panel = "Panel de control",
-			portlet = "Configuración de instancia");
+		task ("View the Home page is localized") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Bienvenido a Liferay");
 
-		PortalSettings.viewCurrentDefaultPortalLanguageCP(
-			defaultPortalLanguage = "español (España)",
-			localizationTranslation = "Localización");
+			AssertVisible(
+				id = "image-square",
+				key_image = "tree.png",
+				key_imageDescription = "Responsive Image",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("View the instance settings is localized") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuración",
+				panel = "Panel de control",
+				portlet = "Configuración de instancia");
 
-		LexiconEntry.gotoAddMenuItem(menuItem = "Contenido web básico");
+			PortalSettings.viewCurrentDefaultPortalLanguageCP(
+				defaultPortalLanguage = "español (España)",
+				localizationTranslation = "Localización");
+		}
 
-		PortletEntry.viewLocale(locale = "es-ES");
+		task ("View the web content section is localized") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Contenido web básico");
+
+			PortletEntry.viewLocale(locale = "es-ES");
+		}
 	}
 
 	@priority = "4"

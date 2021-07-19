@@ -24,6 +24,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.application.list.ObjectDefinitionPanelApp;
 import com.liferay.object.web.internal.frontend.taglib.clay.data.set.view.table.ObjectDefinitionTableClayDataSetDisplayView;
 import com.liferay.object.web.internal.portlet.ObjectDefinitionPortlet;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -54,7 +55,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		String restContextPath = objectDefinition.getRESTContextPath();
 
-		if (_companyLocalService.getCompaniesCount() > 1) {
+		if ((_companyLocalService.getCompaniesCount() > 1) &&
+			(objectDefinition.getCompanyId() !=
+				_portalInstancesLocalService.getDefaultCompanyId())) {
+
 			String companyName = "o_" + objectDefinition.getCompanyId();
 
 			try {
@@ -127,5 +131,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

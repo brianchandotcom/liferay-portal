@@ -22,6 +22,7 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectFie
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -59,7 +60,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		String namespace = "";
 		String restContextPath = objectDefinition.getRESTContextPath();
 
-		if (_companyLocalService.getCompaniesCount() > 1) {
+		if ((_companyLocalService.getCompaniesCount() > 1) &&
+			(objectDefinition.getCompanyId() !=
+				_portalInstancesLocalService.getDefaultCompanyId())) {
+
 			String companyName = "o_" + objectDefinition.getCompanyId();
 
 			try {
@@ -201,5 +205,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

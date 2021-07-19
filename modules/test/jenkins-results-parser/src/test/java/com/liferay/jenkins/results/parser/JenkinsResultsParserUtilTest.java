@@ -15,9 +15,12 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URI;
 import java.net.URL;
+
+import java.util.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -123,6 +126,44 @@ public class JenkinsResultsParserUtilTest
 			"http://test-4-1/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"http://test-4-1/ABC?123=456&xyz=abc"));
+	}
+
+	@Test
+	public void testGetProperty() throws IOException {
+		Properties properties = JenkinsResultsParserUtil.getBuildProperties();
+
+		testEquals(
+			"disable-dev-shm-usage disable-gpu password-store=basic",
+			JenkinsResultsParserUtil.getProperty(
+				properties, "portal.test.properties", "browser.chrome.bin.args",
+				"master"));
+
+		testEquals(
+			"/opt/google/chrome-stable-86/google-chrome",
+			JenkinsResultsParserUtil.getProperty(
+				properties, "portal.test.properties",
+				"browser.chrome.bin.file[86.0]", "master"));
+
+		testEquals(
+			"chrome,edge,firefox,internetexplorer,safari",
+			JenkinsResultsParserUtil.getProperty(properties, "browser.types"));
+
+		testEquals(
+			"/opt/java/zulu8",
+			JenkinsResultsParserUtil.getProperty(
+				properties, "portal.test.properties",
+				"java.jdk.home[8][x64][zulu]", "master"));
+
+		testEquals(
+			"/opt/dev/projects/github/liferay-release-tool-ee",
+			JenkinsResultsParserUtil.getProperty(
+				properties, "release.tool.dir", "7.0.x"));
+
+		testEquals(
+			"/bin/bash",
+			JenkinsResultsParserUtil.getProperty(
+				properties, "portal.build.properties", "shell.executable",
+				"master"));
 	}
 
 	@Test

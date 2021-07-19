@@ -1,10 +1,10 @@
 !/src/css/_custom.scss
 !/src/css/clay.scss
+!/src/css/solution
+!/src/WEB-INF
 *.lar
 /.web_bundle_build
 /build_gradle
 /dist
 /liferay-theme.json
 /src
-!/src/WEB-INF
-!/src/css/solution

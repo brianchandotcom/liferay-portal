@@ -62,7 +62,8 @@ public class IndexOnStartupIndexerServiceCustomizer
 		Indexer<?> indexer = _bundleContext.getService(serviceReference);
 
 		boolean indexerIndexOnStartup = GetterUtil.getBoolean(
-			serviceReference.getProperty(PropsKeys.INDEX_ON_STARTUP), true);
+			serviceReference.getProperty(PropsKeys.INDEX_ON_STARTUP),
+			GetterUtil.getBoolean(_props.get(PropsKeys.INDEX_ON_STARTUP)));
 
 		String className = indexer.getClassName();
 
@@ -84,7 +85,7 @@ public class IndexOnStartupIndexerServiceCustomizer
 
 			PortalInstanceLifecycleListener portalInstanceLifecycleListener =
 				new IndexOnStartupPortalInstanceLifecycleListener(
-					_indexWriterHelper, _props, className);
+					_indexWriterHelper, className);
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _bundleContext.registerService(

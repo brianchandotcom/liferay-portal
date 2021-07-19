@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 
 /**
  * @author Michael C. Han
@@ -32,19 +29,14 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	public IndexOnStartupPortalInstanceLifecycleListener(
-		IndexWriterHelper indexWriterHelper, Props props, String className) {
+		IndexWriterHelper indexWriterHelper, String className) {
 
 		_indexWriterHelper = indexWriterHelper;
-		_props = props;
 		_className = className;
 	}
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
-		if (!GetterUtil.getBoolean(_props.get(PropsKeys.INDEX_ON_STARTUP))) {
-			return;
-		}
-
+	public void portalInstanceRegistered(Company company) {
 		try {
 			_indexWriterHelper.reindex(
 				UserConstants.USER_ID_DEFAULT,
@@ -61,6 +53,5 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 
 	private final String _className;
 	private final IndexWriterHelper _indexWriterHelper;
-	private final Props _props;
 
 }

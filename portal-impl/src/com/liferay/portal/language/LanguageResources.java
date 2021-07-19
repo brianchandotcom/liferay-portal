@@ -167,6 +167,10 @@ public class LanguageResources {
 			PORTAL_RESOURCE_BUNDLE_LOADER);
 	}
 
+	public void destroy() {
+		_serviceTracker.close();
+	}
+
 	public void setConfig(String config) {
 		_configNames = StringUtil.split(
 			StringUtil.replace(config, CharPool.PERIOD, CharPool.SLASH));

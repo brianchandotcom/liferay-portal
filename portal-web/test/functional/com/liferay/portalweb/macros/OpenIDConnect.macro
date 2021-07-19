@@ -5,8 +5,8 @@ definition {
 			Click(locator1 = "GoogleLogin#ALLOW");
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "Button#I_AGREE")) {
-			Click(locator1 = "Button#I_AGREE");
+		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
+			SignIn.agreeToTermsOfUse();
 		}
 
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER")) {

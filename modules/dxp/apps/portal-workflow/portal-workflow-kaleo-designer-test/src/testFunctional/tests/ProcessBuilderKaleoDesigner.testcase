@@ -499,12 +499,22 @@ definition {
 	}
 
 	@description = "Verify that a pop up message is displayed when deleting Node"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaysMessageOnDeletingNode {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68454 DisplaysMessageOnDeletingNode pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
+		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+
+		ClickNoError(
+			key_nodeNodeLabel = "StartNode",
+			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DELETE_ICON");
+
+		AssertConfirm(value1 = "Are you sure you want to delete the selected node(s)?");
 	}
 
 	@description = "Verify that the Fork node must have at least two outgoing transitions."

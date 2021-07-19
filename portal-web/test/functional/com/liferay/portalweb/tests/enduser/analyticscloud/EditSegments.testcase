@@ -159,9 +159,81 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
+		ACUtils.createBlogsAndAddToPage();
 
-		// TODO LRAC-8135 CanEditStaticSegmentCheckEditSaved pending implementation
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		for (var name : list "ac,liferay") {
+			JSONUser.addUser(
+				userEmailAddress = "${name}@liferay.com",
+				userFirstName = "${name}",
+				userLastName = "${name}",
+				userScreenName = "${name}");
+		}
+
+		ACDXPSettings.syncNewContactData();
+
+		for (var name : list "ac,liferay") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${name}@liferay.com",
+				userLoginFullName = "${name} ${name}");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Pause(locator1 = "5000");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+		ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "ac ac");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Static Segment Test");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertElementPresent(
+			key_userName = "ac ac",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.editSegment(searchTerm = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "liferay liferay");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Static Segment Test");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		for (var name : list "ac,liferay") {
+			AssertElementPresent(
+				key_userName = "${name} ${name}",
+				locator1 = "ACSegments#SEGMENT_MEMBERS");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"

@@ -40,7 +40,6 @@ definition {
 	test CanCreateAccessRequest {
 
 		// TODO LRAC-8119 CanCreateAccessRequest
-
 	}
 
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"

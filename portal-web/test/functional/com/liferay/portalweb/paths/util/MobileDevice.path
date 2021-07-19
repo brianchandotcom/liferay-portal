@@ -28,12 +28,12 @@
 <!--ADD_CLASSIFICATION_RULE-->
 <tr>
 	<td>ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM</td>
-	<td>//select[contains(@id,'os')]/option[contains(.,'${key_ruleOSScope}')]</td>
+	<td>//select[contains(@id,'os')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_CLASSIFICATION_RULE_DEVICE_TYPE</td>
-	<td>//select[contains(@id,'tablet')]/option[contains(.,'${key_deviceType}')]</td>
+	<td>//select[contains(@id,'tablet')]</td>
 	<td></td>
 </tr>
 <tr>

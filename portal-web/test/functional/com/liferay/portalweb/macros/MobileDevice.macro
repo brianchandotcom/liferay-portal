@@ -18,13 +18,13 @@ definition {
 
 		Panel.expandPanel(panel = "Operating System and Type");
 
-		var key_ruleOSScope = "${ruleOSScope}";
+		AddSelection(
+			locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM",
+			value1 = "${ruleOSScope}");
 
-		Click(locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM");
-
-		var key_deviceType = "${deviceType}";
-
-		Click(locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_DEVICE_TYPE");
+		Select(
+			locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_DEVICE_TYPE",
+			value1 = "${deviceType}");
 
 		Click(locator1 = "Button#SAVE");
 

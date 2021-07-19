@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -190,22 +189,14 @@ public class DisplayPageVerticalCard
 				_layoutPageTemplateEntry.getClassName());
 
 		if (infoItemFormVariationsProvider != null) {
-			Collection<InfoItemFormVariation> infoItemFormVariations =
-				infoItemFormVariationsProvider.getInfoItemFormVariations(
-					_layoutPageTemplateEntry.getGroupId());
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					_layoutPageTemplateEntry.getGroupId(),
+					String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
 
-			for (InfoItemFormVariation infoItemFormVariation :
-					infoItemFormVariations) {
-
-				String key = infoItemFormVariation.getKey();
-
-				if (key.equals(
-						String.valueOf(
-							_layoutPageTemplateEntry.getClassTypeId()))) {
-
-					return infoItemFormVariation.getLabel(
-						_themeDisplay.getLocale());
-				}
+			if (infoItemFormVariation != null) {
+				return infoItemFormVariation.getLabel(
+					_themeDisplay.getLocale());
 			}
 		}
 

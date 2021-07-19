@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
@@ -86,20 +84,14 @@ public class DisplayPageTemplateSettingsUtil {
 			return null;
 		}
 
-		Collection<InfoItemFormVariation> infoItemFormVariations =
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				layoutPageTemplateEntry.getGroupId());
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				layoutPageTemplateEntry.getGroupId(),
+				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
-		for (InfoItemFormVariation infoItemFormVariation :
-				infoItemFormVariations) {
-
-			if (Objects.equals(
-					infoItemFormVariation.getKey(),
-					String.valueOf(layoutPageTemplateEntry.getClassTypeId()))) {
-
-				return infoItemFormVariation.getLabel(
-					dtoConverterContext.getLocale());
-			}
+		if (infoItemFormVariation != null) {
+			return infoItemFormVariation.getLabel(
+				dtoConverterContext.getLocale());
 		}
 
 		return null;

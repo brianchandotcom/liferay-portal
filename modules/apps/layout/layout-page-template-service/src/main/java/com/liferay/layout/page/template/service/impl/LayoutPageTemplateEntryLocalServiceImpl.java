@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -75,7 +74,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -872,17 +870,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			return;
 		}
 
-		Collection<InfoItemFormVariation> infoItemFormVariations =
-			infoItemFormVariationsProvider.getInfoItemFormVariations(groupId);
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				groupId, String.valueOf(classTypeId));
 
-		Stream<InfoItemFormVariation> stream = infoItemFormVariations.stream();
-
-		if (!infoItemFormVariations.isEmpty() &&
-			!stream.anyMatch(
-				infoItemFormVariation -> Objects.equals(
-					String.valueOf(classTypeId),
-					infoItemFormVariation.getKey()))) {
-
+		if (infoItemFormVariation == null) {
 			throw new NoSuchClassTypeException(
 				"Class type does not exist for class name ID " + classNameId);
 		}

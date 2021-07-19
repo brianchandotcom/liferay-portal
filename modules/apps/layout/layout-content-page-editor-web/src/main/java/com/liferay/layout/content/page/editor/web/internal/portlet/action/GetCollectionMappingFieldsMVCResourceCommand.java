@@ -35,10 +35,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collection;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -85,23 +82,11 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 				InfoItemFormVariationsProvider.class, itemType);
 
 		if (infoItemFormVariationsProvider != null) {
-			Collection<InfoItemFormVariation> infoItemFormVariations =
-				infoItemFormVariationsProvider.getInfoItemFormVariations(
-					themeDisplay.getScopeGroupId());
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					themeDisplay.getScopeGroupId(), itemSubtype);
 
-			Stream<InfoItemFormVariation> stream =
-				infoItemFormVariations.stream();
-
-			Optional<InfoItemFormVariation> infoItemFormVariationOptional =
-				stream.filter(
-					infoItemFormVariation -> Objects.equals(
-						itemSubtype, infoItemFormVariation.getKey())
-				).findFirst();
-
-			if (infoItemFormVariationOptional.isPresent()) {
-				InfoItemFormVariation infoItemFormVariation =
-					infoItemFormVariationOptional.get();
-
+			if (infoItemFormVariation != null) {
 				itemSubtypeLabel = infoItemFormVariation.getLabel(
 					themeDisplay.getLocale());
 			}

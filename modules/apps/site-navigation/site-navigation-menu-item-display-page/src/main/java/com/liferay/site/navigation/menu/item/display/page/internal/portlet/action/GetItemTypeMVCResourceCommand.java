@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 
-import java.util.Collection;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -132,19 +130,13 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 				return StringPool.BLANK;
 			}
 
-			Collection<InfoItemFormVariation> infoItemFormVariations =
-				infoItemFormVariationsProvider.getInfoItemFormVariations(
-					layoutDisplayPageObjectProvider.getGroupId());
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					layoutDisplayPageObjectProvider.getGroupId(),
+					String.valueOf(classTypeId));
 
-			for (InfoItemFormVariation infoItemFormVariation :
-					infoItemFormVariations) {
-
-				String key = infoItemFormVariation.getKey();
-
-				if (key.equals(String.valueOf(classTypeId))) {
-					return infoItemFormVariation.getLabel(
-						themeDisplay.getLocale());
-				}
+			if (infoItemFormVariation != null) {
+				return infoItemFormVariation.getLabel(themeDisplay.getLocale());
 			}
 		}
 

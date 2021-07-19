@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -295,22 +294,13 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				layoutPageTemplateEntry.getClassName());
 
 		if (infoItemFormVariationsProvider != null) {
-			Collection<InfoItemFormVariation> infoItemFormVariations =
-				infoItemFormVariationsProvider.getInfoItemFormVariations(
-					layoutPageTemplateEntry.getGroupId());
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					layoutPageTemplateEntry.getGroupId(),
+					String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
-			for (InfoItemFormVariation infoItemFormVariation :
-					infoItemFormVariations) {
-
-				String key = infoItemFormVariation.getKey();
-
-				if (key.equals(
-						String.valueOf(
-							layoutPageTemplateEntry.getClassTypeId()))) {
-
-					return infoItemFormVariation.getLabel(
-						themeDisplay.getLocale());
-				}
+			if (infoItemFormVariation != null) {
+				return infoItemFormVariation.getLabel(themeDisplay.getLocale());
 			}
 		}
 

@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.journal.model.JournalArticle;
@@ -30,11 +29,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,33 +64,13 @@ public class JournalArticleInfoItemFormVariationsProviderTest {
 				InfoItemFormVariationsProvider.class,
 				JournalArticle.class.getName());
 
-		Collection<InfoItemFormVariation> originalInfoItemFormVariations =
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				_group.getGroupId());
-
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
-		Collection<InfoItemFormVariation> actualInfoItemFormVariations =
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				_group.getGroupId());
-
-		Assert.assertEquals(
-			actualInfoItemFormVariations.toString(),
-			originalInfoItemFormVariations.size() + 1,
-			actualInfoItemFormVariations.size());
-
-		Stream<InfoItemFormVariation> stream =
-			actualInfoItemFormVariations.stream();
-
-		Optional<InfoItemFormVariation> infoItemFormVariationOptional =
-			stream.filter(
-				infoItemFormVariation -> Objects.equals(
-					infoItemFormVariation.getKey(),
-					String.valueOf(ddmStructure.getStructureId()))
-			).findFirst();
-
-		Assert.assertTrue(infoItemFormVariationOptional.isPresent());
+		Assert.assertNotNull(
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				_group.getGroupId(),
+				String.valueOf(ddmStructure.getStructureId())));
 	}
 
 	@Inject(filter = "ddm.form.deserializer.type=json")

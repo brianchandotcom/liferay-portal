@@ -36,8 +36,6 @@ import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.display.page.internal.constants.SiteNavigationMenuItemTypeDisplayPageWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -144,19 +142,14 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 				return StringPool.BLANK;
 			}
 
-			Collection<InfoItemFormVariation> infoItemFormVariations =
-				infoItemFormVariationsProvider.getInfoItemFormVariations(
-					layoutDisplayPageObjectProvider.getGroupId());
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					layoutDisplayPageObjectProvider.getGroupId(),
+					String.valueOf(getClassTypeId()));
 
-			for (InfoItemFormVariation infoItemFormVariation :
-					infoItemFormVariations) {
-
-				String key = infoItemFormVariation.getKey();
-
-				if (key.equals(String.valueOf(getClassTypeId()))) {
-					return infoItemFormVariation.getLabel(
-						_themeDisplay.getLocale());
-				}
+			if (infoItemFormVariation != null) {
+				return infoItemFormVariation.getLabel(
+					_themeDisplay.getLocale());
 			}
 		}
 

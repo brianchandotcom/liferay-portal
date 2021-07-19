@@ -47,6 +47,11 @@ public class DefaultDDMExpressionParameterAccessor
 	}
 
 	@Override
+	public String getTimeZoneId() {
+		return _getTimeZoneIdSupplier.get();
+	}
+
+	@Override
 	public long getUserId() {
 		return _getUserIdSupplier.get();
 	}
@@ -72,6 +77,7 @@ public class DefaultDDMExpressionParameterAccessor
 		() -> StringPool.BLANK;
 	private Supplier<Long> _getGroupIdSupplier = () -> 0L;
 	private Supplier<Locale> _getLocaleSupplier = () -> new Locale("pt", "BR");
+	private final Supplier<String> _getTimeZoneIdSupplier = () -> "UTC";
 	private Supplier<Long> _getUserIdSupplier = () -> 0L;
 
 }

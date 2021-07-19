@@ -52,6 +52,11 @@ public class DDMFormEvaluatorExpressionParameterAccessor
 	}
 
 	@Override
+	public String getTimeZoneId() {
+		return _ddmFormEvaluatorEvaluateRequest.getTimeZoneId();
+	}
+
+	@Override
 	public long getUserId() {
 		return _ddmFormEvaluatorEvaluateRequest.getUserId();
 	}

@@ -25,6 +25,7 @@ const baseProps = {
 		targetLanguageId: 'es_ES',
 	},
 	autoTranslateEnabled: true,
+	currentUrl: 'http://current-url',
 	getAutoTranslateURL: 'http://translation-url/auto_translate',
 	infoFieldSetEntries: [
 		{
@@ -86,7 +87,6 @@ const baseProps = {
 	targetLanguageId: 'es_ES',
 	targetLanguageIdTitle: 'es-ES',
 	translateLanguagesSelectorData: {
-		currentUrl: 'http://current-url',
 		sourceAvailableLanguages: ['en_US', 'es_ES'],
 		sourceLanguageId: 'en_US',
 		targetAvailableLanguages: [

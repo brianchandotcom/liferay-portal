@@ -83,6 +83,7 @@ const reducer = (state, action) => {
 const Translate = ({
 	aditionalFields,
 	autoTranslateEnabled = false,
+	currentUrl,
 	getAutoTranslateURL,
 	infoFieldSetEntries,
 	portletNamespace,
@@ -123,7 +124,7 @@ const Translate = ({
 	const confirmChangesBeforeReload = (parameters = {}) => {
 		const url = setURLParameters(
 			Liferay.Util.ns(portletNamespace, parameters),
-			translateLanguagesSelectorData.currentUrl
+			currentUrl
 		);
 
 		if (!state.formHasChanges) {
@@ -345,6 +346,7 @@ const Translate = ({
 
 Translate.propTypes = {
 	autoTranslateEnabled: PropTypes.bool,
+	currentUrl: PropTypes.string.isRequired,
 	getAutoTranslateURL: PropTypes.string.isRequired,
 	infoFieldSetEntries: PropTypes.arrayOf(
 		PropTypes.shape({

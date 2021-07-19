@@ -240,6 +240,8 @@ public class TranslateDisplayContext {
 		).put(
 			"autoTranslateEnabled", isAutoTranslateEnabled()
 		).put(
+			"currentUrl", PortalUtil.getCurrentCompleteURL(_httpServletRequest)
+		).put(
 			"getAutoTranslateURL", getAutoTranslateURL()
 		).put(
 			"infoFieldSetEntries", infoFieldSetEntries
@@ -383,8 +385,6 @@ public class TranslateDisplayContext {
 
 	public Map<String, Object> getTranslateLanguagesSelectorData() {
 		return HashMapBuilder.<String, Object>put(
-			"currentUrl", PortalUtil.getCurrentCompleteURL(_httpServletRequest)
-		).put(
 			"sourceAvailableLanguages", _availableSourceLanguageIds
 		).put(
 			"sourceLanguageId", _sourceLanguageId

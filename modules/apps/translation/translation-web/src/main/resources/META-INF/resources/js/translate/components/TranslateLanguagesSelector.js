@@ -18,7 +18,6 @@ import LanguageSelector from './LanguageSelector';
 
 const TranslateLanguagesSelector = ({
 	confirmChangesBeforeReload,
-	currentUrl,
 	sourceAvailableLanguages,
 	sourceLanguageId,
 	targetAvailableLanguages,

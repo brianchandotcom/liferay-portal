@@ -94,9 +94,53 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanDeleteStaticSegment {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		// TODO LRAC-8138 CanDeleteStaticSegment pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
 
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+		ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "ac ac");
+
+		ACSegments.saveSegment();
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_LABEL",
+			value1 = "STATIC SEGMENT");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.viewSegmentName(searchTerm = "Static Segment Test");
+
+		ACSegments.deleteSegment(searchTerm = "Static Segment Test");
+
+		ACSegments.viewDeletedSegmentName(searchTerm = "Static Segment Test");
 	}
 
 }

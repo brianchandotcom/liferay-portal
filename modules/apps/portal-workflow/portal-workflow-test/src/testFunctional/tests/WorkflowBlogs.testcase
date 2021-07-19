@@ -160,7 +160,7 @@ definition {
 	@description = "Verify that the user can modify the workflow of a Blog Entry"
 	@priority = "4"
 	test CanHaveDifferentBlogsWithDifferentWorkflows {
-		 property test.name.skip.portal.instance = "WorkflowBlogs#CanHaveDifferentBlogsWithDifferentWorkflows";
+		property test.name.skip.portal.instance = "WorkflowBlogs#CanHaveDifferentBlogsWithDifferentWorkflows";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

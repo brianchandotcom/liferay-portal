@@ -44,6 +44,7 @@ definition {
 	test CanNavigatesToDataSourcePage {
 
 		// TODO LRAC-8107 CanNavigatesToDataSourcePage
+
 	}
 
 	@description = "Sync Liferay Data Source Contacts"

@@ -33,6 +33,25 @@ import org.osgi.service.component.annotations.Reference;
 public class TranslationURLProviderImpl implements TranslationURLProvider {
 
 	@Override
+	public PortletURL getExportTranslationURL(
+		long groupId, long classNameId, long classPK,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				TranslationPortletKeys.TRANSLATION)
+		).setMVCRenderCommandName(
+			"/translation/export_translation"
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"classPK", classPK
+		).setParameter(
+			"groupId", groupId
+		).build();
+	}
+
+	@Override
 	public PortletURL getImportTranslationURL(
 			long groupId, long classNameId, long classPK,
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory)

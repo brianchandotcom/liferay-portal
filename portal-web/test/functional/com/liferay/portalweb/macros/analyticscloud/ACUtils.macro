@@ -130,7 +130,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		Button.clickPublish();
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",

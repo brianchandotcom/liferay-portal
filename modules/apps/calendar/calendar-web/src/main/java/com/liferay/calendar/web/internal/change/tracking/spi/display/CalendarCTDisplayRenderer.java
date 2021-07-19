@@ -20,6 +20,7 @@ import com.liferay.calendar.web.internal.util.ColorUtil;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -95,7 +96,13 @@ public class CalendarCTDisplayRenderer extends BaseCTDisplayRenderer<Calendar> {
 		).display(
 			"description", calendar.getDescription(locale)
 		).display(
-			"color", ColorUtil.toHexString(calendar.getColor())
+			"color",
+			StringBundler.concat(
+				"<span style=\"background-color: ",
+				ColorUtil.toHexString(calendar.getColor()),
+				"; display: inline-block; height: 80%; vertical-align: ",
+				"middle; width: 80%;\">&nbsp;</span>"),
+			false
 		).display(
 			"default-calendar", calendar.isDefaultCalendar()
 		).display(

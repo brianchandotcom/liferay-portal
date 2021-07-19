@@ -2289,6 +2289,7 @@ definition {
 
 	macro loginUserWithOpenIDConnectEnabledPG {
 		OpenIDConnect.accountSignIn(
+			specificURL = "${specificURL}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 

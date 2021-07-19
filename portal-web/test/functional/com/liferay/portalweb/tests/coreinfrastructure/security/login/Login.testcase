@@ -472,14 +472,10 @@ definition {
 
 		UserBar.signOut();
 
-		OpenIDConnect.accountSignIn(
+		User.loginUserWithOpenIDConnectEnabledPG(
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
-
-		OpenIDConnect.acceptConditions();
-
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 		UserBar.signOut();
 
@@ -502,8 +498,6 @@ definition {
 		var userPassword = PropsUtil.get("email.password.2");
 
 		User.firstLoginPG();
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PortalSettings.gotoConfiguration(
 			baseURL = "http://localhost:8080",
@@ -531,7 +525,6 @@ definition {
 		User.logoutPG();
 
 		User.loginUserWithOpenIDConnectEnabledPG(
-			siteName = "${siteName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 

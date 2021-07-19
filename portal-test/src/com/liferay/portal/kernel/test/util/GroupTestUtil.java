@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -32,7 +33,9 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
@@ -164,6 +167,35 @@ public class GroupTestUtil {
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
 			descriptionMap, type, manualMembership, membershipRestriction,
 			friendlyURL, site, active, serviceContext);
+	}
+
+	public static void addLayoutSetVirtualHost(
+			Group group, boolean privateLayout)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(group.getGroupKey());
+
+		if (privateLayout) {
+			sb.append("-private.");
+		}
+		else {
+			sb.append("-public.");
+		}
+
+		sb.append(RandomTestUtil.randomString(3));
+
+		LayoutSetLocalServiceUtil.updateVirtualHosts(
+			group.getGroupId(), privateLayout,
+			TreeMapBuilder.put(
+				sb.toString(), StringPool.BLANK
+			).build());
+	}
+
+	public static void addLayoutSetVirtualHosts(Group group) throws Exception {
+		addLayoutSetVirtualHost(group, true);
+		addLayoutSetVirtualHost(group, false);
 	}
 
 	public static Group deleteGroup(Group group) throws Exception {

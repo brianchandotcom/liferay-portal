@@ -2276,13 +2276,7 @@ definition {
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 
-		SelectWindow.selectWindowTopNoSPARefresh();
-
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
-			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=Terms of Use");
-
-			GoogleLogin.acceptConditions();
-		}
+		GoogleLogin.acceptConditions();
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}

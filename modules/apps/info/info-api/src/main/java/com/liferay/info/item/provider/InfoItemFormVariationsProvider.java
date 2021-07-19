@@ -17,14 +17,31 @@ package com.liferay.info.item.provider;
 import com.liferay.info.item.InfoItemFormVariation;
 
 import java.util.Collection;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author Jorge Ferrer
  */
 public interface InfoItemFormVariationsProvider<T> {
 
-	public InfoItemFormVariation getInfoItemFormVariation(
-		long groupId, String formVariationKey);
+	public default InfoItemFormVariation getInfoItemFormVariation(
+		long groupId, String formVariationKey) {
+
+		Collection<InfoItemFormVariation> infoItemFormVariations =
+			getInfoItemFormVariations(groupId);
+
+		Stream<InfoItemFormVariation> stream = infoItemFormVariations.stream();
+
+		Optional<InfoItemFormVariation> infoItemFormVariationOptional =
+			stream.filter(
+				infoItemFormVariation -> Objects.equals(
+					formVariationKey, infoItemFormVariation.getKey())
+			).findFirst();
+
+		return infoItemFormVariationOptional.orElse(null);
+	}
 
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId);

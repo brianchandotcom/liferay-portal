@@ -78,6 +78,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
@@ -4444,17 +4445,7 @@ public class JenkinsResultsParserUtil {
 		int maxOptCount = 0;
 
 		for (String propertyName : propertyNames) {
-			Matcher matcher = _propertyOptionPattern.matcher(propertyName);
-
-			Set<String> optSet = new LinkedHashSet<>();
-
-			while (matcher.find()) {
-				String opt = matcher.group("opt");
-
-				opt = Pattern.quote(opt);
-
-				optSet.add(opt.replaceAll("\\*", "\\\\E.+\\\\Q"));
-			}
+			Set<String> optSet = _getPropertyOptSet(propertyName);
 
 			if (optSet.size() > maxOptCount) {
 				maxOptCount = optSet.size();
@@ -4495,6 +4486,56 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return propertyOptRegexSets;
+	}
+
+	private static Set<String> _getPropertyOptSet(String propertyName) {
+		Set<String> propertyOptSet = new LinkedHashSet<>();
+
+		List<Integer> indices = new ArrayList<>();
+		Stack<Integer> stack = new Stack<>();
+
+		Integer start = null;
+
+		for (int i = 0; i < propertyName.length(); i++) {
+			char c = propertyName.charAt(i);
+
+			if (c == '[') {
+				stack.push(i);
+
+				if (start == null) {
+					start = i;
+
+					indices.add(start);
+				}
+			}
+
+			if (c == ']') {
+				if (start == null) {
+					continue;
+				}
+
+				stack.pop();
+
+				if (stack.isEmpty()) {
+					indices.add(i);
+
+					start = null;
+				}
+			}
+		}
+
+		for (int i = 0; i < indices.size(); i++) {
+			String opt = propertyName.substring(
+				indices.get(i) + 1, indices.get(i + 1));
+
+			opt = Pattern.quote(opt);
+
+			propertyOptSet.add(opt.replaceAll("\\*", "\\\\E.+\\\\Q"));
+
+			i++;
+		}
+
+		return propertyOptSet;
 	}
 
 	private static String _getRedactTokenKey(int index) {
@@ -4634,8 +4675,6 @@ public class JenkinsResultsParserUtil {
 		"http://(test-[0-9]+-[0-9]+)/");
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
-	private static final Pattern _propertyOptionPattern = Pattern.compile(
-		"\\[(?<opt>[^\\]]+)\\]");
 	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://(release|test).liferay.com/([0-9]+)/");

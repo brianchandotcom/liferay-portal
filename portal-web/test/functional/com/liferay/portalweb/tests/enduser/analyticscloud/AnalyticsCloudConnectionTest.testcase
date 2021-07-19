@@ -96,6 +96,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewAssetAddedByDXPDataSource {
+
 		// TODO LRAC-8128 ViewAssetAddedByDXPDataSource
 	}
 
@@ -103,6 +104,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewPageAddedByDXPDataSource {
+
 		// TODO LRAC-8127 ViewPageAddedByDXPDataSource
 	}
 

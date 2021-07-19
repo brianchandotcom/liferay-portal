@@ -164,12 +164,11 @@ definition {
 			modalDialogResult = "No Customers Selected",
 			uncheckAll = "true");
 
-		Click(
-			key_opt = "checkbox",
-			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT");
+		Select(
+			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT",
+			value1 = "checkbox");
 
-		Click(
-			key_opt = "radio",
+		Select(
 			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT",
 			value1 = "radio");
 
@@ -201,9 +200,9 @@ definition {
 	}
 
 	macro selectRowsPerPage {
-		Click(
-			key_opt = "100",
-			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_LIST");
+		Select(
+			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_LIST",
+			value1 = "100");
 
 		AssertElementPresent(
 			key_pageNum = "«",
@@ -304,7 +303,7 @@ definition {
 		if (isSet(columnName2)) {
 			KeyPress.keyDown(
 				key_pageNum = "«",
-				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON",
 				value1 = "\COMMAND");
 
 			Click(
@@ -313,7 +312,7 @@ definition {
 
 			KeyPress.keyUp(
 				key_pageNum = "«",
-				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON",
 				value1 = "\COMMAND");
 
 			AssertElementPresent(
@@ -344,7 +343,7 @@ definition {
 		if (isSet(columnName2)) {
 			KeyPress.keyDown(
 				key_pageNum = "«",
-				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON",
 				value1 = "\COMMAND");
 
 			Click(
@@ -357,7 +356,7 @@ definition {
 
 			KeyPress.keyUp(
 				key_pageNum = "«",
-				locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED",
+				locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON",
 				value1 = "\COMMAND");
 
 			AssertElementPresent(
@@ -785,12 +784,11 @@ definition {
 			key_eventText = "Received RowDeselectRangeEvent for rowIndexes=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9] Customers=[John Adams, Samuel Adams, Josiah Bartlett, Carter Braxton, Charles Carroll, Benjamin Franklin, Elbridge Gerry, John Hancock, Thomas Jefferson, Francis Lewis] in the APPLY_REQUEST_VALUES 2 phase.",
 			locator1 = "AlloyShowcase#EVENT_TABLE");
 
-		Click(
-			key_opt = "checkbox",
-			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT");
+		Select(
+			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT",
+			value1 = "checkbox");
 
-		Click(
-			key_opt = "radio",
+		Select(
 			locator1 = "AlloyShowcase#SELECTION_MODAL_SELECT",
 			value1 = "radio");
 

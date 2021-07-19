@@ -647,9 +647,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputlink/conversion");
 
-		Click(
-			key_opt = "United States",
-			locator1 = "JSFShowcase#OUTPUTLINK_SELECT");
+		Select(
+			locator1 = "JSFShowcase#OUTPUTLINK_SELECT",
+			value1 = "United States");
 
 		AssertElementPresent(
 			key_attribute = "Link to a map of United States",
@@ -977,7 +977,7 @@ definition {
 
 		Click(
 			key_opt = "April 5, 33 AD",
-			locator1 = "JSFShowcase#GENERAL_SELECT");
+			locator1 = "JSFShowcase#GENERAL_SELECT_OPTION");
 
 		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
@@ -1110,7 +1110,7 @@ definition {
 
 		Click(
 			key_opt = "April 5, 33 AD",
-			locator1 = "JSFShowcase#GENERAL_SELECT");
+			locator1 = "JSFShowcase#GENERAL_SELECT_OPTION");
 
 		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
@@ -1363,13 +1363,13 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectonemenu/conversion");
 
 		JSFShowcase.select(
-			listboxNameList = "October 31, 1517 AD",
+			oneMenuName = "October 31, 1517 AD",
 			textValue = "Oct 31, 1517 AD");
 
 		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
 
 		JSFShowcase.select(
-			listboxNameList = "July 4, 1776 AD",
+			oneMenuName = "July 4, 1776 AD",
 			textValue = "Jul 4, 1776 AD");
 
 		AssertElementNotPresent(
@@ -1383,11 +1383,11 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectonemenu/data-model");
 
 		JSFShowcase.select(
-			listboxNameList = "Compatible",
+			oneMenuName = "Compatible",
 			textValue = "1");
 
 		JSFShowcase.select(
-			listboxNameList = "Powerful Integration",
+			oneMenuName = "Powerful Integration",
 			textValue = "3");
 
 		AssertElementNotPresent(
@@ -1403,7 +1403,7 @@ definition {
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.select(
-			listboxNameList = "Compatible",
+			oneMenuName = "Compatible",
 			textValue = "1");
 
 		AssertElementNotPresent(
@@ -1417,11 +1417,11 @@ definition {
 		JSFShowcase.validateRequiredCheckbox();
 
 		JSFShowcase.select(
-			listboxNameList = "Select,Powerful Integration",
+			oneMenuName = "Powerful Integration",
 			textValue = "3");
 
 		JSFShowcase.select(
-			listboxNameList = "Select,Compatible",
+			oneMenuName = "Compatible",
 			textValue = "1");
 
 		AssertElementNotPresent(
@@ -1434,26 +1434,26 @@ definition {
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
-			listboxNameList = "Compatible",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
+			oneMenuName = "Compatible",
 			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
-			listboxNameList = "Compatible",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
+			oneMenuName = "Compatible",
 			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
-			listboxNameList = "Powerful Integration",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
+			oneMenuName = "Powerful Integration",
 			textResult = "3");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
-			listboxNameList = "Powerful Integration",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
+			oneMenuName = "Powerful Integration",
 			textResult = "3");
 
 		AssertElementNotPresent(
@@ -1469,11 +1469,11 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectonemenu/instant-ajax");
 
 		JSFShowcase.selectInstantAjax(
-			listboxNameList = "Powerful Integration",
+			oneMenuName = "Powerful Integration",
 			textValue = "3");
 
 		JSFShowcase.selectInstantAjax(
-			listboxNameList = "Compatible",
+			oneMenuName = "Compatible",
 			textValue = "1");
 
 		AssertElementNotPresent(

@@ -55,6 +55,22 @@ definition {
 		}
 	}
 
+	macro anonymizeAllEntriesinApplicationCP {
+		GDPR.filterByApplications(
+			applications = "${applications}",
+			itemsCount = "${itemsCount}");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Anonymize");
+
+		AssertConfirm(value1 = "Are you sure you want to anonymize the selected items?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro anonymizeDataViaReviewData {
 		var key_application = "${application}";
 

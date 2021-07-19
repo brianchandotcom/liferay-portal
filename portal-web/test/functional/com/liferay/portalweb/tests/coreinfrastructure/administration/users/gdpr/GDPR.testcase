@@ -261,7 +261,9 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		GDPR.anonymizeDataViaReviewData(application = "Documents and Media");
+		GDPR.anonymizeAllEntriesinApplicationCP(
+			applications = "Documents and Media",
+			itemsCount = "3");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "Documents and Media");
 

@@ -293,15 +293,17 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				InfoItemFormVariationsProvider.class,
 				layoutPageTemplateEntry.getClassName());
 
-		if (infoItemFormVariationsProvider != null) {
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					layoutPageTemplateEntry.getGroupId(),
-					String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+		if (infoItemFormVariationsProvider == null) {
+			return null;
+		}
 
-			if (infoItemFormVariation != null) {
-				return infoItemFormVariation.getLabel(themeDisplay.getLocale());
-			}
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				layoutPageTemplateEntry.getGroupId(),
+				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+
+		if (infoItemFormVariation != null) {
+			return infoItemFormVariation.getLabel(themeDisplay.getLocale());
 		}
 
 		return null;

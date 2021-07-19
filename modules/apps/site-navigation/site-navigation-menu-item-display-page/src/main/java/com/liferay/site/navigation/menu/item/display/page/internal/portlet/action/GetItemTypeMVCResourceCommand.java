@@ -113,31 +113,33 @@ public class GetItemTypeMVCResourceCommand extends BaseMVCResourceCommand {
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
-		if (infoItemFormVariationsProvider != null) {
-			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				_layoutDisplayPageProviderTracker.
-					getLayoutDisplayPageProviderByClassName(className);
+		if (infoItemFormVariationsProvider == null) {
+			return StringPool.BLANK;
+		}
 
-			if (layoutDisplayPageProvider == null) {
-				return null;
-			}
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(className);
 
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-					new InfoItemReference(className, classPK));
+		if (layoutDisplayPageProvider == null) {
+			return StringPool.BLANK;
+		}
 
-			if (layoutDisplayPageObjectProvider == null) {
-				return StringPool.BLANK;
-			}
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(className, classPK));
 
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					layoutDisplayPageObjectProvider.getGroupId(),
-					String.valueOf(classTypeId));
+		if (layoutDisplayPageObjectProvider == null) {
+			return StringPool.BLANK;
+		}
 
-			if (infoItemFormVariation != null) {
-				return infoItemFormVariation.getLabel(themeDisplay.getLocale());
-			}
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				layoutDisplayPageObjectProvider.getGroupId(),
+				String.valueOf(classTypeId));
+
+		if (infoItemFormVariation != null) {
+			return infoItemFormVariation.getLabel(themeDisplay.getLocale());
 		}
 
 		return StringPool.BLANK;

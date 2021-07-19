@@ -127,30 +127,30 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 				InfoItemFormVariationsProvider.class,
 				PortalUtil.getClassName(getClassNameId()));
 
-		if (infoItemFormVariationsProvider != null) {
-			UnicodeProperties typeSettingsUnicodeProperties =
-				new UnicodeProperties();
+		if (infoItemFormVariationsProvider == null) {
+			return StringPool.BLANK;
+		}
 
-			typeSettingsUnicodeProperties.fastLoad(
-				_siteNavigationMenuItem.getTypeSettings());
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-				_getLayoutDisplayPageObjectProvider(
-					typeSettingsUnicodeProperties);
+		typeSettingsUnicodeProperties.fastLoad(
+			_siteNavigationMenuItem.getTypeSettings());
 
-			if (layoutDisplayPageObjectProvider == null) {
-				return StringPool.BLANK;
-			}
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider(typeSettingsUnicodeProperties);
 
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					layoutDisplayPageObjectProvider.getGroupId(),
-					String.valueOf(getClassTypeId()));
+		if (layoutDisplayPageObjectProvider == null) {
+			return StringPool.BLANK;
+		}
 
-			if (infoItemFormVariation != null) {
-				return infoItemFormVariation.getLabel(
-					_themeDisplay.getLocale());
-			}
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				layoutDisplayPageObjectProvider.getGroupId(),
+				String.valueOf(getClassTypeId()));
+
+		if (infoItemFormVariation != null) {
+			return infoItemFormVariation.getLabel(_themeDisplay.getLocale());
 		}
 
 		return StringPool.BLANK;

@@ -188,16 +188,17 @@ public class DisplayPageVerticalCard
 				InfoItemFormVariationsProvider.class,
 				_layoutPageTemplateEntry.getClassName());
 
-		if (infoItemFormVariationsProvider != null) {
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					_layoutPageTemplateEntry.getGroupId(),
-					String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
+		if (infoItemFormVariationsProvider == null) {
+			return StringPool.BLANK;
+		}
 
-			if (infoItemFormVariation != null) {
-				return infoItemFormVariation.getLabel(
-					_themeDisplay.getLocale());
-			}
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				_layoutPageTemplateEntry.getGroupId(),
+				String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
+
+		if (infoItemFormVariation != null) {
+			return infoItemFormVariation.getLabel(_themeDisplay.getLocale());
 		}
 
 		return StringPool.BLANK;

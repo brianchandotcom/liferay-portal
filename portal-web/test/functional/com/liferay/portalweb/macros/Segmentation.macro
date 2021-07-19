@@ -21,6 +21,15 @@ definition {
 			value1 = "${propertyOption}");
 	}
 
+	macro assetLanguageTag {
+		Click(locator1 = "Segmentation#TRANSLATION_BUTTON");
+
+		AssertTextEquals(
+			key_locale = StringUtil.replace("${locale}", "_", "-"),
+			locator1 = "Segmentation#TRANSLATION_STATUS_TITLE",
+			value1 = "${tagName}");
+	}
+
 	macro changeCriterionConjunction {
 		Click(locator1 = "Segmentation#CRITERION_CONJUNCTION");
 
@@ -35,6 +44,14 @@ definition {
 		Select(
 			locator1 = "Segmentation#CRITERION_INPUT",
 			value1 = "${criterionInputOption}");
+	}
+
+	macro changeLocale {
+		Click(locator1 = "Segmentation#TRANSLATION_BUTTON");
+
+		Click(
+			key_locale = StringUtil.replace("${locale}", "_", "-"),
+			locator1 = "Segmentation#TRANSLATION_STATUS_TITLE");
 	}
 
 	macro checkModifiedDate {
@@ -223,6 +240,21 @@ definition {
 		Type(
 			locator1 = "Segmentation#TITLE_FIELD",
 			value1 = "${titleField}");
+	}
+
+	macro getPortalInstanceDefaultLanguageId {
+		var portalURL = PropsUtil.get("portal.url");
+		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		var curl = '''
+			${portalURL}/api/jsonws/country/get-company-countries \
+			-u test@liferay.com:test \
+			-d companyId=${companyId} \
+			-d start=0 \
+			-d end=1 \
+			-d -orderByComparator=
+		''';
+		var languageId = JSONCurlUtil.post("${curl}", "$..defaultLanguageId");
+		return "${languageId}";
 	}
 
 	macro gotoSidebar {

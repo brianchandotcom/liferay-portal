@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_TOGGLE</td>
+	<td>//label[contains(@class,'toggle-switch toggle-editing')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MEMBERS_MATCHED</td>
 	<td>//b[contains(@class,'ml-2 text-dark')]</td>
 	<td></td>
@@ -133,6 +138,26 @@
 <tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@data-testid='localized-main-input']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_READ_ONLY</td>
+	<td>//input[@data-testid='localized-main-input' and @readonly]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_BUTTON</td>
+	<td>//button[contains(@data-testid,'localized')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_STATUS_TITLE</td>
+	<td>//ul[contains(@class, 'dropdown-menu')]/li[contains(@role, 'presentation')]/descendant::span[contains(text(), '${key_locale}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_TITLE</td>
+	<td>//ul[contains(@class, 'dropdown-menu')]/li[contains(@role, 'presentation')]/descendant::span[contains(text(), '${key_locale}')]</td>
 	<td></td>
 </tr>
 <tr>

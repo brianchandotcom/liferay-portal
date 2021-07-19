@@ -1977,6 +1977,104 @@ definition {
 		}
 	}
 
+	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
+	@priority = "3"
+	test CheckDefaultLanguageTag {
+		var defaultLanguage = Segmentation.getPortalInstanceDefaultLanguageId();
+		
+		task ("Go to add segment screen") {
+			LexiconEntry.gotoAdd();
+		}	
+
+		task ("Validate tag name") {
+			Segmentation.assetLanguageTag(
+				locale = "${defaultLanguage}",
+				tagName = "Default Value");
+		}
+	}
+
+	@description = "LPS-135495 Validate if, Input title values can only be changed in edit mode."
+	@priority = "3"
+	test CheckEditableTranslatedInputTitle {
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Guest",
+				operator = "contains",
+				segmentName = "Original Segment",
+				text = "Test");
+			
+			Refresh();
+		}
+
+		task ("Create segment's translation") {
+			Segmentation.editSegment(entry = "Original Segment");
+
+			Segmentation.changeLocale(locale = "pt-BR");
+			
+			Segmentation.fillTitle(titleField = "Segmento Traduzido");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert if Titile is 'readonly' when edit toggle is disabled") {
+			LexiconEntry.gotoEntry(rowEntry = "Original Segment");
+
+			Segmentation.changeLocale(locale = "pt-BR");
+
+			AssertElementPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
+
+			Check.checkToggleSwitch(locator1 = "Segmentation#EDIT_TOGGLE");
+
+			AssertElementNotPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
+		}
+	}
+
+	@description = "LPS-135495 Validate if, The title shown in the segments list shows the value for the current user language or the value for the criteria default language."
+	@priority = "3"
+	test CheckTitleLanguageInSegmentsList {
+		task ("Create new segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Guest",
+				operator = "contains",
+				segmentName = "Original Segment",
+				text = "Test");
+			
+			Refresh();
+		}
+
+		task ("Check if default language") {
+			Segmentation.editSegment(entry = "Original Segment");
+
+			Segmentation.assetLanguageTag(
+				locale = "en-US",
+				tagName = "Default Value");
+			
+			Button.clickCancel();
+		}
+
+		task ("Create segment's translation") {
+			Segmentation.editSegment(entry = "Original Segment");
+
+			Segmentation.changeLocale(locale = "pt-BR");
+			
+			Segmentation.fillTitle(titleField = "Segmento Traduzido");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Check if title displayed is in english") {
+			AssertElementPresent(
+				key_rowEntry = "Original Segment",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+	}
+
 	@description = "Validate if the members are assigned correctly depending on the criteria selected"
 	@priority = "5"
 	@uitest

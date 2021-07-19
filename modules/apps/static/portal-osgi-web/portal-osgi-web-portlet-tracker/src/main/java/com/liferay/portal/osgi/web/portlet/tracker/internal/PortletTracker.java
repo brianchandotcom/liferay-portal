@@ -91,6 +91,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
@@ -1307,6 +1308,10 @@ public class PortletTracker
 				future.get();
 			}
 			catch (Exception exception) {
+				if (exception instanceof ExecutionException) {
+					throw new PortalException(exception.getCause());
+				}
+
 				throw new PortalException(exception);
 			}
 		}

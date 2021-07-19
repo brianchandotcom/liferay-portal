@@ -35,6 +35,332 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-135675. The user can create navigate menu items based on assets with associated display page template in staging site."
+	@priority = "4"
+	test AddDisplayPageTypeNavigationMenuItems {
+		task ("Add the first display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content DPT",
+				groupName = "Test Site Name-staging",
+				site = "false",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Display Page Content fragment to the first display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the first display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Web Content DPT");
+		}
+
+		task ("Add the second display page template for Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Blogs Entry DPT",
+				groupName = "Test Site Name-staging",
+				site = "false");
+		}
+
+		task ("Add a Display Page Content fragment to the second display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the second display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Blogs Entry DPT");
+		}
+
+		task ("Add the third display page template for Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Document DPT",
+				groupName = "Test Site Name-staging",
+				site = "false",
+				subType = "Basic Document");
+		}
+
+		task ("Add a Display Page Content fragment to the third display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the third display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Document DPT");
+		}
+
+		task ("Add the fourth display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Category DPT",
+				groupName = "Test Site Name-staging",
+				site = "false");
+		}
+
+		task ("Add a Display Page Content fragment to the fourth display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Category DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the fourth display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Category DPT");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name (Staging)",
+				site = "false");
+		}
+
+		task ("Add a document with an image") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name-staging",
+				mimeType = "image/jpeg",
+				site = "false",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add the Display Page type items in navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Navigation Menu Name");
+		}
+
+		task ("Add the Display Page items to the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Web Content Title",
+				item = "Display Page",
+				navItem = "Web Content");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Blogs Entry Title",
+				item = "Display Page",
+				navItem = "Blogs");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Document Title",
+				item = "Display Page",
+				navItem = "Documents and Media");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Category Name",
+				item = "Display Page",
+				navItem = "Categories");
+		}
+
+		task ("View the Display Page items") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
+				NavigationMenusAdmin.viewItem(itemName = "${itemName}");
+			}
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false");
+		}
+
+		task ("Select the navigation menu in Navigation Menu widget") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the items shown in Navigation Menu widget") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
+				AssertVisible(
+					key_pageName = "${itemName}",
+					locator1 = "Home#PAGE");
+			}
+		}
+
+		task ("Navigate to associated display page template via Navigation Menu widget in staging site") {
+			Click(
+				key_pageName = "Web Content Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content DPT");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+
+			Click(
+				key_pageName = "Blogs Entry Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry DPT");
+
+			AssertVisible(
+				key_entryContent = "Blogs Entry Content",
+				locator1 = "BlogsEntry#CONTENT");
+
+			Click(
+				key_pageName = "Document Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+
+			AssertVisible(
+				key_imageName = "Document_1.jpg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+
+			Click(
+				key_pageName = "Category Name",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+				value1 = "Category Name");
+		}
+
+		task ("Publish to live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Navigate to live site") {
+			Navigator.openStagingSiteURL(siteName = "Test Site Name");
+
+			ProductMenu.gotoLiveSite();
+		}
+
+		task ("Navigate to associated display page template via Navigation Menu widget in live site") {
+			Click(
+				key_pageName = "Web Content Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content DPT");
+
+			AssertVisible(
+				key_tab = "Live",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+
+			Click(
+				key_pageName = "Blogs Entry Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry DPT");
+
+			AssertVisible(
+				key_tab = "Live",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			AssertVisible(
+				key_entryContent = "Blogs Entry Content",
+				locator1 = "BlogsEntry#CONTENT");
+
+			Click(
+				key_pageName = "Document Title",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+
+			AssertVisible(
+				key_tab = "Live",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			AssertVisible(
+				key_imageName = "Document_1.jpg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+
+			Click(
+				key_pageName = "Category Name",
+				locator1 = "Home#PAGE");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+
+			AssertVisible(
+				key_tab = "Live",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+				value1 = "Category Name");
+		}
+	}
+
 	@description = "The user can edit the navigation menus in the staging site but cannot in the live site."
 	@priority = "5"
 	@uitest

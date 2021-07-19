@@ -39,7 +39,7 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 			<commerce-ui:panel
 				title='<%= LanguageUtil.get(request, "diagram-settings") %>'
 			>
-				<aui:select bean="<%= cpDefinitionDiagramSetting %>" label="type" model="<%= CPDefinitionDiagramSetting.class %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "selectType();" %>'>
+				<aui:select bean="<%= cpDefinitionDiagramSetting %>" label="type" model="<%= CPDefinitionDiagramSetting.class %>" name="type">
 
 					<%
 					for (CPDefinitionDiagramType curCPDefinitionDiagramType : cpDefinitionDiagramSettingDisplayContext.getCPDefinitionDiagramTypes()) {
@@ -70,23 +70,13 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 	</aui:form>
 </div>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectType',
-		() => {
-			var A = AUI();
-
-			var type = A.one('#<portlet:namespace />type').val();
-
-			var portletURL = new Liferay.PortletURL.createURL(
-				'<%= currentURLObj %>'
-			);
-
-			portletURL.setParameter('type', type);
-
-			window.location.replace(portletURL.toString());
-		},
-		['liferay-portlet-url']
-	);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"currentURL", currentURL
+		).put(
+			"selectType", liferayPortletResponse.getNamespace() + "selectType"
+		).build()
+	%>'
+	module="js/edit_cp_definition_diagram_setting"
+/>

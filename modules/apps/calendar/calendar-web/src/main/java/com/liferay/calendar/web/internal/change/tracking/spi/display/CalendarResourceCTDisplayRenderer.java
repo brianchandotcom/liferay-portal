@@ -105,7 +105,11 @@ public class CalendarResourceCTDisplayRenderer
 				Calendar defaultCalendar =
 					calendarResource.getDefaultCalendar();
 
-				return defaultCalendar.getName(locale);
+				if (defaultCalendar != null) {
+					return defaultCalendar.getName(locale);
+				}
+
+				return null;
 			}
 		);
 	}

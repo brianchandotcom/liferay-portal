@@ -424,9 +424,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 								<param name="todir" value="lib/development" />
 							</antcall>
 
-							<local name="test.app.server.lib.portal.dir" />
-
-							<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
+							<get-test-app-server-lib-portal-dir />
 
 							<antcall inheritall="false" target="copy-optional-jars">
 								<param name="database.type" value="@{database.type}" />
@@ -1827,7 +1825,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
 								</gradle-execute>
 
-								<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
+								<get-test-app-server-lib-portal-dir />
 
 								<unzip
 									dest="portal-impl/classes"
@@ -3048,7 +3046,7 @@ log.sanitizer.enabled=false</echo>
 								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
 							</gradle-execute>
 
-							<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
+							<get-test-app-server-lib-portal-dir />
 
 							<unzip
 								dest="portal-impl/classes"

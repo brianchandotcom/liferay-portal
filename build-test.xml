@@ -1068,6 +1068,23 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-app-server-lib-portal-dir">
+		<sequential>
+			<var name="test.app.server.lib.portal.dir" unset="true" />
+
+			<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
+
+			<if>
+				<not>
+					<available file="${test.app.server.lib.portal.dir}/portal-impl.jar" />
+				</not>
+				<then>
+					<propertycopy from="app.server.${app.server.type}.shielded-container-lib.portal.dir" name="test.app.server.lib.portal.dir" override="true" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-case-properties-content">
 		<attribute default="batch-jdk8" name="test.batch.name" />
 
@@ -2016,6 +2033,8 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 			<get-database-property property.name="database.schema" />
 			<get-database-property property.name="database.username" />
 
+			<get-test-app-server-lib-portal-dir />
+
 			<if>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<then>
@@ -2123,7 +2142,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 									<equals arg1="${database.type}" arg2="mysql" />
 									<then>
 										<copy
-											file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}"
+											file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}"
 											tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
 										/>
 
@@ -2164,7 +2183,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 										<equals arg1="${database.type}" arg2="mariadb" />
 										<then>
 											<copy
-												file="${app.server.lib.portal.dir}/${jdbc.mariadb.driver}"
+												file="${test.app.server.lib.portal.dir}/${jdbc.mariadb.driver}"
 												tofile="${app.server.lib.global.dir}/${jdbc.mariadb.driver}"
 											/>
 
@@ -2234,7 +2253,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 					</and>
 					<then>
 						<copy
-							file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}"
+							file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}"
 							tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
 						/>
 
@@ -2293,7 +2312,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 					</and>
 					<then>
 						<copy
-							file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}"
+							file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}"
 							tofile="${app.server.lib.global.dir}/${jdbc.mysql.driver}"
 						/>
 
@@ -3811,6 +3830,7 @@ tell application "Safari" to quit
 					<var name="app.server.instance.dir" value="${app.server.dir}/standalone" />
 					<var name="app.server.lib.global.dir" value="${app.server.dir}/modules/com/liferay/portal/main" />
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/lib/" />
+					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/shielded-container-lib/" />
 					<var name="app.server.zip.url" value="http://developers.redhat.com/download-manager/file/${app.server.zip.name}" />
 				</then>
 			</if>
@@ -3825,6 +3845,7 @@ tell application "Safari" to quit
 					<var name="app.server.classes.portal.dir" value="${app.server.dir}/webapps/ROOT/WEB-INF/classes" />
 					<var name="app.server.lib.global.dir" value="${app.server.dir}/lib/ext" />
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/webapps/ROOT/WEB-INF/lib/" />
+					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/webapps/ROOT/WEB-INF/shielded-container-lib/" />
 					<var name="app.server.zip.url" value="http://archive.apache.org/dist/tomcat/tomcat-9/v@{app.server.version}/bin/${app.server.zip.name}" />
 				</then>
 			</if>
@@ -3839,6 +3860,7 @@ tell application "Safari" to quit
 					<var name="app.server.classes.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/classes/" />
 					<var name="app.server.lib.global.dir" value="${app.server.dir}/modules/com/liferay/portal/main" />
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/lib/" />
+					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/shielded-container-lib/" />
 
 					<propertyregex
 						input="@{app.server.version}"
@@ -3863,6 +3885,7 @@ tell application "Safari" to quit
 					<var name="app.server.instance.dir" value="${app.server.dir}/domains/liferay" />
 					<var name="app.server.lib.global.dir" value="${app.server.dir}/domains/liferay/lib" />
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/domains/liferay/autodeploy/ROOT/WEB-INF/lib/" />
+					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/domains/liferay/autodeploy/ROOT/WEB-INF/shielded-container-lib/" />
 
 					<propertyregex
 						input="@{app.server.version}"
@@ -3887,6 +3910,7 @@ tell application "Safari" to quit
 					<var name="app.server.instance.dir" value="${app.server.dir}/profiles/liferay" />
 					<var name="app.server.lib.global.dir" value="${app.server.dir}/modules/com/liferay/portal/main" />
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/lib/" />
+					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/shielded-container-lib/" />
 				</then>
 			</if>
 
@@ -3901,6 +3925,7 @@ tell application "Safari" to quit
 					<var name="app.server.instance.dir" value="${app.server.dir}/standalone" />
 					<var name="app.server.lib.global.dir" value="${app.server.dir}/modules/com/liferay/portal/main" />
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/lib/" />
+					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/shielded-container-lib/" />
 					<var name="app.server.zip.url" value="http://download.jboss.org/wildfly/@{app.server.version}.Final/${app.server.zip.name}" />
 				</then>
 			</if>
@@ -3920,6 +3945,7 @@ tell application "Safari" to quit
 				app.server.@{app.server.type}.classes.portal.dir=${app.server.classes.portal.dir}
 				app.server.@{app.server.type}.lib.global.dir=${app.server.lib.global.dir}
 				app.server.@{app.server.type}.lib.portal.dir=${app.server.lib.portal.dir}
+				app.server.@{app.server.type}.shielded-container-lib.portal.dir=${app.server.shielded-container-lib.portal.dir}
 				app.server.@{app.server.type}.version=@{app.server.version}
 			</echo>
 
@@ -6940,6 +6966,8 @@ go</echo>
 	<target name="copy-optional-jars">
 		<get-database-property property.name="database.version" />
 
+		<get-test-app-server-lib-portal-dir />
+
 		<if>
 			<and>
 				<equals arg1="${database.type}" arg2="db2" />
@@ -6947,7 +6975,7 @@ go</echo>
 			<then>
 				<delete failonerror="false" includeemptydirs="true">
 					<fileset
-						dir="${app.server.lib.portal.dir}"
+						dir="${test.app.server.lib.portal.dir}"
 						includes="${jdbc.db2.driver}"
 					/>
 				</delete>
@@ -6998,7 +7026,7 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="mariadb" />
 					<not>
-						<available file="${app.server.lib.portal.dir}/${jdbc.mariadb.driver}" />
+						<available file="${test.app.server.lib.portal.dir}/${jdbc.mariadb.driver}" />
 					</not>
 				</and>
 				<then>
@@ -7016,7 +7044,7 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="mysql" />
 					<not>
-						<available file="${app.server.lib.portal.dir}/${jdbc.mysql.driver}" />
+						<available file="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" />
 					</not>
 				</and>
 				<then>
@@ -7037,7 +7065,7 @@ go</echo>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
 						<fileset
-							dir="${app.server.lib.portal.dir}"
+							dir="${test.app.server.lib.portal.dir}"
 							includes="${jdbc.oracle.driver}"
 						/>
 					</delete>
@@ -7052,7 +7080,7 @@ go</echo>
 				<and>
 					<equals arg1="${database.type}" arg2="postgresql" />
 					<not>
-						<available file="${app.server.lib.portal.dir}/${jdbc.postgresql.driver}" />
+						<available file="${test.app.server.lib.portal.dir}/${jdbc.postgresql.driver}" />
 					</not>
 				</and>
 				<then>
@@ -7071,7 +7099,7 @@ go</echo>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
 						<fileset
-							dir="${app.server.lib.portal.dir}"
+							dir="${test.app.server.lib.portal.dir}"
 							includes="${jdbc.sqlserver.driver}"
 						/>
 					</delete>
@@ -7089,7 +7117,7 @@ go</echo>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
 						<fileset
-							dir="${app.server.lib.portal.dir}"
+							dir="${test.app.server.lib.portal.dir}"
 							includes="${jdbc.sybase.driver}"
 						/>
 					</delete>
@@ -8032,7 +8060,9 @@ virtualHostname="localhost"
 			srcfile="${mysql.input.file}"
 		/>
 
-		<sql classpath="${app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
+		<get-test-app-server-lib-portal-dir />
+
+		<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
 			<![CDATA[
 				${mysql.statement}
 			]]>
@@ -12531,6 +12561,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 		<get-database-property property.name="database.docker.image" />
 
+		<get-test-app-server-lib-portal-dir />
+
 		<if>
 			<isset property="database.docker.image" />
 			<then>
@@ -12833,7 +12865,7 @@ go</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
-							<sql classpath="${app.server.lib.portal.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
+							<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
 								<![CDATA[
 									drop user lportal cascade;
 									select directory_name, directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
@@ -13645,8 +13677,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-test-app-server-lib-portal-dir />
+
 		<antcall inheritAll="false" target="copy-optional-jars">
-			<param name="todir" value="${app.server.lib.portal.dir}" />
+			<param name="todir" value="${test.app.server.lib.portal.dir}" />
 		</antcall>
 
 		<get-testcase-property property.name="index.search.spell.checker.enabled" />

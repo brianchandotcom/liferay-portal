@@ -23,6 +23,7 @@ import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -30,13 +31,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -164,7 +163,8 @@ public class CalendarBookingCTDisplayRenderer
 					calendarBooking.getChildCalendarBookings();
 
 				if (!childCalendarBookings.isEmpty()) {
-					List<String> calendarResourcesNames = new ArrayList<>();
+					StringBundler sb = new StringBundler(
+						2 * childCalendarBookings.size());
 
 					for (CalendarBooking childCalendarBooking :
 							childCalendarBookings) {
@@ -172,12 +172,14 @@ public class CalendarBookingCTDisplayRenderer
 						CalendarResource calendarResource =
 							childCalendarBooking.getCalendarResource();
 
-						calendarResourcesNames.add(
-							calendarResource.getName(locale));
+						sb.append(calendarResource.getName(locale));
+
+						sb.append(StringPool.COMMA_AND_SPACE);
 					}
 
-					return StringUtil.merge(
-						calendarResourcesNames, StringPool.COMMA_AND_SPACE);
+					sb.setIndex(sb.index() - 1);
+
+					return sb.toString();
 				}
 
 				return null;

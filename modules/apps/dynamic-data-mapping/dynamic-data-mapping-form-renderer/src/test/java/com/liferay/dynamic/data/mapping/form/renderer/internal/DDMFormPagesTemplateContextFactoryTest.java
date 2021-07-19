@@ -45,6 +45,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -109,7 +110,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		setUpCalendarFactoryUtil();
@@ -1076,12 +1077,13 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		htmlUtil.setHtml(new HtmlImpl());
 	}
 
-	protected void setUpHttpServletRequest() {
+	protected void setUpHttpServletRequest() throws Exception {
 		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setPathThemeImages(StringPool.BLANK);
+		themeDisplay.setUser(Mockito.mock(User.class));
 
 		when(
 			(ThemeDisplay)_httpServletRequest.getAttribute(

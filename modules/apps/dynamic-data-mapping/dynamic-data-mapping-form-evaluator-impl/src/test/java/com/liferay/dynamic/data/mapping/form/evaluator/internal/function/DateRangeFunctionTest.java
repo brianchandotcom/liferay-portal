@@ -20,9 +20,12 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.time.LocalDate;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Carolina Barbosa
@@ -34,16 +37,20 @@ public class DateRangeFunctionTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() throws Exception {
+		_setUpFutureDatesFunction();
+		_setUpPastDatesFunction();
+	}
+
 	@Test
 	public void testApplyFalse1() {
-		DateRangeFunction dateRangeFunction = new DateRangeFunction();
-
 		LocalDate todayLocalDate = LocalDate.now();
 
 		LocalDate yesterdayLocalDate = todayLocalDate.minusDays(1);
 
 		Assert.assertFalse(
-			dateRangeFunction.apply(
+			_dateRangeFunction.apply(
 				yesterdayLocalDate.toString(),
 				JSONUtil.put(
 					"endsOn", JSONUtil.put("type", "responseDate")
@@ -54,14 +61,12 @@ public class DateRangeFunctionTest {
 
 	@Test
 	public void testApplyFalse2() {
-		DateRangeFunction dateRangeFunction = new DateRangeFunction();
-
 		LocalDate todayLocalDate = LocalDate.now();
 
 		LocalDate tomorrowLocalDate = todayLocalDate.plusDays(1);
 
 		Assert.assertFalse(
-			dateRangeFunction.apply(
+			_dateRangeFunction.apply(
 				tomorrowLocalDate.toString(),
 				JSONUtil.put(
 					"endsOn", JSONUtil.put("type", "responseDate")
@@ -72,10 +77,8 @@ public class DateRangeFunctionTest {
 
 	@Test
 	public void testApplyTrue() {
-		DateRangeFunction dateRangeFunction = new DateRangeFunction();
-
 		Assert.assertTrue(
-			dateRangeFunction.apply(
+			_dateRangeFunction.apply(
 				LocalDate.now(),
 				JSONUtil.put(
 					"endsOn", JSONUtil.put("type", "responseDate")
@@ -83,5 +86,34 @@ public class DateRangeFunctionTest {
 					"startsFrom", JSONUtil.put("type", "responseDate")
 				).toString()));
 	}
+
+	private void _setUpFutureDatesFunction() throws Exception {
+		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
+
+		futureDatesFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
+
+		PowerMockito.field(
+			DateRangeFunction.class, "_futureDatesFunction"
+		).set(
+			_dateRangeFunction, futureDatesFunction
+		);
+	}
+
+	private void _setUpPastDatesFunction() throws Exception {
+		PastDatesFunction pastDatesFunction = new PastDatesFunction();
+
+		pastDatesFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
+
+		PowerMockito.field(
+			DateRangeFunction.class, "_pastDatesFunction"
+		).set(
+			_dateRangeFunction, pastDatesFunction
+		);
+	}
+
+	private final DateRangeFunction _dateRangeFunction =
+		new DateRangeFunction();
 
 }

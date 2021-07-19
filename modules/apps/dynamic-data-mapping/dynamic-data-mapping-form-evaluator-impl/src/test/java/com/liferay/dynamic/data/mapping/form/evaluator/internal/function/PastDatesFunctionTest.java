@@ -20,6 +20,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.time.LocalDate;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,16 +35,20 @@ public class PastDatesFunctionTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() throws Exception {
+		_pastDatesFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
+	}
+
 	@Test
 	public void testApplyFalse1() {
-		PastDatesFunction pastDatesFunction = new PastDatesFunction();
-
 		LocalDate todayLocalDate = LocalDate.now();
 
 		LocalDate tomorrowLocalDate = todayLocalDate.plusDays(1);
 
 		Assert.assertFalse(
-			pastDatesFunction.apply(
+			_pastDatesFunction.apply(
 				tomorrowLocalDate.toString(),
 				JSONUtil.put(
 					"endsOn", JSONUtil.put("type", "responseDate")
@@ -52,10 +57,8 @@ public class PastDatesFunctionTest {
 
 	@Test
 	public void testApplyFalse2() {
-		PastDatesFunction pastDatesFunction = new PastDatesFunction();
-
 		Assert.assertFalse(
-			pastDatesFunction.apply(
+			_pastDatesFunction.apply(
 				null,
 				JSONUtil.put(
 					"endsOn", JSONUtil.put("type", "responseDate")
@@ -64,18 +67,19 @@ public class PastDatesFunctionTest {
 
 	@Test
 	public void testApplyTrue() {
-		PastDatesFunction pastDatesFunction = new PastDatesFunction();
-
 		LocalDate todayLocalDate = LocalDate.now();
 
 		LocalDate yesterdayLocalDate = todayLocalDate.minusDays(1);
 
 		Assert.assertTrue(
-			pastDatesFunction.apply(
+			_pastDatesFunction.apply(
 				yesterdayLocalDate.toString(),
 				JSONUtil.put(
 					"endsOn", JSONUtil.put("type", "responseDate")
 				).toString()));
 	}
+
+	private final PastDatesFunction _pastDatesFunction =
+		new PastDatesFunction();
 
 }

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTemplateContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -421,11 +422,12 @@ public class DDMFormTemplateContextFactoryTest {
 		Assert.assertEquals(true, ddmFormTemplateContext.get("viewMode"));
 	}
 
-	protected void setUpThemeDisplay() {
+	protected void setUpThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setPathContext("/my/path/context/");
 		themeDisplay.setPathThemeImages("/my/theme/images/");
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}

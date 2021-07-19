@@ -20,6 +20,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.time.LocalDate;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,16 +36,20 @@ public class FutureDatesFunctionTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() throws Exception {
+		_futureDatesFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
+	}
+
 	@Test
 	public void testApplyFalse1() {
-		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
-
 		LocalDate todayLocalDate = LocalDate.now();
 
 		LocalDate yesterdayLocalDate = todayLocalDate.minusDays(1);
 
 		Assert.assertFalse(
-			futureDatesFunction.apply(
+			_futureDatesFunction.apply(
 				yesterdayLocalDate.toString(),
 				JSONUtil.put(
 					"startsFrom", JSONUtil.put("type", "responseDate")
@@ -53,10 +58,8 @@ public class FutureDatesFunctionTest {
 
 	@Test
 	public void testApplyFalse2() {
-		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
-
 		Assert.assertFalse(
-			futureDatesFunction.apply(
+			_futureDatesFunction.apply(
 				null,
 				JSONUtil.put(
 					"startsFrom", JSONUtil.put("type", "responseDate")
@@ -65,18 +68,19 @@ public class FutureDatesFunctionTest {
 
 	@Test
 	public void testApplyTrue() {
-		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
-
 		LocalDate todayLocalDate = LocalDate.now();
 
 		LocalDate tomorrowLocalDate = todayLocalDate.plusDays(1);
 
 		Assert.assertTrue(
-			futureDatesFunction.apply(
+			_futureDatesFunction.apply(
 				tomorrowLocalDate.toString(),
 				JSONUtil.put(
 					"startsFrom", JSONUtil.put("type", "responseDate")
 				).toString()));
 	}
+
+	private final FutureDatesFunction _futureDatesFunction =
+		new FutureDatesFunction();
 
 }

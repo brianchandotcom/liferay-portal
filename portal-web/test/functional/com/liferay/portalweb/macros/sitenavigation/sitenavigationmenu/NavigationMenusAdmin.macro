@@ -122,21 +122,33 @@ definition {
 				pageNames = "${pageNames}",
 				privacy = "${privacy}");
 		}
-		else if ("${item}" == "Submenu") {
+
+		if ("${item}" == "Display Page") {
+			NavigationMenusAdmin._addItemDisplayPage(
+				assetTitle = "${assetTitle}",
+				navItem = "${navItem}");
+		}
+
+		if ("${item}" == "Submenu") {
 			NavigationMenusAdmin._addItemSubmenu(submenuName = "${submenuName}");
 		}
-		else if ("${item}" == "URL") {
+
+		if ("${item}" == "URL") {
 			NavigationMenusAdmin._addItemURL(
 				target = "${target}",
 				url = "${url}",
 				urlName = "${urlName}");
 		}
 
-		MouseOver(
-			key_text = "Add",
-			locator1 = "Button#ANY");
+		if ("${item}" != "Display Page") {
+			MouseOver(
+				key_text = "Add",
+				locator1 = "Button#ANY");
 
-		Button.clickAdd();
+			Button.clickAdd();
+		}
+
+		Alert.viewSuccessMessage();
 
 		IFrame.selectTopFrame();
 	}

@@ -78,5 +78,11 @@ export default function normalizeDropdownItems(items) {
 		return null;
 	}
 
-	return addSeparators(filterEmptyGroups(items).map(spreadDataAttributes));
+	const filteredItems = filterEmptyGroups(items);
+
+	if (filteredItems.length === 0) {
+		return null;
+	}
+
+	return addSeparators(filteredItems.map(spreadDataAttributes));
 }

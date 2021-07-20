@@ -26,7 +26,3 @@
 .component-tabs .navigation-bar-light .nav-link span:focus {
 	outline: none;
 }
-
-.component-tabs img {
-	width: 100%;
-}

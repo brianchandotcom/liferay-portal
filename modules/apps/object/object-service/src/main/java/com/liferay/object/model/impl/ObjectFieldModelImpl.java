@@ -19,9 +19,11 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldModel;
+import com.liferay.object.model.ObjectFieldSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -39,10 +41,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -59,6 +63,7 @@ import java.util.function.Function;
  * @see ObjectFieldImpl
  * @generated
  */
+@JSON(strict = true)
 public class ObjectFieldModelImpl
 	extends BaseModelImpl<ObjectField> implements ObjectFieldModel {
 
@@ -153,6 +158,64 @@ public class ObjectFieldModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static ObjectField toModel(ObjectFieldSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		ObjectField model = new ObjectFieldImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
+		model.setObjectFieldId(soapModel.getObjectFieldId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setObjectDefinitionId(soapModel.getObjectDefinitionId());
+		model.setDBColumnName(soapModel.getDBColumnName());
+		model.setIndexed(soapModel.isIndexed());
+		model.setIndexedAsKeyword(soapModel.isIndexedAsKeyword());
+		model.setIndexedLanguageId(soapModel.getIndexedLanguageId());
+		model.setName(soapModel.getName());
+		model.setRequired(soapModel.isRequired());
+		model.setType(soapModel.getType());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<ObjectField> toModels(ObjectFieldSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<ObjectField> models = new ArrayList<ObjectField>(
+			soapModels.length);
+
+		for (ObjectFieldSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public ObjectFieldModelImpl() {
@@ -353,6 +416,7 @@ public class ObjectFieldModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -367,6 +431,7 @@ public class ObjectFieldModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -395,6 +460,7 @@ public class ObjectFieldModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
+	@JSON
 	@Override
 	public long getObjectFieldId() {
 		return _objectFieldId;
@@ -409,6 +475,7 @@ public class ObjectFieldModelImpl
 		_objectFieldId = objectFieldId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -433,6 +500,7 @@ public class ObjectFieldModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -463,6 +531,7 @@ public class ObjectFieldModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -482,6 +551,7 @@ public class ObjectFieldModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -496,6 +566,7 @@ public class ObjectFieldModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -516,6 +587,7 @@ public class ObjectFieldModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getObjectDefinitionId() {
 		return _objectDefinitionId;
@@ -540,6 +612,7 @@ public class ObjectFieldModelImpl
 			this.<Long>getColumnOriginalValue("objectDefinitionId"));
 	}
 
+	@JSON
 	@Override
 	public String getDBColumnName() {
 		if (_dbColumnName == null) {
@@ -559,11 +632,13 @@ public class ObjectFieldModelImpl
 		_dbColumnName = dbColumnName;
 	}
 
+	@JSON
 	@Override
 	public boolean getIndexed() {
 		return _indexed;
 	}
 
+	@JSON
 	@Override
 	public boolean isIndexed() {
 		return _indexed;
@@ -578,11 +653,13 @@ public class ObjectFieldModelImpl
 		_indexed = indexed;
 	}
 
+	@JSON
 	@Override
 	public boolean getIndexedAsKeyword() {
 		return _indexedAsKeyword;
 	}
 
+	@JSON
 	@Override
 	public boolean isIndexedAsKeyword() {
 		return _indexedAsKeyword;
@@ -597,6 +674,7 @@ public class ObjectFieldModelImpl
 		_indexedAsKeyword = indexedAsKeyword;
 	}
 
+	@JSON
 	@Override
 	public String getIndexedLanguageId() {
 		if (_indexedLanguageId == null) {
@@ -616,6 +694,7 @@ public class ObjectFieldModelImpl
 		_indexedLanguageId = indexedLanguageId;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -644,11 +723,13 @@ public class ObjectFieldModelImpl
 		return getColumnOriginalValue("name");
 	}
 
+	@JSON
 	@Override
 	public boolean getRequired() {
 		return _required;
 	}
 
+	@JSON
 	@Override
 	public boolean isRequired() {
 		return _required;
@@ -663,6 +744,7 @@ public class ObjectFieldModelImpl
 		_required = required;
 	}
 
+	@JSON
 	@Override
 	public String getType() {
 		if (_type == null) {

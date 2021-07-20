@@ -93,15 +93,15 @@ public interface UserAccountResource {
 			Long accountId, String[] strings)
 		throws Exception;
 
-	public void postAccountUserAccountsByEmailAddress(
-			Long accountId, String[] strings)
+	public Page<UserAccount> postAccountUserAccountsByEmailAddress(
+			Long accountId, String accountRoleIds, String[] strings)
 		throws Exception;
 
 	public void deleteAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception;
 
-	public void postAccountUserAccountByEmailAddress(
+	public UserAccount postAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception;
 

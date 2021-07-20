@@ -392,16 +392,25 @@ public abstract class BaseUserAccountResourceImpl
 		description = "Assigns users to an account by their email addresses"
 	)
 	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.QUERY, name = "accountRoleIds")
+		}
+	)
 	@Path("/accounts/{accountId}/user-accounts/by-email-address")
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public void postAccountUserAccountsByEmailAddress(
+	public Page<UserAccount> postAccountUserAccountsByEmailAddress(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
+			@Parameter(hidden = true) @QueryParam("accountRoleIds") String
+				accountRoleIds,
 			String[] strings)
 		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	/**
@@ -450,12 +459,14 @@ public abstract class BaseUserAccountResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "UserAccount")})
-	public void postAccountUserAccountByEmailAddress(
+	public UserAccount postAccountUserAccountByEmailAddress(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId,
 			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
 				emailAddress)
 		throws Exception {
+
+		return new UserAccount();
 	}
 
 	/**

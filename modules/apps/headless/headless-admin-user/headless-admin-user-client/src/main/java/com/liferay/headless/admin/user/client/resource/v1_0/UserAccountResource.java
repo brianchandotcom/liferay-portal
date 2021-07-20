@@ -133,13 +133,13 @@ public interface UserAccountResource {
 				Long accountId, String[] strings)
 		throws Exception;
 
-	public void postAccountUserAccountsByEmailAddress(
-			Long accountId, String[] strings)
+	public Page<UserAccount> postAccountUserAccountsByEmailAddress(
+			Long accountId, String accountRoleIds, String[] strings)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAccountUserAccountsByEmailAddressHttpResponse(
-				Long accountId, String[] strings)
+				Long accountId, String accountRoleIds, String[] strings)
 		throws Exception;
 
 	public void deleteAccountUserAccountByEmailAddress(
@@ -151,7 +151,7 @@ public interface UserAccountResource {
 				Long accountId, String emailAddress)
 		throws Exception;
 
-	public void postAccountUserAccountByEmailAddress(
+	public UserAccount postAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
 		throws Exception;
 
@@ -1266,13 +1266,13 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountUserAccountsByEmailAddress(
-				Long accountId, String[] strings)
+		public Page<UserAccount> postAccountUserAccountsByEmailAddress(
+				Long accountId, String accountRoleIds, String[] strings)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAccountUserAccountsByEmailAddressHttpResponse(
-					accountId, strings);
+					accountId, accountRoleIds, strings);
 
 			String content = httpResponse.getContent();
 
@@ -1300,7 +1300,7 @@ public interface UserAccountResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, UserAccountSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1313,7 +1313,7 @@ public interface UserAccountResource {
 
 		public HttpInvoker.HttpResponse
 				postAccountUserAccountsByEmailAddressHttpResponse(
-					Long accountId, String[] strings)
+					Long accountId, String accountRoleIds, String[] strings)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1346,6 +1346,11 @@ public interface UserAccountResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (accountRoleIds != null) {
+				httpInvoker.parameter(
+					"accountRoleIds", String.valueOf(accountRoleIds));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -1445,7 +1450,7 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountUserAccountByEmailAddress(
+		public UserAccount postAccountUserAccountByEmailAddress(
 				Long accountId, String emailAddress)
 			throws Exception {
 
@@ -1479,7 +1484,7 @@ public interface UserAccountResource {
 			}
 
 			try {
-				return;
+				return UserAccountSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(

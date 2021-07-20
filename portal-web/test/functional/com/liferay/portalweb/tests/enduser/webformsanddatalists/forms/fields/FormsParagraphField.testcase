@@ -1290,6 +1290,10 @@ definition {
 
 		FormFields.editTextBodyToolBar(
 			content = "Test",
+			optionTool = "Bold");
+
+		FormFields.editTextBodyToolBar(
+			content = "Test",
 			optionTool = "Italic");
 
 		Form.save();
@@ -1301,6 +1305,10 @@ definition {
 		Click(
 			key_textName = "Test",
 			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC");
+			
+		FormFields.editTextBodyToolBar(
+			content = "Test",
+			optionTool = "Italic");
 
 		FormFields.editTextBodyToolBar(
 			content = "Test",

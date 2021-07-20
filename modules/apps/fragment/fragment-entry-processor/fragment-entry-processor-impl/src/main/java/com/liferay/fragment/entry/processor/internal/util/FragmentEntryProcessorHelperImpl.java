@@ -281,7 +281,7 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(
+			infoItemFieldValuesProvider.getInfoFieldValue(
 				displayObjectOptional.get(),
 				jsonObject.getString("collectionFieldId"));
 
@@ -636,7 +636,7 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(
+			infoItemFieldValuesProvider.getInfoFieldValue(
 				displayObject, fieldId);
 
 		Object value = StringPool.BLANK;

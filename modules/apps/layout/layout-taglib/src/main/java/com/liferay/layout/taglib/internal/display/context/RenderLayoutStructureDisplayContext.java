@@ -368,7 +368,7 @@ public class RenderLayoutStructureDisplayContext {
 
 				if (infoItemFieldValuesProvider != null) {
 					InfoFieldValue<Object> infoItemFieldValue =
-						infoItemFieldValuesProvider.getInfoItemFieldValue(
+						infoItemFieldValuesProvider.getInfoFieldValue(
 							infoItem, mappedField);
 
 					if (infoItemFieldValue != null) {
@@ -418,7 +418,7 @@ public class RenderLayoutStructureDisplayContext {
 
 					if (infoItem != null) {
 						InfoFieldValue<Object> infoItemFieldValue =
-							infoItemFieldValuesProvider.getInfoItemFieldValue(
+							infoItemFieldValuesProvider.getInfoFieldValue(
 								infoItem, fieldId);
 
 						if (infoItemFieldValue != null) {
@@ -979,7 +979,7 @@ public class RenderLayoutStructureDisplayContext {
 
 				if (infoItemFieldValuesProvider != null) {
 					InfoFieldValue<Object> infoItemFieldValue =
-						infoItemFieldValuesProvider.getInfoItemFieldValue(
+						infoItemFieldValuesProvider.getInfoFieldValue(
 							infoItem, mappedField);
 
 					if (infoItemFieldValue != null) {
@@ -1035,7 +1035,7 @@ public class RenderLayoutStructureDisplayContext {
 
 					if (infoItem != null) {
 						InfoFieldValue<Object> infoItemFieldValue =
-							infoItemFieldValuesProvider.getInfoItemFieldValue(
+							infoItemFieldValuesProvider.getInfoFieldValue(
 								infoItem, fieldId);
 
 						if (infoItemFieldValue != null) {
@@ -1277,7 +1277,7 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(
+			infoItemFieldValuesProvider.getInfoFieldValue(
 				displayObject, collectionFieldId);
 
 		if (infoFieldValue == null) {

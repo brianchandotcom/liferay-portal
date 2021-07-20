@@ -403,7 +403,7 @@ public class PageFragmentInstanceDefinitionMapper {
 			}
 
 			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValuesProvider.getInfoItemFieldValue(
+				infoItemFieldValuesProvider.getInfoFieldValue(
 					infoItem, jsonObject.getString("fieldId"));
 
 			if (infoFieldValue == null) {

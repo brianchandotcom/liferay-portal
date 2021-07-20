@@ -128,7 +128,7 @@ public class GetInfoItemFieldValueMVCResourceCommand
 		);
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(object, fieldId);
+			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldId);
 
 		Object value = StringPool.BLANK;
 

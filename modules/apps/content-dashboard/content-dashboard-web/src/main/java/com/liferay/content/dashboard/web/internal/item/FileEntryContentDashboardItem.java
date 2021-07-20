@@ -261,7 +261,7 @@ public class FileEntryContentDashboardItem
 	@Override
 	public Object getDisplayFieldValue(String fieldName, Locale locale) {
 		InfoFieldValue<Object> infoItemFieldValue =
-			_infoItemFieldValuesProvider.getInfoItemFieldValue(
+			_infoItemFieldValuesProvider.getInfoFieldValue(
 				_fileEntry, fieldName);
 
 		if (infoItemFieldValue == null) {

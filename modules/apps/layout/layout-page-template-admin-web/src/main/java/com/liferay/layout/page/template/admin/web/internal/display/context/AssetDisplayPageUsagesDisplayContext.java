@@ -243,7 +243,7 @@ public class AssetDisplayPageUsagesDisplayContext {
 		}
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(
+			infoItemFieldValuesProvider.getInfoFieldValue(
 				infoItem, "title");
 
 		if (infoFieldValue == null) {

@@ -219,7 +219,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 					InfoItemFieldValuesProvider.class, className.getClassName())
 			).map(
 				infoItemFieldValuesProvider ->
-					infoItemFieldValuesProvider.getInfoItemFieldValue(
+					infoItemFieldValuesProvider.getInfoFieldValue(
 						layoutDisplayPageObjectProvider.getDisplayObject(),
 						"createDate")
 			).filter(
@@ -272,7 +272,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 					className.getClassName());
 
 			return (String)Optional.ofNullable(
-				infoItemFieldValuesProvider.getInfoItemFieldValue(
+				infoItemFieldValuesProvider.getInfoFieldValue(
 					layoutDisplayPageObjectProvider.getDisplayObject(), "title")
 			).filter(
 				infoFieldValue -> {

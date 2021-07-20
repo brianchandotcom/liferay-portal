@@ -99,7 +99,7 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 				InfoItemFieldValuesProvider.class, className);
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(model, "title");
+			infoItemFieldValuesProvider.getInfoFieldValue(model, "title");
 
 		return (String)infoFieldValue.getValue(locale);
 	}

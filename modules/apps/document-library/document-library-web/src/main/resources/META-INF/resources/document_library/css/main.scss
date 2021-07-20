@@ -25,6 +25,8 @@ $productMenuWidth: 320px;
 
 .portlet-document-library,
 .portlet-document-library-display {
+	@import 'document_library_preview';
+
 	.bulk-status-container {
 		height: 32px;
 		margin-bottom: -32px;

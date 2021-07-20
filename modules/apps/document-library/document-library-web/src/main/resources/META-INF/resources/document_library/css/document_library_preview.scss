@@ -1,0 +1,29 @@
+@import 'atlas-variables';
+
+@import 'upper_tbar';
+
+.preview-file-error-container {
+	margin: auto;
+	max-width: 340px;
+	padding-bottom: 5em;
+	padding-top: 10em;
+	text-align: center;
+}
+
+.sidebar-preview {
+	.sidebar-panel {
+		background-color: #fff;
+	}
+
+	@include media-breakpoint-up(sm) {
+		.panel {
+			border-color: transparent;
+		}
+	}
+
+	&.contextual-sidebar {
+		overflow-y: scroll;
+		top: auto;
+		z-index: 1;
+	}
+}

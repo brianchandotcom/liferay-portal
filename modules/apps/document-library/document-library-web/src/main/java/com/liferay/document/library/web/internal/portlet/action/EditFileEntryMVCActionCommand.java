@@ -378,9 +378,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
 		Date expirationDate = _getExpirationDate(
-			uploadPortletRequest, user.getTimeZone());
+			uploadPortletRequest, false, user.getTimeZone());
 		Date reviewDate = _getReviewDate(
-			uploadPortletRequest, user.getTimeZone());
+			uploadPortletRequest, false, user.getTimeZone());
 
 		for (String selectedFileName : selectedFileNames) {
 			_addMultipleFileEntries(
@@ -865,7 +865,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private Date _getExpirationDate(
-			UploadPortletRequest uploadPortletRequest, TimeZone timeZone)
+			UploadPortletRequest uploadPortletRequest,
+			boolean neverExpireDefaultValue, TimeZone timeZone)
 		throws PortalException {
 
 		if (!FFExpirationDateReviewDateConfigurationUtil.
@@ -875,7 +876,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		boolean neverExpire = ParamUtil.getBoolean(
-			uploadPortletRequest, "neverExpire", true);
+			uploadPortletRequest, "neverExpire", neverExpireDefaultValue);
 
 		if (!PropsValues.SCHEDULER_ENABLED || neverExpire) {
 			return null;
@@ -912,7 +913,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private Date _getReviewDate(
-			UploadPortletRequest uploadPortletRequest, TimeZone timeZone)
+			UploadPortletRequest uploadPortletRequest,
+			boolean neverReviewDefaultValue, TimeZone timeZone)
 		throws PortalException {
 
 		if (!FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled()) {
@@ -920,7 +922,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		boolean neverReview = ParamUtil.getBoolean(
-			uploadPortletRequest, "neverReview", true);
+			uploadPortletRequest, "neverReview", neverReviewDefaultValue);
 
 		if (!PropsValues.SCHEDULER_ENABLED || neverReview) {
 			return null;
@@ -1204,10 +1206,16 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			User user = _userLocalService.getUser(themeDisplay.getUserId());
 
+			boolean addDynamic = false;
+
+			if (cmd.equals(Constants.ADD_DYNAMIC)) {
+				addDynamic = true;
+			}
+
 			Date expirationDate = _getExpirationDate(
-				uploadPortletRequest, user.getTimeZone());
+				uploadPortletRequest, addDynamic, user.getTimeZone());
 			Date reviewDate = _getReviewDate(
-				uploadPortletRequest, user.getTimeZone());
+				uploadPortletRequest, addDynamic, user.getTimeZone());
 
 			ServiceContext serviceContext = _createServiceContext(
 				uploadPortletRequest);

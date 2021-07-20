@@ -377,6 +377,34 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to subscribe to a message"
+	macro subscribeToMessage {
+		Variables.assertDefined(parameterList = "${threadSubject},${groupName}");
+
+		var messageId = JSONMBMessage.getMessageIdByName(
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			threadSubject = "${threadSubject}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbmessage/subscribe-message \
+				-u ${userEmailAddress}:${userPassword} \
+				-d messageId=${messageId} \
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to update a message"
 	macro updateMessage {
 		var messageId = JSONMBMessage.getMessageIdByName(

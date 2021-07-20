@@ -68,9 +68,10 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -93,10 +94,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user-account.properties",
-	scope = ServiceScope.PROTOTYPE, service = UserAccountResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, UserAccountResource.class}
 )
 public class UserAccountResourceImpl
-	extends BaseUserAccountResourceImpl implements EntityModelResource {
+	extends BaseUserAccountResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public void deleteAccountUserAccountByEmailAddress(
@@ -230,6 +232,10 @@ public class UserAccountResourceImpl
 			_userService.getUserById(permissionChecker.getUserId()));
 	}
 
+	@NestedField(
+		parentClass = com.liferay.headless.admin.user.dto.v1_0.Organization.class,
+		value = "userAccounts"
+	)
 	@Override
 	public Page<UserAccount> getOrganizationUserAccountsPage(
 			String organizationId, String search, Filter filter,

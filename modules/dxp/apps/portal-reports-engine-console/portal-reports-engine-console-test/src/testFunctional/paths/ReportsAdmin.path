@@ -53,6 +53,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_TABLE</td>
+	<td>//div[contains(@class,'sheet-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -392,7 +392,7 @@ Sincerely,<br />
 		}
 
 		AssertTextEquals(
-			locator1 = "Message#INFO",
+			locator1 = "ReportsAdmin#EMPTY_TABLE",
 			value1 = "There are no definitions.");
 	}
 
@@ -417,8 +417,8 @@ Sincerely,<br />
 		}
 
 		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "There are no entries.");
+			locator1 = "ReportsAdmin#EMPTY_TABLE",
+			value1 = "There are no reports.");
 	}
 
 	macro tearDownSources {
@@ -441,7 +441,7 @@ Sincerely,<br />
 		}
 
 		AssertTextEquals(
-			locator1 = "Message#INFO",
+			locator1 = "ReportsAdmin#EMPTY_TABLE",
 			value1 = "There are no sources.");
 	}
 

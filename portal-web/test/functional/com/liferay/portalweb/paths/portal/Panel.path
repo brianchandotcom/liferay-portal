@@ -69,7 +69,7 @@
 </tr>
 <tr>
 	<td>ENTRY_REPORT_PARAMETERS</td>
-	<td>xpath=(//fieldset[contains(@aria-labelledby,'report-parametersTitle')]//span)[1]</td>
+	<td>//fieldset[contains(@id,'report-parameters')]//span/span[1]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -189,7 +189,7 @@ definition {
 			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
-			emailNotificationsAddress = PropsUtil.get("email.address.4"),
+			emailNotificationsAddress = PropsUtil.get("email.address.1"),
 			emailRecipientAddress = PropsUtil.get("email.address.3"),
 			reportFormat = "pdf",
 			reportsDefinitionName = "Reports Definition Name");
@@ -197,8 +197,8 @@ definition {
 		Pause(locator1 = "30000");
 
 		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"));
+			userEmailAddress = PropsUtil.get("email.address.1"),
+			userPassword = PropsUtil.get("email.password.1"));
 
 		Gmail.gotoHtmlMode();
 

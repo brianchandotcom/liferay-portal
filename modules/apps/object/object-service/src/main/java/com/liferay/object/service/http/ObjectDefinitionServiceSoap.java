@@ -83,6 +83,29 @@ public class ObjectDefinitionServiceSoap {
 	}
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
+			addCustomObjectDefinition(
+				long userId, String name,
+				com.liferay.object.model.ObjectFieldSoap[] objectFields)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectDefinition returnValue =
+				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
+					userId, name,
+					com.liferay.object.model.impl.ObjectFieldModelImpl.toModels(
+						objectFields));
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectDefinitionSoap
 			deleteObjectDefinition(long objectDefinitionId)
 		throws RemoteException {
 
@@ -139,6 +162,20 @@ public class ObjectDefinitionServiceSoap {
 		}
 	}
 
+	public static int getObjectDefinitionsCount() throws RemoteException {
+		try {
+			int returnValue =
+				ObjectDefinitionServiceUtil.getObjectDefinitionsCount();
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getObjectDefinitionsCount(long companyId)
 		throws RemoteException {
 
@@ -148,6 +185,25 @@ public class ObjectDefinitionServiceSoap {
 					companyId);
 
 			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectDefinitionSoap
+			publishCustomObjectDefinition(long userId, long objectDefinitionId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectDefinition returnValue =
+				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
+					userId, objectDefinitionId);
+
+			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

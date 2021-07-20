@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -54,6 +55,10 @@ public interface ObjectDefinitionService extends BaseService {
 	public ObjectDefinition addCustomObjectDefinition(long userId, String name)
 		throws PortalException;
 
+	public ObjectDefinition addCustomObjectDefinition(
+			long userId, String name, List<ObjectField> objectFields)
+		throws PortalException;
+
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
 		throws PortalException;
 
@@ -65,6 +70,9 @@ public interface ObjectDefinitionService extends BaseService {
 	public List<ObjectDefinition> getObjectDefinitions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectDefinitionsCount() throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectDefinitionsCount(long companyId) throws PortalException;
 
 	/**
@@ -73,5 +81,9 @@ public interface ObjectDefinitionService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ObjectDefinition publishCustomObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException;
 
 }

@@ -42,6 +42,16 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
+			long userId, String name,
+			java.util.List<com.liferay.object.model.ObjectField> objectFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.addCustomObjectDefinition(
+			userId, name, objectFields);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition deleteObjectDefinition(
 			long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,6 +76,13 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
+	public int getObjectDefinitionsCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.getObjectDefinitionsCount();
+	}
+
+	@Override
 	public int getObjectDefinitionsCount(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -80,6 +97,15 @@ public class ObjectDefinitionServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectDefinitionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			publishCustomObjectDefinition(long userId, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.publishCustomObjectDefinition(
+			userId, objectDefinitionId);
 	}
 
 	@Override

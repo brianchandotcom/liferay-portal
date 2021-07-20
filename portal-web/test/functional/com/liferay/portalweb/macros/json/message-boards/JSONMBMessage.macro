@@ -162,6 +162,10 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		var serviceContext = JSONServiceContextUtil.setServiceContext(
+			addGroupPermissions = "true",
+			addGuestPermissions = "${addGuestPermissions}");
+
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbmessage/add-message \
 				-u test@liferay.com:test \
@@ -173,6 +177,7 @@ definition {
 				-d anonymous=${anonymous} \
 				-d priority=0 \
 				-d allowPingbacks=true \
+				-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'Message' with the following info using JSONWS:");

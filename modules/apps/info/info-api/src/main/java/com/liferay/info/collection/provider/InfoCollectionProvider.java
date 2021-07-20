@@ -18,6 +18,7 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.type.Keyed;
 import com.liferay.info.type.Labeled;
 import com.liferay.petra.reflect.GenericUtil;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Jorge Ferrer
@@ -34,6 +35,10 @@ public interface InfoCollectionProvider<T> extends Keyed, Labeled {
 		Class<?> clazz = getCollectionItemClass();
 
 		return clazz.getName();
+	}
+
+	public default String getCollectionItemFormVariationKey() {
+		return StringPool.BLANK;
 	}
 
 	public default boolean isAvailable() {

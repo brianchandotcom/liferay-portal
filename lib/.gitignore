@@ -50,6 +50,7 @@
 /development/ojdbc5.jar
 /development/ojdbc6.jar
 /development/osgi-annotation-versioning.jar
+/development/osgi-core.jar
 /development/p6spy.jar
 /development/portletmvc4spring-test.jar
 /development/postgresql.jar

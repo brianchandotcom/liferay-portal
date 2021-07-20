@@ -60,9 +60,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.text.DateFormat;
@@ -87,10 +88,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/organization.properties",
-	scope = ServiceScope.PROTOTYPE, service = OrganizationResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, OrganizationResource.class}
 )
 public class OrganizationResourceImpl
-	extends BaseOrganizationResourceImpl implements EntityModelResource {
+	extends BaseOrganizationResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public void deleteOrganization(String organizationId) throws Exception {
@@ -129,6 +131,25 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		return _toOrganization(organizationId);
+	}
+
+	@NestedField(parentClass = Organization.class, value = "childOrganizations")
+	@Override
+	public Page<Organization> getOrganizationChildOrganizationsPage(
+			String organizationId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _getOrganizationsPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					"VIEW", "getOrganizationChildOrganizationsPage",
+					com.liferay.portal.kernel.model.Organization.class.
+						getName(),
+					_getServiceBuilderOrganizationId(organizationId))
+			).build(),
+			organizationId, flatten, filter, search, pagination, sorts);
 	}
 
 	@Override

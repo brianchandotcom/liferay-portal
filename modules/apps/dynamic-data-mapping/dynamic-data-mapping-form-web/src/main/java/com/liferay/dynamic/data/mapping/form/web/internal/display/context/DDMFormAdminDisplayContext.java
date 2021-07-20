@@ -1237,7 +1237,8 @@ public class DDMFormAdminDisplayContext {
 			Map<String, DDMFormField> ddmFormFieldsMap =
 				ddmForm.getDDMFormFieldsMap(false);
 
-			DDMFormField ddmFormField = ddmFormFieldsMap.get("objectDefinitionId");
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				"objectDefinitionId");
 
 			ddmFormField.setReadOnly(true);
 

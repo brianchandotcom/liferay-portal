@@ -31,7 +31,7 @@ export default (state, action) => {
 		case EVENT_TYPES.RULE.CHANGE: {
 			const {
 				loc,
-				rule: {actions, conditions, logicalOperator},
+				rule: {actions, conditions, logicalOperator, ...otherRule},
 			} = action.payload;
 			const {rules} = state;
 
@@ -41,7 +41,9 @@ export default (state, action) => {
 
 				// Compatibility with the Forms backend
 
-				'logical-operator': logicalOperator,
+				'logical-operator': otherRule['logical-operator']
+					? otherRule['logical-operator']
+					: logicalOperator,
 			});
 
 			return {

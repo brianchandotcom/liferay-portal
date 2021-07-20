@@ -14,6 +14,7 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 import com.liferay.template.web.internal.util.DDMTemplateActionDropdownItemsProvider;
 
@@ -59,8 +61,11 @@ import javax.servlet.http.HttpServletRequest;
 public class TemplateDisplayContext {
 
 	public TemplateDisplayContext(
+		DDMWebConfiguration ddmWebConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
+
+		_ddmWebConfiguration = ddmWebConfiguration;
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -196,6 +201,22 @@ public class TemplateDisplayContext {
 		return templateHandler.getName(_themeDisplay.getLocale());
 	}
 
+	public boolean isAddDDMTemplateEnable() {
+		if (!_ddmWebConfiguration.enableTemplateCreation()) {
+			return false;
+		}
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -269,6 +290,7 @@ public class TemplateDisplayContext {
 	}
 
 	private SearchContainer<DDMTemplate> _ddmTemplateSearchContainer;
+	private final DDMWebConfiguration _ddmWebConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;

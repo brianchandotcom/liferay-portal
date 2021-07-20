@@ -14,6 +14,8 @@
 
 package com.liferay.template.web.internal.portlet;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -22,19 +24,25 @@ import com.liferay.template.web.internal.display.context.TemplateDisplayContext;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
@@ -63,11 +71,21 @@ public class TemplatePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new TemplateDisplayContext(
+				_ddmWebConfiguration,
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse)));
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
+			DDMWebConfiguration.class, properties);
+	}
+
+	private volatile DDMWebConfiguration _ddmWebConfiguration;
 
 	@Reference
 	private Portal _portal;

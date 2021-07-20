@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -60,11 +59,13 @@ public class TemplateManagementToolbarDisplayContext
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<DDMTemplate> templateSearchContainer) {
+		TemplateDisplayContext templateDisplayContext) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			templateSearchContainer);
+			templateDisplayContext.getTemplateSearchContainer());
+
+		_addDDMTemplateEnable = templateDisplayContext.isAddDDMTemplateEnable();
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -112,6 +113,10 @@ public class TemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		if (!_addDDMTemplateEnable) {
+			return null;
+		}
+
 		CreationMenu creationMenu = new CreationMenu();
 
 		List<TemplateHandler> templateHandlers =
@@ -227,6 +232,7 @@ public class TemplateManagementToolbarDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateManagementToolbarDisplayContext.class);
 
+	private final boolean _addDDMTemplateEnable;
 	private final ThemeDisplay _themeDisplay;
 
 }

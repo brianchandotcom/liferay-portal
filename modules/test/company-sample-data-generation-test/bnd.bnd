@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Company Sample Data Generation Test
+Bundle-SymbolicName: com.liferay.company.sample.data.generation.test
+Bundle-Version: 1.0.0

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.company.test;
+package com.liferay.company.sample.data.generation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
@@ -228,8 +228,8 @@ public class CompanySampleDataGenerationTest {
 
 		outputDirFile.mkdir();
 
-		try (LoggingTimer loggingTimer =
-				 new LoggingTimer(outputDirFile.getAbsolutePath());
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				outputDirFile.getAbsolutePath());
 			BufferedWriter companyBufferedWriter = Files.newBufferedWriter(
 				outputDirPath.resolve("company.csv"));
 			BufferedWriter hostBufferedWriter = Files.newBufferedWriter(

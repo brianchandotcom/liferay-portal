@@ -20,7 +20,7 @@ export let accounts = [];
 
 export const accountTemplate = {
 	emailAddresses: ['email@test.com'],
-	id: 999999,
+	id: 42332,
 	logoURL: '/test-logo-folder/test.jpg',
 	name: 'TEST ACCOUNT NAME',
 };

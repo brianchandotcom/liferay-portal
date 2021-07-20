@@ -19,6 +19,7 @@ import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 import '../../../../../frontend-theme/frontend-theme-styled/src/main/resources/META-INF/resources/_styled/css/application/_account_selector.scss';
 
 launcher('account_selector', 'account-selector', {
+	channelId: 24324,
 	createNewOrderURL: '/asdasdasd',
 	currentAccount: {
 		id: 42332,

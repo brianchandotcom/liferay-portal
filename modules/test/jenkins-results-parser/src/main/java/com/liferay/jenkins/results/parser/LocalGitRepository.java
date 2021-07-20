@@ -27,6 +27,8 @@ public interface LocalGitRepository extends GitRepository {
 
 	public static final Integer COMMITS_HISTORY_SIZE_MAX = 25000;
 
+	public boolean containsSHA(String sha);
+
 	public File getDirectory();
 
 	public GitWorkingDirectory getGitWorkingDirectory();

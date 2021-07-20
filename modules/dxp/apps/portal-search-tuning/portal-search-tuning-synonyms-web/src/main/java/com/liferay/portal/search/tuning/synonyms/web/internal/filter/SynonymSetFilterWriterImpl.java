@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.filter;
 
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.OpenIndexRequest;
@@ -34,7 +35,7 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 	public void updateSynonymSets(
 		String companyIndexName, String filterName, String[] synonymSets) {
 
-		if (synonymSets.length == 0) {
+		if (ArrayUtil.isEmpty(synonymSets)) {
 			return;
 		}
 

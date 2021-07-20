@@ -117,6 +117,34 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This test asserts that a user can add additional mail host name."
+	@priority = "3"
+	test CanAddAdditionalMailHostName {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Mail Host Names",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertElementPresent(
+			key_fieldLabel = "Enter one mail host name",
+			locator1 = "FormFields#LABEL");
+
+		FormFields.editTextArea(
+			fieldName = "admin.mail.host.names",
+			fieldValue = "newhostname.com");
+
+		PortletEntry.save();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Mail Host Names",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewTextAreaValue(
+			fieldName = "admin.mail.host.names",
+			fieldValue = "newhostname.com");
+	}
+
 	@description = "This test add the contact information via appearance in Instance Configuration."
 	@priority = "3"
 	test CanAddContactInformationInInstanceConfiguration {

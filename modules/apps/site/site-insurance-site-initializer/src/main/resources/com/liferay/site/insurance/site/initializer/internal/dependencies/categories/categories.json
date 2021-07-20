@@ -1,0 +1,217 @@
+[
+	{
+		"subcategories": [
+			{
+				"description": "Provide accounting services",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1160"
+					},
+					{
+						"key": "Segment",
+						"value": "Office"
+					}
+				],
+				"title": "Accounting Services"
+			},
+			{
+				"description": "Own an apartment that has between 13 to 30 residential units",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1395"
+					},
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Apartments - Residential - 13 to 30 Units"
+			},
+			{
+				"description": "Own an apartment that has over 32 residential units",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1396"
+					},
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Apartments - Residential - 31+ Units"
+			},
+			{
+				"description": "Own an apartment that has up to 12 residential units",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1394"
+					},
+					{
+						"key": "Segment",
+						"value": "Habitational"
+					}
+				],
+				"title": "Apartments - Residential - Up to 12 Units"
+			},
+			{
+				"description": "Manufacture and distribute coffee and/or tea",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1345"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Coffee and Tea - Distribution and Manufacturing"
+			},
+			{
+				"description": "Own an establishment that primarily serves coffee and/or tea",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1280"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Coffee and Tea Shop"
+			},
+			{
+				"description": "Primarily sell flowers, plants, and gardening supplies",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1349"
+					},
+					{
+						"key": "Segment",
+						"value": "Wholesale"
+					}
+				],
+				"title": "Flower, Nursery Stock and Florist Supplies - Wholesale"
+			},
+			{
+				"description": "Primarily sell a general range of food and household products",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1283"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Grocery / Convenience Food Stores"
+			},
+			{
+				"description": "Provide dental services",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1246"
+					},
+					{
+						"key": "Segment",
+						"value": "Office"
+					}
+				],
+				"title": "Medical Offices - Dentists"
+			},
+			{
+				"description": "Primarily sell animals and a general range of animal supplies and pet acessories",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "750"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Pet Stores"
+			},
+			{
+				"description": "Provide photography services",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "753"
+					},
+					{
+						"key": "Segment",
+						"value": "Service"
+					}
+				],
+				"title": "Photographers"
+			},
+			{
+				"description": "Sell commercial and residential properties",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "815"
+					},
+					{
+						"key": "Segment",
+						"value": "Service"
+					}
+				],
+				"title": "Real Estate Agents"
+			},
+			{
+				"description": "Own an establishment with a liquor license to cook and serve meals on the premises",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1391"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Restaurants with Liquor Sales"
+			},
+			{
+				"description": "Own an establishment without a liquor license to cook and serve meals on the premises",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1389"
+					},
+					{
+						"key": "Segment",
+						"value": "Retail"
+					}
+				],
+				"title": "Restaurants without Liquor Sales"
+			},
+			{
+				"description": "Provide hospital services to animals",
+				"properties": [
+					{
+						"key": "BCC",
+						"value": "1040"
+					},
+					{
+						"key": "Segment",
+						"value": "Office"
+					}
+				],
+				"title": "Veterinarian or Veterinary Hospitals"
+			}
+		],
+		"title": "Business Class Codes (BCC)"
+	}
+]

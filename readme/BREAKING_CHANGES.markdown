@@ -494,6 +494,28 @@ This change was made to align and standarize all OAuth 2.0 constants in our code
 
 ---------------------------------------
 
+### Removed JournalArticle Content Field
+- **Date:** 2021-May-21
+- **JIRA Ticket:** [LPS-129058](https://issues.liferay.com/browse/LPS-129058)
+
+#### What changed?
+
+JournalArticle content is now stored by DDM Field services.
+
+#### Who is affected?
+
+Anyone directly setting the JournalArticle content field.
+
+#### How should I update my code?
+
+Use the new update methods in `JournalArticleLocalService` instead of setting the content field.
+
+#### Why was this change made?
+
+To make file, page and web content DDM fields easy to reference in the database without fetching and parsing the content.
+
+---------------------------------------
+
 ### Class `com.liferay.portal.kernel.util.StringBundler` has been deprecated
 - **Date:** 2021-Jun-25
 - **JIRA Ticket:** [LPS-133200](https://issues.liferay.com/browse/LPS-133200)

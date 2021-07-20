@@ -388,7 +388,7 @@ definition {
 		property test.name.skip.portal.instance = "Locale#RestrictDefaultLocale";
 
 		task ("Sign in via UI") {
-			User.firstLoginPG(
+			User.firstLoginUI(
 				localization = "ES",
 				localizedAgree = "Acepto",
 				localizedAnswer = "Respuesta",

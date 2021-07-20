@@ -35,6 +35,28 @@ public class Account implements Cloneable, Serializable {
 		return AccountSerDes.toDTO(json);
 	}
 
+	public UserAccount[] getAccountUserAccounts() {
+		return accountUserAccounts;
+	}
+
+	public void setAccountUserAccounts(UserAccount[] accountUserAccounts) {
+		this.accountUserAccounts = accountUserAccounts;
+	}
+
+	public void setAccountUserAccounts(
+		UnsafeSupplier<UserAccount[], Exception>
+			accountUserAccountsUnsafeSupplier) {
+
+		try {
+			accountUserAccounts = accountUserAccountsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected UserAccount[] accountUserAccounts;
+
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}
@@ -157,6 +179,27 @@ public class Account implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public Integer getNumberOfUsers() {
+		return numberOfUsers;
+	}
+
+	public void setNumberOfUsers(Integer numberOfUsers) {
+		this.numberOfUsers = numberOfUsers;
+	}
+
+	public void setNumberOfUsers(
+		UnsafeSupplier<Integer, Exception> numberOfUsersUnsafeSupplier) {
+
+		try {
+			numberOfUsers = numberOfUsersUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfUsers;
 
 	public Long[] getOrganizationIds() {
 		return organizationIds;

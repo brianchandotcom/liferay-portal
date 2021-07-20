@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -80,19 +81,24 @@ public interface OrganizationResource {
 	public Response putOrganizationBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<Organization> getOrganizationChildOrganizationsPage(
+			String organizationId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public void deleteUserAccountsByEmailAddress(
 			String organizationId, String[] strings)
 		throws Exception;
 
-	public void postUserAccountsByEmailAddress(
-			String organizationId, String[] strings)
+	public Page<UserAccount> postUserAccountsByEmailAddress(
+			String organizationId, String organizationRoleIds, String[] strings)
 		throws Exception;
 
 	public void deleteUserAccountByEmailAddress(
 			String organizationId, String emailAddress)
 		throws Exception;
 
-	public void postUserAccountByEmailAddress(
+	public UserAccount postUserAccountByEmailAddress(
 			String organizationId, String emailAddress)
 		throws Exception;
 

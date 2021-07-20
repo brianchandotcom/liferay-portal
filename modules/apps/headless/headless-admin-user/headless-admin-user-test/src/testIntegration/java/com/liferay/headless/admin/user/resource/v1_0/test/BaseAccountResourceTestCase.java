@@ -888,6 +888,308 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrganizationAccountsPage() throws Exception {
+		Page<Account> page = accountResource.getOrganizationAccountsPage(
+			testGetOrganizationAccountsPage_getOrganizationId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		String organizationId =
+			testGetOrganizationAccountsPage_getOrganizationId();
+		String irrelevantOrganizationId =
+			testGetOrganizationAccountsPage_getIrrelevantOrganizationId();
+
+		if (irrelevantOrganizationId != null) {
+			Account irrelevantAccount =
+				testGetOrganizationAccountsPage_addAccount(
+					irrelevantOrganizationId, randomIrrelevantAccount());
+
+			page = accountResource.getOrganizationAccountsPage(
+				irrelevantOrganizationId, null, null, Pagination.of(1, 2),
+				null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantAccount),
+				(List<Account>)page.getItems());
+			assertValid(page);
+		}
+
+		Account account1 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, randomAccount());
+
+		Account account2 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, randomAccount());
+
+		page = accountResource.getOrganizationAccountsPage(
+			organizationId, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(account1, account2), (List<Account>)page.getItems());
+		assertValid(page);
+
+		accountResource.deleteAccount(account1.getId());
+
+		accountResource.deleteAccount(account2.getId());
+	}
+
+	@Test
+	public void testGetOrganizationAccountsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String organizationId =
+			testGetOrganizationAccountsPage_getOrganizationId();
+
+		Account account1 = randomAccount();
+
+		account1 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, account1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Account> page = accountResource.getOrganizationAccountsPage(
+				organizationId, null,
+				getFilterString(entityField, "between", account1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(account1),
+				(List<Account>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrganizationAccountsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String organizationId =
+			testGetOrganizationAccountsPage_getOrganizationId();
+
+		Account account1 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, randomAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account2 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, randomAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<Account> page = accountResource.getOrganizationAccountsPage(
+				organizationId, null,
+				getFilterString(entityField, "eq", account1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(account1),
+				(List<Account>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrganizationAccountsPageWithPagination()
+		throws Exception {
+
+		String organizationId =
+			testGetOrganizationAccountsPage_getOrganizationId();
+
+		Account account1 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, randomAccount());
+
+		Account account2 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, randomAccount());
+
+		Account account3 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, randomAccount());
+
+		Page<Account> page1 = accountResource.getOrganizationAccountsPage(
+			organizationId, null, null, Pagination.of(1, 2), null);
+
+		List<Account> accounts1 = (List<Account>)page1.getItems();
+
+		Assert.assertEquals(accounts1.toString(), 2, accounts1.size());
+
+		Page<Account> page2 = accountResource.getOrganizationAccountsPage(
+			organizationId, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Account> accounts2 = (List<Account>)page2.getItems();
+
+		Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
+
+		Page<Account> page3 = accountResource.getOrganizationAccountsPage(
+			organizationId, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(account1, account2, account3),
+			(List<Account>)page3.getItems());
+	}
+
+	@Test
+	public void testGetOrganizationAccountsPageWithSortDateTime()
+		throws Exception {
+
+		testGetOrganizationAccountsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, account1, account2) -> {
+				BeanUtils.setProperty(
+					account1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrganizationAccountsPageWithSortInteger()
+		throws Exception {
+
+		testGetOrganizationAccountsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, account1, account2) -> {
+				BeanUtils.setProperty(account1, entityField.getName(), 0);
+				BeanUtils.setProperty(account2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetOrganizationAccountsPageWithSortString()
+		throws Exception {
+
+		testGetOrganizationAccountsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, account1, account2) -> {
+				Class<?> clazz = account1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						account1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						account2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						account1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						account2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						account1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						account2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetOrganizationAccountsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Account, Account, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String organizationId =
+			testGetOrganizationAccountsPage_getOrganizationId();
+
+		Account account1 = randomAccount();
+		Account account2 = randomAccount();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, account1, account2);
+		}
+
+		account1 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, account1);
+
+		account2 = testGetOrganizationAccountsPage_addAccount(
+			organizationId, account2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Account> ascPage = accountResource.getOrganizationAccountsPage(
+				organizationId, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(account1, account2),
+				(List<Account>)ascPage.getItems());
+
+			Page<Account> descPage =
+				accountResource.getOrganizationAccountsPage(
+					organizationId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(account2, account1),
+				(List<Account>)descPage.getItems());
+		}
+	}
+
+	protected Account testGetOrganizationAccountsPage_addAccount(
+			String organizationId, Account account)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetOrganizationAccountsPage_getOrganizationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetOrganizationAccountsPage_getIrrelevantOrganizationId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testPostOrganizationAccounts() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account account = testPostOrganizationAccounts_addAccount();
@@ -1026,6 +1328,16 @@ public abstract class BaseAccountResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"accountUserAccounts", additionalAssertFieldName)) {
+
+				if (account.getAccountUserAccounts() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (account.getActions() == null) {
 					valid = false;
@@ -1062,6 +1374,14 @@ public abstract class BaseAccountResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (account.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfUsers", additionalAssertFieldName)) {
+				if (account.getNumberOfUsers() == null) {
 					valid = false;
 				}
 
@@ -1181,6 +1501,19 @@ public abstract class BaseAccountResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"accountUserAccounts", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						account1.getAccountUserAccounts(),
+						account2.getAccountUserAccounts())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)account1.getActions(),
@@ -1236,6 +1569,17 @@ public abstract class BaseAccountResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						account1.getName(), account2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfUsers", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getNumberOfUsers(),
+						account2.getNumberOfUsers())) {
 
 					return false;
 				}
@@ -1370,6 +1714,11 @@ public abstract class BaseAccountResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("accountUserAccounts")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1407,6 +1756,11 @@ public abstract class BaseAccountResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("numberOfUsers")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("organizationIds")) {
@@ -1474,6 +1828,7 @@ public abstract class BaseAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				numberOfUsers = RandomTestUtil.randomInt();
 				parentAccountId = RandomTestUtil.randomLong();
 				status = RandomTestUtil.randomInt();
 			}

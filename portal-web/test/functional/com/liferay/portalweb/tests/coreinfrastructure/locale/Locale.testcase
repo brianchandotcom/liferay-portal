@@ -387,7 +387,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Locale#RestrictDefaultLocale";
 
-		task ("Sign in") {
+		task ("Sign in via UI") {
 			User.firstLoginPG(
 				localization = "ES",
 				localizedAgree = "Acepto",
@@ -395,12 +395,14 @@ definition {
 				localizedSaveButton = "Guardar");
 		}
 
-		task ("View the Home page is localized") {
+		task ("View the inline text is localized on Home page") {
 			AssertTextEquals(
 				key_fragmentName = "heading",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "Bienvenido a Liferay");
+		}
 
+		task ("View the tree page is shown on Home page") {
 			AssertVisible(
 				id = "image-square",
 				key_image = "tree.png",
@@ -408,7 +410,7 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
-		task ("View the instance settings is localized") {
+		task ("View the default instance language is Spanish") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuración",
 				panel = "Panel de control",
@@ -419,7 +421,7 @@ definition {
 				localizationTranslation = "Localización");
 		}
 
-		task ("View the web content section is localized") {
+		task ("View the default locale is es-ES in web content editor") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Contenido web básico");

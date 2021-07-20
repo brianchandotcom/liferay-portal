@@ -1339,6 +1339,7 @@ definition {
 				backgroundImageStyle = "Document_1.jpg",
 				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
 				locator2 = "outline-style",
+				position = "1",
 				value1 = "dashed");
 		}
 	}

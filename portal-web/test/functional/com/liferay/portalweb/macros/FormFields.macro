@@ -1998,10 +1998,10 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
-	macro viewValueValidationFieldNotPresent {
+	macro viewValidationValueFieldNotPresent {
 		var key_fieldLabel = "${fieldLabel}";
 
-		AssertElementNotPresent(locator1 = "FormFields#FIELD_VALIDATION_VALUE");
+		AssertElementNotPresent(locator1 = "FormFields#VALIDATION_VALUE_FIELD");
 	}
 
 }

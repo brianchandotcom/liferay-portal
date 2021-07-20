@@ -348,7 +348,7 @@ definition {
 			fieldName = "If Input",
 			selectOption = "Is an email");
 
-		FormFields.viewValueValidationFieldNotPresent(fieldLabel = "Value");
+		FormFields.viewValidationValueFieldNotPresent(fieldLabel = "Value");
 
 		FormFields.editText(
 			fieldName = "errorMessage",
@@ -405,7 +405,7 @@ definition {
 			fieldName = "If Input",
 			selectOption = "Is a URL");
 
-		FormFields.viewValueValidationFieldNotPresent(fieldLabel = "Value");
+		FormFields.viewValidationValueFieldNotPresent(fieldLabel = "Value");
 
 		FormFields.editText(
 			fieldName = "errorMessage",

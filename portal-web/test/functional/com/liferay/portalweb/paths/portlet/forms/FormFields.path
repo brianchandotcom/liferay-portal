@@ -141,9 +141,9 @@
 	<td></td>
 </tr>
 <tr>
-<td>FIELD_VALIDATION_VALUE</td>
-<td>//div[contains(@data-field-name,'validation')]//label[contains(text(),'${key_fieldLabel}')]</td>
-<td></td>
+	<td>VALIDATION_VALUE_FIELD</td>
+	<td>//div[contains(@data-field-name,'validation')]//label[contains(text(),'${key_fieldLabel}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>PREDEFINED_VALUE_INPUT</td>

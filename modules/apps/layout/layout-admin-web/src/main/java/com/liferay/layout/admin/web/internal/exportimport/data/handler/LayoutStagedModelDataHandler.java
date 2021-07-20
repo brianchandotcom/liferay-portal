@@ -1211,8 +1211,7 @@ public class LayoutStagedModelDataHandler
 		}
 
 		if (exportThemeSettings &&
-			!portletDataContext.isPerformDirectBinaryImport() &&
-			!layout.isInheritLookAndFeel()) {
+			!portletDataContext.isPerformDirectBinaryImport()) {
 
 			String css =
 				_dlReferencesExportImportContentProcessor.
@@ -1240,14 +1239,17 @@ public class LayoutStagedModelDataHandler
 				layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 			}
 
-			StagedTheme stagedTheme = new StagedThemeImpl(layout.getTheme());
+			if (!layout.isInheritLookAndFeel()) {
+				StagedTheme stagedTheme = new StagedThemeImpl(
+					layout.getTheme());
 
-			Element layoutElement = portletDataContext.getExportDataElement(
-				layout);
+				Element layoutElement = portletDataContext.getExportDataElement(
+					layout);
 
-			portletDataContext.addReferenceElement(
-				layout, layoutElement, stagedTheme,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				portletDataContext.addReferenceElement(
+					layout, layoutElement, stagedTheme,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
 		}
 	}
 

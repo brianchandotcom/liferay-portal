@@ -295,6 +295,8 @@ definition {
 	@description = "This is a test for LPS-131040 and LPS-132081. View mapped content of selected category and subcategory preview items."
 	@priority = "5"
 	test ViewMappedContentOfPreviewCategoryItem {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

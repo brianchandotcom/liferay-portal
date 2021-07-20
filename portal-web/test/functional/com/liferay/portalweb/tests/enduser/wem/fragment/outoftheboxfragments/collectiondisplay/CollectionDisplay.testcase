@@ -152,6 +152,8 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Categories for This Item into another Collection Display with a dynamic collection."
 	@priority = "5"
 	test AddCollectionDisplayWithCategoriesForThisItemToAnotherCollectionDisplayWithDynamicCollection {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -571,6 +573,8 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with a manual collection into another Collection Display with Recent Content."
 	@priority = "5"
 	test AddCollectionDisplayWithManualCollectionToAnotherCollectionDisplayWithRecentContent {
+		property portal.acceptance = "true";
+
 		task ("Add a web content,a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -876,6 +880,8 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with the Highest Rated Assets."
 	@priority = "5"
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithHighestRatedAssets {
+		property portal.acceptance = "true";
+
 		task ("Add a web content,a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -4856,6 +4862,8 @@ definition {
 	@description = "This is a test for LPS-132081. View related categories shown in display page template for non-category assets when apply Categories for This Item to Collection Display."
 	@priority = "5"
 	test ViewRelatedCategoriesInCollectionDisplayWithCategoriesForThisItem {
+		property portal.acceptance = "true";
+
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

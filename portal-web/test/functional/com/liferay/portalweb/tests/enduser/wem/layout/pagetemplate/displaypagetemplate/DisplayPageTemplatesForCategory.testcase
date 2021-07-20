@@ -539,6 +539,8 @@ definition {
 	@description = "This is a test for LPS-132081. View mapped content of assets in display page template for Category when apply the Items with This Category to Collection Display."
 	@priority = "5"
 	test ViewMappedContentInCollectionDisplayWithItemsWithThisCategory {
+		property portal.acceptance = "true";
+
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",

@@ -70,12 +70,12 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
-
 				long productEntryId = resultSet.getLong("productEntryId");
 
 				_mbMessageLocalService.deleteDiscussionMessages(
 					scProductEntryClassName, productEntryId);
+
+				long companyId = resultSet.getLong("companyId");
 
 				_subscriptionLocalService.deleteSubscriptions(
 					companyId, scProductEntryClassName, productEntryId);

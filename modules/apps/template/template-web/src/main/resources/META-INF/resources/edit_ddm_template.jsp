@@ -23,10 +23,15 @@ long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
 
 DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTemplateId);
 
+long classNameId = BeanParamUtil.getLong(ddmTemplate, request, "classNameId");
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 if (ddmTemplate != null) {
 	renderResponse.setTitle(LanguageUtil.format(request, "edit-x", HtmlUtil.escape(ddmTemplate.getName(locale))));
+}
+else {
+	renderResponse.setTitle(LanguageUtil.format(request, "add-x", HtmlUtil.escape(templateDisplayContext.getTemplateType(classNameId))));
 }
 %>

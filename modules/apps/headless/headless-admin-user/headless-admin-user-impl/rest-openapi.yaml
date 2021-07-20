@@ -343,6 +343,10 @@ components:
                                 type: string
                         type: object
                     type: array
+                userAccounts:
+                    items:
+                        $ref: "#/components/schemas/UserAccount"
+                    type: array
             type: object
         OrganizationBrief:
             description:

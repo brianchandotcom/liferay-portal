@@ -22,12 +22,24 @@ import com.liferay.info.item.InfoItemFieldValues;
  */
 public interface InfoItemFieldValuesProvider<T> {
 
-	public default InfoFieldValue<Object> getInfoItemFieldValue(
+	public default InfoFieldValue<Object> getInfoFieldValue(
 		T t, String fieldName) {
 
 		InfoItemFieldValues infoItemFieldValues = getInfoItemFieldValues(t);
 
 		return infoItemFieldValues.getInfoFieldValue(fieldName);
+	}
+
+	/**
+	 *   @deprecated As the method name does not match the interface class
+	 *   that is returned , replaced by {@link
+	 *          #getInfoFieldValue(Object, String)} ()}
+	 */
+	@Deprecated
+	public default InfoFieldValue<Object> getInfoItemFieldValue(
+		T t, String fieldName) {
+
+		return getInfoFieldValue(t, fieldName);
 	}
 
 	public InfoItemFieldValues getInfoItemFieldValues(T t);

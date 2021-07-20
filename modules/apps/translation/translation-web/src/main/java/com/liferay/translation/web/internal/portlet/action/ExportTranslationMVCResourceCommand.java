@@ -93,7 +93,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				_getInfoItemIdentifier(resourceRequest));
 
 			InfoFieldValue<Object> infoItemFieldValue =
-				infoItemFieldValuesProvider.getInfoItemFieldValue(
+				infoItemFieldValuesProvider.getInfoFieldValue(
 					object, "title");
 
 			String escapedTitle = StringUtil.removeSubstrings(

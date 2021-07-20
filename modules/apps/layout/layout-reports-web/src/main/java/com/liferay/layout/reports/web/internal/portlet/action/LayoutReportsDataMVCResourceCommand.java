@@ -349,7 +349,7 @@ public class LayoutReportsDataMVCResourceCommand
 						infoItemDetails.getClassName())
 			).map(
 				infoItemFieldValuesProvider ->
-					infoItemFieldValuesProvider.getInfoItemFieldValue(
+					infoItemFieldValuesProvider.getInfoFieldValue(
 						portletRequest.getAttribute(
 							InfoDisplayWebKeys.INFO_ITEM),
 						"title")

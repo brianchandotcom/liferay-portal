@@ -266,7 +266,7 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public Object getDisplayFieldValue(String fieldName, Locale locale) {
 		InfoFieldValue<Object> infoItemFieldValue =
-			_infoItemFieldValuesProvider.getInfoItemFieldValue(
+			_infoItemFieldValuesProvider.getInfoFieldValue(
 				_journalArticle, fieldName);
 
 		if (infoItemFieldValue == null) {

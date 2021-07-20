@@ -1,0 +1,91 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Publisher";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Site.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+		}
+	}
+
+	@description = "This is a test for LPS-124704. Asset Publisher view.jsp has potential XSS vulnerability."
+	@priority = "4"
+	@uitest
+	test ViewAssetDetailsWhenAppendXSSToURL {
+		task ("Add Multiples Web Contents based on Basic Web Content.") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content",
+					groupName = "Test Site Name",
+					title = "WC WebContent Title ${i}");
+			}
+		}
+
+		task ("Add a page with an Asset Publisher widget and display the Web Contents article in the Asset Publisher Widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Click on one of the web content titles in Asset Publisher") {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent Title ${i}");
+		}
+
+		task ("Click the back button on Asset Publisher") {
+			PageEditor.clickBack();
+		}
+
+		task ("View in URL AssetEntryId Validate") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			var assetEntryId = '''
+				${portalURL}/web/test-site-name/asset-publisher-page?assetEntryId=</script> <script> alert (1) </script>
+				''';
+
+			Navigator.openSpecificURL(url = "${assetEntryId}");
+
+			AssertAlertNotPresent();
+		}
+	}
+
+}

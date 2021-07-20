@@ -106,7 +106,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "public"
+			"key": "public-quote"
 		}
 	}
 }

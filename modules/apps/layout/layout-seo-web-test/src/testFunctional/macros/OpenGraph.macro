@@ -256,6 +256,12 @@ definition {
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 	}
 
+	macro viewNoTab {
+		AssertElementNotPresent(
+			key_panel = "Open Graph",
+			locator1 = "NavTab#TAB_LINK");
+	}
+
 	macro viewOpenGraphProperties {
 		for (var ogProperty : list "${ogPropertyList}" ) {
 			AssertHTMLSourceTextPresent(value1 = "${ogProperty}");

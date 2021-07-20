@@ -26,9 +26,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -171,6 +175,25 @@ public class TemplateManagementToolbarDisplayContext
 		return new String[] {"modified-date", "id"};
 	}
 
+	private boolean _containsAddPortletDisplayTemplatePermission(
+		String resourceName) {
+
+		try {
+			return PortletPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
+				resourceName, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE, false,
+				false);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to check permissions for resourceName: " + resourceName,
+				portalException);
+		}
+
+		return false;
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getCreationMenuDropdownItem(PortletURL url, String label) {
 
@@ -183,14 +206,26 @@ public class TemplateManagementToolbarDisplayContext
 	private List<TemplateHandler> _getPortletDisplayTemplateHandlers(
 		Locale locale) {
 
-		List<TemplateHandler> templateHandlersList =
-			TemplateHandlerRegistryUtil.getTemplateHandlers();
+		List<TemplateHandler> templateHandlersList = new ArrayList<>();
+
+		for (TemplateHandler templateHandler :
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
+
+			if (_containsAddPortletDisplayTemplatePermission(
+					templateHandler.getResourceName())) {
+
+				templateHandlersList.add(templateHandler);
+			}
+		}
 
 		ListUtil.sort(
 			templateHandlersList, new TemplateHandlerComparator(locale));
 
 		return templateHandlersList;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TemplateManagementToolbarDisplayContext.class);
 
 	private final ThemeDisplay _themeDisplay;
 

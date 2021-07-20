@@ -5,6 +5,12 @@ components:
             description:
                 An account represents an external account, for example a customer business.
             properties:
+                accountUserAccounts:
+                    description:
+                        The users linked to the account
+                    items:
+                        $ref: "#/components/schemas/UserAccount"
+                    type: array
                 actions:
                     additionalProperties:
                         additionalProperties:

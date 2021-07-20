@@ -14,9 +14,16 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
+
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -24,7 +31,42 @@ import java.util.Set;
  * @author Michael Hashimoto
  */
 public class SubrepositoryGitRepositoryJob
-	extends GitRepositoryJob implements SubrepositoryTestClassJob {
+	extends GitRepositoryJob
+	implements BatchDependentJob, SubrepositoryTestClassJob {
+
+	@Override
+	public List<AxisTestClassGroup> getDependentAxisTestClassGroups() {
+		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
+
+		for (BatchTestClassGroup batchTestClassGroup :
+				getDependentBatchTestClassGroups()) {
+
+			axisTestClassGroups.addAll(
+				batchTestClassGroup.getAxisTestClassGroups());
+		}
+
+		return axisTestClassGroups;
+	}
+
+	@Override
+	public Set<String> getDependentBatchNames() {
+		return getFilteredBatchNames(getRawDependentBatchNames());
+	}
+
+	@Override
+	public List<BatchTestClassGroup> getDependentBatchTestClassGroups() {
+		return getBatchTestClassGroups(getRawDependentBatchNames());
+	}
+
+	@Override
+	public Set<String> getDependentSegmentNames() {
+		return getFilteredSegmentNames(getRawDependentBatchNames());
+	}
+
+	@Override
+	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups() {
+		return getSegmentTestClassGroups(getRawDependentBatchNames());
+	}
 
 	@Override
 	public Set<String> getDistTypes() {
@@ -142,6 +184,17 @@ public class SubrepositoryGitRepositoryJob
 			getJobProperties(), "test.batch.names", getBranchName());
 
 		return getSetFromString(batchNames);
+	}
+
+	protected Set<String> getRawDependentBatchNames() {
+		String dependentBatchNames = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.names.smoke", getBranchName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(dependentBatchNames)) {
+			return new HashSet<>();
+		}
+
+		return getSetFromString(dependentBatchNames);
 	}
 
 	protected PortalGitWorkingDirectory portalGitWorkingDirectory;

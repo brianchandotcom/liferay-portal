@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -67,7 +66,7 @@ public class SubrepositoryAcceptancePullRequestJob
 			getTestSuiteName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(dependentBatchNames)) {
-			return new HashSet<>();
+			return super.getRawDependentBatchNames();
 		}
 
 		return getSetFromString(dependentBatchNames);

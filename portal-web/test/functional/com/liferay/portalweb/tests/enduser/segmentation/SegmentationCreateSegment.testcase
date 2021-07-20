@@ -2080,4 +2080,226 @@ definition {
 		}
 	}
 
+	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Site."
+	@priority = "4"
+	test ValidateSiteFieldInputInViewMode {
+		task ("Create a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+		}
+
+		task ("Create a segment using the property") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Site",
+				groupName = "Guest",
+				operator = "equals",
+				segmentName = "Validade Site Segment",
+				text = "${siteID}");
+			
+			Refresh();
+		}
+
+		task ("Validade input") {
+			LexiconEntry.gotoEntry(rowEntry = "Validade Site Segment");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CRITERION_VIEW_MODE",
+				propertyValue = "Test Site Name");
+		}
+	}
+
+	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Role."
+	@priority = "4"
+	test ValidateRoleFieldInputInViewMode {
+		task ("Get role id") {
+			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Administrator");
+		}
+
+		task ("Create a segment using the property") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Regular Role",
+				groupName = "Guest",
+				operator = "equals",
+				segmentName = "Validade Role Segment",
+				text = "${roleId}");
+			
+			Refresh();
+		}
+
+		task ("Validade input") {
+			LexiconEntry.gotoEntry(rowEntry = "Validade Role Segment");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CRITERION_VIEW_MODE",
+				propertyValue = "Administrator");
+		}
+	}
+
+	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: User."
+	@priority = "4"
+	test ValidateUserFieldInputInViewMode {
+		task ("Get user ID") {
+			var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Create a segment using the property") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "User",
+				groupName = "Guest",
+				operator = "equals",
+				segmentName = "Validade User Segment",
+				text = "${userId}");
+			
+			Refresh();
+		}
+
+		task ("Validade input") {
+			LexiconEntry.gotoEntry(rowEntry = "Validade User Segment");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CRITERION_VIEW_MODE",
+				propertyValue = "Test Test");
+		}
+	}
+
+	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Team."
+	@priority = "4"
+	test ValidateTeamFieldInputInViewMode {
+		task ("Add team") {
+			Site.openSiteTeamsAdmin(siteURLKey = "guest");
+
+			Team.addCP(
+				teamDescription = "Site Team Description",
+				teamName = "Site Team Name");
+		}
+
+		task ("Create segment using the property") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Team");
+
+			Segmentation.fillProperty(selectLink = "Site Team Name");
+
+			Segmentation.fillTitle(titleField = "Validade Team Segment");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Validade input") {
+			LexiconEntry.gotoEntry(rowEntry = "Validade Team Segment");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CRITERION_VIEW_MODE",
+				propertyValue = "Site Team Name");
+		}
+	}
+
+	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: User Group."
+	@priority = "4"
+	test ValidateUserGroupFieldInputInViewMode {
+		task ("Create and get user group ID") {
+			JSONUserGroup.addUserGroup(userGroupName = "Test Group Name");
+
+			var userGroupId = JSONUserGroupSetter.setUserGroupId(userGroupName = "Test Group Name");
+		}
+
+		task ("Create a segment using the property") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "User Group",
+				groupName = "Guest",
+				operator = "equals",
+				segmentName = "Validade User Group Segment",
+				text = "${userGroupId}");
+			
+			Refresh();
+		}
+
+		task ("Validade input") {
+			LexiconEntry.gotoEntry(rowEntry = "Validade User Group Segment");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CRITERION_VIEW_MODE",
+				propertyValue = "Test Group Name");
+		}
+	}
+
+	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Organization."
+	@priority = "4"
+	test ValidateOrganizationFieldInputInViewMode {
+		task ("Add and get organization ID") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				organizationSite = "true");
+
+			var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "Organization Name");
+		}
+
+		task ("Create a segment using the property") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			Segmentation.addProperties(propertyOption = "Organization");
+
+			Segmentation.fillProperty(selectCheckbox = "Organization Name");
+
+			Segmentation.fillTitle(titleField = "Validade Organization Segment");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Validade input") {
+			LexiconEntry.gotoEntry(rowEntry = "Validade Organization Segment");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CRITERION_VIEW_MODE",
+				propertyValue = "Organization Name");
+		}
+	}
+
+	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Parent Organization."
+	@priority = "4"
+	test ValidateParentOrganizationFieldInputInViewMode {
+		task ("Add organization and parent, and get parent's organization ID") {
+			JSONOrganization.addOrganization(organizationName = "Parent Organization Name");
+
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				parentOrganizationName = "Parent Organization Name");
+
+			var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "Parent Organization Name");
+		}
+
+		task ("Create a segment using the property") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			Segmentation.addProperties(propertyOption = "Parent Organization");
+
+			Segmentation.fillProperty(selectCheckbox = "Parent Organization Name");
+
+			Segmentation.fillTitle(titleField = "Validade Parent Organization Segment");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Validade input") {
+			LexiconEntry.gotoEntry(rowEntry = "Validade Parent Organization Segment");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CRITERION_VIEW_MODE",
+				propertyValue = "Parent Organization Name");
+		}
+	}
+
 }

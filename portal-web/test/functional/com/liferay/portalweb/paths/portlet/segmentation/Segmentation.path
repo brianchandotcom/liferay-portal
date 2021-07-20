@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERION_VIEW_MODE</td>
+	<td>//span[contains(@class, 'criterion-string')] //b[contains(text(), '${propertyValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_SEGMENT</td>
 	<td>//*[contains(@class, 'lexicon-icon-times-circle')]</td>
 	<td></td>

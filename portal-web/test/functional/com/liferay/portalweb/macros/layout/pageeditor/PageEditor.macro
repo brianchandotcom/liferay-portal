@@ -1442,110 +1442,6 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 	}
 
-	macro editCollectionCategoryFilter {
-		var key_fragmentName = "${fragmentName}";
-
-		if (isSet(columnNumber)) {
-			Click.clickNoWaitForVisible(
-				key_columnNumber = "${columnNumber}",
-				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]",
-				key_position = "1",
-				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
-		}
-		else {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
-
-		AssertVisible(
-			key_sidebarButton = "Browser",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-		Navigator.gotoNavTab(navTab = "General");
-
-		if (isSet(selectedName)) {
-			AssertElementPresent(
-				key_contentName = "${selectedName}",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
-		}
-		else {
-			WaitForElementPresent(
-				key_fieldLabel = "Source",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL");
-
-			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Source']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
-
-			if ("${itemSelectorContentInputValue}" == "") {
-				Click(
-					key_fieldLabel = "Source",
-					key_text = "plus",
-					locator1 = "Icon#ANY_ITEM_SELECTOR");
-			}
-			else {
-				Click(
-					key_fieldLabel = "Source",
-					key_text = "change",
-					locator1 = "Icon#ANY_ITEM_SELECTOR");
-			}
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			LexiconTable.clickTableEntryColumnLink(
-				columnName = "name",
-				tableEntry = "${vocabularyName}");
-
-			for (var category : list "${categoryNameList}") {
-				AssertVisible(
-					key_columnName = "name",
-					key_tableEntry = "${category}",
-					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
-			}
-
-			if (isSet(categoryName)) {
-				LexiconTable.clickTableEntryColumnLink(
-					columnName = "name",
-					tableEntry = "${categoryName}");
-
-				for (var subcategory : list "${subcategoryNameList}") {
-					AssertVisible(
-						key_columnName = "name",
-						key_tableEntry = "${subcategory}",
-						locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
-				}
-
-				Button.click(button = "Select This Level");
-
-				Pause(locator1 = "3000");
-
-				AssertElementPresent(
-					key_contentName = "${categoryName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
-			}
-			else {
-				Button.click(button = "Select This Level");
-
-				Pause(locator1 = "3000");
-
-				AssertElementPresent(
-					key_contentName = "${vocabularyName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
-			}
-		}
-
-		if (isSet(singleSelection)) {
-			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Single Selection", locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click.clickAtNotVisible(
-					checkboxName = "Single Selection",
-					locator1 = "Checkbox#ANY_CHECKBOX");
-			}
-
-			Pause(locator1 = "3000");
-
-			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "Single Selection",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-	}
-
 	macro editCollectionDisplay {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -1692,6 +1588,110 @@ definition {
 		}
 
 		PageEditor.waitForAutoSave();
+	}
+
+	macro editCollectionFilter {
+		var key_fragmentName = "${fragmentName}";
+
+		if (isSet(columnNumber)) {
+			Click.clickNoWaitForVisible(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+		else {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		if (isSet(selectedName)) {
+			AssertElementPresent(
+				key_contentName = "${selectedName}",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+		else {
+			WaitForElementPresent(
+				key_fieldLabel = "Source",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL");
+
+			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Source']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+
+			if ("${itemSelectorContentInputValue}" == "") {
+				Click(
+					key_fieldLabel = "Source",
+					key_text = "plus",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+			else {
+				Click(
+					key_fieldLabel = "Source",
+					key_text = "change",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+			}
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "name",
+				tableEntry = "${vocabularyName}");
+
+			for (var category : list "${categoryNameList}") {
+				AssertVisible(
+					key_columnName = "name",
+					key_tableEntry = "${category}",
+					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+			}
+
+			if (isSet(categoryName)) {
+				LexiconTable.clickTableEntryColumnLink(
+					columnName = "name",
+					tableEntry = "${categoryName}");
+
+				for (var subcategory : list "${subcategoryNameList}") {
+					AssertVisible(
+						key_columnName = "name",
+						key_tableEntry = "${subcategory}",
+						locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+				}
+
+				Button.click(button = "Select This Level");
+
+				Pause(locator1 = "3000");
+
+				AssertElementPresent(
+					key_contentName = "${categoryName}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+			else {
+				Button.click(button = "Select This Level");
+
+				Pause(locator1 = "3000");
+
+				AssertElementPresent(
+					key_contentName = "${vocabularyName}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+		}
+
+		if (isSet(singleSelection)) {
+			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Single Selection", locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click.clickAtNotVisible(
+					checkboxName = "Single Selection",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Pause(locator1 = "3000");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Single Selection",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 	}
 
 	macro editComment {

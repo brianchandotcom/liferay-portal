@@ -51,27 +51,33 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 					HashMapBuilder.<String, Object>put(
 						"actions", templateManagementToolbarDisplayContext.getAvailableActions(ddmTemplate)
 					).build());
+
+				String editURL = templateDisplayContext.getDDMTemplateEditURL(ddmTemplate);
 				%>
 
 				<liferay-ui:search-container-column-text
+					href="<%= editURL %>"
 					name="id"
 					property="templateId"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
+					href="<%= editURL %>"
 					name="name"
 					value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
+					href="<%= editURL %>"
 					name="description"
 					value="<%= HtmlUtil.escape(ddmTemplate.getDescription(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest"
+					href="<%= editURL %>"
 					name="type"
 					value="<%= HtmlUtil.escape(templateDisplayContext.getDDMTemplateType(ddmTemplate)) %>"
 				/>
@@ -83,6 +89,7 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 				/>
 
 				<liferay-ui:search-container-column-date
+					href="<%= editURL %>"
 					name="modified-date"
 					value="<%= ddmTemplate.getModifiedDate() %>"
 				/>

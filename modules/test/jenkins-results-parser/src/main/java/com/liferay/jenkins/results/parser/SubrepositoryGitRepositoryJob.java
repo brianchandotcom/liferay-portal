@@ -17,10 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Michael Hashimoto
@@ -30,10 +28,10 @@ public class SubrepositoryGitRepositoryJob
 
 	@Override
 	public Set<String> getDistTypes() {
-		String distTypes = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "subrepo.dist.app.servers");
+		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.dist.app.servers");
 
-		return new TreeSet<>(Arrays.asList(distTypes.split(",")));
+		return getSetFromString(testBatchDistAppServers);
 	}
 
 	@Override
@@ -108,6 +106,14 @@ public class SubrepositoryGitRepositoryJob
 
 		checkGitRepositoryDir();
 
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		jobPropertiesFiles.add(
+			new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"test.properties"));
+
 		Properties buildProperties = null;
 
 		try {
@@ -132,15 +138,8 @@ public class SubrepositoryGitRepositoryJob
 
 	@Override
 	protected Set<String> getRawBatchNames() {
-		Properties jobProperties = getJobProperties();
-
 		String batchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names[" + getBranchName() + "]");
-
-		if (batchNames == null) {
-			batchNames = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.batch.names");
-		}
+			getJobProperties(), "test.batch.names", getBranchName());
 
 		return getSetFromString(batchNames);
 	}

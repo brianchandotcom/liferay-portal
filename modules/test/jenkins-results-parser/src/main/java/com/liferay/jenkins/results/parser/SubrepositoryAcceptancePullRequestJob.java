@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Properties;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -36,15 +36,9 @@ public class SubrepositoryAcceptancePullRequestJob
 
 	@Override
 	public Set<String> getDistTypes() {
-		Properties jobProperties = getJobProperties();
-
 		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "subrepo.dist.app.servers[" + _testSuiteName + "]");
-
-		if (testBatchDistAppServers == null) {
-			testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "subrepo.dist.app.servers");
-		}
+			getJobProperties(), "test.batch.dist.app.servers",
+			getTestSuiteName());
 
 		return getSetFromString(testBatchDistAppServers);
 	}
@@ -57,25 +51,31 @@ public class SubrepositoryAcceptancePullRequestJob
 	@Override
 	protected Set<String> getRawBatchNames() {
 		String batchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names[" + _testSuiteName + "]");
+			getJobProperties(), "test.batch.names", getBranchName(),
+			getTestSuiteName());
 
-		if (batchNames == null) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(batchNames)) {
 			return super.getRawBatchNames();
 		}
 
 		return getSetFromString(batchNames);
 	}
 
-	private void _setValidationRequired() {
-		Properties jobProperties = getJobProperties();
+	protected Set<String> getRawDependentBatchNames() {
+		String dependentBatchNames = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.names.smoke", getBranchName(),
+			getTestSuiteName());
 
-		String testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.run.validation[" + _testSuiteName + "]");
-
-		if (testRunValidationProperty == null) {
-			testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
-				jobProperties, "test.run.validation");
+		if (JenkinsResultsParserUtil.isNullOrEmpty(dependentBatchNames)) {
+			return new HashSet<>();
 		}
+
+		return getSetFromString(dependentBatchNames);
+	}
+
+	private void _setValidationRequired() {
+		String testRunValidationProperty = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.run.validation", getTestSuiteName());
 
 		validationRequired = Boolean.parseBoolean(testRunValidationProperty);
 	}

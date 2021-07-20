@@ -246,6 +246,24 @@
 						</clay:content-row>
 					</h2>
 
+					<div class="mb-5">
+						<div class="mb-2">
+							<span class="mr-1"><liferay-ui:message key="asset-types" />:</span>
+							<span class="text-secondary"><%= assetCategoriesDisplayContext.getAssetType(vocabulary) %></span>
+						</div>
+
+						<%
+						String description = vocabulary.getDescription(locale);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(description) %>">
+							<div class="mb-2">
+								<span class="mr-1"><liferay-ui:message key="description" />:</span>
+								<span class="text-secondary"><%= description %></span>
+							</div>
+						</c:if>
+					</div>
+
 					<p class="mb-5 text-secondary">
 						<span class="mr-2">
 							<liferay-ui:message arguments="<%= assetCategoriesDisplayContext.getMaximumNumberOfCategoriesPerVocabulary() %>" key="the-maximum-number-of-categories-per-vocabulary-is-x" />

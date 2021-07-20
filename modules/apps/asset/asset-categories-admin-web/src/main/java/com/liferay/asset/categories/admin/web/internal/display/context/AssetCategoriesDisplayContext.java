@@ -195,6 +195,9 @@ public class AssetCategoriesDisplayContext {
 			if (vocabulary.isRequired(classNameId, classTypePK)) {
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.STAR);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(LanguageUtil.get(_httpServletRequest, "required"));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			sb.append(StringPool.COMMA_AND_SPACE);

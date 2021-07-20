@@ -99,6 +99,8 @@ export default function fieldChange({
 					viewMode,
 				});
 
+				dispatch({payload: properties, type: EVENT_TYPES.FIELD.CHANGE});
+
 				if (REVALIDATE_UPDATES.length > 0) {
 
 					// All nonevaluable operations that were performed after the request
@@ -147,12 +149,6 @@ export default function fieldChange({
 			}
 		}
 		else {
-
-			// We triggered a dispatch of FIELD_CHANGE just to propagate the event to
-			// the upper layers.
-
-			dispatch({payload: editedPages, type: EVENT_TYPES.PAGE.UPDATE});
-
 			dispatch({payload: properties, type: EVENT_TYPES.FIELD.CHANGE});
 
 			REVALIDATE_UPDATES.push({

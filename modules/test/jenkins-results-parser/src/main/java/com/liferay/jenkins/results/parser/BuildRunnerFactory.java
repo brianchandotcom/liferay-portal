@@ -33,8 +33,11 @@ public class BuildRunnerFactory {
 			buildRunner = new RootCauseAnalysisToolTopLevelBuildRunner(
 				(PortalTopLevelBuildData)buildData);
 		}
-
-		if (jobName.contains("-batch")) {
+		else if (jobName.equals("root-cause-analysis-tool-batch")) {
+			buildRunner = new RootCauseAnalysisBatchBuildRunner(
+				(PortalBatchBuildData)buildData);
+		}
+		else if (jobName.contains("-batch")) {
 			buildRunner = new DefaultPortalBatchBuildRunner(
 				(PortalBatchBuildData)buildData);
 		}

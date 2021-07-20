@@ -748,8 +748,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			CTColumnResolutionType.MIN);
 
 		for (String name : tableColumnsMap.keySet()) {
-			boolean composite = false;
-
 			if (name.equals("ctCollectionId")) {
 				sb.append(_sourceCTCollectionId);
 				sb.append(" as ");
@@ -760,26 +758,16 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			else if (ignoredColumnNames.contains(name)) {
 				sb.append("production.");
 			}
-			else if (maxColumnNames.contains(name)) {
-				sb.append("max(composite.");
+			else if (maxColumnNames.contains(name) ||
+					 minColumnNames.contains(name)) {
 
-				composite = true;
-			}
-			else if (minColumnNames.contains(name)) {
-				sb.append("min(composite.");
-
-				composite = true;
+				sb.append("composite.");
 			}
 			else {
 				sb.append("publication.");
 			}
 
 			sb.append(name);
-
-			if (composite) {
-				sb.append(")");
-			}
-
 			sb.append(", ");
 		}
 
@@ -793,32 +781,42 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(" = publication.");
 		sb.append(primaryKeyName);
 
-		if (maxColumnNames.isEmpty() && minColumnNames.isEmpty()) {
-			sb.append(" where ");
-		}
-		else {
-			sb.append(" inner join ");
+		if (!maxColumnNames.isEmpty() || !minColumnNames.isEmpty()) {
+			sb.append(" inner join (select ");
+			sb.append(primaryKeyName);
+
+			for (String maxColumnName : maxColumnNames) {
+				sb.append(", max(");
+				sb.append(maxColumnName);
+				sb.append(") ");
+				sb.append(maxColumnName);
+			}
+
+			for (String minColumnName : minColumnNames) {
+				sb.append(", min(");
+				sb.append(minColumnName);
+				sb.append(") ");
+				sb.append(minColumnName);
+			}
+
+			sb.append(" from ");
 			sb.append(ctPersistence.getTableName());
-			sb.append(" composite on composite.");
-			sb.append(primaryKeyName);
-			sb.append(" = production.");
-			sb.append(primaryKeyName);
-			sb.append(" where composite.ctCollectionId in (");
+			sb.append(" where ctCollectionId in (");
 			sb.append(_targetCTCollectionId);
 			sb.append(", ");
 			sb.append(tempCTCollectionId);
-			sb.append(") and ");
+			sb.append(") group by ");
+			sb.append(primaryKeyName);
+			sb.append(") composite on composite.");
+			sb.append(primaryKeyName);
+			sb.append(" = production.");
+			sb.append(primaryKeyName);
 		}
 
-		sb.append("publication.ctCollectionId = ");
+		sb.append(" where publication.ctCollectionId = ");
 		sb.append(tempCTCollectionId);
 		sb.append(" and production.ctCollectionId = ");
 		sb.append(_targetCTCollectionId);
-
-		if (!maxColumnNames.isEmpty() || !minColumnNames.isEmpty()) {
-			sb.append(" group by composite.");
-			sb.append(primaryKeyName);
-		}
 
 		try {
 			CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());

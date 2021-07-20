@@ -813,15 +813,19 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("Add a Paragraph fragment") {
-			ContentPagesNavigator.openEditContentPage(
+		task ("Add a Paragraph fragment to content page") {
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
+
+			ContentPages.clickPencil();
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Paragraph");
+		}
 
+		task ("Publish the content page") {
 			PageEditor.clickPublish();
 		}
 	}

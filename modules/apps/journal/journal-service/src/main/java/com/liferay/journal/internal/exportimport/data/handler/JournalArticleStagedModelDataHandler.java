@@ -1011,7 +1011,7 @@ public class JournalArticleStagedModelDataHandler
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, article, Layout.class);
 
-			content =
+			String replacedContent =
 				_journalArticleExportImportContentProcessor.
 					replaceImportContentReferences(
 						portletDataContext, article, content);
@@ -1022,15 +1022,15 @@ public class JournalArticleStagedModelDataHandler
 			if (newContent !=
 					JournalCreationStrategy.ARTICLE_CONTENT_UNCHANGED) {
 
-				content = newContent;
+				replacedContent = newContent;
 			}
 
-			if (!StringUtil.equals(importedArticle.getContent(), content)) {
+			if (!StringUtil.equals(replacedContent, content)) {
 				importedArticle = _journalArticleLocalService.updateArticle(
 					userId, importedArticle.getGroupId(), folderId,
 					importedArticle.getArticleId(), article.getVersion(),
 					article.getTitleMap(), article.getDescriptionMap(),
-					friendlyURLMap, content, parentDDMStructureKey,
+					friendlyURLMap, replacedContent, parentDDMStructureKey,
 					parentDDMTemplateKey, article.getLayoutUuid(),
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,

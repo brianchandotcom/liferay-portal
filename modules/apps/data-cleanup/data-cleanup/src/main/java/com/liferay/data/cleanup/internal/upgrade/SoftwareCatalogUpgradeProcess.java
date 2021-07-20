@@ -41,7 +41,8 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_deleteSoftwareCatalog();
+		_deleteImages();
+		_deleteSocial();
 
 		removePortletData(null, null, new String[] {"98"});
 
@@ -61,7 +62,31 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 			});
 	}
 
-	private void _deleteSoftwareCatalog() throws Exception {
+	private void _deleteImages() throws Exception {
+		if (!hasTable("SCProductScreenshot")) {
+			return;
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select fullImageId, thumbnailId from SCProductScreenshot");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long fullImageId = resultSet.getLong("fullImageId");
+
+				long thumbnailId = resultSet.getLong("thumbnailId");
+
+				_imageLocalService.deleteImage(fullImageId);
+				_imageLocalService.deleteImage(thumbnailId);
+			}
+		}
+	}
+
+	private void _deleteSocial() throws Exception {
+		if (!hasTable("SCProductEntry")) {
+			return;
+		}
+
 		String scProductEntryClassName =
 			"com.liferay.portlet.softwarecatalog.model.SCProductEntry";
 
@@ -82,20 +107,6 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 
 				_ratingsStatsLocalService.deleteStats(
 					scProductEntryClassName, productEntryId);
-			}
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select fullImageId, thumbnailId from SCProductScreenshot");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long fullImageId = resultSet.getLong("fullImageId");
-
-				long thumbnailId = resultSet.getLong("thumbnailId");
-
-				_imageLocalService.deleteImage(fullImageId);
-				_imageLocalService.deleteImage(thumbnailId);
 			}
 		}
 	}

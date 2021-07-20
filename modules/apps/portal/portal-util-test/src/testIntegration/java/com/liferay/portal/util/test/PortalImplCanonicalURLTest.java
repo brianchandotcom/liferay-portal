@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -156,6 +157,15 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, _group.getFriendlyURL()
 			).build());
 
+		_layout4 = LayoutTestUtil.addLayout(
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.US, "weben"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "/weben"
+			).build());
+
 		String groupKey = PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME;
 
 		if (Validator.isNull(groupKey)) {
@@ -177,6 +187,33 @@ public class PortalImplCanonicalURLTest {
 			_defaultGrouplayout2 = LayoutTestUtil.addLayout(
 				_defaultGroup.getGroupId());
 		}
+	}
+
+	@Test
+	public void testCanonicalURLPartialCollisionWIthPublicGroupServletMapping()
+		throws Exception {
+
+		String portalDomain = "localhost";
+
+		LayoutSet layoutSet = _layout4.getLayoutSet();
+
+		layoutSet.setVirtualHostname("test.com");
+
+		ThemeDisplay themeDisplay = _createThemeDisplay(
+			portalDomain, _group, 8080, false);
+
+		themeDisplay.setLayoutSet(layoutSet);
+
+		String completeURL =
+			Http.HTTP_WITH_SLASH + "test.com:8080" + _layout4.getFriendlyURL();
+
+		Assert.assertEquals(
+			completeURL,
+			_portal.getCanonicalURL(
+				_http.addParameter(
+					completeURL, "_ga",
+					"2.237928582.786466685.1515402734-1365236376"),
+				themeDisplay, _layout4, false, false));
 	}
 
 	@Test
@@ -670,6 +707,7 @@ public class PortalImplCanonicalURLTest {
 	private Layout _layout1;
 	private Layout _layout2;
 	private Layout _layout3;
+	private Layout _layout4;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

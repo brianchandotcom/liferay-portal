@@ -1798,6 +1798,16 @@ definition {
 
 		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.deleteCP(
+			assetName = "DM Document Title With DM Type",
+			assetType = "Document");
+
 		DepotNavigator.openDepotAdmin();
 
 		Depot.deleteCP(depotName = "Edited Test Depot Name");
@@ -2431,8 +2441,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Page HTML Title Edit");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "Page Description Edit");
 
 		Button.clickSave();

@@ -71,6 +71,26 @@
 		"cssVariableMapping": "btn-outline-secondary-hover-color",
 		"value": "var(--white)"
 	},
+	"btnOutlineTertiaryBorderColor": {
+		"cssVariableMapping": "btn-outline-tertiary-border-color",
+		"value": "var(--tertiary)"
+	},
+	"btnOutlineTertiaryColor": {
+		"cssVariableMapping": "btn-outline-tertiary-color",
+		"value": "var(--tertiary)"
+	},
+	"btnOutlineTertiaryHoverBackgroundColor": {
+		"cssVariableMapping": "btn-outline-tertiary-hover-background-color",
+		"value": "var(--tertiary)"
+	},
+	"btnOutlineTertiaryHoverBorderColor": {
+		"cssVariableMapping": "btn-outline-tertiary-hover-border-color",
+		"value": "var(--tertiary)"
+	},
+	"btnOutlineTertiaryHoverColor": {
+		"cssVariableMapping": "btn-outline-tertiary-hover-color",
+		"value": "var(--white)"
+	},
 	"btnPrimaryBackgroundColor": {
 		"cssVariableMapping": "btn-primary-background-color",
 		"value": "var(--primary)"
@@ -117,6 +137,26 @@
 	},
 	"btnSecondaryHoverColor": {
 		"cssVariableMapping": "btn-secondary-hover-color",
+		"value": "var(--white)"
+	},
+	"btnTertiaryBorderColor": {
+		"cssVariableMapping": "btn-tertiary-border-color",
+		"value": "var(--tertiary)"
+	},
+	"btnTertiaryColor": {
+		"cssVariableMapping": "btn-tertiary-color",
+		"value": "var(--white)"
+	},
+	"btnTertiaryHoverBackgroundColor": {
+		"cssVariableMapping": "btn-tertiary-hover-background-color",
+		"value": "#DD8D31"
+	},
+	"btnTertiaryHoverBorderColor": {
+		"cssVariableMapping": "btn-tertiary-hover-border-color",
+		"value": "#DD8D31"
+	},
+	"btnTertiaryHoverColor": {
+		"cssVariableMapping": "btn-tertiary-hover-color",
 		"value": "var(--white)"
 	},
 	"containerMaxLg": {
@@ -294,6 +334,10 @@
 	"successColor": {
 		"cssVariableMapping": "success",
 		"value": "#20c997"
+	},
+	"tertiaryColor": {
+		"cssVariableMapping": "tertiary",
+		"value": "#F69D37"
 	},
 	"textMuted": {
 		"cssVariableMapping": "text-muted",

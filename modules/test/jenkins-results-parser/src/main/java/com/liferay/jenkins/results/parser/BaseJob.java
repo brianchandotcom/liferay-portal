@@ -409,10 +409,6 @@ public abstract class BaseJob implements Job {
 							TestClassGroupFactory.newBatchTestClassGroup(
 								batchName, job);
 
-						if (batchTestClassGroup.getAxisCount() <= 0) {
-							return null;
-						}
-
 						long duration =
 							JenkinsResultsParserUtil.getCurrentTimeMillis() -
 								start;
@@ -426,6 +422,10 @@ public abstract class BaseJob implements Job {
 								" at ",
 								JenkinsResultsParserUtil.toDateString(
 									new Date())));
+
+						if (batchTestClassGroup.getAxisCount() <= 0) {
+							return null;
+						}
 
 						return batchTestClassGroup;
 					}

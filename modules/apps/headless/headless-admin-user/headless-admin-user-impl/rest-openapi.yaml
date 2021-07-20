@@ -204,6 +204,10 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                childOrganizations:
+                    items:
+                        $ref: "#/components/schemas/Organization"
+                    type: array
                 comment:
                     description:
                         The text of a comment associated with the organization.
@@ -2417,6 +2421,58 @@ paths:
                     description:
                         ""
             tags: ["Account"]
+    "/organizations/{organizationId}/child-organizations":
+        get:
+            description:
+                Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched,
+                and sorted.
+            operationId: getOrganizationChildOrganizationsPage
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                    description:
+                        ""
+            tags: ["Organization"]
     "/organizations/{organizationId}/email-addresses":
         get:
             description:

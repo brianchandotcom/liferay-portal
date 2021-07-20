@@ -69,43 +69,62 @@ public class BasicFragmentManagementToolbarDisplayContext
 				themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData(
-					"action", "exportFragmentCompositionsAndFragmentEntries");
-				dropdownItem.setIcon("import-export");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "export"));
-				dropdownItem.setQuickAction(true);
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action",
+								"exportFragmentCompositionsAndFragmentEntries");
+							dropdownItem.setIcon("import-export");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "export"));
+							dropdownItem.setQuickAction(true);
+						}
+					).add(
+						() -> hasManageFragmentEntriesPermission,
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "copySelectedFragmentEntries");
+							dropdownItem.setIcon("paste");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest, "make-a-copy"));
+							dropdownItem.setQuickAction(true);
+						}
+					).add(
+						() -> hasManageFragmentEntriesPermission,
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action",
+								"moveFragmentCompositionsAndFragmentEntries");
+							dropdownItem.setIcon("move-folder");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "move"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
 			}
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			dropdownItem -> {
-				dropdownItem.putData(
-					"action", "moveFragmentCompositionsAndFragmentEntries");
-				dropdownItem.setIcon("move-folder");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "move"));
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			dropdownItem -> {
-				dropdownItem.putData("action", "copySelectedFragmentEntries");
-				dropdownItem.setIcon("paste");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "make-a-copy"));
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			dropdownItem -> {
-				dropdownItem.putData(
-					"action", "deleteFragmentCompositionsAndFragmentEntries");
-				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasManageFragmentEntriesPermission,
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action",
+								"deleteFragmentCompositionsAndFragmentEntries");
+							dropdownItem.setIcon("times-circle");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

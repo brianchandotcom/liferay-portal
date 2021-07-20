@@ -146,25 +146,40 @@ public class FragmentDisplayContext {
 				_themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "exportCollections");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "export"));
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "exportCollections");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "export"));
+						}
+					).add(
+						() -> hasManageFragmentEntriesPermission,
+						dropdownItem -> {
+							dropdownItem.putData("action", "openImportView");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "import"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			dropdownItem -> {
-				dropdownItem.putData("action", "openImportView");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "import"));
-			}
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteCollections");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasManageFragmentEntriesPermission,
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteCollections");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

@@ -75,11 +75,6 @@ public class FragmentEntryUsageManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "FRAGMENT_ENTRY_USAGE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"last-propagation"};
 	}

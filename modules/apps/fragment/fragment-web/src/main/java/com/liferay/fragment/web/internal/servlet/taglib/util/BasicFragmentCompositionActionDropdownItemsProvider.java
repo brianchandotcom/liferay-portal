@@ -75,26 +75,47 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 				_themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
-		return DropdownItemListBuilder.add(
-			() -> hasManageFragmentEntriesPermission,
-			_getRenameFragmentCompositionActionUnsafeConsumer()
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			_getMoveFragmentCompositionActionUnsafeConsumer()
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			_getUpdateFragmentCompositionPreviewActionUnsafeConsumer()
-		).add(
-			() ->
-				hasManageFragmentEntriesPermission &&
-				(_fragmentComposition.getPreviewFileEntryId() > 0),
-			_getDeleteFragmentCompositionPreviewActionUnsafeConsumer()
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			_getExportFragmentCompositionActionUnsafeConsumer()
-		).add(
-			() -> hasManageFragmentEntriesPermission,
-			_getDeleteFragmentCompositionActionUnsafeConsumer()
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasManageFragmentEntriesPermission,
+						_getUpdateFragmentCompositionPreviewActionUnsafeConsumer()
+					).add(
+						() ->
+							hasManageFragmentEntriesPermission &&
+							(_fragmentComposition.getPreviewFileEntryId() > 0),
+						_getDeleteFragmentCompositionPreviewActionUnsafeConsumer()
+					).add(
+						() -> hasManageFragmentEntriesPermission,
+						_getRenameFragmentCompositionActionUnsafeConsumer()
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasManageFragmentEntriesPermission,
+						_getExportFragmentCompositionActionUnsafeConsumer()
+					).add(
+						() -> hasManageFragmentEntriesPermission,
+						_getMoveFragmentCompositionActionUnsafeConsumer()
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasManageFragmentEntriesPermission,
+						_getDeleteFragmentCompositionActionUnsafeConsumer()
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

@@ -288,7 +288,15 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 								<clay:content-col
 									cssClass="inline-item-after"
 								>
-									<liferay-util:include page="/fragment_collection_action.jsp" servletContext="<%= application %>" />
+
+									<%
+									FragmentCollectionActionDropdownItemsProvider fragmentCollectionActionDropdownItemsProvider = new FragmentCollectionActionDropdownItemsProvider(fragmentDisplayContext, request, renderResponse);
+									%>
+
+									<clay:dropdown-actions
+										dropdownItems="<%= fragmentCollectionActionDropdownItemsProvider.getActionDropdownItems() %>"
+										propsTransformer="js/FragmentCollectionDropdownPropsTransformer"
+									/>
 								</clay:content-col>
 							</c:if>
 						</clay:content-row>

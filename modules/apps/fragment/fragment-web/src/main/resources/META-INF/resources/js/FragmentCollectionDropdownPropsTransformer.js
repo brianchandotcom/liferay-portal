@@ -12,20 +12,41 @@
  * details.
  */
 
-import {ACTIONS} from './actions';
+import {openModal} from 'frontend-js-web';
 
-export default function propsTransformer({
-	additionalProps: {
-		deleteFragmentCollectionURL,
-		exportFragmentCollectionsURL,
-		viewDeleteFragmentCollectionsURL,
-		viewExportFragmentCollectionsURL,
-		viewImportURL,
+const ACTIONS = {
+	deleteFragmentCollection({deleteFragmentCollectionURL}) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			submitForm(document.hrefFm, deleteFragmentCollectionURL);
+		}
 	},
-	items,
-	portletNamespace,
-	...props
-}) {
+	openImportCollectionView({viewImportURL}) {
+		openModal({
+			buttons: [
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					label: Liferay.Language.get('import'),
+					type: 'submit',
+				},
+			],
+			onClose: () => {
+				window.location.reload();
+			},
+			title: Liferay.Language.get('import'),
+			url: viewImportURL,
+		});
+	},
+};
+
+export default function propsTransformer({items, ...props}) {
 	return {
 		...props,
 		items: items.map((item) => {
@@ -40,14 +61,7 @@ export default function propsTransformer({
 							if (action) {
 								event.preventDefault();
 
-								ACTIONS[action]({
-									deleteFragmentCollectionURL,
-									exportFragmentCollectionsURL,
-									portletNamespace,
-									viewDeleteFragmentCollectionsURL,
-									viewExportFragmentCollectionsURL,
-									viewImportURL,
-								});
+								ACTIONS[action](child.data);
 							}
 						},
 					};

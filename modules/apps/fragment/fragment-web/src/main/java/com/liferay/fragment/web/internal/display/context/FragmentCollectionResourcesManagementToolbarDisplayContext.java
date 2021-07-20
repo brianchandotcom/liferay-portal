@@ -118,12 +118,6 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "FRAGMENT_COLLECTION_RESOURCES_MANAGEMENT_TOOLBAR_DEFAULT_" +
-			"EVENT_HANDLER";
-	}
-
-	@Override
 	public String getSortingURL() {
 		return null;
 	}

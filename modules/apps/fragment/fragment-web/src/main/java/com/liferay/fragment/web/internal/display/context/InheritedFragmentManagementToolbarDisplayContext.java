@@ -101,7 +101,7 @@ public class InheritedFragmentManagementToolbarDisplayContext
 				).buildString();
 			}
 		).put(
-			"exportFragmentEntriesURL",
+			"exportFragmentCompositionsAndFragmentEntriesURL",
 			() -> {
 				ResourceURL exportFragmentEntriesURL =
 					liferayPortletResponse.createResourceURL();

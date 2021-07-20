@@ -75,12 +75,6 @@ public class GroupFragmentEntryUsageManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "GROUP_FRAGMENT_ENTRY_USAGE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_" +
-			"HANDLER";
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}

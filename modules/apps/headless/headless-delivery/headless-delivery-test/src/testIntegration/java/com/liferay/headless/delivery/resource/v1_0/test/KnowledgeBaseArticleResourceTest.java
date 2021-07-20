@@ -93,6 +93,7 @@ public class KnowledgeBaseArticleResourceTest
 			super.randomKnowledgeBaseArticle();
 
 		knowledgeBaseArticle.setParentKnowledgeBaseArticleId(0L);
+		knowledgeBaseArticle.setParentKnowledgeBaseFolderId(0L);
 
 		return knowledgeBaseArticle;
 	}

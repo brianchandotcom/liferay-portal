@@ -173,8 +173,8 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return _addKnowledgeBaseFolder(
 			knowledgeBaseFolder.getExternalReferenceCode(),
-			parentKnowledgeBaseFolderId, knowledgeBaseFolder,
-			parentKBFolder.getGroupId());
+			parentKBFolder.getGroupId(), parentKnowledgeBaseFolderId,
+			knowledgeBaseFolder);
 	}
 
 	@Override
@@ -183,8 +183,8 @@ public class KnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		return _addKnowledgeBaseFolder(
-			knowledgeBaseFolder.getExternalReferenceCode(), null,
-			knowledgeBaseFolder, siteId);
+			knowledgeBaseFolder.getExternalReferenceCode(), siteId, null,
+			knowledgeBaseFolder);
 	}
 
 	@Override
@@ -214,9 +214,9 @@ public class KnowledgeBaseFolderResourceImpl
 		}
 
 		return _addKnowledgeBaseFolder(
-			externalReferenceCode,
+			externalReferenceCode, siteId,
 			knowledgeBaseFolder.getParentKnowledgeBaseFolderId(),
-			knowledgeBaseFolder, siteId);
+			knowledgeBaseFolder);
 	}
 
 	@Override
@@ -237,8 +237,8 @@ public class KnowledgeBaseFolderResourceImpl
 	}
 
 	private KnowledgeBaseFolder _addKnowledgeBaseFolder(
-			String externalReferenceCode, Long parentResourcePrimKey,
-			KnowledgeBaseFolder knowledgeBaseFolder, long siteId)
+			String externalReferenceCode, long groupId,
+			Long parentResourcePrimKey, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
 		if (parentResourcePrimKey == null) {
@@ -247,11 +247,11 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return _toKnowledgeBaseFolder(
 			_kbFolderService.addKBFolder(
-				externalReferenceCode, siteId, _getClassNameId(),
+				externalReferenceCode, groupId, _getClassNameId(),
 				parentResourcePrimKey, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
 				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder), siteId,
+					_getExpandoBridgeAttributes(knowledgeBaseFolder), groupId,
 					contextHttpServletRequest,
 					knowledgeBaseFolder.getViewableByAsString())));
 	}

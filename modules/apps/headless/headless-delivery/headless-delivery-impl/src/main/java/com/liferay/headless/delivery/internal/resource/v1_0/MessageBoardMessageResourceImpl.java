@@ -351,8 +351,13 @@ public class MessageBoardMessageResourceImpl
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
+		MBMessage mbMessage = _mbMessageLocalService.getMBMessage(
+			parentMessageBoardMessageId);
+
 		return _addMessageBoardMessage(
-			parentMessageBoardMessageId, messageBoardMessage);
+			messageBoardMessage.getExternalReferenceCode(),
+			mbMessage.getGroupId(), mbMessage.getMessageId(),
+			messageBoardMessage);
 	}
 
 	@Override
@@ -375,7 +380,9 @@ public class MessageBoardMessageResourceImpl
 			messageBoardThreadId);
 
 		return _addMessageBoardMessage(
-			mbThread.getRootMessageId(), messageBoardMessage);
+			messageBoardMessage.getExternalReferenceCode(),
+			mbThread.getGroupId(), mbThread.getRootMessageId(),
+			messageBoardMessage);
 	}
 
 	@Override
@@ -429,13 +436,8 @@ public class MessageBoardMessageResourceImpl
 			return _updateMessageBoardMessage(mbMessage, messageBoardMessage);
 		}
 
-		if (messageBoardMessage.getParentMessageBoardMessageId() == null) {
-			throw new BadRequestException("Parent message board ID is null");
-		}
-
-		messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
-
 		return _addMessageBoardMessage(
+			externalReferenceCode, siteId,
 			messageBoardMessage.getParentMessageBoardMessageId(),
 			messageBoardMessage);
 	}
@@ -458,15 +460,20 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	private MessageBoardMessage _addMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+			String externalReferenceCode, Long groupId, Long parentMessageId,
+			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		MBMessage parentMBMessage = _mbMessageService.getMessage(
-			messageBoardMessageId);
+		if (parentMessageId == null) {
+			throw new BadRequestException("Parent message board ID is null");
+		}
 
 		String headline = messageBoardMessage.getHeadline();
 
 		if (headline == null) {
+			MBMessage parentMBMessage = _mbMessageService.getMessage(
+				parentMessageId);
+
 			headline =
 				MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE +
 					parentMBMessage.getSubject();
@@ -479,14 +486,11 @@ public class MessageBoardMessageResourceImpl
 		}
 
 		MBMessage mbMessage = _mbMessageService.addMessage(
-			messageBoardMessage.getExternalReferenceCode(),
-			messageBoardMessageId, headline,
+			externalReferenceCode, parentMessageId, headline,
 			messageBoardMessage.getArticleBody(), encodingFormat,
 			Collections.emptyList(),
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
-			false,
-			_getServiceContext(
-				messageBoardMessage, parentMBMessage.getGroupId()));
+			false, _getServiceContext(messageBoardMessage, groupId));
 
 		_updateAnswer(mbMessage, messageBoardMessage);
 

@@ -131,12 +131,8 @@ public class WikiNodeResourceImpl
 	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
 		throws Exception {
 
-		return _toWikiNode(
-			_wikiNodeService.addNode(
-				wikiNode.getExternalReferenceCode(), wikiNode.getName(),
-				wikiNode.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					siteId, contextHttpServletRequest, null)));
+		return _addWikiNode(
+			wikiNode.getExternalReferenceCode(), siteId, wikiNode);
 	}
 
 	@Override
@@ -152,13 +148,7 @@ public class WikiNodeResourceImpl
 			return _updateWikiNode(serviceBuilderWikiNode, wikiNode);
 		}
 
-		return _toWikiNode(
-			_wikiNodeService.addNode(
-				externalReferenceCode, wikiNode.getName(),
-				wikiNode.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					siteId, contextHttpServletRequest,
-					wikiNode.getViewableByAsString())));
+		return _addWikiNode(externalReferenceCode, siteId, wikiNode);
 	}
 
 	@Override
@@ -197,6 +187,19 @@ public class WikiNodeResourceImpl
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
 		return com.liferay.wiki.model.WikiNode.class.getName();
+	}
+
+	private WikiNode _addWikiNode(
+			String externalReferenceCode, Long groupId, WikiNode wikiNode)
+		throws Exception {
+
+		return _toWikiNode(
+			_wikiNodeService.addNode(
+				externalReferenceCode, wikiNode.getName(),
+				wikiNode.getDescription(),
+				ServiceContextRequestUtil.createServiceContext(
+					groupId, contextHttpServletRequest,
+					wikiNode.getViewableByAsString())));
 	}
 
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)

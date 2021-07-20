@@ -499,6 +499,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editTextArea {
+		Type(
+			key_text = "${fieldName}",
+			locator1 = "TextArea#ANY",
+			value1 = "${fieldValue}");
+	}
+
 	macro editTextBodyToolBar {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1883,6 +1890,13 @@ definition {
 			locator1 = "FormFields#PARAGRAPH_BODY_CONTENT_TABLE");
 
 		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewTextAreaValue {
+		AssertTextEquals.assertText(
+			key_text = "${fieldName}",
+			locator1 = "TextArea#ANY",
+			value1 = "${fieldValue}");
 	}
 
 	macro viewTextField {

@@ -203,4 +203,10 @@ definition {
 			value1 = "${content}");
 	}
 
+	macro viewNoMail {
+		MockMock._gotoMail();
+
+		AssertElementPresent(locator1 = "MockMock#MOCKMOCK_NO_EMAIL_IN_QUEUE");
+	}
+
 }

@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MOCKMOCK_NO_EMAIL_IN_QUEUE</td>
+	<td>//h2[contains(.,'No emails in queue')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOCKMOCK_HAVE_EMAILS_MESSAGE</td>
 	<td>//div[@class='container' and contains(.,'You have')]/h1</td>
 	<td></td>

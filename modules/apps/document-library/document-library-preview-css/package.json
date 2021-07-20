@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/css": "3.31.0"
+		"@clayui/css": "3.33.1"
 	},
 	"main": "index.js",
 	"name": "@liferay/document-library-preview-css",
@@ -8,8 +8,7 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "1.0.0"
 }

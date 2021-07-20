@@ -134,7 +134,7 @@ definition {
 		}
 
 		task ("Save change") {
-			Button.clickSave();
+			PortletEntry.save();
 		}
 
 		task ("Refresh the page") {

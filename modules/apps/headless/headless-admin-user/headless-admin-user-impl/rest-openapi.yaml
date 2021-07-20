@@ -300,6 +300,10 @@ components:
                         The number of this organization's associated users.
                     readOnly: true
                     type: integer
+                organizationAccounts:
+                    items:
+                        $ref: "#/components/schemas/Account"
+                    type: array
                 organizationContactInformation:
                     description:
                         The organization's contact information, which includes email addresses, postal addresses, phone
@@ -2340,6 +2344,53 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        ""
+            tags: ["Account"]
+        get:
+            description:
+                Retrieves the organization's members (accounts). Results can be paginated, filtered, searched, and
+                sorted.
+            operationId: getOrganizationAccountsPage
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
                     description:
                         ""
             tags: ["Account"]

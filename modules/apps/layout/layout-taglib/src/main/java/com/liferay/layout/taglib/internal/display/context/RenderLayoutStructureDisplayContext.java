@@ -367,12 +367,12 @@ public class RenderLayoutStructureDisplayContext {
 							infoItemDetails.getClassName());
 
 				if (infoItemFieldValuesProvider != null) {
-					InfoFieldValue<Object> infoItemFieldValue =
+					InfoFieldValue<Object> infoFieldValue =
 						infoItemFieldValuesProvider.getInfoFieldValue(
 							infoItem, mappedField);
 
-					if (infoItemFieldValue != null) {
-						Object object = infoItemFieldValue.getValue(
+					if (infoFieldValue != null) {
+						Object object = infoFieldValue.getValue(
 							LocaleUtil.getDefault());
 
 						if (object instanceof String) {
@@ -417,12 +417,12 @@ public class RenderLayoutStructureDisplayContext {
 						infoItemIdentifier);
 
 					if (infoItem != null) {
-						InfoFieldValue<Object> infoItemFieldValue =
+						InfoFieldValue<Object> infoFieldValue =
 							infoItemFieldValuesProvider.getInfoFieldValue(
 								infoItem, fieldId);
 
-						if (infoItemFieldValue != null) {
-							Object object = infoItemFieldValue.getValue(
+						if (infoFieldValue != null) {
+							Object object = infoFieldValue.getValue(
 								LocaleUtil.getDefault());
 
 							if (object instanceof String) {
@@ -978,12 +978,12 @@ public class RenderLayoutStructureDisplayContext {
 							infoItemDetails.getClassName());
 
 				if (infoItemFieldValuesProvider != null) {
-					InfoFieldValue<Object> infoItemFieldValue =
+					InfoFieldValue<Object> infoFieldValue =
 						infoItemFieldValuesProvider.getInfoFieldValue(
 							infoItem, mappedField);
 
-					if (infoItemFieldValue != null) {
-						Object object = infoItemFieldValue.getValue(
+					if (infoFieldValue != null) {
+						Object object = infoFieldValue.getValue(
 							LocaleUtil.getDefault());
 
 						if (object instanceof JSONObject) {
@@ -1034,12 +1034,12 @@ public class RenderLayoutStructureDisplayContext {
 						infoItemIdentifier);
 
 					if (infoItem != null) {
-						InfoFieldValue<Object> infoItemFieldValue =
+						InfoFieldValue<Object> infoFieldValue =
 							infoItemFieldValuesProvider.getInfoFieldValue(
 								infoItem, fieldId);
 
-						if (infoItemFieldValue != null) {
-							Object object = infoItemFieldValue.getValue(
+						if (infoFieldValue != null) {
+							Object object = infoFieldValue.getValue(
 								LocaleUtil.getDefault());
 
 							if (object instanceof JSONObject) {

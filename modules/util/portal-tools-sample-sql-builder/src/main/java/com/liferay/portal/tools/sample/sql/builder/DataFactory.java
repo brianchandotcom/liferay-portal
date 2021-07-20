@@ -2814,7 +2814,7 @@ public class DataFactory {
 
 		// PK fields
 
-		cpOptionValueModel.setCPOptionId(_counter.get());
+		cpOptionValueModel.setCPOptionValueId(_counter.get());
 
 		// Audit fields
 

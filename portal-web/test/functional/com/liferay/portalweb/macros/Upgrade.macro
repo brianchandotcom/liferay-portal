@@ -2437,8 +2437,8 @@ definition {
 			fieldLabel = "HTML Title",
 			text = "Page HTML Title Edit");
 
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
+		PortletEntry.inputText(
+			fieldLabel = "Description",
 			text = "Page Description Edit");
 
 		Button.clickSave();

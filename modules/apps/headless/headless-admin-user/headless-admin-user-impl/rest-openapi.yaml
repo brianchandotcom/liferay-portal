@@ -274,9 +274,19 @@ components:
                     description:
                         The organization's name.
                     type: string
+                numberOfAccounts:
+                    description:
+                        The number of this organization's associated accounts.
+                    readOnly: true
+                    type: integer
                 numberOfOrganizations:
                     description:
                         The number of this organization's child organizations.
+                    readOnly: true
+                    type: integer
+                numberOfUsers:
+                    description:
+                        The number of this organization's associated users.
                     readOnly: true
                     type: integer
                 organizationContactInformation:

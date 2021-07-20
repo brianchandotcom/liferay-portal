@@ -239,8 +239,12 @@ public class GitWorkingDirectory {
 	}
 
 	public void cherryPick(LocalGitCommit localGitCommit) {
+		cherryPick(localGitCommit.getSHA());
+	}
+
+	public void cherryPick(String localGitCommitSHA) {
 		String cherryPickCommand = JenkinsResultsParserUtil.combine(
-			"git cherry-pick " + localGitCommit.getSHA());
+			"git cherry-pick " + localGitCommitSHA);
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
@@ -249,8 +253,8 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to cherry pick commit ", localGitCommit.getSHA(),
-					"\n", executionResult.getStandardError()));
+					"Unable to cherry pick commit ", localGitCommitSHA, "\n",
+					executionResult.getStandardError()));
 		}
 	}
 

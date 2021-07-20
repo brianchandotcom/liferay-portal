@@ -31,38 +31,6 @@ public abstract class BaseLocalGitRepository
 	extends BaseGitRepository implements LocalGitRepository {
 
 	@Override
-	public void cherryPick(String sha) {
-		String command = JenkinsResultsParserUtil.combine(
-			"git cherry-pick " + sha);
-
-		GitUtil.ExecutionResult executionResult = GitUtil.executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 3,
-			getDirectory(), command);
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to cherry pick commit ", sha, "\n",
-					executionResult.getStandardError()));
-		}
-	}
-
-	@Override
-	public boolean containsSHA(String sha) {
-		String command = "git cat-file -t " + sha;
-
-		GitUtil.ExecutionResult executionResult = GitUtil.executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 3,
-			getDirectory(), command);
-
-		if (executionResult.getExitValue() == 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;

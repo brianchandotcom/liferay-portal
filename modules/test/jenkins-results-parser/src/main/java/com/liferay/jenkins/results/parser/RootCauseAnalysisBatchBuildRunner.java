@@ -44,8 +44,11 @@ public class RootCauseAnalysisBatchBuildRunner
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
 
+		GitWorkingDirectory gitWorkingDirectory =
+			portalWorkspaceGitRepository.getGitWorkingDirectory();
+
 		for (String portalCherryPickSHA : portalCherryPickSHAs) {
-			portalWorkspaceGitRepository.cherryPick(portalCherryPickSHA);
+			gitWorkingDirectory.cherryPick(portalCherryPickSHA);
 		}
 	}
 

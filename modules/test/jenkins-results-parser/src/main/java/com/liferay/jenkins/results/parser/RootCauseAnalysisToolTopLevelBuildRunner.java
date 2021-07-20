@@ -99,13 +99,16 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		PortalWorkspace portalWorkspace = getWorkspace();
 
-		WorkspaceGitRepository workspaceGitRepository =
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+
+		GitWorkingDirectory gitWorkingDirectory =
+			portalWorkspaceGitRepository.getGitWorkingDirectory();
 
 		List<String> portalBranchSHAs = _getPortalBranchSHAs();
 
 		for (String portalBranchSHA : portalBranchSHAs) {
-			if (workspaceGitRepository.containsSHA(portalBranchSHA)) {
+			if (gitWorkingDirectory.localSHAExists(portalBranchSHA)) {
 				continue;
 			}
 
@@ -126,7 +129,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		List<String> portalCherryPickSHAs = _getPortalCherryPickSHAs();
 
 		for (String portalCherryPickSHA : portalCherryPickSHAs) {
-			if (workspaceGitRepository.containsSHA(portalCherryPickSHA)) {
+			if (gitWorkingDirectory.localSHAExists(portalCherryPickSHA)) {
 				continue;
 			}
 
@@ -150,7 +153,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		commitSHAs.addAll(portalCherryPickSHAs);
 
 		try {
-			workspaceGitRepository.storeCommitHistory(commitSHAs);
+			portalWorkspaceGitRepository.storeCommitHistory(commitSHAs);
 		}
 		catch (Exception exception) {
 			failBuildRunner("Failed to store the commit history", exception);

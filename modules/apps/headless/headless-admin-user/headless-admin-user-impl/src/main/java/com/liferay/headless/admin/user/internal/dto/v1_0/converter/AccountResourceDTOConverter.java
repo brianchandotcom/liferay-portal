@@ -78,6 +78,7 @@ public class AccountResourceDTOConverter
 
 		return new Account() {
 			{
+				actions = dtoConverterContext.getActions();
 				description = accountEntry.getDescription();
 				domains = StringUtil.split(accountEntry.getDomains());
 				externalReferenceCode = accountEntry.getExternalReferenceCode();

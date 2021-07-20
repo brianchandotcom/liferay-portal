@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -243,96 +245,101 @@ public class AccountResourceImpl
 				_getStatus(account), null));
 	}
 
-	private Map<String, Map<String, String>> _getActions(Long accountEntryId) {
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"create-organization-accounts",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"postOrganizationAccounts",
-				_accountEntryModelResourcePermission)
-		).put(
-			"create-organization-accounts-by-external-reference-code",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"postOrganizationAccountsByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"delete",
-			addAction(
-				ActionKeys.DELETE, accountEntryId, "deleteAccount",
-				_accountEntryModelResourcePermission)
-		).put(
-			"delete-by-external-reference-code",
-			addAction(
-				ActionKeys.DELETE, accountEntryId,
-				"deleteAccountByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"delete-organization-accounts",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"deleteOrganizationAccounts",
-				_accountEntryModelResourcePermission)
-		).put(
-			"delete-organization-accounts-by-external-reference-code",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"deleteOrganizationAccountsByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"get",
-			addAction(
-				ActionKeys.VIEW, accountEntryId, "getAccount",
-				_accountEntryModelResourcePermission)
-		).put(
-			"get-by-external-reference-code",
-			addAction(
-				ActionKeys.VIEW, accountEntryId,
-				"getAccountByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"move-organization-accounts",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"patchOrganizationMoveAccounts",
-				_accountEntryModelResourcePermission)
-		).put(
-			"move-organization-accounts-by-external-reference-code",
-			addAction(
-				AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
-				"patchOrganizationMoveAccountsByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"replace",
-			addAction(
-				ActionKeys.UPDATE, accountEntryId, "putAccount",
-				_accountEntryModelResourcePermission)
-		).put(
-			"replace-by-external-reference-code",
-			addAction(
-				ActionKeys.UPDATE, accountEntryId,
-				"putAccountByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update",
-			addAction(
-				ActionKeys.UPDATE, accountEntryId, "patchAccount",
-				_accountEntryModelResourcePermission)
-		).put(
-			"update-by-external-reference-code",
-			addAction(
-				ActionKeys.UPDATE, accountEntryId,
-				"patchAccountByExternalReferenceCode",
-				_accountEntryModelResourcePermission)
-		).build();
-	}
-
 	private String[] _getDomains(Account account) {
 		return Optional.ofNullable(
 			account.getDomains()
 		).orElse(
 			new String[0]
 		);
+	}
+
+	private DTOConverterContext _getDTOConverterContext(long accountEntryId) {
+		return new DefaultDTOConverterContext(
+			contextAcceptLanguage.isAcceptAllLanguages(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create-organization-accounts",
+				addAction(
+					AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+					"postOrganizationAccounts",
+					_accountEntryModelResourcePermission)
+			).put(
+				"create-organization-accounts-by-external-reference-code",
+				addAction(
+					AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+					"postOrganizationAccountsByExternalReferenceCode",
+					_accountEntryModelResourcePermission)
+			).put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, accountEntryId, "deleteAccount",
+					_accountEntryModelResourcePermission)
+			).put(
+				"delete-by-external-reference-code",
+				addAction(
+					ActionKeys.DELETE, accountEntryId,
+					"deleteAccountByExternalReferenceCode",
+					_accountEntryModelResourcePermission)
+			).put(
+				"delete-organization-accounts",
+				addAction(
+					AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+					"deleteOrganizationAccounts",
+					_accountEntryModelResourcePermission)
+			).put(
+				"delete-organization-accounts-by-external-reference-code",
+				addAction(
+					AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+					"deleteOrganizationAccountsByExternalReferenceCode",
+					_accountEntryModelResourcePermission)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, accountEntryId, "getAccount",
+					_accountEntryModelResourcePermission)
+			).put(
+				"get-by-external-reference-code",
+				addAction(
+					ActionKeys.VIEW, accountEntryId,
+					"getAccountByExternalReferenceCode",
+					_accountEntryModelResourcePermission)
+			).put(
+				"move-organization-accounts",
+				addAction(
+					AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+					"patchOrganizationMoveAccounts",
+					_accountEntryModelResourcePermission)
+			).put(
+				"move-organization-accounts-by-external-reference-code",
+				addAction(
+					AccountActionKeys.MANAGE_ORGANIZATIONS, accountEntryId,
+					"patchOrganizationMoveAccountsByExternalReferenceCode",
+					_accountEntryModelResourcePermission)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.UPDATE, accountEntryId, "putAccount",
+					_accountEntryModelResourcePermission)
+			).put(
+				"replace-by-external-reference-code",
+				addAction(
+					ActionKeys.UPDATE, accountEntryId,
+					"putAccountByExternalReferenceCode",
+					_accountEntryModelResourcePermission)
+			).put(
+				"update",
+				addAction(
+					ActionKeys.UPDATE, accountEntryId, "patchAccount",
+					_accountEntryModelResourcePermission)
+			).put(
+				"update-by-external-reference-code",
+				addAction(
+					ActionKeys.UPDATE, accountEntryId,
+					"patchAccountByExternalReferenceCode",
+					_accountEntryModelResourcePermission)
+			).build(),
+			null, contextHttpServletRequest, accountEntryId,
+			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+			contextUser);
 	}
 
 	private long[] _getOrganizationIds(Account account) {
@@ -362,11 +369,8 @@ public class AccountResourceImpl
 	}
 
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {
-		Account account = _accountResourceDTOConverter.toDTO(accountEntry);
-
-		account.setActions(_getActions(accountEntry.getAccountEntryId()));
-
-		return account;
+		return _accountResourceDTOConverter.toDTO(
+			_getDTOConverterContext(accountEntry.getAccountEntryId()));
 	}
 
 	@Reference

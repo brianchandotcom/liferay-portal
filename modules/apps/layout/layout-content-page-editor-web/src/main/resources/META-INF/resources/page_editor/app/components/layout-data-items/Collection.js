@@ -173,6 +173,7 @@ const DEFAULT_COLLECTION = {
 	fakeCollection: true,
 	items: [{}],
 	length: 1,
+	totalNumberOfItems: 1,
 };
 
 const Collection = React.forwardRef(({children, item}, ref) => {
@@ -187,7 +188,10 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 	const [loading, setLoading] = useState(false);
 
 	const totalPages = Math.ceil(
-		collectionConfig.numberOfItems / collectionConfig.numberOfItemsPerPage
+		Math.min(
+			collectionConfig.numberOfItems,
+			collection.totalNumberOfItems
+		) / collectionConfig.numberOfItemsPerPage
 	);
 
 	useEffect(() => {

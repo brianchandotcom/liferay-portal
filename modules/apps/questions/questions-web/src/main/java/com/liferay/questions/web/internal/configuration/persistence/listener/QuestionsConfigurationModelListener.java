@@ -198,13 +198,13 @@ public class QuestionsConfigurationModelListener
 
 		String name = "QUESTIONS_SERVICE_ACCESS_POLICY";
 
-		if (!enableAnonymousRead) {
-			SAPEntry sapEntry = _sapEntryService.getSAPEntry(
-				CompanyThreadLocal.getCompanyId(), name);
+		SAPEntry sapEntry = _sapEntryService.fetchSAPEntry(
+			CompanyThreadLocal.getCompanyId(), name);
 
+		if (!enableAnonymousRead && (_sapEntryService != null)) {
 			_sapEntryService.deleteSAPEntry(sapEntry);
 		}
-		else {
+		else if (enableAnonymousRead && (_sapEntryService == null)) {
 			String mbPackage = "com.liferay.message.boards.service.";
 
 			_sapEntryService.addSAPEntry(

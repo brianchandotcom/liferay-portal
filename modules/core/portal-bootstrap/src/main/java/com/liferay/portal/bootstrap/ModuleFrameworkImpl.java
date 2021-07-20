@@ -423,17 +423,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private Bundle _addBundle(
-			String location, InputStream inputStream, boolean checkPermission)
+	private Bundle _addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
 		if (_framework == null) {
 			throw new IllegalStateException(
 				"OSGi framework is not initialized");
-		}
-
-		if (checkPermission) {
-			_checkPermission();
 		}
 
 		BundleContext bundleContext = _framework.getBundleContext();
@@ -1130,7 +1125,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				_log.debug("Adding initial bundle " + location);
 			}
 
-			Bundle bundle = _addBundle(location, inputStream, false);
+			Bundle bundle = _addBundle(location, inputStream);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Added initial bundle " + bundle);

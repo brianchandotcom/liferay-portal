@@ -8773,7 +8773,9 @@ public class PortalImpl implements Portal {
 		String siteGroupFriendlyURL, String layoutFriendlyURL,
 		String groupFriendlyURL) {
 
-		if (groupFriendlyURL.contains(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+		if (groupFriendlyURL.contains(
+				_PUBLIC_GROUP_SERVLET_MAPPING + StringPool.SLASH)) {
+
 			if (groupFriendlyURL.contains(
 					StringBundler.concat(
 						_PUBLIC_GROUP_SERVLET_MAPPING, siteGroupFriendlyURL,

@@ -68,26 +68,21 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			return null;
 		}
 
-		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
-				layoutDisplayPageObjectProvider.getGroupId(),
-				layoutDisplayPageObjectProvider.getClassNameId(),
-				layoutDisplayPageObjectProvider.getClassPK(),
-				layoutDisplayPageObjectProvider.getClassTypeId())) {
+		String friendlyURL = _getFriendlyURL(
+			themeDisplay.getScopeGroupId(), layoutDisplayPageProvider,
+			layoutDisplayPageObjectProvider, locale, themeDisplay);
 
-			return null;
+		if ((friendlyURL != null) ||
+			(themeDisplay.getScopeGroupId() ==
+				layoutDisplayPageObjectProvider.getGroupId())) {
+
+			return friendlyURL;
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(
-			_getGroupFriendlyURL(
-				layoutDisplayPageObjectProvider.getGroupId(), locale,
-				themeDisplay));
-
-		sb.append(layoutDisplayPageProvider.getURLSeparator());
-		sb.append(layoutDisplayPageObjectProvider.getURLTitle(locale));
-
-		return sb.toString();
+		return _getFriendlyURL(
+			layoutDisplayPageObjectProvider.getGroupId(),
+			layoutDisplayPageProvider, layoutDisplayPageObjectProvider, locale,
+			themeDisplay);
 	}
 
 	@Override
@@ -97,6 +92,30 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		return getFriendlyURL(
 			className, classPK, themeDisplay.getLocale(), themeDisplay);
+	}
+
+	private String _getFriendlyURL(
+			long groupId,
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+			Locale locale, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
+				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId())) {
+
+			return null;
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_getGroupFriendlyURL(groupId, locale, themeDisplay));
+		sb.append(layoutDisplayPageProvider.getURLSeparator());
+		sb.append(layoutDisplayPageObjectProvider.getURLTitle(locale));
+
+		return sb.toString();
 	}
 
 	private String _getGroupFriendlyURL(

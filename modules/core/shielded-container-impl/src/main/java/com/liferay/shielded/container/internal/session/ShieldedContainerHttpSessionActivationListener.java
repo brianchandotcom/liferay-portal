@@ -58,6 +58,8 @@ public class ShieldedContainerHttpSessionActivationListener
 		ClassLoader classLoader = (ClassLoader)servletContext.getAttribute(
 			ShieldedContainerClassLoader.NAME);
 
+		RuntimeException runtimeException = null;
+
 		for (String scrubbedName : scrubbedNames) {
 			try {
 				httpSession.setAttribute(
@@ -67,9 +69,18 @@ public class ShieldedContainerHttpSessionActivationListener
 						classLoader));
 			}
 			catch (Exception exception) {
-				throw new RuntimeException(
-					"Unable to recover scrubbed value", exception);
+				if (runtimeException == null) {
+					runtimeException = new RuntimeException(
+						"Unable to recover scrubbed value", exception);
+				}
+				else {
+					runtimeException.addSuppressed(exception);
+				}
 			}
+		}
+
+		if (runtimeException != null) {
+			throw runtimeException;
 		}
 	}
 

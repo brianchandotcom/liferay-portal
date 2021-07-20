@@ -230,7 +230,8 @@ public class WikiPageResourceImpl
 
 		return _toWikiPage(
 			_wikiPageService.addPage(
-				wikiNodeId, wikiPage.getHeadline(), wikiPage.getContent(),
+				wikiPage.getExternalReferenceCode(), wikiNodeId,
+				wikiPage.getHeadline(), wikiPage.getContent(),
 				wikiPage.getHeadline(), true,
 				_toFormat(wikiPage.getEncodingFormat()), null, null,
 				serviceContext));
@@ -259,9 +260,10 @@ public class WikiPageResourceImpl
 
 		return _toWikiPage(
 			_wikiPageLocalService.addPage(
-				contextUser.getUserId(), parentWikiPage.getNodeId(),
-				wikiPage.getHeadline(), WikiPageConstants.VERSION_DEFAULT,
-				wikiPage.getContent(), wikiPage.getHeadline(), false,
+				wikiPage.getExternalReferenceCode(), contextUser.getUserId(),
+				parentWikiPage.getNodeId(), wikiPage.getHeadline(),
+				WikiPageConstants.VERSION_DEFAULT, wikiPage.getContent(),
+				wikiPage.getHeadline(), false,
 				_toFormat(wikiPage.getEncodingFormat()), false,
 				parentWikiPage.getTitle(), null, serviceContext));
 	}

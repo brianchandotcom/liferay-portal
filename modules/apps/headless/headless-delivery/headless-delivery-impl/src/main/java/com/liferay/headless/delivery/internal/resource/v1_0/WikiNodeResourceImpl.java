@@ -133,7 +133,8 @@ public class WikiNodeResourceImpl
 
 		return _toWikiNode(
 			_wikiNodeService.addNode(
-				wikiNode.getName(), wikiNode.getDescription(),
+				wikiNode.getExternalReferenceCode(), wikiNode.getName(),
+				wikiNode.getDescription(),
 				ServiceContextRequestUtil.createServiceContext(
 					siteId, contextHttpServletRequest, null)));
 	}
@@ -147,17 +148,17 @@ public class WikiNodeResourceImpl
 			_wikiNodeLocalService.fetchWikiNodeByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
-		if (serviceBuilderWikiNode == null) {
-			return _toWikiNode(
-				_wikiNodeService.addNode(
-					externalReferenceCode, wikiNode.getName(),
-					wikiNode.getDescription(),
-					ServiceContextRequestUtil.createServiceContext(
-						siteId, contextHttpServletRequest,
-						wikiNode.getViewableByAsString())));
+		if (serviceBuilderWikiNode != null) {
+			return _updateWikiNode(serviceBuilderWikiNode, wikiNode);
 		}
 
-		return _updateWikiNode(serviceBuilderWikiNode, wikiNode);
+		return _toWikiNode(
+			_wikiNodeService.addNode(
+				externalReferenceCode, wikiNode.getName(),
+				wikiNode.getDescription(),
+				ServiceContextRequestUtil.createServiceContext(
+					siteId, contextHttpServletRequest,
+					wikiNode.getViewableByAsString())));
 	}
 
 	@Override

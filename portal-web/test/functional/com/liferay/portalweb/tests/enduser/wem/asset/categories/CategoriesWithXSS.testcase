@@ -128,7 +128,7 @@ definition {
 		}
 
 		task ("View the selected category in Account Settings") {
-			AssertElementPresent(
+			AssertVisible(
 				key_categoryName = '''><img src=x onerror=alert()>''',
 				locator1 = "AssetCategorization#CATEGORY");
 		}

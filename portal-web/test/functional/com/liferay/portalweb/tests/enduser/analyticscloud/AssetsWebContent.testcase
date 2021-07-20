@@ -37,7 +37,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
-	@ignore = "true"
 	@priority = "5"
 	test CanNavigateToWebContentOverviewPage {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

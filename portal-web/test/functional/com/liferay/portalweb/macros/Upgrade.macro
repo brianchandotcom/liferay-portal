@@ -1798,6 +1798,16 @@ definition {
 
 		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.deleteCP(
+			assetName = "DM Document Title With DM Type",
+			assetType = "Document");
+
 		DepotNavigator.openDepotAdmin();
 
 		Depot.deleteCP(depotName = "Edited Test Depot Name");

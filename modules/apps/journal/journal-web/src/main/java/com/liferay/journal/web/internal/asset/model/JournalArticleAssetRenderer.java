@@ -657,21 +657,20 @@ public class JournalArticleAssetRenderer
 	private boolean _isShowDisplayPage(long groupId, JournalArticle article)
 		throws Exception {
 
-		if (Validator.isNotNull(article.getLayoutUuid())) {
-			return false;
-		}
-
 		AssetRendererFactory<JournalArticle> assetRendererFactory =
 			getAssetRendererFactory();
 
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		if (AssetDisplayPageUtil.hasAssetDisplayPage(groupId, assetEntry)) {
-			return true;
+		boolean hasDisplayPage = AssetDisplayPageUtil.hasAssetDisplayPage(
+			groupId, assetEntry);
+
+		if (Validator.isNull(article.getLayoutUuid()) && !hasDisplayPage) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

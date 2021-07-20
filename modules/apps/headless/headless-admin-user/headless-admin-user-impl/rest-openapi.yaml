@@ -43,6 +43,11 @@ components:
                     type: integer
                 name:
                     type: string
+                numberOfUsers:
+                    description:
+                        The number of this account's associated users.
+                    readOnly: true
+                    type: integer
                 organizationIds:
                     items:
                         format: int64

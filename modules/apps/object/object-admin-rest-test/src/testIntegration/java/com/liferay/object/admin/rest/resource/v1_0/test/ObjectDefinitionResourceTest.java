@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -71,6 +72,12 @@ public class ObjectDefinitionResourceTest
 
 		Assert.assertEquals(
 			totalCount + 1, objectDefinitionsPage.getTotalCount());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetObjectDefinitionNotFound() {
 	}
 
 	@Override

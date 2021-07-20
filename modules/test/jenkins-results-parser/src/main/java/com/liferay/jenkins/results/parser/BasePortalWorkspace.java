@@ -179,22 +179,17 @@ public abstract class BasePortalWorkspace
 
 			Matcher matcher = _portalBatchNamePattern.matcher(portalBatchName);
 
+			String databaseName = "mysql57";
 			String databaseType = "mysql";
 
 			if (matcher.find()) {
-				Properties buildProperties = null;
-
-				try {
-					buildProperties =
-						JenkinsResultsParserUtil.getBuildProperties();
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-
-				String databaseName = matcher.group("databaseName");
-
+				databaseName = matcher.group("databaseName");
 				databaseType = matcher.group("databaseType");
+			}
+
+			try {
+				Properties buildProperties =
+					JenkinsResultsParserUtil.getBuildProperties();
 
 				portalTestProperties.setProperty(
 					JenkinsResultsParserUtil.combine(
@@ -212,6 +207,9 @@ public abstract class BasePortalWorkspace
 						JenkinsResultsParserUtil.combine(
 							"database.docker.run.options[", databaseName,
 							"]")));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 
 			String databaseHost = JenkinsResultsParserUtil.combine(

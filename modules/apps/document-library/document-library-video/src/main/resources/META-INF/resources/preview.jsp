@@ -20,6 +20,7 @@
 	outputKey="document_library_video_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/document-library-preview-css/css/main.css") %>" rel="stylesheet" />
 </liferay-util:html-top>
 
 <div class="preview-file video-preview video-preview-framed">

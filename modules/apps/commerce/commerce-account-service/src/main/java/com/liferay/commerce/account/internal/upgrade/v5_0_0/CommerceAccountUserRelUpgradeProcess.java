@@ -53,8 +53,6 @@ public class CommerceAccountUserRelUpgradeProcess extends UpgradeProcess {
 				_accountEntryUserRelLocalService.addAccountEntryUserRel(
 					accountEntryId, accountUserId);
 			}
-
-			runSQL("truncate table CommerceAccountUserRel");
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(oldCompanyId);

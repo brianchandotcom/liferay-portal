@@ -128,8 +128,6 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 					companyId, WorkflowConstants.DEFAULT_GROUP_ID,
 					CommerceAccount.class.getName(), accountEntryId);
 			}
-
-			runSQL("truncate table CommerceAccount");
 		}
 
 		long accountEntryClassNameId = _classNameLocalService.getClassNameId(

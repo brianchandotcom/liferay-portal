@@ -57,8 +57,6 @@ public class CommerceAccountOrganizationRelUpgradeProcess
 					addAccountEntryOrganizationRel(
 						accountEntryId, organizationId);
 			}
-
-			runSQL("truncate table CommerceAccountOrganizationRel");
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(oldCompanyId);

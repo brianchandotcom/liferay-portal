@@ -144,8 +144,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		Locale locale = portal.getLocale(httpServletRequest);
 		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
-			groupId, layoutDisplayPageObjectProvider,
-			layoutDisplayPageProvider);
+			layoutDisplayPageObjectProvider, layoutDisplayPageProvider);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
@@ -205,8 +204,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
-			groupId, layoutDisplayPageObjectProvider,
-			layoutDisplayPageProvider);
+			layoutDisplayPageObjectProvider, layoutDisplayPageProvider);
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");
@@ -333,13 +331,13 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	}
 
 	private Layout _getLayoutDisplayPageObjectProviderLayout(
-		long groupId,
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getGroupId(),
+				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK());
 
 		if (assetDisplayPageEntry != null) {
@@ -373,7 +371,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 				if (parentLayoutDisplayPageObjectProvider != null) {
 					return _getLayoutDisplayPageObjectProviderLayout(
-						groupId, parentLayoutDisplayPageObjectProvider,
+						parentLayoutDisplayPageObjectProvider,
 						layoutDisplayPageProvider);
 				}
 			}
@@ -381,7 +379,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getGroupId(),
+				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassTypeId());
 
 		if (layoutPageTemplateEntry != null) {

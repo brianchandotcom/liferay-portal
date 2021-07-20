@@ -12,6 +12,20 @@ $a11y-panel-width: 320px;
 	.page-editor__sidebar__content {
 		right: $a11y-panel-width + 42px;
 	}
+
+	.modal-dialog {
+		right: $a11y-panel-width + 45px;
+	}
+
+	.applications-menu-modal {
+		.modal-body {
+			padding-right: $a11y-panel-width;
+		}
+
+		.modal-dialog {
+			right: inherit;
+		}
+	}
 }
 
 .a11y-dropdown {

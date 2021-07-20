@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>SELECT_ADDRESS_RADIO</td>
-	<td>//input[contains(@name,'selectAddress')]//following-sibling::span[normalize-space()='${key_addressName}']</td>
+	<td>//input[contains(@name,'selectAddress')]//following-sibling::span/span[normalize-space()='${key_addressName}']</td>
 	<td></td>
 </tr>
 <tr>

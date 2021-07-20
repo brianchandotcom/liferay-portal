@@ -28,6 +28,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <liferay-theme:defineObjects />
 
 <%
+long channelId = (long)request.getAttribute("liferay-commerce:account-selector:channelId");
 String createNewOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:createNewOrderURL");
 CurrentCommerceAccountModel currentAccount = (CurrentCommerceAccountModel)request.getAttribute("liferay-commerce:account-selector:currentAccount");
 CurrentCommerceOrderModel currentOrder = (CurrentCommerceOrderModel)request.getAttribute("liferay-commerce:account-selector:currentOrder");

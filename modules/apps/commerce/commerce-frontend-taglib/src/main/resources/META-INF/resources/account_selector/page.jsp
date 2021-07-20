@@ -23,6 +23,7 @@
 		'<%= accountSelectorId %>',
 		'<%= accountSelectorId %>',
 		{
+			channelId: '<%= channelId %>',
 			createNewOrderURL: '<%= createNewOrderURL %>',
 			currentAccount: <%= Validator.isNotNull(currentAccount) ? jsonSerializer.serializeDeep(currentAccount) : null %>,
 			currentOrder: <%= Validator.isNotNull(currentOrder) ? jsonSerializer.serializeDeep(currentOrder) : null %>,

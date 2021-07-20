@@ -30,6 +30,7 @@ import OrdersListView from './views/OrdersListView';
 
 function AccountSelector({
 	alignmentPosition,
+	channelId,
 	createNewOrderURL,
 	currentAccount: account,
 	currentOrder: order,
@@ -109,6 +110,7 @@ function AccountSelector({
 
 				{currentView === VIEWS.ORDERS_LIST && (
 					<OrdersListView
+						channelId={channelId}
 						createOrderURL={createNewOrderURL}
 						currentAccount={currentAccount}
 						disabled={!active}
@@ -123,6 +125,7 @@ function AccountSelector({
 
 AccountSelector.propTypes = {
 	alignmentPosition: PropTypes.number,
+	channelId: PropTypes.number.isRequired,
 	createNewOrderURL: PropTypes.string.isRequired,
 	currentAccount: PropTypes.shape({
 		id: PropTypes.number,

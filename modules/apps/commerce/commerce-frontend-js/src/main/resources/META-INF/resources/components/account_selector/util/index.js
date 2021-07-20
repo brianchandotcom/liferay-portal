@@ -21,10 +21,6 @@ export function getInitials(name) {
 		.join('');
 }
 
-export function composeFilterByAccountId(id) {
-	return `sort=modifiedDate:desc&filter=(accountId/any(x:(x eq ${id})))`;
-}
-
 export function selectAccount(id, actionURL) {
 	const endpointURL = new URL(actionURL, Liferay.ThemeDisplay.getPortalURL());
 

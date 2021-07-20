@@ -24,12 +24,29 @@ function resolveCartsPath(basePath = '', cartId) {
 }
 
 function resolveChannelsPath(basePath = '', channelId) {
-	return `${basePath}${VERSION}${CHANNELS_PATH}/${channelId}${CARTS_PATH}`;
+	return `${basePath}${VERSION}${CHANNELS_PATH}/${channelId}`;
+}
+
+function resolveCartsByAccountIdAndChannelIdPath(
+	basePath = '',
+	accountId,
+	channelId
+) {
+	return `${resolveChannelsPath(
+		basePath,
+		channelId
+	)}/account/${accountId}${CARTS_PATH}`;
 }
 
 export default (basePath) => ({
+	cartsByAccountIdAndChannelIdURL: (accountId, channelId) =>
+		resolveCartsByAccountIdAndChannelIdPath(basePath, accountId, channelId),
+
 	createCartByChannelId: (channelId, json) =>
-		AJAX.POST(resolveChannelsPath(basePath, channelId), json),
+		AJAX.POST(
+			`${resolveChannelsPath(basePath, channelId)}${CARTS_PATH}`,
+			json
+		),
 
 	createCouponCodeByCartId: (cartId, json) =>
 		AJAX.POST(`${resolveCartsPath(basePath, cartId)}/coupon-code`, json),
@@ -43,8 +60,14 @@ export default (basePath) => ({
 			resolveCartsPath(basePath, cartId) + '?nestedFields=cartItems'
 		),
 
-	getCartsByChannelId: (channelId) =>
-		AJAX.GET(resolveChannelsPath(basePath, channelId)),
+	getCartsByAccountIdAndChannelId: (accountId, channelId) =>
+		AJAX.GET(
+			resolveCartsByAccountIdAndChannelIdPath(
+				basePath,
+				accountId,
+				channelId
+			)
+		),
 
 	replaceCartById: (cartId, json) =>
 		AJAX.PUT(resolveCartsPath(basePath, cartId), json),

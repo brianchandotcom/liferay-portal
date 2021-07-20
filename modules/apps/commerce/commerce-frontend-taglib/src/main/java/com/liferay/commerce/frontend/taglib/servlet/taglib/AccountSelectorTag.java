@@ -96,6 +96,10 @@ public class AccountSelectorTag extends IncludeTag {
 				(CommerceContext)parentHttpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
+			httpServletRequest.setAttribute(
+				"liferay-commerce:account-selector:channelId",
+				commerceContext.getCommerceChannelId());
+
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
 

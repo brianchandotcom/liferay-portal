@@ -105,7 +105,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-132705."
+	@description = "This is a test for LPS-132705. The user could select a category with XSS name in Account Settings."
 	@priority = "4"
 	@uitest
 	test SelectCategoryWithXSSNameInAccountSettings {

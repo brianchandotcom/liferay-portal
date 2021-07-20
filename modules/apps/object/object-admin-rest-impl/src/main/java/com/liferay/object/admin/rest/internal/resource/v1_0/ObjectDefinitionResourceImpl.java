@@ -17,11 +17,17 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,8 +47,7 @@ public class ObjectDefinitionResourceImpl
 	public void deleteObjectDefinition(Long objectDefinitionId)
 		throws Exception {
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinitionId);
+		_objectDefinitionService.deleteObjectDefinition(objectDefinitionId);
 	}
 
 	@Override
@@ -50,21 +55,20 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		return _toObjectDefinition(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId));
+			_objectDefinitionService.getObjectDefinition(objectDefinitionId));
 	}
 
 	@Override
 	public Page<ObjectDefinition> getObjectDefinitionsPage(
-		Pagination pagination) {
+			Pagination pagination)
+		throws PortalException {
 
 		return Page.of(
 			transform(
-				_objectDefinitionLocalService.getObjectDefinitions(
+				_objectDefinitionService.getObjectDefinitions(
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toObjectDefinition),
-			pagination,
-			_objectDefinitionLocalService.getObjectDefinitionsCount());
+			pagination, _objectDefinitionService.getObjectDefinitionsCount());
 	}
 
 	@Override
@@ -74,14 +78,14 @@ public class ObjectDefinitionResourceImpl
 
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =
-				_objectDefinitionLocalService.addCustomObjectDefinition(
+				_objectDefinitionService.addCustomObjectDefinition(
 					contextUser.getUserId(), objectDefinition.getName(),
 					transformToList(
 						objectDefinition.getObjectFields(),
 						this::_toObjectField));
 
 		return _toObjectDefinition(
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
+			_objectDefinitionService.publishCustomObjectDefinition(
 				serviceBuilderObjectDefinition.getUserId(),
 				serviceBuilderObjectDefinition.getObjectDefinitionId()));
 	}
@@ -105,8 +109,33 @@ public class ObjectDefinitionResourceImpl
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 
+		HashMapBuilder.HashMapWrapper<String, Map<String, String>> mapBuilder =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
+					"getObjectDefinition",
+					_objectDefinitionModelResourcePermission)
+			).put(
+				"update",
+				addAction(
+					ActionKeys.UPDATE, objectDefinition.getObjectDefinitionId(),
+					"postObjectDefinition",
+					_objectDefinitionModelResourcePermission)
+			);
+
+		if (!objectDefinition.isSystem()) {
+			mapBuilder.put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, objectDefinition.getObjectDefinitionId(),
+					"deleteObjectDefinition",
+					_objectDefinitionModelResourcePermission));
+		}
+
 		return new ObjectDefinition() {
 			{
+				actions = mapBuilder.build();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
 				id = objectDefinition.getObjectDefinitionId();
@@ -140,8 +169,14 @@ public class ObjectDefinitionResourceImpl
 		return serviceBuilderObjectField;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<com.liferay.object.model.ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
+
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

@@ -1,5 +1,13 @@
 definition {
 
+	macro searchSubmissions {
+		Type(
+			locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BAR",
+			value1 = "${searchValue}");
+
+		Click(locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BUTTON");
+	}
+
 	macro viewSubmissionStatus {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -8,14 +16,6 @@ definition {
 		AssertElementPresent(
 			key_taskName = "${submissionTitle}",
 			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
-	}
-	
-	macro searchSubmissions {
-		Type(
-			locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BAR",
-			value1 = "${searchValue}");
-
-		Click(locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BUTTON");
 	}
 
 }

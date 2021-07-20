@@ -2,11 +2,13 @@
 <head>
 <title>WorkflowSubmissions</title>
 </head>
+
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">WorkflowSubmissions</td></tr>
 </thead>
+
 <tbody>
 <tr>
 	<td>SUBMISSIONS_TASK_NAME</td>
@@ -41,16 +43,37 @@
 <tr>
 	<td>SUBMISSION_CLEAR_SEARCH_BUTTON</td>
 	<td>//div//a[text()='Clear']</td>
-
-<tbody>
+	<td></td>
+</tr>
+<tr>
+	<td>END_DATE_COLUMN_TEXT</td>
+	<td>//td[contains(@class,'lfr-end-date-column')]//a[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_HEADER</td>
+	<td>//span[contains(@data-qa-id,'headerTitle') and contains(text(),'${key_header}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_NAME_COLUMN</td>
+	<td>//td//a[contains(text(),'${key_title}')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ENTRY_TASK_ROW_NUMBER_ELLIPSIS</td>
 	<td>xpath=(//*[@data-qa-id='row']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_INDEX</td>
+	<td>//th[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBMISSIONS_DETAILS_PAGE_ELLIPSIS</td>
 	<td>//*[contains(@class,'icon-ellipsis-v')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>EMPTY_MESSAGE</td>

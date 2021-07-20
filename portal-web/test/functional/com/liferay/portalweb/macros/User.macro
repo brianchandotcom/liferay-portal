@@ -1984,11 +1984,21 @@ definition {
 
 		User._clickSignInButton(localization = "${localization}");
 
-		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
+		if (isSet(localizedAgree)) {
+			User.acceptEndUserLicenseAgreementLocalized(localizedAgree = "${localizedAgree}");
+		}
+
+		else if (IsElementPresent(locator1 = "Button#I_AGREE")) {
 			SignIn.agreeToTermsOfUse();
 		}
 
-		if (IsElementPresent(locator1 = "Select#QUESTION")) {
+		if (isSet(localizedAnswer)) {
+			User.answerPasswordReminderLocalized(
+				localizedAnswer = "${localizedAnswer}",
+				localizedSaveButton = "${localizedSaveButton}");
+		}
+
+		else if (IsElementPresent(locator1 = "Select#QUESTION")) {
 			SignIn.setPasswordReminder();
 		}
 

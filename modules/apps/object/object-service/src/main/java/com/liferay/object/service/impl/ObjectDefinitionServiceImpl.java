@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectsConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectDefinitionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -47,11 +48,19 @@ public class ObjectDefinitionServiceImpl
 	public ObjectDefinition addCustomObjectDefinition(long userId, String name)
 		throws PortalException {
 
+		return addCustomObjectDefinition(userId, name, null);
+	}
+
+	@Override
+	public ObjectDefinition addCustomObjectDefinition(
+			long userId, String name, List<ObjectField> objectFields)
+		throws PortalException {
+
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			userId, name, null);
+			userId, name, objectFields);
 	}
 
 	@Override
@@ -82,11 +91,25 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
+	public int getObjectDefinitionsCount() throws PortalException {
+		return _objectDefinitionLocalService.getObjectDefinitionsCount();
+	}
+
+	@Override
 	public int getObjectDefinitionsCount(long companyId)
 		throws PortalException {
 
 		return _objectDefinitionLocalService.getObjectDefinitionsCount(
 			companyId);
+	}
+
+	@Override
+	public ObjectDefinition publishCustomObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException {
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			userId, objectDefinitionId);
 	}
 
 	@Reference

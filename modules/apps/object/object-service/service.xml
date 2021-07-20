@@ -100,7 +100,7 @@
 			<order-column name="objectEntryId" />
 		</order>
 	</entity>
-	<entity local-service="true" name="ObjectField" remote-service="false" uuid="true">
+	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

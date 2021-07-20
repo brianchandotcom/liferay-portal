@@ -221,42 +221,6 @@ definition {
 		User.firstLoginUI();
 	}
 
-	@priority = "4"
-	test GoogleSSOSmoke {
-		property dummy.socket.proxy.disabled = "true";
-		property osgi.app.includes = "portal-security-sso-google";
-		property test.name.skip.portal.instance = "Login#GoogleSSOSmoke";
-
-		var googleClientID = PropsUtil.get("google.client.id.2");
-		var googleClientSecret = PropsUtil.get("google.client.secret.2");
-		var userEmailAddress = PropsUtil.get("email.address.2");
-		var userPassword = PropsUtil.get("email.password.2");
-
-		User.firstLoginPG();
-
-		PortalSettings.gotoConfiguration(
-			baseURL = "http://localhost:8080",
-			configurationCategory = "SSO",
-			configurationName = "Google Authorization",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.enableGoogleSSOCP(
-			googleClientID = "${googleClientID}",
-			googleClientSecret = "${googleClientSecret}");
-
-		User.logoutPG();
-
-		User.loginUserWithGoogleSSOEnabledPG(
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-	}
-
 	@description = "This is a use case for LPS-72398."
 	@priority = "5"
 	test LoginWithSpanishOnlyEnabledLocale {
@@ -658,7 +622,7 @@ definition {
 
 	@priority = "3"
 	test ViewInstanceSettingsAuthentication {
-		property osgi.app.includes = "portal-security-sso-google,portal-security-sso-ntlm,portal-security-sso-openid";
+		property osgi.app.includes = "portal-security-sso-ntlm,portal-security-sso-openid";
 
 		User.firstLoginPG();
 

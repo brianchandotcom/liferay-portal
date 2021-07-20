@@ -14,10 +14,13 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -26,11 +29,18 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -97,6 +107,49 @@ public class TemplateManagementToolbarDisplayContext
 	}
 
 	@Override
+	public CreationMenu getCreationMenu() {
+		CreationMenu creationMenu = new CreationMenu();
+
+		List<TemplateHandler> templateHandlers =
+			_getPortletDisplayTemplateHandlers(_themeDisplay.getLocale());
+
+		if (!templateHandlers.isEmpty()) {
+			PortletURL addDDMTemplateURL = PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/edit_ddm_template.jsp"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"groupId", _themeDisplay.getScopeGroupId()
+			).setParameter(
+				"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
+			).build();
+
+			for (TemplateHandler templateHandler : templateHandlers) {
+				addDDMTemplateURL.setParameter(
+					"classNameId",
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							templateHandler.getClassName())));
+				addDDMTemplateURL.setParameter("classPK", "0");
+				addDDMTemplateURL.setParameter(
+					"resourceClassNameId",
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							PortletDisplayTemplate.class)));
+
+				creationMenu.addPrimaryDropdownItem(
+					_getCreationMenuDropdownItem(
+						addDDMTemplateURL,
+						templateHandler.getName(_themeDisplay.getLocale())));
+			}
+		}
+
+		return creationMenu;
+	}
+
+	@Override
 	public String getDefaultEventHandler() {
 		return "TEMPLATE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
@@ -116,6 +169,27 @@ public class TemplateManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date", "id"};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getCreationMenuDropdownItem(PortletURL url, String label) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(url);
+			dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, label));
+		};
+	}
+
+	private List<TemplateHandler> _getPortletDisplayTemplateHandlers(
+		Locale locale) {
+
+		List<TemplateHandler> templateHandlersList =
+			TemplateHandlerRegistryUtil.getTemplateHandlers();
+
+		ListUtil.sort(
+			templateHandlersList, new TemplateHandlerComparator(locale));
+
+		return templateHandlersList;
 	}
 
 	private final ThemeDisplay _themeDisplay;

@@ -125,7 +125,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "11_transitions_definition.xml",
+			workflowDefinitionFile = "11-transitions-workflow-definition.xml",
 			workflowDefinitionTitle = "11 Transitions Definition");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "11 Transitions Definition");
@@ -623,7 +623,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "11-transitions-update.xml",
+			workflowDefinitionFile = "11-transitions-update-workflow-definition.xml",
 			workflowDefinitionTitle = "11 Transitions Update");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "11 Transitions Update");

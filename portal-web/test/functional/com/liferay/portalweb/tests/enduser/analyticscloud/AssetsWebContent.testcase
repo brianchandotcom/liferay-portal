@@ -171,7 +171,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8125 | Test Summary: Web content list shows all web content in a list"
-	@ignore = "true"
 	@priority = "5"
 	test ViewAllWebContentShownInAssetList {
 		for (var layoutName : list "AC Page 2,AC Page 3") {

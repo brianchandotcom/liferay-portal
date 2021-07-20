@@ -475,6 +475,9 @@ public class ContentPageLayoutEditorDisplayContext
 
 		return JSONUtil.put(
 			JSONUtil.put(
+				"itemSubtype",
+				infoCollectionProvider.getCollectionItemFormVariationKey()
+			).put(
 				"itemType", infoCollectionProvider.getCollectionItemClassName()
 			).put(
 				"key", infoCollectionProvider.getKey()

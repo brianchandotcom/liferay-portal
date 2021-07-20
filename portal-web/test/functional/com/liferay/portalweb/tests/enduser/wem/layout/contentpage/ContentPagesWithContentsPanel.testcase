@@ -506,8 +506,8 @@ definition {
 
 		task ("Map the Content of blogs entry to link editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Paragraph",
-				id = "element-text");
+				fragmentName = "Button",
+				id = "link");
 
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Blogs Entry Title",

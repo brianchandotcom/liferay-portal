@@ -82,6 +82,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public void deleteObjectEntry(Long groupId, String externalReferenceCode)
+		throws Exception {
+
+		_objectEntryManager.deleteObjectEntry(
+			externalReferenceCode, contextCompany.getCompanyId(), groupId);
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		if (_entityModel == null) {
 			_entityModel = new ObjectEntryEntityModel(
@@ -111,6 +119,16 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public ObjectEntry getObjectEntry(
+			Long groupId, String externalReferenceCode)
+		throws Exception {
+
+		return _objectEntryManager.getObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			contextCompany.getCompanyId(), groupId);
+	}
+
+	@Override
 	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
@@ -127,6 +145,17 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		return _objectEntryManager.updateObjectEntry(
 			_getDTOConverterContext(objectEntryId), contextUser.getUserId(),
 			objectEntryId, objectEntry);
+	}
+
+	@Override
+	public ObjectEntry putObjectEntry(
+			Long groupId, String externalReferenceCode, ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectEntryManager.addOrUpdateObjectEntry(
+			_getDTOConverterContext(null), externalReferenceCode,
+			contextUser.getUserId(), groupId,
+			_objectDefinition.getObjectDefinitionId(), objectEntry);
 	}
 
 	@Override

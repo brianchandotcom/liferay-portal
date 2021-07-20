@@ -113,8 +113,9 @@ public class ObjectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long objectEntryId = counterLocalService.increment();
@@ -126,6 +127,7 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
 
 		objectEntry.setGroupId(groupId);
+		objectEntry.setExternalReferenceCode(externalReferenceCode);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -175,13 +177,13 @@ public class ObjectEntryLocalServiceImpl
 
 		if (objectEntry != null) {
 			return updateObjectEntry(
-				userId, objectEntry.getObjectEntryId(), values, serviceContext);
+				externalReferenceCode, userId, objectEntry.getObjectEntryId(),
+				values, serviceContext);
 		}
 
 		objectEntry = addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
-
-		objectEntry.setExternalReferenceCode(externalReferenceCode);
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
 
 		return objectEntryPersistence.update(objectEntry);
 	}
@@ -217,6 +219,17 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntry deleteObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryPersistence.findByG_C_ERC(
+			groupId, companyId, externalReferenceCode);
+
+		return objectEntryLocalService.deleteObjectEntry(objectEntry);
+	}
+
+	@Override
 	public List<ObjectEntry> getObjectEntries(
 			long objectDefinitionId, int start, int end)
 		throws PortalException {
@@ -229,6 +242,15 @@ public class ObjectEntryLocalServiceImpl
 	public int getObjectEntriesCount(long objectDefinitionId) {
 		return objectEntryPersistence.countByObjectDefinitionId(
 			objectDefinitionId);
+	}
+
+	@Override
+	public ObjectEntry getObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException {
+
+		return objectEntryPersistence.findByG_C_ERC(
+			groupId, companyId, externalReferenceCode);
 	}
 
 	@Override
@@ -416,8 +438,8 @@ public class ObjectEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectEntry updateObjectEntry(
-			long userId, long objectEntryId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long objectEntryId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
@@ -429,6 +451,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryId, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
+		objectEntry.setExternalReferenceCode(externalReferenceCode);
 
 		objectEntry = objectEntryPersistence.update(objectEntry);
 

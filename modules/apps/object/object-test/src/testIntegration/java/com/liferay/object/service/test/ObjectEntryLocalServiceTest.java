@@ -682,7 +682,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 
 		ObjectEntryLocalServiceUtil.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			null, TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "João"
 			).put(
@@ -721,7 +721,7 @@ public class ObjectEntryLocalServiceTest {
 		String portrait = "In the beginning was the Logos";
 
 		ObjectEntryLocalServiceUtil.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			null, TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"ageOfDeath", "94"
 			).put(
@@ -764,7 +764,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		ObjectEntryLocalServiceUtil.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			null, TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"weight", 65D
 			).build(),
@@ -794,7 +794,8 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			ObjectEntryLocalServiceUtil.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				null, TestPropsValues.getUserId(),
+				objectEntry.getObjectEntryId(),
 				new HashMap<String, Serializable>(),
 				ServiceContextTestUtil.getServiceContext());
 
@@ -809,7 +810,8 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			ObjectEntryLocalServiceUtil.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				null, TestPropsValues.getUserId(),
+				objectEntry.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"c_testId", ""
 				).put(
@@ -847,7 +849,7 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			_objectDefinition.getObjectDefinitionId(), values,
 			ServiceContextTestUtil.getServiceContext());
 	}

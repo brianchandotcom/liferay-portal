@@ -19,6 +19,11 @@ components:
                 dateModified:
                     format: date
                     type: string
+                externalReferenceCode:
+                    type: string
+                groupId:
+                    format: int64
+                    type: integer
                 id:
                     format: int64
                     type: integer
@@ -112,9 +117,94 @@ paths:
                     description:
                         ""
             tags: ["ObjectEntry"]
-    "/{objectEntryId}":
+    "/by-external-reference-code/{groupId}/{externalReferenceCode}":
         delete:
             operationId: deleteObjectEntry
+            parameters:
+                - in: path
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["ObjectEntry"]
+        get:
+            operationId: getObjectEntry
+            parameters:
+                - in: path
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                    description:
+                        ""
+            tags: ["ObjectEntry"]
+        put:
+            operationId: putObjectEntry
+            parameters:
+                - in: path
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                    description:
+                        ""
+            tags: ["ObjectEntry"]
+    "/{objectEntryId}":
+        delete:
             parameters:
                 - in: path
                   name: objectEntryId
@@ -131,7 +221,6 @@ paths:
                         ""
             tags: ["ObjectEntry"]
         get:
-            operationId: getObjectEntry
             parameters:
                 - in: path
                   name: objectEntryId
@@ -152,7 +241,6 @@ paths:
                         ""
             tags: ["ObjectEntry"]
         put:
-            operationId: putObjectEntry
             parameters:
                 - in: path
                   name: objectEntryId

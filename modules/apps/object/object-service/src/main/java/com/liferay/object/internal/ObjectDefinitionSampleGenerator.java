@@ -102,7 +102,8 @@ public class ObjectDefinitionSampleGenerator {
 
 		for (int i = 0; i < 100; i++) {
 			_objectEntryLocalService.addObjectEntry(
-				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				null, user.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"able", 10 + i
 				).put(

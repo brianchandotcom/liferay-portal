@@ -91,7 +91,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
-	@ignore = "true"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

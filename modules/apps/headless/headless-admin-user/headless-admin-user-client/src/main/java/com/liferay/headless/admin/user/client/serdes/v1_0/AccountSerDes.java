@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -52,6 +54,26 @@ public class AccountSerDes {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("{");
+
+		if (account.getAccountUserAccounts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountUserAccounts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getAccountUserAccounts().length; i++) {
+				sb.append(String.valueOf(account.getAccountUserAccounts()[i]));
+
+				if ((i + 1) < account.getAccountUserAccounts().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (account.getActions() != null) {
 			if (sb.length() > 1) {
@@ -139,6 +161,16 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
+		if (account.getNumberOfUsers() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfUsers\": ");
+
+			sb.append(account.getNumberOfUsers());
+		}
+
 		if (account.getOrganizationIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -197,6 +229,15 @@ public class AccountSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (account.getAccountUserAccounts() == null) {
+			map.put("accountUserAccounts", null);
+		}
+		else {
+			map.put(
+				"accountUserAccounts",
+				String.valueOf(account.getAccountUserAccounts()));
+		}
+
 		if (account.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -239,6 +280,14 @@ public class AccountSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(account.getName()));
+		}
+
+		if (account.getNumberOfUsers() == null) {
+			map.put("numberOfUsers", null);
+		}
+		else {
+			map.put(
+				"numberOfUsers", String.valueOf(account.getNumberOfUsers()));
 		}
 
 		if (account.getOrganizationIds() == null) {
@@ -286,7 +335,19 @@ public class AccountSerDes {
 			Account account, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "accountUserAccounts")) {
+				if (jsonParserFieldValue != null) {
+					account.setAccountUserAccounts(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> UserAccountSerDes.toDTO((String)object)
+						).toArray(
+							size -> new UserAccount[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					account.setActions(
 						(Map)AccountSerDes.toMap((String)jsonParserFieldValue));
@@ -319,6 +380,12 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					account.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfUsers")) {
+				if (jsonParserFieldValue != null) {
+					account.setNumberOfUsers(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "organizationIds")) {

@@ -121,22 +121,26 @@ definition {
 			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 		}
 
-		task ("Select the Topic category") {
+		task ("Select the new category") {
 			Click(locator1 = "Button#SELECT_CATEGORIES");
 
 			AssetCategorization.selectCategory(categoryName = '''><img src=x onerror=alert()>''');
 		}
 
-		task ("View the Category in Account Settings") {
+		task ("View the selected category in Account Settings") {
 			AssertElementPresent(
 				key_categoryName = '''><img src=x onerror=alert()>''',
 				locator1 = "AssetCategorization#CATEGORY");
 		}
-		task ("Save change and Refresh") {
-			Button.clickSave();
 
+		task ("Save change") {
+			Button.clickSave();
+		}
+
+		task ("Refresh the page") {
 			Refresh();
 		}
+
 		task ("View the alert not shown") {
 			AssertAlertNotPresent();
 		}

@@ -2357,15 +2357,13 @@ definition {
 
 	macro viewAndEditOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteID = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
 
 		Page.viewPreview(
 			description = "This is a custom description",
@@ -2375,9 +2373,7 @@ definition {
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
-		var siteID = Site.getSiteId();
-
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -2387,13 +2383,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description edit",
@@ -2410,7 +2404,7 @@ definition {
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 

@@ -196,6 +196,7 @@ public class ClaySampleFileCard implements FileCard {
 	@Override
 	public String getStickerStyle() {
 		if (_stickerStyle != null) {
+			return _stickerStyle;
 		}
 
 		return "info";

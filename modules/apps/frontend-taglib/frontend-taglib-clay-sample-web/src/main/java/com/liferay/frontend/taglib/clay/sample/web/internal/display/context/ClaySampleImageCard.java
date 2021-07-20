@@ -210,6 +210,7 @@ public class ClaySampleImageCard implements ImageCard {
 	@Override
 	public String getStickerStyle() {
 		if (_stickerStyle != null) {
+			return _stickerStyle;
 		}
 
 		return "danger";

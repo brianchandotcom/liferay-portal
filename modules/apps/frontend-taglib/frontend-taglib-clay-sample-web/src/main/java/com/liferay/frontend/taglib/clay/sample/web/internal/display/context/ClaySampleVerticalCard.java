@@ -217,6 +217,7 @@ public class ClaySampleVerticalCard implements VerticalCard {
 	@Override
 	public String getStickerStyle() {
 		if (_stickerStyle != null) {
+			return _stickerStyle;
 		}
 
 		return "warning";

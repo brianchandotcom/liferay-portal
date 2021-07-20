@@ -262,9 +262,40 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8133 CanSeeOptionsToCreateStaticOrDynamicSegment pending implementation
+		ACUtils.launchAC();
 
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSegments();
+
+		Click(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
+
+		for (var segmentType : list "Dynamic Segment,Static Segment") {
+			getFirst = StringUtil.extractFirst("${segmentType}"," ");
+
+			getFirst = StringUtil.upperCase("${getFirst}");
+
+			AssertTextEquals(
+				key_SegmentType = "${getFirst}",
+				locator1 = "ACSegments#SELECT_SEGMENT_TYPE",
+				value1 = "${segmentType}");
+		}
+
+		ACSegments.selectSegmentType(segmentType = "STATIC");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_LABEL",
+			value1 = "STATIC SEGMENT");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_LABEL",
+			value1 = "DYNAMIC SEGMENT");
 	}
 
 }

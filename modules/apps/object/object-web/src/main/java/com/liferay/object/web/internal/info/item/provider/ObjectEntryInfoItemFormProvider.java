@@ -15,7 +15,9 @@
 package com.liferay.object.web.internal.info.item.provider;
 
 import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -109,6 +111,17 @@ public class ObjectEntryInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldSet _getDisplayPageInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.displayPageURLInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "configuration")
+		).name(
+			"configuration"
+		).build();
+	}
+
 	private InfoForm _getInfoForm(long objectDefinitionId)
 		throws NoSuchFormVariationException {
 
@@ -134,6 +147,8 @@ public class ObjectEntryInfoItemFormProvider
 						_getObjectDefinitionInfoFieldSet(objectDefinitionId));
 				}
 			}
+		).infoFieldSetEntry(
+			_getDisplayPageInfoFieldSet()
 		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				ObjectEntry.class.getName())
@@ -174,7 +189,9 @@ public class ObjectEntryInfoItemFormProvider
 							objectDefinitionId)) {
 
 					consumer.accept(
-						InfoFieldSet.builder(
+						InfoField.builder(
+						).infoFieldType(
+							TextInfoFieldType.INSTANCE
 						).name(
 							objectField.getName()
 						).labelInfoLocalizedValue(

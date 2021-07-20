@@ -23,7 +23,7 @@
 <c:choose>
 	<c:when test="<%= fragmentCollectionFilterCategoryDisplayContext.isSingleSelection() %>">
 		<clay:dropdown-menu
-			cssClass="form-control form-control-select form-control-sm text-left w-100"
+			cssClass="bg-light font-weight-bold form-control form-control-select form-control-sm text-left w-100"
 			displayType="secondary"
 			dropdownItems="<%= fragmentCollectionFilterCategoryDisplayContext.getDropdownItems() %>"
 			label="<%= fragmentCollectionFilterCategoryDisplayContext.getSelectedAssetCategoryTitle() %>"
@@ -33,7 +33,7 @@
 	<c:otherwise>
 		<div>
 			<clay:button
-				cssClass="dropdown-toggle form-control-select form-control-sm text-left w-100"
+				cssClass="bg-light dropdown-toggle font-weight-bold form-control-select form-control-sm text-left w-100"
 				disabled="<%= true %>"
 				displayType="secondary"
 				label='<%= LanguageUtil.get(request, "select") %>'

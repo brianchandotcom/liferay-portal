@@ -116,7 +116,7 @@ export default function MultiSelectCategory({
 			searchable={showSearch}
 			trigger={
 				<ClayButton
-					className="form-control-select form-control-sm text-left w-100"
+					className="bg-light form-control-select form-control-sm text-left w-100"
 					displayType="secondary"
 					small
 				>

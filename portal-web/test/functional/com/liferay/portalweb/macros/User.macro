@@ -1387,7 +1387,7 @@ definition {
 	}
 
 	macro editDetailsViaProfile {
-		Click.mouseOverClick(locator1 = "Icon#EDIT_PENCIL");
+		Click.javaScriptClick(locator1 = "Icon#EDIT_PENCIL");
 
 		Portlet.viewSpecificPG(portletName = "Account Settings");
 

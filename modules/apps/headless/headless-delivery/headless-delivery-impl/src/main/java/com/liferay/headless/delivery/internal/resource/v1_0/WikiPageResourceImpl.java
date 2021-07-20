@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -220,13 +221,8 @@ public class WikiPageResourceImpl
 
 		WikiNode wikiNode = _wikiNodeService.getNode(wikiNodeId);
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-				_getExpandoBridgeAttributes(wikiPage), wikiNode.getGroupId(),
-				contextHttpServletRequest, wikiPage.getViewableByAsString());
-
-		serviceContext.setCommand("add");
+		ServiceContext serviceContext = _createServiceContext(
+			Constants.ADD, wikiNode.getGroupId(), wikiPage);
 
 		return _toWikiPage(
 			_wikiPageService.addPage(
@@ -249,14 +245,8 @@ public class WikiPageResourceImpl
 			PermissionThreadLocal.getPermissionChecker(),
 			parentWikiPage.getNodeId(), ActionKeys.ADD_PAGE);
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-				_getExpandoBridgeAttributes(wikiPage),
-				parentWikiPage.getGroupId(), contextHttpServletRequest,
-				wikiPage.getViewableByAsString());
-
-		serviceContext.setCommand("add");
+		ServiceContext serviceContext = _createServiceContext(
+			Constants.ADD, parentWikiPage.getGroupId(), wikiPage);
 
 		return _toWikiPage(
 			_wikiPageLocalService.addPage(
@@ -291,11 +281,7 @@ public class WikiPageResourceImpl
 				wikiPage.getHeadline(), wikiPage.getContent(),
 				wikiPage.getDescription(), false,
 				_toFormat(wikiPage.getEncodingFormat()), null, null,
-				ServiceContextRequestUtil.createServiceContext(
-					wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-					_getExpandoBridgeAttributes(wikiPage),
-					contextUser.getGroupId(), contextHttpServletRequest,
-					wikiPage.getViewableByAsString())));
+				_createServiceContext(Constants.ADD, siteId, wikiPage)));
 	}
 
 	@Override
@@ -354,6 +340,20 @@ public class WikiPageResourceImpl
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
 		return com.liferay.wiki.model.WikiPage.class.getName();
+	}
+
+	private ServiceContext _createServiceContext(
+		String command, Long groupId, WikiPage wikiPage) {
+
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
+				_getExpandoBridgeAttributes(wikiPage), groupId,
+				contextHttpServletRequest, wikiPage.getViewableByAsString());
+
+		serviceContext.setCommand(command);
+
+		return serviceContext;
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -432,14 +432,8 @@ public class WikiPageResourceImpl
 			WikiPage wikiPage)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-				_getExpandoBridgeAttributes(wikiPage),
-				serviceBuilderWikiPage.getGroupId(), contextHttpServletRequest,
-				wikiPage.getViewableByAsString());
-
-		serviceContext.setCommand("update");
+		ServiceContext serviceContext = _createServiceContext(
+			Constants.UPDATE, serviceBuilderWikiPage.getGroupId(), wikiPage);
 
 		return _toWikiPage(
 			_wikiPageService.updatePage(

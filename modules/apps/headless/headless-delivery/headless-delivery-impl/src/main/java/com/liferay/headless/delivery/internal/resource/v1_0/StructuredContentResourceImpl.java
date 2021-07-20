@@ -489,8 +489,8 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _addStructuredContent(
-			siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			structuredContent);
+			structuredContent.getExternalReferenceCode(), siteId,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, structuredContent);
 	}
 
 	@Override
@@ -502,6 +502,7 @@ public class StructuredContentResourceImpl
 			structuredContentFolderId);
 
 		return _addStructuredContent(
+			structuredContent.getExternalReferenceCode(),
 			journalFolder.getGroupId(), structuredContentFolderId,
 			structuredContent);
 	}
@@ -532,11 +533,9 @@ public class StructuredContentResourceImpl
 			return _updateStructuredContent(journalArticle, structuredContent);
 		}
 
-		structuredContent.setExternalReferenceCode(externalReferenceCode);
-
 		return _addStructuredContent(
-			siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			structuredContent);
+			externalReferenceCode, siteId,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, structuredContent);
 	}
 
 	@Override
@@ -602,7 +601,8 @@ public class StructuredContentResourceImpl
 	}
 
 	private StructuredContent _addStructuredContent(
-			Long siteId, Long parentStructuredContentFolderId,
+			String externalReferenceCode, Long groupId,
+			Long parentStructuredContentFolderId,
 			StructuredContent structuredContent)
 		throws Exception {
 
@@ -639,14 +639,13 @@ public class StructuredContentResourceImpl
 
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
-				structuredContent.getExternalReferenceCode(), siteId,
-				parentStructuredContentFolderId, 0, 0, null, true, titleMap,
-				descriptionMap, friendlyUrlMap,
+				externalReferenceCode, groupId, parentStructuredContentFolderId,
+				0, 0, null, true, titleMap, descriptionMap, friendlyUrlMap,
 				StructuredContentUtil.getJournalArticleContent(
 					_ddm,
 					DDMFormValuesUtil.toDDMFormValues(
 						structuredContent.getContentFields(),
-						ddmStructure.getDDMForm(), _dlAppService, siteId,
+						ddmStructure.getDDMForm(), _dlAppService, groupId,
 						_journalArticleService, _layoutLocalService,
 						contextAcceptLanguage.getPreferredLocale(),
 						_getRootDDMFormFields(ddmStructure)),
@@ -662,7 +661,7 @@ public class StructuredContentResourceImpl
 				ServiceContextRequestUtil.createServiceContext(
 					structuredContent.getTaxonomyCategoryIds(),
 					structuredContent.getKeywords(),
-					_getExpandoBridgeAttributes(structuredContent), siteId,
+					_getExpandoBridgeAttributes(structuredContent), groupId,
 					contextHttpServletRequest,
 					structuredContent.getViewableByAsString())));
 	}

@@ -306,8 +306,9 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _addKnowledgeBaseArticle(
 			knowledgeBaseArticle.getExternalReferenceCode(),
-			kbArticle.getGroupId(), parentKnowledgeBaseArticleId,
-			knowledgeBaseArticle);
+			kbArticle.getGroupId(),
+			_portal.getClassNameId(KBArticle.class.getName()),
+			parentKnowledgeBaseArticleId, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -331,7 +332,9 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _addKnowledgeBaseArticle(
 			knowledgeBaseArticle.getExternalReferenceCode(),
-			kbFolder.getGroupId(), knowledgeBaseFolderId, knowledgeBaseArticle);
+			kbFolder.getGroupId(),
+			_portal.getClassNameId(KBFolder.class.getName()),
+			knowledgeBaseFolderId, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -340,7 +343,8 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return _addKnowledgeBaseArticle(
-			knowledgeBaseArticle.getExternalReferenceCode(), siteId, null,
+			knowledgeBaseArticle.getExternalReferenceCode(), siteId,
+			_portal.getClassNameId(KBFolder.class.getName()), null,
 			knowledgeBaseArticle);
 	}
 
@@ -350,8 +354,8 @@ public class KnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		KBArticle kbArticle = _kbArticleLocalService.getKBArticle(
-			knowledgeBaseArticleId);
+		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
+			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _updateKnowledgeBaseArticle(kbArticle, knowledgeBaseArticle);
 	}
@@ -402,7 +406,8 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _addKnowledgeBaseArticle(
 			externalReferenceCode, siteId,
-			knowledgeBaseArticle.getParentKnowledgeBaseArticleId(),
+			_portal.getClassNameId(KBFolder.class.getName()),
+			knowledgeBaseArticle.getParentKnowledgeBaseFolderId(),
 			knowledgeBaseArticle);
 	}
 
@@ -441,8 +446,8 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	private KnowledgeBaseArticle _addKnowledgeBaseArticle(
-			String externalReferenceCode, Long siteId,
-			Long parentResourcePrimaryKey,
+			String externalReferenceCode, Long groupId,
+			Long parentResourceClassNameId, Long parentResourcePrimaryKey,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -454,15 +459,15 @@ public class KnowledgeBaseArticleResourceImpl
 		return _toKnowledgeBaseArticle(
 			_kbArticleService.addKBArticle(
 				externalReferenceCode, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
-				_portal.getClassNameId(KBFolder.class.getName()),
-				parentResourcePrimaryKey, knowledgeBaseArticle.getTitle(),
+				parentResourceClassNameId, parentResourcePrimaryKey,
+				knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, null,
 				ServiceContextRequestUtil.createServiceContext(
 					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					knowledgeBaseArticle.getKeywords(),
-					_getExpandoBridgeAttributes(knowledgeBaseArticle), siteId,
+					_getExpandoBridgeAttributes(knowledgeBaseArticle), groupId,
 					contextHttpServletRequest,
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
@@ -615,7 +620,7 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _toKnowledgeBaseArticle(
 			_kbArticleService.updateKBArticle(
-				kbArticle.getKbArticleId(), knowledgeBaseArticle.getTitle(),
+				kbArticle.getResourcePrimKey(), knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, null, null,
 				ServiceContextRequestUtil.createServiceContext(

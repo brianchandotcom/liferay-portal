@@ -357,16 +357,15 @@ public class DocumentResourceImpl
 	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
 		throws Exception {
 
-		return _addDocument(null, siteId, siteId, 0L, multipartBody);
+		return _addDocument(null, siteId, siteId, null, multipartBody);
 	}
 
 	@Override
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
-
-		return _updateDocument(documentId, fileEntry, multipartBody);
+		return _updateDocument(
+			_dlAppService.getFileEntry(documentId), multipartBody);
 	}
 
 	@Override
@@ -389,13 +388,12 @@ public class DocumentResourceImpl
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
-		if (fileEntry == null) {
-			return _addDocument(
-				externalReferenceCode, siteId, siteId, 0L, multipartBody);
+		if (fileEntry != null) {
+			return _updateDocument(fileEntry, multipartBody);
 		}
 
-		return _updateDocument(
-			fileEntry.getFileEntryId(), fileEntry, multipartBody);
+		return _addDocument(
+			externalReferenceCode, siteId, siteId, null, multipartBody);
 	}
 
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
@@ -416,14 +414,8 @@ public class DocumentResourceImpl
 
 	private Document _addDocument(
 			String externalReferenceCode, Long groupId, Long repositoryId,
-			long documentFolderId, MultipartBody multipartBody)
+			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception {
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		if (binaryFile == null) {
-			throw new BadRequestException("No file found in body");
-		}
 
 		Optional<Document> documentOptional =
 			multipartBody.getValueAsInstanceOptional(
@@ -435,6 +427,16 @@ public class DocumentResourceImpl
 			).orElse(
 				null
 			);
+		}
+
+		if (documentFolderId == null) {
+			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		if (binaryFile == null) {
+			throw new BadRequestException("No file found in body");
 		}
 
 		return _toDocument(
@@ -767,7 +769,7 @@ public class DocumentResourceImpl
 	}
 
 	private Document _updateDocument(
-			long documentId, FileEntry fileEntry, MultipartBody multipartBody)
+			FileEntry fileEntry, MultipartBody multipartBody)
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
@@ -787,11 +789,12 @@ public class DocumentResourceImpl
 				fileEntry.getContentStream(), fileEntry.getSize());
 		}
 
-		fileEntry = _moveDocument(documentId, documentOptional, fileEntry);
+		fileEntry = _moveDocument(
+			fileEntry.getFileEntryId(), documentOptional, fileEntry);
 
 		return _toDocument(
 			_dlAppService.updateFileEntry(
-				documentId, binaryFile.getFileName(),
+				fileEntry.getFileEntryId(), binaryFile.getFileName(),
 				binaryFile.getContentType(),
 				documentOptional.map(
 					Document::getTitle

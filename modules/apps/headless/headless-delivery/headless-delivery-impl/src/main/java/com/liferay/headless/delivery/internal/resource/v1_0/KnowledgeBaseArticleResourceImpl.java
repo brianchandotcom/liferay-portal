@@ -304,10 +304,10 @@ public class KnowledgeBaseArticleResourceImpl
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			parentKnowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
-		return _getKnowledgeBaseArticle(
-			kbArticle.getGroupId(),
-			_portal.getClassNameId(KBArticle.class.getName()),
-			parentKnowledgeBaseArticleId, knowledgeBaseArticle);
+		return _addKnowledgeBaseArticle(
+			knowledgeBaseArticle.getExternalReferenceCode(),
+			kbArticle.getGroupId(), parentKnowledgeBaseArticleId,
+			knowledgeBaseArticle);
 	}
 
 	@Override
@@ -329,10 +329,9 @@ public class KnowledgeBaseArticleResourceImpl
 
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
-		return _getKnowledgeBaseArticle(
-			kbFolder.getGroupId(),
-			_portal.getClassNameId(KBFolder.class.getName()),
-			knowledgeBaseFolderId, knowledgeBaseArticle);
+		return _addKnowledgeBaseArticle(
+			knowledgeBaseArticle.getExternalReferenceCode(),
+			kbFolder.getGroupId(), knowledgeBaseFolderId, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -340,8 +339,8 @@ public class KnowledgeBaseArticleResourceImpl
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return _getKnowledgeBaseArticle(
-			siteId, _portal.getClassNameId(KBFolder.class.getName()), 0L,
+		return _addKnowledgeBaseArticle(
+			knowledgeBaseArticle.getExternalReferenceCode(), siteId, null,
 			knowledgeBaseArticle);
 	}
 
@@ -351,10 +350,10 @@ public class KnowledgeBaseArticleResourceImpl
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return _toKnowledgeBaseArticle(
-			_updateKnowledgeBaseArticle(
-				knowledgeBaseArticleId, knowledgeBaseArticle,
-				contextCompany.getGroupId()));
+		KBArticle kbArticle = _kbArticleLocalService.getKBArticle(
+			knowledgeBaseArticleId);
+
+		return _updateKnowledgeBaseArticle(kbArticle, knowledgeBaseArticle);
 	}
 
 	@Override
@@ -397,25 +396,14 @@ public class KnowledgeBaseArticleResourceImpl
 			_kbArticleLocalService.fetchLatestKBArticleByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
-		Long parentKnowledgeBaseArticleId =
-			knowledgeBaseArticle.getParentKnowledgeBaseArticleId();
-
-		if (parentKnowledgeBaseArticleId == null) {
-			parentKnowledgeBaseArticleId =
-				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY;
+		if (kbArticle != null) {
+			return _updateKnowledgeBaseArticle(kbArticle, knowledgeBaseArticle);
 		}
 
-		if (kbArticle == null) {
-			return _toKnowledgeBaseArticle(
-				_addKnowledgeBaseArticle(
-					externalReferenceCode, siteId,
-					_portal.getClassNameId(KBFolder.class.getName()),
-					parentKnowledgeBaseArticleId, knowledgeBaseArticle));
-		}
-
-		return _toKnowledgeBaseArticle(
-			_updateKnowledgeBaseArticle(
-				kbArticle.getResourcePrimKey(), knowledgeBaseArticle, siteId));
+		return _addKnowledgeBaseArticle(
+			externalReferenceCode, siteId,
+			knowledgeBaseArticle.getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	@Override
@@ -452,25 +440,31 @@ public class KnowledgeBaseArticleResourceImpl
 		return KBArticle.class.getName();
 	}
 
-	private KBArticle _addKnowledgeBaseArticle(
+	private KnowledgeBaseArticle _addKnowledgeBaseArticle(
 			String externalReferenceCode, Long siteId,
-			long parentResourceClassNameId, Long parentResourcePrimaryKey,
+			Long parentResourcePrimaryKey,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return _kbArticleService.addKBArticle(
-			externalReferenceCode, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
-			parentResourceClassNameId, parentResourcePrimaryKey,
-			knowledgeBaseArticle.getTitle(),
-			knowledgeBaseArticle.getFriendlyUrlPath(),
-			knowledgeBaseArticle.getArticleBody(),
-			knowledgeBaseArticle.getDescription(), null, null, null,
-			ServiceContextRequestUtil.createServiceContext(
-				knowledgeBaseArticle.getTaxonomyCategoryIds(),
-				knowledgeBaseArticle.getKeywords(),
-				_getExpandoBridgeAttributes(knowledgeBaseArticle), siteId,
-				contextHttpServletRequest,
-				knowledgeBaseArticle.getViewableByAsString()));
+		if (parentResourcePrimaryKey == null) {
+			parentResourcePrimaryKey =
+				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY;
+		}
+
+		return _toKnowledgeBaseArticle(
+			_kbArticleService.addKBArticle(
+				externalReferenceCode, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
+				_portal.getClassNameId(KBFolder.class.getName()),
+				parentResourcePrimaryKey, knowledgeBaseArticle.getTitle(),
+				knowledgeBaseArticle.getFriendlyUrlPath(),
+				knowledgeBaseArticle.getArticleBody(),
+				knowledgeBaseArticle.getDescription(), null, null, null,
+				ServiceContextRequestUtil.createServiceContext(
+					knowledgeBaseArticle.getTaxonomyCategoryIds(),
+					knowledgeBaseArticle.getKeywords(),
+					_getExpandoBridgeAttributes(knowledgeBaseArticle), siteId,
+					contextHttpServletRequest,
+					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -480,18 +474,6 @@ public class KnowledgeBaseArticleResourceImpl
 			KBArticle.class.getName(), contextCompany.getCompanyId(),
 			knowledgeBaseArticle.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private KnowledgeBaseArticle _getKnowledgeBaseArticle(
-			Long siteId, long parentResourceClassNameId,
-			Long parentResourcePrimaryKey,
-			KnowledgeBaseArticle knowledgeBaseArticle)
-		throws Exception {
-
-		return _toKnowledgeBaseArticle(
-			_addKnowledgeBaseArticle(
-				null, siteId, parentResourceClassNameId,
-				parentResourcePrimaryKey, knowledgeBaseArticle));
 	}
 
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
@@ -627,29 +609,29 @@ public class KnowledgeBaseArticleResourceImpl
 				contextUser));
 	}
 
-	private KBArticle _updateKnowledgeBaseArticle(
-			long knowledgeBaseArticleId,
-			KnowledgeBaseArticle knowledgeBaseArticle, long siteId)
+	private KnowledgeBaseArticle _updateKnowledgeBaseArticle(
+			KBArticle kbArticle, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return _kbArticleService.updateKBArticle(
-			knowledgeBaseArticleId, knowledgeBaseArticle.getTitle(),
-			knowledgeBaseArticle.getArticleBody(),
-			knowledgeBaseArticle.getDescription(), null, null, null, null,
-			ServiceContextRequestUtil.createServiceContext(
-				Optional.ofNullable(
-					knowledgeBaseArticle.getTaxonomyCategoryIds()
-				).orElse(
-					new Long[0]
-				),
-				Optional.ofNullable(
-					knowledgeBaseArticle.getKeywords()
-				).orElse(
-					new String[0]
-				),
-				_getExpandoBridgeAttributes(knowledgeBaseArticle), siteId,
-				contextHttpServletRequest,
-				knowledgeBaseArticle.getViewableByAsString()));
+		return _toKnowledgeBaseArticle(
+			_kbArticleService.updateKBArticle(
+				kbArticle.getKbArticleId(), knowledgeBaseArticle.getTitle(),
+				knowledgeBaseArticle.getArticleBody(),
+				knowledgeBaseArticle.getDescription(), null, null, null, null,
+				ServiceContextRequestUtil.createServiceContext(
+					Optional.ofNullable(
+						knowledgeBaseArticle.getTaxonomyCategoryIds()
+					).orElse(
+						new Long[0]
+					),
+					Optional.ofNullable(
+						knowledgeBaseArticle.getKeywords()
+					).orElse(
+						new String[0]
+					),
+					_getExpandoBridgeAttributes(knowledgeBaseArticle),
+					kbArticle.getGroupId(), contextHttpServletRequest,
+					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
 	@Reference

@@ -528,13 +528,15 @@ public class StructuredContentResourceImpl
 				fetchLatestArticleByExternalReferenceCode(
 					siteId, externalReferenceCode);
 
-		if (journalArticle == null) {
-			return _addStructuredContent(
-				siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				structuredContent);
+		if (journalArticle != null) {
+			return _updateStructuredContent(journalArticle, structuredContent);
 		}
 
-		return _updateStructuredContent(journalArticle, structuredContent);
+		structuredContent.setExternalReferenceCode(externalReferenceCode);
+
+		return _addStructuredContent(
+			siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			structuredContent);
 	}
 
 	@Override

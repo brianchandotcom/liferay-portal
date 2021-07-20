@@ -306,11 +306,9 @@ public class MessageBoardMessageResourceImpl
 				Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		MBMessage mbMessage =
+		return _toMessageBoardMessage(
 			_mbMessageLocalService.getMBMessageByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		return _toMessageBoardMessage(mbMessage);
+				siteId, externalReferenceCode));
 	}
 
 	@Override
@@ -385,8 +383,10 @@ public class MessageBoardMessageResourceImpl
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return _updateMessageBoardMessage(
-			messageBoardMessageId, messageBoardMessage);
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			messageBoardMessageId);
+
+		return _updateMessageBoardMessage(mbMessage, messageBoardMessage);
 	}
 
 	@Override
@@ -421,24 +421,23 @@ public class MessageBoardMessageResourceImpl
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		if (messageBoardMessage.getParentMessageBoardMessageId() == null) {
-			throw new BadRequestException("Parent message board ID is null");
-		}
-
 		MBMessage mbMessage =
 			_mbMessageLocalService.fetchMBMessageByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
-		if (mbMessage == null) {
-			messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
-
-			return _addMessageBoardMessage(
-				messageBoardMessage.getParentMessageBoardMessageId(),
-				messageBoardMessage);
+		if (mbMessage != null) {
+			return _updateMessageBoardMessage(mbMessage, messageBoardMessage);
 		}
 
-		return _updateMessageBoardMessage(
-			mbMessage.getMessageId(), messageBoardMessage);
+		if (messageBoardMessage.getParentMessageBoardMessageId() == null) {
+			throw new BadRequestException("Parent message board ID is null");
+		}
+
+		messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
+
+		return _addMessageBoardMessage(
+			messageBoardMessage.getParentMessageBoardMessageId(),
+			messageBoardMessage);
 	}
 
 	@Override
@@ -742,7 +741,7 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	private MessageBoardMessage _updateMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
+			MBMessage mbMessage, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		if ((messageBoardMessage.getArticleBody() == null) &&
@@ -751,9 +750,6 @@ public class MessageBoardMessageResourceImpl
 			throw new BadRequestException(
 				"Article body and headline are both null");
 		}
-
-		MBMessage mbMessage = _mbMessageService.getMessage(
-			messageBoardMessageId);
 
 		String headline = messageBoardMessage.getHeadline();
 
@@ -768,7 +764,7 @@ public class MessageBoardMessageResourceImpl
 
 		mbMessage = _mbMessageService.updateDiscussionMessage(
 			mbMessage.getClassName(), mbMessage.getClassPK(),
-			messageBoardMessageId, headline,
+			mbMessage.getMessageId(), headline,
 			messageBoardMessage.getArticleBody(),
 			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
 

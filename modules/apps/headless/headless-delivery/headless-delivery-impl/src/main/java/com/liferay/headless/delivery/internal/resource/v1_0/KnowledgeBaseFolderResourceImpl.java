@@ -171,10 +171,10 @@ public class KnowledgeBaseFolderResourceImpl
 		KBFolder parentKBFolder = _kbFolderService.getKBFolder(
 			parentKnowledgeBaseFolderId);
 
-		return _toKnowledgeBaseFolder(
-			_addKnowledgeBaseFolder(
-				null, parentKnowledgeBaseFolderId, knowledgeBaseFolder,
-				parentKBFolder.getGroupId()));
+		return _addKnowledgeBaseFolder(
+			knowledgeBaseFolder.getExternalReferenceCode(),
+			parentKnowledgeBaseFolderId, knowledgeBaseFolder,
+			parentKBFolder.getGroupId());
 	}
 
 	@Override
@@ -182,8 +182,9 @@ public class KnowledgeBaseFolderResourceImpl
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return _toKnowledgeBaseFolder(
-			_addKnowledgeBaseFolder(null, 0, knowledgeBaseFolder, siteId));
+		return _addKnowledgeBaseFolder(
+			knowledgeBaseFolder.getExternalReferenceCode(), null,
+			knowledgeBaseFolder, siteId);
 	}
 
 	@Override
@@ -191,17 +192,10 @@ public class KnowledgeBaseFolderResourceImpl
 			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		Long parentKnowledgeBaseFolderId =
-			knowledgeBaseFolder.getParentKnowledgeBaseFolderId();
+		KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
+			knowledgeBaseFolderId);
 
-		if (parentKnowledgeBaseFolderId == null) {
-			parentKnowledgeBaseFolderId = 0L;
-		}
-
-		return _toKnowledgeBaseFolder(
-			_updateKnowledgeBaseFolder(
-				knowledgeBaseFolderId, knowledgeBaseFolder,
-				parentKnowledgeBaseFolderId));
+		return _updateKnowledgeBaseFolder(kbFolder, knowledgeBaseFolder);
 	}
 
 	@Override
@@ -215,25 +209,14 @@ public class KnowledgeBaseFolderResourceImpl
 			_kbFolderLocalService.fetchKBFolderByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
-		Long parentKnowledgeBaseFolderId =
-			knowledgeBaseFolder.getParentKnowledgeBaseFolderId();
-
-		if (parentKnowledgeBaseFolderId == null) {
-			parentKnowledgeBaseFolderId =
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		if (kbFolder != null) {
+			return _updateKnowledgeBaseFolder(kbFolder, knowledgeBaseFolder);
 		}
 
-		if (kbFolder == null) {
-			return _toKnowledgeBaseFolder(
-				_addKnowledgeBaseFolder(
-					externalReferenceCode, parentKnowledgeBaseFolderId,
-					knowledgeBaseFolder, siteId));
-		}
-
-		return _toKnowledgeBaseFolder(
-			_updateKnowledgeBaseFolder(
-				kbFolder.getKbFolderId(), knowledgeBaseFolder,
-				parentKnowledgeBaseFolderId));
+		return _addKnowledgeBaseFolder(
+			externalReferenceCode,
+			knowledgeBaseFolder.getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder, siteId);
 	}
 
 	@Override
@@ -253,19 +236,24 @@ public class KnowledgeBaseFolderResourceImpl
 		return KBFolder.class.getName();
 	}
 
-	private KBFolder _addKnowledgeBaseFolder(
-			String externalReferenceCode, long parentResourcePrimKey,
+	private KnowledgeBaseFolder _addKnowledgeBaseFolder(
+			String externalReferenceCode, Long parentResourcePrimKey,
 			KnowledgeBaseFolder knowledgeBaseFolder, long siteId)
 		throws Exception {
 
-		return _kbFolderService.addKBFolder(
-			externalReferenceCode, siteId, _getClassNameId(),
-			parentResourcePrimKey, knowledgeBaseFolder.getName(),
-			knowledgeBaseFolder.getDescription(),
-			ServiceContextRequestUtil.createServiceContext(
-				_getExpandoBridgeAttributes(knowledgeBaseFolder), siteId,
-				contextHttpServletRequest,
-				knowledgeBaseFolder.getViewableByAsString()));
+		if (parentResourcePrimKey == null) {
+			parentResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		return _toKnowledgeBaseFolder(
+			_kbFolderService.addKBFolder(
+				externalReferenceCode, siteId, _getClassNameId(),
+				parentResourcePrimKey, knowledgeBaseFolder.getName(),
+				knowledgeBaseFolder.getDescription(),
+				ServiceContextRequestUtil.createServiceContext(
+					_getExpandoBridgeAttributes(knowledgeBaseFolder), siteId,
+					contextHttpServletRequest,
+					knowledgeBaseFolder.getViewableByAsString())));
 	}
 
 	private long _getClassNameId() {
@@ -332,18 +320,18 @@ public class KnowledgeBaseFolderResourceImpl
 		};
 	}
 
-	private KBFolder _updateKnowledgeBaseFolder(
-			long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder,
-			long parentKnowledgeBaseFolderId)
+	private KnowledgeBaseFolder _updateKnowledgeBaseFolder(
+			KBFolder kbFolder, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return _kbFolderService.updateKBFolder(
-			_getClassNameId(), parentKnowledgeBaseFolderId,
-			knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
-			knowledgeBaseFolder.getDescription(),
-			ServiceContextRequestUtil.createServiceContext(
-				_getExpandoBridgeAttributes(knowledgeBaseFolder), 0,
-				contextHttpServletRequest, null));
+		return _toKnowledgeBaseFolder(
+			_kbFolderService.updateKBFolder(
+				_getClassNameId(), kbFolder.getParentKBFolderId(),
+				kbFolder.getKbFolderId(), knowledgeBaseFolder.getName(),
+				knowledgeBaseFolder.getDescription(),
+				ServiceContextRequestUtil.createServiceContext(
+					_getExpandoBridgeAttributes(knowledgeBaseFolder), 0,
+					contextHttpServletRequest, null)));
 	}
 
 	@Reference

@@ -92,12 +92,11 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			Object object = infoItemObjectProvider.getInfoItem(
 				_getInfoItemIdentifier(resourceRequest));
 
-			InfoFieldValue<Object> infoItemFieldValue =
-				infoItemFieldValuesProvider.getInfoFieldValue(
-					object, "title");
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValuesProvider.getInfoFieldValue(object, "title");
 
 			String escapedTitle = StringUtil.removeSubstrings(
-				(String)infoItemFieldValue.getValue(themeDisplay.getLocale()),
+				(String)infoFieldValue.getValue(themeDisplay.getLocale()),
 				PropsValues.DL_CHAR_BLACKLIST);
 
 			String sourceLanguageId = ParamUtil.getString(

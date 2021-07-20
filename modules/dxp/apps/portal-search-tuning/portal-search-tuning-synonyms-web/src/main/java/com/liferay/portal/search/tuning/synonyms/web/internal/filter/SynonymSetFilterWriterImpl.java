@@ -34,6 +34,10 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 	public void updateSynonymSets(
 		String companyIndexName, String filterName, String[] synonymSets) {
 
+		if (synonymSets.length == 0) {
+			return;
+		}
+
 		closeIndex(companyIndexName);
 
 		try {

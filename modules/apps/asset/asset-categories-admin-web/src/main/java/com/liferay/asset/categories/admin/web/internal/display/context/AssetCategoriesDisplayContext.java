@@ -20,7 +20,6 @@ import com.liferay.asset.categories.admin.web.internal.constants.AssetCategories
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.categories.admin.web.internal.util.AssetCategoryTreePathComparator;
 import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -109,12 +108,6 @@ public class AssetCategoriesDisplayContext {
 						ASSET_CATEGORIES_ADMIN_CONFIGURATION);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_assetDisplayPageFriendlyURLProvider =
-			(AssetDisplayPageFriendlyURLProvider)
-				_httpServletRequest.getAttribute(
-					AssetCategoriesAdminWebKeys.
-						ASSET_DISPLAY_PAGE_FRIENDLY_URL_PROVIDER);
 	}
 
 	public String getAddCategoryRedirect() throws PortalException {
@@ -412,14 +405,6 @@ public class AssetCategoriesDisplayContext {
 		).buildString();
 	}
 
-	public String getDisplayPageURL(AssetCategory category)
-		throws PortalException {
-
-		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			AssetCategory.class.getName(), category.getCategoryId(),
-			_themeDisplay);
-	}
-
 	public String getDisplayStyle() {
 		if (isFlattenedNavigationAllowed()) {
 			_displayStyle = "list";
@@ -565,44 +550,6 @@ public class AssetCategoriesDisplayContext {
 			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
-	}
-
-	public String getSelectCategoryURL(long vocabularyId) throws Exception {
-		if (_selectCategoryURL != null) {
-			return _selectCategoryURL;
-		}
-
-		_selectCategoryURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE)
-		).setParameter(
-			"allowedSelectVocabularies", true
-		).setParameter(
-			"eventName", _renderResponse.getNamespace() + "selectCategory"
-		).setParameter(
-			"moveCategory", true
-		).setParameter(
-			"singleSelect", true
-		).setParameter(
-			"vocabularyIds",
-			() -> {
-				AssetVocabulary vocabulary =
-					AssetVocabularyServiceUtil.getVocabulary(vocabularyId);
-
-				List<AssetVocabulary> vocabularies =
-					AssetVocabularyServiceUtil.getGroupVocabularies(
-						_themeDisplay.getScopeGroupId(),
-						vocabulary.getVisibilityType());
-
-				return ListUtil.toString(
-					vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
-			}
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
-
-		return _selectCategoryURL;
 	}
 
 	public List<AssetVocabulary> getVocabularies() throws PortalException {
@@ -975,8 +922,6 @@ public class AssetCategoriesDisplayContext {
 
 	private final AssetCategoriesAdminWebConfiguration
 		_assetCategoriesAdminWebConfiguration;
-	private final AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 	private SearchContainer<AssetCategory> _categoriesSearchContainer;
 	private AssetCategory _category;
 	private Long _categoryId;
@@ -989,7 +934,6 @@ public class AssetCategoriesDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private String _selectCategoryURL;
 	private Boolean _showSelectAssetDisplayPage;
 	private final ThemeDisplay _themeDisplay;
 	private List<AssetVocabulary> _vocabularies;

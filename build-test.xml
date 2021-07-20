@@ -525,13 +525,16 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<var name="dxp.license.product.name" unset="true" />
 
 			<if>
-				<or>
-					<equals arg1="${dxp.license.file}" arg2="dxp-license-dummy.xml" />
-					<equals arg1="${dxp.license.file}" arg2="dxp-binary-license-developer.li" />
-				</or>
+				<equals arg1="${dxp.license.file}" arg2="dxp-binary-license-developer.li" />
 				<then>
 					<property name="dxp.license.product.name" value="Portal Development" />
 				</then>
+				<elseif>
+					<equals arg1="${dxp.license.file}" arg2="dxp-license-dummy.xml" />
+					<then>
+						<property name="dxp.license.product.name" value="DXP Development" />
+					</then>
+				</elseif>
 				<else>
 					<loadfile
 						property="dxp.license.content"

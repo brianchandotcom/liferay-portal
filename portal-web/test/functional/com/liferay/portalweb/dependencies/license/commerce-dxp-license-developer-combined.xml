@@ -1,29 +1,32 @@
 <?xml version="1.0"?>
+
 <licenses>
 	<license>
-		<owner>Commerce License 1</owner>
-		<description>Commerce License 1</description>
-		<product-name>Liferay Commerce Subscription Development</product-name>
+		<owner>Korlic - Project Number 397305</owner>
+		<description>Korlic - Project Number 397305 License2 Description</description>
+		<product-name>Commerce Subscription Development</product-name>
 		<product-id>9a473157-06a6-44b6-b017-a360ffaf5f38</product-id>
 		<product-version>1</product-version>
-		<license-type>developer-cluster</license-type>
+		<license-type>developer</license-type>
 		<license-version>3</license-version>
-		<start-date>Thursday, September 17, 2020 12:00:00 AM GMT</start-date>
-		<expiration-date>Saturday, August 24, 2120 12:00:00 AM GMT</expiration-date>
+		<start-date>Monday, July 19, 2021 12:00:00 AM GMT</start-date>
+		<expiration-date>Thursday, June 25, 2122 12:00:00 AM GMT</expiration-date>
 		<max-http-sessions>5</max-http-sessions>
 		<key>INVALID</key>
 	</license>
 	<license>
-		<owner>DXP License 1</owner>
-		<description>DXP License 1</description>
-		<product-name>Portal Development</product-name>
-		<product-version>7.3</product-version>
-		<license-name>Portal Development</license-name>
-		<license-type>developer-cluster</license-type>
-		<license-version>3</license-version>
-		<start-date>Thursday, September 17, 2020 12:00:00 AM GMT</start-date>
-		<expiration-date>Saturday, August 24, 2120 12:00:00 AM GMT</expiration-date>
+		<account-name>Korlic - Project Number 397305</account-name>
+		<owner>Korlic - Project Number 397305</owner>
+		<description>Korlic - Project Number 397305 License1 Description</description>
+		<product-name>DXP Development</product-name>
+		<product-version>7.2</product-version>
+		<license-name>DXP Development</license-name>
+		<license-type>developer</license-type>
+		<license-version>6</license-version>
+		<start-date>Monday, July 19, 2021 12:00:00 AM GMT</start-date>
+		<expiration-date>Thursday, June 25, 2122 12:00:00 AM GMT</expiration-date>
 		<max-http-sessions>5</max-http-sessions>
+		<instance-size>Sizing 1</instance-size>
 		<key>INVALID</key>
 	</license>
 </licenses>

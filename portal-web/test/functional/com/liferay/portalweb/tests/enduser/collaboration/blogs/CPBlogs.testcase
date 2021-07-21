@@ -446,6 +446,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Unique Title");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Text",
+			entryTitle = "Blogs Entry Title");
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -453,7 +457,9 @@ definition {
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Blogs Entry Content",
-			entryTitle = "Unique Title");
+			entryTitle = "Unique Title",
+			position = "1",
+			relevance = "true");
 
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
@@ -474,6 +480,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Unique Title");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content Text",
+			entryTitle = "Blogs Entry Title");
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -481,7 +491,9 @@ definition {
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Unique Title",
-			entryTitle = "Unique Title");
+			entryTitle = "Unique Title",
+			position = "1",
+			relevance = "true");
 
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",

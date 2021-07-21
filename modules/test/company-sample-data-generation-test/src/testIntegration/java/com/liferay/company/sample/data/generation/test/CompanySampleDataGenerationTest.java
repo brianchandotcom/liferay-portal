@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -103,6 +105,10 @@ public class CompanySampleDataGenerationTest {
 				futures.add(
 					_executorService.submit(
 						() -> {
+							BufferedIncrementThreadLocal.setWithSafeCloseable(
+								true);
+							ProxyModeThreadLocal.setWithSafeCloseable(true);
+
 							_addCompany(companyIndex);
 
 							return null;

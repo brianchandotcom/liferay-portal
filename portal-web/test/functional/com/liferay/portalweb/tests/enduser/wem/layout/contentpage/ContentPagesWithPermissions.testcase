@@ -182,7 +182,7 @@ definition {
 
 		task ("Assert cannot access to web content editor via Contents panel") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				Click.waitForMenuToggleJSClick(
+				Click.clickAtNotVisible(
 					key_rowEntry = "${webContentTitle}",
 					locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
 

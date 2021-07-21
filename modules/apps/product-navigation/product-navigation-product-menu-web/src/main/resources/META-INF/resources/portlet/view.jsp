@@ -21,8 +21,6 @@ String productMenuState = SessionClicks.get(request, "com.liferay.product.naviga
 String pagesTreeState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_pagesTreeState", "closed");
 
 ApplicationsMenuInstanceConfiguration applicationsMenuInstanceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(ApplicationsMenuInstanceConfiguration.class, themeDisplay.getCompanyId());
-
-String p_p_id = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_p_id");
 %>
 
 <div class="lfr-product-menu-sidebar <%= applicationsMenuInstanceConfiguration.enableApplicationsMenu() ? "lfr-applications-menu" : "" %>" id="productMenuSidebar">
@@ -52,7 +50,7 @@ String p_p_id = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request
 
 	<div class="sidebar-body">
 		<c:choose>
-			<c:when test='<%= p_p_id.equals(LayoutAdminPortletKeys.GROUP_PAGES) || (Objects.equals(productMenuState, "open") && !Objects.equals(pagesTreeState, "open")) %>'>
+			<c:when test='<%= !productMenuDisplayContext.isTreePageAllowed() || (Objects.equals(productMenuState, "open") && !Objects.equals(pagesTreeState, "open")) %>'>
 				<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:when test='<%= Objects.equals(productMenuState, "open") && Objects.equals(pagesTreeState, "open") %>'>

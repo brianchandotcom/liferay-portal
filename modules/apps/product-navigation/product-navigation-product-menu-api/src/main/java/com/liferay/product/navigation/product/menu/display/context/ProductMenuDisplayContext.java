@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
@@ -37,6 +39,8 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
@@ -49,6 +53,8 @@ public class ProductMenuDisplayContext {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(_portletRequest);
 
 		_panelAppRegistry = (PanelAppRegistry)_portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY);
@@ -183,6 +189,28 @@ public class ProductMenuDisplayContext {
 		return true;
 	}
 
+	public boolean isTreePageAllowed() {
+		String p_p_id = ParamUtil.getString(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			"p_p_id");
+		String mvcRenderCommandName = ParamUtil.getString(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			PortalUtil.getPortletNamespace(_GROUP_PAGES) +
+				"mvcRenderCommandName");
+		String mvcPath = ParamUtil.getString(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			"mvcPath");
+
+		if (!p_p_id.equals(_GROUP_PAGES) ||
+			(p_p_id.equals(_GROUP_PAGES) && !mvcRenderCommandName.isEmpty()) ||
+			(p_p_id.equals(_GROUP_PAGES) && !mvcPath.isEmpty())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isEnableApplicationsMenu() {
 		if (_enableApplicationsMenu != null) {
 			return _enableApplicationsMenu;
@@ -213,11 +241,15 @@ public class ProductMenuDisplayContext {
 		return _enableApplicationsMenu;
 	}
 
+	private static final String _GROUP_PAGES =
+		"com_liferay_layout_admin_web_portlet_GroupPagesPortlet";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductMenuDisplayContext.class);
 
 	private List<PanelCategory> _childPanelCategories;
 	private Boolean _enableApplicationsMenu;
+	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final PanelCategoryRegistry _panelCategoryRegistry;

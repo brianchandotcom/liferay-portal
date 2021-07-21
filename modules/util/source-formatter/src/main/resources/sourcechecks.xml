@@ -349,6 +349,10 @@
 			<category name="Styling" />
 			<description name="Finds cases where the default value is passed to `GetterUtil.get*` or `ParamUtil.get*`." />
 		</check>
+		<check name="IfStatementCheck">
+			<category name="Styling" />
+			<description name="Finds cases where the default value is passed to `GetterUtil.get*` or `ParamUtil.get*`." />
+		</check>
 		<check name="Java2HTMLCheck">
 			<category name="Miscellaneous" />
 			<description name="Finds incorrect use of `.java.html` in `.jsp` files." />
@@ -908,6 +912,10 @@
 		<check name="GetterUtilCheck">
 			<category name="Styling" />
 			<description name="Finds cases where the default value is passed to `GetterUtil.get*` or `ParamUtil.get*`." />
+		</check>
+		<check name="IfStatementCheck">
+			<category name="Styling" />
+			<description name="Finds empty if-statements" />
 		</check>
 		<check name="JSPArrowFunctionCheck">
 			<category name="Bug Prevention" />

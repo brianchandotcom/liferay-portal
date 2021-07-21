@@ -460,8 +460,7 @@ class Analytics {
 	 * @returns {Promise} A promise returned by the fetch request.
 	 */
 	_sendIdentity(identity, userId) {
-		const {channelId, dataSourceId} = this.config;
-		const {emailAddressHashed} = identity;
+		const {dataSourceId} = this.config;
 
 		const newIdentityHash = this._getIdentityHash(
 			dataSourceId,
@@ -473,6 +472,9 @@ class Analytics {
 		let identityHash = Promise.resolve(storedIdentityHash);
 
 		if (newIdentityHash !== storedIdentityHash) {
+			const {channelId} = this._getContext();
+			const {emailAddressHashed} = identity;
+
 			setItem(STORAGE_KEY_IDENTITY, newIdentityHash);
 
 			instance._identityQueue.addItem({

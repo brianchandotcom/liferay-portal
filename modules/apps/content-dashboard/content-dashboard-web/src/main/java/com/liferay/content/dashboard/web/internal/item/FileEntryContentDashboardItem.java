@@ -59,12 +59,13 @@ public class FileEntryContentDashboardItem
 	implements ContentDashboardItem<FileEntry> {
 
 	public FileEntryContentDashboardItem(
-		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
-		ContentDashboardItemType contentDashboardItemType, Group group,
+		ContentDashboardItemType contentDashboardItemType, FileEntry fileEntry,
+		Group group,
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
-		FileEntry fileEntry, Language language, Portal portal) {
+		Language language, List<AssetCategory> assetCategories,
+		List<AssetTag> assetTags, Portal portal) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			_assetCategories = Collections.emptyList();
@@ -83,9 +84,9 @@ public class FileEntryContentDashboardItem
 		_contentDashboardItemActionProviderTracker =
 			contentDashboardItemActionProviderTracker;
 		_contentDashboardItemType = contentDashboardItemType;
+		_fileEntry = fileEntry;
 		_group = group;
 		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
-		_fileEntry = fileEntry;
 		_language = language;
 		_portal = portal;
 	}

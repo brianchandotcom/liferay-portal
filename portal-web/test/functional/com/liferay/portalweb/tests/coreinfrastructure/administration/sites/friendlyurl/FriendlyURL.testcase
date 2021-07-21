@@ -251,6 +251,10 @@ definition {
 				key_imageDescription = "Responsive Image",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
+
+		task ("Change the locale to English") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "en/web/guest/home");
+		}
 	}
 
 }

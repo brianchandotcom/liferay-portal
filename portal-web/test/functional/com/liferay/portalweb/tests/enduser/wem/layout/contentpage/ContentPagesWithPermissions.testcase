@@ -1137,12 +1137,12 @@ definition {
 			Navigator.gotoNavTab(navTab = "Page Content");
 
 			AssertVisible(
-				key_webContentTitle = "WC WebContent Title",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_CONTENTS_LIST_TITLE");
+				key_itemName = "WC WebContent Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertElementNotPresent(
-				key_rowNumber = "2",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_ENTRY_N");
+				index = "2",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM_POSITION");
 		}
 	}
 

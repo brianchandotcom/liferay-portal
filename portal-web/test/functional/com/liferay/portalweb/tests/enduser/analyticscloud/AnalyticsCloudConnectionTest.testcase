@@ -114,6 +114,7 @@ definition {
 	test ViewAssetAddedByDXPDataSource {
 
 		// TODO LRAC-8128 ViewAssetAddedByDXPDataSource
+
 	}
 
 	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
@@ -122,6 +123,7 @@ definition {
 	test ViewPageAddedByDXPDataSource {
 
 		// TODO LRAC-8127 ViewPageAddedByDXPDataSource
+
 	}
 
 }

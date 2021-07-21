@@ -239,9 +239,65 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanRenameIndividualsSegment {
+		ACUtils.createBlogsAndAddToPage();
 
-		// TODO LRAC-8136 CanRenameIndividualsSegment pending implementation
+		Navigator.openURL();
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+		ACSegments.editWebBehaviorCriterion(
+			indexField = "1",
+			searchTerm = "Blogs AC Title");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.viewSegmentName(searchTerm = "Dynamic Segment Test");
+
+		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+
+		ACSegments.nameSegment(segmentName = "Rename Dynamic Segment Test");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.viewSegmentName(searchTerm = "Rename Dynamic Segment Test");
 	}
 
 }

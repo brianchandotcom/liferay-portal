@@ -1712,6 +1712,7 @@ public abstract class BaseDocumentResourceTestCase {
 			putDocument.getSiteId(), putDocument.getExternalReferenceCode());
 
 		assertEquals(newDocument, getDocument);
+
 		Assert.assertEquals(
 			newDocument.getExternalReferenceCode(),
 			putDocument.getExternalReferenceCode());

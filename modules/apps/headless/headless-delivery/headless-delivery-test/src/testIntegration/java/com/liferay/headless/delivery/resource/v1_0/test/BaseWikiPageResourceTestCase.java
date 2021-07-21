@@ -361,6 +361,7 @@ public abstract class BaseWikiPageResourceTestCase {
 			putWikiPage.getSiteId(), putWikiPage.getExternalReferenceCode());
 
 		assertEquals(newWikiPage, getWikiPage);
+
 		Assert.assertEquals(
 			newWikiPage.getExternalReferenceCode(),
 			putWikiPage.getExternalReferenceCode());

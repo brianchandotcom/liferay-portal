@@ -1021,6 +1021,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					putKnowledgeBaseFolder.getExternalReferenceCode());
 
 		assertEquals(newKnowledgeBaseFolder, getKnowledgeBaseFolder);
+
 		Assert.assertEquals(
 			newKnowledgeBaseFolder.getExternalReferenceCode(),
 			putKnowledgeBaseFolder.getExternalReferenceCode());

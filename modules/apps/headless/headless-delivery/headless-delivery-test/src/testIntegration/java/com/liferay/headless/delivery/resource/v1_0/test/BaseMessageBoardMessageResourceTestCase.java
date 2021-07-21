@@ -1880,6 +1880,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 					putMessageBoardMessage.getExternalReferenceCode());
 
 		assertEquals(newMessageBoardMessage, getMessageBoardMessage);
+
 		Assert.assertEquals(
 			newMessageBoardMessage.getExternalReferenceCode(),
 			putMessageBoardMessage.getExternalReferenceCode());

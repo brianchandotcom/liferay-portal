@@ -195,7 +195,7 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
-		task ("Append locale URL to Chinese") {
+		task ("Change the locale to Chinese") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "zh/web/guest/home");
 		}
 
@@ -214,7 +214,7 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
-		task ("Append locale URL to Portuguese") {
+		task ("Change the locale to Portuguese") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "pt/web/guest/home");
 		}
 
@@ -233,7 +233,7 @@ definition {
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
-		task ("Append locale URL to French") {
+		task ("Change the locale to French") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/home");
 		}
 

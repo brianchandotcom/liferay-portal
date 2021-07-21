@@ -43,6 +43,8 @@ definition {
 	test CanNavigatesToDataSourcePage {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
+		var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+
 		ACDXPSettings.syncNewContactData();
 
 		Navigator.openURL();
@@ -55,9 +57,9 @@ definition {
 
 		ACNavigation.goToSettings();
 
-		ACSettings.assertDataSourceList(dataSourceName = "Beryl Commerce");
+		ACSettings.assertDataSourceName(dataSourceName = "Beryl Commerce");
 
-		ACSettings.assertDataSourceList(dataSourceName = "Beryl Salesforce");
+		ACSettings.assertDataSourceName(dataSourceName = "${dataSource}");
 	}
 
 	@description = "Sync Liferay Data Source Contacts"

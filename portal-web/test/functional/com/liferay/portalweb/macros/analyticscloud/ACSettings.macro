@@ -10,7 +10,7 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
-	macro assertDataSourceList {
+	macro assertDataSourceName {
 		var itemName = "${dataSourceName}";
 
 		AssertElementPresent(locator1 = "ACSettings#ITEM_ON_LIST");

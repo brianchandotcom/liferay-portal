@@ -16,7 +16,7 @@ package com.liferay.commerce.internal.upgrade.v6_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -30,6 +30,12 @@ import java.util.Date;
  * @author Pei-Jung Lan
  */
 public class CommerceCountryUpgradeProcess extends UpgradeProcess {
+
+	public CommerceCountryUpgradeProcess(
+		CountryLocalService countryLocalService) {
+
+		_countryLocalService = countryLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -68,7 +74,7 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 					"shippingAllowed");
 				boolean subjectToVAT = resultSet.getBoolean("subjectToVAT");
 
-				Country country = CountryLocalServiceUtil.fetchCountryByA2(
+				Country country = _countryLocalService.fetchCountryByA2(
 					companyId, a2);
 
 				if (country != null) {
@@ -110,11 +116,11 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 			boolean shippingAllowed, boolean subjectToVAT, Date lastPublishDate)
 		throws Exception {
 
-		if (CountryLocalServiceUtil.fetchCountry(countryId) != null) {
+		if (_countryLocalService.fetchCountry(countryId) != null) {
 			countryId = increment();
 		}
 
-		Country country = CountryLocalServiceUtil.createCountry(countryId);
+		Country country = _countryLocalService.createCountry(countryId);
 
 		country.setCompanyId(companyId);
 		country.setUserId(userId);
@@ -137,12 +143,12 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 		country.setSubjectToVAT(subjectToVAT);
 		country.setLastPublishDate(lastPublishDate);
 
-		CountryLocalServiceUtil.addCountry(country);
+		_countryLocalService.addCountry(country);
 
 		for (String languageId :
 				LocalizationUtil.getAvailableLanguageIds(name)) {
 
-			CountryLocalServiceUtil.updateCountryLocalization(
+			_countryLocalService.updateCountryLocalization(
 				country, languageId,
 				LocalizationUtil.getLocalization(name, languageId));
 		}
@@ -176,12 +182,12 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 		for (String languageId :
 				LocalizationUtil.getAvailableLanguageIds(name)) {
 
-			CountryLocalServiceUtil.updateCountryLocalization(
+			_countryLocalService.updateCountryLocalization(
 				country, languageId,
 				LocalizationUtil.getLocalization(name, languageId));
 		}
 
-		return CountryLocalServiceUtil.updateCountry(country);
+		return _countryLocalService.updateCountry(country);
 	}
 
 	private void _updateCountryId(
@@ -214,5 +220,7 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 		"CommerceAddress", "CommerceAddressRestriction", "CommerceRegion",
 		"CommerceTaxFixedRateAddressRel", "CShippingFixedOptionRel"
 	};
+
+	private final CountryLocalService _countryLocalService;
 
 }

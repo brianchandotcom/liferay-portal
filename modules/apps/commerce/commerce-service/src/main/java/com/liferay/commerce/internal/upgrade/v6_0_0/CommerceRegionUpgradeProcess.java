@@ -16,7 +16,7 @@ package com.liferay.commerce.internal.upgrade.v6_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
@@ -28,6 +28,10 @@ import java.util.Date;
  * @author Pei-Jung Lan
  */
 public class CommerceRegionUpgradeProcess extends UpgradeProcess {
+
+	public CommerceRegionUpgradeProcess(RegionLocalService regionLocalService) {
+		_regionLocalService = regionLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -45,7 +49,7 @@ public class CommerceRegionUpgradeProcess extends UpgradeProcess {
 				String name = resultSet.getString("name");
 				Double priority = resultSet.getDouble("priority");
 
-				Region region = RegionLocalServiceUtil.fetchRegion(
+				Region region = _regionLocalService.fetchRegion(
 					commerceCountryId, code);
 
 				if (region != null) {
@@ -80,11 +84,11 @@ public class CommerceRegionUpgradeProcess extends UpgradeProcess {
 		Date createDate, Date modifiedDate, long countryId, boolean active,
 		String name, Double position, String regionCode, Date lastPublishDate) {
 
-		if (RegionLocalServiceUtil.fetchRegion(regionId) != null) {
+		if (_regionLocalService.fetchRegion(regionId) != null) {
 			regionId = increment();
 		}
 
-		Region region = RegionLocalServiceUtil.createRegion(regionId);
+		Region region = _regionLocalService.createRegion(regionId);
 
 		region.setCompanyId(companyId);
 		region.setUserId(userId);
@@ -98,7 +102,7 @@ public class CommerceRegionUpgradeProcess extends UpgradeProcess {
 		region.setRegionCode(regionCode);
 		region.setLastPublishDate(lastPublishDate);
 
-		return RegionLocalServiceUtil.addRegion(region);
+		return _regionLocalService.addRegion(region);
 	}
 
 	private Region _updateRegion(
@@ -111,7 +115,7 @@ public class CommerceRegionUpgradeProcess extends UpgradeProcess {
 		region.setRegionCode(regionCode);
 		region.setLastPublishDate(lastPublishDate);
 
-		return RegionLocalServiceUtil.updateRegion(region);
+		return _regionLocalService.updateRegion(region);
 	}
 
 	private void _updateRegionId(
@@ -134,5 +138,7 @@ public class CommerceRegionUpgradeProcess extends UpgradeProcess {
 		"CommerceAddress", "CommerceTaxFixedRateAddressRel",
 		"CShippingFixedOptionRel"
 	};
+
+	private final RegionLocalService _regionLocalService;
 
 }

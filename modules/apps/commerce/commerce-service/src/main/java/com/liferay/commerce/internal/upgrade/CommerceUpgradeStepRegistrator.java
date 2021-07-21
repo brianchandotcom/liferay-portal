@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.internal.upgrade;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
 import com.liferay.commerce.internal.upgrade.v1_1_0.CommerceOrderItemUpgradeProcess;
@@ -41,10 +42,15 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -204,14 +210,16 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register(
 			"5.0.1", "6.0.0",
 			new com.liferay.commerce.internal.upgrade.v6_0_0.
-				CommerceCountryUpgradeProcess(),
+				CommerceCountryUpgradeProcess(_countryLocalService),
 			new com.liferay.commerce.internal.upgrade.v6_0_0.
-				CommerceRegionUpgradeProcess());
+				CommerceRegionUpgradeProcess(_regionLocalService));
 
 		registry.register(
 			"6.0.0", "7.0.0",
 			new com.liferay.commerce.internal.upgrade.v7_0_0.
-				CommerceAddressUpgradeProcess());
+				CommerceAddressUpgradeProcess(
+					_addressLocalService, _accountEntryLocalService,
+					_listTypeLocalService, _phoneLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
@@ -222,6 +230,12 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		CommerceUpgradeStepRegistrator.class);
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AddressLocalService _addressLocalService;
+
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
@@ -230,6 +244,9 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	@Reference
 	private CommerceAccountOrganizationRelLocalService
 		_commerceAccountOrganizationRelLocalService;
+
+	@Reference
+	private CountryLocalService _countryLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
@@ -244,7 +261,16 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private PhoneLocalService _phoneLocalService;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

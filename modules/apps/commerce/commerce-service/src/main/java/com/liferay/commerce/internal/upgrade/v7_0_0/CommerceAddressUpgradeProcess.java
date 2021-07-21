@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.upgrade.v7_0_0;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalServiceUtil;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
-import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
-import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
-import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -41,6 +41,18 @@ import java.util.Objects;
  */
 public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
+	public CommerceAddressUpgradeProcess(
+		AddressLocalService addressLocalService,
+		AccountEntryLocalService accountEntryLocalService,
+		ListTypeLocalService listTypeLocalService,
+		PhoneLocalService phoneLocalService) {
+
+		_addressLocalService = addressLocalService;
+		_accountEntryLocalService = accountEntryLocalService;
+		_listTypeLocalService = listTypeLocalService;
+		_phoneLocalService = phoneLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (Statement selectStatement = connection.createStatement()) {
@@ -48,7 +60,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				"select * from CommerceAddress order by commerceAddressId");
 
 			while (resultSet.next()) {
-				Address address = AddressLocalServiceUtil.createAddress(
+				Address address = _addressLocalService.createAddress(
 					resultSet.getLong("commerceAddressId"));
 
 				address.setExternalReferenceCode(
@@ -73,7 +85,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				address.setStreet3(resultSet.getString("street3"));
 				address.setZip(resultSet.getString("zip"));
 
-				address = AddressLocalServiceUtil.addAddress(address);
+				address = _addressLocalService.addAddress(address);
 
 				_setPhoneNumber(address, resultSet.getString("phoneNumber"));
 				_setDefaultBilling(
@@ -109,7 +121,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 			 Objects.equals(CommerceAccount.class.getName(), className))) {
 
 			try {
-				AccountEntryLocalServiceUtil.updateDefaultBillingAddressId(
+				_accountEntryLocalService.updateDefaultBillingAddressId(
 					address.getClassPK(), address.getAddressId());
 			}
 			catch (PortalException portalException) {
@@ -126,7 +138,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 			 Objects.equals(CommerceAccount.class.getName(), className))) {
 
 			try {
-				AccountEntryLocalServiceUtil.updateDefaultShippingAddressId(
+				_accountEntryLocalService.updateDefaultShippingAddressId(
 					address.getClassPK(), address.getAddressId());
 			}
 			catch (PortalException portalException) {
@@ -140,14 +152,14 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		ListType listType = ListTypeLocalServiceUtil.getListType(
+		ListType listType = _listTypeLocalService.getListType(
 			"phone-number", ListTypeConstants.ADDRESS_PHONE);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		try {
-			PhoneLocalServiceUtil.addPhone(
+			_phoneLocalService.addPhone(
 				serviceContext.getUserId(), Address.class.getName(),
 				address.getAddressId(), phoneNumber, null,
 				listType.getListTypeId(), false, serviceContext);
@@ -159,5 +171,10 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAddressUpgradeProcess.class);
+
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final AddressLocalService _addressLocalService;
+	private final ListTypeLocalService _listTypeLocalService;
+	private final PhoneLocalService _phoneLocalService;
 
 }

@@ -19,13 +19,13 @@ definition {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Asset Publisher Page");
+				layoutName = "Test Page Name");
 		}
 
 		task ("Add an Asset Publisher widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Asset Publisher Page",
+				layoutName = "Test Page Name",
 				widgetName = "Asset Publisher");
 		}
 	}
@@ -56,10 +56,10 @@ definition {
 
 		task ("View the first web content details via Asset Publisher") {
 			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent Title ${i}");
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent Title 1");
 		}
 
 		task ("Click the back button of Asset Publisher") {

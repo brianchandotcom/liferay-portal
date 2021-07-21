@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Documents Management";
+	property testray.main.component.name = "Document Management";
 
 	var pageName = "Media Gallery Page";
 	var portletName = "Media Gallery";

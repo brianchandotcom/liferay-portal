@@ -4,7 +4,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property portal.upstream = "quarantine";
-	property testray.component.names = "Documents Management";
+	property testray.component.names = "Document Management";
 	property testray.main.component.name = "Upgrades Collaboration";
 
 	setUp {

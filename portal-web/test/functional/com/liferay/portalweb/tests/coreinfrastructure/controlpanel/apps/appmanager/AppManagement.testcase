@@ -262,7 +262,7 @@ definition {
 	@priority = "5"
 	test DeactivateAndActivateDocumentLibraryOpener {
 		property test.name.skip.portal.instance = "AppManagement#DeactivateAndActivateDocumentLibraryOpener";
-		property testray.main.component.name = "Documents Management";
+		property testray.main.component.name = "Document Management";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

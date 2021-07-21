@@ -65,10 +65,6 @@ public class StringMethodsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected boolean isJavaSource(String content, int pos) {
-		return true;
-	}
-
 	private void _checkInefficientStringMethods(
 		String fileName, String content, String regex, String methodName) {
 

@@ -63,10 +63,6 @@ public abstract class BaseStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected boolean isJavaSource(String content, int pos) {
-		return true;
-	}
-
 	private String _fixBooleanStatement(String content) {
 		Matcher matcher = _booleanPattern.matcher(content);
 

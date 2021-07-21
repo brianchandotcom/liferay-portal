@@ -86,10 +86,6 @@ public abstract class BaseLogParametersCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected boolean isJavaSource(String content, int pos) {
-		return true;
-	}
-
 	private static final Pattern _logPattern = Pattern.compile(
 		"_log\\.(debug|error|fatal|info|trace|warn)\\((.+?)\\);\n",
 		Pattern.DOTALL);

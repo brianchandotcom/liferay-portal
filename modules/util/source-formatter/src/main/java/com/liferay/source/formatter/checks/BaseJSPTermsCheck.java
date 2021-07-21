@@ -290,7 +290,7 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 			int x = matcher.start() + 1;
 
-			if (JSPSourceUtil.isJavaSource(content, x)) {
+			if (isJavaSource(content, x)) {
 				if (!ToolsUtil.isInsideQuotes(content, x)) {
 					count++;
 				}

@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.io.IOException;
 
@@ -91,7 +90,7 @@ public class JSPLineBreakCheck extends BaseLineBreakCheck {
 		Matcher matcher = _redundantCommaPattern.matcher(content);
 
 		while (matcher.find()) {
-			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
+			if (isJavaSource(content, matcher.start())) {
 				return StringUtil.replaceFirst(
 					content, StringPool.COMMA, StringPool.BLANK,
 					matcher.start());

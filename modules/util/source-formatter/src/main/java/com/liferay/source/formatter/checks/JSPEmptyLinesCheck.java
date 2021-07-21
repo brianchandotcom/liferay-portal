@@ -55,11 +55,6 @@ public class JSPEmptyLinesCheck extends BaseEmptyLinesCheck {
 		return content;
 	}
 
-	@Override
-	protected boolean isJavaSource(String content, int pos) {
-		return JSPSourceUtil.isJavaSource(content, pos);
-	}
-
 	private String _fixMissingEmptyLines(String content) {
 		Matcher matcher = _missingEmptyLinePattern1.matcher(content);
 

@@ -76,11 +76,6 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		return formatStyling(content);
 	}
 
-	@Override
-	protected boolean isJavaSource(String content, int pos) {
-		return JSPSourceUtil.isJavaSource(content, pos, true);
-	}
-
 	private String _combineJavaSourceBlocks(String content) {
 		Matcher matcher = _adjacentJavaBlocksPattern.matcher(content);
 
@@ -157,7 +152,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		matcher = _incorrectLineBreakPattern2.matcher(content);
 
 		while (matcher.find()) {
-			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
+			if (isJavaSource(content, matcher.start())) {
 				return StringUtil.replaceFirst(
 					content, matcher.group(1), StringPool.SPACE,
 					matcher.start());

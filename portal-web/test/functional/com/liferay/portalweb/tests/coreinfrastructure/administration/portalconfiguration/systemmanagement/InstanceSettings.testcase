@@ -1156,6 +1156,60 @@ definition {
 		PortalSettings.viewEmailNotificationsSenderCP();
 	}
 
+	@description = "This test asserts that a user can update the password changed notification subject and body. The notification also send when set password via json."
+	@priority = "3"
+	test ViewPasswordChangedNotificationTemplateUpdated {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.smtp.server.enabled = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		PortalSettings.editConfigurationUsersEmailNotificationsCP(
+			configurationName = "Password Changed Notification",
+			notificationsBody = '''
+				Dear [$TO_NAME$],<br /><br />
+
+				This is a new template for user password change test.<br /><br />
+
+				Your password for [$PORTAL_URL$] has been changed.<br /><br />
+
+				The request for a new password was made from [$REMOTE_ADDRESS$] / [$REMOTE_HOST$].<br /><br />
+
+				Sincerely,<br />
+				[$FROM_NAME$]<br />
+				[$FROM_ADDRESS$]<br />
+				[$PORTAL_URL$]
+			''',
+			notificationsSubject = "[$PORTAL_URL$]: Dear user, your Password Has Been Changed");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		MockMock.viewMail(
+			asset = "${portalURL}: Dear user, your Password Has Been Changed",
+			content = "This is a new template for user password change test.",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "${portalURL}: Dear user, your Password Has Been Changed");
+	}
+
 	@description = "This is a use case for LPS-97907."
 	@priority = "5"
 	test ViewSystemSettingsSavedByKeyboard {

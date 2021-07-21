@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="IfStatementCheck" files="depot-service/src/main/java/com/liferay/depot/internal/security/permission/contributor/DepotRoleContributor\.java" />
+	</source-check>
+</suppressions>

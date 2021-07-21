@@ -383,6 +383,34 @@ definition {
 		AssertElementNotPresent(locator1 = "Link#CREATE_ACCOUNT");
 	}
 
+	@description = "This test asserts that a user can create multi factory configurations."
+	@priority = "4"
+	test CanCreateTwoFactoryConfigurations {
+		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
+		var openIDConnectClientID1 = PropsUtil.get("google.client.id.2");
+		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
+		var openIDConnectClientSecret1 = PropsUtil.get("google.client.secret.2");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID Connect Provider",
+			configurationScope = "Virtual Instance Scope");
+
+		OpenIDConnect.addProvider(
+			openIDConnectClientID = "${openIDConnectClientID}",
+			openIDConnectClientSecret = "${openIDConnectClientSecret}",
+			providerName = "Google");
+
+		LexiconEntry.viewEntryName(rowEntry = "Google");
+
+		OpenIDConnect.addProvider(
+			openIDConnectClientID = "${openIDConnectClientID1}",
+			openIDConnectClientSecret = "${openIDConnectClientSecret1}",
+			providerName = "New Entry 1");
+
+		LexiconEntry.viewEntryName(rowEntry = "New Entry 1");
+	}
+
 	@description = "This test asserts that a user can disable the account created notification. No email would send to user when the account created notification is disabled."
 	@priority = "3"
 	test CanDisabledAccountCreatedNotification {

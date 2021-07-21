@@ -236,7 +236,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
-	@ignore = "true"
 	@priority = "5"
 	test CanRenameIndividualsSegment {
 		ACUtils.createBlogsAndAddToPage();

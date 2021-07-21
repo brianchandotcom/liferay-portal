@@ -1521,6 +1521,91 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-126190. The user should receive an e-mail after subscribe to Asset Publisher when Dynamic Subscription Limit is set to 0."
+	@priority = "4"
+	test ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero {
+		property custom.properties = "mail.send.blacklist= ";
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero";
+		property test.smtp.server.enabled = "true";
+
+		task ("Go to System Settings on Control Panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+		}
+
+		task ("Set the Dynamic Subscription Limit on Asset Publisher") {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Asset Publisher",
+				configurationScope = "System Scope");
+
+			SystemSettings.editTextSetting(
+				settingName = "Dynamic Subscription Limit",
+				settingValue = "0");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Enable subscription in the Asset Publisher") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Subscribe to the Asset Publisher") {
+			Click(locator1 = "Button#SUBSCRIBE");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Force the subscription with Groovy script") {
+			ServerAdministration.openServerAdmin();
+
+			var script = '''
+				import com.liferay.registry.RegistryUtil
+
+				try {
+				def registry = RegistryUtil.getRegistry()
+
+				def serviceReference = registry.getServiceReference("com.liferay.asset.publisher.web.internal.messaging.AssetEntriesCheckerHelper")
+
+				def assetEntriesCheckerHelper = registry.getService(serviceReference)
+
+				def checkEntriesMethod = assetEntriesCheckerHelper.getClass().getMethod("checkAssetEntries")
+
+				checkEntriesMethod.invoke(assetEntriesCheckerHelper)
+				}
+				catch (Exception e) {
+				e.printStackTrace(out)
+				}
+			''';
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
+		}
+
+		task ("View the email in Mock Mock") {
+			MockMock.viewMail(
+				asset = "New Asset Entries Added to Asset Publisher",
+				content = "The following asset entries have been added to Asset Publisher",
+				recipient = "Test Test",
+				sender = "Test Test",
+				subject = "New Asset Entries Added to Asset Publisher");
+		}
+	}
+
 	@description = "Add and edit web content via Asset Publisher in organization site with virtual host."
 	@priority = "3"
 	@uitest

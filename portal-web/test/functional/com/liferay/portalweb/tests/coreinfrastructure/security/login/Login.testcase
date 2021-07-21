@@ -14,6 +14,7 @@ definition {
 	test CASSSOSmoke {
 		property cas.enabled = "true";
 		property dummy.socket.proxy.disabled = "true";
+		property osgi.app.includes = "portal-security-sso-cas";
 		property test.name.skip.portal.instance = "Login#CASSSOSmoke";
 
 		User.firstLoginPG();

@@ -677,12 +677,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-119817. Map manual URL to Container element."
-	@ignore = "true"
 	@priority = "5"
 	test MapManualURLToContainerElement {
-
-		// Ignored until LRCI-2329 is resolved
-
 		property portal.acceptance = "true";
 
 		task ("Add a Container element to page") {

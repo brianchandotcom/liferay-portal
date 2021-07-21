@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
@@ -155,8 +154,9 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 		ListType listType = _listTypeLocalService.getListType(
 			"phone-number", ListTypeConstants.ADDRESS_PHONE);
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUserId(address.getUserId());
 
 		try {
 			_phoneLocalService.addPhone(

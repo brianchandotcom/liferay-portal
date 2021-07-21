@@ -44,7 +44,7 @@ definition {
 	@description = "This is a test for LPS-124704. No alert popup on view asset in Asset Publisher when replace the value of assetEntryId by XSS in URL."
 	@priority = "4"
 	@uitest
-	test ViewAssetDetailsWhenAppendXSSToURL {
+	test ViewAssetWhenReplaceValueOfAssetEntryIdByXSSInURL {
 		task ("Add three web contents") {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(

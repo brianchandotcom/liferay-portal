@@ -100,6 +100,7 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.TreeMap;
 
@@ -266,6 +267,18 @@ public class LayoutsAdminDisplayContext {
 		_backURL = backURL;
 
 		return _backURL;
+	}
+
+	public String getConfigurationTitle(Layout layout, Locale locale) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry.getName();
+		}
+
+		return layout.getName(locale);
 	}
 
 	public String getConfigureLayoutURL(Layout layout) {

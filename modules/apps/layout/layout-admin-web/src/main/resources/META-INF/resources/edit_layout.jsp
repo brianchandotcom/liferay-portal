@@ -40,7 +40,7 @@ if (Validator.isNotNull(backURL)) {
 	portletDisplay.setURLBack(backURL);
 }
 
-renderResponse.setTitle(selLayout.getName(locale));
+renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayout, locale));
 %>
 
 <liferay-ui:success key='<%= portletResource + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />

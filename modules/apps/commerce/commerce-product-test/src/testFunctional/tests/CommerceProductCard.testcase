@@ -1190,9 +1190,6 @@ definition {
 	@priority = "3"
 	test ViewProductCardPrice {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceProductCard#ViewProductCardPrice";
-
-		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

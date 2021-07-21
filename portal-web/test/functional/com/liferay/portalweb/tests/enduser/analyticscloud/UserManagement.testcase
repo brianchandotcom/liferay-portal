@@ -9,18 +9,10 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
-		ACSettings.takeTokenFromAnalyticsCloud();
-
-		TestCase.setUpPortalInstance();
-
-		ACUtils.launchDXP();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -30,12 +22,19 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8142 | Test Summary: Users list can be searched"
-	@ignore = "true"
 	@priority = "5"
 	test UsersListCanBeSearched {
+		ACNavigation.goToSettings();
 
-		// TODO LRAC-8142 Automate UserManagement#UsersListCanBeSearched pending implementation
+		ACSettings.goToUserManagement();
 
+		ACUtils.searchBar(searchItem = "michelle hoshi");
+
+		ACSettings.assertUserList(userName = "michelle hoshi");
+
+		ACUtils.searchBar(searchItem = "corbin murakami");
+
+		ACSettings.assertUserList(userName = "corbin murakami");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8143 | Test Summary: Owner can delete users"

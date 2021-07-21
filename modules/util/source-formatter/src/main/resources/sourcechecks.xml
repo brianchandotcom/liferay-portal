@@ -672,7 +672,7 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that the correct log messages are printed." />
 		</check>
-		<check name="JavaLogParametersCheck">
+		<check name="LogParametersCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the values of parameters passed to `_log.*` calls." />
 		</check>
@@ -1048,7 +1048,7 @@
 			<category name="Bug Prevention" />
 			<description name="Finds missing language keys in `Language.properties`." />
 		</check>
-		<check name="JSPLogParametersCheck">
+		<check name="LogParametersCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the values of parameters passed to `_log.*` calls." />
 		</check>

@@ -228,13 +228,9 @@ definition {
 
 				var value = StringUtil.extractLast("${borderColorAttribute}", "-");
 
-				Click(
-					key_fieldLabel = "${fieldLabel}",
-					locator1 = "PageEditor#ITEM_SELECTOR_DROPDOWN_TOGGLE");
-
-				Click(
-					key_colorSwatchItem = "${value}",
-					locator1 = "Button#COLOR_SWATCH_ITEM");
+				PageEditor.selectColorSwatchItem(
+					colorSwatchItem = "${value}",
+					fieldLabel = "${fieldLabel}");
 			}
 		}
 

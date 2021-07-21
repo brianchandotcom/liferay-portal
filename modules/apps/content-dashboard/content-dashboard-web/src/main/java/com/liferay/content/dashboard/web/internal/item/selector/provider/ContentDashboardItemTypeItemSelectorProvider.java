@@ -116,16 +116,19 @@ public class ContentDashboardItemTypeItemSelectorProvider {
 		dlBooleanQueryImpl.addExactTerm(
 			Field.ENTRY_CLASS_NAME, DLFileEntryType.class.getName());
 
-		BooleanQueryImpl finalBooleanQueryImpl = new BooleanQueryImpl();
-
-		finalBooleanQueryImpl.add(
-			booleanQueryImpl, BooleanClauseOccur.SHOULD.getName());
-		finalBooleanQueryImpl.add(
-			dlBooleanQueryImpl, BooleanClauseOccur.SHOULD.getName());
-
 		return new BooleanClause[] {
 			BooleanClauseFactoryUtil.create(
-				finalBooleanQueryImpl, BooleanClauseOccur.MUST.getName())
+				new BooleanQueryImpl() {
+					{
+						add(
+							booleanQueryImpl,
+							BooleanClauseOccur.SHOULD.getName());
+						add(
+							dlBooleanQueryImpl,
+							BooleanClauseOccur.SHOULD.getName());
+					}
+				},
+				BooleanClauseOccur.MUST.getName())
 		};
 	}
 

@@ -52,14 +52,12 @@ class LiferayApp extends App {
 		userNotification,
 		validStatusCodes,
 	}) {
-		super();
+		super({navigationExceptionSelectors});
 
 		this._cacheExpirationTime = cacheExpirationTime;
 		this._clearScreensCache = clearScreensCache;
 		this._debugEnabled = debugEnabled;
 
-		this.formSelector = `form${navigationExceptionSelectors}`;
-		this.linkSelector = `a${navigationExceptionSelectors}`;
 		this.portletsBlacklist = portletsBlacklist;
 		this.userNotification = userNotification;
 		this.validStatusCodes = validStatusCodes;

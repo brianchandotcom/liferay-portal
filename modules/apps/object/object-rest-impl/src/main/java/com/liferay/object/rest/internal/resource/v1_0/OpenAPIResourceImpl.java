@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
@@ -38,10 +39,11 @@ import javax.ws.rs.core.UriInfo;
 public class OpenAPIResourceImpl {
 
 	public OpenAPIResourceImpl(
-		OpenAPIResource openAPIResource,
+		Long objectDefinitionCompanyId, OpenAPIResource openAPIResource,
 		OpenAPISchemaFilter openAPISchemaFilter,
 		Set<Class<?>> resourceClasses) {
 
+		_objectDefinitionCompanyId = objectDefinitionCompanyId;
 		_openAPIResource = openAPIResource;
 		_openAPISchemaFilter = openAPISchemaFilter;
 		_resourceClasses = resourceClasses;
@@ -53,10 +55,20 @@ public class OpenAPIResourceImpl {
 	public Response getOpenAPI(@PathParam("type") String type)
 		throws Exception {
 
+		if (_contextCompany.getCompanyId() != _objectDefinitionCompanyId) {
+			return Response.status(
+				404
+			).build();
+		}
+
 		return _openAPIResource.getOpenAPI(
 			_openAPISchemaFilter, _resourceClasses, type, _uriInfo);
 	}
 
+	@Context
+	private Company _contextCompany;
+
+	private final Long _objectDefinitionCompanyId;
 	private final OpenAPIResource _openAPIResource;
 	private final OpenAPISchemaFilter _openAPISchemaFilter;
 	private final Set<Class<?>> _resourceClasses;

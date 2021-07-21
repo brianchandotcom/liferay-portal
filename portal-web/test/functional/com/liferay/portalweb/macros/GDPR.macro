@@ -107,6 +107,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro anonymizeSingleEntryViaInfoPanel {
+		LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Anonymize");
+
+		AssertConfirm(value1 = "Are you sure you want to anonymize this entity?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteAllEntriesCP {
 		PortletEntry.selectAll();
 

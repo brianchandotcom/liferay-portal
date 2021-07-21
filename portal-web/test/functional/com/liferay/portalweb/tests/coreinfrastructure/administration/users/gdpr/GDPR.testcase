@@ -329,9 +329,48 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "2"
 	test CanAnonymizeViaInfoPanel {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50729 Anonymize a single entry from an Application via the info panel
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry 1");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry 2");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applications = "Blogs",
+			itemsCount = "2");
+
+		GDPR.anonymizeSingleEntryViaInfoPanel(rowEntry = "Blogs Entry 1");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry 1");
+
+		BlogsEntry.viewEntryAuthorCP(
+			entryAuthorFullName = "Anonymous Anonymous",
+			entryTitle = "Blogs Entry 1");
 	}
 
 	@description = "This test deletes multiple staged data from an application."

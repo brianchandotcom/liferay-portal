@@ -54,7 +54,6 @@ definition {
 	@description = "Verify that the user can approve a Content Page"
 	@priority = "5"
 	test CanApproveContentPageWithWorkflow {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -189,9 +188,8 @@ definition {
 		Click(
 			key_workflowAssetTitle = "",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE_2");
-		
-		AssertElementPresent(locator1 = "AssetWorkflow#ASSET_STATE_APPROVED");
 
+		AssertElementPresent(locator1 = "AssetWorkflow#ASSET_STATE_APPROVED");
 	}
 
 	@description = "Verify that the user can reject a Content Page"

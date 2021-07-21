@@ -15,12 +15,14 @@
 package com.liferay.company.sample.data.generation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -137,19 +139,26 @@ public class CompanySampleDataGenerationTest {
 
 			// Add user
 
-			int originalCompanyUsersCount =
-				_userLocalService.getCompanyUsersCount(company.getCompanyId());
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(
+						company.getCompanyId())) {
 
-			_addUser(
-				companyIndex, company.getCompanyId(), company.getGroupId(),
-				webId);
+				int originalCompanyUsersCount =
+					_userLocalService.getCompanyUsersCount(
+						company.getCompanyId());
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					"User count for ", webId, "should be ",
-					_USER_PER_COMPANY_COUNT + originalCompanyUsersCount),
-				_USER_PER_COMPANY_COUNT + originalCompanyUsersCount,
-				_userLocalService.getCompanyUsersCount(company.getCompanyId()));
+				_addUser(
+					companyIndex, company.getCompanyId(), company.getGroupId(),
+					webId);
+
+				Assert.assertEquals(
+					StringBundler.concat(
+						"User count for ", webId, " should be ",
+						_USER_PER_COMPANY_COUNT + originalCompanyUsersCount),
+					_USER_PER_COMPANY_COUNT + originalCompanyUsersCount,
+					_userLocalService.getCompanyUsersCount(
+						company.getCompanyId()));
+			}
 		}
 	}
 

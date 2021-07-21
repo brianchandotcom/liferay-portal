@@ -175,7 +175,7 @@ public class Account implements Serializable {
 	}
 
 	@GraphQLField(description = "The optional external key of this account.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
 
 	@Schema

@@ -85,6 +85,14 @@ definition {
 		task ("View the alert not shown") {
 			AssertAlertNotPresent();
 		}
+
+		task ("View the web contents shown in Asset Publisher") {
+			for (var i : list "1,2,3") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "WC WebContent Content",
+					assetTitle = "WC WebContent Title ${i}");
+			}
+		}
 	}
 
 }

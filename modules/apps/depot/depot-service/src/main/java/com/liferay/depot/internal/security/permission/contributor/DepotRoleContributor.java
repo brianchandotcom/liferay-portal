@@ -23,13 +23,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 
 import java.util.List;
 
@@ -61,21 +59,6 @@ public class DepotRoleContributor implements RoleContributor {
 			if (userBag.hasUserGroup(group)) {
 				_addRoleId(
 					roleCollection, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
-			}
-
-			User user = roleCollection.getUser();
-
-			if (_userGroupRoleLocalService.hasUserGroupRole(
-					user.getUserId(), group.getGroupId(),
-					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
-			}
-
-			if (_userGroupRoleLocalService.hasUserGroupRole(
-					user.getUserId(), group.getGroupId(),
-					DepotRolesConstants.ASSET_LIBRARY_OWNER, true) ||
-				_userGroupRoleLocalService.hasUserGroupRole(
-					user.getUserId(), group.getGroupId(),
-					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true)) {
 			}
 
 			List<DepotEntryGroupRel> depotEntryGroupRels =
@@ -125,8 +108,5 @@ public class DepotRoleContributor implements RoleContributor {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

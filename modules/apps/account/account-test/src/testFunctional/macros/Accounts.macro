@@ -138,6 +138,25 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addBusinessAccountWithCategory {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${accountName}");
+
+		AssertClick(
+			key_vocabularyName = "${vocabularyName}",
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_CATEGORY_SELECT",
+			value1 = "Select");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Select ${vocabularyName}");
+
+		AssetCategorization.selectCategory(categoryName = "${categoryName}");
+
+		PortletEntry.save();
+	}
+
 	macro addInactiveBusinessAccount {
 		LexiconEntry.gotoAdd();
 

@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +31,7 @@ public class JSPLanguageUtilCheck extends BaseFileCheck {
 		Matcher matcher = _languageUtilPattern.matcher(content);
 
 		while (matcher.find()) {
-			if (JSPSourceUtil.isJavaSource(content, matcher.start(), true)) {
+			if (isJavaSource(content, matcher.start(), true)) {
 				return StringUtil.replaceFirst(
 					content, "LanguageUtil.get(locale,",
 					"LanguageUtil.get(request,");

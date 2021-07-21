@@ -284,7 +284,7 @@ public class JSPCoreTaglibCheck extends BaseJSPTermsCheck {
 	private Clause _getClause(String content, int lineNumber) {
 		int startPos = getLineStartPos(content, lineNumber + 1) - 2;
 
-		if (!JSPSourceUtil.isJavaSource(content, startPos)) {
+		if (!isJavaSource(content, startPos)) {
 			return null;
 		}
 
@@ -306,7 +306,7 @@ public class JSPCoreTaglibCheck extends BaseJSPTermsCheck {
 				return null;
 			}
 
-			if (!JSPSourceUtil.isJavaSource(content, endPos) ||
+			if (!isJavaSource(content, endPos) ||
 				ToolsUtil.isInsideQuotes(content, endPos)) {
 
 				continue;

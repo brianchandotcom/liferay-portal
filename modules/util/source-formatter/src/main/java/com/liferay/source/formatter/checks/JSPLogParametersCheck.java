@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.source.formatter.checks.util.JSPSourceUtil;
-
 /**
  * @author Hugo Huijser
  */
@@ -26,11 +24,6 @@ public class JSPLogParametersCheck extends BaseLogParametersCheck {
 		String fileName, String absolutePath, String content) {
 
 		return formatLogParameters(content);
-	}
-
-	@Override
-	protected boolean isJavaSource(String content, int pos) {
-		return JSPSourceUtil.isJavaSource(content, pos);
 	}
 
 }

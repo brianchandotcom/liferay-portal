@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.source.formatter.checks.util.JSPSourceUtil;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +29,7 @@ public class JSPParenthesesCheck extends BaseIfStatementCheck {
 		Matcher matcher = _ifStatementPattern.matcher(content);
 
 		while (matcher.find()) {
-			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
+			if (isJavaSource(content, matcher.start())) {
 				checkIfClauseParentheses(
 					matcher.group(), fileName,
 					getLineNumber(content, matcher.start(1)), true);
@@ -41,7 +39,7 @@ public class JSPParenthesesCheck extends BaseIfStatementCheck {
 		matcher = _tagPattern.matcher(content);
 
 		while (matcher.find()) {
-			if (!JSPSourceUtil.isJavaSource(content, matcher.start())) {
+			if (!isJavaSource(content, matcher.start())) {
 				String ifClause = "if (" + matcher.group(1) + ") {";
 
 				checkIfClauseParentheses(

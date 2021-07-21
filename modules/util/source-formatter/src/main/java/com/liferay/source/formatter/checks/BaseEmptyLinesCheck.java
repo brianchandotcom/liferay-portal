@@ -612,10 +612,6 @@ public abstract class BaseEmptyLinesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected boolean isJavaSource(String content, int pos) {
-		return true;
-	}
-
 	private int _getMatchingClosingCurlyBracePos(String content, int start) {
 		int x = start;
 

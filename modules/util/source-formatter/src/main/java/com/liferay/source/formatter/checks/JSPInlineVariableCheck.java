@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.io.IOException;
 
@@ -56,9 +55,7 @@ public class JSPInlineVariableCheck extends BaseJSPTermsCheck {
 			content);
 
 		while (variableDefinitionMatcher.find()) {
-			if (!JSPSourceUtil.isJavaSource(
-					content, variableDefinitionMatcher.start())) {
-
+			if (!isJavaSource(content, variableDefinitionMatcher.start())) {
 				continue;
 			}
 

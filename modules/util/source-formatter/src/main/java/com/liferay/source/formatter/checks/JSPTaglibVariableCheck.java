@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.io.IOException;
 
@@ -186,7 +185,7 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 		while (matcher.find()) {
 			int x = matcher.start() + 1;
 
-			if (JSPSourceUtil.isJavaSource(content, x)) {
+			if (isJavaSource(content, x)) {
 				if (!ToolsUtil.isInsideQuotes(content, x)) {
 					count++;
 				}
@@ -194,7 +193,7 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 				continue;
 			}
 
-			if (JSPSourceUtil.isJavaSource(content, x, true)) {
+			if (isJavaSource(content, x, true)) {
 				count++;
 			}
 		}

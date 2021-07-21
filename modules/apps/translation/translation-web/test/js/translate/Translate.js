@@ -19,7 +19,7 @@ import React from 'react';
 import Translate from '../../../src/main/resources/META-INF/resources/js/translate/Translate';
 
 const baseProps = {
-	aditionalFields: {
+	additionalFields: {
 		redirect: 'http://redirect-url',
 		sourceLanguageId: 'en_US',
 		targetLanguageId: 'es_ES',

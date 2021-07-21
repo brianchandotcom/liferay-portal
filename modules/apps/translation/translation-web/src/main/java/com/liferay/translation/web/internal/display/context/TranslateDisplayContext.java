@@ -238,7 +238,7 @@ public class TranslateDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"aditionalFields",
+			"additionalFields",
 			HashMapBuilder.<String, Object>put(
 				"redirect", ParamUtil.getString(_httpServletRequest, "redirect")
 			).put(

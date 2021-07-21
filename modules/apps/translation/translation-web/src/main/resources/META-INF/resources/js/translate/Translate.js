@@ -81,7 +81,7 @@ const reducer = (state, action) => {
 };
 
 const Translate = ({
-	aditionalFields,
+	additionalFields,
 	autoTranslateEnabled = false,
 	currentUrl,
 	experiencesSelectorData,
@@ -288,7 +288,7 @@ const Translate = ({
 				name={`${portletNamespace}workflowAction`}
 				type="hidden"
 			/>
-			{Object.entries(aditionalFields).map(([name, value]) => (
+			{Object.entries(additionalFields).map(([name, value]) => (
 				<input
 					defaultValue={value}
 					key={name}

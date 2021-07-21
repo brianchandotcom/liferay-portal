@@ -7,7 +7,7 @@ html#{$cadmin-selector} {
 			}
 
 			.sidebar {
-				border-left: 1px solid $gray-300;
+				border-left: 1px solid $cadmin-gray-300;
 			}
 
 			.sidebar-header {
@@ -15,8 +15,8 @@ html#{$cadmin-selector} {
 			}
 
 			.panel-header {
-				border-bottom: 1px solid $gray-500;
-				color: $gray-900;
+				border-bottom: 1px solid $cadmin-gray-500;
+				color: $cadmin-gray-900;
 				font-size: 12px;
 				line-height: 18px;
 				padding-bottom: 6px;
@@ -24,7 +24,7 @@ html#{$cadmin-selector} {
 
 				.collapse-icon-closed, 
 				.collapse-icon-open {
-					color: $gray-600;
+					color: $cadmin-gray-600;
 					right: 0;
 				}
 			}
@@ -62,17 +62,17 @@ html#{$cadmin-selector} {
 			}
 
 			.lfr-device-item {
-				color: $gray-600;
+				color: $cadmin-gray-600;
 
 				&:hover {
-					color: $gray-900;
+					color: $cadmin-gray-900;
 				}
 
 				&.selected {
-					color: $gray-900;
+					color: $cadmin-gray-900;
 
 					.icon {
-						background-color: $gray-200;
+						background-color: $cadmin-gray-200;
 						border-radius: 4px;
 					}
 				}

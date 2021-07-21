@@ -23,8 +23,6 @@ import org.osgi.framework.launch.Framework;
  */
 public interface ModuleFramework {
 
-	public URL getBundleResource(long bundleId, String name);
-
 	public Framework getFramework();
 
 	public void initFramework() throws Exception;

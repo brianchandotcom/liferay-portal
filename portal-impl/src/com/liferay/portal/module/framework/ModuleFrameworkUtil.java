@@ -14,8 +14,6 @@
 
 package com.liferay.portal.module.framework;
 
-import java.net.URL;
-
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
@@ -30,10 +28,6 @@ import org.osgi.framework.launch.Framework;
  * @see    ModuleFrameworkClassLoader
  */
 public class ModuleFrameworkUtil {
-
-	public static URL getBundleResource(long bundleId, String name) {
-		return _moduleFramework.getBundleResource(bundleId, name);
-	}
 
 	public static Framework getFramework() {
 		return _moduleFramework.getFramework();

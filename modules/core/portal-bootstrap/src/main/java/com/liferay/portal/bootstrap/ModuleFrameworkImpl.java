@@ -165,27 +165,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	public Bundle getBundle(long bundleId) {
-		if (_framework == null) {
-			return null;
-		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		return bundleContext.getBundle(bundleId);
-	}
-
-	@Override
-	public URL getBundleResource(long bundleId, String name) {
-		Bundle bundle = getBundle(bundleId);
-
-		if (bundle == null) {
-			return null;
-		}
-
-		return bundle.getResource(name);
-	}
-
 	@Override
 	public Framework getFramework() {
 		return _framework;

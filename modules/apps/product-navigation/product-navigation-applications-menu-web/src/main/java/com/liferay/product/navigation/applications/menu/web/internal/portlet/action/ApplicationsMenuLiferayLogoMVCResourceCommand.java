@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
 
@@ -34,6 +33,9 @@ import java.net.URL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -49,6 +51,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ApplicationsMenuLiferayLogoMVCResourceCommand
 	extends BaseMVCResourceCommand {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
 
 	@Override
 	protected void doServeResource(
@@ -98,10 +105,13 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 					inputStream = classLoader.getResourceAsStream(name);
 				}
 				else {
-					URL url = ModuleFrameworkUtil.getBundleResource(
-						bundleId, name);
+					Bundle bundle = _bundleContext.getBundle(bundleId);
 
-					inputStream = url.openStream();
+					if (bundle != null) {
+						URL url = bundle.getResource(name);
+
+						inputStream = url.openStream();
+					}
 				}
 			}
 
@@ -132,5 +142,7 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ApplicationsMenuLiferayLogoMVCResourceCommand.class);
+
+	private BundleContext _bundleContext;
 
 }

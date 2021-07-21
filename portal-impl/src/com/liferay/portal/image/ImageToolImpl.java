@@ -78,6 +78,10 @@ import org.im4java.core.IMOperation;
 
 import org.monte.media.jpeg.CMYKJPEGImageReaderSpi;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.launch.Framework;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -372,10 +376,17 @@ public class ImageToolImpl implements ImageTool {
 					inputStream = classLoader.getResourceAsStream(name);
 				}
 				else {
-					URL url = ModuleFrameworkUtil.getBundleResource(
-						bundleId, name);
+					Framework framework = ModuleFrameworkUtil.getFramework();
 
-					inputStream = url.openStream();
+					BundleContext bundleContext = framework.getBundleContext();
+
+					Bundle bundle = bundleContext.getBundle(bundleId);
+
+					if (bundle != null) {
+						URL url = bundle.getResource(name);
+
+						inputStream = url.openStream();
+					}
 				}
 			}
 

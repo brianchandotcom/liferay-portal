@@ -672,10 +672,6 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that the correct log messages are printed." />
 		</check>
-		<check name="LogParametersCheck">
-			<category name="Bug Prevention" />
-			<description name="Validates the values of parameters passed to `_log.*` calls." />
-		</check>
 		<check name="JavaMissingXMLPublicIdsCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing public IDs for check XML files." />
@@ -794,6 +790,10 @@
 		<check name="LocaleUtilCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `com.liferay.portal.kernel.util.LocaleUtil` should be used (instead of `java.util.Locale`)." />
+		</check>
+		<check name="LogParametersCheck">
+			<category name="Bug Prevention" />
+			<description name="Validates the values of parameters passed to `_log.*` calls." />
 		</check>
 		<check name="ResourceBundleCheck">
 			<category name="Bug Prevention" />
@@ -1048,10 +1048,6 @@
 			<category name="Bug Prevention" />
 			<description name="Finds missing language keys in `Language.properties`." />
 		</check>
-		<check name="LogParametersCheck">
-			<category name="Bug Prevention" />
-			<description name="Validates the values of parameters passed to `_log.*` calls." />
-		</check>
 		<check name="JSPMissingTaglibsCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for missing taglibs." />
@@ -1075,6 +1071,10 @@
 		<check name="LocaleUtilCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `com.liferay.portal.kernel.util.LocaleUtil` should be used (instead of `java.util.Locale`)." />
+		</check>
+		<check name="LogParametersCheck">
+			<category name="Bug Prevention" />
+			<description name="Validates the values of parameters passed to `_log.*` calls." />
 		</check>
 		<check name="ResourceBundleCheck">
 			<category name="Bug Prevention" />

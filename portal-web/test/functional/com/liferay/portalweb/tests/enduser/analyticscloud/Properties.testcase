@@ -33,7 +33,7 @@ definition {
 	@priority = "5"
 	test CanNavigateToProperties {
 		ACUtils.launchAC();
-		
+
 		ACNavigation.goToSettings();
 
 		ACSettings.goToProperties();
@@ -42,12 +42,17 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
-	@ignore = "true"
 	@priority = "5"
 	test OwnerCanCreateNewProperty {
+		ACUtils.launchAC();
 
-		// TODO LRAC-8145 Properties#OwnerCanCreateNewProperty pending implementation
+		ACNavigation.goToSettings();
 
+		ACSettings.goToProperties();
+
+		ACProperties.addNewProperty(propertyName = "Name of property");
+
+		ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"

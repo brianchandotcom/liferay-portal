@@ -30,12 +30,15 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8144 | Test Summary: Properties management menu is present"
-	@ignore = "true"
 	@priority = "5"
 	test CanNavigateToProperties {
+		ACUtils.launchAC();
+		
+		ACNavigation.goToSettings();
 
-		// TODO LRAC-8144 Automate Properties#CanNavigateToProperties pending implementation
+		ACSettings.goToProperties();
 
+		ACProperties.assertPropertyTitle(propertyName = "Properties");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"

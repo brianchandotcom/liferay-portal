@@ -19,6 +19,9 @@ import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.selector.web.internal.search.EntriesChecker;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -55,6 +59,14 @@ public class AssetTagsSelectorDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_rowChecker = rowChecker;
+	}
+
+	public String getAssetTagGroupName(AssetTag assetTag, Locale locale)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(assetTag.getGroupId());
+
+		return group.getDescriptiveName(locale);
 	}
 
 	public String getEventName() {

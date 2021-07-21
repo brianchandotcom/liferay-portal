@@ -36,6 +36,12 @@
 				truncate="<%= true %>"
 				value="<%= tag.getName() %>"
 			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="site"
+				value="<%= HtmlUtil.escape(assetTagsSelectorDisplayContext.getAssetTagGroupName(tag, locale)) %>"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

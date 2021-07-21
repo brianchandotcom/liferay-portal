@@ -5056,7 +5056,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (!silentUpdate || (user.getPasswordModifiedDate() == null) ||
 			!_isPasswordUnchanged(user, password1, newEncPwd)) {
 
-			Date modifiedDate = serviceContext.getModifiedDate();
+			Date modifiedDate = null;
+
+			if (serviceContext != null) {
+				modifiedDate = serviceContext.getModifiedDate();
+			}
 
 			if (modifiedDate != null) {
 				user.setPasswordModifiedDate(modifiedDate);

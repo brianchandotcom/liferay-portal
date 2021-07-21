@@ -352,11 +352,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY_VERTICAL_ELLIPSIS_2</td>
-	<td>xpath=(//div[contains(@class,'portlet') and contains(@class,'container')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEPOT_LANGUAGES_ELLIPSIS</td>
 	<td>//tr[contains(.,'${key_language}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>

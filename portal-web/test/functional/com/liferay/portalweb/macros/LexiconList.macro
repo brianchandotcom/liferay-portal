@@ -71,4 +71,12 @@ definition {
 			value1 = "${listEntry}");
 	}
 
+	macro viewListEntryTitleLinkSpecific {
+		AssertTextEquals(
+			key_listEntry = "${listEntry}",
+			key_position = "${position}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK_SPECIFIC",
+			value1 = "${listEntry}");
+	}
+
 }

@@ -54,22 +54,11 @@ definition {
 			}
 		}
 
-		task ("Add a page with an Asset Publisher widget and display the Web Contents article in the Asset Publisher Widget") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Asset Publisher Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Asset Publisher Page",
-				widgetName = "Asset Publisher");
-
+		task ("View the first web content details via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
-		}
 
-		task ("View the first web content details via Asset Publisher") {
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent Title ${i}");
 		}
 

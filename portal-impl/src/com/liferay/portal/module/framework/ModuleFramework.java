@@ -15,6 +15,7 @@
 package com.liferay.portal.module.framework;
 
 import java.net.URL;
+import org.osgi.framework.launch.Framework;
 
 /**
  * @author Raymond Augé
@@ -24,7 +25,7 @@ public interface ModuleFramework {
 
 	public URL getBundleResource(long bundleId, String name);
 
-	public Object getFramework();
+	public Framework getFramework();
 
 	public void initFramework() throws Exception;
 

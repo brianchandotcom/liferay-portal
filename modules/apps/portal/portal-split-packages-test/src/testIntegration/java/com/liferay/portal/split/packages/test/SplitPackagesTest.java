@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 
 import java.io.IOException;
 
@@ -42,6 +41,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Tom Wang
@@ -56,9 +56,9 @@ public class SplitPackagesTest {
 			_getAllowedSplitPackageNames();
 		Map<Bundle, Set<ExportPackage>> exportPackagesMap = new HashMap<>();
 
-		Bundle systemBundle = (Bundle)ModuleFrameworkUtil.getFramework();
+		Bundle currentBundle = FrameworkUtil.getBundle(SplitPackagesTest.class);
 
-		BundleContext bundleContext = systemBundle.getBundleContext();
+		BundleContext bundleContext = currentBundle.getBundleContext();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			Set<ExportPackage> exportPackages = _getExportPackages(bundle);

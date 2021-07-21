@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
+import org.osgi.framework.launch.Framework;
+
 /**
  * This class is a simple wrapper in order to make the framework module running
  * under its own class loader.
@@ -33,7 +35,7 @@ public class ModuleFrameworkUtil {
 		return _moduleFramework.getBundleResource(bundleId, name);
 	}
 
-	public static Object getFramework() {
+	public static Framework getFramework() {
 		return _moduleFramework.getFramework();
 	}
 

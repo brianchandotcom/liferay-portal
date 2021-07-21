@@ -657,7 +657,13 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
+		Blogs.viewEntryTitle(
+			entryTitle = "${entryTitle}",
+			position = "${position}");
+
+		if (isSet(relevance)) {
+			ManagementBar.viewFilterAndOrderSelectedItem(menuItem = "Relevance");
+		}
 	}
 
 	macro searchNoCP {

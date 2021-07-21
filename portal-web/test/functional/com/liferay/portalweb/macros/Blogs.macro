@@ -669,8 +669,16 @@ definition {
 
 	macro viewEntryTitle {
 		var key_entryTitle = "${entryTitle}";
+		var key_position = "${position}";
 
-		LexiconList.viewListEntryTitleLink(listEntry = "${entryTitle}");
+		if (isSet(position)) {
+			LexiconList.viewListEntryTitleLinkSpecific(
+				listEntry = "${entryTitle}",
+				position = "${position}");
+		}
+		else {
+			LexiconList.viewListEntryTitleLink(listEntry = "${entryTitle}");
+		}
 	}
 
 	macro viewNoEntryCP {

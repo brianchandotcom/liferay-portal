@@ -197,9 +197,12 @@ public class TemplateManagementToolbarDisplayContext
 				false);
 		}
 		catch (PortalException portalException) {
-			_log.error(
-				"Unable to check permissions for resourceName: " + resourceName,
-				portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to check permission for resourceName " +
+						resourceName,
+					portalException);
+			}
 		}
 
 		return false;

@@ -43,6 +43,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			message="edit"
 			url="<%= editSiteNavigationMenuURL %>"
 		/>
+
+		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 	</c:if>
 
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
@@ -64,6 +66,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			message="rename"
 			url="javascript:;"
 		/>
+
+		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 	</c:if>
 
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.PERMISSIONS) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
@@ -81,6 +85,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			url="<%= permissionsMenuURL %>"
 			useDialog="<%= true %>"
 		/>
+
+		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 	</c:if>
 
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.DELETE) %>">
@@ -93,10 +99,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			trash="<%= false %>"
 			url="<%= deleteSiteNavigationMenuURL %>"
 		/>
+
+		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 	</c:if>
 
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) && siteNavigationAdminDisplayContext.hasEditPermission() %>">
-		<div class="border-top dropdown-subheader">
+		<div class="dropdown-subheader">
 			<liferay-ui:message key="mark-as" />
 		</div>
 

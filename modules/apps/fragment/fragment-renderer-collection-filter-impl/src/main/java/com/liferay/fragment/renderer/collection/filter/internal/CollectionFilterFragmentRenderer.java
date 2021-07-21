@@ -66,7 +66,8 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
+			"content.Language", fragmentRendererContext.getLocale(),
+			getClass());
 
 		try {
 			String json = StringUtil.read(

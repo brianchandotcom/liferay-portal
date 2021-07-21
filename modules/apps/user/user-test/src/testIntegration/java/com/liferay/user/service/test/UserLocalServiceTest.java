@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -59,6 +60,7 @@ import com.liferay.portal.util.PropsValues;
 import java.lang.reflect.Field;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
@@ -423,6 +425,25 @@ public class UserLocalServiceTest {
 
 		_userLocalService.unsetRoleUsers(
 			role.getRoleId(), new long[] {user.getUserId()});
+	}
+
+	@Test
+	public void testUpdatePassword() throws Exception {
+		User user = UserTestUtil.addUser();
+		String password = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		Date oldPasswordModifiedDate = user.getPasswordModifiedDate();
+
+		_userLocalService.updatePassword(
+			user.getUserId(), password, password, false, true);
+
+		user = _userLocalService.getUser(user.getUserId());
+
+		Date newPasswordModifiedDate = user.getPasswordModifiedDate();
+
+		Assert.assertTrue(
+			newPasswordModifiedDate.after(oldPasswordModifiedDate));
 	}
 
 	@Test

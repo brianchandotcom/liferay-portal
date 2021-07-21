@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -58,11 +59,14 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 	public FragmentCollectionFilterCategoryDisplayContext(
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentEntryLink fragmentEntryLink,
+		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
-		_fragmentEntryLink = fragmentEntryLink;
+
+		_fragmentRendererContext = fragmentRendererContext;
+
+		_fragmentEntryLink = _fragmentRendererContext.getFragmentEntryLink();
 
 		_httpServletRequest = httpServletRequest;
 
@@ -83,14 +87,15 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			AssetCategory assetCategory =
 				AssetCategoryServiceUtil.fetchCategory(assetCategoryTreeNodeId);
 
-			return assetCategory.getTitle(_themeDisplay.getLanguageId());
+			return assetCategory.getTitle(_fragmentRendererContext.getLocale());
 		}
 		else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
 			AssetVocabulary assetVocabulary =
 				AssetVocabularyServiceUtil.fetchVocabulary(
 					assetCategoryTreeNodeId);
 
-			return assetVocabulary.getTitle(_themeDisplay.getLanguageId());
+			return assetVocabulary.getTitle(
+				_fragmentRendererContext.getLocale());
 		}
 
 		return StringPool.BLANK;
@@ -125,7 +130,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 					}
 
 					dropdownItem.setLabel(
-						assetCategory.getTitle(_themeDisplay.getLanguageId()));
+						assetCategory.getTitle(
+							_fragmentRendererContext.getLocale()));
 				});
 		}
 
@@ -163,7 +169,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 						"id", String.valueOf(assetCategory.getCategoryId())
 					).put(
 						"label",
-						assetCategory.getTitle(_themeDisplay.getLanguageId())
+						assetCategory.getTitle(
+							_fragmentRendererContext.getLocale())
 					).build()
 				).collect(
 					Collectors.toList()
@@ -201,7 +208,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			}
 
 			if (assetCategory != null) {
-				return assetCategory.getTitle(_themeDisplay.getLanguageId());
+				return assetCategory.getTitle(
+					_fragmentRendererContext.getLocale());
 			}
 		}
 
@@ -282,8 +290,8 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	private Object _getFieldValue(String fieldName) {
 		return _fragmentEntryConfigurationParser.getFieldValue(
 			_fragmentEntryLink.getConfiguration(),
-			_fragmentEntryLink.getEditableValues(), _themeDisplay.getLocale(),
-			fieldName);
+			_fragmentEntryLink.getEditableValues(),
+			_fragmentRendererContext.getLocale(), fieldName);
 	}
 
 	private String _getParameterName() {
@@ -321,6 +329,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;
+	private final FragmentRendererContext _fragmentRendererContext;
 	private final HttpServletRequest _httpServletRequest;
 	private Map<String, Object> _props;
 	private JSONObject _sourceJSONObject;

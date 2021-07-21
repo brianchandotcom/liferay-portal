@@ -32,6 +32,11 @@ public interface SourceCheck {
 
 	public boolean isEnabled(String absolutePath);
 
+	public boolean isJavaSource(String content, int pos);
+
+	public boolean isJavaSource(
+		String content, int pos, boolean checkInsideTags);
+
 	public boolean isLiferaySourceCheck();
 
 	public boolean isModuleSourceCheck();

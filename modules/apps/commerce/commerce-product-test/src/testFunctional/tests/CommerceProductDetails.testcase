@@ -80,11 +80,7 @@ definition {
 			key_localizationName = "heart-full",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
 
-		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
-
-		Click(
-			key_menuItem = "My Lists",
-			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
 
 		AssertElementPresent(
 			key_formViewName = "U-Joint",
@@ -463,11 +459,7 @@ definition {
 			key_localizationName = "heart-full",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
 
-		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
-
-		Click(
-			key_menuItem = "My Lists",
-			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
 
 		AssertElementPresent(
 			key_formViewName = "U-Joint",
@@ -487,11 +479,7 @@ definition {
 			key_localizationName = "heart",
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
 
-		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
-
-		Click(
-			key_menuItem = "My Lists",
-			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
 
 		AssertElementNotPresent(
 			key_formViewName = "U-Joint",

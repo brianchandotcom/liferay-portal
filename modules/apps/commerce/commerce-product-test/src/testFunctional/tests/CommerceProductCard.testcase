@@ -39,11 +39,7 @@ definition {
 			key_productName = "U-Joint",
 			locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
 
-		Click(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
-
-		Click(
-			key_menuItem = "My Lists",
-			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
 
 		AssertTextEquals(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
@@ -1092,11 +1088,7 @@ definition {
 			key_productName = "U-Joint",
 			locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
 
-		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
-
-		Click(
-			key_menuItem = "My Lists",
-			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
 
 		AssertElementNotPresent(
 			key_userName = "U-Joint",

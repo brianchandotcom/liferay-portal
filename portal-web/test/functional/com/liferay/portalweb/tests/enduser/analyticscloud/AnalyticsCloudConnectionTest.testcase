@@ -39,11 +39,25 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8107 | Test Summary: Navigates to data source page"
-	@ignore = "true"
 	@priority = "5"
 	test CanNavigatesToDataSourcePage {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8107 CanNavigatesToDataSourcePage
+		ACDXPSettings.syncNewContactData();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.assertDataSourceList(dataSourceName = "Beryl Commerce");
+
+		ACSettings.assertDataSourceList(dataSourceName = "Beryl Salesforce");
 
 	}
 

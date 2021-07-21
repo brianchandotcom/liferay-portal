@@ -259,7 +259,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8133 | Test Summary: Create button shows option to create static or dynamic"
-	@ignore = "true"
 	@priority = "5"
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();

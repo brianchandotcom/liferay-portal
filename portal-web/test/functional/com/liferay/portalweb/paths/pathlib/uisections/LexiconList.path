@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_ENTRY_TITLE_LINK_SPECIFIC</td>
+	<td>//li[@data-qa-id='row'][${key_position}][contains(.,'${key_listEntry}')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_ENTRY_SUBTITLE</td>
 	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h6[contains(.,'${key_listEntrySubtitle}')]</td>
 	<td></td>

@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -40,19 +41,87 @@ public class IfStatementCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String followingCode1 = ifStatement1.getFollowingCode();
+			String followingCode = ifStatement1.getFollowingCode();
 
-			if (!followingCode1.startsWith("//") &&
-				!followingCode1.startsWith("else ") &&
+			if (!followingCode.startsWith("//") &&
+				!followingCode.startsWith("else ") &&
 				Validator.isNull(ifStatement1.getBody())) {
 
 				addMessage(
 					fileName, "If-statement with empty body",
 					getLineNumber(content, matcher.start()));
 			}
+
+			if (!followingCode.startsWith("if (")) {
+				continue;
+			}
+
+			IfStatement ifStatement2 = _getIfStatement(
+				content, ifStatement1.getEnd());
+
+			String newContent = _combineStatementsWithSameBodies(
+				content, ifStatement1, ifStatement2);
+
+			if (!content.equals(newContent)) {
+				return newContent;
+			}
 		}
 
 		return content;
+	}
+
+	private String _combineStatementsWithSameBodies(
+		String content, IfStatement ifStatement1, IfStatement ifStatement2) {
+
+		String body = ifStatement1.getBody();
+
+		if (!body.equals(ifStatement2.getBody())) {
+			return content;
+		}
+
+		Matcher matcher = _assignStatementPattern.matcher(body);
+
+		if (matcher.find()) {
+			String clause = ifStatement2.getClause();
+
+			if (clause.matches("(?s).*\\W" + matcher.group(1) + "\\W.*")) {
+				return content;
+			}
+		}
+		else if (!body.matches(
+					"(?s)(.+\t)?(break|continue|return|throw)(\\s|;).*")) {
+
+			return content;
+		}
+
+		String followingCode = ifStatement2.getFollowingCode();
+
+		if (followingCode.startsWith("//") ||
+			followingCode.startsWith("else ")) {
+
+			return content;
+		}
+
+		String combinedStatements = StringBundler.concat(
+			"if (", ifStatement1.getClause(), " || ", ifStatement2.getClause(),
+			") {\n", ifStatement1.getBody(), "\n}\n");
+
+		if (combinedStatements.contains("&&")) {
+			int count =
+				StringUtil.count(combinedStatements, "||") +
+					StringUtil.count(combinedStatements, "&&");
+
+			if (count > 2) {
+				return content;
+			}
+		}
+
+		String consecutiveStatements = content.substring(
+			ifStatement1.getStart(), ifStatement2.getEnd());
+
+		return StringUtil.replace(
+			content, consecutiveStatements, combinedStatements,
+			ifStatement1.getStart() - 1);
 	}
 
 	private int _getClosePos(
@@ -100,6 +169,8 @@ public class IfStatementCheck extends BaseFileCheck {
 			StringUtil.trim(content.substring(y + 1)), pos, y + 1);
 	}
 
+	private static final Pattern _assignStatementPattern = Pattern.compile(
+		"^(\\w+) =[^;]+;$");
 	private static final Pattern _ifStatementPattern = Pattern.compile(
 		"[\n\t]if \\(");
 

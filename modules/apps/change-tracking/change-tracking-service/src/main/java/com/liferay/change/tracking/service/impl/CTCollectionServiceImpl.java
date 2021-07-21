@@ -492,7 +492,8 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 							UserGroupRoleTable.INSTANCE.userId.eq(
 								permissionChecker.getUserId())
 						)
-					))));
+					))
+			).withParentheses());
 	}
 
 	@Reference

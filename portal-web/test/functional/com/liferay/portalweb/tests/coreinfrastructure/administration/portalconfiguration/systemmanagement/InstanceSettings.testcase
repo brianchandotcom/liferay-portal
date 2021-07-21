@@ -1143,13 +1143,6 @@ definition {
 	}
 
 	@priority = "3"
-	test ViewEmailNotificationsPasswordChangedNotification {
-		Navigator.openURL();
-
-		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
-	}
-
-	@priority = "3"
 	test ViewEmailNotificationsSender {
 		Navigator.openURL();
 
@@ -1163,6 +1156,10 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openURL();
+
+		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",

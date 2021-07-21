@@ -701,6 +701,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 			putWikiNode.getSiteId(), putWikiNode.getExternalReferenceCode());
 
 		assertEquals(newWikiNode, getWikiNode);
+
 		Assert.assertEquals(
 			newWikiNode.getExternalReferenceCode(),
 			putWikiNode.getExternalReferenceCode());

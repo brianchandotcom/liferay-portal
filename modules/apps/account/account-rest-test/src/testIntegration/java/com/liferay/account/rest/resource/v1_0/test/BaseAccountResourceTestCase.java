@@ -658,6 +658,7 @@ public abstract class BaseAccountResourceTestCase {
 			putAccount.getExternalReferenceCode());
 
 		assertEquals(newAccount, getAccount);
+
 		Assert.assertEquals(
 			newAccount.getExternalReferenceCode(),
 			putAccount.getExternalReferenceCode());

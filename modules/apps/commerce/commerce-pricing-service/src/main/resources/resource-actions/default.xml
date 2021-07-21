@@ -6,7 +6,6 @@
 		<model-name>com.liferay.commerce.pricing</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_pricing_web_internal_portlet_CommercePricingClassesPortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>

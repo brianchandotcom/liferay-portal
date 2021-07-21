@@ -33,15 +33,25 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMERCE_CHANNEL</action-key>
+				<action-key>ADD_COMMERCE_NOTIFICATION_TEMPLATE</action-key>
+				<action-key>DELETE_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>RESEND_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
 				<action-key>VIEW_COMMERCE_CHANNELS</action-key>
+				<action-key>VIEW_COMMERCE_NOTIFICATION_QUEUE_ENTRIES</action-key>
+				<action-key>VIEW_COMMERCE_NOTIFICATION_TEMPLATES</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_CHANNEL</action-key>
+				<action-key>ADD_COMMERCE_NOTIFICATION_TEMPLATE</action-key>
+				<action-key>DELETE_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>RESEND_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
 				<action-key>VIEW_COMMERCE_CHANNELS</action-key>
+				<action-key>VIEW_COMMERCE_NOTIFICATION_QUEUE_ENTRIES</action-key>
+				<action-key>VIEW_COMMERCE_NOTIFICATION_TEMPLATES</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -57,6 +67,7 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
+				<action-key>ADD_COMMERCE_PRICING_CLASS</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
@@ -74,6 +85,7 @@
 				<action-key>VIEW_PRICE</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>ADD_COMMERCE_PRICING_CLASS</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_RULE</action-key>

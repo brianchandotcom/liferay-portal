@@ -22,8 +22,6 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDisplayContext = new SiteAdministrationPanelCategoryDisplayContext(liferayPortletRequest, liferayPortletResponse, null);
 
 Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
-
-String p_p_id = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_p_id");
 %>
 
 <c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
@@ -99,7 +97,7 @@ String p_p_id = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request
 			<c:if test="<%= !group.isDepot() && !group.isCompany() %>">
 				<clay:button
 					cssClass="list-group-heading navigation-link panel-header-link"
-					disabled='<%= p_p_id.equals("com_liferay_layout_admin_web_portlet_GroupPagesPortlet") %>'
+					disabled="<%= !siteAdministrationPanelCategoryDisplayContext.isTreePageAllowed() %>"
 					displayType="unstyled"
 					icon="pages-tree"
 					id='<%= liferayPortletResponse.getNamespace() + "pagesTreeSidenavToggleId" %>'

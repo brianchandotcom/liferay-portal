@@ -444,6 +444,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return _showStagingInfo;
 	}
 
+	public boolean isTreePageAllowed() throws PortalException {
+		ProductMenuDisplayContext productMenuDisplayContext =
+			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
+
+		return productMenuDisplayContext.isTreePageAllowed();
+	}
+
 	protected String getGroupAdministrationURL(Group group) {
 		if (_panelCategoryHelper == null) {
 			return null;

@@ -98,6 +98,7 @@ GradleStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .gradle
 GradleTestDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .gradle | Checks the version for dependencies in gradle build files. |
 HTMLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
+[IfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies |
 [IncorrectFileLocationCheck](checks/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | | Checks that `/src/*/java/` only contains `.java` files. |
 InstanceofOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
 [ItemListBuilderCheck](checks/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | Checks that `DropdownItemListBuilder`, `LabelItemListBuilder` or `NavigationItemListBuilder` is used when possible. |

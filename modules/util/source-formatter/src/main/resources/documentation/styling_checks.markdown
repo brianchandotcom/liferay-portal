@@ -49,6 +49,7 @@ GradleStylingCheck | .gradle | Applies rules to enforce consisteny in code style
 [GradleTaskCreationCheck](checks/gradle_task_creation_check.markdown#gradletaskcreationcheck) | .gradle | Checks that a task is declared on a separate line before the closure. |
 HTMLEmptyLinesCheck | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
+[IfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies |
 InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
 JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce consisteny in code style. |
 [JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `JSONUtil`. |

@@ -15,9 +15,9 @@
 package com.liferay.commerce.notification.service.impl;
 
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
-import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.service.base.CommerceNotificationQueueEntryServiceBaseImpl;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
@@ -106,6 +106,6 @@ public class CommerceNotificationQueueEntryServiceImpl
 			PortletResourcePermissionFactory.getInstance(
 				CommerceNotificationQueueEntryServiceImpl.class,
 				"_portletResourcePermission",
-				CommerceNotificationConstants.RESOURCE_NAME);
+				CPConstants.RESOURCE_NAME_CHANNEL);
 
 }

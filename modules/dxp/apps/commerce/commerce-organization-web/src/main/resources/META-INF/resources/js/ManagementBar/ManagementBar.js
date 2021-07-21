@@ -14,7 +14,6 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
-import ViewSelector from './ViewSelector';
 
 function ManagementBar() {
 	const {chartInstanceRef} = useContext(ChartContext);
@@ -31,10 +30,6 @@ function ManagementBar() {
 					>
 						{Liferay.Language.get('collapse-all')}
 					</ClayButton>
-				</ClayManagementToolbar.Item>
-
-				<ClayManagementToolbar.Item>
-					<ViewSelector />
 				</ClayManagementToolbar.Item>
 			</ClayManagementToolbar.ItemList>
 		</ClayManagementToolbar>

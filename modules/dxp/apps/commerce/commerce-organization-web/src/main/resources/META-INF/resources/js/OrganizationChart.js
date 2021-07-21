@@ -22,12 +22,8 @@ import MenuProvider from './menu/MenuProvider';
 import ModalProvider from './modals/ModalProvider';
 import {VIEWS} from './utils/constants';
 
-function OrganizationChartApp({
-	pageSize,
-	rootOrganizationId,
-	spritemap,
-	templatesURL,
-}) {
+import '../style/main.scss';
+function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 	const [modalActive, updateModalActive] = useState(false);
 	const [modalData, updateModalData] = useState(null);
 	const [currentView, updateCurrentView] = useState(VIEWS[0]);
@@ -42,7 +38,7 @@ function OrganizationChartApp({
 	const zoomInRef = useRef(null);
 
 	useEffect(() => {
-		if (rootOrganizationId) {
+		if (Number(rootOrganizationId)) {
 			getOrganization(rootOrganizationId).then(updateRootData);
 		}
 		else {
@@ -94,7 +90,6 @@ function OrganizationChartApp({
 			value={{
 				chartInstanceRef,
 				currentView,
-				templatesURL,
 				updateCurrentView,
 			}}
 		>
@@ -145,20 +140,15 @@ function OrganizationChartApp({
 	);
 }
 
-OrganizationChartApp.defaultProps = {
+OrganizationChart.defaultProps = {
 	pageSize: 10,
-	rootOrganizationId: 0
+	rootOrganizationId: 0,
 };
 
-OrganizationChartApp.propTypes = {
+OrganizationChart.propTypes = {
 	pageSize: PropTypes.number,
 	rootOrganizationId: PropTypes.number,
 	spritemap: PropTypes.string.isRequired,
-	templatesURL: PropTypes.shape({
-		accountsDetailsPage: PropTypes.string.isRequired,
-		organizationsDetailsPage: PropTypes.string.isRequired,
-		usersDetailsPage: PropTypes.string.isRequired,
-	}),
 };
 
-export default OrganizationChartApp;
+export default OrganizationChart;

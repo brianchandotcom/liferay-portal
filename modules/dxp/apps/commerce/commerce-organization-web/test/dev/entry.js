@@ -13,19 +13,12 @@ import {render} from '@liferay/frontend-js-react-web';
 
 import OrganizationChart from '../../src/main/resources/META-INF/resources/js/OrganizationChart';
 
-import '../../src/main/resources/META-INF/resources/style/main.scss';
-
 render(
 	OrganizationChart,
 	{
 		pageSize: 100,
 		rootOrganizationId: 0,
 		spritemap: './assets/clay/icons.svg',
-		templatesURL: {
-			accountsDetailsPage: '/account/{id}',
-			organizationsDetailsPage: '/organization/{id}',
-			usersDetailsPage: '/user/{id}',
-		},
 	},
 	document.getElementById('organizations-chart-root')
 );

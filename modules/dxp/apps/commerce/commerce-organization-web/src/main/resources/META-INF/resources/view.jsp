@@ -21,6 +21,8 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 %>
 
 <div id="<%= liferayPortletResponse.getNamespace() + "org-chart-root" %>">
+	<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+
 	<react:component
 		module="js/OrganizationChart"
 		props='<%=

@@ -11,7 +11,6 @@
 
 import {event as d3event, linkHorizontal} from 'd3';
 
-import {formatItemDescription, formatItemName} from '.';
 import {
 	NODE_BUTTON_WIDTH,
 	NODE_PADDING,
@@ -19,6 +18,7 @@ import {
 	SYMBOLS_MAP,
 } from './constants';
 import {USER_INVITATION_ENABLED} from './flags';
+import {formatItemDescription, formatItemName} from './index';
 
 export function appendIcon(node, symbol, size, className) {
 	return node

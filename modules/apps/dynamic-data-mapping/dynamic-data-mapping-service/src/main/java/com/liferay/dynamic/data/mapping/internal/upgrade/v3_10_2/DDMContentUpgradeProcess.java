@@ -172,7 +172,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(
 				ddmFormFieldValueName);
 
-			if (DDMFormFieldUpgradeProcessUtil.isDDMFormFieldWithOptions(
+			if ((ddmFormField != null) &&
+				DDMFormFieldUpgradeProcessUtil.isDDMFormFieldWithOptions(
 					ddmFormField.getType())) {
 
 				_normalizeDDMFormFieldValue(ddmFormFieldValue.getValue());

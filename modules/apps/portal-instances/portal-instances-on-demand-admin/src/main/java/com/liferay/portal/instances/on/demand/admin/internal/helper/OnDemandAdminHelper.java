@@ -15,14 +15,21 @@
 package com.liferay.portal.instances.on.demand.admin.internal.helper;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.on.demand.admin.internal.constants.OnDemandAdminConstants;
 import com.liferay.portal.instances.on.demand.admin.internal.generator.OnDemandAdminTokenGenerator;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,6 +39,35 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = OnDemandAdminHelper.class)
 public class OnDemandAdminHelper {
+
+	public void cleanUpOnDemandAdminUsers(Date olderThanDate)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_userLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property createDateProperty = PropertyFactoryUtil.forName(
+					"createDate");
+
+				dynamicQuery.add(createDateProperty.lt(olderThanDate));
+
+				Property screenNameProperty = PropertyFactoryUtil.forName(
+					"screenName");
+
+				dynamicQuery.add(
+					screenNameProperty.like(
+						OnDemandAdminConstants.
+							ON_DEMAND_ADMIN_SCREEN_NAME_PREFIX +
+								StringPool.PERCENT));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(User user) -> _userLocalService.deleteUser(user));
+
+		actionableDynamicQuery.performActions();
+	}
 
 	public String getLoginURL(Company company, long userId)
 		throws PortalException {
@@ -68,5 +104,8 @@ public class OnDemandAdminHelper {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

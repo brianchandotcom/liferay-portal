@@ -1761,7 +1761,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage.class);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
+			long currentUserId = userId;
+
 			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+				currentUserId = message.getUserId();
 
 				// Asset
 
@@ -1798,7 +1801,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Subscriptions
 
 			notifySubscribers(
-				userId, (MBMessage)message.clone(),
+				currentUserId, (MBMessage)message.clone(),
 				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 				serviceContext);
 

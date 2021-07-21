@@ -470,9 +470,17 @@ definition {
 			configurationName = "${configurationName}",
 			configurationScope = "Virtual Instance Scope");
 
-		Type.typeCKEditor(
-			locator1 = "CKEditor#BODY_FIELD",
-			value1 = "${notificationsBody}");
+		if (isSet(notificationsSubject)) {
+			FormFields.editText(
+				fieldName = "Subject",
+				fieldValue = "${notificationsSubject}");
+		}
+
+		if (isSet(notificationsBody)) {
+			Type.typeCKEditor(
+				locator1 = "CKEditor#BODY_FIELD",
+				value1 = "${notificationsBody}");
+		}
 
 		PortletEntry.save();
 	}

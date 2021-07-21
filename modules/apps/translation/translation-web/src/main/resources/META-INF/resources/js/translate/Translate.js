@@ -84,6 +84,7 @@ const Translate = ({
 	aditionalFields,
 	autoTranslateEnabled = false,
 	currentUrl,
+	experiencesSelectorData,
 	getAutoTranslateURL,
 	infoFieldSetEntries,
 	portletNamespace,
@@ -299,6 +300,7 @@ const Translate = ({
 			<TranslateActionBar
 				autoTranslateEnabled={autoTranslateEnabled}
 				confirmChangesBeforeReload={confirmChangesBeforeReload}
+				experienceSelectorData={experiencesSelectorData}
 				fetchAutoTranslateFields={fetchAutoTranslateFieldsBulk}
 				fetchAutoTranslateStatus={state.fetchAutoTranslateStatus}
 				onSaveButtonClick={handleOnSaveDraft}
@@ -347,6 +349,16 @@ const Translate = ({
 Translate.propTypes = {
 	autoTranslateEnabled: PropTypes.bool,
 	currentUrl: PropTypes.string.isRequired,
+	experiencesSelectorData: PropTypes.shape({
+		label: PropTypes.string.isRequired,
+		options: PropTypes.arrayOf(
+			PropTypes.shape({
+				label: PropTypes.string.isRequired,
+				value: PropTypes.string.isRequired,
+			})
+		),
+		value: PropTypes.string.isRequired,
+	}),
 	getAutoTranslateURL: PropTypes.string.isRequired,
 	infoFieldSetEntries: PropTypes.arrayOf(
 		PropTypes.shape({

@@ -81,6 +81,7 @@ public class TranslateDisplayContext {
 		BooleanSupplier booleanSupplier, String className, long classPK,
 		InfoForm infoForm, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Object object,
+		String segmentsExperienceId,
 		InfoItemFieldValues sourceInfoItemFieldValues, String sourceLanguageId,
 		InfoItemFieldValues targetInfoItemFieldValues, String targetLanguageId,
 		TranslationInfoFieldChecker translationInfoFieldChecker) {
@@ -93,6 +94,7 @@ public class TranslateDisplayContext {
 		_infoForm = infoForm;
 		_liferayPortletResponse = liferayPortletResponse;
 		_object = object;
+		_segmentsExperienceId = segmentsExperienceId;
 		_sourceInfoItemFieldValues = sourceInfoItemFieldValues;
 		_sourceLanguageId = sourceLanguageId;
 		_targetInfoItemFieldValues = targetInfoItemFieldValues;
@@ -474,7 +476,7 @@ public class TranslateDisplayContext {
 				_themeDisplay.getLocale())
 		).put(
 			"value",
-			String.valueOf((Object) SegmentsExperienceConstants.ID_DEFAULT)
+			String.valueOf((Object)SegmentsExperienceConstants.ID_DEFAULT)
 		).build();
 
 		List<HashMap<String, String>> options = new ArrayList<>();
@@ -494,8 +496,8 @@ public class TranslateDisplayContext {
 					"label",
 					segmentsExperience.getName(_themeDisplay.getLocale())
 				).put(
-					"value", String.valueOf(
-						segmentsExperience.getSegmentsExperienceId())
+					"value",
+					String.valueOf(segmentsExperience.getSegmentsExperienceId())
 				).build());
 		}
 
@@ -508,7 +510,7 @@ public class TranslateDisplayContext {
 		).put(
 			"options", options
 		).put(
-			"value", String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
+			"value", _segmentsExperienceId
 		).build();
 	}
 
@@ -577,6 +579,7 @@ public class TranslateDisplayContext {
 	private final InfoForm _infoForm;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Object _object;
+	private final String _segmentsExperienceId;
 	private final InfoItemFieldValues _sourceInfoItemFieldValues;
 	private final String _sourceLanguageId;
 	private final Locale _sourceLocale;

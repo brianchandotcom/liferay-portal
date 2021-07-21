@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
 import com.liferay.translation.constants.TranslationPortletKeys;
@@ -141,6 +142,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					renderRequest, renderResponse, className, classPK);
 			}
 
+			String segmentsExperienceId = ParamUtil.getString(
+				renderRequest, "segmentsExperienceId",
+				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT));
+
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId",
 				_getDefaultTargetLanguageId(availableTargetLanguageIds));
@@ -158,9 +163,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					className, classPK, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), object,
-					sourceInfoItemFieldValues, sourceLanguageId,
-					targetInfoItemFieldValues, targetLanguageId,
-					_translationInfoFieldChecker));
+					segmentsExperienceId, sourceInfoItemFieldValues,
+					sourceLanguageId, targetInfoItemFieldValues,
+					targetLanguageId, _translationInfoFieldChecker));
 
 			return "/translate.jsp";
 		}
@@ -224,7 +229,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				className, classPK, null,
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse), null, null,
-				null, null, null, _translationInfoFieldChecker));
+				null, null, null, null, _translationInfoFieldChecker));
 
 		return "/translate.jsp";
 	}

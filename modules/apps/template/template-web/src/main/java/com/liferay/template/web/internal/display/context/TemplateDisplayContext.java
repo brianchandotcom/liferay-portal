@@ -66,7 +66,6 @@ public class TemplateDisplayContext {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_ddmWebConfiguration = ddmWebConfiguration;
-
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 

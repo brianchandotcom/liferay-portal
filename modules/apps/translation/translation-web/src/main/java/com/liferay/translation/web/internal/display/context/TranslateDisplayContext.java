@@ -504,7 +504,7 @@ public class TranslateDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"label", "Experience"
+			"label", LanguageUtil.get(_httpServletRequest, "experience")
 		).put(
 			"options", options
 		).put(

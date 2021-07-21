@@ -19,6 +19,8 @@
 <%
 CPDefinitionDiagramSettingDisplayContext cpDefinitionDiagramSettingDisplayContext = (CPDefinitionDiagramSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CPDefinition cpDefinition = cpDefinitionDiagramSettingDisplayContext.getCPDefinition();
+
 CPDefinitionDiagramSetting cpDefinitionDiagramSetting = cpDefinitionDiagramSettingDisplayContext.fetchCPDefinitionDiagramSetting();
 
 String type = BeanParamUtil.getString(cpDefinitionDiagramSetting, renderRequest, "type", DefaultCPDefinitionDiagramType.KEY);
@@ -32,12 +34,14 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 	<aui:form action="<%= editProductDefinitionDiagramSettingActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCPDefinitionDiagramSetting" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionDiagramSettingDisplayContext.getCPDefinitionId() %>" />
-		<aui:input name="cpDefinitionDiagramSettingId" type="hidden" value="<%= (cpDefinitionDiagramSetting == null) ? StringPool.BLANK : cpDefinitionDiagramSetting.getCPDefinitionDiagramSettingId() %>" />
+		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 
-		<div class="col-md-8">
+		<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
+		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
+
+		<div class="col-8">
 			<commerce-ui:panel
-				title='<%= LanguageUtil.get(request, "diagram-settings") %>'
+				title='<%= LanguageUtil.get(resourceBundle, "diagram-settings") %>'
 			>
 				<aui:select bean="<%= cpDefinitionDiagramSetting %>" label="type" model="<%= CPDefinitionDiagramSetting.class %>" name="type">
 
@@ -56,7 +60,7 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 			</commerce-ui:panel>
 
 			<commerce-ui:panel
-				title='<%= LanguageUtil.get(request, "diagram-mapping") %>'
+				title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
 			>
 
 				<%
@@ -66,7 +70,38 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 			</commerce-ui:panel>
 		</div>
 
-		<div class="col-md-4" />
+		<div class="col-4">
+			<commerce-ui:panel
+				elementClasses="flex-fill h-100"
+				title='<%= LanguageUtil.get(resourceBundle, "diagram-file") %>'
+			>
+				<div class="row">
+					<div class="col-12 h-100">
+
+						<%
+						FileEntry fileEntry = cpDefinitionDiagramSettingDisplayContext.getFileEntry();
+						%>
+
+						<aui:model-context bean="<%= fileEntry %>" model="<%= FileEntry.class %>" />
+
+						<div class="lfr-attachment-cover-image-selector">
+							<portlet:actionURL name="/cp_definitions/upload_cp_definition_diagram_setting_image" var="uploadCPDefinitionDiagramSettingImageActionURL" />
+
+							<liferay-item-selector:image-selector
+								draggableImage="vertical"
+								fileEntryId='<%= BeanParamUtil.getLong(fileEntry, request, "fileEntryId") %>'
+								itemSelectorEventName="addFileEntry"
+								itemSelectorURL="<%= cpDefinitionDiagramSettingDisplayContext.getImageItemSelectorUrl() %>"
+								maxFileSize="<%= cpDefinitionDiagramSettingDisplayContext.getImageMaxSize() %>"
+								paramName="fileEntry"
+								uploadURL="<%= uploadCPDefinitionDiagramSettingImageActionURL %>"
+								validExtensions="<%= StringUtil.merge(cpDefinitionDiagramSettingDisplayContext.getImageExtensions(), StringPool.COMMA_AND_SPACE) %>"
+							/>
+						</div>
+					</div>
+				</div>
+			</commerce-ui:panel>
+		</div>
 	</aui:form>
 </div>
 

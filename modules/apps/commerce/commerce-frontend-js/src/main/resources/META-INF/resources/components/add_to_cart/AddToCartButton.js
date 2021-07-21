@@ -100,7 +100,7 @@ function AddToCartButton({
 						(cpInstance.backOrderAllowed ||
 							cpInstance.stockQuantity > 0);
 
-					setDisabled(!isPurchasable);
+					setDisabled(disabled || !isPurchasable);
 				}),
 		[activeOrder, CartResource, catalogItem]
 	);

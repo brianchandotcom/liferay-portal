@@ -17,6 +17,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
+	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:translation:translation-api")
 	compileOnly project(":core:petra:petra-function")

@@ -88,7 +88,6 @@ public class ContentDashboardItemSearchContainerFactory {
 
 		searchContainer.setResults(
 			_getContentDashboardItems(searchResponse.getDocuments71()));
-
 		searchContainer.setTotal(searchResponse.getTotalHits());
 
 		return searchContainer;

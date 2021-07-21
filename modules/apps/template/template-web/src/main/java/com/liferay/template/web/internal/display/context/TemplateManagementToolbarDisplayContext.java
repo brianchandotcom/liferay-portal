@@ -124,37 +124,37 @@ public class TemplateManagementToolbarDisplayContext
 		List<TemplateHandler> templateHandlers =
 			_getPortletDisplayTemplateHandlers(_themeDisplay.getLocale());
 
-		if (!templateHandlers.isEmpty()) {
-			PortletURL addDDMTemplateURL = PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/edit_ddm_template.jsp"
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).setParameter(
-				"groupId", _themeDisplay.getScopeGroupId()
-			).setParameter(
-				"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
-			).build();
+		if (templateHandlers.isEmpty()) {
+			return creationMenu;
+		}
 
-			for (TemplateHandler templateHandler : templateHandlers) {
-				addDDMTemplateURL.setParameter(
-					"classNameId",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							templateHandler.getClassName())));
-				addDDMTemplateURL.setParameter("classPK", "0");
-				addDDMTemplateURL.setParameter(
-					"resourceClassNameId",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							PortletDisplayTemplate.class)));
+		PortletURL addDDMTemplateURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/edit_ddm_template.jsp"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"groupId", _themeDisplay.getScopeGroupId()
+		).setParameter(
+			"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
+		).build();
 
-				creationMenu.addPrimaryDropdownItem(
-					_getCreationMenuDropdownItem(
-						addDDMTemplateURL,
-						templateHandler.getName(_themeDisplay.getLocale())));
-			}
+		for (TemplateHandler templateHandler : templateHandlers) {
+			addDDMTemplateURL.setParameter(
+				"classNameId",
+				String.valueOf(
+					PortalUtil.getClassNameId(templateHandler.getClassName())));
+			addDDMTemplateURL.setParameter("classPK", "0");
+			addDDMTemplateURL.setParameter(
+				"resourceClassNameId",
+				String.valueOf(
+					PortalUtil.getClassNameId(PortletDisplayTemplate.class)));
+
+			creationMenu.addPrimaryDropdownItem(
+				_getCreationMenuDropdownItem(
+					addDDMTemplateURL,
+					templateHandler.getName(_themeDisplay.getLocale())));
 		}
 
 		return creationMenu;

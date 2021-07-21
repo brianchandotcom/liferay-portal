@@ -19,7 +19,7 @@ export default function PaginationBar({
 	activeDelta,
 	activePage,
 	componentId: _componentId,
-	cssClass: _cssClass,
+	cssClass,
 	deltas,
 	disabledPages,
 	ellipsisBuffer,
@@ -40,6 +40,7 @@ export default function PaginationBar({
 		<ClayPaginationBarWithBasicItems
 			activeDelta={initialActiveDelta}
 			activePage={initialActivePage}
+			className={cssClass}
 			deltas={deltas}
 			disabledPages={disabledPages ?? []}
 			ellipsisBuffer={initialEllipsisBuffer}

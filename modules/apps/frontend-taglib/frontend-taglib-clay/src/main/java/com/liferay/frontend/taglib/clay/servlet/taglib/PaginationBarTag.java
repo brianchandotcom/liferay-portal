@@ -26,6 +26,7 @@ import com.liferay.taglib.util.TagResourceBundleUtil;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -173,13 +174,19 @@ public class PaginationBarTag extends BaseContainerTag {
 	}
 
 	@Override
+	protected String processCssClasses(Set<String> cssClasses) {
+		cssClasses.add("pagination-bar");
+
+		return super.processCssClasses(cssClasses);
+	}
+
+	@Override
 	protected int processStartTag() throws Exception {
 		super.processStartTag();
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"pagination-bar\"><div class=\"");
-		jspWriter.write("dropdown pagination-items-per-page\">");
+		jspWriter.write("<div class=\"dropdown pagination-items-per-page\">");
 		jspWriter.write("<button class=\"dropdown-toggle btn btn-unstyled\"");
 		jspWriter.write(" type=\"button\">");
 		jspWriter.write(_activeDelta.toString());
@@ -199,11 +206,21 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		jspWriter.write("</button></div><div class=\"pagination-results\">");
 		jspWriter.write(LanguageUtil.get(resourceBundle, "showing"));
-		jspWriter.write(" 1 ");
+		jspWriter.write(StringPool.SPACE);
+
+		Integer from = ((_activePage - 1) * _activeDelta) + 1;
+
+		jspWriter.write(from.toString());
+
+		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(
 			StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "to")));
 		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(_activeDelta.toString());
+
+		Integer to = _activePage * _activeDelta;
+
+		jspWriter.write(to.toString());
+
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(
 			StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "of")));
@@ -302,7 +319,7 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		buttonTag.doTag(pageContext);
 
-		jspWriter.write("</li></ul></div>");
+		jspWriter.write("</li></ul>");
 
 		return SKIP_BODY;
 	}

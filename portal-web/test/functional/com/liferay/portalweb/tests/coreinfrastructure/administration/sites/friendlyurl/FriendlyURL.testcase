@@ -174,19 +174,83 @@ definition {
 		}
 	}
 
-	@description = "This test is created to cover LPS-135619. We should be able to translate pages through the Friendly URL without getting an error"
+	@description = "This is a test for LPS-135619 and LPS-134072. View the Home page in different user languages."
 	@priority = "5"
 	test ViewLocaleChangeThroughFriendlyURL {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("View the inline text on Home page is in English as default") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Welcome to Liferay");
+		}
 
-		Navigator.openSpecificURL(url = "${portalURL}/es/web/guest/home");
+		task ("View the tree page is shown on Home page") {
+			AssertVisible(
+				id = "image-square",
+				key_image = "tree.png",
+				key_imageDescription = "Responsive Image",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
 
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+		task ("Append locale URL to Chinese") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "zh/web/guest/home");
+		}
 
-		AssertTextPresent(value1 = "Bienvenido a Liferay");
+		task ("View the inline text on Home page is in Chinese") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "欢迎来到Liferay");
+		}
+
+		task ("View the tree page is shown on Home page") {
+			AssertVisible(
+				id = "image-square",
+				key_image = "tree.png",
+				key_imageDescription = "Responsive Image",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+
+		task ("Append locale URL to Portuguese") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "pt/web/guest/home");
+		}
+
+		task ("View the inline text on Home page is in Portuguese") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Bem Vindo ao Liferay");
+		}
+
+		task ("View the tree page is shown on Home page") {
+			AssertVisible(
+				id = "image-square",
+				key_image = "tree.png",
+				key_imageDescription = "Responsive Image",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+
+		task ("Append locale URL to French") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/home");
+		}
+
+		task ("View the inline text on Home page is in French") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Bienvenue à Liferay");
+		}
+
+		task ("View the tree page is shown on Home page") {
+			AssertVisible(
+				id = "image-square",
+				key_image = "tree.png",
+				key_imageDescription = "Responsive Image",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
 	}
 
 }

@@ -97,13 +97,13 @@ public class JournalArticleContentDashboardItemFactory
 				classPK, WorkflowConstants.STATUS_APPROVED);
 
 		return new JournalArticleContentDashboardItem(
-			assetEntry.getCategories(), assetEntry.getTags(),
 			_contentDashboardItemActionProviderTracker,
 			contentDashboardItemTypeFactory.create(
 				ddmStructure.getStructureId()),
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
-			infoItemFieldValuesProvider, journalArticle, _language,
-			latestApprovedJournalArticle, _portal);
+			infoItemFieldValuesProvider, journalArticle,
+			latestApprovedJournalArticle, _language, assetEntry.getCategories(), assetEntry.getTags(),
+			_portal);
 	}
 
 	@Reference

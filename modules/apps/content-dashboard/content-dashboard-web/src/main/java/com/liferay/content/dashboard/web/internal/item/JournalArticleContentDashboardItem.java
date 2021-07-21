@@ -57,13 +57,17 @@ public class JournalArticleContentDashboardItem
 	implements ContentDashboardItem<JournalArticle> {
 
 	public JournalArticleContentDashboardItem(
-		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
-		ContentDashboardItemType contentDashboardItemType, Group group,
+		ContentDashboardItemType contentDashboardItemType,
+		Group group,
 		InfoItemFieldValuesProvider<JournalArticle> infoItemFieldValuesProvider,
-		JournalArticle journalArticle, Language language,
-		JournalArticle latestApprovedJournalArticle, Portal portal) {
+		JournalArticle journalArticle,
+		JournalArticle latestApprovedJournalArticle,
+		Language language,
+		List<AssetCategory> assetCategories,
+		List<AssetTag> assetTags,
+		Portal portal) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			_assetCategories = Collections.emptyList();

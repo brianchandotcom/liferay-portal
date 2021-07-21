@@ -19,16 +19,26 @@ import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryExcepti
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.shop.by.diagram.configuration.CPDefinitionDiagramSettingImageConfiguration;
 import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramType;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramTypeRegistry;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
+import java.util.Collections;
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,13 +50,19 @@ public class CPDefinitionDiagramSettingDisplayContext
 
 	public CPDefinitionDiagramSettingDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		CPDefinitionDiagramSettingImageConfiguration
+			cpDefinitionDiagramSettingImageConfiguration,
 		CPDefinitionDiagramSettingService cpDefinitionDiagramSettingService,
-		CPDefinitionDiagramTypeRegistry cpDefinitionDiagramTypeRegistry) {
+		CPDefinitionDiagramTypeRegistry cpDefinitionDiagramTypeRegistry,
+		ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
 
+		_cpDefinitionDiagramSettingImageConfiguration =
+			cpDefinitionDiagramSettingImageConfiguration;
 		_cpDefinitionDiagramSettingService = cpDefinitionDiagramSettingService;
 		_cpDefinitionDiagramTypeRegistry = cpDefinitionDiagramTypeRegistry;
+		_itemSelector = itemSelector;
 	}
 
 	public CPDefinitionDiagramSetting fetchCPDefinitionDiagramSetting()
@@ -100,6 +116,33 @@ public class CPDefinitionDiagramSettingDisplayContext
 		}
 	}
 
+	public String[] getImageExtensions() {
+		return _cpDefinitionDiagramSettingImageConfiguration.imageExtensions();
+	}
+
+	public String getImageItemSelectorUrl() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest());
+
+		ImageItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new FileEntryItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "addFileEntry",
+			imageItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
+	public long getImageMaxSize() {
+		return _cpDefinitionDiagramSettingImageConfiguration.imageMaxSize();
+	}
+
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		CPType cpType = null;
@@ -122,9 +165,12 @@ public class CPDefinitionDiagramSettingDisplayContext
 		CPDefinitionDiagramSettingDisplayContext.class);
 
 	private CPDefinitionDiagramSetting _cpDefinitionDiagramSetting;
+	private final CPDefinitionDiagramSettingImageConfiguration
+		_cpDefinitionDiagramSettingImageConfiguration;
 	private final CPDefinitionDiagramSettingService
 		_cpDefinitionDiagramSettingService;
 	private final CPDefinitionDiagramTypeRegistry
 		_cpDefinitionDiagramTypeRegistry;
+	private final ItemSelector _itemSelector;
 
 }

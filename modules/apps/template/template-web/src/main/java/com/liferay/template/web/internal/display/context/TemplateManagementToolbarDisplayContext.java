@@ -115,7 +115,7 @@ public class TemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_isAddDDMTemplateEnable()) {
+		if (!_isShowAddDDMTemplateButton()) {
 			return null;
 		}
 
@@ -231,7 +231,7 @@ public class TemplateManagementToolbarDisplayContext
 		return templateHandlersList;
 	}
 
-	private boolean _isAddDDMTemplateEnable() {
+	private boolean _isShowAddDDMTemplateButton() {
 		if (!_templateDisplayContext.enableTemplateCreation()) {
 			return false;
 		}

@@ -126,6 +126,26 @@
 	<td>//h3[contains(@class,'title')]/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NEW_PROPERTY_BUTTON</td>
+	<td>//button[contains(@data-testid,'addproperty')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTY_INPUT</td>
+	<td>//input[@name='name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTY_NAME</td>
+	<td>//span[@class='title-value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[text()='Save']</td>
+	<td></td>
+</tr>
 <!-- USAGE -->
 <tr>
 	<td>INDIVIDUALS_USAGE_METRIC</td>

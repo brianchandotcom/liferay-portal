@@ -1,9 +1,29 @@
 definition {
 
+	@summary = "Adds new property"
+	macro addNewProperty {
+		Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+		Click(locator1 = "ACSettings#PROPERTY_INPUT");
+
+		Type(
+			locator1 = "ACSettings#PROPERTY_INPUT",
+			value1 = "${propertyName}");
+		
+		Click(locator1 = "ACSettings#SAVE_BUTTON");
+	}
+	
 	@summary = "Asserts that the workspace is scoped by a specific Property"
 	macro assertCurrentActiveProperty {
 		AssertTextEquals(
 			locator1 = "ACSidebar#CURRENT_PROPERTY",
+			value1 = "${propertyName}");
+	}
+
+	@summary = "Asserts the property saved in settings"
+	macro assertNewCreatedProperty {
+		AssertTextEquals(
+			locator1 = "ACSettings#PROPERTY_NAME",
 			value1 = "${propertyName}");
 	}
 

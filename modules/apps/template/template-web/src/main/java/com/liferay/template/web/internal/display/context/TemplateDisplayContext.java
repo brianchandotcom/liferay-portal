@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 import com.liferay.template.web.internal.util.DDMTemplateActionDropdownItemsProvider;
 
@@ -73,6 +72,10 @@ public class TemplateDisplayContext {
 			_liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public boolean enableTemplateCreation() {
+		return _ddmWebConfiguration.enableTemplateCreation();
 	}
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
@@ -198,22 +201,6 @@ public class TemplateDisplayContext {
 			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
 		return templateHandler.getName(_themeDisplay.getLocale());
-	}
-
-	public boolean isAddDDMTemplateEnable() {
-		if (!_ddmWebConfiguration.enableTemplateCreation()) {
-			return false;
-		}
-
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private String _getKeywords() {

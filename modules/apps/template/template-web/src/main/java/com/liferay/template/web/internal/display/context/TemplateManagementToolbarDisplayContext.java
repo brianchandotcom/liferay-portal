@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.ArrayList;
@@ -65,7 +67,7 @@ public class TemplateManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			templateDisplayContext.getTemplateSearchContainer());
 
-		_addDDMTemplateEnable = templateDisplayContext.isAddDDMTemplateEnable();
+		_templateDisplayContext = templateDisplayContext;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -113,7 +115,7 @@ public class TemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_addDDMTemplateEnable) {
+		if (!_isAddDDMTemplateEnable()) {
 			return null;
 		}
 
@@ -229,10 +231,26 @@ public class TemplateManagementToolbarDisplayContext
 		return templateHandlersList;
 	}
 
+	private boolean _isAddDDMTemplateEnable() {
+		if (!_templateDisplayContext.enableTemplateCreation()) {
+			return false;
+		}
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateManagementToolbarDisplayContext.class);
 
-	private final boolean _addDDMTemplateEnable;
+	private final TemplateDisplayContext _templateDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -22,7 +22,7 @@ export const TRANSITION_TIME = 800;
 export const ORGANIZATIONS_PROPERTY_NAME = 'childOrganizations';
 export const ACCOUNTS_PROPERTY_NAME = 'organizationAccounts';
 export const USERS_PROPERTY_NAME_IN_ORGANIZATION = 'userAccounts';
-export const USERS_PROPERTY_NAME_IN_ACCOUNT = 'accountUsers';
+export const USERS_PROPERTY_NAME_IN_ACCOUNT = 'accountUserAccounts';
 export const MAX_NAME_LENGTH = 16;
 
 export const VIEWS = [

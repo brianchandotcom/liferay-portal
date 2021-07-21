@@ -45,7 +45,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 			confirm(
 				Liferay.Util.sub(
 					Liferay.Language.get(
-						'x-will-be-remove-from-its-parent-organization'
+						'x-will-be-removed-from-its-parent-organization'
 					),
 					data.name
 				)

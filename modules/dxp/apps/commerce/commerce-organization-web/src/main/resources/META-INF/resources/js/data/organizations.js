@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {getEntityId} from '../utils';
 import {
 	ACCOUNTS_PROPERTY_NAME,
 	ORGANIZATIONS_PROPERTY_NAME,
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
 } from '../utils/constants';
 import {fetchFromHeadless} from '../utils/fetch';
+import {getEntityId} from '../utils/index';
 
 export const ORGANIZATIONS_ROOT_ENDPOINT =
 	'/o/headless-admin-user/v1.0/organizations';

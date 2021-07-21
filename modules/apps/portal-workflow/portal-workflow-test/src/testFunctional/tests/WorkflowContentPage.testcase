@@ -52,11 +52,145 @@ definition {
 	}
 
 	@description = "Verify that the user can approve a Content Page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanApproveContentPageWithWorkflow {
 
-		// TODO LRQA-68700 CanApproveContentPageWithWorkflow pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Content Page");
+
+		Alert.viewSuccessMessage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(siteName = "Site Test");
+
+		JSONGroup.addGroup(groupName = "Site Test");
+
+		JSONUser.addUser(
+			userEmailAddress = "usersn@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn_");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "usersn@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "usersn@liferay.com");
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Site.assignUserSitesCP(
+			siteName = "Site Test",
+			userScreenName = "usersn_");
+
+		JSONRole.addSiteRole(
+			roleKey = "Page Author",
+			roleTitle = "Page Author");
+
+		for (var resourceAction : list "UPDATE,UPDATE_LAYOUT_CONTENT,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Page Author",
+				roleType = "site");
+		}
+
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Page Author",
+				roleType = "site");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Page Author",
+			userScreenName = "usersn_");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Test",
+			layoutName = "Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Site Test");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+			value1 = "Submit for Publication");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		AssertElementPresent(
+			key_status = "Pending",
+			locator1 = "AssetWorkflow#BLOGS_ENTRY_STATUS_TABLE");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "usersn@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Page Name",
+			workflowAssetType = "Content Page",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Page Name",
+			workflowAssetType = "Content Page",
+			workflowTask = "Review");
+
+		Click(
+			key_workflowAssetTitle = "",
+			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE_2");
+		
+		AssertElementPresent(locator1 = "AssetWorkflow#ASSET_STATE_APPROVED");
 
 	}
 

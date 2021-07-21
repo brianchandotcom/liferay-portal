@@ -115,6 +115,12 @@
 	<td>//span[contains(@class, "label-item label-item-expand") and text()="${key_status}"]</td>
 	<td></td>
 </tr>
+<!--REVIEW ASSET-->
+<tr>
+	<td>ASSET_STATE_APPROVED</td>
+	<td>//div/span[contains(.,'State')]/..//div[(@class='panel-body') and contains(.,'Approved')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

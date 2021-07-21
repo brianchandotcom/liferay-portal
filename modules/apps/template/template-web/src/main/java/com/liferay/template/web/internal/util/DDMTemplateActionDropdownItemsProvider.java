@@ -82,10 +82,13 @@ public class DDMTemplateActionDropdownItemsProvider {
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).build(),
-				"redirect", _themeDisplay.getURLCurrent(), "ddmTemplateId",
-				_ddmTemplate.getTemplateId(), "mvcPath",
-				"/copy_ddm_template.jsp");
+				).setMVCPath(
+					"/copy_ddm_template.jsp"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ddmTemplateId", _ddmTemplate.getTemplateId()
+				).build());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
 		};
@@ -119,10 +122,13 @@ public class DDMTemplateActionDropdownItemsProvider {
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).build(),
-				"redirect", _themeDisplay.getURLCurrent(), "ddmTemplateId",
-				_ddmTemplate.getTemplateId(), "mvcPath",
-				"/edit_ddm_template.jsp");
+				).setMVCPath(
+					"/edit_ddm_template.jsp"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ddmTemplateId", _ddmTemplate.getTemplateId()
+				).build());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};

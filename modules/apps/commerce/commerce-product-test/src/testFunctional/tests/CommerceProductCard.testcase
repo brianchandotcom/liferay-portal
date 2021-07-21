@@ -50,9 +50,6 @@ definition {
 	@priority = "3"
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceProductCard#AssertDefaultChannelCurrencyIsAppliedToProductCard";
-
-		// TODO Review
 
 		var currencyName = "US Dollar";
 
@@ -87,7 +84,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_productName = "U-Joint",
 			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
-			value1 = "$ 24.00");
+			value1 = "$");
 	}
 
 	@description = "COMMERCE-6657. As a buyer, I want to be unable to add a bundled product(Price Type Dynamic) to cart directly"

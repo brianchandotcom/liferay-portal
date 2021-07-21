@@ -148,6 +148,34 @@ definition {
 			accountType = "Person");
 	}
 
+	@description = "This test adds a category to an account"
+	@priority = "3"
+	test CanAddCategoryToAnAccount {
+		JSONCategory.addVocabulary(
+			groupName = "Global",
+			title = "Vocabulary Name 1");
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1");
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.addBusinessAccountWithCategory(
+			accountName = "Account with Category",
+			categoryName = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Category");
+
+		AssetCategorization.viewCategory(categoryName = "Category Name 1");
+
+		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
+	}
+
 	@description = "This test asserts that users can add more than one domain to a business account."
 	@priority = "4"
 	test CanAddMultipleDomainsToAccount {

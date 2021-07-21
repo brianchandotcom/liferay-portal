@@ -34,6 +34,13 @@ definition {
 			value1 = "${pageViewsUsageValue}");
 	}
 
+	@summary = "Asserts the users shown in list"
+	macro assertUserList() {
+		AssertTextEquals(
+			locator1 = "ACSettings#USER_LIST",
+			value1 = "${userName}");
+	}
+
 	@summary = "Deletes all properties \
 	@param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {

@@ -132,6 +132,12 @@
 	<td>//*[contains(@class,'metric-name') and contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
 	<td></td>
 </tr>
+<!-- USERS LIST -->
+<tr>
+	<td>USER_LIST</td>
+	<td>//h4[contains(@class,'table')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -37,13 +37,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
-			Site.tearDownCP();
-
-			JSONUser.tearDownNonAdminUsers();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

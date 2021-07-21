@@ -19,17 +19,24 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.diagram.type.DefaultCPDefinitionDiagramType" %><%@
+<%@ page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException" %><%@
+page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.diagram.type.DefaultCPDefinitionDiagramType" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CPDefinitionDiagramSettingDisplayContext" %><%@
 page import="com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting" %><%@
 page import="com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramType" %><%@
+page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.petra.string.StringUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@

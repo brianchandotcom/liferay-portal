@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.SourceProcessor;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.GradleFileCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
@@ -80,8 +81,8 @@ public class SourceChecksUtil {
 
 	public static SourceChecksResult processSourceChecks(
 			File file, String fileName, String absolutePath, String content,
-			Set<String> modifiedMessages, boolean modulesFile,
-			List<SourceCheck> sourceChecks,
+			SourceProcessor sourceProcessor, Set<String> modifiedMessages,
+			boolean modulesFile, List<SourceCheck> sourceChecks,
 			SourceFormatterSuppressions sourceFormatterSuppressions,
 			boolean showDebugInformation)
 		throws Exception {
@@ -115,8 +116,8 @@ public class SourceChecksUtil {
 
 			if (sourceCheck instanceof FileCheck) {
 				sourceChecksResult = _processFileCheck(
-					sourceChecksResult, (FileCheck)sourceCheck, fileName,
-					absolutePath);
+					sourceProcessor, sourceChecksResult, (FileCheck)sourceCheck,
+					fileName, absolutePath);
 			}
 			else if (sourceCheck instanceof GradleFileCheck) {
 				if (gradleFile == null) {
@@ -319,13 +320,15 @@ public class SourceChecksUtil {
 	}
 
 	private static SourceChecksResult _processFileCheck(
+			SourceProcessor sourceProcessor,
 			SourceChecksResult sourceChecksResult, FileCheck fileCheck,
 			String fileName, String absolutePath)
 		throws Exception {
 
 		sourceChecksResult.setContent(
 			fileCheck.process(
-				fileName, absolutePath, sourceChecksResult.getContent()));
+				sourceProcessor, fileName, absolutePath,
+				sourceChecksResult.getContent()));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				fileCheck.getSourceFormatterMessages(fileName)) {

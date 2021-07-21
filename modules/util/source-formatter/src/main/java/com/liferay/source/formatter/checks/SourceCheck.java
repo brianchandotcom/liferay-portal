@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.SourceProcessor;
 
 import java.util.List;
 import java.util.Set;
@@ -58,6 +59,8 @@ public interface SourceCheck {
 
 	public void setSourceFormatterExcludes(
 		SourceFormatterExcludes sourceFormatterExcludes);
+
+	public void setSourceProcessor(SourceProcessor sourceProcessor);
 
 	public void setSubrepository(boolean subrepository);
 

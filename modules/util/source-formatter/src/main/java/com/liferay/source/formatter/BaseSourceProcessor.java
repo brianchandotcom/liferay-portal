@@ -778,7 +778,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		SourceChecksResult sourceChecksResult =
 			SourceChecksUtil.processSourceChecks(
-				file, fileName, absolutePath, content, modifiedMessages,
+				file, fileName, absolutePath, content, this, modifiedMessages,
 				_isModulesFile(absolutePath), sourceChecks,
 				_sourceFormatterSuppressions,
 				_sourceFormatterArgs.isShowDebugInformation());

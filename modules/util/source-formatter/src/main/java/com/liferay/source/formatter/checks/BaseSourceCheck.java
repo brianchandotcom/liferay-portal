@@ -30,6 +30,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.SourceProcessor;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
@@ -146,6 +147,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		SourceFormatterExcludes sourceFormatterExcludes) {
 
 		_sourceFormatterExcludes = sourceFormatterExcludes;
+	}
+
+	@Override
+	public void setSourceProcessor(SourceProcessor sourceProcessor) {
+		_sourceProcessor = sourceProcessor;
 	}
 
 	@Override
@@ -551,6 +557,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _sourceFormatterExcludes;
 	}
 
+	protected SourceProcessor getSourceProcessor() {
+		return _sourceProcessor;
+	}
+
 	protected String getVariableTypeName(
 		String content, String fileContent, String variableName) {
 
@@ -798,6 +808,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
+	private SourceProcessor _sourceProcessor;
 	private boolean _subrepository;
 
 }

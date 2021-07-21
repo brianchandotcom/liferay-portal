@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.SourceProcessor;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -42,10 +43,14 @@ public abstract class BaseFileCheck
 	extends BaseSourceCheck implements FileCheck {
 
 	@Override
-	public String process(String fileName, String absolutePath, String content)
+	public String process(
+			SourceProcessor sourceProcessor, String fileName,
+			String absolutePath, String content)
 		throws Exception {
 
 		clearSourceFormatterMessages(fileName);
+
+		setSourceProcessor(sourceProcessor);
 
 		return doProcess(fileName, absolutePath, content);
 	}

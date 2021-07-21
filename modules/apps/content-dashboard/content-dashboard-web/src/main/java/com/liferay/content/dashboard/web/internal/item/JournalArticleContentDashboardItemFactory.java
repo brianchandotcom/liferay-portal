@@ -102,8 +102,8 @@ public class JournalArticleContentDashboardItemFactory
 				ddmStructure.getStructureId()),
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
 			infoItemFieldValuesProvider, journalArticle,
-			latestApprovedJournalArticle, _language, assetEntry.getCategories(), assetEntry.getTags(),
-			_portal);
+			latestApprovedJournalArticle, _language, assetEntry.getCategories(),
+			assetEntry.getTags(), _portal);
 	}
 
 	@Reference

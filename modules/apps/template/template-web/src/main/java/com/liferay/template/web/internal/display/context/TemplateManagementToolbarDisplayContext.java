@@ -119,14 +119,14 @@ public class TemplateManagementToolbarDisplayContext
 			return null;
 		}
 
-		CreationMenu creationMenu = new CreationMenu();
-
 		List<TemplateHandler> templateHandlers =
 			_getPortletDisplayTemplateHandlers(_themeDisplay.getLocale());
 
 		if (templateHandlers.isEmpty()) {
-			return creationMenu;
+			return null;
 		}
+
+		CreationMenu creationMenu = new CreationMenu();
 
 		PortletURL addDDMTemplateURL = PortletURLBuilder.createRenderURL(
 			liferayPortletResponse

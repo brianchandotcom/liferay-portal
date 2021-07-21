@@ -69,13 +69,17 @@ definition {
 		}
 
 		task ("Replace the value of assetEntryId by XSS in URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			WaitForSPARefresh();
 
-			var assetEntryId = '''
-				${portalURL}/web/test-site-name/asset-publisher-page?assetEntryId=</script> <script> alert (1) </script>
-				''';
+			var url = selenium.getLocation();
 
-			Navigator.openSpecificURL(url = "${assetEntryId}");
+			var value = StringUtil.extractLast("${url}", "assetEntryId=");
+
+			var script = '''</script> <script> alert (1) </script>''';
+
+			var url = StringUtil.replace("${url}", "${value}", "${script}");
+
+			Navigator.openSpecificURL(url = "${url}");
 		}
 
 		task ("View the alert not shown") {

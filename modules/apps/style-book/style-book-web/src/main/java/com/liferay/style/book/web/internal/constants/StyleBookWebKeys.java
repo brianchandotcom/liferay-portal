@@ -21,7 +21,4 @@ public class StyleBookWebKeys {
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
-	public static final String STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER =
-		"STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER";
-
 }

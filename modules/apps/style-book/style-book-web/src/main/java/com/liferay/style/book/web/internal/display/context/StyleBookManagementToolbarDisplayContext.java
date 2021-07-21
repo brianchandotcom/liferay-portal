@@ -71,31 +71,45 @@ public class StyleBookManagementToolbarDisplayContext
 			return Collections.emptyList();
 		}
 
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData(
-					"action", "deleteSelectedStyleBookEntries");
-				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "exportSelectedStyleBookEntries");
+							dropdownItem.setIcon("import-export");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "export"));
+							dropdownItem.setQuickAction(true);
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "copySelectedStyleBookEntries");
+							dropdownItem.setIcon("paste");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest, "make-a-copy"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData(
-					"action", "exportSelectedStyleBookEntries");
-				dropdownItem.setIcon("import-export");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "export"));
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "copySelectedStyleBookEntries");
-				dropdownItem.setIcon("paste");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "make-a-copy"));
-				dropdownItem.setQuickAction(true);
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "deleteSelectedStyleBookEntries");
+							dropdownItem.setIcon("times-circle");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

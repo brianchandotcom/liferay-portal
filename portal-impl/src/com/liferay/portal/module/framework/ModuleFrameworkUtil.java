@@ -45,16 +45,8 @@ public class ModuleFrameworkUtil {
 		_moduleFramework.startFramework();
 	}
 
-	public static void startRuntime() throws Exception {
-		_moduleFramework.startRuntime();
-	}
-
 	public static void stopFramework(long timeout) throws Exception {
 		_moduleFramework.stopFramework(timeout);
-	}
-
-	public static void stopRuntime() throws Exception {
-		_moduleFramework.stopRuntime();
 	}
 
 	public static void unregisterContext(Object context) {

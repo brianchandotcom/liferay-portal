@@ -274,10 +274,6 @@ public class InitUtil {
 
 			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 
-			if (initModuleFramework) {
-				ModuleFrameworkUtil.startRuntime();
-			}
-
 			_appApplicationContext = configurableApplicationContext;
 
 			if (initModuleFramework && registerContext) {
@@ -334,24 +330,6 @@ public class InitUtil {
 
 			},
 			PortalLifecycle.METHOD_DESTROY);
-	}
-
-	public static synchronized void stopModuleFramework() {
-		try {
-			ModuleFrameworkUtil.stopFramework(0);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	public static synchronized void stopRuntime() {
-		try {
-			ModuleFrameworkUtil.stopRuntime();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 	}
 
 	private static final boolean _PRINT_TIME = false;

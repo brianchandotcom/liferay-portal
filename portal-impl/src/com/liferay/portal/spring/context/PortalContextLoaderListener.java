@@ -159,13 +159,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		_cleanUpJDBCDrivers();
 
 		try {
-			ModuleFrameworkUtil.stopRuntime();
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-
-		try {
 			ModuleFrameworkUtil.stopFramework(
 				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
 		}
@@ -322,8 +315,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			ModuleFrameworkUtil.registerContext(_arrayApplicationContext);
 
 			ModuleFrameworkUtil.startFramework();
-
-			ModuleFrameworkUtil.startRuntime();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

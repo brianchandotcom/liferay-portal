@@ -285,21 +285,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					"\"lb\" to see all bundles");
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Started the OSGi framework");
-		}
-	}
-
-	@Override
-	public void startRuntime() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Starting the OSGi runtime");
-		}
-
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
@@ -307,7 +292,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Started the OSGi runtime");
+			_log.debug("Started the OSGi framework");
 		}
 	}
 
@@ -315,6 +300,22 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	public void stopFramework(long timeout) throws Exception {
 		if (_framework == null) {
 			return;
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
+			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
+
+		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+		if (frameworkEvent.getType() != FrameworkEvent.STARTLEVEL_CHANGED) {
+			ReflectionUtil.throwException(frameworkEvent.getThrowable());
 		}
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -337,7 +338,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_framework.stop();
 
-		FrameworkEvent frameworkEvent = _framework.waitForStop(timeout);
+		frameworkEvent = _framework.waitForStop(timeout);
 
 		if (frameworkEvent.getType() == FrameworkEvent.WAIT_TIMEDOUT) {
 			_log.error(
@@ -355,29 +356,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (Boolean.parseBoolean(System.getenv("LIFERAY_CLEAN_OSGI_STATE"))) {
 			_cleanOSGiStateFolder();
-		}
-	}
-
-	@Override
-	public void stopRuntime() throws Exception {
-		if (_framework == null) {
-			return;
-		}
-
-		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
-			FrameworkStartLevel.class);
-
-		DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
-
-		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
-			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
-
-		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
-
-		if (frameworkEvent.getType() != FrameworkEvent.STARTLEVEL_CHANGED) {
-			ReflectionUtil.throwException(frameworkEvent.getThrowable());
 		}
 	}
 

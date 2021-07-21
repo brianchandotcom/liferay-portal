@@ -14,7 +14,6 @@
 
 package com.liferay.portal.module.framework;
 
-import java.net.URL;
 import org.osgi.framework.launch.Framework;
 
 /**
@@ -31,11 +30,7 @@ public interface ModuleFramework {
 
 	public void startFramework() throws Exception;
 
-	public void startRuntime() throws Exception;
-
 	public void stopFramework(long timeout) throws Exception;
-
-	public void stopRuntime() throws Exception;
 
 	public void unregisterContext(Object context);
 

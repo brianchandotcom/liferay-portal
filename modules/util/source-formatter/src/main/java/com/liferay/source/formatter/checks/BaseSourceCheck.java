@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.JSPSourceProcessor;
+import com.liferay.source.formatter.JavaSourceProcessor;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.SourceProcessor;
+import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
@@ -78,6 +81,34 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	public boolean isEnabled(String absolutePath) {
 		return isAttributeValue(
 			SourceFormatterCheckUtil.ENABLED_KEY, absolutePath, true);
+	}
+
+	@Override
+	public boolean isJavaSource(String content, int pos) {
+		if (_sourceProcessor instanceof JavaSourceProcessor) {
+			return true;
+		}
+
+		if (_sourceProcessor instanceof JSPSourceProcessor) {
+			return JSPSourceUtil.isJavaSource(content, pos);
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isJavaSource(
+		String content, int pos, boolean checkInsideTags) {
+
+		if (_sourceProcessor instanceof JavaSourceProcessor) {
+			return true;
+		}
+
+		if (_sourceProcessor instanceof JSPSourceProcessor) {
+			return JSPSourceUtil.isJavaSource(content, pos, checkInsideTags);
+		}
+
+		return false;
 	}
 
 	@Override

@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-site-navigation:breadcrumb
-	breadcrumbEntries="<%= layoutsAdminDisplayContext.getPortletBreadcrumbEntries() %>"
-/>
-
 <liferay-ui:search-container
 	id="pages"
 	searchContainer="<%= layoutsAdminDisplayContext.getLayoutsSearchContainer() %>"

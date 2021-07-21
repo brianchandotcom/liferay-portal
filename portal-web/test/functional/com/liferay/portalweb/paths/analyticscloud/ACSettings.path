@@ -121,6 +121,11 @@
 	<td>//a[@class='back-arrow']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROPERTIES_TITLE</td>
+	<td>//h3[contains(@class,'title')]/span</td>
+	<td></td>
+</tr>
 <!-- USAGE -->
 <tr>
 	<td>INDIVIDUALS_USAGE_METRIC</td>

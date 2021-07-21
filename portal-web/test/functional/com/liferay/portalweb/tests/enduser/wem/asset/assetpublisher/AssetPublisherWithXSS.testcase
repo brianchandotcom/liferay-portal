@@ -6,20 +6,28 @@ definition {
 	property testray.main.component.name = "Asset Publisher";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page");
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page",
-			widgetName = "Asset Publisher");
+		task ("Add an Asset Publisher widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
 	}
 
 	tearDown {
@@ -39,11 +47,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-124704. Asset Publisher view.jsp has potential XSS vulnerability."
+	@description = "This is a test for LPS-124704. No alert popup on view asset in Asset Publisher when replace the value of assetEntryId by XSS in URL."
 	@priority = "4"
 	@uitest
 	test ViewAssetDetailsWhenAppendXSSToURL {
-		task ("Add Multiples Web Contents based on Basic Web Content.") {
+		task ("Add three web contents") {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
@@ -67,15 +75,15 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Click on one of the web content titles in Asset Publisher") {
+		task ("View the first web content details via Asset Publisher") {
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent Title ${i}");
 		}
 
-		task ("Click the back button on Asset Publisher") {
+		task ("Click the back button of Asset Publisher") {
 			PageEditor.clickBack();
 		}
 
-		task ("View in URL AssetEntryId Validate") {
+		task ("Replace the value of assetEntryId by XSS in URL") {
 			var portalURL = PropsUtil.get("portal.url");
 
 			var assetEntryId = '''
@@ -83,7 +91,9 @@ definition {
 				''';
 
 			Navigator.openSpecificURL(url = "${assetEntryId}");
+		}
 
+		task ("View the alert not shown") {
 			AssertAlertNotPresent();
 		}
 	}

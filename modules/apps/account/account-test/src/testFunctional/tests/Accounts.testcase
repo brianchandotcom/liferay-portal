@@ -402,6 +402,50 @@ definition {
 		}
 	}
 
+	@description = "This test deletes multiple accounts via management toolbar"
+	@priority = "3"
+	test CanDeleteAccountsInBulk {
+		for (var accountNumber : list "1,2,3") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.addBusinessAccount(accountName = "Account ${accountNumber}");
+		}
+
+		for (var accountNumber : list "4,5,6") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.addPersonAccount(accountName = "Account ${accountNumber}");
+		}
+
+		Accounts.openAccountsAdmin();
+
+		for (var accountNumber : list "1,2,4,6") {
+			LexiconEntry.selectEntry(rowEntry = "Account ${accountNumber}");
+		}
+
+		ClickNoError(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+
+		for (var accountNumber : list "1,2,4,6") {
+			LexiconEntry.viewNoEntry(rowEntry = "Account ${accountNumber}");
+		}
+
+		for (var accountNumber : list "3,5") {
+			LexiconEntry.viewEntryName(rowEntry = "Account ${accountNumber}");
+		}
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		for (var accountNumber : list "1,2,4,6") {
+			LexiconEntry.viewNoEntry(rowEntry = "Account ${accountNumber}");
+		}
+	}
+
 	@description = "This test asserts address deletes successfully."
 	@priority = "3"
 	test CanDeleteAddress {

@@ -475,9 +475,13 @@ definition {
 
 		PortalSettings.editConfigurationAuthenticationGeneral(enableRequireStrangers = "true");
 
-		PortalSettings.editConfigurationUsersEmailNotificationsCP();
+		PortalSettings.editConfigurationUsersEmailNotificationsCP(
+			configurationName = "Account Created Notification",
+			notificationsBody = "[$USER_PASSWORD$]");
 
-		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP();
+		PortalSettings.editConfigurationUsersEmailNotificationsCP(
+			configurationName = "Email Verification Notification",
+			notificationsBody = "[$EMAIL_VERIFICATION_CODE$]");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

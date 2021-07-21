@@ -467,32 +467,12 @@ definition {
 	macro editConfigurationUsersEmailNotificationsCP {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
-			configurationName = "Account Created Notification",
+			configurationName = "${configurationName}",
 			configurationScope = "Virtual Instance Scope");
 
 		Type.typeCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",
-			value1 = "[$USER_PASSWORD$]");
-
-		PortletEntry.save();
-	}
-
-	macro editConfigurationUsersEmailVerificationNotificationsCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Email",
-			configurationName = "Email Verification Notification",
-			configurationScope = "Virtual Instance Scope");
-
-		if ("${emailVerificationURL}" == "true") {
-			Type.typeCKEditor(
-				locator1 = "CKEditor#BODY_FIELD",
-				value1 = "[$EMAIL_VERIFICATION_URL$]");
-		}
-		else {
-			Type.typeCKEditor(
-				locator1 = "CKEditor#BODY_FIELD",
-				value1 = "[$EMAIL_VERIFICATION_CODE$]");
-		}
+			value1 = "${notificationsBody}");
 
 		PortletEntry.save();
 	}

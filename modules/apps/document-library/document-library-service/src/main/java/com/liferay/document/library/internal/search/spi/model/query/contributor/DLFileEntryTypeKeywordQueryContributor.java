@@ -42,10 +42,9 @@ public class DLFileEntryTypeKeywordQueryContributor
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
 		addSearchLocalizedTerm(
-			booleanQuery, keywordQueryContributorHelper, Field.NAME);
-
-		addSearchLocalizedTerm(
 			booleanQuery, keywordQueryContributorHelper, Field.DESCRIPTION);
+		addSearchLocalizedTerm(
+			booleanQuery, keywordQueryContributorHelper, Field.NAME);
 	}
 
 	protected void addSearchLocalizedTerm(

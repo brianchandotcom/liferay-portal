@@ -185,14 +185,6 @@ public class AccountResourceImpl
 			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			_getStatus(account), null);
 
-		if (account.getExternalReferenceCode() != null) {
-			accountEntry.setExternalReferenceCode(
-				account.getExternalReferenceCode());
-
-			accountEntry = _accountEntryLocalService.updateAccountEntry(
-				accountEntry);
-		}
-
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
 				accountEntry.getAccountEntryId(), _getOrganizationIds(account));

@@ -41,14 +41,14 @@ public class ViewFileEntryContentDashboardItemAction
 
 	public ViewFileEntryContentDashboardItemAction(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		Http http, HttpServletRequest httpServletRequest, FileEntry fileEntry,
+		FileEntry fileEntry, Http http, HttpServletRequest httpServletRequest,
 		Language language) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
+		_fileEntry = fileEntry;
 		_http = http;
 		_httpServletRequest = httpServletRequest;
-		_fileEntry = fileEntry;
 		_language = language;
 	}
 

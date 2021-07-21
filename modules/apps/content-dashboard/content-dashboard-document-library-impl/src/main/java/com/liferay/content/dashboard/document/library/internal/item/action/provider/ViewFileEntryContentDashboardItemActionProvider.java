@@ -82,8 +82,8 @@ public class ViewFileEntryContentDashboardItemActionProvider
 		HttpServletRequest httpServletRequest, FileEntry fileEntry) {
 
 		return new ViewFileEntryContentDashboardItemAction(
-			_assetDisplayPageFriendlyURLProvider, _http, httpServletRequest,
-			fileEntry, _language);
+			_assetDisplayPageFriendlyURLProvider, fileEntry, _http,
+			httpServletRequest, _language);
 	}
 
 	@Reference

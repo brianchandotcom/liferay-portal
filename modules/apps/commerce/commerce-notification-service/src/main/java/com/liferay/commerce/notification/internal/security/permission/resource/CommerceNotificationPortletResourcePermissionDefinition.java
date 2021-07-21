@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.notification.internal.security.permission.resource;
 
-import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionLogic;
@@ -46,7 +46,7 @@ public class CommerceNotificationPortletResourcePermissionDefinition
 
 	@Override
 	public String getResourceName() {
-		return CommerceNotificationConstants.RESOURCE_NAME;
+		return CPConstants.RESOURCE_NAME_CHANNEL;
 	}
 
 	@Reference

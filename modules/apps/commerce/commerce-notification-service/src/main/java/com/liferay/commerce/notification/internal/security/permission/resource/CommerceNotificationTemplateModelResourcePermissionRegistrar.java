@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.notification.internal.security.permission.resource;
 
-import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -73,7 +73,7 @@ public class CommerceNotificationTemplateModelResourcePermissionRegistrar {
 		_commerceNotificationTemplateLocalService;
 
 	@Reference(
-		target = "(resource.name=" + CommerceNotificationConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_CHANNEL + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

@@ -375,8 +375,6 @@ definition {
 	@description = "LPS-86652 - Validate that the correct number of entries is showed when user chooses 4, 8, 20, 40, 60"
 	@priority = "3"
 	test CorrectNumberOfEntriesDisplayedWhenPaginationEdited {
-
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

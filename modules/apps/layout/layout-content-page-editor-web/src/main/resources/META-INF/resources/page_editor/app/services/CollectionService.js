@@ -63,6 +63,18 @@ export default {
 		return serviceFetch(config.getCollectionFiltersURL, {}, () => {});
 	},
 
+	getCollectionItemCount({collection, onNetworkStatus}) {
+		return serviceFetch(
+			config.getCollectionItemCountURL,
+			{
+				body: {
+					layoutObjectReference: JSON.stringify(collection),
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
 	/**
 	 * Get available collection mapping fields
 	 * @param {object} options

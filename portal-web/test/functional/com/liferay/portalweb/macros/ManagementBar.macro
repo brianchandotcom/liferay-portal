@@ -94,6 +94,14 @@ definition {
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
 	}
 
+	macro viewFilterAndOrderSelectedItem {
+		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		AssertElementPresent(
+			key_menuItem = "${menuItem}",
+			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM_SELECTED");
+	}
+
 	macro viewNoSubheaderInFilterAndOrder {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 

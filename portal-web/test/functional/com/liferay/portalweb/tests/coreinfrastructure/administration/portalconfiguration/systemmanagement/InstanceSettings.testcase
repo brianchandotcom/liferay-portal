@@ -1207,6 +1207,64 @@ definition {
 			subject = "${portalURL}: Dear user, your Password Has Been Changed");
 	}
 
+	@description = "This test asserts that a user can update the password reset notification subject and body. The notification also send when set password via json."
+	@priority = "3"
+	test ViewPasswordResetNotificationTemplateUpdated {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.smtp.server.enabled = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		PortalSettings.editConfigurationUsersEmailNotificationsCP(
+			configurationName = "Password Reset Notification",
+			notificationsBody = '''
+				Dear [$TO_NAME$],<br /><br />
+
+				This is a new template for user password reset test.<br /><br />
+
+				You can reset your password for [$PORTAL_URL$] at [$PASSWORD_RESET_URL$].<br /><br />
+
+				The request for a new password was made from [$REMOTE_ADDRESS$] / [$REMOTE_HOST$].<br /><br />
+
+				Sincerely,<br />
+				[$FROM_NAME$]<br />
+				[$FROM_ADDRESS$]<br />
+				[$PORTAL_URL$]<br />
+			''',
+			notificationsSubject = "[$PORTAL_URL$]: Dear user, please reset Your Password");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
+
+		MockMock.viewMail(
+			asset = "${portalURL}: Dear user, please reset Your Password",
+			content = "This is a new template for user password reset test.",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "${portalURL}: Dear user, please reset Your Password");
+	}
+
 	@description = "This is a use case for LPS-97907."
 	@priority = "5"
 	test ViewSystemSettingsSavedByKeyboard {

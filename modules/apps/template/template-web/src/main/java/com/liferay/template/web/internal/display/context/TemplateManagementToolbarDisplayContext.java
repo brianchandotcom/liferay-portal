@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -152,9 +151,14 @@ public class TemplateManagementToolbarDisplayContext
 					PortalUtil.getClassNameId(PortletDisplayTemplate.class)));
 
 			creationMenu.addPrimaryDropdownItem(
-				_getCreationMenuDropdownItem(
-					addDDMTemplateURL,
-					templateHandler.getName(_themeDisplay.getLocale())));
+				dropdownItem -> {
+					dropdownItem.setHref(addDDMTemplateURL);
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							httpServletRequest,
+							templateHandler.getName(
+								_themeDisplay.getLocale())));
+				});
 		}
 
 		return creationMenu;
@@ -199,15 +203,6 @@ public class TemplateManagementToolbarDisplayContext
 		}
 
 		return false;
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getCreationMenuDropdownItem(PortletURL url, String label) {
-
-		return dropdownItem -> {
-			dropdownItem.setHref(url);
-			dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, label));
-		};
 	}
 
 	private List<TemplateHandler> _getPortletDisplayTemplateHandlers(

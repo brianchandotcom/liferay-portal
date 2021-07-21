@@ -130,19 +130,26 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			SessionErrors.add(actionRequest, exception.getClass(), exception);
+			try {
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
-			PortletURL portletURL =
-				_translationURLProvider.getImportTranslationURL(
-					ParamUtil.getLong(actionRequest, "groupId"),
-					ParamUtil.getLong(actionRequest, "classNameId"),
-					ParamUtil.getLong(actionRequest, "classPK"),
-					RequestBackedPortletURLFactoryUtil.create(actionRequest));
+				PortletURL portletURL =
+					_translationURLProvider.getImportTranslationURL(
+						ParamUtil.getLong(actionRequest, "groupId"),
+						ParamUtil.getLong(actionRequest, "classNameId"),
+						ParamUtil.getLong(actionRequest, "classPK"),
+						RequestBackedPortletURLFactoryUtil.create(
+							actionRequest));
 
-			actionResponse.sendRedirect(portletURL.toString());
+				actionResponse.sendRedirect(portletURL.toString());
 
-			if (exception instanceof XLIFFFileException) {
-				hideDefaultErrorMessage(actionRequest);
+				if (exception instanceof XLIFFFileException) {
+					hideDefaultErrorMessage(actionRequest);
+				}
+			}
+			catch (PortalException portalException) {
+				throw new IOException(portalException);
 			}
 		}
 	}

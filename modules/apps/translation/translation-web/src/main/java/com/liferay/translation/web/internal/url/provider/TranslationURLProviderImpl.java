@@ -15,13 +15,16 @@
 package com.liferay.translation.web.internal.url.provider;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -31,12 +34,14 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 
 	@Override
 	public PortletURL getImportTranslationURL(
-		long groupId, long classNameId, long classPK,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			long groupId, long classNameId, long classPK,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory)
+		throws PortalException {
 
 		return PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createRenderURL(
-				TranslationPortletKeys.TRANSLATION)
+			requestBackedPortletURLFactory.createControlPanelRenderURL(
+				TranslationPortletKeys.TRANSLATION,
+				_groupLocalService.getGroup(groupId), 0, 0)
 		).setMVCRenderCommandName(
 			"/translation/import_translation"
 		).setParameter(
@@ -45,6 +50,25 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 			"classPK", classPK
 		).setParameter(
 			"groupId", groupId
+		).build();
+	}
+
+	@Override
+	public PortletURL getTranslateURL(
+			long groupId, long classNameId, long classPK,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory)
+		throws PortalException {
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createControlPanelRenderURL(
+				TranslationPortletKeys.TRANSLATION,
+				_groupLocalService.getGroup(groupId), 0, 0)
+		).setMVCRenderCommandName(
+			"/translation/translate"
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"classPK", classPK
 		).build();
 	}
 
@@ -64,5 +88,8 @@ public class TranslationURLProviderImpl implements TranslationURLProvider {
 			"classPK", classPK
 		).build();
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

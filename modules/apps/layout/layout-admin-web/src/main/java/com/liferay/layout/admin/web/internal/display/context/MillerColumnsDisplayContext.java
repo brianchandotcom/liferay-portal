@@ -647,6 +647,7 @@ public class MillerColumnsDisplayContext {
 					"url",
 					PortletURLBuilder.create(
 						_translationURLProvider.getTranslateURL(
+							_themeDisplay.getScopeGroupId(),
 							PortalUtil.getClassNameId(Layout.class.getName()),
 							layout.getPlid(),
 							RequestBackedPortletURLFactoryUtil.create(

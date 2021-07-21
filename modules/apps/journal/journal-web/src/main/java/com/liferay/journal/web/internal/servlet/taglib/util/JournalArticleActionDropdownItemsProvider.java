@@ -768,6 +768,7 @@ public class JournalArticleActionDropdownItemsProvider {
 
 			dropdownItem.setHref(
 				_translationURLProvider.getTranslateURL(
+					_themeDisplay.getScopeGroupId(),
 					PortalUtil.getClassNameId(JournalArticle.class.getName()),
 					_article.getResourcePrimKey(),
 					RequestBackedPortletURLFactoryUtil.create(

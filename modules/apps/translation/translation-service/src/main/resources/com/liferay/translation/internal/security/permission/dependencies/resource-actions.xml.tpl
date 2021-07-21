@@ -7,7 +7,6 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_translation_web_internal_portlet_TranslationPortlet</portlet-name>
 		</portlet-ref>
-		<root>true</root>
 		<weight>[$WEIGHT$]</weight>
 		<permissions>
 			<supports>

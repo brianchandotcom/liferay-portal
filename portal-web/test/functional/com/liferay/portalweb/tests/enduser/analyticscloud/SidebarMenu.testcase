@@ -32,21 +32,19 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8158 | Test Summary: Switch the property which was selected by default"
 	@priority = "5"
 	test CanSwitchPropertyWhichWasSelectedByDefault {
-		
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-		
+
 		ACUtils.launchAC();
-		
+
 		AssertTextNotEquals(
 			locator1 = "ACSidebar#CURRENT_PROPERTY",
 			value1 = "${propertyName}");
-		
+
 		ACProperties.switchProperty(propertyName = "${propertyName}");
-		
+
 		AssertTextEquals(
 			locator1 = "ACSidebar#CURRENT_PROPERTY",
 			value1 = "${propertyName}");
-
 	}
 
 }

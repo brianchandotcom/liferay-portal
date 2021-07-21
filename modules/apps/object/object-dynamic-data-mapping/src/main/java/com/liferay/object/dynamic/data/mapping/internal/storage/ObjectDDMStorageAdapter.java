@@ -15,6 +15,7 @@
 package com.liferay.object.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -137,7 +138,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				new ObjectEntry() {
 					{
 						properties = _getObjectEntryProperties(
-							ddmStorageAdapterSaveRequest,
+							ddmFormValues.getDDMFormFieldValues(),
 							_objectFieldLocalService.getObjectFields(
 								objectDefinitionId));
 					}
@@ -220,7 +221,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 	}
 
 	private Map<String, Object> _getObjectEntryProperties(
-		DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest,
+		List<DDMFormFieldValue> ddmFormFieldValues,
 		List<ObjectField> objectFields) {
 
 		Map<String, Object> properties = new HashMap<>();
@@ -230,25 +231,31 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		Map<String, String> objectFieldTypes = stream.collect(
 			Collectors.toMap(ObjectField::getName, ObjectField::getType));
 
-		DDMFormValues ddmFormValues =
-			ddmStorageAdapterSaveRequest.getDDMFormValues();
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (StringUtil.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
 
-		for (DDMFormFieldValue ddmFormValue :
-				ddmFormValues.getDDMFormFieldValues()) {
+				properties.putAll(
+					_getObjectEntryProperties(
+						ddmFormFieldValue.getNestedDDMFormFieldValues(),
+						objectFields));
+			}
+			else {
+				String objectFieldName = _getObjectFieldName(
+					ddmFormFieldValue.getDDMFormField());
 
-			String objectFieldName = _getObjectFieldName(
-				ddmFormValue.getDDMFormField());
+				Value value = ddmFormFieldValue.getValue();
 
-			Value value = ddmFormValue.getValue();
+				Map<Locale, String> values = value.getValues();
 
-			Map<Locale, String> values = value.getValues();
-
-			properties.put(
-				objectFieldName,
-				_getValue(
-					value.getDefaultLocale(),
-					objectFieldTypes.get(objectFieldName),
-					values.get(value.getDefaultLocale())));
+				properties.put(
+					objectFieldName,
+					_getValue(
+						value.getDefaultLocale(),
+						objectFieldTypes.get(objectFieldName),
+						values.get(value.getDefaultLocale())));
+			}
 		}
 
 		return properties;

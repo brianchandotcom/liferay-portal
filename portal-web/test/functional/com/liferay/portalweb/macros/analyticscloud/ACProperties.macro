@@ -9,10 +9,10 @@ definition {
 		Type(
 			locator1 = "ACSettings#PROPERTY_INPUT",
 			value1 = "${propertyName}");
-		
+
 		Click(locator1 = "ACSettings#SAVE_BUTTON");
 	}
-	
+
 	@summary = "Asserts that the workspace is scoped by a specific Property"
 	macro assertCurrentActiveProperty {
 		AssertTextEquals(

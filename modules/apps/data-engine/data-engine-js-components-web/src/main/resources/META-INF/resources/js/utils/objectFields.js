@@ -106,26 +106,17 @@ export const getSelectedValue = (value) => {
 };
 
 export const getObjectFieldName = ({settingsContext}) => {
-	if (settingsContext.type === 'fieldset') {
+	const getAdvancedColumn = ({title}) => title.toLowerCase() === 'advanced';
+	const fieldsFromAdvancedColumn = settingsContext.pages.find(
+		getAdvancedColumn
+	)?.rows[0].columns[0].fields;
+
+	if (settingsContext.type === 'fieldset' || !fieldsFromAdvancedColumn) {
 		return;
 	}
 
-	const getFieldsByColumn = (settingsContext, columnTitle) => {
-		const column = ({title}) => title.toLowerCase() === columnTitle;
-
-		return settingsContext.pages.find(column).rows[0].columns[0].fields;
-	};
-	const getFieldProperty = (fields, fieldName) =>
-		fields.find((field) => field.fieldName === fieldName);
-
-	const fieldsFromAdvancedColumn = getFieldsByColumn(
-		settingsContext,
-		'advanced'
-	);
-
-	const objectFieldName = getFieldProperty(
-		fieldsFromAdvancedColumn,
-		'objectFieldName'
+	const objectFieldName = fieldsFromAdvancedColumn.find(
+		(field) => field.fieldName === 'objectFieldName'
 	);
 
 	return objectFieldName;

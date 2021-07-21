@@ -442,4 +442,82 @@ definition {
 			assigneeType = "Users");
 	}
 
+	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."
+	@priority = "3"
+	test ClickingCancelOrBackWillNotSaveAccountUser {
+		Accounts.openAccountsAdmin();
+
+		Accounts.addBusinessAccount(accountName = "Account with User");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
+
+		AssertClick(
+			key_accountName = "Account with User",
+			locator1 = "Account#CHOOSE_ACCOUNT",
+			value1 = "Choose");
+
+		SelectFrame(value1 = "relative=top");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "usersn");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "userea@liferay.com");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+			value1 = "userfn");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+			value1 = "userln");
+
+		Button.clickCancel();
+
+		AccountUsers.openAccountUsersAdmin();
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
+
+		AssertClick(
+			key_accountName = "Account with User",
+			locator1 = "Account#CHOOSE_ACCOUNT",
+			value1 = "Choose");
+
+		SelectFrame(value1 = "relative=top");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "usersn");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "userea@liferay.com");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+			value1 = "userfn");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+			value1 = "userln");
+
+		Navigator.gotoBack();
+
+		AccountUsers.openAccountUsersAdmin();
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+	}
+
 }

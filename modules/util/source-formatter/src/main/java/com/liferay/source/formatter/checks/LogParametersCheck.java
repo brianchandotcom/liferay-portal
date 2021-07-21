@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.JavaSourceProcessor;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.List;
@@ -28,14 +29,27 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public abstract class BaseLogParametersCheck extends BaseFileCheck {
+public class LogParametersCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
 		return true;
 	}
 
-	protected String formatLogParameters(String content) {
+	@Override
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
+
+		if ((getSourceProcessor() instanceof JavaSourceProcessor) &&
+			content.contains("import com.liferay.portal.kernel.log.Log;")) {
+
+			return content;
+		}
+
+		return _formatLogParameters(content);
+	}
+
+	private String _formatLogParameters(String content) {
 		Matcher matcher = _logPattern.matcher(content);
 
 		while (matcher.find()) {

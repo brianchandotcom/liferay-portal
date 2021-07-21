@@ -1270,11 +1270,9 @@ definition {
 	@priority = "3"
 	test ViewProductCardSKU {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceProductCard#ViewProductCardSKU";
-
-		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		AssertElementPresent(

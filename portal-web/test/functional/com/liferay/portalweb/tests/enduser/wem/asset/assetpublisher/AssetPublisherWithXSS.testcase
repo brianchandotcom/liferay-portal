@@ -59,11 +59,13 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent Title 1");
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "WC WebContent Content",
+				assetTitle = "WC WebContent Title 1");
 		}
 
 		task ("Click the back button of Asset Publisher") {
-			PageEditor.clickBack();
+			Navigator.gotoBack();
 		}
 
 		task ("Replace the value of assetEntryId by XSS in URL") {

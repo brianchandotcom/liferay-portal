@@ -73,9 +73,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -93,6 +90,11 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Zsolt Berentey
@@ -636,12 +638,14 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	private void _registerService(
 		DLExportableRepositoryPublisher dlExportableRepositoryPublisher) {
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(DLPortletDataHandlerTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceRegistrations.add(
-			registry.registerService(
+			bundleContext.registerService(
 				DLExportableRepositoryPublisher.class,
-				dlExportableRepositoryPublisher, new HashMap<>()));
+				dlExportableRepositoryPublisher, null));
 	}
 
 	@Inject

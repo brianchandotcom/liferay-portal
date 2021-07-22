@@ -35,10 +35,8 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.upload.AttachmentContentUpdater;
 
 import java.io.InputStream;
@@ -48,10 +46,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,27 +65,10 @@ public class EntryAttachmentContentUpdaterTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			AttachmentContentUpdater.class.getName());
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
-
-		_attachmentContentUpdater = _serviceTracker.getService();
 	}
 
 	@Test
@@ -366,9 +345,7 @@ public class EntryAttachmentContentUpdaterTest {
 	private static final String _TEMP_FILE_ENTRY_IMAGE_URL =
 		"www.liferay.com/temp_logo";
 
-	private static ServiceTracker
-		<AttachmentContentUpdater, AttachmentContentUpdater> _serviceTracker;
-
+	@Inject
 	private AttachmentContentUpdater _attachmentContentUpdater;
 
 	@DeleteAfterTestRun

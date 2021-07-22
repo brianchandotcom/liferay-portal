@@ -25,7 +25,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Company;
@@ -54,16 +53,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -85,27 +79,6 @@ public class BlogEntriesDisplayContextTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("(component.name=");
-		sb.append("com.liferay.blogs.web.internal.portlet.action.");
-		sb.append("ViewMVCRenderCommand)");
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(sb.toString()));
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -293,12 +266,10 @@ public class BlogEntriesDisplayContextTest {
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
 
-		MVCRenderCommand mvcRenderCommand = _serviceTracker.getService();
-
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest(mockHttpServletRequest);
 
-		mvcRenderCommand.render(
+		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
 
@@ -324,9 +295,6 @@ public class BlogEntriesDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private static ServiceTracker<MVCRenderCommand, MVCRenderCommand>
-		_serviceTracker;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -348,5 +316,10 @@ public class BlogEntriesDisplayContextTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject(
+		filter = "component.name=com.liferay.blogs.web.internal.portlet.action.ViewMVCRenderCommand"
+	)
+	private MVCRenderCommand _mvcRenderCommand;
 
 }

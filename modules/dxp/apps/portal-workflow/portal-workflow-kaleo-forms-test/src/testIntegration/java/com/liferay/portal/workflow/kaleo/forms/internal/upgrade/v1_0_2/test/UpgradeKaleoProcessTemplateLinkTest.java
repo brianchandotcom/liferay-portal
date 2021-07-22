@@ -32,10 +32,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -196,14 +195,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 	}
 
 	protected void setUpUpgradeKaleoProcessTemplateLink() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			registry.getServiceReference(
-				"com.liferay.portal.workflow.kaleo.forms.internal.upgrade." +
-					"KaleoFormsServiceUpgrade"));
-
-		upgradeStepRegistror.register(
+		_upgradeStepRegistrator.register(
 			new UpgradeStepRegistrator.Registry() {
 
 				@Override
@@ -240,5 +232,10 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 	private long _kaleoProcessLinkId;
 	private UpgradeProcess _kaleoProcessTemplateLinkUpgradeProcess;
 	private Timestamp _timestamp;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.workflow.kaleo.forms.internal.upgrade.KaleoFormsServiceUpgrade"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

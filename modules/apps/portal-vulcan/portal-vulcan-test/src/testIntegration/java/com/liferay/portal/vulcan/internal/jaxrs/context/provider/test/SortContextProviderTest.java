@@ -16,16 +16,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockMessage;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockResource;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
 
@@ -40,6 +37,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -62,13 +64,15 @@ public class SortContextProviderTest {
 			"com.liferay.portal.vulcan.internal.jaxrs.context.provider." +
 				"SortContextProvider");
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(SortContextProviderTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		_mockResource = new MockResource();
 
-		_serviceRegistration = registry.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			EntityModelResource.class, _mockResource,
-			HashMapBuilder.<String, Object>put(
+			HashMapDictionaryBuilder.<String, Object>put(
 				"component.name", MockResource.class.getCanonicalName()
 			).put(
 				"osgi.jaxrs.resource", "true"

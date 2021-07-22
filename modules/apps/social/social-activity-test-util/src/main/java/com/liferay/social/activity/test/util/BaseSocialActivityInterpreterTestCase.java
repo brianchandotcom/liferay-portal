@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
@@ -35,7 +33,6 @@ import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -45,11 +42,14 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -59,25 +59,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public abstract class BaseSocialActivityInterpreterTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(TrashHelper.class);
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
-
-		trashHelper = _serviceTracker.getService();
 
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
@@ -208,20 +192,28 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 		String portletId, String className) {
 
 		try {
-			Registry registry = RegistryUtil.getRegistry();
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-			Collection<SocialActivityInterpreter> socialActivityInterpreters =
-				registry.getServices(
-					SocialActivityInterpreter.class,
-					"(javax.portlet.name=" + portletId + ")");
+			BundleContext bundleContext = bundle.getBundleContext();
 
-			for (SocialActivityInterpreter socialActivityInterpreter :
-					socialActivityInterpreters) {
+			for (ServiceReference<SocialActivityInterpreter> serviceReference :
+					bundleContext.getServiceReferences(
+						SocialActivityInterpreter.class,
+						"(javax.portlet.name=" + portletId + ")")) {
 
-				if (ArrayUtil.contains(
-						socialActivityInterpreter.getClassNames(), className)) {
+				SocialActivityInterpreter socialActivityInterpreter =
+					bundleContext.getService(serviceReference);
 
-					return socialActivityInterpreter;
+				try {
+					if (ArrayUtil.contains(
+							socialActivityInterpreter.getClassNames(),
+							className)) {
+
+						return socialActivityInterpreter;
+					}
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
 				}
 			}
 
@@ -275,8 +267,8 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	protected Group group;
 
 	protected ServiceContext serviceContext;
-	protected TrashHelper trashHelper;
 
-	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
+	@Inject
+	protected TrashHelper trashHelper;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
@@ -225,7 +226,8 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 
 		DDMDataProviderInstance ddmDataProviderInstance =
 			DDMDataProviderTestUtil.createDDMRestDataProviderInstance(
-				GroupTestUtil.addGroup(), null, outputParametersSettings);
+				_ddmDataProvider, GroupTestUtil.addGroup(), null,
+				outputParametersSettings);
 
 		DDMFormFieldType ddmFormFieldType =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType("select");
@@ -290,6 +292,9 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 
 		return ddmFormFieldsPropertyChanges.get(ddmFormFieldContextKey);
 	}
+
+	@Inject(filter = "ddm.data.provider.type=rest")
+	private DDMDataProvider _ddmDataProvider;
 
 	@Inject(type = DDMFormEvaluator.class)
 	private DDMFormEvaluator _ddmFormEvaluator;

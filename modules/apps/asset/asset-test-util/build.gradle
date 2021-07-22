@@ -10,7 +10,6 @@ dependencies {
 	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:portal-search:portal-search-test-util")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":core:registry-api")
 }
 
 liferay {

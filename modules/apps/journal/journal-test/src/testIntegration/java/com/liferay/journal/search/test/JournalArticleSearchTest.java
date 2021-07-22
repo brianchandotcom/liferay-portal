@@ -85,9 +85,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,8 +162,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				JournalServiceConfiguration.class,
 				TestPropsValues.getCompanyId());
-
-		setUpDDMIndexer();
 	}
 
 	@After
@@ -594,13 +591,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	protected void setUpDDMIndexer() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmIndexer = registry.getService(
-			registry.getServiceReference(DDMIndexer.class));
-	}
-
 	@Override
 	protected BaseModel<?> updateBaseModel(
 			BaseModel<?> baseModel, String keywords,
@@ -762,7 +752,9 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	}
 
+	@Inject
 	private DDMIndexer _ddmIndexer;
+
 	private DDMStructure _ddmStructure;
 	private JournalServiceConfiguration _journalServiceConfiguration;
 	private String _originalPortalPreferencesXML;

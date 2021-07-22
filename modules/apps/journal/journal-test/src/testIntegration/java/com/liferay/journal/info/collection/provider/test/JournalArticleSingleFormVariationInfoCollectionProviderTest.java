@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Locale;
 
@@ -49,6 +46,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Eudaldo Alonso
@@ -68,13 +70,17 @@ public class JournalArticleSingleFormVariationInfoCollectionProviderTest {
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			JournalArticleSingleFormVariationInfoCollectionProviderTest.class);
 
-		_serviceRegistration = registry.registerService(
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
 			(Class<InfoCollectionProvider<?>>)
 				(Class<?>)InfoCollectionProvider.class,
 			new TestSingleFormVariationInfoCollectionProvider(
-				_ddmStructure, _group, _journalArticleLocalService));
+				_ddmStructure, _group, _journalArticleLocalService),
+			null);
 	}
 
 	@After

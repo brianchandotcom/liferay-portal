@@ -21,13 +21,8 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-
-import java.util.Collection;
-import java.util.Iterator;
 
 import javax.servlet.ServletContext;
 
@@ -62,34 +57,12 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 			DependencyManagementThreadLocal.isEnabled();
 
 		DependencyManagementThreadLocal.setEnabled(false);
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Collection<ServiceReference<HotDeployListener>> serviceReferences =
-			registry.getServiceReferences(
-				HotDeployListener.class,
-				"(component.name=" +
-					LegacyPortletPanelAppHotDeployListener.class.getName() +
-						")");
-
-		Iterator<ServiceReference<HotDeployListener>> iterator =
-			serviceReferences.iterator();
-
-		_serviceReference = iterator.next();
-
-		_hotDeployListener =
-			(LegacyPortletPanelAppHotDeployListener)registry.getService(
-				_serviceReference);
 	}
 
 	@After
 	public void tearDown() {
 		DependencyManagementThreadLocal.setEnabled(
 			_dependencyManagementEnabled);
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.ungetService(_serviceReference);
 	}
 
 	@Test
@@ -153,8 +126,12 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 	}
 
 	private boolean _dependencyManagementEnabled;
+
+	@Inject(
+		filter = "component.name=com.liferay.application.list.deploy.hot.LegacyPortletPanelAppHotDeployListener",
+		type = HotDeployListener.class
+	)
 	private LegacyPortletPanelAppHotDeployListener _hotDeployListener;
-	private ServiceReference<HotDeployListener> _serviceReference;
 
 	private static class TestResourceLoader extends DefaultResourceLoader {
 

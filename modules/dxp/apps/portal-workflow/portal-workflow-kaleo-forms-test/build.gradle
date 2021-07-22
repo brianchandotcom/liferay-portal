@@ -6,7 +6,6 @@ dependencies {
 	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":core:petra:petra-string")
-	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":dxp:apps:portal-workflow:portal-workflow-kaleo-forms-api")
 	testIntegrationCompile project(":dxp:apps:portal-workflow:portal-workflow-kaleo-forms-service")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

@@ -48,9 +48,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.test.util.RatingsTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -59,10 +56,8 @@ import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -78,29 +73,6 @@ public class MBExportImportPortletPreferencesProcessorTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("(&(javax.portlet.name=");
-		sb.append(MBPortletKeys.MESSAGE_BOARDS);
-		sb.append(")(objectClass=");
-		sb.append(ExportImportPortletPreferencesProcessor.class.getName());
-		sb.append("))");
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(sb.toString()));
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -127,8 +99,6 @@ public class MBExportImportPortletPreferencesProcessorTest {
 
 		_portletDataContextImport.setPlid(_layout.getPlid());
 		_portletDataContextImport.setPortletId(MBPortletKeys.MESSAGE_BOARDS);
-
-		_exportImportPortletPreferencesProcessor = _serviceTracker.getService();
 
 		_portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -233,10 +203,7 @@ public class MBExportImportPortletPreferencesProcessorTest {
 			mbMessage.getMessageId(), GetterUtil.getLong(importedWikiPageId));
 	}
 
-	private static ServiceTracker
-		<ExportImportPortletPreferencesProcessor,
-		 ExportImportPortletPreferencesProcessor> _serviceTracker;
-
+	@Inject(filter = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS)
 	private ExportImportPortletPreferencesProcessor
 		_exportImportPortletPreferencesProcessor;
 

@@ -51,9 +51,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.HashSet;
 import java.util.List;
@@ -70,6 +67,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Marcellus Tavares
  */
@@ -85,10 +87,12 @@ public class DDLRecordServiceTest {
 	public static void setUpClass() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(DDLRecordServiceTest.class);
 
-		_serviceRegistration = registry.registerService(
-			StorageAdapter.class, new FailStorageAdapter());
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			StorageAdapter.class, new FailStorageAdapter(), null);
 	}
 
 	@AfterClass

@@ -76,8 +76,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,17 +113,12 @@ public class CommerceOrderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceComponentRuntime serviceComponentRuntime = registry.getService(
-			registry.getServiceReference(ServiceComponentRuntime.class));
-
 		ComponentDescriptionDTO componentDescriptionDTO =
-			serviceComponentRuntime.getComponentDescriptionDTO(
+			_serviceComponentRuntime.getComponentDescriptionDTO(
 				FrameworkUtil.getBundle(TestCustomCommerceContextFactory.class),
 				TestCustomCommerceContextFactory.class.getName());
 
-		Promise<Void> voidPromise = serviceComponentRuntime.enableComponent(
+		Promise<Void> voidPromise = _serviceComponentRuntime.enableComponent(
 			componentDescriptionDTO);
 
 		voidPromise.getValue();
@@ -171,17 +164,12 @@ public class CommerceOrderTest {
 
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceComponentRuntime serviceComponentRuntime = registry.getService(
-			registry.getServiceReference(ServiceComponentRuntime.class));
-
 		ComponentDescriptionDTO componentDescriptionDTO =
-			serviceComponentRuntime.getComponentDescriptionDTO(
+			_serviceComponentRuntime.getComponentDescriptionDTO(
 				FrameworkUtil.getBundle(TestCustomCommerceContextFactory.class),
 				TestCustomCommerceContextFactory.class.getName());
 
-		Promise<Void> voidPromise = serviceComponentRuntime.disableComponent(
+		Promise<Void> voidPromise = _serviceComponentRuntime.disableComponent(
 			componentDescriptionDTO);
 
 		voidPromise.getValue();
@@ -1137,6 +1125,9 @@ public class CommerceOrderTest {
 			StringPool.BLANK,
 			new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, negate);
 	}
+
+	@Inject
+	private static ServiceComponentRuntime _serviceComponentRuntime;
 
 	@Inject
 	private CommerceAccountHelper _commerceAccountHelper;

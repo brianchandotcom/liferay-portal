@@ -46,11 +46,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.text.DateFormat;
 
@@ -65,10 +63,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,24 +79,8 @@ public abstract class BaseAssetSearchTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(AssetHelper.class.getName());
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_assetHelper = _serviceTracker.getService();
-
 		_group1 = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
@@ -1486,11 +1466,12 @@ public abstract class BaseAssetSearchTestCase {
 		assertCount(size, assetEntryQuery, searchContext, 0, 1);
 	}
 
-	private static ServiceTracker<AssetHelper, AssetHelper> _serviceTracker;
-
 	private long[] _assetCategoryIds1;
 	private long[] _assetCategoryIds2;
+
+	@Inject
 	private AssetHelper _assetHelper;
+
 	private String[] _assetTagsNames1;
 	private String[] _assetTagsNames2;
 	private long _fashionCategoryId;

@@ -46,9 +46,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -71,6 +68,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Cristina González
@@ -203,12 +205,15 @@ public class AddCollectionItemMVCActionCommandTest {
 		_registerAssetRendererFactory(
 			AssetRendererFactory<?> assetRendererFactory) {
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			AddCollectionItemMVCActionCommandTest.class);
 
-		return registry.registerService(
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.registerService(
 			(Class<AssetRendererFactory<?>>)
 				(Class<?>)AssetRendererFactory.class,
-			assetRendererFactory);
+			assetRendererFactory, null);
 	}
 
 	@Inject

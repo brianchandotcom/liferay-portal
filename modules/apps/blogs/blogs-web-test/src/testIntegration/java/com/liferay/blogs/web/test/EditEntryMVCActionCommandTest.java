@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -35,9 +34,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
 
@@ -45,10 +41,8 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -68,27 +62,6 @@ public class EditEntryMVCActionCommandTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("(component.name=");
-		sb.append("com.liferay.blogs.web.internal.portlet.action.");
-		sb.append("EditEntryMVCActionCommand)");
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(sb.toString()));
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -139,7 +112,7 @@ public class EditEntryMVCActionCommandTest {
 		ActionRequest actionRequest, boolean moveToTrash) {
 
 		ReflectionTestUtil.invoke(
-			_serviceTracker.getService(), "_deleteEntries",
+			_mvcActionCommand, "_deleteEntries",
 			new Class<?>[] {ActionRequest.class, boolean.class}, actionRequest,
 			moveToTrash);
 	}
@@ -156,14 +129,16 @@ public class EditEntryMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private static ServiceTracker<MVCActionCommand, MVCActionCommand>
-		_serviceTracker;
-
 	@Inject
 	private BlogsEntryService _blogsEntryService;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(
+		filter = "component.name=com.liferay.blogs.web.internal.portlet.action.EditEntryMVCActionCommand"
+	)
+	private MVCActionCommand _mvcActionCommand;
 
 	private ServiceContext _serviceContext;
 

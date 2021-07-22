@@ -44,9 +44,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Collections;
 import java.util.List;
@@ -60,6 +57,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Víctor Galán
@@ -91,13 +93,15 @@ public class LayoutListRetrieverTest {
 	public void testAssetRelatedInfoItemCollectionProviderLayoutListRetriever()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(LayoutListRetrieverTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<RelatedInfoItemCollectionProvider<?, ?>>
-			serviceRegistration = registry.registerService(
+			serviceRegistration = bundleContext.registerService(
 				(Class<RelatedInfoItemCollectionProvider<?, ?>>)
 					(Class<?>)RelatedInfoItemCollectionProvider.class,
-				new AssetEntryRelatedInfoItemCollectionProvider());
+				new AssetEntryRelatedInfoItemCollectionProvider(), null);
 
 		LayoutListRetriever<?, KeyListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, KeyListObjectReference>)
@@ -145,13 +149,15 @@ public class LayoutListRetrieverTest {
 
 	@Test
 	public void testInfoCollectionProviderLayoutListRetriever() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(LayoutListRetrieverTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<InfoCollectionProvider<?>> serviceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				(Class<InfoCollectionProvider<?>>)
 					(Class<?>)InfoCollectionProvider.class,
-				new TestInfoCollectionProvider());
+				new TestInfoCollectionProvider(), null);
 
 		LayoutListRetriever<?, KeyListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, KeyListObjectReference>)

@@ -23,9 +23,6 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -35,6 +32,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Eudaldo Alonso
@@ -49,13 +51,16 @@ public class SingleFormVariationInfoCollectionProviderTest {
 
 	@Test
 	public void testSingleFormVariationInfoCollectionProvider() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			SingleFormVariationInfoCollectionProviderTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<InfoCollectionProvider<?>> serviceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				(Class<InfoCollectionProvider<?>>)
 					(Class<?>)InfoCollectionProvider.class,
-				new TestSingleFormVariationInfoCollectionProvider());
+				new TestSingleFormVariationInfoCollectionProvider(), null);
 
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(

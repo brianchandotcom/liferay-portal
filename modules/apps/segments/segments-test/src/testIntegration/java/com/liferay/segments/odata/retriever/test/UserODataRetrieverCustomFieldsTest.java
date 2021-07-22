@@ -40,10 +40,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 
 import java.io.Serializable;
@@ -61,6 +57,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author David Arques
@@ -80,14 +81,18 @@ public class UserODataRetrieverCustomFieldsTest {
 		_expandoTable = ExpandoTestUtil.addTable(
 			PortalUtil.getClassNameId(User.class), "CUSTOM_FIELDS");
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			OrganizationODataRetrieverCustomFieldsTest.class);
 
-		Filter filter = registry.getFilter(
-			StringBundler.concat(
-				"(&(model.class.name=com.liferay.portal.kernel.model.User)",
-				"(objectClass=", ODataRetriever.class.getName(), "))"));
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = registry.trackServices(filter);
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(model.class.name=com.liferay.portal.kernel.model.User)",
+					"(objectClass=", ODataRetriever.class.getName(), "))")),
+			null);
 
 		_serviceTracker.open();
 	}

@@ -34,9 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.test.MockLiferayPortletContext;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Dictionary;
 
@@ -49,6 +46,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Cristina González
@@ -66,15 +68,17 @@ public class SegmentsDisplayContextTest {
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			SegmentsDisplayContextTest.class);
 
-		StringBundler sb = new StringBundler(2);
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		sb.append("(component.name=");
-		sb.append("com.liferay.segments.web.internal.portlet.SegmentsPortlet)");
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(sb.toString()));
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				"(component.name=com.liferay.segments.web.internal.portlet." +
+					"SegmentsPortlet)"),
+			null);
 
 		_serviceTracker.open();
 	}

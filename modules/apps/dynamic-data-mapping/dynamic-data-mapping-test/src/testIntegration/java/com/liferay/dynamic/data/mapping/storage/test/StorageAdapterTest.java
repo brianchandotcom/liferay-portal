@@ -52,9 +52,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -96,8 +95,6 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpDDMFormValuesToFieldsConverter();
-		setUpFieldsToDDMFormValuesConverter();
 		setUpJSONStorageAdapter();
 	}
 
@@ -637,26 +634,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		return sb.toString();
 	}
 
-	protected void setUpDDMFormValuesToFieldsConverter() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormValuesToFieldsConverter = registry.getService(
-			registry.getServiceReference(DDMFormValuesToFieldsConverter.class));
-	}
-
-	protected void setUpFieldsToDDMFormValuesConverter() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_fieldsToDDMFormValuesConverter = registry.getService(
-			registry.getServiceReference(FieldsToDDMFormValuesConverter.class));
-	}
-
 	protected void setUpJSONStorageAdapter() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_storageAdapterRegistry = registry.getService(
-			registry.getServiceReference(StorageAdapterRegistry.class));
-
 		_defaultStorageAdapter = _storageAdapterRegistry.getStorageAdapter(
 			StorageType.DEFAULT.toString());
 	}
@@ -687,9 +665,15 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private static Locale _enLocale;
 	private static Locale _ptLocale;
 
+	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
 	private StorageAdapter _defaultStorageAdapter;
+
+	@Inject
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Inject
 	private StorageAdapterRegistry _storageAdapterRegistry;
 
 }

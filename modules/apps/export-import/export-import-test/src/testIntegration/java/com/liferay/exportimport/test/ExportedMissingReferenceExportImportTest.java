@@ -35,6 +35,8 @@ import com.liferay.exportimport.test.util.model.util.DummyFolderTestUtil;
 import com.liferay.exportimport.test.util.model.util.DummyReferenceTestUtil;
 import com.liferay.exportimport.test.util.model.util.DummyTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
@@ -46,10 +48,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Akos Thurzo
@@ -238,16 +242,22 @@ public class ExportedMissingReferenceExportImportTest
 	}
 
 	protected int getPortletDataHandlerRank(Class<?> portletDataHandlerClass) {
-		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
-			ServiceTrackerCollections.openList(
+		Bundle bundle = FrameworkUtil.getBundle(
+			ExportedMissingReferenceExportImportTest.class);
+
+		ServiceTrackerList<PortletDataHandler, PortletDataHandler>
+			portletDataHandlerInstances = ServiceTrackerListFactory.open(
+				bundle.getBundleContext(),
 				(Class<PortletDataHandler>)portletDataHandlerClass);
 
 		Assert.assertEquals(
 			portletDataHandlerInstances.toString(), 1,
 			portletDataHandlerInstances.size());
 
-		PortletDataHandler portletDataHandlerInstance =
-			portletDataHandlerInstances.get(0);
+		Iterator<PortletDataHandler> iterator =
+			portletDataHandlerInstances.iterator();
+
+		PortletDataHandler portletDataHandlerInstance = iterator.next();
 
 		return portletDataHandlerInstance.getRank();
 	}
@@ -256,11 +266,22 @@ public class ExportedMissingReferenceExportImportTest
 			String portletId, Class<?> portletDataHandlerClass)
 		throws Exception {
 
-		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
-			ServiceTrackerCollections.openList(
+		Bundle bundle = FrameworkUtil.getBundle(
+			ExportedMissingReferenceExportImportTest.class);
+
+		ServiceTrackerList<PortletDataHandler, PortletDataHandler>
+			portletDataHandlerInstances = ServiceTrackerListFactory.open(
+				bundle.getBundleContext(),
 				(Class<PortletDataHandler>)portletDataHandlerClass);
 
-		return setPortletDataHandler(portletId, portletDataHandlerInstances);
+		Iterator<PortletDataHandler> iterator =
+			portletDataHandlerInstances.iterator();
+
+		List<PortletDataHandler> portletDataHandlerList = new ArrayList<>();
+
+		iterator.forEachRemaining(portletDataHandlerList::add);
+
+		return setPortletDataHandler(portletId, portletDataHandlerList);
 	}
 
 	protected List<PortletDataHandler> setPortletDataHandler(
@@ -281,16 +302,22 @@ public class ExportedMissingReferenceExportImportTest
 	protected void setPortletDataHandlerRank(
 		Class<?> portletDataHandlerClass, int rank) {
 
-		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
-			ServiceTrackerCollections.openList(
+		Bundle bundle = FrameworkUtil.getBundle(
+			ExportedMissingReferenceExportImportTest.class);
+
+		ServiceTrackerList<PortletDataHandler, PortletDataHandler>
+			portletDataHandlerInstances = ServiceTrackerListFactory.open(
+				bundle.getBundleContext(),
 				(Class<PortletDataHandler>)portletDataHandlerClass);
 
 		Assert.assertEquals(
 			portletDataHandlerInstances.toString(), 1,
 			portletDataHandlerInstances.size());
 
-		PortletDataHandler portletDataHandlerInstance =
-			portletDataHandlerInstances.get(0);
+		Iterator<PortletDataHandler> iterator =
+			portletDataHandlerInstances.iterator();
+
+		PortletDataHandler portletDataHandlerInstance = iterator.next();
 
 		portletDataHandlerInstance.setRank(rank);
 	}

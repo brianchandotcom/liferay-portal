@@ -33,12 +33,9 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.lang.reflect.Method;
 
@@ -54,11 +51,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
@@ -74,19 +75,6 @@ public class AssetAutoTaggerOSGiCommandsTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_assetAutoTaggerOSGiCommands = registry.getService(
-			registry.getServiceReference(
-				"com.liferay.asset.auto.tagger.internal.osgi.commands." +
-					"AssetAutoTaggerOSGiCommands"));
-	}
 
 	@Test
 	public void testCommitAutoTagsRemovesAllTheAutoTaggerEntries()
@@ -170,24 +158,24 @@ public class AssetAutoTaggerOSGiCommandsTest
 	public void testTagAllUntaggedTagsAllTheAssetsThatHaveNoTagsWithAnAssetEntryAutoTagProvider()
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			AssetAutoTaggerOSGiCommandsTest.class);
 
-		ServiceRegistration<AssetAutoTagProvider<?>>
-			assetAutoTagProviderServiceRegistration = registry.registerService(
-				(Class<AssetAutoTagProvider<?>>)
-					(Class<?>)AssetAutoTagProvider.class,
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> assetAutoTagProviderServiceRegistration =
+			bundleContext.registerService(
+				AssetAutoTagProvider.class,
 				model -> Arrays.asList(ASSET_TAG_NAME_AUTO),
-				HashMapBuilder.<String, Object>put(
-					"model.class.name", AssetEntry.class.getName()
-				).build());
+				MapUtil.singletonDictionary(
+					"model.class.name", AssetEntry.class.getName()));
 
 		String className = RandomTestUtil.randomString();
 
-		ServiceRegistration<AssetRendererFactory<?>>
-			assetRendererFactoryServiceRegistration = registry.registerService(
-				(Class<AssetRendererFactory<?>>)
-					(Class<?>)AssetRendererFactory.class,
-				new TestAssetRendererFactory(className));
+		ServiceRegistration<?> assetRendererFactoryServiceRegistration =
+			bundleContext.registerService(
+				AssetRendererFactory.class,
+				new TestAssetRendererFactory(className), null);
 
 		try {
 			withAutoTaggerDisabled(
@@ -284,10 +272,14 @@ public class AssetAutoTaggerOSGiCommandsTest
 			classNames);
 	}
 
+	@Inject(
+		filter = "osgi.command.scope=assetAutoTagger",
+		type = Inject.NoType.class
+	)
+	private static Object _assetAutoTaggerOSGiCommands;
+
 	@Inject
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
-
-	private Object _assetAutoTaggerOSGiCommands;
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

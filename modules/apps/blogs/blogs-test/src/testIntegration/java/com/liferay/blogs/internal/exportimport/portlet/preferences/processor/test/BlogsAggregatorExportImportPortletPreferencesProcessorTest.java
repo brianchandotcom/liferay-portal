@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -33,19 +32,15 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.HashMap;
 
 import javax.portlet.PortletPreferences;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,29 +56,6 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("(&(objectClass=");
-		sb.append(ExportImportPortletPreferencesProcessor.class.getName());
-		sb.append(")(javax.portlet.name=");
-		sb.append(BlogsPortletKeys.BLOGS_AGGREGATOR);
-		sb.append("))");
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(sb.toString()));
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -127,12 +99,8 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 
 		portletPreferences.store();
 
-		ExportImportPortletPreferencesProcessor
-			blogsAggregatorPortletPreferencesProcessor =
-				_serviceTracker.getService();
-
 		PortletPreferences exportedPortletPreferences =
-			blogsAggregatorPortletPreferencesProcessor.
+			_exportImportPortletPreferencesProcessor.
 				processExportPortletPreferences(
 					_portletDataContextExport, portletPreferences);
 
@@ -156,7 +124,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 		// Test the import
 
 		PortletPreferences importedPortletPreferences =
-			blogsAggregatorPortletPreferencesProcessor.
+			_exportImportPortletPreferencesProcessor.
 				processImportPortletPreferences(
 					_portletDataContextImport, exportedPortletPreferences);
 
@@ -168,9 +136,9 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessorTest {
 			GetterUtil.getLong(importedOrganizationId));
 	}
 
-	private static ServiceTracker
-		<ExportImportPortletPreferencesProcessor,
-		 ExportImportPortletPreferencesProcessor> _serviceTracker;
+	@Inject(filter = "javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR)
+	private ExportImportPortletPreferencesProcessor
+		_exportImportPortletPreferencesProcessor;
 
 	@DeleteAfterTestRun
 	private Group _group;

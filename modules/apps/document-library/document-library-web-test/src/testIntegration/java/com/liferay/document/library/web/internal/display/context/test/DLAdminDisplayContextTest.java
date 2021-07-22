@@ -45,9 +45,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.io.Writer;
 
@@ -63,10 +60,8 @@ import javax.portlet.annotations.PortletSerializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -86,22 +81,6 @@ public class DLAdminDisplayContextTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			"com.liferay.document.library.web.internal.display.context." +
-				"DLAdminDisplayContextProvider");
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -186,10 +165,8 @@ public class DLAdminDisplayContextTest {
 	private SearchContainer<Object> _getSearchContainer(
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest) {
 
-		Object dlAdminDisplayContextProvider = _serviceTracker.getService();
-
 		Object dlAdminDisplayContext = ReflectionTestUtil.invoke(
-			dlAdminDisplayContextProvider, "getDLAdminDisplayContext",
+			_dlAdminDisplayContextProvider, "getDLAdminDisplayContext",
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class
 			},
@@ -212,12 +189,16 @@ public class DLAdminDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private static ServiceTracker<Object, Object> _serviceTracker;
-
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider",
+		type = Inject.NoType.class
+	)
+	private Object _dlAdminDisplayContextProvider;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

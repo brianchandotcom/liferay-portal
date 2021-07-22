@@ -20,16 +20,13 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.junit.AfterClass;
@@ -39,6 +36,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Rafael Praxedes
@@ -53,7 +55,6 @@ public class DDMDataProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		setUpDDMDataProviderTracker();
 		setUpTestDDMDataProvider();
 	}
 
@@ -94,25 +95,20 @@ public class DDMDataProviderTest {
 		Assert.assertEquals(keyValuePairs.toString(), 2, keyValuePairs.size());
 	}
 
-	protected static void setUpDDMDataProviderTracker() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmDataProviderTracker = registry.getService(
-			registry.getServiceReference(DDMDataProviderTracker.class));
-	}
-
 	protected static void setUpTestDDMDataProvider() {
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"ddm.data.provider.instance.id", "test"
-		).build();
+		Bundle bundle = FrameworkUtil.getBundle(DDMDataProviderTest.class);
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = registry.registerService(
-			DDMDataProvider.class, new DDMTestDataProvider(), properties);
+		_serviceRegistration = bundleContext.registerService(
+			DDMDataProvider.class, new DDMTestDataProvider(),
+			MapUtil.singletonDictionary(
+				"ddm.data.provider.instance.id", "test"));
 	}
 
+	@Inject
 	private static DDMDataProviderTracker _ddmDataProviderTracker;
+
 	private static ServiceRegistration<DDMDataProvider> _serviceRegistration;
 
 	private static class DDMTestDataProvider implements DDMDataProvider {

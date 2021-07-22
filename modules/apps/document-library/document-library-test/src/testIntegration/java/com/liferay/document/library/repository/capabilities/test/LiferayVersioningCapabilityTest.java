@@ -40,9 +40,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -54,6 +51,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
@@ -174,12 +176,16 @@ public class LiferayVersioningCapabilityTest {
 
 				List<FileVersion> deletedFileVersions = new ArrayList<>();
 
-				Registry registry = RegistryUtil.getRegistry();
+				Bundle bundle = FrameworkUtil.getBundle(
+					LiferayVersioningCapabilityTest.class);
+
+				BundleContext bundleContext = bundle.getBundleContext();
 
 				ServiceRegistration<VersionPurger.VersionPurgedListener>
-					capabilityServiceRegistration = registry.registerService(
-						VersionPurger.VersionPurgedListener.class,
-						deletedFileVersions::add);
+					capabilityServiceRegistration =
+						bundleContext.registerService(
+							VersionPurger.VersionPurgedListener.class,
+							deletedFileVersions::add, null);
 
 				try {
 					for (int i = 0; i < 10; i++) {

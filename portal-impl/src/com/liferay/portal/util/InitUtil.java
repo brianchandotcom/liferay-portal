@@ -55,6 +55,7 @@ import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcesso
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.xml.SAXReaderImpl;
+import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -222,6 +223,9 @@ public class InitUtil {
 					System.getProperty(SystemProperties.TMP_DIR);
 
 				ModuleFrameworkUtil.initFramework();
+			}
+			else {
+				RegistryUtil.setRegistry(new BasicRegistryImpl());
 			}
 
 			DBInitUtil.init();

@@ -27,8 +27,6 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -287,42 +285,24 @@ public class AMImageScalerTrackerImplTest {
 	}
 
 	private void _disableAMDefaultImageScaler() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceComponentRuntime serviceComponentRuntime = registry.getService(
-			registry.getServiceReference(ServiceComponentRuntime.class));
-
-		Object service = registry.getService(
-			registry.getServiceReference(
-				_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER));
-
 		ComponentDescriptionDTO componentDescriptionDTO =
-			serviceComponentRuntime.getComponentDescriptionDTO(
-				FrameworkUtil.getBundle(service.getClass()),
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				FrameworkUtil.getBundle(_amImageScalerTracker.getClass()),
 				_CLASS_NAME_ADAPTIVE_MEDIA_DEFAULT_IMAGE_SCALER);
 
-		Promise<Void> voidPromise = serviceComponentRuntime.disableComponent(
+		Promise<Void> voidPromise = _serviceComponentRuntime.disableComponent(
 			componentDescriptionDTO);
 
 		voidPromise.getValue();
 	}
 
 	private void _enableAMDefaultImageScaler() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceComponentRuntime serviceComponentRuntime = registry.getService(
-			registry.getServiceReference(ServiceComponentRuntime.class));
-
-		Object service = registry.getService(
-			registry.getServiceReference(
-				_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER));
-
 		ComponentDescriptionDTO componentDescriptionDTO =
-			serviceComponentRuntime.getComponentDescriptionDTO(
-				FrameworkUtil.getBundle(service.getClass()),
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				FrameworkUtil.getBundle(_amImageScalerTracker.getClass()),
 				_CLASS_NAME_ADAPTIVE_MEDIA_DEFAULT_IMAGE_SCALER);
 
-		Promise<Void> voidPromise = serviceComponentRuntime.enableComponent(
+		Promise<Void> voidPromise = _serviceComponentRuntime.enableComponent(
 			componentDescriptionDTO);
 
 		voidPromise.getValue();
@@ -332,13 +312,8 @@ public class AMImageScalerTrackerImplTest {
 			AMImageScaler amImageScaler, String mimeType, int serviceRanking)
 		throws Exception {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Object service = registry.getService(
-			registry.getServiceReference(
-				_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER));
-
-		Bundle bundle = FrameworkUtil.getBundle(service.getClass());
+		Bundle bundle = FrameworkUtil.getBundle(
+			_amDefaultImageScaler.getClass());
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -367,13 +342,12 @@ public class AMImageScalerTrackerImplTest {
 				"AMDefaultImageScaler";
 
 	private static final String
-		_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER =
-			"com.liferay.adaptive.media.image.scaler.AMImageScalerTracker";
-
-	private static final String
 		_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER_IMPL =
 			"com.liferay.adaptive.media.image.internal.scaler." +
 				"AMImageScalerTrackerImpl";
+
+	@Inject
+	private static ServiceComponentRuntime _serviceComponentRuntime;
 
 	@Inject(filter = "component.name=*.AMDefaultImageScaler")
 	private AMImageScaler _amDefaultImageScaler;

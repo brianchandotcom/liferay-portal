@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -65,8 +63,6 @@ public abstract class BaseDDMServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMXML();
-
 		group = GroupTestUtil.addGroup();
 
 		ddmStructureTestHelper = new DDMStructureTestHelper(
@@ -301,13 +297,6 @@ public abstract class BaseDDMServiceTestCase {
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
 
-	protected void setUpDDMXML() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ddmXML = registry.getService(
-			registry.getServiceReference(DDMXML.class));
-	}
-
 	protected DDMForm toDDMForm(String definition) throws Exception {
 		ddmXML.validateXML(definition);
 
@@ -330,6 +319,8 @@ public abstract class BaseDDMServiceTestCase {
 
 	protected DDMStructureLayoutTestHelper ddmStructureLayoutTestHelper;
 	protected DDMStructureTestHelper ddmStructureTestHelper;
+
+	@Inject
 	protected DDMXML ddmXML;
 
 	@DeleteAfterTestRun

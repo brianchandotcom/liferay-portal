@@ -21,18 +21,20 @@ import com.liferay.frontend.editor.embed.EditorEmbedProvider;
 import com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -49,34 +51,37 @@ public class DLVideoExternalShortcutResolverTest {
 
 	@Test
 	public void testResolveFromAnEditorEmbedProvider() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			DLVideoExternalShortcutResolverTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<EditorEmbedProvider>
-			editorEmbedProviderServiceRegistration = registry.registerService(
-				EditorEmbedProvider.class,
-				new EditorEmbedProvider() {
+			editorEmbedProviderServiceRegistration =
+				bundleContext.registerService(
+					EditorEmbedProvider.class,
+					new EditorEmbedProvider() {
 
-					@Override
-					public String getId() {
-						return "test";
-					}
+						@Override
+						public String getId() {
+							return "test";
+						}
 
-					@Override
-					public String getTpl() {
-						return "<iframe>{embedId}</iframe>";
-					}
+						@Override
+						public String getTpl() {
+							return "<iframe>{embedId}</iframe>";
+						}
 
-					@Override
-					public String[] getURLSchemes() {
-						return new String[] {
-							"http:\\/\\/test\\.example\\/(.*)"
-						};
-					}
+						@Override
+						public String[] getURLSchemes() {
+							return new String[] {
+								"http:\\/\\/test\\.example\\/(.*)"
+							};
+						}
 
-				},
-				HashMapBuilder.<String, Object>put(
-					"type", EditorEmbedProviderTypeConstants.VIDEO
-				).build());
+					},
+					MapUtil.singletonDictionary(
+						"type", EditorEmbedProviderTypeConstants.VIDEO));
 
 		try {
 			Assert.assertEquals(

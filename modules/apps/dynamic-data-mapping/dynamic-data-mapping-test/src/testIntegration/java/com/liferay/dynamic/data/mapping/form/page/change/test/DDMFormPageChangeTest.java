@@ -30,10 +30,9 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.List;
 import java.util.Map;
@@ -45,6 +44,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Bruno Oliveira
@@ -60,7 +64,6 @@ public class DDMFormPageChangeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		setUpDDMFormPageChangeTracker();
 		setUpDDMTestFormPageChange();
 	}
 
@@ -117,22 +120,15 @@ public class DDMFormPageChangeTest {
 		Assert.assertNotNull(ddmFormPageChange);
 	}
 
-	protected static void setUpDDMFormPageChangeTracker() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormPageChangeTracker = registry.getService(
-			registry.getServiceReference(DDMFormPageChangeTracker.class));
-	}
-
 	protected static void setUpDDMTestFormPageChange() {
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"ddm.form.instance.id", _DDM_FORM_INSTANCE_ID
-		).build();
+		Bundle bundle = FrameworkUtil.getBundle(DDMFormPageChangeTest.class);
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = registry.registerService(
-			DDMFormPageChange.class, new DDMTestFormPageChange(), properties);
+		_serviceRegistration = bundleContext.registerService(
+			DDMFormPageChange.class, new DDMTestFormPageChange(),
+			MapUtil.singletonDictionary(
+				"ddm.form.instance.id", _DDM_FORM_INSTANCE_ID));
 	}
 
 	private DDMFormField _createDDMFormField(
@@ -148,7 +144,9 @@ public class DDMFormPageChangeTest {
 	private static final String _DDM_FORM_INSTANCE_ID =
 		RandomTestUtil.randomString();
 
+	@Inject
 	private static DDMFormPageChangeTracker _ddmFormPageChangeTracker;
+
 	private static ServiceRegistration<DDMFormPageChange> _serviceRegistration;
 
 	private static class DDMTestFormPageChange implements DDMFormPageChange {

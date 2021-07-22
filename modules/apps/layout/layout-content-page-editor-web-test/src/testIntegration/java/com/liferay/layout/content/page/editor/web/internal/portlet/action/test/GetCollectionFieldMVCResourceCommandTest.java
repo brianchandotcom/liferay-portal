@@ -50,9 +50,6 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Locale;
 
@@ -66,6 +63,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -95,12 +97,16 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			GetCollectionFieldMVCResourceCommandTest.class);
 
-		_infoCollectionProviderServiceRegistration = registry.registerService(
-			(Class<InfoCollectionProvider<?>>)
-				(Class<?>)InfoCollectionProvider.class,
-			new TestInfoCollectionProvider());
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_infoCollectionProviderServiceRegistration =
+			bundleContext.registerService(
+				(Class<InfoCollectionProvider<?>>)
+					(Class<?>)InfoCollectionProvider.class,
+				new TestInfoCollectionProvider(), null);
 
 		_originalThemeDisplayDefaultLocale =
 			LocaleThreadLocal.getThemeDisplayLocale();

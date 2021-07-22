@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,19 +41,11 @@ import java.util.Map;
 public class DDMDataProviderTestUtil {
 
 	public static DDMDataProviderInstance createDDMRestDataProviderInstance(
-			Group group,
+			DDMDataProvider restDDMDataProvider, Group group,
 			List<DDMDataProviderInputParametersSettings> inputParameterSettings,
 			List<DDMDataProviderOutputParametersSettings>
 				outputParameterSettings)
 		throws Exception {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		DDMDataProvider[] ddmDataProviders = registry.getServices(
-			"com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider",
-			"(ddm.data.provider.type=rest)");
-
-		DDMDataProvider restDDMDataProvider = ddmDataProviders[0];
 
 		DDMForm ddmForm = DDMFormFactory.create(
 			restDDMDataProvider.getSettings());

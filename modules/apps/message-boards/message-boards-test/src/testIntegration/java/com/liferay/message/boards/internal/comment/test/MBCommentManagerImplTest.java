@@ -41,12 +41,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
@@ -80,8 +76,6 @@ public class MBCommentManagerImplTest {
 			null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
-
-		_initializeCommentManager();
 
 		_createDiscussion();
 	}
@@ -238,25 +232,11 @@ public class MBCommentManagerImplTest {
 				_group, _user.getUserId()));
 	}
 
-	private void _initializeCommentManager() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Collection<CommentManager> services = registry.getServices(
-			CommentManager.class,
-			"(component.name=com.liferay.message.boards.comment.internal." +
-				"MBCommentManagerImpl)");
-
-		if (services.isEmpty()) {
-			throw new IllegalStateException(
-				"MBMessage Comment API implementation was not found");
-		}
-
-		Iterator<CommentManager> iterator = services.iterator();
-
-		_commentManager = iterator.next();
-	}
-
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.comment.internal.MBCommentManagerImpl"
+	)
 	private CommentManager _commentManager;
+
 	private FileEntry _fileEntry;
 
 	@DeleteAfterTestRun

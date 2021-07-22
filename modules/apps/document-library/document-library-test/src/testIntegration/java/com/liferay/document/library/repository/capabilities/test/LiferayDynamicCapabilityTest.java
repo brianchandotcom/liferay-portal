@@ -33,19 +33,16 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -54,6 +51,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
@@ -80,7 +82,10 @@ public class LiferayDynamicCapabilityTest {
 
 		AtomicInteger atomicInteger = new AtomicInteger(0);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		TestRepositoryEventAwareCapability testRepositoryEventAwareCapability =
 			repositoryEventRegistry ->
@@ -89,13 +94,13 @@ public class LiferayDynamicCapabilityTest {
 					fileEntry -> atomicInteger.incrementAndGet());
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class, testRepositoryEventAwareCapability,
 				_getCapabilityProperties("ALL"));
 
 		capabilityServiceRegistration.unregister();
 
-		capabilityServiceRegistration = registry.registerService(
+		capabilityServiceRegistration = bundleContext.registerService(
 			Capability.class, testRepositoryEventAwareCapability,
 			_getCapabilityProperties("ALL"));
 
@@ -116,10 +121,13 @@ public class LiferayDynamicCapabilityTest {
 
 		AtomicInteger atomicInteger = new AtomicInteger(0);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
@@ -145,10 +153,13 @@ public class LiferayDynamicCapabilityTest {
 
 		FileEntry fileEntry1 = _addRandomFileEntry(serviceContext);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				new TestRepositoryWrapperAwareCapability() {
 
@@ -201,10 +212,13 @@ public class LiferayDynamicCapabilityTest {
 
 		AtomicInteger atomicInteger = new AtomicInteger(0);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
@@ -229,10 +243,13 @@ public class LiferayDynamicCapabilityTest {
 
 		AtomicInteger atomicInteger = new AtomicInteger(0);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
@@ -257,10 +274,13 @@ public class LiferayDynamicCapabilityTest {
 
 		AtomicInteger atomicInteger = new AtomicInteger(0);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
@@ -282,10 +302,13 @@ public class LiferayDynamicCapabilityTest {
 
 		AtomicInteger atomicInteger = new AtomicInteger(0);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
@@ -310,10 +333,13 @@ public class LiferayDynamicCapabilityTest {
 
 		FileEntry fileEntry1 = _addRandomFileEntry(serviceContext);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				new TestRepositoryWrapperAwareCapability() {
 
@@ -365,10 +391,13 @@ public class LiferayDynamicCapabilityTest {
 
 		FileEntry fileEntry1 = _addRandomFileEntry(serviceContext);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayDynamicCapabilityTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Capability.class,
 				new TestRepositoryWrapperAwareCapability() {
 
@@ -421,12 +450,11 @@ public class LiferayDynamicCapabilityTest {
 			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 	}
 
-	private Map<String, Object> _getCapabilityProperties(
+	private Dictionary<String, Object> _getCapabilityProperties(
 		String repositoryClassName) {
 
-		return HashMapBuilder.<String, Object>put(
-			"repository.class.name", repositoryClassName
-		).build();
+		return MapUtil.singletonDictionary(
+			"repository.class.name", repositoryClassName);
 	}
 
 	@DeleteAfterTestRun

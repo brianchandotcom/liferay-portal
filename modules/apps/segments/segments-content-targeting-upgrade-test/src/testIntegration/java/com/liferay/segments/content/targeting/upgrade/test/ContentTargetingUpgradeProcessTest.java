@@ -47,8 +47,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -743,14 +741,7 @@ public class ContentTargetingUpgradeProcessTest {
 	}
 
 	protected void setUpContentTargetingUpgradeProcess() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			registry.getServiceReference(
-				"com.liferay.segments.content.targeting.upgrade.internal." +
-					"SegmentsContentTargetingUpgrade"));
-
-		upgradeStepRegistror.register(
+		_upgradeStepRegistror.register(
 			new UpgradeStepRegistrator.Registry() {
 
 				@Override
@@ -846,5 +837,10 @@ public class ContentTargetingUpgradeProcessTest {
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.segments.content.targeting.upgrade.internal.SegmentsContentTargetingUpgrade"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistror;
 
 }

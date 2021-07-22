@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -116,8 +114,6 @@ public class DDMStructureStagedModelDataHandlerTest
 		_availableLocales = LanguageUtil.getAvailableLocales(
 			TestPropsValues.getCompanyId());
 		_defaultLocale = LocaleUtil.getDefault();
-
-		setUpDDMDataProvider();
 	}
 
 	@After
@@ -455,16 +451,6 @@ public class DDMStructureStagedModelDataHandlerTest
 		}
 	}
 
-	protected void setUpDDMDataProvider() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		DDMDataProvider[] ddmDataProviders = registry.getServices(
-			"com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider",
-			"(ddm.data.provider.type=rest)");
-
-		_ddmDataProvider = ddmDataProviders[0];
-	}
-
 	@Override
 	protected void validateImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
@@ -580,6 +566,7 @@ public class DDMStructureStagedModelDataHandlerTest
 	@Inject(filter = "ddm.form.values.deserializer.type=json")
 	private static DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
+	@Inject(filter = "ddm.data.provider.type=rest")
 	private DDMDataProvider _ddmDataProvider;
 
 	@DeleteAfterTestRun

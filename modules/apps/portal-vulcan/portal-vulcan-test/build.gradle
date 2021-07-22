@@ -7,6 +7,5 @@ dependencies {
 	testIntegrationCompile group: "org.springframework", name: "spring-test", version: "5.2.2.RELEASE"
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

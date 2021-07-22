@@ -25,12 +25,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,6 +35,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Manuel de la Peña
@@ -116,7 +118,9 @@ public class LayoutImplTest {
 
 	@Test
 	public void testIsTypeEmbeddedWithLayoutTypeController() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(LayoutImplTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		LayoutTypeController layoutTypeController =
 			new LayoutTypeControllerImpl(LayoutConstants.TYPE_EMBEDDED);
@@ -129,9 +133,9 @@ public class LayoutImplTest {
 			_layout.setType(type);
 
 			ServiceRegistration<LayoutTypeController> serviceRegistration =
-				registry.registerService(
+				bundleContext.registerService(
 					LayoutTypeController.class, layoutTypeController,
-					HashMapBuilder.<String, Object>put(
+					HashMapDictionaryBuilder.<String, Object>put(
 						"layout.type", type
 					).put(
 						"service.ranking", Integer.MAX_VALUE
@@ -168,7 +172,9 @@ public class LayoutImplTest {
 
 	@Test
 	public void testIsTypePanelWithLayoutTypeController() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(LayoutImplTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		LayoutTypeController layoutTypeController =
 			new LayoutTypeControllerImpl(LayoutConstants.TYPE_PANEL);
@@ -181,9 +187,9 @@ public class LayoutImplTest {
 			_layout.setType(layoutTypeValue);
 
 			ServiceRegistration<LayoutTypeController> serviceRegistration =
-				registry.registerService(
+				bundleContext.registerService(
 					LayoutTypeController.class, layoutTypeController,
-					HashMapBuilder.<String, Object>put(
+					HashMapDictionaryBuilder.<String, Object>put(
 						"layout.type", layoutTypeValue
 					).put(
 						"service.ranking", Integer.MAX_VALUE
@@ -200,7 +206,9 @@ public class LayoutImplTest {
 
 	@Test
 	public void testIsTypePortletReturnsFalse() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(LayoutImplTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		for (String type : _TYPES) {
 			if (type.equals(LayoutConstants.TYPE_PORTLET)) {
@@ -211,9 +219,9 @@ public class LayoutImplTest {
 				new LayoutTypeControllerImpl(type);
 
 			ServiceRegistration<LayoutTypeController> serviceRegistration =
-				registry.registerService(
+				bundleContext.registerService(
 					LayoutTypeController.class, layoutTypeController,
-					HashMapBuilder.<String, Object>put(
+					HashMapDictionaryBuilder.<String, Object>put(
 						"layout.type", type
 					).build());
 
@@ -237,7 +245,9 @@ public class LayoutImplTest {
 
 	@Test
 	public void testIsTypePortletWithLayoutTypeController() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(LayoutImplTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		LayoutTypeController layoutTypeController =
 			new LayoutTypeControllerImpl(LayoutConstants.TYPE_PORTLET);
@@ -250,9 +260,9 @@ public class LayoutImplTest {
 			_layout.setType(type);
 
 			ServiceRegistration<LayoutTypeController> serviceRegistration =
-				registry.registerService(
+				bundleContext.registerService(
 					LayoutTypeController.class, layoutTypeController,
-					HashMapBuilder.<String, Object>put(
+					HashMapDictionaryBuilder.<String, Object>put(
 						"layout.type", type
 					).put(
 						"service.ranking", Integer.MAX_VALUE

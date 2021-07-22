@@ -51,9 +51,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.test.util.RatingsTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,10 +58,8 @@ import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,29 +75,6 @@ public class DLExportImportPortletPreferencesProcessorTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("(&(javax.portlet.name=");
-		sb.append(DLPortletKeys.DOCUMENT_LIBRARY);
-		sb.append(")(objectClass=");
-		sb.append(ExportImportPortletPreferencesProcessor.class.getName());
-		sb.append("))");
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(sb.toString()));
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -130,8 +102,6 @@ public class DLExportImportPortletPreferencesProcessorTest {
 
 		_portletDataContextImport.setPlid(_layout.getPlid());
 		_portletDataContextImport.setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
-
-		_exportImportPortletPreferencesProcessor = _serviceTracker.getService();
 
 		_portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -283,13 +253,10 @@ public class DLExportImportPortletPreferencesProcessorTest {
 			serviceContext);
 	}
 
-	private static ServiceTracker
-		<ExportImportPortletPreferencesProcessor,
-		 ExportImportPortletPreferencesProcessor> _serviceTracker;
-
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
+	@Inject(filter = "javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY)
 	private ExportImportPortletPreferencesProcessor
 		_exportImportPortletPreferencesProcessor;
 

@@ -48,10 +48,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -109,19 +105,6 @@ public class FriendlyURLServletTest {
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), availableLocales, LocaleUtil.US);
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			StringBundler.concat(
-				"(&(servlet.type=friendly-url)(servlet.init.private=false)",
-				"(objectClass=", Servlet.class.getName(), "))"));
-
-		_serviceTracker = registry.trackServices(filter);
-
-		_serviceTracker.open();
-
-		_servlet = _serviceTracker.getService();
-
 		Class<?> clazz = _servlet.getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -153,8 +136,6 @@ public class FriendlyURLServletTest {
 			PropsUtil.get(PropsKeys.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE));
 
 		LanguageUtil.init();
-
-		_serviceTracker.close();
 	}
 
 	@Test
@@ -619,7 +600,9 @@ public class FriendlyURLServletTest {
 	@Inject
 	private RedirectEntryLocalService _redirectEntryLocalService;
 
-	private ServiceTracker<Servlet, Servlet> _serviceTracker;
+	@Inject(
+		filter = "(&(servlet.type=friendly-url)(servlet.init.private=false))"
+	)
 	private Servlet _servlet;
 
 	@DeleteAfterTestRun

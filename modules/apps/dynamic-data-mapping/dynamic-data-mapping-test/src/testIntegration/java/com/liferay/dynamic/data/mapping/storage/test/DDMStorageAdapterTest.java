@@ -34,11 +34,9 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +51,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Carolina Barbosa
  */
@@ -66,7 +69,6 @@ public class DDMStorageAdapterTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_setUpDDMStorageAdapterTracker();
 		_setUpDDMTestStorageAdapter();
 	}
 
@@ -116,21 +118,15 @@ public class DDMStorageAdapterTest {
 		Assert.assertNull(_getDDMFormValues(testDDMStorageAdapter, primaryKey));
 	}
 
-	private static void _setUpDDMStorageAdapterTracker() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmStorageAdapterTracker = registry.getService(
-			registry.getServiceReference(DDMStorageAdapterTracker.class));
-	}
-
 	private static void _setUpDDMTestStorageAdapter() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(DDMStorageAdapterTest.class);
 
-		_serviceRegistration = registry.registerService(
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
 			DDMStorageAdapter.class, new DDMTestStorageAdapter(),
-			HashMapBuilder.<String, Object>put(
-				"ddm.storage.adapter.type", _STORAGE_TYPE_TEST
-			).build());
+			MapUtil.singletonDictionary(
+				"ddm.storage.adapter.type", _STORAGE_TYPE_TEST));
 	}
 
 	private boolean _containsValue(DDMFormValues ddmFormValues, String value) {
@@ -212,7 +208,9 @@ public class DDMStorageAdapterTest {
 
 	private static final String _STORAGE_TYPE_TEST = "test";
 
+	@Inject
 	private static DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+
 	private static ServiceRegistration<DDMStorageAdapter> _serviceRegistration;
 
 	private static class DDMTestStorageAdapter implements DDMStorageAdapter {

@@ -24,7 +24,6 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.test.util.DispatchLogTestUtil;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,15 +47,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Date;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -79,27 +73,6 @@ public class DispatchLogDisplayContextTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("(component.name=");
-		sb.append("com.liferay.dispatch.web.internal.portlet.action.");
-		sb.append("ViewDispatchLogMVCRenderCommand)");
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(sb.toString()));
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Test
 	public void testDispatchLogDisplayContextExceptions() throws Exception {
@@ -270,12 +243,10 @@ public class DispatchLogDisplayContextTest {
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
 
-		MVCRenderCommand mvcRenderCommand = _serviceTracker.getService();
-
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest(mockHttpServletRequest);
 
-		mvcRenderCommand.render(
+		_mvcRenderCommand.render(
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
 
@@ -313,9 +284,6 @@ public class DispatchLogDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private static ServiceTracker<MVCRenderCommand, MVCRenderCommand>
-		_serviceTracker;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -324,5 +292,10 @@ public class DispatchLogDisplayContextTest {
 
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.dispatch.web.internal.portlet.action.ViewDispatchLogMVCRenderCommand"
+	)
+	private MVCRenderCommand _mvcRenderCommand;
 
 }

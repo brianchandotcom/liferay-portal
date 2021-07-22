@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -358,7 +359,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	protected Account testDeleteAccountByExternalReferenceCode_addAccount()
 		throws Exception {
 
-		return _postAccount();
+		return accountResource.putAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomAccount());
 	}
 
 	@Override
@@ -370,7 +373,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	protected Account testGetAccountByExternalReferenceCode_addAccount()
 		throws Exception {
 
-		return _postAccount();
+		return accountResource.putAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomAccount());
 	}
 
 	@Override
@@ -394,7 +399,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	protected Account testPatchAccountByExternalReferenceCode_addAccount()
 		throws Exception {
 
-		return _postAccount();
+		return accountResource.putAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomAccount());
 	}
 
 	@Override
@@ -413,7 +420,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	protected Account testPutAccountByExternalReferenceCode_addAccount()
 		throws Exception {
 
-		return _postAccount();
+		return accountResource.putAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomAccount());
 	}
 
 	private AccountEntry _addAccountEntry() throws Exception {

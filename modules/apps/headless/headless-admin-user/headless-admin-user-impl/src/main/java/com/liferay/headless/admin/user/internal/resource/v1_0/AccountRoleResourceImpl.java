@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
@@ -89,9 +90,12 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 		BaseModelSearchResult<com.liferay.account.model.AccountRole>
 			baseModelSearchResult = _accountRoleLocalService.searchAccountRoles(
-				contextCompany.getCompanyId(), accountId, keywords,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				_getOrderByComparator(sorts));
+				contextCompany.getCompanyId(),
+				new long[] {
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, accountId
+				},
+				keywords, pagination.getStartPosition(),
+				pagination.getEndPosition(), _getOrderByComparator(sorts));
 
 		return Page.of(
 			transform(

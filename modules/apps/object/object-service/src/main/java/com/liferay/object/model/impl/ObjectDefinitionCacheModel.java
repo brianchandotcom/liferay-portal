@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,6 +104,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(pkObjectFieldDBColumnName);
 		sb.append(", pkObjectFieldName=");
 		sb.append(pkObjectFieldName);
+		sb.append(", scope=");
+		sb.append(scope);
 		sb.append(", system=");
 		sb.append(system);
 		sb.append(", version=");
@@ -182,6 +184,13 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setPKObjectFieldName(pkObjectFieldName);
 		}
 
+		if (scope == null) {
+			objectDefinitionImpl.setScope("");
+		}
+		else {
+			objectDefinitionImpl.setScope(scope);
+		}
+
 		objectDefinitionImpl.setSystem(system);
 		objectDefinitionImpl.setVersion(version);
 		objectDefinitionImpl.setStatus(status);
@@ -208,6 +217,7 @@ public class ObjectDefinitionCacheModel
 		name = objectInput.readUTF();
 		pkObjectFieldDBColumnName = objectInput.readUTF();
 		pkObjectFieldName = objectInput.readUTF();
+		scope = objectInput.readUTF();
 
 		system = objectInput.readBoolean();
 
@@ -271,6 +281,13 @@ public class ObjectDefinitionCacheModel
 			objectOutput.writeUTF(pkObjectFieldName);
 		}
 
+		if (scope == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(scope);
+		}
+
 		objectOutput.writeBoolean(system);
 
 		objectOutput.writeInt(version);
@@ -290,6 +307,7 @@ public class ObjectDefinitionCacheModel
 	public String name;
 	public String pkObjectFieldDBColumnName;
 	public String pkObjectFieldName;
+	public String scope;
 	public boolean system;
 	public int version;
 	public int status;

@@ -14,9 +14,15 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.object.service.ObjectEntryServiceUtil</code> service
+ * <code>ObjectEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,61 @@ package com.liferay.object.service.http;
  */
 @Deprecated
 public class ObjectEntryServiceSoap {
+
+	public static com.liferay.object.model.ObjectEntrySoap deleteObjectEntry(
+			long objectEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectEntry returnValue =
+				ObjectEntryServiceUtil.deleteObjectEntry(objectEntryId);
+
+			return com.liferay.object.model.ObjectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectEntrySoap[] getObjectEntries(
+			long objectDefinitionId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.object.model.ObjectEntry> returnValue =
+				ObjectEntryServiceUtil.getObjectEntries(
+					objectDefinitionId, start, end);
+
+			return com.liferay.object.model.ObjectEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getObjectEntriesCount(long objectDefinitionId)
+		throws RemoteException {
+
+		try {
+			int returnValue = ObjectEntryServiceUtil.getObjectEntriesCount(
+				objectDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectEntryServiceSoap.class);
+
 }

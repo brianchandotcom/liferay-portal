@@ -14,6 +14,14 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides the remote service utility for ObjectEntry. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectEntryServiceImpl</code> and is an
@@ -33,13 +41,50 @@ public class ObjectEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectEntry addObjectEntry(
+			long userId, long groupId, long objectDefinitionId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addObjectEntry(
+			userId, groupId, objectDefinitionId, values, serviceContext);
+	}
+
+	public static ObjectEntry addOrUpdateObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateObjectEntry(
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
+	}
+
+	public static ObjectEntry deleteObjectEntry(long objectEntryId)
+		throws PortalException {
+
+		return getService().deleteObjectEntry(objectEntryId);
+	}
+
+	public static List<ObjectEntry> getObjectEntries(
+			long objectDefinitionId, int start, int end)
+		throws PortalException {
+
+		return getService().getObjectEntries(objectDefinitionId, start, end);
+	}
+
+	public static int getObjectEntriesCount(long objectDefinitionId) {
+		return getService().getObjectEntriesCount(objectDefinitionId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

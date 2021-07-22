@@ -74,6 +74,13 @@ public class ObjectEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public void addResources(com.liferay.object.model.ObjectEntry objectEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryLocalService.addResources(objectEntry);
+	}
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *

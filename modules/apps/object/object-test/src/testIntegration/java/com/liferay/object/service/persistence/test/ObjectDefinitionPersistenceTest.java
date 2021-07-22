@@ -147,6 +147,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setScope(RandomTestUtil.randomString());
+
 		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
 
 		newObjectDefinition.setVersion(RandomTestUtil.nextInt());
@@ -192,6 +194,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getPKObjectFieldName(),
 			newObjectDefinition.getPKObjectFieldName());
+		Assert.assertEquals(
+			existingObjectDefinition.getScope(),
+			newObjectDefinition.getScope());
 		Assert.assertEquals(
 			existingObjectDefinition.isSystem(),
 			newObjectDefinition.isSystem());
@@ -281,8 +286,8 @@ public class ObjectDefinitionPersistenceTest {
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"dbTableName", true, "name", true, "pkObjectFieldDBColumnName",
-			true, "pkObjectFieldName", true, "system", true, "version", true,
-			"status", true);
+			true, "pkObjectFieldName", true, "scope", true, "system", true,
+			"version", true, "status", true);
 	}
 
 	@Test
@@ -593,6 +598,8 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomString());
 
 		objectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
+
+		objectDefinition.setScope(RandomTestUtil.randomString());
 
 		objectDefinition.setSystem(RandomTestUtil.randomBoolean());
 

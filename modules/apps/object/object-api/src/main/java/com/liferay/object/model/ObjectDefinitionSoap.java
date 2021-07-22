@@ -46,6 +46,7 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setPKObjectFieldDBColumnName(
 			model.getPKObjectFieldDBColumnName());
 		soapModel.setPKObjectFieldName(model.getPKObjectFieldName());
+		soapModel.setScope(model.getScope());
 		soapModel.setSystem(model.isSystem());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setStatus(model.getStatus());
@@ -206,6 +207,14 @@ public class ObjectDefinitionSoap implements Serializable {
 		_pkObjectFieldName = pkObjectFieldName;
 	}
 
+	public String getScope() {
+		return _scope;
+	}
+
+	public void setScope(String scope) {
+		_scope = scope;
+	}
+
 	public boolean getSystem() {
 		return _system;
 	}
@@ -246,6 +255,7 @@ public class ObjectDefinitionSoap implements Serializable {
 	private String _name;
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;
+	private String _scope;
 	private boolean _system;
 	private int _version;
 	private int _status;

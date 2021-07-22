@@ -81,8 +81,9 @@ public class ObjectDefinitionModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"dbTableName", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"pkObjectFieldDBColumnName", Types.VARCHAR},
-		{"pkObjectFieldName", Types.VARCHAR}, {"system_", Types.BOOLEAN},
-		{"version", Types.INTEGER}, {"status", Types.INTEGER}
+		{"pkObjectFieldName", Types.VARCHAR}, {"scope", Types.VARCHAR},
+		{"system_", Types.BOOLEAN}, {"version", Types.INTEGER},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,13 +102,14 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pkObjectFieldDBColumnName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pkObjectFieldName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,name VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,name VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -195,6 +197,7 @@ public class ObjectDefinitionModelImpl
 		model.setPKObjectFieldDBColumnName(
 			soapModel.getPKObjectFieldDBColumnName());
 		model.setPKObjectFieldName(soapModel.getPKObjectFieldName());
+		model.setScope(soapModel.getScope());
 		model.setSystem(soapModel.isSystem());
 		model.setVersion(soapModel.getVersion());
 		model.setStatus(soapModel.getStatus());
@@ -418,6 +421,10 @@ public class ObjectDefinitionModelImpl
 			"pkObjectFieldName",
 			(BiConsumer<ObjectDefinition, String>)
 				ObjectDefinition::setPKObjectFieldName);
+		attributeGetterFunctions.put("scope", ObjectDefinition::getScope);
+		attributeSetterBiConsumers.put(
+			"scope",
+			(BiConsumer<ObjectDefinition, String>)ObjectDefinition::setScope);
 		attributeGetterFunctions.put("system", ObjectDefinition::getSystem);
 		attributeSetterBiConsumers.put(
 			"system",
@@ -700,6 +707,26 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public String getScope() {
+		if (_scope == null) {
+			return "";
+		}
+		else {
+			return _scope;
+		}
+	}
+
+	@Override
+	public void setScope(String scope) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_scope = scope;
+	}
+
+	@JSON
+	@Override
 	public boolean getSystem() {
 		return _system;
 	}
@@ -844,6 +871,7 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setPKObjectFieldDBColumnName(
 			getPKObjectFieldDBColumnName());
 		objectDefinitionImpl.setPKObjectFieldName(getPKObjectFieldName());
+		objectDefinitionImpl.setScope(getScope());
 		objectDefinitionImpl.setSystem(isSystem());
 		objectDefinitionImpl.setVersion(getVersion());
 		objectDefinitionImpl.setStatus(getStatus());
@@ -1003,6 +1031,14 @@ public class ObjectDefinitionModelImpl
 			objectDefinitionCacheModel.pkObjectFieldName = null;
 		}
 
+		objectDefinitionCacheModel.scope = getScope();
+
+		String scope = objectDefinitionCacheModel.scope;
+
+		if ((scope != null) && (scope.length() == 0)) {
+			objectDefinitionCacheModel.scope = null;
+		}
+
 		objectDefinitionCacheModel.system = isSystem();
 
 		objectDefinitionCacheModel.version = getVersion();
@@ -1095,6 +1131,7 @@ public class ObjectDefinitionModelImpl
 	private String _name;
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;
+	private String _scope;
 	private boolean _system;
 	private int _version;
 	private int _status;
@@ -1141,6 +1178,7 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put(
 			"pkObjectFieldDBColumnName", _pkObjectFieldDBColumnName);
 		_columnOriginalValues.put("pkObjectFieldName", _pkObjectFieldName);
+		_columnOriginalValues.put("scope", _scope);
 		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("status", _status);
@@ -1192,11 +1230,13 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("pkObjectFieldName", 2048L);
 
-		columnBitmasks.put("system_", 4096L);
+		columnBitmasks.put("scope", 4096L);
 
-		columnBitmasks.put("version", 8192L);
+		columnBitmasks.put("system_", 8192L);
 
-		columnBitmasks.put("status", 16384L);
+		columnBitmasks.put("version", 16384L);
+
+		columnBitmasks.put("status", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

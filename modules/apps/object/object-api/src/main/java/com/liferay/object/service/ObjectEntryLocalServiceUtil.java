@@ -80,6 +80,12 @@ public class ObjectEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void addResources(ObjectEntry objectEntry)
+		throws PortalException {
+
+		getService().addResources(objectEntry);
+	}
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *

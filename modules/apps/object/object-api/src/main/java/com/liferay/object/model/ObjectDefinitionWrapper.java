@@ -56,6 +56,7 @@ public class ObjectDefinitionWrapper
 		attributes.put(
 			"pkObjectFieldDBColumnName", getPKObjectFieldDBColumnName());
 		attributes.put("pkObjectFieldName", getPKObjectFieldName());
+		attributes.put("scope", getScope());
 		attributes.put("system", isSystem());
 		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
@@ -136,6 +137,12 @@ public class ObjectDefinitionWrapper
 
 		if (pkObjectFieldName != null) {
 			setPKObjectFieldName(pkObjectFieldName);
+		}
+
+		String scope = (String)attributes.get("scope");
+
+		if (scope != null) {
+			setScope(scope);
 		}
 
 		Boolean system = (Boolean)attributes.get("system");
@@ -268,8 +275,23 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public String getResourceName() {
+		return model.getResourceName();
+	}
+
+	@Override
 	public String getRESTContextPath() {
 		return model.getRESTContextPath();
+	}
+
+	/**
+	 * Returns the scope of this object definition.
+	 *
+	 * @return the scope of this object definition
+	 */
+	@Override
+	public String getScope() {
+		return model.getScope();
 	}
 
 	@Override
@@ -460,6 +482,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the scope of this object definition.
+	 *
+	 * @param scope the scope of this object definition
+	 */
+	@Override
+	public void setScope(String scope) {
+		model.setScope(scope);
 	}
 
 	/**

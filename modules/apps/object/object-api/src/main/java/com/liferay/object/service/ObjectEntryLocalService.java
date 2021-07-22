@@ -94,6 +94,8 @@ public interface ObjectEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void addResources(ObjectEntry objectEntry) throws PortalException;
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *

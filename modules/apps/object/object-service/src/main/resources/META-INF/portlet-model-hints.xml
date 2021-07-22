@@ -14,6 +14,7 @@
 		<field name="name" type="String" />
 		<field name="pkObjectFieldDBColumnName" type="String" />
 		<field name="pkObjectFieldName" type="String" />
+		<field name="scope" type="String" />
 		<field name="system" type="boolean" />
 		<field name="version" type="int" />
 		<field name="status" type="int" />

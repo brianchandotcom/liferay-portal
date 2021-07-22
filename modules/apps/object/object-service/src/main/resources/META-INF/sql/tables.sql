@@ -11,6 +11,7 @@ create table ObjectDefinition (
 	name VARCHAR(75) null,
 	pkObjectFieldDBColumnName VARCHAR(75) null,
 	pkObjectFieldName VARCHAR(75) null,
+	scope VARCHAR(75) null,
 	system_ BOOLEAN,
 	version INTEGER,
 	status INTEGER

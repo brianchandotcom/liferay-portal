@@ -265,6 +265,21 @@ public interface ObjectDefinitionModel
 	public void setPKObjectFieldName(String pkObjectFieldName);
 
 	/**
+	 * Returns the scope of this object definition.
+	 *
+	 * @return the scope of this object definition
+	 */
+	@AutoEscape
+	public String getScope();
+
+	/**
+	 * Sets the scope of this object definition.
+	 *
+	 * @param scope the scope of this object definition
+	 */
+	public void setScope(String scope);
+
+	/**
 	 * Returns the system of this object definition.
 	 *
 	 * @return the system of this object definition

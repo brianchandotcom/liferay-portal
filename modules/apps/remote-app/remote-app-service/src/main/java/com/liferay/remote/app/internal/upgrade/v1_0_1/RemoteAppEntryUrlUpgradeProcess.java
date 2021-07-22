@@ -12,23 +12,21 @@
  * details.
  */
 
-package com.liferay.remote.app.internal.upgrade;
+package com.liferay.remote.app.internal.upgrade.v1_0_1;
 
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.remote.app.internal.upgrade.v1_0_1.RemoteAppEntryUrlUpgradeProcess;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.remote.app.internal.upgrade.v1_0_1.util.RemoteAppEntryTable;
 
 /**
- * @author Iván Zaera
+ * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class RemoteAppServiceUpgrade implements UpgradeStepRegistrator {
+public class RemoteAppEntryUrlUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public void register(Registry registry) {
-		registry.register(
-			"1.0.0", "1.0.1", new RemoteAppEntryUrlUpgradeProcess());
+	protected void doUpgrade() throws Exception {
+		alter(
+			RemoteAppEntryTable.class,
+			new AlterColumnType("url", "VARCHAR(1024) null"));
 	}
 
 }

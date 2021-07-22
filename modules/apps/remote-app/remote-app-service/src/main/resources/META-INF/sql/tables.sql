@@ -8,5 +8,5 @@ create table RemoteAppEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	url VARCHAR(75) null
+	url VARCHAR(1024) null
 );

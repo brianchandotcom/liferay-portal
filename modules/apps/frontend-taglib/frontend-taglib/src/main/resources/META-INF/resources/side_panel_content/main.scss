@@ -1,0 +1,48 @@
+@import 'atlas-variables';
+
+$header-height: 65px;
+$dialog-footer-height: 70px;
+
+.side-panel-iframe {
+	.dialog-footer {
+		position: fixed;
+	}
+
+	.page-header {
+		position: sticky;
+		top: $header-height;
+		z-index: 10;
+	}
+
+	.side-panel-iframe-content {
+		padding: map-get($spacers, 4) map-get($spacers, 3)
+			calc(#{map-get($spacers, 4)} + #{$dialog-footer-height});
+	}
+
+	.side-panel-iframe-header {
+		align-items: center;
+		background: #f7f7f7;
+		border-bottom: 1px solid $border-color;
+		display: flex;
+		height: $header-height;
+		justify-content: space-between;
+		padding: map-get($spacers, 1) map-get($spacers, 3);
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	.side-panel-iframe-title {
+		font-weight: 600;
+	}
+
+	.side-panel-iframe-menu-wrapper {
+		border-bottom: 1px solid $gray-300;
+		position: sticky;
+		top: 0;
+	}
+
+	.side-panel-iframe-wrapper {
+		padding: map-get($spacers, 4) map-get($spacers, 3);
+	}
+}

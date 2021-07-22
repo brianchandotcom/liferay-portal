@@ -15,7 +15,7 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration;
-import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationPersistenceManagerUtil;
+import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -47,7 +47,7 @@ public class DataRemoval implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		try {
-			ConfigurationPersistenceManagerUtil.resetConfiguration(
+			ConfigurationUtil.resetConfiguration(
 				_persistenceManager, DataRemovalConfiguration.class);
 
 			_removeModuleData(

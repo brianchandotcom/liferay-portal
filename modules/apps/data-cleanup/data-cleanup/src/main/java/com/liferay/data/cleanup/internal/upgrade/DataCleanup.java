@@ -15,7 +15,7 @@
 package com.liferay.data.cleanup.internal.upgrade;
 
 import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
-import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationPersistenceManagerUtil;
+import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -51,7 +51,7 @@ public class DataCleanup implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		try {
-			ConfigurationPersistenceManagerUtil.resetConfiguration(
+			ConfigurationUtil.resetConfiguration(
 				_persistenceManager, DataCleanupConfiguration.class);
 
 			_cleanUpModuleData(

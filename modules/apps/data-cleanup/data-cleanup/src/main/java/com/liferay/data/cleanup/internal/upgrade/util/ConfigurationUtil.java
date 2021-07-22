@@ -29,7 +29,7 @@ import org.apache.felix.cm.PersistenceManager;
 /**
  * @author Kevin Lee
  */
-public class ConfigurationPersistenceManagerUtil {
+public class ConfigurationUtil {
 
 	public static void resetConfiguration(
 			PersistenceManager persistenceManager, Class<?> clazz)

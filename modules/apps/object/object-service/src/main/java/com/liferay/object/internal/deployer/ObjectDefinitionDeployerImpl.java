@@ -17,11 +17,25 @@ package com.liferay.object.internal.deployer;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.list.provider.ObjectEntryInfoListProvider;
+import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
+import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletPermissionLogic;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.exception.ResourceActionsException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
+import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +55,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
+		try {
+			_importResourceAction(objectDefinition);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
 		return Arrays.asList(
 			_bundleContext.registerService(
 				InfoListProvider.class,
@@ -61,9 +81,32 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_bundleContext = bundleContext;
 	}
 
+	private void _importResourceAction(ObjectDefinition objectDefinition)
+		throws DocumentException, IOException, ResourceActionsException {
+
+		String xml = StringUtil.read(
+			ObjectDefinitionDeployerImpl.class.getClassLoader(),
+			_DEPENDENCIES_PATH + "resource-actions.xml.tpl");
+
+		_resourceActions.populateModelResources(
+			SAXReaderUtil.read(
+				StringUtil.replace(
+					StringUtil.replace(
+						xml, "[$RESOURCE_NAME$]", objectDefinition.getName()),
+					"[$MODEL_NAME$]", objectDefinition.getDBTableName())));
+	}
+
+	private static final String _DEPENDENCIES_PATH = "resource-actions/";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionDeployerImpl.class);
+
 	private BundleContext _bundleContext;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 }

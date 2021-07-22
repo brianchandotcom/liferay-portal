@@ -607,7 +607,7 @@ public abstract class BaseDB implements DB {
 	public void updateIndexes(
 			Connection connection, String tablesSQL, String indexesSQL,
 			boolean dropIndexes)
-		throws IOException, SQLException {
+		throws Exception {
 
 		process(
 			companyId -> {

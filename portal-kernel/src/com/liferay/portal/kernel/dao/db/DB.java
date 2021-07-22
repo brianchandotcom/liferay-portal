@@ -217,6 +217,6 @@ public interface DB {
 	public void updateIndexes(
 			Connection connection, String tablesSQL, String indexesSQL,
 			boolean dropStaleIndexes)
-		throws IOException, SQLException;
+		throws Exception;
 
 }

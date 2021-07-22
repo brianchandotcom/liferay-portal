@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.ArrayList;
@@ -114,7 +112,7 @@ public class TemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_isShowAddDDMTemplateButton()) {
+		if (!_templateDisplayContext.isAddDDMTemplateEnable()) {
 			return null;
 		}
 
@@ -227,22 +225,6 @@ public class TemplateManagementToolbarDisplayContext
 			templateHandlersList, new TemplateHandlerComparator(locale));
 
 		return templateHandlersList;
-	}
-
-	private boolean _isShowAddDDMTemplateButton() {
-		if (!_templateDisplayContext.enableTemplateCreation()) {
-			return false;
-		}
-
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

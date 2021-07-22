@@ -87,7 +87,7 @@ public class TemplateDisplayContext {
 			ddmTemplateActionDropdownItemsProvider =
 				new DDMTemplateActionDropdownItemsProvider(
 					ddmTemplate, _httpServletRequest, _liferayPortletResponse,
-					_isAddDDMTemplateEnable());
+					isAddDDMTemplateEnable());
 
 		return ddmTemplateActionDropdownItemsProvider.getActionDropdownItems();
 	}
@@ -205,6 +205,22 @@ public class TemplateDisplayContext {
 		return templateHandler.getName(_themeDisplay.getLocale());
 	}
 
+	public boolean isAddDDMTemplateEnable() {
+		if (!_ddmWebConfiguration.enableTemplateCreation()) {
+			return false;
+		}
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -275,22 +291,6 @@ public class TemplateDisplayContext {
 		}
 
 		return orderByComparator;
-	}
-
-	private boolean _isAddDDMTemplateEnable() {
-		if (!_ddmWebConfiguration.enableTemplateCreation()) {
-			return false;
-		}
-
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private SearchContainer<DDMTemplate> _ddmTemplateSearchContainer;

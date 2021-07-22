@@ -16,6 +16,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_FIELD_POSITION2xxx</td>
+	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-root')]/div[1] | //*[contains(@class, 'edit-container')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_POSITION_EMPTY</td>
+	<td>//div[contains(@class, 'empty-drop-zone-dashed')] //*[contains(@class, 'drop-zone-target')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_POSITION_EDIT</td>
+	<td>//*[contains(@class, 'edit-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_POSITION_TYPExxx</td>
+	<td>//div[contains(@class, 'criteria-builder-root') and descendant::h4[text()='${key_typeShort}']]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_FIELD_TYPE</td>
 	<td>//*[contains(@class, 'criteria-sidebar-item-root') and (text()='${key_propertyOption}')]</td>
 	<td></td>
@@ -103,6 +123,11 @@
 <tr>
 	<td>PROPERTY_FIELD</td>
 	<td>//div[@class='criterion'][1]//*[@data-testid='simple-string']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONDITIONS_PROPERTY_NAME</td>
+	<td>//div[@class='criterion'] //span[contains(.,'${propertyName}')]</td>
 	<td></td>
 </tr>
 <tr>

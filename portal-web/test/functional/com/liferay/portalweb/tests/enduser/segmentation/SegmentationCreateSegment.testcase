@@ -2235,6 +2235,136 @@ definition {
 		}
 	}
 
+	@description = "LPS-135969 Validate if, on Segmentation, when the user clicks in a different Property section the contributor area of this section will be displayed."
+	@priority = "3"
+	test ValidatePropertyDisplayedInSection {
+		task ("Click on USER field type and asser if its properties are displayed.") {
+			LexiconEntry.gotoAdd();
+			
+			AssertElementPresent(
+				key_propertyOption = "Date of Birth",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+		
+		task ("Click on ORGANIZATION field type and asser if its properties are displayed.") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+			
+			AssertElementPresent(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+		
+		task ("Click on SESSION field type and asser if its properties are displayed.") {
+			Segmentation.gotoSidebar(fieldType = "Session");
+			
+			AssertElementPresent(
+				key_propertyOption = "Browser",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+
+		task ("Click on SEGMENTS field type and asser if its properties are displayed.") {
+			Segmentation.gotoSidebar(fieldType = "Segments");
+			
+			AssertElementPresent(
+				key_propertyOption = "Segment",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+	}
+
+	@description = "LPS-135969 Validate if, on Segmentation, the user can't drag and drop fields into different Property section."
+	@priority = "3"
+	test ValidatePropertyDragAndDropToSections {
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Guest",
+				operator = "contains",
+				segmentName = "Segment With Multiple Conditions",
+				text = "Test");
+			
+			Refresh();
+		}
+		
+		task ("Try to drag property to wrong section") {
+			Segmentation.editSegment(entry = "Segment With Multiple Conditions");
+
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				locator2 = "Segmentation#ADD_FIELD_POSITION_EDIT",
+				key_propertyOption = "Country",
+				value1 = "Country");
+		}
+
+		task ("Assert that property was not added") {
+			AssertElementNotPresent(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Country");
+			
+			Refresh();
+		}
+
+		task ("Try to drag property to right section") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				locator2 = "Segmentation#ADD_FIELD_POSITION_EMPTY",
+				key_propertyOption = "Country",
+				value1 = "Country");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Country"
+			);
+		}
+	}
+
+	@description = "LPS-135969 Validate if, on Segmentation, when the user clicks in a different Property section the contributor area of the others sections will be disabled."
+	@priority = "3"
+	test ValidatePropertyNotDisplayedDifferentSection {
+		task ("Click on USER field type and assert if other properties are not displayed") {
+			LexiconEntry.gotoAdd();
+			
+			for (var option : list "Country, Browser, Segment") {
+				AssertElementNotPresent(
+					key_propertyOption = "${option}",
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
+
+		task ("Click on ORGANIZATION field type and assert if other properties are not displayed") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+			
+			for (var option : list "Date of Birth, Browser, Segment") {
+				AssertElementNotPresent(
+					key_propertyOption = "${option}",
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
+
+		task ("Click on SESSION field type and assert if other properties are not displayed") {
+			Segmentation.gotoSidebar(fieldType = "Session");
+			
+			for (var option : list "Date of Birth, Country, Segment") {
+				AssertElementNotPresent(
+					key_propertyOption = "${option}",
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
+
+		task ("Click on SEGMENTS field type and assert if other properties are not displayed") {
+			Segmentation.gotoSidebar(fieldType = "Segments");
+			
+			for (var option : list "Date of Birth, Country, Browser") {
+				AssertElementNotPresent(
+					key_propertyOption = "${option}",
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
+	}
+
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Role."
 	@priority = "4"
 	test ValidateRoleFieldInputInViewMode {

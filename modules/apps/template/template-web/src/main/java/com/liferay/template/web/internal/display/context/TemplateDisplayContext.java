@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 import com.liferay.template.web.internal.util.DDMTemplateActionDropdownItemsProvider;
 
@@ -86,7 +87,7 @@ public class TemplateDisplayContext {
 			ddmTemplateActionDropdownItemsProvider =
 				new DDMTemplateActionDropdownItemsProvider(
 					ddmTemplate, _httpServletRequest, _liferayPortletResponse,
-					enableTemplateCreation());
+					_isAddDDMTemplateEnable());
 
 		return ddmTemplateActionDropdownItemsProvider.getActionDropdownItems();
 	}
@@ -274,6 +275,22 @@ public class TemplateDisplayContext {
 		}
 
 		return orderByComparator;
+	}
+
+	private boolean _isAddDDMTemplateEnable() {
+		if (!_ddmWebConfiguration.enableTemplateCreation()) {
+			return false;
+		}
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private SearchContainer<DDMTemplate> _ddmTemplateSearchContainer;

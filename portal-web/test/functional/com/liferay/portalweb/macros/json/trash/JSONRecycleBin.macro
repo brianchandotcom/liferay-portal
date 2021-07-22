@@ -1,0 +1,34 @@
+definition {
+
+	@summary = "This calls the JSON WS API to empty recycle bin"
+	macro emptyRecycleBin {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/trash.trashentry/delete-entries \
+			-u ${userEmailAddress}:${userPassword} \
+			-d groupId=${groupId}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+}

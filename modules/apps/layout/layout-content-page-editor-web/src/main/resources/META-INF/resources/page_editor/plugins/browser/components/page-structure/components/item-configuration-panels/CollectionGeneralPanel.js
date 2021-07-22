@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {
+	ClayCheckbox,
 	ClayInput,
 	ClaySelect,
 	ClaySelectWithOption,
@@ -70,6 +71,7 @@ export const CollectionGeneralPanel = ({item}) => {
 		numberOfItemsPerPageNextValue,
 		setNumberOfItemsPerPageNextValue,
 	] = useState(item.config.numberOfItemsPerPage);
+	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
 
 	const numberOfItemsPerPageError =
 		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
@@ -286,22 +288,44 @@ export const CollectionGeneralPanel = ({item}) => {
 						)}
 
 					{config.collectionDisplayFragmentPaginationEnabled && (
-						<ClayForm.Group small>
-							<label htmlFor={collectionPaginationTypeId}>
-								{Liferay.Language.get('pagination')}
-							</label>
-							<ClaySelectWithOption
-								aria-label={Liferay.Language.get('pagination')}
-								id={collectionPaginationTypeId}
-								onChange={({target: {value}}) =>
-									handleConfigurationChanged({
-										paginationType: value,
-									})
-								}
-								options={PAGINATION_TYPE_OPTIONS}
-								value={item.config.paginationType}
-							/>
-						</ClayForm.Group>
+						<>
+							<ClayForm.Group small>
+								<label htmlFor={collectionPaginationTypeId}>
+									{Liferay.Language.get('pagination')}
+								</label>
+								<ClaySelectWithOption
+									aria-label={Liferay.Language.get(
+										'pagination'
+									)}
+									id={collectionPaginationTypeId}
+									onChange={({target: {value}}) =>
+										handleConfigurationChanged({
+											paginationType: value,
+										})
+									}
+									options={PAGINATION_TYPE_OPTIONS}
+									value={item.config.paginationType}
+								/>
+							</ClayForm.Group>
+
+							{item.config.paginationType && (
+								<div className="mb-1 pt-1">
+									<ClayCheckbox
+										checked={showAllItems}
+										label={Liferay.Language.get(
+											'display-all-collection-items'
+										)}
+										onChange={({target}) => {
+											setShowAllItems(target.checked);
+
+											handleConfigurationChanged({
+												showAllItems: target.checked,
+											});
+										}}
+									/>
+								</div>
+							)}
+						</>
 					)}
 
 					<ClayForm.Group small>
@@ -320,9 +344,13 @@ export const CollectionGeneralPanel = ({item}) => {
 									});
 								}
 							}}
-							onChange={({target: {value}}) =>
-								setNumberOfItemsNextValue(value)
-							}
+							onChange={({target: {value}}) => {
+								setNumberOfItemsNextValue(value);
+
+								if (showAllItems) {
+									setShowAllItems(false);
+								}
+							}}
 							type="number"
 							value={numberOfItemsNextValue}
 						/>

@@ -2530,6 +2530,22 @@ definition {
 			value1 = "${webContentTitle}");
 	}
 
+	macro viewTagFromInfoPanel {
+		var tagName = StringUtil.lowerCase("${tagName}");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Check(
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WC#ENTRY_LIST_CHECKBOX");
+
+		Click(locator1 = "Icon#INFO");
+
+		AssertElementPresent(
+			key_tagName = "${tagName}",
+			locator1 = "WC#SIDEBAR_TAG");
+	}
+
 	macro viewTitle {
 		if (!(contains("${webContentTitleEscapeCharacter}", "{webContentTitleEscapeCharacter}"))) {
 			var key_webContentTitle = "${webContentTitleEscapeCharacter}";

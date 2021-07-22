@@ -29,6 +29,33 @@ definition {
 		}
 	}
 
+	@description = "LPS-130215 - Verify that the filter offers an option for each existing version"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanChooseEspecifcVersionOnPage {
+
+		// TODO LRQA-68933 CanChooseEspecifcVersionOnPage pending implementation
+
+	}
+
+	@description = "LPS-101075 - Verify that the filter offers an option for each existing version"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanFilterByEachExistingVersion {
+
+		// TODO LRQA-68927 CanFilterByEachExistingVersion pending implementation
+
+	}
+
+	@description = "LPS-101075 - Verify that the filter is available on the card in the Performance tab"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanFilterTopStepsByWorkflowVersion {
+
+		// TODO LRQA-68922 CanFilterTopStepsByWorkflowVersion pending implementation
+
+	}
+
 	@description = "LPS-100674 - Verify that the user can not insert a future date"
 	@priority = "2"
 	test CannotInsertFutureDate {
@@ -49,6 +76,42 @@ definition {
 			title = "Performance by Step");
 
 		WorkflowMetrics.viewDateRangeErrorMessage(errorMessage = "Please enter a valid date.");
+	}
+
+	@description = "LPS-130215 - Verify that the user is not able so select more than one version"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanNotSelectMoreThanOneVersion {
+
+		// TODO LRQA-68934 CanNotSelectMoreThanOneVersion pending implementation
+
+	}
+
+	@description = "LPS-101075 - Verify that the filter offers an option to see all version together"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSeeAllVersionsTogether {
+
+		// TODO LRQA-68924 CanSeeAllVersionsTogether pending implementation
+
+	}
+
+	@description = "LPS-130215 - Verify that the filter allows to see all version together"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSeeAllVersionsTogetherOnPage {
+
+		// TODO LRQA-68932 CanSeeAllVersionsTogetherOnPage pending implementation
+
+	}
+
+	@description = "LPS-101075 - Verify that when a specific version is chosen, the card only considers closed instances that are in the version chosen"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CardConsidersClosedInstancesInChosenVersion {
+
+		// TODO LRQA-68929 CardConsidersClosedInstancesInChosenVersion pending implementation
+
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Step has no more than 10 entries displayed"
@@ -122,6 +185,15 @@ definition {
 			locator1 = "WorkflowAllItems#WORKFLOW_HEADER_TITLE");
 	}
 
+	@description = "LPS-101075 - Verify that the default value for the filter is All Versions"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DefalutFilterValueIsAllVersions {
+
+		// TODO LRQA-68923 DefalutFilterValueIsAllVersions pending implementation
+
+	}
+
 	@description = "LPS-100674 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
 	@priority = "3"
 	test DefaultDateFormatIsMMDDYYYY {
@@ -142,6 +214,33 @@ definition {
 		AssertElementPresent(
 			key_dateFormat = "Default date format is MM/DD/YYYY.",
 			locator1 = "WorkflowMetricsCompletionVelocity#DEFAULT_DATE_FORMAT_MESSAGE");
+	}
+
+	@description = "LPS-101075 - Verify that the All Versions filter considers only the steps touched by the task"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FilterConsidersStepsTouchedByTaks {
+
+		// TODO LRQA-68925 FilterConsidersStepsTouchedByTaks pending implementation
+
+	}
+
+	@description = "LPS-130215 - Verify that, selecting all versions, the filter considers only the steps touched by the task"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FilterConsidersStepsTouchedByTaksOnPage {
+
+		// TODO LRQA-68935 FilterConsidersStepsTouchedByTaksOnPage pending implementation
+
+	}
+
+	@description = "LPS-130215 - Verify that the Process Version filter is available on the Performance by Step page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FilterIsAvailableOnPage {
+
+		// TODO LRQA-68931 FilterIsAvailableOnPage pending implementation
+
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last 7 Days time period, the result and filter options displayed in accordance with reference"
@@ -338,6 +437,24 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
 	}
 
+	@description = "LPS-130215 - Verify that when a specific version is chosen, the page only considers closed instances that are in the version chosen"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PageConsidersClosedInstancesInChosenVersion {
+
+		// TODO LRQA-68936 PageConsidersClosedInstancesInChosenVersion pending implementation
+
+	}
+
+	@description = "LPS-101075 - Verify that when the user clicks on View All Steps the Performance by Step page displays the same steps displayed in the card"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PageDisplaysSameStepsAsCard {
+
+		// TODO LRQA-68930 PageDisplaysSameStepsAsCard pending implementation
+
+	}
+
 	@description = "LPS-100678 - Verify that the Performance by Step page displays the specific error state when there is an unexpected error"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -382,6 +499,15 @@ definition {
 			isNotPresent = "Review",
 			slaBreachedValue = "0 (0%)",
 			stepName = "Update");
+	}
+
+	@description = "LPS-101075 - Verify that, when a task do not touch the workflow task, the step is not displayed for the specific version"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test StepIsNotDisplayedForSpecificVersion {
+
+		// TODO LRQA-68928 StepIsNotDisplayedForSpecificVersion pending implementation
+
 	}
 
 	@description = "LPS-97667 - Verify that when there are tasks with average time smaller than 1 minute the average completion time is displayed"

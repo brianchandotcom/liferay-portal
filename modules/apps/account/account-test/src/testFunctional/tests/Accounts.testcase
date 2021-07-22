@@ -84,6 +84,42 @@ definition {
 			accountUserName = "userfn1");
 	}
 
+	@description = "This test adds an account specific role and ensures this role is not shared across accounts"
+	@priority = "4"
+	test AccountSpecificRoleIsNotSharedAcrossAccounts {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Account with Role",
+			accountEntryName = "Account with Role",
+			accountEntryStatus = "Active",
+			accountEntryType = "Business");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Account without Role",
+			accountEntryName = "Account without Role",
+			accountEntryStatus = "Active",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Role");
+
+		Accounts.addAccountSpecificRole(accountRoleTitle = "Account Specific Role");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Specific Role");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account without Role");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Administrator");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Account without Role");
+	}
+
 	@description = "This test adds and removes multiple organizations from an account via management toolbar."
 	@priority = "4"
 	test CanAddAndRemoveOrganizationsInBulk {

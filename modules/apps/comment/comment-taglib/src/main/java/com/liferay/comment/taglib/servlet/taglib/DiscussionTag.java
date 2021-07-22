@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -141,8 +142,8 @@ public class DiscussionTag extends IncludeTag {
 		return StringBundler.concat(
 			themeDisplay.getPathMain(),
 			"/portal/comment/discussion/get_editor?p_p_isolated=1&",
-			"doAsUserId=", themeDisplay.getDoAsUserId(), "&portletId=",
-			portletId);
+			"doAsUserId=", URLCodec.encodeURL(themeDisplay.getDoAsUserId()),
+			"&portletId=", portletId);
 	}
 
 	protected String getFormAction(HttpServletRequest httpServletRequest) {
@@ -157,7 +158,7 @@ public class DiscussionTag extends IncludeTag {
 		return StringBundler.concat(
 			themeDisplay.getPathMain(),
 			"/portal/comment/discussion/edit?doAsUserId=",
-			themeDisplay.getDoAsUserId());
+			URLCodec.encodeURL(themeDisplay.getDoAsUserId()));
 	}
 
 	@Override
@@ -177,8 +178,8 @@ public class DiscussionTag extends IncludeTag {
 		return StringBundler.concat(
 			themeDisplay.getPathMain(),
 			"/portal/comment/discussion/get_comments?p_p_isolated=1&",
-			"doAsUserId=", themeDisplay.getDoAsUserId(), "&portletId=",
-			portletId);
+			"doAsUserId=", URLCodec.encodeURL(themeDisplay.getDoAsUserId()),
+			"&portletId=", portletId);
 	}
 
 	@Override

@@ -164,6 +164,15 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	macro viewNoTag {
+		var tagName = StringUtil.lowerCase("${tagName}");
+
+		AssertElementNotPresent(
+			key_tagName = "${tagName}",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "${tagName}");
+	}
+
 	macro viewNoVocabularyField {
 		Panel.expandPanel(panel = "Categorization");
 

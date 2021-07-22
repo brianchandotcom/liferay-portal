@@ -1335,12 +1335,14 @@ definition {
 				key_itemName = "Document Title",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			AssertCssValue(
-				backgroundImageStyle = "Document_1.jpg",
-				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
-				locator2 = "outline-style",
-				position = "1",
-				value1 = "dashed");
+			var backgroundImageOutlineStyle = Css.getPseudoElementCssValue(
+				attribute = "outline-style",
+				element = "//div[contains(@class,'page-editor__topper')][@draggable][.//div[contains(@style,'Document_1.jpg')]]",
+				pseudo = ":after");
+
+			TestUtils.assertEquals(
+				actual = "${backgroundImageOutlineStyle}",
+				expected = "dashed");
 		}
 	}
 

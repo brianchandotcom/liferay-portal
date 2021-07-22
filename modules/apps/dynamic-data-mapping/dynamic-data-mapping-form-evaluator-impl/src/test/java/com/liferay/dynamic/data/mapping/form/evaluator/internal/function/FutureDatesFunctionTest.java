@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,7 +45,7 @@ public class FutureDatesFunctionTest {
 
 	@Test
 	public void testApplyFalse1() {
-		LocalDate todayLocalDate = LocalDate.now();
+		LocalDate todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
 
 		LocalDate yesterdayLocalDate = todayLocalDate.minusDays(1);
 
@@ -68,7 +69,7 @@ public class FutureDatesFunctionTest {
 
 	@Test
 	public void testApplyTrue() {
-		LocalDate todayLocalDate = LocalDate.now();
+		LocalDate todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
 
 		LocalDate tomorrowLocalDate = todayLocalDate.plusDays(1);
 

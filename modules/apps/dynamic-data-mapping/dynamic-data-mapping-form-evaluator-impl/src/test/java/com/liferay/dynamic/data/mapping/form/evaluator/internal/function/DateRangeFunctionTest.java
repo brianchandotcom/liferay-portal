@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,13 +40,16 @@ public class DateRangeFunctionTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_dateRangeFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
+
 		_setUpFutureDatesFunction();
 		_setUpPastDatesFunction();
 	}
 
 	@Test
 	public void testApplyFalse1() {
-		LocalDate todayLocalDate = LocalDate.now();
+		LocalDate todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
 
 		LocalDate yesterdayLocalDate = todayLocalDate.minusDays(1);
 
@@ -61,7 +65,7 @@ public class DateRangeFunctionTest {
 
 	@Test
 	public void testApplyFalse2() {
-		LocalDate todayLocalDate = LocalDate.now();
+		LocalDate todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
 
 		LocalDate tomorrowLocalDate = todayLocalDate.plusDays(1);
 
@@ -79,7 +83,7 @@ public class DateRangeFunctionTest {
 	public void testApplyTrue() {
 		Assert.assertTrue(
 			_dateRangeFunction.apply(
-				LocalDate.now(),
+				LocalDate.now(ZoneId.of("UTC")),
 				JSONUtil.put(
 					"endsOn", JSONUtil.put("type", "responseDate")
 				).put(
@@ -88,28 +92,18 @@ public class DateRangeFunctionTest {
 	}
 
 	private void _setUpFutureDatesFunction() throws Exception {
-		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
-
-		futureDatesFunction.setDDMExpressionParameterAccessor(
-			new DefaultDDMExpressionParameterAccessor());
-
 		PowerMockito.field(
 			DateRangeFunction.class, "_futureDatesFunction"
 		).set(
-			_dateRangeFunction, futureDatesFunction
+			_dateRangeFunction, new FutureDatesFunction()
 		);
 	}
 
 	private void _setUpPastDatesFunction() throws Exception {
-		PastDatesFunction pastDatesFunction = new PastDatesFunction();
-
-		pastDatesFunction.setDDMExpressionParameterAccessor(
-			new DefaultDDMExpressionParameterAccessor());
-
 		PowerMockito.field(
 			DateRangeFunction.class, "_pastDatesFunction"
 		).set(
-			_dateRangeFunction, pastDatesFunction
+			_dateRangeFunction, new PastDatesFunction()
 		);
 	}
 

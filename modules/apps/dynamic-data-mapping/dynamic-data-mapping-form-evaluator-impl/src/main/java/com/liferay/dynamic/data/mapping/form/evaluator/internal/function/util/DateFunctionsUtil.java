@@ -15,10 +15,14 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+
+import java.util.TimeZone;
 
 /**
  * @author Carolina Barbosa
@@ -54,6 +58,12 @@ public class DateFunctionsUtil {
 	}
 
 	private static LocalDate _getCurrentLocalDate(String timeZoneId) {
+		if (Validator.isNull(timeZoneId)) {
+			TimeZone timeZone = TimeZoneUtil.getDefault();
+
+			timeZoneId = timeZone.getID();
+		}
+
 		return LocalDate.now(ZoneId.of(timeZoneId));
 	}
 

@@ -41,14 +41,14 @@ exports[`Translate renders with auto-translate disabled 1`] = `
             class="tbar-item tbar-item-expand"
           >
             <div
-              class="autofit-row autofit-row-center languages-selector"
+              class="languages-selector autofit-row autofit-row-center"
             >
-              <span
+              <div
                 class="autofit-col"
               >
                 translate-from
-              </span>
-              <span
+              </div>
+              <div
                 class="autofit-col"
               >
                 <div
@@ -78,13 +78,13 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                     </span>
                   </button>
                 </div>
-              </span>
-              <span
+              </div>
+              <div
                 class="autofit-col"
               >
                 to
-              </span>
-              <span
+              </div>
+              <div
                 class="autofit-col"
               >
                 <div
@@ -114,7 +114,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                     </span>
                   </button>
                 </div>
-              </span>
+              </div>
             </div>
           </li>
           <li
@@ -460,14 +460,14 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             class="tbar-item"
           >
             <div
-              class="autofit-row autofit-row-center languages-selector"
+              class="languages-selector autofit-row autofit-row-center"
             >
-              <span
+              <div
                 class="autofit-col"
               >
                 translate-from
-              </span>
-              <span
+              </div>
+              <div
                 class="autofit-col"
               >
                 <div
@@ -497,13 +497,13 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     </span>
                   </button>
                 </div>
-              </span>
-              <span
+              </div>
+              <div
                 class="autofit-col"
               >
                 to
-              </span>
-              <span
+              </div>
+              <div
                 class="autofit-col"
               >
                 <div
@@ -533,7 +533,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     </span>
                   </button>
                 </div>
-              </span>
+              </div>
             </div>
           </li>
           <li

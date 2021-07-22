@@ -41,6 +41,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.dynamic.data.mapping.validator.internal.expression.DDMFormFieldValueExpressionParameterAccessor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -89,6 +90,16 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			ddmForm.getDDMFormFieldsMap(false));
 	}
 
+	@Override
+	public void validate(DDMFormValues ddmFormValues, String timeZoneId)
+		throws DDMFormValuesValidationException {
+
+		_ddmFormFieldValueExpressionParameterAccessor =
+			new DDMFormFieldValueExpressionParameterAccessor(timeZoneId);
+
+		validate(ddmFormValues);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -129,6 +140,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 							parameterLocalizedValue.getString(locale))
 					).withDDMExpressionDateValidation(
 						StringUtil.equals(dataType, FieldConstants.DATE)
+					).withDDMExpressionParameterAccessor(
+						_ddmFormFieldValueExpressionParameterAccessor
 					).build());
 			}
 			else {
@@ -418,6 +431,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 	private DDMExpressionFactory _ddmExpressionFactory;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldValueExpressionParameterAccessor
+		_ddmFormFieldValueExpressionParameterAccessor;
 	private final DDMFormFieldValueAccessor<String>
 		_defaultDDMFormFieldValueAccessor =
 			new DefaultDDMFormFieldValueAccessor();

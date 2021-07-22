@@ -343,7 +343,6 @@ definition {
 	@description = "LPS-86652 - Verify that every column displays the correct info for a item"
 	@priority = "5"
 	test ColumnsDiplayCorrectInfo {
-		property portal.upstream = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

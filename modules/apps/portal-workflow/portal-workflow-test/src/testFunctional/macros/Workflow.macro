@@ -188,7 +188,7 @@ definition {
 		AssertElementPresent(
 			key_columnName = "Assignee",
 			key_fieldName = "${key_assignee}",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_TH");
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
 
 		AssertElementPresent(
 			key_columnName = "Created By",

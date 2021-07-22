@@ -4980,8 +4980,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		new BackupFilesBuildAdapter();
 	private static final Set<String> _copyrightedExtensions = new HashSet<>(
 		Arrays.asList(
-			"ftl", "groovy", "htm", "html", "js", "jsp", "jspf", "txt", "vm",
-			"xml"));
+			"ftl", "groovy", "htm", "html", "java", "js", "jsp", "jspf", "txt",
+			"vm", "xml"));
 	private static final Spec<File> _javaSpec = new NameSuffixFileSpec(".java");
 	private static final Spec<File> _jsdocSpec = new NameSuffixFileSpec(
 		".es.js", ".jsdoc", ".jsx");

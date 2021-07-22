@@ -183,13 +183,6 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -283,6 +276,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference

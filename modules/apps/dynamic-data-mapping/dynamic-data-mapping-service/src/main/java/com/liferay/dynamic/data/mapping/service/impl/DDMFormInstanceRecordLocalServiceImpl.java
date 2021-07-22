@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
@@ -84,6 +85,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -936,7 +938,13 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return;
 		}
 
-		_ddmFormValuesValidator.validate(ddmFormValues);
+		TimeZone timeZone = serviceContext.getTimeZone();
+
+		if (timeZone == null) {
+			timeZone = TimeZoneUtil.getDefault();
+		}
+
+		_ddmFormValuesValidator.validate(ddmFormValues, timeZone.getID());
 	}
 
 	protected void validate(long groupId, DDMFormInstance ddmFormInstance)

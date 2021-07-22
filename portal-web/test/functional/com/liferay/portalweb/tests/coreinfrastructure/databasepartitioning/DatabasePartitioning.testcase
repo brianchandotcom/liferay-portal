@@ -1,6 +1,7 @@
 @component-name = "portal-database-partitioning"
 definition {
 
+	property database.partition.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Partitioning";
@@ -17,7 +18,7 @@ definition {
 
 	@priority = "4"
 	test AddMultipleCompanies {
-		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property database.types = "mysql";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddMultipleCompanies";
 
@@ -91,7 +92,7 @@ definition {
 
 	@priority = "5"
 	test AddNewCompany {
-		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property database.types = "mysql";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
@@ -135,7 +136,7 @@ definition {
 	test AddNewCompanyWithCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
-		property custom.properties = "cluster.link.enabled=true${line.separator}database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property database.types = "mysql";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompanyWithCluster";
 

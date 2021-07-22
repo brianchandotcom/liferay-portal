@@ -92,11 +92,9 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 			return classContent;
 		}
 
-		if (!javaTerm.isJavaVariable() || !previousJavaTerm.isJavaVariable()) {
-			return _fixJavaTermDivider(classContent, javaTermContent, true);
-		}
+		if (!javaTerm.isJavaVariable() || !previousJavaTerm.isJavaVariable() ||
+			(previousJavaTerm.isStatic() ^ javaTerm.isStatic())) {
 
-		if (previousJavaTerm.isStatic() ^ javaTerm.isStatic()) {
 			return _fixJavaTermDivider(classContent, javaTermContent, true);
 		}
 
@@ -120,12 +118,8 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 		}
 
 		if (javaTermContent.matches("\\s*[/@*][\\S\\s]*") ||
-			previousJavaTermContent.matches("\\s*[/@*][\\S\\s]*")) {
-
-			return _fixJavaTermDivider(classContent, javaTermContent, true);
-		}
-
-		if (javaTermContent.contains("\n\n\t") ||
+			previousJavaTermContent.matches("\\s*[/@*][\\S\\s]*") ||
+			javaTermContent.contains("\n\n\t") ||
 			previousJavaTermContent.contains("\n\n\t")) {
 
 			return _fixJavaTermDivider(classContent, javaTermContent, true);

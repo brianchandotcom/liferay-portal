@@ -34,11 +34,9 @@ public class GradleJavaVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!absolutePath.endsWith("/build.gradle")) {
-			return content;
-		}
+		if (!absolutePath.endsWith("/build.gradle") ||
+			!_hasBNDFile(absolutePath)) {
 
-		if (!_hasBNDFile(absolutePath)) {
 			return content;
 		}
 

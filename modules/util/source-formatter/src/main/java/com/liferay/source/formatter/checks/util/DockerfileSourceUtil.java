@@ -39,11 +39,7 @@ public class DockerfileSourceUtil {
 	}
 
 	public static String getInstruction(String line, String previousLine) {
-		if (Validator.isNull(line)) {
-			return StringPool.BLANK;
-		}
-
-		if (endsWithBackSlash(previousLine)) {
+		if (Validator.isNull(line) || endsWithBackSlash(previousLine)) {
 			return StringPool.BLANK;
 		}
 

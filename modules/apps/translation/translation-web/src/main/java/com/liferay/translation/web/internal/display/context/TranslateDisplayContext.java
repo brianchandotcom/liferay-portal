@@ -369,6 +369,15 @@ public class TranslateDisplayContext {
 		InfoFieldValue<Object> infoFieldValue =
 			_sourceInfoItemFieldValues.getInfoFieldValue("title");
 
+		if (infoFieldValue == null) {
+			infoFieldValue = _sourceInfoItemFieldValues.getInfoFieldValue(
+				"name");
+		}
+
+		if (infoFieldValue == null) {
+			return LanguageUtil.get(_themeDisplay.getLocale(), "translation");
+		}
+
 		return (String)infoFieldValue.getValue(_themeDisplay.getLocale());
 	}
 

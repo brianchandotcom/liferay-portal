@@ -611,6 +611,10 @@ public abstract class BaseDB implements DB {
 
 		process(
 			companyId -> {
+				if (Validator.isNotNull(companyId) && _log.isInfoEnabled()) {
+					_log.info("Updating database indexes#" + companyId);
+				}
+
 				List<Index> indexes = getIndexes(connection);
 
 				Set<String> validIndexNames = null;

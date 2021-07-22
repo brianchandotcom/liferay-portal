@@ -309,13 +309,6 @@ public class DLAdminManagementToolbarDisplayContext
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
-			this::_isNavigationRecent,
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "order-by"));
-			}
-		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
@@ -826,14 +819,6 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		return true;
-	}
-
-	private boolean _isNavigationRecent() {
-		if (Objects.equals(_getNavigation(), "recent")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isSearch() {

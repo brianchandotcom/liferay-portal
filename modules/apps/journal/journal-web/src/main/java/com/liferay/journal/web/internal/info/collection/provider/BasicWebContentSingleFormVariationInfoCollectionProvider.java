@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true, service = InfoCollectionProvider.class
 )
-public class BasicWebContentInfoCollectionProvider
+public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	implements SingleFormVariationInfoCollectionProvider<JournalArticle> {
 
 	@Override

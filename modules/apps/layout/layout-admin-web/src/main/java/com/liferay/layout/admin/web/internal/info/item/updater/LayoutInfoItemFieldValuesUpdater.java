@@ -43,13 +43,9 @@ public class LayoutInfoItemFieldValuesUpdater
 	public Layout updateFromInfoItemFieldValues(
 		Layout layout, InfoItemFieldValues infoItemFieldValues) {
 
-		layout.setDescriptionMap(
-			_getFieldMap(
-				LayoutInfoItemFields.descriptionInfoField.getName(),
-				infoItemFieldValues, layout.getDescriptionMap()));
 		layout.setNameMap(
 			_getFieldMap(
-				LayoutInfoItemFields.titleInfoField.getName(),
+				LayoutInfoItemFields.nameInfoField.getName(),
 				infoItemFieldValues, layout.getNameMap()));
 
 		return _layoutLocalService.updateLayout(layout);

@@ -24,29 +24,15 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public class LayoutInfoItemFields {
 
-	public static final InfoField<TextInfoFieldType> descriptionInfoField =
+	public static final InfoField<TextInfoFieldType> nameInfoField =
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
-			"description"
-		).attribute(
-			TextInfoFieldType.HTML, true
+			"name"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				InfoItemFieldValuesProvider.class, "description")
-		).localizable(
-			true
-		).build();
-	public static final InfoField<TextInfoFieldType> titleInfoField =
-		InfoField.builder(
-		).infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).name(
-			"title"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				InfoItemFieldValuesProvider.class, "title")
+				InfoItemFieldValuesProvider.class, "name")
 		).localizable(
 			true
 		).build();

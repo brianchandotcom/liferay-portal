@@ -60,9 +60,7 @@ public class LayoutInfoItemFormProvider
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
-			LayoutInfoItemFields.titleInfoField
-		).infoFieldSetEntry(
-			LayoutInfoItemFields.descriptionInfoField
+			LayoutInfoItemFields.nameInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(

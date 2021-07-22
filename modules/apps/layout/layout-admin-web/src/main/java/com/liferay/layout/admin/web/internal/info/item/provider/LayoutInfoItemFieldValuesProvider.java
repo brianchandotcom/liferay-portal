@@ -48,21 +48,12 @@ public class LayoutInfoItemFieldValuesProvider
 		return InfoItemFieldValues.builder(
 		).infoFieldValue(
 			new InfoFieldValue<>(
-				LayoutInfoItemFields.titleInfoField,
+				LayoutInfoItemFields.nameInfoField,
 				InfoLocalizedValue.<String>builder(
 				).defaultLocale(
 					LocaleUtil.fromLanguageId(layout.getDefaultLanguageId())
 				).values(
 					layout.getNameMap()
-				).build())
-		).infoFieldValue(
-			new InfoFieldValue<>(
-				LayoutInfoItemFields.descriptionInfoField,
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.fromLanguageId(layout.getDefaultLanguageId())
-				).values(
-					layout.getDescriptionMap()
 				).build())
 		).infoFieldValues(
 			_getLayoutInfoFieldValues(layout)

@@ -193,6 +193,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
 		var groupId = JSONWebcontentSetter.setGroupId(
 			site = "${site}",
 			groupName = "${groupName}");
@@ -202,13 +206,33 @@ definition {
 			groupName = "${groupName}",
 			title = "${webContentTitle}");
 
-		if (!(isSet(folderId))) {
+		if (isSet(folderName)) {
+			var folderId = JSONWebcontentSetter.setFolderId(
+				folderName = "${folderName}",
+				groupId = "${groupId}");
+		}
+		else {
 			var folderId = "0";
 		}
 
 		// Articles accessed in admin will stay in admin after editing.
 
 		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3DeuYy8gst%26wkrh___tabs1%3Dproperties&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_articleId=${articleId}");
+
+		if (!(isSet(version))) {
+			version = "1.0";
+		}
+
+		if (isSet(staging)) {
+			Navigator.openWithAppendToBaseURL(
+				baseURL = "${baseURL}",
+				urlAppend = "group/${siteURLKey}-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=/edit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=${baseURL}/group/${siteURLKey}-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_articleId=${articleId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}&_com_liferay_journal_web_portlet_JournalPortlet_referringPortletResource=&_com_liferay_journal_web_portlet_JournalPortlet_version=${version}");
+		}
+		else {
+			Navigator.openWithAppendToBaseURL(
+				baseURL = "${baseURL}",
+				urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=/edit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_articleId=${articleId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}&_com_liferay_journal_web_portlet_JournalPortlet_referringPortletResource=&_com_liferay_journal_web_portlet_JournalPortlet_version=${version}");
+		}
 	}
 
 	macro openWebContentAdmin {

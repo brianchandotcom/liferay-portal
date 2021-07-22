@@ -66,14 +66,14 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
-		return getStagedModelTypes();
+		return _getStagedModelTypes();
 	}
 
 	@Override
 	public long getExportModelCount(ManifestSummary manifestSummary) {
 		long totalModelCount = -1;
 
-		for (StagedModelType stagedModelType : getStagedModelTypes()) {
+		for (StagedModelType stagedModelType : _getStagedModelTypes()) {
 			long modelCount = manifestSummary.getModelAdditionCount(
 				stagedModelType);
 
@@ -112,7 +112,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getDDMTemplateActionableDynamicQuery(
+			_getDDMTemplateActionableDynamicQuery(
 				portletDataContext,
 				ArrayUtil.toArray(_templateHandlerRegistry.getClassNameIds()),
 				new StagedModelType(
@@ -153,14 +153,14 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 				portletDataContext)) {
 
 			_staging.populateLastPublishDateCounts(
-				portletDataContext, getStagedModelTypes());
+				portletDataContext, _getStagedModelTypes());
 
 			return;
 		}
 
-		for (StagedModelType stagedModelType : getStagedModelTypes()) {
+		for (StagedModelType stagedModelType : _getStagedModelTypes()) {
 			ActionableDynamicQuery actionableDynamicQuery =
-				getDDMTemplateActionableDynamicQuery(
+				_getDDMTemplateActionableDynamicQuery(
 					portletDataContext,
 					new Long[] {stagedModelType.getReferrerClassNameId()},
 					stagedModelType);
@@ -169,7 +169,19 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		}
 	}
 
-	protected ActionableDynamicQuery getDDMTemplateActionableDynamicQuery(
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private ActionableDynamicQuery _getDDMTemplateActionableDynamicQuery(
 		final PortletDataContext portletDataContext, final Long[] classNameIds,
 		final StagedModelType stagedModelType) {
 
@@ -206,37 +218,6 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		return exportActionableDynamicQuery;
 	}
 
-	protected StagedModelType[] getStagedModelTypes() {
-		if (_stagedModelTypes != null) {
-			return _stagedModelTypes;
-		}
-
-		List<StagedModelType> stagedModelTypes = new ArrayList<>();
-
-		long ddmTemplateClassNameId = _portal.getClassNameId(DDMTemplate.class);
-
-		for (long classNameId : _templateHandlerRegistry.getClassNameIds()) {
-			stagedModelTypes.add(
-				new StagedModelType(ddmTemplateClassNameId, classNameId));
-		}
-
-		_stagedModelTypes = stagedModelTypes.toArray(new StagedModelType[0]);
-
-		return _stagedModelTypes;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private PortletDataHandlerControl[] _getPortletDataHandlerControls() {
 		List<PortletDataHandlerControl> portletDataHandlerControls =
 			new ArrayList<>();
@@ -264,6 +245,25 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 		return portletDataHandlerControls.toArray(
 			new PortletDataHandlerControl[0]);
+	}
+
+	private StagedModelType[] _getStagedModelTypes() {
+		if (_stagedModelTypes != null) {
+			return _stagedModelTypes;
+		}
+
+		List<StagedModelType> stagedModelTypes = new ArrayList<>();
+
+		long ddmTemplateClassNameId = _portal.getClassNameId(DDMTemplate.class);
+
+		for (long classNameId : _templateHandlerRegistry.getClassNameIds()) {
+			stagedModelTypes.add(
+				new StagedModelType(ddmTemplateClassNameId, classNameId));
+		}
+
+		_stagedModelTypes = stagedModelTypes.toArray(new StagedModelType[0]);
+
+		return _stagedModelTypes;
 	}
 
 	@Reference

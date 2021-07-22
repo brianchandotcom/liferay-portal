@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_FIELD_POSITION2xxx</td>
-	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-root')]/div[1] | //*[contains(@class, 'edit-container')][2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_FIELD_POSITION_EMPTY</td>
 	<td>//div[contains(@class, 'empty-drop-zone-dashed')] //*[contains(@class, 'drop-zone-target')]</td>
 	<td></td>
@@ -28,11 +23,6 @@
 <tr>
 	<td>ADD_FIELD_POSITION_EDIT</td>
 	<td>//*[contains(@class, 'edit-container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_FIELD_POSITION_TYPExxx</td>
-	<td>//div[contains(@class, 'criteria-builder-root') and descendant::h4[text()='${key_typeShort}']]/div</td>
 	<td></td>
 </tr>
 <tr>

@@ -27,26 +27,6 @@ $custom-properties-container-max-widths: map-merge(
 	$custom-properties-container-max-widths
 );
 
-// Spacers map copy
-
-$custom-properties-spacers: ();
-$custom-properties-spacers: map-merge(
-	(
-		0: var(--spacer-0),
-		1: var(--spacer-1),
-		2: var(--spacer-2),
-		3: var(--spacer-3),
-		4: var(--spacer-4),
-		5: var(--spacer-5),
-		6: var(--spacer-6),
-		7: var(--spacer-7),
-		8: var(--spacer-8),
-		9: var(--spacer-9),
-		10: var(--spacer-10),
-	),
-	$custom-properties-spacers
-);
-
 // Theme colors
 
 $custom-properties-theme-colors: ();
@@ -141,22 +121,22 @@ $custom-properties-theme-colors: map-merge(
 
 	// Blockquotes
 
-	--blockquote-font-size: #{$font-size-base} * 1.25;
-	--blockquote-small-color: #{$gray-600};
-	--blockquote-small-font-size: #{$small-font-size};
+	--blockquote-font-size: #{getDefault($blockquote-font-size)};
+	--blockquote-small-color: #{getDefault($gray-600)};
+	--blockquote-small-font-size: #{getDefault($small-font-size)};
 
 	// Body
 
-	--body-bg: #{$body-bg};
-	--body-color: #{$body-color};
+	--body-bg: #{getDefault($body-bg)};
+	--body-color: #{getDefault($body-color)};
 
 	// Border radius
 
 	--border-radius-circle: 50%;
-	--border-radius-lg: #{$border-radius-lg};
-	--border-radius-sm: #{$border-radius-sm};
-	--border-radius: #{$border-radius};
-	--rounded-pill: #{$rounded-pill};
+	--border-radius-lg: #{getDefault($border-radius-lg)};
+	--border-radius-sm: #{getDefault($border-radius-sm)};
+	--border-radius: #{getDefault($border-radius)};
+	--rounded-pill: #{getDefault($rounded-pill)};
 
 	// Colors
 
@@ -165,76 +145,76 @@ $custom-properties-theme-colors: map-merge(
 	--brand-color-3: #{$info};
 	--brand-color-4: #{$dark-l1};
 
-	--black: #{$black};
-	--gray-100: #{$gray-100};
-	--gray-200: #{$gray-200};
-	--gray-300: #{$gray-300};
-	--gray-400: #{$gray-400};
-	--gray-500: #{$gray-500};
-	--gray-600: #{$gray-600};
-	--gray-700: #{$gray-700};
-	--gray-800: #{$gray-800};
-	--gray-900: #{$gray-900};
+	--black: #{getDefault($black)};
+	--gray-100: #{getDefault($gray-100)};
+	--gray-200: #{getDefault($gray-200)};
+	--gray-300: #{getDefault($gray-300)};
+	--gray-400: #{getDefault($gray-400)};
+	--gray-500: #{getDefault($gray-500)};
+	--gray-600: #{getDefault($gray-600)};
+	--gray-700: #{getDefault($gray-700)};
+	--gray-800: #{getDefault($gray-800)};
+	--gray-900: #{getDefault($gray-900)};
 	--transparent: transparent;
-	--white: #{$white};
+	--white: #{getDefault($white)};
 
 	@each $key, $value in $theme-colors {
-		--#{$key}: #{$value};
+		--#{$key}: #{getDefault($value)};
 	}
 
 	// Container max
 
 	@each $key, $value in $container-max-widths {
-		--container-max-#{$key}: #{$value};
+		--container-max-#{$key}: #{getDefault($value)};
 	}
 
 	// Display
 
-	--display1-size: #{$display1-size};
-	--display2-size: #{$display2-size};
-	--display3-size: #{$display3-size};
-	--display4-size: #{$display4-size};
+	--display1-size: #{getDefault($display1-size)};
+	--display2-size: #{getDefault($display2-size)};
+	--display3-size: #{getDefault($display3-size)};
+	--display4-size: #{getDefault($display4-size)};
 
-	--display1-weight: #{$display1-weight};
-	--display2-weight: #{$display2-weight};
-	--display3-weight: #{$display3-weight};
-	--display4-weight: #{$display4-weight};
+	--display1-weight: #{getDefault($display1-weight)};
+	--display2-weight: #{getDefault($display2-weight)};
+	--display3-weight: #{getDefault($display3-weight)};
+	--display4-weight: #{getDefault($display4-weight)};
 
-	--display-line-height: #{$display-line-height};
+	--display-line-height: #{getDefault($display-line-height)};
 
 	// Fonts
 
-	--font-family-base: #{$font-family-base};
-	--font-family-monospace: #{$font-family-monospace};
-	--font-family-sans-serif: #{$font-family-sans-serif};
+	--font-family-base: #{getDefault($font-family-base)};
+	--font-family-monospace: #{getDefault($font-family-monospace)};
+	--font-family-sans-serif: #{getDefault($font-family-sans-serif)};
 
-	--font-size-base: #{$font-size-base};
-	--font-size-lg: #{$font-size-lg};
-	--font-size-sm: #{$font-size-sm};
+	--font-size-base: #{getDefault($font-size-base)};
+	--font-size-lg: #{getDefault($font-size-lg)};
+	--font-size-sm: #{getDefault($font-size-sm)};
 
-	--font-weight-bold: #{$font-weight-bold};
-	--font-weight-bolder: #{$font-weight-bolder};
-	--font-weight-light: #{$font-weight-light};
-	--font-weight-lighter: #{$font-weight-lighter};
-	--font-weight-normal: #{$font-weight-normal};
-	--font-weight-semi-bold: #{$font-weight-semi-bold};
+	--font-weight-bold: #{getDefault($font-weight-bold)};
+	--font-weight-bolder: #{getDefault($font-weight-bolder)};
+	--font-weight-light: #{getDefault($font-weight-light)};
+	--font-weight-lighter: #{getDefault($font-weight-lighter)};
+	--font-weight-normal: #{getDefault($font-weight-normal)};
+	--font-weight-semi-bold: #{getDefault($font-weight-semi-bold)};
 
-	--line-height-base: #{$line-height-base};
+	--line-height-base: #{getDefault($line-height-base)};
 	--line-height-sm: 1.15;
 
 	// Headings
 
-	--h1-font-size: #{$h1-font-size};
-	--h2-font-size: #{$h2-font-size};
-	--h3-font-size: #{$h3-font-size};
-	--h4-font-size: #{$h4-font-size};
-	--h5-font-size: #{$h5-font-size};
-	--h6-font-size: #{$h6-font-size};
+	--h1-font-size: #{getDefault($h1-font-size)};
+	--h2-font-size: #{getDefault($h2-font-size)};
+	--h3-font-size: #{getDefault($h3-font-size)};
+	--h4-font-size: #{getDefault($h4-font-size)};
+	--h5-font-size: #{getDefault($h5-font-size)};
+	--h6-font-size: #{getDefault($h6-font-size)};
 
 	// Lead
 
-	--lead-font-size: #{$lead-font-size};
-	--lead-font-weight: #{$lead-font-weight};
+	--lead-font-size: #{getDefault($lead-font-size)};
+	--lead-font-weight: #{getDefault($lead-font-weight)};
 
 	// Portlet
 
@@ -254,19 +234,19 @@ $custom-properties-theme-colors: map-merge(
 
 	// Separator
 
-	--hr-border-color: #{$hr-border-color};
-	--hr-border-width: #{$hr-border-width};
-	--hr-margin-y: #{$hr-margin-y};
+	--hr-border-color: #{getDefault($hr-border-color)};
+	--hr-border-width: #{getDefault($hr-border-width)};
+	--hr-margin-y: #{getDefault($hr-margin-y)};
 
 	// Shadows
 
-	--box-shadow-lg: #{$box-shadow-lg};
-	--box-shadow-sm: #{$box-shadow-sm};
-	--box-shadow: #{$box-shadow};
+	--box-shadow-lg: #{getDefault($box-shadow-lg)};
+	--box-shadow-sm: #{getDefault($box-shadow-sm)};
+	--box-shadow: #{getDefault($box-shadow)};
 
 	// Spacers
 
-	--spacer: #{$spacer};
+	--spacer: getDefault($spacer);
 	@each $key, $value in $spacers {
 		$multiplier: nth($value, 1) / $spacer;
 		@if ($value == 0) {
@@ -277,10 +257,10 @@ $custom-properties-theme-colors: map-merge(
 
 	// Text muted
 
-	--text-muted: #{$text-muted};
+	--text-muted: #{getDefault($text-muted)};
 
 	// Transitions
 
-	--transition-collapse: #{$transition-collapse};
-	--transition-fade: #{$transition-fade};
+	--transition-collapse: #{getDefault($transition-collapse)};
+	--transition-fade: #{getDefault($transition-fade)};
 }

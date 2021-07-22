@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.JSPSourceProcessor;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -67,6 +68,16 @@ public class IfStatementCheck extends BaseFileCheck {
 				content, ifStatement1, ifStatement2);
 
 			if (!content.equals(newContent)) {
+				if (getSourceProcessor() instanceof JSPSourceProcessor) {
+					addMessage(
+						fileName,
+						"Merge consecutive if-statements when executing " +
+							"identical code",
+						getLineNumber(content, matcher.start()));
+
+					continue;
+				}
+
 				return newContent;
 			}
 		}

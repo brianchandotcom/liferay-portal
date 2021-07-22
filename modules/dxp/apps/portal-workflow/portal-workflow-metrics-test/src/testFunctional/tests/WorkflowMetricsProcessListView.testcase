@@ -270,8 +270,6 @@ definition {
 			key_rowNumber = "4",
 			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
 			value1 = "Single Approver B");
-
-			
 	}
 
 	@description = "LPS-88573 - Verify that when an instance from Asset is added to the list of process, the count number should be reflected on the Process List"

@@ -1056,7 +1056,7 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no calls to `HttpServletResponse.sendRedirect` from `jsp` files." />
 		</check>
-		<check name="JSPStringMethodsCheck">
+		<check name="StringMethodsCheck">
 			<category name="Performance" />
 			<description name="Finds cases of inefficient String operations." />
 		</check>

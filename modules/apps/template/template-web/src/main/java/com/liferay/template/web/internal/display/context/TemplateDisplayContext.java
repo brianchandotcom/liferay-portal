@@ -83,7 +83,7 @@ public class TemplateDisplayContext {
 			ddmTemplateActionDropdownItemsProvider =
 				new DDMTemplateActionDropdownItemsProvider(
 					ddmTemplate, _httpServletRequest, _liferayPortletResponse,
-					isAddDDMTemplateEnable());
+					isAddDDMTemplateEnabled());
 
 		return ddmTemplateActionDropdownItemsProvider.getActionDropdownItems();
 	}
@@ -201,7 +201,7 @@ public class TemplateDisplayContext {
 		return templateHandler.getName(_themeDisplay.getLocale());
 	}
 
-	public boolean isAddDDMTemplateEnable() {
+	public boolean isAddDDMTemplateEnabled() {
 		if (!_ddmWebConfiguration.enableTemplateCreation()) {
 			return false;
 		}

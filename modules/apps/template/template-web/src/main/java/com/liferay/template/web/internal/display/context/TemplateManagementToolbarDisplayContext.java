@@ -112,7 +112,7 @@ public class TemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_templateDisplayContext.isAddDDMTemplateEnable()) {
+		if (!_templateDisplayContext.isAddDDMTemplateEnabled()) {
 			return null;
 		}
 

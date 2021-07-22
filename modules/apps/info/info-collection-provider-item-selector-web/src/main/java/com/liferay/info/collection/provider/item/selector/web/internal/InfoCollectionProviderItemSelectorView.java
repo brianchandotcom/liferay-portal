@@ -15,6 +15,7 @@
 package com.liferay.info.collection.provider.item.selector.web.internal;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
@@ -24,6 +25,7 @@ import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -160,11 +162,7 @@ public class InfoCollectionProviderItemSelectorView
 						(ThemeDisplay)_httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
-					return JSONUtil.put(
-						"itemSubtype",
-						infoCollectionProvider.
-							getCollectionItemFormVariationKey()
-					).put(
+					JSONObject jsonObject = JSONUtil.put(
 						"itemType",
 						infoCollectionProvider.getCollectionItemClassName()
 					).put(
@@ -173,7 +171,23 @@ public class InfoCollectionProviderItemSelectorView
 						"title",
 						infoCollectionProvider.getLabel(
 							themeDisplay.getLocale())
-					).toString();
+					);
+
+					if (infoCollectionProvider instanceof
+							SingleFormVariationInfoCollectionProvider) {
+
+						SingleFormVariationInfoCollectionProvider<?>
+							singleFormVariationInfoCollectionProvider =
+								(SingleFormVariationInfoCollectionProvider<?>)
+									infoCollectionProvider;
+
+						jsonObject.put(
+							"itemSubtype",
+							singleFormVariationInfoCollectionProvider.
+								getFormVariationKey());
+					}
+
+					return jsonObject.toString();
 				}
 
 				@Override

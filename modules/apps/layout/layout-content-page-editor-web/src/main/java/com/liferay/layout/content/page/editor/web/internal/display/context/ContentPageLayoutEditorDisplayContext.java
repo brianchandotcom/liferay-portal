@@ -28,6 +28,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelector;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -473,20 +475,31 @@ public class ContentPageLayoutEditorDisplayContext
 	private JSONArray _getInfoCollectionProviderLinkedCollectionJSONArray(
 		InfoCollectionProvider<?> infoCollectionProvider) {
 
-		return JSONUtil.put(
-			JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
+			"itemType", infoCollectionProvider.getCollectionItemClassName()
+		).put(
+			"key", infoCollectionProvider.getKey()
+		).put(
+			"title", infoCollectionProvider.getLabel(LocaleUtil.getDefault())
+		).put(
+			"type", InfoListProviderItemSelectorReturnType.class.getName()
+		);
+
+		if (infoCollectionProvider instanceof
+				SingleFormVariationInfoCollectionProvider) {
+
+			SingleFormVariationInfoCollectionProvider<?>
+				singleFormVariationInfoCollectionProvider =
+					(SingleFormVariationInfoCollectionProvider<?>)
+						infoCollectionProvider;
+
+			jsonObject.put(
 				"itemSubtype",
-				infoCollectionProvider.getCollectionItemFormVariationKey()
-			).put(
-				"itemType", infoCollectionProvider.getCollectionItemClassName()
-			).put(
-				"key", infoCollectionProvider.getKey()
-			).put(
-				"title",
-				infoCollectionProvider.getLabel(LocaleUtil.getDefault())
-			).put(
-				"type", InfoListProviderItemSelectorReturnType.class.getName()
-			));
+				singleFormVariationInfoCollectionProvider.
+					getFormVariationKey());
+		}
+
+		return JSONUtil.put(jsonObject);
 	}
 
 	private List<Map<String, Object>> _getLayoutDataList() throws Exception {

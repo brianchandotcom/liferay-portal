@@ -20,6 +20,7 @@ import com.liferay.headless.delivery.dto.v1_0.CollectionConfig;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -210,10 +211,7 @@ public class CollectionLayoutStructureItemImporter
 			return null;
 		}
 
-		return JSONUtil.put(
-			"itemSubtype",
-			infoCollectionProvider.getCollectionItemFormVariationKey()
-		).put(
+		JSONObject jsonObject = JSONUtil.put(
 			"itemType", infoCollectionProvider.getCollectionItemClassName()
 		).put(
 			"key", className
@@ -222,6 +220,22 @@ public class CollectionLayoutStructureItemImporter
 		).put(
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);
+
+		if (infoCollectionProvider instanceof
+				SingleFormVariationInfoCollectionProvider) {
+
+			SingleFormVariationInfoCollectionProvider<?>
+				singleFormVariationInfoCollectionProvider =
+					(SingleFormVariationInfoCollectionProvider<?>)
+						infoCollectionProvider;
+
+			jsonObject.put(
+				"itemSubtype",
+				singleFormVariationInfoCollectionProvider.
+					getFormVariationKey());
+		}
+
+		return jsonObject;
 	}
 
 	private Long _toClassPK(String classPKString) {

@@ -1142,6 +1142,41 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Back Icon Account");
 	}
 
+	@description = "This test makes sure the default account roles are present in Roles Admin."
+	@priority = "4"
+	test DefaultAccountRolesArePresent {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Navigator.gotoNavItem(navItem = "Account Roles");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals(
+			key_tableEntry = "Account Administrator",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+			value1 = "Account Administrator");
+
+		AssertTextEquals(
+			key_columnName = "description",
+			key_tableEntry = "Account Administrator",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "Account Administrators are super users of their account.");
+
+		AssertTextEquals(
+			key_tableEntry = "Account Member",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+			value1 = "Account Member");
+
+		AssertTextEquals(
+			key_columnName = "description",
+			key_tableEntry = "Account Member",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "All users who belong to an account have this role within that account.");
+	}
+
 	@description = "This test removes domain set to an account."
 	@priority = "4"
 	test DisablingDomainValidationRemovesWarningMessages {

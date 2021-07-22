@@ -196,7 +196,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "${propertyName}");
 
 		ACNavigation.goToIndividuals();
 

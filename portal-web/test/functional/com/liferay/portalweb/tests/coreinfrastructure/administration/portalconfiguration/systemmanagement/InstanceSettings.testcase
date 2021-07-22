@@ -411,6 +411,52 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "New Entry 1");
 	}
 
+	@description = "This test asserts that a user can delete site logo via portal setting."
+	@priority = "3"
+	test CanDeleteSiteLogoViaAppearance {
+		Page.viewDefaultLogoPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "Appearance",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertElementPresent(
+			key_text = "Delete",
+			locator1 = "Button#ANY_DISABLED");
+
+		Page.uploadFileForLogo(logoFile = "Document_2.png");
+
+		AssertElementPresent(locator1 = "Button#DELETE_LAYOUT_LOGO");
+
+		AssertElementNotPresent(
+			key_text = "Delete",
+			locator1 = "Button#ANY_DISABLED");
+
+		Navigator.openURL();
+
+		Page.viewCustomLogoPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "Appearance",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertClick(
+			locator1 = "Button#DELETE_LAYOUT_LOGO",
+			value1 = "Delete");
+
+		PortletEntry.save();
+
+		AssertElementPresent(
+			key_text = "Delete",
+			locator1 = "Button#ANY_DISABLED");
+
+		Navigator.openURL();
+
+		Page.viewDefaultLogoPG();
+	}
+
 	@description = "This test asserts that a user can disable the account created notification. No email would send to user when the account created notification is disabled."
 	@priority = "3"
 	test CanDisabledAccountCreatedNotification {

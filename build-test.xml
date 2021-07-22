@@ -9422,6 +9422,17 @@ cluster.link.bind.addr["cluster-link-udp"]=${ip.address}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="database.partition.enabled" />
+
+		<if>
+			<equals arg1="${database.partition.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+database.partition.enabled=true</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="liferay.online.properties" />
 
 		<if>

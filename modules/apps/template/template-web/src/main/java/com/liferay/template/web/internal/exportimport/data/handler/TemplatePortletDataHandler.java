@@ -104,6 +104,20 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		for (long classNameId : _templateHandlerRegistry.getClassNameIds()) {
+			_ddmTemplateLocalService.deleteTemplates(
+				portletDataContext.getScopeGroupId(), classNameId);
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

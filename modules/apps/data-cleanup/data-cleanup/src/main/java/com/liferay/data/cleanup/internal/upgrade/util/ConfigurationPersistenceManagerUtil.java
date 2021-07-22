@@ -26,17 +26,16 @@ import java.util.Dictionary;
 
 import org.apache.felix.cm.PersistenceManager;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Kevin Lee
  */
-@Component(service = {})
 public class ConfigurationPersistenceManagerUtil {
 
-	public static void resetConfiguration(Class<?> clazz) throws IOException {
-		Dictionary<String, Object> properties = _persistenceManager.load(
+	public static void resetConfiguration(
+			PersistenceManager persistenceManager, Class<?> clazz)
+		throws IOException {
+
+		Dictionary<String, Object> properties = persistenceManager.load(
 			clazz.getName());
 
 		if (properties == null) {
@@ -66,16 +65,7 @@ public class ConfigurationPersistenceManagerUtil {
 			}
 		}
 
-		_persistenceManager.store(clazz.getName(), newProperties);
+		persistenceManager.store(clazz.getName(), newProperties);
 	}
-
-	@Reference(unbind = "-")
-	protected void setPersistenceManager(
-		PersistenceManager persistenceManager) {
-
-		_persistenceManager = persistenceManager;
-	}
-
-	private static PersistenceManager _persistenceManager;
 
 }

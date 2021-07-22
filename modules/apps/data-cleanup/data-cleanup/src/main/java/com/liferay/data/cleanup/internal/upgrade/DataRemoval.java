@@ -29,6 +29,8 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.apache.felix.cm.PersistenceManager;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +48,7 @@ public class DataRemoval implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		try {
 			ConfigurationPersistenceManagerUtil.resetConfiguration(
-				DataRemovalConfiguration.class);
+				_persistenceManager, DataRemovalConfiguration.class);
 
 			_removeModuleData(
 				_dataRemovalConfiguration::removeExpiredJournalArticles,
@@ -88,6 +90,9 @@ public class DataRemoval implements UpgradeStepRegistrator {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private PersistenceManager _persistenceManager;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

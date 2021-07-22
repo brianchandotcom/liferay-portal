@@ -33,6 +33,8 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.apache.felix.cm.PersistenceManager;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,7 +52,7 @@ public class DataCleanup implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		try {
 			ConfigurationPersistenceManagerUtil.resetConfiguration(
-				DataCleanupConfiguration.class);
+				_persistenceManager, DataCleanupConfiguration.class);
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpChatModuleData,
@@ -148,6 +150,9 @@ public class DataCleanup implements UpgradeStepRegistrator {
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
+	private PersistenceManager _persistenceManager;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

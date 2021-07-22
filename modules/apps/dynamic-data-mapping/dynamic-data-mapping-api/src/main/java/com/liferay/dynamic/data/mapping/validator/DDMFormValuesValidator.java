@@ -16,12 +16,18 @@ package com.liferay.dynamic.data.mapping.validator;
 
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface DDMFormValuesValidator {
 
 	public void validate(DDMFormValues ddmFormValues)
+		throws DDMFormValuesValidationException;
+
+	public void validate(DDMFormValues ddmFormValues, String timeZoneId)
 		throws DDMFormValuesValidationException;
 
 }

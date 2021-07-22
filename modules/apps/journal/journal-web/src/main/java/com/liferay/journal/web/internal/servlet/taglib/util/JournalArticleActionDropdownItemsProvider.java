@@ -136,6 +136,11 @@ public class JournalArticleActionDropdownItemsProvider {
 						() -> hasUpdatePermission,
 						_getEditArticleActionUnsafeConsumer()
 					).add(
+						() ->
+							hasViewPermission &&
+							(previewContentArticleAction != null),
+						previewContentArticleAction
+					).add(
 						() -> {
 							Group group = _themeDisplay.getScopeGroup();
 
@@ -153,11 +158,6 @@ public class JournalArticleActionDropdownItemsProvider {
 							hasTranslatePermission && hasViewPermission &&
 							!singleLanguageSite,
 						_getTranslateActionUnsafeConsumer()
-					).add(
-						() ->
-							hasViewPermission &&
-							(previewContentArticleAction != null),
-						previewContentArticleAction
 					).add(
 						() ->
 							hasViewPermission &&
@@ -202,9 +202,6 @@ public class JournalArticleActionDropdownItemsProvider {
 							_article.getFolderId(), ActionKeys.ADD_ARTICLE),
 						_getCopyArticleActionUnsafeConsumer()
 					).add(
-						() -> hasUpdatePermission,
-						_getMoveArticleActionUnsafeConsumer()
-					).add(
 						() ->
 							hasTranslatePermission && hasViewPermission &&
 							!singleLanguageSite,
@@ -217,6 +214,9 @@ public class JournalArticleActionDropdownItemsProvider {
 							hasUpdatePermission &&
 							(availableLanguageIds.length > 1),
 						_getDeleteArticleTranslationsActionUnsafeConsumer()
+					).add(
+						() -> hasUpdatePermission,
+						_getMoveArticleActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}

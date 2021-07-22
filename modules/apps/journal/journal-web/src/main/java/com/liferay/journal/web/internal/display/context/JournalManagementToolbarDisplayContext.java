@@ -93,41 +93,56 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteEntries");
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "moveEntries");
+							dropdownItem.setIcon("move-folder");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "move"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
 
-				boolean trashEnabled = _trashHelper.isTrashEnabled(
-					_themeDisplay.getScopeGroupId());
-
-				dropdownItem.setIcon(trashEnabled ? "trash" : "times-circle");
-
-				String label = "delete";
-
-				if (trashEnabled) {
-					label = "recycle-bin";
-				}
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, label));
-
-				dropdownItem.setQuickAction(true);
+				dropdownGroupItem.setSeparator(true);
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "expireEntries");
-				dropdownItem.setIcon("time");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "expire"));
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "moveEntries");
-				dropdownItem.setIcon("move-folder");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "move"));
-				dropdownItem.setQuickAction(true);
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteEntries");
+
+							boolean trashEnabled = _trashHelper.isTrashEnabled(
+								_themeDisplay.getScopeGroupId());
+
+							dropdownItem.setIcon(
+								trashEnabled ? "trash" : "times-circle");
+
+							String label = "delete";
+
+							if (trashEnabled) {
+								label = "recycle-bin";
+							}
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, label));
+
+							dropdownItem.setQuickAction(true);
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "expireEntries");
+							dropdownItem.setIcon("time");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "expire"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

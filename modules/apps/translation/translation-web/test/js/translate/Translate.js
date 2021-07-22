@@ -137,6 +137,28 @@ describe('Translate', () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
+	it('renders with experiences selector', () => {
+		const {asFragment} = renderComponent({
+			...baseProps,
+			experiencesSelectorData: {
+				label: 'Experience',
+				options: [
+					{
+						label: 'Default',
+						value: '0',
+					},
+					{
+						label: 'Experience 1',
+						value: '1',
+					},
+				],
+				value: '0',
+			},
+		});
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
 	it('renders auto-translate field button disabled when the field sourceContent is empty', () => {
 		const {getByText} = renderComponent({
 			...baseProps,

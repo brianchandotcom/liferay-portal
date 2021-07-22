@@ -509,28 +509,51 @@ definition {
 		Upgrade.viewContributedFragmentStyle();
 	}
 
-	@description = "This is a use case for LPS-123098."
+	@description = "This is a use case for LPS-123098 and LPS-135373. View existing Banner Center fragment on page after upgrade from 7.2."
 	@priority = "4"
-	test ViewEditableFieldValueAfterUpgrade721 {
-		property data.archive.type = "data-archive-modify-editable-field-value";
+	test ViewEditedInlineContentOfBannerCenterAfterUpgrade721 {
+		property data.archive.type = "data-archive-banner-center";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Guest");
+		task ("View the edited inline content at view mode") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
 
-		AssertTextEquals(
-			locator1 = "//div[contains(@class,'banner')]//h1",
-			value1 = "Edited Banner Title");
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
 
-		ContentPages.clickPencil();
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
 
-		PageEditor.viewFragmentEditableText(
-			contributed = "false",
-			editableText = "Edited Banner Title",
-			fragmentName = "Element",
-			id = "01-title");
+		task ("View the edited inline content at edit mode") {
+			ContentPages.clickPencil();
+
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Edited Banner Title",
+				fragmentName = "Element",
+				id = "01-title");
+
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Edited Banner Subtitle",
+				fragmentName = "Element",
+				id = "02-subtitle");
+
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Edited Banner Link",
+				fragmentName = "Element",
+				id = "03-link");
+
+			AssertVisible(
+				key_fragmentName = "Element",
+				key_imageName = "Document_1.jpg",
+				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+		}
 	}
 
 	@description = "This is a use case for LPS-123098."

@@ -2169,7 +2169,10 @@ definition {
 			dmDocumentTypeName = "DM Document Type Depot",
 			textField = "DM Document Text");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 

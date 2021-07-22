@@ -100,8 +100,6 @@ import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
@@ -253,11 +251,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				(ConfigurableApplicationContext)context;
 
 			_registerApplicationContext(configurableApplicationContext);
-		}
-		else if (context instanceof ServletContext) {
-			ServletContext servletContext = (ServletContext)context;
-
-			_registerServletContext(servletContext);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -1321,25 +1314,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return serviceRegistration;
-	}
-
-	private void _registerServletContext(ServletContext servletContext) {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Register servlet context");
-		}
-
-		ServiceRegistration<?> serviceRegistration =
-			bundleContext.registerService(
-				new String[] {ServletContext.class.getName()}, servletContext,
-				_getProperties(servletContext, "liferayServletContext"));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Registered servlet context as " +
-					serviceRegistration.getReference());
-		}
 	}
 
 	private Bundle _setUpInitialBundles() throws Exception {

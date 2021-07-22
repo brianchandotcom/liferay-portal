@@ -95,9 +95,9 @@ definition {
 			numericField = "1234",
 			textField = "Text");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewDocumentTypePG(
 			numericValue = "1234",
@@ -230,19 +230,15 @@ definition {
 
 		LAR.importPortlet(larFileName = "DM_Test.lar");
 
-		Navigator.openURL();
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.doc");
 
-		Navigator.openURL();
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 	}
@@ -275,7 +271,10 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmFolderName = "DM Folder Name");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",

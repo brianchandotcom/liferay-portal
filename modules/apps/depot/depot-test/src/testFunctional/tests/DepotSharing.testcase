@@ -239,9 +239,9 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocumentSharing.changePermission(
 			depotName = "Test Depot Name",
@@ -290,9 +290,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocumentSharing.changePermission(
 			depotName = "Test Depot Name",
@@ -440,17 +440,17 @@ definition {
 			userEmailAddress = "userea2@liferay.com",
 			userName = "userfn2 userln2");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocumentSharing.viewSharedFlag(detailsView = "true");
 
 		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocumentSharing.removeCollaborator(
 			collaboratorList = "userfn,userfn2",

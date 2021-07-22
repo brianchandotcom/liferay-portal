@@ -174,14 +174,12 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Document");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
 		for (var dmDocumentTitle : list "Document_1,Document_2") {
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+			DepotNavigator.openToDMEntryInDepot(
+				depotName = "Test Depot Name",
+				dmDocumentTitle = "${dmDocumentTitle}");
 
 			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
-
-			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
 	}
 

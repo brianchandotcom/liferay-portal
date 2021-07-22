@@ -80,9 +80,9 @@ definition {
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document JPG");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -152,9 +152,9 @@ definition {
 			dmDocumentTitle = "DM Document TXT",
 			dmDocumentTitleEdit = "DM Document TXT Edit");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document TXT Edit");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document TXT Edit");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document TXT Edit");
 
@@ -188,11 +188,10 @@ definition {
 			folderName = "DM Folder Name",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document DOC");
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document DOC",
+			folderName = "DM Folder Name");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOC");
 

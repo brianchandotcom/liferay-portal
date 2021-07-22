@@ -220,9 +220,10 @@ definition {
 			dmDocumentTypeName = "DM Document Type Depot",
 			textField = "DM Document Text");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		DMDocument.viewDocumentTypePG(textContent = "DM Document Text");
 

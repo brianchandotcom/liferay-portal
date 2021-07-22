@@ -111,6 +111,12 @@ public class LanguageExtension {
 					bundleWiring.getClassLoader(), (String)baseName,
 					GetterUtil.getBoolean(excludePortalResources));
 			}
+			else {
+				attributes.put("resource.bundle.base.name", "content.Language");
+
+				resourceBundleLoader =
+					ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+			}
 
 			if (Validator.isNotNull(serviceRanking)) {
 				attributes.put(

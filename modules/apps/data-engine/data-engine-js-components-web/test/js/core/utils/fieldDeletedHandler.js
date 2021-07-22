@@ -12,10 +12,9 @@
  * details.
  */
 
-import {RulesSupport} from 'dynamic-data-mapping-form-builder';
-
 import fieldDeletedHandler from '../../../../src/main/resources/META-INF/resources/js/core/utils/fieldDeletedHandler';
 import * as FormSupport from '../../../../src/main/resources/META-INF/resources/js/utils/FormSupport.es';
+import * as RulesSupport from '../../../../src/main/resources/META-INF/resources/js/utils/rulesSupport';
 import mockPages from '../../__mock__/mockPages.es';
 
 describe('core/utils/fieldDeletedHandler', () => {

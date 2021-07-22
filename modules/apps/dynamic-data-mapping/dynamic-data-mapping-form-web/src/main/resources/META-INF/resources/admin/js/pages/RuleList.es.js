@@ -12,17 +12,17 @@
  * details.
  */
 
-import './RuleList.scss';
-
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
+import {RulesSupport} from 'data-engine-js-components-web';
 import {LangUtil, OPERATOR_OPTIONS_TYPES} from 'data-engine-taglib';
-import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import React, {useMemo} from 'react';
+
+import './RuleList.scss';
 
 const LOGICAL_OPERATOR = {
 	AND: Liferay.Language.get('and'),

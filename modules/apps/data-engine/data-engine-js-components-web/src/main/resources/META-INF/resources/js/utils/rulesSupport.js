@@ -12,13 +12,13 @@
  * details.
  */
 
-import {PagesVisitor} from 'data-engine-js-components-web';
+import {FieldUtil, Tokenizer} from 'dynamic-data-mapping-form-builder';
 
-import {Tokenizer} from '../../expressions/Tokenizer.es';
-import {DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION} from '../../util/regex.es';
-import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+import {PagesVisitor} from './visitors.es';
 
-const clearTargetValue = (actions, index) => {
+const DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION = /[a-zA-Z]+\d{8}/g;
+
+export const clearTargetValue = (actions, index) => {
 	if (actions[index]) {
 		actions[index].target = '';
 	}
@@ -26,7 +26,7 @@ const clearTargetValue = (actions, index) => {
 	return actions;
 };
 
-const clearFirstOperandValue = (condition) => {
+export const clearFirstOperandValue = (condition) => {
 	if (condition && condition.operands[0]) {
 		condition.operands[0].type = '';
 		condition.operands[0].value = '';
@@ -35,7 +35,7 @@ const clearFirstOperandValue = (condition) => {
 	return condition;
 };
 
-const clearOperatorValue = (condition) => {
+export const clearOperatorValue = (condition) => {
 	if (condition) {
 		condition.operator = '';
 	}
@@ -43,7 +43,7 @@ const clearOperatorValue = (condition) => {
 	return condition;
 };
 
-const clearSecondOperandValue = (condition) => {
+export const clearSecondOperandValue = (condition) => {
 	if (condition && condition.operands[1]) {
 		condition.operands[1].type = '';
 		condition.operands[1].value = '';
@@ -52,7 +52,7 @@ const clearSecondOperandValue = (condition) => {
 	return condition;
 };
 
-const clearAllConditionFieldValues = (condition) => {
+export const clearAllConditionFieldValues = (condition) => {
 	condition = clearFirstOperandValue(condition);
 	condition = clearOperatorValue(condition);
 	condition = clearSecondOperandValue(condition);
@@ -68,7 +68,7 @@ const fieldWithOptions = (fieldType) => {
 	);
 };
 
-const getFieldOptions = (fieldName, pages) => {
+export const getFieldOptions = (fieldName, pages) => {
 	let options = [];
 	const visitor = new PagesVisitor(pages);
 
@@ -81,8 +81,8 @@ const getFieldOptions = (fieldName, pages) => {
 	return options;
 };
 
-const getFieldType = (fieldName, pages) => {
-	return getFieldProperty(pages, fieldName, 'type');
+export const getFieldType = (fieldName, pages) => {
+	return FieldUtil.getFieldProperty(pages, fieldName, 'type');
 };
 
 const optionBelongsToRule = (condition, options) => {
@@ -116,7 +116,7 @@ const targetFieldExists = (target, pages) => {
 	return targetFieldExists;
 };
 
-const syncActions = (pages, actions) => {
+export const syncActions = (pages, actions) => {
 	actions.forEach((action) => {
 		if (action.action === 'auto-fill') {
 			const {inputs, outputs} = action;
@@ -168,7 +168,7 @@ const syncActions = (pages, actions) => {
 	return actions;
 };
 
-const formatRules = (pages, rules) => {
+export const formatRules = (pages, rules) => {
 	const visitor = new PagesVisitor(pages);
 
 	const formattedRules = (rules || []).map((rule) => {
@@ -281,7 +281,7 @@ const expressionHasNonNumericFields = (action, fields) => {
 	return hasNonNumericFields;
 };
 
-const fieldNameBelongsToAction = (actions, fieldName, fields) => {
+export const fieldNameBelongsToAction = (actions, fieldName, fields) => {
 	const emptyField = '[]';
 
 	return actions
@@ -320,7 +320,7 @@ const fieldNameBelongsToAction = (actions, fieldName, fields) => {
 		.some((fieldFound) => fieldFound === true);
 };
 
-const fieldNameBelongsToCondition = (conditions, fieldName) => {
+export const fieldNameBelongsToCondition = (conditions, fieldName) => {
 	return conditions
 		.map((condition) => {
 			return condition.operands
@@ -330,7 +330,7 @@ const fieldNameBelongsToCondition = (conditions, fieldName) => {
 		.some((fieldFound) => fieldFound === true);
 };
 
-const findRuleByFieldName = (fieldName, pages, rules) => {
+export const findRuleByFieldName = (fieldName, pages, rules) => {
 	return rules.some(
 		(rule) =>
 			fieldNameBelongsToAction(rule.actions, fieldName, pages) ||
@@ -341,7 +341,7 @@ const findRuleByFieldName = (fieldName, pages, rules) => {
 const isOperandValid = (operand) =>
 	operand && Boolean(operand.type) && Boolean(operand.value);
 
-const isConditionsValid = (conditions) =>
+export const isConditionsValid = (conditions) =>
 	conditions
 		.map(({operator, operands: [left, right]}) => {
 			if (['is-empty', 'not-is-empty'].includes(operator)) {
@@ -356,7 +356,7 @@ const isConditionsValid = (conditions) =>
 		})
 		.every((result) => result === true);
 
-const isActionsValid = (actions) =>
+export const isActionsValid = (actions) =>
 	actions
 		.map(({action, target, ...payload}) => {
 			switch (action) {
@@ -384,11 +384,11 @@ const isActionsValid = (actions) =>
 		})
 		.every((result) => result === true);
 
-const findInvalidRule = (pages, rule) => {
+export const findInvalidRule = (pages, rule) => {
 	return findRuleByFieldName('', pages, [rule]);
 };
 
-const replaceFieldNameByFieldLabel = (expression, fields) => {
+export const replaceFieldNameByFieldLabel = (expression, fields) => {
 	const operands = expression.match(DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION);
 
 	if (!operands) {
@@ -406,23 +406,4 @@ const replaceFieldNameByFieldLabel = (expression, fields) => {
 	});
 
 	return newExpression;
-};
-
-export default {
-	clearAllConditionFieldValues,
-	clearFirstOperandValue,
-	clearOperatorValue,
-	clearSecondOperandValue,
-	clearTargetValue,
-	fieldNameBelongsToAction,
-	fieldNameBelongsToCondition,
-	findInvalidRule,
-	findRuleByFieldName,
-	formatRules,
-	getFieldOptions,
-	getFieldType,
-	isActionsValid,
-	isConditionsValid,
-	replaceFieldNameByFieldLabel,
-	syncActions,
 };

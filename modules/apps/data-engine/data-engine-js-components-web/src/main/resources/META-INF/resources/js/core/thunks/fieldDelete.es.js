@@ -13,18 +13,13 @@
  */
 
 import ClayButton from '@clayui/button';
-import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import React from 'react';
+
+import {findRuleByFieldName} from '../../utils/rulesSupport';
 
 export default function fieldDelete({action, modalDispatch, onClose, rules}) {
 	return (dispatch) => {
-		if (
-			!RulesSupport.findRuleByFieldName(
-				action.payload.fieldName,
-				null,
-				rules
-			)
-		) {
+		if (!findRuleByFieldName(action.payload.fieldName, null, rules)) {
 			dispatch(action);
 
 			return;

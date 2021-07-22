@@ -15,12 +15,12 @@
 import {
 	FieldSupport,
 	FieldUtil,
-	RulesSupport,
 	RulesUtil,
 	SettingsContext,
 } from 'dynamic-data-mapping-form-builder';
 
 import * as FormSupport from '../../utils/FormSupport.es';
+import {formatRules} from '../../utils/rulesSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import sectionAdded from '../utils/sectionAddedHandler';
@@ -340,9 +340,7 @@ export default (state, action, config) => {
 			return {
 				focusedField: {},
 				pages: newPages,
-				rules: editRule
-					? RulesSupport.formatRules(newPages, rules)
-					: rules,
+				rules: editRule ? formatRules(newPages, rules) : rules,
 			};
 		}
 		case EVENT_TYPES.FIELD.DUPLICATE: {

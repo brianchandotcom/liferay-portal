@@ -12,20 +12,20 @@
  * details.
  */
 
-import './Editor.scss';
-
 import {ClayModalProvider} from '@clayui/modal';
 import {
 	PageProvider as FieldProvider,
+	RulesSupport,
 	useFieldTypesResource,
 } from 'data-engine-js-components-web';
-import RulesSupport from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RulesSupport.es';
 import React, {useEffect, useReducer} from 'react';
 
 import {Actions} from './Actions.es';
 import {Conditions} from './Conditions.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
 import {ACTION_TARGET_SHAPE, DEFAULT_RULE, RIGHT_TYPES} from './config.es';
+
+import './Editor.scss';
 
 const CONFIG_DATA = {
 	actions: {

@@ -14,7 +14,6 @@
 
 // Utils
 
-import sectionAdded from './core/utils/sectionAddedHandler';
 export {default as compose} from './utils/compose.es';
 export {normalizeFieldName} from './utils/fields.es';
 export {
@@ -30,6 +29,7 @@ export {getUid} from './utils/formId.es';
 export {parseProps} from './utils/parseProps.es';
 export {makeFetch, convertToFormData} from './utils/fetch.es';
 export {default as setDataRecord} from './utils/setDataRecord.es';
+export * as RulesSupport from './utils/rulesSupport';
 
 // Form/Data Engine Core
 
@@ -45,7 +45,7 @@ export {FormProvider, useForm, useFormState} from './core/hooks/useForm.es';
 export {ConfigProvider, useConfig} from './core/hooks/useConfig.es';
 export {Layout} from './core/components/PageRenderer/Layout.es';
 export * as DefaultVariant from './core/components/PageRenderer/DefaultVariant.es';
-export {sectionAdded};
+export {default as sectionAdded} from './core/utils/sectionAddedHandler';
 
 // Custom Form
 

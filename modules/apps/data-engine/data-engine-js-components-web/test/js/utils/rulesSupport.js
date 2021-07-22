@@ -12,7 +12,13 @@
  * details.
  */
 
-import RulesSupport from '../../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';
+import {
+	clearFirstOperandValue,
+	clearOperatorValue,
+	clearSecondOperandValue,
+	clearTargetValue,
+	findRuleByFieldName,
+} from '../../../src/main/resources/META-INF/resources/js/utils/rulesSupport';
 
 const mockActions = [
 	{
@@ -45,7 +51,7 @@ describe('RulesSupport', () => {
 	it('clears the action target value', () => {
 		const mockArgument = [...mockActions];
 
-		const actions = RulesSupport.clearTargetValue(mockArgument, 0);
+		const actions = clearTargetValue(mockArgument, 0);
 
 		expect(actions[0].target).toEqual('');
 	});
@@ -53,7 +59,7 @@ describe('RulesSupport', () => {
 	it('clears the first operand value', () => {
 		const mockArgument = [...mockConditions];
 
-		const condition = RulesSupport.clearFirstOperandValue(mockArgument[0]);
+		const condition = clearFirstOperandValue(mockArgument[0]);
 
 		expect(condition.operands[0].type).toEqual('');
 		expect(condition.operands[0].value).toEqual('');
@@ -62,7 +68,7 @@ describe('RulesSupport', () => {
 	it('clears the operator value', () => {
 		const mockArgument = [...mockConditions];
 
-		const condition = RulesSupport.clearOperatorValue(mockArgument[0]);
+		const condition = clearOperatorValue(mockArgument[0]);
 
 		expect(condition.operator).toEqual('');
 	});
@@ -70,7 +76,7 @@ describe('RulesSupport', () => {
 	it('clears the second operand value', () => {
 		const mockArgument = [...mockConditions];
 
-		const condition = RulesSupport.clearSecondOperandValue(mockArgument[0]);
+		const condition = clearSecondOperandValue(mockArgument[0]);
 
 		expect(condition.operands[1].type).toEqual('');
 		expect(condition.operands[1].value).toEqual('');
@@ -104,9 +110,7 @@ describe('RulesSupport', () => {
 				},
 			];
 
-			expect(
-				RulesSupport.findRuleByFieldName('text3', null, rules)
-			).toBeFalsy();
+			expect(findRuleByFieldName('text3', null, rules)).toBeFalsy();
 		});
 
 		it('returns true if field belongs to rule', () => {
@@ -136,17 +140,11 @@ describe('RulesSupport', () => {
 				},
 			];
 
-			expect(
-				RulesSupport.findRuleByFieldName('date1', null, rules)
-			).toBeTruthy();
+			expect(findRuleByFieldName('date1', null, rules)).toBeTruthy();
 
-			expect(
-				RulesSupport.findRuleByFieldName('text1', null, rules)
-			).toBeTruthy();
+			expect(findRuleByFieldName('text1', null, rules)).toBeTruthy();
 
-			expect(
-				RulesSupport.findRuleByFieldName('text2', null, rules)
-			).toBeTruthy();
+			expect(findRuleByFieldName('text2', null, rules)).toBeTruthy();
 		});
 
 		it('returns true if field belongs to calculate rule', () => {
@@ -173,13 +171,9 @@ describe('RulesSupport', () => {
 				},
 			];
 
-			expect(
-				RulesSupport.findRuleByFieldName('num1', null, rules)
-			).toBeTruthy();
+			expect(findRuleByFieldName('num1', null, rules)).toBeTruthy();
 
-			expect(
-				RulesSupport.findRuleByFieldName('num2', null, rules)
-			).toBeTruthy();
+			expect(findRuleByFieldName('num2', null, rules)).toBeTruthy();
 		});
 
 		it('returns true if field belongs to auto-fill rule', () => {
@@ -210,13 +204,9 @@ describe('RulesSupport', () => {
 				},
 			];
 
-			expect(
-				RulesSupport.findRuleByFieldName('select1', null, rules)
-			).toBeTruthy();
+			expect(findRuleByFieldName('select1', null, rules)).toBeTruthy();
 
-			expect(
-				RulesSupport.findRuleByFieldName('text2', null, rules)
-			).toBeTruthy();
+			expect(findRuleByFieldName('text2', null, rules)).toBeTruthy();
 		});
 	});
 });

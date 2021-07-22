@@ -14,8 +14,7 @@
 		],
 		"testPathIgnorePatterns": [
 			"fieldSupport",
-			"LayoutProvider/util",
-			"RuleBuilder/RulesSupport."
+			"LayoutProvider/util"
 		]
 	},
 	"main": "js/index.es.js",

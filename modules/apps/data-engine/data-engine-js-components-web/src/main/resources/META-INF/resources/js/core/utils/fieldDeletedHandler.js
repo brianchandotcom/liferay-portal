@@ -12,9 +12,10 @@
  * details.
  */
 
-import {FieldSupport, RulesSupport} from 'dynamic-data-mapping-form-builder';
+import {FieldSupport} from 'dynamic-data-mapping-form-builder';
 
-import * as FormSupport from '../../utils/FormSupport.es';
+import {removeEmptyRows as removeEmptyRowsUtil} from '../../utils/FormSupport.es';
+import {formatRules} from '../../utils/rulesSupport';
 
 export const handleFieldDeleted = (
 	props,
@@ -39,10 +40,7 @@ export const handleFieldDeleted = (
 			return {
 				...page,
 				rows: removeEmptyRows
-					? FormSupport.removeEmptyRows(
-							pagesWithFieldRemoved,
-							pageIndex
-					  )
+					? removeEmptyRowsUtil(pagesWithFieldRemoved, pageIndex)
 					: pagesWithFieldRemoved[pageIndex].rows,
 			};
 		}
@@ -53,9 +51,7 @@ export const handleFieldDeleted = (
 	return {
 		focusedField: {},
 		pages: newPages,
-		rules: editRule
-			? RulesSupport.formatRules(newPages, state.rules)
-			: state.rules,
+		rules: editRule ? formatRules(newPages, state.rules) : state.rules,
 	};
 };
 

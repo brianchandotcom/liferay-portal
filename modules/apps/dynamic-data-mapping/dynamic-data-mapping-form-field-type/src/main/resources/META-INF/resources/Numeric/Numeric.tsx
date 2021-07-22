@@ -143,6 +143,7 @@ const Numeric: React.FC<IProps> = ({
 	inputMaskFormat: inputMaskFormatInitial,
 	localizedValue,
 	name,
+	numericInputMask,
 	onBlur,
 	onChange,
 	onFocus,
@@ -238,20 +239,37 @@ const Numeric: React.FC<IProps> = ({
 		}
 
 		if (dataType === 'double') {
+			const newInputMask = {append, appendType, symbols};
+
+			if (typeof numericInputMask === 'string') {
+				const parsedInputMask = JSON.parse(numericInputMask);
+
+				newInputMask.append = parsedInputMask.append ?? append;
+				newInputMask.appendType =
+					parsedInputMask.appendType ?? appendType;
+				newInputMask.symbols = parsedInputMask.symbols ?? symbols;
+			}
+
 			return getMaskedValue({
-				append,
-				appendType,
+				...newInputMask,
 				dataType,
 				inputMask,
 				inputMaskFormat,
-				symbols,
 				value: '0.00'.replace('.', symbols.decimalSymbol),
 			}).masked;
 		}
 		else {
 			return inputMaskFormat?.replace(/\d/g, '_');
 		}
-	}, [append, appendType, dataType, inputMask, inputMaskFormat, symbols]);
+	}, [
+		append,
+		appendType,
+		dataType,
+		inputMask,
+		inputMaskFormat,
+		numericInputMask,
+		symbols,
+	]);
 
 	return (
 		<FieldBase
@@ -289,6 +307,12 @@ interface IMaskedNumber {
 	raw: string;
 }
 
+interface INumericInputMask {
+	append: string;
+	appendType: 'prefix' | 'suffix';
+	symbols: ISymbols;
+}
+
 interface INumberMaskConfig {
 	allowDecimal?: boolean;
 	allowLeadingZeroes: boolean;
@@ -310,6 +334,7 @@ interface IProps {
 	inputMaskFormat?: string;
 	localizedValue?: LocalizedValue<string>;
 	name: string;
+	numericInputMask: INumericInputMask | string;
 	onBlur: FocusEventHandler<HTMLInputElement>;
 	onChange: (event: {target: {value: string}}) => void;
 	onFocus: FocusEventHandler<HTMLInputElement>;

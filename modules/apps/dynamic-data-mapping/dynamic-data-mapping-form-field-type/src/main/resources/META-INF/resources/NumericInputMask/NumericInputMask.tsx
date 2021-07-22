@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {FocusEventHandler, useMemo, useState} from 'react';
+import React, {FocusEventHandler, useEffect, useMemo, useState} from 'react';
 
 // @ts-ignore
 
@@ -33,6 +33,7 @@ interface INumericInputMaskValue {
 	append?: string;
 	appendType?: 'prefix' | 'suffix';
 	decimalSymbol?: DecimalSymbol[];
+	symbols: LocalizedValue<ISymbols>;
 	thousandsSeparator?: ThousandsSeparator[];
 }
 interface IProps {
@@ -40,6 +41,8 @@ interface IProps {
 	appendType?: 'prefix' | 'suffix';
 	decimalSymbol: DecimalSymbol[];
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
+	defaultLanguageId: Locale;
+	editingLanguageId: Locale;
 	readOnly: boolean;
 	thousandsSeparator?: ThousandsSeparator[];
 	thousandsSeparators: ISelectProps<ThousandsSeparator>[];
@@ -67,12 +70,14 @@ const NumericInputMask: React.FC<IProps> = ({
 	appendType: appendTypeInitial,
 	decimalSymbol: decimalSymbolInitial,
 	decimalSymbols: decimalSymbolsProp,
+	editingLanguageId,
 	onBlur,
 	onChange,
 	onFocus,
 	readOnly,
 	thousandsSeparator: thousandsSeparatorInitial,
 	thousandsSeparators: thousandsSeparatorsProp,
+	value,
 	visible,
 }) => {
 	const [thousandsSeparator, setThousandsSeparator] = useState(
@@ -99,6 +104,30 @@ const NumericInputMask: React.FC<IProps> = ({
 			};
 		});
 	}, [decimalSymbol, thousandsSeparatorsProp]);
+
+	useEffect(() => {
+		const newValue =
+			typeof value === 'string' ? JSON.parse(value) : {...value};
+
+		setAppend(newValue.append ?? append);
+
+		setAppendType(newValue.appendType ?? appendType);
+
+		const symbols = newValue.symbols;
+
+		setDecimalSymbol(symbols?.decimalSymbol ?? decimalSymbol);
+
+		setThousandsSeparator(
+			symbols?.thousandsSeparator ?? thousandsSeparator
+		);
+	}, [
+		append,
+		appendType,
+		decimalSymbol,
+		editingLanguageId,
+		thousandsSeparator,
+		value,
+	]);
 
 	const handleChange = (key: string, value: string | ISymbols) => {
 		onChange({

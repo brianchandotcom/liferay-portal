@@ -19,6 +19,7 @@ interface INumericInputMaskValue {
 	append?: string;
 	appendType?: 'prefix' | 'suffix';
 	decimalSymbol?: DecimalSymbol[];
+	symbols: LocalizedValue<ISymbols>;
 	thousandsSeparator?: ThousandsSeparator[];
 }
 interface IProps {
@@ -26,6 +27,8 @@ interface IProps {
 	appendType?: 'prefix' | 'suffix';
 	decimalSymbol: DecimalSymbol[];
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
+	defaultLanguageId: Locale;
+	editingLanguageId: Locale;
 	readOnly: boolean;
 	thousandsSeparator?: ThousandsSeparator[];
 	thousandsSeparators: ISelectProps<ThousandsSeparator>[];

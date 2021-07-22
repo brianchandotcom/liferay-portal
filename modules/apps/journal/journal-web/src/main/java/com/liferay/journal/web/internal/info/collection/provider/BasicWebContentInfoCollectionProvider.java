@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
@@ -46,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true, service = InfoCollectionProvider.class
 )
 public class BasicWebContentInfoCollectionProvider
-	implements InfoCollectionProvider<JournalArticle> {
+	implements SingleFormVariationInfoCollectionProvider<JournalArticle> {
 
 	@Override
 	public InfoPage<JournalArticle> getCollectionInfoPage(
@@ -86,7 +87,7 @@ public class BasicWebContentInfoCollectionProvider
 	}
 
 	@Override
-	public String getCollectionItemFormVariationKey() {
+	public String getFormVariationKey() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 

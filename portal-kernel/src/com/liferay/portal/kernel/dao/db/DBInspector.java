@@ -237,7 +237,7 @@ public class DBInspector {
 		return name;
 	}
 
-	protected boolean hasIndex(String tableName, String indexName)
+	public boolean hasIndex(String tableName, String indexName)
 		throws Exception {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();

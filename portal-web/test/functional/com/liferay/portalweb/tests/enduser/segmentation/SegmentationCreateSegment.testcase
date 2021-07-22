@@ -2240,23 +2240,23 @@ definition {
 	test ValidatePropertyDisplayedInSection {
 		task ("Click on USER field type and asser if its properties are displayed.") {
 			LexiconEntry.gotoAdd();
-			
+
 			AssertElementPresent(
 				key_propertyOption = "Date of Birth",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}
-		
+
 		task ("Click on ORGANIZATION field type and asser if its properties are displayed.") {
 			Segmentation.gotoSidebar(fieldType = "Organization");
-			
+
 			AssertElementPresent(
 				key_propertyOption = "Country",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}
-		
+
 		task ("Click on SESSION field type and asser if its properties are displayed.") {
 			Segmentation.gotoSidebar(fieldType = "Session");
-			
+
 			AssertElementPresent(
 				key_propertyOption = "Browser",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
@@ -2264,7 +2264,7 @@ definition {
 
 		task ("Click on SEGMENTS field type and asser if its properties are displayed.") {
 			Segmentation.gotoSidebar(fieldType = "Segments");
-			
+
 			AssertElementPresent(
 				key_propertyOption = "Segment",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
@@ -2281,19 +2281,19 @@ definition {
 				operator = "contains",
 				segmentName = "Segment With Multiple Conditions",
 				text = "Test");
-			
+
 			Refresh();
 		}
-		
+
 		task ("Try to drag property to wrong section") {
 			Segmentation.editSegment(entry = "Segment With Multiple Conditions");
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_propertyOption = "Country",
 				locator1 = "Segmentation#ADD_FIELD_TYPE",
 				locator2 = "Segmentation#ADD_FIELD_POSITION_EDIT",
-				key_propertyOption = "Country",
 				value1 = "Country");
 		}
 
@@ -2301,7 +2301,7 @@ definition {
 			AssertElementNotPresent(
 				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
 				propertyName = "Country");
-			
+
 			Refresh();
 		}
 
@@ -2309,15 +2309,14 @@ definition {
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_propertyOption = "Country",
 				locator1 = "Segmentation#ADD_FIELD_TYPE",
 				locator2 = "Segmentation#ADD_FIELD_POSITION_EMPTY",
-				key_propertyOption = "Country",
 				value1 = "Country");
 
 			AssertElementPresent(
 				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
-				propertyName = "Country"
-			);
+				propertyName = "Country");
 		}
 	}
 
@@ -2326,7 +2325,7 @@ definition {
 	test ValidatePropertyNotDisplayedDifferentSection {
 		task ("Click on USER field type and assert if other properties are not displayed") {
 			LexiconEntry.gotoAdd();
-			
+
 			for (var option : list "Country, Browser, Segment") {
 				AssertElementNotPresent(
 					key_propertyOption = "${option}",
@@ -2336,7 +2335,7 @@ definition {
 
 		task ("Click on ORGANIZATION field type and assert if other properties are not displayed") {
 			Segmentation.gotoSidebar(fieldType = "Organization");
-			
+
 			for (var option : list "Date of Birth, Browser, Segment") {
 				AssertElementNotPresent(
 					key_propertyOption = "${option}",
@@ -2346,7 +2345,7 @@ definition {
 
 		task ("Click on SESSION field type and assert if other properties are not displayed") {
 			Segmentation.gotoSidebar(fieldType = "Session");
-			
+
 			for (var option : list "Date of Birth, Country, Segment") {
 				AssertElementNotPresent(
 					key_propertyOption = "${option}",
@@ -2356,7 +2355,7 @@ definition {
 
 		task ("Click on SEGMENTS field type and assert if other properties are not displayed") {
 			Segmentation.gotoSidebar(fieldType = "Segments");
-			
+
 			for (var option : list "Date of Birth, Country, Browser") {
 				AssertElementNotPresent(
 					key_propertyOption = "${option}",

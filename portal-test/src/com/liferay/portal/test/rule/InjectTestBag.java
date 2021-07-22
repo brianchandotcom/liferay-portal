@@ -27,13 +27,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Stream;
 
 /**
  * @author Preston Crary
@@ -70,8 +67,11 @@ public class InjectTestBag {
 
 			Class<?> clazz = inject.type();
 
-			if (clazz == Object.class) {
+			if (clazz == Inject.FieldType.class) {
 				clazz = field.getType();
+			}
+			else if (clazz == Inject.NoType.class) {
+				clazz = null;
 			}
 
 			ServiceReference<?> serviceReference = _getServiceReference(
@@ -102,7 +102,7 @@ public class InjectTestBag {
 			return "(objectClass=" + clazz.getName() + ")";
 		}
 
-		if ((clazz != Object.class) && !filterString.contains("objectClass")) {
+		if ((clazz != null) && !filterString.contains("objectClass")) {
 			int index = filterString.indexOf('&');
 
 			StringBundler sb = new StringBundler(5);
@@ -123,6 +123,9 @@ public class InjectTestBag {
 			}
 
 			filterString = sb.toString();
+		}
+		else if (!filterString.startsWith("(")) {
+			filterString = StringBundler.concat("(", filterString, ")");
 		}
 
 		return filterString;
@@ -180,7 +183,11 @@ public class InjectTestBag {
 
 		int waitTime = 0;
 
-		String className = clazz.getName();
+		String className = "(no type)";
+
+		if (clazz != null) {
+			className = clazz.getName();
+		}
 
 		while (serviceReference == null) {
 			waitTime += _SLEEP_TIME;
@@ -223,14 +230,20 @@ public class InjectTestBag {
 			Registry registry, Class<T> clazz, String filterString)
 		throws Exception {
 
-		Collection<ServiceReference<T>> serviceReferences =
-			registry.getServiceReferences(clazz, filterString);
+		String className = null;
 
-		Stream<ServiceReference<T>> stream = serviceReferences.stream();
+		if (clazz != null) {
+			className = clazz.getName();
+		}
 
-		Optional<ServiceReference<T>> optional = stream.findFirst();
+		ServiceReference<T>[] serviceReferences =
+			registry.getAllServiceReferences(className, filterString);
 
-		return optional.orElse(null);
+		if ((serviceReferences == null) || (serviceReferences.length == 0)) {
+			return null;
+		}
+
+		return serviceReferences[0];
 	}
 
 	private static final int _SLEEP_TIME = 2000;

@@ -30,6 +30,12 @@ public @interface Inject {
 
 	public String filter() default "";
 
-	public Class<?> type() default Object.class;
+	public Class<?> type() default FieldType.class;
+
+	public interface FieldType {
+	}
+
+	public interface NoType {
+	}
 
 }

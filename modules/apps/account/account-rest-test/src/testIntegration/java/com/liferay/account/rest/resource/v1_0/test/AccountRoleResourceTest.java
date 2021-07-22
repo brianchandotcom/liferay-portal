@@ -63,7 +63,9 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 
-		_account = _accountResource.postAccount(_randomAccount());
+		_account = _accountResource.putAccountByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			_randomAccount());
 	}
 
 	@After
@@ -301,8 +303,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		return new Account() {
 			{
 				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

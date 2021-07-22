@@ -352,6 +352,7 @@
 		<check name="IfStatementCheck">
 			<category name="Styling" />
 			<description name="Finds empty if-statements and consecutive if-statements with identical bodies" />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="Java2HTMLCheck">
 			<category name="Miscellaneous" />
@@ -916,6 +917,7 @@
 		<check name="IfStatementCheck">
 			<category name="Styling" />
 			<description name="Finds empty if-statements and consecutive if-statements with identical bodies" />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPArrowFunctionCheck">
 			<category name="Bug Prevention" />

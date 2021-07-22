@@ -609,27 +609,30 @@ public abstract class BaseDB implements DB {
 			boolean dropIndexes)
 		throws IOException, SQLException {
 
-		List<Index> indexes = getIndexes(connection);
+		process(
+			companyId -> {
+				List<Index> indexes = getIndexes(connection);
 
-		Set<String> validIndexNames = null;
+				Set<String> validIndexNames = null;
 
-		if (dropIndexes) {
-			validIndexNames = dropIndexes(
-				connection, tablesSQL, indexesSQL, indexes);
-		}
-		else {
-			validIndexNames = new HashSet<>();
+				if (dropIndexes) {
+					validIndexNames = dropIndexes(
+						connection, tablesSQL, indexesSQL, indexes);
+				}
+				else {
+					validIndexNames = new HashSet<>();
 
-			for (Index index : indexes) {
-				String indexName = StringUtil.toUpperCase(index.getIndexName());
+					for (Index index : indexes) {
+						String indexName = StringUtil.toUpperCase(index.getIndexName());
 
-				validIndexNames.add(indexName);
-			}
-		}
+						validIndexNames.add(indexName);
+					}
+				}
 
-		indexesSQL = _applyMaxStringIndexLengthLimitation(indexesSQL);
+				indexesSQL = _applyMaxStringIndexLengthLimitation(indexesSQL);
 
-		addIndexes(connection, indexesSQL, validIndexNames);
+				addIndexes(connection, indexesSQL, validIndexNames);
+			});
 	}
 
 	protected BaseDB(DBType dbType, int majorVersion, int minorVersion) {

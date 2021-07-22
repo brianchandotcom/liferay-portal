@@ -15,7 +15,7 @@
 package com.liferay.object.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
-import com.liferay.object.web.internal.display.context.util.ObjectDefinitionRequestHelper;
+import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Collections;
@@ -32,8 +32,7 @@ public class ObjectDefinitionDisplayContext {
 		HttpServletRequest httpServletRequest, String restContextPath) {
 
 		_apiURL = "/o/" + restContextPath;
-		_objectDefinitionRequestHelper = new ObjectDefinitionRequestHelper(
-			httpServletRequest);
+		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
 	public String getAPIURL() {
@@ -46,16 +45,15 @@ public class ObjectDefinitionDisplayContext {
 		return Collections.singletonList(
 			new ClayDataSetActionDropdownItem(
 				_apiURL + "/{id}", "trash", "delete",
-				LanguageUtil.get(
-					_objectDefinitionRequestHelper.getRequest(), "delete"),
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
 	}
 
 	public String getClayHeadlessDataSetDisplayId() {
-		return _objectDefinitionRequestHelper.getPortletId();
+		return _objectRequestHelper.getPortletId();
 	}
 
 	private final String _apiURL;
-	private final ObjectDefinitionRequestHelper _objectDefinitionRequestHelper;
+	private final ObjectRequestHelper _objectRequestHelper;
 
 }

@@ -21,11 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class ObjectDefinitionRequestHelper extends BaseRequestHelper {
+public class ObjectRequestHelper extends BaseRequestHelper {
 
-	public ObjectDefinitionRequestHelper(
-		HttpServletRequest httpServletRequest) {
-
+	public ObjectRequestHelper(HttpServletRequest httpServletRequest) {
 		super(httpServletRequest);
 	}
 

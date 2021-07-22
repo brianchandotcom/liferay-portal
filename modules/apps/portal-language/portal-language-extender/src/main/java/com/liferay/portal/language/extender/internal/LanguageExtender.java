@@ -21,6 +21,7 @@ import java.util.List;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
@@ -46,27 +47,20 @@ public class LanguageExtender
 		List<BundleCapability> bundleCapabilities =
 			bundleWiring.getCapabilities("liferay.resource.bundle");
 
-		LanguageExtension languageExtension = null;
-
 		if ((bundleCapabilities == null) || bundleCapabilities.isEmpty()) {
-			languageExtension = new DefaultLanguageExtension(
-				bundle, _bundleContext);
+			return null;
 		}
-		else {
-			languageExtension = new BundleCapabilityLanguageExtension(
-				_bundleContext, bundle, bundleCapabilities);
-		}
+
+		LanguageExtension languageExtension = new LanguageExtension(
+			_bundleContext, bundle, bundleCapabilities);
 
 		try {
 			languageExtension.start();
 		}
-		catch (RuntimeException runtimeException) {
-			throw runtimeException;
-		}
-		catch (Exception exception) {
+		catch (InvalidSyntaxException invalidSyntaxException) {
 			languageExtension.destroy();
 
-			throw new RuntimeException(exception);
+			throw new RuntimeException(invalidSyntaxException);
 		}
 
 		return languageExtension;

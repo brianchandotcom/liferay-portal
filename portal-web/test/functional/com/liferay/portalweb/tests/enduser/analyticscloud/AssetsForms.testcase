@@ -37,7 +37,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8121 | Test Summary: Assert clicking a form in the forms list navigates to the form overview page"
-	@ignore = "true"
 	@priority = "5"
 	test CanNavigatesToFormsOverviewPage {
 		Navigator.openURL();

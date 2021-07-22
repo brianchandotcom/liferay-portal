@@ -473,9 +473,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws E {
 
 		if (CompanyThreadLocal.isLocked()) {
-			companies = new ArrayList<>();
+			unsafeConsumer.accept(
+				fetchCompanyById(CompanyThreadLocal.getCompanyId()));
 
-			companies.add(fetchCompanyById(CompanyThreadLocal.getCompanyId()));
+			return;
 		}
 
 		for (Company company : companies) {
@@ -511,7 +512,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws E {
 
 		if (CompanyThreadLocal.isLocked()) {
-			companyIds = new long[] {CompanyThreadLocal.getCompanyId()};
+			unsafeConsumer.accept(CompanyThreadLocal.getCompanyId());
+
+			return;
 		}
 
 		for (long companyId : companyIds) {

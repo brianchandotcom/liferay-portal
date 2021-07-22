@@ -61,6 +61,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
+
+		PortletResourcePermission portletResourcePermission =
+			PortletResourcePermissionFactory.create(
+				objectDefinition.getResourceName(),
+				new ObjectEntryPortletPermissionLogic());
+
 		return Arrays.asList(
 			_bundleContext.registerService(
 				InfoListProvider.class,
@@ -73,7 +79,34 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition, _objectEntryLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
+				PortletResourcePermission.class, portletResourcePermission,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"resource.name", objectDefinition.getResourceName()
+				).put(
+					"object", "true"
+				).build()),
+			_bundleContext.registerService(
+				ModelResourcePermission.class,
+				new ObjectEntryModelResourcePermission(
+					objectDefinition.getClassName(), _objectEntryLocalService,
+					portletResourcePermission),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", objectDefinition.getClassName()
+				).put(
+					"object", "true"
 				).build()));
+	}
+
+	@Override
+	public void undeploy(ObjectDefinition objectDefinition) {
+
+		//TODO Should we remove the resource actions at each
+
+		// undeploy or just if we delete the object?
+		// How does it works in portal?
+
 	}
 
 	@Activate

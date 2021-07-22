@@ -1,5 +1,21 @@
 definition {
 
+	macro addAccountSpecificRole {
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add New Role");
+
+		PortletEntry.inputTitle(title = "${accountRoleTitle}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addAccountWithDomain {
 		LexiconEntry.gotoAdd();
 

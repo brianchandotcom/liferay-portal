@@ -289,12 +289,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
 
 		if ((nextSiblingDetailAST == null) ||
-			(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+			(nextSiblingDetailAST.getType() != TokenTypes.SEMI) ||
+			_hasPrecedingVariableDef(parentDetailAST)) {
 
-			return;
-		}
-
-		if (_hasPrecedingVariableDef(parentDetailAST)) {
 			return;
 		}
 

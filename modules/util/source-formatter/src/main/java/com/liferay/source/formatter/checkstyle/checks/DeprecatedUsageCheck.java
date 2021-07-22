@@ -61,11 +61,9 @@ public class DeprecatedUsageCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if (parentDetailAST != null) {
-			return;
-		}
+		if ((parentDetailAST != null) ||
+			AnnotationUtil.containsAnnotation(detailAST, "Deprecated")) {
 
-		if (AnnotationUtil.containsAnnotation(detailAST, "Deprecated")) {
 			return;
 		}
 

@@ -76,12 +76,9 @@ public class JavaTaglibMethodCheck extends BaseJavaTermCheck {
 			javaClass, absolutePath);
 
 		if (!_containsClass(
-				extendedTagJavaClasses, "com.liferay.taglib.util.IncludeTag")) {
+				extendedTagJavaClasses, "com.liferay.taglib.util.IncludeTag") ||
+			(extendedTagJavaClasses == null)) {
 
-			return javaTerm.getContent();
-		}
-
-		if (extendedTagJavaClasses == null) {
 			return javaTerm.getContent();
 		}
 

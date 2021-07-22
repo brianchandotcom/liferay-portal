@@ -248,11 +248,8 @@ public class ChainingCheck extends BaseCheck {
 
 		DetailAST methodCallDetailAST = dotDetailAST.getParent();
 
-		if (methodCallDetailAST.getType() != TokenTypes.METHOD_CALL) {
-			return;
-		}
-
-		if ((detailAST.findFirstToken(TokenTypes.ARRAY_DECLARATOR) != null) ||
+		if ((methodCallDetailAST.getType() != TokenTypes.METHOD_CALL) ||
+			(detailAST.findFirstToken(TokenTypes.ARRAY_DECLARATOR) != null) ||
 			(detailAST.findFirstToken(TokenTypes.OBJBLOCK) != null)) {
 
 			return;

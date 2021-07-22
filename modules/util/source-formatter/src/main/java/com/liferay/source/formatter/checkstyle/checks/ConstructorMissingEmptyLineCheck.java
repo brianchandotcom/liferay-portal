@@ -95,11 +95,9 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 
 		DetailAST childDetailAST = expressionDetailAST.getFirstChild();
 
-		if (childDetailAST.getType() != TokenTypes.ASSIGN) {
-			return false;
-		}
+		if ((childDetailAST.getType() != TokenTypes.ASSIGN) ||
+			(childDetailAST.getChildCount() != 2)) {
 
-		if (childDetailAST.getChildCount() != 2) {
 			return false;
 		}
 

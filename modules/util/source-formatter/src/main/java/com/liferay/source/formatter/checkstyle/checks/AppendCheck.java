@@ -73,12 +73,8 @@ public class AppendCheck extends BaseStringConcatenationCheck {
 				i - 1);
 
 			if (!variableName.equals(
-					getVariableName(previousMethodCallDetailAST))) {
-
-				continue;
-			}
-
-			if (_containsMethodCall(
+					getVariableName(previousMethodCallDetailAST)) ||
+				_containsMethodCall(
 					detailAST, variableName, "setIndex", "setStringAt")) {
 
 				continue;
@@ -123,13 +119,9 @@ public class AppendCheck extends BaseStringConcatenationCheck {
 			previousLiteralStringValue, literalStringValue,
 			previousMethodCallDetailAST.getLineNo());
 
-		if (_hasIncorrectLineBreaks(methodCallDetailAST) |
-			_hasIncorrectLineBreaks(previousMethodCallDetailAST)) {
-
-			return;
-		}
-
-		if (literalStringValue.startsWith("<") ||
+		if ((_hasIncorrectLineBreaks(methodCallDetailAST) |
+			 _hasIncorrectLineBreaks(previousMethodCallDetailAST)) ||
+			literalStringValue.startsWith("<") ||
 			literalStringValue.endsWith(">") ||
 			previousLiteralStringValue.startsWith("<") ||
 			previousLiteralStringValue.endsWith(">")) {

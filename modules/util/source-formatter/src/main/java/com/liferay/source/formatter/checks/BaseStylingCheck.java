@@ -73,15 +73,10 @@ public abstract class BaseStylingCheck extends BaseFileCheck {
 
 			boolean booleanValue = true;
 
-			if (matcher.group(1) != null) {
-				booleanValue = !booleanValue;
-			}
+			if ((matcher.group(1) != null) ||
+				Objects.equals(matcher.group(3), "!=") ||
+				Objects.equals(matcher.group(4), "false")) {
 
-			if (Objects.equals(matcher.group(3), "!=")) {
-				booleanValue = !booleanValue;
-			}
-
-			if (Objects.equals(matcher.group(4), "false")) {
 				booleanValue = !booleanValue;
 			}
 

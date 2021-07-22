@@ -75,10 +75,6 @@ public class TemplateDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public boolean enableTemplateCreation() {
-		return _ddmWebConfiguration.enableTemplateCreation();
-	}
-
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
 			DDMTemplate ddmTemplate)
 		throws Exception {

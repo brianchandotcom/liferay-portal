@@ -290,13 +290,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
-		RecycleBin.emptyCP();
+		JSONRecycleBin.emptyRecycleBin();
 	}
 
 	macro editCP {
@@ -518,13 +512,7 @@ definition {
 			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
 		}
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
-		RecycleBin.emptyCP();
+		JSONRecycleBin.emptyRecycleBin();
 	}
 
 	macro viewBookmark {

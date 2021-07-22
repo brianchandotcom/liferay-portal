@@ -629,9 +629,9 @@ public abstract class BaseDB implements DB {
 					}
 				}
 
-				indexesSQL = _applyMaxStringIndexLengthLimitation(indexesSQL);
+				String limitedLengthIndexesSQL = _applyMaxStringIndexLengthLimitation(indexesSQL);
 
-				addIndexes(connection, indexesSQL, validIndexNames);
+				addIndexes(connection, limitedLengthIndexesSQL, validIndexNames);
 			});
 	}
 

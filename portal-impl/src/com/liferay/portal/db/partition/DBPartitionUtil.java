@@ -112,6 +112,12 @@ public class DBPartitionUtil {
 			return;
 		}
 
+		if (CompanyThreadLocal.isLocked()) {
+			unsafeConsumer.accept(CompanyThreadLocal.getCompanyId());
+
+			return;
+		}
+
 		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
 			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 					companyId)) {

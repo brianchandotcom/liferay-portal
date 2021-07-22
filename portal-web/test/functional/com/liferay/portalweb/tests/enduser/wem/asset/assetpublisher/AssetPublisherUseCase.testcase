@@ -1549,7 +1549,7 @@ definition {
 		}
 
 		task ("Enable the Subscribe in the Asset Publisher") {
-			ContentPagesNavigator.openViewContentPage(
+			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 

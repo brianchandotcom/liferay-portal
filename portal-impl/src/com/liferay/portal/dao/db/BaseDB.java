@@ -623,15 +623,18 @@ public abstract class BaseDB implements DB {
 					validIndexNames = new HashSet<>();
 
 					for (Index index : indexes) {
-						String indexName = StringUtil.toUpperCase(index.getIndexName());
+						String indexName = StringUtil.toUpperCase(
+							index.getIndexName());
 
 						validIndexNames.add(indexName);
 					}
 				}
 
-				String limitedLengthIndexesSQL = _applyMaxStringIndexLengthLimitation(indexesSQL);
+				String limitedLengthIndexesSQL =
+					_applyMaxStringIndexLengthLimitation(indexesSQL);
 
-				addIndexes(connection, limitedLengthIndexesSQL, validIndexNames);
+				addIndexes(
+					connection, limitedLengthIndexesSQL, validIndexNames);
 			});
 	}
 

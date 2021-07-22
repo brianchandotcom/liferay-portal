@@ -224,6 +224,267 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "Verify that when there are no completed tasks Assigned to My Roles, the page is displaying -There are no completed tasks.-"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AssignedToMyRolesShowsMessageWhenNoCompletedTasks {
+
+		// TODO LRQA-68831 AssignedToMyRolesShowsMessageWhenNoCompletedTasks pending implementation
+
+	}
+
+	@description = "Verify that when there are no pending tasks Assigned to My Roles, the page is displaying -There are no pending tasks assigned to your roles.-"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AssignedToMyRolesShowsMessageWhenNoPendingTasks {
+
+		// TODO LRQA-68832 AssignedToMyRolesShowsMessageWhenNoPendingTasks pending implementation
+
+	}
+
+	@description = "Verify that the user can assign a task to current user in the Assigned to My Roles tab"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignTaskToCurrentUser {
+
+		// TODO LRQA-68842 CanAssignTaskToCurrentUser pending implementation
+
+	}
+
+	@description = "Verify that the user can assign a task to another user in the Assigned to My Roles tab"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignTaskToOtherUser {
+
+		// TODO LRQA-68843 CanAssignTaskToOtherUser pending implementation
+
+	}
+
+	@description = "Verify that the user can view the Assigned to My Roles page in List View"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanChangeToListView {
+
+		// TODO LRQA-68841 CanChangeToListView pending implementation
+
+	}
+
+	@description = "Verify that the Clear All option cleans the search results"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanClearAllSearchResults {
+
+		// TODO LRQA-68856 CanClearAllSearchResults pending implementation
+
+	}
+
+	@description = "Verify that in Update Due Date modal, the user can expand the comment box"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanExpandCommentBox {
+
+		// TODO LRQA-68860 CanExpandCommentBox pending implementation
+
+	}
+
+	@description = "Verify that the user can filter the results inside Assigned to Me by status"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAssignedtoMeTasksByAssetStatus {
+
+		// TODO LRQA-68847 CanFilterAssignedtoMeTasksByAssetStatus pending implementation
+
+	}
+
+	@description = "Verify that the user can filter the results inside Assigned to My Roles by status"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterAssignedToMyRolesTaskByAssetStatus {
+
+		// TODO LRQA-68838 CanFilterAssignedToMyRolesTaskByAssetStatus pending implementation
+
+	}
+
+	@description = "Verify that the user can open the task details by the table"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanOpenTaskDetailsByTable {
+
+		// TODO LRQA-68859 CanOpenTaskDetailsByTable pending implementation
+
+	}
+
+	@description = "Verify that the user can order the results inside Assigned to Me by Due Date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderAssignedtoMeTasksByDueDate {
+
+		// TODO LRQA-68849 CanOrderAssignedtoMeTasksByDueDate pending implementation
+
+	}
+
+	@description = "Verify that the user can order the results inside Assigned to Me by Last Activity Date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderAssignedtoMeTasksByLastActivityDate {
+
+		// TODO LRQA-68848 CanOrderAssignedtoMeTasksByLastActivityDate pending implementation
+
+	}
+
+	@description = "Verify that the user can order the results inside Assigned to My Roles by Due Date"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanOrderAssignedtoMyRolesTasksByDueDate {
+
+		// TODO LRQA-68840 CanOrderAssignedtoMyRolesTasksByDueDate pending implementation
+
+	}
+
+	@description = "Verify that the user can order the results inside Assigned to My Roles by Last Activity Date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderAssignedtoMyRolesTasksByLastActivityDate {
+
+		// TODO LRQA-68839 CanOrderAssignedtoMyRolesTasksByLastActivityDate pending implementation
+
+	}
+
+	@description = "Verify that the user can assign a task to another user in the Assigned to Me tab"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanReassignTask {
+
+		// TODO LRQA-68850 CanReassignTask pending implementation
+
+	}
+
+	@description = "Verify that the user is able to Reverse Sort Direction by clicking the icon"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanReverseSortDirection {
+
+		// TODO LRQA-68836 CanReverseSortDirection pending implementation
+
+	}
+
+	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Title"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSearchForAssetTitleOnAssignedToMyRolesTab {
+
+		// TODO LRQA-68835 CanSearchForAssetTitleOnAssignedToMyRolesTab pending implementation
+
+	}
+
+	@description = "Verify that the user can search for results inside Assigned to My Roles by Asset Type"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchForAssetTypeOnAssignedToMyRolesTab {
+
+		// TODO LRQA-68834 CanSearchForAssetTypeOnAssignedToMyRolesTab pending implementation
+
+	}
+
+	@description = "Verify that the user can search for Task on Assigned to My Roles page"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanSearchForTaskOnAssignedToMyRolesTab {
+
+		// TODO LRQA-68833 CanSearchForTaskOnAssignedToMyRolesTab pending implementation
+
+	}
+
+	@description = "Verify that the user can search for results inside Assigned to Me by Task"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchTasksAssignedToMe {
+
+		// TODO LRQA-68845 CanSearchTasksAssignedToMe pending implementation
+
+	}
+
+	@description = "Verify that the user can search for results inside Assigned to Me by Asset Title"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchTasksAssignedtoMeByAssetTitle {
+
+		// TODO LRQA-68846 CanSearchTasksAssignedtoMeByAssetTitle pending implementation
+
+	}
+
+	@description = "Verify that the user can search for results inside Assigned to Me by Asset Type"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchTasksAssignedtoMeByAssetType {
+
+		// TODO LRQA-68879 CanSearchTasksAssignedtoMeByAssetType pending implementation
+
+	}
+
+	@description = "Verify that, in the Assigned to Me table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewActivityTimeByHoveringAssignedToMeTable {
+
+		// TODO LRQA-68857 CanViewActivityTimeByHoveringAssignedToMeTable pending implementation
+
+	}
+
+	@description = "Verify that, in the Assigned to My Roles table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewActivityTimeByHoveringAssignedToMyRolesTable {
+
+		// TODO LRQA-68858 CanViewActivityTimeByHoveringAssignedToMyRolesTable pending implementation
+
+	}
+
+	@description = "Verify that in Update Due Date, the due date is required"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DueDateIsRequired {
+
+		// TODO LRQA-68861 DueDateIsRequired pending implementation
+
+	}
+
+	@description = "Verify that in Update Due Date modal, the user can not insert a past date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DueDateMustBeInFuture {
+
+		// TODO LRQA-68862 DueDateMustBeInFuture pending implementation
+
+	}
+
+	@description = "Verify that the pagination button indicates the selected page, even when there is only 1 page"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PaginationButtonIndicatesSelectedPage {
+
+		// TODO LRQA-68855 PaginationButtonIndicatesSelectedPage pending implementation
+
+	}
+
+	@description = "Verify that pagination follows in asc/desc sequence in the Assigned to Me tab"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PaginationFollowsAscDescSequence {
+
+		// TODO LRQA-68851 PaginationFollowsAscDescSequence pending implementation
+
+	}
+
+	@description = "Verify that the pagination component is displayed when the table has 5 items or more"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PaginationIsDisplayedWhenTableHas5Items {
+
+		// TODO LRQA-68852 PaginationIsDisplayedWhenTableHas5Items pending implementation
+
+	}
+
 	@priority = "4"
 	test RejectTaskByDetails {
 		Navigator.openURL();
@@ -513,6 +774,24 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "Verify that when there are no results for the search in Assigned to My Roles tab, the page displays the message -There are no tasks assigned to your roles with the specified search criteria-"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ShowsMessageWhenSearchReturnsNoResults {
+
+		// TODO LRQA-68830 ShowsMessageWhenSearchReturnsNoResults pending implementation
+
+	}
+
+	@description = "Verify that when the user updates the due date of a task, the time until the due date shows in the table"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TableShowsTimeLeft {
+
+		// TODO LRQA-68863 TableShowsTimeLeft pending implementation
+
+	}
+
 	@priority = "5"
 	test UpdateDueDateTaskByActions {
 		property portal.acceptance = "true";
@@ -536,6 +815,15 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowDueDateTime = "12:45 PM",
 			workflowTask = "Review");
+	}
+
+	@description = "Verify that when there are no results for the search in Assigned to Me, the page is displaying -There are no tasks assigned to you with the specified search criteria.-"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ViewMessageNoTasksAssignedToYouWithSearchCriteria {
+
+		// TODO LRQA-68844 ViewMessageNoTasksAssignedToYouWithSearchCriteria pending implementation
+
 	}
 
 }

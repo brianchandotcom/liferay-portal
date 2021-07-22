@@ -18,6 +18,7 @@ import ClayForm, {
 	ClaySelect,
 	ClaySelectWithOption,
 } from '@clayui/form';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -27,6 +28,7 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
+import CollectionService from '../../../../../../app/services/CollectionService';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {useId} from '../../../../../../app/utils/useId';
@@ -61,6 +63,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	const collectionNumberOfItemsPerPageId = useId();
 	const collectionPaginationTypeId = useId();
 	const dispatch = useDispatch();
+	const isMounted = useIsMounted();
 	const listStyleId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
@@ -72,6 +75,7 @@ export const CollectionGeneralPanel = ({item}) => {
 		setNumberOfItemsPerPageNextValue,
 	] = useState(item.config.numberOfItemsPerPage);
 	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
+	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
 
 	const numberOfItemsPerPageError =
 		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
@@ -116,6 +120,19 @@ export const CollectionGeneralPanel = ({item}) => {
 				});
 		}
 	}, [collectionItemType]);
+
+	useEffect(() => {
+		if (showAllItems) {
+			CollectionService.getCollectionItemCount({
+				collection: item.config.collection,
+				onNetworkStatus: () => {},
+			}).then(({totalNumberOfItems}) => {
+				if (isMounted()) {
+					setTotalNumberOfItems(totalNumberOfItems);
+				}
+			});
+		}
+	}, [item.config.collection, showAllItems, isMounted]);
 
 	useEffect(() => {
 		if (
@@ -317,8 +334,12 @@ export const CollectionGeneralPanel = ({item}) => {
 										)}
 										onChange={({target}) => {
 											setShowAllItems(target.checked);
+											setNumberOfItemsNextValue(
+												totalNumberOfItems
+											);
 
 											handleConfigurationChanged({
+												numberOfItems: totalNumberOfItems,
 												showAllItems: target.checked,
 											});
 										}}

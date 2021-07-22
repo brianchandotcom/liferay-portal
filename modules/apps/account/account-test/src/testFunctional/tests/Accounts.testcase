@@ -1347,6 +1347,55 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
+	@description = "This test makes sure the default account roles are present in Roles Admin."
+	@priority = "4"
+	test SharedAccountRoleDisplaysInAllAccounts {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Navigator.gotoNavItem(navItem = "Account Roles");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputTitle(title = "Shared Account Role");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Account 1",
+			accountEntryName = "Account 1",
+			accountEntryStatus = "Active",
+			accountEntryType = "Business");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Account 2",
+			accountEntryName = "Account 2",
+			accountEntryStatus = "Active",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 1");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.viewEntryName(rowEntry = "Shared Account Role");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account 2");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.viewEntryName(rowEntry = "Shared Account Role");
+	}
+
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";

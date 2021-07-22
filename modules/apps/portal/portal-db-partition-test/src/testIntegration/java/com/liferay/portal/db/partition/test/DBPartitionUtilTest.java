@@ -220,6 +220,39 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testUpdateIndexes() throws Exception {
+		_addDBPartition();
+
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					try (Statement statement = _connection.createStatement()) {
+						_createAndPopulateTable("test");
+
+						Assert.assertFalse(
+							_dbInspector.hasIndex("test", "IX_Test"));
+
+						db.updateIndexes(
+							_connection,
+							"create table test(test bigint primary key)",
+							"create index IX_Test on test (test)", true);
+
+						Assert.assertTrue(
+							_dbInspector.hasIndex("test", "IX_Test"));
+					}
+				});
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					try (Statement statement = _connection.createStatement()) {
+						statement.execute("drop table if exists test");
+					}
+				});
+		}
+	}
+
+	@Test
 	public void testUpgrade() throws Exception {
 		_addDBPartition();
 
@@ -465,7 +498,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 	}
 
-	private static final long _COMPANY_ID = 1L;
+	private static final long _COMPANY_ID = 2L;
 
 	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";

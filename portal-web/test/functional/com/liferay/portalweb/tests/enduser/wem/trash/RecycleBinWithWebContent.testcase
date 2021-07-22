@@ -39,8 +39,6 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		Navigator.openURL();
-
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.deleteCP(

@@ -227,32 +227,23 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "Bookmarks");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BookmarksFolder.addPG(
+		JSONBookmarks.addFolder(
 			folderDescription = "Folder Description",
-			folderName = "Folder Name");
-
-		BookmarksFolder.gotoPG(folderName = "Folder Name");
-
-		BookmarksFolder.addSubfolderPG(
-			folderDescription = "Subfolder Description",
-			folderName = "Subfolder Name");
-
-		BookmarksFolder.gotoSubfolderPG(
 			folderName = "Folder Name",
-			pageName = "Test Page",
-			siteName = "Site Name",
-			subfolderName = "Subfolder Name");
+			groupName = "Site Name");
 
-		Bookmark.addPG(
-			bookmarkDescription = "Bookmark Description",
-			bookmarkName = "Bookmark Name",
-			bookmarkURL = "https://www.liferay.com");
+		JSONBookmarks.addFolder(
+			folderDescription = "Subfolder Description",
+			folderName = "Subfolder Name",
+			groupName = "Site Name",
+			parentFolderName = "Folder Name");
 
-		User.firstLoginPG();
+		JSONBookmarks.addBookmarks(
+			description = "Bookmark Description",
+			folderName = "Subfolder Name",
+			groupName = "Site Name",
+			name = "Bookmark Name",
+			url = "https://www.liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -317,12 +308,18 @@ definition {
 
 	@priority = "3"
 	test RecycleBinMBAttachment {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
-
-		MessageboardsThread.addCP(
-			mbAttachmentFile = "Document_1.doc",
+		JSONMBMessage.addMessage(
+			groupName = "Site Name",
 			threadBody = "MB Body",
 			threadSubject = "MB Subject");
+
+		JSONMBMessage.addAttachmentToMessage(
+			fileName = "Document_1.doc",
+			groupName = "Site Name",
+			mimeType = "application/msword",
+			threadSubject = "MB Subject");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.editCP(
 			mbAttachmentFile = "Document_1.doc",
@@ -409,47 +406,23 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		BlogsEntry.moveToRecycleBinPG(
-			assetType = "Blogs Entry",
-			entryContent = "Blogs Entry Content 3",
-			entryTitle = "Blogs Entry Title 3");
-
-		BlogsEntry.moveToRecycleBinPG(
-			assetType = "Blogs Entry",
-			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2");
-
-		BlogsEntry.moveToRecycleBinPG(
-			assetType = "Blogs Entry",
-			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1");
+		for (var n : list "1,2,3") {
+			BlogsEntry.moveToRecycleBinPG(
+				assetType = "Blogs Entry",
+				entryContent = "Blogs Entry Content ${n}",
+				entryTitle = "Blogs Entry Title ${n}");
+		}
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
-		Search.searchCP(searchTerm = "1");
+		for (var n : list "1,2,3") {
+			Search.searchCP(searchTerm = "${n}");
 
-		RecycleBin.viewCP(
-			assetName = "Blogs Entry Title 1",
-			assetType = "Blogs Entry",
-			deleteUser = "Test Test");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
-
-		Search.searchCP(searchTerm = "2");
-
-		RecycleBin.viewCP(
-			assetName = "Blogs Entry Title 2",
-			assetType = "Blogs Entry",
-			deleteUser = "Test Test");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
-
-		Search.searchCP(searchTerm = "3");
-
-		RecycleBin.viewCP(
-			assetName = "Blogs Entry Title 3",
-			assetType = "Blogs Entry",
-			deleteUser = "Test Test");
+			RecycleBin.viewCP(
+				assetName = "Blogs Entry Title ${n}",
+				assetType = "Blogs Entry",
+				deleteUser = "Test Test");
+		}
 	}
 
 	@priority = "3"
@@ -668,23 +641,19 @@ definition {
 
 	@priority = "3"
 	test RecycleBinWiki {
-		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
+		JSONWiki.addWikiNode(
+			groupName = "Site Name",
+			wikiNodeName = "Wiki Node Name");
 
-		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+		JSONWiki.addWikiNode(
+			groupName = "Site Name",
+			wikiNodeName = "Wiki2 Node2 Name2");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
-
-		WikiNode.addCP(wikiNodeName = "Wiki2 Node2 Name2");
-
-		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
-
-		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
-
-		WikiNavigator.gotoAllPagesCP();
-
-		WikiPage.addCP(
+		JSONWiki.addWikiPage(
+			groupName = "Site Name",
+			wikiNodeName = "Wiki Node Name",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
+			wikiPageName = "Wiki Page Title");
 
 		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 

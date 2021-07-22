@@ -14,6 +14,7 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
@@ -49,6 +50,21 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		}
 
 		return getDBTableName();
+	}
+
+	@Override
+	public String getResourceName() {
+		if (isSystem()) {
+			throw new UnsupportedOperationException();
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("com.liferay.object.");
+		sb.append(getDBTableName());
+		sb.append(".resource.name");
+
+		return sb.toString();
 	}
 
 	@Override

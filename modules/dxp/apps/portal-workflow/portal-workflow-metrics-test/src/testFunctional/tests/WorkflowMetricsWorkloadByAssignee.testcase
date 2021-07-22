@@ -562,7 +562,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "12_transitions_definition.xml",
+			workflowDefinitionFile = "12-transitions-workflow-definition.xml",
 			workflowDefinitionTitle = "12 Transitions Definition");
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -600,8 +600,6 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
 
 		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR");
-
-		
 	}
 
 	@description = "LPS-98518 - Verify that a search bar is present in the step filter when the dropdown is higher than 496px"
@@ -615,7 +613,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "12_transitions_definition.xml",
+			workflowDefinitionFile = "12-transitions-workflow-definition.xml",
 			workflowDefinitionTitle = "12 transitions");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

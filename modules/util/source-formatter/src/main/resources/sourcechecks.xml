@@ -1056,10 +1056,6 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no calls to `HttpServletResponse.sendRedirect` from `jsp` files." />
 		</check>
-		<check name="StringMethodsCheck">
-			<category name="Performance" />
-			<description name="Finds cases of inefficient String operations." />
-		</check>
 		<check name="JSPUnusedJSPFCheck">
 			<category name="Performance" />
 			<description name="Finds `.jspf` files that are not used." />
@@ -1079,6 +1075,10 @@
 		<check name="ResourceBundleCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no calls to `java.util.ResourceBundle.getBundle`." />
+		</check>
+		<check name="StringMethodsCheck">
+			<category name="Performance" />
+			<description name="Finds cases of inefficient String operations." />
 		</check>
 		<check name="SubstringCheck">
 			<category name="Performance" />

@@ -25,11 +25,7 @@ boolean incompleteProfile = false;
 
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(User.class.getName(), user2.getUserId());
 
-if (assetTags.isEmpty()) {
-	incompleteProfile = true;
-}
-
-if (Validator.isNull(user2.getComments())) {
+if (assetTags.isEmpty() || Validator.isNull(user2.getComments())) {
 	incompleteProfile = true;
 }
 %>

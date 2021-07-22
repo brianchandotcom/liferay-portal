@@ -103,11 +103,7 @@
 			for (Portlet curPortlet : dataSiteLevelPortlets) {
 				PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
 
-				if (!portletDataHandler.isConfigurationEnabled()) {
-					continue;
-				}
-
-				if (!GroupCapabilityUtil.isSupportsPortlet(liveGroup, curPortlet)) {
+				if (!portletDataHandler.isConfigurationEnabled() || !GroupCapabilityUtil.isSupportsPortlet(liveGroup, curPortlet)) {
 					continue;
 				}
 

@@ -1090,18 +1090,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 					assertValid(post${schemaName}, multipartFiles);
 				</#if>
-
-				<#assign getByExternalReferenceCodeMethodName = "get" + schemaName + "ByExternalReferenceCode" />
-
-				<#if properties?keys?seq_contains("externalReferenceCode") && (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, getByExternalReferenceCodeMethodName))>
-					random${schemaName} = random${schemaName}();
-
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getByExternalReferenceCodeMethodName}HttpResponse(random${schemaName}.getExternalReferenceCode()));
-
-					test${javaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName});
-
-					assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getByExternalReferenceCodeMethodName}HttpResponse(random${schemaName}.getExternalReferenceCode()));
-				</#if>
 			}
 
 			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}

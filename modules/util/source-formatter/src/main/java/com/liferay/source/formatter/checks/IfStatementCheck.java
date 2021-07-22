@@ -34,6 +34,10 @@ public class IfStatementCheck extends BaseFileCheck {
 		Matcher matcher = _ifStatementPattern.matcher(content);
 
 		while (matcher.find()) {
+			if (!isJavaSource(content, matcher.start())) {
+				continue;
+			}
+
 			IfStatement ifStatement1 = _getIfStatement(
 				content, matcher.start());
 

@@ -45,6 +45,88 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8114 | Test Summary: Blogs known individuals list shows individuals who have viewed the blog"
+	@priority = "5"
+	test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		for (var name : list "ac,liferay,dxp") {
+			JSONUser.addUser(
+				userEmailAddress = "${name}@liferay.com",
+				userFirstName = "${name}",
+				userLastName = "${name}",
+				userScreenName = "${name}");
+		}
+
+		ACDXPSettings.syncNewContactData();
+
+		for (var name : list "ac,liferay,dxp") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${name}@liferay.com",
+				userLoginFullName = "${name} ${name}");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Pause(locator1 = "5000");
+		}
+
+		JSONUser.addUser(
+			userEmailAddress = "userac@liferay.com",
+			userFirstName = "userac",
+			userLastName = "userac",
+			userScreenName = "userac");
+
+		User.logoutAndLoginPG(
+			userEmailAddress = "userac@liferay.com",
+			userFirstName = "userac",
+			userLastName = "userac",
+			userScreenName = "userac");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Blogs");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		ACAssets.accessAssets(titleName = "Blogs AC Title");
+
+		ACIndividualsDashboard.goToKnownIndividualsTab();
+
+		ACNavigation.viewActiveSwitchTab(tabName = "Known Individuals");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		for (var name : list "ac,liferay,dxp") {
+			AssertElementPresent(
+				key_userName = "${name} ${name}",
+				locator1 = "ACSegments#SEGMENT_MEMBERS");
+		}
+
+		AssertElementNotPresent(
+			key_userName = "userac userac",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
 	@description = "View all blogs in the property in assets"
 	@priority = "5"
 	test ViewAllBlogsShownInAssetList {

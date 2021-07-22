@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_NO_SEGMENTS</td>
+	<td>//div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'There are no segments')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTY_FIELD</td>
 	<td>//div[@class='criterion'][1]//*[@data-testid='simple-string']</td>
 	<td></td>

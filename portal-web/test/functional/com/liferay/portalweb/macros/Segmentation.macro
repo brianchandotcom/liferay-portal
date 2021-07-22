@@ -310,6 +310,10 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Segmentation#SEGMENT_LIST");
 	}
+	
+	macro viewEntryNotPresent {
+		LexiconEntry.viewNoEntry(rowEntry = "${segmentName}");
+	}
 
 	macro viewMembers {
 		var key_memberName = "${memberName}";

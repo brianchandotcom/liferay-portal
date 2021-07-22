@@ -2161,6 +2161,16 @@ definition {
 		}
 	}
 
+	@description = "LPS-136086 Validate if, in the segments page, the default segment doesn't appear, with the page without records."
+	@priority = "4"
+	test ValidateDefaultSegmentNotDisplayed {
+		task ("Assert 'default' segment is not present") {
+			Segmentation.viewEntryNotPresent(segmentName = "Anyone");
+
+			AssertElementPresent(locator1 = "Segmentation#MESSAGE_NO_SEGMENTS");
+		}
+	}
+
 	@description = "LPS-135880 Validate in Segmentation, if on view mode, the value on the criteria field input, is correct for property: Organization."
 	@priority = "4"
 	test ValidateOrganizationFieldInputInViewMode {

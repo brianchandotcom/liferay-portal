@@ -26,7 +26,7 @@ const ExperienceSelector = ({
 	const selectorId = 'experience-selector';
 
 	const changePage = (event) => {
-		confirmChangesBeforeReload({experienceId: event.target.value});
+		confirmChangesBeforeReload({segmentsExperienceId: event.target.value});
 	};
 
 	return (

@@ -40,11 +40,13 @@ public class DDMTemplateActionDropdownItemsProvider {
 
 	public DDMTemplateActionDropdownItemsProvider(
 		DDMTemplate ddmTemplate, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		boolean addDDMTemplateEnable) {
 
 		_ddmTemplate = ddmTemplate;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_addDDMTemplateEnable = addDDMTemplateEnable;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -57,10 +59,13 @@ public class DDMTemplateActionDropdownItemsProvider {
 				ActionKeys.UPDATE),
 			_getEditDDMTemplateActionUnsafeConsumer()
 		).add(
-			() -> DDMTemplatePermission.containsAddTemplatePermission(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _ddmTemplate.getClassNameId(),
-				_ddmTemplate.getResourceClassNameId()),
+			() ->
+				_addDDMTemplateEnable &&
+				DDMTemplatePermission.containsAddTemplatePermission(
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(),
+					_ddmTemplate.getClassNameId(),
+					_ddmTemplate.getResourceClassNameId()),
 			_getCopyDDMTemplateActionUnsafeConsumer()
 		).add(
 			() -> DDMTemplatePermission.contains(
@@ -153,6 +158,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 		};
 	}
 
+	private final boolean _addDDMTemplateEnable;
 	private final DDMTemplate _ddmTemplate;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

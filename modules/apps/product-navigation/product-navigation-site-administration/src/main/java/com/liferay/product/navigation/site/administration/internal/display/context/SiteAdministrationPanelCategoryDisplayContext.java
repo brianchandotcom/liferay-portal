@@ -388,6 +388,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return true;
 	}
 
+	public boolean isShowLayoutsTree() throws PortalException {
+		ProductMenuDisplayContext productMenuDisplayContext =
+			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
+
+		return productMenuDisplayContext.isShowLayoutsTree();
+	}
+
 	public boolean isShowSiteAdministration() throws PortalException {
 		Group group = getGroup();
 
@@ -442,13 +449,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		_showStagingInfo = true;
 
 		return _showStagingInfo;
-	}
-
-	public boolean isTreePageAllowed() throws PortalException {
-		ProductMenuDisplayContext productMenuDisplayContext =
-			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
-
-		return productMenuDisplayContext.isTreePageAllowed();
 	}
 
 	protected String getGroupAdministrationURL(Group group) {

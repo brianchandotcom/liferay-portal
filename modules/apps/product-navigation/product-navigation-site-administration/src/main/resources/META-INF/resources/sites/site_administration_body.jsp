@@ -97,7 +97,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 			<c:if test="<%= !group.isDepot() && !group.isCompany() %>">
 				<clay:button
 					cssClass="list-group-heading navigation-link panel-header-link"
-					disabled="<%= !siteAdministrationPanelCategoryDisplayContext.isTreePageAllowed() %>"
+					disabled="<%= !siteAdministrationPanelCategoryDisplayContext.isShowLayoutsTree() %>"
 					displayType="unstyled"
 					icon="pages-tree"
 					id='<%= liferayPortletResponse.getNamespace() + "pagesTreeSidenavToggleId" %>'

@@ -173,6 +173,29 @@ public class ProductMenuDisplayContext {
 		return false;
 	}
 
+	public boolean isShowLayoutsTree() {
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
+		String ppid = ParamUtil.getString(originalHttpServletRequest, "p_p_id");
+		String mvcRenderCommandName = ParamUtil.getString(
+			originalHttpServletRequest,
+			PortalUtil.getPortletNamespace(_GROUP_PAGES) +
+				"mvcRenderCommandName");
+		String mvcPath = ParamUtil.getString(
+			originalHttpServletRequest, "mvcPath");
+
+		if (!ppid.equals(_GROUP_PAGES) ||
+			(ppid.equals(_GROUP_PAGES) &&
+			 Validator.isNotNull(mvcRenderCommandName)) ||
+			(ppid.equals(_GROUP_PAGES) && Validator.isNotNull(mvcPath))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowProductMenu() {
 		Layout layout = _themeDisplay.getLayout();
 
@@ -187,28 +210,6 @@ public class ProductMenuDisplayContext {
 		}
 
 		return true;
-	}
-
-	public boolean isTreePageAllowed() {
-		String p_p_id = ParamUtil.getString(
-			PortalUtil.getOriginalServletRequest(_httpServletRequest),
-			"p_p_id");
-		String mvcRenderCommandName = ParamUtil.getString(
-			PortalUtil.getOriginalServletRequest(_httpServletRequest),
-			PortalUtil.getPortletNamespace(_GROUP_PAGES) +
-				"mvcRenderCommandName");
-		String mvcPath = ParamUtil.getString(
-			PortalUtil.getOriginalServletRequest(_httpServletRequest),
-			"mvcPath");
-
-		if (!p_p_id.equals(_GROUP_PAGES) ||
-			(p_p_id.equals(_GROUP_PAGES) && !mvcRenderCommandName.isEmpty()) ||
-			(p_p_id.equals(_GROUP_PAGES) && !mvcPath.isEmpty())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isEnableApplicationsMenu() {

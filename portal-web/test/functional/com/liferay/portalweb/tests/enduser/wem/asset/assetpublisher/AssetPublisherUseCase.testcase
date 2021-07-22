@@ -1521,21 +1521,21 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126190. The user should receive an e-mail after subscribe to Asset Publisher when Dynamic Subscription Limit is set to 0."
+	@description = "This is a test for LPS-126190. The user could receive a notification email when the Dynamic Subscription Limit is set to 0 in Asset Publisher."
 	@priority = "4"
 	test ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero {
 		property custom.properties = "mail.send.blacklist=";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero";
 		property test.smtp.server.enabled = "true";
 
-		task ("Go to System Settings on Control Panel") {
+		task ("Go to System Settings") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "System Settings");
 		}
 
-		task ("Set the Dynamic Subscription Limit on Asset Publisher") {
+		task ("Set the Dynamic Subscription Limit to 0 in Asset Publisher") {
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Assets",
 				configurationName = "Asset Publisher",
@@ -1548,7 +1548,7 @@ definition {
 			SystemSettings.saveConfiguration();
 		}
 
-		task ("Enable subscription in the Asset Publisher") {
+		task ("Enable the Subscribe in the Asset Publisher") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
@@ -1558,7 +1558,7 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("Subscribe to the Asset Publisher") {
+		task ("Subscribe the Asset Publisher") {
 			Click(locator1 = "Button#SUBSCRIBE");
 		}
 
@@ -1569,7 +1569,7 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("Force the subscription with Groovy script") {
+		task ("Execute the Groovy script to check displayed asset entries in Asset Publisher") {
 			ServerAdministration.openServerAdmin();
 
 			var script = '''
@@ -1598,7 +1598,7 @@ catch (Exception e) {
 				script = "${script}");
 		}
 
-		task ("View the email in Mock Mock") {
+		task ("View the notification email in Mock Mock") {
 			MockMock.viewMail(
 				asset = "New Asset Entries Added to Asset Publisher",
 				content = "The following asset entries have been added to Asset Publisher",

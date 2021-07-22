@@ -761,14 +761,14 @@ public class MiniumSiteInitializer implements SiteInitializer {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 				String externalReferenceCode = jsonObject.getString(
-					"ExternalReferenceCode");
+					"externalReferenceCode");
 
 				String newExternalReferenceCode =
 					externalReferenceCode +
 						_siteInitializerDependencyResolver.getKey();
 
 				jsonObject.put(
-					"ExternalReferenceCode", newExternalReferenceCode);
+					"externalReferenceCode", newExternalReferenceCode);
 			}
 		}
 

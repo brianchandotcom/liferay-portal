@@ -30,4 +30,23 @@ return computedStyle.getPropertyValue("${attribute}");
 		return "${cssValue}";
 	}
 
+	macro getPseudoElementCssValue {
+		WaitForSPARefresh();
+
+		var javascript = '''
+function getWebElement(locator) {
+	return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+
+var computedStyle = getComputedStyle(getWebElement("${element}"),'${pseudo}');
+
+return computedStyle.getPropertyValue("${attribute}");
+
+		''';
+
+		var cssValue = selenium.getEval("${javascript}");
+
+		return "${cssValue}";
+	}
+
 }

@@ -1524,7 +1524,7 @@ definition {
 	@description = "This is a test for LPS-126190. The user should receive an e-mail after subscribe to Asset Publisher when Dynamic Subscription Limit is set to 0."
 	@priority = "4"
 	test ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero {
-		property custom.properties = "mail.send.blacklist= ";
+		property custom.properties = "mail.send.blacklist=";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero";
 		property test.smtp.server.enabled = "true";
 
@@ -1573,23 +1573,25 @@ definition {
 			ServerAdministration.openServerAdmin();
 
 			var script = '''
-				import com.liferay.registry.RegistryUtil
+import com.liferay.registry.RegistryUtil;
 
-				try {
-				def registry = RegistryUtil.getRegistry()
+try {
+	def registry = RegistryUtil.getRegistry();
 
-				def serviceReference = registry.getServiceReference("com.liferay.asset.publisher.web.internal.messaging.AssetEntriesCheckerHelper")
+	def serviceReference = registry.getServiceReference("com.liferay.asset.publisher.web.internal.messaging.AssetEntriesCheckerHelper");
 
-				def assetEntriesCheckerHelper = registry.getService(serviceReference)
+	def assetEntriesCheckerHelper = registry.getService(serviceReference);
 
-				def checkEntriesMethod = assetEntriesCheckerHelper.getClass().getMethod("checkAssetEntries")
+	def checkEntriesMethod = assetEntriesCheckerHelper.getClass().getMethod("checkAssetEntries");
 
-				checkEntriesMethod.invoke(assetEntriesCheckerHelper)
-				}
-				catch (Exception e) {
-				e.printStackTrace(out)
-				}
+	checkEntriesMethod.invoke(assetEntriesCheckerHelper);
+}
+catch (Exception e) {
+	e.printStackTrace(out);
+}
 			''';
+			var script = StringUtil.trimLeading("${script}");
+			var script = StringUtil.trimTrailing("${script}");
 
 			ServerAdministration.executeScript(
 				language = "Groovy",

@@ -565,6 +565,7 @@ definition {
 
 	@priority = "4"
 	test ViewEmailNotificationDelivery {
+		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
 
@@ -596,7 +597,7 @@ definition {
 			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
-			emailNotificationsAddress = PropsUtil.get("email.address.5"),
+			emailNotificationsAddress = PropsUtil.get("email.address.4"),
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "pdf",
 			reportName = "Custom Report Name",
@@ -605,8 +606,8 @@ definition {
 		Pause(locator1 = "30000");
 
 		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"));
 
 		Gmail.gotoHtmlMode();
 
@@ -643,6 +644,7 @@ definition {
 
 	@priority = "4"
 	test ViewEmailRecipientDelivery {
+		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
 
@@ -673,15 +675,15 @@ definition {
 
 		ReportsAdmin.addReportEntry(
 			emailNotificationsAddress = "test@liferay.com",
-			emailRecipientAddress = PropsUtil.get("email.address.1"),
+			emailRecipientAddress = PropsUtil.get("email.address.4"),
 			reportFormat = "pdf",
 			reportsDefinitionName = "Reports Definition Name");
 
 		Pause(locator1 = "30000");
 
 		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"));
 
 		Gmail.gotoHtmlMode();
 

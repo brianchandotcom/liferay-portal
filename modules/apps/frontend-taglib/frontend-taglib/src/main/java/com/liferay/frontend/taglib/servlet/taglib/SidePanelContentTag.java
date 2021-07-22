@@ -42,10 +42,6 @@ public class SidePanelContentTag extends IncludeTag {
 		HttpServletRequest httpServletRequest = getRequest();
 
 		setNamespacedAttribute(
-			httpServletRequest, "showCloseButton", _showCloseButton);
-		setNamespacedAttribute(httpServletRequest, "sidePanelId", _sidePanelId);
-		setNamespacedAttribute(httpServletRequest, "title", _title);
-		setNamespacedAttribute(
 			httpServletRequest, "screenNavigatorKey", _screenNavigatorKey);
 		setNamespacedAttribute(
 			httpServletRequest, "screenNavigatorModelBean",
@@ -53,6 +49,10 @@ public class SidePanelContentTag extends IncludeTag {
 		setNamespacedAttribute(
 			httpServletRequest, "screenNavigatorPortletURL",
 			_screenNavigatorPortletURL);
+		setNamespacedAttribute(
+			httpServletRequest, "showCloseButton", _showCloseButton);
+		setNamespacedAttribute(httpServletRequest, "sidePanelId", _sidePanelId);
+		setNamespacedAttribute(httpServletRequest, "title", _title);
 
 		super.doStartTag();
 

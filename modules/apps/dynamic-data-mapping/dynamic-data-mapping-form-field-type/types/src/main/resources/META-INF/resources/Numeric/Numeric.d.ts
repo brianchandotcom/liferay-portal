@@ -22,13 +22,11 @@ interface IProps {
 	append: string;
 	appendType: 'prefix' | 'suffix';
 	dataType: NumericDataType;
-	defaultLanguageId: string;
+	defaultLanguageId: Locale;
 	id: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;
-	localizedValue?: {
-		[key: string]: string;
-	};
+	localizedValue?: LocalizedValue<string>;
 	name: string;
 	onBlur: FocusEventHandler<HTMLInputElement>;
 	onChange: (event: {

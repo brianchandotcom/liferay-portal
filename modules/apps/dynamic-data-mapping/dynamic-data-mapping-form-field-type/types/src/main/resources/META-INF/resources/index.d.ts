@@ -14,3 +14,38 @@
 
 export {FieldBase as ReactFieldBase} from './FieldBase/ReactFieldBase.es';
 export {default as FieldBase} from './FieldBase/FieldBase.es';
+declare global {
+	type Direction = 'ltr' | 'rtl';
+	type Locale =
+		| 'ar_SA'
+		| 'ca_ES'
+		| 'de_DE'
+		| 'en_US'
+		| 'es_ES'
+		| 'fi_FI'
+		| 'fr_FR'
+		| 'hu_HU'
+		| 'nl_NL'
+		| 'ja_JP'
+		| 'pt_BR'
+		| 'sv_SE'
+		| 'zh_CN';
+	type LocalizedTextKey =
+		| 'choose-an-option'
+		| 'decimal-separator'
+		| 'input-mask-append-placeholder'
+		| 'prefix'
+		| 'prefix-or-suffix'
+		| 'suffix'
+		| 'the-maximum-length-is-10-characters'
+		| 'thousands-separator';
+	type LocalizedValue<T> = {
+		[key in Locale]?: T;
+	};
+	const Liferay: {
+		Language: {
+			direction: LocalizedValue<Direction>;
+			get: (key: LocalizedTextKey) => string;
+		};
+	};
+}

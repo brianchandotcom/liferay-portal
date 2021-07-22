@@ -123,9 +123,6 @@ const NumericInputMask: React.FC<IProps> = ({
 			<div className="align-items-end d-flex position-relative">
 				<div className="pr-2 w-50">
 					<Select
-
-						// @ts-ignore
-
 						label={Liferay.Language.get('thousands-separator')}
 						name="thousandsSeparator"
 						onBlur={onBlur}
@@ -139,9 +136,6 @@ const NumericInputMask: React.FC<IProps> = ({
 						}}
 						onFocus={onFocus}
 						options={thousandsSeparators}
-
-						// @ts-ignore
-
 						placeholder={Liferay.Language.get('choose-an-option')}
 						readOnly={readOnly}
 						showEmptyOption={false}
@@ -151,9 +145,6 @@ const NumericInputMask: React.FC<IProps> = ({
 				</div>
 				<div className="pl-2 w-50">
 					<Select
-
-						// @ts-ignore
-
 						label={Liferay.Language.get('decimal-separator')}
 						name="decimalSymbol"
 						onBlur={onBlur}
@@ -171,9 +162,6 @@ const NumericInputMask: React.FC<IProps> = ({
 						}}
 						onFocus={onFocus}
 						options={decimalSymbols}
-
-						// @ts-ignore
-
 						placeholder={Liferay.Language.get('choose-an-option')}
 						readOnly={readOnly}
 						showEmptyOption={false}
@@ -183,9 +171,6 @@ const NumericInputMask: React.FC<IProps> = ({
 				</div>
 			</div>
 			<Text
-
-				// @ts-ignore
-
 				label={Liferay.Language.get('prefix-or-suffix')}
 				name="append"
 				onBlur={onBlur}
@@ -195,17 +180,11 @@ const NumericInputMask: React.FC<IProps> = ({
 					setAppend(event.target.value);
 				}}
 				onFocus={onFocus}
-
-				// @ts-ignore
-
 				placeholder={Liferay.Language.get(
 					'input-mask-append-placeholder'
 				)}
 				readOnly={readOnly}
 				required={false}
-
-				// @ts-ignore
-
 				tip={Liferay.Language.get(
 					'the-maximum-length-is-10-characters'
 				)}
@@ -225,16 +204,10 @@ const NumericInputMask: React.FC<IProps> = ({
 					onFocus={onFocus}
 					options={[
 						{
-
-							// @ts-ignore
-
 							label: Liferay.Language.get('prefix'),
 							value: 'prefix',
 						},
 						{
-
-							// @ts-ignore
-
 							label: Liferay.Language.get('suffix'),
 							value: 'suffix',
 						},

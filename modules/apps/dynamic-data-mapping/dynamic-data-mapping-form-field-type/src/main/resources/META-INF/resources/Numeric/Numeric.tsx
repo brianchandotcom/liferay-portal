@@ -153,7 +153,7 @@ const Numeric: React.FC<IProps> = ({
 	value,
 	...otherProps
 }) => {
-	const {editingLanguageId} = useFormState();
+	const {editingLanguageId}: {editingLanguageId: Locale} = useFormState();
 	const symbols = useMemo<ISymbols>(() => {
 		return inputMask
 			? {
@@ -259,9 +259,6 @@ const Numeric: React.FC<IProps> = ({
 			readOnly={readOnly}
 		>
 			<ClayInput
-
-				// @ts-ignore
-
 				dir={Liferay.Language.direction[editingLanguageId]}
 				disabled={readOnly}
 				id={id}
@@ -304,11 +301,11 @@ interface IProps {
 	append: string;
 	appendType: 'prefix' | 'suffix';
 	dataType: NumericDataType;
-	defaultLanguageId: string;
+	defaultLanguageId: Locale;
 	id: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;
-	localizedValue?: {[key: string]: string};
+	localizedValue?: LocalizedValue<string>;
 	name: string;
 	onBlur: FocusEventHandler<HTMLInputElement>;
 	onChange: (event: {target: {value: string}}) => void;

@@ -14,9 +14,9 @@
 
 package com.liferay.object.internal.deployer;
 
-import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.internal.info.list.provider.ObjectEntryInfoListProvider;
+import com.liferay.object.internal.info.list.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -43,8 +43,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		return Arrays.asList(
 			_bundleContext.registerService(
-				InfoListProvider.class,
-				new ObjectEntryInfoListProvider(
+				InfoCollectionProvider.class,
+				new ObjectEntrySingleFormVariationInfoCollectionProvider(
 					objectDefinition, _objectEntryLocalService),
 				null),
 			_bundleContext.registerService(

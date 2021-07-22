@@ -14,26 +14,25 @@
 
 package com.liferay.object.internal.info.list.provider;
 
-import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.InfoListProviderContext;
+import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
-import com.liferay.info.sort.Sort;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
 import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
  */
-public class ObjectEntryInfoListProvider
-	implements InfoListProvider<ObjectEntry> {
+public class ObjectEntrySingleFormVariationInfoCollectionProvider
+	implements SingleFormVariationInfoCollectionProvider<ObjectEntry> {
 
-	public ObjectEntryInfoListProvider(
+	public ObjectEntrySingleFormVariationInfoCollectionProvider(
 		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService) {
 
@@ -42,21 +41,19 @@ public class ObjectEntryInfoListProvider
 	}
 
 	@Override
-	public List<ObjectEntry> getInfoList(
-		InfoListProviderContext infoListProviderContext) {
+	public InfoPage<ObjectEntry> getCollectionInfoPage(
+		CollectionQuery collectionQuery) {
 
-		return getInfoList(infoListProviderContext, Pagination.of(20, 0), null);
-	}
-
-	@Override
-	public List<ObjectEntry> getInfoList(
-		InfoListProviderContext infoListProviderContext, Pagination pagination,
-		Sort sort) {
+		Pagination pagination = collectionQuery.getPagination();
 
 		try {
-			return _objectEntryLocalService.getObjectEntries(
-				_objectDefinition.getObjectDefinitionId(),
-				pagination.getStart(), pagination.getEnd());
+			return InfoPage.of(
+				_objectEntryLocalService.getObjectEntries(
+					_objectDefinition.getObjectDefinitionId(),
+					pagination.getStart(), pagination.getEnd()),
+				collectionQuery.getPagination(),
+				_objectEntryLocalService.getObjectEntriesCount(
+					_objectDefinition.getObjectDefinitionId()));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -67,17 +64,15 @@ public class ObjectEntryInfoListProvider
 	}
 
 	@Override
-	public int getInfoListCount(
-		InfoListProviderContext infoListProviderContext) {
-
-		return _objectEntryLocalService.getObjectEntriesCount(
-			_objectDefinition.getObjectDefinitionId());
+	public String getFormVariationKey() {
+		return String.valueOf(_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Override
 	public String getKey() {
 		return StringBundler.concat(
-			InfoListProvider.super.getKey(), "_", _objectDefinition.getName());
+			SingleFormVariationInfoCollectionProvider.super.getKey(), "_",
+			_objectDefinition.getName());
 	}
 
 	@Override

@@ -450,8 +450,7 @@ definition {
 
 			AssertVisible(
 				key_content = "WC WebContent Content ${i}",
-				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT",
-				pageName = "Content Collection Page Name");
+				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT");
 
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 

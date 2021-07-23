@@ -54,19 +54,10 @@ definition {
 		}
 
 		task ("Assert can configure permissions of AP") {
-			MouseOver.mouseOverNotVisible(
-				key_portletName = "Asset Publisher",
-				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-
-			Click.waitForMenuToggleJSClick(
-				key_portletName = "Asset Publisher",
-				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-
-			AssertVisible(
-				key_menuItem = "Permissions",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-
-			MenuItem.click(menuItem = "Permissions");
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Permissions",
+				siteTemplate = "true");
 
 			IFrame.selectPermissionsFrame();
 
@@ -82,9 +73,7 @@ definition {
 				key_roleTitle = "guest",
 				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+			Portlet.saveAndCloseConfig();
 		}
 	}
 

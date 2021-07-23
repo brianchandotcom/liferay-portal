@@ -69,6 +69,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(PortalInstances.getDefaultCompanyId());
+
 		_dbPartitionEnabled = GetterUtil.getBoolean(
 			_props.get("database.partition.enabled"));
 

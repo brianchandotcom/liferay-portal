@@ -13,7 +13,6 @@
  */
 
 export * as FieldUtil from './components/LayoutProvider/util/fields.es';
-export * as FieldSetUtil from './components/LayoutProvider/util/fieldset.es';
 export * as RulesUtil from './components/LayoutProvider/util/rules.es';
 export * as SettingsContext from './components/LayoutProvider/util/settingsContext.es';
 export {Token} from './expressions/Token.es';

@@ -12,11 +12,11 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'data-engine-js-components-web';
+import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
+import {FIELD_TYPE_FIELDSET} from 'dynamic-data-mapping-form-builder/js/util/constants.es';
 
-import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
-import {createField, generateInstanceId} from '../../../util/fieldSupport.es';
-import {updateField} from '../util/settingsContext.es';
+import {addFieldToColumn, removeFields} from './FormSupport.es';
+import {PagesVisitor} from './visitors.es';
 
 const addNestedFields = ({field, indexes, nestedFields, props}) => {
 	let layout = [{rows: field.rows}];
@@ -28,20 +28,15 @@ const addNestedFields = ({field, indexes, nestedFields, props}) => {
 				(nestedField) => nestedField.fieldName === field.fieldName
 			)
 		) {
-			layout = FormSupport.removeFields(
-				layout,
-				pageIndex,
-				rowIndex,
-				columnIndex
-			);
+			layout = removeFields(layout, pageIndex, rowIndex, columnIndex);
 		}
 	});
 
 	[...nestedFields].reverse().forEach((nestedField) => {
 		if (!nestedField.instanceId) {
-			nestedField.instanceId = generateInstanceId(8);
+			nestedField.instanceId = FieldSupport.generateInstanceId(8);
 		}
-		layout = FormSupport.addFieldToColumn(
+		layout = addFieldToColumn(
 			layout,
 			indexes.pageIndex,
 			indexes.rowIndex,
@@ -50,12 +45,17 @@ const addNestedFields = ({field, indexes, nestedFields, props}) => {
 		);
 	});
 
-	field = updateField(props, field, 'nestedFields', nestedFields);
+	field = SettingsContext.updateField(
+		props,
+		field,
+		'nestedFields',
+		nestedFields
+	);
 
 	const {rows} = layout[indexes.pageIndex];
 
 	return {
-		...updateField(props, field, 'rows', rows),
+		...SettingsContext.updateField(props, field, 'rows', rows),
 		nestedFields,
 		rows,
 	};
@@ -71,7 +71,10 @@ export const createFieldSet = (
 	const fieldType = fieldTypes.find((fieldType) => {
 		return fieldType.name === FIELD_TYPE_FIELDSET;
 	});
-	const fieldSetField = createField(props, {...event, fieldType});
+	const fieldSetField = FieldSupport.createField(props, {
+		...event,
+		fieldType,
+	});
 
 	return addNestedFields({
 		field: {

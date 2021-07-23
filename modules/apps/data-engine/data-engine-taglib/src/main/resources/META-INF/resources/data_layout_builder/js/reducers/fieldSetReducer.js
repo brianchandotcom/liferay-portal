@@ -12,12 +12,12 @@
  * details.
  */
 
-import {PagesVisitor, sectionAdded} from 'data-engine-js-components-web';
 import {
 	FieldSetUtil,
-	FieldSupport,
-	SettingsContext,
-} from 'dynamic-data-mapping-form-builder';
+	PagesVisitor,
+	sectionAdded,
+} from 'data-engine-js-components-web';
+import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import {EVENT_TYPES} from '../eventTypes';
 import {

@@ -402,6 +402,30 @@ definition {
 		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 	}
 
+	@description = "This test covers LPS-120834. It ensures that a user can not redirect to the depot via Space icon."
+	@priority = "5"
+	@refactordone
+	test CannotAccessDepotViaSite {
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.openWorkspace();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		WaitForVisible(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "${navItem}");
+
+		AssertElementNotPresent(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			navItem = "Asset Libraries",
+			value1 = "Asset Libraries");
+	}
+
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
 	@priority = "5"
 	@refactordone

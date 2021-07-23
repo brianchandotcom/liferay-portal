@@ -413,13 +413,11 @@ export const CollectionGeneralPanel = ({item}) => {
 									type="number"
 									value={nextValue.numberOfItemsPerPage}
 								/>
-								<p
-									className={classNames(
-										'mt-2 page-editor__collection-general-panel__pagination-label',
-										{
-											error: numberOfItemsPerPageError,
-										}
-									)}
+
+								<PaginationLabel
+									className={classNames('mb-2 mt-2', {
+										error: numberOfItemsPerPageError,
+									})}
 								>
 									<span
 										className={classNames('mr-1', {
@@ -441,7 +439,7 @@ export const CollectionGeneralPanel = ({item}) => {
 											),
 											config.searchContainerPageMaxDelta
 										)}
-								</p>
+								</PaginationLabel>
 							</ClayForm.Group>
 						)}
 				</>
@@ -449,3 +447,11 @@ export const CollectionGeneralPanel = ({item}) => {
 		</>
 	);
 };
+
+const PaginationLabel = ({children, className}) => (
+	<p
+		className={`page-editor__collection-general-panel__pagination-label ${className}`}
+	>
+		{children}
+	</p>
+);

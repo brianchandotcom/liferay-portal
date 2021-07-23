@@ -320,9 +320,51 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAnonymizeMultipleEntriesFromAnApplication {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50730 Anonymize multiple entries from an Application
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		DMFolder.addCP(dmFolderName = "Folder1");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		User.openUsersAdmin();
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applications = "Documents and Media",
+			itemsCount = "5");
+
+		GDPR.anonymizeMultipleEntriesCP(rowEntry = "Folder1,Document_2.docx");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
+
+		DMDocument.expandInfo();
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
+			value1 = "Anonymous Anonymous");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "Folder1");
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		AssertTextPresent(
+			locator1 = "Sidebar#SIDEBAR",
+			value1 = "Anonymous Anonymous");
 	}
 
 	@description = "This test anonymizes only one entry from an application via the Info panel"

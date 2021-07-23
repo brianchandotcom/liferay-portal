@@ -107,6 +107,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro anonymizeMultipleEntriesCP {
+		for (var rowEntry : list "${rowEntry}") {
+			LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
+		}
+
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Anonymize");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to anonymize the selected items?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro anonymizeSingleEntryViaInfoPanel {
 		LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
 

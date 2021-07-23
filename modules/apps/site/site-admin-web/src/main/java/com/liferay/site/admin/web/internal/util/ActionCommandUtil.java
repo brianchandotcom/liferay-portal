@@ -78,20 +78,16 @@ public class ActionCommandUtil {
 			}
 		}
 
+		Group group = liveGroup.getStagingGroup();
+
 		if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
-			SitesUtil.updateLayoutSetPrototypesLinks(
-				liveGroup, publicLayoutSetPrototypeId,
-				privateLayoutSetPrototypeId,
-				publicLayoutSetPrototypeLinkEnabled,
-				privateLayoutSetPrototypeLinkEnabled);
+			group = liveGroup;
 		}
-		else {
-			SitesUtil.updateLayoutSetPrototypesLinks(
-				liveGroup.getStagingGroup(), publicLayoutSetPrototypeId,
-				privateLayoutSetPrototypeId,
-				publicLayoutSetPrototypeLinkEnabled,
-				privateLayoutSetPrototypeLinkEnabled);
-		}
+
+		SitesUtil.updateLayoutSetPrototypesLinks(
+			group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
+			publicLayoutSetPrototypeLinkEnabled,
+			privateLayoutSetPrototypeLinkEnabled);
 	}
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;

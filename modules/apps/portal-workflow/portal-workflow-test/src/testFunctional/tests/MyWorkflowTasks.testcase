@@ -315,11 +315,61 @@ definition {
 	}
 
 	@description = "Verify that the user can filter the results inside Assigned to Me by status"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterAssignedtoMeTasksByAssetStatus {
 
-		// TODO LRQA-68847 CanFilterAssignedtoMeTasksByAssetStatus pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry( 
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry( 
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		 Workflow.assignToMeTaskByActions(
+            workflowAssetTitle = "Blogs Entry Title 1",
+            workflowAssetType = "Blogs Entry",
+            workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+            workflowAssetTitle = "Blogs Entry Title 2",
+            workflowAssetType = "Blogs Entry",
+            workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow._gotoPendingFilter();
+
+		Workflow.viewPendingTasks(
+				workflowAssetTitle = "Blogs Entry Title 2",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+
+		Workflow.gotoCompletedFilter();
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+
+
 
 	}
 

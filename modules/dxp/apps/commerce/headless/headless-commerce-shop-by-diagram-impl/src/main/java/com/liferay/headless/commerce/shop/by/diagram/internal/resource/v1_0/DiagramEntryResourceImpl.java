@@ -22,15 +22,15 @@ import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryServ
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.DiagramEntry;
 import com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converter.DiagramEntryDTOConverter;
 import com.liferay.headless.commerce.shop.by.diagram.resource.v1_0.DiagramEntryResource;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,15 +70,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 					externalReferenceCode);
 		}
 
-		return Page.of(
-			_toDiagramEntries(
-				_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
-					cpDefinition.getCPDefinitionId(),
-					pagination.getStartPosition(),
-					pagination.getEndPosition())),
-			pagination,
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntriesCount(
-				cpDefinition.getCPDefinitionId()));
+		return _getDiagramEntriesPage(search, pagination, sorts);
 	}
 
 	@Override
@@ -94,15 +86,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 				"Unable to find product with ID " + productId);
 		}
 
-		return Page.of(
-			_toDiagramEntries(
-				_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
-					cpDefinition.getCPDefinitionId(),
-					pagination.getStartPosition(),
-					pagination.getEndPosition())),
-			pagination,
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntriesCount(
-				cpDefinition.getCPDefinitionId()));
+		return _getDiagramEntriesPage(search, pagination, sorts);
 	}
 
 	@Override
@@ -192,13 +176,27 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 			cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId());
 	}
 
-	private List<DiagramEntry> _toDiagramEntries(
-		List<CPDefinitionDiagramEntry> cpDefinitionDiagramEntries) {
+	private Page<DiagramEntry> _getDiagramEntriesPage(
+			String search, Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-		return TransformUtil.transform(
-			cpDefinitionDiagramEntries,
-			cpDefinitionDiagramEntry -> _toDiagramEntry(
-				cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId()));
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+			},
+			null, CPDefinitionDiagramEntry.class, search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+			},
+			sorts,
+			document -> _toDiagramEntry(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	private DiagramEntry _toDiagramEntry(long cpDefinitionDiagramEntryId)

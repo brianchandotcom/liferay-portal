@@ -71,6 +71,7 @@ export const CollectionGeneralPanel = ({item}) => {
 		numberOfItems: item.config.numberOfItems,
 		numberOfItemsPerPage: item.config.numberOfItemsPerPage,
 	});
+	const [numberOfItemsError, setNumberOfItemsError] = useState(null);
 	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
 		null
 	);
@@ -99,6 +100,22 @@ export const CollectionGeneralPanel = ({item}) => {
 
 	const isMaximumValuePerPageError =
 		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
+
+	useEffect(() => {
+		if (
+			totalNumberOfItems &&
+			item.config.numberOfItems > totalNumberOfItems
+		) {
+			setNumberOfItemsError(
+				Liferay.Util.sub(
+					Liferay.Language.get(
+						'the-maximum-number-of-items-in-this-collection-is-x'
+					),
+					totalNumberOfItems
+				)
+			);
+		}
+	}, [totalNumberOfItems, item.config.numberOfItems]);
 
 	useEffect(() => {
 		if (
@@ -361,6 +378,10 @@ export const CollectionGeneralPanel = ({item}) => {
 												numberOfItems: totalNumberOfItems,
 												showAllItems: target.checked,
 											});
+
+											if (numberOfItemsError) {
+												setNumberOfItemsError(null);
+											}
 										}}
 									/>
 								</div>
@@ -374,13 +395,22 @@ export const CollectionGeneralPanel = ({item}) => {
 						</label>
 						<ClayInput
 							id={collectionNumberOfItemsId}
+							min="1"
 							onBlur={({target: {value}}) => {
 								if (
 									nextValue.numberOfItems !==
 									item.config.numberOfItems
 								) {
+									setNumberOfItemsError(
+										Number(value) < 1
+											? Liferay.Language.get(
+													'collection-display-pagination-requires-at-least-one-item'
+											  )
+											: null
+									);
+
 									handleConfigurationChanged({
-										numberOfItems: value,
+										numberOfItems: Number(value) || 1,
 									});
 								}
 							}}
@@ -397,6 +427,14 @@ export const CollectionGeneralPanel = ({item}) => {
 							type="number"
 							value={nextValue.numberOfItems}
 						/>
+
+						{config.collectionDisplayFragmentPaginationEnabled &&
+							item.config.paginationType &&
+							numberOfItemsError && (
+								<PaginationLabel className="error mt-2">
+									{numberOfItemsError}
+								</PaginationLabel>
+							)}
 					</ClayForm.Group>
 
 					{config.collectionDisplayFragmentPaginationEnabled &&

@@ -14,13 +14,10 @@ definition {
 	}
 
 	@description = "Deploy the following jar into Liferay Portal server with port ${nodePort}: ${liferayDependencyJars}"
-	macro deployJarOnSpecificServer {
-		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = ${leadingPortNumber} - 8;
-
-		FileInstall.deployFileOnServer(
-			bundleIndex = "${bundleIndex}",
-			liferayDependencyJars = "${liferayDependencyJars}");
+	macro deployClusteringJar {
+		FileInstall.gradleDeployOnServer(
+			moduleBaseDir = "modules/apps/portal/portal-cluster-sample",
+			nodePort = "${nodePort}");
 	}
 
 	macro enableDebugging {

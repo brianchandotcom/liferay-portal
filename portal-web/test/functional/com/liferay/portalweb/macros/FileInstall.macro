@@ -37,4 +37,23 @@ definition {
 		Pause(locator1 = "10000");
 	}
 
+	macro gradleDeployOnServer {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+
+		var bundleIndex = ${leadingPortNumber} - 8;
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		if (("${bundleIndex}" == "0") || (!(isSet(bundleIndex)))) {
+			var deployDir = "${liferayHome}/deploy";
+		}
+		else {
+			var deployDir = "${liferayHome}-${bundleIndex}/deploy";
+		}
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module -Dmodule.base.dir=${moduleBaseDir} -Dliferay.home=${deployDir}");
+	}
+
 }

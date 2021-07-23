@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVITIES_NUMBER</td>
+	<td>//div[@class='details']//b</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_BREAKDOWN_BUTTON</td>
 	<td>//div[contains(@class,'tabs-root')]/button</td>
 	<td></td>

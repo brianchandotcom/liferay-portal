@@ -68,6 +68,12 @@ definition {
 		Click(locator1 = "ACIndividualsDashboard#SAVE_BREAKDOWN_BUTTON");
 	}
 
+	macro viewActivitiesNumberInPeriod {
+		AssertTextEquals(
+			locator1 = "ACIndividualsDashboard#ACTIVITIES_NUMBER",
+			value1 = "${activitiesNumber}");
+	}
+
 	macro viewTotalActivities {
 		var key_userName = "${userName}";
 		var key_activitiesNumber = "${activitiesNumber}";

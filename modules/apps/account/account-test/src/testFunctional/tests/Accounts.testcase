@@ -50,40 +50,6 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 	}
 
-	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
-	@priority = "4"
-	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
-		Accounts.openAccountsAdmin();
-
-		Accounts.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
-
-		Accounts.addNewUserToPersonAccount(
-			accountName = "Person Account",
-			accountUserName = "userfn1",
-			userEmailAddress = "userfn1@liferay.com",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		Accounts.addNewUserToPersonAccount(
-			accountName = "Person Account",
-			accountUserName = "userfn2",
-			userEmailAddress = "userfn2@liferay.com",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AccountUsers.viewEntryAccounts(
-			accountName = "Person Account",
-			accountUserName = "userfn2");
-
-		AccountUsers.viewEntryAccounts(
-			accountName = "No Assigned Account",
-			accountUserName = "userfn1");
-	}
-
 	@description = "This test adds an account specific role and ensures this role is not shared across accounts"
 	@priority = "4"
 	test AccountSpecificRoleIsNotSharedAcrossAccounts {
@@ -118,6 +84,40 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Account Administrator");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Account without Role");
+	}
+
+	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
+	@priority = "4"
+	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
+		Accounts.openAccountsAdmin();
+
+		Accounts.addPersonAccount(
+			accountDescription = "This is a Person Account.",
+			accountName = "Person Account");
+
+		Accounts.addNewUserToPersonAccount(
+			accountName = "Person Account",
+			accountUserName = "userfn1",
+			userEmailAddress = "userfn1@liferay.com",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		Accounts.addNewUserToPersonAccount(
+			accountName = "Person Account",
+			accountUserName = "userfn2",
+			userEmailAddress = "userfn2@liferay.com",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.viewEntryAccounts(
+			accountName = "Person Account",
+			accountUserName = "userfn2");
+
+		AccountUsers.viewEntryAccounts(
+			accountName = "No Assigned Account",
+			accountUserName = "userfn1");
 	}
 
 	@description = "This test adds and removes multiple organizations from an account via management toolbar."

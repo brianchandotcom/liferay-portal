@@ -1,11 +1,5 @@
 definition {
 
-	macro accessAssets {
-		var key_titleName = "${titleName}";
-
-		Click(locator1 = "ACAssets#ASSETS_TITLE_NAME");
-	}
-
 	macro viewAssets {
 		var key_assetName = "${assetName}";
 

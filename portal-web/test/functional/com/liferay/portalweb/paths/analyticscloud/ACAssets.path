@@ -12,11 +12,6 @@
 <tbody>
 <!-- ASSETS PAGE -->
 <tr>
-	<td>ASSETS_TITLE_NAME</td>
-	<td>//a[@class='text-truncate'and text()='${key_titleName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSETS_TABLE</td>
 	<td>//a[text()='${key_assetName}']</td>
 	<td></td>

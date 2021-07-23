@@ -67,13 +67,10 @@ export const CollectionGeneralPanel = ({item}) => {
 	const listStyleId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const [numberOfItemsNextValue, setNumberOfItemsNextValue] = useState(
-		item.config.numberOfItems
-	);
-	const [
-		numberOfItemsPerPageNextValue,
-		setNumberOfItemsPerPageNextValue,
-	] = useState(item.config.numberOfItemsPerPage);
+	const [nextValue, setNextValue] = useState({
+		numberOfItems: item.config.numberOfItems,
+		numberOfItemsPerPage: item.config.numberOfItemsPerPage,
+	});
 	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
 
@@ -338,9 +335,10 @@ export const CollectionGeneralPanel = ({item}) => {
 										)}
 										onChange={({target}) => {
 											setShowAllItems(target.checked);
-											setNumberOfItemsNextValue(
-												totalNumberOfItems
-											);
+											setNextValue({
+												...nextValue,
+												numberOfItems: totalNumberOfItems,
+											});
 
 											handleConfigurationChanged({
 												numberOfItems: totalNumberOfItems,
@@ -361,7 +359,7 @@ export const CollectionGeneralPanel = ({item}) => {
 							id={collectionNumberOfItemsId}
 							onBlur={({target: {value}}) => {
 								if (
-									numberOfItemsNextValue !==
+									nextValue.numberOfItems !==
 									item.config.numberOfItems
 								) {
 									handleConfigurationChanged({
@@ -370,14 +368,17 @@ export const CollectionGeneralPanel = ({item}) => {
 								}
 							}}
 							onChange={({target: {value}}) => {
-								setNumberOfItemsNextValue(value);
+								setNextValue({
+									...nextValue,
+									numberOfItems: value,
+								});
 
 								if (showAllItems) {
 									setShowAllItems(false);
 								}
 							}}
 							type="number"
-							value={numberOfItemsNextValue}
+							value={nextValue.numberOfItems}
 						/>
 					</ClayForm.Group>
 
@@ -395,7 +396,7 @@ export const CollectionGeneralPanel = ({item}) => {
 									id={collectionNumberOfItemsPerPageId}
 									onBlur={({target: {value}}) => {
 										if (
-											numberOfItemsPerPageNextValue !==
+											nextValue.numberOfItemsPerPage !==
 											item.config.numberOfItemsPerPage
 										) {
 											handleConfigurationChanged({
@@ -404,10 +405,13 @@ export const CollectionGeneralPanel = ({item}) => {
 										}
 									}}
 									onChange={({target: {value}}) =>
-										setNumberOfItemsPerPageNextValue(value)
+										setNextValue({
+											...nextValue,
+											numberOfItemsPerPage: value,
+										})
 									}
 									type="number"
-									value={numberOfItemsPerPageNextValue}
+									value={nextValue.numberOfItemsPerPage}
 								/>
 								<p
 									className={classNames(

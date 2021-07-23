@@ -54,13 +54,14 @@ definition {
 			userLastName = "A Userl",
 			userScreenName = "Auser_");
 
-		Click(locator1 = "Icon#BACK");
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Power User",
 			userScreenName = "auser_");
-
-		Click(locator1 = "Icon#BACK");
 
 		JSONUser.addUser(
 			userEmailAddress = "BUser@liferay.com",
@@ -68,7 +69,10 @@ definition {
 			userLastName = "B Userl",
 			userScreenName = "Buser_");
 
-		Click(locator1 = "Icon#BACK");
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
 		User.assignRegularRoleCP(
 			roleTitle = "Power User",
@@ -1998,6 +2002,8 @@ definition {
 	@description = "LPS-92052 - Verify that when the task has multiple assignees, the sort considers the first one displayed on the row"
 	@priority = "3"
 	test SortConsidersOnlyTheFirstAssignee {
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#SortConsidersOnlyTheFirstAssignee";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		for (var orderNumber : list "1,2,3") {
@@ -2378,7 +2384,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi_task_process.xml",
+			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
 			workflowDefinitionTitle = "Multi Task Process");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

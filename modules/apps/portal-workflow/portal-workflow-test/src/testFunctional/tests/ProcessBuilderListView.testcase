@@ -30,6 +30,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDuplicateNonPublishedProcess {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanDuplicateNonPublishedProcess";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -59,6 +61,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDuplicateProcess {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanDuplicateProcess";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		ApplicationsMenu.gotoPortlet(
@@ -75,6 +79,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditTitleOfDuplicatedProcess {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanEditTitleOfDuplicatedProcess";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver 2");
 
 		ApplicationsMenu.gotoPortlet(
@@ -90,6 +96,8 @@ definition {
 	@description = "Verify that the user is able to filter by Not Published processes"
 	@priority = "3"
 	test CanFilterByNonPublishedProcesses {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanFilterByNonPublishedProcesses";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -112,6 +120,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanFilterByPublishedProcesses {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanFilterByPublishedProcesses";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -215,6 +225,8 @@ definition {
 	@description = "Verify that the user is able to order by Last Modified"
 	@priority = "2"
 	test CanOrderByLastModified {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanOrderByLastModified";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		ApplicationsMenu.gotoPortlet(
@@ -238,6 +250,8 @@ definition {
 	@description = "Verify that the user is able to order by Title"
 	@priority = "3"
 	test CanOrderByTitle {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanOrderByTitle";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -282,6 +296,8 @@ definition {
 	@description = "Verify that the user is able to reverse sort direction"
 	@priority = "2"
 	test CanReverseSortDirection {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanReverseSortDirection";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		ApplicationsMenu.gotoPortlet(
@@ -324,6 +340,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchNonAsciiChar {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSearchNonAsciiChar";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
 
 		ApplicationsMenu.gotoPortlet(
@@ -343,6 +361,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectEditOption {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectEditOption";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -363,6 +383,8 @@ definition {
 	@description = "Verify that the user can select Edit option in the kebab menu for a Not Published process"
 	@priority = "4"
 	test CanSelectEditOptionForNonPublishedProcess {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectEditOptionForNonPublishedProcess";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -438,6 +460,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanUnpublishDuplicatedDefinition {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanUnpublishDuplicatedDefinition";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		Navigator.gotoBack();
@@ -535,6 +559,8 @@ definition {
 	@description = "Verify that hovering the + button will display the text New Workflow"
 	@priority = "2"
 	test DisplaysText {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#DisplaysText";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -549,6 +575,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test PaginationComponentIsDisplayed {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#PaginationComponentIsDisplayed";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -581,6 +609,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test RedirectToNewWorkflowPage {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#RedirectToNewWorkflowPage";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

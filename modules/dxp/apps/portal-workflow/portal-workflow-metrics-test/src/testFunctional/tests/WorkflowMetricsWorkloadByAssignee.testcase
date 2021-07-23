@@ -614,7 +614,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "12_transitions_definition.xml",
+			workflowDefinitionFile = "12-transitions-workflow-definition.xml",
 			workflowDefinitionTitle = "12 transitions");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

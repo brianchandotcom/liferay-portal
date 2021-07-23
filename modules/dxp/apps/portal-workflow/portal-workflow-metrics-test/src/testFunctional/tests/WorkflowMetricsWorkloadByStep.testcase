@@ -226,7 +226,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi_task_process.xml",
+			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
 			workflowDefinitionTitle = "Multi Task Process");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

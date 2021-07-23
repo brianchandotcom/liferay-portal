@@ -184,6 +184,8 @@ definition {
 
 		CalendarEvent.viewStatusViaDetails(status = "Pending");
 
+		CalendarNavigator.closeModal(modalTitle = "View Event Details");
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(

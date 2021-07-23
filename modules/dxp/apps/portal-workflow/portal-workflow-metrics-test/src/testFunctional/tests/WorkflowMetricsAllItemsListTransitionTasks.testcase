@@ -126,6 +126,8 @@ definition {
 	@description = "LPS-108138 - Verify that tasks that are not assigned to the current users can't be transitioned via bulk transition action"
 	@priority = "4"
 	test CanNotBulkTransitionTasksNotAssignedToCurrentUser {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONUser.addUser(
 			userEmailAddress = "usertest@liferay.com",
 			userFirstName = "User",
@@ -143,7 +145,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "Liferay DXP");
+			site = "${siteName}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -553,6 +555,8 @@ definition {
 	@description = "LPS-108138 - Verify that when there are 11 or more instances to be transitioned with the same step, only the first 10 instances are displayed with the -Show All/Show Less- buttons available to be selected"
 	@priority = "3"
 	test ShowAllLessButtonAvailable {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -651,7 +655,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "10_transitions_definition.xml",
+			workflowDefinitionFile = "10-transitions-workflow-definition.xml",
 			workflowDefinitionTitle = "Transitions Definition");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

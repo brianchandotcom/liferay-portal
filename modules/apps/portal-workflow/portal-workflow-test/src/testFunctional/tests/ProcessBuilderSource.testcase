@@ -81,6 +81,8 @@ definition {
 	@description = "Verify that, when importing a non XML file, an error message is displayed and the Workflow is not published"
 	@priority = "4"
 	test CanImportNonXMLFile {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanImportNonXMLFile";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -233,6 +235,8 @@ definition {
 	@description = "Verify that the user is able to restore a previous version of definition by clicking on Restore option, on kebab menu"
 	@priority = "4"
 	test CanRestorePreviousVersionOnMenu {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanRestorePreviousVersionOnMenu";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -264,6 +268,8 @@ definition {
 	@description = "Verify that the user is able to restore a previous version of definition by clicking on Restore button, on Preview modal"
 	@priority = "4"
 	test CanRestorePreviousVersionOnModal {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanRestorePreviousVersionOnModal";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -442,6 +448,8 @@ definition {
 	@description = "Verify that the user is able to view a previous version of definition by clicking on Preview option, on kebab menu"
 	@priority = "4"
 	test CanViewPreviousVersion {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanViewPreviousVersion";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

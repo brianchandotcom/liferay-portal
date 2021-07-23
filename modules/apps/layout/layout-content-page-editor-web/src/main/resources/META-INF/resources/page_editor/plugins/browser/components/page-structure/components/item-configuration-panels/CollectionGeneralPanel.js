@@ -71,11 +71,11 @@ export const CollectionGeneralPanel = ({item}) => {
 		numberOfItems: item.config.numberOfItems,
 		numberOfItemsPerPage: item.config.numberOfItemsPerPage,
 	});
+	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
+		null
+	);
 	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
-
-	const numberOfItemsPerPageError =
-		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
 
 	const handleConfigurationChanged = (itemConfig) => {
 		dispatch(
@@ -96,6 +96,23 @@ export const CollectionGeneralPanel = ({item}) => {
 	const collectionItemType = item.config.collection
 		? item.config.collection.itemType
 		: null;
+
+	const isMaximumValuePerPageError =
+		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
+
+	useEffect(() => {
+		if (
+			config.collectionDisplayFragmentPaginationEnabled &&
+			isMaximumValuePerPageError
+		) {
+			setNumberOfItemsPerPageError(
+				Liferay.Util.sub(
+					Liferay.Language.get('only-x-items-will-be-displayed'),
+					config.searchContainerPageMaxDelta
+				)
+			);
+		}
+	}, [isMaximumValuePerPageError]);
 
 	useEffect(() => {
 		if (collectionItemType) {
@@ -394,13 +411,23 @@ export const CollectionGeneralPanel = ({item}) => {
 								</label>
 								<ClayInput
 									id={collectionNumberOfItemsPerPageId}
+									min="1"
 									onBlur={({target: {value}}) => {
 										if (
 											nextValue.numberOfItemsPerPage !==
 											item.config.numberOfItemsPerPage
 										) {
+											setNumberOfItemsPerPageError(
+												Number(value) < 1
+													? Liferay.Language.get(
+															'collection-display-pagination-requires-at-least-one-item'
+													  )
+													: null
+											);
+
 											handleConfigurationChanged({
-												numberOfItemsPerPage: value,
+												numberOfItemsPerPage:
+													Number(value) || 1,
 											});
 										}
 									}}
@@ -416,12 +443,16 @@ export const CollectionGeneralPanel = ({item}) => {
 
 								<PaginationLabel
 									className={classNames('mb-2 mt-2', {
-										error: numberOfItemsPerPageError,
+										error:
+											isMaximumValuePerPageError &&
+											numberOfItemsPerPageError,
 									})}
 								>
 									<span
 										className={classNames('mr-1', {
-											'font-weight-bold': numberOfItemsPerPageError,
+											'font-weight-bold':
+												isMaximumValuePerPageError &&
+												numberOfItemsPerPageError,
 										})}
 									>
 										{Liferay.Util.sub(
@@ -432,13 +463,13 @@ export const CollectionGeneralPanel = ({item}) => {
 										)}
 									</span>
 
-									{numberOfItemsPerPageError &&
-										Liferay.Util.sub(
-											Liferay.Language.get(
-												'only-x-items-will-be-displayed'
-											),
-											config.searchContainerPageMaxDelta
-										)}
+									{isMaximumValuePerPageError ? (
+										numberOfItemsPerPageError
+									) : (
+										<PaginationLabel className="error mb-2 mt-2">
+											{numberOfItemsPerPageError}
+										</PaginationLabel>
+									)}
 								</PaginationLabel>
 							</ClayForm.Group>
 						)}

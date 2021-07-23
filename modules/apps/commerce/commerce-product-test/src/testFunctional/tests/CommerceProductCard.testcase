@@ -465,8 +465,6 @@ definition {
 	test AssertProductCannotBeAddedToCartIfProductIsNotPurchasable {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -517,9 +515,9 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
+		AssertElementPresent(
 			key_productName = "U-Joint",
-			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 	}
 
 	@description = "COMMERCE-5860. As a buyer, I want to change the channel currency and view the product price with the changed currency"

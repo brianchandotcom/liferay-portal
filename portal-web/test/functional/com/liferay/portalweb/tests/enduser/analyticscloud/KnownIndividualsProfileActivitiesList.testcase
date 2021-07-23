@@ -82,8 +82,8 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 
 			ACIndividualsDashboard.viewTotalActivities(
-				userName = "${name} ${name}",
-				activitiesNumber = "12");
+				activitiesNumber = "12",
+				userName = "${name} ${name}");
 
 			ACNavigation.openItem(itemName = "${name} ${name}");
 

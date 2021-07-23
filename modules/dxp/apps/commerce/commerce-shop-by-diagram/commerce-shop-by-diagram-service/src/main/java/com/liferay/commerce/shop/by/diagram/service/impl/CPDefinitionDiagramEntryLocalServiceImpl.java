@@ -21,6 +21,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 
@@ -41,6 +43,7 @@ import org.osgi.service.component.annotations.Component;
 public class CPDefinitionDiagramEntryLocalServiceImpl
 	extends CPDefinitionDiagramEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
 			long userId, long cpDefinitionId, String cpInstanceUuid,
@@ -88,6 +91,7 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPDefinitionDiagramEntry deleteCPDefinitionDiagramEntry(
@@ -116,6 +120,7 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 			cpDefinitionId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
 			long cpDefinitionId, int number)

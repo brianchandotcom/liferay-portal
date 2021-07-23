@@ -37,7 +37,7 @@ portletDisplay.setURLBack(redirect);
 %>
 
 <div id="<portlet:namespace />editOrderItemContainer">
-	<commerce-ui:side-panel-content
+	<liferay-frontend:side-panel-content
 		screenNavigatorKey="<%= CommerceOrderScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL %>"
 		screenNavigatorModelBean="<%= commerceOrderItem %>"
 		screenNavigatorPortletURL="<%= currentURLObj %>"

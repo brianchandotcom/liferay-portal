@@ -27,7 +27,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_option_rel" var="editProductDefinitionOptionRelActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= (cpDefinitionOptionRel == null) ? LanguageUtil.get(request, "add-option") : LanguageUtil.format(request, "edit-x", cpDefinitionOptionRel.getName(languageId), false) %>'
 >
 	<aui:form action="<%= editProductDefinitionOptionRelActionURL %>" method="post" name="fm">
@@ -320,4 +320,4 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 			<aui:button cssClass="btn-lg" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

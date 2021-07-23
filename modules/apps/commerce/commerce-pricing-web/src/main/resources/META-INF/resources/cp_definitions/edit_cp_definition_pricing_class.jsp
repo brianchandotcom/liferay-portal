@@ -24,7 +24,7 @@ CommercePricingClass commercePricingClass = cpDefinitionPricingClassDisplayConte
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_pricing_class" var="editCommercePricingClassActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-product-group") %>'
 >
 	<commerce-ui:panel
@@ -59,4 +59,4 @@ CommercePricingClass commercePricingClass = cpDefinitionPricingClassDisplayConte
 			</c:if>
 		</aui:form>
 	</commerce-ui:panel>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

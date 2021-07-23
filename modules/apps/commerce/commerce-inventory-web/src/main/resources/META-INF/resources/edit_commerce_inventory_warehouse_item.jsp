@@ -26,7 +26,7 @@ CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventor
 
 <portlet:actionURL name="/commerce_inventory/edit_commerce_inventory_warehouse_item" var="editCommerceInventoryWarehouseItemActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-inventory") %>'
 >
 	<commerce-ui:panel
@@ -55,4 +55,4 @@ CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventor
 			</aui:button-row>
 		</aui:form>
 	</commerce-ui:panel>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

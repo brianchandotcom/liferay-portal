@@ -35,7 +35,7 @@ if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != n
 
 <portlet:actionURL name="/commerce_price_list/edit_commerce_price_entry" var="editCommercePriceEntryActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-price") %>'
 >
 	<aui:form action="<%= editCommercePriceEntryActionURL %>" method="post" name="fm">
@@ -94,4 +94,4 @@ if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != n
 			<aui:button cssClass="btn-lg" type="submit" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

@@ -32,7 +32,7 @@ if (commerceShippingFixedOptionRel != null) {
 }
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(resourceBundle, "edit-shipping-option-setting") %>'
 >
 	<portlet:actionURL name="/commerce_shipping_methods/edit_commerce_shipping_fixed_option_rel" var="editCommerceShippingFixedOptionRelActionURL" />
@@ -151,7 +151,7 @@ if (commerceShippingFixedOptionRel != null) {
 			<aui:button cssClass="btn-lg" type="submit" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>
 
 <aui:script use="aui-base,liferay-dynamic-select">
 	new Liferay.DynamicSelect([

@@ -22,10 +22,10 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 CommerceNotificationQueueEntry commerceNotificationQueueEntry = commerceOrderEditDisplayContext.getCommerceNotificationQueueEntry();
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title="<%= commerceNotificationQueueEntry.getSubject() %>"
 >
 	<div class="commerce-notification-queue-entry-body">
 		<%= HtmlUtil.escape(commerceNotificationQueueEntry.getBody()) %>
 	</div>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

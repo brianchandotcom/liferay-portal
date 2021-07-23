@@ -35,7 +35,7 @@ CommerceTaxFixedRate commerceTaxFixedRate = commerceTaxFixedRatesDisplayContext.
 		</commerce-ui:modal-content>
 	</c:when>
 	<c:otherwise>
-		<commerce-ui:side-panel-content
+		<liferay-frontend:side-panel-content
 			title='<%= LanguageUtil.get(resourceBundle, "edit-tax-rate") %>'
 		>
 			<aui:form action="<%= editCommerceTaxFixedRateActionURL %>" method="post" name="fm">
@@ -47,6 +47,6 @@ CommerceTaxFixedRate commerceTaxFixedRate = commerceTaxFixedRatesDisplayContext.
 					<aui:button cssClass="btn-lg" type="submit" />
 				</aui:button-row>
 			</aui:form>
-		</commerce-ui:side-panel-content>
+		</liferay-frontend:side-panel-content>
 	</c:otherwise>
 </c:choose>

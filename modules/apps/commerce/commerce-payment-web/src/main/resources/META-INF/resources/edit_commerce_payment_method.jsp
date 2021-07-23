@@ -20,7 +20,7 @@
 CommercePaymentMethodGroupRelsDisplayContext commercePaymentMethodGroupRelsDisplayContext = (CommercePaymentMethodGroupRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	screenNavigatorKey="<%= CommercePaymentScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_METHOD %>"
 	screenNavigatorModelBean="<%= commercePaymentMethodGroupRelsDisplayContext.getCommercePaymentMethodGroupRel() %>"
 	screenNavigatorPortletURL="<%= currentURLObj %>"

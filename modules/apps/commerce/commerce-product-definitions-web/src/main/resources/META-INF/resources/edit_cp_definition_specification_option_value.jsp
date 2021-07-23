@@ -29,7 +29,7 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_specification_option_value" var="editProductDefinitionSpecificationOptionValueActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title="<%= cpSpecificationOption.getTitle(locale) %>"
 >
 	<commerce-ui:panel
@@ -83,4 +83,4 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 			</aui:button-row>
 		</aui:form>
 	</commerce-ui:panel>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

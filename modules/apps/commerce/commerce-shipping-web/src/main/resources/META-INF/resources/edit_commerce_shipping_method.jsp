@@ -26,7 +26,7 @@ if (commerceShippingMethod != null) {
 }
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	screenNavigatorKey="<%= CommerceShippingScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD %>"
 	screenNavigatorModelBean="<%= commerceShippingMethod %>"
 	screenNavigatorPortletURL="<%= currentURLObj %>"

@@ -27,10 +27,3 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
-
-<%
-String title = (String)request.getAttribute("liferay-commerce:side-panel-content:title");
-String screenNavigatorKey = (String)request.getAttribute("liferay-commerce:side-panel-content:screenNavigatorKey");
-Object screenNavigatorModelBean = (Object)request.getAttribute("liferay-commerce:side-panel-content:screenNavigatorModelBean");
-PortletURL screenNavigatorPortletURL = (PortletURL)request.getAttribute("liferay-commerce:side-panel-content:screenNavigatorPortletURL");
-%>

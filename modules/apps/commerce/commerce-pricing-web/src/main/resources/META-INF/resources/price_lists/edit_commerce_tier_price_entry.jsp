@@ -42,7 +42,7 @@ if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getExpirationDat
 
 <portlet:actionURL name="/commerce_price_list/edit_commerce_tier_price_entry" var="editCommerceTierPriceEntryActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-price-tier") %>'
 >
 	<aui:form action="<%= editCommerceTierPriceEntryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
@@ -77,4 +77,4 @@ if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getExpirationDat
 			<aui:button cssClass="btn-lg" type="submit" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

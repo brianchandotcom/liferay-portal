@@ -26,7 +26,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 
 <portlet:actionURL name="/commerce_discount/edit_commerce_discount_rule" var="editCommerceDiscountRuleActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-rule") %>'
 >
 	<aui:form action="<%= editCommerceDiscountRuleActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
@@ -84,7 +84,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 			<aui:button cssClass="btn-lg" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>
 
 <aui:script require="commerce-frontend-js/utilities/notifications as NotificationUtils, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
 	var CommerceDiscountRuleResource = ServiceProvider.default.AdminPricingAPI(

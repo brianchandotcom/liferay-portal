@@ -35,7 +35,7 @@ CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel = commerceTaxFixed
 		</commerce-ui:modal-content>
 	</c:when>
 	<c:otherwise>
-		<commerce-ui:side-panel-content
+		<liferay-frontend:side-panel-content
 			title='<%= LanguageUtil.get(resourceBundle, "edit-tax-rate-setting") %>'
 		>
 			<aui:form action="<%= editCommerceTaxFixedRateAddressRelActionURL %>" method="post" name="fm">
@@ -47,7 +47,7 @@ CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel = commerceTaxFixed
 					<aui:button cssClass="btn-lg" type="submit" />
 				</aui:button-row>
 			</aui:form>
-		</commerce-ui:side-panel-content>
+		</liferay-frontend:side-panel-content>
 	</c:otherwise>
 </c:choose>
 

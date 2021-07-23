@@ -32,7 +32,7 @@ if (commerceShippingFixedOption != null) {
 
 <portlet:actionURL name="/commerce_shipping_methods/edit_commerce_shipping_fixed_option" var="editCommerceShippingFixedOptionActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(resourceBundle, "shipping-option") %>'
 >
 	<aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" method="post" name="fm">
@@ -59,4 +59,4 @@ if (commerceShippingFixedOption != null) {
 			<aui:button type="submit" value="save" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

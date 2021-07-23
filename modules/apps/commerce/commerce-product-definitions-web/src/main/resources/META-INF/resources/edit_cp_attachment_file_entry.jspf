@@ -14,7 +14,7 @@
  */
 --%>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title="<%= title %>"
 >
 	<portlet:actionURL name="/cp_definitions/edit_cp_attachment_file_entry" var="editCPAttachmentFileEntryActionURL" />
@@ -94,7 +94,7 @@
 			<aui:button cssClass="btn-lg" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>
 
 <%
 String fieldValues = "[]";

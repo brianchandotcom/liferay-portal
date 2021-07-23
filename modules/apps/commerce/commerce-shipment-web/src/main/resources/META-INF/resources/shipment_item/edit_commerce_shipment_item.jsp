@@ -34,7 +34,7 @@ portletDisplay.setURLBack(redirect);
 
 <portlet:actionURL name="/commerce_shipment/edit_commerce_shipment_item" var="editCommerceShipmentItemActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.format(request, "warehouse-availability-x", commerceOrderItem.getSku()) %>'
 >
 	<aui:form action="<%= editCommerceShipmentItemActionURL %>" method="post" name="fm">
@@ -80,4 +80,4 @@ portletDisplay.setURLBack(redirect);
 			<aui:button type="submit" value="save" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

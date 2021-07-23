@@ -38,7 +38,7 @@ if (cpOptionValue != null) {
 
 <portlet:actionURL name="/cp_options/edit_cp_option_value" var="editProductOptionValueActionURL" />
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.format(request, "edit-x", cpOptionValue.getName(), false) %>'
 >
 	<aui:form action="<%= editProductOptionValueActionURL %>" method="post" name="fm">
@@ -91,4 +91,4 @@ if (cpOptionValue != null) {
 			<aui:button cssClass="btn-lg" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>

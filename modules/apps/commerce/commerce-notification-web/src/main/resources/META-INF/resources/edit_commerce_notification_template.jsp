@@ -45,7 +45,7 @@ if (commerceNotificationTemplate != null) {
 }
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	title="<%= title %>"
 >
 	<portlet:actionURL name="/commerce_channels/edit_commerce_notification_template" var="editCommerceNotificationTemplateActionURL" />
@@ -207,7 +207,7 @@ if (commerceNotificationTemplate != null) {
 			<aui:button cssClass="btn-lg" type="submit" />
 		</aui:button-row>
 	</aui:form>
-</commerce-ui:side-panel-content>
+</liferay-frontend:side-panel-content>
 
 <aui:script>
 	Liferay.provide(

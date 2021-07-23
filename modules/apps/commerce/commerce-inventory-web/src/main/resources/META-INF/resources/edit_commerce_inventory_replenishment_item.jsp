@@ -37,7 +37,7 @@ CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem = commerce
 		</commerce-ui:modal-content>
 	</c:when>
 	<c:otherwise>
-		<commerce-ui:side-panel-content
+		<liferay-frontend:side-panel-content
 			title='<%= LanguageUtil.get(request, "edit-incoming-quantity") %>'
 		>
 			<commerce-ui:panel
@@ -53,6 +53,6 @@ CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem = commerce
 					</aui:button-row>
 				</aui:form>
 			</commerce-ui:panel>
-		</commerce-ui:side-panel-content>
+		</liferay-frontend:side-panel-content>
 	</c:otherwise>
 </c:choose>

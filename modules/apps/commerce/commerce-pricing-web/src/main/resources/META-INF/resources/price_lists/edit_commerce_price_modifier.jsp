@@ -20,7 +20,7 @@
 CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePriceListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	screenNavigatorKey="<%= CommercePriceListScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_PRICE_MODIFIER_GENERAL %>"
 	screenNavigatorModelBean="<%= commercePriceListDisplayContext.getCommercePriceModifier() %>"
 	screenNavigatorPortletURL="<%= currentURLObj %>"

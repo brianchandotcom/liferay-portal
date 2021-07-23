@@ -44,7 +44,7 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = cpDefinitionOptionValueR
 		</commerce-ui:modal-content>
 	</c:when>
 	<c:otherwise>
-		<commerce-ui:side-panel-content
+		<liferay-frontend:side-panel-content
 			title='<%= LanguageUtil.format(request, "edit-x", cpDefinitionOptionValueRel.getName(languageId), false) %>'
 		>
 			<aui:form action="<%= editProductDefinitionOptionValueRelActionURL %>" method="post" name="cpDefinitionOptionValueRelfm">
@@ -69,6 +69,6 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = cpDefinitionOptionValueR
 
 				<aui:button cssClass="btn-lg" type="submit" value="save" />
 			</aui:form>
-		</commerce-ui:side-panel-content>
+		</liferay-frontend:side-panel-content>
 	</c:otherwise>
 </c:choose>

@@ -26,7 +26,7 @@ if (commerceTaxMethod != null) {
 }
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	screenNavigatorKey="<%= CommerceTaxScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_TAX_METHOD %>"
 	screenNavigatorModelBean="<%= commerceTaxMethod %>"
 	screenNavigatorPortletURL="<%= currentURLObj %>"

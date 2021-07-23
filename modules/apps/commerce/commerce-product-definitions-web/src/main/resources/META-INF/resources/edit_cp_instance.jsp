@@ -22,7 +22,7 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
 %>
 
-<commerce-ui:side-panel-content
+<liferay-frontend:side-panel-content
 	screenNavigatorKey="<%= CPInstanceScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL %>"
 	screenNavigatorModelBean="<%= cpInstance %>"
 	screenNavigatorPortletURL="<%= currentURLObj %>"

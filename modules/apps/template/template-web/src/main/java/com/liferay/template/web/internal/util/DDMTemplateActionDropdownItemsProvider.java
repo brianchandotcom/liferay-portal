@@ -39,14 +39,14 @@ import javax.servlet.http.HttpServletRequest;
 public class DDMTemplateActionDropdownItemsProvider {
 
 	public DDMTemplateActionDropdownItemsProvider(
-		boolean addDDMTemplateEnabled,
-		DDMTemplate ddmTemplate, HttpServletRequest httpServletRequest,
+		boolean addDDMTemplateEnabled, DDMTemplate ddmTemplate,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_addDDMTemplateEnabled = addDDMTemplateEnabled;
 		_ddmTemplate = ddmTemplate;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_addDDMTemplateEnabled = addDDMTemplateEnabled;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

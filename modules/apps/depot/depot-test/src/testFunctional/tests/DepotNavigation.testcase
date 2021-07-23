@@ -49,41 +49,4 @@ definition {
 			value1 = "Asset Libraries");
 	}
 
-	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
-	@priority = "5"
-	@refactorneeded
-	test ViewRestrictionWhenConnectingSites {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Button.clickAdd();
-
-		if (IsElementNotPresent(locator1 = "IFrame#SELECT_SITES")) {
-			Button.clickAdd();
-		}
-
-		SelectFrame(locator1 = "IFrame#SELECT_SITES");
-
-		AssertVisible(
-			key_navItem = "Recent",
-			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Recent");
-
-		AssertVisible(
-			key_navItem = "My Sites",
-			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "My Sites");
-
-		AssertElementNotPresent(
-			key_navItem = "Asset Libraries",
-			locator1 = "NavBar#NAV_ITEM_LINK");
-	}
-
 }

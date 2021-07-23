@@ -320,7 +320,6 @@ definition {
 		AssertElementPresent(
 			key_text = "list",
 			locator1 = "Icon#ANY");
-			
 	}
 
 	@description = "Verify that the Clear All option cleans the search results"

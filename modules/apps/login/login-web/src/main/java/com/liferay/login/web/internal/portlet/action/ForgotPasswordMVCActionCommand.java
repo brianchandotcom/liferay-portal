@@ -339,6 +339,12 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		String authType = company.getAuthType();
 
+		PortletPreferences preferences = actionRequest.getPreferences();
+
+		if (preferences != null) {
+			authType = preferences.getValue("authType", null);
+		}
+
 		PortletSession portletSession = actionRequest.getPortletSession();
 
 		String login = (String)portletSession.getAttribute(

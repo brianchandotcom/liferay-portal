@@ -122,7 +122,11 @@ export const CollectionGeneralPanel = ({item}) => {
 	}, [collectionItemType]);
 
 	useEffect(() => {
-		if (showAllItems) {
+		if (
+			config.collectionDisplayFragmentPaginationEnabled &&
+			showAllItems &&
+			item.config.collection
+		) {
 			CollectionService.getCollectionItemCount({
 				collection: item.config.collection,
 				onNetworkStatus: () => {},

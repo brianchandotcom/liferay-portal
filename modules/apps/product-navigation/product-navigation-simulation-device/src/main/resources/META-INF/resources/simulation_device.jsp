@@ -31,8 +31,7 @@
 								symbol="desktop"
 							/>
 						</span>
-
-						<small><liferay-ui:message key="desktop" /></small>
+						<span class="d-block mb-3 mt-1"><liferay-ui:message key="desktop" /></span>
 					</div>
 				</button>
 
@@ -48,8 +47,7 @@
 								symbol="tablet-landscape"
 							/>
 						</span>
-
-						<small><liferay-ui:message key="tablet" /></small>
+						<span class="d-block mb-3 mt-1"><liferay-ui:message key="tablet" /></span>
 					</div>
 				</button>
 
@@ -65,8 +63,7 @@
 								symbol="mobile-landscape"
 							/>
 						</span>
-
-						<small><liferay-ui:message key="mobile" /></small>
+						<span class="d-block mb-3 mt-1"><liferay-ui:message key="mobile" /></span>
 					</div>
 				</button>
 
@@ -77,8 +74,7 @@
 								symbol="autosize"
 							/>
 						</span>
-
-						<small><liferay-ui:message key="autosize" /></small>
+						<span class="d-block mb-3 mt-1"><liferay-ui:message key="autosize" /></span>
 					</div>
 				</button>
 
@@ -89,8 +85,7 @@
 								symbol="custom-size"
 							/>
 						</span>
-
-						<small><liferay-ui:message key="custom" /></small>
+						<span class="d-block mb-3 mt-1"><liferay-ui:message key="custom" /></span>
 					</div>
 				</button>
 			</clay:row>

@@ -47,6 +47,7 @@ html#{$cadmin-selector} {
 			.default-devices {
 				.icon-monospaced {
 					height: 40px;
+					line-height: 34px;
 					width: 40px;
 
 					> .lexicon-icon {
@@ -54,10 +55,6 @@ html#{$cadmin-selector} {
 						margin-top: 3px;
 						width: 1.2em;
 					}
-				}
-
-				small {
-					margin: 4px 0 16px;
 				}
 			}
 

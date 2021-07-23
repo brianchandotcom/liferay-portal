@@ -59,7 +59,7 @@ CollectionWithControls.propTypes = {
 
 export default CollectionWithControls;
 
-const HoverHandler = (item, setHovered, hovered) => {
+const HoverHandler = ({hovered, item, setHovered}) => {
 	const hoveredItemType = useHoveredItemType();
 	const hoveredItemId = useHoveredItemId();
 

@@ -29,11 +29,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetService;
-import com.liferay.portal.kernel.service.MembershipRequestLocalService;
-import com.liferay.portal.kernel.service.MembershipRequestService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -501,9 +498,6 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 	private GroupExceptionRequestHandler _groupExceptionRequestHandler;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private GroupService _groupService;
 
 	@Reference
@@ -511,12 +505,6 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutSetService _layoutSetService;
-
-	@Reference
-	private MembershipRequestLocalService _membershipRequestLocalService;
-
-	@Reference
-	private MembershipRequestService _membershipRequestService;
 
 	@Reference
 	private Portal _portal;

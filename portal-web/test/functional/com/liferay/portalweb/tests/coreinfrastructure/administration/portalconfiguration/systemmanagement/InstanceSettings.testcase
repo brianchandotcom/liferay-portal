@@ -1268,6 +1268,7 @@ definition {
 	@priority = "3"
 	test ViewPasswordChangedNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordChangedNotificationTemplateUpdated";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -1326,6 +1327,7 @@ definition {
 	@priority = "3"
 	test ViewPasswordResetNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordResetNotificationTemplateUpdated";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");

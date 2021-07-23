@@ -129,10 +129,15 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
+			Locale locale = _portal.getLocale(httpServletRequest);
+
+			if (!availableLocales.contains(locale)) {
+				locale = LocaleUtil.getSiteDefault();
+			}
+
 			for (LayoutSEOLink layoutSEOLink :
 					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-						layout, _portal.getLocale(httpServletRequest),
-						canonicalURL, alternateURLs)) {
+						layout, locale, canonicalURL, alternateURLs)) {
 
 				printWriter.println(_addLinkTag(layoutSEOLink));
 			}
@@ -213,10 +218,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				_getOpenGraphTag("og:locale", themeDisplay.getLanguageId()));
 
 			availableLocales.forEach(
-				locale -> printWriter.println(
+				availableLocale -> printWriter.println(
 					_getOpenGraphTag(
 						"og:locale:alternate",
-						LocaleUtil.toLanguageId(locale))));
+						LocaleUtil.toLanguageId(availableLocale))));
 
 			Group group = layout.getGroup();
 

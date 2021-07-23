@@ -15,6 +15,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -24,6 +26,9 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
 		ACUtils.tearDownAC();

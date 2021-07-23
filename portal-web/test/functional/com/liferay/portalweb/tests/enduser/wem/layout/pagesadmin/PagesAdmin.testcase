@@ -455,9 +455,7 @@ definition {
 
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-			AssertVisible(
-				key_itemName = "Content Collection Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+			ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
 		}
 	}
 
@@ -576,9 +574,7 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		AssertVisible(
-			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
+		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -601,9 +597,7 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		AssertVisible(
-			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
+		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -625,9 +619,7 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		AssertVisible(
-			key_pageName = "Content Collection Page Name",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
+		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
 	}

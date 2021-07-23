@@ -27,9 +27,11 @@ html#{$cadmin-selector} {
 				color: $cadmin-black;
 				font-size: 12px;
 				font-weight: 700;
+				margin-top: $pageEditorSpacing * 1.5;
 
 				&:first-child {
 					border-top: 0;
+					margin-top: 0;
 				}
 			}
 		}

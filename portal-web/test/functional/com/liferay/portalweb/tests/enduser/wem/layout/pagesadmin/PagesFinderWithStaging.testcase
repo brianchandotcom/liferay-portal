@@ -55,7 +55,7 @@ definition {
 		}
 
 		task ("Add a Collection Page based on Dynamic Collection via Pages Tree Panel") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			ProductMenu.gotoStagingSite(site = "Test Site Name");
 
 			PagesFinder.goToFindAPage();
 

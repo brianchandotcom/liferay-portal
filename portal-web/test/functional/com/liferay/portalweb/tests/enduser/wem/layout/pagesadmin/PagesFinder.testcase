@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("Add a Collection Page based on Dynamic Collection via Pages Tree Panel") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
 			PagesFinder.goToFindAPage();
 
@@ -259,6 +259,8 @@ definition {
 		}
 
 		task ("Configure page via Page Tree panel") {
+			Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+
 			PagesFinder.goToFindAPage();
 
 			PagesFinder.gotoPageEllipsisItem(

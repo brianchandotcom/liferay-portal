@@ -429,6 +429,8 @@ definition {
 			key_itemName = "Content Collection Page Name",
 			locator1 = "SitePages#LIST_GROUP_ITEM");
 
+		Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+
 		PagesFinder.goToFindAPage();
 
 		for (var i : list "1,2,3") {
@@ -551,6 +553,8 @@ definition {
 		AssertVisible(
 			key_pageName = "Content Collection Page Name",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");
+
+		Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
 
 		PagesFinder.goToFindAPage();
 
@@ -1117,8 +1121,6 @@ definition {
 			collectionName = "Dynamic Collection",
 			pageName = "Content Collection Page Name",
 			tabName = "Collections");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		PagesFinder.goToFindAPage();
 

@@ -158,7 +158,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
 
 		PagesFinder.goToFindAPage();
 

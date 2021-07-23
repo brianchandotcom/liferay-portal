@@ -23,6 +23,7 @@ import com.liferay.commerce.shop.by.diagram.constants.CPDefinitionDiagramSetting
 import com.liferay.commerce.shop.by.diagram.exception.NoSuchCPDefinitionDiagramEntryException;
 import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -82,6 +83,7 @@ public class EditCPDefinitionDiagramSettingMVCActionCommand
 		catch (Throwable throwable) {
 			if (throwable instanceof NoSuchCPAttachmentFileEntryException ||
 				throwable instanceof NoSuchCPDefinitionDiagramEntryException ||
+				throwable instanceof NoSuchFileEntryException ||
 				throwable instanceof PrincipalException) {
 
 				hideDefaultErrorMessage(actionRequest);

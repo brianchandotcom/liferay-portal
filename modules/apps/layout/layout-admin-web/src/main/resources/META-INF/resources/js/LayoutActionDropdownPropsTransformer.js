@@ -12,23 +12,33 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.constants;
+import ACTIONS from './actions';
 
-/**
- * @author Julio Camarero
- */
-public class LayoutAdminWebKeys {
+export default function propsTransformer({
+	items,
+	portletNamespace,
+	...otherProps
+}) {
+	return {
+		...otherProps,
+		items: items.map((item) => {
+			return {
+				...item,
+				items: item.items?.map((child) => {
+					return {
+						...child,
+						onClick(event) {
+							const action = child.data?.action;
 
-	public static final String LAYOUT_ACTION_DROPDOWN_ITEMS_PROVIDER =
-		"LAYOUT_ACTION_DROPDOWN_ITEMS_PROVIDER";
+							if (action) {
+								event.preventDefault();
 
-	public static final String LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT =
-		"LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT";
-
-	public static final String MILLER_COLUMNS_DISPLAY_CONTEXT =
-		"MILLER_COLUMNS_DISPLAY_CONTEXT";
-
-	public static final String SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT =
-		"SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT";
-
+								ACTIONS[action](child.data, portletNamespace);
+							}
+						},
+					};
+				}),
+			};
+		}),
+	};
 }

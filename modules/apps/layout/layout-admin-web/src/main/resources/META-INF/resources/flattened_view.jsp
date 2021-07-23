@@ -59,9 +59,17 @@
 			property="createDate"
 		/>
 
-		<liferay-ui:search-container-column-jsp
-			path="/layout_action.jsp"
-		/>
+		<liferay-ui:search-container-column-text>
+
+			<%
+			LayoutActionDropdownItemsProvider layoutActionDropdownItemsProvider = (LayoutActionDropdownItemsProvider)request.getAttribute(LayoutAdminWebKeys.LAYOUT_ACTION_DROPDOWN_ITEMS_PROVIDER);
+			%>
+
+			<clay:dropdown-actions
+				dropdownItems="<%= layoutActionDropdownItemsProvider.getActionDropdownItems(layout, true) %>"
+				propsTransformer="js/LayoutActionDropdownPropsTransformer"
+			/>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator

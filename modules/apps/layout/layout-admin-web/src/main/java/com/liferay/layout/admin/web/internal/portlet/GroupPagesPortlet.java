@@ -26,6 +26,7 @@ import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.SelectLayoutCollectionDisplayContext;
+import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -203,8 +204,17 @@ public class GroupPagesPortlet extends MVCPortlet {
 					_stagingGroupHelper);
 
 			renderRequest.setAttribute(
+				LayoutAdminWebKeys.LAYOUT_ACTION_DROPDOWN_ITEMS_PROVIDER,
+				new LayoutActionDropdownItemsProvider(
+					_ffLayoutTranslationConfiguration,
+					_portal.getHttpServletRequest(renderRequest),
+					layoutsAdminDisplayContext, _translationPermission,
+					_translationURLProvider));
+
+			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				layoutsAdminDisplayContext);
+
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.MILLER_COLUMNS_DISPLAY_CONTEXT,
 				new MillerColumnsDisplayContext(

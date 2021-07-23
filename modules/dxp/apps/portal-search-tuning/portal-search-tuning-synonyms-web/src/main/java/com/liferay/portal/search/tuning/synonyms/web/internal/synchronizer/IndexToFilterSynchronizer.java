@@ -22,6 +22,7 @@ import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 public interface IndexToFilterSynchronizer {
 
 	public void copyToFilter(
-		SynonymSetIndexName synonymSetIndexName, String companyIndexName);
+		SynonymSetIndexName synonymSetIndexName, String companyIndexName,
+		boolean deletion);
 
 }

@@ -41,7 +41,7 @@ public class SynonymSetIndexCreationIndexContributor
 		}
 
 		_indexToFilterSynchronizer.copyToFilter(
-			synonymSetIndexName, companyIndexName);
+			synonymSetIndexName, companyIndexName, false);
 	}
 
 	protected static final String SYNONYMS_INDEX_NAME_SUFFIX =

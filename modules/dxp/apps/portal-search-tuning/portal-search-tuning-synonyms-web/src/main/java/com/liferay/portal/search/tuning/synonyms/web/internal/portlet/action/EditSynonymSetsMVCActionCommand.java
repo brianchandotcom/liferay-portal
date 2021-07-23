@@ -80,7 +80,8 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			getSynonymSetOptional(synonymSetIndexName, actionRequest));
 
 		_indexToFilterSynchronizer.copyToFilter(
-			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId));
+			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId),
+			false);
 	}
 
 	protected void updateSynonymSetIndex(

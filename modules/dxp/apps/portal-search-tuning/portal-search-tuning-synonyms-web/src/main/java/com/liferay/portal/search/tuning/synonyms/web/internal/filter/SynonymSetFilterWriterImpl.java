@@ -33,9 +33,10 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 
 	@Override
 	public void updateSynonymSets(
-		String companyIndexName, String filterName, String[] synonymSets) {
+		String companyIndexName, String filterName, String[] synonymSets,
+		boolean deletion) {
 
-		if (ArrayUtil.isEmpty(synonymSets)) {
+		if (ArrayUtil.isEmpty(synonymSets) && !deletion) {
 			return;
 		}
 

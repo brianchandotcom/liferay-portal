@@ -36,10 +36,12 @@ public class IndexToFilterSynchronizerImpl
 
 	@Override
 	public void copyToFilter(
-		SynonymSetIndexName synonymSetIndexName, String companyIndexName) {
+		SynonymSetIndexName synonymSetIndexName, String companyIndexName,
+		boolean deletion) {
 
 		updateFilters(
-			companyIndexName, getSynonymFromIndex(synonymSetIndexName));
+			companyIndexName, getSynonymFromIndex(synonymSetIndexName),
+			deletion);
 	}
 
 	protected String[] getSynonymFromIndex(
@@ -57,10 +59,12 @@ public class IndexToFilterSynchronizerImpl
 		);
 	}
 
-	protected void updateFilters(String companyIndexName, String[] synonyms) {
+	protected void updateFilters(
+		String companyIndexName, String[] synonyms, boolean deletion) {
+
 		for (String filterName : _synonymSetFilterNameHolder.getFilterNames()) {
 			_synonymSetFilterWriter.updateSynonymSets(
-				companyIndexName, filterName, synonyms);
+				companyIndexName, filterName, synonyms, deletion);
 		}
 	}
 

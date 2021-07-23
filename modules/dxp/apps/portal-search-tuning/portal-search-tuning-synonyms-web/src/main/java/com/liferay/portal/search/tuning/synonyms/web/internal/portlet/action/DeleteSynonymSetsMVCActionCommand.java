@@ -66,7 +66,8 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			getDeletedSynonymSets(actionRequest, synonymSetIndexName));
 
 		_indexToFilterSynchronizer.copyToFilter(
-			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId));
+			synonymSetIndexName, _indexNameBuilder.getIndexName(companyId),
+			true);
 
 		sendRedirect(actionRequest, actionResponse);
 	}

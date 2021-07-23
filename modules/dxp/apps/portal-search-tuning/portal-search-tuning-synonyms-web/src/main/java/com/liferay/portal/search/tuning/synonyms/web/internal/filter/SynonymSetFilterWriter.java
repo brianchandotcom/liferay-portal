@@ -20,6 +20,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.filter;
 public interface SynonymSetFilterWriter {
 
 	public void updateSynonymSets(
-		String companyIndexName, String filterName, String[] synonymSets);
+		String companyIndexName, String filterName, String[] synonymSets,
+		boolean deletion);
 
 }

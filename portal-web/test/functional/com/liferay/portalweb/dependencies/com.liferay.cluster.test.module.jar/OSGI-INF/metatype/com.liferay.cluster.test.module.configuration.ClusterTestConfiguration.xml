@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.1.0" localization="com.liferay.cluster.test.module.configuration.ClusterTestConfiguration">
-  <OCD name="cluster-test-configuration-name" id="com.liferay.cluster.test.module.configuration.ClusterTestConfiguration">
-    <AD name="Cluster test command" id="clusterTestCommand" cardinality="0" required="false" default="" type="String"/>
-  </OCD>
-  <Designate pid="com.liferay.cluster.test.module.configuration.ClusterTestConfiguration">
-    <Object ocdref="com.liferay.cluster.test.module.configuration.ClusterTestConfiguration"/>
-  </Designate>
-</metatype:MetaData>

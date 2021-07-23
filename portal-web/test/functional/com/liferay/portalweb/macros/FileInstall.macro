@@ -44,16 +44,13 @@ definition {
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		if (("${bundleIndex}" == "0") || (!(isSet(bundleIndex)))) {
-			var deployDir = "${liferayHome}/deploy";
-		}
-		else {
-			var deployDir = "${liferayHome}-${bundleIndex}/deploy";
+		if ("${bundleIndex}" != "0") {
+			var liferayHome = "${liferayHome}-${bundleIndex}";
 		}
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module -Dmodule.base.dir=${moduleBaseDir} -Dliferay.home=${deployDir}");
+			value1 = "deploy-osgi-module -Dmodule.base.dir=${moduleBaseDir} -Dliferay.home=${liferayHome}");
 	}
 
 }

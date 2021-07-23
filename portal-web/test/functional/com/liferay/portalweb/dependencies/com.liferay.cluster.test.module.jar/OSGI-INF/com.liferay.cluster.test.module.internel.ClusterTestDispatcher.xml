@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="com.liferay.cluster.test.module.internel.ClusterTestDispatcher" immediate="true" activate="activate" modified="activate" configuration-pid="com.liferay.cluster.test.module.configuration.ClusterTestConfiguration">
-  <reference name="ClusterExecutor" interface="com.liferay.portal.kernel.cluster.ClusterExecutor" bind="setClusterExecutor"/>
-  <reference name="ClusterMasterExecutor" interface="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" bind="setClusterMasterExecutor"/>
-  <implementation class="com.liferay.cluster.test.module.internel.ClusterTestDispatcher"/>
-</scr:component>

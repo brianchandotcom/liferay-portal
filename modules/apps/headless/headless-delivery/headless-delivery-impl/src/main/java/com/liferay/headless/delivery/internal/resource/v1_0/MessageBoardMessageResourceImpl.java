@@ -490,11 +490,44 @@ public class MessageBoardMessageResourceImpl
 			messageBoardMessage.getArticleBody(), encodingFormat,
 			Collections.emptyList(),
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
-			false, _getServiceContext(messageBoardMessage, groupId));
+			false, _createServiceContext(groupId, messageBoardMessage));
 
 		_updateAnswer(mbMessage, messageBoardMessage);
 
 		return _toMessageBoardMessage(mbMessage);
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, MessageBoardMessage messageBoardMessage) {
+
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				_getExpandoBridgeAttributes(messageBoardMessage), groupId,
+				contextHttpServletRequest,
+				messageBoardMessage.getViewableByAsString());
+
+		String link = contextHttpServletRequest.getHeader("Link");
+
+		if (link == null) {
+			UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
+				contextUriInfo);
+
+			link = String.valueOf(
+				uriBuilder.replacePath(
+					"/"
+				).build());
+		}
+
+		serviceContext.setAttribute("entryURL", link);
+
+		if (messageBoardMessage.getId() == null) {
+			serviceContext.setCommand("add");
+		}
+		else {
+			serviceContext.setCommand("update");
+		}
+
+		return serviceContext;
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -614,39 +647,6 @@ public class MessageBoardMessageResourceImpl
 			document -> _toMessageBoardMessage(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
-	}
-
-	private ServiceContext _getServiceContext(
-		MessageBoardMessage messageBoardMessage, long siteId) {
-
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				_getExpandoBridgeAttributes(messageBoardMessage), siteId,
-				contextHttpServletRequest,
-				messageBoardMessage.getViewableByAsString());
-
-		String link = contextHttpServletRequest.getHeader("Link");
-
-		if (link == null) {
-			UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
-				contextUriInfo);
-
-			link = String.valueOf(
-				uriBuilder.replacePath(
-					"/"
-				).build());
-		}
-
-		serviceContext.setAttribute("entryURL", link);
-
-		if (messageBoardMessage.getId() == null) {
-			serviceContext.setCommand("add");
-		}
-		else {
-			serviceContext.setCommand("update");
-		}
-
-		return serviceContext;
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -770,7 +770,7 @@ public class MessageBoardMessageResourceImpl
 			mbMessage.getClassName(), mbMessage.getClassPK(),
 			mbMessage.getMessageId(), headline,
 			messageBoardMessage.getArticleBody(),
-			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
+			_createServiceContext(mbMessage.getGroupId(), messageBoardMessage));
 
 		if (messageBoardMessage.getShowAsAnswer() != mbMessage.isAnswer()) {
 			_updateAnswer(mbMessage, messageBoardMessage);

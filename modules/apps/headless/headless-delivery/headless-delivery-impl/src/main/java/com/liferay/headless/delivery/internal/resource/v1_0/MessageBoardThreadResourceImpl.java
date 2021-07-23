@@ -427,7 +427,8 @@ public class MessageBoardThreadResourceImpl
 				_toPriority(
 					mbThread.getGroupId(), messageBoardThread.getThreadType()),
 				false,
-				_getServiceContext(messageBoardThread, mbThread.getGroupId())));
+				_createServiceContext(
+					mbThread.getGroupId(), messageBoardThread)));
 	}
 
 	@Override
@@ -499,8 +500,8 @@ public class MessageBoardThreadResourceImpl
 			encodingFormat = MBMessageConstants.DEFAULT_FORMAT;
 		}
 
-		ServiceContext serviceContext = _getServiceContext(
-			messageBoardThread, siteId);
+		ServiceContext serviceContext = _createServiceContext(
+			siteId, messageBoardThread);
 
 		MBMessage mbMessage = _mbMessageService.addMessage(
 			siteId, messageBoardSectionId, messageBoardThread.getHeadline(),
@@ -530,6 +531,45 @@ public class MessageBoardThreadResourceImpl
 					" must be the owner or a content reviewer to access this ",
 					"message thread"));
 		}
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, MessageBoardThread messageBoardThread) {
+
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				messageBoardThread.getTaxonomyCategoryIds(),
+				Optional.ofNullable(
+					messageBoardThread.getKeywords()
+				).orElse(
+					new String[0]
+				),
+				_getExpandoBridgeAttributes(messageBoardThread), groupId,
+				contextHttpServletRequest,
+				messageBoardThread.getViewableByAsString());
+
+		String link = contextHttpServletRequest.getHeader("Link");
+
+		if (link == null) {
+			UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
+				contextUriInfo);
+
+			link = String.valueOf(
+				uriBuilder.replacePath(
+					"/"
+				).build());
+		}
+
+		serviceContext.setAttribute("entryURL", link);
+
+		if (messageBoardThread.getId() == null) {
+			serviceContext.setCommand("add");
+		}
+		else {
+			serviceContext.setCommand("update");
+		}
+
+		return serviceContext;
 	}
 
 	private DynamicQuery _getDynamicQuery(
@@ -579,45 +619,6 @@ public class MessageBoardThreadResourceImpl
 			MBMessage.class.getName(), contextCompany.getCompanyId(),
 			messageBoardThread.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private ServiceContext _getServiceContext(
-		MessageBoardThread messageBoardThread, long siteId) {
-
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				messageBoardThread.getTaxonomyCategoryIds(),
-				Optional.ofNullable(
-					messageBoardThread.getKeywords()
-				).orElse(
-					new String[0]
-				),
-				_getExpandoBridgeAttributes(messageBoardThread), siteId,
-				contextHttpServletRequest,
-				messageBoardThread.getViewableByAsString());
-
-		String link = contextHttpServletRequest.getHeader("Link");
-
-		if (link == null) {
-			UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
-				contextUriInfo);
-
-			link = String.valueOf(
-				uriBuilder.replacePath(
-					"/"
-				).build());
-		}
-
-		serviceContext.setAttribute("entryURL", link);
-
-		if (messageBoardThread.getId() == null) {
-			serviceContext.setCommand("add");
-		}
-		else {
-			serviceContext.setCommand("update");
-		}
-
-		return serviceContext;
 	}
 
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(

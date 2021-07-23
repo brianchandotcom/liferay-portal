@@ -29,6 +29,10 @@ public interface PortalInstanceActionContributor {
 
 	public String getMessage(PortletRequest portletRequest);
 
+	public default String getTarget() {
+		return "_self";
+	}
+
 	public String getURL(
 		Company company, PortletRequest portletRequest,
 		PortletResponse portletResponse);

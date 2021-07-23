@@ -61,6 +61,7 @@ Company companyObject = (Company)row.getObject();
 		<c:if test="<%= portalInstanceActionContributor.isShow(companyObject, liferayPortletRequest) %>">
 			<liferay-ui:icon
 				message="<%= portalInstanceActionContributor.getMessage(liferayPortletRequest) %>"
+				target="<%= portalInstanceActionContributor.getTarget() %>"
 				url="<%= portalInstanceActionContributor.getURL(companyObject, liferayPortletRequest, liferayPortletResponse) %>"
 			/>
 		</c:if>

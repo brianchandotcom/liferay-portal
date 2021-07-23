@@ -49,6 +49,11 @@ public class RequestAdminAccessPortalInstanceActionContributor
 	}
 
 	@Override
+	public String getTarget() {
+		return "_blank";
+	}
+
+	@Override
 	public String getURL(
 		Company company, PortletRequest portletRequest,
 		PortletResponse portletResponse) {

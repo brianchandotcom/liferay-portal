@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -61,10 +60,10 @@ import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
+import com.liferay.site.admin.web.internal.util.ActionCommandUtil;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.sites.kernel.util.Sites;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -467,68 +466,8 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			creationType.equals(
 				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
 
-			long privateLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "privateLayoutSetPrototypeId");
-			long publicLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "publicLayoutSetPrototypeId");
-
-			LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
-
-			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "privateLayoutSetPrototypeLinkEnabled",
-				privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
-
-			LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
-
-			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "publicLayoutSetPrototypeLinkEnabled",
-				publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
-
-			if ((privateLayoutSetPrototypeId == 0) &&
-				(publicLayoutSetPrototypeId == 0) &&
-				!privateLayoutSetPrototypeLinkEnabled &&
-				!publicLayoutSetPrototypeLinkEnabled) {
-
-				long layoutSetPrototypeId = ParamUtil.getLong(
-					actionRequest, "layoutSetPrototypeId");
-				int layoutSetVisibility = ParamUtil.getInteger(
-					actionRequest, "layoutSetVisibility");
-				boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-					actionRequest, "layoutSetPrototypeLinkEnabled",
-					layoutSetPrototypeId > 0);
-				boolean layoutSetVisibilityPrivate = ParamUtil.getBoolean(
-					actionRequest, "layoutSetVisibilityPrivate");
-
-				if ((layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) ||
-					layoutSetVisibilityPrivate) {
-
-					privateLayoutSetPrototypeId = layoutSetPrototypeId;
-
-					privateLayoutSetPrototypeLinkEnabled =
-						layoutSetPrototypeLinkEnabled;
-				}
-				else {
-					publicLayoutSetPrototypeId = layoutSetPrototypeId;
-
-					publicLayoutSetPrototypeLinkEnabled =
-						layoutSetPrototypeLinkEnabled;
-				}
-			}
-
-			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
-				SitesUtil.updateLayoutSetPrototypesLinks(
-					liveGroup, publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId,
-					publicLayoutSetPrototypeLinkEnabled,
-					privateLayoutSetPrototypeLinkEnabled);
-			}
-			else {
-				SitesUtil.updateLayoutSetPrototypesLinks(
-					liveGroup.getStagingGroup(), publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId,
-					publicLayoutSetPrototypeLinkEnabled,
-					privateLayoutSetPrototypeLinkEnabled);
-			}
+			ActionCommandUtil.updateLayoutSetPrototypesLinks(
+				actionRequest, liveGroup);
 		}
 		else if (creationType.equals(
 					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
@@ -553,8 +492,6 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		return liveGroup;
 	}
-
-	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

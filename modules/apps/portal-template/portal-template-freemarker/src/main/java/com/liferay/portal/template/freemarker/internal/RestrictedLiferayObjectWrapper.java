@@ -178,11 +178,35 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 
 		Class<?> clazz = object.getClass();
 
-		String className = clazz.getName();
+		if (object instanceof BaseModel) {
+			long currentCompanyId = CompanyThreadLocal.getCompanyId();
+
+			if (currentCompanyId != CompanyConstants.SYSTEM) {
+				BaseModel<?> baseModel = (BaseModel<?>)object;
+
+				Map<String, Function<Object, Object>> getterFunctions =
+					(Map<String, Function<Object, Object>>)
+						(Map<String, ?>)baseModel.getAttributeGetterFunctions();
+
+				Function<Object, Object> function = getterFunctions.get(
+					"companyId");
+
+				if ((function != null) &&
+					(currentCompanyId != (Long)function.apply(object))) {
+
+					throw new TemplateModelException(
+						StringBundler.concat(
+							"Denied access to model object as it does not ",
+							"belong to current company ", currentCompanyId));
+				}
+			}
+		}
 
 		if (!_allowAllClasses && _isRestricted(clazz)) {
 			return _RESTRICTED_STRING_MODEL_FACTORY.create(object, this);
 		}
+
+		String className = clazz.getName();
 
 		if (_restrictedMethodNames.containsKey(className)) {
 			LiferayFreeMarkerStringModel liferayFreeMarkerStringModel =
@@ -210,29 +234,6 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 				_serviceProxyClassNames.add(className);
 
 				return _SERVICE_PROXY_STRING_MODEL_FACTORY.create(object, this);
-			}
-		}
-		else if (object instanceof BaseModel) {
-			long currentCompanyId = CompanyThreadLocal.getCompanyId();
-
-			if (currentCompanyId != CompanyConstants.SYSTEM) {
-				BaseModel<?> baseModel = (BaseModel<?>)object;
-
-				Map<String, Function<Object, Object>> getterFunctions =
-					(Map<String, Function<Object, Object>>)
-						(Map<String, ?>)baseModel.getAttributeGetterFunctions();
-
-				Function<Object, Object> function = getterFunctions.get(
-					"companyId");
-
-				if ((function != null) &&
-					(currentCompanyId != (Long)function.apply(object))) {
-
-					throw new TemplateModelException(
-						StringBundler.concat(
-							"Denied access to model object as it does not ",
-							"belong to current company ", currentCompanyId));
-				}
 			}
 		}
 

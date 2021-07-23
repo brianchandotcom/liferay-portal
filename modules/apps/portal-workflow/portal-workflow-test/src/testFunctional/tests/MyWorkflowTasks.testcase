@@ -288,12 +288,39 @@ definition {
 	}
 
 	@description = "Verify that the user can view the Assigned to My Roles page in List View"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanChangeToListView {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-68841 CanChangeToListView pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Click(
+			key_text = "table",
+			locator1 = "Icon#ANY");
+
+		Click(
+			key_selectOption = "List",
+			locator1 = "MyWorkflowTasks#DROPDOWN_MENU_OPTION");
+
+		AssertElementPresent(
+			key_text = "list",
+			locator1 = "Icon#ANY");
+			
 	}
 
 	@description = "Verify that the Clear All option cleans the search results"

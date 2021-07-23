@@ -195,6 +195,12 @@
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td//a</td>
 	<td></td>
 </tr>
+<!--Menu-->
+<tr>
+	<td>DROPDOWN_MENU_OPTION</td>
+	<td>//a[contains(@class,'dropdown-item') and contains(text(), '${key_selectOption}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

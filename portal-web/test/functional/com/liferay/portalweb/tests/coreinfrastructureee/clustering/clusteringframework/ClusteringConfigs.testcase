@@ -3,6 +3,7 @@ definition {
 
 	property app.server.bundles.size = "1";
 	property cluster.enabled = "true";
+	property minimum.slave.ram = "32";
 	property portal.release = "true";
 	property portal.upstream = "quarantine";
 	property remote.elasticsearch.enabled = "true";

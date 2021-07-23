@@ -4,6 +4,7 @@ definition {
 	property app.server.bundles.size = "2";
 	property cluster.enabled = "true";
 	property license.required = "true";
+	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "false";
 	property remote.elasticsearch.enabled = "true";

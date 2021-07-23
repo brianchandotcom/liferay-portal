@@ -409,8 +409,6 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		// Virtual hosts
 
-		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
-
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			liveGroup.getGroupId());
 
@@ -418,8 +416,6 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			liveGroup.getGroupId(), false,
 			ActionUtil.toTreeMap(
 				actionRequest, "publicVirtualHost", availableLocales));
-
-		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
 
 		_layoutSetService.updateVirtualHosts(
 			liveGroup.getGroupId(), true,
@@ -476,9 +472,14 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");
 
+			LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
+
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "privateLayoutSetPrototypeLinkEnabled",
 				privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
+
+			LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
+
 			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "publicLayoutSetPrototypeLinkEnabled",
 				publicLayoutSet.isLayoutSetPrototypeLinkEnabled());

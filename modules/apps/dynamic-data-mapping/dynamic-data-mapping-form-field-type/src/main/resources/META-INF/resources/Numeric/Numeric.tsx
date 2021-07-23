@@ -140,7 +140,7 @@ const Numeric: React.FC<IProps> = ({
 	defaultLanguageId,
 	id,
 	inputMask,
-	inputMaskFormat,
+	inputMaskFormat: inputMaskFormatInitial,
 	localizedValue,
 	name,
 	onBlur,
@@ -154,6 +154,9 @@ const Numeric: React.FC<IProps> = ({
 	...otherProps
 }) => {
 	const {editingLanguageId}: {editingLanguageId: Locale} = useFormState();
+	const inputMaskFormat = useMemo<string>(() => {
+		return String(inputMaskFormatInitial);
+	}, [inputMaskFormatInitial]);
 	const symbols = useMemo<ISymbols>(() => {
 		return inputMask
 			? {

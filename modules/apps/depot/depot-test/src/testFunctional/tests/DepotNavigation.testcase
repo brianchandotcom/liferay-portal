@@ -41,7 +41,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = "3000");
+		WaitForVisible(
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "${navItem}");
 
 		AssertElementNotPresent(
 			locator1 = "NavBar#NAV_ITEM_LINK",

@@ -19,6 +19,7 @@ import com.liferay.bulk.rest.dto.v1_0.Selection;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
 import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,6 +32,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/selection.properties",
 	scope = ServiceScope.PROTOTYPE, service = SelectionResource.class
 )
+@CTAware
 public class SelectionResourceImpl extends BaseSelectionResourceImpl {
 
 	@Override

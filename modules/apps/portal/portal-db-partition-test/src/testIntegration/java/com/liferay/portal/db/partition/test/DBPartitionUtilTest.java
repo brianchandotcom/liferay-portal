@@ -80,8 +80,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		_connection = DataAccess.getConnection();
 
-		_defaultSchemaName = _connection.getCatalog();
-
 		_dbInspector = new DBInspector(_connection);
 
 		_enableDBPartition();
@@ -101,8 +99,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	@After
 	public void tearDown() throws Exception {
 		db.runSQL("drop schema if exists " + _getSchemaName(_COMPANY_ID));
-
-		_connection.setCatalog(_defaultSchemaName);
 	}
 
 	@Test
@@ -119,8 +115,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					".TestTable (testColumn int)"));
 
 			statement.execute("select 1 from TestTable");
-
-			connection.setCatalog(_defaultSchemaName);
 		}
 	}
 
@@ -136,8 +130,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			Statement statement = connection.createStatement()) {
 
 			statement.execute("select 1 from CompanyInfo");
-
-			connection.setCatalog(_defaultSchemaName);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentCompanyId);
@@ -223,8 +215,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testUpdateIndexes() throws Exception {
-		_addDBPartition();
-
 		try {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
@@ -510,7 +500,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");
 	private static DBInspector _dbInspector;
 	private static boolean _dbPartitionEnabled;
-	private static String _defaultSchemaName;
 	private static LazyConnectionDataSourceProxy _lazyConnectionDataSourceProxy;
 
 	@Inject

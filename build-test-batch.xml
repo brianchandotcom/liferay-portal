@@ -6932,30 +6932,35 @@ information. Make sure to commit in all build REST results.
 			</test-action>
 
 			<test-set-up>
-				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --verbose
+				<if>
+					<available file="liferay-portal-source.tar.gz" />
+					<then>
+						<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --verbose
 tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/lib/biz.aQute.bnd.annotation.jar --gzip --verbose</echo>
 
-				<execute>
-					<![CDATA[
-						tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --verbose
-						tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/lib/biz.aQute.bnd.annotation.jar --gzip --verbose
-					]]>
-				</execute>
-
-				<echo>tar -zxvf liferay-portal-source.tar.gz --wildcards '*.profile-dxp.properties'</echo>
-
-				<trycatch property="tar.failure">
-					<try>
 						<execute>
 							<![CDATA[
-								tar -zxvf liferay-portal-source.tar.gz --wildcards '*.profile-dxp.properties'
+								tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --verbose
+								tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/lib/biz.aQute.bnd.annotation.jar --gzip --verbose
 							]]>
 						</execute>
-					</try>
-					<catch>
-						<echo>${tar.failure}</echo>
-					</catch>
-				</trycatch>
+
+						<echo>tar -zxvf liferay-portal-source.tar.gz --wildcards '*.profile-dxp.properties'</echo>
+
+						<trycatch property="tar.failure">
+							<try>
+								<execute>
+									<![CDATA[
+										tar -zxvf liferay-portal-source.tar.gz --wildcards '*.profile-dxp.properties'
+									]]>
+								</execute>
+							</try>
+							<catch>
+								<echo>${tar.failure}</echo>
+							</catch>
+						</trycatch>
+					</then>
+				</if>
 
 				<echo>Deleting stale baseline log files.</echo>
 

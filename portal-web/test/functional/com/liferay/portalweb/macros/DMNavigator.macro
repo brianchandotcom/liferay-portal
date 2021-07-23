@@ -376,6 +376,7 @@ definition {
 
 	macro openToEntryInAdmin {
 		var fileEntryId = JSONDocument.getFileEntryId(
+			site = "${site}",
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",
 			groupName = "${groupName}",

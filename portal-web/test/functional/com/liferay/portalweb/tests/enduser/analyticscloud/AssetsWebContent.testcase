@@ -75,7 +75,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACAssets.accessAssets(titleName = "Web Content AC Title");
+		ACNavigation.openItem(itemName = "Web Content AC Title");
 
 		ACIndividualsDashboard.goToOverviewTab();
 
@@ -149,7 +149,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACAssets.accessAssets(titleName = "Web Content AC Title");
+		ACNavigation.openItem(itemName = "Web Content AC Title");
 
 		ACIndividualsDashboard.goToKnownIndividualsTab();
 
@@ -251,7 +251,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACAssets.accessAssets(titleName = "Web Content AC Title");
+		ACNavigation.openItem(itemName = "Web Content AC Title");
 
 		ACAssets.viewVisitorsBehaviorMetric(
 			metricTitle = "Views",

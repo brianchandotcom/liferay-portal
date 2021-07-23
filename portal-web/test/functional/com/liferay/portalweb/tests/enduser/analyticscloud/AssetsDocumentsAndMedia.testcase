@@ -114,7 +114,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACAssets.accessAssets(titleName = "DM AC Title");
+		ACNavigation.openItem(itemName = "DM AC Title");
 
 		ACAssets.viewVisitorsBehaviorMetric(
 			metricTitle = "Previews",

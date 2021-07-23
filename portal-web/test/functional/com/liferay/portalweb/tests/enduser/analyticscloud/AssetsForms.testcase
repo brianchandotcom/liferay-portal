@@ -91,7 +91,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACAssets.accessAssets(titleName = "Created Form Name");
+		ACNavigation.openItem(itemName = "Created Form Name");
 
 		ACIndividualsDashboard.goToOverviewTab();
 
@@ -165,7 +165,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACAssets.accessAssets(titleName = "Created Form Name");
+		ACNavigation.openItem(itemName = "Created Form Name");
 
 		ACNavigation.switchTab(tabName = "Known Individuals");
 
@@ -220,7 +220,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACAssets.accessAssets(titleName = "Created Form Name");
+		ACNavigation.openItem(itemName = "Created Form Name");
 
 		ACAssets.viewVisitorsBehaviorMetric(
 			metricTitle = "Views",

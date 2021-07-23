@@ -38,9 +38,61 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test IndividualActivitiesListShowsAccurateActivitiesWhenSwitchedTo24HourView {
+		ACUtils.createDMAndAddToPage();
 
-		// TODO LRAC-8151 GraphShowsActivitiesFromTodayWhenSwitchedTo24HourView pending implementation
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		for (var name : list "ac,liferay") {
+			JSONUser.addUser(
+				userEmailAddress = "${name}@liferay.com",
+				userFirstName = "${name}",
+				userLastName = "${name}",
+				userScreenName = "${name}");
+		}
+
+		ACDXPSettings.syncNewContactData();
+
+		for (var name : list "ac,liferay") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${name}@liferay.com",
+				userLoginFullName = "${name} ${name}");
+
+			for (var n : list "1,2,3,4") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+			}
+
+			Pause(locator1 = "5000");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		for (var name : list "ac,liferay") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.viewTotalActivities(
+				userName = "${name} ${name}",
+				activitiesNumber = "12");
+
+			ACNavigation.openItem(itemName = "${name} ${name}");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACIndividualsDashboard.viewActivitiesNumberInPeriod(activitiesNumber = "12");
+		}
 	}
 
 }

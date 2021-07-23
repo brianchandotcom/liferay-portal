@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
@@ -28,6 +29,16 @@ function MappingFields({
 }) {
 	return (
 		<MappingContext.Provider value={{ffSEOInlineFieldMappingEnabled}}>
+			{ffSEOInlineFieldMappingEnabled && (
+				<ClayAlert
+					displayType="info"
+					title={Liferay.Language.get('info')}
+				>
+					{Liferay.Language.get(
+						'add-multiple-fields-to-define-how-the-meta-tags-will-be-filled'
+					)}
+				</ClayAlert>
+			)}
 			{inputs.map((props) => {
 				const filteredFields = fields.filter(
 					({type}) => type === props.fieldType

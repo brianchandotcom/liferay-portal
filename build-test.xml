@@ -7839,6 +7839,10 @@ virtualHostname="localhost"
 		</for>
 	</target>
 
+	<target name="deploy-osgi-module">
+		<gradle-execute dir="${project.dir}/${module.base.dir}" forcedcacheenabled="false" task="deploy" />
+	</target>
+
 	<target name="deploy-osgi-modules">
 		<if>
 			<not>

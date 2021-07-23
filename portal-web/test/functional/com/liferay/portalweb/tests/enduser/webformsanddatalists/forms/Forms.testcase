@@ -666,6 +666,106 @@ definition {
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
 	}
 
+	@description = "LPS-68390 - Verify that a notification appears when a Form is autosaved."
+	@priority = "3"
+	test AutosaveDisplaysANotification {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#AutosaveDisplaysANotification";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Pause(locator1 = "60000");
+
+		Form.viewSaveNotification();
+
+		FormsAdminNavigator.gotoBack();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Created Form Name");
+	}
+
+	@description = "LPS-68418 - Verify that a Form's autosave interval can be configured"
+	@priority = "3"
+	test AutosaveIntervalCanBeConfigured {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#AutosaveIntervalCanBeConfigured";
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Autosave Interval",
+			fieldName = "autosaveInterval");
+
+		FormFields.editText(
+			fieldName = "autosaveInterval",
+			fieldValue = "2");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field Should Not Be Saved");
+
+		Form.closeSidebar();
+
+		Pause(locator1 = "60000");
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdmin.viewNoForms();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field Will Be Saved");
+
+		Form.closeSidebar();
+
+		Pause(locator1 = "120000");
+
+		FormsAdminNavigator.gotoBack();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Created Form Name");
+	}
+
 	@description = "Verify that a Form can be created"
 	@priority = "5"
 	test CanBeCreated {
@@ -833,6 +933,38 @@ definition {
 			locator1 = "FormViewBuilder#EMPTY_FORM_FIELD_BY_NUMBER");
 	}
 
+	@description = "LPS-64379 - Verify that a Form can be created without a Form Title"
+	@priority = "5"
+	test CanBeCreatedWithoutTitle {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#CanBeCreatedWithoutTitle";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdmin.viewForm(
+			formDescription = "",
+			formName = "Untitled Form");
+	}
+
 	@description = "Verify that a Form can be deleted"
 	@priority = "5"
 	test CanBeDeleted {
@@ -966,6 +1098,170 @@ definition {
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
 	}
 
+	@description = "LPS-69334 - Verify that a Form can be edited after the default language is changed"
+	@priority = "3"
+	test CanBeEditedAfterChangingLanguage {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#CanBeEditedAfterChangingLanguage";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		Navigator.gotoAccountSettings();
+
+		MyAccount.changeUserLanguage(
+			languageName = "español (España)",
+			saveButton = "Save");
+
+		ProductMenu.gotoPortlet(
+			category = "Contenido",
+			portlet = "Formularios");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
+
+		Form.editNameLocalized(
+			formName = "User Locale Edit Form Name",
+			localizedText = "Editor de texto enriquecido");
+
+		Form.editDescription(formDescription = "User Locale Edit Form Description");
+
+		Form.saveLocalized(saveButton = "Guardar");
+	}
+
+	@description = "LPS-69100 - Verify that a Form can be edited after the Site's default locale is changed"
+	@priority = "3"
+	test CanBeEditedAfterChangingLocale {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#CanBeEditedAfterChangingLocale";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Site Locale Form Name");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.save();
+
+		Navigator.openURL();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.configureCurrentLanguagesCP(
+			defaultSiteLanguage = "Spanish (Spain)",
+			displaySettings = "Display Settings");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Site Locale Form Name");
+
+		Form.editName(formName = "Site Locale Edit Form Name");
+
+		Form.editDescription(formDescription = "Site Locale Edit Form Description");
+
+		Form.save();
+	}
+
+	@description = "LPS-61740 - Verify that a Form can be previewed"
+	@priority = "5"
+	test CanBePreviewed {
+		property portal.acceptance = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Form.previewForm(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "Preview Paragraph entry",
+			formName = "Form 1");
+	}
+
+	@description = "LPS-61740 - Verify that a Form can be published"
+	@priority = "5"
+	test CanBePublished {
+		property portal.acceptance = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Published Paragraph entry");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text",
+			fieldValue = "Published Paragraph entry");
+	}
+
 	@description = "Verify that a Form can be unpublished"
 	@priority = "5"
 	test CanBeUnpublished {
@@ -1016,6 +1312,118 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3_ALT",
 			value1 = "This form is not available or it was not published.");
+	}
+
+	@description = "LPS-60520 - Verify that a Form can still be viewed after one of the Fields is deleted"
+	@priority = "4"
+	test CanBeViewedAfterDeletingAField {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#CanBeViewedAfterDeletingAField";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Date");
+
+		var fieldDateField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextField(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "${fieldDateField}");
+
+		FormFields.editDate(
+			fieldName = "${fieldDateField}",
+			fieldValue = "01/01/2016");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Created Form Name");
+
+		FormsAdminNavigator.gotoDeleteField(
+			fieldLabel = "Date Field",
+			fieldName = "Date Field");
+
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "Date Field");
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntryNotPresent(
+			fieldLabel = "Date Field",
+			fieldValue = "1/1/16");
 	}
 
 	@description = "This is a use case for LPS-75116 and LPS-79101."
@@ -1358,34 +1766,12 @@ definition {
 			fieldValue = "Test");
 	}
 
-	@description = "This is a use case for LPS-68418."
+	@description = "LPS-69214 - Verify that a confirmation appears when attempting to leave a Form without saving."
 	@priority = "3"
-	test ConfigureAutosave {
+	test ConfirmationAppearsWhenLeavingFormWithoutSaving {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#ConfigureAutosave";
-
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Forms",
-			configurationName = "Forms",
-			configurationScope = "Site Scope");
-
-		FormFields.viewTextLabel(
-			fieldLabel = "Autosave Interval",
-			fieldName = "autosaveInterval");
-
-		FormFields.editText(
-			fieldName = "autosaveInterval",
-			fieldValue = "2");
-
-		SystemSettings.saveConfiguration();
+		property test.name.skip.portal.instance = "Forms#ConfirmationAppearsWhenLeavingFormWithoutSaving";
 
 		Navigator.openURL();
 
@@ -1395,37 +1781,25 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
-		Form.editName();
-
 		Form.addTextField(fieldPositionNumber = "0");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field Should Not Be Saved");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
-		Pause(locator1 = "60000");
+		Navigator.gotoBack();
 
-		FormsAdminNavigator.gotoBack();
+		AssertElementPresent(locator1 = "Button#LEAVE");
 
-		FormsAdmin.viewNoForms();
+		Click(locator1 = "Button#STAY");
 
-		FormsAdminNavigator.gotoAddForm();
+		Form.save();
 
-		Form.editName();
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field Will Be Saved");
-
-		Form.closeSidebar();
-
-		Pause(locator1 = "120000");
-
-		FormsAdminNavigator.gotoBack();
+		Navigator.gotoBack();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "Created Form Name");
+			rowEntry = "Untitled Form");
 	}
 
 	@description = "This is a use case for LPS-98073."
@@ -1481,12 +1855,16 @@ definition {
 		Form.publishForm();
 	}
 
-	@description = "This is a use case for LPS-64379."
-	@priority = "3"
-	test CreateUntitledForm {
-		property portal.acceptance = "true";
+	@description = "Verify that Data Provider can retreive data for guest users"
+	@priority = "5"
+	test DataProviderCanRetrieveDataForGuestUser {
+		property portal.acceptance = "false";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#CreateUntitledForm";
+		property test.name.skip.portal.instance = "FormsDataProvider#DataProviderCanRetrieveDataForGuestUser";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
 		Navigator.openURL();
 
@@ -1494,142 +1872,31 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Forms");
 
-		FormsAdminNavigator.gotoAddForm();
+		Navigator.gotoNavItem(navItem = "Data Providers");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		FormsAdminNavigator.gotoAddDataProvider();
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
+		FormsAdmin.editDataProvider(
+			name = "Liferay Countries",
+			outputParameterLabel = "Country Names",
+			outputParameterName = "Country Names",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterType = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com");
 
-		Form.closeSidebar();
-
-		Form.save();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdmin.viewForm(
-			formDescription = "",
-			formName = "Untitled Form");
-	}
-
-	@description = "This is a use case for LPS-60520."
-	@priority = "4"
-	test DeleteDateFieldAndViewEntries {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#DeleteDateFieldAndViewEntries";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.editDescription();
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		var fieldTextField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(
-			fieldPositionNumber = "1",
-			fieldType = "Date");
-
-		var fieldDateField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Date Field");
-
-		Form.closeSidebar();
-
-		Form.save();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Form Page");
-
-		Navigator.gotoPage(pageName = "Form Page");
-
-		Portlet.addPG(
-			pageName = "Form Page",
-			portletName = "Form");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortlet.waitFormRenderer(text = "Submit");
-
-		FormFields.viewTextField(
-			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}");
-
-		FormFields.editText(
-			fieldName = "${fieldTextField}",
-			fieldValue = "Text Field Value");
-
-		FormFields.viewDateField(
-			fieldLabel = "Date Field",
-			fieldName = "${fieldDateField}");
-
-		FormFields.editDate(
-			fieldName = "${fieldDateField}",
-			fieldValue = "01/01/2016");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
+		FormsAdmin.saveDataProvider();
 
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Created Form Name");
+			menuItem = "Permissions",
+			rowEntry = "Liferay Countries");
 
-		FormsAdminNavigator.gotoDeleteField(
-			fieldLabel = "Date Field",
-			fieldName = "Date Field");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		FormFields.viewDateFieldNotPresent(
-			fieldLabel = "Date Field",
-			fieldName = "Date Field");
+		Check(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
 
-		Form.save();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdmin.viewFormTableEntryNotPresent(
-			fieldLabel = "Date Field",
-			fieldValue = "1/1/16");
-	}
-
-	@priority = "5"
-	test DeletePages {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#DeletePages";
+		Button.clickSave();
 
 		Navigator.openURL();
 
@@ -1641,45 +1908,43 @@ definition {
 
 		Form.editName();
 
-		Form.editPageTitle(
-			formPageName = "Page 1",
-			formTitleNumber = "1");
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
 
-		Form.addTextField(formPageNumber = "0");
+		var fieldNameCountries = FormFields.getFieldName();
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field Page 1");
+		Form.editFieldLabelMetal(fieldValue = "Countries");
 
-		Form.gotoAdvancedTab();
+		Form.editFieldDataProvider(
+			dataProvider = "Liferay Countries",
+			dataProviderOutput = "Country Names");
 
-		var textFieldPage1Name = FormFields.getFieldName();
+		Form.save();
 
-		Form.closeSidebar();
+		Form.publishForm();
 
-		Form.addPage(formAddNewPageNumber = "1");
+		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		Form.editPageTitle(
-			formPageName = "Page 2",
-			formTitleNumber = "2");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
 
-		Form.addTextField(formPageNumber = "1");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
+		FormFields.viewSelectOptionsList(
+			fieldName = "${fieldNameCountries}",
+			selectOption = "Afghanistan");
 
-		Form.closeSidebar();
+		User.logoutPG();
 
-		Form.editSuccessPage(
-			successPageDescription = "Thank you for filling out the Form.",
-			successPageTitle = "Success Page Title");
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 
-		Form.deleteCurrentPage(
-			formDropDownNumber = "1",
-			formPageNumber = "2");
+		FormFields.viewSelectOptionsList(
+			fieldName = "${fieldNameCountries}",
+			selectOption = "Afghanistan");
 
-		Form.deleteSuccessPage(formPageNumber = "2");
-
-		FormFields.viewTextField(
-			fieldLabel = "Text Field Page 1",
-			fieldName = "${textFieldPage1Name}");
+		User.loginUserPG();
 	}
 
 	@description = "This is a use case for LPS-74997."
@@ -2218,83 +2483,6 @@ definition {
 		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
 	}
 
-	@description = "This is a use case for LPS-69100 and LPS-69334."
-	@priority = "2"
-	test EditFormWithUpdatedSiteAndUserLocale {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#EditFormWithUpdatedSiteAndUserLocale";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.editDescription();
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		Form.save();
-
-		Navigator.gotoAccountSettings();
-
-		MyAccount.changeUserLanguage(
-			languageName = "español (España)",
-			saveButton = "Save");
-
-		ProductMenu.gotoPortlet(
-			category = "Contenido",
-			portlet = "Formularios");
-
-		FormsAdminNavigator.gotoEditFormByName();
-
-		Form.editNameLocalized(
-			formName = "User Locale Edit Form Name",
-			localizedText = "Editor de texto enriquecido");
-
-		Form.editDescription(formDescription = "User Locale Edit Form Description");
-
-		Form.saveLocalized(saveButton = "Guardar");
-
-		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		Click(
-			key_dropdownItem = "Mi cuenta",
-			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
-
-		MyAccount.changeUserLanguage(
-			languageName = "English (United States)",
-			saveButton = "Guardar",
-			successMessage = "Your request completed successfully.");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
-
-		Site.configureCurrentLanguagesCP(
-			defaultSiteLanguage = "Spanish (Spain)",
-			displaySettings = "Display Settings");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoEditFormByName(formName = "User Locale Edit Form Name");
-
-		Form.editName(formName = "Site Locale Edit Form Name");
-
-		Form.editDescription(formDescription = "Site Locale Edit Form Description");
-
-		Form.save();
-	}
-
 	@description = "This is a use case for LPS-78697."
 	@ignore = "true"
 	@priority = "4"
@@ -2584,6 +2772,54 @@ definition {
 		Form.viewFormName(formName = "Text");
 	}
 
+	@description = "LPS-84276 - Verify that Form Pages can be removed"
+	@priority = "5"
+	test PagesCanBeDeleted {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#PagesCanBeDeleted";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.addTextField(formPageNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page A");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		Form.addTextField(formPageNumber = "1");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page B");
+
+		Form.deleteCurrentPage(
+			formDropDownNumber = "1",
+			formPageNumber = "2");
+
+		FormFields.viewDeletedFieldLabel(fieldName = "Text Field Page B");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field Page A",
+			fieldName = "Text Field Page A");
+	}
+
 	@description = "Verify that Form Pages can be reordered"
 	@priority = "5"
 	test PagesCanBeReordered {
@@ -2721,101 +2957,6 @@ definition {
 		Form.viewPageTitleDefault(pageIndex = "0");
 
 		Form.viewPageEmptyField(pageIndex = "0");
-	}
-
-	@description = "This is a use case for LPS-61740"
-	@priority = "5"
-	test PreviewAndPublishForm {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName(formName = "Test Preview and Publish Form");
-
-		Form.editDescription(formDescription = "Test Preview and Publish Form Description");
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		var fieldTextField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		Form.save();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoEditFormByName(formName = "Test Preview and Publish Form");
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPreviewForm();
-
-		Form.previewForm(
-			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}",
-			fieldValue = "Preview Paragraph entry",
-			formName = "Test Preview and Publish Form");
-
-		Navigator.closeWindow();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoEditFormByName(formName = "Test Preview and Publish Form");
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormPortlet.waitFormRenderer(text = "Submit");
-
-		FormFields.viewTextField(
-			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}");
-
-		FormFields.editText(
-			fieldName = "${fieldTextField}",
-			fieldValue = "Published Paragraph entry");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdmin.viewFormTableEntry(
-			fieldLabel = "Text Field",
-			fieldValue = "Published Paragraph entry");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoEditFormByName(formName = "Test Preview and Publish Form");
-
-		Form.viewFormNotPublished();
 	}
 
 	@description = "This is a use case for LPS-68381."
@@ -5554,42 +5695,6 @@ definition {
 			fieldValue = "Text");
 	}
 
-	@description = "This is a use case for LPS-69214."
-	@priority = "3"
-	test ViewConfirmationWhenLeavingFormWithoutSaving {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#ViewConfirmationWhenLeavingFormWithoutSaving";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		Navigator.gotoBack();
-
-		AssertElementPresent(locator1 = "Button#LEAVE");
-
-		Click(locator1 = "Button#STAY");
-
-		Form.save();
-
-		Navigator.gotoBack();
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Untitled Form");
-	}
-
 	@description = "This is a use case for LPS-64305."
 	@priority = "4"
 	test ViewDefaultFieldNamesWithPunctuationCharacters {
@@ -5887,40 +5992,6 @@ definition {
 		FormFields.viewRepeatableTextFieldLabel(
 			fieldLabel = "Text Field",
 			fieldName = "${fieldTextField}");
-	}
-
-	@description = "This is a use case for LPS-68390."
-	@priority = "3"
-	test ViewSaveNotification {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#ViewSaveNotification";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		Pause(locator1 = "60000");
-
-		Form.viewSaveNotification();
-
-		FormsAdminNavigator.gotoBack();
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Created Form Name");
 	}
 
 	@description = "This is a use case for LPS-71072."

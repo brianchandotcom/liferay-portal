@@ -46,12 +46,43 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
-	@ignore = "true"
 	@priority = "5"
 	test ViewAllDocumentsAndMediaShownInAssetList {
+		for (var n : list "2,3,4") {
+			ACUtils.createDMAndAddToPage(
+				dmDocumentFile = "Document_${n}.jpg",
+				dmDocumentTitle = "DM AC Title ${n}");
+		}
 
-		// TODO LRAC-8115 ViewAllDocumentsAndMediaShownInAssetList pending implementation
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		for (var documentTitle : list "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${documentTitle}");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Documents and Media");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		for (var assetName : list "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4") {
+			ACAssets.viewAssets(assetName = "${assetName}");
+		}
 	}
 
 	@description = "Documents visitor behavior card shows expected amount of views"

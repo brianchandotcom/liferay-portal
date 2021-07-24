@@ -1144,6 +1144,8 @@ definition {
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
 
+		SelectFrameTop();
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");

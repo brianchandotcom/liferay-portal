@@ -418,6 +418,8 @@ definition {
 				item = "View Display Page",
 				tableEntry = "WC WebContent Title ${i}");
 
+			SelectFrameTop();
+
 			AssertVisible(
 				key_content = "WC WebContent Content ${i}",
 				locator1 = "Fragment#FRAGMENT_SECTION_CONTENT");
@@ -447,6 +449,8 @@ definition {
 			Page.gotoCollectionEntryEllipsisItem(
 				item = "View Display Page",
 				tableEntry = "WC WebContent Title ${i}");
+
+			SelectFrameTop();
 
 			AssertVisible(
 				key_content = "WC WebContent Content ${i}",

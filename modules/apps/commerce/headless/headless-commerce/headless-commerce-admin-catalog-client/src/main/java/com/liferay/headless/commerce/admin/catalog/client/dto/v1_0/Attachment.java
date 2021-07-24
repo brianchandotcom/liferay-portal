@@ -57,45 +57,47 @@ public class Attachment implements Cloneable, Serializable {
 
 	protected String attachment;
 
-	public Boolean getCdn() {
-		return cdn;
+	public Boolean getCdnEnabled() {
+		return cdnEnabled;
 	}
 
-	public void setCdn(Boolean cdn) {
-		this.cdn = cdn;
+	public void setCdnEnabled(Boolean cdnEnabled) {
+		this.cdnEnabled = cdnEnabled;
 	}
 
-	public void setCdn(UnsafeSupplier<Boolean, Exception> cdnUnsafeSupplier) {
+	public void setCdnEnabled(
+		UnsafeSupplier<Boolean, Exception> cdnEnabledUnsafeSupplier) {
+
 		try {
-			cdn = cdnUnsafeSupplier.get();
+			cdnEnabled = cdnEnabledUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean cdn;
+	protected Boolean cdnEnabled;
 
-	public String getCdnUrl() {
-		return cdnUrl;
+	public String getCdnURL() {
+		return cdnURL;
 	}
 
-	public void setCdnUrl(String cdnUrl) {
-		this.cdnUrl = cdnUrl;
+	public void setCdnURL(String cdnURL) {
+		this.cdnURL = cdnURL;
 	}
 
-	public void setCdnUrl(
-		UnsafeSupplier<String, Exception> cdnUrlUnsafeSupplier) {
+	public void setCdnURL(
+		UnsafeSupplier<String, Exception> cdnURLUnsafeSupplier) {
 
 		try {
-			cdnUrl = cdnUrlUnsafeSupplier.get();
+			cdnURL = cdnURLUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String cdnUrl;
+	protected String cdnURL;
 
 	public CustomField[] getCustomFields() {
 		return customFields;

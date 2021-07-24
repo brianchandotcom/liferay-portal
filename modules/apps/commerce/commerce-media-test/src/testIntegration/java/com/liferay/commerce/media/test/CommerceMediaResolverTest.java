@@ -174,7 +174,7 @@ public class CommerceMediaResolverTest {
 				null, _user.getUserId(), _group.getGroupId(),
 				PortalUtil.getClassNameId(CPDefinition.class.getName()),
 				cpDefinition.getCPDefinitionId(), dlFileEntry.getFileEntryId(),
-				null, false, displayDateMonth, displayDateDay, displayDateYear,
+				false, null, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, true,

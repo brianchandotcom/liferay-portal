@@ -87,18 +87,20 @@ public class Attachment implements Serializable {
 	protected String attachment;
 
 	@Schema
-	public Boolean getCdn() {
-		return cdn;
+	public Boolean getCdnEnabled() {
+		return cdnEnabled;
 	}
 
-	public void setCdn(Boolean cdn) {
-		this.cdn = cdn;
+	public void setCdnEnabled(Boolean cdnEnabled) {
+		this.cdnEnabled = cdnEnabled;
 	}
 
 	@JsonIgnore
-	public void setCdn(UnsafeSupplier<Boolean, Exception> cdnUnsafeSupplier) {
+	public void setCdnEnabled(
+		UnsafeSupplier<Boolean, Exception> cdnEnabledUnsafeSupplier) {
+
 		try {
-			cdn = cdnUnsafeSupplier.get();
+			cdnEnabled = cdnEnabledUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -110,23 +112,23 @@ public class Attachment implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean cdn;
+	protected Boolean cdnEnabled;
 
 	@Schema
-	public String getCdnUrl() {
-		return cdnUrl;
+	public String getCdnURL() {
+		return cdnURL;
 	}
 
-	public void setCdnUrl(String cdnUrl) {
-		this.cdnUrl = cdnUrl;
+	public void setCdnURL(String cdnURL) {
+		this.cdnURL = cdnURL;
 	}
 
 	@JsonIgnore
-	public void setCdnUrl(
-		UnsafeSupplier<String, Exception> cdnUrlUnsafeSupplier) {
+	public void setCdnURL(
+		UnsafeSupplier<String, Exception> cdnURLUnsafeSupplier) {
 
 		try {
-			cdnUrl = cdnUrlUnsafeSupplier.get();
+			cdnURL = cdnURLUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -138,7 +140,7 @@ public class Attachment implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String cdnUrl;
+	protected String cdnURL;
 
 	@Schema
 	@Valid
@@ -490,26 +492,26 @@ public class Attachment implements Serializable {
 			sb.append("\"");
 		}
 
-		if (cdn != null) {
+		if (cdnEnabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"cdn\": ");
+			sb.append("\"cdnEnabled\": ");
 
-			sb.append(cdn);
+			sb.append(cdnEnabled);
 		}
 
-		if (cdnUrl != null) {
+		if (cdnURL != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"cdnUrl\": ");
+			sb.append("\"cdnURL\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(cdnUrl));
+			sb.append(_escape(cdnURL));
 
 			sb.append("\"");
 		}

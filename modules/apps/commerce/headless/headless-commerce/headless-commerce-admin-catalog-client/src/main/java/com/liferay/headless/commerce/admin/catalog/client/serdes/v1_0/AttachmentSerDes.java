@@ -75,26 +75,26 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
-		if (attachment.getCdn() != null) {
+		if (attachment.getCdnEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"cdn\": ");
+			sb.append("\"cdnEnabled\": ");
 
-			sb.append(attachment.getCdn());
+			sb.append(attachment.getCdnEnabled());
 		}
 
-		if (attachment.getCdnUrl() != null) {
+		if (attachment.getCdnURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"cdnUrl\": ");
+			sb.append("\"cdnURL\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(attachment.getCdnUrl()));
+			sb.append(_escape(attachment.getCdnURL()));
 
 			sb.append("\"");
 		}
@@ -265,18 +265,18 @@ public class AttachmentSerDes {
 			map.put("attachment", String.valueOf(attachment.getAttachment()));
 		}
 
-		if (attachment.getCdn() == null) {
-			map.put("cdn", null);
+		if (attachment.getCdnEnabled() == null) {
+			map.put("cdnEnabled", null);
 		}
 		else {
-			map.put("cdn", String.valueOf(attachment.getCdn()));
+			map.put("cdnEnabled", String.valueOf(attachment.getCdnEnabled()));
 		}
 
-		if (attachment.getCdnUrl() == null) {
-			map.put("cdnUrl", null);
+		if (attachment.getCdnURL() == null) {
+			map.put("cdnURL", null);
 		}
 		else {
-			map.put("cdnUrl", String.valueOf(attachment.getCdnUrl()));
+			map.put("cdnURL", String.valueOf(attachment.getCdnURL()));
 		}
 
 		if (attachment.getCustomFields() == null) {
@@ -389,14 +389,14 @@ public class AttachmentSerDes {
 					attachment.setAttachment((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "cdn")) {
+			else if (Objects.equals(jsonParserFieldName, "cdnEnabled")) {
 				if (jsonParserFieldValue != null) {
-					attachment.setCdn((Boolean)jsonParserFieldValue);
+					attachment.setCdnEnabled((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "cdnUrl")) {
+			else if (Objects.equals(jsonParserFieldName, "cdnURL")) {
 				if (jsonParserFieldValue != null) {
-					attachment.setCdnUrl((String)jsonParserFieldValue);
+					attachment.setCdnURL((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

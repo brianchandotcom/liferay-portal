@@ -48,6 +48,8 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setFileEntryId(model.getFileEntryId());
+		soapModel.setCdnEnabled(model.isCdnEnabled());
+		soapModel.setCdnURL(model.getCdnURL());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setTitle(model.getTitle());
@@ -217,6 +219,26 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 		_fileEntryId = fileEntryId;
 	}
 
+	public boolean getCdnEnabled() {
+		return _cdnEnabled;
+	}
+
+	public boolean isCdnEnabled() {
+		return _cdnEnabled;
+	}
+
+	public void setCdnEnabled(boolean cdnEnabled) {
+		_cdnEnabled = cdnEnabled;
+	}
+
+	public String getCdnURL() {
+		return _cdnURL;
+	}
+
+	public void setCdnURL(String cdnURL) {
+		_cdnURL = cdnURL;
+	}
+
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -317,6 +339,8 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private long _fileEntryId;
+	private boolean _cdnEnabled;
+	private String _cdnURL;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private String _title;

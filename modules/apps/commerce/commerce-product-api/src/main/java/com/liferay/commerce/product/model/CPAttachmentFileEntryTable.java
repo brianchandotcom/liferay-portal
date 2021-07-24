@@ -69,6 +69,12 @@ public class CPAttachmentFileEntryTable
 	public final Column<CPAttachmentFileEntryTable, Long> fileEntryId =
 		createColumn(
 			"fileEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CPAttachmentFileEntryTable, Boolean> cdnEnabled =
+		createColumn(
+			"cdnEnabled", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CPAttachmentFileEntryTable, String> cdnURL =
+		createColumn(
+			"cdnURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPAttachmentFileEntryTable, Date> displayDate =
 		createColumn(
 			"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);

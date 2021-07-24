@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,6 +53,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE,
 	service = DataDefinitionFieldLinkResource.class
 )
+@CTAware
 public class DataDefinitionFieldLinkResourceImpl
 	extends BaseDataDefinitionFieldLinkResourceImpl {
 

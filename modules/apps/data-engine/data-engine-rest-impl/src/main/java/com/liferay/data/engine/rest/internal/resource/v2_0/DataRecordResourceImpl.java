@@ -41,6 +41,7 @@ import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -96,6 +97,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v2_0/data-record.properties",
 	scope = ServiceScope.PROTOTYPE, service = DataRecordResource.class
 )
+@CTAware
 public class DataRecordResourceImpl
 	extends BaseDataRecordResourceImpl implements EntityModelResource {
 

@@ -54,6 +54,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -103,6 +104,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v2_0/data-layout.properties",
 	scope = ServiceScope.PROTOTYPE, service = DataLayoutResource.class
 )
+@CTAware
 public class DataLayoutResourceImpl
 	extends BaseDataLayoutResourceImpl implements EntityModelResource {
 

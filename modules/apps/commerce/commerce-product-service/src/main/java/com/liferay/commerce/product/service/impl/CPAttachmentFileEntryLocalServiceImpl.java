@@ -88,14 +88,14 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	@Override
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
 			String externalReferenceCode, long userId, long groupId,
-			long classNameId, long classPK, long fileEntryId, String cdnURL,
-			boolean cdn, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			Map<Locale, String> titleMap, String json, double priority,
-			int type, ServiceContext serviceContext)
+			long classNameId, long classPK, long fileEntryId,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product attachment file entry
@@ -104,7 +104,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		FileEntry fileEntry = null;
 
-		if (!cdn) {
+		if (!cdnEnabled) {
 			fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			ClassName className = classNameLocalService.getClassName(
@@ -115,7 +115,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		_validate(
-			classNameId, classPK, fileEntryId, cdnURL, cdn, 0, null, false);
+			classNameId, classPK, fileEntryId, cdnEnabled, cdnURL, 0, null,
+			false);
 
 		Date expirationDate = null;
 		Date now = new Date();
@@ -163,8 +164,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setClassNameId(classNameId);
 		cpAttachmentFileEntry.setClassPK(classPK);
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
+		cpAttachmentFileEntry.setCdnEnabled(cdnEnabled);
 		cpAttachmentFileEntry.setCdnURL(cdnURL);
-		cpAttachmentFileEntry.setCdn(cdn);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
 
@@ -198,7 +199,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			String cdnURL, boolean cdn, int displayDateMonth,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -224,7 +225,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry =
 				cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
 					externalReferenceCode, serviceContext.getUserId(), groupId,
-					classNameId, classPK, fileEntryId, cdnURL, cdn,
+					classNameId, classPK, fileEntryId, cdnEnabled, cdnURL,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -236,11 +237,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 					serviceContext.getUserId(),
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-					fileEntryId, cdnURL, cdn, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					titleMap, json, priority, type, serviceContext);
+					fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, titleMap, json, priority,
+					type, serviceContext);
 		}
 
 		return cpAttachmentFileEntry;
@@ -325,7 +327,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpDefinitionLocalService.copyCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
-			if (cpAttachmentFileEntry.isCdn()) {
+			if (cpAttachmentFileEntry.isCdnEnabled()) {
 				cpAttachmentFileEntry =
 					cpAttachmentFileEntryPersistence.findByC_C_C_First(
 						cpDefinitionClassNameId,
@@ -550,7 +552,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	@Override
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			String cdnURL, boolean cdn, int displayDateMonth,
+			boolean cdnEnabled, String cdnURL, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -577,7 +579,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpDefinitionLocalService.copyCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
-			if (cdn) {
+			if (cdnEnabled) {
 				cpAttachmentFileEntry =
 					cpAttachmentFileEntryPersistence.findByC_C_C_First(
 						cpDefinitionClassNameId,
@@ -595,7 +597,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		FileEntry fileEntry = null;
 
-		if (!cdn) {
+		if (!cdnEnabled) {
 			fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			fileEntryId = _getFileEntryId(
@@ -606,7 +608,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		_validate(
 			cpAttachmentFileEntry.getClassNameId(),
-			cpAttachmentFileEntry.getClassPK(), fileEntryId, cdnURL, cdn,
+			cpAttachmentFileEntry.getClassPK(), fileEntryId, cdnEnabled, cdnURL,
 			cpAttachmentFileEntry.getFileEntryId(),
 			cpAttachmentFileEntry.getCdnURL(), true);
 
@@ -644,8 +646,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
+		cpAttachmentFileEntry.setCdnEnabled(cdnEnabled);
 		cpAttachmentFileEntry.setCdnURL(cdnURL);
-		cpAttachmentFileEntry.setCdn(cdn);
 		cpAttachmentFileEntry.setTitleMap(
 			_getValidLocalizedMap(
 				LocaleUtil.getSiteDefault(), fileEntry, titleMap));
@@ -839,12 +841,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	private void _validate(
-			long classNameId, long classPK, long fileEntryId, String cdnURL,
-			boolean cdn, long oldFileEntryId, String oldCdnURL, boolean old)
+			long classNameId, long classPK, long fileEntryId,
+			boolean cdnEnabled, String cdnURL, long oldFileEntryId,
+			String oldCdnURL, boolean old)
 		throws PortalException {
 
 		if (old) {
-			if (!cdn) {
+			if (!cdnEnabled) {
 				if (fileEntryId == oldFileEntryId) {
 					return;
 				}
@@ -859,7 +862,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		CPAttachmentFileEntry existingCPAttachmentFileEntry = null;
 
-		if (cdn) {
+		if (cdnEnabled) {
 			if (Validator.isUrl(cdnURL)) {
 				existingCPAttachmentFileEntry =
 					cpAttachmentFileEntryPersistence.fetchByC_C_C_First(

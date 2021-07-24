@@ -105,8 +105,8 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
+		boolean cdnEnabled = ParamUtil.getBoolean(actionRequest, "cdnEnabled");
 		String cdnURL = ParamUtil.getString(actionRequest, "cdnURL");
-		boolean cdn = ParamUtil.getBoolean(actionRequest, "cdn");
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -154,11 +154,11 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 		if (cpAttachmentFileEntryId > 0) {
 			_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
 				serviceContext.getUserId(), cpAttachmentFileEntryId,
-				fileEntryId, cdnURL, cdn, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-				null, priority, type, serviceContext);
+				fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, titleMap, null, priority, type, serviceContext);
 		}
 		else {
 			long classNameId = _portal.getClassNameId(AssetCategory.class);
@@ -170,7 +170,7 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
 				serviceContext.getUserId(), assetCategory.getGroupId(),
-				classNameId, categoryId, fileEntryId, cdnURL, cdn,
+				classNameId, categoryId, fileEntryId, cdnEnabled, cdnURL,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,

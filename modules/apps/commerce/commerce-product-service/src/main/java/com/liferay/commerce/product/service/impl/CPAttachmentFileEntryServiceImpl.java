@@ -53,9 +53,9 @@ public class CPAttachmentFileEntryServiceImpl
 	@Override
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
 			long userId, long groupId, long classNameId, long classPK,
-			long fileEntryId, String cdnUrl, boolean cdn, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			long fileEntryId, boolean cdnEnabled, String cdnUrl,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
@@ -66,19 +66,19 @@ public class CPAttachmentFileEntryServiceImpl
 			serviceContext.getScopeGroupId(), classNameId, classPK, type);
 
 		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-			null, userId, groupId, classNameId, classPK, fileEntryId, cdnUrl,
-			cdn, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, titleMap, json, priority, type,
-			serviceContext);
+			null, userId, groupId, classNameId, classPK, fileEntryId,
+			cdnEnabled, cdnUrl, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+			json, priority, type, serviceContext);
 	}
 
 	@Override
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			String cdnUrl, boolean cdn, int displayDateMonth,
+			boolean cdnEnabled, String cdnUrl, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -111,7 +111,7 @@ public class CPAttachmentFileEntryServiceImpl
 		return cpAttachmentFileEntryLocalService.
 			addOrUpdateCPAttachmentFileEntry(
 				externalReferenceCode, groupId, classNameId, classPK,
-				cpAttachmentFileEntryId, fileEntryId, cdnUrl, cdn,
+				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
@@ -221,7 +221,7 @@ public class CPAttachmentFileEntryServiceImpl
 
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
-			else if (cpAttachmentFileEntry.isCdn()) {
+			else if (cpAttachmentFileEntry.isCdnEnabled()) {
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
 		}
@@ -258,7 +258,7 @@ public class CPAttachmentFileEntryServiceImpl
 
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
-			else if (cpAttachmentFileEntry.isCdn()) {
+			else if (cpAttachmentFileEntry.isCdnEnabled()) {
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
 		}
@@ -318,7 +318,7 @@ public class CPAttachmentFileEntryServiceImpl
 	@Override
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 			long userId, long cpAttachmentFileEntryId, long fileEntryId,
-			String cdnUrl, boolean cdn, int displayDateMonth,
+			boolean cdnEnabled, String cdnUrl, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -330,7 +330,7 @@ public class CPAttachmentFileEntryServiceImpl
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
 		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-			userId, cpAttachmentFileEntryId, fileEntryId, cdnUrl, cdn,
+			userId, cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnUrl,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

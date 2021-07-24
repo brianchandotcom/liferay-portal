@@ -26,7 +26,7 @@ public class CPAttachmentFileEntryImpl extends CPAttachmentFileEntryBaseImpl {
 
 	@Override
 	public FileEntry fetchFileEntry() throws PortalException {
-		if (isCdn()) {
+		if (isCdnEnabled()) {
 			return null;
 		}
 

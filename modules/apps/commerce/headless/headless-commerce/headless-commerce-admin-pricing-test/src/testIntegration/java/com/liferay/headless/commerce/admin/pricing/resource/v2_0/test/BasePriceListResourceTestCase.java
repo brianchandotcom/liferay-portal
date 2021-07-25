@@ -488,20 +488,6 @@ public abstract class BasePriceListResourceTestCase {
 
 		assertEquals(randomPriceList, postPriceList);
 		assertValid(postPriceList);
-
-		randomPriceList = randomPriceList();
-
-		assertHttpResponseStatusCode(
-			404,
-			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
-				randomPriceList.getExternalReferenceCode()));
-
-		testPostPriceList_addPriceList(randomPriceList);
-
-		assertHttpResponseStatusCode(
-			200,
-			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
-				randomPriceList.getExternalReferenceCode()));
 	}
 
 	protected PriceList testPostPriceList_addPriceList(PriceList priceList)

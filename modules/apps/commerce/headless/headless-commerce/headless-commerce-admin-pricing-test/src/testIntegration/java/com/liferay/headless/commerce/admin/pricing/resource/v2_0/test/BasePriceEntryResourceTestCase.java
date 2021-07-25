@@ -408,21 +408,6 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		assertEquals(randomPriceEntry, postPriceEntry);
 		assertValid(postPriceEntry);
-
-		randomPriceEntry = randomPriceEntry();
-
-		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				randomPriceEntry.getExternalReferenceCode()));
-
-		testPostPriceListByExternalReferenceCodePriceEntry_addPriceEntry(
-			randomPriceEntry);
-
-		assertHttpResponseStatusCode(
-			200,
-			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				randomPriceEntry.getExternalReferenceCode()));
 	}
 
 	protected PriceEntry
@@ -746,20 +731,6 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		assertEquals(randomPriceEntry, postPriceEntry);
 		assertValid(postPriceEntry);
-
-		randomPriceEntry = randomPriceEntry();
-
-		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				randomPriceEntry.getExternalReferenceCode()));
-
-		testPostPriceListIdPriceEntry_addPriceEntry(randomPriceEntry);
-
-		assertHttpResponseStatusCode(
-			200,
-			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				randomPriceEntry.getExternalReferenceCode()));
 	}
 
 	protected PriceEntry testPostPriceListIdPriceEntry_addPriceEntry(

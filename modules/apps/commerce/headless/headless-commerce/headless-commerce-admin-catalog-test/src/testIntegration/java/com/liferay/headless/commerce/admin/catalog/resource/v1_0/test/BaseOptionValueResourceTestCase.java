@@ -714,23 +714,6 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		assertEquals(randomOptionValue, postOptionValue);
 		assertValid(postOptionValue);
-
-		randomOptionValue = randomOptionValue();
-
-		assertHttpResponseStatusCode(
-			404,
-			optionValueResource.
-				getOptionValueByExternalReferenceCodeHttpResponse(
-					randomOptionValue.getExternalReferenceCode()));
-
-		testPostOptionByExternalReferenceCodeOptionValue_addOptionValue(
-			randomOptionValue);
-
-		assertHttpResponseStatusCode(
-			200,
-			optionValueResource.
-				getOptionValueByExternalReferenceCodeHttpResponse(
-					randomOptionValue.getExternalReferenceCode()));
 	}
 
 	protected OptionValue
@@ -992,22 +975,6 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		assertEquals(randomOptionValue, postOptionValue);
 		assertValid(postOptionValue);
-
-		randomOptionValue = randomOptionValue();
-
-		assertHttpResponseStatusCode(
-			404,
-			optionValueResource.
-				getOptionValueByExternalReferenceCodeHttpResponse(
-					randomOptionValue.getExternalReferenceCode()));
-
-		testPostOptionIdOptionValue_addOptionValue(randomOptionValue);
-
-		assertHttpResponseStatusCode(
-			200,
-			optionValueResource.
-				getOptionValueByExternalReferenceCodeHttpResponse(
-					randomOptionValue.getExternalReferenceCode()));
 	}
 
 	protected OptionValue testPostOptionIdOptionValue_addOptionValue(

@@ -247,20 +247,6 @@ public abstract class BaseDiscountResourceTestCase {
 
 		assertEquals(randomDiscount, postDiscount);
 		assertValid(postDiscount);
-
-		randomDiscount = randomDiscount();
-
-		assertHttpResponseStatusCode(
-			404,
-			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
-				randomDiscount.getExternalReferenceCode()));
-
-		testPostDiscount_addDiscount(randomDiscount);
-
-		assertHttpResponseStatusCode(
-			200,
-			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
-				randomDiscount.getExternalReferenceCode()));
 	}
 
 	protected Discount testPostDiscount_addDiscount(Discount discount)

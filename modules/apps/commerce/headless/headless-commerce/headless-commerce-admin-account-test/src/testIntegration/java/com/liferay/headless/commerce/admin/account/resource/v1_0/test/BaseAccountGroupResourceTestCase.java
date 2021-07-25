@@ -242,22 +242,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		assertEquals(randomAccountGroup, postAccountGroup);
 		assertValid(postAccountGroup);
-
-		randomAccountGroup = randomAccountGroup();
-
-		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse(
-					randomAccountGroup.getExternalReferenceCode()));
-
-		testPostAccountGroup_addAccountGroup(randomAccountGroup);
-
-		assertHttpResponseStatusCode(
-			200,
-			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse(
-					randomAccountGroup.getExternalReferenceCode()));
 	}
 
 	protected AccountGroup testPostAccountGroup_addAccountGroup(

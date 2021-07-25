@@ -358,13 +358,17 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		@JsonCreator
 		public static ${enumName} create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (${enumName} ${freeMarkerTool.getSchemaVarName(enumName)} : values()) {
 				if (Objects.equals(${freeMarkerTool.getSchemaVarName(enumName)}.getValue(), value)) {
 					return ${freeMarkerTool.getSchemaVarName(enumName)};
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException("Enum value is invalid: " + value);
 		}
 
 		@JsonValue

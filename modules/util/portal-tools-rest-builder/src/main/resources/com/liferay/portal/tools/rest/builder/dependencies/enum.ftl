@@ -24,13 +24,17 @@ public enum ${schemaName} {
 
 	@JsonCreator
 	public static ${schemaName} fromString(String value) {
+		if ((value == null) || value.equals("")) {
+			return null;
+		}
+
 		for (${schemaName} ${schemaVarName} : values()) {
 			if (Objects.equals(${schemaVarName}.getValue(), value)) {
 				return ${schemaVarName};
 			}
 		}
 
-		return null;
+		throw new IllegalArgumentException("Enum value is invalid: " + value);
 	}
 
 	@JsonValue

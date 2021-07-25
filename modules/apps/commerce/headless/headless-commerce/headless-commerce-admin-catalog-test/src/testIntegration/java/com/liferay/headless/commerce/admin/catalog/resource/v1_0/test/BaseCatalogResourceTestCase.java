@@ -692,20 +692,6 @@ public abstract class BaseCatalogResourceTestCase {
 
 		assertEquals(randomCatalog, postCatalog);
 		assertValid(postCatalog);
-
-		randomCatalog = randomCatalog();
-
-		assertHttpResponseStatusCode(
-			404,
-			catalogResource.getCatalogByExternalReferenceCodeHttpResponse(
-				randomCatalog.getExternalReferenceCode()));
-
-		testPostCatalog_addCatalog(randomCatalog);
-
-		assertHttpResponseStatusCode(
-			200,
-			catalogResource.getCatalogByExternalReferenceCodeHttpResponse(
-				randomCatalog.getExternalReferenceCode()));
 	}
 
 	protected Catalog testPostCatalog_addCatalog(Catalog catalog)

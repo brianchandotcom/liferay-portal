@@ -666,23 +666,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 		assertEquals(randomAccountAddress, postAccountAddress);
 		assertValid(postAccountAddress);
-
-		randomAccountAddress = randomAccountAddress();
-
-		assertHttpResponseStatusCode(
-			404,
-			accountAddressResource.
-				getAccountAddressByExternalReferenceCodeHttpResponse(
-					randomAccountAddress.getExternalReferenceCode()));
-
-		testPostAccountByExternalReferenceCodeAccountAddress_addAccountAddress(
-			randomAccountAddress);
-
-		assertHttpResponseStatusCode(
-			200,
-			accountAddressResource.
-				getAccountAddressByExternalReferenceCodeHttpResponse(
-					randomAccountAddress.getExternalReferenceCode()));
 	}
 
 	protected AccountAddress
@@ -827,22 +810,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 		assertEquals(randomAccountAddress, postAccountAddress);
 		assertValid(postAccountAddress);
-
-		randomAccountAddress = randomAccountAddress();
-
-		assertHttpResponseStatusCode(
-			404,
-			accountAddressResource.
-				getAccountAddressByExternalReferenceCodeHttpResponse(
-					randomAccountAddress.getExternalReferenceCode()));
-
-		testPostAccountIdAccountAddress_addAccountAddress(randomAccountAddress);
-
-		assertHttpResponseStatusCode(
-			200,
-			accountAddressResource.
-				getAccountAddressByExternalReferenceCodeHttpResponse(
-					randomAccountAddress.getExternalReferenceCode()));
 	}
 
 	protected AccountAddress testPostAccountIdAccountAddress_addAccountAddress(

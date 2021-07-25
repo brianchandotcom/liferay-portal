@@ -44,7 +44,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ObjectDefinitionDeployer.class)
+@Component(
+	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = ObjectDefinitionDeployer.class
+)
 public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	public List<ServiceRegistration<?>> deploy(

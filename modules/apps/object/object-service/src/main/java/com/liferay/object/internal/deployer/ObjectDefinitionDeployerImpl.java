@@ -108,9 +108,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					StringUtil.read(
 						ObjectDefinitionDeployerImpl.class.getClassLoader(),
 						"resource-actions/resource-actions.xml.tpl"),
-					new String[] {"[$MODEL_NAME$]", "[$RESOURCE_NAME$]"},
+					new String[] {
+						"[$MODEL_NAME$]", "[$PORTLET_NAME$]",
+						"[$RESOURCE_NAME$]"
+					},
 					new String[] {
 						objectDefinition.getClassName(),
+						objectDefinition.getPortletId(),
 						objectDefinition.getResourceName()
 					})));
 	}

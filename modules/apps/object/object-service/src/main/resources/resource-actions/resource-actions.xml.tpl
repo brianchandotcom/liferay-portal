@@ -5,6 +5,7 @@
 	<model-resource>
 		<model-name>[$MODEL_NAME$]</model-name>
 		<portlet-ref>
+			<portlet-name>[$PORTLET_NAME$]</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -30,6 +31,7 @@
 	<model-resource>
 		<model-name>[$RESOURCE_NAME$]</model-name>
 		<portlet-ref>
+			<portlet-name>[$PORTLET_NAME$]</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>

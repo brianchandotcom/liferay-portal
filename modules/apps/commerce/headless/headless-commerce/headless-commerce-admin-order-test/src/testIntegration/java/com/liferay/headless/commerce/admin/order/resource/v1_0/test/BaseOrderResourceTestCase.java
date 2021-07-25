@@ -516,20 +516,6 @@ public abstract class BaseOrderResourceTestCase {
 
 		assertEquals(randomOrder, postOrder);
 		assertValid(postOrder);
-
-		randomOrder = randomOrder();
-
-		assertHttpResponseStatusCode(
-			404,
-			orderResource.getOrderByExternalReferenceCodeHttpResponse(
-				randomOrder.getExternalReferenceCode()));
-
-		testPostOrder_addOrder(randomOrder);
-
-		assertHttpResponseStatusCode(
-			200,
-			orderResource.getOrderByExternalReferenceCodeHttpResponse(
-				randomOrder.getExternalReferenceCode()));
 	}
 
 	protected Order testPostOrder_addOrder(Order order) throws Exception {

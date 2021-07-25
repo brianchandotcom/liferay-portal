@@ -490,22 +490,6 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		assertEquals(randomProductGroup, postProductGroup);
 		assertValid(postProductGroup);
-
-		randomProductGroup = randomProductGroup();
-
-		assertHttpResponseStatusCode(
-			404,
-			productGroupResource.
-				getProductGroupByExternalReferenceCodeHttpResponse(
-					randomProductGroup.getExternalReferenceCode()));
-
-		testPostProductGroup_addProductGroup(randomProductGroup);
-
-		assertHttpResponseStatusCode(
-			200,
-			productGroupResource.
-				getProductGroupByExternalReferenceCodeHttpResponse(
-					randomProductGroup.getExternalReferenceCode()));
 	}
 
 	protected ProductGroup testPostProductGroup_addProductGroup(

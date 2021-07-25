@@ -561,21 +561,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		assertEquals(randomOrderNote, postOrderNote);
 		assertValid(postOrderNote);
-
-		randomOrderNote = randomOrderNote();
-
-		assertHttpResponseStatusCode(
-			404,
-			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
-				randomOrderNote.getExternalReferenceCode()));
-
-		testPostOrderByExternalReferenceCodeOrderNote_addOrderNote(
-			randomOrderNote);
-
-		assertHttpResponseStatusCode(
-			200,
-			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
-				randomOrderNote.getExternalReferenceCode()));
 	}
 
 	protected OrderNote
@@ -699,20 +684,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		assertEquals(randomOrderNote, postOrderNote);
 		assertValid(postOrderNote);
-
-		randomOrderNote = randomOrderNote();
-
-		assertHttpResponseStatusCode(
-			404,
-			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
-				randomOrderNote.getExternalReferenceCode()));
-
-		testPostOrderIdOrderNote_addOrderNote(randomOrderNote);
-
-		assertHttpResponseStatusCode(
-			200,
-			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
-				randomOrderNote.getExternalReferenceCode()));
 	}
 
 	protected OrderNote testPostOrderIdOrderNote_addOrderNote(

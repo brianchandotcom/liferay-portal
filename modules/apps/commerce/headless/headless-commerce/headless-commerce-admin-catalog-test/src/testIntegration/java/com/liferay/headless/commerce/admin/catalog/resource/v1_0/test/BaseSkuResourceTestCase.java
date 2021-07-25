@@ -328,20 +328,6 @@ public abstract class BaseSkuResourceTestCase {
 
 		assertEquals(randomSku, postSku);
 		assertValid(postSku);
-
-		randomSku = randomSku();
-
-		assertHttpResponseStatusCode(
-			404,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				randomSku.getExternalReferenceCode()));
-
-		testPostProductByExternalReferenceCodeSku_addSku(randomSku);
-
-		assertHttpResponseStatusCode(
-			200,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				randomSku.getExternalReferenceCode()));
 	}
 
 	protected Sku testPostProductByExternalReferenceCodeSku_addSku(Sku sku)
@@ -449,20 +435,6 @@ public abstract class BaseSkuResourceTestCase {
 
 		assertEquals(randomSku, postSku);
 		assertValid(postSku);
-
-		randomSku = randomSku();
-
-		assertHttpResponseStatusCode(
-			404,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				randomSku.getExternalReferenceCode()));
-
-		testPostProductIdSku_addSku(randomSku);
-
-		assertHttpResponseStatusCode(
-			200,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				randomSku.getExternalReferenceCode()));
 	}
 
 	protected Sku testPostProductIdSku_addSku(Sku sku) throws Exception {

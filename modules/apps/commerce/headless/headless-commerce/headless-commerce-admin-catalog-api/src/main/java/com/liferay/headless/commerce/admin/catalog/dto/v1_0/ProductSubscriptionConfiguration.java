@@ -314,13 +314,18 @@ public class ProductSubscriptionConfiguration implements Serializable {
 
 		@JsonCreator
 		public static SubscriptionType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (SubscriptionType subscriptionType : values()) {
 				if (Objects.equals(subscriptionType.getValue(), value)) {
 					return subscriptionType;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

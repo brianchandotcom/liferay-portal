@@ -469,13 +469,18 @@ public class ImportTask implements Serializable {
 
 		@JsonCreator
 		public static ExecuteStatus create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (ExecuteStatus executeStatus : values()) {
 				if (Objects.equals(executeStatus.getValue(), value)) {
 					return executeStatus;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue
@@ -503,13 +508,18 @@ public class ImportTask implements Serializable {
 
 		@JsonCreator
 		public static Operation create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (Operation operation : values()) {
 				if (Objects.equals(operation.getValue(), value)) {
 					return operation;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

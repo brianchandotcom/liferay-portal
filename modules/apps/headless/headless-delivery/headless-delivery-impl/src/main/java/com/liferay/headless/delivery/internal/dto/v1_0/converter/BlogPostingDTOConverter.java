@@ -143,6 +143,7 @@ public class BlogPostingDTOConverter
 						_layoutPageTemplateEntryService,
 						"getBlogPostingRenderedContentByDisplayPageDisplay" +
 							"PageKey"));
+				viewableBy = ViewableBy.ANYONE;
 			}
 		};
 	}

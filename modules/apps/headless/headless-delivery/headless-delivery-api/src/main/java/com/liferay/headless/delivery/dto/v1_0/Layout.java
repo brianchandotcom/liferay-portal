@@ -942,13 +942,18 @@ public class Layout implements Serializable {
 
 		@JsonCreator
 		public static Align create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (Align align : values()) {
 				if (Objects.equals(align.getValue(), value)) {
 					return align;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue
@@ -977,13 +982,18 @@ public class Layout implements Serializable {
 
 		@JsonCreator
 		public static BorderRadius create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (BorderRadius borderRadius : values()) {
 				if (Objects.equals(borderRadius.getValue(), value)) {
 					return borderRadius;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue
@@ -1011,13 +1021,18 @@ public class Layout implements Serializable {
 
 		@JsonCreator
 		public static ContainerType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (ContainerType containerType : values()) {
 				if (Objects.equals(containerType.getValue(), value)) {
 					return containerType;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue
@@ -1045,13 +1060,18 @@ public class Layout implements Serializable {
 
 		@JsonCreator
 		public static ContentDisplay create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (ContentDisplay contentDisplay : values()) {
 				if (Objects.equals(contentDisplay.getValue(), value)) {
 					return contentDisplay;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue
@@ -1080,13 +1100,18 @@ public class Layout implements Serializable {
 
 		@JsonCreator
 		public static Justify create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (Justify justify : values()) {
 				if (Objects.equals(justify.getValue(), value)) {
 					return justify;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue
@@ -1115,13 +1140,18 @@ public class Layout implements Serializable {
 
 		@JsonCreator
 		public static Shadow create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (Shadow shadow : values()) {
 				if (Objects.equals(shadow.getValue(), value)) {
 					return shadow;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue
@@ -1149,13 +1179,18 @@ public class Layout implements Serializable {
 
 		@JsonCreator
 		public static WidthType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (WidthType widthType : values()) {
 				if (Objects.equals(widthType.getValue(), value)) {
 					return widthType;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

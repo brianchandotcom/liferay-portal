@@ -508,13 +508,18 @@ public class NavigationMenu implements Serializable {
 
 		@JsonCreator
 		public static NavigationType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (NavigationType navigationType : values()) {
 				if (Objects.equals(navigationType.getValue(), value)) {
 					return navigationType;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

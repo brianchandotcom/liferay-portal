@@ -156,13 +156,18 @@ public class ContextReference implements Serializable {
 
 		@JsonCreator
 		public static ContextSource create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (ContextSource contextSource : values()) {
 				if (Objects.equals(contextSource.getValue(), value)) {
 					return contextSource;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

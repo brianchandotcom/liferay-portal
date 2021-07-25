@@ -537,13 +537,18 @@ public class PageCollectionDefinition implements Serializable {
 
 		@JsonCreator
 		public static PaginationType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (PaginationType paginationType : values()) {
 				if (Objects.equals(paginationType.getValue(), value)) {
 					return paginationType;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

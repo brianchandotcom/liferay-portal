@@ -639,13 +639,18 @@ public class Option implements Serializable {
 
 		@JsonCreator
 		public static FieldType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (FieldType fieldType : values()) {
 				if (Objects.equals(fieldType.getValue(), value)) {
 					return fieldType;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

@@ -242,13 +242,18 @@ public class HistogramMetric implements Serializable {
 
 		@JsonCreator
 		public static Unit create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (Unit unit : values()) {
 				if (Objects.equals(unit.getValue(), value)) {
 					return unit;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

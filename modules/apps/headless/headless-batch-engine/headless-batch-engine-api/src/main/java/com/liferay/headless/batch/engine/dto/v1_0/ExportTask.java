@@ -417,13 +417,18 @@ public class ExportTask implements Serializable {
 
 		@JsonCreator
 		public static ExecuteStatus create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (ExecuteStatus executeStatus : values()) {
 				if (Objects.equals(executeStatus.getValue(), value)) {
 					return executeStatus;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

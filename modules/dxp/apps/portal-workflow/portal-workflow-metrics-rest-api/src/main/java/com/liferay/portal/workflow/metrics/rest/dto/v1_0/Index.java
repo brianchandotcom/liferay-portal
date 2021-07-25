@@ -233,13 +233,18 @@ public class Index implements Serializable {
 
 		@JsonCreator
 		public static Group create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
 			for (Group group : values()) {
 				if (Objects.equals(group.getValue(), value)) {
 					return group;
 				}
 			}
 
-			return null;
+			throw new IllegalArgumentException(
+				"Enum value is invalid: " + value);
 		}
 
 		@JsonValue

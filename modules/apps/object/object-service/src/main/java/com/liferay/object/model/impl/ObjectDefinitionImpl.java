@@ -49,7 +49,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return getDBTableName();
+		return "com_liferay_object_" + getObjectDefinitionId() + "Portlet";
 	}
 
 	@Override

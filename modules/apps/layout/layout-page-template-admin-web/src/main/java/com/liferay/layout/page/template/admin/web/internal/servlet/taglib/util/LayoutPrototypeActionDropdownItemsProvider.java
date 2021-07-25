@@ -68,29 +68,54 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			_themeDisplay.getPermissionChecker(),
 			_layoutPrototype.getLayoutPrototypeId(), ActionKeys.UPDATE);
 
-		return DropdownItemListBuilder.add(
-			() -> hasUpdatePermission,
-			_getEditLayoutPrototypeActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission,
-			_getConfigureLayoutPrototypeActionUnsafeConsumer()
-		).add(
-			() -> LayoutPrototypePermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				_layoutPrototype.getLayoutPrototypeId(),
-				ActionKeys.PERMISSIONS),
-			_getPermissionsLayoutPrototypeActionUnsafeConsumer()
-		).add(
-			() -> hasExportImportLayoutsPermission,
-			_getExportLayoutPrototypeActionUnsafeConsumer()
-		).add(
-			() -> hasExportImportLayoutsPermission,
-			_getImportLayoutPrototypeActionUnsafeConsumer()
-		).add(
-			() -> LayoutPrototypePermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				_layoutPrototype.getLayoutPrototypeId(), ActionKeys.DELETE),
-			_getDeleteLayoutPrototypeActionUnsafeConsumer()
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasUpdatePermission,
+						_getEditLayoutPrototypeActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasExportImportLayoutsPermission,
+						_getExportLayoutPrototypeActionUnsafeConsumer()
+					).add(
+						() -> hasExportImportLayoutsPermission,
+						_getImportLayoutPrototypeActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasUpdatePermission,
+						_getConfigureLayoutPrototypeActionUnsafeConsumer()
+					).add(
+						() -> LayoutPrototypePermissionUtil.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutPrototype.getLayoutPrototypeId(),
+							ActionKeys.PERMISSIONS),
+						_getPermissionsLayoutPrototypeActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> LayoutPrototypePermissionUtil.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutPrototype.getLayoutPrototypeId(),
+							ActionKeys.DELETE),
+						_getDeleteLayoutPrototypeActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

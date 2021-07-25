@@ -15,45 +15,36 @@
 import {openModal} from 'frontend-js-web';
 
 const ACTIONS = {
-	deleteLayoutPrototype({deleteLayoutPrototypeURL}) {
+	deleteLayoutPageTemplateCollection({
+		deleteLayoutPageTemplateCollectionURL,
+	}) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(document.hrefFm, deleteLayoutPrototypeURL);
+			submitForm(document.hrefFm, deleteLayoutPageTemplateCollectionURL);
 		}
 	},
 
-	exportLayoutPrototype({exportLayoutPrototypeURL}) {
-		openModal({
-			title: Liferay.Language.get('export'),
-			url: exportLayoutPrototypeURL,
-		});
-	},
-
-	importLayoutPrototype({importLayoutPrototypeURL}) {
-		openModal({
-			title: Liferay.Language.get('import'),
-			url: importLayoutPrototypeURL,
-		});
-	},
-
-	permissionsLayoutPrototype({permissionsLayoutPrototypeURL}) {
+	permissionsLayoutPageTemplateCollection({
+		permissionsLayoutPageTemplateCollectionURL,
+	}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),
-			url: permissionsLayoutPrototypeURL,
+			url: permissionsLayoutPageTemplateCollectionURL,
 		});
 	},
 };
 
-export default function LayoutPrototypeDropdownPropsTransformer({
-	actions,
+export default function LayoutPageTemplateEntryPropsTransformer({
+	items,
+	portletNamespace,
 	...otherProps
 }) {
 	return {
 		...otherProps,
-		actions: actions?.map((item) => {
+		items: items?.map((item) => {
 			return {
 				...item,
 				items: item.items?.map((child) => {
@@ -65,12 +56,13 @@ export default function LayoutPrototypeDropdownPropsTransformer({
 							if (action) {
 								event.preventDefault();
 
-								ACTIONS[action](child.data);
+								ACTIONS[action](child.data, portletNamespace);
 							}
 						},
 					};
 				}),
 			};
 		}),
+		portletNamespace,
 	};
 }

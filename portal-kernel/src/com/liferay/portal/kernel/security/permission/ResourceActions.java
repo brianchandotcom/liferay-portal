@@ -183,6 +183,9 @@ public interface ResourceActions {
 			ClassLoader classLoader, String... sources)
 		throws ResourceActionsException;
 
+	public void populatePortletResources(Document document)
+		throws ResourceActionsException;
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

@@ -670,6 +670,27 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
+	@Override
+	public void populatePortletResources(Document document)
+		throws ResourceActionsException {
+
+		if ((document == null) ||
+			!PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
+
+			return;
+		}
+
+		Set<String> portletResourceNames = new HashSet<>();
+
+		_readPortletResources(document.getRootElement(), portletResourceNames);
+
+		for (String portletResourceName : portletResourceNames) {
+			resourceActionLocalService.checkResourceActions(
+				portletResourceName,
+				getPortletResourceActions(portletResourceName));
+		}
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

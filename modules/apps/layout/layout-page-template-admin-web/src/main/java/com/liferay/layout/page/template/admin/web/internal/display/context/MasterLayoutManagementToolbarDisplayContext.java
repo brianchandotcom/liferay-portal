@@ -66,23 +66,38 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteSelectedMasterLayouts");
-				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-				dropdownItem.setQuickAction(true);
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "exportMasterLayouts");
+							dropdownItem.putData(
+								"exportMasterLayoutURL",
+								_getExportMasterLayoutURL());
+							dropdownItem.setIcon("download");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "export"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "exportMasterLayouts");
-				dropdownItem.putData(
-					"exportMasterLayoutURL", _getExportMasterLayoutURL());
-				dropdownItem.setIcon("download");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "export"));
-				dropdownItem.setQuickAction(true);
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "deleteSelectedMasterLayouts");
+							dropdownItem.setIcon("times-circle");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}

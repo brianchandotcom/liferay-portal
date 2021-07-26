@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.util.CSVUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
@@ -46,6 +48,8 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
+
+import java.net.InetSocketAddress;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -61,6 +65,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -85,11 +90,22 @@ public class CompanySampleDataGenerationTest {
 	@Before
 	public void setUp() {
 		_executorService = Executors.newWorkStealingPool();
+
+		_originalAtomicReference = ReflectionTestUtil.getFieldValue(
+			_portal, "_portalServerInetSocketAddress");
+
+		ReflectionTestUtil.setFieldValue(
+			_portal, "_portalServerInetSocketAddress",
+			new AtomicReference<InetSocketAddress>());
 	}
 
 	@After
 	public void tearDown() {
 		_executorService.shutdownNow();
+
+		ReflectionTestUtil.setFieldValue(
+			_portal, "_portalServerInetSocketAddress",
+			_originalAtomicReference);
 	}
 
 	@Test
@@ -311,6 +327,10 @@ public class CompanySampleDataGenerationTest {
 
 	private final Map<String, List<String>> _csvMap = new ConcurrentHashMap<>();
 	private ExecutorService _executorService;
+	private AtomicReference<InetSocketAddress> _originalAtomicReference;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

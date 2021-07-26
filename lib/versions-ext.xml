@@ -1679,7 +1679,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/httpclient.jar</file-name>
-				<version>4.5.5</version>
+				<version>4.5.13</version>
 				<project-name>HttpComponents</project-name>
 				<project-url>http://hc.apache.org</project-url>
 				<licenses>
@@ -1691,7 +1691,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/httpcore.jar</file-name>
-				<version>4.4.9</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents</project-name>
 				<project-url>http://hc.apache.org</project-url>
 				<licenses>
@@ -1703,7 +1703,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/httpmime.jar</file-name>
-				<version>4.5.5</version>
+				<version>4.5.13</version>
 				<project-name>HttpComponents</project-name>
 				<project-url>http://hc.apache.org</project-url>
 				<licenses>

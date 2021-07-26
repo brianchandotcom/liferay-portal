@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +39,8 @@ import com.liferay.remote.app.model.RemoteCustomElementEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +67,11 @@ public interface RemoteCustomElementEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteCustomElementEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote custom element entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RemoteCustomElementEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteCustomElementEntry addRemoteCustomElementEntry(
+			long userId, Map<Locale, String> nameMap, String tagName,
+			String url, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the remote custom element entry to the database. Also notifies the appropriate model listeners.
@@ -291,6 +300,22 @@ public interface RemoteCustomElementEntryLocalService
 	public RemoteCustomElementEntry
 			getRemoteCustomElementEntryByUuidAndCompanyId(
 				String uuid, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RemoteCustomElementEntry> searchRemoteCustomElementEntries(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchRemoteCustomElementEntriesCount(
+			long companyId, String keywords)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteCustomElementEntry updateRemoteCustomElementEntry(
+			long remoteCustomElementEntryId, Map<Locale, String> nameMap,
+			String tagName, String url, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

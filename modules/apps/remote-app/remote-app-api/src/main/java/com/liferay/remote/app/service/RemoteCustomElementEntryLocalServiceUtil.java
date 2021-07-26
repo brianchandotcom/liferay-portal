@@ -24,6 +24,7 @@ import com.liferay.remote.app.model.RemoteCustomElementEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for RemoteCustomElementEntry. This utility wraps
@@ -44,6 +45,15 @@ public class RemoteCustomElementEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteCustomElementEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static RemoteCustomElementEntry addRemoteCustomElementEntry(
+			long userId, Map<java.util.Locale, String> nameMap, String tagName,
+			String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addRemoteCustomElementEntry(
+			userId, nameMap, tagName, url, serviceContext);
+	}
 
 	/**
 	 * Adds the remote custom element entry to the database. Also notifies the appropriate model listeners.
@@ -333,6 +343,34 @@ public class RemoteCustomElementEntryLocalServiceUtil {
 
 		return getService().getRemoteCustomElementEntryByUuidAndCompanyId(
 			uuid, companyId);
+	}
+
+	public static List<RemoteCustomElementEntry>
+			searchRemoteCustomElementEntries(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().searchRemoteCustomElementEntries(
+			companyId, keywords, start, end, sort);
+	}
+
+	public static int searchRemoteCustomElementEntriesCount(
+			long companyId, String keywords)
+		throws PortalException {
+
+		return getService().searchRemoteCustomElementEntriesCount(
+			companyId, keywords);
+	}
+
+	public static RemoteCustomElementEntry updateRemoteCustomElementEntry(
+			long remoteCustomElementEntryId,
+			Map<java.util.Locale, String> nameMap, String tagName, String url,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateRemoteCustomElementEntry(
+			remoteCustomElementEntryId, nameMap, tagName, url, serviceContext);
 	}
 
 	/**

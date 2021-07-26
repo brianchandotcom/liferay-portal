@@ -35,6 +35,19 @@ public class RemoteCustomElementEntryLocalServiceWrapper
 			remoteCustomElementEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.remote.app.model.RemoteCustomElementEntry
+			addRemoteCustomElementEntry(
+				long userId, java.util.Map<java.util.Locale, String> nameMap,
+				String tagName, String url,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteCustomElementEntryLocalService.
+			addRemoteCustomElementEntry(
+				userId, nameMap, tagName, url, serviceContext);
+	}
+
 	/**
 	 * Adds the remote custom element entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -371,6 +384,42 @@ public class RemoteCustomElementEntryLocalServiceWrapper
 
 		return _remoteCustomElementEntryLocalService.
 			getRemoteCustomElementEntryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.remote.app.model.RemoteCustomElementEntry>
+			searchRemoteCustomElementEntries(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteCustomElementEntryLocalService.
+			searchRemoteCustomElementEntries(
+				companyId, keywords, start, end, sort);
+	}
+
+	@Override
+	public int searchRemoteCustomElementEntriesCount(
+			long companyId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteCustomElementEntryLocalService.
+			searchRemoteCustomElementEntriesCount(companyId, keywords);
+	}
+
+	@Override
+	public com.liferay.remote.app.model.RemoteCustomElementEntry
+			updateRemoteCustomElementEntry(
+				long remoteCustomElementEntryId,
+				java.util.Map<java.util.Locale, String> nameMap, String tagName,
+				String url,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteCustomElementEntryLocalService.
+			updateRemoteCustomElementEntry(
+				remoteCustomElementEntryId, nameMap, tagName, url,
+				serviceContext);
 	}
 
 	/**

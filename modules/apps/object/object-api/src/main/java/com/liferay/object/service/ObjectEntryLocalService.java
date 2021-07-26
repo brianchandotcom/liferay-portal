@@ -140,6 +140,10 @@ public interface ObjectEntryLocalService
 	public ObjectEntry deleteObjectEntry(ObjectEntry objectEntry)
 		throws PortalException;
 
+	public ObjectEntry deleteObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
@@ -308,6 +312,11 @@ public interface ObjectEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntry getObjectEntry(long objectEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntry getObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
 		throws PortalException;
 
 	/**

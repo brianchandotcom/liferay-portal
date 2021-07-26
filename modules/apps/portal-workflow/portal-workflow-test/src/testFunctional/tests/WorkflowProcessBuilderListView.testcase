@@ -39,6 +39,8 @@ definition {
 	@description = "Verify that the user can select Duplicate option in the kebab menu for a particular row"
 	@priority = "4"
 	test CanDuplicateProcess {
+		property test.name.skip.portal.instance = "WorkflowProcessBuilderListView#CanDuplicateProcess";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
 		ApplicationsMenu.gotoPortlet(
@@ -72,6 +74,8 @@ definition {
 	@description = "Verify that the user is able to filter by Published processes"
 	@priority = "3"
 	test CanFilterByPublishedProcesses {
+		property test.name.skip.portal.instance = "WorkflowProcessBuilderListView#CanFilterByPublishedProcesses";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -195,6 +199,8 @@ definition {
 	@description = "Verify that search can be done using non-ASCII character"
 	@priority = "4"
 	test CanSearchNonAsciiChar {
+		property test.name.skip.portal.instance = "WorkflowProcessBuilderListView#CanSearchNonAsciiChar";
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
 
 		ApplicationsMenu.gotoPortlet(
@@ -330,6 +336,8 @@ definition {
 	@description = "Verify that the users are able to click on the + button and be directed to the New Workflow page"
 	@priority = "5"
 	test RedirectToNewWorkflowPage {
+		property test.name.skip.portal.instance = "WorkflowProcessBuilderListView#RedirectToNewWorkflowPage";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

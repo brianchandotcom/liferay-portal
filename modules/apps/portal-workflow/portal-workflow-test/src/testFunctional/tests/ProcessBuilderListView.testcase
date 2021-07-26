@@ -413,6 +413,8 @@ definition {
 	@description = "Verify that the user can select Permissions option in the kebab menu for a particular row"
 	@priority = "4"
 	test CanSelectPermissionsOption {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectPermissionsOption";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -425,6 +427,8 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectPermissionsOptionForNonPublishedProcess {
+		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectPermissionsOptionForNonPublishedProcess";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

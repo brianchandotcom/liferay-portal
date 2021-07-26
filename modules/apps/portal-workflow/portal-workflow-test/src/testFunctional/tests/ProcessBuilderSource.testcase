@@ -387,6 +387,8 @@ definition {
 	@description = "Verify that the user can select Permissions option in the kebab for a particular definition"
 	@priority = "3"
 	test CanSelectPermissions {
+		property test.name.skip.portal.instance = "ProcessBuilderSource#CanSelectPermissions";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

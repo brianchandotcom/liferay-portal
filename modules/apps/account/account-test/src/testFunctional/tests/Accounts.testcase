@@ -120,6 +120,66 @@ definition {
 			accountUserName = "userfn1");
 	}
 
+	@description = "This test adds and removes a user assignee to an account specific role."
+	@priority = "4"
+	test CanAddAndRemoveAssigneeToAccountSpecificRole {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryDescription = "Account Description",
+			accountEntryName = "Account Name",
+			accountEntryStatus = "Active",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.addNewUserToBusinessAccount(
+			accountName = "Account Name",
+			assigneeName = "userfn",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.addAccountSpecificRole(accountRoleTitle = "Account Role Title");
+
+		Accounts.addAssigneeToRole(
+			accountRoleTitle = "Account Role Title",
+			assigneeName = "userfn");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		// Navigate to assignees via menu item and removes existing assignee from role
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Assign Users",
+			rowEntry = "Account Role Title");
+
+		LexiconEntry.selectEntry(rowEntry = "userfn userln");
+
+		ClickNoError(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY");
+
+		AssertConfirm(value1 = "Are you sure you want to remove the selected users?");
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no users associated with this role.");
+	}
+
 	@description = "This test adds and removes multiple organizations from an account via management toolbar."
 	@priority = "4"
 	test CanAddAndRemoveOrganizationsInBulk {

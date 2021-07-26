@@ -120,7 +120,7 @@ paths:
             tags: ["ObjectEntry"]
     "/sites/{siteId}/by-external-reference-code/{externalReferenceCode}":
         delete:
-            operationId: deleteObjectEntry
+            operationId: deleteSiteByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -143,7 +143,7 @@ paths:
                         ""
             tags: ["ObjectEntry"]
         get:
-            operationId: getObjectEntry
+            operationId: getSiteByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -170,7 +170,7 @@ paths:
                         ""
             tags: ["ObjectEntry"]
         put:
-            operationId: putObjectEntry
+            operationId: putSiteByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -206,6 +206,7 @@ paths:
             tags: ["ObjectEntry"]
     "/{objectEntryId}":
         delete:
+            operationId: deleteObjectEntry
             parameters:
                 - in: path
                   name: objectEntryId
@@ -222,6 +223,7 @@ paths:
                         ""
             tags: ["ObjectEntry"]
         get:
+            operationId: getObjectEntry
             parameters:
                 - in: path
                   name: objectEntryId
@@ -242,6 +244,7 @@ paths:
                         ""
             tags: ["ObjectEntry"]
         put:
+            operationId: putObjectEntry
             parameters:
                 - in: path
                   name: objectEntryId

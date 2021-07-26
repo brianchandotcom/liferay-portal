@@ -39,7 +39,45 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="RemoteCustomElementEntry" remote-service="false" trash-enabled="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column container-model="true" name="remoteCustomElementEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" uad-nonanonymizable="true" />
+		<column name="tagName" type="String" uad-nonanonymizable="true" />
+		<column name="url" type="String" uad-nonanonymizable="true" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column case-sensitive="false" name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="C_U" return-type="RemoteCustomElementEntry" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="url" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<exceptions>
 		<exception>DuplicateRemoteAppEntryURL</exception>
+		<exception>DuplicateRemoteCustomElementEntryURL</exception>
 	</exceptions>
 </service-builder>

@@ -1984,7 +1984,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.apache.http.components.jar!httpcore-nio.jar</file-name>
-				<version>4.4.12</version>
+				<version>4.4.14</version>
 				<project-name>Apache HttpCore NIO</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -1996,7 +1996,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.apache.http.components.jar!httpcore.jar</file-name>
-				<version>4.4.13</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -2008,8 +2008,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.apache.http.components.jar!httpmime.jar</file-name>
-				<version>4.5.5</version>
-				<project-name>HttpComponents Apache HttpClient Mime</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient Mime</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
@@ -2140,8 +2140,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.json.web.service.client.jar!httpasyncclient.jar</file-name>
-				<version>4.1.3</version>
-				<project-name>HttpComponents Apache HttpAsyncClient</project-name>
+				<version>4.1.4</version>
+				<project-name>Apache HttpAsyncClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-asyncclient</project-url>
 				<licenses>
 					<license>
@@ -2152,36 +2152,36 @@
 			</library>
 			<library>
 				<file-name>com.liferay.petra.json.web.service.client.jar!httpclient.jar</file-name>
-				<version>4.5.3</version>
-				<project-name>HttpComponents Apache HttpClient</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.petra.json.web.service.client.jar!httpcore-nio.jar</file-name>
-				<version>4.4.6</version>
-				<project-name>HttpComponents Apache HttpCore NIO</project-name>
+				<version>4.4.14</version>
+				<project-name>Apache HttpCore NIO</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.petra.json.web.service.client.jar!httpcore.jar</file-name>
-				<version>4.4.6</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -2376,8 +2376,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.portlet.container.test.util.jar!httpclient.jar</file-name>
-				<version>4.5.5</version>
-				<project-name>HttpComponents Apache HttpClient</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
@@ -2388,7 +2388,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.portlet.container.test.util.jar!httpcore.jar</file-name>
-				<version>4.4.9</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -2400,8 +2400,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.portlet.container.test.util.jar!httpmime.jar</file-name>
-				<version>4.5.5</version>
-				<project-name>HttpComponents Apache HttpClient Mime</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient Mime</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
@@ -2708,7 +2708,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!httpclient.jar</file-name>
-				<version>4.5.10</version>
+				<version>4.5.13</version>
 				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
@@ -2720,7 +2720,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!httpcore-nio.jar</file-name>
-				<version>4.4.12</version>
+				<version>4.4.14</version>
 				<project-name>Apache HttpCore NIO</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -2732,7 +2732,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!httpcore.jar</file-name>
-				<version>4.4.12</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -3067,8 +3067,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!httpclient.jar</file-name>
-				<version>4.5.5</version>
-				<project-name>HttpComponents Apache HttpClient</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
@@ -3079,7 +3079,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!httpcore.jar</file-name>
-				<version>4.4.9</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -3653,8 +3653,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!httpclient.jar</file-name>
-				<version>4.5.5</version>
-				<project-name>HttpComponents Apache HttpClient</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
@@ -3665,7 +3665,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!httpcore.jar</file-name>
-				<version>4.4.9</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -3857,19 +3857,19 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!httpclient.jar</file-name>
-				<version>4.5.2</version>
-				<project-name>HttpComponents Apache HttpClient</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!httpcore.jar</file-name>
-				<version>4.4.9</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -4440,24 +4440,24 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.microsoft.jar!httpclient.jar</file-name>
-				<version>4.3.6</version>
-				<project-name>HttpComponents Apache HttpClient</project-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.microsoft.jar!httpcore.jar</file-name>
-				<version>4.3.3</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -4476,7 +4476,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!httpclient.jar</file-name>
-				<version>4.5.12</version>
+				<version>4.5.13</version>
 				<project-name>Apache HttpClient</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
@@ -4488,7 +4488,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!httpcore.jar</file-name>
-				<version>4.4.13</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents Apache HttpCore</project-name>
 				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
 				<licenses>
@@ -6477,7 +6477,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/httpclient.jar</file-name>
-				<version>4.5.5</version>
+				<version>4.5.13</version>
 				<project-name>HttpComponents</project-name>
 				<project-url>http://hc.apache.org</project-url>
 				<licenses>
@@ -6489,7 +6489,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/httpcore.jar</file-name>
-				<version>4.4.9</version>
+				<version>4.4.14</version>
 				<project-name>HttpComponents</project-name>
 				<project-url>http://hc.apache.org</project-url>
 				<licenses>
@@ -6501,7 +6501,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/httpmime.jar</file-name>
-				<version>4.5.5</version>
+				<version>4.5.13</version>
 				<project-name>HttpComponents</project-name>
 				<project-url>http://hc.apache.org</project-url>
 				<licenses>

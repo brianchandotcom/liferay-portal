@@ -37,7 +37,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8153 | Test Summary: Redirects to Accounts page"
-	@ignore = "true"
 	@priority = "5"
 	test CanRedirectsToAccountsPage {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

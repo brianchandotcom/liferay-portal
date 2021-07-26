@@ -1790,6 +1790,16 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 				</then>
 			</if>
 
+			<if>
+				<and>
+					<equals arg1="${basedir.unix}" arg2="${project.dir}/util-taglib" />
+					<equals arg1="@{test.type}" arg2="unit" />
+				</and>
+				<then>
+					<var name="junit.classpath" value="${classpath.util-taglib-unit}" />
+				</then>
+			</if>
+
 			<path id="test.classpath">
 				<pathelement path="test-classes/@{test.type}" />
 				<pathelement path="${junit.classpath}" />

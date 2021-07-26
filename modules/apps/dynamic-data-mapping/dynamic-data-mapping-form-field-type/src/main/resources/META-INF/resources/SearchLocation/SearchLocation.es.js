@@ -162,8 +162,11 @@ const Main = ({
 		<FieldBase
 			{...otherProps}
 			name={name}
+			placeholder=""
 			readOnly={readOnly}
 			repeatable={repeatable}
+			required={false}
+			tip=""
 		>
 			<Field
 				{...otherProps}
@@ -207,10 +210,11 @@ const Main = ({
 										onChange={onChange}
 										onFocus={onFocus}
 										parsedValue={parsedValue}
-										placeholder={placeholder}
+										placeholder=""
 										readOnly={readOnly}
 										repeatable={false}
 										showLabel
+										tip=""
 										visibleField={visibleField}
 									/>
 								</div>

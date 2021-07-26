@@ -129,8 +129,14 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getJSONArray("options"), ddmFormField);
 		setDDMFormFieldPlaceholder(
 			jsonObject.getString("placeholder"), ddmFormField);
+		setDDMFormFieldProperty(
+			ddmFormField, "buttonLabel", jsonObject.getString("buttonLabel"));
+		setDDMFormFieldProperty(
+			ddmFormField, "title", jsonObject.getString("title"));
 		setDDMFormFieldPropertyDDMStructureId(jsonObject, ddmFormField);
 		setDDMFormFieldPropertyDDMStructureLayoutId(jsonObject, ddmFormField);
+		setDDMFormFieldPropertyMessage(
+			ddmFormField, jsonObject.getString("message"));
 		setDDMFormFieldPropertyOptions(jsonObject, ddmFormField, "columns");
 		setDDMFormFieldPropertyRows(jsonObject, ddmFormField);
 		setDDMFormFieldPropertyUpgradedStructure(jsonObject, ddmFormField);
@@ -379,6 +385,17 @@ public class DDMFormTemplateContextProcessor {
 			getLocalizedValue(GetterUtil.getString(placeholder)));
 	}
 
+	protected void setDDMFormFieldProperty(
+		DDMFormField ddmFormField, String propertyName, String propertyValue) {
+
+		if (!Objects.equals(ddmFormField.getType(), "redirect_button")) {
+			return;
+		}
+
+		ddmFormField.setProperty(
+			propertyName, new Object[] {getLocalizedValue(propertyValue)});
+	}
+
 	protected void setDDMFormFieldPropertyDDMStructureId(
 		JSONObject jsonObject, DDMFormField ddmFormField) {
 
@@ -411,6 +428,16 @@ public class DDMFormTemplateContextProcessor {
 		}
 
 		ddmFormField.setProperty("rows", jsonArray.toString());
+	}
+
+	protected void setDDMFormFieldPropertyMessage(
+		DDMFormField ddmFormField, String message) {
+
+		if (!Objects.equals(ddmFormField.getType(), "redirect_button")) {
+			return;
+		}
+
+		ddmFormField.setProperty("message", message);
 	}
 
 	protected void setDDMFormFieldPropertyOptions(

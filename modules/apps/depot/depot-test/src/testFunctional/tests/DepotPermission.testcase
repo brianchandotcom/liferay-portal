@@ -178,17 +178,8 @@ definition {
 		Depot.viewMember(
 			userFirstName = "userfn1",
 			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		Click.waitForMenuToggleJSClick(
-			key_card = "usersn1",
-			locator1 = "Card#CARD_ELLIPSIS");
-
-		for (var item : list "Remove Membership,Assign Roles") {
-			AssertElementNotPresent(
-				key_menuItem = "${item}",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
+			userScreenName = "usersn1",
+			viewOnly = "true");
 	}
 
 	@description = "This ensures that the user can only add web content to the depot that has permissions set."

@@ -57,15 +57,31 @@ public class RedirectButtonDDMFormFieldTemplateContextContributor
 				"buttonLabel")[0]
 		).put(
 			"message",
-			LanguageUtil.format(
-				ResourceBundleUtil.getBundle(
-					ddmFormFieldRenderingContext.getLocale(), getClass()),
-				GetterUtil.getString(
-					((Object[])ddmFormField.getProperty("message"))[0]),
-				(Object[])ddmFormField.getProperty("messageArguments"))
+			() -> {
+				String message = GetterUtil.getString(
+					ddmFormField.getProperty("message"));
+
+				if (!message.isEmpty()) {
+					return message;
+				}
+
+				return LanguageUtil.format(
+					ResourceBundleUtil.getBundle(
+						ddmFormFieldRenderingContext.getLocale(), getClass()),
+					GetterUtil.getString(
+						((Object[])ddmFormField.getProperty("messageKey"))[0]),
+					(Object[])ddmFormField.getProperty("messageArguments"));
+			}
 		).put(
 			"redirectURL",
 			() -> {
+				String redirectURL = GetterUtil.getString(
+					ddmFormField.getProperty("redirectURL"));
+
+				if (!redirectURL.isEmpty()) {
+					return redirectURL;
+				}
+
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 					RequestBackedPortletURLFactoryUtil.create(
 						ddmFormFieldRenderingContext.getHttpServletRequest());

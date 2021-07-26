@@ -3,6 +3,12 @@ html#{$cadmin-selector} {
 		.sidebar-sm {
 			font-size: 14px;
 
+			.sidebar-header {
+				.close {
+					font-size: 14px;
+				}
+			}
+
 			.sheet-subtitle {
 				font-size: 12px;
 				margin-bottom: 16px;

@@ -57,6 +57,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -1180,6 +1181,9 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 					setValue("futureDates(field0, \"{parameter}\")");
 				}
 			});
+		ddmFormFieldValidation.setErrorMessageLocalizedValue(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				StringPool.BLANK, LocaleUtil.US));
 		ddmFormFieldValidation.setParameterLocalizedValue(
 			DDMFormValuesTestUtil.createLocalizedValue(
 				"{\"startsFrom\": \"responseDate\"}", LocaleUtil.US));
@@ -1218,6 +1222,9 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 				new DDMFormEvaluatorFieldContextKey(
 					"field0", "field0_instanceId"));
 
+		Assert.assertEquals(
+			"This field is invalid.",
+			ddmFormFieldPropertyChanges.get("errorMessage"));
 		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("valid"));
 	}
 

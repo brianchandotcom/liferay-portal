@@ -30,19 +30,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
-import com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.portlet.PortletURL;
 
@@ -116,10 +110,10 @@ public class TemplateManagementToolbarDisplayContext
 			return null;
 		}
 
-		List<TemplateHandler> templateHandlers =
-			_getPortletDisplayTemplateHandlers(_themeDisplay.getLocale());
+		Map<String, Long> addAllowedTemplateTypesMap =
+			_getAddAllowedTemplateTypesMap();
 
-		if (templateHandlers.isEmpty()) {
+		if (addAllowedTemplateTypesMap.isEmpty()) {
 			return null;
 		}
 
@@ -137,16 +131,18 @@ public class TemplateManagementToolbarDisplayContext
 			"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
 		).buildPortletURL();
 
-		for (TemplateHandler templateHandler : templateHandlers) {
+		String resourceClassNameIdParameterValue = String.valueOf(
+			_templateDisplayContext.getResourceClassNameId());
+
+		for (Map.Entry<String, Long> addAllowedTemplateTypeEntry :
+				addAllowedTemplateTypesMap.entrySet()) {
+
 			addDDMTemplateURL.setParameter(
 				"classNameId",
-				String.valueOf(
-					PortalUtil.getClassNameId(templateHandler.getClassName())));
+				String.valueOf(addAllowedTemplateTypeEntry.getValue()));
 			addDDMTemplateURL.setParameter("classPK", "0");
 			addDDMTemplateURL.setParameter(
-				"resourceClassNameId",
-				String.valueOf(
-					PortalUtil.getClassNameId(PortletDisplayTemplate.class)));
+				"resourceClassNameId", resourceClassNameIdParameterValue);
 
 			creationMenu.addPrimaryDropdownItem(
 				dropdownItem -> {
@@ -154,8 +150,7 @@ public class TemplateManagementToolbarDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest,
-							templateHandler.getName(
-								_themeDisplay.getLocale())));
+							addAllowedTemplateTypeEntry.getKey()));
 				});
 		}
 
@@ -185,14 +180,13 @@ public class TemplateManagementToolbarDisplayContext
 	}
 
 	private boolean _containsAddPortletDisplayTemplatePermission(
-		String resourceName) {
+		String resourceName, String actionId) {
 
 		try {
 			return PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
-				resourceName, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE, false,
-				false);
+				resourceName, actionId, false, false);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -206,25 +200,21 @@ public class TemplateManagementToolbarDisplayContext
 		return false;
 	}
 
-	private List<TemplateHandler> _getPortletDisplayTemplateHandlers(
-		Locale locale) {
+	private Map<String, Long> _getAddAllowedTemplateTypesMap() {
+		Map<String, Long> addAllowedTemplateTypesMap = new TreeMap<>();
 
-		List<TemplateHandler> templateHandlersList = new ArrayList<>();
-
-		for (TemplateHandler templateHandler :
-				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
-
+		for (long classNameId : _templateDisplayContext.getClassNameIds()) {
 			if (_containsAddPortletDisplayTemplatePermission(
-					templateHandler.getResourceName())) {
+					_templateDisplayContext.getResourceName(classNameId),
+					_templateDisplayContext.getAddPermissionActionId())) {
 
-				templateHandlersList.add(templateHandler);
+				addAllowedTemplateTypesMap.put(
+					_templateDisplayContext.getTemplateType(classNameId),
+					classNameId);
 			}
 		}
 
-		ListUtil.sort(
-			templateHandlersList, new TemplateHandlerComparator(locale));
-
-		return templateHandlersList;
+		return addAllowedTemplateTypesMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

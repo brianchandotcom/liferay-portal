@@ -95,7 +95,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		throws DDMFormValuesValidationException {
 
 		_ddmFormFieldValueExpressionParameterAccessor =
-			new DDMFormFieldValueExpressionParameterAccessor(timeZoneId);
+			new DDMFormFieldValueExpressionParameterAccessor(
+				ddmFormValues.getDefaultLocale(), timeZoneId);
 
 		validate(ddmFormValues);
 	}

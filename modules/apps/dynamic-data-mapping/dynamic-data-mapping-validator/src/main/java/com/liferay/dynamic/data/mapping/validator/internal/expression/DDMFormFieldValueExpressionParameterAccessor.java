@@ -26,7 +26,10 @@ import java.util.Locale;
 public class DDMFormFieldValueExpressionParameterAccessor
 	implements DDMExpressionParameterAccessor {
 
-	public DDMFormFieldValueExpressionParameterAccessor(String timeZoneId) {
+	public DDMFormFieldValueExpressionParameterAccessor(
+		Locale locale, String timeZoneId) {
+
+		_locale = locale;
 		_timeZoneId = timeZoneId;
 	}
 
@@ -47,7 +50,7 @@ public class DDMFormFieldValueExpressionParameterAccessor
 
 	@Override
 	public Locale getLocale() {
-		return null;
+		return _locale;
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class DDMFormFieldValueExpressionParameterAccessor
 		return 0L;
 	}
 
+	private final Locale _locale;
 	private final String _timeZoneId;
 
 }

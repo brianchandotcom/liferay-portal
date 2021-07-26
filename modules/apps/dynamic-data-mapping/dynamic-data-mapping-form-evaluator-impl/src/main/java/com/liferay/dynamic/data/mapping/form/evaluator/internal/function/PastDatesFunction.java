@@ -52,7 +52,7 @@ public class PastDatesFunction
 			}
 
 			return DateFunctionsUtil.isPastDate(
-				object1.toString(),
+				object1.toString(), _ddmExpressionParameterAccessor.getLocale(),
 				_ddmExpressionParameterAccessor.getTimeZoneId(),
 				endsOnJSONObject.getString("type"));
 		}

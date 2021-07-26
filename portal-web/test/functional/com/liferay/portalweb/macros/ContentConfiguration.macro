@@ -4,7 +4,7 @@ definition {
 		for (var contentName : list "${checkContentNameList}") {
 			var key_contentName = "${contentName}";
 
-			Check.checkToggleSwitch(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
+			Check.checkToggleSwitch(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 		}
 	}
 
@@ -130,7 +130,7 @@ definition {
 		for (var contentName : list "${uncheckContentNameList}") {
 			Uncheck.uncheckToggleSwitch(
 				key_contentName = "${contentName}",
-				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
+				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 		}
 	}
 

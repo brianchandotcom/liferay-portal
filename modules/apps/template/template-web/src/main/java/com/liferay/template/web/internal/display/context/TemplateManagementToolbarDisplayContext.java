@@ -34,9 +34,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.portlet.PortletURL;
 
@@ -110,10 +109,9 @@ public class TemplateManagementToolbarDisplayContext
 			return null;
 		}
 
-		Map<String, Long> addAllowedTemplateTypesMap =
-			_getAddAllowedTemplateTypesMap();
+		List<Long> addAllowedClassNameIds = _getAddAllowedClassNameIds();
 
-		if (addAllowedTemplateTypesMap.isEmpty()) {
+		if (addAllowedClassNameIds.isEmpty()) {
 			return null;
 		}
 
@@ -134,12 +132,9 @@ public class TemplateManagementToolbarDisplayContext
 		String resourceClassNameIdParameterValue = String.valueOf(
 			_templateDisplayContext.getResourceClassNameId());
 
-		for (Map.Entry<String, Long> addAllowedTemplateTypeEntry :
-				addAllowedTemplateTypesMap.entrySet()) {
-
+		for (long addAllowedClassNameId : addAllowedClassNameIds) {
 			addDDMTemplateURL.setParameter(
-				"classNameId",
-				String.valueOf(addAllowedTemplateTypeEntry.getValue()));
+				"classNameId", String.valueOf(addAllowedClassNameId));
 			addDDMTemplateURL.setParameter("classPK", "0");
 			addDDMTemplateURL.setParameter(
 				"resourceClassNameId", resourceClassNameIdParameterValue);
@@ -150,7 +145,8 @@ public class TemplateManagementToolbarDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest,
-							addAllowedTemplateTypeEntry.getKey()));
+							_templateDisplayContext.getTemplateType(
+								addAllowedClassNameId)));
 				});
 		}
 
@@ -180,19 +176,21 @@ public class TemplateManagementToolbarDisplayContext
 	}
 
 	private boolean _containsAddPortletDisplayTemplatePermission(
-		String resourceName, String actionId) {
+		long classNameId) {
 
 		try {
 			return PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
-				resourceName, actionId, false, false);
+				_templateDisplayContext.getResourceName(classNameId),
+				_templateDisplayContext.getAddPermissionActionId(), false,
+				false);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to check permission for resource name " +
-						resourceName,
+						_templateDisplayContext.getResourceName(classNameId),
 					portalException);
 			}
 		}
@@ -200,21 +198,16 @@ public class TemplateManagementToolbarDisplayContext
 		return false;
 	}
 
-	private Map<String, Long> _getAddAllowedTemplateTypesMap() {
-		Map<String, Long> addAllowedTemplateTypesMap = new TreeMap<>();
+	private List<Long> _getAddAllowedClassNameIds() {
+		List<Long> addAllowedClassNameIds = new ArrayList<>();
 
 		for (long classNameId : _templateDisplayContext.getClassNameIds()) {
-			if (_containsAddPortletDisplayTemplatePermission(
-					_templateDisplayContext.getResourceName(classNameId),
-					_templateDisplayContext.getAddPermissionActionId())) {
-
-				addAllowedTemplateTypesMap.put(
-					_templateDisplayContext.getTemplateType(classNameId),
-					classNameId);
+			if (_containsAddPortletDisplayTemplatePermission(classNameId)) {
+				addAllowedClassNameIds.add(classNameId);
 			}
 		}
 
-		return addAllowedTemplateTypesMap;
+		return addAllowedClassNameIds;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

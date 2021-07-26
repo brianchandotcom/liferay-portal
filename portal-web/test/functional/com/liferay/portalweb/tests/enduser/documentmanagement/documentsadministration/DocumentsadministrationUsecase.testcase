@@ -245,7 +245,7 @@ definition {
 		Button.clickPublish();
 
 		AssertTextEquals(
-			locator1 = "Message#MAX_FILESIZE_ALERT",
+			locator1 = "Message#WARNING_FEEDBACK",
 			value1 = "Please enter a file with a valid file size no larger than 293 KB.");
 
 		Button.clickCancel();

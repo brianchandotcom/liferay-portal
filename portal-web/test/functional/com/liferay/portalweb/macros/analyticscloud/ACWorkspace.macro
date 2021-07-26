@@ -13,6 +13,10 @@ definition {
 	}
 
 	macro signOut {
+		if(IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
+			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
+		}
+
 		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
 
 		Click(locator1 = "ACWorkspace#LOGOUT_WORKSPACE_OPTION");

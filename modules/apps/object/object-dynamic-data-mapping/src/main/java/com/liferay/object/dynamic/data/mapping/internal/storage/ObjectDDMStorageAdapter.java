@@ -42,14 +42,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.math.BigDecimal;
-
-import java.text.ParseException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -252,7 +249,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				properties.put(
 					objectFieldName,
 					_getValue(
-						value.getDefaultLocale(),
 						objectFieldTypes.get(objectFieldName),
 						values.get(value.getDefaultLocale())));
 			}
@@ -277,9 +273,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		}
 	}
 
-	private Object _getValue(
-		Locale locale, String objectFieldType, String value) {
-
+	private Object _getValue(String objectFieldType, String value) {
 		if (Objects.equals(objectFieldType, "BigDecimal")) {
 			return GetterUtil.get(value, BigDecimal.ZERO);
 		}
@@ -288,18 +282,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		}
 		else if (Objects.equals(objectFieldType, "Boolean")) {
 			return GetterUtil.getBoolean(value);
-		}
-		else if (Objects.equals(objectFieldType, "Date")) {
-			try {
-				return DateUtil.parseDate("yyyy-MM-dd", value, locale);
-			}
-			catch (ParseException parseException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(parseException, parseException);
-				}
-
-				return value;
-			}
 		}
 		else if (Objects.equals(objectFieldType, "Double")) {
 			return GetterUtil.getDouble(value);

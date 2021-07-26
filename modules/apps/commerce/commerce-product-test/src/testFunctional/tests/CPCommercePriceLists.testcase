@@ -1116,6 +1116,8 @@ definition {
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
 
+		SelectFrameTop();
+
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		Click(locator1 = "Button#PLUS");
@@ -1128,6 +1130,8 @@ definition {
 		AssertClickNoError(
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
+
+		SelectFrameTop();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",

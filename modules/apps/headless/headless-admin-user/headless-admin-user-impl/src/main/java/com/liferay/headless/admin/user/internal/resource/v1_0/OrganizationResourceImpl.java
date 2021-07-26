@@ -350,6 +350,22 @@ public class OrganizationResourceImpl
 			}
 		}
 
+		Organization parentOrganization = organization.getParentOrganization();
+
+		if ((parentOrganization != null) &&
+			!Validator.isBlank(parentOrganization.getId())) {
+
+			try {
+				existingOrganization.setParentOrganization(
+					_toOrganization(parentOrganization.getId()));
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
+				}
+			}
+		}
+
 		if (organization.getServices() != null) {
 			existingOrganization.setServices(organization.getServices());
 		}

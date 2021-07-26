@@ -49,11 +49,9 @@ public class ConfigurationUtil {
 			).build();
 
 		for (Method method : clazz.getMethods()) {
-			if (!method.isAnnotationPresent(Meta.AD.class)) {
-				continue;
-			}
+			if (!method.isAnnotationPresent(Meta.AD.class) ||
+				!Objects.equals(method.getReturnType(), Boolean.TYPE)) {
 
-			if (!Objects.equals(method.getReturnType(), Boolean.TYPE)) {
 				continue;
 			}
 

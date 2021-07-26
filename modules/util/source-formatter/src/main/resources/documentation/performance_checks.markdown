@@ -9,7 +9,6 @@ ConcatCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for correct 
 [FrameworkBundleCheck](checks/framework_bundle_check.markdown#frameworkbundlecheck) | .java | Checks that `org.osgi.framework.Bundle.getHeaders()` is not used. |
 [GradleDependenciesCheck](checks/gradle_dependencies_check.markdown#gradledependenciescheck) | .gradle | Checks that `petra` modules are not depending on other modules. |
 [JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown#jspdefineobjectscheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for unnesecarry duplication of code that already exists in `defineObjects`. |
-[JSPStringMethodsCheck](checks/string_methods_check.markdown#stringmethodscheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of inefficient String operations. |
 [JSPUnusedJSPFCheck](checks/jsp_unused_jspf_check.markdown#jspunusedjspfcheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds `.jspf` files that are not used. |
 JSPUnusedTermsCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds taglibs, variables and imports that are unused. |
 JavaHibernateSQLCheck | .java | Finds calls to `com.liferay.portal.kernel.dao.orm.Session.createSQLQuery` (use `Session.createSynchronizedSQLQuery` instead). |
@@ -23,7 +22,7 @@ LocalPatternCheck | .java | Checks that a `java.util.Pattern` variable is declar
 ParsePrimitiveTypeCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible. |
 RedundantBranchingStatementCheck | .java | Finds unnecessary branching (`break`, `continue` or `return`) statements. |
 StringCastCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where a redundant `toString()` is called on variable type `String`. |
-[StringMethodsCheck](checks/string_methods_check.markdown#stringmethodscheck) | .java | Checks if performance can be improved by using different String operation methods. |
+[StringMethodsCheck](checks/string_methods_check.markdown#stringmethodscheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks if performance can be improved by using different String operation methods. |
 SubstringCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases like `s.substring(1, s.length())` (use `s.substring(1)` instead). |
 ThreadLocalUtilCheck | .java | Finds new instances of `java.lang.Thread` (use `ThreadLocalUtil.create` instead). |
 TryWithResourcesCheck | .java | Ensures using Try-With-Resources statement to properly close the resource. |

@@ -357,7 +357,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
       class="form-control ddm-field-text"
       id="validationDate_errorMessage_fieldDetails"
       name="validationDate_errorMessage"
-      placeholder="error-message"
+      placeholder="this-field-is-invalid"
       type="text"
       value=""
     />
@@ -518,7 +518,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
       class="form-control ddm-field-text"
       id="validationDate_errorMessage_fieldDetails"
       name="validationDate_errorMessage"
-      placeholder="error-message"
+      placeholder="this-field-is-invalid"
       type="text"
       value=""
     />

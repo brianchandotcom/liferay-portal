@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -53,6 +54,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
@@ -117,6 +119,25 @@ public class DLFileEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test(expected = FileExtensionException.class)
+	public void testAddFileEntryShouldFailIfSourceFileNameExtensionNotSupported()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				DLFileEntryServiceTestUtil.getConfigurationTemporarySwapper(
+					"fileExtensions", new String[] {".doc"})) {
+
+			DLFileEntryLocalServiceUtil.addFileEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"file.jpg", ContentTypes.TEXT_PLAIN, "file", StringPool.BLANK,
+				StringPool.BLANK, -1, new HashMap<>(), null,
+				new ByteArrayInputStream(new byte[0]), 0, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+		}
 	}
 
 	@Test
@@ -857,6 +878,37 @@ public class DLFileEntryLocalServiceTest {
 
 		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
+	}
+
+	@Test(expected = FileExtensionException.class)
+	public void testUpdateFileEntryShouldFailIfSourceFileNameExtensionNotSupported()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				DLFileEntryServiceTestUtil.getConfigurationTemporarySwapper(
+					"fileExtensions", new String[] {".txt"})) {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId());
+
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"file.txt", ContentTypes.TEXT_PLAIN, "file.txt",
+				StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
+				new ByteArrayInputStream(new byte[0]), 0, null, null,
+				serviceContext);
+
+			DLFileEntryLocalServiceUtil.updateFileEntry(
+				dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
+				"file.jpg", dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
+				dlFileEntry.getTitle(), StringPool.BLANK,
+				DLVersionNumberIncrease.fromMajorVersion(false),
+				dlFileEntry.getFileEntryTypeId(), new HashMap<>(), null,
+				new ByteArrayInputStream(new byte[0]), 0, null, null,
+				serviceContext);
+		}
 	}
 
 	@Test(expected = DuplicateFolderNameException.class)

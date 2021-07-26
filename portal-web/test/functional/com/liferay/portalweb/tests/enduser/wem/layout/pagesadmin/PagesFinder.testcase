@@ -275,9 +275,7 @@ definition {
 		task ("View the renamed page is shown in Pages admin") {
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-			AssertVisible(
-				key_itemName = "New Test Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
+			ControlMenu.viewHeaderTitle(headerTitle = "New Test Page Name");
 		}
 
 		task ("View the renamed page is shown in Page Tree panel") {

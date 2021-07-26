@@ -15,7 +15,9 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -43,6 +45,7 @@ public class DateRangeFunctionTest {
 		_dateRangeFunction.setDDMExpressionParameterAccessor(
 			new DefaultDDMExpressionParameterAccessor());
 
+		_setUpDateFormatFactoryUtil();
 		_setUpFutureDatesFunction();
 		_setUpPastDatesFunction();
 	}
@@ -89,6 +92,13 @@ public class DateRangeFunctionTest {
 				).put(
 					"startsFrom", JSONUtil.put("type", "responseDate")
 				).toString()));
+	}
+
+	private void _setUpDateFormatFactoryUtil() {
+		DateFormatFactoryUtil dateFormatFactoryUtil =
+			new DateFormatFactoryUtil();
+
+		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
 	private void _setUpFutureDatesFunction() throws Exception {

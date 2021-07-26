@@ -34,6 +34,10 @@ html#{$cadmin-selector} {
 			}
 
 			.custom-devices {
+				@include media-breakpoint-down(md, $cadmin-grid-breakpoints) {
+					display: none !important;
+				}
+
 				.form-control {
 					border-radius: 4px;
 					padding: 8px 12px;

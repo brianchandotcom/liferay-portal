@@ -990,6 +990,12 @@ syncPortalLanguageKeys {
 		portalLanguagePropertiesFileTree.each {
 			File portalLanguagePropertiesFile ->
 
+			Properties portalImplLanguageProperties = new Properties()
+
+			new InputStreamReader(new FileInputStream(new File(projectDir, "../portal-impl/src/content/" + portalLanguagePropertiesFile.name)), StandardCharsets.UTF_8).withReader {
+				portalImplLanguageProperties.load(it)
+			}
+
 			Properties portalLanguageProperties = new Properties()
 
 			new InputStreamReader(new FileInputStream(portalLanguagePropertiesFile), StandardCharsets.UTF_8).withReader {
@@ -1010,13 +1016,15 @@ syncPortalLanguageKeys {
 					languageProperties.each {
 						String key, String value ->
 
-						if (!portalLanguageProperties.containsKey(key)) {
-							logger.lifecycle "Added " + key + ":" + languagePropertiesFile
+						if (!portalImplLanguageProperties.containsKey(key) || (portalImplLanguageProperties.getProperty(key) != value)) {
+							if (!portalLanguageProperties.containsKey(key)) {
+								logger.lifecycle "Added " + key + ":" + languagePropertiesFile
 
-							portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
-						}
-						else if (portalLanguageProperties.getProperty(key) != value) {
-							languageKeys.add(key + '=' + value.replace("\n", "\\n"))
+								portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
+							}
+							else if (portalLanguageProperties.getProperty(key) != value) {
+								languageKeys.add(key + '=' + value.replace("\n", "\\n"))
+							}
 						}
 					}
 

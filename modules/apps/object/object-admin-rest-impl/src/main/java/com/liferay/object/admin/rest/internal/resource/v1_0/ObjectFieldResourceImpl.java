@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,6 +49,20 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				this::_toObjectField),
 			pagination,
 			_objectFieldLocalService.getObjectFieldsCount(objectDefinitionId));
+	}
+
+	@Override
+	public ObjectField postObjectField(
+			Long objectDefinitionId, ObjectField objectField)
+		throws Exception {
+
+		return ObjectFieldUtil.toObjectField(
+			_objectFieldLocalService.addObjectField(
+				contextUser.getUserId(), objectDefinitionId,
+				objectField.getName(), objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(), objectField.getName(),
+				objectField.getRequired(), objectField.getType()));
 	}
 
 	private ObjectField _toObjectField(

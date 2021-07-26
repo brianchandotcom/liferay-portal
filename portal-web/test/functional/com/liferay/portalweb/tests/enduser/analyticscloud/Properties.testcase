@@ -56,10 +56,12 @@ definition {
 
 		ACWorkspace.signOut();
 
-		ACLogin.loginAs(emailAddress = "corbin.murakami@faro.io", password = "test");
+		ACLogin.loginAs(
+			emailAddress = "corbin.murakami@faro.io",
+			password = "test");
 
 		ACWorkspace.openWorkspace();
-		
+
 		ACNavigation.goToSettings();
 
 		ACSettings.goToProperties();
@@ -68,10 +70,12 @@ definition {
 
 		ACWorkspace.signOut();
 
-		ACLogin.loginAs(emailAddress = "michelle.hoshi@faro.io", password = "test");
+		ACLogin.loginAs(
+			emailAddress = "michelle.hoshi@faro.io",
+			password = "test");
 
 		ACWorkspace.openWorkspace();
-		
+
 		ACNavigation.goToSettings();
 
 		ACSettings.goToProperties();

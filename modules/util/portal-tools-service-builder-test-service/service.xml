@@ -79,7 +79,7 @@
 			<finder-column name="groupId" />
 		</finder>
 	</entity>
-	<entity cache-enabled="false" local-service="true" name="CacheMissEntry" remote-service="false">
+	<entity cache-enabled="false" change-tracking-enabled="true" local-service="true" mvcc-enabled="true" name="CacheMissEntry" remote-service="false">
 
 		<!-- PK fields -->
 

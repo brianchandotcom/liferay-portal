@@ -241,7 +241,7 @@ public class CollectionStyledLayoutStructureItem
 	private int _numberOfItems = 5;
 	private int _numberOfItemsPerPage = 5;
 	private String _paginationType;
-	private boolean _showAllItems = true;
+	private boolean _showAllItems;
 	private String _templateKey;
 
 }

@@ -415,6 +415,7 @@ definition {
 	@priority = "4"
 	test CanSelectPermissionsOption {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectPermissionsOption";
+		property test.run.environment = "EE";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -429,6 +430,7 @@ definition {
 	@priority = "4"
 	test CanSelectPermissionsOptionForNonPublishedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectPermissionsOptionForNonPublishedProcess";
+		property test.run.environment = "EE";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

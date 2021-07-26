@@ -14,7 +14,7 @@
 
 package com.liferay.portal.instances.web.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 
 /**

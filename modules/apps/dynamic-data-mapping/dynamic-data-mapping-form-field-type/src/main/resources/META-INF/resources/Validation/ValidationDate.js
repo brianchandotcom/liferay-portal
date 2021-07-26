@@ -183,7 +183,7 @@ const ValidationDate = ({
 							type: EVENT_TYPES.CHANGE_ERROR_MESSAGE,
 						});
 					}}
-					placeholder={Liferay.Language.get('error-message')}
+					placeholder={Liferay.Language.get('this-field-is-invalid')}
 					readOnly={readOnly}
 					required={false}
 					value={localizedValue(errorMessage)}

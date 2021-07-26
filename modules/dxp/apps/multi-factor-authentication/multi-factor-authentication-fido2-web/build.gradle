@@ -11,7 +11,7 @@ dependencies {
 	compileInclude group: "com.yubico", name: "yubico-util", version: "1.6.4"
 	compileInclude group: "net.i2p.crypto", name: "eddsa", version: "0.3.0"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
-	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.13"
+	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.68"
 	compileInclude group: "org.checkerframework", name: "checker-qual", version: "2.11.1"
 

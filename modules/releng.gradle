@@ -15,6 +15,7 @@ import groovy.io.FileVisitResult
 
 import groovy.json.JsonSlurper
 
+import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 
 import java.util.jar.Attributes
@@ -88,6 +89,7 @@ task prepareMajorIncrement
 task prepareMajorIncrementAppProperties
 task syncAppProperties
 task syncGitRepoReleases
+task syncPortalLanguageKeys
 task tagAppReleases
 
 buildFixPackChangeLog {
@@ -977,6 +979,81 @@ syncGitRepoReleases {
 	}
 
 	group = "releng"
+}
+
+syncPortalLanguageKeys {
+	doLast {
+		FileTree languagePropertiesFileTree = fileTree(dir: projectDir, excludes: ["apps/archived", "apps/portal-language"], includes: ["apps/**/src/main/resources/content/Language*.properties", "apps/**/src/WEB-INF/src/content/Language*.properties", "dxp/**/src/main/resources/content/Language*.properties", "dxp/**/src/WEB-INF/src/content/Language*.properties"])
+
+		FileTree portalLanguagePropertiesFileTree = fileTree(dir: projectDir, includes: ["apps/portal-language/portal-language-lang/src/main/resources/content/Language*.properties"])
+
+		portalLanguagePropertiesFileTree.each {
+			File portalLanguagePropertiesFile ->
+
+			Properties portalLanguageProperties = new Properties()
+
+			new InputStreamReader(new FileInputStream(portalLanguagePropertiesFile), StandardCharsets.UTF_8).withReader {
+				portalLanguageProperties.load(it)
+			}
+
+			languagePropertiesFileTree.each {
+				File languagePropertiesFile ->
+
+				if (languagePropertiesFile.name == portalLanguagePropertiesFile.name) {
+					List<String> languageKeys = []
+					Properties languageProperties = new Properties()
+
+					new InputStreamReader(new FileInputStream(languagePropertiesFile), StandardCharsets.UTF_8).withReader {
+						languageProperties.load(it)
+					}
+
+					languageProperties.each {
+						String key, String value ->
+
+						if (!portalLanguageProperties.containsKey(key)) {
+							logger.lifecycle "Added " + key + ":" + languagePropertiesFile
+
+							portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
+						}
+						else if (portalLanguageProperties.getProperty(key) != value) {
+							languageKeys.add(key + '=' + value.replace("\n", "\\n"))
+						}
+					}
+
+					if (!languageKeys.isEmpty() || (languagePropertiesFile.name == "Language.properties")) {
+						languagePropertiesFile.setText languageKeys.sort().join("\n"), "UTF-8"
+					}
+					else {
+						delete languagePropertiesFile
+					}
+				}
+			}
+
+			List<String> portalLanguageKeys = []
+
+			for (String key : portalLanguageProperties.stringPropertyNames()) {
+				portalLanguageKeys.add(key + '=' + portalLanguageProperties.getProperty(key).replace("\n", "\\n"))
+			}
+
+			portalLanguagePropertiesFile.setText portalLanguageKeys.sort().join("\n"), "UTF-8"
+
+			logger.lifecycle "Updated {}", portalLanguagePropertiesFile
+		}
+
+		StartParameter startParameter = gradle.startParameter.newBuild()
+
+		startParameter.currentDir = new File(projectDir, "apps/portal-language/portal-language-lang")
+		startParameter.projectProperties = ["formatLocalChanges": "true"]
+		startParameter.taskNames = ["formatSource"]
+
+		_executeGradle(startParameter, true)
+	}
+
+	group = "releng"
+
+	outputs.upToDateWhen {
+		false
+	}
 }
 
 tagAppReleases {

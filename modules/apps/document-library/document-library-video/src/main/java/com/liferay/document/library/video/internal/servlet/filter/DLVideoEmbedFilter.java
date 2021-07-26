@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -121,20 +122,35 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		return getEmbedVideoURL.toString();
 	}
 
+	private FileEntry _getFileEntry(List<String> pathParts)
+		throws PortalException {
+
+		long groupId = GetterUtil.getLong(pathParts.get(1));
+
+		if (pathParts.size() == 5) {
+			String uuid = pathParts.get(4);
+
+			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
+		}
+
+		long folderId = GetterUtil.getLong(pathParts.get(2));
+		String fileName = _http.decodeURL(pathParts.get(3));
+
+		return _dlAppLocalService.getFileEntryByFileName(
+			groupId, folderId, fileName);
+	}
+
 	private String _getFileVersionId(HttpServletRequest httpServletRequest) {
 		List<String> pathParts = StringUtil.split(
 			httpServletRequest.getRequestURI(), CharPool.SLASH);
 
-		if (pathParts.size() < 5) {
+		if (pathParts.size() < 4) {
 			return StringPool.BLANK;
 		}
 
-		long groupId = GetterUtil.getLong(pathParts.get(1));
-		String uuid = pathParts.get(4);
-
 		try {
-			FileEntry fileEntry =
-				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
+			FileEntry fileEntry = _getFileEntry(pathParts);
 
 			String version = ParamUtil.getString(httpServletRequest, "version");
 
@@ -172,5 +188,8 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Http _http;
 
 }

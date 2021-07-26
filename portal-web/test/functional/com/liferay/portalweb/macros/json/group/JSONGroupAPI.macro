@@ -141,18 +141,21 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (!(isSet(locale))) {
-			var locale = "en_US";
+		if (!(isSet(defaultLocale))) {
+			var defaultLocale = "en_US";
+		}
+		else {
+			var defaultLocale = "${defaultLocale}";
 		}
 
-		var defaultLocale = '''default-locale=\"${locale}\"''';
+		var locale = '''default-locale=\"${defaultLocale}\"''';
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
 				-u test@liferay.com:test
 		''';
 
-		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}' && @['name'] contains '${defaultLocale}')]['classPK']");
+		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}' && @['name'] contains '${locale}')]['classPK']");
 
 		if ("${depotId}" == "") {
 			fail("FAIL. Cannot find group.");

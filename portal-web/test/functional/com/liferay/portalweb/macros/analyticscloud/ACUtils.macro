@@ -110,8 +110,8 @@ definition {
 			siteName = "Site Name");
 	}
 
-	macro createFormAndAddToPage {		
-		if(!(isSet(formACTitle))){
+	macro createFormAndAddToPage {
+		if (!(isSet(formACTitle))) {
 			var formACTitle = "Created Form Name";
 		}
 

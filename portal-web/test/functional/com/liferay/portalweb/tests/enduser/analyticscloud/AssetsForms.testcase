@@ -189,8 +189,8 @@ definition {
 
 		for (var n : list "1,2,3") {
 			ACUtils.createFormAndAddToPage(
-				layoutName = "AC Page ${n}",
-				formACTitle = "Created Form Name ${n}");
+				formACTitle = "Created Form Name ${n}",
+				layoutName = "AC Page ${n}");
 		}
 
 		Refresh();
@@ -218,7 +218,7 @@ definition {
 		}
 
 		ACUtils.closeAllSessions();
-		
+
 		Pause(locator1 = "30000");
 
 		ACUtils.launchAC();
@@ -236,7 +236,6 @@ definition {
 		for (var formACTitle : list "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3") {
 			ACAssets.viewAssets(assetName = "${formACTitle}");
 		}
-
 	}
 
 	@description = "Forms visitor behavior card shows expected amount of views"

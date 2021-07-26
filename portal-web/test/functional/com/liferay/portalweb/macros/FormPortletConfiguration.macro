@@ -28,10 +28,10 @@ definition {
 	}
 
 	macro selectForm {
-		if(isSet(formTitle)){
+		if (isSet(formTitle)) {
 			formName = "${formTitle}";
 		}
-		
+
 		Navigator.gotoNavItem(navItem = "Setup");
 
 		AssertClick(

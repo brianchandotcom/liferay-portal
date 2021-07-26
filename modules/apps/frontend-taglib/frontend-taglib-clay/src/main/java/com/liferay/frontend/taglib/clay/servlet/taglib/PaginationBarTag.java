@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -39,6 +40,13 @@ public class PaginationBarTag extends BaseContainerTag {
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		if (getPaginationBarDeltas() == null) {
+			setPaginationBarDeltas(
+				Arrays.asList(
+					new PaginationBarDelta(10), new PaginationBarDelta(20),
+					new PaginationBarDelta(30), new PaginationBarDelta(50)));
+		}
 
 		if (_activeDelta == null) {
 			PaginationBarDelta paginationBarDelta =
@@ -106,6 +114,10 @@ public class PaginationBarTag extends BaseContainerTag {
 		return _paginationBarLabels;
 	}
 
+	public boolean getShowDeltasDropDown() {
+		return _showDeltasDropDown;
+	}
+
 	public Integer getTotalItems() {
 		return _totalItems;
 	}
@@ -138,6 +150,10 @@ public class PaginationBarTag extends BaseContainerTag {
 		_paginationBarLabels = paginationBarLabels;
 	}
 
+	public void setShowDeltasDropDown(boolean showDeltasDropDown) {
+		_showDeltasDropDown = false;
+	}
+
 	public void setTotalItems(Integer totalItems) {
 		_totalItems = totalItems;
 	}
@@ -152,6 +168,7 @@ public class PaginationBarTag extends BaseContainerTag {
 		_ellipsisBuffer = null;
 		_paginationBarDeltas = null;
 		_paginationBarLabels = null;
+		_showDeltasDropDown = true;
 		_totalItems = null;
 	}
 
@@ -168,6 +185,7 @@ public class PaginationBarTag extends BaseContainerTag {
 		props.put("disabledPages", _disabledPages);
 		props.put("ellipsisBuffer", _ellipsisBuffer);
 		props.put("labels", _paginationBarLabels);
+		props.put("showDeltasDropDown", _showDeltasDropDown);
 		props.put("totalItems", _totalItems);
 
 		return super.prepareProps(props);
@@ -186,25 +204,32 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"dropdown pagination-items-per-page\">");
-		jspWriter.write("<button class=\"dropdown-toggle btn btn-unstyled\"");
-		jspWriter.write(" type=\"button\">");
-		jspWriter.write(_activeDelta.toString());
-		jspWriter.write(StringPool.SPACE);
-
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
 			pageContext);
 
-		jspWriter.write(
-			StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "items")));
+		if (_showDeltasDropDown) {
+			jspWriter.write(
+				"<div class=\"dropdown pagination-items-per-page\">");
+			jspWriter.write(
+				"<button class=\"dropdown-toggle btn btn-unstyled\"");
+			jspWriter.write(" type=\"button\">");
+			jspWriter.write(_activeDelta.toString());
+			jspWriter.write(StringPool.SPACE);
 
-		IconTag iconTag = new IconTag();
+			jspWriter.write(
+				StringUtil.toLowerCase(
+					LanguageUtil.get(resourceBundle, "items")));
 
-		iconTag.setSymbol("caret-double-l");
+			IconTag iconTag = new IconTag();
 
-		iconTag.doTag(pageContext);
+			iconTag.setSymbol("caret-double-l");
 
-		jspWriter.write("</button></div><div class=\"pagination-results\">");
+			iconTag.doTag(pageContext);
+
+			jspWriter.write("</button></div>");
+		}
+
+		jspWriter.write("<div class=\"pagination-results\">");
 		jspWriter.write(LanguageUtil.get(resourceBundle, "showing"));
 		jspWriter.write(StringPool.SPACE);
 
@@ -333,6 +358,7 @@ public class PaginationBarTag extends BaseContainerTag {
 	private Integer _ellipsisBuffer;
 	private List<PaginationBarDelta> _paginationBarDeltas;
 	private PaginationBarLabels _paginationBarLabels;
+	private boolean _showDeltasDropDown = true;
 	private Integer _totalItems;
 
 }

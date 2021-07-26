@@ -2191,7 +2191,7 @@
 		<attribute>
 			<description></description>
 			<name>paginationBarDeltas</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -2209,6 +2209,12 @@
 		<attribute>
 			<description></description>
 			<name>propsTransformerServletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>showDeltasDropDown</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -26,6 +26,7 @@ export default function PaginationBar({
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
+	showDeltasDropDown,
 	totalItems,
 	...otherProps
 }) {
@@ -46,6 +47,7 @@ export default function PaginationBar({
 			ellipsisBuffer={initialEllipsisBuffer}
 			onDeltaChange={setInitialActiveDelta}
 			onPageChange={setInitialActivePage}
+			showDeltasDropDown={showDeltasDropDown}
 			totalItems={totalItems}
 			{...otherProps}
 		/>

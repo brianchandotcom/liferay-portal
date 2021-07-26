@@ -20,6 +20,8 @@
 	<p>A pagination bar provides navigation through datasets.</p>
 </blockquote>
 
+<h3>Default</h3>
+
 <clay:pagination-bar
 	activePage="<%= 1 %>"
 	disabledPages="<%= Arrays.asList(5, 6, 7) %>"
@@ -27,4 +29,14 @@
 	paginationBarDeltas="<%= Arrays.asList(new PaginationBarDelta(10), new PaginationBarDelta(20), new PaginationBarDelta(30), new PaginationBarDelta(50)) %>"
 	paginationBarLabels='<%= new PaginationBarLabels("Showing {0} - {1} of {2}", "{0} items", "{0} items") %>'
 	totalItems="<%= 100 %>"
+/>
+
+<h3>Without DropDown</h3>
+
+<clay:pagination-bar
+	activePage="<%= 4 %>"
+	ellipsisBuffer="<%= 2 %>"
+	paginationBarLabels='<%= new PaginationBarLabels("Showing {0} - {1} of {2}", "{0} items", "{0} items") %>'
+	showDeltasDropDown="<%= false %>"
+	totalItems="<%= 80 %>"
 />

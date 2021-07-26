@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.service;
 
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -39,8 +40,9 @@ public class CTProcessServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTProcessServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static List<CTProcess> getCTProcesses(
-		long companyId, long userId, String keywords, int status, int start,
-		int end, OrderByComparator<CTProcess> orderByComparator) {
+			long companyId, long userId, String keywords, int status, int start,
+			int end, OrderByComparator<CTProcess> orderByComparator)
+		throws PortalException {
 
 		return getService().getCTProcesses(
 			companyId, userId, keywords, status, start, end, orderByComparator);

@@ -52,12 +52,13 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CTProcessServiceHttp {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(
-			HttpPrincipal httpPrincipal, long companyId, long userId,
-			String keywords, int status, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.change.tracking.model.CTProcess>
-					orderByComparator) {
+			getCTProcesses(
+				HttpPrincipal httpPrincipal, long companyId, long userId,
+				String keywords, int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.change.tracking.model.CTProcess>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -74,6 +75,13 @@ public class CTProcessServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}

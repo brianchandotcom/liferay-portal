@@ -793,7 +793,7 @@ public class DDMFormEvaluatorHelper {
 					_resourceBundle.getLocale());
 			}
 
-			if (errorMessage == null) {
+			if (Validator.isNull(errorMessage)) {
 				errorMessage = LanguageUtil.get(
 					_resourceBundle, "this-field-is-invalid");
 			}

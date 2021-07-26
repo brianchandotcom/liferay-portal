@@ -181,11 +181,61 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"
-	@ignore = "true"
 	@priority = "5"
 	test ViewAllFormsShownInAssetList {
+		for (var n : list "1,2,3") {
+			ACUtils.addSiteAndPage(layoutName = "AC Page ${n}");
+		}
 
-		// TODO LRAC-8120 ViewAllFormsShownInAssetList pending implementation
+		for (var n : list "1,2,3") {
+			ACUtils.createFormAndAddToPage(
+				layoutName = "AC Page ${n}",
+				formACTitle = "Created Form Name ${n}");
+		}
+
+		Refresh();
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		for (var pageName : list "AC Page,AC Page 1,AC Page 2,AC Page 3") {
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Site Name");
+
+			FormPortlet.waitFormRenderer(text = "Submit");
+
+			FormFields.viewTextLabel(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Assets");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Pause(locator1 = "5000");
+		}
+
+		ACUtils.closeAllSessions();
+		
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Forms");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		for (var formACTitle : list "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3") {
+			ACAssets.viewAssets(assetName = "${formACTitle}");
+		}
 
 	}
 

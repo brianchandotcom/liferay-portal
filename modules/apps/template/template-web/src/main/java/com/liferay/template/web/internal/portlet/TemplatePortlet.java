@@ -15,16 +15,22 @@
 package com.liferay.template.web.internal.portlet;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.constants.TemplatePortletKeys;
+import com.liferay.template.web.internal.display.context.InformationTemplatesTemplateDisplayContext;
 import com.liferay.template.web.internal.display.context.TemplateDisplayContext;
+import com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext;
 
 import java.io.IOException;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -69,12 +75,34 @@ public class TemplatePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new TemplateDisplayContext(
-				_ddmWebConfiguration,
-				_portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse)));
+		String tabs1 = ParamUtil.getString(
+			renderRequest, "tabs1", "information-templates");
+
+		if (Objects.equals(tabs1, "information-templates")) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new InformationTemplatesTemplateDisplayContext(
+					_ddmWebConfiguration, _infoItemServiceTracker,
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)));
+		}
+		else if (Objects.equals(tabs1, "widget-templates")) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new WidgetTemplatesTemplateDisplayContext(
+					_ddmWebConfiguration,
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse),
+					_portletDisplayTemplate));
+		}
+		else {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new TemplateDisplayContext(
+					_ddmWebConfiguration,
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)));
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -89,6 +117,12 @@ public class TemplatePortlet extends MVCPortlet {
 	private volatile DDMWebConfiguration _ddmWebConfiguration;
 
 	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

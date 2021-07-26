@@ -173,9 +173,7 @@
 
 			editor.ui.addBalloonToolbarButton('TextLink', {
 				click() {
-					editor.fire('showToolbar', {
-						toolbarCommand: 'linkToolbar',
-					});
+					editor.execCommand('linkToolbar');
 				},
 				icon: 'link',
 				title: editor.lang.link.title,

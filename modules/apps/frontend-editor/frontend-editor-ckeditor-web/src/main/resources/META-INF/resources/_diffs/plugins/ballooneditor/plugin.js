@@ -29,16 +29,16 @@
 			const eventListeners = [];
 
 			editor.on('contentDom', () => {
-				const document = editor.document;
+				const editable = editor.editable();
 
 				eventListeners.push(
-					document.on('keyup', () => {
+					editable.on('keyup', () => {
 						editor.forceNextSelectionCheck();
 					})
 				);
 
 				eventListeners.push(
-					document.on('mouseup', () => {
+					editable.on('mouseup', () => {
 						editor.forceNextSelectionCheck();
 					})
 				);
@@ -121,8 +121,10 @@
 
 				const panelRect = this.parts.panel.getClientRect(true);
 
-				const ranges = elementOrSelection.getRanges();
-				const type = elementOrSelection.getType();
+				const selection = this.editor.getSelection();
+
+				const ranges = selection.getRanges();
+				const type = selection.getType();
 
 				let triangleSide = 'bottom';
 				let x = 0;
@@ -145,9 +147,7 @@
 					let selectionDirection = SELECTION_DIRECTION.TOP_TO_BOTTOM;
 
 					if (firstSelectedRect !== lastSelectedRect) {
-						selectionDirection = getSelectionDirection(
-							this.editor.getSelection()
-						);
+						selectionDirection = getSelectionDirection(selection);
 					}
 
 					if (firstSelectedRect === lastSelectedRect) {
@@ -183,7 +183,7 @@
 					}
 				}
 				else if (type === CKEDITOR.SELECTION_ELEMENT) {
-					let selectedElement = elementOrSelection.getSelectedElement();
+					let selectedElement = selection.getSelectedElement();
 
 					if (!selectedElement) {
 						selectedElement = ranges && ranges[0].startContainer;
@@ -353,9 +353,14 @@
 						}
 					);
 
+					const selectedElement = selection.getSelectedElement();
+
+					const startElement = selection.getStartElement();
+
 					if (
-						!selection.getSelectedElement() &&
-						!selection.getSelectedText()
+						!selectedElement &&
+						(!selection.getSelectedText() ||
+							startElement.getName() === 'a')
 					) {
 						return;
 					}

@@ -29,7 +29,7 @@
 
 			const editor = instance.editor;
 
-			instance._toolbar = new CKEDITOR.ui.balloonToolbar(editor);
+			const toolbar = new CKEDITOR.ui.balloonToolbar(editor);
 
 			const unlinkButton = new CKEDITOR.ui.balloonToolbarButton({
 				click: instance._onUnlinkButtonClick.bind(instance),
@@ -37,7 +37,7 @@
 				title: editor.lang.undo.undo,
 			});
 
-			instance._toolbar.addItem('unlinkButton', unlinkButton);
+			toolbar.addItem('unlinkButton', unlinkButton);
 
 			const targetSelect = new CKEDITOR.ui.balloonToolbarSelect({
 				items: [
@@ -66,14 +66,10 @@
 				name: editor.lang.common.target,
 			});
 
-			instance._toolbar.addItem('targetSelect', targetSelect);
+			toolbar.addItem('targetSelect', targetSelect);
 
 			const linkInput = new CKEDITOR.ui.balloonToolbarTextInput({
 				placeholder: editor.lang.link.title,
-			});
-
-			linkInput.on('cancel', () => {
-				instance._toolbar.hide();
 			});
 
 			const changeOrClickHandler = instance._onOkButtonClick.bind(
@@ -84,7 +80,7 @@
 				changeOrClickHandler();
 			});
 
-			instance._toolbar.addItem('linkInput', linkInput);
+			toolbar.addItem('linkInput', linkInput);
 
 			const okButton = new CKEDITOR.ui.balloonToolbarButton({
 				click: changeOrClickHandler,
@@ -92,27 +88,23 @@
 				title: editor.lang.common.ok,
 			});
 
-			instance._toolbar.addItem('okButton', okButton);
+			toolbar.addItem('okButton', okButton);
 
 			const folderButton = new CKEDITOR.ui.balloonToolbarButton({
 				click() {
-					instance._toolbar.hide();
+					editor.execCommand('linkselector', (selectedItemURL) => {
+						const linkInput = toolbar.getItem('linkInput');
 
-					const editor = instance.editor;
-
-					const imageWidget = editor.widgets.selected[0];
-
-					if (!imageWidget || imageWidget.name !== 'image') {
-						return;
-					}
-
-					editor.execCommand('imageselector');
+						linkInput.setValue(selectedItemURL);
+					});
 				},
 				icon: 'folder',
 				title: editor.lang.common.browseServer,
 			});
 
-			instance._toolbar.addItem('folderButton', folderButton);
+			toolbar.addItem('folderButton', folderButton);
+
+			instance._toolbar = toolbar;
 		},
 
 		_currentSelection: null,
@@ -126,9 +118,21 @@
 				return;
 			}
 
+			let selection = this._currentSelection;
+
+			const attributes = {
+				'data-cke-saved-href': linkInput.value,
+				href: linkInput.value,
+				rel: 'noopener',
+			};
+
 			const targetSelect = this._toolbar.getItem('targetSelect');
 
 			const hasTarget = targetSelect.value !== 'Default';
+
+			if (hasTarget) {
+				attributes.target = targetSelect.value;
+			}
 
 			if (this.editor.widgets.selected[0]) {
 				const imageWidget = this.editor.widgets.selected[0];
@@ -137,35 +141,31 @@
 					return;
 				}
 
-				const newData = Object.assign(imageWidget.data, {
-					link: {
-						url: linkInput.value,
-					},
-				});
+				const link = imageWidget.wrapper.findOne('a');
 
-				imageWidget.shiftState({
-					deflate() {},
-					element: imageWidget.element,
-					inflate() {
-						const wrapperElement = imageWidget.wrapper;
+				if (link) {
+					link.setAttributes(attributes);
+				}
+				else {
+					const newData = Object.assign(imageWidget.data, {
+						link: {
+							url: linkInput.value,
+						},
+					});
 
-						const linkElement = wrapperElement.findOne('a');
+					imageWidget.shiftState({
+						deflate() {},
+						element: imageWidget.element,
+						inflate() {
+							const link = imageWidget.wrapper.findOne('a');
 
-						if (linkElement) {
-							linkElement.setAttribute('rel', 'noopener');
-
-							if (hasTarget) {
-								linkElement.setAttribute(
-									'target',
-									targetSelect.value
-								);
-							}
-						}
-					},
-					newData,
-					oldData: imageWidget.oldData,
-					widget: imageWidget,
-				});
+							link.setAttributes(attributes);
+						},
+						newData,
+						oldData: imageWidget.oldData,
+						widget: imageWidget,
+					});
+				}
 
 				this._toolbar.hide();
 
@@ -173,8 +173,6 @@
 				imageWidget.element.focus();
 			}
 			else {
-				let selection = this._currentSelection;
-
 				const startElement = selection.getStartElement();
 
 				let linkElement;
@@ -182,15 +180,7 @@
 				if (startElement.getName() === 'a') {
 					linkElement = startElement;
 
-					linkElement.setAttributes({
-						'data-cke-saved-href': linkInput.value,
-						href: linkInput.value,
-						rel: 'noopener',
-					});
-
-					if (hasTarget) {
-						linkElement.setAttribute('target', targetSelect.value);
-					}
+					linkElement.setAttributes(attributes);
 
 					linkInput.clear();
 
@@ -209,36 +199,21 @@
 
 					linkElement = new CKEDITOR.dom.element('a');
 
-					linkElement.setAttributes({
-						href: linkInput.value,
-						rel: 'noopener',
-					});
-
-					if (hasTarget) {
-						linkElement.setAttribute('target', targetSelect.value);
-					}
-
+					linkElement.setAttributes(attributes);
 					linkElement.setText(selectedText);
 
 					linkElement.insertAfter(bookmark.endNode);
 
 					range.moveToBookmark(bookmark);
+
 					range.deleteContents();
 
 					linkInput.clear();
 
 					this._toolbar.hide();
 
-					selection = this.editor.getSelection();
-
 					selection.unlock(true);
 				}
-			}
-		},
-
-		_onSelectionChange() {
-			if (this._toolbar) {
-				this._toolbar.hide();
 			}
 		},
 
@@ -282,7 +257,38 @@
 
 			instance.editor = editor;
 
-			editor.on('selectionChange', this._onSelectionChange.bind(this));
+			const eventListeners = [];
+
+			editor.on('contentDom', () => {
+				const editable = editor.editable();
+
+				const showLinkToolbar = (event) => {
+					const imageWidget = editor.widgets.selected[0];
+
+					const target = event.data.getTarget();
+
+					if (imageWidget?.name === 'image') {
+						this._toolbar?.hide();
+					}
+					else if (target.$.closest('a')) {
+						editor.fire('showToolbar', {
+							toolbarCommand: 'linkToolbar',
+						});
+					}
+					else {
+						this._toolbar?.hide();
+					}
+				};
+
+				eventListeners.push(editable.on('mouseup', showLinkToolbar));
+				eventListeners.push(editable.on('keyup', showLinkToolbar));
+			});
+
+			editor.on('destroy', () => {
+				eventListeners.forEach((listener) => {
+					listener.removeListener();
+				});
+			});
 
 			editor.on('unlinkTextOrImage', (event) => {
 				instance._currentSelection = event.data.selection;
@@ -293,41 +299,35 @@
 				exec(editor) {
 					instance._createToolbar();
 
-					if (editor.widgets.selected[0]) {
-						const imageWidget = editor.widgets.selected[0];
-
-						if (!imageWidget || imageWidget.name !== 'image') {
-							return;
-						}
-
-						imageWidget.focus();
-					}
-
 					const selection = editor.getSelection();
 
 					selection.lock();
 
 					instance._currentSelection = selection;
 
+					editor.balloonToolbars.hide();
+
 					instance._toolbar.attach(selection);
 
 					const startElement = selection.getStartElement();
 
-					const linkInput = instance._toolbar.getItem('linkInput');
+					let link;
 
-					if (startElement.getName() === 'a') {
-						linkInput.setValue(
-							selection.getStartElement().getAttribute('href')
-						);
+					if (editor.widgets.selected[0]?.name === 'image') {
+						link = startElement.findOne('a');
+					}
+					else if (startElement.getName() === 'a') {
+						link = startElement;
 					}
 
-					setTimeout(() => {
-						const linkInputElement = linkInput.getInputElement();
+					const linkInput = instance._toolbar.getItem('linkInput');
 
-						if (linkInputElement) {
-							linkInputElement.focus();
-						}
-					}, 0);
+					if (link) {
+						linkInput.setValue(link.getAttribute('href'));
+					}
+					else {
+						linkInput.clear();
+					}
 				},
 			});
 		},

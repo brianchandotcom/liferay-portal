@@ -2712,6 +2712,8 @@ public class DLFileEntryLocalServiceImpl
 	protected void validateFileExtension(String fileName, String extension)
 		throws PortalException {
 
+		DLValidatorUtil.validateFileExtension(fileName);
+
 		if (Validator.isNull(extension)) {
 			return;
 		}

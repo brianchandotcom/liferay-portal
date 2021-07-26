@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -183,38 +181,12 @@ public class LayoutReportsDataMVCResourceCommand
 		}
 	}
 
-	private String _getConfigurationAdminPortletId(ThemeDisplay themeDisplay) {
-		if (_isOmniAdmin()) {
-			return ConfigurationAdminPortletKeys.SYSTEM_SETTINGS;
-		}
-
-		if (_isCompanyAdmin()) {
-			return ConfigurationAdminPortletKeys.INSTANCE_SETTINGS;
-		}
-
-		if (_isSiteAdmin(themeDisplay.getScopeGroupId())) {
-			return ConfigurationAdminPortletKeys.SITE_SETTINGS;
-		}
-
-		return null;
-	}
-
 	private String _getConfigureGooglePageSpeedURL(
 		PortletRequest portletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String configurationAdminPortletId = _getConfigurationAdminPortletId(
-			themeDisplay);
-
-		if (Validator.isNull(configurationAdminPortletId)) {
-			return null;
-		}
-
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				portletRequest, configurationAdminPortletId,
+				portletRequest, ConfigurationAdminPortletKeys.SITE_SETTINGS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/configuration_admin/edit_configuration"
@@ -370,27 +342,6 @@ public class LayoutReportsDataMVCResourceCommand
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private boolean _isCompanyAdmin() {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		return permissionChecker.isCompanyAdmin();
-	}
-
-	private boolean _isOmniAdmin() {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		return permissionChecker.isOmniadmin();
-	}
-
-	private boolean _isSiteAdmin(long groupId) {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		return permissionChecker.isGroupAdmin(groupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

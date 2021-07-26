@@ -59,8 +59,6 @@ definition {
 	@description = "LPS-100674 - Verify that the user can not insert a future date"
 	@priority = "2"
 	test CannotInsertFutureDate {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Navigator.gotoNavItem(navItem = "Performance");
@@ -197,13 +195,12 @@ definition {
 	@description = "LPS-100674 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
 	@priority = "3"
 	test DefaultDateFormatIsMMDDYYYY {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		Click(
+			key_dateRange = "Last 30 Days",
 			key_title = "Performance by Step",
 			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
 
@@ -214,6 +211,7 @@ definition {
 		AssertElementPresent(
 			key_dateFormat = "Default date format is MM/DD/YYYY.",
 			locator1 = "WorkflowMetricsCompletionVelocity#DEFAULT_DATE_FORMAT_MESSAGE");
+			
 	}
 
 	@description = "LPS-101075 - Verify that the All Versions filter considers only the steps touched by the task"
@@ -316,8 +314,6 @@ definition {
 	@description = "LPS-100679 - Verify that users are able to filter the Performance by Step page by period: Today, Yesterday, Last 7 Days, Last 30 Days, Last 90 Days, Last 180 Days, Last Year, Custom Range"
 	@priority = "3"
 	test FilterPerformanceByStepPagePerTimeRange {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
@@ -406,8 +402,6 @@ definition {
 	@description = "LPS-100674 - Verify that at the custom range modal, the oldest date accepted is 1970"
 	@priority = "2"
 	test OldestDataAcceptedIs1970 {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Navigator.gotoNavItem(navItem = "Performance");
@@ -593,8 +587,6 @@ definition {
 	@description = "LPS-100674 - Verify that the To date is greater than the From date"
 	@priority = "3"
 	test ToDateMustBeGreaterThanFromDate {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Navigator.gotoNavItem(navItem = "Performance");

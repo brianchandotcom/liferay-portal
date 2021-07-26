@@ -177,7 +177,7 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		Click(
-			key_dateRange = "Last 30 days",
+			key_dateRange = "Last 30 Days",
 			key_title = "Completion Velocity",
 			locator1 = "WorkflowMetrics#METRICS_DATE_RANGE_DROPDOWN_BY_TITLE");
 

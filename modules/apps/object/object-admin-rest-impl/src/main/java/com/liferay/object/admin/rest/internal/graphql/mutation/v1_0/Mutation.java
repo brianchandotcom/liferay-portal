@@ -15,7 +15,9 @@
 package com.liferay.object.admin.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,6 +52,14 @@ public class Mutation {
 
 		_objectDefinitionResourceComponentServiceObjects =
 			objectDefinitionResourceComponentServiceObjects;
+	}
+
+	public static void setObjectFieldResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectFieldResource>
+			objectFieldResourceComponentServiceObjects) {
+
+		_objectFieldResourceComponentServiceObjects =
+			objectFieldResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -108,6 +118,19 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField
+	public ObjectField createObjectField(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("objectField") ObjectField objectField)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource -> objectFieldResource.postObjectField(
+				objectDefinitionId, objectField));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -162,8 +185,24 @@ public class Mutation {
 		objectDefinitionResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			ObjectFieldResource objectFieldResource)
+		throws Exception {
+
+		objectFieldResource.setContextAcceptLanguage(_acceptLanguage);
+		objectFieldResource.setContextCompany(_company);
+		objectFieldResource.setContextHttpServletRequest(_httpServletRequest);
+		objectFieldResource.setContextHttpServletResponse(_httpServletResponse);
+		objectFieldResource.setContextUriInfo(_uriInfo);
+		objectFieldResource.setContextUser(_user);
+		objectFieldResource.setGroupLocalService(_groupLocalService);
+		objectFieldResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<ObjectDefinitionResource>
 		_objectDefinitionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectFieldResource>
+		_objectFieldResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

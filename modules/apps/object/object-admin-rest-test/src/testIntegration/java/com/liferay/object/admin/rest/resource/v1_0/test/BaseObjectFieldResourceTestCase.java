@@ -315,6 +315,25 @@ public abstract class BaseObjectFieldResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testPostObjectField() throws Exception {
+		ObjectField randomObjectField = randomObjectField();
+
+		ObjectField postObjectField = testPostObjectField_addObjectField(
+			randomObjectField);
+
+		assertEquals(randomObjectField, postObjectField);
+		assertValid(postObjectField);
+	}
+
+	protected ObjectField testPostObjectField_addObjectField(
+			ObjectField objectField)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected ObjectField testGraphQLObjectField_addObjectField()
 		throws Exception {
 

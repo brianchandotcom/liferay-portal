@@ -41,6 +41,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setObjectDefinitionResourceComponentServiceObjects(
 			_objectDefinitionResourceComponentServiceObjects);
+		Mutation.setObjectFieldResourceComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects);
 
 		Query.setObjectDefinitionResourceComponentServiceObjects(
 			_objectDefinitionResourceComponentServiceObjects);

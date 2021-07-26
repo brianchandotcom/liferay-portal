@@ -52,6 +52,10 @@ public interface ObjectFieldResource {
 			Long objectDefinitionId, Pagination pagination)
 		throws Exception;
 
+	public ObjectField postObjectField(
+			Long objectDefinitionId, ObjectField objectField)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

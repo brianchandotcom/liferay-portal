@@ -56,7 +56,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -99,6 +101,29 @@ public abstract class BaseObjectFieldResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-fields' -d $'{"indexed": ___, "indexedAsKeyword": ___, "indexedLanguageId": ___, "name": ___, "required": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectDefinitionId")}
+	)
+	@Path("/object-definitions/{objectDefinitionId}/object-fields")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectField")})
+	public ObjectField postObjectField(
+			@NotNull @Parameter(hidden = true) @PathParam("objectDefinitionId")
+				Long objectDefinitionId,
+			ObjectField objectField)
+		throws Exception {
+
+		return new ObjectField();
 	}
 
 	@Override

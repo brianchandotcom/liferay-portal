@@ -210,6 +210,10 @@ definition {
 
 		PageEditor.clickPublish();
 
+		Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+
+		PagesFinder.goToFindAPage();
+
 		PagesFinder.addPrivatePage(
 			pageName = "Private Widget Page",
 			sitePageType = "Widget Page");

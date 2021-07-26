@@ -104,6 +104,16 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 					).add(
 						() ->
 							hasManageFragmentEntriesPermission &&
+							!_fragmentEntry.isReadOnly() &&
+							(_fragmentEntry.isDraft() ||
+							 (_fragmentEntry.fetchDraftFragmentEntry() !=
+								 null)) &&
+							(_fragmentEntry.getType() !=
+								FragmentConstants.TYPE_REACT),
+						_getDeleteDraftFragmentEntryActionUnsafeConsumer()
+					).add(
+						() ->
+							hasManageFragmentEntriesPermission &&
 							!_fragmentEntry.isReadOnly(),
 						_getRenameFragmentEntryActionUnsafeConsumer()
 					).add(
@@ -154,16 +164,6 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 							hasManageFragmentEntriesPermission &&
 							!_fragmentEntry.isReadOnly(),
 						_getDeleteFragmentEntryActionUnsafeConsumer()
-					).add(
-						() ->
-							hasManageFragmentEntriesPermission &&
-							!_fragmentEntry.isReadOnly() &&
-							(_fragmentEntry.isDraft() ||
-							 (_fragmentEntry.fetchDraftFragmentEntry() !=
-								 null)) &&
-							(_fragmentEntry.getType() !=
-								FragmentConstants.TYPE_REACT),
-						_getDeleteDraftFragmentEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}

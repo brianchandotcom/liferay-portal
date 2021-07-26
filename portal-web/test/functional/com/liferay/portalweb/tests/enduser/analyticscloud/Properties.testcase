@@ -53,6 +53,32 @@ definition {
 		ACProperties.addNewProperty(propertyName = "Name of property");
 
 		ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(emailAddress = "corbin.murakami@faro.io", password = "test");
+
+		ACWorkspace.openWorkspace();
+		
+		ACNavigation.goToSettings();
+
+		ACSettings.goToProperties();
+
+		AssertElementNotPresent(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(emailAddress = "michelle.hoshi@faro.io", password = "test");
+
+		ACWorkspace.openWorkspace();
+		
+		ACNavigation.goToSettings();
+
+		ACSettings.goToProperties();
+
+		ACProperties.addNewProperty(propertyName = "New property");
+
+		ACProperties.assertNewCreatedProperty(propertyName = "New property");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"

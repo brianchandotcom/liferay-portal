@@ -37,8 +37,10 @@ import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -218,6 +220,30 @@ public class ObjectDefinitionLocalServiceImpl
 		if ((objectDefinition.getStatus() ==
 				WorkflowConstants.STATUS_APPROVED) &&
 			!objectDefinition.isSystem()) {
+
+			for (ResourceAction resourceAction :
+					_resourceActionLocalService.getResourceActions(
+						objectDefinition.getClassName())) {
+
+				_resourceActionLocalService.deleteResourceAction(
+					resourceAction);
+			}
+
+			for (ResourceAction resourceAction :
+					_resourceActionLocalService.getResourceActions(
+						objectDefinition.getPortletId())) {
+
+				_resourceActionLocalService.deleteResourceAction(
+					resourceAction);
+			}
+
+			for (ResourceAction resourceAction :
+					_resourceActionLocalService.getResourceActions(
+						objectDefinition.getResourceName())) {
+
+				_resourceActionLocalService.deleteResourceAction(
+					resourceAction);
+			}
 
 			_dropTable(objectDefinition);
 
@@ -656,6 +682,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	private final Map
 		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>

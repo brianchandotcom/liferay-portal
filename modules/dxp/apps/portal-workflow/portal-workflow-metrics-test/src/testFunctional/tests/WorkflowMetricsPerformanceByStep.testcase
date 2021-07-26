@@ -211,7 +211,6 @@ definition {
 		AssertElementPresent(
 			key_dateFormat = "Default date format is MM/DD/YYYY.",
 			locator1 = "WorkflowMetricsCompletionVelocity#DEFAULT_DATE_FORMAT_MESSAGE");
-			
 	}
 
 	@description = "LPS-101075 - Verify that the All Versions filter considers only the steps touched by the task"

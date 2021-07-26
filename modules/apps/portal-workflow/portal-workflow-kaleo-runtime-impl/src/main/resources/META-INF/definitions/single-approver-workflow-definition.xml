@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.3.0"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.3.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_3_0.xsd"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Single Approver</name>
 	<description>A single approver can approve a workflow content.</description>
@@ -161,6 +161,10 @@
 		</actions>
 		<assignments>
 			<roles>
+				<role>
+					<role-type>account</role-type>
+					<name>Account Member</name>
+				</role>
 				<role>
 					<role-type>depot</role-type>
 					<name>Asset Library Administrator</name>

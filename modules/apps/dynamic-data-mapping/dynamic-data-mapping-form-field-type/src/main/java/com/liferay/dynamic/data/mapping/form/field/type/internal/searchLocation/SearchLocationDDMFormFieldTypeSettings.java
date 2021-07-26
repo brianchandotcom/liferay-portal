@@ -115,11 +115,11 @@ public interface SearchLocationDDMFormFieldTypeSettings
 				name = "buttonLabel", value = "%third-party-applications"
 			),
 			@DDMFormFieldProperty(
-				name = "message",
-				value = "a-google-places-api-key-is-required-to-use-this-field"
+				name = "messageArguments", value = {"<strong>", "</strong>"}
 			),
 			@DDMFormFieldProperty(
-				name = "messageArguments", value = {"<strong>", "</strong>"}
+				name = "messageKey",
+				value = "a-google-places-api-key-is-required-to-use-this-field"
 			),
 			@DDMFormFieldProperty(
 				name = "mvcRenderCommandName",

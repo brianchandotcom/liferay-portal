@@ -262,7 +262,7 @@
 </tr>
 <tr>
 	<td>FILE_PRESENT</td>
-	<td>//input[contains(@class,'success-field')][@type='file']</td>
+	<td>//small[contains(@class, 'inline-item-after')]</td>
 	<td></td>
 </tr>
 <tr>

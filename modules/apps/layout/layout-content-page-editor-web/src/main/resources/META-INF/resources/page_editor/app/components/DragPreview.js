@@ -45,7 +45,8 @@ function getItemIcon(item, fragmentEntryLinks, fragments, widgets) {
 		).icon;
 	}
 
-	return fragmentEntries.find((fragment) => fragment.type === item.type).icon;
+	return fragmentEntries.find((fragment) => fragment.type === item.type)
+		?.icon;
 }
 
 const getItemStyles = (currentOffset, ref, rtl) => {

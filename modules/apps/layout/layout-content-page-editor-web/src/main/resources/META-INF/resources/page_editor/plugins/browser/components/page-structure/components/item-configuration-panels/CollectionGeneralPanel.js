@@ -155,7 +155,6 @@ export const CollectionGeneralPanel = ({item}) => {
 	useEffect(() => {
 		if (
 			config.collectionDisplayFragmentPaginationEnabled &&
-			showAllItems &&
 			item.config.collection
 		) {
 			CollectionService.getCollectionItemCount({
@@ -167,7 +166,7 @@ export const CollectionGeneralPanel = ({item}) => {
 				}
 			});
 		}
-	}, [item.config.collection, showAllItems, isMounted]);
+	}, [item.config.collection, isMounted]);
 
 	useEffect(() => {
 		if (

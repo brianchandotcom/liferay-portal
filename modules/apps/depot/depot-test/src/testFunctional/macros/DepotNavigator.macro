@@ -255,7 +255,7 @@ definition {
 	}
 
 	macro openDepotLanguages {
-		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}",defaultLocale = "${defaultLocale}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotSettingsPortlet&_com_liferay_depot_web_portlet_DepotSettingsPortlet_screenNavigationEntryKey=languages");
 	}
@@ -279,7 +279,7 @@ definition {
 	}
 
 	macro openDepotSettingsGeneral {
-		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}",defaultLocale = "${defaultLocale}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotSettingsPortlet");
 	}

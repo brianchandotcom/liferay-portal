@@ -60,7 +60,7 @@ public class MBDiscussionLocalServiceImpl
 
 		discussion.setUuid(serviceContext.getUuid());
 		discussion.setGroupId(groupId);
-		discussion.setCompanyId(serviceContext.getCompanyId());
+		discussion.setCompanyId(group.getCompanyId());
 		discussion.setUserId(userId);
 		discussion.setUserName(user.getFullName());
 		discussion.setClassNameId(classNameId);

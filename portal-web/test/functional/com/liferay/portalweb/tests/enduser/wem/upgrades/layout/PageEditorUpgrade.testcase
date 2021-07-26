@@ -517,7 +517,7 @@ definition {
 		property portal.version = "7.2.1";
 
 		task ("View the edited inline content at view mode") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Guest");
 
@@ -608,7 +608,7 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		task ("View the edited inline content at view mode") {
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Guest");
 

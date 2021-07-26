@@ -100,6 +100,14 @@ const THEME_COLORS = [
 	'dark',
 ];
 
+const BUTTONS = [
+	'primary',
+	'secondary',
+	'outline-primary',
+	'outline-secondary',
+	'link',
+];
+
 const TokenGroup = ({children, group, medium, title}) => {
 	return (
 		<ClayLayout.Col
@@ -319,6 +327,19 @@ export default function App() {
 						<TokenItem label="separator">
 							<hr />
 						</TokenItem>
+					</TokenGroup>
+
+					<TokenGroup
+						group="buttons"
+						title={Liferay.Language.get('buttons')}
+					>
+						{BUTTONS.map((item) => (
+							<TokenItem key={item} sample={item}>
+								<button className={'btn btn-' + item}>
+									Button
+								</button>
+							</TokenItem>
+						))}
 					</TokenGroup>
 				</ClayLayout.Row>
 			</ClayLayout.ContainerFluid>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
@@ -46,6 +47,22 @@ public class WidgetTemplatesTemplateDisplayContext
 	@Override
 	public String getAddPermissionActionId() {
 		return ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
+	}
+
+	@Override
+	public String getResourceName(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		return templateHandler.getResourceName();
+	}
+
+	@Override
+	public String getTemplateType(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		return templateHandler.getName(themeDisplay.getLocale());
 	}
 
 	@Override

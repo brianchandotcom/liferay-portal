@@ -90,16 +90,6 @@
 				title: editor.lang.common.alignRight,
 			});
 
-			editor.ui.addBalloonToolbarButton('LinkToolbar', {
-				click() {
-					editor.fire('showToolbar', {
-						toolbarCommand: 'linkToolbar',
-					});
-				},
-				icon: 'link',
-				title: editor.lang.link.title,
-			});
-
 			editor.ui.addBalloonToolbarButton('LinkAddOrEdit', {
 				click() {
 					editor.fire('showToolbar', {

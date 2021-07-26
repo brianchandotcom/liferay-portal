@@ -28,11 +28,10 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 
 	const basicToolbars = {
 		toolbarImage:
-			'ImageAlignLeft,ImageAlignCenter,ImageAlignRight,LinkToolbar,AltImg',
-		toolbarLink: 'LinkAddOrEdit,LinkRemove',
+			'ImageAlignLeft,ImageAlignCenter,ImageAlignRight,LinkAddOrEdit,AltImg',
 		toolbarTable: 'TableHeaders,TableRow,TableColumn,TableCell,TableDelete',
 		toolbarText:
-			'Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink' +
+			'Styles,Bold,Italic,Underline,BulletedList,NumberedList,TextLink,' +
 			'JustifyLeft,JustifyCenter,JustifyRight,LineHeight,RemoveFormat',
 		toolbarVideo: 'VideoAlignLeft,VideoAlignCenter,VideoAlignRight',
 	};
@@ -91,13 +90,6 @@ const BalloonEditor = ({config = {}, contents, name, ...otherProps}) => {
 					priority:
 						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
 					widgets: 'image,image2',
-				});
-
-				balloonToolbars.create({
-					buttons: editorConfig.toolbarLink,
-					cssSelector: 'a',
-					priority:
-						window.CKEDITOR.plugins.balloontoolbar.PRIORITY.HIGH,
 				});
 
 				balloonToolbars.create({

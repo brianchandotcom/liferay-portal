@@ -72,7 +72,8 @@ public class CKEditorBalloonEditorConfigContributor
 			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
 		).put(
 			"toolbarImage",
-			"ImageAlignLeft,ImageAlignCenter,ImageAlignRight,LinkToolbar,AltImg"
+			"ImageAlignLeft,ImageAlignCenter,ImageAlignRight,LinkAddOrEdit," +
+				"AltImg"
 		).put(
 			"toolbarTable",
 			"TableHeaders,TableRow,TableColumn,TableCell,TableDelete"

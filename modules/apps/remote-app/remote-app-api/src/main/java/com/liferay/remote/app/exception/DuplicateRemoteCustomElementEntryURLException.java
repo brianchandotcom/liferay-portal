@@ -11,20 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.liferay.remote.app.exception;
 
-package com.liferay.remote.app.uad.constants;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class RemoteAppUADConstants {
+public class DuplicateRemoteCustomElementEntryURLException extends PortalException {
 
-	public static final String[] USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY = {
-		"userId"
-	};
+	public DuplicateRemoteCustomElementEntryURLException() {
+	}
 
-	public static final String[]
-		USER_ID_FIELD_NAMES_REMOTE_CUSTOM_ELEMENT_ENTRY = {"userId"};
+	public DuplicateRemoteCustomElementEntryURLException(String msg) {
+		super(msg);
+	}
+
+	public DuplicateRemoteCustomElementEntryURLException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public DuplicateRemoteCustomElementEntryURLException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

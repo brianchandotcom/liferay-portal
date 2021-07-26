@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Remote App API
 Bundle-SymbolicName: com.liferay.remote.app.api
-Bundle-Version: 2.1.3
+Bundle-Version: 2.2.0
 Export-Package:\
 	com.liferay.remote.app.exception,\
 	com.liferay.remote.app.model,\

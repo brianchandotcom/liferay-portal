@@ -11,20 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.liferay.remote.app.exception;
 
-package com.liferay.remote.app.uad.constants;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class RemoteAppUADConstants {
+public class NoSuchRemoteCustomElementEntryException extends NoSuchModelException {
 
-	public static final String[] USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY = {
-		"userId"
-	};
+	public NoSuchRemoteCustomElementEntryException() {
+	}
 
-	public static final String[]
-		USER_ID_FIELD_NAMES_REMOTE_CUSTOM_ELEMENT_ENTRY = {"userId"};
+	public NoSuchRemoteCustomElementEntryException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchRemoteCustomElementEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public NoSuchRemoteCustomElementEntryException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

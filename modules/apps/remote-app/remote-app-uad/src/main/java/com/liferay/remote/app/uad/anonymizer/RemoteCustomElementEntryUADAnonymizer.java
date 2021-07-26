@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.remote.app.uad.constants;
+package com.liferay.remote.app.uad.anonymizer;
+
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class RemoteAppUADConstants {
-
-	public static final String[] USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY = {
-		"userId"
-	};
-
-	public static final String[]
-		USER_ID_FIELD_NAMES_REMOTE_CUSTOM_ELEMENT_ENTRY = {"userId"};
-
+@Component(immediate = true, service = UADAnonymizer.class)
+public class RemoteCustomElementEntryUADAnonymizer
+	extends BaseRemoteCustomElementEntryUADAnonymizer {
 }

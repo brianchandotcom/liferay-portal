@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 import com.liferay.template.web.internal.util.DDMTemplateActionDropdownItemsProvider;
@@ -57,6 +56,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Lourdes Fernández Besada
+ * @author Eudaldo Alonso
  */
 public class TemplateDisplayContext {
 
@@ -66,13 +66,18 @@ public class TemplateDisplayContext {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_ddmWebConfiguration = ddmWebConfiguration;
-		_liferayPortletRequest = liferayPortletRequest;
+		this.liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
-			_liferayPortletRequest);
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			liferayPortletRequest);
+
+		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getAddPermissionActionId() {
+		return StringPool.BLANK;
 	}
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
@@ -92,7 +97,7 @@ public class TemplateDisplayContext {
 		throws PortalException {
 
 		if (!DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), ddmTemplate,
+				themeDisplay.getPermissionChecker(), ddmTemplate,
 				ActionKeys.UPDATE)) {
 
 			return StringPool.BLANK;
@@ -103,7 +108,7 @@ public class TemplateDisplayContext {
 		).setMVCPath(
 			"/edit_ddm_template.jsp"
 		).setRedirect(
-			_themeDisplay.getURLCurrent()
+			themeDisplay.getURLCurrent()
 		).setParameter(
 			"ddmTemplateId", ddmTemplate.getTemplateId()
 		).buildString();
@@ -115,7 +120,7 @@ public class TemplateDisplayContext {
 		Group group = GroupLocalServiceUtil.getGroup(ddmTemplate.getGroupId());
 
 		return LanguageUtil.get(
-			_httpServletRequest, group.getScopeLabel(_themeDisplay));
+			_httpServletRequest, group.getScopeLabel(themeDisplay));
 	}
 
 	public String getDDMTemplateType(DDMTemplate ddmTemplate) {
@@ -153,6 +158,13 @@ public class TemplateDisplayContext {
 		).build();
 	}
 
+	public String getResourceName(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		return templateHandler.getResourceName();
+	}
+
 	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
 		if (_ddmTemplateSearchContainer != null) {
 			return _ddmTemplateSearchContainer;
@@ -160,7 +172,7 @@ public class TemplateDisplayContext {
 
 		SearchContainer<DDMTemplate> ddmTemplateSearchContainer =
 			new SearchContainer<>(
-				_liferayPortletRequest, _getPortletURL(), null,
+				liferayPortletRequest, _getPortletURL(), null,
 				"there-are-no-templates");
 
 		ddmTemplateSearchContainer.setOrderByCol(_getOrderByCol());
@@ -169,24 +181,23 @@ public class TemplateDisplayContext {
 		ddmTemplateSearchContainer.setOrderByType(_getOrderByType());
 		ddmTemplateSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
+
 		ddmTemplateSearchContainer.setResults(
 			DDMTemplateServiceUtil.search(
-				_themeDisplay.getCompanyId(),
-				new long[] {_themeDisplay.getScopeGroupId()},
-				TemplateHandlerRegistryUtil.getClassNameIds(), null,
-				PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+				themeDisplay.getCompanyId(),
+				new long[] {themeDisplay.getScopeGroupId()}, getClassNameIds(),
+				null, getResourceClassNameId(), _getKeywords(),
+				StringPool.BLANK, StringPool.BLANK,
 				WorkflowConstants.STATUS_ANY,
 				ddmTemplateSearchContainer.getStart(),
 				ddmTemplateSearchContainer.getEnd(),
 				ddmTemplateSearchContainer.getOrderByComparator()));
 		ddmTemplateSearchContainer.setTotal(
 			DDMTemplateServiceUtil.searchCount(
-				_themeDisplay.getCompanyId(),
-				new long[] {_themeDisplay.getScopeGroupId()},
-				TemplateHandlerRegistryUtil.getClassNameIds(), null,
-				PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+				themeDisplay.getCompanyId(),
+				new long[] {themeDisplay.getScopeGroupId()}, getClassNameIds(),
+				null, getResourceClassNameId(), _getKeywords(),
+				StringPool.BLANK, StringPool.BLANK,
 				WorkflowConstants.STATUS_ANY));
 
 		_ddmTemplateSearchContainer = ddmTemplateSearchContainer;
@@ -198,7 +209,7 @@ public class TemplateDisplayContext {
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-		return templateHandler.getName(_themeDisplay.getLocale());
+		return templateHandler.getName(themeDisplay.getLocale());
 	}
 
 	public boolean isAddDDMTemplateEnabled() {
@@ -206,7 +217,7 @@ public class TemplateDisplayContext {
 			return false;
 		}
 
-		Group scopeGroup = _themeDisplay.getScopeGroup();
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
 			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
@@ -216,6 +227,17 @@ public class TemplateDisplayContext {
 
 		return false;
 	}
+
+	protected long[] getClassNameIds() {
+		return new long[0];
+	}
+
+	protected long getResourceClassNameId() {
+		return 0;
+	}
+
+	protected final LiferayPortletRequest liferayPortletRequest;
+	protected final ThemeDisplay themeDisplay;
 
 	private String _getKeywords() {
 		if (_keywords != null) {
@@ -265,7 +287,7 @@ public class TemplateDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", "information-templates");
+			liferayPortletRequest, "tabs1", "information-templates");
 
 		return _tabs1;
 	}
@@ -293,11 +315,9 @@ public class TemplateDisplayContext {
 	private final DDMWebConfiguration _ddmWebConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private String _tabs1;
-	private final ThemeDisplay _themeDisplay;
 
 }

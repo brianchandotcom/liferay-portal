@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -58,7 +56,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Lourdes Fernández Besada
  * @author Eudaldo Alonso
  */
-public class TemplateDisplayContext {
+public abstract class TemplateDisplayContext {
 
 	public TemplateDisplayContext(
 		DDMWebConfiguration ddmWebConfiguration,
@@ -76,9 +74,7 @@ public class TemplateDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAddPermissionActionId() {
-		return StringPool.BLANK;
-	}
+	public abstract String getAddPermissionActionId();
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
 			DDMTemplate ddmTemplate)
@@ -158,12 +154,7 @@ public class TemplateDisplayContext {
 		).build();
 	}
 
-	public String getResourceName(long classNameId) {
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-		return templateHandler.getResourceName();
-	}
+	public abstract String getResourceName(long classNameId);
 
 	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
 		if (_ddmTemplateSearchContainer != null) {
@@ -205,12 +196,7 @@ public class TemplateDisplayContext {
 		return _ddmTemplateSearchContainer;
 	}
 
-	public String getTemplateType(long classNameId) {
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-		return templateHandler.getName(themeDisplay.getLocale());
-	}
+	public abstract String getTemplateType(long classNameId);
 
 	public boolean isAddDDMTemplateEnabled() {
 		if (!_ddmWebConfiguration.enableTemplateCreation()) {
@@ -228,13 +214,9 @@ public class TemplateDisplayContext {
 		return false;
 	}
 
-	protected long[] getClassNameIds() {
-		return new long[0];
-	}
+	protected abstract long[] getClassNameIds();
 
-	protected long getResourceClassNameId() {
-		return 0;
-	}
+	protected abstract long getResourceClassNameId();
 
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final ThemeDisplay themeDisplay;

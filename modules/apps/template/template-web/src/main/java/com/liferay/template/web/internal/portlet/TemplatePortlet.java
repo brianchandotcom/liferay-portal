@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.display.context.InformationTemplatesTemplateDisplayContext;
-import com.liferay.template.web.internal.display.context.TemplateDisplayContext;
 import com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext;
 
 import java.io.IOException;
@@ -94,14 +93,6 @@ public class TemplatePortlet extends MVCPortlet {
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_portletDisplayTemplate));
-		}
-		else {
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				new TemplateDisplayContext(
-					_ddmWebConfiguration,
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
 		}
 
 		super.render(renderRequest, renderResponse);

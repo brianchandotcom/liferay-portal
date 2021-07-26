@@ -126,11 +126,10 @@ public class CommercePriceListPermissionImpl
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				permissionChecker.getCompanyId(),
+				commercePriceList.getCompanyId(),
 				CommercePriceList.class.getName(),
 				commercePriceList.getCommercePriceListId(),
-				permissionChecker.getUserId(), actionId) &&
-			(commercePriceList.getUserId() == permissionChecker.getUserId())) {
+				commercePriceList.getUserId(), actionId)) {
 
 			return true;
 		}

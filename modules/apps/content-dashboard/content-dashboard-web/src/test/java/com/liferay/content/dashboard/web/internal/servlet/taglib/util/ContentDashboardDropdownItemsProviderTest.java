@@ -315,6 +315,11 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public String getType() {
+				return "Web Content";
+			}
+
+			@Override
 			public long getUserId() {
 				return 0;
 			}

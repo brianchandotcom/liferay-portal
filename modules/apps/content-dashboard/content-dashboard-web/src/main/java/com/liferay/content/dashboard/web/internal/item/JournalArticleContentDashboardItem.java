@@ -314,6 +314,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public String getType() {
+		return _JOURNAL_ARTICLE_TYPE;
+	}
+
+	@Override
 	public long getUserId() {
 		if (_latestApprovedJournalArticle != null) {
 			return _latestApprovedJournalArticle.getUserId();
@@ -410,6 +415,8 @@ public class JournalArticleContentDashboardItem
 				String.valueOf(curJournalArticle.getVersion()))
 		);
 	}
+
+	private static final String _JOURNAL_ARTICLE_TYPE = "Web Content";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleContentDashboardItem.class);

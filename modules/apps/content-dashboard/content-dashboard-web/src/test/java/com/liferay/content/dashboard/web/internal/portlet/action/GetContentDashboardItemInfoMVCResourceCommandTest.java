@@ -283,6 +283,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
+			public String getType() {
+				return "Web Content";
+			}
+
+			@Override
 			public long getUserId() {
 				return 0;
 			}

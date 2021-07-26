@@ -309,6 +309,11 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public String getType() {
+		return _FILE_ENTRY_TYPE;
+	}
+
+	@Override
 	public long getUserId() {
 		return _fileEntry.getUserId();
 	}
@@ -419,6 +424,8 @@ public class FileEntryContentDashboardItem
 				curFileVersion.getVersion())
 		);
 	}
+
+	private static final String _FILE_ENTRY_TYPE = "Document";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryContentDashboardItem.class);

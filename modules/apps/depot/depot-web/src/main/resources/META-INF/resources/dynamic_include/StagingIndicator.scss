@@ -1,46 +1,48 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.staging-indicator {
-	background-color: $dark-l1;
-	border-bottom: 1px solid lighten($dark-l2, 4.3);
-	font-size: 12px;
-	text-align: center;
+html#{$cadmin-selector} .cadmin {
+	.staging-indicator {
+		background-color: $cadmin-dark-l1;
+		border-bottom: 1px solid lighten($cadmin-dark-l2, 4.3);
+		font-size: 12px;
+		text-align: center;
 
-	.staging-indicator-button {
-		align-items: center;
-		background-color: $dark-l1;
-		border: none;
-		color: $white;
-		display: inline-flex;
-		font-weight: 600;
-		justify-content: center;
-		margin: 2px 2px 1px;
-		padding: 1px 10px;
-		text-decoration: none;
-		vertical-align: middle;
-
-		.staging-indicator-icon-staging {
-			color: $info-l1;
-			margin-right: 6px;
-			margin-top: 0;
-		}
-
-		.staging-indicator-icon-live {
-			color: $success-l1;
-			font-size: 16px;
-			margin-right: 2px;
-			margin-top: 0;
-		}
-
-		.staging-indicator-title {
-			font-size: 12px;
+		.staging-indicator-button {
+			align-items: center;
+			background-color: $cadmin-dark-l1;
+			border: none;
+			color: $cadmin-white;
+			display: inline-flex;
 			font-weight: 600;
-		}
+			justify-content: center;
+			margin: 2px 2px 1px;
+			padding: 1px 10px;
+			text-decoration: none;
+			vertical-align: middle;
 
-		.lexicon-icon-caret-bottom {
-			font-size: 13px;
-			margin-left: 5px;
-			margin-top: 0;
+			.staging-indicator-icon-staging {
+				color: $cadmin-info-l1;
+				margin-right: 6px;
+				margin-top: 0;
+			}
+
+			.staging-indicator-icon-live {
+				color: $cadmin-success-l1;
+				font-size: 16px;
+				margin-right: 2px;
+				margin-top: 0;
+			}
+
+			.staging-indicator-title {
+				font-size: 12px;
+				font-weight: 600;
+			}
+
+			.lexicon-icon-caret-bottom {
+				font-size: 13px;
+				margin-left: 5px;
+				margin-top: 0;
+			}
 		}
 	}
 }

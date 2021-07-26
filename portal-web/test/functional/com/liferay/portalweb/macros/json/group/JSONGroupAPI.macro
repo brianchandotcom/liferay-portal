@@ -144,6 +144,9 @@ definition {
 		if (!(isSet(locale))) {
 			var locale = "en_US";
 		}
+		else {
+			var locale = "${locale}";
+		}
 
 		var defaultLocale = '''default-locale=\"${locale}\"''';
 

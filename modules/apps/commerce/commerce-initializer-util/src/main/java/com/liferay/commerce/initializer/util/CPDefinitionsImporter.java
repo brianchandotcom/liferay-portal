@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -164,6 +165,31 @@ public class CPDefinitionsImporter {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			CPDefinition cpDefinition = _importCPDefinition(
 				jsonArray.getJSONObject(i), assetVocabularyName, catalogGroupId,
+				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
+				imageDependenciesPath, serviceContext);
+
+			cpDefinitions.add(cpDefinition);
+		}
+
+		return cpDefinitions;
+	}
+
+	public List<CPDefinition> importCPDefinitions(
+		JSONArray jsonArray, List<AssetCategory> assetCategories,
+		long catalogGroupId,
+		long commerceChannelId, long[] commerceInventoryWarehouseIds,
+		ClassLoader classLoader, String imageDependenciesPath,
+		long scopeGroupId, long userId)
+		throws Exception {
+
+		ServiceContext serviceContext = getServiceContext(scopeGroupId, userId);
+
+		List<CPDefinition> cpDefinitions = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			CPDefinition cpDefinition = _importCPDefinition(
+				jsonArray.getJSONObject(i), assetCategories,
+				catalogGroupId,
 				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
 				imageDependenciesPath, serviceContext);
 
@@ -330,6 +356,373 @@ public class CPDefinitionsImporter {
 		unicodeProperties.fastLoad(subscriptionTypeSettingsUnicodeProperties);
 
 		return unicodeProperties;
+	}
+
+	private CPDefinition _importCPDefinition(
+		JSONObject jsonObject, List<AssetCategory> assetCategories1,
+		 long catalogGroupId, long commerceChannelId,
+		long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
+		String imageDependenciesPath, ServiceContext serviceContext)
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(
+			serviceContext.getCompanyId());
+
+		// Categories
+
+		List<AssetCategory> assetCategories2 = new ArrayList<>();
+
+		JSONArray categoriesJSONArray = jsonObject.getJSONArray("categories");
+
+		if (categoriesJSONArray != null) {
+			for (int i = 0; i < categoriesJSONArray.length(); i++) {
+				String externalReferenceCode = categoriesJSONArray.getString(i);
+				for (int j = 0; j < assetCategories1.size(); j++) {
+					AssetCategory assetCategory = assetCategories1.get(j);
+					if(StringUtil.equals(assetCategory.getExternalReferenceCode(), externalReferenceCode)) {
+						assetCategories2.add(assetCategory);
+					}
+				}
+			}
+		}
+
+		// Tags
+
+		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
+
+		if (tagsJSONArray != null) {
+			_assetTagsImporter.importAssetTags(
+				tagsJSONArray, company.getGroupId(),
+				serviceContext.getUserId());
+		}
+		else {
+			tagsJSONArray = new JSONArrayImpl();
+		}
+
+		// Commerce product definition
+
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					externalReferenceCode, company.getCompanyId());
+
+		if (cpDefinition != null) {
+			_commerceChannelRelLocalService.addCommerceChannelRel(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+				commerceChannelId, serviceContext);
+
+			Indexer<CPDefinition> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
+
+			indexer.reindex(cpDefinition);
+
+			return cpDefinition;
+		}
+
+		String name = jsonObject.getString("name");
+		String shortDescription = jsonObject.getString("shortDescription");
+		String description = jsonObject.getString("description");
+		boolean shippable = jsonObject.getBoolean("shippable", true);
+		String sku = jsonObject.getString("sku");
+		String taxCategory = jsonObject.getString("taxCategory");
+
+		long width = jsonObject.getLong("width");
+		long height = jsonObject.getLong("height");
+		long length = jsonObject.getLong("length");
+		long weight = jsonObject.getLong("weight");
+
+		boolean subscriptionEnabled = false;
+		int subscriptionLength = 1;
+		String subscriptionType = null;
+		long maxSubscriptionCycles = 0;
+
+		JSONObject subscriptionInfoJSONObject = jsonObject.getJSONObject(
+			"subscriptionInfo");
+
+		if (subscriptionInfoJSONObject != null) {
+			subscriptionEnabled = GetterUtil.getBoolean(
+				subscriptionInfoJSONObject.get("subscriptionEnabled"));
+			subscriptionLength = GetterUtil.getInteger(
+				subscriptionInfoJSONObject.get("subscriptionLength"), 1);
+			subscriptionType = GetterUtil.getString(
+				subscriptionInfoJSONObject.get("subscriptionType"));
+			maxSubscriptionCycles = GetterUtil.getLong(
+				subscriptionInfoJSONObject.get("maxSubscriptionCycles"));
+		}
+
+		long[] assetCategoryIds = ListUtil.toLongArray(
+			assetCategories2, AssetCategory.CATEGORY_ID_ACCESSOR);
+
+		String[] assetTagNames = ArrayUtil.toStringArray(tagsJSONArray);
+
+		int originalWorkflowAction = serviceContext.getWorkflowAction();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_DRAFT);
+
+		cpDefinition = _addCPDefinition(
+			catalogGroupId, name, shortDescription, description,
+			externalReferenceCode, shippable, sku, taxCategory, width, height,
+			length, weight, subscriptionEnabled, subscriptionLength,
+			subscriptionType,
+			_getSubscriptionTypeSettingsUnicodeProperties(
+				subscriptionInfoJSONObject),
+			maxSubscriptionCycles, assetCategoryIds, assetTagNames,
+			serviceContext);
+
+		serviceContext.setWorkflowAction(originalWorkflowAction);
+
+		// Commerce product definition specification option values
+
+		JSONArray specificationOptionsJSONArray = jsonObject.getJSONArray(
+			"specificationOptions");
+
+		if (specificationOptionsJSONArray != null) {
+			for (int i = 0; i < specificationOptionsJSONArray.length(); i++) {
+				JSONObject specificationOptionJSONObject =
+					specificationOptionsJSONArray.getJSONObject(i);
+
+				_importCPDefinitionSpecificationOptionValue(
+					company.getCompanyId(), cpDefinition.getCPDefinitionId(),
+					specificationOptionJSONObject, i, serviceContext);
+			}
+		}
+
+		// Commerce product definition option rels
+
+		JSONArray optionsJSONArray = jsonObject.getJSONArray("options");
+
+		if (optionsJSONArray != null) {
+			for (int i = 0; i < optionsJSONArray.length(); i++) {
+				JSONObject optionJSONObject = optionsJSONArray.getJSONObject(i);
+
+				_importCPDefinitionOptionRel(
+					catalogGroupId, company.getCompanyId(),
+					cpDefinition.getCPDefinitionId(), optionJSONObject,
+					serviceContext);
+			}
+		}
+
+		// Commerce product instances
+
+		JSONArray skusJSONArray = jsonObject.getJSONArray("skus");
+
+		if (skusJSONArray != null) {
+			Calendar calendar = Calendar.getInstance();
+
+			for (int i = 0; i < skusJSONArray.length(); i++) {
+				JSONObject skuJSONObject = skusJSONArray.getJSONObject(i);
+
+				_importCPInstance(
+					cpDefinition.getCPDefinitionId(), skuJSONObject,
+					commerceInventoryWarehouseIds, calendar, serviceContext);
+			}
+		}
+		else {
+			try {
+				_cpInstanceLocalService.buildCPInstances(
+					cpDefinition.getCPDefinitionId(), serviceContext);
+			}
+			catch (NoSuchSkuContributorCPDefinitionOptionRelException
+				noSuchSkuContributorCPDefinitionOptionRelException) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"No options defined as sku contributor for " +
+						"CPDefinition " + cpDefinition.getCPDefinitionId(),
+						noSuchSkuContributorCPDefinitionOptionRelException);
+				}
+			}
+
+			List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+			for (CPInstance cpInstance : cpInstances) {
+
+				// Commerce product instance
+
+				double priceDouble = jsonObject.getDouble("price", 0);
+
+				BigDecimal price = BigDecimal.valueOf(priceDouble);
+
+				BigDecimal cost = BigDecimal.valueOf(
+					jsonObject.getDouble("cost", 0));
+
+				BigDecimal promoPrice = BigDecimal.valueOf(
+					jsonObject.getDouble("promoPrice", 0));
+
+				cpInstance.setPrice(price);
+				cpInstance.setPromoPrice(promoPrice);
+				cpInstance.setCost(cost);
+
+				String manufacturerPartNumber = jsonObject.getString(
+					"manufacturerPartNumber");
+
+				cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
+
+				String cpInstanceExternalReferenceCode =
+					FriendlyURLNormalizerUtil.normalize(sku);
+
+				cpInstance.setExternalReferenceCode(
+					cpInstanceExternalReferenceCode);
+
+				_cpInstanceLocalService.updateCPInstance(cpInstance);
+
+				// Commerce warehouse items
+
+				_addWarehouseQuantities(
+					jsonObject, commerceInventoryWarehouseIds, serviceContext,
+					cpInstance);
+			}
+		}
+
+		// Commerce product definition inventory
+
+		String cpDefinitionInventoryEngine = jsonObject.getString(
+			"cpDefinitionInventoryEngine");
+		String lowStockActivity = jsonObject.getString("lowStockActivity");
+		boolean displayAvailability = jsonObject.getBoolean(
+			"displayAvailability");
+		boolean displayStockQuantity = jsonObject.getBoolean(
+			"displayStockQuantity");
+		int minStockQuantity = jsonObject.getInt("minStockQuantity");
+		boolean backOrders = jsonObject.getBoolean("backOrders");
+		int minOrderQuantity = jsonObject.getInt(
+			"minOrderQuantity",
+			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY);
+		int maxOrderQuantity = jsonObject.getInt(
+			"maxOrderQuantity",
+			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY);
+		String allowedOrderQuantities = jsonObject.getString(
+			"allowedOrderQuantities");
+		int multipleOrderQuantity = jsonObject.getInt(
+			"multipleOrderQuantity",
+			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY);
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpDefinition.getCPDefinitionId());
+
+		if (cpDefinitionInventory == null) {
+			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
+				serviceContext.getUserId(), cpDefinition.getCPDefinitionId(),
+				cpDefinitionInventoryEngine, lowStockActivity,
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
+		}
+		else {
+			_cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
+				cpDefinitionInventory.getCPDefinitionInventoryId(),
+				cpDefinitionInventoryEngine, lowStockActivity,
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
+		}
+
+		// Commerce product definition availability estimate
+
+		String availabilityEstimate = jsonObject.getString(
+			"availabilityEstimate");
+
+		if (Validator.isNotNull(availabilityEstimate)) {
+			_updateCPDAvailabilityEstimate(
+				cpDefinition.getCProductId(), availabilityEstimate,
+				serviceContext);
+		}
+
+		// Commerce product images
+
+		String image = jsonObject.getString("image");
+
+		if (Validator.isNotNull(image)) {
+			_cpAttachmentFileEntryCreator.addCPAttachmentFileEntry(
+				cpDefinition, classLoader, imageDependenciesPath, image, 0,
+				CPAttachmentFileEntryConstants.TYPE_IMAGE, catalogGroupId,
+				serviceContext.getUserId());
+		}
+
+		JSONArray imagesJSONArray = jsonObject.getJSONArray("images");
+
+		if (imagesJSONArray != null) {
+			for (int i = 0; i < imagesJSONArray.length(); i++) {
+				_cpAttachmentFileEntryCreator.addCPAttachmentFileEntry(
+					cpDefinition, classLoader, imageDependenciesPath,
+					imagesJSONArray.getString(i), i,
+					CPAttachmentFileEntryConstants.TYPE_IMAGE, catalogGroupId,
+					serviceContext.getUserId());
+			}
+		}
+
+		// Commerce product attachment file entries
+
+		String attachment = jsonObject.getString("attachment");
+
+		if (Validator.isNotNull(attachment)) {
+			_cpAttachmentFileEntryCreator.addCPAttachmentFileEntry(
+				cpDefinition, classLoader, imageDependenciesPath, attachment, 0,
+				CPAttachmentFileEntryConstants.TYPE_OTHER, catalogGroupId,
+				serviceContext.getUserId());
+		}
+
+		JSONArray attachmentsJSONArray = jsonObject.getJSONArray("attachments");
+
+		if (attachmentsJSONArray != null) {
+			for (int i = 0; i < attachmentsJSONArray.length(); i++) {
+				_cpAttachmentFileEntryCreator.addCPAttachmentFileEntry(
+					cpDefinition, classLoader, imageDependenciesPath,
+					attachmentsJSONArray.getString(i), i,
+					CPAttachmentFileEntryConstants.TYPE_OTHER, catalogGroupId,
+					serviceContext.getUserId());
+			}
+		}
+
+		// Commerce product channel
+
+		_cpDefinitionLocalService.updateCPDefinitionChannelFilter(
+			cpDefinition.getCPDefinitionId(), true);
+
+		_commerceChannelRelLocalService.addCommerceChannelRel(
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+			commerceChannelId, serviceContext);
+
+		// Filter account groups
+
+		JSONArray filterAccountGroupsJSONArray = jsonObject.getJSONArray(
+			"filterAccountGroups");
+
+		if (filterAccountGroupsJSONArray != null) {
+			_cpDefinitionLocalService.updateCPDefinitionAccountGroupFilter(
+				cpDefinition.getCPDefinitionId(), true);
+
+			for (int i = 0; i < filterAccountGroupsJSONArray.length(); i++) {
+				String accountGroupExternalReferenceCode =
+					FriendlyURLNormalizerUtil.normalize(
+						filterAccountGroupsJSONArray.getString(i));
+
+				CommerceAccountGroup commerceAccountGroup =
+					_commerceAccountGroupLocalService.
+						fetchByExternalReferenceCode(
+							company.getCompanyId(),
+							accountGroupExternalReferenceCode);
+
+				if (commerceAccountGroup != null) {
+					_commerceAccountGroupRelLocalService.
+						addCommerceAccountGroupRel(
+							CPDefinition.class.getName(),
+							cpDefinition.getCPDefinitionId(),
+							commerceAccountGroup.getCommerceAccountGroupId(),
+							serviceContext);
+				}
+			}
+		}
+
+		return _cpDefinitionLocalService.updateStatus(
+			cpDefinition.getUserId(), cpDefinition.getCPDefinitionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			Collections.emptyMap());
 	}
 
 	private CPDefinition _importCPDefinition(

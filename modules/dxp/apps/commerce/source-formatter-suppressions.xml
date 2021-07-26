@@ -2,6 +2,7 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="JavaConfigurationCategoryCheck" files="commerce-shop-by-diagram/commerce-shop-by-diagram-api/src/main/java/com/liferay/commerce/shop/by/diagram/configuration/CPDefinitionDiagramSettingImageConfiguration\.java" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-organization-web/src/main/java/com/liferay/commerce/organization/web/internal/organization/resource/CommerceOrganizationResourceUtil\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="commerce-organization-web/src/main/java/com/liferay/commerce/organization/web/internal/frontend/OrganizationFilterImpl\.java" />
 		<suppress checks="JavaPackagePathCheck" files="commerce-dashboard-web/src/main/java/com/liferay/commerce/dashboard/web/internal/configuration/definition/CommerceDashboardForecastPortletInstanceConfigurationBeanDeclaration\.java" />

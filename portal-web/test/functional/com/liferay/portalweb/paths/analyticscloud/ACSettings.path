@@ -32,6 +32,11 @@
 	<td>//div/label/input[@data-testid='select-all-checkbox']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SETTINGS_PAGE</td>
+	<td>//h2[text()='Settings']</td>
+	<td></td>
+</tr>
 <!-- INTEREST KEYWORD -->
 <tr>
 	<td>KEYWORD_BUTTON</td>

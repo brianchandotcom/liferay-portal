@@ -384,6 +384,7 @@ definition {
 	@priority = "4"
 	test CanSelectEditOptionForNonPublishedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectEditOptionForNonPublishedProcess";
+		property test.run.environment = "EE";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -442,6 +443,8 @@ definition {
 	@description = "Verify that the user can select View option in the kebab menu for a particular row"
 	@priority = "4"
 	test CanSelectViewOption {
+		property test.run.environment = "EE";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -483,6 +486,8 @@ definition {
 	@description = "Verify that the user can select View option in the kebab menu for a Not Published process"
 	@priority = "3"
 	test CanViewNonPublishedProcess {
+		property test.run.environment = "EE";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

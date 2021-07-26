@@ -161,6 +161,9 @@ definition {
 	@priority = "4"
 	test CanHaveDifferentBlogsWithDifferentWorkflows {
 		property test.name.skip.portal.instance = "WorkflowBlogs#CanHaveDifferentBlogsWithDifferentWorkflows";
+		property test.run.environment = "EE";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -173,7 +176,7 @@ definition {
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
-		ApplicationsMenu.gotoSite(site = "Liferay DXP");
+		ApplicationsMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

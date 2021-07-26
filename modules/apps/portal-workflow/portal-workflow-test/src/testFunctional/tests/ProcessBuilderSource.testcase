@@ -170,8 +170,6 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		KaleoDesigner.viewSourceXMLTab();
-
 		Button.clickPublish();
 
 		Alert.viewErrorMessage(errorMessage = "Please name your workflow before publishing.");
@@ -236,6 +234,7 @@ definition {
 	@priority = "4"
 	test CanRestorePreviousVersionOnMenu {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanRestorePreviousVersionOnMenu";
+		property test.run.environment = "EE";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -269,6 +268,7 @@ definition {
 	@priority = "4"
 	test CanRestorePreviousVersionOnModal {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanRestorePreviousVersionOnModal";
+		property test.run.environment = "EE";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -314,8 +314,6 @@ definition {
 			portlet = "Process Builder");
 
 		LexiconEntry.gotoAdd();
-
-		KaleoDesigner.viewSourceXMLTab();
 
 		Workflow.saveDefinition();
 
@@ -451,6 +449,7 @@ definition {
 	@priority = "4"
 	test CanViewPreviousVersion {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanViewPreviousVersion";
+		property test.run.environment = "EE";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

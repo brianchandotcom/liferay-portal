@@ -338,6 +338,7 @@ definition {
 	@priority = "4"
 	test CanSearchNonAsciiChar {
 		property test.name.skip.portal.instance = "ProcessBuilderConfiguration#CanSearchNonAsciiChar";
+		property test.run.environment = "EE";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
 

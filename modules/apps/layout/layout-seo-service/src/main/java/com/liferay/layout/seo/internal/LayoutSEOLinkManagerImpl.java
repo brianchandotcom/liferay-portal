@@ -19,11 +19,15 @@ import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.internal.util.FriendlyURLMapperProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -111,7 +115,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		mappedFriendlyURLs.forEach(
 			(urlLocale, url) -> layoutSEOLinks.add(
 				new LayoutSEOLinkImpl(
-					_html.escapeAttribute(url),
+					_html.escapeAttribute(
+						_getAlternateCustomCanonicalURL(
+							layout, urlLocale, url)),
 					LocaleUtil.toW3cLanguageId(urlLocale),
 					LayoutSEOLink.Relationship.ALTERNATE)));
 
@@ -169,6 +175,41 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	@Deactivate
 	protected void deactivate() {
 		_friendlyURLMapperProvider = null;
+	}
+
+	private String _getAlternateCustomCanonicalURL(
+		Layout layout, Locale locale, String alternateURL) {
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if ((layoutSEOEntry == null) ||
+			!layoutSEOEntry.isCanonicalURLEnabled()) {
+
+			return alternateURL;
+		}
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+		long groupId = layout.getGroupId();
+
+		try {
+			siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		String currentCanonical = layoutSEOEntry.getCanonicalURL(
+			siteDefaultLocale);
+		String alternateCanonical = layoutSEOEntry.getCanonicalURL(locale);
+
+		if (currentCanonical.equals(alternateCanonical)) {
+			return alternateURL;
+		}
+
+		return alternateCanonical;
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
@@ -269,6 +310,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		return StringUtil.merge(strings, " - ");
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSEOLinkManagerImpl.class);
+
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
@@ -286,6 +330,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Reference
 	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
+
+	@Reference
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private OpenGraphConfiguration _openGraphConfiguration;

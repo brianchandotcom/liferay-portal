@@ -528,9 +528,35 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "2"
 	test CanOrderDataInViewData {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50736 Filter and sort lists of entities (LPS-77749)
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		User.openUsersAdmin();
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applications = "Documents and Media",
+			itemsCount = "4");
+
+		for (var orderBy : list "Name,Count,Description") {
+			ManagementBar.setFilterAndOrder(orderBy = "${orderBy}");
+
+			ManagementBar.toggleViewOrder(order = "list-up");
+
+			ManagementBar.toggleViewOrder(order = "list-down");
+		}
 	}
 
 	@description = "This test publishes a staged entry to live after deleting live entry."

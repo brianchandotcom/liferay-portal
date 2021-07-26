@@ -23,6 +23,22 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class ObjectFieldUtil {
 
+	public static ObjectField toObjectField(
+		com.liferay.object.model.ObjectField objectField) {
+
+		return new ObjectField() {
+			{
+				id = objectField.getObjectFieldId();
+				indexed = objectField.getIndexed();
+				indexedAsKeyword = objectField.getIndexedAsKeyword();
+				indexedLanguageId = objectField.getIndexedLanguageId();
+				name = objectField.getName();
+				required = objectField.isRequired();
+				type = objectField.getType();
+			}
+		};
+	}
+
 	public static com.liferay.object.model.ObjectField toObjectField(
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService) {

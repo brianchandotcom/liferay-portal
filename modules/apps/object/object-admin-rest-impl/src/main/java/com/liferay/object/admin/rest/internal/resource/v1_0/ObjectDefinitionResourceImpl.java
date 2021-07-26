@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -84,27 +84,12 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getName(),
 					transformToList(
 						objectDefinition.getObjectFields(),
-						this::_toObjectField));
+						objectField -> ObjectFieldUtil.toObjectField(
+							objectField, _objectFieldLocalService)));
 
 		return _toObjectDefinition(
 			_objectDefinitionService.publishCustomObjectDefinition(
 				serviceBuilderObjectDefinition.getObjectDefinitionId()));
-	}
-
-	private static ObjectField _toObjectField(
-		com.liferay.object.model.ObjectField objectField) {
-
-		return new ObjectField() {
-			{
-				id = objectField.getObjectFieldId();
-				indexed = objectField.getIndexed();
-				indexedAsKeyword = objectField.getIndexedAsKeyword();
-				indexedLanguageId = objectField.getIndexedLanguageId();
-				name = objectField.getName();
-				required = objectField.isRequired();
-				type = objectField.getType();
-			}
-		};
 	}
 
 	private ObjectDefinition _toObjectDefinition(
@@ -147,8 +132,7 @@ public class ObjectDefinitionResourceImpl
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),
-					ObjectDefinitionResourceImpl::_toObjectField,
-					ObjectField.class);
+					ObjectFieldUtil::toObjectField, ObjectField.class);
 				status = new Status() {
 					{
 						code = objectDefinition.getStatus();
@@ -164,26 +148,6 @@ public class ObjectDefinitionResourceImpl
 				system = objectDefinition.isSystem();
 			}
 		};
-	}
-
-	private com.liferay.object.model.ObjectField _toObjectField(
-		ObjectField objectField) {
-
-		com.liferay.object.model.ObjectField serviceBuilderObjectField =
-			_objectFieldLocalService.createObjectField(0L);
-
-		serviceBuilderObjectField.setIndexed(
-			GetterUtil.getBoolean(objectField.getIndexed()));
-		serviceBuilderObjectField.setIndexedAsKeyword(
-			GetterUtil.getBoolean(objectField.getIndexedAsKeyword()));
-		serviceBuilderObjectField.setIndexedLanguageId(
-			objectField.getIndexedLanguageId());
-		serviceBuilderObjectField.setName(objectField.getName());
-		serviceBuilderObjectField.setRequired(
-			GetterUtil.getBoolean(objectField.getRequired()));
-		serviceBuilderObjectField.setType(objectField.getType());
-
-		return serviceBuilderObjectField;
 	}
 
 	@Reference(

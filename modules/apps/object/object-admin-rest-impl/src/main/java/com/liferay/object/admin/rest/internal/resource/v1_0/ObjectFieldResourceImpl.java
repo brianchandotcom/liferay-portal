@@ -19,7 +19,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -40,13 +39,12 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 	@NestedField(parentClass = ObjectDefinition.class, value = "objectFields")
 	@Override
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
-			Long objectDefinitionId, Pagination pagination)
-		throws Exception {
+		Long objectDefinitionId, Pagination pagination) {
 
 		return Page.of(
 			transform(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId),
-				this::_toObjectField),
+				ObjectFieldUtil::toObjectField),
 			pagination,
 			_objectFieldLocalService.getObjectFieldsCount(objectDefinitionId));
 	}
@@ -63,22 +61,6 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(), objectField.getName(),
 				objectField.getRequired(), objectField.getType()));
-	}
-
-	private ObjectField _toObjectField(
-			com.liferay.object.model.ObjectField objectField)
-		throws PortalException {
-
-		return new ObjectField() {
-			{
-				id = objectField.getObjectFieldId();
-				indexed = objectField.getIndexed();
-				indexedAsKeyword = objectField.getIndexedAsKeyword();
-				indexedLanguageId = objectField.getIndexedLanguageId();
-				name = objectField.getName();
-				type = objectField.getType();
-			}
-		};
 	}
 
 	@Reference

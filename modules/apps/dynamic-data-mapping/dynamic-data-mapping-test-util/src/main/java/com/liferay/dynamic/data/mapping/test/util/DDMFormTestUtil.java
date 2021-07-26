@@ -255,8 +255,8 @@ public class DDMFormTestUtil {
 			null);
 
 		ddmFormField.setProperty("buttonLabel", buttonLabel);
-		ddmFormField.setProperty("message", message);
 		ddmFormField.setProperty("messageArguments", messageArguments);
+		ddmFormField.setProperty("messageKey", message);
 		ddmFormField.setProperty("mvcRenderCommandName", mvcRenderCommandName);
 		ddmFormField.setProperty("parameters", parameters);
 		ddmFormField.setProperty("portletId", portletId);

@@ -311,7 +311,7 @@ export default function App() {
 						title={Liferay.Language.get('others')}
 					>
 						<TokenItem sample="lead">{SAMPLE_TEXT}</TokenItem>
-						<TokenItem sample="muted">{SAMPLE_TEXT}</TokenItem>
+						<TokenItem sample="text-muted">{SAMPLE_TEXT}</TokenItem>
 						<TokenItem label="blockquote">
 							<span className="blockquote">{SAMPLE_TEXT}</span>
 							<span className="blockquote-footer">Liferay</span>

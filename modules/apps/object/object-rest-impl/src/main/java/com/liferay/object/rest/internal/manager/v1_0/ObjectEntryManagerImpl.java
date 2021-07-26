@@ -77,8 +77,31 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	@Override
+	public ObjectEntry addOrUpdateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId, ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectEntryDTOConverter.toDTO(
+			dtoConverterContext,
+			_objectEntryLocalService.addOrUpdateObjectEntry(
+				externalReferenceCode, userId, groupId, objectDefinitionId,
+				(Map)objectEntry.getProperties(), new ServiceContext()));
+	}
+
+	@Override
 	public void deleteObjectEntry(long objectEntryId) throws Exception {
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId);
+	}
+
+	@Override
+	public void deleteObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
+		throws Exception {
+
+		_objectEntryLocalService.deleteObjectEntry(
+			externalReferenceCode, companyId, groupId);
 	}
 
 	@Override
@@ -127,6 +150,18 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.getObjectEntry(objectEntryId));
+	}
+
+	@Override
+	public ObjectEntry getObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, long companyId, long groupId)
+		throws Exception {
+
+		return _objectEntryDTOConverter.toDTO(
+			dtoConverterContext,
+			_objectEntryLocalService.getObjectEntry(
+				externalReferenceCode, companyId, groupId));
 	}
 
 	@Override

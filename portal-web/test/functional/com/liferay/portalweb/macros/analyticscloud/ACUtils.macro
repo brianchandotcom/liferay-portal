@@ -110,7 +110,11 @@ definition {
 			siteName = "Site Name");
 	}
 
-	macro createFormAndAddToPage {
+	macro createFormAndAddToPage {		
+		if(!(isSet(formACTitle))){
+			var formACTitle = "Created Form Name";
+		}
+
 		if (!(isSet(layoutName))) {
 			layoutName = "AC Page";
 		}
@@ -129,7 +133,7 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
-		Form.editName();
+		Form.editName(formTitle = "${formACTitle}");
 
 		Form.addTextField(fieldPositionNumber = "0");
 
@@ -138,12 +142,12 @@ definition {
 		Button.clickPublish();
 
 		Navigator.gotoSitePage(
-			pageName = "AC Page",
+			pageName = "${layoutName}",
 			siteName = "Site Name");
 
 		FormPortletNavigator.gotoSelectForm();
 
-		FormPortletConfiguration.selectForm();
+		FormPortletConfiguration.selectForm(formTitle = "${formACTitle}");
 
 		PortletEntry.save();
 	}

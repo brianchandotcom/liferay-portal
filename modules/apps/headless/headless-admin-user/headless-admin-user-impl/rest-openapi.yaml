@@ -2965,6 +2965,12 @@ paths:
             operationId: getRolesPage
             parameters:
                 - in: query
+                  name: types
+                  schema:
+                      items:
+                          type: integer
+                      type: array
+                - in: query
                   name: page
                   schema:
                       type: integer

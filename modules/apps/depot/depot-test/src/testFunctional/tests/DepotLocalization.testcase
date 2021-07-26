@@ -38,10 +38,6 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
 
 		Click.clickNoMouseOverNoWaitForVisible(
@@ -56,7 +52,9 @@ definition {
 			defaultDepotLanguage = "Spanish (Spain)",
 			locale = "es_ES");
 
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsGeneral(
+			defaultLocale = "es_ES",
+			depotName = "Test Depot Name");
 
 		AssertElementNotPresent(locator1 = "Button#BACK");
 
@@ -66,7 +64,9 @@ definition {
 			key_unnamedTitle = "Repositorio sin nombre",
 			locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
 
-		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
+		DepotNavigator.openDepotLanguages(
+			defaultLocale = "es_ES",
+			depotName = "Test Depot Name");
 
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
 	}

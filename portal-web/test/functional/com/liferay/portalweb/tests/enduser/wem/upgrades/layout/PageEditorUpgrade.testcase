@@ -647,4 +647,48 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-135373. View existing Banner Center fragment on page after upgrade from 7.3."
+	@priority = "4"
+	test ViewEditedInlineContentOfBannerCenterAfterUpgrade73101 {
+		property data.archive.type = "data-archive-banner-center";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10.1";
+
+		task ("View the edited inline content at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
+				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
+			}
+
+			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
+		}
+
+		task ("View the edited inline content at edit mode") {
+			ContentPages.clickPencil();
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Edited Banner Title",
+				fragmentName = "Element",
+				id = "01-title");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Edited Banner Subtitle",
+				fragmentName = "Element",
+				id = "02-subtitle");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Edited Banner Link",
+				fragmentName = "Element",
+				id = "03-link");
+
+			AssertVisible(
+				key_fragmentName = "Element",
+				key_imageName = "Document_1.jpg",
+				locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+		}
+	}
+
 }

@@ -234,6 +234,8 @@ definition {
 	@description = "This is a test for LPS-131307. View the order of web content actions."
 	@priority = "5"
 	test ViewOrderOfWebContentActions {
+		property portal.acceptance = "true";
+
 		task ("Add a published web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

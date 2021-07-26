@@ -59,6 +59,23 @@ components:
                 status:
                     type: integer
             type: object
+        AccountBrief:
+            description:
+                Represents an account's basic information, to be embedded in other resources. This resource's ID can be
+                used to query the account's complete information.
+            properties:
+                id:
+                    description:
+                        The account's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        The account's name.
+                    readOnly: true
+                    type: string
+            type: object
         AccountRole:
             # @review
             description:
@@ -725,6 +742,13 @@ components:
             description:
                 Represents a user.
             properties:
+                accountBriefs:
+                    description:
+                        A list of the user's account.
+                    items:
+                        $ref: "#/components/schemas/AccountBrief"
+                    readOnly: true
+                    type: array
                 actions:
                     additionalProperties:
                         additionalProperties:

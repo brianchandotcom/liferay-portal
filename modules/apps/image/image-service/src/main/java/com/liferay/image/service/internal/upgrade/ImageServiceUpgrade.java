@@ -14,10 +14,6 @@
 
 package com.liferay.image.service.internal.upgrade;
 
-import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
-import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.image.service.internal.upgrade.v1_0_0.ImageCompanyIdUpgradeProcess;
@@ -50,15 +46,6 @@ public class ImageServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.0", "1.0.0",
 			new ImageCompanyIdUpgradeProcess<>(
-				_commercePaymentMethodGroupRelLocalService::
-					getActionableDynamicQuery,
-				CommercePaymentMethodGroupRel::getCompanyId,
-				CommercePaymentMethodGroupRel::getImageId),
-			new ImageCompanyIdUpgradeProcess<>(
-				_commerceShippingMethodLocalService::getActionableDynamicQuery,
-				CommerceShippingMethod::getCompanyId,
-				CommerceShippingMethod::getImageId),
-			new ImageCompanyIdUpgradeProcess<>(
 				_companyLocalService::getActionableDynamicQuery,
 				Company::getCompanyId, Company::getLogoId),
 			new ImageCompanyIdUpgradeProcess<>(
@@ -81,14 +68,6 @@ public class ImageServiceUpgrade implements UpgradeStepRegistrator {
 				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLiveLogoId),
 			new ImageStorageUpgradeProcess(_imageLocalService, _storeFactory));
 	}
-
-	@Reference
-	private CommercePaymentMethodGroupRelLocalService
-		_commercePaymentMethodGroupRelLocalService;
-
-	@Reference
-	private CommerceShippingMethodLocalService
-		_commerceShippingMethodLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -34,6 +34,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandle
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.internal.provider.OpenIdConnectSessionProviderImpl;
+import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.proc.BadJOSEException;
@@ -176,12 +177,9 @@ public class OpenIdConnectServiceHandlerImpl
 			userInfo, _portal.getCompanyId(httpServletRequest),
 			serviceContext.getPathMain(), serviceContext.getPortalURL());
 
-		_updateSessionTokens(
-			System.currentTimeMillis(), openIdConnectSessionImpl, oidcTokens,
-			userId, userInfo);
-
-		OpenIdConnectSessionProviderImpl.setOpenIdConnectSession(
-			httpSession, openIdConnectSessionImpl);
+		OfflineOpenIdConnectSessionManager.startOpenIdConnectSession(
+			httpSession, System.currentTimeMillis(), oidcTokens,
+			openIdConnectSessionImpl, userId, userInfo);
 	}
 
 	@Override
@@ -402,8 +400,8 @@ public class OpenIdConnectServiceHandlerImpl
 				openIdConnectSessionImpl.getOpenIdProviderName()),
 			refreshToken);
 
-		_updateSessionTokens(
-			System.currentTimeMillis(), openIdConnectSessionImpl, oidcTokens);
+		OfflineOpenIdConnectSessionManager.extendOpenIdConnectSession(
+			System.currentTimeMillis(), oidcTokens, openIdConnectSessionImpl);
 
 		return true;
 	}
@@ -567,34 +565,6 @@ public class OpenIdConnectServiceHandlerImpl
 					exception.getMessage()),
 				exception);
 		}
-	}
-
-	private void _updateSessionTokens(
-		long loginTime, OpenIdConnectSessionImpl openIdConnectSessionImpl,
-		OIDCTokens oidcTokens) {
-
-		openIdConnectSessionImpl.setAccessToken(oidcTokens.getAccessToken());
-
-		if (oidcTokens.getRefreshToken() != null) {
-			openIdConnectSessionImpl.setRefreshToken(
-				oidcTokens.getRefreshToken());
-		}
-
-		openIdConnectSessionImpl.setLoginTime(loginTime);
-	}
-
-	private void _updateSessionTokens(
-		long loginTime, OpenIdConnectSessionImpl openIdConnectSessionImpl,
-		OIDCTokens oidcTokens, long userId, UserInfo userInfo) {
-
-		openIdConnectSessionImpl.setLoginUserId(userId);
-
-		openIdConnectSessionImpl.setOpenIdConnectFlowState(
-			OpenIdConnectFlowState.AUTH_COMPLETE);
-
-		openIdConnectSessionImpl.setUserInfoJSONObject(userInfo.toJSONObject());
-
-		_updateSessionTokens(loginTime, openIdConnectSessionImpl, oidcTokens);
 	}
 
 	private void _validateState(State requestedState, State state)

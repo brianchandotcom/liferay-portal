@@ -31,4 +31,8 @@ public interface ModelSearchRegistrarHelper {
 		Class<? extends BaseModel<?>> clazz, BundleContext bundleContext,
 		ModelSearchDefinitionContributor modelSearchDefinitionContributor);
 
+	public ServiceRegistration<?> register(
+		String className, BundleContext bundleContext,
+		ModelSearchDefinitionContributor modelSearchDefinitionContributor);
+
 }

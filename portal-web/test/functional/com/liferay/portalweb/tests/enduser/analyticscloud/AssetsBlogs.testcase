@@ -137,6 +137,8 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
+		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");

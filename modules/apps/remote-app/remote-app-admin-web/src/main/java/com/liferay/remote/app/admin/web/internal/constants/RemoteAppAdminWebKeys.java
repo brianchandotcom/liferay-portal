@@ -24,4 +24,10 @@ public class RemoteAppAdminWebKeys {
 
 	public static final String REMOTE_APP_ENTRY = "REMOTE_APP_ENTRY";
 
+	public static final String REMOTE_CUSTOM_ELEMENT_ADMIN_DISPLAY_CONTEXT =
+		"REMOTE_CUSTOM_ELEMENT_ADMIN_DISPLAY_CONTEXT";
+
+	public static final String REMOTE_CUSTOM_ELEMENT_ENTRY =
+		"REMOTE_CUSTOM_ELEMENT_ENTRY";
+
 }

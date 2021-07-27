@@ -24,12 +24,11 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.remote.app.admin.web.internal.RemoteAppPortletRegistrar;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminPortletKeys;
-import com.liferay.remote.app.exception.DuplicateRemoteAppEntryURLException;
+import com.liferay.remote.app.exception.DuplicateRemoteCustomElementEntryURLException;
 import com.liferay.remote.app.exception.NoSuchEntryException;
-import com.liferay.remote.app.model.RemoteAppEntry;
-import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.model.RemoteCustomElementEntry;
+import com.liferay.remote.app.service.RemoteCustomElementEntryLocalService;
 
 import java.util.Locale;
 import java.util.Map;
@@ -41,17 +40,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Bruno Basto
+ * @author Iván Zaera Avellón
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
-		"mvc.command.name=/remote_app_admin/edit_remote_app_entry"
+		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_CUSTOM_ELEMENT_ADMIN,
+		"mvc.command.name=/remote_custom_element_admin/edit_remote_custom_element_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
+public class EditRemoteCustomElementEntryMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -64,31 +64,27 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
+		String tagName = ParamUtil.getString(actionRequest, "tagName");
 		String url = ParamUtil.getString(actionRequest, "url");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			RemoteAppEntry.class.getName(), actionRequest);
+			RemoteCustomElementEntry.class.getName(), actionRequest);
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				RemoteAppEntry remoteAppEntry =
-					_remoteAppEntryLocalService.addRemoteAppEntry(
-						serviceContext.getUserId(), nameMap, url,
+				_remoteCustomElementEntryLocalService.
+					addRemoteCustomElementEntry(
+						serviceContext.getUserId(), nameMap, tagName, url,
 						serviceContext);
-
-				_remoteAppPortletRegistrar.registerPortlet(remoteAppEntry);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				long remoteAppEntryId = ParamUtil.getLong(
-					actionRequest, "remoteAppEntryId");
+				long remoteCustomElementEntryId = ParamUtil.getLong(
+					actionRequest, "remoteCustomElementEntryId");
 
-				RemoteAppEntry remoteAppEntry =
-					_remoteAppEntryLocalService.updateRemoteAppEntry(
-						remoteAppEntryId, nameMap, url, serviceContext);
-
-				_remoteAppPortletRegistrar.unregisterPortlet(remoteAppEntry);
-
-				_remoteAppPortletRegistrar.registerPortlet(remoteAppEntry);
+				_remoteCustomElementEntryLocalService.
+					updateRemoteCustomElementEntry(
+						remoteCustomElementEntryId, nameMap, tagName, url,
+						serviceContext);
 			}
 
 			if (Validator.isNotNull(redirect)) {
@@ -102,9 +98,11 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/remote_app_admin/error.jsp");
+					"mvcPath", "/remote_custom_element_admin/error.jsp");
 			}
-			else if (exception instanceof DuplicateRemoteAppEntryURLException) {
+			else if (exception instanceof
+						DuplicateRemoteCustomElementEntryURLException) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
@@ -114,9 +112,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
-
-	@Reference
-	private RemoteAppPortletRegistrar _remoteAppPortletRegistrar;
+	private RemoteCustomElementEntryLocalService
+		_remoteCustomElementEntryLocalService;
 
 }

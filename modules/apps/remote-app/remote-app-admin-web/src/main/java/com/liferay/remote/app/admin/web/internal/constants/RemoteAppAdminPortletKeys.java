@@ -22,4 +22,8 @@ public class RemoteAppAdminPortletKeys {
 	public static final String REMOTE_APP_ADMIN =
 		"com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet";
 
+	public static final String REMOTE_CUSTOM_ELEMENT_ADMIN =
+		"com_liferay_remote_app_admin_web_portlet_" +
+			"RemoteCustomElementAdminPortlet";
+
 }

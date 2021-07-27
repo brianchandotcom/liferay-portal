@@ -15,13 +15,10 @@
 package com.liferay.remote.app.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminWebKeys;
-import com.liferay.remote.app.admin.web.internal.display.context.RemoteAppAdminDisplayContext;
-import com.liferay.remote.app.exception.NoSuchEntryException;
-import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.admin.web.internal.display.context.RemoteCustomElementAdminDisplayContext;
+import com.liferay.remote.app.service.RemoteCustomElementEntryLocalService;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -31,17 +28,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Iván Zaera
+ * @author Iván Zaera Avellón
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
-		"mvc.command.name=/remote_app_admin/edit_remote_app_entry"
+		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_CUSTOM_ELEMENT_ADMIN,
+		"mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
+public class RemoteCustomElementAdminViewMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -49,35 +47,16 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT,
-			new RemoteAppAdminDisplayContext(
-				renderRequest, renderResponse, _remoteAppEntryLocalService));
+			RemoteAppAdminWebKeys.REMOTE_CUSTOM_ELEMENT_ADMIN_DISPLAY_CONTEXT,
+			new RemoteCustomElementAdminDisplayContext(
+				renderRequest, renderResponse,
+				_remoteCustomElementEntryLocalService));
 
-		try {
-			long remoteAppEntryId = ParamUtil.getLong(
-				renderRequest, "remoteAppEntryId");
-
-			if (remoteAppEntryId > 0) {
-				renderRequest.setAttribute(
-					RemoteAppAdminWebKeys.REMOTE_APP_ENTRY,
-					_remoteAppEntryLocalService.getRemoteAppEntry(
-						remoteAppEntryId));
-			}
-		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchEntryException) {
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				return "/remote_app_admin/error.jsp";
-			}
-
-			throw new PortletException(exception);
-		}
-
-		return "/remote_app_admin/edit_remote_app_entry.jsp";
+		return "/remote_custom_element_admin/view.jsp";
 	}
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private RemoteCustomElementEntryLocalService
+		_remoteCustomElementEntryLocalService;
 
 }

@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.remote.app.admin.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Bruno Basto
- */
-public class RemoteAppAdminConstants {
-
-	public static final String REMOTE_APP_ENTRY_DATA_SET_DISPLAY =
-		"REMOTE_APP_ENTRY_DATA_SET_DISPLAY";
-
-	public static final String REMOTE_CUSTOM_ELEMENT_ENTRY_DATA_SET_DISPLAY =
-		"REMOTE_CUSTOM_ELEMENT_ENTRY_DATA_SET_DISPLAY";
-
-}
+<%@ page import="com.liferay.remote.app.admin.web.internal.display.context.RemoteCustomElementAdminDisplayContext" %><%@
+page import="com.liferay.remote.app.exception.DuplicateRemoteCustomElementEntryURLException" %><%@
+page import="com.liferay.remote.app.model.RemoteCustomElementEntry" %>

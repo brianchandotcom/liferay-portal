@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class RemoteAppAdminViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -50,7 +50,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			new RemoteAppAdminDisplayContext(
 				renderRequest, renderResponse, _remoteAppEntryLocalService));
 
-		return "/admin/view.jsp";
+		return "/remote_app_admin/view.jsp";
 	}
 
 	@Reference

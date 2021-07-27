@@ -26,6 +26,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="name" type="String" />
 		<field name="tagName" type="String" />
-		<field name="url" type="String" />
+		<field name="url" type="String">
+			<hint name="max-length">1024</hint>
+		</field>
 	</model>
 </model-hints>

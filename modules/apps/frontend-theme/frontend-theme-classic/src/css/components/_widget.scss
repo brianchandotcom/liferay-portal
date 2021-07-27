@@ -2,7 +2,7 @@
 	background-color: #fff;
 
 	.title {
-		color: $dark-color;
+		color: $dark;
 		font-weight: 700;
 		line-height: 1.25;
 	}
@@ -20,7 +20,7 @@
 		}
 
 		.username {
-			color: $dark-color;
+			color: $dark;
 			font-weight: 600;
 			line-height: 2;
 		}
@@ -46,7 +46,7 @@
 
 	.widget-topbar {
 		.title-link {
-			color: $dark-color;
+			color: $dark;
 		}
 
 		.title {
@@ -65,7 +65,7 @@
 		}
 
 		.username {
-			color: $dark-color;
+			color: $dark;
 			font-weight: 600;
 		}
 	}
@@ -82,21 +82,21 @@
 	}
 
 	.widget-toolbar {
-		border-top: 1px solid $light-color;
+		border-top: 1px solid $secondary-l3;
 		padding-top: 8px;
 	}
 }
 
 .widget-mode-simple {
 	.widget-mode-simple-entry:not(:last-child) {
-		border-bottom: 1px solid $light-color;
+		border-bottom: 1px solid $secondary-l3;
 		margin-bottom: 24px;
 		padding-bottom: 24px;
 	}
 
 	.widget-topbar {
 		.title-link {
-			color: $dark-color;
+			color: $dark;
 		}
 
 		.title {
@@ -113,7 +113,7 @@
 		}
 
 		.username {
-			color: $dark-color;
+			color: $dark;
 			font-weight: 600;
 		}
 	}

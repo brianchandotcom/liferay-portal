@@ -16,7 +16,7 @@ definition {
 		Type(
 			locator1 = "ACSettings#INVITE_USERS_INPUT",
 			value1 = "${userInvite}");
-		
+
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	macro deleteUser {
-		if(IsVisible(locator1 = "ACSettings#USER_LIST_EMAIL", value1 = "${userDelete}")) {
+		if (IsVisible(locator1 = "ACSettings#USER_LIST_EMAIL", value1 = "${userDelete}")) {
 			Click(locator1 = "ACSettings#DELETE_USER");
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");

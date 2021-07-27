@@ -327,6 +327,12 @@ public class RestrictedLiferayObjectWrapperTest
 				new String[] {
 					TestLiferayMethodObject.class.getName() + "#getName"
 				}));
+
+		testWrap(
+			new RestrictedLiferayObjectWrapper(
+				new String[] {StringPool.BLANK},
+				new String[] {StringPool.BLANK},
+				new String[] {TestBaseModel.class.getName() + "#getName"}));
 	}
 
 	public class TestLiferayMethodObject {

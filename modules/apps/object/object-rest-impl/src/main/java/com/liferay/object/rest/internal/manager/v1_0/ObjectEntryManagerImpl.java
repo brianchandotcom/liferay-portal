@@ -14,10 +14,12 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -86,6 +88,10 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
 		return SearchUtil.search(
 			new HashMap<>(),
 			booleanQuery -> {
@@ -98,8 +104,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 						String.valueOf(objectDefinitionId)),
 					BooleanClauseOccur.MUST);
 			},
-			filter, com.liferay.object.model.ObjectEntry.class, search,
-			pagination,
+			filter, objectDefinition.getClassName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
@@ -193,6 +198,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return values;
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;

@@ -203,13 +203,17 @@ public class GroupPagesPortlet extends MVCPortlet {
 					_portal.getLiferayPortletResponse(renderResponse),
 					_stagingGroupHelper);
 
+			LayoutActionDropdownItemsProvider
+				layoutActionDropdownItemsProvider =
+					new LayoutActionDropdownItemsProvider(
+						_ffLayoutTranslationConfiguration,
+						_portal.getHttpServletRequest(renderRequest),
+						layoutsAdminDisplayContext, _translationPermission,
+						_translationURLProvider);
+
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_ACTION_DROPDOWN_ITEMS_PROVIDER,
-				new LayoutActionDropdownItemsProvider(
-					_ffLayoutTranslationConfiguration,
-					_portal.getHttpServletRequest(renderRequest),
-					layoutsAdminDisplayContext, _translationPermission,
-					_translationURLProvider));
+				layoutActionDropdownItemsProvider);
 
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
@@ -218,12 +222,11 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.MILLER_COLUMNS_DISPLAY_CONTEXT,
 				new MillerColumnsDisplayContext(
-					_ffLayoutTranslationConfiguration,
+					layoutActionDropdownItemsProvider,
 					layoutsAdminDisplayContext,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
-					_translationInfoItemFieldValuesExporterTracker,
-					_translationPermission, _translationURLProvider));
+					_translationInfoItemFieldValuesExporterTracker));
 
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT,

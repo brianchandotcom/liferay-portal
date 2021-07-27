@@ -19,6 +19,7 @@ import com.liferay.layout.admin.web.internal.configuration.FFLayoutTranslationCo
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
+import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -91,11 +92,15 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 		MillerColumnsDisplayContext millerColumnsDisplayContext =
 			new MillerColumnsDisplayContext(
-				_ffLayoutTranslationConfiguration, layoutsAdminDisplayContext,
+				new LayoutActionDropdownItemsProvider(
+					_ffLayoutTranslationConfiguration,
+					_portal.getHttpServletRequest(actionRequest),
+					layoutsAdminDisplayContext, _translationPermission,
+					_translationURLProvider),
+				layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse),
-				_translationInfoItemFieldValuesExporterTracker,
-				_translationPermission, _translationURLProvider);
+				_translationInfoItemFieldValuesExporterTracker);
 
 		JSONArray jsonArray = millerColumnsDisplayContext.getLayoutsJSONArray(
 			layout.getLayoutId(), layout.isPrivateLayout());

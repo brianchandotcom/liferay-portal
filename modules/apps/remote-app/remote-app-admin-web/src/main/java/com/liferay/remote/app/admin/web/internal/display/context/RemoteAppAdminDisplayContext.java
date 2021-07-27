@@ -53,7 +53,7 @@ public class RemoteAppAdminDisplayContext {
 						_getRedirect()
 					).build());
 
-				dropdownItem.setLabel(_getLabel("add-remote-web-app"));
+				dropdownItem.setLabel(_getLabel("new-remote-app"));
 			}
 		).build();
 	}

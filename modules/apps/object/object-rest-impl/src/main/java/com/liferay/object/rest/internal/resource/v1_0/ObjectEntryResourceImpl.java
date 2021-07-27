@@ -82,7 +82,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public void deleteObjectEntry(Long siteId, String externalReferenceCode)
+	public void deleteSiteObjectEntryByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
 		throws Exception {
 
 		_objectEntryManager.deleteObjectEntry(
@@ -119,7 +120,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public ObjectEntry getObjectEntry(Long siteId, String externalReferenceCode)
+	public ObjectEntry getSiteObjectEntryByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntry(
@@ -147,7 +149,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public ObjectEntry putObjectEntry(
+	public ObjectEntry putSiteObjectEntryByExternalReferenceCode(
 			Long siteId, String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception {
 

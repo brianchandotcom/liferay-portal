@@ -28,12 +28,15 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
+import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../../app/services/CollectionService';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
+import {setIn} from '../../../../../../app/utils/setIn';
 import {useId} from '../../../../../../app/utils/useId';
 import CollectionSelector from '../../../../../../common/components/CollectionSelector';
+import {FieldSet} from './FieldSet';
 
 const LAYOUT_OPTIONS = [
 	{label: Liferay.Language.get('full-width'), value: '1'},
@@ -62,6 +65,9 @@ export const CollectionGeneralPanel = ({item}) => {
 	const [availableListStyles, setAvailableListStyles] = useState([
 		DEFAULT_LIST_STYLE,
 	]);
+	const [collectionConfiguration, setCollectionConfiguration] = useState(
+		null
+	);
 	const collectionItemType = item.config.collection?.itemType || null;
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
@@ -72,6 +78,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	const isMaximumValuePerPageError =
 		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
 	const isMounted = useIsMounted();
+	const languageId = useSelector(selectLanguageId);
 	const listStyleId = useId();
 	const [nextValue, setNextValue] = useState({
 		numberOfItems: item.config.numberOfItems,
@@ -162,6 +169,28 @@ export const CollectionGeneralPanel = ({item}) => {
 		},
 		[item.itemId, dispatch, segmentsExperienceId]
 	);
+
+	const handleFieldValueSelect = (fieldSet, name, value) => {
+		const field = fieldSet.fields.find((field) => field.name === name);
+		let nextConfig;
+
+		if (field.localizable) {
+			nextConfig = setIn(
+				item.config,
+				['collection', 'config', name, languageId],
+				value
+			);
+		}
+		else {
+			nextConfig = setIn(
+				item.config,
+				['collection', 'config', name],
+				value
+			);
+		}
+
+		handleConfigurationChanged(nextConfig);
+	};
 
 	const handleShowAllItemsChanged = (event) => {
 		setShowAllItems(event.target.checked);
@@ -280,6 +309,17 @@ export const CollectionGeneralPanel = ({item}) => {
 				});
 		}
 	}, [item.config.collection, item.config.listStyle]);
+
+	useEffect(() => {
+		if (item.config.collection?.key) {
+			CollectionService.getCollectionConfiguration(
+				item.config.collection
+			).then(setCollectionConfiguration);
+		}
+		else {
+			setCollectionConfiguration(null);
+		}
+	}, [item.config.collection]);
 
 	return (
 		<>
@@ -465,6 +505,31 @@ export const CollectionGeneralPanel = ({item}) => {
 					)}
 				</>
 			)}
+
+			{collectionConfiguration
+				? collectionConfiguration.fieldSets
+						.filter(
+							(fieldSet) =>
+								fieldSet.configurationRole &&
+								fieldSet.fields.length
+						)
+						.map((fieldSet) => (
+							<FieldSet
+								fields={fieldSet.fields}
+								key={fieldSet.configurationRole}
+								label={fieldSet.configurationRole}
+								languageId={languageId}
+								onValueSelect={(name, value) =>
+									handleFieldValueSelect(
+										fieldSet,
+										name,
+										value
+									)
+								}
+								values={item.config.collection?.config || {}}
+							/>
+						))
+				: null}
 		</>
 	);
 };

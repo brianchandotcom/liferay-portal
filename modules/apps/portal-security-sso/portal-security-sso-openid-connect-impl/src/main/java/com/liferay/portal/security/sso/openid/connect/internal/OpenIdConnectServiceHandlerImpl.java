@@ -173,22 +173,21 @@ public class OpenIdConnectServiceHandlerImpl
 		URI redirectURI = _getLoginRedirectURI(httpServletRequest);
 
 		Tokens tokens = _requestIdToken(
-			authenticationSuccessResponse, oidcClientInformation,
-			oidcProviderMetadata, redirectURI,
-			openIdConnectSessionImpl.getNonce(),
+			authenticationSuccessResponse, openIdConnectSessionImpl.getNonce(),
+			oidcClientInformation, oidcProviderMetadata, redirectURI,
 			openIdConnectProvider.geTokenConnectionTimeout());
 
 		_updateSessionTokens(
-			openIdConnectSessionImpl, tokens, System.currentTimeMillis(),
-			false);
+			false, System.currentTimeMillis(), openIdConnectSessionImpl,
+			tokens);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
 		_processUserInfo(
-			_portal.getCompanyId(httpServletRequest), openIdConnectSessionImpl,
-			oidcProviderMetadata, serviceContext.getPathMain(),
-			serviceContext.getPortalURL());
+			_portal.getCompanyId(httpServletRequest),
+			serviceContext.getPathMain(), oidcProviderMetadata,
+			openIdConnectSessionImpl, serviceContext.getPortalURL());
 
 		openIdConnectSessionImpl.setOpenIdConnectFlowState(
 			OpenIdConnectFlowState.AUTH_COMPLETE);
@@ -214,7 +213,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 		OpenIdConnectSessionImpl openIdConnectSessionImpl =
 			_getOpenIdConnectSessionImpl(
-				httpSession, openIdConnectProviderName);
+				openIdConnectProviderName, httpSession);
 
 		if (openIdConnectSessionImpl == null) {
 			openIdConnectSessionImpl = new OpenIdConnectSessionImpl(
@@ -222,10 +221,10 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 
 		URI authenticationRequestURI = _getAuthenticationRequestURI(
-			_getLoginRedirectURI(httpServletRequest), openIdConnectProvider,
-			openIdConnectSessionImpl.getNonce(),
-			openIdConnectSessionImpl.getState(),
-			Scope.parse(openIdConnectProvider.getScopes()));
+			_getLoginRedirectURI(httpServletRequest),
+			openIdConnectSessionImpl.getNonce(), openIdConnectProvider,
+			Scope.parse(openIdConnectProvider.getScopes()),
+			openIdConnectSessionImpl.getState());
 
 		try {
 			httpServletResponse.sendRedirect(
@@ -248,10 +247,10 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	private URI _getAuthenticationRequestURI(
-			URI loginRedirectURI,
+			URI loginRedirectURI, Nonce nonce,
 			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
 				openIdConnectProvider,
-			Nonce nonce, State state, Scope scope)
+			Scope scope, State state)
 		throws OpenIdConnectServiceException.ProviderException {
 
 		OIDCProviderMetadata oidcProviderMetadata =
@@ -347,7 +346,7 @@ public class OpenIdConnectServiceHandlerImpl
 		throws OpenIdConnectServiceException.NoOpenIdConnectSessionException {
 
 		OpenIdConnectSessionImpl openIdConnectSessionImpl =
-			_getOpenIdConnectSessionImpl(httpSession, null);
+			_getOpenIdConnectSessionImpl(null, httpSession);
 
 		if (openIdConnectSessionImpl == null) {
 			throw new OpenIdConnectServiceException.
@@ -359,7 +358,7 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	private OpenIdConnectSessionImpl _getOpenIdConnectSessionImpl(
-		HttpSession httpSession, String expectedProviderName) {
+		String expectedProviderName, HttpSession httpSession) {
 
 		Object openIdConnectSessionObject =
 			_openIdConnectSessionProviderImpl.getOpenIdConnectSession(
@@ -401,9 +400,9 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	private void _processUserInfo(
-			long companyId, OpenIdConnectSessionImpl openIdConnectSessionImpl,
-			OIDCProviderMetadata oidcProviderMetadata, String mainPath,
-			String portalURL)
+			long companyId, String mainPath,
+			OIDCProviderMetadata oidcProviderMetadata,
+			OpenIdConnectSessionImpl openIdConnectSessionImpl, String portalURL)
 		throws PortalException {
 
 		UserInfo userInfo = _requestUserInfo(
@@ -456,50 +455,49 @@ public class OpenIdConnectServiceHandlerImpl
 			openIdConnectProvider.getOIDCProviderMetadata();
 
 		Tokens tokens = _requestRefreshToken(
-			refreshToken, _getOIDCClientInformation(openIdConnectProvider),
-			oidcProviderMetadata,
+			_getOIDCClientInformation(openIdConnectProvider),
+			oidcProviderMetadata, refreshToken,
 			openIdConnectProvider.geTokenConnectionTimeout());
 
 		_updateSessionTokens(
-			openIdConnectSessionImpl, tokens, System.currentTimeMillis(), true);
+			true, System.currentTimeMillis(), openIdConnectSessionImpl, tokens);
 
 		return true;
 	}
 
 	private Tokens _requestIdToken(
 			AuthenticationSuccessResponse authenticationSuccessResponse,
-			OIDCClientInformation oidcClientInformation,
+			Nonce nonce, OIDCClientInformation oidcClientInformation,
 			OIDCProviderMetadata oidcProviderMetadata, URI redirectURI,
-			Nonce nonce, int tokenConnectionTimeout)
+			int tokenConnectionTimeout)
 		throws OpenIdConnectServiceException.TokenException {
 
 		AuthorizationGrant authorizationCodeGrant = new AuthorizationCodeGrant(
 			authenticationSuccessResponse.getAuthorizationCode(), redirectURI);
 
 		return _requestTokens(
-			oidcClientInformation, oidcProviderMetadata, nonce,
-			authorizationCodeGrant, tokenConnectionTimeout);
+			authorizationCodeGrant, nonce, oidcClientInformation,
+			oidcProviderMetadata, tokenConnectionTimeout);
 	}
 
 	private Tokens _requestRefreshToken(
-			RefreshToken refreshToken,
 			OIDCClientInformation oidcClientInformation,
 			OIDCProviderMetadata oidcProviderMetadata,
-			int tokenConnectionTimeout)
+			RefreshToken refreshToken, int tokenConnectionTimeout)
 		throws OpenIdConnectServiceException {
 
 		AuthorizationGrant refreshTokenGrant = new RefreshTokenGrant(
 			refreshToken);
 
 		return _requestTokens(
-			oidcClientInformation, oidcProviderMetadata, null,
-			refreshTokenGrant, tokenConnectionTimeout);
+			refreshTokenGrant, null, oidcClientInformation,
+			oidcProviderMetadata, tokenConnectionTimeout);
 	}
 
 	private Tokens _requestTokens(
+			AuthorizationGrant authorizationCodeGrant, Nonce nonce,
 			OIDCClientInformation oidcClientInformation,
-			OIDCProviderMetadata oidcProviderMetadata, Nonce nonce,
-			AuthorizationGrant authorizationCodeGrant,
+			OIDCProviderMetadata oidcProviderMetadata,
 			int tokenConnectionTimeout)
 		throws OpenIdConnectServiceException.TokenException {
 
@@ -535,7 +533,7 @@ public class OpenIdConnectServiceHandlerImpl
 				(OIDCTokenResponse)tokenResponse;
 
 			_validateToken(
-				oidcClientInformation, nonce, oidcProviderMetadata,
+				nonce, oidcClientInformation, oidcProviderMetadata,
 				oidcTokenResponse, tokenConnectionTimeout);
 
 			return oidcTokenResponse.getTokens();
@@ -620,8 +618,8 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	private void _updateSessionTokens(
-		OpenIdConnectSessionImpl openIdConnectSessionImpl, Tokens tokens,
-		long loginTime, boolean exchangeRefreshToken) {
+		boolean exchangeRefreshToken, long loginTime,
+		OpenIdConnectSessionImpl openIdConnectSessionImpl, Tokens tokens) {
 
 		openIdConnectSessionImpl.setAccessToken(tokens.getAccessToken());
 
@@ -645,7 +643,7 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	private IDTokenClaimsSet _validateToken(
-			OIDCClientInformation oidcClientInformation, Nonce nonce,
+			Nonce nonce, OIDCClientInformation oidcClientInformation,
 			OIDCProviderMetadata oidcProviderMetadata,
 			OIDCTokenResponse oidcTokenResponse, int tokenConnectionTimeout)
 		throws OpenIdConnectServiceException.TokenException {

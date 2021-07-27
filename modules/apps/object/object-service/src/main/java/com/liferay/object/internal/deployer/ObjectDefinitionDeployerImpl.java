@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -81,6 +82,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryModelIndexerWriterContributor(
 					_dynamicQueryBatchIndexingActionableFactory,
 					_objectEntryLocalService);
+
+		_persistedModelLocalServiceRegistry.register(
+			objectDefinition.getClassName(), _objectEntryLocalService);
+
 		return Arrays.asList(
 			_bundleContext.registerService(
 				InfoCollectionProvider.class,
@@ -146,6 +151,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()));
 	}
 
+	@Override
+	public void undeploy(ObjectDefinition objectDefinition) {
+		_persistedModelLocalServiceRegistry.unregister(
+			objectDefinition.getClassName());
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -185,6 +196,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private ResourceActions _resourceActions;

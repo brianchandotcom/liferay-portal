@@ -154,12 +154,22 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"
-	@ignore = "true"
 	@priority = "5"
 	test TotalNumberOfPageViewsIsShown {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		// TODO LRAC-8149 Usage#TotalNumberOfPageViewsIsShown pending implementation
+		ACUtils.launchAC();
 
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		AssertElementPresent(
+			key_metricName = "Page Views",
+			key_totalNumber = "75,000,000",
+			locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
 	}
 
 }

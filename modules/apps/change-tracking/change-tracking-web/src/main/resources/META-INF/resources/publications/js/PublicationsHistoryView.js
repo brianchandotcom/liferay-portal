@@ -157,8 +157,20 @@ const PublicationStatus = ({
 const renderPublicationInfo = (entry, published) => {
 	return (
 		<a
-			className={!published ? 'btn btn-unstyled disabled' : ''}
+			className={
+				!entry.hasViewPermission || !published
+					? 'btn btn-unstyled disabled'
+					: ''
+			}
+			data-tooltip-align="top"
 			href={entry.viewURL}
+			title={
+				!entry.hasViewPermission
+					? Liferay.Language.get(
+							'you-do-not-have-permission-to-view-this-publication'
+					  )
+					: ''
+			}
 		>
 			<div className="publication-name">{entry.name}</div>
 			{entry.description && (
@@ -178,6 +190,19 @@ const PublicationsHistoryListItem = ({entry, spritemap, userInfo}) => {
 			setPublishedValue(entry.published);
 		}
 	}, [entry, publishedValue]);
+
+	let title = '';
+
+	if (!entry.hasViewPermission) {
+		title = Liferay.Language.get(
+			'you-do-not-have-permission-to-revert-this-publication'
+		);
+	}
+	else if (entry.expired && publishedValue) {
+		title = Liferay.Language.get(
+			'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-revert-it'
+		);
+	}
 
 	return (
 		<ClayList.Item flex>
@@ -204,19 +229,14 @@ const PublicationsHistoryListItem = ({entry, spritemap, userInfo}) => {
 				</ClayList.ItemText>
 			</ClayList.ItemField>
 			<ClayList.ItemField>
-				<div
-					data-tooltip-align="top"
-					title={
-						entry.expired && publishedValue
-							? Liferay.Language.get(
-									'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-revert-it'
-							  )
-							: ''
-					}
-				>
+				<div data-tooltip-align="top" title={title}>
 					<a
 						className={`${
-							entry.expired || !publishedValue ? 'disabled' : ''
+							entry.expired ||
+							!entry.hasViewPermission ||
+							!publishedValue
+								? 'disabled'
+								: ''
 						} btn btn-secondary btn-sm`}
 						href={entry.revertURL}
 					>
@@ -236,6 +256,19 @@ const PublicationsHistoryTableRow = ({entry, spritemap, userInfo}) => {
 			setPublishedValue(entry.published);
 		}
 	}, [entry, publishedValue]);
+
+	let title = '';
+
+	if (!entry.hasViewPermission) {
+		title = Liferay.Language.get(
+			'you-do-not-have-permission-to-revert-this-publication'
+		);
+	}
+	else if (entry.expired && publishedValue) {
+		title = Liferay.Language.get(
+			'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-revert-it'
+		);
+	}
 
 	return (
 		<ClayTable.Row>
@@ -263,19 +296,14 @@ const PublicationsHistoryTableRow = ({entry, spritemap, userInfo}) => {
 				/>
 			</ClayTable.Cell>
 			<ClayTable.Cell className="table-cell-expand-smallest">
-				<div
-					data-tooltip-align="top"
-					title={
-						entry.expired && publishedValue
-							? Liferay.Language.get(
-									'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-revert-it'
-							  )
-							: ''
-					}
-				>
+				<div data-tooltip-align="top" title={title}>
 					<a
 						className={`${
-							entry.expired || !publishedValue ? 'disabled' : ''
+							entry.expired ||
+							!entry.hasViewPermission ||
+							!publishedValue
+								? 'disabled'
+								: ''
 						} btn btn-secondary btn-sm`}
 						href={entry.revertURL}
 					>

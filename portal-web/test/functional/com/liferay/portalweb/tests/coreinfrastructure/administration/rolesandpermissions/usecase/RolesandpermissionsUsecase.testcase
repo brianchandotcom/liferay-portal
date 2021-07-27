@@ -543,8 +543,6 @@ definition {
 	test RolesPermissionsDynamicDataLists {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONRole.addSiteRole(
 			roleKey = "Data Recorder Name",
 			roleTitle = "Data Recorder Name");
@@ -583,33 +581,19 @@ definition {
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
 			userEmailAddress = "userea1@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "userea1@liferay.com");
 
-		User.editUserSiteCP(
-			siteName = "${siteName}",
-			userScreenName = "usersn1");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Data Recorder Name",
-			userScreenName = "usersn1");
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Data Recorder Name",
+			userEmailAddress = "userea1@liferay.com");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
@@ -617,44 +601,35 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
 			userEmailAddress = "userea2@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "userea2@liferay.com");
 
-		User.editUserSiteCP(
-			siteName = "${siteName}",
-			userScreenName = "usersn2");
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Records Manager Name",
+			userEmailAddress = "userea2@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Dynamic Data Lists Page");
 
-		User.assignSiteRoleCP(
-			siteRoleName = "Records Manager Name",
-			userScreenName = "usersn2");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Dynamic Data Lists Page",
+			layoutTemplate = "1 Column");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages",
-			site = "${siteName}");
-
-		SitePages.addPublicPage(pageName = "Dynamic Data Lists Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Dynamic Data Lists Page",
+			widgetName = "Dynamic Data Lists Display");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
-
-		Portlet.addPG(portletName = "Dynamic Data Lists Display");
 
 		DDLList.addViaDDLDisplayPG(
 			ddlListDescription = "Liferay Employee Profiles",
@@ -668,16 +643,6 @@ definition {
 			field = "Boolean",
 			fieldFieldLabel = "Employee",
 			fieldName = "Employee");
-
-		DynamicDataMapping.addField(
-			field = "Date",
-			fieldFieldLabel = "Start Date",
-			fieldName = "StartDate");
-
-		DynamicDataMapping.addField(
-			field = "Decimal",
-			fieldFieldLabel = "Salary",
-			fieldName = "Salary");
 
 		DDLDataDefinition.saveViaDDLDisplayPG();
 
@@ -693,16 +658,6 @@ definition {
 			ddlRecordFieldData = "Yes",
 			fieldFieldLabel = "Employee",
 			fieldName = "Employee");
-
-		DDLRecord.populateFieldDate(
-			ddlRecordFieldData = "04/01/2015",
-			fieldFieldLabel = "Start Date",
-			fieldName = "StartDate");
-
-		DDLRecord.populateFieldDecimal(
-			ddlRecordFieldData = "35000",
-			fieldFieldLabel = "Salary",
-			fieldName = "Salary");
 
 		PortletEntry.publish();
 

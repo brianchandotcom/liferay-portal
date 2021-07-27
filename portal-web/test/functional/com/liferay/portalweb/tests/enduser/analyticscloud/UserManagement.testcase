@@ -38,12 +38,61 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8143 | Test Summary: Owner can delete users"
-	@ignore = "true"
 	@priority = "5"
 	test ViewOwnerCanDeleteUser {
+		ACNavigation.goToSettings();
 
-		// TODO LRAC-8143 Automate UserManagement#ViewOwnerCanDeleteUser pending implementation
+		ACSettings.goToUserManagement();
 
+		ACSettings.addUser(userInvite = "user@liferay.com");
+
+		ACUtils.searchBar(searchItem = "user");
+
+		ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+
+		ACSettings.deleteUser(userDelete = "user@liferay.com");
+
+		AssertTextNotPresent(
+			locator1 = "ACSettings#USER_LIST_EMAIL",
+			value1 = "user@liferay.com");
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "corbin.murakami@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+
+		AssertElementNotPresent(locator1 = "ACSettings#DELETE_USER");
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "michelle.hoshi@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+
+		ACSettings.addUser(userInvite = "user2@liferay.com");
+
+		ACUtils.searchBar(searchItem = "user");
+
+		ACSettings.assertUserListEmail(userEmail = "user2@liferay.com");
+
+		ACSettings.deleteUser(userDelete = "user2@liferay.com");
+
+		AssertTextNotPresent(
+			locator1 = "ACSettings#USER_LIST_EMAIL",
+			value1 = "user2@liferay.com");
 	}
 
 }

@@ -506,7 +506,7 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
-    	macro editTextBodyToolBar {
+	macro editTextBodyToolBar {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type.clickAtType(
@@ -973,6 +973,22 @@ definition {
 		AssertElementPresent(
 			key_imageName = "${uploadFileName}",
 			locator1 = "Form#SIDEBAR_ADVANCED_PREDEFINED_VALUE");
+	}
+
+	macro toggleCKEditorContentStyle {
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		SelectFieldText(locator1 = "CKEditor#BODY");
+
+		SelectFrame();
+
+		WaitForElementPresent(
+			key_titleName = "${optionTool}",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		Click(
+			key_titleName = "${optionTool}",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 	}
 
 	macro validateImagePredefinedValue {
@@ -2006,22 +2022,6 @@ definition {
 		var key_fieldLabel = "${fieldLabel}";
 
 		AssertElementNotPresent(locator1 = "FormFields#VALIDATION_VALUE_FIELD");
-	}
-
-	macro toggleCKEditorContentStyle {
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-		SelectFieldText(locator1 = "CKEditor#BODY");
-
-		SelectFrame();
-
-		WaitForElementPresent(
-			key_titleName = "${optionTool}",
-			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
-
-		Click(
-			key_titleName = "${optionTool}",
-			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 	}
 
 }

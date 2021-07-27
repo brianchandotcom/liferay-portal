@@ -22,5 +22,5 @@ create table RemoteCustomElementEntry (
 	modifiedDate DATE null,
 	name STRING null,
 	tagName VARCHAR(75) null,
-	url VARCHAR(75) null
+	url VARCHAR(1024) null
 );

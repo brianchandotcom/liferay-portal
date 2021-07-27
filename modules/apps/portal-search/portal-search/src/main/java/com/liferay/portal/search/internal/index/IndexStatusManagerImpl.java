@@ -20,6 +20,7 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
+import com.liferay.portal.search.configuration.BufferedIndexerInvocationHandlerInternalConfiguration;
 import com.liferay.portal.search.configuration.IndexStatusManagerConfiguration;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration;
@@ -38,12 +39,19 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = {
+		"com.liferay.portal.search.configuration.BufferedIndexerInvocationHandlerInternalConfiguration",
 		"com.liferay.portal.search.configuration.IndexStatusManagerConfiguration",
-		"com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration"
+		"com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration",
+		"com.liferay.portal.search.internal.index.IndexStatusManagerInternalConfiguration"
 	},
 	immediate = true, service = IndexStatusManager.class
 )
 public class IndexStatusManagerImpl implements IndexStatusManager {
+
+	@Override
+	public boolean isAsync() {
+		return _async;
+	}
 
 	@Override
 	public boolean isIndexReadOnly() {
@@ -141,11 +149,20 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 
 		_suppressIndexReadOnly =
 			indexStatusManagerInternalConfiguration.suppressIndexReadOnly();
+
+		BufferedIndexerInvocationHandlerInternalConfiguration
+			bufferedIndexerInvocationHandlerInternalConfiguration =
+				ConfigurableUtil.createConfigurable(
+					BufferedIndexerInvocationHandlerInternalConfiguration.class,
+					properties);
+
+		_async = bufferedIndexerInvocationHandlerInternalConfiguration.async();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexStatusManagerImpl.class);
 
+	private volatile boolean _async;
 	private volatile boolean _indexReadOnly;
 	private Throwable _indexReadOnlyCallStackThrowable;
 	private final Set<String> _indexReadOnlyModels = Collections.newSetFromMap(

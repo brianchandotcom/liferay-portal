@@ -33,21 +33,22 @@ import java.util.Objects;
 public class IndexerRequest {
 
 	public IndexerRequest(
-		Method method, ClassedModel classedModel, Indexer<?> indexer) {
+		Method method, ClassedModel classedModel, Indexer<?> indexer,
+		boolean foceSync) {
 
 		_method = method;
 		_classedModel = classedModel;
 
 		_indexer = new NoAutoCommitIndexer<>(indexer);
 
-		_forceSync = ProxyModeThreadLocal.isForceSync();
+		_forceSync = foceSync;
 		_modelClassName = classedModel.getModelClassName();
 		_modelPrimaryKey = (Long)_classedModel.getPrimaryKeyObj();
 	}
 
 	public IndexerRequest(
 		Method method, Indexer<?> indexer, String modelClassName,
-		Long modelPrimaryKey) {
+		Long modelPrimaryKey, boolean foceSync) {
 
 		_method = method;
 		_indexer = new NoAutoCommitIndexer<>(indexer);
@@ -55,7 +56,7 @@ public class IndexerRequest {
 		_modelPrimaryKey = modelPrimaryKey;
 
 		_classedModel = null;
-		_forceSync = ProxyModeThreadLocal.isForceSync();
+		_forceSync = foceSync;
 	}
 
 	@Override

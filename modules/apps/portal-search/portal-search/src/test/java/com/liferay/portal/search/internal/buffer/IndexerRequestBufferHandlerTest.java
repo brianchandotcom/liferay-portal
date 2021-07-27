@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.buffer;
 
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
@@ -84,7 +85,7 @@ public class IndexerRequestBufferHandlerTest {
 	protected IndexerRequest createIndexerRequest(Indexer<?> indexer) {
 		return new IndexerRequest(
 			_method, indexer, RandomTestUtil.randomString(),
-			RandomTestUtil.randomLong());
+			RandomTestUtil.randomLong(), ProxyModeThreadLocal.isForceSync());
 	}
 
 	protected IndexerRequestBufferExecutorWatcher

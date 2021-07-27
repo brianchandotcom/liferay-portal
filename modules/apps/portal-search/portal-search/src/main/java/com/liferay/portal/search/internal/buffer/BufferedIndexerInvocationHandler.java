@@ -171,7 +171,8 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		ClassedModel classedModel = (ClassedModel)baseModel.clone();
 
 		IndexerRequest indexerRequest = new IndexerRequest(
-			methodKey.getMethod(), classedModel, _indexer);
+			methodKey.getMethod(), classedModel, _indexer,
+			!_indexStatusManager.isAsync());
 
 		doBufferRequest(indexerRequest, indexerRequestBuffer);
 	}
@@ -192,7 +193,8 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		}
 
 		IndexerRequest indexerRequest = new IndexerRequest(
-			methodKey.getMethod(), _indexer, className, classPK);
+			methodKey.getMethod(), _indexer, className, classPK,
+			!_indexStatusManager.isAsync());
 
 		doBufferRequest(indexerRequest, indexerRequestBuffer);
 	}

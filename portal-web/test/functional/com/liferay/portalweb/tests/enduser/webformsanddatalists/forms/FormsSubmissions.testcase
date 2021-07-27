@@ -224,6 +224,91 @@ definition {
 		FormPortlet.submitSuccessfully();
 	}
 
+	@description = "LPS-59338 - Verify that a Form with a required Field can be submitted"
+	@priority = "5"
+	test CanBeSubmittedWithARequiredField {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSubmissions#CanBeSubmittedWithARequiredField";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		var fieldMultipleSelectionField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
+
+		FormFields.enableSwitcher(fieldName = "Required");
+
+		FormFields.editOptionsRow(
+			optionName = "Checkbox1",
+			optionValue = "Checkbox 1",
+			rowNumber = "1");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewCheckboxLabel(
+			fieldLabel = "Checkbox Field",
+			fieldName = "${fieldMultipleSelectionField}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormFields.selectCheckboxOption(
+			checkboxOption = "Checkbox 1",
+			fieldName = "${fieldMultipleSelectionField}");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Checkbox Field",
+			fieldValue = "Checkbox 1");
+	}
+
 	@description = "Verify that a Form with multiple pages can be submitted"
 	@priority = "5"
 	test CanBeSubmittedWithMultiplePages {
@@ -269,6 +354,75 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
+	}
+
+	@description = "Verify that a Form cannot be submitted without filling out a required field"
+	@priority = "5"
+	test CannotBeSubmittedWithoutARequiredField {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSubmissions#CannotBeSubmittedWithoutARequiredField";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		var fieldMultipleSelectionField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
+
+		FormFields.enableSwitcher(fieldName = "Required");
+
+		FormFields.editOptionsRow(
+			optionName = "Checkbox1",
+			optionValue = "Checkbox 1",
+			rowNumber = "1");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewCheckboxLabel(
+			fieldLabel = "Checkbox Field",
+			fieldName = "${fieldMultipleSelectionField}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.submitWithValidationError();
 	}
 
 	@description = "Verify that a Form can redirect a user after being submitted"
@@ -318,6 +472,104 @@ definition {
 		FormPortlet.submit();
 
 		Form.viewRedirectedURL(friendlyURL = "${friendlyURL}");
+	}
+
+	@description = "LPS-60818 - Verify that a Form can require CAPTCHA before being accessed"
+	@priority = "5"
+	test CanRequireCAPTCHA {
+		property captcha.enabled = "true";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSubmissions#CanRequireCAPTCHA";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureRequireCaptcha();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		for (var formAccessLevel : list "private,public") {
+			if ("${formAccessLevel}" == "private") {
+				Navigator.gotoPage(pageName = "Form Page");
+			}
+			else if ("${formAccessLevel}" == "public") {
+				Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+			}
+
+			FormPortlet.waitFormRenderer(text = "Submit");
+
+			FormFields.viewTextField(
+				fieldLabel = "Text Field",
+				fieldName = "${fieldTextField}");
+
+			FormFields.editText(
+				fieldName = "${fieldTextField}",
+				fieldValue = "Text Field Value");
+
+			FormFields.viewCaptchaField();
+
+			FormFields.editCaptchaTextVerification(fieldValue = "1");
+
+			FormPortlet.submitWithError(errorMessage = "Text verification failed.");
+
+			FormFields.viewTextValue(
+				fieldName = "${fieldTextField}",
+				fieldValue = "Text Field Value");
+		}
 	}
 
 	@description = "Verify that a Form can require user authentication before being accessed"
@@ -394,6 +646,95 @@ definition {
 		Form.deleteSuccessPage(formPageNumber = "2");
 
 		Form.addSuccessPageForm();
+	}
+
+	@description = "Verify that an email notification is sent after a Form is submitted"
+	@priority = "4"
+	test SendEmailNotificationsSubmittingForm {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSubmissions#SendEmailNotificationsSubmittingForm";
+		property test.smtp.server.enabled = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureEmailNotifications(
+			fromAddress = "test@liferay.com",
+			fromName = "Sender Name",
+			subject = "Form Subject",
+			toAddress = "formreviewer@liferay.com");
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.submitSuccessfully();
+
+		MockMock.viewMail(
+			asset = "Form Subject",
+			content = "Text Field Value",
+			recipient = "formreviewer@liferay.com",
+			sender = "Sender Name",
+			subject = "submitted an entry");
+
+		MockMock.clickBodyLink(
+			asset = "Form Subject",
+			bodyLink = "Click here to access the form");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
 	}
 
 	@description = "Verify that the Submit button's default value is restored if the Submit Button Label is left blank"
@@ -603,6 +944,77 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
+	}
+
+	@description = "LPS-71072 - Verify that a Form's Success Page can be customized"
+	@priority = "5"
+	test SuccessPageCanBeCustomized {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSubmissions#SuccessPageCanBeCustomized";
+		property testray.component.names = "Training";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.editSuccessPage(
+			successPageDescription = "Edited: Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Edited: Thank You");
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Edited: Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Edited: Thank You");
 	}
 
 	@description = "Verify that a Form's Success Page can be deleted"

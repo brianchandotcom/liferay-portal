@@ -60,8 +60,8 @@ export default function TemplateModal({
 		setLoading(true);
 
 		const body = Liferay.Util.ns(namespace, {
-			itemSubtype,
-			itemType: itemType.value,
+			classNameId: itemType.value,
+			classPK: itemSubtype,
 			name,
 		});
 

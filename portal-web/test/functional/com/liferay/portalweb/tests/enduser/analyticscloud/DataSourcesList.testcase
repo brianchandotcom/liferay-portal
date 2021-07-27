@@ -25,9 +25,25 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test DataSourceListShowsAllDataSources {
+		for (var n : list "1,2,3") {
+			ACSettings.takeTokenFromAnalyticsCloud();
 
-		// TODO LRAC-8129 DataSourceListShowsAllDataSources
+			ACUtils.launchDXP();
 
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSettings();
+
+			ACSettings.assertDataSourceName(dataSourceName = "${dataSource}");
+		}
 	}
 
 }

@@ -131,6 +131,22 @@ public class ObjectEntryServiceTest {
 		_testDeleteObjectEntry(_user);
 	}
 
+	@Test
+	public void testGetObjectEntry() throws Exception {
+		try {
+			_testGetObjectEntry(_defaultUser);
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _defaultUser.getUserId() +
+						" must have VIEW permission for"));
+		}
+
+		_testGetObjectEntry(_user);
+	}
 	private ObjectField _createObjectField(
 		boolean indexed, boolean indexedAsKeyword, String name,
 		boolean required, String type) {
@@ -199,6 +215,32 @@ public class ObjectEntryServiceTest {
 		}
 		finally {
 			if (deleteObjectEntry == null) {
+				ObjectEntryLocalServiceUtil.deleteObjectEntry(objectEntry);
+			}
+		}
+	}
+
+	private void _testGetObjectEntry(User user) throws Exception {
+		ObjectEntry objectEntry = null;
+
+		try {
+			_setUser(user);
+
+			objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
+				user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", RandomStringUtils.randomAlphabetic(5)
+				).put(
+					"LastName", RandomStringUtils.randomAlphabetic(5)
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), user.getUserId()));
+
+			ObjectEntryServiceUtil.getObjectEntry(
+				objectEntry.getObjectEntryId());
+		}
+		finally {
+			if (objectEntry != null) {
 				ObjectEntryLocalServiceUtil.deleteObjectEntry(objectEntry);
 			}
 		}

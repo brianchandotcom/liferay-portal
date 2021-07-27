@@ -168,6 +168,26 @@
 	<td>//h4[contains(@class,'table')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USER_LIST_EMAIL</td>
+	<td>//h4[contains(@class,'table')]/parent::td/following-sibling::td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_USERS_BUTTON</td>
+	<td>//button[text()='Invite Users']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_USERS_INPUT</td>
+	<td>//input[@class='form-control-inset']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_USER</td>
+	<td>//*[name()='svg'][contains(@class,'trash')]/parent::button</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

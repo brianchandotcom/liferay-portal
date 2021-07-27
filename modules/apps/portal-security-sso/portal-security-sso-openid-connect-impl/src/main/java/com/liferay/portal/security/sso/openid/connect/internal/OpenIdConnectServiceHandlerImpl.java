@@ -625,9 +625,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 		openIdConnectSessionImpl.setAccessToken(tokens.getAccessToken());
 
-		if (!exchangeRefreshToken ||
-			(exchangeRefreshToken && (tokens.getRefreshToken() != null))) {
-
+		if (!exchangeRefreshToken || (tokens.getRefreshToken() != null)) {
 			openIdConnectSessionImpl.setRefreshToken(tokens.getRefreshToken());
 		}
 

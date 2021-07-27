@@ -37,6 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = AutoLogin.class)
 public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 
+	public static final String USER_ID = "OPEN_ID_CONNECT_AUTO_LOGIN_USER_ID";
+
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest httpServletRequest,
@@ -55,18 +57,11 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		OpenIdConnectSession openIdConnectSession =
-			_openIdConnectSessionProvider.getOpenIdConnectSession(httpSession);
+		Long userId = (Long)httpSession.getAttribute(USER_ID);
 
-		if (openIdConnectSession == null) {
-			return null;
-		}
+		httpSession.removeAttribute(USER_ID);
 
-		if (OpenIdConnectFlowState.AUTH_COMPLETE.equals(
-				openIdConnectSession.getOpenIdConnectFlowState())) {
-
-			long userId = openIdConnectSession.getLoginUserId();
-
+		if (userId != null) {
 			User user = _userLocalService.getUserById(userId);
 
 			String[] credentials = new String[3];
@@ -74,6 +69,10 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			credentials[0] = String.valueOf(user.getUserId());
 			credentials[1] = user.getPassword();
 			credentials[2] = Boolean.TRUE.toString();
+
+			OpenIdConnectSession openIdConnectSession =
+				_openIdConnectSessionProvider.getOpenIdConnectSession(
+					httpSession);
 
 			openIdConnectSession.setOpenIdConnectFlowState(
 				OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE);

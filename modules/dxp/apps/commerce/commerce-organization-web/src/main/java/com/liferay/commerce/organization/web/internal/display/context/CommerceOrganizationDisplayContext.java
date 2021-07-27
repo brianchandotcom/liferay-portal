@@ -167,6 +167,23 @@ public class CommerceOrganizationDisplayContext {
 		return portletURL;
 	}
 
+	public Organization getRootOrganization() throws PortalException {
+		String rootOrganizationIdString = getRootOrganizationId();
+
+		if (rootOrganizationIdString.isEmpty()) {
+			return null;
+		}
+
+		try {
+			Long rootOrganizationId = Long.valueOf(rootOrganizationIdString);
+
+			return _organizationService.fetchOrganization(rootOrganizationId);
+		}
+		catch (NumberFormatException numberFormatException) {
+			return null;
+		}
+	}
+
 	public String getRootOrganizationId() {
 		return _commerceOrganizationPortletInstanceConfiguration.
 			rootOrganizationId();

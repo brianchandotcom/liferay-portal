@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,12 +67,22 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinition.getResourceName(),
 				new ObjectEntryPortletResourcePermissionLogic());
 
+		ObjectEntryModelIndexerWriterContributor
+			objectEntryModelIndexerWriterContributor =
+				new ObjectEntryModelIndexerWriterContributor(
+					_dynamicQueryBatchIndexingActionableFactory,
+					_objectEntryLocalService);
 		return Arrays.asList(
 			_bundleContext.registerService(
 				InfoCollectionProvider.class,
 				new ObjectEntrySingleFormVariationInfoCollectionProvider(
 					objectDefinition, _objectEntryLocalService),
 				null),
+			_modelSearchRegistrarHelper.register(
+				objectDefinition.getClassName(), _bundleContext,
+				modelSearchDefinition ->
+					modelSearchDefinition.setModelIndexWriteContributor(
+						objectEntryModelIndexerWriterContributor)),
 			_bundleContext.registerService(
 				ModelResourcePermission.class,
 				new ObjectEntryModelResourcePermission(
@@ -124,6 +136,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private BundleContext _bundleContext;
 
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 

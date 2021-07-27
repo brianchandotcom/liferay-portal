@@ -98,11 +98,31 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
-		DDMTemplate ddmTemplate = _ddmTemplateService.updateTemplate(
-			ddmTemplateId, classPK, nameMap, descriptionMap,
-			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-			language, script, cacheable, smallImage, smallImageURL,
-			smallImageFile, serviceContext);
+		DDMTemplate ddmTemplate = null;
+
+		if (ddmTemplateId <= 0) {
+			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
+			long classNameId = ParamUtil.getLong(
+				uploadPortletRequest, "classNameId");
+			long resourceClassNameId = ParamUtil.getLong(
+				uploadPortletRequest, "resourceClassNameId");
+			String templateKey = ParamUtil.getString(
+				uploadPortletRequest, "templateKey");
+
+			ddmTemplate = _ddmTemplateService.addTemplate(
+				groupId, classNameId, classPK, resourceClassNameId, templateKey,
+				nameMap, descriptionMap,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
+				language, script, cacheable, smallImage, smallImageURL,
+				smallImageFile, serviceContext);
+		}
+		else {
+			ddmTemplate = _ddmTemplateService.updateTemplate(
+				ddmTemplateId, classPK, nameMap, descriptionMap,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
+				language, script, cacheable, smallImage, smallImageURL,
+				smallImageFile, serviceContext);
+		}
 
 		boolean saveAndContinue = ParamUtil.getBoolean(
 			uploadPortletRequest, "saveAndContinue");

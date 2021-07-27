@@ -143,20 +143,6 @@ definition {
 		CommerceLicense.executeSmoke();
 	}
 
-	@ignore = "true"
-	@priority = "4"
-	test DeployModuleLicenseToLCSPortal {
-		property commerce.enabled = "true";
-		property commerce.license.file = "commerce-license-production.xml";
-		property deploy.lcs.token.file = "true";
-
-		Pause(locator1 = "60000");
-
-		AssertConsoleTextNotPresent(value1 = "Processing license.xml");
-
-		CommerceLicense.executeSmoke();
-	}
-
 	@priority = "4"
 	test DeployToOSGIDirectory {
 		property commerce.enabled = "true";

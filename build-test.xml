@@ -2766,17 +2766,6 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 				</elseif>
 			</if>
 
-			<get-testcase-property property.name="deploy.lcs.token.file" />
-
-			<if>
-				<equals arg1="${deploy.lcs.token.file}" arg2="true" />
-				<then>
-					<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
-
-					<antcall target="deploy-lcs-environment-token" />
-				</then>
-			</if>
-
 			<antcall target="deploy-license-xml-to-osgi-directory" />
 		</sequential>
 	</macrodef>
@@ -5106,34 +5095,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-lcs-app-server">
-		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.index" />
-		<attribute default="8" name="app.server.leading.port.number" />
-
-		<sequential>
-			<parallel>
-				<sequential>
-					<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
-						<socket port="@{app.server.leading.port.number}080" server="localhost" />
-					</waitfor>
-				</sequential>
-				<daemons>
-					<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
-						<arg line="${app.server.start.executable.arg.line}" />
-					</exec>
-				</daemons>
-			</parallel>
-
-			<if>
-				<equals arg1="@{app.server.bundle.index}" arg2="0" />
-				<then>
-					<record action="stop" name="${project.dir}/log" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-test-smtp-server">
 		<sequential>
 			<mirrors-get
@@ -5515,31 +5476,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<exec executable="taskkill.exe">
 				<arg line="/F /IM IEDriverServer.exe" />
 			</exec>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-lcs-app-server">
-		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.index" />
-		<attribute default="8" name="app.server.leading.port.number" />
-
-		<sequential>
-			<if>
-				<equals arg1="@{app.server.bundle.index}" arg2="0" />
-				<then>
-					<record action="start" name="${project.dir}/log" />
-				</then>
-			</if>
-
-			<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
-				<arg line="${app.server.stop.executable.arg.line}" />
-			</exec>
-
-			<waitfor maxwait="1" maxwaitunit="minute">
-				<not>
-					<socket port="@{app.server.leading.port.number}080" server="localhost" />
-				</not>
-			</waitfor>
 		</sequential>
 	</macrodef>
 
@@ -7601,76 +7537,9 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
-	<target name="deploy-lcs-environment-token">
-		<if>
-			<and>
-				<isset property="portal.lcs.license.url" />
-				<or>
-					<matches pattern="file://" string="${portal.lcs.license.url}" />
-					<matches pattern="https?://" string="${portal.lcs.license.url}" />
-				</or>
-			</and>
-			<then>
-				<mirrors-get
-					dest="${selenium.output.dir.name}"
-					src="${portal.lcs.license.url}"
-				/>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="app.server.bundles.size" />
-
-		<if>
-			<isset property="app.server.bundles.size" />
-			<then>
-				<var name="app.server.bundle.index" value="1" />
-
-				<antelope:repeat count="${app.server.bundles.size}">
-					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}-${app.server.bundle.index}" />
-
-					<copy
-						todir="${test.app.server.parent.dir}/data"
-					>
-						<fileset
-							dir="${selenium.output.dir.name}"
-							includes="lcs-aatf-*.aatf"
-						/>
-					</copy>
-
-					<math
-						datatype="int"
-						operand1="${app.server.bundle.index}"
-						operand2="1"
-						operation="+"
-						result="app.server.bundle.index"
-					/>
-				</antelope:repeat>
-
-				<var name="app.server.bundle.index" unset="true" />
-				<var name="test.app.server.parent.dir" unset="true" />
-			</then>
-		</if>
-
-		<move
-			todir="${app.server.parent.dir}/data"
-		>
-			<fileset
-				dir="${selenium.output.dir.name}"
-				includes="lcs-aatf-*.aatf"
-			/>
-		</move>
-	</target>
-
 	<target name="deploy-license-xml">
-		<get-testcase-property property.name="deploy.lcs.token.file" />
-
 		<if>
-			<and>
-				<matches pattern="https?://" string="${test.build.license.xml.zip.url}" />
-				<not>
-					<equals arg1="${deploy.lcs.token.file}" arg2="true" />
-				</not>
-			</and>
+			<matches pattern="https?://" string="${test.build.license.xml.zip.url}" />
 			<then>
 				<mkdir dir="${liferay.home}/deploy" />
 
@@ -8915,193 +8784,6 @@ ${update.properties}</echo>
 		</if>
 	</target>
 
-	<target name="prepare-lcs-gateway-bundle">
-		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
-			<property name="app.server.parent.dir" value="${app.server.parent.dir}/gateway" />
-		</ant>
-
-		<replaceregexp
-			file="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/conf/server.xml"
-			flags="g"
-			match="=&quot;8(\d\d\d)&quot;"
-			replace="=&quot;7\1&quot;"
-		/>
-
-		<mirrors-get
-			dest="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
-			src="https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar"
-		/>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/gateway/plugins/webs/osb-lcs-gateway-web/docroot/WEB-INF/src/gateway-ext.properties"
-			tofile="${lp.plugins.dir}/webs/osb-lcs-gateway-web/docroot/WEB-INF/src/gateway-ext.properties"
-		/>
-
-		<delete dir="${lp.plugins.dir}/dist" failonerror="false" />
-
-		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
-
-		<ant dir="${lp.plugins.dir}" inheritAll="false" target="clean" />
-
-		<ant dir="${lp.plugins.dir}" target="war">
-			<property name="plugins.includes" value="${plugins.includes.gateway}" />
-		</ant>
-
-		<copy
-			todir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/webapps"
-		>
-			<fileset
-				dir="${lp.plugins.dir}/dist"
-			/>
-		</copy>
-	</target>
-
-	<target name="prepare-lcs-portal-bundle">
-		<antcall if:set="env.JENKINS_HOME" target="prepare-portal-ext-properties" />
-
-		<antcall inheritAll="false" target="rebuild-database" />
-
-		<loadfile
-			property="lcs.portal.bundle.properties"
-			srcFile="${lfrsite-lcs.dir}/jenkins/development/portal/artifacts/liferay/portal-ext.properties"
-		/>
-
-		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
-
-${lcs.portal.bundle.properties}</echo>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/portal/artifacts/liferay/portal-log4j-ext.xml"
-			tofile="${app.server.classes.global.dir}/portal-log4j-ext.xml"
-		/>
-
-		<replace
-			file="${app.server.bin.dir}/setenv${file.suffix.bat}"
-		>
-			<replacetoken><![CDATA[-Djava.net.preferIPv4Stack=true]]></replacetoken>
-			<replacevalue><![CDATA[-Djava.net.preferIPv4Stack=true -Dportal:ldap.auth.search.filter=\"(&(mail=@email_address@)(member=cn=Liferay\5C, Inc.,ou=Organizations,ou=liferay.com,o=Liferay))\" -Dportal:ldap.import.user.search.filter=\"(&(objectClass=inetOrgPerson)(member=cn=Liferay\5C, Inc.,ou=Organizations,ou=liferay.com,o=Liferay))\"]]></replacevalue>
-		</replace>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
-			tofile="${lp.plugins.dir}/portlets/lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
-		/>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
-			tofile="${lp.plugins.dir}/portlets/lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
-		/>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/osb-lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
-			tofile="${lp.plugins.dir}/portlets/osb-lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
-		/>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/osb-lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
-			tofile="${lp.plugins.dir}/portlets/osb-lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
-		/>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/webs/file-repository-web/docroot/WEB-INF/web.xml"
-			tofile="${lp.plugins.dir}/webs/file-repository-web/docroot/WEB-INF/web.xml"
-		/>
-
-		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
-
-		<ant dir="${lp.plugins.dir}" target="clean" />
-
-		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-			<property name="plugins.includes" value="${plugins.includes.portal}" />
-		</ant>
-	</target>
-
-	<target name="prepare-lcs-portlet-bundle">
-		<chmod
-			perm="a+x"
-		>
-			<fileset
-				dir="${app.server.parent.dir}/patching-tool"
-			>
-				<include name="*.sh" />
-			</fileset>
-		</chmod>
-
-		<delete file="${app.server.parent.dir}/patching-tool/default.properties" />
-
-		<execute dir="${app.server.parent.dir}/patching-tool">
-			patching-tool${file.suffix.bat} auto-discovery
-			patching-tool${file.suffix.bat} setup
-		</execute>
-
-		<replace
-			file="${app.server.dir}/bin/setenv${file.suffix.bat}"
-		>
-			<replacetoken><![CDATA[-XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[-javaagent:../../patching-tool/lib/patching-tool-agent.jar]]></replacevalue>
-		</replace>
-
-		<echo file="${lp.plugins.dir}/portlets/lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties">#QA AWS
-
-osb.lcs.gateway.web.host.name=${osb.lcs.gateway.web.host.name}
-osb.lcs.gateway.web.host.port=${osb.lcs.gateway.web.host.port}
-
-osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
-osb.lcs.portlet.host.port=${osb.lcs.portlet.host.port}
-
-osb.lcs.portlet.oauth.consumer.key=${osb.lcs.portlet.oauth.consumer.key}
-osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</echo>
-
-		<property name="plugins.includes" value="lcs-portlet" />
-
-		<ant dir="${lp.plugins.dir}" target="clean" />
-
-		<ant dir="${lp.plugins.dir}" target="compile" />
-
-		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" />
-	</target>
-
-	<target name="prepare-lcs-processor-bundle">
-		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
-			<property name="app.server.parent.dir" value="${app.server.parent.dir}/processor" />
-		</ant>
-
-		<replaceregexp
-			file="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/conf/server.xml"
-			flags="g"
-			match="=&quot;8(\d\d\d)&quot;"
-			replace="=&quot;9\1&quot;"
-		/>
-
-		<mirrors-get
-			dest="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
-			src="https://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar"
-		/>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/processor/plugins/webs/osb-lcs-processor-web/docroot/WEB-INF/src/processor-ext.properties"
-			tofile="${lp.plugins.dir}/webs/osb-lcs-processor-web/docroot/WEB-INF/src/processor-ext.properties"
-		/>
-
-		<delete dir="${lp.plugins.dir}/dist" failonerror="false" />
-
-		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
-
-		<ant dir="${lp.plugins.dir}" inheritAll="false" target="clean" />
-
-		<ant dir="${lp.plugins.dir}" target="war">
-			<property name="plugins.includes" value="${plugins.includes.processor}" />
-		</ant>
-
-		<copy
-			todir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/webapps"
-		>
-			<fileset
-				dir="${lp.plugins.dir}/dist"
-			/>
-		</copy>
-	</target>
-
 	<target name="prepare-log4j-ext-xml">
 		<var name="dialect.detector.log.level" value="INFO" />
 
@@ -9180,34 +8862,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<Logger level="DEBUG" name="com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache" />
 	</Loggers>
 </Configuration>]]></echo>
-
-		<get-testcase-property property.name="deploy.lcs.token.file" />
-
-		<if>
-			<equals arg1="${deploy.lcs.token.file}" arg2="true" />
-			<then>
-				<echo file="${liferay.home}/osgi/log4j/com.liferay.lcs.client.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal.platform.http" />
-
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal" />
-
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal.advisor" />
-
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal.lifecycle" />
-
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal.task.advisor" />
-
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal.task.scheduler" />
-
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal.command" />
-
-		<Logger level="TRACE" name="com.liferay.lcs.client.internal.runnable" />
-	</Loggers>
-</Configuration>]]></echo>
-			</then>
-		</if>
 	</target>
 
 	<target name="prepare-osgi-module-configurations">
@@ -10291,15 +9945,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="osb.lcs.portlet.host.name" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
-				</echo>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${tear.down.before.test}" arg2="true" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -10864,60 +10509,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					email.password.5=${email.password.5}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.address.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.email.address.1=${lcs.email.address.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.address.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.email.address.2=${lcs.email.address.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.address.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.email.address.3=${lcs.email.address.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.site.password.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.site.password.1=${lcs.site.password.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.site.password.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.site.password.2=${lcs.site.password.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.site.password.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.site.password.3=${lcs.site.password.3}
 				</echo>
 			</then>
 		</if>
@@ -12231,32 +11822,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		<fail message="Please set the property ${process.name}." unless="process.name" />
 
 		<print-jstack-logs process.name="${process.name}" />
-	</target>
-
-	<target name="print-lcs-log-content">
-		<var name="lcs.log.files" unset="true" />
-
-		<fileset
-			dir="${liferay.home}/logs/"
-			id="lcs.log.files"
-		>
-			<include name="lcs.*.log" />
-		</fileset>
-
-		<pathconvert pathsep="," property="lcs.log.files" refid="lcs.log.files" />
-
-		<for list="${lcs.log.files}" param="lcs.log.file">
-			<sequential>
-				<print-file file.name="@{lcs.log.file}" />
-			</sequential>
-		</for>
-
-		<if>
-			<equals arg1="${lcs.log.files}" arg2="" />
-			<then>
-				<echo>No LCS logs found.</echo>
-			</then>
-		</if>
 	</target>
 
 	<target name="print-scm-revision">
@@ -14248,13 +13813,6 @@ url=${short.hostname}:8080</echo>
 			</then>
 			<else>
 				<antcall target="run-selenium-test" />
-
-				<if>
-					<equals arg1="${deploy.lcs.token.file}" arg2="true" />
-					<then>
-						<antcall target="print-lcs-log-content" />
-					</then>
-				</if>
 			</else>
 		</if>
 
@@ -14465,22 +14023,6 @@ url=${short.hostname}:8080</echo>
 		<start-docker-database />
 	</target>
 
-	<target name="start-lcs-server">
-		<start-lcs-app-server
-			app.server.bin.dir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/bin"
-			app.server.bundle.index="1"
-			app.server.leading.port.number="7"
-		/>
-
-		<start-lcs-app-server
-			app.server.bin.dir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/bin"
-			app.server.bundle.index="2"
-			app.server.leading.port.number="9"
-		/>
-
-		<start-lcs-app-server />
-	</target>
-
 	<target name="start-test-smtp-server">
 		<start-test-smtp-server />
 	</target>
@@ -14502,22 +14044,6 @@ url=${short.hostname}:8080</echo>
 
 	<target name="stop-docker-database">
 		<stop-docker-database />
-	</target>
-
-	<target name="stop-lcs-server">
-		<stop-lcs-app-server
-			app.server.bin.dir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/bin"
-			app.server.bundle.index="1"
-			app.server.leading.port.number="7"
-		/>
-
-		<stop-lcs-app-server
-			app.server.bin.dir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/bin"
-			app.server.bundle.index="2"
-			app.server.leading.port.number="9"
-		/>
-
-		<stop-lcs-app-server />
 	</target>
 
 	<target name="test-package">

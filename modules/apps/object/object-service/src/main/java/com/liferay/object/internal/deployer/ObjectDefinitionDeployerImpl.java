@@ -17,11 +17,16 @@ package com.liferay.object.internal.deployer;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
+import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelDocumentContributor;
+import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelIndexerWriterContributor;
+import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryKeywordQueryContributor;
+import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryModelPreFilterContributor;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -32,6 +37,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
+import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 
 import java.util.Arrays;
@@ -78,6 +87,34 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntrySingleFormVariationInfoCollectionProvider(
 					objectDefinition, _objectEntryLocalService),
 				null),
+			_bundleContext.registerService(
+				ModelDocumentContributor.class,
+				new ObjectEntryModelDocumentContributor(
+					objectDefinition.getClassName(), _objectEntryLocalService,
+					_objectFieldLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"indexer.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
+				ModelIndexerWriterContributor.class,
+				objectEntryModelIndexerWriterContributor,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"indexer.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
+				KeywordQueryContributor.class,
+				new ObjectEntryKeywordQueryContributor(
+					_objectFieldLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"indexer.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
+				ModelPreFilterContributor.class,
+				new ObjectEntryModelPreFilterContributor(
+					_workflowStatusModelPreFilterContributor),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"indexer.class.name", objectDefinition.getClassName()
+				).build()),
 			_modelSearchRegistrarHelper.register(
 				objectDefinition.getClassName(), _bundleContext,
 				modelSearchDefinition ->
@@ -142,10 +179,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
+
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
 	private ResourceActions _resourceActions;
+
+	@Reference(target = "(model.pre.filter.contributor.id=WorkflowStatus)")
+	private ModelPreFilterContributor _workflowStatusModelPreFilterContributor;
 
 }

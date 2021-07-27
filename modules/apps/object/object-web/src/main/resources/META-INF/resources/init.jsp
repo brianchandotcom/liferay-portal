@@ -27,6 +27,7 @@ page import="com.liferay.object.web.internal.constants.ObjectAdminScreenNavigati
 page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
 page import="com.liferay.object.web.internal.display.context.ObjectAdminDisplayContext" %><%@
 page import="com.liferay.object.web.internal.display.context.ObjectDisplayContext" %><%@
+page import="com.liferay.object.web.internal.display.context.ObjectFieldAdminDisplayContext" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

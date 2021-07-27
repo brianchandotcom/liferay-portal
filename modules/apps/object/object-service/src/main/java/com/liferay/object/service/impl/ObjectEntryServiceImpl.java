@@ -15,6 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -99,6 +100,25 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ActionKeys.DELETE);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntryId);
+	}
+
+	@Override
+	public ObjectEntry getObjectEntry(long objectEntryId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.fetchObjectEntry(
+			objectEntryId);
+
+		if (objectEntry == null) {
+			throw new NoSuchObjectEntryException(
+				"No ObjectEntry exists with the primary key " + objectEntryId);
+		}
+
+		_checkModelResourcePermission(
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.VIEW);
+
+		return objectEntry;
 	}
 
 	@Reference(

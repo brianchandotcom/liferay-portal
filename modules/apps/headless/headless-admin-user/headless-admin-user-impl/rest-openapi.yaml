@@ -1838,6 +1838,11 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: accountRoleIds
+                  required: false
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1857,10 +1862,18 @@ paths:
                     A list of user email addresses to assign to the account
                 required: true
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
                     description:
                         ""
             tags: ["UserAccount"]
@@ -1908,10 +1921,14 @@ paths:
                   schema:
                       type: string
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
                     description:
                         ""
             tags: ["UserAccount"]
@@ -2722,6 +2739,11 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: organizationRoleIds
+                  required: false
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2741,10 +2763,18 @@ paths:
                     A list of user email addresses to assign to the organization
                 required: true
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
                     description:
                         ""
             tags: ["Organization"]
@@ -2790,10 +2820,14 @@ paths:
                   schema:
                       type: string
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
                     description:
                         ""
             tags: ["Organization"]

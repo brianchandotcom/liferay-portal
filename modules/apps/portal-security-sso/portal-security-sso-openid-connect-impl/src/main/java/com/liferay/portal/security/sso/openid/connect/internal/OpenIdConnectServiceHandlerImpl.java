@@ -31,6 +31,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.internal.provider.OpenIdConnectSessionProviderImpl;
 
@@ -350,38 +351,37 @@ public class OpenIdConnectServiceHandlerImpl
 			HttpSession httpSession)
 		throws OpenIdConnectServiceException.NoOpenIdConnectSessionException {
 
-		OpenIdConnectSessionImpl openIdConnectSessionImpl =
-			_getOpenIdConnectSessionImpl(null, httpSession);
+		OpenIdConnectSession openIdConnectSession =
+			_openIdConnectSessionProviderImpl.getOpenIdConnectSession(
+				httpSession);
 
-		if (openIdConnectSessionImpl == null) {
+		if (!(openIdConnectSession instanceof OpenIdConnectSessionImpl)) {
 			throw new OpenIdConnectServiceException.
 				NoOpenIdConnectSessionException(
 					"HTTP session does contain an OpenId Connect session");
 		}
 
-		return openIdConnectSessionImpl;
+		return (OpenIdConnectSessionImpl)openIdConnectSession;
 	}
 
 	private OpenIdConnectSessionImpl _getOpenIdConnectSessionImpl(
 		String expectedProviderName, HttpSession httpSession) {
 
-		Object openIdConnectSessionObject =
+		OpenIdConnectSession openIdConnectSession =
 			_openIdConnectSessionProviderImpl.getOpenIdConnectSession(
 				httpSession);
 
-		if (openIdConnectSessionObject instanceof OpenIdConnectSessionImpl) {
-			OpenIdConnectSessionImpl openIdConnectSessionImpl =
-				(OpenIdConnectSessionImpl)openIdConnectSessionObject;
-
-			if (Validator.isNull(expectedProviderName) ||
-				expectedProviderName.equals(
-					openIdConnectSessionImpl.getOpenIdProviderName())) {
-
-				return openIdConnectSessionImpl;
-			}
+		if (!(openIdConnectSession instanceof OpenIdConnectSessionImpl)) {
+			return null;
 		}
 
-		return null;
+		if (!expectedProviderName.equals(
+				openIdConnectSession.getOpenIdProviderName())) {
+
+			return null;
+		}
+
+		return (OpenIdConnectSessionImpl)openIdConnectSession;
 	}
 
 	private boolean _hasValidAccessToken(

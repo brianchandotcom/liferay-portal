@@ -72,8 +72,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -157,6 +159,38 @@ public class GetCollectionFieldMVCResourceCommand
 			resourceRequest, resourceResponse, jsonObject);
 	}
 
+	private Map<String, String[]> _getCollectionConfiguration(
+		JSONObject collectionConfigurationJSONObject) {
+
+		if (collectionConfigurationJSONObject == null) {
+			return null;
+		}
+
+		Map<String, String[]> collectionConfiguration = new HashMap<>();
+
+		for (String key : collectionConfigurationJSONObject.keySet()) {
+			List<String> values = new ArrayList<>();
+
+			Object object = collectionConfigurationJSONObject.get(key);
+
+			if (object instanceof JSONArray) {
+				JSONArray jsonArray =
+					collectionConfigurationJSONObject.getJSONArray(key);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					values.add(jsonArray.getString(i));
+				}
+			}
+			else {
+				values.add(String.valueOf(object));
+			}
+
+			collectionConfiguration.put(key, values.toArray(new String[0]));
+		}
+
+		return collectionConfiguration;
+	}
+
 	private JSONObject _getCollectionFieldsJSONObject(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, int activePage,
@@ -188,9 +222,12 @@ public class GetCollectionFieldMVCResourceCommand
 				JSONObject configJSONObject =
 					layoutObjectReferenceJSONObject.getJSONObject("config");
 
-				if (configJSONObject != null) {
+				Map<String, String[]> collectionConfiguration =
+					_getCollectionConfiguration(configJSONObject);
+
+				if (collectionConfiguration != null) {
 					defaultLayoutListRetrieverContext.
-						setCollectionConfiguration(configJSONObject);
+						setCollectionConfiguration(collectionConfiguration);
 				}
 
 				Object infoItem = _getInfoItem(httpServletRequest);

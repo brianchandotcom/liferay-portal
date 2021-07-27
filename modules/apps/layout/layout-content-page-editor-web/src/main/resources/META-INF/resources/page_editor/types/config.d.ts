@@ -114,6 +114,7 @@ export interface Config {
 	getAvailableListRenderersURL: string;
 	getAvailableListItemRenderersURL: string;
 	getAvailableTemplatesURL: string;
+	getCollectionConfigurationURL: string;
 	getCollectionFieldURL: string;
 	getCollectionFiltersURL: string;
 	getCollectionItemCountURL: string;

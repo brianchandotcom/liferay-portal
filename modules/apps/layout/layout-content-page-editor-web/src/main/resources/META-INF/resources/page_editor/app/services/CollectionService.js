@@ -16,6 +16,13 @@ import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
+	getCollectionConfiguration(collection) {
+		return serviceFetch(config.getCollectionConfigurationURL, {
+			body: {
+				collectionKey: collection.key,
+			},
+		});
+	},
 
 	/**
 	 * Get an asset's value

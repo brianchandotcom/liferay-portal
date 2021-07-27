@@ -184,10 +184,15 @@ public class OpenIdConnectServiceHandlerImpl
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		_processUserInfo(
-			_portal.getCompanyId(httpServletRequest),
-			serviceContext.getPathMain(), oidcProviderMetadata,
-			openIdConnectSessionImpl, serviceContext.getPortalURL());
+		UserInfo userInfo = _requestUserInfo(
+			openIdConnectSessionImpl.getAccessToken(), oidcProviderMetadata);
+
+		openIdConnectSessionImpl.setLoginUserId(
+			_openIdConnectUserInfoProcessor.processUserInfo(
+				userInfo, _portal.getCompanyId(httpServletRequest),
+				serviceContext.getPathMain(), serviceContext.getPortalURL()));
+
+		openIdConnectSessionImpl.setUserInfoJSONObject(userInfo.toJSONObject());
 
 		openIdConnectSessionImpl.setOpenIdConnectFlowState(
 			OpenIdConnectFlowState.AUTH_COMPLETE);
@@ -397,23 +402,6 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 
 		return false;
-	}
-
-	private void _processUserInfo(
-			long companyId, String mainPath,
-			OIDCProviderMetadata oidcProviderMetadata,
-			OpenIdConnectSessionImpl openIdConnectSessionImpl, String portalURL)
-		throws PortalException {
-
-		UserInfo userInfo = _requestUserInfo(
-			openIdConnectSessionImpl.getAccessToken(), oidcProviderMetadata);
-
-		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
-			userInfo, companyId, mainPath, portalURL);
-
-		openIdConnectSessionImpl.setLoginUserId(userId);
-
-		openIdConnectSessionImpl.setUserInfoJSONObject(userInfo.toJSONObject());
 	}
 
 	private boolean _refreshAuthToken(

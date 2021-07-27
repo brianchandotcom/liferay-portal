@@ -136,37 +136,36 @@ public class OpenIdConnectServiceHandlerImpl
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		OpenIdConnectSessionImpl openIdConnectSessionImpl =
-			_getOpenIdConnectSessionImpl(httpSession);
+		OpenIdConnectAuthenticationSession openIdConnectAuthenticationSession =
+			(OpenIdConnectAuthenticationSession)httpSession.getAttribute(
+				OpenIdConnectAuthenticationSession.SESSION);
 
-		if (!OpenIdConnectFlowState.AUTH_REQUESTED.equals(
-				openIdConnectSessionImpl.getOpenIdConnectFlowState())) {
+		httpSession.removeAttribute(OpenIdConnectAuthenticationSession.SESSION);
 
+		if (openIdConnectAuthenticationSession == null) {
 			throw new OpenIdConnectServiceException.AuthenticationException(
-				StringBundler.concat(
-					"OpenId Connect login flow is not in the ",
-					OpenIdConnectFlowState.AUTH_REQUESTED, " state: ",
-					openIdConnectSessionImpl.getOpenIdConnectFlowState()));
+				"OpenId Connect authentication was not requested or removed");
 		}
 
 		AuthenticationSuccessResponse authenticationSuccessResponse =
 			_getAuthenticationSuccessResponse(httpServletRequest);
 
 		_validateState(
-			openIdConnectSessionImpl.getState(),
+			openIdConnectAuthenticationSession.getState(),
 			authenticationSuccessResponse.getState());
 
 		OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
 			openIdConnectProvider =
 				_openIdConnectProviderRegistry.findOpenIdConnectProvider(
 					_portal.getCompanyId(httpServletRequest),
-					openIdConnectSessionImpl.getOpenIdProviderName());
+					openIdConnectAuthenticationSession.getProviderName());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
 		OIDCTokens oidcTokens = _requestTokensWithAuthCode(
-			authenticationSuccessResponse, openIdConnectSessionImpl.getNonce(),
+			authenticationSuccessResponse,
+			openIdConnectAuthenticationSession.getNonce(),
 			openIdConnectProvider, _getLoginRedirectURI(httpServletRequest));
 
 		UserInfo userInfo = _requestUserInfo(
@@ -179,7 +178,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 		OfflineOpenIdConnectSessionManager.startOpenIdConnectSession(
 			httpSession, System.currentTimeMillis(), oidcTokens,
-			openIdConnectSessionImpl, userId, userInfo);
+			_getOpenIdConnectSessionImpl(httpSession), userId, userInfo);
 	}
 
 	@Override
@@ -221,6 +220,13 @@ public class OpenIdConnectServiceHandlerImpl
 
 			OpenIdConnectSessionProviderImpl.setOpenIdConnectSession(
 				httpSession, openIdConnectSessionImpl);
+
+			httpSession.setAttribute(
+				OpenIdConnectAuthenticationSession.SESSION,
+				new OpenIdConnectAuthenticationSession(
+					openIdConnectProviderName,
+					openIdConnectSessionImpl.getNonce(),
+					openIdConnectSessionImpl.getState()));
 		}
 		catch (IOException ioException) {
 			throw new SystemException(

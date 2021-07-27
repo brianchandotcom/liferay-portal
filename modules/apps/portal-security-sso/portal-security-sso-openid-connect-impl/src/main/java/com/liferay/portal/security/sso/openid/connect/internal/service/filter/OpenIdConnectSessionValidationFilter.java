@@ -14,16 +14,12 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.service.filter;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
-import com.liferay.portal.security.sso.openid.connect.provider.OpenIdConnectSessionProvider;
+import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -57,48 +53,6 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 			_portal.getCompanyId(httpServletRequest));
 	}
 
-	protected boolean checkEndSession(HttpSession httpSession)
-		throws Exception {
-
-		boolean endSession = false;
-
-		OpenIdConnectSession openIdConnectSession =
-			_openIdConnectSessionProvider.getOpenIdConnectSession(httpSession);
-
-		if (openIdConnectSession == null) {
-			return endSession;
-		}
-
-		OpenIdConnectFlowState openIdConnectFlowState =
-			openIdConnectSession.getOpenIdConnectFlowState();
-
-		if (!OpenIdConnectFlowState.AUTH_COMPLETE.equals(
-				openIdConnectFlowState) &&
-			!OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE.equals(
-				openIdConnectFlowState)) {
-
-			return endSession;
-		}
-
-		try {
-			if (!_openIdConnectServiceHandler.hasValidOpenIdConnectSession(
-					httpSession)) {
-
-				endSession = true;
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to validate OpenId Connect session: " +
-					portalException.getMessage(),
-				portalException);
-
-			endSession = true;
-		}
-
-		return endSession;
-	}
-
 	@Override
 	protected Log getLog() {
 		return _log;
@@ -112,7 +66,11 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 
 		HttpSession httpSession = httpServletRequest.getSession(false);
 
-		if ((httpSession != null) && checkEndSession(httpSession)) {
+		if (_offlineOpenIdConnectSessionManager.isOpenIdConnectSession(
+				httpSession) &&
+			_offlineOpenIdConnectSessionManager.isOpenIdConnectSessionExpired(
+				httpSession)) {
+
 			httpSession.invalidate();
 
 			httpServletResponse.sendRedirect(
@@ -130,13 +88,11 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 		OpenIdConnectSessionValidationFilter.class);
 
 	@Reference
+	private OfflineOpenIdConnectSessionManager
+		_offlineOpenIdConnectSessionManager;
+
+	@Reference
 	private OpenIdConnect _openIdConnect;
-
-	@Reference
-	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
-
-	@Reference
-	private OpenIdConnectSessionProvider _openIdConnectSessionProvider;
 
 	@Reference
 	private Portal _portal;

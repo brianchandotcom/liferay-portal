@@ -116,4 +116,34 @@ definition {
 			site = "${site}");
 	}
 
+	@summary = "This calls the JSON WS API to make structure available or unavailable."
+	macro updateStructureState {
+		Variables.assertDefined(parameterList = "${groupName},${structureState}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if ("${structureState}" == "Available") {
+			var ddmStructuresAvailable = "true";
+		}
+
+		if ("${structureState}" == "Unavailable") {
+			var ddmStructuresAvailable = "false";
+		}
+
+		var depotEntryGroupRelId = JSONGroupAPI._getDepotEntryGroupRelIdByGroupName(groupName = "${groupName}", site = "${site}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/depot.depotentrygrouprel/update-ddm-structures-available \
+				-u test@liferay.com:test \
+				-d depotEntryGroupRelId=${depotEntryGroupRelId} \
+				-d ddmStructuresAvailable=${ddmStructuresAvailable}
+			''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 }

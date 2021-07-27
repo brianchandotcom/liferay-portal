@@ -50,6 +50,15 @@ html#{$cadmin-selector} {
 				padding: 2px;
 			}
 
+			#impersonate-user-sticker {
+				bottom: -6.4px;
+				color: $cadmin-gray-900;
+				font-size: 9.6px;
+				height: 19.2px;
+				right: -6.4px;
+				width: 19.2px;
+			}
+
 			a:not(.dropdown-item),
 			button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
 				&:focus,

@@ -152,6 +152,29 @@ public class CPDefinitionsImporter {
 	}
 
 	public List<CPDefinition> importCPDefinitions(
+			JSONArray jsonArray, List<AssetCategory> assetCategories,
+			long catalogGroupId, long commerceChannelId,
+			long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
+			String imageDependenciesPath, long scopeGroupId, long userId)
+		throws Exception {
+
+		ServiceContext serviceContext = getServiceContext(scopeGroupId, userId);
+
+		List<CPDefinition> cpDefinitions = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			CPDefinition cpDefinition = _importCPDefinition(
+				jsonArray.getJSONObject(i), assetCategories, catalogGroupId,
+				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
+				imageDependenciesPath, serviceContext);
+
+			cpDefinitions.add(cpDefinition);
+		}
+
+		return cpDefinitions;
+	}
+
+	public List<CPDefinition> importCPDefinitions(
 			JSONArray jsonArray, String assetVocabularyName,
 			long catalogGroupId, long commerceChannelId,
 			long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
@@ -165,31 +188,6 @@ public class CPDefinitionsImporter {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			CPDefinition cpDefinition = _importCPDefinition(
 				jsonArray.getJSONObject(i), assetVocabularyName, catalogGroupId,
-				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
-				imageDependenciesPath, serviceContext);
-
-			cpDefinitions.add(cpDefinition);
-		}
-
-		return cpDefinitions;
-	}
-
-	public List<CPDefinition> importCPDefinitions(
-		JSONArray jsonArray, List<AssetCategory> assetCategories,
-		long catalogGroupId,
-		long commerceChannelId, long[] commerceInventoryWarehouseIds,
-		ClassLoader classLoader, String imageDependenciesPath,
-		long scopeGroupId, long userId)
-		throws Exception {
-
-		ServiceContext serviceContext = getServiceContext(scopeGroupId, userId);
-
-		List<CPDefinition> cpDefinitions = new ArrayList<>(jsonArray.length());
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			CPDefinition cpDefinition = _importCPDefinition(
-				jsonArray.getJSONObject(i), assetCategories,
-				catalogGroupId,
 				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
 				imageDependenciesPath, serviceContext);
 
@@ -359,10 +357,10 @@ public class CPDefinitionsImporter {
 	}
 
 	private CPDefinition _importCPDefinition(
-		JSONObject jsonObject, List<AssetCategory> assetCategories1,
-		 long catalogGroupId, long commerceChannelId,
-		long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
-		String imageDependenciesPath, ServiceContext serviceContext)
+			JSONObject jsonObject, List<AssetCategory> assetCategories,
+			long catalogGroupId, long commerceChannelId,
+			long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
+			String imageDependenciesPath, ServiceContext serviceContext)
 		throws Exception {
 
 		Company company = _companyLocalService.getCompany(
@@ -370,17 +368,20 @@ public class CPDefinitionsImporter {
 
 		// Categories
 
-		List<AssetCategory> assetCategories2 = new ArrayList<>();
+		List<AssetCategory> filteredAssetCategories = new ArrayList<>();
 
 		JSONArray categoriesJSONArray = jsonObject.getJSONArray("categories");
 
 		if (categoriesJSONArray != null) {
 			for (int i = 0; i < categoriesJSONArray.length(); i++) {
 				String externalReferenceCode = categoriesJSONArray.getString(i);
-				for (int j = 0; j < assetCategories1.size(); j++) {
-					AssetCategory assetCategory = assetCategories1.get(j);
-					if(StringUtil.equals(assetCategory.getExternalReferenceCode(), externalReferenceCode)) {
-						assetCategories2.add(assetCategory);
+
+				for (AssetCategory assetCategory : assetCategories) {
+					if (StringUtil.equals(
+							assetCategory.getExternalReferenceCode(),
+							externalReferenceCode)) {
+
+						filteredAssetCategories.add(assetCategory);
 					}
 				}
 			}
@@ -454,7 +455,7 @@ public class CPDefinitionsImporter {
 		}
 
 		long[] assetCategoryIds = ListUtil.toLongArray(
-			assetCategories2, AssetCategory.CATEGORY_ID_ACCESSOR);
+			filteredAssetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
 		String[] assetTagNames = ArrayUtil.toStringArray(tagsJSONArray);
 
@@ -526,12 +527,12 @@ public class CPDefinitionsImporter {
 					cpDefinition.getCPDefinitionId(), serviceContext);
 			}
 			catch (NoSuchSkuContributorCPDefinitionOptionRelException
-				noSuchSkuContributorCPDefinitionOptionRelException) {
+						noSuchSkuContributorCPDefinitionOptionRelException) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"No options defined as sku contributor for " +
-						"CPDefinition " + cpDefinition.getCPDefinitionId(),
+							"CPDefinition " + cpDefinition.getCPDefinitionId(),
 						noSuchSkuContributorCPDefinitionOptionRelException);
 				}
 			}

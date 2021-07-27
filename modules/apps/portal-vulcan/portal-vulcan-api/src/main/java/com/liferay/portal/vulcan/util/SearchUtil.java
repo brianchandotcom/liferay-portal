@@ -97,6 +97,24 @@ public class SearchUtil {
 			UnsafeFunction<Document, T, Exception> transformUnsafeFunction)
 		throws Exception {
 
+		return search(
+			actions, booleanQueryUnsafeConsumer, filter, indexerClass.getName(),
+			keywords, pagination, queryConfigUnsafeConsumer,
+			searchContextUnsafeConsumer, sorts, transformUnsafeFunction);
+	}
+
+	public static <T> Page<T> search(
+			Map<String, Map<String, String>> actions,
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, String indexerClassName, String keywords,
+			Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			Sort[] sorts,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction)
+		throws Exception {
+
 		if (actions == null) {
 			actions = Collections.emptyMap();
 		}
@@ -117,7 +135,7 @@ public class SearchUtil {
 
 		Hits hits = null;
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(indexerClass);
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(indexerClassName);
 
 		if (searchContext.isVulcanCheckPermissions()) {
 			hits = indexer.search(searchContext);

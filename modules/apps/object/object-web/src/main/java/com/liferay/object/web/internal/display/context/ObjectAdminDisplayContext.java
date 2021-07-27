@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -50,6 +51,21 @@ public class ObjectAdminDisplayContext {
 
 	public String getClayHeadlessDataSetDisplayId() {
 		return _objectRequestHelper.getPortletId();
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+		//TODO Check permissions
+		creationMenu.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("addObjectDefinition");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_objectRequestHelper.getRequest(), "add-object"));
+				dropdownItem.setTarget("event");
+			});
+
+		return creationMenu;
 	}
 
 	private final ObjectRequestHelper _objectRequestHelper;

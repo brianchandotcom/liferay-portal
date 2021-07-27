@@ -23,6 +23,8 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const DIGIT_REGEX = /\d/i;
 const LETTER_REGEX = /[a-z]/i;
+const LETTER_DIGIT_REGEX = /[A-Z0-9]/gi;
+const YEARS_INDEX = 6;
 
 const getDateMask = (dateDelimiter, dateFormat) => {
 	return dateFormat
@@ -228,15 +230,29 @@ const DatePicker = ({
 				}
 			}
 			else if (initialValueMemoized) {
-				inputRef.current.value = moment(initialValueMemoized).format(
-					dateMask.toUpperCase()
+				var year = parseInt(
+					initialValueMemoized.substr(YEARS_INDEX),
+					10
 				);
+
+				const date = moment(initialValueMemoized);
+
+				if (year <= 50) {
+					date.subtract(1900, 'years');
+				}
+				else if (year < 100) {
+					date.subtract(2000, 'years');
+				}
+
+				inputRef.current.value = date.format(dateMask.toUpperCase());
 			}
 			else {
 				inputRef.current.value = '';
 			}
 
-			maskInstance.current.update(inputRef.current.value);
+			if (inputRef.current.value.match(LETTER_DIGIT_REGEX)) {
+				maskInstance.current.update(inputRef.current.value);
+			}
 		}
 	}, [
 		dateMask,

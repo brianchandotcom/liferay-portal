@@ -40,7 +40,11 @@ ObjectAdminDisplayContext objectAdminDisplayContext = (ObjectAdminDisplayContext
 <script>
 	function handleCreateObjectDefinitionClick(event) {
 		event.preventDefault();
-		const addObjectDefinition = document.querySelector('#<portlet:namespace />addObjectDefinition');
+
+		const addObjectDefinition = document.querySelector(
+			'#<portlet:namespace />addObjectDefinition'
+		);
+
 		Liferay.Util.openModal({
 			title: '<liferay-ui:message key="create-new-object" />',
 			bodyHTML: addObjectDefinition.innerHTML,
@@ -53,40 +57,51 @@ ObjectAdminDisplayContext objectAdminDisplayContext = (ObjectAdminDisplayContext
 				{
 					label: '<liferay-ui:message key="save" />',
 					onClick: () => {
-						const name = document.querySelector('.modal-body #<portlet:namespace />name');
+						const name = document.querySelector(
+							'.modal-body #<portlet:namespace />name'
+						);
+
 						const formattedData = {
 							name: name.value,
-							objectFields: []
+							objectFields: [],
 						};
-						Liferay.Util.fetch('<%= objectAdminDisplayContext.getAPIURL() %>', {
-							headers: new Headers({
-								Accept: 'application/json',
-								'Content-Type': 'application/json',
-							}),
-							body: JSON.stringify(formattedData),
-							method: 'POST',
-						}).then((response) => {
-							if (response.ok) {
-								window.location.reload();
+
+						Liferay.Util.fetch(
+							'<%= objectAdminDisplayContext.getAPIURL() %>',
+							{
+								headers: new Headers({
+									Accept: 'application/json',
+									'Content-Type': 'application/json',
+								}),
+								body: JSON.stringify(formattedData),
+								method: 'POST',
 							}
-							else {
-								return response.json();
-							}
-						}).then(({title}) => {
-							Liferay.Util.openToast({
-								message: title,
-								type: 'danger',
+						)
+							.then((response) => {
+								if (response.ok) {
+									window.location.reload();
+								}
+								else {
+									return response.json();
+								}
+							})
+							.then(({title}) => {
+								Liferay.Util.openToast({
+									message: title,
+									type: 'danger',
+								});
 							});
-						});
-					}
+					},
 				},
-			]
+			],
 		});
 	}
+
 	function handleDestroyPortlet() {
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		Liferay.detach('addObjectDefinition', handleCreateObjectDefinitionClick);
 	}
+
 	Liferay.on('destroyPortlet', handleDestroyPortlet);
 	Liferay.on('addObjectDefinition', handleCreateObjectDefinitionClick);
 </script>

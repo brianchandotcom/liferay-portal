@@ -224,6 +224,10 @@
 			<contains>Returning the default theme</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-100651">
+			<contains>Unable to connect to a valid mail server. Please make sure one is properly configured: Couldn't connect to host, port: localhost, 25; timeout -1</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-105385 - temporarily ignore until fixed">
 			<contains>Unable to deserialize com.liferay.portal.kernel.util.EscapableLocalizableFunction due to security restrictions</contains>
 			<matches></matches>

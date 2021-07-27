@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -129,6 +130,11 @@ public interface OrganizationService extends BaseService {
 	public Organization addOrganization(
 			long parentOrganizationId, String name, String type, long regionId,
 			long countryId, long statusId, String comments, boolean site,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public User addOrganizationUserByEmailAddress(
+			String emailAddress, long organizationId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

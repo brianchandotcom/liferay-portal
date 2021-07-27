@@ -153,6 +153,17 @@ public class OrganizationLocalServiceWrapper
 			userId, organization);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.User
+			addOrganizationUserByEmailAddress(
+				String emailAddress, long organizationId,
+				ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _organizationLocalService.addOrganizationUserByEmailAddress(
+			emailAddress, organizationId, serviceContext);
+	}
+
 	/**
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.

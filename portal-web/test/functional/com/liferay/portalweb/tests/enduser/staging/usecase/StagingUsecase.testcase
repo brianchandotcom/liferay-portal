@@ -994,6 +994,7 @@ definition {
 	@priority = "3"
 	test PublishWebContentWithFeeds {
 		property test.name.skip.portal.instance = "StagingUsecase#PublishWebContentWithFeeds";
+		property testray.component.names = "Web Content Administration";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

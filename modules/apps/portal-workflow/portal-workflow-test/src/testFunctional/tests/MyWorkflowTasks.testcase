@@ -899,10 +899,6 @@ definition {
 		BridgeDemos.viewDateFormat(
 			dateFormat = "MM/dd/yyyy",
 			displayDate = "${displayDate}");
-
-
-
-		
 	}
 
 	@description = "Verify that, in the Assigned to My Roles table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"

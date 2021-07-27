@@ -32,7 +32,7 @@ renderResponse.setTitle(objectDefinition.getName());
 <clay:headless-data-set-display
 	apiURL="<%= objectFieldAdminDisplayContext.getAPIURL() %>"
 	formId="fm"
-	id="/object_admin_fields/list"
+	id="<%= ObjectAdminDataSetConstants.OBJECT_FIELD_ADMIN_DATA_SET_KEY %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

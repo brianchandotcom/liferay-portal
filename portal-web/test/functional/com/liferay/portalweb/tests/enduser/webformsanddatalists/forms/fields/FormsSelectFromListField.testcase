@@ -31,6 +31,85 @@ definition {
 		}
 	}
 
+	@description = "LPS-76079 - Verify that a Select From List Field can allow Multiple Selections"
+	@priority = "5"
+	test CanAllowMultipleSelections {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSelectFromListField#CanAllowMultipleSelections";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		var fieldSelectFromListField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Select");
+
+		for (var number : list "1,2,3,4") {
+			FormFields.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Multiple");
+
+		Form.closeSidebar();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.selectSelectWithMultipleOptions(
+			fieldName = "${fieldSelectFromListField}",
+			selectOptionsList = "Select 1,Select 2,Select 3");
+
+		FormFields.removeSelectOption(
+			fieldName = "${fieldSelectFromListField}",
+			selectOption = "Select 1");
+
+		FormFields.removeSelectOptionViaDropdown(
+			fieldName = "${fieldSelectFromListField}",
+			selectOption = "Select 2");
+
+		FormFields.selectSelectWithMultipleOptions(
+			fieldName = "${fieldSelectFromListField}",
+			selectOptionsList = "Select 4");
+
+		FormFields.viewSelectMultipleOptions(
+			fieldName = "${fieldSelectFromListField}",
+			selectOptionsList = "Select 3,Select 4");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Select",
+			fieldValue = "Select 3, Select 4");
+	}
+
 	@description = "Verify that a Select From List Field can be created"
 	@priority = "5"
 	test CanBeCreated {
@@ -446,6 +525,94 @@ definition {
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
+	@description = "LPS-85025 - Verify that a list can be created using a DataProvider"
+	@priority = "5"
+	test CanCreateListUsingDataProvider {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingDataProvider";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Data Providers");
+
+		FormsAdminNavigator.gotoAddDataProvider();
+
+		FormsAdmin.editDataProvider(
+			name = "Liferay Countries",
+			outputParameterLabel = "Country Names",
+			outputParameterName = "Country Names",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterType = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com");
+
+		FormsAdmin.saveDataProvider();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		var fieldNameDataProvider = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Data Provider Select Field");
+
+		Form.editFieldDataProvider(
+			dataProvider = "Liferay Countries",
+			dataProviderOutput = "Country Names");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "Data Provider Select Field",
+			fieldName = "${fieldNameDataProvider}");
+
+		FormFields.selectSelectOption(
+			fieldName = "${fieldNameDataProvider}",
+			selectOption = "United States");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Data Provider Select Field",
+			fieldValue = "United States");
+	}
+
 	@description = "Verify that changes to a Field can be canceled"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -641,6 +808,69 @@ definition {
 		FormFields.viewSelectOptionsList(
 			fieldName = "Select from List",
 			selectOption = "Option 2");
+	}
+
+	@description = "LPS-68362 - Verify that options can be removed"
+	@priority = "3"
+	test OptionsCanBeDeleted {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsSelectFromListField#OptionsCanBeDeleted";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		var fieldSelectFromListField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Select");
+
+		for (var number : list "1,2,3") {
+			FormFields.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+
+		FormFields.deleteOptionsRow(rowNumber = "3");
+
+		FormFields.viewSelectOptionsRowFieldValue(
+			fieldValue = "Select 1",
+			rowNumber = "1");
+
+		FormFields.viewSelectOptionsRowFieldValue(
+			fieldValue = "Select 2",
+			rowNumber = "2");
+
+		FormFields.viewDeletedSelectOptionsRowFieldValue(
+			fieldValue = "Select 3",
+			rowNumber = "3");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select");
+
+		FormFields.viewSelectOptionsRowFieldValue(
+			fieldValue = "Select 1",
+			rowNumber = "1");
+
+		FormFields.viewSelectOptionsRowFieldValue(
+			fieldValue = "Select 2",
+			rowNumber = "2");
+
+		FormFields.viewDeletedSelectOptionsRowFieldValue(
+			fieldValue = "Select 3",
+			rowNumber = "3");
 	}
 
 	@description = "Verify that options can be rearranged"

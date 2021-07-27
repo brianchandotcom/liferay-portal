@@ -9,26 +9,13 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
-		ACSettings.takeTokenFromAnalyticsCloud();
-
-		TestCase.setUpPortalInstance();
-
-		ACUtils.launchDXP();
-
-		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownDXP();
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
 		ACUtils.tearDownAC();

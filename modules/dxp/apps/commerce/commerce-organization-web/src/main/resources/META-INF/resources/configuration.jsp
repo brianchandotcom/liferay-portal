@@ -24,6 +24,14 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
+<%
+request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
+request.setAttribute("configuration.jsp-redirect", redirect);
+
+String wrapperId = liferayPortletResponse.getNamespace() + "autocomplete-wrapper";
+Organization rootOrganization = commerceOrganizationDisplayContext.getRootOrganization();
+%>
+
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"
 	method="post"
@@ -32,15 +40,25 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<%
-	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
-	request.setAttribute("configuration.jsp-redirect", redirect);
-	%>
-
 	<liferay-frontend:edit-form-body>
-		<aui:fieldset markupView="lexicon">
-			<aui:input label="root-organization-id" name="preferences--rootOrganizationId--" type="text" value="<%= commerceOrganizationDisplayContext.getRootOrganizationId() %>" />
-		</aui:fieldset>
+		<div class="form-group">
+			<label><liferay-ui:message key="root-organization" /></label>
+
+			<div id="<%= wrapperId %>"></div>
+		</div>
+
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"rootOrganizationId", (rootOrganization == null) ? 0 : rootOrganization.getOrganizationId()
+				).put(
+					"rootOrganizationName", (rootOrganization == null) ? "" : rootOrganization.getName()
+				).put(
+					"wrapperId", wrapperId
+				).build()
+			%>'
+			module="js/configuration"
+		/>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

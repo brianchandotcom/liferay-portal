@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -55,6 +57,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Marco Leo
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class ObjectEntryServiceTest {
 
@@ -147,6 +150,47 @@ public class ObjectEntryServiceTest {
 
 		_testGetObjectEntry(_user);
 	}
+
+	@Test
+	public void testSearchObjectEntries() throws Exception {
+		_setUser(_user);
+
+		ObjectEntryLocalServiceUtil.addObjectEntry(
+			_user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomStringUtils.randomAlphabetic(5)
+			).put(
+				"LastName", RandomStringUtils.randomAlphabetic(5)
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _user.getUserId()));
+
+		ObjectEntryLocalServiceUtil.addObjectEntry(
+			_user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomStringUtils.randomAlphabetic(5)
+			).put(
+				"LastName", RandomStringUtils.randomAlphabetic(5)
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _user.getUserId()));
+
+		_setUser(_user);
+
+		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
+			ObjectEntryLocalServiceUtil.searchObjectEntries(
+				_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+
+		Assert.assertEquals(2, baseModelSearchResult.getLength());
+
+		_setUser(_defaultUser);
+
+		baseModelSearchResult = ObjectEntryLocalServiceUtil.searchObjectEntries(
+			_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+
+		Assert.assertEquals(0, baseModelSearchResult.getLength());
+	}
+
 	private ObjectField _createObjectField(
 		boolean indexed, boolean indexedAsKeyword, String name,
 		boolean required, String type) {

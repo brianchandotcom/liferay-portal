@@ -470,58 +470,132 @@ definition {
 
 	}
 
-	@description = "This test filters application to Blogs and views all Blogs data in Review Data section"
-	@ignore = "Test Stub"
+	@description = "This test filters application to Forms, Web Content, Bookmarks, and Contacts and views all filtered data in Review Data section"
 	@priority = "3"
-	test CanFilterAndViewBlogsData {
+	test CanFilterAndViewData {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
-	}
+		FormsAdminNavigator.gotoAddForm();
 
-	@description = "This test filters application to DM and views all DM data in Review Data section"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanFilterAndViewDMData {
+		Form.editName();
 
-		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+		Form.editDescription();
 
-	}
+		Form.addTextField(fieldPositionNumber = "0");
 
-	@description = "This test filters application to Forms and views all Forms data in Review Data section"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanFilterAndViewFormsData {
+		var fieldTextField = FormFields.getFieldName();
 
-		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-	}
+		Form.closeSidebar();
 
-	@description = "This test filters application to Message Boards and views all Message Boards data in Review Data section"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanFilterAndViewMessageBoardsData {
+		Form.save();
 
-		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
-	}
+		SitePages.addPublicPage(pageName = "Form Page");
 
-	@description = "This test filters application to WebContent and views all WebContent data in Review Data section"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanFilterAndViewWebContentData {
+		Navigator.gotoPage(pageName = "Form Page");
 
-		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
-	}
+		FormPortletNavigator.gotoSelectForm();
 
-	@description = "This test filters application to Wiki and views all Wiki data in Review Data section"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanFilterAndViewWikiData {
+		FormPortletConfiguration.selectForm();
 
-		// TODO LRQA-50738 View all types of user-associated data from all applications that are implemented
+		PortletEntry.save();
 
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Text Field Value");
+
+		FormPortlet.submitSuccessfully();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Contacts Center Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Contacts Center Page",
+			layoutTemplate = "1 Column");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Contacts Center Page",
+			widgetName = "Contacts Center");
+
+		Navigator.gotoPage(pageName = "Contacts Center Page");
+
+		ContactsCenter.addPG(
+			contactName = "test1",
+			emailAddress = "test1@liferay.com");
+
+		ContactsCenter.viewContactPG(
+			contactName = "test1",
+			emailAddress = "test1@liferay.com");
+
+		JSONWebcontent.addWebContent(
+			content = "This is a WC Content for GDPR Export testing.",
+			groupName = "Guest",
+			title = "GDPR Export Article",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Bookmarks");
+
+		Bookmark.addCP(
+			bookmarkDescription = "This is a test bookmark!",
+			bookmarkName = "Test Bookmark",
+			bookmarkURL = "https://www.liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		User.openUsersAdmin();
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applications = "Contacts Center",
+			itemsCount = "1");	
+
+		GDPR.filterByScope(scope = "Regular Sites");
+
+		GDPR.filterByApplications(
+			applications = "Bookmarks",
+			itemsCount = "1");
+
+		GDPR.filterByApplications(
+			applications = "Forms",
+			itemsCount = "2");	
+
+		GDPR.filterByApplications(
+			applications = "Web Content",
+			itemsCount = "1");	
 	}
 
 	@description = "LPS-77749"

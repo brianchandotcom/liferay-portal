@@ -17,16 +17,21 @@ package com.liferay.object.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Gabriel Albuquerque
  */
 public class ObjectAdminDisplayContext {
 
@@ -40,9 +45,20 @@ public class ObjectAdminDisplayContext {
 
 	public List<ClayDataSetActionDropdownItem>
 			getClayDataSetActionDropdownItems()
-		throws PortalException {
+		throws Exception {
 
-		return Collections.singletonList(
+		return Arrays.asList(
+			new ClayDataSetActionDropdownItem(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/object_admin/edit_object_admin"
+				).setParameter(
+					"objectDefinitionId", "{id}"
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
+				"get", null, null),
 			new ClayDataSetActionDropdownItem(
 				getAPIURL() + "/{id}", "trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
@@ -66,6 +82,14 @@ public class ObjectAdminDisplayContext {
 			});
 
 		return creationMenu;
+	}
+
+	public PortletURL getPortletURL() throws PortletException {
+		return PortletURLUtil.clone(
+			PortletURLUtil.getCurrent(
+				_objectRequestHelper.getLiferayPortletRequest(),
+				_objectRequestHelper.getLiferayPortletResponse()),
+			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
 	private final ObjectRequestHelper _objectRequestHelper;

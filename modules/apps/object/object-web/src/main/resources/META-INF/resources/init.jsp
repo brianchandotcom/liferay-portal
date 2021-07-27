@@ -22,8 +22,15 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.object.web.internal.display.context.ObjectAdminDisplayContext" %><%@
+<%@ page import="com.liferay.object.model.ObjectDefinition" %><%@
+page import="com.liferay.object.web.internal.constants.ObjectAdminScreenNavigationEntryConstants" %><%@
+page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
+page import="com.liferay.object.web.internal.display.context.ObjectAdminDisplayContext" %><%@
 page import="com.liferay.object.web.internal.display.context.ObjectDisplayContext" %><%@
+page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-frontend:defineObjects />

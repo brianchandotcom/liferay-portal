@@ -14,10 +14,10 @@
 
 import {
 	renameFieldInsideExpression,
-	updateRulesFieldName,
-} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/rules.es';
+	updateRulesReferences,
+} from '../../../../src/main/resources/META-INF/resources/js/core/utils/rules';
 
-describe('LayoutProvider/util/rules', () => {
+describe('core/utils/rules', () => {
 	describe('renameFieldInsideExpression(expression, fieldName, newFieldName)', () => {
 		it('renames a field name used inside an expression', () => {
 			const expression = '2*[FieldName1]+sum([FieldName2])';
@@ -39,7 +39,7 @@ describe('LayoutProvider/util/rules', () => {
 		});
 	});
 
-	describe('updateRulesFieldName(rules, fieldName, newFieldName)', () => {
+	describe('updateRulesReferences(rules, oldProperties, newProperties)', () => {
 		it('renames a field name used inside a rule condition operand of type "field"', () => {
 			const rules = [
 				{
@@ -69,10 +69,10 @@ describe('LayoutProvider/util/rules', () => {
 				},
 			];
 
-			const updatedRules = updateRulesFieldName(
+			const updatedRules = updateRulesReferences(
 				rules,
-				'FieldName1',
-				'NewFieldName'
+				{fieldName: 'FieldName1'},
+				{fieldName: 'NewFieldName'}
 			);
 
 			expect(updatedRules[0].conditions[0].operands[0].value).toEqual(
@@ -98,10 +98,10 @@ describe('LayoutProvider/util/rules', () => {
 				},
 			];
 
-			const updatedRules = updateRulesFieldName(
+			const updatedRules = updateRulesReferences(
 				rules,
-				'FieldName1',
-				'NewFieldName'
+				{fieldName: 'FieldName1'},
+				{fieldName: 'NewFieldName'}
 			);
 
 			expect(updatedRules[0].actions[0].target).toEqual('NewFieldName');
@@ -125,10 +125,10 @@ describe('LayoutProvider/util/rules', () => {
 				},
 			];
 
-			const updatedRules = updateRulesFieldName(
+			const updatedRules = updateRulesReferences(
 				rules,
-				'FieldName2',
-				'NewFieldName'
+				{fieldName: 'FieldName2'},
+				{fieldName: 'NewFieldName'}
 			);
 
 			expect(updatedRules[0].actions[0].expression).toEqual(

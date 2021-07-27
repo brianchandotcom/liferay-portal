@@ -15,7 +15,6 @@
 import {
 	FieldSupport,
 	FieldUtil,
-	RulesUtil,
 	SettingsContext,
 } from 'dynamic-data-mapping-form-builder';
 
@@ -23,6 +22,7 @@ import * as FormSupport from '../../utils/FormSupport.es';
 import {formatRules} from '../../utils/rulesSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
+import {updateRulesReferences} from '../utils/rules';
 import sectionAdded from '../utils/sectionAddedHandler';
 
 export const deleteField = ({
@@ -301,7 +301,7 @@ export default (state, action, config) => {
 					true,
 					true
 				),
-				rules: RulesUtil.updateRulesReferences(
+				rules: updateRulesReferences(
 					rules || [],
 					focusedField,
 					newFocusedField
@@ -536,7 +536,7 @@ export default (state, action, config) => {
 			return {
 				focusedField: newFocusedField,
 				pages: newPages,
-				rules: RulesUtil.updateRulesReferences(
+				rules: updateRulesReferences(
 					rules || [],
 					focusedField,
 					newFocusedField

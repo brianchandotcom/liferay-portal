@@ -12,12 +12,11 @@
  * details.
  */
 
-import {RulesVisitor} from 'data-engine-js-components-web';
+import {Token, Tokenizer} from 'dynamic-data-mapping-form-builder';
 
-import Token from '../../../expressions/Token.es';
-import Tokenizer from '../../../expressions/Tokenizer.es';
+import {RulesVisitor} from '../../utils/visitors.es';
 
-export const isEqualLengthOptions = (options1, options2) => {
+const isEqualLengthOptions = (options1, options2) => {
 	if (!!options1 && !!options2) {
 		return options1.length === options2.length;
 	}
@@ -26,7 +25,7 @@ export const isEqualLengthOptions = (options1, options2) => {
 	}
 };
 
-export const isFieldValueOperand = (operands) => {
+const isFieldValueOperand = (operands) => {
 	return (
 		operands.length == 2 &&
 		operands[0].type === 'field' &&
@@ -34,7 +33,7 @@ export const isFieldValueOperand = (operands) => {
 	);
 };
 
-export const isOptionReferencedByOperand = (options, operandValue) => {
+const isOptionReferencedByOperand = (options, operandValue) => {
 	return options.some(({label}) => operandValue === label);
 };
 
@@ -56,11 +55,7 @@ export const renameFieldInsideExpression = (
 	);
 };
 
-export const renameFieldInsideAutofill = (
-	object,
-	oldFieldName,
-	newFieldName
-) => {
+const renameFieldInsideAutofill = (object, oldFieldName, newFieldName) => {
 	Object.keys(object).map((key) => {
 		if (object[key] === oldFieldName) {
 			object[key] = newFieldName;

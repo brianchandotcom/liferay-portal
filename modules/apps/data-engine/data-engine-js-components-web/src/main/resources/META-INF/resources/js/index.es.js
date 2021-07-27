@@ -31,7 +31,7 @@ export {
 export * as RulesSupport from './utils/rulesSupport';
 export {default as setDataRecord} from './utils/setDataRecord.es';
 export * as StringUtils from './utils/strings';
-export {PagesVisitor, RulesVisitor} from './utils/visitors.es';
+export {PagesVisitor} from './utils/visitors.es';
 
 // Form/Data Engine Core
 

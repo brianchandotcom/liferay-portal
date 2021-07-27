@@ -987,6 +987,8 @@ syncPortalLanguageKeys {
 
 		FileTree portalLanguagePropertiesFileTree = fileTree(dir: projectDir, includes: ["apps/portal-language/portal-language-lang/src/main/resources/content/Language*.properties"])
 
+		Map<String, Set<String>> moduleMap = new TreeMap<String, Set<String>>()
+
 		portalLanguagePropertiesFileTree.each {
 			File portalLanguagePropertiesFile ->
 
@@ -1001,6 +1003,8 @@ syncPortalLanguageKeys {
 			new InputStreamReader(new FileInputStream(portalLanguagePropertiesFile), StandardCharsets.UTF_8).withReader {
 				portalLanguageProperties.load(it)
 			}
+
+			boolean updatedPortalLanguageProperties = false
 
 			languagePropertiesFileTree.each {
 				File languagePropertiesFile ->
@@ -1018,11 +1022,15 @@ syncPortalLanguageKeys {
 
 						if (!portalImplLanguageProperties.containsKey(key) || (portalImplLanguageProperties.getProperty(key) != value)) {
 							if (!portalLanguageProperties.containsKey(key)) {
-								logger.lifecycle "Added " + key + ":" + languagePropertiesFile
+								updatedPortalLanguageProperties = true
 
 								portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
 							}
 							else if (portalLanguageProperties.getProperty(key) != value) {
+								String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
+
+								moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
+
 								languageKeys.add(key + '=' + value.replace("\n", "\\n"))
 							}
 						}
@@ -1037,15 +1045,21 @@ syncPortalLanguageKeys {
 				}
 			}
 
-			List<String> portalLanguageKeys = []
+			if (updatedPortalLanguageProperties) {
+				List<String> portalLanguageKeys = []
 
-			for (String key : portalLanguageProperties.stringPropertyNames()) {
-				portalLanguageKeys.add(key + '=' + portalLanguageProperties.getProperty(key).replace("\n", "\\n"))
+				for (String key : portalLanguageProperties.stringPropertyNames()) {
+					portalLanguageKeys.add(key + '=' + portalLanguageProperties.getProperty(key).replace("\n", "\\n"))
+				}
+
+				portalLanguagePropertiesFile.setText portalLanguageKeys.sort().join("\n"), "UTF-8"
+
+				logger.lifecycle "Updated {}", FileUtil.relativize(portalLanguagePropertiesFile, projectDir)
 			}
+		}
 
-			portalLanguagePropertiesFile.setText portalLanguageKeys.sort().join("\n"), "UTF-8"
-
-			logger.lifecycle "Updated {}", portalLanguagePropertiesFile
+		moduleMap.each {
+			logger.lifecycle "Conflicting keys in {}: {}", it.key, it.value.unique().sort().join(", ")
 		}
 
 		StartParameter startParameter = gradle.startParameter.newBuild()

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -356,7 +357,14 @@ public class PortletBagImpl implements PortletBag {
 			}
 		}
 
-		return resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
+
+		if (resourceBundle == null) {
+			resourceBundle = LanguageResources.getResourceBundle(locale);
+		}
+
+		return resourceBundle;
 	}
 
 	@Override

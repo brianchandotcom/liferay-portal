@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
@@ -33,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -214,8 +217,23 @@ public class ResourceBundleUtil {
 		}
 
 		if (resourceBundleLoader == null) {
-			return ResourceBundle.getBundle(
-				baseName, locale, classLoader, UTF8Control.INSTANCE);
+			if (!_portalResourceBundleClassLoaders.contains(classLoader)) {
+				try {
+					return ResourceBundle.getBundle(
+						baseName, locale, classLoader, UTF8Control.INSTANCE);
+				}
+				catch (MissingResourceException missingResourceException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							missingResourceException, missingResourceException);
+					}
+
+					_portalResourceBundleClassLoaders.add(classLoader);
+				}
+			}
+
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 		}
 
 		return resourceBundleLoader.loadResourceBundle(locale);
@@ -223,5 +241,10 @@ public class ResourceBundleUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourceBundleUtil.class);
+
+	private static final Set<ClassLoader> _portalResourceBundleClassLoaders =
+		Collections.newSetFromMap(
+			new ConcurrentReferenceKeyHashMap<>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY));
 
 }

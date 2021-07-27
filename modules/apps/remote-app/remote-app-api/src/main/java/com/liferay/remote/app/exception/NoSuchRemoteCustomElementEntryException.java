@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.remote.app.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchRemoteCustomElementEntryException extends NoSuchModelException {
+public class NoSuchRemoteCustomElementEntryException
+	extends NoSuchModelException {
 
 	public NoSuchRemoteCustomElementEntryException() {
 	}
@@ -27,7 +29,9 @@ public class NoSuchRemoteCustomElementEntryException extends NoSuchModelExceptio
 		super(msg);
 	}
 
-	public NoSuchRemoteCustomElementEntryException(String msg, Throwable throwable) {
+	public NoSuchRemoteCustomElementEntryException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

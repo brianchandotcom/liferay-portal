@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,7 +47,6 @@ import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
-import com.nimbusds.oauth2.sdk.token.RefreshToken;
 import com.nimbusds.openid.connect.sdk.AuthenticationErrorResponse;
 import com.nimbusds.openid.connect.sdk.AuthenticationRequest;
 import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
@@ -321,44 +319,6 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 
 		return false;
-	}
-
-	private boolean _refreshAuthToken(
-			OpenIdConnectSessionImpl openIdConnectSessionImpl)
-		throws OpenIdConnectServiceException {
-
-		if (_hasValidAccessToken(openIdConnectSessionImpl)) {
-			return true;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"User session auth token is invalid, attempting to use " +
-					"refresh token to obtain a valid auth token");
-		}
-
-		RefreshToken refreshToken = openIdConnectSessionImpl.getRefreshToken();
-
-		if (refreshToken == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Unable to refresh auth token because no refresh token " +
-						"is supplied");
-			}
-
-			return false;
-		}
-
-		OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
-			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
-				CompanyThreadLocal.getCompanyId(),
-				openIdConnectSessionImpl.getOpenIdProviderName()),
-			refreshToken);
-
-		OfflineOpenIdConnectSessionManager.extendOpenIdConnectSession(
-			System.currentTimeMillis(), oidcTokens, openIdConnectSessionImpl);
-
-		return true;
 	}
 
 	private UserInfo _requestUserInfo(

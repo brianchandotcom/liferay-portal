@@ -47,20 +47,18 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "indexer.class.name=com.liferay.object.model.ObjectEntry",
-	service = KeywordQueryContributor.class
-)
 public class ObjectEntryKeywordQueryContributor
 	implements KeywordQueryContributor {
+
+	public ObjectEntryKeywordQueryContributor(
+		ObjectFieldLocalService objectFieldLocalService) {
+
+		_objectFieldLocalService = objectFieldLocalService;
+	}
 
 	@Override
 	public void contribute(
@@ -338,7 +336,6 @@ public class ObjectEntryKeywordQueryContributor
 
 	private static final Pattern _pattern = Pattern.compile("\\d{14}");
 
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

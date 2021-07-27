@@ -40,20 +40,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "indexer.class.name=com.liferay.object.model.ObjectEntry",
-	service = ModelDocumentContributor.class
-)
 public class ObjectEntryModelDocumentContributor
 	implements ModelDocumentContributor<ObjectEntry> {
+
+	public ObjectEntryModelDocumentContributor(
+		String className, ObjectEntryLocalService objectEntryLocalService,
+		ObjectFieldLocalService objectFieldLocalService) {
+
+		_className = className;
+		_objectEntryLocalService = objectEntryLocalService;
+		_objectFieldLocalService = objectFieldLocalService;
+	}
 
 	@Override
 	public void contribute(Document document, ObjectEntry objectEntry) {
@@ -234,10 +235,8 @@ public class ObjectEntryModelDocumentContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelDocumentContributor.class);
 
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
+	private final String _className;
+	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

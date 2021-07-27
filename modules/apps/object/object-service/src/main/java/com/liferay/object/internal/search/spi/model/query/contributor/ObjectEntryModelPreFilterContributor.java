@@ -22,20 +22,19 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "indexer.class.name=com.liferay.object.model.ObjectEntry",
-	service = ModelPreFilterContributor.class
-)
 public class ObjectEntryModelPreFilterContributor
 	implements ModelPreFilterContributor {
+
+	public ObjectEntryModelPreFilterContributor(
+		ModelPreFilterContributor workflowStatusModelPreFilterContributor) {
+
+		_workflowStatusModelPreFilterContributor =
+			workflowStatusModelPreFilterContributor;
+	}
 
 	@Override
 	public void contribute(
@@ -61,7 +60,7 @@ public class ObjectEntryModelPreFilterContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelPreFilterContributor.class);
 
-	@Reference(target = "(model.pre.filter.contributor.id=WorkflowStatus)")
-	private ModelPreFilterContributor _workflowStatusModelPreFilterContributor;
+	private final ModelPreFilterContributor
+		_workflowStatusModelPreFilterContributor;
 
 }

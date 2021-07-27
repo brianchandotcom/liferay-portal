@@ -61,6 +61,14 @@ public class ObjectEntryServiceWrapper
 		return _objectEntryService.deleteObjectEntry(objectEntryId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntry getObjectEntry(
+			long objectEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getObjectEntry(objectEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

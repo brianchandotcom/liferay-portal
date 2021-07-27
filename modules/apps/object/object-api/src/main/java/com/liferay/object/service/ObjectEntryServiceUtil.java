@@ -67,6 +67,12 @@ public class ObjectEntryServiceUtil {
 		return getService().deleteObjectEntry(objectEntryId);
 	}
 
+	public static ObjectEntry getObjectEntry(long objectEntryId)
+		throws PortalException {
+
+		return getService().getObjectEntry(objectEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

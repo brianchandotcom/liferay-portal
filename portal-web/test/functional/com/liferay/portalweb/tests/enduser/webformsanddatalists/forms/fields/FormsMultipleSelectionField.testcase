@@ -498,6 +498,97 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Multiple Selection");
 	}
 
+	@description = "LPS-85026 - Veriy that the Field Label can be hidden"
+	@ignore = "true"
+	@priority = "5"
+	test LabelCanBeHidden {
+		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHidden";
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1");
+
+		FormFields.viewLabel(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.disableSwitcher(fieldName = "Show Label");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
+	}
+
+	@description = "LPS-66513 - Verify that the Field Label can be hidden when options are displayed as switchers"
+	@ignore = "true"
+	@priority = "3"
+	test LabelCanBeHiddenWithSwitcherEnabled {
+		property test.name.skip.portal.instance = "FormsMultipleSelectionField#LabelCanBeHiddenWithSwitcherEnabled";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
+
+		FormFields.editOptionsRow(
+			optionName = "Switcher1",
+			optionValue = "Switcher 1",
+			rowNumber = "1");
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Switcher 1");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.disableSwitcher(fieldName = "Show Label");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Switcher 1");
+	}
+
 	@description = "Verify that options can be added"
 	@priority = "5"
 	test OptionsCanBeAdded {
@@ -602,6 +693,47 @@ definition {
 			rowNumber = "2");
 	}
 
+	@description = "Verify that options can be displayed as switchers"
+	@priority = "5"
+	test OptionsCanBeDisplayedAsSwitchers {
+		property test.name.skip.portal.instance = "FormsMultipleSelectionField#OptionsCanBeDisplayedAsSwitchers";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.enableSwitcher(fieldName = "Show as a Switcher");
+
+		FormFields.editOptionsRow(
+			optionName = "Switcher1",
+			optionValue = "Switcher 1",
+			rowNumber = "1");
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Switcher 1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Switcher 1");
+	}
+
 	@description = "Verify that options can be displayed both inline and as a list"
 	@priority = "5"
 	test OptionsCanBeDisplayedInlineAndAsList {
@@ -699,6 +831,77 @@ definition {
 		FormFields.viewOptionsRowFieldValue(
 			fieldValue = "Option 2",
 			rowNumber = "1");
+	}
+
+	@description = "LPS-68381 - Verify that options can be rearranged after one is removed"
+	@priority = "3"
+	test OptionsCanBeReordered {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsMultipleSelectionField#OptionsCanBeReordered";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		for (var number : list "1,2,3,4") {
+			FormFields.editOptionsRow(
+				optionName = "Checkbox${number}",
+				optionValue = "Checkbox ${number}",
+				rowNumber = "${number}");
+		}
+
+		FormFields.moveOptionsRow(
+			rowNumberEnd = "1",
+			rowNumberStart = "3");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Checkbox 3",
+			rowNumber = "1");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Checkbox 1",
+			rowNumber = "2");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Checkbox 2",
+			rowNumber = "3");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Checkbox 4",
+			rowNumber = "4");
+
+		FormFields.deleteOptionsRow(rowNumber = "2");
+
+		FormFields.moveOptionsRow(
+			rowNumberEnd = "2",
+			rowNumberStart = "3");
+
+		if (IsTextNotEqual(locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD", value1 = "Checkbox 4", key_rowNumber = "2")) {
+			FormFields.moveOptionsRow(
+				rowNumberEnd = "2",
+				rowNumberStart = "3");
+		}
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Checkbox 3",
+			rowNumber = "1");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Checkbox 4",
+			rowNumber = "2");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Checkbox 2",
+			rowNumber = "3");
 	}
 
 	@description = "Verify that an option can be selected as a Predefined Value"

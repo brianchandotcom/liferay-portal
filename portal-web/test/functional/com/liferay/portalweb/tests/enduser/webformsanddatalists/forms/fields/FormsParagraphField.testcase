@@ -1275,8 +1275,9 @@ definition {
 		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
 		FormFields.editTextBodyToolBar(
-			content = "Test",
-			optionTool = "Bold");
+			content = "Test");
+
+			FormFields.toggleCKEditorContentStyle(optionTool = "Bold");
 
 		Form.save();
 
@@ -1288,13 +1289,9 @@ definition {
 			key_textName = "Test",
 			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD");
 
-		FormFields.editTextBodyToolBar(
-			content = "Test",
-			optionTool = "Bold");
+		FormFields.toggleCKEditorContentStyle(optionTool = "Bold");
 
-		FormFields.editTextBodyToolBar(
-			content = "Test",
-			optionTool = "Italic");
+		FormFields.toggleCKEditorContentStyle(optionTool = "Italic");
 
 		Form.save();
 
@@ -1306,13 +1303,9 @@ definition {
 			key_textName = "Test",
 			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC");
 
-		FormFields.editTextBodyToolBar(
-			content = "Test",
-			optionTool = "Italic");
+		FormFields.toggleCKEditorContentStyle(optionTool = "Italic");
 
-		FormFields.editTextBodyToolBar(
-			content = "Test",
-			optionTool = "Underline");
+		FormFields.toggleCKEditorContentStyle(optionTool = "Underline");
 
 		Form.save();
 
@@ -1320,6 +1313,7 @@ definition {
 			key_textName = "Test",
 			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_UNDERLINE");
 	}
+
 
 	@description = "Verify that the Field Title can be edited"
 	@priority = "5"

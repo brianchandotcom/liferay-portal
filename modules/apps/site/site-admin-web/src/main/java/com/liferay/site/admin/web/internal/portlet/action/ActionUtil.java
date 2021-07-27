@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,6 +165,77 @@ public class ActionUtil {
 		return treeMap;
 	}
 
+	public static void updateLayoutSetPrototypesLinks(
+			ActionRequest actionRequest, Group liveGroup)
+		throws Exception {
+
+		long privateLayoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "privateLayoutSetPrototypeId");
+		long publicLayoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "publicLayoutSetPrototypeId");
+		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "privateLayoutSetPrototypeLinkEnabled");
+		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "publicLayoutSetPrototypeLinkEnabled");
+
+		if ((privateLayoutSetPrototypeId == 0) &&
+			(publicLayoutSetPrototypeId == 0) &&
+			!privateLayoutSetPrototypeLinkEnabled &&
+			!publicLayoutSetPrototypeLinkEnabled) {
+
+			long layoutSetPrototypeId = ParamUtil.getLong(
+				actionRequest, "layoutSetPrototypeId");
+			int layoutSetVisibility = ParamUtil.getInteger(
+				actionRequest, "layoutSetVisibility");
+			boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "layoutSetPrototypeLinkEnabled",
+				layoutSetPrototypeId > 0);
+			boolean layoutSetVisibilityPrivate = ParamUtil.getBoolean(
+				actionRequest, "layoutSetVisibilityPrivate");
+
+			if ((layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) ||
+				layoutSetVisibilityPrivate) {
+
+				privateLayoutSetPrototypeId = layoutSetPrototypeId;
+
+				privateLayoutSetPrototypeLinkEnabled =
+					layoutSetPrototypeLinkEnabled;
+			}
+			else {
+				publicLayoutSetPrototypeId = layoutSetPrototypeId;
+
+				publicLayoutSetPrototypeLinkEnabled =
+					layoutSetPrototypeLinkEnabled;
+			}
+		}
+
+		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
+		LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
+
+		if ((privateLayoutSetPrototypeId ==
+				privateLayoutSet.getLayoutSetPrototypeId()) &&
+			(publicLayoutSetPrototypeId ==
+				publicLayoutSet.getLayoutSetPrototypeId()) &&
+			(privateLayoutSetPrototypeLinkEnabled ==
+				privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) &&
+			(publicLayoutSetPrototypeLinkEnabled ==
+				publicLayoutSet.isLayoutSetPrototypeLinkEnabled())) {
+
+			return;
+		}
+
+		Group group = liveGroup.getStagingGroup();
+
+		if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
+			group = liveGroup;
+		}
+
+		SitesUtil.updateLayoutSetPrototypesLinks(
+			group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
+			publicLayoutSetPrototypeLinkEnabled,
+			privateLayoutSetPrototypeLinkEnabled);
+	}
+
 	public static void validateDefaultLocaleGroupName(
 			Map<Locale, String> nameMap, Locale defaultLocale)
 		throws PortalException {
@@ -171,6 +244,8 @@ public class ActionUtil {
 			throw new GroupNameException();
 		}
 	}
+
+	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);
 

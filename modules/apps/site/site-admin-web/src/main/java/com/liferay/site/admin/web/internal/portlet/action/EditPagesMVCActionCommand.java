@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.site.admin.web.internal.util.ActionCommandUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -96,8 +95,7 @@ public class EditPagesMVCActionCommand
 		liveGroup = _groupService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 
-		ActionCommandUtil.updateLayoutSetPrototypesLinks(
-			actionRequest, liveGroup);
+		ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, liveGroup);
 	}
 
 	@Reference

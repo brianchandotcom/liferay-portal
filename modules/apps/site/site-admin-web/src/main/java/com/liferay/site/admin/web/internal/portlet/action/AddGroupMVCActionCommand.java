@@ -57,7 +57,6 @@ import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
-import com.liferay.site.admin.web.internal.util.ActionCommandUtil;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.sites.kernel.util.Sites;
@@ -463,8 +462,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			creationType.equals(
 				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
 
-			ActionCommandUtil.updateLayoutSetPrototypesLinks(
-				actionRequest, liveGroup);
+			ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, liveGroup);
 		}
 		else if (creationType.equals(
 					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {

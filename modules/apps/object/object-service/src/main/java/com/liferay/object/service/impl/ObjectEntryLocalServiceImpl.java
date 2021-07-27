@@ -351,7 +351,7 @@ public class ObjectEntryLocalServiceImpl
 			_searchRequestBuilderFactory.builder();
 
 		searchRequestBuilder.entryClassNames(
-			ObjectEntry.class.getName()
+			objectDefinition.getClassName()
 		).emptySearchEnabled(
 			true
 		).from(

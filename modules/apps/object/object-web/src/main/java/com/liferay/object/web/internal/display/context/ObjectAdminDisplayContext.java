@@ -65,10 +65,6 @@ public class ObjectAdminDisplayContext {
 				"delete", "delete", "async"));
 	}
 
-	public String getClayHeadlessDataSetDisplayId() {
-		return _objectRequestHelper.getPortletId();
-	}
-
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 		//TODO Check permissions

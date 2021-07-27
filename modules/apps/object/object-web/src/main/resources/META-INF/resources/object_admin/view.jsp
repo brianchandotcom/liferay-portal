@@ -29,7 +29,7 @@ ObjectAdminDisplayContext objectAdminDisplayContext = (ObjectAdminDisplayContext
 	clayDataSetActionDropdownItems="<%= objectAdminDisplayContext.getClayDataSetActionDropdownItems() %>"
 	creationMenu="<%= objectAdminDisplayContext.getCreationMenu() %>"
 	formId="fm"
-	id="<%= objectAdminDisplayContext.getClayHeadlessDataSetDisplayId() %>"
+	id="<%= ObjectAdminDataSetConstants.OBJECT_ADMIN_DATA_SET_KEY %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

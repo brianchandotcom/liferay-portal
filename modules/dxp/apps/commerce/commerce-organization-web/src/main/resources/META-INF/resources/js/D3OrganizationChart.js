@@ -90,19 +90,20 @@ class D3OrganizationChart {
 		const formattedChildren = children.map((child) =>
 			formatChild(child, type)
 		);
-		let lastNodeAdded = null;
+
+		let firstNodeAdded = null;
 
 		this._root.each((d) => {
 			if (getEntityId(d.data) === parentId) {
 				const {children} = insertChildrenIntoNode(formattedChildren, d);
 
-				lastNodeAdded = children[children.length - 1];
+				firstNodeAdded = children[children.length - 1];
 				this._update(d, false);
 			}
 		});
 
-		if (lastNodeAdded) {
-			this._recenterViewport(lastNodeAdded);
+		if (firstNodeAdded) {
+			this._recenterViewport(firstNodeAdded);
 		}
 	}
 

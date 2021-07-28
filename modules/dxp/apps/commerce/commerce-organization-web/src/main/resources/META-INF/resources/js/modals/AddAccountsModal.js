@@ -13,12 +13,12 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
+import classNames from 'classnames';
 import {openToast} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import ChartContext from '../ChartContext';
-import {getAccounts, updateAccountDetails} from '../data/accounts';
-import {getUsers} from '../data/users';
+import {createAccount, getAccounts, updateAccount} from '../data/accounts';
 import {ACCOUNTS_CREATION_ENABLED} from '../utils/flags';
 
 function showNotFoundError(name) {
@@ -39,10 +39,7 @@ export default function AddOrganizationModal({
 	const [newAccountName, setNewAccountName] = useState('');
 	const [fetchedAccounts, setFetchedAccounts] = useState([]);
 	const [selectedAccounts, setSelectedAccounts] = useState([]);
-
-	const [emailsQuery, setEmailsQuery] = useState('');
-	const [fetchedUsers, setFetchedUsers] = useState([]);
-	const [selectedUsers, setSelectedUsers] = useState([]);
+	const [errors, setErrors] = useState([]);
 	const [newAccountMode, updateNewAccountMode] = useState(false);
 
 	useEffect(() => {
@@ -55,17 +52,6 @@ export default function AddOrganizationModal({
 			setFetchedAccounts([]);
 		}
 	}, [accountsQuery]);
-
-	useEffect(() => {
-		if (emailsQuery) {
-			getUsers(emailsQuery).then((response) => {
-				setFetchedUsers(response.items);
-			});
-		}
-		else {
-			setFetchedUsers([]);
-		}
-	}, [emailsQuery]);
 
 	const accountOptions = useMemo(() => {
 		const selectedAccountIds = new Set(
@@ -84,10 +70,25 @@ export default function AddOrganizationModal({
 	}, [parentData, selectedAccounts, fetchedAccounts]);
 
 	function handleSave() {
-		const errors = [];
-
 		if (newAccountMode) {
-			throw new Error('account-creation-un-handled');
+			createAccount(newAccountName, [parentData.id])
+				.then((accountData) => {
+					chartInstanceRef.current.addNodes(
+						[accountData],
+						'account',
+						parentData
+					);
+
+					chartInstanceRef.current.updateNodeContent({
+						...parentData,
+						numberOfAccounts: parentData.numberOfAccounts + 1,
+					});
+
+					closeModal();
+				})
+				.catch((error) => {
+					setErrors([error.title]);
+				});
 		}
 		else {
 			if (accountsQuery) {
@@ -97,7 +98,7 @@ export default function AddOrganizationModal({
 			if (selectedAccounts.length) {
 				Promise.allSettled(
 					selectedAccounts.map((account) =>
-						updateAccountDetails(account.id, {
+						updateAccount(account.id, {
 							organizationIds: [
 								...account.organizationIds,
 								parentData.id,
@@ -106,6 +107,7 @@ export default function AddOrganizationModal({
 					)
 				).then((results) => {
 					const nodeChildren = [];
+					const newErrors = [];
 
 					results.forEach((result) => {
 						if (result.status === 'fulfilled') {
@@ -116,9 +118,11 @@ export default function AddOrganizationModal({
 								message: result.value,
 								type: 'danger',
 							});
-							errors.push(result.value);
+							newErrors.push(result.value);
 						}
 					});
+
+					setErrors(newErrors);
 
 					chartInstanceRef.current.addNodes(
 						nodeChildren,
@@ -154,6 +158,17 @@ export default function AddOrganizationModal({
 		setSelectedAccounts(filteredItems);
 	}
 
+	const errorsContainer = !!errors.length && (
+		<ClayForm.FeedbackGroup>
+			{errors.map((error, i) => (
+				<ClayForm.FeedbackItem key={i}>
+					<ClayForm.FeedbackIndicator symbol="info-circle" />
+					{error}
+				</ClayForm.FeedbackItem>
+			))}
+		</ClayForm.FeedbackGroup>
+	);
+
 	return (
 		<ClayModal center observer={observer} size="md">
 			<ClayModal.Header>
@@ -181,39 +196,27 @@ export default function AddOrganizationModal({
 					</ClayRadioGroup>
 				)}
 				{newAccountMode ? (
-					<>
-						<ClayForm.Group>
-							<label htmlFor="newAccountNameInput">
-								{Liferay.Language.get('name')}
-							</label>
+					<ClayForm.Group
+						className={classNames(errors.length && 'has-error')}
+					>
+						<label htmlFor="newAccountNameInput">
+							{Liferay.Language.get('name')}
+						</label>
 
-							<ClayInput
-								id="newAccountNameInput"
-								onChange={(event) =>
-									setNewAccountName(event.target.value)
-								}
-								value={newAccountName}
-							/>
-						</ClayForm.Group>
+						<ClayInput
+							id="newAccountNameInput"
+							onChange={(event) =>
+								setNewAccountName(event.target.value)
+							}
+							value={newAccountName}
+						/>
 
-						<ClayForm.Group>
-							<label htmlFor="administratorEmailInput">
-								{Liferay.Language.get('administrators-email')}
-							</label>
-
-							<ClayMultiSelect
-								id="administratorEmailInput"
-								inputValue={emailsQuery}
-								items={selectedUsers}
-								locator={{label: 'name', value: 'id'}}
-								onChange={setEmailsQuery}
-								onItemsChange={setSelectedUsers}
-								sourceItems={fetchedUsers}
-							/>
-						</ClayForm.Group>
-					</>
+						{errorsContainer}
+					</ClayForm.Group>
 				) : (
-					<ClayForm.Group>
+					<ClayForm.Group
+						className={classNames(errors.length && 'has-error')}
+					>
 						<label htmlFor="searchAccountInput">
 							{Liferay.Language.get('search-account')}
 						</label>
@@ -227,6 +230,8 @@ export default function AddOrganizationModal({
 							onItemsChange={handleItemsChange}
 							sourceItems={accountOptions}
 						/>
+
+						{errorsContainer}
 					</ClayForm.Group>
 				)}
 			</ClayModal.Body>

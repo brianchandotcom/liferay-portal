@@ -23,7 +23,11 @@ export const ORGANIZATIONS_PROPERTY_NAME = 'childOrganizations';
 export const ACCOUNTS_PROPERTY_NAME = 'organizationAccounts';
 export const USERS_PROPERTY_NAME_IN_ORGANIZATION = 'userAccounts';
 export const USERS_PROPERTY_NAME_IN_ACCOUNT = 'accountUserAccounts';
-export const MAX_NAME_LENGTH = 16;
+export const MAX_NAME_LENGTH = {
+	account: 16,
+	organization: 18,
+	user: 14,
+} 
 
 export const VIEWS = [
 	{
@@ -80,3 +84,6 @@ export const SYMBOLS_MAP = {
 	organization: 'organizations',
 	user: 'user',
 };
+
+export const ORGANIZATIONS_ROLE_TYPE_ID = 3;
+export const ACCOUNTS_ROLE_TYPE_ID = 6;

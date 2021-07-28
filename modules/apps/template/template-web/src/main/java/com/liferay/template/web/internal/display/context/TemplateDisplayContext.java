@@ -27,8 +27,6 @@ import java.util.List;
  */
 public interface TemplateDisplayContext {
 
-	public String getAddPermissionActionId();
-
 	public long[] getClassNameIds();
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
@@ -44,8 +42,6 @@ public interface TemplateDisplayContext {
 	public List<NavigationItem> getNavigationItems();
 
 	public long getResourceClassNameId();
-
-	public String getResourceName(long classNameId);
 
 	public String getTabs1();
 

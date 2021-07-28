@@ -15,14 +15,12 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
-import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.template.constants.TemplatePortletKeys;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -44,11 +42,6 @@ public class InformationTemplatesTemplateDisplayContext
 			ddmWebConfiguration, liferayPortletRequest, liferayPortletResponse);
 
 		_infoItemServiceTracker = infoItemServiceTracker;
-	}
-
-	@Override
-	public String getAddPermissionActionId() {
-		return DDMActionKeys.ADD_TEMPLATE;
 	}
 
 	@Override
@@ -80,11 +73,6 @@ public class InformationTemplatesTemplateDisplayContext
 			InfoItemFormProvider.class);
 
 		return _resourceClassNameId;
-	}
-
-	@Override
-	public String getResourceName(long classNameId) {
-		return TemplatePortletKeys.TEMPLATE;
 	}
 
 	@Override

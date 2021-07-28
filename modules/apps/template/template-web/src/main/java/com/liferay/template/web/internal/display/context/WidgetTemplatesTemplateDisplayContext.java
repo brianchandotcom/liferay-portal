@@ -17,7 +17,6 @@ package com.liferay.template.web.internal.display.context;
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -42,11 +41,6 @@ public class WidgetTemplatesTemplateDisplayContext
 			ddmWebConfiguration, liferayPortletRequest, liferayPortletResponse);
 
 		_portletDisplayTemplate = portletDisplayTemplate;
-	}
-
-	@Override
-	public String getAddPermissionActionId() {
-		return ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
 	}
 
 	@Override
@@ -79,14 +73,6 @@ public class WidgetTemplatesTemplateDisplayContext
 			PortletDisplayTemplate.class);
 
 		return _resourceClassNameId;
-	}
-
-	@Override
-	public String getResourceName(long classNameId) {
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-		return templateHandler.getResourceName();
 	}
 
 	@Override

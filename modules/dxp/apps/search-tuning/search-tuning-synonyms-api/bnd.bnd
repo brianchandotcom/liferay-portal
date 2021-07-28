@@ -1,3 +1,8 @@
 Bundle-Name: Liferay Search Tuning Synonyms API
 Bundle-SymbolicName: com.liferay.search.tuning.synonyms.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.search.tuning.synonyms.exception,\
+	com.liferay.search.tuning.synonyms.model,\
+	com.liferay.search.tuning.synonyms.service,\
+	com.liferay.search.tuning.synonyms.service.persistence

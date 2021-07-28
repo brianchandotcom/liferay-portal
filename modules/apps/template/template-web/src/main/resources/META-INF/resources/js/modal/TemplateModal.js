@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {
 	ClayInput,
@@ -97,6 +98,15 @@ export default function TemplateModal({
 				{Liferay.Language.get('add-template')}
 			</ClayModal.Header>
 			<ClayModal.Body>
+				{errors.other && (
+					<ClayAlert
+						displayType="danger"
+						onClose={() => {}}
+						title={Liferay.Language.get('error')}
+					>
+						{errors.other}
+					</ClayAlert>
+				)}
 				<ClayForm onSubmit={handleSubmit} ref={formRef}>
 					<Field
 						errors={errors}

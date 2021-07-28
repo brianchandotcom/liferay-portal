@@ -109,12 +109,14 @@ for (String childrenItemId : childrenItemIds) {
 				int maxNumberOfItems = Math.min(collectionCount, collectionStyledLayoutStructureItem.getNumberOfItems());
 
 				int numberOfPages = (int)Math.ceil((double)maxNumberOfItems / collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+
+				int activePage = Math.max(1, Math.min(numberOfPages, ParamUtil.getInteger(request, "page_number_" + collectionStyledLayoutStructureItem.getItemId(), 1)));
 				%>
 
 				<c:if test='<%= Objects.equals(paginationType, "numeric") %>'>
 					<clay:pagination-bar
 						activeDelta="<%= collectionStyledLayoutStructureItem.getNumberOfItemsPerPage() %>"
-						activePage='<%= Math.max(1, Math.min(numberOfPages, ParamUtil.getInteger(request, "page_number_" + collectionStyledLayoutStructureItem.getItemId(), 1))) %>'
+						activePage="<%= activePage %>"
 						additionalProps='<%=
 							HashMapBuilder.<String, Object>put(
 								"collectionId", collectionStyledLayoutStructureItem.getItemId()
@@ -132,6 +134,37 @@ for (String childrenItemId : childrenItemIds) {
 						paginationBarDeltas="<%= Collections.emptyList() %>"
 						propsTransformer="render_layout_structure/js/NumericCollectionPaginationPropsTransformer"
 						totalItems="<%= collectionStyledLayoutStructureItem.getNumberOfItems() %>"
+					/>
+				</c:if>
+
+				<c:if test='<%= Objects.equals(paginationType, "simple") %>'>
+					<div class="d-flex flex-grow-1 h-100 justify-content-center py-3" id="<%= "paginationButtons_" + collectionStyledLayoutStructureItem.getItemId() %>">
+						<clay:button
+							cssClass="font-weight-semi-bold mr-3 previous text-secondary"
+							disabled="<%= Objects.equals(activePage, 1) %>"
+							displayType="unstyled"
+							id='<%= "paginationPreviousButton_" + collectionStyledLayoutStructureItem.getItemId() %>'
+							label='<%= LanguageUtil.get(request, "previous") %>'
+						/>
+
+						<clay:button
+							cssClass="font-weight-semi-bold ml-3 next text-secondary"
+							disabled="<%= Objects.equals(activePage, numberOfPages) %>"
+							displayType="unstyled"
+							id='<%= "paginationNextButton_" + collectionStyledLayoutStructureItem.getItemId() %>'
+							label='<%= LanguageUtil.get(request, "next") %>'
+						/>
+					</div>
+
+					<liferay-frontend:component
+						context='<%=
+							HashMapBuilder.<String, Object>put(
+								"activePage", activePage
+							).put(
+								"collectionId", collectionStyledLayoutStructureItem.getItemId()
+							).build()
+						%>'
+						module="render_layout_structure/js/SimpleCollectionPagination"
 					/>
 				</c:if>
 			</div>

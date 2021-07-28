@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>SELECTED_DOCUMENT_TITLE</td>
-	<td>//span[contains(@id,'pickButtonTitle') and contains(.,'${key_dmDocumentTitle}')]</td>
+	<td>//strong[contains(@id,'pickButtonTitle') and contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

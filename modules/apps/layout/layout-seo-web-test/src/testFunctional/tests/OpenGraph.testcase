@@ -328,7 +328,7 @@ definition {
 	@description = "This ensures that OG tags will appear when Open Graph is enabled."
 	@priority = "5"
 	@refactordone
-	test CanViewMetaTagDefault {
+	test CanViewDefaultMetaTags {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");

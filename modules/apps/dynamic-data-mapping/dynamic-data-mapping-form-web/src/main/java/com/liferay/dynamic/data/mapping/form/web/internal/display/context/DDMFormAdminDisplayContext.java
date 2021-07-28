@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
@@ -55,6 +57,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -146,6 +149,7 @@ public class DDMFormAdminDisplayContext {
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
 		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever,
+		DDMFormContextDeserializer<DDMFormValues> ddmFormContextToDDMFormValues,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer,
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
@@ -168,6 +172,7 @@ public class DDMFormAdminDisplayContext {
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
 		_ddmFormBuilderSettingsRetriever = ddmFormBuilderSettingsRetriever;
+		_ddmFormContextToDDMFormValues = ddmFormContextToDDMFormValues;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_ddmFormFieldTypesSerializer = ddmFormFieldTypesSerializer;
 		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
@@ -449,24 +454,20 @@ public class DDMFormAdminDisplayContext {
 			PageContext pageContext)
 		throws Exception {
 
-		long formInstanceId = ParamUtil.getLong(
-			renderRequest, "formInstanceId");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			createDDMFormRenderingContext(pageContext, renderRequest);
-
-		setDDMFormRenderingContextDDMFormValues(
-			ddmFormRenderingContext, formInstanceId);
+		DDMForm ddmForm = createSettingsDDMForm(
+			ParamUtil.getLong(renderRequest, "formInstanceId"),
+			(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY));
 
 		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
 			DDMFormInstanceSettings.class);
 
 		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
 
-		DDMForm ddmForm = createSettingsDDMForm(formInstanceId, themeDisplay);
+		DDMFormRenderingContext ddmFormRenderingContext =
+			createDDMFormRenderingContext(pageContext, renderRequest);
+
+		ddmFormRenderingContext.setDDMFormValues(
+			getDDMFormRenderingContextDDMFormValues());
 
 		return ddmFormRenderer.getDDMFormTemplateContext(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -1364,6 +1365,28 @@ public class DDMFormAdminDisplayContext {
 			DDMFormWebKeys.DYNAMIC_DATA_MAPPING_FORM_INSTANCE_RECORD);
 	}
 
+	protected DDMFormValues getDDMFormRenderingContextDDMFormValues()
+		throws PortalException {
+
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
+
+		if (ddmFormInstance != null) {
+			return ddmFormInstance.getSettingsDDMFormValues();
+		}
+
+		String serializedSettingsContext = ParamUtil.getString(
+			renderRequest, "serializedSettingsContext");
+
+		if (Validator.isNull(serializedSettingsContext)) {
+			return null;
+		}
+
+		return _ddmFormContextToDDMFormValues.deserialize(
+			DDMFormContextDeserializerRequest.with(
+				DDMFormFactory.create(DDMFormInstanceSettings.class),
+				serializedSettingsContext));
+	}
+
 	protected Locale getDefaultLocale() {
 		String i18nLanguageId = (String)renderRequest.getAttribute(
 			WebKeys.I18N_LANGUAGE_ID);
@@ -1613,22 +1636,6 @@ public class DDMFormAdminDisplayContext {
 		ddmFormInstanceSearch.setTotal(total);
 	}
 
-	protected void setDDMFormRenderingContextDDMFormValues(
-			DDMFormRenderingContext ddmFormRenderingContext,
-			long formInstanceId)
-		throws PortalException {
-
-		DDMFormInstance formInstance =
-			_ddmFormInstanceLocalService.fetchFormInstance(formInstanceId);
-
-		if (formInstance == null) {
-			return;
-		}
-
-		ddmFormRenderingContext.setDDMFormValues(
-			formInstance.getSettingsDDMFormValues());
-	}
-
 	protected final DDMFormRenderer ddmFormRenderer;
 	protected final DDMFormAdminRequestHelper formAdminRequestHelper;
 	protected final JSONFactory jsonFactory;
@@ -1721,6 +1728,8 @@ public class DDMFormAdminDisplayContext {
 	private DDMFormBuilderSettingsResponse _ddmFormBuilderSettingsResponse;
 	private final DDMFormBuilderSettingsRetriever
 		_ddmFormBuilderSettingsRetriever;
+	private final DDMFormContextDeserializer<DDMFormValues>
+		_ddmFormContextToDDMFormValues;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
 	private final DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -34,6 +35,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
@@ -153,6 +155,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddmFormBuilderContextFactory,
 					_ddmFormBuilderSettingsRetriever,
+					_ddmFormContextToDDMFormValues,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
@@ -176,6 +179,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddmFormBuilderContextFactory,
 					_ddmFormBuilderSettingsRetriever,
+					_ddmFormContextToDDMFormValues,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
@@ -211,6 +215,12 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMFormBuilderSettingsRetriever _ddmFormBuilderSettingsRetriever;
+
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formValues)"
+	)
+	private DDMFormContextDeserializer<DDMFormValues>
+		_ddmFormContextToDDMFormValues;
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

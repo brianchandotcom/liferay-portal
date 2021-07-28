@@ -243,7 +243,13 @@ public class OrganizationResourceImpl
 			emailAddress, _getServiceBuilderOrganizationId(organizationId),
 			serviceContext);
 
-		return _userResourceDTOConverter.toDTO(user);
+		return _userResourceDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				_dtoConverterRegistry, user.getUserId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			user);
 	}
 
 	@Override
@@ -259,7 +265,7 @@ public class OrganizationResourceImpl
 				postUserAccountByEmailAddress(organizationId, emailAddress));
 		}
 
-		if (!organizationRoleIds.isEmpty()) {
+		if (Validator.isNotNull(organizationRoleIds)) {
 			String[] orgRoleIds = StringUtil.split(
 				organizationRoleIds, CharPool.COMMA);
 

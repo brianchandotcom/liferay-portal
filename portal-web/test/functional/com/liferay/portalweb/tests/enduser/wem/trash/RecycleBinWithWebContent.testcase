@@ -55,6 +55,26 @@ definition {
 	}
 
 	@priority = "3"
+	test DisableRecycleBin {
+		task ("Go to site to disable recycle bin") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+			RecycleBin.disableRecycleBinViaSiteSettings();
+		}
+
+		task ("Add a web content and delete it") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContent.deleteWithDisabledRB(entryTitle = "Web Content Title");
+		}
+	}
+
+	@priority = "3"
 	test MoveFolderWithWebContentToRecycleBin {
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
@@ -80,6 +100,216 @@ definition {
 			assetName = "WC Folder Name",
 			assetType = "Web Content Folder",
 			deleteUser = "Test Test");
+	}
+
+	@description = "This is a use case for LPS-123274. Can move web content to recycle bin via drag and drop."
+	@priority = "3"
+	test MoveWebContentToRecycleBinViaDragAndDrop {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Navigate to Web Content admin") {
+			ApplicationsMenu.gotoSite(site = "Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Web Content");
+		}
+
+		task ("Expand the Recycle Bin category") {
+			ProductMenuHelper.expandCategory(category = "Recycle Bin");
+		}
+
+		task ("Move the web content to recycle bin via drag and drop") {
+			DragAndDrop.dragAndDropToObject(
+				key_listEntry = "Web Content Title",
+				key_portlet = "Recycle Bin",
+				locator1 = "LexiconList#LIST_ENTRY",
+				locator2 = "ProductMenu#PORTLET",
+				value1 = "Web Content Title");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the web content is not shown in Web Content admin") {
+			AssertElementNotPresent(
+				key_webContentTitle = "Web Content Title",
+				locator1 = "WC#ENTRY_LIST_TITLE");
+		}
+
+		task ("Assert the web content is shown in Recycle Bin") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.viewCP(
+				assetName = "Web Content Title",
+				assetType = "Web Content Article",
+				deleteUser = "Test Test");
+		}
+	}
+
+	@priority = "3"
+	test RecycleBinStaging {
+		task ("Add a WCD to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Go to page and add a web content via WCD") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page",
+				siteName = "Site Name");
+
+			WebContent.addPGViaWCD(
+				webContentContent = "WC Content",
+				webContentTitle = "WC Title");
+
+			WebContent.viewPGViaWCD(webContentContent = "WC Content");
+		}
+
+		task ("Enbale local staging without web content") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(
+				siteName = "Site Name",
+				uncheckContent = "Web Content");
+		}
+
+		task ("Add a blogs widget and entry to blogs in staging site") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Test Page",
+				site = "false",
+				widgetName = "Blogs");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Site Name (Staging)",
+				site = "false");
+		}
+
+		task ("Move web content and blog entry to recycle bin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContent.moveToRecycleBinCP(
+				assetType = "Web Content Article",
+				webContentTitle = "WC Title");
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page",
+				siteName = "Site Name");
+
+			BlogsEntry.moveToRecycleBinPG(
+				assetType = "Blogs Entry",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("View blog and WC in recycle bin") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name-staging");
+
+			RecycleBin.viewCP(
+				assetName = "Blogs Entry Title",
+				assetType = "Blogs Entry",
+				deleteUser = "Test Test");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.viewCP(
+				assetName = "WC Title",
+				assetType = "Web Content Article",
+				deleteUser = "Test Test");
+		}
+	}
+
+	@priority = "3"
+	test RecycleBinWebContent {
+		task ("Add a structure with text field and save") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a template to that structure") {
+			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a WC basing on the created structure and publish") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "WC WebContent Text",
+				webContentTitle = "WC WebContent Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Move WC to recycle bin and view in recycle bin") {
+			WebContent.moveToRecycleBinCP(
+				assetType = "Web Content Article",
+				webContentTitle = "WC WebContent Title");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.viewCP(
+				assetName = "WC WebContent Title",
+				assetType = "Web Content Article",
+				deleteUser = "Test Test");
+		}
+		task ("Restore WC and view the WC, structure, template are all restored") {
+			RecycleBin.restoreCP(
+				assetName = "WC WebContent Title",
+				assetRestoreLocation = "Home",
+				assetType = "Web Content Article");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContent.viewWithStructureCP(
+				webContentText = "WC WebContent Text",
+				webContentTitle = "WC WebContent Title");
+
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+			WebContentStructures.viewCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+
+			WebContentTemplates.viewCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "WC Template Name");
+		}
 	}
 
 	@priority = "3"
@@ -139,6 +369,161 @@ definition {
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
+	}
+
+	@priority = "3"
+	test RestoreWebContentFromFolderCP {
+		task ("Add a WC folder and a web content to it") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				folderName = "WC Folder Name",
+				groupName = "Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Move WC folder to recycle bin and restore the WC") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.moveToRecycleBinCP(
+				assetType = "Web Content Folder",
+				folderName = "WC Folder Name");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreContentFromFolderCP(
+				assetName = "WC Folder Name",
+				assetRestoreLocation = "Home",
+				assetType = "Web Content Folder",
+				assetType2 = "Web Content Article",
+				documentName = "Web Content Title");
+		}
+
+		task ("Assert WC is restored") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.viewCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
+	@priority = "3"
+	test RestoreWebContentWithArticleVersions {
+		task ("Add a WC folder and WC to the folder") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				folderName = "WC Folder Name",
+				groupName = "Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Edit the web content 3 times") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 1",
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit 1");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 2",
+				webContentTitle = "Web Content Title Edit 1",
+				webContentTitleEdit = "Web Content Title Edit 2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 2");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 3",
+				webContentTitle = "Web Content Title Edit 2",
+				webContentTitleEdit = "Web Content Title Edit 3");
+		}
+
+		task ("Expire the third web content") {
+			WebContent.expireSpecificVersionCP(
+				webContentList = "Web Content Title Edit 1,Web Content Title Edit 2",
+				webContentTitle = "Web Content Title Edit 3");
+		}
+
+		task ("Save the web content as draft") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 3");
+
+			WebContent.editCP(
+				saveAsDraft = "true",
+				webContentContentEdit = "Web Content Content Edit Draft",
+				webContentTitle = "Web Content Title Edit 3",
+				webContentTitleEdit = "Web Content Title Edit Draft");
+		}
+
+		task ("Move WC folder to recycle bin and restore in recycle bin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.moveToRecycleBinCP(
+				assetType = "Web Content Folder",
+				folderName = "WC Folder Name");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreCP(
+				assetName = "WC Folder Name",
+				assetRestoreLocation = "Home",
+				assetType = "Web Content Folder");
+		}
+
+		task ("View WC status in specific version") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title Edit Draft",
+				menuItem = "View History");
+
+			WebContent.viewSpecificVersionHistoryCP(
+				webContentStatus = "APPROVED",
+				webContentTitle = "Web Content Title");
+
+			WebContent.viewSpecificVersionHistoryCP(
+				webContentStatus = "EXPIRED",
+				webContentTitle = "Web Content Title Edit 1");
+
+			WebContent.viewSpecificVersionHistoryCP(
+				webContentStatus = "EXPIRED",
+				webContentTitle = "Web Content Title Edit 2");
+
+			WebContent.viewSpecificVersionHistoryCP(
+				webContentStatus = "APPROVED",
+				webContentTitle = "Web Content Title Edit 3");
+
+			WebContent.viewSpecificVersionHistoryCP(
+				webContentStatus = "DRAFT",
+				webContentTitle = "Web Content Title Edit Draft");
+		}
 	}
 
 	@priority = "3"

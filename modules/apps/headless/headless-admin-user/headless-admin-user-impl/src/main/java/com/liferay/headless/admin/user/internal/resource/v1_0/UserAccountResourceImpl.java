@@ -685,6 +685,19 @@ public class UserAccountResourceImpl
 	protected void preparePatch(
 		UserAccount userAccount, UserAccount existingUserAccount) {
 
+		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
+
+		if (accountBriefs != null) {
+			existingUserAccount.setAccountBriefs(accountBriefs);
+		}
+
+		OrganizationBrief[] organizationBriefs =
+			userAccount.getOrganizationBriefs();
+
+		if (organizationBriefs != null) {
+			existingUserAccount.setOrganizationBriefs(organizationBriefs);
+		}
+
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
 

@@ -17,16 +17,18 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 const ImportStructureModal = ({namespace, onClose: onCloseProp}) => {
 	const {observer, onClose} = useModal({
 		onClose: onCloseProp,
 	});
 	const inputFileRef = useRef();
-
 	const nameInputId = `${namespace}_name`;
 	const jsonFileInputId = `${namespace}_jsonFile`;
+	const [inputFile, setInputFile] = useState();
+	const [fileName, setFileName] = useState('');
+	const [structureName, setStructureName] = useState('');
 
 	return (
 		<ClayModal observer={observer} size="md">
@@ -48,15 +50,24 @@ const ImportStructureModal = ({namespace, onClose: onCloseProp}) => {
 					</label>
 					<ClayInput
 						id={nameInputId}
-						name={`${namespace}_name`}
+						name={nameInputId}
+						onChange={(event) =>
+							setStructureName(event.target.value)
+						}
 						type="text"
+						value={structureName}
 					/>
 					<label htmlFor={jsonFileInputId}>
 						{Liferay.Language.get('json-file')}
 					</label>
 					<ClayInput.Group>
 						<ClayInput.GroupItem prepend>
-							<ClayInput id={jsonFileInputId} type="text" />
+							<ClayInput
+								disabled
+								id={jsonFileInputId}
+								type="text"
+								value={fileName}
+							/>
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem append shrink>
 							<ClayButton
@@ -66,16 +77,29 @@ const ImportStructureModal = ({namespace, onClose: onCloseProp}) => {
 								{Liferay.Language.get('select')}
 							</ClayButton>
 						</ClayInput.GroupItem>
-						<ClayInput.GroupItem shrink>
-							<ClayButton displayType="secondary">
-								{Liferay.Language.get('clear')}
-							</ClayButton>
-						</ClayInput.GroupItem>
+						{inputFile && (
+							<ClayInput.GroupItem shrink>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => {
+										setFileName('');
+										setInputFile(null);
+									}}
+								>
+									{Liferay.Language.get('clear')}
+								</ClayButton>
+							</ClayInput.GroupItem>
+						)}
 					</ClayInput.Group>
 				</ClayForm.Group>
 				<input
 					className="d-none"
-					name={`${namespace}_jsonFile`}
+					name={jsonFileInputId}
+					onChange={(event) => {
+						const [file] = event.target.files;
+						setInputFile(file);
+						setFileName(file.name);
+					}}
 					ref={inputFileRef}
 					type="file"
 				/>
@@ -86,7 +110,10 @@ const ImportStructureModal = ({namespace, onClose: onCloseProp}) => {
 						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
-						<ClayButton>
+						<ClayButton
+							disabled={!inputFile || !structureName}
+							type="submit"
+						>
 							{Liferay.Language.get('import')}
 						</ClayButton>
 					</ClayButton.Group>

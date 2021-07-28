@@ -50,6 +50,11 @@
 	<td>//a[contains(@class,'dropdown-toggle')][contains(.,'${key_pageName}')]/parent::li[contains(@class,'open')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SPLIT_BUTTON_DROPDOWNS_ITEM</td>
+	<td>//ul[contains(@class,'split-button-dropdowns')]//li//a[normalize-space()='${key_itemName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

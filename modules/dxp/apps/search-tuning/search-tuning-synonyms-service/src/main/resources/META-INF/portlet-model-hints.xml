@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.search.tuning.synonyms.model.STSynonymsEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="STSynonymsEntryId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+</model-hints>

@@ -1,0 +1,1 @@
+create index IX_B5CC02A9 on STSynonymsEntry (companyId);

@@ -23,8 +23,13 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const DIGIT_REGEX = /\d/i;
 const LETTER_REGEX = /[a-z]/i;
+const NOT_LETTER_REGEX = /[^a-z]/gi;
 
 const getDateMask = (dateDelimiter, dateFormat) => {
+	const lastSymbol = dateFormat.slice(-1).match(NOT_LETTER_REGEX);
+
+	dateFormat = lastSymbol ? dateFormat.slice(0, -1) : dateFormat;
+
 	return dateFormat
 		.split(dateDelimiter)
 		.map((item) => {

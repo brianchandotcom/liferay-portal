@@ -32,6 +32,557 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that an asset library custom document entry can be displayed with the default display page template on a connected site."
+	@priority = "5"
+	test CanViewDepotDMUsingDepotType {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Test Site Name");
+
+		JSONDepot.updateStructureState(
+			groupName = "Test Site Name",
+			structureState = "Available");
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "DM Document Type Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			composition = "true",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Paragraph",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Text");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			textField = "Text");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureAddSiteScopes(depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		DMDocument.viewPGViaAP(
+			contentList = "DM Document Title,Text",
+			displayPageTemplate = "true",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test ensures that an asset library document entry created with a type stored in the global site can be displayed with the default display page template on the generic site."
+	@priority = "5"
+	test CanViewDepotDMUsingGolbalType {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Test Site Name");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "global");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			displayPageTemplateEntryName = "Display Page Name",
+			globalDocumentType = "true",
+			groupName = "Test Site Name",
+			subType = "DM Document Type Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			composition = "true",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Paragraph",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Text");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			textField = "Text");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureAddSiteScopes(depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		DMDocument.viewPGViaAP(
+			contentList = "DM Document Title,Text",
+			displayPageTemplate = "true",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test ensures that an asset library custom article can be displayed with the default display page template on a connected site."
+	@priority = "5"
+	test CanViewDepotWCUsingDepotStructure {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Test Site Name");
+
+		JSONDepot.updateStructureState(
+			groupName = "Test Site Name",
+			structureState = "Available");
+
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			depotName = "Test Depot Name",
+			depotStructure = "true",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "WC Structure Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			composition = "true",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Paragraph",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Text");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "WC WebContent Content",
+			webContentTitle = "WC Webcontent Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureAddSiteScopes(depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.viewPGViaAP(
+			contentList = "WC Webcontent Title,WC WebContent Content",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC Webcontent Title");
+	}
+
+	@description = "This test ensures that an asset library article created with a structure stored in the global site can be displayed with the default display page template on the generic site."
+	@priority = "5"
+	test CanViewDepotWCUsingGolbalStructure {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			globalStructure = "true",
+			groupName = "Test Site Name",
+			subType = "WC Structure Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			composition = "true",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Paragraph",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Text");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "WC WebContent Content",
+			webContentTitle = "WC Webcontent Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureAddSiteScopes(depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.viewPGViaAP(
+			contentList = "WC Webcontent Title,WC WebContent Content",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC Webcontent Title");
+	}
+
+	@description = "This test ensures that a site document entry created with a type stored in an asset library can be displayed with the default display page template on a connected site."
+	@priority = "5"
+	test CanViewSiteDMUsingDepotType {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Test Site Name");
+
+		JSONDepot.updateStructureState(
+			groupName = "Test Site Name",
+			structureState = "Available");
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Document",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "DM Document Type Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			composition = "true",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Paragraph",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Text");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			textField = "Text");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureAddSiteScopes(depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		DMDocument.viewPGViaAP(
+			contentList = "DM Document Title,Text",
+			displayPageTemplate = "true",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test ensures that a site article created with a structure stored in an asset library can be displayed with the default display page template on a connected site."
+	@priority = "5"
+	test CanViewSiteWCUsingDepotStructure {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Test Site Name");
+
+		JSONDepot.updateStructureState(
+			groupName = "Test Site Name",
+			structureState = "Available");
+
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			depotName = "Test Depot Name",
+			depotStructure = "true",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "WC Structure Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			composition = "true",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Paragraph",
+			id = "element-text");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Text");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentText = "WC WebContent Content",
+			webContentTitle = "WC Webcontent Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.viewPGViaAP(
+			contentList = "WC Webcontent Title,WC WebContent Content",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC Webcontent Title");
+	}
+
 	@description = "This test ensures that a user can map the display page with Open Graph when using the DM type from AL on a connect site."
 	@priority = "5"
 	@refactorneeded

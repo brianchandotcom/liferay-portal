@@ -27,6 +27,7 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
+import {isLayoutDataItemDeleted} from '../../../../../../app/utils/isLayoutDataItemDeleted';
 import {useId} from '../../../../../../app/utils/useId';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
@@ -36,7 +37,8 @@ const selectConfiguredCollectionDisplays = (state) =>
 		(item) =>
 			item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 			item.config?.collection &&
-			Object.keys(item.config.collection).length > 0
+			Object.keys(item.config.collection).length > 0 &&
+			!isLayoutDataItemDeleted(state.layoutData, item.itemId)
 	);
 
 function TargetCollectionsField({onValueSelect, value}) {

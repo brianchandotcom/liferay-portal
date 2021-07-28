@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -188,6 +189,10 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
+		String cdnUrl = ParamUtil.getString(actionRequest, "cdnUrl");
+
+		boolean cdnEnabled = Validator.isNotNull(cdnUrl);
+
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
 
@@ -198,7 +203,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 		if (cpAttachmentFileEntryId > 0) {
 			_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
-				cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
+				serviceContext.getUserId(), cpAttachmentFileEntryId,
+				fileEntryId, cdnEnabled, cdnUrl, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -209,11 +215,12 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
-				fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, ddmFormValues,
-				priority, type, serviceContext);
+				fileEntryId, cdnEnabled, cdnUrl, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, titleMap, ddmFormValues, priority, type,
+				serviceContext);
 		}
 	}
 

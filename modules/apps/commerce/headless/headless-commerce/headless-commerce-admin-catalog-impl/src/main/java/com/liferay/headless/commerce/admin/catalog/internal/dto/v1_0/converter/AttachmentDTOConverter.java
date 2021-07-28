@@ -73,6 +73,8 @@ public class AttachmentDTOConverter
 
 		return new Attachment() {
 			{
+				cdnEnabled = cpAttachmentFileEntry.isCdnEnabled();
+				cdnURL = cpAttachmentFileEntry.getCdnURL();
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					CPAttachmentFileEntry.class.getName(),

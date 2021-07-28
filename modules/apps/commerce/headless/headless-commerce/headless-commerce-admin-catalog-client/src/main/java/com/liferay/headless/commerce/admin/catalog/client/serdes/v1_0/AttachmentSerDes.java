@@ -75,6 +75,30 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (attachment.getCdnEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdnEnabled\": ");
+
+			sb.append(attachment.getCdnEnabled());
+		}
+
+		if (attachment.getCdnURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdnURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getCdnURL()));
+
+			sb.append("\"");
+		}
+
 		if (attachment.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -241,6 +265,20 @@ public class AttachmentSerDes {
 			map.put("attachment", String.valueOf(attachment.getAttachment()));
 		}
 
+		if (attachment.getCdnEnabled() == null) {
+			map.put("cdnEnabled", null);
+		}
+		else {
+			map.put("cdnEnabled", String.valueOf(attachment.getCdnEnabled()));
+		}
+
+		if (attachment.getCdnURL() == null) {
+			map.put("cdnURL", null);
+		}
+		else {
+			map.put("cdnURL", String.valueOf(attachment.getCdnURL()));
+		}
+
 		if (attachment.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -349,6 +387,16 @@ public class AttachmentSerDes {
 			if (Objects.equals(jsonParserFieldName, "attachment")) {
 				if (jsonParserFieldValue != null) {
 					attachment.setAttachment((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "cdnEnabled")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setCdnEnabled((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "cdnURL")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setCdnURL((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

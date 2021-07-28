@@ -87,7 +87,13 @@ public class CommerceProductAttachmentDataSetDataProvider
 			String title = cpAttachmentFileEntry.getTitle(
 				LanguageUtil.getLanguageId(locale));
 
-			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+			String extension = StringPool.BLANK;
+
+			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+			if (fileEntry != null) {
+				extension = HtmlUtil.escape(fileEntry.getExtension());
+			}
 
 			Date modifiedDate = cpAttachmentFileEntry.getModifiedDate();
 
@@ -111,8 +117,7 @@ public class CommerceProductAttachmentDataSetDataProvider
 						CommerceMediaResolverUtil.getThumbnailURL(
 							CommerceAccountConstants.ACCOUNT_ID_GUEST,
 							cpAttachmentFileEntryId)),
-					HtmlUtil.escape(title),
-					HtmlUtil.escape(fileEntry.getExtension()),
+					HtmlUtil.escape(title), extension,
 					cpAttachmentFileEntry.getPriority(),
 					LanguageUtil.format(
 						httpServletRequest, "x-ago", modifiedDateDescription,

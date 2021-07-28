@@ -12,25 +12,30 @@
  * details.
  */
 
-package com.liferay.commerce.product.model.impl;
+package com.liferay.commerce.product.exception;
 
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Marco Leo
- * @author Andrea Di Giorgi
  */
-public class CPAttachmentFileEntryImpl extends CPAttachmentFileEntryBaseImpl {
+public class CPAttachmentFileEntryCDNURLException extends PortalException {
 
-	@Override
-	public FileEntry fetchFileEntry() throws PortalException {
-		if (isCdnEnabled()) {
-			return null;
-		}
+	public CPAttachmentFileEntryCDNURLException() {
+	}
 
-		return DLAppLocalServiceUtil.getFileEntry(getFileEntryId());
+	public CPAttachmentFileEntryCDNURLException(String msg) {
+		super(msg);
+	}
+
+	public CPAttachmentFileEntryCDNURLException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	public CPAttachmentFileEntryCDNURLException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

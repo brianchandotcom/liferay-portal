@@ -60,7 +60,7 @@ public interface CPAttachmentFileEntry
 
 			};
 
-	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
+	public com.liferay.portal.kernel.repository.model.FileEntry fetchFileEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }

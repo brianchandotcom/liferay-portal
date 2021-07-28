@@ -64,7 +64,7 @@ public class CPAttachmentFileEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,10 @@ public class CPAttachmentFileEntryCacheModel
 		sb.append(classPK);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
+		sb.append(", cdnEnabled=");
+		sb.append(cdnEnabled);
+		sb.append(", cdnURL=");
+		sb.append(cdnURL);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -167,6 +171,14 @@ public class CPAttachmentFileEntryCacheModel
 		cpAttachmentFileEntryImpl.setClassNameId(classNameId);
 		cpAttachmentFileEntryImpl.setClassPK(classPK);
 		cpAttachmentFileEntryImpl.setFileEntryId(fileEntryId);
+		cpAttachmentFileEntryImpl.setCdnEnabled(cdnEnabled);
+
+		if (cdnURL == null) {
+			cpAttachmentFileEntryImpl.setCdnURL("");
+		}
+		else {
+			cpAttachmentFileEntryImpl.setCdnURL(cdnURL);
+		}
 
 		if (displayDate == Long.MIN_VALUE) {
 			cpAttachmentFileEntryImpl.setDisplayDate(null);
@@ -253,6 +265,9 @@ public class CPAttachmentFileEntryCacheModel
 		classPK = objectInput.readLong();
 
 		fileEntryId = objectInput.readLong();
+
+		cdnEnabled = objectInput.readBoolean();
+		cdnURL = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		title = objectInput.readUTF();
@@ -309,6 +324,16 @@ public class CPAttachmentFileEntryCacheModel
 		objectOutput.writeLong(classPK);
 
 		objectOutput.writeLong(fileEntryId);
+
+		objectOutput.writeBoolean(cdnEnabled);
+
+		if (cdnURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(cdnURL);
+		}
+
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 
@@ -357,6 +382,8 @@ public class CPAttachmentFileEntryCacheModel
 	public long classNameId;
 	public long classPK;
 	public long fileEntryId;
+	public boolean cdnEnabled;
+	public String cdnURL;
 	public long displayDate;
 	public long expirationDate;
 	public String title;

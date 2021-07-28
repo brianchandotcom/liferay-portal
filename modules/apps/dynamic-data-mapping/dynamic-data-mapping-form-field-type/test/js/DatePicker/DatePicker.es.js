@@ -228,4 +228,23 @@ describe('DatePicker', () => {
 			).toBeTruthy()
 		);
 	});
+
+	it('fills the input completely when last item of a date mask is a symbol Ex: (YYYY.MM.DD.)', () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container} = render(
+			<DatePicker
+				{...defaultDatePickerConfig}
+				label="Field date"
+				locale="hu_HU"
+				onChange={handleFieldEdited}
+			/>
+		);
+
+		const input = container.querySelector('[type=text]');
+
+		userEvent.type(input, '1111.11.11.');
+
+		expect(input.value).toBe('1111.11.11.');
+	});
 });

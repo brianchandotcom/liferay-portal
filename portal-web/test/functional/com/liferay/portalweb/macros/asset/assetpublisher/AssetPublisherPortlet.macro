@@ -76,6 +76,22 @@ definition {
 			SiteSelector.selectSite(site = "${otherSite}");
 		}
 
+		if (isSet(depotName)) {
+			Click(locator1 = "Configuration#SCOPE_SELECT");
+
+			MenuItem.click(menuItem = "Other Site or Asset Library...");
+
+			SelectFrame(value1 = "relative=top");
+
+			SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+			Navigator.gotoNavTab(navTab = "Asset Libraries");
+
+			Click(
+				key_card = "${depotName}",
+				locator1 = "Card#CARD_TITLE");
+		}
+
 		if (isSet(defaultSite)) {
 			Click(locator1 = "Configuration#SCOPE_SELECT");
 

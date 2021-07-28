@@ -58,6 +58,10 @@ public interface BatchPlannerPlanService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerPlan fetchBatchPlannerPlan(long batchPlannerPlanId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchPlannerPlan getBatchPlannerPlan(long batchPlannerPlanId)
 		throws PortalException;
 

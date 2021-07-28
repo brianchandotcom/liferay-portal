@@ -137,6 +137,47 @@ public class BatchPlannerPlanServiceHttp {
 	}
 
 	public static com.liferay.batch.planner.model.BatchPlannerPlan
+			fetchBatchPlannerPlan(
+				HttpPrincipal httpPrincipal, long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchPlannerPlanServiceUtil.class, "fetchBatchPlannerPlan",
+				_fetchBatchPlannerPlanParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, batchPlannerPlanId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.planner.model.BatchPlannerPlan)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPlan
 			getBatchPlannerPlan(
 				HttpPrincipal httpPrincipal, long batchPlannerPlanId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -144,7 +185,7 @@ public class BatchPlannerPlanServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				BatchPlannerPlanServiceUtil.class, "getBatchPlannerPlan",
-				_getBatchPlannerPlanParameterTypes2);
+				_getBatchPlannerPlanParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, batchPlannerPlanId);
@@ -186,7 +227,7 @@ public class BatchPlannerPlanServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				BatchPlannerPlanServiceUtil.class, "updateBatchPlannerPlan",
-				_updateBatchPlannerPlanParameterTypes3);
+				_updateBatchPlannerPlanParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, batchPlannerPlanId, name);
@@ -229,9 +270,11 @@ public class BatchPlannerPlanServiceHttp {
 		};
 	private static final Class<?>[] _deleteBatchPlannerPlanParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getBatchPlannerPlanParameterTypes2 =
+	private static final Class<?>[] _fetchBatchPlannerPlanParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateBatchPlannerPlanParameterTypes3 =
+	private static final Class<?>[] _getBatchPlannerPlanParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateBatchPlannerPlanParameterTypes4 =
 		new Class[] {long.class, String.class};
 
 }

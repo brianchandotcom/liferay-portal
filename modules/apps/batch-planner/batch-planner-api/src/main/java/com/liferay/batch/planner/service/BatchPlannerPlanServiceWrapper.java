@@ -53,6 +53,15 @@ public class BatchPlannerPlanServiceWrapper
 	}
 
 	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPlan
+			fetchBatchPlannerPlan(long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPlanService.fetchBatchPlannerPlan(
+			batchPlannerPlanId);
+	}
+
+	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPlan getBatchPlannerPlan(
 			long batchPlannerPlanId)
 		throws com.liferay.portal.kernel.exception.PortalException {

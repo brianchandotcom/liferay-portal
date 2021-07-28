@@ -52,6 +52,13 @@ public class BatchPlannerPlanServiceUtil {
 		return getService().deleteBatchPlannerPlan(batchPlannerPlanId);
 	}
 
+	public static BatchPlannerPlan fetchBatchPlannerPlan(
+			long batchPlannerPlanId)
+		throws PortalException {
+
+		return getService().fetchBatchPlannerPlan(batchPlannerPlanId);
+	}
+
 	public static BatchPlannerPlan getBatchPlannerPlan(long batchPlannerPlanId)
 		throws PortalException {
 

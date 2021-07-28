@@ -163,6 +163,10 @@
 			<roles>
 				<role>
 					<role-type>account</role-type>
+					<name>Account Administrator</name>
+				</role>
+				<role>
+					<role-type>account</role-type>
 					<name>Account Member</name>
 				</role>
 				<role>

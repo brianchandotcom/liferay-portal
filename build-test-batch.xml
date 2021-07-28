@@ -3627,6 +3627,47 @@ log.sanitizer.enabled=false</echo>
 		<run-archived-modules-test />
 	</target>
 
+	<target name="modules-integration-aws-test-jdk8">
+		<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
+
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="aws.bucket.id" />
+		</tstamp>
+
+		<ant antfile="build-test-aws-s3.xml" target="configure-aws-cli" />
+		
+		<prepare-aws-s3-configuration />
+
+		<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
+
+		<trycatch>
+			<try>
+				<run-modules-integration-test
+					database.type="mysql"
+					database.version="5.7"
+					test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+					test.fix.pack.base.url="${test.fix.pack.base.url}"
+					test.license.xml.url="${test.license.xml.url}"
+					test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+					test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+					test.portal.bundle.version="${test.portal.bundle.version}"
+					test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+					test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+					test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+					test.sql.zip.url="${test.sql.zip.url}"
+				/>
+			</try>
+
+			<finally>
+				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
+			</finally>
+		</trycatch>
+	</target>
+
 	<target name="blade-samples-jdk8">
 		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
 

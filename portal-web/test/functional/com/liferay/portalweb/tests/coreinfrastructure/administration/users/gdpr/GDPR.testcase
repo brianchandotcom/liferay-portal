@@ -546,17 +546,17 @@ definition {
 		Navigator.gotoPage(pageName = "Contacts Center Page");
 
 		ContactsCenter.addPG(
-			contactName = "test1",
+			contactName = "testfn testln",
 			emailAddress = "test1@liferay.com");
 
 		ContactsCenter.viewContactPG(
-			contactName = "test1",
+			contactName = "testfn testln",
 			emailAddress = "test1@liferay.com");
 
 		JSONWebcontent.addWebContent(
-			content = "This is a WC Content for GDPR Export testing.",
+			content = "This is a WC Content for GDPR testing.",
 			groupName = "Guest",
-			title = "GDPR Export Article",
+			title = "GDPR Article",
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
@@ -579,23 +579,43 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		GDPR.filterByApplications(
-			applications = "Contacts Center",
-			itemsCount = "1");	
+		Click.clickNoWaitForVisible(
+			key_selectData = "Contacts Center",
+			locator1 = "DataErasure#REVIEW_DATA_SELECT");
+
+		AssertElementPresent(
+			key_rowEntry = "testfn testln",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 		GDPR.filterByScope(scope = "Regular Sites");
 
-		GDPR.filterByApplications(
-			applications = "Bookmarks",
-			itemsCount = "1");
+		Click.clickNoWaitForVisible(
+			key_selectData = "Bookmarks",
+			locator1 = "DataErasure#REVIEW_DATA_SELECT");
 
-		GDPR.filterByApplications(
-			applications = "Forms",
-			itemsCount = "2");	
+		AssertElementPresent(
+			key_rowEntry = "Test Bookmark",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
-		GDPR.filterByApplications(
-			applications = "Web Content",
-			itemsCount = "1");	
+		Click.clickNoWaitForVisible(
+			key_selectData = "Forms",
+			locator1 = "DataErasure#REVIEW_DATA_SELECT");
+
+		AssertElementPresent(
+			key_rowEntry = "Created Form Name",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		Click.clickNoWaitForVisible(
+			key_selectData = "Web Content",
+			locator1 = "DataErasure#REVIEW_DATA_SELECT");
+
+		Click.clickNoWaitForVisible(
+			key_selectData = "JournalArticle",
+			locator1 = "DataErasure#REVIEW_DATA_SELECT");
+
+		AssertElementPresent(
+			key_rowEntry = "gdpr-article",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 	}
 
 	@description = "LPS-77749"

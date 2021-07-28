@@ -26,6 +26,11 @@ import React, {useReducer, useRef, useState} from 'react';
 
 import Field from './Field';
 
+const DEFAULT_OPTION = {
+	label: `- ${Liferay.Language.get('not-selected')} -`,
+	value: -1,
+};
+
 export default function TemplateModal({
 	addDDMTemplateURL,
 	itemTypes = [],
@@ -42,7 +47,7 @@ export default function TemplateModal({
 	);
 
 	const [name, setName] = useState('');
-	const [itemType, setItemType] = useState(null);
+	const [itemType, setItemType] = useState(DEFAULT_OPTION.value);
 	const [itemSubtype, setItemSubtype] = useState(null);
 
 	const formRef = useRef(null);
@@ -116,7 +121,11 @@ export default function TemplateModal({
 					>
 						<ClayInput
 							id={nameId}
-							onChange={(event) => setName(event.target.value)}
+							onChange={(event) => {
+								setName(event.target.value);
+
+								setErrors({name: null});
+							}}
 							value={name}
 						/>
 					</Field>
@@ -135,17 +144,17 @@ export default function TemplateModal({
 								const itemType =
 									value === -1 ? null : itemTypes[value];
 
-								const [subtype] = itemType.subtypes || [];
-
 								setItemType(itemType);
-								setItemSubtype(subtype);
+								setErrors({itemType: null});
+
+								if (itemType.subtypes?.length) {
+									setItemSubtype(DEFAULT_OPTION.value);
+								}
 							}}
 						>
 							<ClaySelect.Option
-								label={`- ${Liferay.Language.get(
-									'not-selected'
-								)} -`}
-								value="-1"
+								label={DEFAULT_OPTION.label}
+								value={DEFAULT_OPTION.value}
 							/>
 
 							{itemTypes.map((itemType, index) => (
@@ -167,10 +176,11 @@ export default function TemplateModal({
 						>
 							<ClaySelectWithOption
 								id={itemSubtypeId}
-								onChange={(event) =>
-									setItemSubtype(event.target.value)
-								}
-								options={itemType.subtypes}
+								onChange={(event) => {
+									setItemSubtype(event.target.value);
+									setErrors({itemSubtype: null});
+								}}
+								options={[DEFAULT_OPTION, ...itemType.subtypes]}
 							/>
 						</Field>
 					)}

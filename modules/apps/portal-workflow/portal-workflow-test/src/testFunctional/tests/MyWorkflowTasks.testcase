@@ -1035,11 +1035,51 @@ definition {
 	}
 
 	@description = "Verify that the pagination component is displayed when the table has 5 items or more"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test PaginationIsDisplayedWhenTableHas5Items {
 
-		// TODO LRQA-68852 PaginationIsDisplayedWhenTableHas5Items pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry( 
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry( 
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Blogs Entry Title 2");
+
+		JSONBlog.addEntry( 
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Blogs Entry Title 3");
+
+		JSONBlog.addEntry( 
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Blogs Entry Title 4");
+
+		JSONBlog.addEntry( 
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Blogs Entry Title 5");
+
+
+        UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		AssertElementPresent(
+			locator1 = "Pagination#FIRST_LINK"
+		);
+
+
+
 
 	}
 

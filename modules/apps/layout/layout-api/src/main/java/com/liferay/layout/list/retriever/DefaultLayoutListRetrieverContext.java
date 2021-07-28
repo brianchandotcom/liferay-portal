@@ -16,6 +16,7 @@ package com.liferay.layout.list.retriever;
 
 import com.liferay.info.pagination.Pagination;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,13 @@ public class DefaultLayoutListRetrieverContext
 	@Override
 	public Optional<long[][]> getAssetCategoryIdsOptional() {
 		return Optional.ofNullable(_assetCategoryIds);
+	}
+
+	@Override
+	public Optional<Map<String, String[]>>
+		getCollectionConfigurationOptional() {
+
+		return Optional.ofNullable(_collectionConfiguration);
 	}
 
 	@Override
@@ -72,6 +80,12 @@ public class DefaultLayoutListRetrieverContext
 		_assetCategoryIds = assetCategoryIds;
 	}
 
+	public void setCollectionConfiguration(
+		Map<String, String[]> collectionConfiguration) {
+
+		_collectionConfiguration = collectionConfiguration;
+	}
+
 	public void setContextObject(Object contextObject) {
 		_contextObject = contextObject;
 	}
@@ -106,6 +120,7 @@ public class DefaultLayoutListRetrieverContext
 	}
 
 	private long[][] _assetCategoryIds;
+	private Map<String, String[]> _collectionConfiguration;
 	private Object _contextObject;
 	private HttpServletRequest _httpServletRequest;
 	private Pagination _pagination;

@@ -16,6 +16,7 @@ package com.liferay.layout.list.retriever;
 
 import com.liferay.info.pagination.Pagination;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,8 @@ public interface LayoutListRetrieverContext {
 	 */
 	@Deprecated
 	public Optional<long[][]> getAssetCategoryIdsOptional();
+
+	public Optional<Map<String, String[]>> getCollectionConfigurationOptional();
 
 	public Optional<Object> getContextObjectOptional();
 

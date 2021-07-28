@@ -56,9 +56,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Lourdes Fernández Besada
  * @author Eudaldo Alonso
  */
-public abstract class TemplateDisplayContext {
+public abstract class BaseTemplateDisplayContext {
 
-	public TemplateDisplayContext(
+	public BaseTemplateDisplayContext(
 		DDMWebConfiguration ddmWebConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {

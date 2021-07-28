@@ -30,7 +30,7 @@ import java.util.stream.Stream;
  * @author Lourdes Fernández Besada
  */
 public class WidgetTemplatesTemplateDisplayContext
-	extends TemplateDisplayContext {
+	extends BaseTemplateDisplayContext {
 
 	public WidgetTemplatesTemplateDisplayContext(
 		DDMWebConfiguration ddmWebConfiguration,

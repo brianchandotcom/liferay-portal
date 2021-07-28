@@ -315,7 +315,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public String getType() {
+			public String getType(Locale locale) {
 				return "Web Content";
 			}
 

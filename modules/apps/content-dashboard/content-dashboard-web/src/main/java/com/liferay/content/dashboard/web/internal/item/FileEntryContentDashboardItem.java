@@ -309,7 +309,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public String getType() {
+	public String getType(Locale locale) {
 		return _FILE_ENTRY_TYPE;
 	}
 

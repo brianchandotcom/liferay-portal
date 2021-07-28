@@ -314,7 +314,7 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public String getType() {
+	public String getType(Locale locale) {
 		return _JOURNAL_ARTICLE_TYPE;
 	}
 

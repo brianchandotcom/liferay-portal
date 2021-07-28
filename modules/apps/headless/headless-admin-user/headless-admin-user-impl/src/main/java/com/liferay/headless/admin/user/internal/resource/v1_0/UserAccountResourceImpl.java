@@ -24,7 +24,6 @@ import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserAccountResourceDTOConverter;
-import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderEmailAddressUtil;
@@ -68,10 +67,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -221,7 +221,7 @@ public class UserAccountResourceImpl
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
 			sorts,
-			document -> _userResourceDTOConverter.toDTO(
+			document -> _toUserAccount(
 				_userLocalService.getUserById(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
@@ -236,7 +236,7 @@ public class UserAccountResourceImpl
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		return _userResourceDTOConverter.toDTO(
+		return _toUserAccount(
 			_userService.getUserById(permissionChecker.getUserId()));
 	}
 
@@ -298,8 +298,7 @@ public class UserAccountResourceImpl
 
 	@Override
 	public UserAccount getUserAccount(Long userAccountId) throws Exception {
-		return _userResourceDTOConverter.toDTO(
-			_userService.getUserById(userAccountId));
+		return _toUserAccount(_userService.getUserById(userAccountId));
 	}
 
 	@Override
@@ -310,13 +309,7 @@ public class UserAccountResourceImpl
 		User user = _userService.getUserByExternalReferenceCode(
 			contextCompany.getCompanyId(), externalReferenceCode);
 
-		return _userResourceDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
-				_dtoConverterRegistry, user.getUserId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
-			user);
+		return _toUserAccount(user);
 	}
 
 	@Override
@@ -448,7 +441,7 @@ public class UserAccountResourceImpl
 		User user = _userLocalService.getUser(
 			accountEntryUserRel.getAccountUserId());
 
-		return _userResourceDTOConverter.toDTO(user);
+		return _toUserAccount(user);
 	}
 
 	@Override
@@ -485,7 +478,7 @@ public class UserAccountResourceImpl
 				postAccountUserAccountByEmailAddress(accountId, emailAddress));
 		}
 
-		if (!accountRoleIds.isEmpty()) {
+		if (Validator.isNotNull(accountRoleIds)) {
 			String[] accRoleIds = StringUtil.split(
 				accountRoleIds, CharPool.COMMA);
 
@@ -505,14 +498,7 @@ public class UserAccountResourceImpl
 					contextCompany.getCompanyId(),
 					userAccount.getEmailAddress());
 
-				userAccountList.add(
-					_userResourceDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							contextAcceptLanguage.isAcceptAllLanguages(), null,
-							_dtoConverterRegistry, userAccount.getId(),
-							contextAcceptLanguage.getPreferredLocale(),
-							contextUriInfo, contextUser),
-						userByEmailAddress));
+				userAccountList.add(_toUserAccount(userByEmailAddress));
 			}
 
 			return Page.of(userAccountList);
@@ -580,7 +566,7 @@ public class UserAccountResourceImpl
 			user = _userLocalService.updateUser(user);
 		}
 
-		return _userResourceDTOConverter.toDTO(user);
+		return _toUserAccount(user);
 	}
 
 	@Override
@@ -607,7 +593,7 @@ public class UserAccountResourceImpl
 			twitter = userAccountContactInformation.getTwitter();
 		}
 
-		return _userResourceDTOConverter.toDTO(
+		return _toUserAccount(
 			_userService.updateUser(
 				userAccountId, null, null, null, false, null, null,
 				userAccount.getAlternateName(), userAccount.getEmailAddress(),
@@ -678,13 +664,7 @@ public class UserAccountResourceImpl
 			user = _userService.getUserById(user.getUserId());
 		}
 
-		return _userResourceDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
-				_dtoConverterRegistry, user.getUserId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
-			user);
+		return _toUserAccount(user);
 	}
 
 	@Override
@@ -948,7 +928,7 @@ public class UserAccountResourceImpl
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
 			sorts,
-			document -> _userResourceDTOConverter.toDTO(
+			document -> _toUserAccount(
 				_userService.getUserById(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
@@ -1000,14 +980,14 @@ public class UserAccountResourceImpl
 	@Reference
 	private ContactLocalService _contactLocalService;
 
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
 	)
 	private ModelResourcePermission<Organization>
 		_organizationModelResourcePermission;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
@@ -1025,9 +1005,6 @@ public class UserAccountResourceImpl
 		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
 	)
 	private ModelResourcePermission<User> _userModelResourcePermission;
-
-	@Reference
-	private UserResourceDTOConverter _userResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

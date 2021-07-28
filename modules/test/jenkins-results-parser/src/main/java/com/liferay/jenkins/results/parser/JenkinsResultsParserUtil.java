@@ -1241,6 +1241,25 @@ public class JenkinsResultsParserUtil {
 	public static String getCIProperty(
 		String branchName, String key, String repositoryName) {
 
+		List<String> ciPropertyURLs = new ArrayList<>();
+
+		if (repositoryName.startsWith("com-liferay-")) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("https://raw.githubusercontent.com/liferay");
+			sb.append("/liferay-portal");
+
+			if (!branchName.equals("master")) {
+				sb.append("-ee");
+			}
+
+			sb.append("/");
+			sb.append(branchName);
+			sb.append("/ci.properties");
+
+			ciPropertyURLs.add(sb.toString());
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://raw.githubusercontent.com/liferay/");
@@ -1249,18 +1268,20 @@ public class JenkinsResultsParserUtil {
 		sb.append(branchName);
 		sb.append("/ci.properties");
 
+		ciPropertyURLs.add(sb.toString());
+
 		Properties ciProperties = new Properties();
 
-		try {
-			String ciPropertiesString = toString(sb.toString(), true);
+		for (String ciPropertyURL : ciPropertyURLs) {
+			try {
+				String ciPropertiesString = toString(ciPropertyURL, true);
 
-			ciProperties.load(new StringReader(ciPropertiesString));
-		}
-		catch (IOException ioException) {
-			System.out.println(
-				"Unable to load ci.properties from " + sb.toString());
-
-			return null;
+				ciProperties.load(new StringReader(ciPropertiesString));
+			}
+			catch (IOException ioException) {
+				System.out.println(
+					"Unable to load ci.properties from " + ciPropertyURL);
+			}
 		}
 
 		return ciProperties.getProperty(key);

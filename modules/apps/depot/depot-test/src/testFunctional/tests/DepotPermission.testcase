@@ -153,27 +153,15 @@ definition {
 			resourceName = "com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet",
 			roleTitle = "Depot Regrole Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONUser.addUserToDepot(
 			depotName = "Test Depot Name",
-			portlet = "Memberships");
-
-		Depot.assignUserAsMember(
-			depotName = "Test Depot Name",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
+			userEmailAddress = "userea1@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",
 			userLoginFullName = "userfn1 userln1");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Memberships");
+		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
 		Depot.viewMember(
 			userFirstName = "userfn1",

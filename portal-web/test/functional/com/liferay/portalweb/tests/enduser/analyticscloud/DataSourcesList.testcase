@@ -24,6 +24,8 @@ definition {
 	@description = "Automation ID: LRAC-8129 | Test Summary: Show data source lists"
 	@priority = "5"
 	test DataSourceListShowsAllDataSources {
+		var dataSourceList = "";
+
 		for (var n : list "1,2,3") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 
@@ -33,15 +35,19 @@ definition {
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
 
+			dataSourceList = StringUtil.add("${dataSourceList}", "${dataSource}");
+
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-
 			ACNavigation.goToSettings();
 
 			ACSettings.assertDataSourceName(dataSourceName = "${dataSource}");
+		}
+
+		for (var dataSourceName : list "${dataSourceList}") {
+			ACSettings.assertDataSourceName(dataSourceName = "${dataSourceName}");
 		}
 	}
 

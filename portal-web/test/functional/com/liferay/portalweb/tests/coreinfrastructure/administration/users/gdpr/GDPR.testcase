@@ -814,7 +814,6 @@ definition {
 	}
 
 	@description = "LPS-77750 This test asserts that the details of the entry display when user clicks on the Info icon."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EntryDetailsDisplayInInfoPanel {
 		User.logoutAndLoginPG(
@@ -823,9 +822,14 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMFolder.addCP(dmFolderName = "Folder1");
+		DMFolder.addCP(
+			dmFolderDescription = "Folder_1 Description",
+			dmFolderName = "Folder_1");
 
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");
+		DMDocument.addCP(
+			dmDocumentDescription = "Document_1 Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document_1 Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -839,28 +843,32 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "5");
+			itemsCount = "2");
 
 		AssertTextPresent(value1 = "DLFOLDER");
 
 		AssertTextPresent(value1 = "DLFILEENTRY");
 
-		for (var rowEntry : list "Folder1,Document_1.jpeg") {
-			LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
+		LexiconEntry.selectEntry(rowEntry = "Folder_1");
 
-			Click.clickAt(locator1 = "Icon#INFO");
+		Click.clickAt(locator1 = "Icon#INFO");
 
-			for (var infoPanel : list "${rowEntry},Primary Key,Description") {
-				AssertTextPresent(
+		for (var infoPanel : list "Folder_1,Folder_1 Description") {
+			AssertTextEquals.assertPartialText(
 				locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE",
 				value1 = "${infoPanel}");
-			}		
+		}
 
-			Click.clickAt(locator1 = "Icon#INFO");
+		LexiconEntry.selectEntry(rowEntry = "Document_1.txt");
 
-			Uncheck(
-				key_rowEntry = "${rowEntry}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+		Uncheck(
+			key_rowEntry = "Folder_1",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+
+		for (var infoPanel : list "Document_1 Title,Document_1 Description,txt") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE",
+				value1 = "${infoPanel}");
 		}
 	}
 

@@ -28,9 +28,11 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -315,7 +317,10 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public String getType(Locale locale) {
-		return _JOURNAL_ARTICLE_TYPE;
+		String modelResourceNamePrefix =
+			ResourceActionsUtil.getModelResourceNamePrefix();
+		String key = modelResourceNamePrefix.concat(JournalArticle.class.getName());
+		return LanguageUtil.get(locale, key, StringPool.BLANK);
 	}
 
 	@Override

@@ -61,6 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
@@ -462,6 +463,10 @@ public class TranslateDisplayContext {
 
 	private Map<String, Object> _getExperiencesSelectorData()
 		throws PortalException {
+
+		if (!Objects.equals(_className, Layout.class.getName())) {
+			return null;
+		}
 
 		List<SegmentsExperience> segmentsExperiences =
 			SegmentsExperienceServiceUtil.getSegmentsExperiences(

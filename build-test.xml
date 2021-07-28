@@ -12623,8 +12623,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
 		/>
 
-		<get-database-property property.name="database.docker.image" />
-
 		<get-testcase-property property.name="database.partition.enabled" />
 
 		<if>
@@ -12636,6 +12634,8 @@ database.partition.enabled=true</echo>
 		</if>
 
 		<get-test-app-server-lib-portal-dir />
+
+		<get-database-property property.name="database.docker.image" />
 
 		<if>
 			<isset property="database.docker.image" />

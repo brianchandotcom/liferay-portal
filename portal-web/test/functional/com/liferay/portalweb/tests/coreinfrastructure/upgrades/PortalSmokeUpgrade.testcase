@@ -85,6 +85,18 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewPortalSmokeArchive741 {
+		property data.archive.type = "data-archive-portal-partition";
+		property database.partition.enabled="true";
+		property database.types = "mysql";
+		property portal.upgrades = "true";
+		property portal.version = "7.4.1";
+		property test.assert.warning.exceptions = "true";
+
+		Upgrade.viewUpgradeDBPartition();
+	}
+
+	@priority = "5"
 	test ViewPortalSmokeArchive7110 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";

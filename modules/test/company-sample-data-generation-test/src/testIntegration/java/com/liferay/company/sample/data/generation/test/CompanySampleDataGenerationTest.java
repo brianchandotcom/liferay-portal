@@ -89,17 +89,17 @@ public class CompanySampleDataGenerationTest {
 
 	@Before
 	public void setUp() {
-		Runtime runtime = Runtime.getRuntime();
-
-		_executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors());
-
 		_originalAtomicReference = ReflectionTestUtil.getFieldValue(
 			_portal, "_portalServerInetSocketAddress");
 
 		ReflectionTestUtil.setFieldValue(
 			_portal, "_portalServerInetSocketAddress",
 			new AtomicReference<InetSocketAddress>());
+
+		Runtime runtime = Runtime.getRuntime();
+
+		_executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors());
 	}
 
 	@After

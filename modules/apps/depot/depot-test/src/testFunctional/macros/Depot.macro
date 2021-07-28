@@ -1038,9 +1038,15 @@ definition {
 			cardSubtitle = "${userScreenName}");
 
 		if (isSet(viewOnly)) {
-			AssertElementNotPresent(
-				key_card = "${userFirstName} ${userLastName}",
+			Click.waitForMenuToggleJSClick(
+				key_card = "${userScreenName}",
 				locator1 = "Card#CARD_ELLIPSIS");
+
+			for (var item : list "Remove Membership,Assign Roles") {
+				AssertElementNotPresent(
+					key_menuItem = "${item}",
+					locator1 = "MenuItem#ANY_MENU_ITEM");
+			}
 		}
 		else {
 			AssertVisible(

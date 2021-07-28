@@ -12,10 +12,10 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
 
 import Select from '../Select/Select.es';
-import Text from '../Text/Text.es';
 import {EVENT_TYPES} from './validationReducer';
 
 const getSelectedParameter = (localizedValue, selectedParameterName) => {
@@ -96,6 +96,8 @@ const ValidationDate = ({
 		dispatch({payload: {parameter}, type: EVENT_TYPES.SET_PARAMETER});
 	};
 
+	const errorMessageName = name + '_errorMessage';
+
 	return (
 		<>
 			<Select
@@ -169,27 +171,25 @@ const ValidationDate = ({
 					</>
 				);
 			})}
-			{selectedValidation.name !== 'dateRange' && (
-				<Text
-					key="errorMessage"
-					label={Liferay.Language.get('error-message')}
-					name={`${name}_errorMessage`}
-					onBlur={onBlur}
-					onChange={(event) => {
-						dispatch({
-							payload: {
-								errorMessage: event.target.value,
-							},
-							type: EVENT_TYPES.CHANGE_ERROR_MESSAGE,
-						});
-					}}
-					placeholder={Liferay.Language.get('this-field-is-invalid')}
-					readOnly={readOnly}
-					required={false}
-					value={localizedValue(errorMessage)}
-					visible={visible}
-				/>
-			)}
+			<label htmlFor={errorMessageName}>
+				{Liferay.Language.get('error-message')}
+			</label>
+			<ClayInput
+				id={errorMessageName}
+				name={errorMessageName}
+				onBlur={onBlur}
+				onChange={(event) => {
+					dispatch({
+						payload: {
+							errorMessage: event.target.value,
+						},
+						type: EVENT_TYPES.CHANGE_ERROR_MESSAGE,
+					});
+				}}
+				placeholder={Liferay.Language.get('this-field-is-invalid')}
+				type="text"
+				value={localizedValue(errorMessage)}
+			/>
 		</>
 	);
 };

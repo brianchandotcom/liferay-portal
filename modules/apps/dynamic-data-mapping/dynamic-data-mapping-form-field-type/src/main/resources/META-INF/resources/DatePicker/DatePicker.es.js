@@ -23,6 +23,7 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const DIGIT_REGEX = /\d/i;
 const LETTER_REGEX = /[a-z]/i;
+const LETTER_DIGIT_REGEX = /[A-Z0-9]/gi;
 const NOT_LETTER_REGEX = /[^a-z]/gi;
 const YEARS_INDEX = 6;
 
@@ -219,18 +220,19 @@ const DatePicker = ({
 				showMask: true,
 			});
 
-			if (localizedValue[locale]) {
-				if (
-					typeof localizedValue[locale] === 'string' &&
-					(localizedValue[locale].includes('/') ||
-						localizedValue[locale].includes('.'))
-				) {
-					inputRef.current.value = localizedValue[locale];
-				}
-				else {
-					inputRef.current.value = moment(
-						localizedValue[locale]
-					).format(dateMask.toUpperCase());
+			const currentValue = localizedValue[locale];
+
+			if (currentValue) {
+				const currentValue = localizedValue[locale];
+
+				if (currentValue) {
+					inputRef.current.value =
+						/_/.test(currentValue) &&
+						currentValue.match(DIGIT_REGEX)
+							? currentValue
+							: moment(currentValue).format(
+									dateMask.toUpperCase()
+							  );
 				}
 			}
 			else if (initialValueMemoized) {

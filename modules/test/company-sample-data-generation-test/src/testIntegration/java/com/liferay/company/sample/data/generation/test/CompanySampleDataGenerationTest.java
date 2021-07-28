@@ -145,7 +145,7 @@ public class CompanySampleDataGenerationTest {
 			_COMPANY_COUNT + originalCompaniesCount,
 			_companyLocalService.getCompaniesCount());
 
-		_exportCSV();
+		_exportCSVs();
 	}
 
 	private void _addCompany(int companyIndex) throws Exception {
@@ -244,7 +244,7 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
-	private void _exportCSV() throws Exception {
+	private void _exportCSVs() throws Exception {
 		String outputDir = PropsUtil.get("sample.data.output.dir");
 
 		if (Validator.isNull(outputDir)) {
@@ -283,11 +283,11 @@ public class CompanySampleDataGenerationTest {
 				hostBufferedWriter.append(CSVUtil.encode(key));
 				hostBufferedWriter.newLine();
 
-				List<String> value = _csvMap.get(key);
+				List<String> screenNames = _csvMap.get(key);
 
-				Collections.sort(value);
+				Collections.sort(screenNames);
 
-				for (String screenName : value) {
+				for (String screenName : screenNames) {
 					userBufferedWriter.append(CSVUtil.encode(key));
 					userBufferedWriter.append(StringPool.COMMA);
 					userBufferedWriter.append(CSVUtil.encode(screenName));

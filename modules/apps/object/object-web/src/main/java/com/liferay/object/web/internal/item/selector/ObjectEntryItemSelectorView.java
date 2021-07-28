@@ -163,6 +163,10 @@ public class ObjectEntryItemSelectorView
 			).put(
 				"classPK", _objectEntry.getObjectEntryId()
 			).put(
+				"classTypeId", _objectEntry.getObjectDefinitionId()
+			).put(
+				"subtype", _objectDefinition.getName()
+			).put(
 				"title",
 				StringBundler.concat(
 					_objectDefinition.getName(), StringPool.SPACE,

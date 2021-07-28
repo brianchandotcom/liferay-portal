@@ -31,6 +31,12 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * <code>classPK</code>: The class pk of the selected info item
  * </li>
  * <li>
+ * <code>classTypeId</code>: The class type ID of the selected info item
+ * </li>
+ * <li>
+ * <code>subtype</code>: The sub type of the selected info item
+ * </li>
+ * <li>
  * <code>title</code>: The title of the selected info item
  * </li>
  * </ul>

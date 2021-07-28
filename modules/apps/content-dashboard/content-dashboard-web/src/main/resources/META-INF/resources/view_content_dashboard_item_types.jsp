@@ -22,41 +22,4 @@ ContentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext conte
 ContentDashboardItemSubtypeItemSelectorViewDisplayContext contentDashboardItemSubtypeItemSelectorViewDisplayContext = (ContentDashboardItemSubtypeItemSelectorViewDisplayContext)request.getAttribute(ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.getName());
 %>
 
-<clay:management-toolbar
-	managementToolbarDisplayContext="<%= contentDashboardItemSubtypeItemSelectorViewManagementToolbarDisplayContext %>"
-/>
-
-<clay:container-fluid>
-	<liferay-ui:search-container
-		id="contentDashboardItemSubtypes"
-		searchContainer="<%= contentDashboardItemSubtypeItemSelectorViewDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype"
-			modelVar="contentDashboardItemSubtype"
-		>
-
-			<%
-			InfoItemReference infoItemReference = contentDashboardItemSubtype.getInfoItemReference();
-
-			row.setPrimaryKey(
-				HtmlUtil.toInputSafe(
-					JSONUtil.put(
-						"className", infoItemReference.getClassName()
-					).put(
-						"classPK", infoItemReference.getClassPK()
-					).toJSONString()));
-			%>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="name"
-				value="<%= contentDashboardItemSubtype.getFullLabel(locale) %>"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</clay:container-fluid>
+<react:component module="js/SelectTypeAndSubtype" />

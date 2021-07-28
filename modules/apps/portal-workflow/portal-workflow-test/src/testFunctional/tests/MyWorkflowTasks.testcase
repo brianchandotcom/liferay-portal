@@ -602,7 +602,6 @@ definition {
 	@description = "Verify that the user can open the task details by the table"
 	@priority = "4"
 	test CanOpenTaskDetailsByTable {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -625,11 +624,10 @@ definition {
 		Click(
 			key_workflowAssetTitle = "Blogs Entry",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		
+
 		AssertElementPresent(
 			key_titleValue = "Blogs Entry",
 			locator1 = "AssetWorkflow#ASSET_TITLE_HEADER");
-
 	}
 
 	@description = "Verify that the user can order the results inside Assigned to Me by Due Date"

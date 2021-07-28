@@ -19,7 +19,7 @@ import ClayForm, {
 	ClaySelectWithOption,
 } from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, navigate, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useReducer, useRef, useState} from 'react';
 
@@ -65,7 +65,26 @@ export default function TemplateModal({
 			name,
 		});
 
-		fetch(addDDMTemplateURL, {body: objectToFormData(body), method: 'POST'});
+		fetch(addDDMTemplateURL, {body: objectToFormData(body), method: 'POST'})
+			.then((response) => response.json())
+			.then((responseContent) => {
+				if (responseContent.error) {
+					setLoading(false);
+					setErrors(responseContent.error);
+				}
+				else if (responseContent.redirectURL) {
+					navigate(responseContent.redirectURL, {
+						beforeScreenFlip: onClose,
+					});
+				}
+			})
+			.catch(() =>
+				setErrors({
+					other: Liferay.Language.get(
+						'an-unexpected-error-occurred-while-creating-the-template'
+					),
+				})
+			);
 	};
 
 	const nameId = `${namespace}name`;

@@ -81,6 +81,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -88,6 +90,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -566,6 +570,18 @@ public class UserAccountResourceImpl
 		String skype = null;
 		String twitter = null;
 
+		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
+
+		if (accountBriefs != null) {
+			_accountEntryUserRelLocalService.
+				deleteAccountEntryUserRelsByAccountUserId(userAccountId);
+
+			for (AccountBrief accountBrief : accountBriefs) {
+				_accountEntryUserRelLocalService.addAccountEntryUserRel(
+					accountBrief.getId(), userAccountId);
+			}
+		}
+
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
 
@@ -577,7 +593,21 @@ public class UserAccountResourceImpl
 			twitter = userAccountContactInformation.getTwitter();
 		}
 
-		return _toUserAccount(
+		OrganizationBrief[] organizationBriefs =
+			userAccount.getOrganizationBriefs();
+
+		long[] organizationIds = user.getOrganizationIds();
+
+		if (organizationBriefs != null) {
+			Stream<OrganizationBrief> stream = Arrays.stream(
+				organizationBriefs);
+
+			LongStream longStream = stream.mapToLong(OrganizationBrief::getId);
+
+			organizationIds = longStream.toArray();
+		}
+
+		return _userResourceDTOConverter.toDTO(
 			_userService.updateUser(
 				userAccountId, null, null, null, false, null, null,
 				userAccount.getAlternateName(), userAccount.getEmailAddress(),
@@ -588,8 +618,8 @@ public class UserAccountResourceImpl
 				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
 				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
 				sms, facebook, jabber, skype, twitter,
-				userAccount.getJobTitle(), user.getGroupIds(),
-				user.getOrganizationIds(), user.getRoleIds(),
+				userAccount.getJobTitle(), user.getGroupIds(), organizationIds,
+				user.getRoleIds(),
 				_userGroupRoleLocalService.getUserGroupRoles(userAccountId),
 				user.getUserGroupIds(), _getAddresses(userAccount),
 				_getServiceBuilderEmailAddresses(userAccount),

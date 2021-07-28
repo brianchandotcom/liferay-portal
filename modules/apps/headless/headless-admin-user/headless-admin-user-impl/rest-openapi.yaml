@@ -75,6 +75,13 @@ components:
                         The account's name.
                     readOnly: true
                     type: string
+                roleBriefs:
+                    description:
+                        A list of the user's roles.
+                    items:
+                        $ref: "#/components/schemas/RoleBrief"
+                    readOnly: true
+                    type: array
             type: object
         AccountRole:
             # @review
@@ -410,6 +417,13 @@ components:
                         The organization's name.
                     readOnly: true
                     type: string
+                roleBriefs:
+                    description:
+                        A list of the user's roles.
+                    items:
+                        $ref: "#/components/schemas/RoleBrief"
+                    readOnly: true
+                    type: array
             type: object
         Phone:
             description:

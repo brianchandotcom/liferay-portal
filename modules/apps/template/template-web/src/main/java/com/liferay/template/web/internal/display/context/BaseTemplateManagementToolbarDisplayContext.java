@@ -57,9 +57,9 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			templateDisplayContext.getTemplateSearchContainer());
 
-		_templateDisplayContext = templateDisplayContext;
+		this.templateDisplayContext = templateDisplayContext;
 
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -80,7 +80,7 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 		throws PortalException {
 
 		if (DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), ddmTemplate,
+				themeDisplay.getPermissionChecker(), ddmTemplate,
 				ActionKeys.DELETE)) {
 
 			return "deleteSelectedDDMTemplates";
@@ -105,7 +105,7 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_templateDisplayContext.isAddDDMTemplateEnabled()) {
+		if (!templateDisplayContext.isAddDDMTemplateEnabled()) {
 			return null;
 		}
 
@@ -122,11 +122,11 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 		).setMVCPath(
 			"/edit_ddm_template.jsp"
 		).setRedirect(
-			_themeDisplay.getURLCurrent()
+			themeDisplay.getURLCurrent()
 		).setTabs1(
-			_templateDisplayContext.getTabs1()
+			templateDisplayContext.getTabs1()
 		).setParameter(
-			"groupId", _themeDisplay.getScopeGroupId()
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
 			"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
 		).buildPortletURL();
@@ -138,7 +138,7 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 			addDDMTemplateURL.setParameter(
 				"resourceClassNameId",
 				String.valueOf(
-					_templateDisplayContext.getResourceClassNameId()));
+					templateDisplayContext.getResourceClassNameId()));
 
 			creationMenu.addPrimaryDropdownItem(
 				dropdownItem -> {
@@ -146,7 +146,7 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest,
-							_templateDisplayContext.getTemplateTypeLabel(
+							templateDisplayContext.getTemplateTypeLabel(
 								addAllowedClassNameId)));
 				});
 		}
@@ -171,27 +171,22 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 		return "ddmTemplates";
 	}
 
-	@Override
-	protected String[] getOrderByKeys() {
-		return new String[] {"modified-date", "id"};
-	}
-
-	private boolean _containsAddPortletDisplayTemplatePermission(
+	protected boolean containsAddPortletDisplayTemplatePermission(
 		long classNameId) {
 
 		try {
 			return PortletPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
-				_templateDisplayContext.getResourceName(classNameId),
-				_templateDisplayContext.getAddPermissionActionId(), false,
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
+				templateDisplayContext.getResourceName(classNameId),
+				templateDisplayContext.getAddPermissionActionId(), false,
 				false);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to check permission for resource name " +
-						_templateDisplayContext.getResourceName(classNameId),
+						templateDisplayContext.getResourceName(classNameId),
 					portalException);
 			}
 		}
@@ -199,11 +194,19 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 		return false;
 	}
 
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"modified-date", "id"};
+	}
+
+	protected final TemplateDisplayContext templateDisplayContext;
+	protected final ThemeDisplay themeDisplay;
+
 	private List<Long> _getAddAllowedClassNameIds() {
 		List<Long> addAllowedClassNameIds = new ArrayList<>();
 
-		for (long classNameId : _templateDisplayContext.getClassNameIds()) {
-			if (_containsAddPortletDisplayTemplatePermission(classNameId)) {
+		for (long classNameId : templateDisplayContext.getClassNameIds()) {
+			if (containsAddPortletDisplayTemplatePermission(classNameId)) {
 				addAllowedClassNameIds.add(classNameId);
 			}
 		}
@@ -213,8 +216,5 @@ public abstract class BaseTemplateManagementToolbarDisplayContext
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseTemplateManagementToolbarDisplayContext.class);
-
-	private final TemplateDisplayContext _templateDisplayContext;
-	private final ThemeDisplay _themeDisplay;
 
 }

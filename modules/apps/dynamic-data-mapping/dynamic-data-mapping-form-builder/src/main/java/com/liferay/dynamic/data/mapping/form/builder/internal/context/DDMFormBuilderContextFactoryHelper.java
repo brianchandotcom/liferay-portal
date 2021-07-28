@@ -217,6 +217,15 @@ public class DDMFormBuilderContextFactoryHelper {
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setContainerId("settings");
+
+		if (_ddmStructureVersionOptional.isPresent()) {
+			DDMStructureVersion ddmStructureVersion =
+				_ddmStructureVersionOptional.get();
+
+			ddmFormRenderingContext.setGroupId(
+				ddmStructureVersion.getGroupId());
+		}
+
 		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(_httpServletResponse);
 		ddmFormRenderingContext.setLocale(_locale);

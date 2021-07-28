@@ -207,6 +207,19 @@ exports[`ValidationDate shows date range validation 1`] = `
     />
     
   </div>
+  <label
+    for="validationDate_errorMessage"
+  >
+    error-message
+  </label>
+  <input
+    class="form-control"
+    id="validationDate_errorMessage"
+    name="validationDate_errorMessage"
+    placeholder="this-field-is-invalid"
+    type="text"
+    value=""
+  />
 </div>
 `;
 
@@ -341,33 +354,19 @@ exports[`ValidationDate shows future dates validation 1`] = `
     />
     
   </div>
-  <div
-    class="form-group"
-    data-field-name="validationDate_errorMessage"
+  <label
+    for="validationDate_errorMessage"
   >
-    <label
-      class="ddm-label"
-      for="validationDate_errorMessage"
-      tabindex="0"
-    >
-      error-message
-    </label>
-    <input
-      aria-labelledby="validationDate_errorMessage_fieldDetails"
-      class="form-control ddm-field-text"
-      id="validationDate_errorMessage_fieldDetails"
-      name="validationDate_errorMessage"
-      placeholder="this-field-is-invalid"
-      type="text"
-      value=""
-    />
-    <input
-      name="validationDate_errorMessage_edited"
-      type="hidden"
-      value="false"
-    />
-    
-  </div>
+    error-message
+  </label>
+  <input
+    class="form-control"
+    id="validationDate_errorMessage"
+    name="validationDate_errorMessage"
+    placeholder="this-field-is-invalid"
+    type="text"
+    value=""
+  />
 </div>
 `;
 
@@ -502,32 +501,18 @@ exports[`ValidationDate shows past dates validation 1`] = `
     />
     
   </div>
-  <div
-    class="form-group"
-    data-field-name="validationDate_errorMessage"
+  <label
+    for="validationDate_errorMessage"
   >
-    <label
-      class="ddm-label"
-      for="validationDate_errorMessage"
-      tabindex="0"
-    >
-      error-message
-    </label>
-    <input
-      aria-labelledby="validationDate_errorMessage_fieldDetails"
-      class="form-control ddm-field-text"
-      id="validationDate_errorMessage_fieldDetails"
-      name="validationDate_errorMessage"
-      placeholder="this-field-is-invalid"
-      type="text"
-      value=""
-    />
-    <input
-      name="validationDate_errorMessage_edited"
-      type="hidden"
-      value="false"
-    />
-    
-  </div>
+    error-message
+  </label>
+  <input
+    class="form-control"
+    id="validationDate_errorMessage"
+    name="validationDate_errorMessage"
+    placeholder="this-field-is-invalid"
+    type="text"
+    value=""
+  />
 </div>
 `;

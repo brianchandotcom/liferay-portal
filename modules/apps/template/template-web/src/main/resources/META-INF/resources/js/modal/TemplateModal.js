@@ -28,7 +28,7 @@ import Field from './Field';
 
 const DEFAULT_OPTION = {
 	label: `- ${Liferay.Language.get('not-selected')} -`,
-	value: -1,
+	value: '-1',
 };
 
 export default function TemplateModal({
@@ -47,7 +47,7 @@ export default function TemplateModal({
 	);
 
 	const [name, setName] = useState('');
-	const [itemType, setItemType] = useState(DEFAULT_OPTION.value);
+	const [itemType, setItemType] = useState(null);
 	const [itemSubtype, setItemSubtype] = useState(null);
 
 	const formRef = useRef(null);
@@ -55,7 +55,7 @@ export default function TemplateModal({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		const errors = validateFields(name, itemType);
+		const errors = validateFields(name, itemType, itemSubtype);
 
 		if (Object.keys(errors).length > 0) {
 			setErrors(errors);
@@ -147,7 +147,7 @@ export default function TemplateModal({
 								setItemType(itemType);
 								setErrors({itemType: null});
 
-								if (itemType.subtypes?.length) {
+								if (itemType?.subtypes?.length) {
 									setItemSubtype(DEFAULT_OPTION.value);
 								}
 							}}
@@ -230,7 +230,7 @@ TemplateModal.propTypes = {
 	onModalClose: PropTypes.func,
 };
 
-const validateFields = (name, itemType) => {
+const validateFields = (name, itemType, itemSubtype) => {
 	const errors = {};
 
 	const errorMessage = Liferay.Language.get('this-field-is-required');
@@ -239,8 +239,12 @@ const validateFields = (name, itemType) => {
 		errors.name = errorMessage;
 	}
 
-	if (itemType === -1) {
+	if (!itemType) {
 		errors.itemType = errorMessage;
+	}
+
+	if (itemSubtype === DEFAULT_OPTION.value) {
+		errors.itemSubtype = errorMessage;
 	}
 
 	return errors;

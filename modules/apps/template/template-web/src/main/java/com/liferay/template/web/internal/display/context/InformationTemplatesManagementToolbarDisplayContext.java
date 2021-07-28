@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.constants.TemplatePortletKeys;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -129,7 +131,8 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		).filter(
 			infoForm -> Validator.isNotNull(infoForm.getName())
 		).sorted(
-			Comparator.comparing(InfoForm::getName)
+			Comparator.comparing(
+				infoForm -> infoForm.getLabel(themeDisplay.getLocale()))
 		).collect(
 			Collectors.toList()
 		);
@@ -145,6 +148,12 @@ public class InformationTemplatesManagementToolbarDisplayContext
 				Collection<InfoItemFormVariation> infoItemFormVariations =
 					infoItemFormVariationsProvider.getInfoItemFormVariations(
 						themeDisplay.getScopeGroupId());
+
+				infoItemFormVariations = ListUtil.sort(
+					new ArrayList<>(infoItemFormVariations),
+					Comparator.comparing(
+						infoItemFormVariation -> infoItemFormVariation.getLabel(
+							themeDisplay.getLocale())));
 
 				for (InfoItemFormVariation infoItemFormVariation :
 						infoItemFormVariations) {

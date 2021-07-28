@@ -492,7 +492,9 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				value1 = "Primary Navigation");
 
 			Portlet.saveAndCloseConfig();
 		}

@@ -270,7 +270,7 @@ definition {
 		task ("Edit Global Navigation Menu via Navigation Menu widget") {
 			NavigationMenusWidget.gotoEditNavigationMenuEntry();
 
-			Pause(locator1 = "5000");
+			ControlMenu.viewHeaderTitle(headerTitle = "Global Navigation Menu Name");
 
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -363,11 +363,11 @@ definition {
 
 			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name");
 
-			Pause(locator1 = "3000");
-
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "Bar minimally styled");
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -421,11 +421,15 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				value1 = "Public Pages Hierarchy");
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "Bar minimally styled");
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -493,11 +497,15 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				value1 = "Public Pages Hierarchy");
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "List Menu");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "List Menu");
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -567,7 +575,10 @@ definition {
 
 			NavigationMenusWidget.selectLevelsToDisplay(levels = "2");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				key_selectFieldLabel = "Levels to Display",
+				locator1 = "Select#ANY",
+				value1 = "2");
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -595,7 +606,10 @@ definition {
 
 			NavigationMenusWidget.selectLevelsToDisplay(levels = "3");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				key_selectFieldLabel = "Levels to Display",
+				locator1 = "Select#ANY",
+				value1 = "3");
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -721,11 +735,11 @@ definition {
 
 			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name");
 
-			Pause(locator1 = "3000");
-
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Navigation Menu Test ADT");
 
-			Pause(locator1 = "3000");
+			AssertSelectedLabel(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "Navigation Menu Test ADT");
 
 			Portlet.saveAndCloseConfig();
 		}

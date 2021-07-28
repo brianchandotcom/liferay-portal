@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portlet.StrutsResourceBundle;
 
 import java.util.ArrayList;
@@ -250,7 +251,8 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 				resourceBundleId);
 
 			if (resourceBundle == null) {
-				resourceBundle = new PortletResourceBundle(null, _portletInfos);
+				resourceBundle = new PortletResourceBundle(
+					LanguageResources.getResourceBundle(locale), _portletInfos);
 
 				_resourceBundles.put(resourceBundleId, resourceBundle);
 			}

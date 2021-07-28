@@ -16,14 +16,18 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
+import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserAccountResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderEmailAddressUtil;
@@ -81,7 +85,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -225,8 +228,8 @@ public class UserAccountResourceImpl
 				contextCompany.getCompanyId()),
 			sorts,
 			document -> _toUserAccount(
-				_userLocalService.getUserById(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+				Collections.emptyMap(),
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -607,7 +610,7 @@ public class UserAccountResourceImpl
 			organizationIds = longStream.toArray();
 		}
 
-		return _userResourceDTOConverter.toDTO(
+		return _toUserAccount(
 			_userService.updateUser(
 				userAccountId, null, null, null, false, null, null,
 				userAccount.getAlternateName(), userAccount.getEmailAddress(),
@@ -956,8 +959,8 @@ public class UserAccountResourceImpl
 				contextCompany.getCompanyId()),
 			sorts,
 			document -> _toUserAccount(
-				_userService.getUserById(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+				actions,
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	private List<Website> _getWebsites(UserAccount userAccount) {
@@ -977,8 +980,20 @@ public class UserAccountResourceImpl
 		);
 	}
 
+	private UserAccount _toUserAccount(
+			Map<String, Map<String, String>> actions, long userId)
+		throws Exception {
+
+		return _userResourceDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				_dtoConverterRegistry, userId,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
+	}
+
 	private UserAccount _toUserAccount(User user) throws Exception {
-		return _userAccountResourceDTOConverter.toDTO(
+		return _userResourceDTOConverter.toDTO(
 			_getDTOConverterContext(user.getUserId()), user);
 	}
 
@@ -990,6 +1005,9 @@ public class UserAccountResourceImpl
 	)
 	private ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private AccountEntryUserRelService _accountEntryUserRelService;
@@ -1032,6 +1050,9 @@ public class UserAccountResourceImpl
 		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
 	)
 	private ModelResourcePermission<User> _userModelResourcePermission;
+
+	@Reference
+	private UserResourceDTOConverter _userResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

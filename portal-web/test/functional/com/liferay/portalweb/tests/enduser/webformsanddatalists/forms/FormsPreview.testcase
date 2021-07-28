@@ -41,19 +41,7 @@ definition {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Data Providers",
-			configurationName = "Data Providers",
-			configurationScope = "Data Providers");
-
-		FormFields.enableCheckbox(fieldName = "accessLocalNetwork");
-
-		Button.clickSave();
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
 		Navigator.openURL();
 
@@ -65,15 +53,17 @@ definition {
 
 		FormsAdminNavigator.gotoAddDataProvider();
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		FormsAdmin.editDataProviderLocalNetwork(
 			name = "Countries of the World",
 			outputParameterLabel = "Country Name",
 			outputParameterPath = "$..nameCurrentValue",
 			outputParameterType = "List",
 			timeout = "1000",
-			url = "http://localhost:8080/api/jsonws/country/get-countries/");
+			url = "${portalURL}/api/jsonws/country/get-countries/");
 
-		Button.clickSave();
+		FormsAdmin.saveDataProvider();
 
 		Navigator.gotoNavItem(navItem = "Forms");
 

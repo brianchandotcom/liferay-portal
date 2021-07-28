@@ -12625,6 +12625,16 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 		<get-database-property property.name="database.docker.image" />
 
+		<get-testcase-property property.name="database.partition.enabled" />
+
+		<if>
+			<equals arg1="${database.partition.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+database.partition.enabled=true</echo>
+			</then>
+		</if>
+
 		<get-test-app-server-lib-portal-dir />
 
 		<if>
@@ -12680,6 +12690,26 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									#!/bin/bash
 
 									mysql --database=${database.schema} --password=${database.password} --user=${database.username} < /tmp/${database.type}.sql
+								]]>
+							</echo>
+
+							<property name="docker.database.dest.path" value="/tmp/${database.type}.sql" />
+							<property name="import.database.src.path" value="${liferay.home}/${database.type}.sql" />
+						</then>
+					</elseif>
+					<elseif>
+						<and>
+							<equals arg1="${database.partition.enabled}" arg2="true" />
+							<equals arg1="${database.type}" arg2="mysql" />
+						</and>
+						<then>
+							<echo file="${import.database.sh.file.path}">
+								<![CDATA[
+									#!/bin/bash
+
+									mysql --password=${database.password} --user=${database.username} < /tmp/${database.type}.sql
+
+									mysql_upgrade --force --password=${database.password} --user=${database.username}
 								]]>
 							</echo>
 

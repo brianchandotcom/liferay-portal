@@ -193,6 +193,95 @@ definition {
 		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Date");
 	}
 
+	@description = "LPS-73322 - Verify that a Date Field can be required"
+	@priority = "4"
+	test CanBeRequired {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormsDateField#CanBeRequired";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		var fieldDateField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		FormFields.enableSwitcher(fieldName = "Required");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "${fieldDateField}");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.submitWithValidationError();
+
+		Type(
+			key_fieldName = "${fieldDateField}",
+			locator1 = "FormFields#DATE_FIELD",
+			value1 = "Invalid Value, Date Field");
+
+		AssertTextEquals(
+			key_fieldName = "${fieldDateField}",
+			locator1 = "FormFields#DATE_FIELD",
+			value1 = "__/__/____");
+
+		FormPortlet.submitWithValidationError();
+
+		FormFields.editDate(
+			fieldName = "${fieldDateField}",
+			fieldValue = "01/01/2016");
+
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "Date Field",
+			fieldName = "${fieldDateField}",
+			fieldValue = "01/01/2016");
+	}
+
 	@description = "Verify that a Date Field can be Repeatable"
 	@priority = "5"
 	test CanBeSetAsRepeatable {

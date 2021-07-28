@@ -20,6 +20,6 @@ package com.liferay.batch.planner.constants;
 public class BatchPlannerPortletKeys {
 
 	public static final String BATCH_PLANNER =
-		"com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet";
+		"com_liferay_batch_planner_web_internal_portlet_BatchPlanner";
 
 }

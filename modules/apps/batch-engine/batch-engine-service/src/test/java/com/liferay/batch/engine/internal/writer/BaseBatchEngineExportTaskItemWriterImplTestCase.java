@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Field;
 
@@ -206,7 +207,7 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 	protected static final List<String> columnFieldNames = Arrays.asList(
 		"createDate", "description", "id", "name_en", "name_hr");
 	protected static final DateFormat dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		"yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 	protected static Map<String, Field> fieldMap = ItemClassIndexUtil.index(
 		Item.class);
 	protected static final List<String> jsonFieldNames = Arrays.asList(
@@ -218,7 +219,9 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 		}
 
 		if (value instanceof Date) {
-			return "\"" + dateFormat.format(value) + "\"";
+			return "\"" +
+				StringUtil.replace(dateFormat.format(value), 'Z', "+00:00") +
+					"\"";
 		}
 
 		if (value instanceof String) {

@@ -61,6 +61,8 @@ public interface STSynonymsEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.search.tuning.synonyms.service.impl.STSynonymsEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the st synonyms entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link STSynonymsEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public STSynonymsEntry addSTSynonymsEntry(
+		String indexName, String synonyms);
 
 	/**
 	 * Adds the st synonyms entry to the database. Also notifies the appropriate model listeners.
@@ -236,6 +238,10 @@ public interface STSynonymsEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<STSynonymsEntry> getSTSynonymsEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<STSynonymsEntry> getSTSynonymsEntriesByCompanyId(
+		long companyId);
+
 	/**
 	 * Returns the number of st synonyms entries.
 	 *
@@ -253,6 +259,10 @@ public interface STSynonymsEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public STSynonymsEntry getSTSynonymsEntry(long STSynonymsEntryId)
+		throws PortalException;
+
+	public STSynonymsEntry updateSTSynonymsEntry(
+			long stSynonymsEntryId, String synonyms)
 		throws PortalException;
 
 	/**

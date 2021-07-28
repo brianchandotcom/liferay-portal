@@ -79,6 +79,11 @@ public class STSynonymsEntryWrapper
 		return model.getCompanyId();
 	}
 
+	@Override
+	public String getJSON() {
+		return model.getJSON();
+	}
+
 	/**
 	 * Returns the mvcc version of this st synonyms entry.
 	 *
@@ -107,6 +112,16 @@ public class STSynonymsEntryWrapper
 	@Override
 	public long getSTSynonymsEntryId() {
 		return model.getSTSynonymsEntryId();
+	}
+
+	@Override
+	public String getSynonyms() {
+		return model.getSynonyms();
+	}
+
+	@Override
+	public String getSynonymSetDocumentId() {
+		return model.getSynonymSetDocumentId();
 	}
 
 	@Override

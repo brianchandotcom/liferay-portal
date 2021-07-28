@@ -44,6 +44,11 @@ public class STSynonymsEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.tuning.synonyms.service.impl.STSynonymsEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static STSynonymsEntry addSTSynonymsEntry(
+		String indexName, String synonyms) {
+
+		return getService().addSTSynonymsEntry(indexName, synonyms);
+	}
 
 	/**
 	 * Adds the st synonyms entry to the database. Also notifies the appropriate model listeners.
@@ -263,6 +268,12 @@ public class STSynonymsEntryLocalServiceUtil {
 		return getService().getSTSynonymsEntries(start, end);
 	}
 
+	public static List<STSynonymsEntry> getSTSynonymsEntriesByCompanyId(
+		long companyId) {
+
+		return getService().getSTSynonymsEntriesByCompanyId(companyId);
+	}
+
 	/**
 	 * Returns the number of st synonyms entries.
 	 *
@@ -283,6 +294,13 @@ public class STSynonymsEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getSTSynonymsEntry(STSynonymsEntryId);
+	}
+
+	public static STSynonymsEntry updateSTSynonymsEntry(
+			long stSynonymsEntryId, String synonyms)
+		throws PortalException {
+
+		return getService().updateSTSynonymsEntry(stSynonymsEntryId, synonyms);
 	}
 
 	/**

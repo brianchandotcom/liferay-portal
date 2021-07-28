@@ -58,4 +58,10 @@ public interface STSynonymsEntry extends PersistedModel, STSynonymsEntryModel {
 
 		};
 
+	public String getJSON();
+
+	public String getSynonyms();
+
+	public String getSynonymSetDocumentId();
+
 }

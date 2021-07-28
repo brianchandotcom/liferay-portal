@@ -33,6 +33,14 @@ public class STSynonymsEntryLocalServiceWrapper
 		_stSynonymsEntryLocalService = stSynonymsEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.search.tuning.synonyms.model.STSynonymsEntry
+		addSTSynonymsEntry(String indexName, String synonyms) {
+
+		return _stSynonymsEntryLocalService.addSTSynonymsEntry(
+			indexName, synonyms);
+	}
+
 	/**
 	 * Adds the st synonyms entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -295,6 +303,15 @@ public class STSynonymsEntryLocalServiceWrapper
 		return _stSynonymsEntryLocalService.getSTSynonymsEntries(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.search.tuning.synonyms.model.STSynonymsEntry>
+			getSTSynonymsEntriesByCompanyId(long companyId) {
+
+		return _stSynonymsEntryLocalService.getSTSynonymsEntriesByCompanyId(
+			companyId);
+	}
+
 	/**
 	 * Returns the number of st synonyms entries.
 	 *
@@ -319,6 +336,15 @@ public class STSynonymsEntryLocalServiceWrapper
 
 		return _stSynonymsEntryLocalService.getSTSynonymsEntry(
 			STSynonymsEntryId);
+	}
+
+	@Override
+	public com.liferay.search.tuning.synonyms.model.STSynonymsEntry
+			updateSTSynonymsEntry(long stSynonymsEntryId, String synonyms)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _stSynonymsEntryLocalService.updateSTSynonymsEntry(
+			stSynonymsEntryId, synonyms);
 	}
 
 	/**

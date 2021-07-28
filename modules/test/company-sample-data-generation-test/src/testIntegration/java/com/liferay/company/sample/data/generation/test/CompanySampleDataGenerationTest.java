@@ -172,7 +172,7 @@ public class CompanySampleDataGenerationTest {
 					_userLocalService.getCompanyUsersCount(
 						company.getCompanyId());
 
-				_addUser(
+				_addUsers(
 					companyIndex, company.getCompanyId(), company.getGroupId(),
 					webId);
 
@@ -187,7 +187,7 @@ public class CompanySampleDataGenerationTest {
 		}
 	}
 
-	private void _addUser(
+	private void _addUsers(
 			int companyIndex, long companyId, long groupId, String webId)
 		throws Exception {
 

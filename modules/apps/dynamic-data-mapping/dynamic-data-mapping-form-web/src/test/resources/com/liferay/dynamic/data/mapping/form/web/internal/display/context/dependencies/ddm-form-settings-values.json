@@ -1,0 +1,61 @@
+{
+	"groupId": "20126",
+	"pages": [
+		{
+			"description": null,
+			"enabled": true,
+			"localizedDescription": {
+			},
+			"localizedTitle": {
+				"en_US": "General"
+			},
+			"rows": [
+				{
+					"columns": [
+						{
+							"fields": [
+								{
+									"dataType": "string",
+									"fieldName": "workflowDefinition",
+									"fieldReference": "workflowDefinition",
+									"instanceId": "eBvF8zup",
+									"label": "Select a Workflow",
+									"locale": "en_US",
+									"localizable": false,
+									"options": [
+										{
+											"label": "No Workflow",
+											"reference": null,
+											"value": "no-workflow"
+										},
+										{
+											"label": "Single Approver",
+											"reference": null,
+											"value": "Single Approver"
+										}
+									],
+									"placeholder": "",
+									"predefinedValue": [
+										"no-workflow"
+									],
+									"type": "select",
+									"value": [
+										"Single Approver"
+									]
+								}
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"showRequiredFieldsWarning": true,
+			"title": "General"
+		}
+	],
+	"paginationMode": "tabbed",
+	"portletNamespace": "_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_",
+	"rules": [
+	],
+	"showRequiredFieldsWarning": true
+}

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
+import com.liferay.dynamic.data.mapping.form.builder.internal.context.DDMFormContextToDDMFormValues;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -26,17 +27,22 @@ import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -46,11 +52,13 @@ import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.registry.BasicRegistryImpl;
@@ -98,7 +106,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	}
 
 	@Before
-	public void setUp() throws PortalException {
+	public void setUp() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		setUpPortalUtil();
@@ -109,6 +117,28 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		setUpResourceBundleLoaderUtil();
 
 		setUpDDMFormDisplayContext();
+	}
+
+	@Test
+	public void testGetDDMFormRenderingContextDDMFormValues() throws Exception {
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+
+		setRenderRequestParamenter(
+			"serializedSettingsContext",
+			_read("ddm-form-settings-values.json"));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			DDMFormTestUtil.createDDMForm("workflowDefinition"));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"eBvF8zup", "workflowDefinition",
+				new UnlocalizedValue("[\"Single Approver\"]")));
+
+		Assert.assertEquals(
+			ddmFormValues,
+			_ddmFormAdminDisplayContext.
+				getDDMFormRenderingContextDDMFormValues());
 	}
 
 	@Test
@@ -321,7 +351,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpDDMFormDisplayContext() throws PortalException {
+	protected void setUpDDMFormDisplayContext() throws Exception {
 		_renderRequest = mock(RenderRequest.class);
 
 		_ddmFormAdminDisplayContext = new DDMFormAdminDisplayContext(
@@ -329,6 +359,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 			new AddDefaultSharedFormLayoutPortalInstanceLifecycleListener(),
 			mock(DDMFormBuilderContextFactory.class),
 			mock(DDMFormBuilderSettingsRetriever.class),
+			_getDDMFormContextToDDMFormValues(),
 			mock(DDMFormFieldTypeServicesTracker.class),
 			mock(DDMFormFieldTypesSerializer.class),
 			mock(DDMFormInstanceLocalService.class),
@@ -404,6 +435,28 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		).toReturn(
 			_serviceTrackerMap
 		);
+	}
+
+	private DDMFormContextToDDMFormValues _getDDMFormContextToDDMFormValues()
+		throws Exception {
+
+		DDMFormContextToDDMFormValues ddmFormContextToDDMFormValues =
+			new DDMFormContextToDDMFormValues();
+
+		field(
+			DDMFormContextToDDMFormValues.class, "jsonFactory"
+		).set(
+			ddmFormContextToDDMFormValues, new JSONFactoryImpl()
+		);
+
+		return ddmFormContextToDDMFormValues;
+	}
+
+	private String _read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getResourceAsStream("dependencies/" + fileName));
 	}
 
 	private static final String _FORM_APPLICATION_PATH =

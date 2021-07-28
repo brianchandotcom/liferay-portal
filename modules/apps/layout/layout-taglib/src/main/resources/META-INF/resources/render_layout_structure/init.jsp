@@ -16,8 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
-
 <%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.renderer.DefaultFragmentRendererContext" %><%@
@@ -43,7 +41,9 @@ page import="com.liferay.portal.kernel.model.LayoutTemplate" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
 page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
-<%@ page import="java.util.List" %><%@
+<%@ page import="java.util.Collections" %><%@
+page import="java.util.List" %><%@
 page import="java.util.Objects" %>

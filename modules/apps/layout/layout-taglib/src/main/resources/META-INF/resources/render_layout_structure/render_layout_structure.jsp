@@ -111,10 +111,11 @@ for (String childrenItemId : childrenItemIds) {
 				int numberOfPages = (int)Math.ceil((double)maxNumberOfItems / collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
 				%>
 
-				<div>
-					<react:component
-						module="render_layout_structure/js/CollectionPagination"
-						props='<%=
+				<c:if test='<%= Objects.equals(paginationType, "numeric") %>'>
+					<clay:pagination-bar
+						activeDelta="<%= collectionStyledLayoutStructureItem.getNumberOfItemsPerPage() %>"
+						activePage='<%= Math.max(1, Math.min(numberOfPages, ParamUtil.getInteger(request, "page_number_" + collectionStyledLayoutStructureItem.getItemId(), 1))) %>'
+						additionalProps='<%=
 							HashMapBuilder.<String, Object>put(
 								"collectionId", collectionStyledLayoutStructureItem.getItemId()
 							).put(
@@ -124,13 +125,15 @@ for (String childrenItemId : childrenItemIds) {
 							).put(
 								"paginationType", paginationType
 							).put(
-								"totalItems", collectionCount
-							).put(
 								"totalPages", numberOfPages
 							).build()
 						%>'
+						cssClass="pb-2 pt-3"
+						paginationBarDeltas="<%= Collections.emptyList() %>"
+						propsTransformer="render_layout_structure/js/NumericCollectionPaginationPropsTransformer"
+						totalItems="<%= collectionStyledLayoutStructureItem.getNumberOfItems() %>"
 					/>
-				</div>
+				</c:if>
 			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">

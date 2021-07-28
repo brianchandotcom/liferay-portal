@@ -19,7 +19,6 @@ import com.liferay.configuration.admin.web.internal.display.context.Configuratio
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.internal.util.AttributeDefinitionUtil;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
@@ -40,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.FileInputStream;
 import java.io.Serializable;
 
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -297,6 +297,9 @@ public class ExportConfigurationMVCResourceCommand
 			return properties;
 		}
 
+		Dictionary<String, Object> configurationProperties =
+			configuration.getProperties();
+
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			configurationModel.getExtendedObjectClassDefinition();
 
@@ -312,8 +315,8 @@ public class ExportConfigurationMVCResourceCommand
 				continue;
 			}
 
-			Object value = AttributeDefinitionUtil.getPropertyObject(
-				attributeDefinition, configuration);
+			Object value = configurationProperties.get(
+				attributeDefinition.getID());
 
 			if (value == null) {
 				continue;

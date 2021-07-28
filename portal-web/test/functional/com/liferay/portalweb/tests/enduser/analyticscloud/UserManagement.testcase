@@ -40,6 +40,14 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8143 | Test Summary: Owner can delete users"
 	@priority = "5"
 	test ViewOwnerCanDeleteUser {
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "bryan.cheung@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
 		ACNavigation.goToSettings();
 
 		ACSettings.goToUserManagement();
@@ -55,6 +63,8 @@ definition {
 		AssertTextNotPresent(
 			locator1 = "ACSettings#USER_LIST_EMAIL",
 			value1 = "user@liferay.com");
+
+		ACSettings.addUser(userInvite = "user2@liferay.com");
 
 		ACWorkspace.signOut();
 
@@ -81,8 +91,6 @@ definition {
 		ACNavigation.goToSettings();
 
 		ACSettings.goToUserManagement();
-
-		ACSettings.addUser(userInvite = "user2@liferay.com");
 
 		ACUtils.searchBar(searchItem = "user");
 

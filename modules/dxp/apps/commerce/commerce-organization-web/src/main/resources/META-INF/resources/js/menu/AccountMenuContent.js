@@ -13,7 +13,7 @@ import ClayDropDown from '@clayui/drop-down';
 import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
-import {deleteAccount} from '../data/accounts';
+import {deleteAccount, updateAccount} from '../data/accounts';
 import {PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS} from '../utils/flags';
 
 export default function AccountMenuContent({closeMenu, data, parentData}) {
@@ -43,9 +43,44 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 		}
 	}
 
+	function handleRemove() {
+		if (
+			confirm(
+				Liferay.Util.sub(
+					Liferay.Language.get(
+						'x-will-be-removed-from-its-parent-organization'
+					),
+					data.name
+				)
+			)
+		) {
+			updateAccount(data.id, {
+				organizationIds: data.organizationIds.filter(
+					(id) => Number(id) !== Number(parentData.id)
+				),
+			}).then(() => {
+				chartInstanceRef.current.deleteNodes([data], false);
+
+				if (parentData) {
+					chartInstanceRef.current.updateNodeContent({
+						...parentData,
+						numberOfAccounts: parentData.numberOfAccounts - 1,
+					});
+				}
+
+				closeMenu();
+			});
+		}
+	}
+
 	const actions = [];
 
 	if (!PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS) {
+		actions.push(
+			<ClayDropDown.Item key="remove" onClick={handleRemove}>
+				{Liferay.Language.get('remove')}
+			</ClayDropDown.Item>
+		);
 		actions.push(
 			<ClayDropDown.Item key="delete" onClick={handleDelete}>
 				{Liferay.Language.get('delete')}

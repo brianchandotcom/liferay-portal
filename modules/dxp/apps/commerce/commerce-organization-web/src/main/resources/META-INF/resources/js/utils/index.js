@@ -254,10 +254,10 @@ const formatDescriptionMap = {
 };
 
 export const formatItemName = (d) => {
-	const name = d.data.name || `${d.data.firstName} ${d.data.lastName}`;
+	const name = d.data.name || d.data.emailAddress;
 
-	if (name.length > MAX_NAME_LENGTH) {
-		return name.slice(0, MAX_NAME_LENGTH - 1).trim() + '…';
+	if (name.length > MAX_NAME_LENGTH[d.data.type]) {
+		return name.slice(0, MAX_NAME_LENGTH[d.data.type] - 1).trim() + '…';
 	}
 
 	return name;

@@ -9,10 +9,12 @@
  * distribution rights of the Software.
  */
 
+import { ACCOUNTS_ROLE_TYPE_ID, ORGANIZATIONS_ROLE_TYPE_ID } from '../utils/constants';
 import {fetchFromHeadless} from '../utils/fetch';
 
 export const USERS_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/user-accounts';
 export const ROLES_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/roles';
+export const ACCOUNT_ROLES_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/accounts';
 
 export function getUsersByEmails(emails) {
 	const filterString = emails
@@ -25,53 +27,35 @@ export function getUsersByEmails(emails) {
 	return fetchFromHeadless(url);
 }
 
-export function getUsersRoles(page = 1) {
+export function getOrganizationRoles() {
 	const url = new URL(ROLES_ROOT_ENDPOINT, themeDisplay.getPortalURL());
-
-	url.searchParams.append('page', page);
+	
 	url.searchParams.append('pageSize', 100);
-
-	return fetchFromHeadless(url, {}, null, true);
+	url.searchParams.append('types', ORGANIZATIONS_ROLE_TYPE_ID);
+	
+	return fetchFromHeadless(url, {}, null, true)
+		.then(jsonResponse => jsonResponse.items);
 }
 
-export function getAllUserRoles() {
-	return getUsersRoles().then((firstResponse) => {
-		if (firstResponse.page === firstResponse.lastPage) {
-			return firstResponse;
-		}
+export function getAccountRoles(accountId) {
+	const genericRolesUrl = new URL(ROLES_ROOT_ENDPOINT, themeDisplay.getPortalURL());
 
-		const requests = [];
+	genericRolesUrl.searchParams.append('pageSize', 100);
+	genericRolesUrl.searchParams.append('types', ACCOUNTS_ROLE_TYPE_ID);
 
-		for (
-			let currentPage = 2;
-			currentPage <= firstResponse.lastPage;
-			currentPage++
-		) {
-			requests.push(getUsersRoles(currentPage));
-		}
+	const specificRolesUrl = new URL(`${ACCOUNT_ROLES_ROOT_ENDPOINT}/${accountId}/account-roles`, themeDisplay.getPortalURL()) 
 
-		return Promise.allSettled(requests).then((results) => {
-			const errors = [];
-
-			const roles = results.reduce((values, result) => {
-				if (result.status === 'fulfilled') {
-					return [...values, ...result.value.items];
-				}
-				else {
-					errors.push(result.reason);
-
-					return values;
-				}
-			}, []);
-
-			if (errors.length) {
-				throw new Error(errors);
-			}
-
-			return {
-				items: [...firstResponse.items, ...roles],
-			};
-		});
+	return Promise.allSettled([
+		fetchFromHeadless(genericRolesUrl),
+		fetchFromHeadless(specificRolesUrl)
+	]).then(([
+		genericRolesResponse, 
+		specificRolesResponse
+	]) => {
+		return [
+			...genericRolesResponse.value.items, 
+			...specificRolesResponse.value.items
+		];
 	});
 }
 

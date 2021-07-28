@@ -46,7 +46,7 @@ export default function AddOrganizationModal({
 			return;
 		}
 
-		createOrganizations(organizationNames, parentData).then((results) => {
+		createOrganizations(organizationNames, parentData.id).then((results) => {
 			const newOrganizationsDetails = [];
 			const newErrors = new Set();
 			const failedOrganizations = [];

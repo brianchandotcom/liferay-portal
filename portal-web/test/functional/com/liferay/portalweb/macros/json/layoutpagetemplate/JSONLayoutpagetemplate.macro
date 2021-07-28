@@ -8,13 +8,7 @@ definition {
 
 		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = "${contentType}");
 
-		if ("${subType}" == "Basic Document") {
-			var classTypeId = "0";
-		}
-		else if ("${contentType}" == "Blogs Entry") {
-			var classTypeId = "0";
-		}
-		else if ("${contentType}" == "Category") {
+		if ("${subType}" == "Basic Document" || "${contentType}" == "Blogs Entry" || "${contentType}" == "Category") {
 			var classTypeId = "0";
 		}
 		else {
@@ -38,10 +32,46 @@ definition {
 					groupId = "${globalGroupId}");
 			}
 			else {
-				var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
-					classNameId = "${classNameId}",
-					groupId = "${groupId}",
-					structureName = "${subType}");
+				if (isSet(depotName)) {
+					var depotId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${depotName}",site = "false");
+
+					if (isSet(depotStructure)) {
+						var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+							classNameId = "${classNameId}",
+							groupId = "${depotId}",
+							structureName = "${subType}");
+					}
+					else if (isSet(depotDocumentType)) {
+						var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+							fileEntryTypeName = "${subType}",
+							groupId = "${depotId}");
+					}
+				}
+				else if (isSet(globalStructure)) {
+					var globalGroupId = JSONGroupAPI._getGroupIdByName(
+						groupName = "Global",
+						site = "true");
+
+					var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+						classNameId = "${classNameId}",
+						groupId = "${globalGroupId}",
+						structureName = "${subType}");
+				}
+				else if (isSet(globalDocumentType)) {
+					var globalGroupId = JSONGroupAPI._getGroupIdByName(
+						groupName = "Global",
+						site = "true");
+
+					var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+						fileEntryTypeName = "${subType}",
+						groupId = "${globalGroupId}");
+				}
+				else {
+					var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+						classNameId = "${classNameId}",
+						groupId = "${groupId}",
+						structureName = "${subType}");
+				}
 			}
 		}
 

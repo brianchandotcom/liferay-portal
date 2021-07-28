@@ -600,11 +600,35 @@ definition {
 	}
 
 	@description = "Verify that the user can open the task details by the table"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanOpenTaskDetailsByTable {
 
-		// TODO LRQA-68859 CanOpenTaskDetailsByTable pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Click(
+			key_workflowAssetTitle = "Blogs Entry",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		
+		AssertElementPresent(
+			key_titleValue = "Blogs Entry",
+			locator1 = "AssetWorkflow#ASSET_TITLE_HEADER");
 
 	}
 

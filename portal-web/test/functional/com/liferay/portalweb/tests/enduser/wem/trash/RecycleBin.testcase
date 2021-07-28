@@ -517,8 +517,6 @@ definition {
 				dmDocumentFile = "Document_1.doc",
 				dmDocumentTitle = "DM Document Title 1");
 
-			Navigator.openURL();
-
 			Navigator.gotoSitePage(
 				pageName = "Test Page",
 				siteName = "Site Name");

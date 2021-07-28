@@ -26,7 +26,7 @@ import React, {useReducer, useRef, useState} from 'react';
 import Field from './Field';
 
 export default function TemplateModal({
-	addTemplateURL,
+	addDDMTemplateURL,
 	itemTypes = [],
 	namespace,
 	onModalClose,
@@ -65,7 +65,7 @@ export default function TemplateModal({
 			name,
 		});
 
-		fetch(addTemplateURL, {body: objectToFormData(body), method: 'POST'});
+		fetch(addDDMTemplateURL, {body: objectToFormData(body), method: 'POST'});
 	};
 
 	const nameId = `${namespace}name`;
@@ -174,7 +174,7 @@ export default function TemplateModal({
 	);
 }
 TemplateModal.propTypes = {
-	addTemplateURL: PropTypes.string.isRequired,
+	addDDMTemplateURL: PropTypes.string.isRequired,
 	itemTypes: PropTypes.arrayOf(
 		PropTypes.shape({
 			label: PropTypes.string,

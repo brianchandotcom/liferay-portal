@@ -15,7 +15,7 @@
 import openTemplateModal from './modal/openTemplateModal';
 
 export default function propsTransformer({
-	additionalProps: {addTemplateURL, itemTypes} = {},
+	additionalProps: {addDDMTemplateURL, itemTypes} = {},
 	portletNamespace,
 	...otherProps
 }) {
@@ -49,7 +49,7 @@ export default function propsTransformer({
 
 			if (action === 'addInformationTemplate') {
 				openTemplateModal({
-					addTemplateURL,
+					addDDMTemplateURL,
 					itemTypes,
 					namespace: portletNamespace,
 				});

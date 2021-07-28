@@ -1,0 +1,212 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Navigation";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-85566. A user can enter translations for navigation menu items."
+	@priority = "5"
+	test TranslateItemName {
+		property portal.acceptance = "true";
+
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add a page type item") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				privateLayout = "false",
+				siteNavigationMenuItemName = "Test Page Name",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "layout");
+		}
+
+		task ("Add a submenu type item") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Submenu Name",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "node");
+		}
+
+		task ("Add a URL type item") {
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "url",
+				url = "https://www.liferay.com",
+				useNewTab = "false");
+		}
+
+		task ("Add a Spanish translation for the page item") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addTranslation(
+				itemName = "Test Page Name",
+				locale = "es_ES",
+				translation = "Nombre de la página de prueba");
+		}
+
+		task ("Add a Spanish translation for the submenu item") {
+			NavigationMenusAdmin.addTranslation(
+				itemName = "Submenu Name",
+				locale = "es_ES",
+				translation = "Submenú Nombre");
+		}
+
+		task ("Add a Spanish translation for the URL item") {
+			NavigationMenusAdmin.addTranslation(
+				itemName = "Liferay",
+				locale = "es_ES",
+				translation = "Liferay (Spanish)");
+		}
+
+		task ("Navigate to the Navigation Menus admin in Spanish") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "es/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+		}
+
+		task ("Assert the page item shows its Spanish name") {
+			AssertVisible(
+				key_itemName = "Nombre de la página de prueba",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
+
+			NavigationMenusAdmin.openItemSidebar(itemName = "Nombre de la página de prueba");
+
+			PortletEntry.changeLocale(
+				fieldName = "Nombre",
+				locale = "es_ES");
+
+			AssertTextEquals(
+				locator1 = "TextInput#NAME",
+				value1 = "Nombre de la página de prueba");
+		}
+
+		task ("Assert the submenu item shows its Spanish name") {
+			AssertVisible(
+				key_itemName = "Submenú Nombre",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
+
+			NavigationMenusAdmin.openItemSidebar(itemName = "Submenú Nombre");
+
+			PortletEntry.changeLocale(
+				fieldName = "Nombre",
+				locale = "es_ES");
+
+			AssertTextEquals(
+				locator1 = "TextInput#NAME",
+				value1 = "Submenú Nombre");
+		}
+
+		task ("Assert the URL item shows its Spanish name") {
+			AssertVisible(
+				key_itemName = "Liferay (Spanish)",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
+
+			NavigationMenusAdmin.openItemSidebar(itemName = "Liferay (Spanish)");
+
+			PortletEntry.changeLocale(
+				fieldName = "Nombre",
+				locale = "es_ES");
+
+			AssertTextEquals(
+				locator1 = "TextInput#NAME",
+				value1 = "Liferay (Spanish)");
+		}
+	}
+
+	@description = "This is a test for LPS-85566. A navigation menu page item will be prepopulated with existing translations for a page."
+	@priority = "5"
+	test ViewPageItemPrepopulatedWithTranslation {
+		property portal.acceptance = "true";
+
+		task ("Add a page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Spanish translation for the page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Page.addPageTranslations(
+				page = "Test Page Name",
+				pageTranslation = "es_ES",
+				pageTranslationName = "Nombre de la página de prueba");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Add the page to the navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Test Page Name");
+		}
+
+		task ("Click on the page item to open the item sidebar") {
+			NavigationMenusAdmin.openItemSidebar(itemName = "Test Page Name");
+		}
+
+		task ("Change the name locale to Spanish") {
+			PortletEntry.changeLocale(
+				fieldName = "Name",
+				locale = "es_ES");
+		}
+
+		task ("View localized name shown in sidebar") {
+			AssertTextEquals(
+				locator1 = "TextInput#NAME",
+				value1 = "Nombre de la página de prueba");
+		}
+	}
+
+}

@@ -220,7 +220,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE</td>
-	<td>//div[contains(@id,'navbar')]/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@id,'navbar')]/ul/li/a[normalize-space()='${key_pageName}']</td>
 	<td>Page</td>
 </tr>
 <tr>

@@ -89,7 +89,10 @@ public class CompanySampleDataGenerationTest {
 
 	@Before
 	public void setUp() {
-		_executorService = Executors.newWorkStealingPool();
+		Runtime runtime = Runtime.getRuntime();
+
+		_executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors());
 
 		_originalAtomicReference = ReflectionTestUtil.getFieldValue(
 			_portal, "_portalServerInetSocketAddress");

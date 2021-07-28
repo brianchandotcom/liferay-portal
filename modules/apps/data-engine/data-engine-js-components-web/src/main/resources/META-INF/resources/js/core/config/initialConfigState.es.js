@@ -12,7 +12,7 @@
  * details.
  */
 
-import {FieldUtil} from 'dynamic-data-mapping-form-builder';
+import {generateFieldName} from '../utils/fields';
 
 /**
  * This is a literary copy of the logic of the old LayoutProvider,
@@ -23,7 +23,7 @@ const getFieldNameGenerator = (pages, generateFieldNameUsingFieldLabel) => (
 	currentName,
 	blacklist = []
 ) =>
-	FieldUtil.generateFieldName(
+	generateFieldName(
 		pages,
 		preferredName,
 		currentName,

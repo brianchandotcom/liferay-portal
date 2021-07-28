@@ -47,6 +47,7 @@ export {FormProvider, useForm, useFormState} from './core/hooks/useForm.es';
 export {PageProvider, usePage} from './core/hooks/usePage.es';
 export {useFieldTypesResource} from './core/hooks/useResource.es';
 export {elementSetAdded} from './core/thunks/elementSetAdded.es';
+export * as FieldUtil from './core/utils/fields';
 export {default as sectionAdded} from './core/utils/sectionAddedHandler';
 
 // Custom Form

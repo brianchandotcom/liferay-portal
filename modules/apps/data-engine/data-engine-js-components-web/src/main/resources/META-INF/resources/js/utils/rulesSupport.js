@@ -12,8 +12,9 @@
  * details.
  */
 
-import {FieldUtil, Tokenizer} from 'dynamic-data-mapping-form-builder';
+import {Tokenizer} from 'dynamic-data-mapping-form-builder';
 
+import {getFieldProperty} from '../core/utils/fields';
 import {PagesVisitor} from './visitors.es';
 
 const DEFAULT_FIELD_NAMES_REGEX_FOR_EXPRESSION = /[a-zA-Z]+\d{8}/g;
@@ -82,7 +83,7 @@ export const getFieldOptions = (fieldName, pages) => {
 };
 
 export const getFieldType = (fieldName, pages) => {
-	return FieldUtil.getFieldProperty(pages, fieldName, 'type');
+	return getFieldProperty(pages, fieldName, 'type');
 };
 
 const optionBelongsToRule = (condition, options) => {

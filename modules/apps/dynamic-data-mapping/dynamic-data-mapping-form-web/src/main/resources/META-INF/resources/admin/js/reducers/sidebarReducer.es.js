@@ -12,9 +12,13 @@
  * details.
  */
 
-import {PagesVisitor, RulesSupport} from 'data-engine-js-components-web';
+import {
+	FieldUtil,
+	PagesVisitor,
+	RulesSupport,
+} from 'data-engine-js-components-web';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-taglib';
-import {FieldUtil, SettingsContext} from 'dynamic-data-mapping-form-builder';
+import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import {EVENT_TYPES} from '../eventTypes.es';
 

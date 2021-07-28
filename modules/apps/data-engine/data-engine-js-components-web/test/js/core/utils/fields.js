@@ -12,29 +12,53 @@
  * details.
  */
 
-import mockPages from '../../../__mock__/mockPages.es';
-import {generateFieldName} from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
+import {generateFieldName} from '../../../../src/main/resources/META-INF/resources/js/core/utils/fields';
+import mockPages from '../../__mock__/mockPages.es';
 
-describe('LayoutProvider/util/fields', () => {
+describe('core/utils/fields', () => {
 	describe('generateFieldName(pages, desiredName, currentName)', () => {
 		it('generates a name based on the desired name', () => {
-			expect(generateFieldName(mockPages, 'New  Name!')).toEqual(
-				'NewName'
+			const name = generateFieldName(
+				mockPages,
+				'New  Name!',
+				undefined,
+				undefined,
+				true
 			);
+			expect(name).toEqual('NewName');
 		});
 
 		it('generates an incremental name when desired name is already being used', () => {
-			expect(generateFieldName(mockPages, 'radio')).toEqual('radio1');
+			const name = generateFieldName(
+				mockPages,
+				'radio',
+				undefined,
+				undefined,
+				true
+			);
+			expect(name).toEqual('radio1');
 		});
 
 		it('generates an incremental name when changing desired name to an already used one', () => {
-			expect(generateFieldName(mockPages, 'radio!!')).toEqual('radio1');
+			const name = generateFieldName(
+				mockPages,
+				'radio!!',
+				undefined,
+				undefined,
+				true
+			);
+			expect(name).toEqual('radio1');
 		});
 
 		it('fallbacks to currentName when generated name is invalid', () => {
-			expect(generateFieldName(mockPages, 'radio!', 'radio')).toEqual(
-				'radio'
+			const name = generateFieldName(
+				mockPages,
+				'radio!',
+				'radio',
+				undefined,
+				true
 			);
+			expect(name).toEqual('radio');
 		});
 	});
 });

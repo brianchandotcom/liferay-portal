@@ -13,24 +13,22 @@
  */
 
 import {
-	FormSupport,
-	PagesVisitor,
-	StringUtils,
-	generateInstanceId,
-	normalizeFieldName,
-} from 'data-engine-js-components-web';
-
-import {
-	getDefaultFieldName,
-	localizeField,
-} from '../../../util/fieldSupport.es';
-import {
 	getSettingsContextProperty,
 	updateField,
 	updateFieldLabel,
 	updateSettingsContextInstanceId,
 	updateSettingsContextProperty,
-} from '../util/settingsContext.es';
+} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/settingsContext.es';
+import {
+	getDefaultFieldName,
+	localizeField,
+} from 'dynamic-data-mapping-form-builder/js/util/fieldSupport.es';
+
+import {findFieldByFieldName} from '../../utils/FormSupport.es';
+import {normalizeFieldName} from '../../utils/fields.es';
+import {generateInstanceId} from '../../utils/repeatable.es';
+import {sub} from '../../utils/strings';
+import {PagesVisitor} from '../../utils/visitors.es';
 
 export const generateFieldName = (
 	pages,
@@ -47,7 +45,7 @@ export const generateFieldName = (
 
 		fieldName = normalizeFieldName(desiredName);
 
-		existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+		existingField = findFieldByFieldName(pages, fieldName);
 
 		while (
 			(existingField && existingField.fieldName !== currentName) ||
@@ -57,7 +55,7 @@ export const generateFieldName = (
 				fieldName = normalizeFieldName(desiredName) + counter;
 			}
 
-			existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+			existingField = findFieldByFieldName(pages, fieldName);
 
 			counter++;
 		}
@@ -67,7 +65,7 @@ export const generateFieldName = (
 	else {
 		fieldName = desiredName;
 
-		existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+		existingField = findFieldByFieldName(pages, fieldName);
 
 		while (
 			(existingField && existingField.fieldName !== currentName) ||
@@ -75,7 +73,7 @@ export const generateFieldName = (
 		) {
 			fieldName = getDefaultFieldName();
 
-			existingField = FormSupport.findFieldByFieldName(pages, fieldName);
+			existingField = findFieldByFieldName(pages, fieldName);
 		}
 
 		return fieldName;
@@ -141,9 +139,7 @@ export const getLabel = (
 		return;
 	}
 
-	return StringUtils.sub(Liferay.Language.get('copy-of-x'), [
-		labelFieldLocalizedValue,
-	]);
+	return sub(Liferay.Language.get('copy-of-x'), [labelFieldLocalizedValue]);
 };
 
 export const updateFieldValidationProperty = (

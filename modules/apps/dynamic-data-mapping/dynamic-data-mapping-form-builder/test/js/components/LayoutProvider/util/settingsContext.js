@@ -15,7 +15,8 @@
 import {
 	getFieldProperty,
 	getFieldValue,
-} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
+} from 'data-engine-js-components-web/js/core/utils/fields';
+
 import {
 	updateFocusedFieldDataType,
 	updateFocusedFieldLabel,

@@ -12,8 +12,11 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'data-engine-js-components-web';
-import {FieldUtil} from 'dynamic-data-mapping-form-builder';
+import {
+	FieldUtil,
+	FormSupport,
+	PagesVisitor,
+} from 'data-engine-js-components-web';
 
 import {EVENT_TYPES} from '../eventTypes.es';
 

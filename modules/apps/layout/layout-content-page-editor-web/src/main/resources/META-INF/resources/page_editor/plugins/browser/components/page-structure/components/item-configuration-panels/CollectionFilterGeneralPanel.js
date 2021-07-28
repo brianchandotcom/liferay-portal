@@ -31,6 +31,14 @@ import {useId} from '../../../../../../app/utils/useId';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 
+const selectConfiguredCollectionDisplays = (state) =>
+	Object.values(state.layoutData.items).filter(
+		(item) =>
+			item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+			item.config?.collection &&
+			Object.keys(item.config.collection).length > 0
+	);
+
 function TargetCollectionsField({onValueSelect, value}) {
 	const [active, setActive] = useState(false);
 	const inputId = useId();
@@ -74,19 +82,13 @@ function TargetCollectionsField({onValueSelect, value}) {
 
 	const items = useSelectorCallback(
 		(state) =>
-			Object.values(state.layoutData.items)
-				.filter(
-					(item) =>
-						item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-						item.config?.collection?.key
-				)
-				.map((item) => ({
-					checked: nextValue.includes(item.itemId),
-					label: item.config.collection.title,
-					onChange: (checked) => handleChange(item.itemId, checked),
-					type: 'checkbox',
-					value: item.itemId,
-				})),
+			selectConfiguredCollectionDisplays(state).map((item) => ({
+				checked: nextValue.includes(item.itemId),
+				label: item.config.collection.title,
+				onChange: (checked) => handleChange(item.itemId, checked),
+				type: 'checkbox',
+				value: item.itemId,
+			})),
 		[nextValue]
 	);
 
@@ -140,6 +142,11 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
+	const hasConfiguredCollections = useSelectorCallback(
+		(state) => selectConfiguredCollectionDisplays(state).length > 0,
+		[]
+	);
+
 	const onValueSelect = (name, value) => {
 		dispatch(
 			updateItemConfig({
@@ -149,6 +156,16 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 			})
 		);
 	};
+
+	if (!hasConfiguredCollections) {
+		return (
+			<p className="alert alert-info text-center" role="alert">
+				{Liferay.Language.get(
+					'display-a-collection-on-the-page-so-that-you-can-use-the-collection-filter-fragment'
+				)}
+			</p>
+		);
+	}
 
 	return (
 		<>

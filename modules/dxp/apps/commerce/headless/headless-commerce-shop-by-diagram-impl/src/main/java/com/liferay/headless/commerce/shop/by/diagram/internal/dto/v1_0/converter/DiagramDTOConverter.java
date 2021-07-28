@@ -94,7 +94,11 @@ public class DiagramDTOConverter
 								getCPAttachmentFileEntry();
 
 						FileEntry fileEntry =
-							cpAttachmentFileEntry.getFileEntry();
+							cpAttachmentFileEntry.fetchFileEntry();
+
+						if (fileEntry == null) {
+							return null;
+						}
 
 						return DLUtil.getDownloadURL(
 							fileEntry, fileEntry.getFileVersion(), null, null);

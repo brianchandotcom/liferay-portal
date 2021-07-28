@@ -12,17 +12,16 @@
  * details.
  */
 
-import {
-	FormSupport,
-	PagesVisitor,
-	generateName,
-	getRepeatedIndex,
-	normalizeFieldName,
-	parseName,
-} from 'data-engine-js-components-web';
+import {updateField} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/settingsContext.es';
 
-import {updateField} from '../components/LayoutProvider/util/settingsContext.es';
-import {FIELD_TYPE_FIELDSET} from './constants.es';
+import {
+	addFieldToColumn,
+	removeEmptyRows as removeEmptyRowsUtil,
+} from './FormSupport.es';
+import {FIELD_TYPE_FIELDSET} from './constants';
+import {normalizeFieldName} from './fields.es';
+import {generateName, getRepeatedIndex, parseName} from './repeatable.es';
+import {PagesVisitor} from './visitors.es';
 
 export const addField = ({
 	defaultLanguageId,
@@ -61,7 +60,7 @@ export const addField = ({
 					);
 
 					const {rows} = field;
-					const pages = FormSupport.addFieldToColumn(
+					const pages = addFieldToColumn(
 						[
 							{
 								rows:
@@ -96,7 +95,7 @@ export const addField = ({
 		);
 	}
 	else {
-		newPages = FormSupport.addFieldToColumn(
+		newPages = addFieldToColumn(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -188,7 +187,7 @@ export const removeField = (
 					}));
 
 					rows = removeEmptyRows
-						? FormSupport.removeEmptyRows(pages, 0)
+						? removeEmptyRowsUtil(pages, 0)
 						: pages[0].rows;
 
 					field = updateField(props, field, 'rows', rows);

@@ -12,9 +12,8 @@
  * details.
  */
 
-import {FieldSupport} from 'dynamic-data-mapping-form-builder';
-
 import {removeEmptyRows as removeEmptyRowsUtil} from '../../utils/FormSupport.es';
+import {removeField} from '../../utils/fieldSupport';
 import {formatRules} from '../../utils/rulesSupport';
 
 export const handleFieldDeleted = (
@@ -30,7 +29,7 @@ export const handleFieldDeleted = (
 
 	const newPages = pages.map((page, pageIndex) => {
 		if (activePage === pageIndex) {
-			const pagesWithFieldRemoved = FieldSupport.removeField(
+			const pagesWithFieldRemoved = removeField(
 				props,
 				pages,
 				fieldName,

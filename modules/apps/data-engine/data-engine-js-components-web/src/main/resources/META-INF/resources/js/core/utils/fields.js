@@ -19,12 +19,9 @@ import {
 	updateSettingsContextInstanceId,
 	updateSettingsContextProperty,
 } from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/settingsContext.es';
-import {
-	getDefaultFieldName,
-	localizeField,
-} from 'dynamic-data-mapping-form-builder/js/util/fieldSupport.es';
 
 import {findFieldByFieldName} from '../../utils/FormSupport.es';
+import {getDefaultFieldName, localizeField} from '../../utils/fieldSupport';
 import {normalizeFieldName} from '../../utils/fields.es';
 import {generateInstanceId} from '../../utils/repeatable.es';
 import {sub} from '../../utils/strings';

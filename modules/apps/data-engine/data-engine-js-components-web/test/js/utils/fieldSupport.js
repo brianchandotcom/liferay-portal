@@ -12,11 +12,11 @@
  * details.
  */
 
-import {FIELD_TYPE_FIELDSET} from '../../../src/main/resources/META-INF/resources/js/util/constants.es';
+import {FIELD_TYPE_FIELDSET} from '../../../src/main/resources/META-INF/resources/js/utils/constants';
 import {
 	isFieldSetChild,
 	localizeField,
-} from '../../../src/main/resources/META-INF/resources/js/util/fieldSupport.es';
+} from '../../../src/main/resources/META-INF/resources/js/utils/fieldSupport';
 
 describe('Field Support Utilities', () => {
 	describe('isFieldSetChild', () => {

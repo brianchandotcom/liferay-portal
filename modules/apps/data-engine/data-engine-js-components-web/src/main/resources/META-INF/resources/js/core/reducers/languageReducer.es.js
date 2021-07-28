@@ -12,8 +12,7 @@
  * details.
  */
 
-import {FieldSupport} from 'dynamic-data-mapping-form-builder';
-
+import {getFieldProperties, localizeField} from '../../utils/fieldSupport';
 import {
 	generateInstanceId,
 	generateName,
@@ -92,7 +91,7 @@ const getLocalizedPages = (pages, defaultLanguageId, editingLanguageId) => {
 	const settingsVisitor = new PagesVisitor(pages);
 
 	return settingsVisitor.mapFields((field) =>
-		FieldSupport.localizeField(field, defaultLanguageId, editingLanguageId)
+		localizeField(field, defaultLanguageId, editingLanguageId)
 	);
 };
 
@@ -119,7 +118,7 @@ const updateFieldLanguage = ({
 	};
 
 	const newField = {
-		...FieldSupport.getFieldProperties(
+		...getFieldProperties(
 			newSettingsContext,
 			defaultLanguageId,
 			editingLanguageId

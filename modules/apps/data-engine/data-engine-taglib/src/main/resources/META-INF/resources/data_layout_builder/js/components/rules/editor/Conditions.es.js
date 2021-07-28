@@ -14,8 +14,11 @@
 
 import ClayButton from '@clayui/button';
 import {Context as ModalContext} from '@clayui/modal';
-import {FieldStateless, generateName} from 'data-engine-js-components-web';
-import {FieldSupport} from 'dynamic-data-mapping-form-builder';
+import {
+	FieldStateless,
+	FieldSupport,
+	generateName,
+} from 'data-engine-js-components-web';
 import React, {useContext, useMemo} from 'react';
 
 import Timeline from './Timeline.es';

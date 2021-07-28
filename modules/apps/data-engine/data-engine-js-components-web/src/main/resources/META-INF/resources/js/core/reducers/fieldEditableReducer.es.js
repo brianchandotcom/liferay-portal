@@ -12,9 +12,16 @@
  * details.
  */
 
-import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
+import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import * as FormSupport from '../../utils/FormSupport.es';
+import {
+	addField,
+	createField,
+	getField,
+	localizeField,
+	removeField,
+} from '../../utils/fieldSupport';
 import {formatRules} from '../../utils/rulesSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
@@ -38,7 +45,7 @@ export const deleteField = ({
 }) =>
 	pages.map((page, pageIndex) => {
 		if (fieldPage === pageIndex) {
-			const pagesWithFieldRemoved = FieldSupport.removeField(
+			const pagesWithFieldRemoved = removeField(
 				{
 					defaultLanguageId,
 					editingLanguageId,
@@ -130,7 +137,7 @@ export default (state, action, config) => {
 
 			const field =
 				action.payload.newField ||
-				FieldSupport.createField(
+				createField(
 					{
 						defaultLanguageId,
 						editingLanguageId,
@@ -151,7 +158,7 @@ export default (state, action, config) => {
 					availableLanguageIds,
 					defaultLanguageId,
 					pages: settingsVisitor.mapFields((field) =>
-						FieldSupport.localizeField(
+						localizeField(
 							field,
 							defaultLanguageId,
 							editingLanguageId
@@ -160,7 +167,7 @@ export default (state, action, config) => {
 				},
 			};
 
-			return FieldSupport.addField({
+			return addField({
 				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
@@ -232,7 +239,7 @@ export default (state, action, config) => {
 							};
 						}
 
-						return FieldSupport.localizeField(
+						return localizeField(
 							currentfield,
 							defaultLanguageId,
 							editingLanguageId
@@ -275,7 +282,7 @@ export default (state, action, config) => {
 				editingLanguageId,
 				fieldNameGenerator,
 				focusedField: fieldName
-					? FieldSupport.getField(pages, fieldName)
+					? getField(pages, fieldName)
 					: focusedField,
 				generateFieldNameUsingFieldLabel,
 				pages,
@@ -474,11 +481,8 @@ export default (state, action, config) => {
 				submitButtonId,
 			} = config;
 
-			const fieldName = FieldSupport.getField(
-				settingsContextPages,
-				'name'
-			);
-			const focusedFieldName = FieldSupport.getField(
+			const fieldName = getField(settingsContextPages, 'name');
+			const focusedFieldName = getField(
 				focusedField.settingsContext.pages,
 				'name'
 			);

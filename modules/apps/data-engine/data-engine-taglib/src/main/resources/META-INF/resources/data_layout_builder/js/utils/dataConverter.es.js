@@ -12,8 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'data-engine-js-components-web';
-import {FieldSupport} from 'dynamic-data-mapping-form-builder';
+import {FieldSupport, PagesVisitor} from 'data-engine-js-components-web';
 
 import {getDataDefinitionField as getDataDefinitionFieldUtils} from './dataDefinition.es';
 import {normalizeDataDefinition, normalizeDataLayout} from './normalizers.es';

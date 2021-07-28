@@ -12,8 +12,7 @@
  * details.
  */
 
-import {normalizeFieldName} from 'data-engine-js-components-web';
-import {getDefaultFieldName} from 'dynamic-data-mapping-form-builder/js/util/fieldSupport.es';
+import {FieldSupport, normalizeFieldName} from 'data-engine-js-components-web';
 
 export const random = (a) => {
 	return a
@@ -92,7 +91,7 @@ export const dedupValue = (fields, value, id, generateValueUsingLabel) => {
 				recursive(fields, value + counter);
 			}
 			else {
-				recursive(fields, getDefaultFieldName(true));
+				recursive(fields, FieldSupport.getDefaultFieldName(true));
 			}
 		}
 		else {
@@ -121,7 +120,7 @@ export const findDuplicateReference = (
 export const getDefaultOptionValue = (generateValueUsingLabel, optionLabel) => {
 	const defaultValue = generateValueUsingLabel
 		? optionLabel
-		: getDefaultFieldName(true);
+		: FieldSupport.getDefaultFieldName(true);
 
 	return defaultValue;
 };
@@ -130,7 +129,7 @@ export const normalizeReference = (fields, currentField, index) => {
 	const {reference, value} = currentField;
 
 	if (!reference || findDuplicateReference(fields, index, reference)) {
-		return value ? value : getDefaultFieldName(true);
+		return value ? value : FieldSupport.getDefaultFieldName(true);
 	}
 
 	return reference;

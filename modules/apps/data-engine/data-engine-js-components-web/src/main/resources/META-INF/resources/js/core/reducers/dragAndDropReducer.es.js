@@ -12,9 +12,14 @@
  * details.
  */
 
-import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
+import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
-import * as FormSupport from '../../utils/FormSupport.es';
+import {
+	findFieldByFieldName,
+	removeEmptyRows,
+} from '../../utils/FormSupport.es';
+import {FIELD_TYPE_FIELDSET} from '../../utils/constants';
+import {addField, getParentField} from '../../utils/fieldSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {
@@ -24,10 +29,6 @@ import {
 } from '../utils/columnResizedHandler';
 import sectionAdded from '../utils/sectionAddedHandler';
 import {deleteField} from './fieldEditableReducer.es';
-
-const FIELD_TYPES = {
-	FIELDSET: 'fieldset',
-};
 
 /**
  * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes
@@ -64,10 +65,7 @@ export default (state, action, config) => {
 
 			let {sourceParentField} = action.payload;
 
-			const sourceField = FormSupport.findFieldByFieldName(
-				pages,
-				sourceFieldName
-			);
+			const sourceField = findFieldByFieldName(pages, sourceFieldName);
 
 			if (
 				sourceParentField &&
@@ -89,7 +87,7 @@ export default (state, action, config) => {
 
 			if (
 				sourceParentField &&
-				sourceParentField.type === FIELD_TYPES.FIELDSET &&
+				sourceParentField.type === FIELD_TYPE_FIELDSET &&
 				sourceParentField.nestedFields.length === 1
 			) {
 				let sourceParentFieldName = sourceParentField
@@ -101,13 +99,13 @@ export default (state, action, config) => {
 						sourceParentFieldName = sourceParentField.fieldName;
 					}
 
-					sourceParentField = FieldSupport.getParentField(
+					sourceParentField = getParentField(
 						pages,
 						sourceParentField.fieldName
 					);
 				} while (
 					sourceParentField &&
-					sourceParentField.type === FIELD_TYPES.FIELDSET &&
+					sourceParentField.type === FIELD_TYPE_FIELDSET &&
 					sourceParentField.fieldName !== targetParentFieldName &&
 					sourceParentField.nestedFields.length === 1
 				);
@@ -165,7 +163,7 @@ export default (state, action, config) => {
 				);
 			}
 
-			const {pages: updatedPages} = FieldSupport.addField({
+			const {pages: updatedPages} = addField({
 				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
@@ -189,7 +187,7 @@ export default (state, action, config) => {
 						},
 						field,
 						'rows',
-						FormSupport.removeEmptyRows([field], 0)
+						removeEmptyRows([field], 0)
 					);
 				}
 
@@ -201,10 +199,7 @@ export default (state, action, config) => {
 					if (sourceFieldPage === pageIndex) {
 						return {
 							...page,
-							rows: FormSupport.removeEmptyRows(
-								newPages,
-								pageIndex
-							),
+							rows: removeEmptyRows(newPages, pageIndex),
 						};
 					}
 

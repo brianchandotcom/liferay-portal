@@ -12,10 +12,11 @@
  * details.
  */
 
-import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
-import {FIELD_TYPE_FIELDSET} from 'dynamic-data-mapping-form-builder/js/util/constants.es';
+import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import {addFieldToColumn, removeFields} from './FormSupport.es';
+import {FIELD_TYPE_FIELDSET} from './constants';
+import {createField, generateInstanceId} from './fieldSupport';
 import {PagesVisitor} from './visitors.es';
 
 const addNestedFields = ({field, indexes, nestedFields, props}) => {
@@ -34,7 +35,7 @@ const addNestedFields = ({field, indexes, nestedFields, props}) => {
 
 	[...nestedFields].reverse().forEach((nestedField) => {
 		if (!nestedField.instanceId) {
-			nestedField.instanceId = FieldSupport.generateInstanceId(8);
+			nestedField.instanceId = generateInstanceId(8);
 		}
 		layout = addFieldToColumn(
 			layout,
@@ -71,7 +72,7 @@ export const createFieldSet = (
 	const fieldType = fieldTypes.find((fieldType) => {
 		return fieldType.name === FIELD_TYPE_FIELDSET;
 	});
-	const fieldSetField = FieldSupport.createField(props, {
+	const fieldSetField = createField(props, {
 		...event,
 		fieldType,
 	});

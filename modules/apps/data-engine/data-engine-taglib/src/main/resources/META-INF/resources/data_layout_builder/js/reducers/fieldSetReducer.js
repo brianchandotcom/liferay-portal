@@ -14,10 +14,11 @@
 
 import {
 	FieldSetUtil,
+	FieldSupport,
 	PagesVisitor,
 	sectionAdded,
 } from 'data-engine-js-components-web';
-import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
+import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import {EVENT_TYPES} from '../eventTypes';
 import {

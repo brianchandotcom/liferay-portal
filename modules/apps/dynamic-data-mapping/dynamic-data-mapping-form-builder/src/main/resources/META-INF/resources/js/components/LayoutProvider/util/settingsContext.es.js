@@ -18,8 +18,7 @@ import {
 	normalizeFieldName,
 } from 'data-engine-js-components-web';
 import {updateFieldValidationProperty} from 'data-engine-js-components-web/js/core/utils/fields';
-
-import {getDefaultFieldName} from '../../../util/fieldSupport.es';
+import {getDefaultFieldName} from 'data-engine-js-components-web/js/utils/fieldSupport';
 
 export const getSettingsContextProperty = (
 	settingsContext,

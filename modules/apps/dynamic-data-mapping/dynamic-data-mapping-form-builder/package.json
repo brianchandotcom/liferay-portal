@@ -13,7 +13,6 @@
 			"<rootDir>/jest-setup.config.js"
 		],
 		"testPathIgnorePatterns": [
-			"fieldSupport",
 			"LayoutProvider/util"
 		]
 	},

@@ -18,6 +18,7 @@ export {default as compose} from './utils/compose.es';
 export {convertToFormData, makeFetch} from './utils/fetch.es';
 export {normalizeFieldName} from './utils/fields.es';
 export * as FieldSetUtil from './utils/fieldSets';
+export * as FieldSupport from './utils/fieldSupport';
 export {getUid} from './utils/formId.es';
 export * as FormSupport from './utils/FormSupport.es';
 export {parseProps} from './utils/parseProps.es';

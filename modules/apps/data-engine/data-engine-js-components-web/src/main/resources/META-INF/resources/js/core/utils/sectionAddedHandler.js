@@ -12,14 +12,15 @@
  * details.
  */
 
-import {FieldSupport, SettingsContext} from 'dynamic-data-mapping-form-builder';
-import {FIELD_TYPE_FIELDSET} from 'dynamic-data-mapping-form-builder/js/util/constants.es';
+import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import {
 	addFieldToColumn,
 	findFieldByFieldName,
 } from '../../utils/FormSupport.es';
+import {FIELD_TYPE_FIELDSET} from '../../utils/constants';
 import {createFieldSet} from '../../utils/fieldSets';
+import {addField, createField} from '../../utils/fieldSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import handleFieldDeleted from './fieldDeletedHandler';
 
@@ -56,7 +57,7 @@ const handleSectionAdded = (props, state, event) => {
 	const {fieldName, parentFieldName} = data;
 	const {pages} = state;
 
-	const newField = event.newField ?? FieldSupport.createField(props, event);
+	const newField = event.newField ?? createField(props, event);
 	const existingField = findFieldByFieldName(pages, fieldName);
 	const fieldSetField = createFieldSet(props, event, [
 		existingField,
@@ -96,7 +97,7 @@ const handleSectionAdded = (props, state, event) => {
 		);
 	}
 	else if (existingField.type === FIELD_TYPE_FIELDSET) {
-		newPages = FieldSupport.addField({
+		newPages = addField({
 			...props,
 			indexes,
 			newField,

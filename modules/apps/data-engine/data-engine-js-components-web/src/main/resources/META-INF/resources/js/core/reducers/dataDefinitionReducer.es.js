@@ -13,8 +13,8 @@
  */
 
 import {DataConverter} from 'data-engine-taglib';
-import {FieldSupport} from 'dynamic-data-mapping-form-builder';
 
+import {createField} from '../../utils/fieldSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
@@ -43,7 +43,7 @@ export default (state, action, config) => {
 
 			const fieldType = fieldTypes.find(({name}) => name === type);
 
-			const field = FieldSupport.createField(
+			const field = createField(
 				{defaultLanguageId, editingLanguageId, fieldNameGenerator},
 				{fieldType}
 			);

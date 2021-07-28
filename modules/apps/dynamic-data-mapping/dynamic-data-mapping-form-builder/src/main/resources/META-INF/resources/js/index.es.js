@@ -15,4 +15,3 @@
 export * as SettingsContext from './components/LayoutProvider/util/settingsContext.es';
 export {Token} from './expressions/Token.es';
 export {Tokenizer} from './expressions/Tokenizer.es';
-export * as FieldSupport from './util/fieldSupport.es';

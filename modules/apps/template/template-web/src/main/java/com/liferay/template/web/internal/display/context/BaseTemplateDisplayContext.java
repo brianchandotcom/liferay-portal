@@ -56,7 +56,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Lourdes Fernández Besada
  * @author Eudaldo Alonso
  */
-public abstract class BaseTemplateDisplayContext {
+public abstract class BaseTemplateDisplayContext
+	implements TemplateDisplayContext {
 
 	public BaseTemplateDisplayContext(
 		DDMWebConfiguration ddmWebConfiguration,
@@ -75,6 +76,8 @@ public abstract class BaseTemplateDisplayContext {
 	}
 
 	public abstract String getAddPermissionActionId();
+
+	public abstract long[] getClassNameIds();
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(
 			DDMTemplate ddmTemplate)
@@ -154,6 +157,8 @@ public abstract class BaseTemplateDisplayContext {
 		).build();
 	}
 
+	public abstract long getResourceClassNameId();
+
 	public abstract String getResourceName(long classNameId);
 
 	public SearchContainer<DDMTemplate> getTemplateSearchContainer() {
@@ -213,10 +218,6 @@ public abstract class BaseTemplateDisplayContext {
 
 		return false;
 	}
-
-	protected abstract long[] getClassNameIds();
-
-	protected abstract long getResourceClassNameId();
 
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final ThemeDisplay themeDisplay;

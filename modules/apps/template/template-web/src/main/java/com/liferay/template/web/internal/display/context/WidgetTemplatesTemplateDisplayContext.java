@@ -50,23 +50,7 @@ public class WidgetTemplatesTemplateDisplayContext
 	}
 
 	@Override
-	public String getResourceName(long classNameId) {
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-		return templateHandler.getResourceName();
-	}
-
-	@Override
-	public String getTemplateType(long classNameId) {
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-		return templateHandler.getName(themeDisplay.getLocale());
-	}
-
-	@Override
-	protected long[] getClassNameIds() {
+	public long[] getClassNameIds() {
 		if (_classNameIds != null) {
 			return _classNameIds;
 		}
@@ -86,7 +70,7 @@ public class WidgetTemplatesTemplateDisplayContext
 	}
 
 	@Override
-	protected long getResourceClassNameId() {
+	public long getResourceClassNameId() {
 		if (_resourceClassNameId != null) {
 			return _resourceClassNameId;
 		}
@@ -95,6 +79,22 @@ public class WidgetTemplatesTemplateDisplayContext
 			PortletDisplayTemplate.class);
 
 		return _resourceClassNameId;
+	}
+
+	@Override
+	public String getResourceName(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		return templateHandler.getResourceName();
+	}
+
+	@Override
+	public String getTemplateType(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		return templateHandler.getName(themeDisplay.getLocale());
 	}
 
 	private long[] _classNameIds;

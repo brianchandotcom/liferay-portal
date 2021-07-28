@@ -52,18 +52,7 @@ public class InformationTemplatesTemplateDisplayContext
 	}
 
 	@Override
-	public String getResourceName(long classNameId) {
-		return TemplatePortletKeys.TEMPLATE;
-	}
-
-	@Override
-	public String getTemplateType(long classNameId) {
-		return ResourceActionsUtil.getModelResource(
-			themeDisplay.getLocale(), PortalUtil.getClassName(classNameId));
-	}
-
-	@Override
-	protected long[] getClassNameIds() {
+	public long[] getClassNameIds() {
 		if (_classNameIds != null) {
 			return _classNameIds;
 		}
@@ -83,7 +72,7 @@ public class InformationTemplatesTemplateDisplayContext
 	}
 
 	@Override
-	protected long getResourceClassNameId() {
+	public long getResourceClassNameId() {
 		if (_resourceClassNameId != null) {
 			return _resourceClassNameId;
 		}
@@ -92,6 +81,17 @@ public class InformationTemplatesTemplateDisplayContext
 			InfoItemFormProvider.class);
 
 		return _resourceClassNameId;
+	}
+
+	@Override
+	public String getResourceName(long classNameId) {
+		return TemplatePortletKeys.TEMPLATE;
+	}
+
+	@Override
+	public String getTemplateType(long classNameId) {
+		return ResourceActionsUtil.getModelResource(
+			themeDisplay.getLocale(), PortalUtil.getClassName(classNameId));
 	}
 
 	private long[] _classNameIds;

@@ -18,25 +18,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Thuong Dinh
- *
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler}
+ * @author Arthur Chan
  */
-@Deprecated
 @ProviderType
-public interface OpenIdConnectServiceHandler {
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean hasValidOpenIdConnectSession(HttpSession httpSession)
-		throws OpenIdConnectServiceException.NoOpenIdConnectSessionException;
+public interface OpenIdConnectAuthenticationHandler {
 
 	public void processAuthenticationResponse(
 			HttpServletRequest httpServletRequest,

@@ -18,21 +18,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.auto.login.OpenIdConnectAutoLogin;
-import com.liferay.portal.security.sso.openid.connect.internal.provider.OpenIdConnectSessionProviderImpl;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
 
@@ -81,35 +77,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Edward C. Han
  * @author Arthur Chan
  */
-@Component(immediate = true, service = OpenIdConnectServiceHandler.class)
-public class OpenIdConnectServiceHandlerImpl
-	implements OpenIdConnectServiceHandler {
-
-	@Override
-	public boolean hasValidOpenIdConnectSession(HttpSession httpSession)
-		throws OpenIdConnectServiceException.NoOpenIdConnectSessionException {
-
-		OpenIdConnectSessionImpl openIdConnectSessionImpl =
-			_getOpenIdConnectSessionImpl(httpSession);
-
-		if (!_hasValidAccessToken(openIdConnectSessionImpl)) {
-			try {
-				return _refreshAuthToken(openIdConnectSessionImpl);
-			}
-			catch (OpenIdConnectServiceException
-						openIdConnectServiceException) {
-
-				_log.error(
-					"Unable to refresh auth token: " +
-						openIdConnectServiceException.getMessage(),
-					openIdConnectServiceException);
-
-				return false;
-			}
-		}
-
-		return true;
-	}
+@Component(immediate = true, service = OpenIdConnectAuthenticationHandler.class)
+public class OpenIdConnectAuthenticationHandlerImpl
+	implements OpenIdConnectAuthenticationHandler {
 
 	@Override
 	public void processAuthenticationResponse(
@@ -155,11 +125,11 @@ public class OpenIdConnectServiceHandlerImpl
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
-			userInfo, _portal.getCompanyId(httpServletRequest),
-			serviceContext.getPathMain(), serviceContext.getPortalURL());
-
-		httpSession.setAttribute(OpenIdConnectAutoLogin.USER_ID, userId);
+		httpSession.setAttribute(
+			OpenIdConnectAutoLogin.USER_ID,
+			_openIdConnectUserInfoProcessor.processUserInfo(
+				userInfo, _portal.getCompanyId(httpServletRequest),
+				serviceContext.getPathMain(), serviceContext.getPortalURL()));
 
 		httpSession.setAttribute(
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION_ID,
@@ -301,26 +271,6 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 	}
 
-	private boolean _hasValidAccessToken(
-		OpenIdConnectSessionImpl openIdConnectSessionImpl) {
-
-		AccessToken accessToken = openIdConnectSessionImpl.getAccessToken();
-
-		if (accessToken == null) {
-			return false;
-		}
-
-		long currentTime = System.currentTimeMillis();
-		long lifetime = accessToken.getLifetime() * Time.SECOND;
-		long loginTime = openIdConnectSessionImpl.getLoginTime();
-
-		if ((currentTime - loginTime) < lifetime) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private UserInfo _requestUserInfo(
 			AccessToken accessToken, OIDCProviderMetadata oidcProviderMetadata)
 		throws OpenIdConnectServiceException.UserInfoException {
@@ -396,9 +346,6 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectServiceHandlerImpl.class);
-
 	@Reference
 	private OfflineOpenIdConnectSessionManager
 		_offlineOpenIdConnectSessionManager;
@@ -407,9 +354,6 @@ public class OpenIdConnectServiceHandlerImpl
 	private OpenIdConnectProviderRegistry
 		<OIDCClientMetadata, OIDCProviderMetadata>
 			_openIdConnectProviderRegistry;
-
-	@Reference
-	private OpenIdConnectSessionProviderImpl _openIdConnectSessionProviderImpl;
 
 	@Reference
 	private OpenIdConnectUserInfoProcessor _openIdConnectUserInfoProcessor;

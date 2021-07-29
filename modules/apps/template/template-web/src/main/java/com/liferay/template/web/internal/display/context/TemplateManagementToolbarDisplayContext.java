@@ -144,7 +144,7 @@ public class TemplateManagementToolbarDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest,
-							_templateDisplayContext.getTemplateType(
+							_templateDisplayContext.getTemplateTypeLabel(
 								addAllowedClassNameId)));
 				});
 		}

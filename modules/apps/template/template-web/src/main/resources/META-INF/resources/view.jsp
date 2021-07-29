@@ -74,7 +74,7 @@ TemplateManagementToolbarDisplayContext templateManagementToolbarDisplayContext 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest"
 					name="type"
-					value="<%= HtmlUtil.escape(templateDisplayContext.getTemplateType(ddmTemplate.getClassNameId())) %>"
+					value="<%= HtmlUtil.escape(templateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

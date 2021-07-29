@@ -88,7 +88,7 @@ public class InformationTemplatesTemplateDisplayContext
 	}
 
 	@Override
-	public String getTemplateType(long classNameId) {
+	public String getTemplateTypeLabel(long classNameId) {
 		return ResourceActionsUtil.getModelResource(
 			themeDisplay.getLocale(), PortalUtil.getClassName(classNameId));
 	}

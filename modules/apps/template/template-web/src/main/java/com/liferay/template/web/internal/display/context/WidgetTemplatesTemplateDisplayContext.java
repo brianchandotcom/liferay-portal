@@ -90,7 +90,7 @@ public class WidgetTemplatesTemplateDisplayContext
 	}
 
 	@Override
-	public String getTemplateType(long classNameId) {
+	public String getTemplateTypeLabel(long classNameId) {
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 

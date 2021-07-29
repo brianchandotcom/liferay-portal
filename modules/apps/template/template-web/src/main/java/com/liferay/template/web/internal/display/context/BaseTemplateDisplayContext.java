@@ -190,7 +190,7 @@ public abstract class BaseTemplateDisplayContext
 		return _ddmTemplateSearchContainer;
 	}
 
-	public abstract String getTemplateType(long classNameId);
+	public abstract String getTemplateTypeLabel(long classNameId);
 
 	public boolean isAddDDMTemplateEnabled() {
 		if (!_ddmWebConfiguration.enableTemplateCreation()) {

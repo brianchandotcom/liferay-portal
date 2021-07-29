@@ -18,15 +18,6 @@ $custom-properties-theme-colors: map-merge(
 );
 
 :root {
-	// Colors
-
-	--transparent: transparent;
-
-	// Fonts
-
-	--line-height-base: #{getdefault($line-height-base)};
-	--line-height-sm: 1.15;
-
 	// Portlet
 
 	--portlet-bg: transparent;

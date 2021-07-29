@@ -61,8 +61,7 @@ public class InformationTemplatesTemplateDisplayContext
 			_infoItemServiceTracker.getInfoItemClassNames(
 				InfoItemFormProvider.class);
 
-		Stream<String> infoItemClassNamesStream =
-			infoItemClassNames.stream();
+		Stream<String> infoItemClassNamesStream = infoItemClassNames.stream();
 
 		_classNameIds = infoItemClassNamesStream.mapToLong(
 			className -> PortalUtil.getClassNameId(className)

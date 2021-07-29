@@ -103,7 +103,7 @@ public class RenderLayoutStructureDisplayContext {
 
 	public static final String PAGE_NUMBER_PARAM_PREFIX = "page_number_";
 
-	public static final String PAGINATION_TYPE_REGULAR = "regular";
+	public static final String PAGINATION_TYPE_NUMERIC = "numeric";
 
 	public static final String PAGINATION_TYPE_SIMPLE = "simple";
 
@@ -196,7 +196,7 @@ public class RenderLayoutStructureDisplayContext {
 
 		if (FFRenderLayoutStructureConfigurationUtil.
 				collectionDisplayFragmentPaginationEnabled() &&
-			(Objects.equals(paginationType, PAGINATION_TYPE_REGULAR) ||
+			(Objects.equals(paginationType, PAGINATION_TYPE_NUMERIC) ||
 			 Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE))) {
 
 			int currentPage = ParamUtil.getInteger(

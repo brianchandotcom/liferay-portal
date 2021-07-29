@@ -43,7 +43,7 @@ export default function CollectionPagination({
 		window.location.search = searchParams;
 	};
 
-	const regularPaginationLabel = [
+	const numericPaginationLabel = [
 		numberOfItemsPerPage && numberOfItems && totalItems
 			? (activePage - 1) * numberOfItemsPerPage + 1
 			: 0,
@@ -57,16 +57,16 @@ export default function CollectionPagination({
 	return (
 		<div
 			className={classNames('d-flex', {
-				'pt-3 pb-2': paginationType === 'regular',
+				'pt-3 pb-2': paginationType === 'numeric',
 				'py-3': paginationType === 'simple',
 			})}
 		>
-			{paginationType === 'regular' ? (
+			{paginationType === 'numeric' ? (
 				<ClayPaginationBar className="flex-grow-1">
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
-							regularPaginationLabel
+							numericPaginationLabel
 						)}
 					</ClayPaginationBar.Results>
 

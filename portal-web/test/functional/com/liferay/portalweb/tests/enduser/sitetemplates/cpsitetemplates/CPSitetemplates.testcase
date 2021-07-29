@@ -816,4 +816,41 @@ definition {
 			locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
 	}
 
+	@description = "This is a use case for LPS-133675."
+	@priority = "3"
+	test ViewJavaScriptPropagateviaSiteTemplate {
+		var javascript = '''alert("alert!");''';
+
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.gotoSettingsCP(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.AddSiteTemplateJavaScript(
+			javaScript = "${javascript}",
+			pageName = "Pages");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Home");
+
+		AssertConfirm(value1 = "alert!");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name");
+
+		SiteTemplates.ViewSiteTemplateJavaScript(
+			javaScript = "${javascript}",
+			pageName = "Public Pages");
+	}
+
 }

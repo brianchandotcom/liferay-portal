@@ -59,9 +59,13 @@ public class PinDTOConverter
 					() -> {
 						CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
 							_cpDefinitionDiagramEntryService.
-								getCPDefinitionDiagramEntry(
+								fetchCPDefinitionDiagramEntry(
 									cpDefinitionDiagramPin.getCPDefinitionId(),
 									cpDefinitionDiagramPin.getNumber());
+
+						if(cpDefinitionDiagramEntry == null) {
+							return null;
+						}
 
 						return _diagramEntryDTOConverter.toDTO(
 							new DefaultDTOConverterContext(

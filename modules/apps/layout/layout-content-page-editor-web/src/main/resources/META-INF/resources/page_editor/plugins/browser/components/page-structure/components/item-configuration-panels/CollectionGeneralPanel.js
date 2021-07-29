@@ -82,7 +82,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
-	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
+	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
 
 	const handleCollectionListItemStyleChanged = ({target}) => {
 		const options = target.options;

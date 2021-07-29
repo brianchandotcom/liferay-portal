@@ -24,7 +24,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,8 +63,9 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 	@Override
 	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
-		if (StringUtil.containsIgnoreCase(
-				matcher.group(0),
+		String imgTag = matcher.group(0);
+
+		if (imgTag.contains(
 				AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID)) {
 
 			return null;

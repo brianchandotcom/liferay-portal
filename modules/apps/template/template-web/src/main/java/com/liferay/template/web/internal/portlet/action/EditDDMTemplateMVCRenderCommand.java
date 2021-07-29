@@ -14,6 +14,7 @@
 
 package com.liferay.template.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,6 +26,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -45,6 +47,8 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
+			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
+		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new EditDDMTemplateDisplayContext(
 				_portal.getLiferayPortletRequest(renderRequest),
@@ -52,6 +56,9 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_ddm_template.jsp";
 	}
+
+	@Reference
+	private DDMTemplateHelper _ddmTemplateHelper;
 
 	private Portal _portal;
 

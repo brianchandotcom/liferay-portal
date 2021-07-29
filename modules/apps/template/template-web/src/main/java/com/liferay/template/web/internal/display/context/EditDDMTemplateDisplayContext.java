@@ -16,6 +16,7 @@ package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -50,6 +51,9 @@ public class EditDDMTemplateDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_ddmTemplateHelper =
+			(DDMTemplateHelper)liferayPortletRequest.getAttribute(
+				DDMTemplateHelper.class.getName());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -159,7 +163,9 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	private JSONObject _getAutocompleteJSONObject() throws Exception {
-		return JSONFactoryUtil.createJSONObject();
+		return JSONFactoryUtil.createJSONObject(
+			_ddmTemplateHelper.getAutocompleteJSON(
+				_httpServletRequest, getLanguage()));
 	}
 
 	private String _getEditorMode() {
@@ -211,6 +217,7 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	private DDMTemplate _ddmTemplate;
+	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;
 	private final HttpServletRequest _httpServletRequest;
 	private String _language;

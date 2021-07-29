@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 7.8.9
+Bundle-Version: 7.9.0
 Export-Package:\
 	com.liferay.portal.asm,\
 	com.liferay.portal.bean,\

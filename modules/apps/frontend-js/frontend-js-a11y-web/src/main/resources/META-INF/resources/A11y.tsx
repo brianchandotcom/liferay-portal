@@ -23,6 +23,8 @@ import {ViolationPopover} from './components/ViolationPopover';
 import Violations from './components/Violations';
 import useA11y from './hooks/useA11y';
 import {TYPES, useFilterViolations} from './hooks/useFilterViolations';
+import useIframeA11yChannel from './hooks/useIframeA11yChannel';
+import {Kind} from './hooks/useIframeClient';
 
 import type {A11yCheckerOptions} from './A11yChecker';
 
@@ -30,6 +32,11 @@ type Params = {
 	name?: string;
 	ruleId?: string;
 	target?: string;
+};
+
+type IframePayload = {
+	ruleId: string;
+	target: string;
 };
 
 export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
@@ -52,6 +59,39 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 			};
 		}
 	}, [nodes]);
+
+	const navigateToOccurrence = useCallback(
+		(ruleId: string, target: string) => {
+			dispatch({
+				payload: {key: 'id', value: ruleId},
+				type: TYPES.ADD_FILTER,
+			});
+			dispatch({
+				payload: {key: 'nodes', value: target},
+				type: TYPES.ADD_FILTER,
+			});
+			setActivePage(2);
+			setParams({
+				name: Liferay.Util.sub(
+					Liferay.Language.get('occurrence-x'),
+					'1'
+				),
+				ruleId,
+				target,
+			});
+		},
+		[dispatch]
+	);
+
+	useIframeA11yChannel<IframePayload, Kind>(
+		violations.iframes,
+		state.violations,
+		({ruleId, target}, kind) => {
+			if (kind === Kind.Click) {
+				navigateToOccurrence(ruleId, target);
+			}
+		}
+	);
 
 	const onParamsChange = useCallback(
 		(newParams: Params) => {
@@ -95,25 +135,9 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 			{Object.keys(state.violations.nodes).map((target, index) => (
 				<ViolationPopover
 					key={`${target}:${index}`}
-					onClick={(target, ruleId) => {
-						dispatch({
-							payload: {key: 'id', value: ruleId},
-							type: TYPES.ADD_FILTER,
-						});
-						dispatch({
-							payload: {key: 'nodes', value: target},
-							type: TYPES.ADD_FILTER,
-						});
-						setActivePage(2);
-						setParams({
-							name: Liferay.Util.sub(
-								Liferay.Language.get('occurrence-x'),
-								'1'
-							),
-							ruleId,
-							target,
-						});
-					}}
+					onClick={(target, ruleId) =>
+						navigateToOccurrence(ruleId, target)
+					}
 					rules={state.violations.rules}
 					target={target}
 					violations={Object.keys(state.violations.nodes[target])}

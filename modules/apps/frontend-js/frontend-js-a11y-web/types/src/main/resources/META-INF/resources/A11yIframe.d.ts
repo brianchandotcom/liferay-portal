@@ -12,24 +12,6 @@
  * details.
  */
 
-import type {A11yCheckerOptions} from './A11yChecker';
-declare global {
-	var Liferay: {
-		Language: {
-			get(value: string): string;
-		};
-		Util: {
-			sub(...value: string[]): string;
-		};
-	};
-	interface ThemeDisplay {
-		isStatePopUp(): boolean;
-	}
-	interface Window {
-		themeDisplay: ThemeDisplay;
-	}
-}
-declare const _default: (
-	props: Omit<A11yCheckerOptions, 'callback' | 'targets'>
-) => void;
-export default _default;
+/// <reference types="react" />
+
+export declare function A11yIframe(): JSX.Element[];

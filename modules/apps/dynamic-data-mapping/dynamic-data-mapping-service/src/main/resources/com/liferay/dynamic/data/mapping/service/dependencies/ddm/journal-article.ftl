@@ -18,8 +18,6 @@
 	/>
 </#if>
 
-<#assign assetBrowserAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_asset_browser_web_portlet_AssetBrowserPortlet") />
-
 <#assign data = data + {
 	"assetBrowserAuthToken": assetBrowserAuthToken
 }>

@@ -182,12 +182,6 @@
 
 <#-- Token -->
 
-<#assign
-	authTokenUtil = serviceLocator.findService("com.liferay.portal.kernel.security.auth.AuthTokenUtil")
-
-	ddmAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), ddmPortletId)
-/>
-
 <#assign data = data + {
 	"ddmAuthToken": ddmAuthToken
 }>

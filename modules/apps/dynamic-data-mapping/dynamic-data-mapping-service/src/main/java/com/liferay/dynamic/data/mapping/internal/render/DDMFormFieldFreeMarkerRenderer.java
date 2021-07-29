@@ -522,9 +522,21 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				namespace, parentDDMFormField, locale);
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		Map<String, Object> freeMarkerContext =
 			HashMapBuilder.<String, Object>put(
-				"ddmPortletId", DDMPortletKeys.DYNAMIC_DATA_MAPPING
+				"assetBrowserAuthToken",
+				AuthTokenUtil.getToken(
+					httpServletRequest, themeDisplay.getPlid(),
+					"com_liferay_asset_browser_web_portlet_AssetBrowserPortlet")
+			).put(
+				"ddmAuthToken",
+				AuthTokenUtil.getToken(
+					httpServletRequest, themeDisplay.getPlid(),
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING)
 			).put(
 				"editorName",
 				() -> {
@@ -537,10 +549,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			).put(
 				"fieldStructure", fieldContext
 			).build();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		try {
 			String itemSelectorAuthToken = AuthTokenUtil.getToken(

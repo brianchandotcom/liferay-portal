@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
@@ -88,7 +88,7 @@ public class OpenIdConnectAuthenticationFilter extends BaseFilter {
 		}
 
 		try {
-			_openIdConnectServiceHandler.processAuthenticationResponse(
+			_openIdConnectAuthenticationHandler.processAuthenticationResponse(
 				httpServletRequest, httpServletResponse);
 		}
 		catch (StrangersNotAllowedException |
@@ -164,7 +164,8 @@ public class OpenIdConnectAuthenticationFilter extends BaseFilter {
 	private OpenIdConnect _openIdConnect;
 
 	@Reference
-	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
+	private OpenIdConnectAuthenticationHandler
+		_openIdConnectAuthenticationHandler;
 
 	@Reference
 	private Portal _portal;

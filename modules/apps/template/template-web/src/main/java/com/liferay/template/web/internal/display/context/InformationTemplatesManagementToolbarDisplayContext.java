@@ -17,10 +17,29 @@ package com.liferay.template.web.internal.display.context;
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.constants.TemplatePortletKeys;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +58,28 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			templateDisplayContext);
+
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)liferayPortletRequest.getAttribute(
+				InfoItemServiceTracker.class.getName());
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"addDDMTemplateURL",
+			PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/template/update_ddm_template"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"resourceClassNameId",
+				templateDisplayContext.getResourceClassNameId()
+			).buildString()
+		).put(
+			"itemTypes", _getItemTypesJSONArray()
+		).build();
 	}
 
 	@Override
@@ -57,5 +98,77 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			}
 		).build();
 	}
+
+	private JSONArray _getItemTypesJSONArray() {
+		JSONArray itemTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		if (!containsAddPortletDisplayTemplatePermission(
+				TemplatePortletKeys.TEMPLATE, DDMActionKeys.ADD_TEMPLATE)) {
+
+			return itemTypesJSONArray;
+		}
+
+		List<String> infoItemClassNames =
+			_infoItemServiceTracker.getInfoItemClassNames(
+				InfoItemFormProvider.class);
+
+		Stream<String> infoItemClassNamesStream = infoItemClassNames.stream();
+
+		List<InfoForm> infoForms = infoItemClassNamesStream.map(
+			infoItemClassName ->
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormProvider.class, infoItemClassName)
+		).map(
+			infoItemFormProvider -> infoItemFormProvider.getInfoForm()
+		).filter(
+			infoForm -> Validator.isNotNull(infoForm.getName())
+		).collect(
+			Collectors.toList()
+		);
+
+		infoForms.sort(Comparator.comparing(infoForm -> infoForm.getName()));
+
+		for (InfoForm infoForm : infoForms) {
+			JSONArray itemSubtypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormVariationsProvider.class, infoForm.getName());
+
+			if (infoItemFormVariationsProvider != null) {
+				Collection<InfoItemFormVariation> infoItemFormVariations =
+					infoItemFormVariationsProvider.getInfoItemFormVariations(
+						themeDisplay.getScopeGroupId());
+
+				for (InfoItemFormVariation infoItemFormVariation :
+						infoItemFormVariations) {
+
+					itemSubtypesJSONArray.put(
+						JSONUtil.put(
+							"label",
+							infoItemFormVariation.getLabel(
+								themeDisplay.getLocale())
+						).put(
+							"value", infoItemFormVariation.getKey()
+						));
+				}
+			}
+
+			itemTypesJSONArray.put(
+				JSONUtil.put(
+					"label", infoForm.getLabel(themeDisplay.getLocale())
+				).put(
+					"subtypes", itemSubtypesJSONArray
+				).put(
+					"value",
+					String.valueOf(
+						PortalUtil.getClassNameId(infoForm.getName()))
+				));
+		}
+
+		return itemTypesJSONArray;
+	}
+
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 
 }

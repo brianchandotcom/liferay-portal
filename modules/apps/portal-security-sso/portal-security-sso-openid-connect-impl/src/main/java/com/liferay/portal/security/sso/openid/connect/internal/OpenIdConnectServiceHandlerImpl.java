@@ -59,7 +59,6 @@ import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
 import com.nimbusds.oauth2.sdk.token.RefreshToken;
-import com.nimbusds.oauth2.sdk.token.Tokens;
 import com.nimbusds.openid.connect.sdk.AuthenticationErrorResponse;
 import com.nimbusds.openid.connect.sdk.AuthenticationRequest;
 import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
@@ -165,12 +164,12 @@ public class OpenIdConnectServiceHandlerImpl
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		Tokens tokens = _requestTokensWithAuthCode(
+		OIDCTokens oidcTokens = _requestTokensWithAuthCode(
 			authenticationSuccessResponse, openIdConnectSessionImpl.getNonce(),
 			openIdConnectProvider, _getLoginRedirectURI(httpServletRequest));
 
 		UserInfo userInfo = _requestUserInfo(
-			tokens.getAccessToken(),
+			oidcTokens.getAccessToken(),
 			openIdConnectProvider.getOIDCProviderMetadata());
 
 		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
@@ -178,7 +177,7 @@ public class OpenIdConnectServiceHandlerImpl
 			serviceContext.getPathMain(), serviceContext.getPortalURL());
 
 		_updateSessionTokens(
-			System.currentTimeMillis(), openIdConnectSessionImpl, tokens,
+			System.currentTimeMillis(), openIdConnectSessionImpl, oidcTokens,
 			userId, userInfo);
 
 		OpenIdConnectSessionProviderImpl.setOpenIdConnectSession(
@@ -397,19 +396,19 @@ public class OpenIdConnectServiceHandlerImpl
 			return false;
 		}
 
-		Tokens tokens = _requestTokensWithRefreshToken(
+		OIDCTokens oidcTokens = _requestTokensWithRefreshToken(
 			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
 				CompanyThreadLocal.getCompanyId(),
 				openIdConnectSessionImpl.getOpenIdProviderName()),
 			refreshToken);
 
 		_updateSessionTokens(
-			System.currentTimeMillis(), openIdConnectSessionImpl, tokens);
+			System.currentTimeMillis(), openIdConnectSessionImpl, oidcTokens);
 
 		return true;
 	}
 
-	private Tokens _requestTokens(
+	private OIDCTokens _requestTokens(
 			AuthorizationGrant authorizationCodeGrant, Nonce nonce,
 			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
 				openIdConnectProvider)
@@ -479,7 +478,7 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 	}
 
-	private Tokens _requestTokensWithAuthCode(
+	private OIDCTokens _requestTokensWithAuthCode(
 			AuthenticationSuccessResponse authenticationSuccessResponse,
 			Nonce nonce,
 			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
@@ -495,7 +494,7 @@ public class OpenIdConnectServiceHandlerImpl
 			authorizationCodeGrant, nonce, openIdConnectProvider);
 	}
 
-	private Tokens _requestTokensWithRefreshToken(
+	private OIDCTokens _requestTokensWithRefreshToken(
 			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
 				openIdConnectProvider,
 			RefreshToken refreshToken)
@@ -572,12 +571,13 @@ public class OpenIdConnectServiceHandlerImpl
 
 	private void _updateSessionTokens(
 		long loginTime, OpenIdConnectSessionImpl openIdConnectSessionImpl,
-		Tokens tokens) {
+		OIDCTokens oidcTokens) {
 
-		openIdConnectSessionImpl.setAccessToken(tokens.getAccessToken());
+		openIdConnectSessionImpl.setAccessToken(oidcTokens.getAccessToken());
 
-		if (tokens.getRefreshToken() != null) {
-			openIdConnectSessionImpl.setRefreshToken(tokens.getRefreshToken());
+		if (oidcTokens.getRefreshToken() != null) {
+			openIdConnectSessionImpl.setRefreshToken(
+				oidcTokens.getRefreshToken());
 		}
 
 		openIdConnectSessionImpl.setLoginTime(loginTime);
@@ -585,7 +585,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 	private void _updateSessionTokens(
 		long loginTime, OpenIdConnectSessionImpl openIdConnectSessionImpl,
-		Tokens tokens, long userId, UserInfo userInfo) {
+		OIDCTokens oidcTokens, long userId, UserInfo userInfo) {
 
 		openIdConnectSessionImpl.setLoginUserId(userId);
 
@@ -594,7 +594,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 		openIdConnectSessionImpl.setUserInfoJSONObject(userInfo.toJSONObject());
 
-		_updateSessionTokens(loginTime, openIdConnectSessionImpl, tokens);
+		_updateSessionTokens(loginTime, openIdConnectSessionImpl, oidcTokens);
 	}
 
 	private void _validateState(State requestedState, State state)

@@ -110,6 +110,17 @@ public class EditDDMTemplateDisplayContext {
 		return JSONFactoryUtil.createJSONArray();
 	}
 
+	protected long getClassNameId() {
+		if (_classNameId != null) {
+			return _classNameId;
+		}
+
+		_classNameId = BeanParamUtil.getLong(
+			getDDMTemplate(), _httpServletRequest, "classNameId");
+
+		return _classNameId;
+	}
+
 	protected long getClassPK() {
 		DDMTemplate ddmTemplate = getDDMTemplate();
 
@@ -142,8 +153,8 @@ public class EditDDMTemplateDisplayContext {
 		return _ddmTemplateId;
 	}
 
-	protected String getDefaultScript() {
-		return "<#-- Empty script-->";
+	protected String getDefaultScript(long classNameId) {
+		return StringPool.BLANK;
 	}
 
 	protected String getLanguage() {
@@ -195,7 +206,7 @@ public class EditDDMTemplateDisplayContext {
 			getDDMTemplate(), _httpServletRequest, "script");
 
 		if (Validator.isNull(script)) {
-			script = getDefaultScript();
+			script = getDefaultScript(getClassNameId());
 		}
 
 		String scriptContent = ParamUtil.getString(
@@ -222,6 +233,7 @@ public class EditDDMTemplateDisplayContext {
 		return false;
 	}
 
+	private Long _classNameId;
 	private DDMTemplate _ddmTemplate;
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;

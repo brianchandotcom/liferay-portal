@@ -6,7 +6,7 @@ definition {
 		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		if (!(isSet(auto))) {
-			var auto = "false";
+			var auto = "true";
 		}
 
 		JSONSitenavigationAPI._addSiteNavigationMenu(

@@ -268,7 +268,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		return _commerceOrderService.addCommerceOrder(
 			userId, commerceChannelGroupId,
-			commerceAccount.getCommerceAccountId(), commerceCurrencyId);
+			commerceAccount.getCommerceAccountId(), commerceCurrencyId,
+			cart.getOrderTypeId());
 	}
 
 	private void _addOrUpdateBillingAddress(

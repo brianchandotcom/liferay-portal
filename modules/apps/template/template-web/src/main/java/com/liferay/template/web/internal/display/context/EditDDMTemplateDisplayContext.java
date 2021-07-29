@@ -60,6 +60,17 @@ public class EditDDMTemplateDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public DDMTemplate getDDMTemplate() {
+		if ((_ddmTemplate != null) || (getDDMTemplateId() <= 0)) {
+			return _ddmTemplate;
+		}
+
+		_ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+			getDDMTemplateId());
+
+		return _ddmTemplate;
+	}
+
 	public HashMap<String, Object> getDDMTemplateEditorContext()
 		throws Exception {
 
@@ -129,17 +140,6 @@ public class EditDDMTemplateDisplayContext {
 		}
 
 		return 0;
-	}
-
-	protected DDMTemplate getDDMTemplate() {
-		if ((_ddmTemplate != null) || (getDDMTemplateId() <= 0)) {
-			return _ddmTemplate;
-		}
-
-		_ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
-			getDDMTemplateId());
-
-		return _ddmTemplate;
 	}
 
 	protected long getDDMTemplateId() {

@@ -1,5 +1,17 @@
 definition {
 
+	macro addFragment {
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${siteURLKey}");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
+
+		PageEditor.addFragment(
+			collectionName = "${collectionName}",
+			fragmentName = "${fragmentName}");
+
+		Button.clickPublish();
+	}
+
 	macro clickPencil {
 		Click(locator1 = "Button#PENCIL");
 	}

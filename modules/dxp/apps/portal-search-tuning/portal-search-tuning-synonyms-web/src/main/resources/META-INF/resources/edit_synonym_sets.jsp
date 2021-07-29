@@ -36,7 +36,7 @@ portletDisplay.setURLBack(editSynonymSetsDisplayContext.getBackURL());
 %>
 
 <portlet:actionURL name="/synonyms/edit_synonym_sets" var="editSynonymSetURL">
-	<portlet:param name="mvcPath" value="/view_synonym_sets.jsp" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

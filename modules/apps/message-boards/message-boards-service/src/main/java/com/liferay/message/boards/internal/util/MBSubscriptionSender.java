@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 public class MBSubscriptionSender
 	extends GroupSubscriptionCheckSubscriptionSender {
 
+	public MBSubscriptionSender() {
+	}
+
 	public MBSubscriptionSender(String resourceName) {
 		super(resourceName);
 	}

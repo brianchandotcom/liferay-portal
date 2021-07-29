@@ -23,25 +23,31 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
  */
 public class MBDiscussionSubcriptionSender extends SubscriptionSender {
 
+	public MBDiscussionSubcriptionSender() {
+	}
+
 	public MBDiscussionSubcriptionSender(
 		CommentGroupServiceConfiguration commentGroupServiceConfiguration) {
 
-		_commentGroupServiceConfiguration = commentGroupServiceConfiguration;
+		boolean discussionEmailCommentsAddedEnabled = false;
+
+		if (commentGroupServiceConfiguration != null) {
+			discussionEmailCommentsAddedEnabled =
+				commentGroupServiceConfiguration.
+					discussionEmailCommentsAddedEnabled();
+		}
+
+		_discussionEmailCommentsAddedEnabled =
+			discussionEmailCommentsAddedEnabled;
 	}
 
 	@Override
 	protected void sendEmailNotification(User user) throws Exception {
-		if ((_commentGroupServiceConfiguration == null) ||
-			!_commentGroupServiceConfiguration.
-				discussionEmailCommentsAddedEnabled()) {
-
-			return;
+		if (_discussionEmailCommentsAddedEnabled) {
+			super.sendEmailNotification(user);
 		}
-
-		super.sendEmailNotification(user);
 	}
 
-	private final CommentGroupServiceConfiguration
-		_commentGroupServiceConfiguration;
+	private boolean _discussionEmailCommentsAddedEnabled;
 
 }

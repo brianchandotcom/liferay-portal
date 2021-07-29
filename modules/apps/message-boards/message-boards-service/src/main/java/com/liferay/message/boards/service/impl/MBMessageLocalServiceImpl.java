@@ -57,6 +57,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -123,6 +124,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -145,7 +147,9 @@ import javax.servlet.http.HttpServletRequest;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -1839,6 +1843,26 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	@Activate
+	protected void activate() {
+		_closeable = _liferayJSONDeserializationWhitelist.register(
+			MBDiscussionSubcriptionSender.class.getName(),
+			MBSubscriptionSender.class.getName());
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+
+		try {
+			_closeable.close();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	protected String getBody(String subject, String body, String format) {
 		if (!Validator.isBlank(body)) {
 			return body;
@@ -2797,6 +2821,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageLocalServiceImpl.class);
 
+	private Closeable _closeable;
+
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
@@ -2805,6 +2831,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private LiferayJSONDeserializationWhitelist
+		_liferayJSONDeserializationWhitelist;
 
 	@Reference
 	private MBCategoryPersistence _mbCategoryPersistence;

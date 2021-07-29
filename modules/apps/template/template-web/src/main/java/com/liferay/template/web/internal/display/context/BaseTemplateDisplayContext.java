@@ -15,7 +15,6 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
-import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.TemplateIdComparator;
@@ -120,16 +119,6 @@ public abstract class BaseTemplateDisplayContext
 
 		return LanguageUtil.get(
 			_httpServletRequest, group.getScopeLabel(themeDisplay));
-	}
-
-	public String getDDMTemplateType(DDMTemplate ddmTemplate) {
-		String type = ddmTemplate.getType();
-
-		if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
-			return type;
-		}
-
-		return getTemplateType(ddmTemplate.getClassNameId());
 	}
 
 	public List<NavigationItem> getNavigationItems() {

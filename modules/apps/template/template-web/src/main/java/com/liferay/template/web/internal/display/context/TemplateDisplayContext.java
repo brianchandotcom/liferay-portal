@@ -41,8 +41,6 @@ public interface TemplateDisplayContext {
 	public String getDDMTemplateScope(DDMTemplate ddmTemplate)
 		throws PortalException;
 
-	public String getDDMTemplateType(DDMTemplate ddmTemplate);
-
 	public List<NavigationItem> getNavigationItems();
 
 	public long getResourceClassNameId();

@@ -1302,9 +1302,9 @@ definition {
 			threadSubject = "Thread Subject");
 	}
 
-	@description = "This test ensures that the MB widget can be accessible."
+	@description = "This test ensures that the MB widget follows W3C accessibility standards"
 	@priority = "4"
-	test WidgetCanBeAccessible {
+	test WidgetFollowsAccessibilityStandards {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Message Boards Page");

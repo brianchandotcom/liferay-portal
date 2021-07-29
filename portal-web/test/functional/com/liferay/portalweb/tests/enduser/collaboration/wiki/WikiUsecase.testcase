@@ -232,9 +232,9 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
-	@description = "This test ensures that the wiki widgets can be accessible."
+	@description = "This test ensures that the wiki widget follows W3C accessibility standards."
 	@priority = "4"
-	test WidgetsCanBeAccessible {
+	test WidgetFollowsAccessibilityStandards {
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",

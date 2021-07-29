@@ -248,9 +248,9 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that the announcement widgets can be accessible."
+	@description = "This test ensures that the announcement widget follows W3C accessibility standards."
 	@priority = "4"
-	test WidgetsCanBeAccessible {
+	test WidgetFollowsAccessibilityStandards {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Announcements Page",

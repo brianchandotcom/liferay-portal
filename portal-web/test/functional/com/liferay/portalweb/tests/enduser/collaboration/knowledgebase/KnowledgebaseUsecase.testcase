@@ -2098,9 +2098,9 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title Edited");
 	}
 
-	@description = "This test ensures that the blogs widgets can be accessible."
+	@description = "This test ensures that the blogs widgets follow W3C accessibility standards."
 	@priority = "4"
-	test WidgetsCanBeAccessible {
+	test WidgetsFollowAccessibilityStandards {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page");

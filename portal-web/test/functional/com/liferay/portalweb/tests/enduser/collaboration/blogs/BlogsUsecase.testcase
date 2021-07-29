@@ -1018,9 +1018,9 @@ definition {
 			portletName = "Blogs Aggregator");
 	}
 
-	@description = "This test ensures that the blogs widgets can be accessible."
+	@description = "This test ensures that blogs widgets follow W3C accessibility standards."
 	@priority = "4"
-	test WidgetsCanBeAccessible {
+	test WidgetsFollowAccessibilityStandards {
 		for (var widgetName : list "Blogs Aggregator,Microblogs,Microblogs Status Update,Recent Bloggers") {
 			JSONLayout.addWidgetToPublicLayout(
 				column = "1",

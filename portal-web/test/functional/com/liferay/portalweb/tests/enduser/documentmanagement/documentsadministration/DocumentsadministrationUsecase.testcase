@@ -2035,9 +2035,9 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
-	@description = "This test ensures that the DM widgets can be accessible."
+	@description = "This test ensures that the DM widgets follow W3C accessibility standards."
 	@priority = "4"
-	test WidgetsCanBeAccessible {
+	test WidgetsFollowAccessibilityStandards {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");

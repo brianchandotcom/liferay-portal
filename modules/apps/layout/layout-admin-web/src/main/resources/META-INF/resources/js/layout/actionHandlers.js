@@ -62,14 +62,6 @@ const actionHandlers = {
 		}
 	},
 
-	exportTranslation: ({itemData, namespace}) => {
-		Liferay.componentReady(
-			`${namespace}ExportForTranslationComponent`
-		).then((exportTranslationComponent) => {
-			exportTranslationComponent.open([itemData.plid]);
-		});
-	},
-
 	permissions: ({actionURL}) => {
 		openModal({
 			title: Liferay.Language.get('permissions'),

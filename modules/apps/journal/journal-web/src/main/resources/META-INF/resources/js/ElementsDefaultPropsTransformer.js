@@ -96,14 +96,6 @@ const ACTIONS = {
 		this.send(itemData.expireURL);
 	},
 
-	exportTranslation({itemData, portletNamespace}) {
-		Liferay.componentReady(
-			`${portletNamespace}ExportForTranslationComponent`
-		).then((exportTranslationComponent) => {
-			exportTranslationComponent.open([itemData.articleEntryId]);
-		});
-	},
-
 	permissions({itemData}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

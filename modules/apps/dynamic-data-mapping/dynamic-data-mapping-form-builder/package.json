@@ -11,9 +11,6 @@
 		],
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
-		],
-		"testPathIgnorePatterns": [
-			"LayoutProvider/util"
 		]
 	},
 	"main": "js/index.es.js",

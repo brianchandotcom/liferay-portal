@@ -27,6 +27,7 @@ export {getConnectedReactComponentAdapter} from './utils/ReactComponentAdapter.e
 export {generateName, getRepeatedIndex, parseName} from './utils/repeatable.es';
 export * as RulesSupport from './utils/rulesSupport';
 export {default as setDataRecord} from './utils/setDataRecord.es';
+export * as SettingsContext from './utils/settingsContext';
 export * as StringUtils from './utils/strings';
 export {PagesVisitor} from './utils/visitors.es';
 

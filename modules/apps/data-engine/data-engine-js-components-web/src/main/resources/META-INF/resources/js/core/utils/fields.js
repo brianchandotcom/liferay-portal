@@ -12,14 +12,6 @@
  * details.
  */
 
-import {
-	getSettingsContextProperty,
-	updateField,
-	updateFieldLabel,
-	updateSettingsContextInstanceId,
-	updateSettingsContextProperty,
-} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/settingsContext.es';
-
 import {findFieldByFieldName} from '../../utils/FormSupport.es';
 import {
 	generateInstanceId,
@@ -27,6 +19,13 @@ import {
 	localizeField,
 } from '../../utils/fieldSupport';
 import {normalizeFieldName} from '../../utils/fields.es';
+import {
+	getSettingsContextProperty,
+	updateField,
+	updateFieldLabel,
+	updateSettingsContextInstanceId,
+	updateSettingsContextProperty,
+} from '../../utils/settingsContext';
 import {sub} from '../../utils/strings';
 import {PagesVisitor} from '../../utils/visitors.es';
 

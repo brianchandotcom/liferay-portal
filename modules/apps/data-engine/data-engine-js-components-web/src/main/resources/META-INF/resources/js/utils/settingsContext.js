@@ -12,12 +12,10 @@
  * details.
  */
 
-import {PagesVisitor, normalizeFieldName} from 'data-engine-js-components-web';
-import {updateFieldValidationProperty} from 'data-engine-js-components-web/js/core/utils/fields';
-import {
-	generateInstanceId,
-	getDefaultFieldName,
-} from 'data-engine-js-components-web/js/utils/fieldSupport';
+import {updateFieldValidationProperty} from '../core/utils/fields';
+import {generateInstanceId, getDefaultFieldName} from './fieldSupport';
+import {normalizeFieldName} from './fields.es';
+import {PagesVisitor} from './visitors.es';
 
 export const getSettingsContextProperty = (
 	settingsContext,

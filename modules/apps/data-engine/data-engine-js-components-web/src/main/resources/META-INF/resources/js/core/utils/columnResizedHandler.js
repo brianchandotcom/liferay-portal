@@ -12,9 +12,8 @@
  * details.
  */
 
-import {SettingsContext} from 'dynamic-data-mapping-form-builder';
-
 import * as FormSupport from '../../utils/FormSupport.es';
+import {updateField} from '../../utils/settingsContext';
 
 export const getColumn = (pages, nestedIndexes = []) => {
 	let column;
@@ -198,12 +197,7 @@ export const handleResizeRight = (props, state, indexes, columnTarget) => {
 
 	if (indexes.length > 1) {
 		newContext = [
-			SettingsContext.updateField(
-				props,
-				newContext[0],
-				'rows',
-				newContext[0].rows
-			),
+			updateField(props, newContext[0], 'rows', newContext[0].rows),
 		];
 
 		currentContext[0].settingsContext = newContext[0].settingsContext;
@@ -326,12 +320,7 @@ export const handleResizeLeft = (props, state, indexes, columnTarget) => {
 
 	if (indexes.length > 1) {
 		newContext = [
-			SettingsContext.updateField(
-				props,
-				newContext[0],
-				'rows',
-				newContext[0].rows
-			),
+			updateField(props, newContext[0], 'rows', newContext[0].rows),
 		];
 
 		currentContext[0].settingsContext = newContext[0].settingsContext;

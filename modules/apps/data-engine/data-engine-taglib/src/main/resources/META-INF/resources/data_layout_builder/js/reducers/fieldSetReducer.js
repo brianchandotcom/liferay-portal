@@ -16,9 +16,9 @@ import {
 	FieldSetUtil,
 	FieldSupport,
 	PagesVisitor,
+	SettingsContext,
 	sectionAdded,
 } from 'data-engine-js-components-web';
-import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import {EVENT_TYPES} from '../eventTypes';
 import {

@@ -12,11 +12,10 @@
  * details.
  */
 
-import {SettingsContext} from 'dynamic-data-mapping-form-builder';
-
 import {addFieldToColumn, removeFields} from './FormSupport.es';
 import {FIELD_TYPE_FIELDSET} from './constants';
 import {createField, generateInstanceId} from './fieldSupport';
+import {updateField} from './settingsContext';
 import {PagesVisitor} from './visitors.es';
 
 const addNestedFields = ({field, indexes, nestedFields, props}) => {
@@ -46,17 +45,12 @@ const addNestedFields = ({field, indexes, nestedFields, props}) => {
 		);
 	});
 
-	field = SettingsContext.updateField(
-		props,
-		field,
-		'nestedFields',
-		nestedFields
-	);
+	field = updateField(props, field, 'nestedFields', nestedFields);
 
 	const {rows} = layout[indexes.pageIndex];
 
 	return {
-		...SettingsContext.updateField(props, field, 'rows', rows),
+		...updateField(props, field, 'rows', rows),
 		nestedFields,
 		rows,
 	};

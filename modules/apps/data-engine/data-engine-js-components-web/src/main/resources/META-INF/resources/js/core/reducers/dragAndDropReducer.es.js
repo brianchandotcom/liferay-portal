@@ -12,14 +12,13 @@
  * details.
  */
 
-import {SettingsContext} from 'dynamic-data-mapping-form-builder';
-
 import {
 	findFieldByFieldName,
 	removeEmptyRows,
 } from '../../utils/FormSupport.es';
 import {FIELD_TYPE_FIELDSET} from '../../utils/constants';
 import {addFieldToPage, getParentField} from '../../utils/fieldSupport';
+import {updateField} from '../../utils/settingsContext';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {
@@ -178,7 +177,7 @@ export default (state, action, config) => {
 
 			updatedPages = visitor.mapFields((field) => {
 				if (field.type != 'grid' && field.rows) {
-					return SettingsContext.updateField(
+					return updateField(
 						{
 							availableLanguageIds,
 							defaultLanguageId,

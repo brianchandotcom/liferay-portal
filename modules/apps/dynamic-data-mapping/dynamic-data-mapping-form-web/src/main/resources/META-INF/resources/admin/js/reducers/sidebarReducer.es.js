@@ -12,9 +12,12 @@
  * details.
  */
 
-import {FieldUtil, PagesVisitor} from 'data-engine-js-components-web';
+import {
+	FieldUtil,
+	PagesVisitor,
+	SettingsContext,
+} from 'data-engine-js-components-web';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-taglib';
-import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 /**
  * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes

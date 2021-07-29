@@ -18,15 +18,15 @@ import {
 } from 'data-engine-js-components-web/js/core/utils/fields';
 
 import {
-	updateFocusedFieldDataType,
-	updateFocusedFieldLabel,
-	updateFocusedFieldName,
-	updateFocusedFieldOptions,
-	updateFocusedFieldProperty,
-} from '../../../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/settingsContext.es';
-import mockPages from '../../../__mock__/mockPages.es';
+	updateFieldDataType,
+	updateFieldLabel,
+	updateFieldName,
+	updateFieldOptions,
+	updateFieldProperty,
+} from '../../../src/main/resources/META-INF/resources/js/utils/settingsContext';
+import mockPages from '../__mock__/mockPages.es';
 
-const focusedField = {
+const field = {
 	fieldName: 'oldFieldName',
 	label: 'Old Field Label',
 	settingsContext: {
@@ -83,20 +83,16 @@ const focusedField = {
 	},
 };
 
-describe('LayoutProvider/util/focusedField', () => {
-	describe('updateFocusedFieldLabel(state, focusedField, value)', () => {
+xdescribe('utils/settingsContext', () => {
+	describe('updateFieldLabel(state, field, value)', () => {
 		it('updates the focused field "label" property', () => {
 			const state = {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldLabel(
-				state,
-				focusedField,
-				'New Label'
-			);
+			const updatedField = updateFieldLabel(state, field, 'New Label');
 
-			expect(newFocusedField.label).toEqual('New Label');
+			expect(updatedField.label).toEqual('New Label');
 		});
 
 		it('updates the settingsContext of the focused field with the new field label', () => {
@@ -104,20 +100,16 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldLabel(
-				state,
-				focusedField,
-				'New Label'
-			);
+			const updatedField = updateFieldLabel(state, field, 'New Label');
 
 			expect(
-				getFieldValue(newFocusedField.settingsContext.pages, 'label')
+				getFieldValue(updatedField.settingsContext.pages, 'label')
 			).toEqual('New Label');
 		});
 
 		it('automaticallys update the field name if it was auto generated from its label', () => {
 			const mockFocusedField = {
-				...focusedField,
+				...field,
 				fieldName: 'GeneratedFieldName',
 				label: 'Generated Field Name',
 			};
@@ -126,15 +118,15 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldLabel(
+			const updatedField = updateFieldLabel(
 				state,
 				mockFocusedField,
 				'New Label'
 			);
 
-			expect(newFocusedField.fieldName).toEqual('NewLabel');
+			expect(updatedField.fieldName).toEqual('NewLabel');
 			expect(
-				getFieldValue(newFocusedField.settingsContext.pages, 'name')
+				getFieldValue(updatedField.settingsContext.pages, 'name')
 			).toEqual('NewLabel');
 		});
 
@@ -143,32 +135,24 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldLabel(
-				state,
-				focusedField,
-				'New Label'
-			);
+			const updatedField = updateFieldLabel(state, field, 'New Label');
 
-			expect(newFocusedField.fieldName).toEqual('oldFieldName');
+			expect(updatedField.fieldName).toEqual('oldFieldName');
 			expect(
-				getFieldValue(newFocusedField.settingsContext.pages, 'name')
+				getFieldValue(updatedField.settingsContext.pages, 'name')
 			).toEqual('oldFieldName');
 		});
 	});
 
-	describe('updateFocusedFieldName(state, focusedField, value)', () => {
+	describe('updateFieldName(state, field, value)', () => {
 		it('updates the focused field "fieldName" property', () => {
 			const state = {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldName(
-				state,
-				focusedField,
-				'newName'
-			);
+			const updatedField = updateFieldName(state, field, 'newName');
 
-			expect(newFocusedField.fieldName).toEqual('newName');
+			expect(updatedField.fieldName).toEqual('newName');
 		});
 
 		it('updates the settingsContext of the focused field with the new field name', () => {
@@ -176,14 +160,10 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldName(
-				state,
-				focusedField,
-				'newName'
-			);
+			const updatedField = updateFieldName(state, field, 'newName');
 
 			expect(
-				getFieldValue(newFocusedField.settingsContext.pages, 'name')
+				getFieldValue(updatedField.settingsContext.pages, 'name')
 			).toEqual('newName');
 		});
 
@@ -192,21 +172,15 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldName(
-				state,
-				focusedField,
-				'newName'
-			);
+			const updatedField = updateFieldName(state, field, 'newName');
 
 			expect(
-				getFieldValue(
-					newFocusedField.settingsContext.pages,
-					'validation'
-				).expression
+				getFieldValue(updatedField.settingsContext.pages, 'validation')
+					.expression
 			).toEqual('isEmailAddress(newName)');
 			expect(
 				getFieldProperty(
-					newFocusedField.settingsContext.pages,
+					updatedField.settingsContext.pages,
 					'validation',
 					'validation'
 				).fieldName
@@ -218,31 +192,27 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldName(
-				state,
-				focusedField,
-				'oldName'
-			);
+			const updatedField = updateFieldName(state, field, 'oldName');
 
 			expect(
-				getFieldValue(newFocusedField.settingsContext.pages, 'name')
+				getFieldValue(updatedField.settingsContext.pages, 'name')
 			).toEqual('oldName');
 		});
 	});
 
-	describe('updateFocusedFieldDataType(state, focusedField, value)', () => {
+	describe('updateFieldDataType(state, field, value)', () => {
 		it('updates the focused field "dataType" property', () => {
 			const state = {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldDataType(
+			const updatedField = updateFieldDataType(
 				state,
-				focusedField,
+				field,
 				'newDataType'
 			);
 
-			expect(newFocusedField.dataType).toEqual('newDataType');
+			expect(updatedField.dataType).toEqual('newDataType');
 		});
 
 		it('updates the settingsContext of the focused field with the new dataType', () => {
@@ -250,14 +220,14 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldDataType(
+			const updatedField = updateFieldDataType(
 				state,
-				focusedField,
+				field,
 				'newDataType'
 			);
 
 			expect(
-				getFieldValue(newFocusedField.settingsContext.pages, 'dataType')
+				getFieldValue(updatedField.settingsContext.pages, 'dataType')
 			).toEqual('newDataType');
 		});
 
@@ -266,15 +236,15 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldDataType(
+			const updatedField = updateFieldDataType(
 				state,
-				focusedField,
+				field,
 				'newDataType'
 			);
 
 			expect(
 				getFieldProperty(
-					newFocusedField.settingsContext.pages,
+					updatedField.settingsContext.pages,
 					'validation',
 					'validation'
 				).dataType
@@ -282,7 +252,7 @@ describe('LayoutProvider/util/focusedField', () => {
 		});
 	});
 
-	describe('updateFocusedFieldOptions(state, focusedField, options)', () => {
+	describe('updateFieldOptions(state, field, options)', () => {
 		it('updates the focused field "options" property', () => {
 			const newOptions = [
 				{
@@ -294,30 +264,26 @@ describe('LayoutProvider/util/focusedField', () => {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldOptions(
-				state,
-				focusedField,
-				newOptions
-			);
+			const updatedField = updateFieldOptions(state, field, newOptions);
 
-			expect(newFocusedField.options).toEqual(newOptions);
+			expect(updatedField.options).toEqual(newOptions);
 		});
 	});
 
-	describe('updateFocusedFieldProperty(state, focusedField, options)', () => {
+	describe('updateFieldProperty(state, field, options)', () => {
 		it('updates the desired property', () => {
 			const state = {
 				pages: mockPages,
 			};
 
-			const newFocusedField = updateFocusedFieldProperty(
+			const updatedField = updateFieldProperty(
 				state,
-				focusedField,
+				field,
 				'readOnly',
 				true
 			);
 
-			expect(newFocusedField.readOnly).toEqual(true);
+			expect(updatedField.readOnly).toEqual(true);
 		});
 	});
 });

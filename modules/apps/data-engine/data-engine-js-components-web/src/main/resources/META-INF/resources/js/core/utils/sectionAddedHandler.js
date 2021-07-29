@@ -12,8 +12,6 @@
  * details.
  */
 
-import {SettingsContext} from 'dynamic-data-mapping-form-builder';
-
 import {
 	addFieldToColumn,
 	findFieldByFieldName,
@@ -21,6 +19,7 @@ import {
 import {FIELD_TYPE_FIELDSET} from '../../utils/constants';
 import {createFieldSet} from '../../utils/fieldSets';
 import {addFieldToPage, createField} from '../../utils/fieldSupport';
+import {updateField} from '../../utils/settingsContext';
 import {PagesVisitor} from '../../utils/visitors.es';
 import handleFieldDeleted from './fieldDeletedHandler';
 
@@ -34,16 +33,11 @@ const addNestedField = ({field, indexes, nestedField, props}) => {
 	);
 	const nestedFields = [...field.nestedFields, nestedField];
 
-	field = SettingsContext.updateField(
-		props,
-		field,
-		'nestedFields',
-		nestedFields
-	);
+	field = updateField(props, field, 'nestedFields', nestedFields);
 
 	const {rows} = layout[indexes.pageIndex];
 
-	field = SettingsContext.updateField(props, field, 'rows', rows);
+	field = updateField(props, field, 'rows', rows);
 
 	return {
 		...field,

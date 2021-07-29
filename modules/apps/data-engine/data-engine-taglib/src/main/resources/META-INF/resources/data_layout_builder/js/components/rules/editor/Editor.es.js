@@ -17,9 +17,9 @@ import {ClayModalProvider} from '@clayui/modal';
 import {
 	PageProvider as FieldProvider,
 	RulesSupport,
+	SettingsContext,
 	useFieldTypesResource,
 } from 'data-engine-js-components-web';
-import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useReducer} from 'react';
 

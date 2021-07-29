@@ -12,8 +12,6 @@
  * details.
  */
 
-import {updateField} from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/settingsContext.es';
-
 import {
 	addFieldToColumn,
 	removeEmptyRows as removeEmptyRowsUtil,
@@ -21,6 +19,7 @@ import {
 import {FIELD_TYPE_FIELDSET} from './constants';
 import {normalizeFieldName} from './fields.es';
 import {generateName, getRepeatedIndex, parseName} from './repeatable.es';
+import {updateField} from './settingsContext';
 import {PagesVisitor} from './visitors.es';
 
 export const addFieldToPage = ({

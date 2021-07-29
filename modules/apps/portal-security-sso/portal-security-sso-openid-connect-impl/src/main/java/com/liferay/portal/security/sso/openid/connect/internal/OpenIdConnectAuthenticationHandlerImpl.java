@@ -136,6 +136,17 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			_offlineOpenIdConnectSessionManager.startOpenIdConnectSession(
 				oidcTokens,
 				openIdConnectAuthenticationSession.getProviderName()));
+
+		httpSession.setAttribute(
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION,
+			new OpenIdConnectSessionImpl(
+				(Long)httpSession.getAttribute(
+					OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION_ID),
+				openIdConnectAuthenticationSession.getProviderName(),
+				openIdConnectAuthenticationSession.getNonce(),
+				openIdConnectAuthenticationSession.getState(),
+				(Long)httpSession.getAttribute(
+					OpenIdConnectAutoLogin.USER_ID)));
 	}
 
 	@Override

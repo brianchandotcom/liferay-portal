@@ -14,9 +14,11 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +37,23 @@ public class ViewObjectFieldsDisplayContext {
 	public String getAPIURL() {
 		return "/o/object-admin/v1.0/object-definitions/" +
 			getObjectDefinitionId() + "/object-fields";
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		//TODO Check permissions
+		
+		creationMenu.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("eventName");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_objectRequestHelper.getRequest(), "add-object-field"));
+				dropdownItem.setTarget("event");
+			});
+
+		return creationMenu;
 	}
 
 	public long getObjectDefinitionId() {

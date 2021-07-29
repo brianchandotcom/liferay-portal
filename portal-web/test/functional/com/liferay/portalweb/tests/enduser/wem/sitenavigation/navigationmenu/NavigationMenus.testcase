@@ -515,28 +515,12 @@ definition {
 	test ToggleAutomaticallyAddNewPagesToNavigationMenu {
 		property portal.acceptance = "true";
 
-		task ("Add a navigation menu with option to offer new pages flagged") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
-				siteNavigationMenuName = "Navigation Menu Name");
-
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
-
-			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "enable");
-		}
-
-		task ("Add a second navigation menu with option to offer new pages flagged") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
-				siteNavigationMenuName = "Navigation Menu Both");
-
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Both");
-
-			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "enable");
+		task ("Add two navigation menus with option to offer new pages flagged") {
+			for (var n : list "1,2") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name",
+					siteNavigationMenuName = "Navigation Menu Name ${n}");
+			}
 		}
 
 		task ("Navigate to pages admin") {

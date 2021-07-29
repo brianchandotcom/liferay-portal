@@ -30,6 +30,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanMapBlogsToDisplayPage {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Blogs Entry",
 			displayPageTemplateEntryName = "Display Page Template Name",
@@ -80,6 +82,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanMapDocumentToDisplayPage {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
 			displayPageTemplateEntryName = "Display Page Template Name",
@@ -163,6 +167,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanMapWebContentToDisplayPage {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
 			displayPageTemplateEntryName = "Display Page Template Name",

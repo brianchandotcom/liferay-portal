@@ -54,9 +54,9 @@ public class FutureDatesFunction
 			}
 
 			return DateFunctionsUtil.isFutureDate(
-				object1.toString(), _ddmExpressionParameterAccessor.getLocale(),
-				_ddmExpressionParameterAccessor.getTimeZoneId(),
-				startsFromJSONObject.getString("type"));
+				object1.toString(), startsFromJSONObject,
+				_ddmExpressionParameterAccessor.getLocale(),
+				_ddmExpressionParameterAccessor.getTimeZoneId());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

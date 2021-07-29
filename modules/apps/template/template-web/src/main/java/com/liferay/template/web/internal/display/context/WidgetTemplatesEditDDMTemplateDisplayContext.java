@@ -16,6 +16,7 @@ package com.liferay.template.web.internal.display.context;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 
@@ -44,6 +45,13 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 		}
 
 		return script;
+	}
+
+	@Override
+	protected String[] getTemplateLanguageTypes() {
+		return new String[] {
+			TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM
+		};
 	}
 
 }

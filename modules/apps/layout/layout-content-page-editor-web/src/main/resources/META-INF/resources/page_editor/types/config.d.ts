@@ -56,6 +56,7 @@ export interface Config {
 
 	changeMasterLayoutURL: string;
 	changeStyleBookEntryURL: string;
+	collectionDisplayFragmentPaginationEnabled: boolean;
 	collectionSelectorURL: string;
 
 	commonStyles: Array<{
@@ -155,6 +156,7 @@ export interface Config {
 	publishURL: string;
 	redirectURL: string;
 	renderFragmentEntryURL: string;
+	searchContainerPageMaxDelta: number;
 	selectedSegmentsEntryId: string;
 
 	sidebarPanels: {

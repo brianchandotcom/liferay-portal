@@ -50,7 +50,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module -Dmodule.base.dir=${moduleBaseDir} -Dliferay.home=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=${moduleBaseDir} -DliferayHome=${liferayHome}");
 	}
 
 }

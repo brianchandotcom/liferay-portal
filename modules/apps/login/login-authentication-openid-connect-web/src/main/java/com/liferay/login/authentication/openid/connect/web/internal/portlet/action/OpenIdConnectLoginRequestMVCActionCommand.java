@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
 import javax.portlet.ActionRequest;
@@ -153,7 +153,7 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL,
 				actionURL.toString());
 
-			_openIdConnectServiceHandler.requestAuthentication(
+			_openIdConnectAuthenticationHandler.requestAuthentication(
 				openIdConnectProviderName, httpServletRequest,
 				httpServletResponse);
 		}
@@ -204,7 +204,8 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 	private OpenIdConnect _openIdConnect;
 
 	@Reference
-	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
+	private OpenIdConnectAuthenticationHandler
+		_openIdConnectAuthenticationHandler;
 
 	@Reference
 	private Portal _portal;

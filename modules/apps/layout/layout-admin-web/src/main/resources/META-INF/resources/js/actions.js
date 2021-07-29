@@ -39,14 +39,6 @@ const ACTIONS = {
 		}
 	},
 
-	exportTranslation: ({plid}, portletNamespace) => {
-		Liferay.componentReady(
-			`${portletNamespace}ExportForTranslationComponent`
-		).then((exportTranslationComponent) => {
-			exportTranslationComponent.open([plid]);
-		});
-	},
-
 	permissionLayout: ({permissionLayoutURL}) => {
 		openModal({
 			title: Liferay.Language.get('permissions'),

@@ -57,16 +57,23 @@ const DEFAULT_LIST_STYLE = {
 };
 
 export const CollectionGeneralPanel = ({item}) => {
+	const [availableListItemStyles, setAvailableListItemStyles] = useState([]);
+	const [availableListStyles, setAvailableListStyles] = useState([
+		DEFAULT_LIST_STYLE,
+	]);
+	const collectionItemType = item.config.collection
+		? item.config.collection.itemType
+		: null;
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
 	const collectionNumberOfItemsId = useId();
 	const collectionNumberOfItemsPerPageId = useId();
 	const collectionPaginationTypeId = useId();
 	const dispatch = useDispatch();
+	const isMaximumValuePerPageError =
+		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
 	const isMounted = useIsMounted();
 	const listStyleId = useId();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-
 	const [nextValue, setNextValue] = useState({
 		numberOfItems: item.config.numberOfItems,
 		numberOfItemsPerPage: item.config.numberOfItemsPerPage,
@@ -75,6 +82,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
 		null
 	);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
 
@@ -87,19 +95,6 @@ export const CollectionGeneralPanel = ({item}) => {
 			})
 		);
 	};
-
-	const [availableListItemStyles, setAvailableListItemStyles] = useState([]);
-
-	const [availableListStyles, setAvailableListStyles] = useState([
-		DEFAULT_LIST_STYLE,
-	]);
-
-	const collectionItemType = item.config.collection
-		? item.config.collection.itemType
-		: null;
-
-	const isMaximumValuePerPageError =
-		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
 
 	useEffect(() => {
 		if (

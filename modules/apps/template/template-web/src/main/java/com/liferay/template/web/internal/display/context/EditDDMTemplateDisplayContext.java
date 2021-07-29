@@ -111,6 +111,12 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	protected long getClassPK() {
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate != null) {
+			return ddmTemplate.getClassPK();
+		}
+
 		return 0;
 	}
 

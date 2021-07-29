@@ -70,6 +70,8 @@ definition {
 				displayPageName = "Display Page Name",
 				subType = "Basic Web Content");
 
+			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
 			PageEditor.clickPublish();

@@ -19,6 +19,12 @@ definition {
 
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
+	
+	macro assertAddonsDetails {
+		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_LIMITS");
+		
+		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_PRICE");
+	}
 
 	macro assertDataSourceName {
 		var itemName = "${dataSourceName}";

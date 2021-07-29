@@ -27,10 +27,14 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.getName(), false));
 %>
 
-<portlet:actionURL name="/object_definitions/edit_object_definition" var="editObjectURL" />
-
 <liferay-frontend:edit-form
-	action="<%= editObjectURL %>"
+	action='<%=
+		PortletURLBuilder.createActionURL(
+			renderResponse
+		).setActionName(
+			"/object_definitions/edit_object_definition"
+		).buildPortletURL()
+	%>'
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

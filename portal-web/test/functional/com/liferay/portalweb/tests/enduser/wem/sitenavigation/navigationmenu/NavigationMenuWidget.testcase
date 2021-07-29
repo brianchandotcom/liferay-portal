@@ -18,6 +18,7 @@ definition {
 
 		task ("Add a navigation menu in Global site") {
 			JSONSitenavigation.addSiteNavigationMenu(
+				auto = "false",
 				groupName = "Global",
 				siteNavigationMenuName = "Global Navigation Menu Name");
 		}

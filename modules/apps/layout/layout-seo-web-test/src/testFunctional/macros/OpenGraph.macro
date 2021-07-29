@@ -139,18 +139,53 @@ definition {
 	}
 
 	macro mapEditableTextToField {
+		if ("${textTpye}" == "TextInput") {
+			Type(
+				key_text = "${mappedField}",
+				locator1 = "TextInput#ANY",
+				value1 = "${mappedFieldText}");
+		}
+		else if ("${textTpye}" == "TextArea") {
+			Type(
+				key_text = "${mappedField}",
+				locator1 = "TextArea#ANY",
+				value1 = "${mappedFieldText}");
+		}
+
 		Click(
-			key_mappedField = "${mappedField}",
+			key_mappedField = "${mappedFieldName}",
 			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
 
-		Select(
-			key_fieldLabel = "Field",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${field}");
+		for (var field : list "${field}" ) {
+			if ("${textTpye}" == "TextInput") {
+				Type.sendKeys(
+					key_text = "${mappedField}",
+					locator1 = "TextInput#ANY",
+					value1 = "${field}:");
+			}
+			else if ("${textTpye}" == "TextArea") {
+				Type.sendKeys(
+					key_text = "${mappedField}",
+					locator1 = "TextArea#ANY",
+					value1 = "${field}:");
+			}
 
-		Click(
-			key_mappedField = "${mappedField}",
-			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${field}");
+
+			if ("${mappedFieldName}" == "Image") {
+				Click(
+					key_text = "Map Content",
+					locator1 = "Button#ANY");
+			}
+			else {
+				Click(
+					key_text = "Add Field",
+					locator1 = "Button#ANY");
+			}
+		}
 	}
 
 	macro openToConfigInSystemSettings {
@@ -220,21 +255,19 @@ definition {
 	}
 
 	macro viewMappedField {
-		AssertTextEquals(
-			key_mappedField = "${mappedField}",
-			locator1 = "TextInput#SEO_MAPPED_FIELD",
-			value1 = "${mappedFieldValue}");
-
-		if ("${mappedFieldValue}" == "-- Unmapped --") {
-			AssertElementPresent(
+		if (isSet(textTpye)) {
+			AssertTextEquals(
 				key_mappedField = "${mappedField}",
-				locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_UNMAPPED_BUTTON");
+				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "${mappedFieldValue}");
 		}
 
 		else {
-			AssertElementPresent(
+			AssertAttributeValue(
+				attribute1 = "value",
 				key_mappedField = "${mappedField}",
-				locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAPPED_BUTTON");
+				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "${mappedFieldValue}");
 		}
 	}
 

@@ -42,7 +42,8 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %>
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfigurationUtil" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.List" %>

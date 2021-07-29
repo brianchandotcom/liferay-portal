@@ -14,8 +14,10 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -33,6 +35,11 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 	@Override
 	protected String getDefaultScript(long classNameId) {
 		return "<#-- Empty script -->";
+	}
+
+	@Override
+	protected long getTemplateHandlerClassNameId() {
+		return PortalUtil.getClassNameId(InfoItemFormProvider.class);
 	}
 
 }

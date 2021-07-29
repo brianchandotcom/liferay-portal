@@ -195,7 +195,7 @@ public class EditDDMTemplateDisplayContext {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			TemplateContextHelper.getTemplateVariableGroups(
-				getClassNameId(), getClassPK(), getLanguage(),
+				getTemplateHandlerClassNameId(), getClassPK(), getLanguage(),
 				_themeDisplay.getLocale());
 
 		return templateVariableGroups.values();
@@ -253,6 +253,10 @@ public class EditDDMTemplateDisplayContext {
 		_language = language;
 
 		return _language;
+	}
+
+	protected long getTemplateHandlerClassNameId() {
+		return getClassNameId();
 	}
 
 	protected String[] getTemplateLanguageTypes() {

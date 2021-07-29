@@ -244,6 +244,44 @@ definition {
 		}
 	}
 
+	macro viewDefaultMappedField {
+		if ("${portlet}" == "Open Graph") {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_mappedField = "Title",
+				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "title");
+
+			AssertTextEquals(
+				key_mappedField = "Description",
+				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "description");
+
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_mappedField = "Image",
+				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "-- Unmapped --");
+
+			AssertTextEquals(
+				key_mappedField = "ImageAlt",
+				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "");
+		}
+
+		if ("${portlet}" == "SEO") {
+			AssertElementPresent(
+				key_mappedField = "title",
+				locator1 = "TextInput#SEO_HTML_TITLE",
+				mappedFieldValue = "title");
+
+			AssertElementPresent(
+				key_mappedField = "description",
+				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				mappedFieldValue = "description");
+		}
+	}
+
 	macro viewImageAltDescriptionDefault {
 		AssertElementPresent(
 			key_text = "openGraphImageAlt",

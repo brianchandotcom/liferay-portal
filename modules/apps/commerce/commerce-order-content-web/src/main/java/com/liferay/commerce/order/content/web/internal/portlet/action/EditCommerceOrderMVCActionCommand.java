@@ -103,10 +103,13 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
 				themeDisplay.getScopeGroupId());
 
+		long commerceOrderTypeId = ParamUtil.getLong(
+			actionRequest, "commerceOrderTypeId");
+
 		try {
 			return _commerceOrderService.addCommerceOrder(
 				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
-				commerceCurrencyId, 0, StringPool.BLANK);
+				commerceCurrencyId, 0, commerceOrderTypeId, StringPool.BLANK);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceOrderAccountLimitException) {

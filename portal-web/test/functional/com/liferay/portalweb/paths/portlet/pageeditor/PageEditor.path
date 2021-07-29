@@ -272,11 +272,6 @@
 	<td>//button[@data-panel-id='layout_background_image']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>EDITABLE_FIELD_TOOLBAR_UNMAPPED_BUTTON</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_mappedField}')]//button[@*='Map' and not (contains(@class,'active'))]</td>
-	<td></td>
-</tr>
 <!--EXPERIENCE-->
 <tr>
 	<td>EXPERIENCE_BUTTON_NAME</td>

@@ -396,7 +396,6 @@ definition {
 	test NavigateViaMenuDisplayInStagingAndLiveSite {
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				auto = "true",
 				groupName = "Test Site Name",
 				siteNavigationMenuName = "Navigation Menu Name");
 		}

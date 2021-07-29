@@ -95,6 +95,9 @@ public class CTCollectionServiceTest {
 			CTActionKeys.ADD_PUBLICATION);
 
 		_roleLocalService.addUserRole(_user.getUserId(), _role);
+		_roleLocalService.addUserRole(
+			_user.getUserId(),
+			_roleLocalService.getDefaultGroupRole(_group.getGroupId()));
 	}
 
 	@Test

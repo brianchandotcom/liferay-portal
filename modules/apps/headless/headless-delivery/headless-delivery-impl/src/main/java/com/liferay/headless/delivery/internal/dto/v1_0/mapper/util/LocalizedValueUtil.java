@@ -47,9 +47,7 @@ public class LocalizedValueUtil {
 			{
 				List<String> availableLanguageIds = getAvailableLanguageIds();
 
-				Set<String> keys = jsonObject.keySet();
-
-				for (String key : keys) {
+				for (String key : jsonObject.keySet()) {
 					if (availableLanguageIds.contains(key)) {
 						put(key, jsonObject.getString(key));
 					}

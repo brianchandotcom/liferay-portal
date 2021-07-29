@@ -199,8 +199,11 @@ public class RenderLayoutStructureDisplayContext {
 			(Objects.equals(paginationType, PAGINATION_TYPE_REGULAR) ||
 			 Objects.equals(paginationType, PAGINATION_TYPE_SIMPLE))) {
 
+			HttpServletRequest originalHttpServletRequest =
+				PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
 			int currentPage = ParamUtil.getInteger(
-				_httpServletRequest,
+				originalHttpServletRequest,
 				PAGE_NUMBER_PARAM_PREFIX +
 					collectionStyledLayoutStructureItem.getItemId());
 

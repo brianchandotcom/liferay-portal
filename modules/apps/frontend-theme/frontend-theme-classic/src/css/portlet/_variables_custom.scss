@@ -1,13 +1,4 @@
-$portlet-header-margin-bottom: map-get($spacers, 5);
-
-$portlet-topper-bg: $primary;
-$portlet-topper-border: $primary;
-$portlet-topper-color: $white;
-$portlet-topper-link-color: $white;
-$portlet-topper-link-hover-color: $white;
-
 $portlet-content-border-radius: 0;
-$portlet-topper-border-radius: 2px 2px 0 0;
 
 $portlet-decorate-bg: #fff;
 $portlet-decorate-border-color: $secondary-l3;
@@ -15,6 +6,15 @@ $portlet-decorate-border-style: solid;
 $portlet-decorate-border-width: 1px;
 $portlet-decorate-padding: 1.5rem;
 
-$widget-resume-line-clamp-image: 3;
+$portlet-header-margin-bottom: map-get($spacers, 5);
+
+$portlet-topper-bg: $primary;
+$portlet-topper-border: $primary;
+$portlet-topper-border-radius: 2px 2px 0 0;
+$portlet-topper-color: $white;
+$portlet-topper-link-color: $white;
+$portlet-topper-link-hover-color: $white;
+
 $widget-resume-line-clamp: 10;
+$widget-resume-line-clamp-image: 3;
 $widget-resume-line-height: 1.35rem;

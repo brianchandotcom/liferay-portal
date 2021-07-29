@@ -525,7 +525,6 @@ definition {
 	}
 
 	@description = "LPS-77749"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanOrderDataInViewData {
 		User.logoutAndLoginPG(
@@ -534,7 +533,20 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");
+		DMDocument.addCP(
+			dmDocumentDescription = "A",
+			dmDocumentFile = "Document_1.jpeg",
+			dmDocumentTitle = "Document_1");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "B",
+			dmDocumentFile = "Document_2.docx",
+			dmDocumentTitle = "Document_2");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "C",
+			dmDocumentFile = "Document_3.txt",
+			dmDocumentTitle = "Document_3");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -548,14 +560,34 @@ definition {
 
 		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "4");
+			itemsCount = "3");
 
-		for (var orderBy : list "Name,Count,Description") {
+		for (var orderBy : list "Name,Description") {
 			ManagementBar.setFilterAndOrder(orderBy = "${orderBy}");
 
 			ManagementBar.toggleViewOrder(order = "list-up");
 
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Document_3.txt");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Document_1.jpeg");
+
 			ManagementBar.toggleViewOrder(order = "list-down");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Document_1.jpeg");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Document_3.txt");
 		}
 	}
 

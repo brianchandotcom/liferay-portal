@@ -56,6 +56,10 @@ export default function PropertiesSidebarPanel({className}) {
 	}, [loading, setEditorMode, portletNamespace]);
 
 	useEffect(() => {
+		if (!propertiesViewURL) {
+			return;
+		}
+
 		fetch(propertiesViewURL)
 			.then((response) => response.text())
 			.then((content) => {

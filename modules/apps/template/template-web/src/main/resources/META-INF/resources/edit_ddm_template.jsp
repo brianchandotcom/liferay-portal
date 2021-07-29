@@ -89,7 +89,10 @@ else {
 				<span aria-hidden="true" class="loading-animation"></span>
 			</div>
 
-			<div>React editor </div>
+			<react:component
+				componentId="ddmTemplateEditor"
+				module="js/ddm_template_editor/components/App"
+			/>
 		</div>
 	</div>
 </aui:form>

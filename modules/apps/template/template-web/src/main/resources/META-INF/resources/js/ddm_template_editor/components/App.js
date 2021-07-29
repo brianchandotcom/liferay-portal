@@ -22,16 +22,18 @@ import {Editor} from './Editor';
 import Sidebar from './Sidebar';
 import {PANEL_IDS} from './panelIds';
 
+import './App.scss';
+
 export default function App({
-	editorAutocompleteData,
-	editorMode: initialEditorMode,
+	editorAutocompleteData = {variables: {}},
+	editorMode: initialEditorMode = 'ftl',
 	portletNamespace,
 	propertiesViewURL,
-	script: initialScript,
-	showCacheableWarning,
-	showLanguageChangeWarning,
-	showPropertiesPanel,
-	templateVariableGroups,
+	script: initialScript = '',
+	showCacheableWarning = false,
+	showLanguageChangeWarning = false,
+	showPropertiesPanel = false,
+	templateVariableGroups = [],
 }) {
 	const [selectedSidebarPanelId, setSelectedSidebarPanelId] = useState(
 		showPropertiesPanel ? PANEL_IDS.properties : PANEL_IDS.elements

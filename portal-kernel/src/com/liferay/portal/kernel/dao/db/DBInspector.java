@@ -148,6 +148,31 @@ public class DBInspector {
 		}
 	}
 
+	public boolean hasIndex(String tableName, String indexName)
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		try (ResultSet resultSet = databaseMetaData.getIndexInfo(
+				_connection.getCatalog(), _connection.getSchema(),
+				normalizeName(tableName, databaseMetaData), false, false)) {
+
+			while (resultSet.next()) {
+				if (Objects.equals(
+						normalizeName(indexName, databaseMetaData),
+						resultSet.getString("index_name"))) {
+
+					return true;
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return false;
+	}
+
 	public boolean hasRows(String tableName) {
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select count(*) from " + tableName);
@@ -235,31 +260,6 @@ public class DBInspector {
 		}
 
 		return name;
-	}
-
-	public boolean hasIndex(String tableName, String indexName)
-		throws Exception {
-
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getIndexInfo(
-				_connection.getCatalog(), _connection.getSchema(),
-				normalizeName(tableName, databaseMetaData), false, false)) {
-
-			while (resultSet.next()) {
-				if (Objects.equals(
-						normalizeName(indexName, databaseMetaData),
-						resultSet.getString("index_name"))) {
-
-					return true;
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-
-		return false;
 	}
 
 	private Integer _getColumnDataType(String columnType) {

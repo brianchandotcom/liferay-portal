@@ -57,12 +57,53 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"
-	@ignore = "true"
 	@priority = "5"
 	test IndividualsUpdatesInRealTime {
+		ACUtils.addSiteAndPage();
 
-		// TODO LRAC-8148 Usage#IndividualsUpdatesInRealTime pending implementation
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		var currentIndividuals = selenium.getText("ACUsage#USAGE_CURRENT_INDIVIDUALS");
+
+		ACUtils.launchDXP();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ACDXPSettings.syncNewContactData();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUsage();
+
+		var newIdividuals = ${currentIndividuals} + 1;
+
+		AssertTextEquals(
+			locator1 = "ACUsage#USAGE_CURRENT_INDIVIDUALS",
+			value1 = "${newIdividuals}");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"

@@ -13,8 +13,8 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayButton from '@clayui/button';
+import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
@@ -25,20 +25,18 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
 	const CHANGE_TYPE_PRODUCTION = 'production';
-	const CONTENT_SELECT_LEFT = 'CONTENT_SELECT_LEFT';
-	const CONTENT_SELECT_RIGHT = 'CONTENT_SELECT_RIGHT';
-	const CONTENT_SELECT_UNIFIED = 'CONTENT_SELECT_UNIFIED';
 	const CONTENT_TYPE_DATA = 'data';
 	const CONTENT_TYPE_DISPLAY = 'display';
-	const VIEW_TYPE_FULL = 'VIEW_TYPE_FULL';
-	const VIEW_TYPE_SPLIT = 'VIEW_TYPE_SPLIT';
+	const VIEW_LEFT = 'VIEW_LEFT';
+	const VIEW_RIGHT = 'VIEW_RIGHT';
+	const VIEW_SPLIT = 'VIEW_SPLIT';
+	const VIEW_UNIFIED = 'VIEW_UNIFIED';
 
 	const [loading, setLoading] = useState(false);
 	const [state, setState] = useState({
-		contentSelect: CONTENT_SELECT_UNIFIED,
 		contentType: CONTENT_TYPE_DISPLAY,
 		renderData: null,
-		viewType: VIEW_TYPE_FULL,
+		view: VIEW_UNIFIED,
 	});
 
 	useEffect(() => {
@@ -51,10 +49,9 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 		if (cachedData && cachedData.changeType) {
 			if (cachedData.changeType === CHANGE_TYPE_PRODUCTION) {
 				setState({
-					contentSelect: CONTENT_SELECT_LEFT,
 					contentType: CONTENT_TYPE_DATA,
 					renderData: cachedData,
-					viewType: VIEW_TYPE_FULL,
+					view: VIEW_LEFT,
 				});
 
 				setLoading(false);
@@ -63,10 +60,9 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 			}
 
 			const newState = {
-				contentSelect: CONTENT_SELECT_UNIFIED,
 				contentType: CONTENT_TYPE_DISPLAY,
 				renderData: cachedData,
-				viewType: VIEW_TYPE_FULL,
+				view: VIEW_UNIFIED,
 			};
 
 			if (!cachedData.content) {
@@ -74,10 +70,10 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 			}
 
 			if (!cachedData.leftTitle) {
-				newState.contentSelect = CONTENT_SELECT_RIGHT;
+				newState.view = VIEW_RIGHT;
 			}
 			else if (!cachedData.rightTitle) {
-				newState.contentSelect = CONTENT_SELECT_LEFT;
+				newState.view = VIEW_LEFT;
 			}
 
 			setState(newState);
@@ -110,10 +106,9 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 				}
 
 				const newState = {
-					contentSelect: CONTENT_SELECT_UNIFIED,
 					contentType: CONTENT_TYPE_DISPLAY,
 					renderData: json,
-					viewType: VIEW_TYPE_FULL,
+					view: VIEW_UNIFIED,
 				};
 
 				if (!json.content) {
@@ -121,10 +116,10 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 				}
 
 				if (!json.leftTitle) {
-					newState.contentSelect = CONTENT_SELECT_RIGHT;
+					newState.view = VIEW_RIGHT;
 				}
 				else if (!json.rightTitle) {
-					newState.contentSelect = CONTENT_SELECT_LEFT;
+					newState.view = VIEW_LEFT;
 				}
 
 				setState(newState);
@@ -143,35 +138,16 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 			});
 	}, [getCache, dataURL, updateCache]);
 
-	const setContentSelect = (contentSelect) => {
-		setState({
-			contentSelect,
-			contentType: state.contentType,
-			renderData: state.renderData,
-			viewType: state.viewType,
-		});
-	};
-
 	const setContentType = (contentType) => {
 		setState({
-			contentSelect: state.contentSelect,
 			contentType,
 			renderData: state.renderData,
-			viewType: state.viewType,
+			view: state.view,
 		});
 	};
 
-	const setViewType = (viewType) => {
-		setState({
-			contentSelect: state.contentSelect,
-			contentType: state.contentType,
-			renderData: state.renderData,
-			viewType,
-		});
-	};
-
-	const getContentSelectTitle = (value) => {
-		if (value === CONTENT_SELECT_LEFT) {
+	const getContentSelectTitle = (view) => {
+		if (view === VIEW_LEFT) {
 			if (
 				state.renderData.changeType === CHANGE_TYPE_ADDED &&
 				state.renderData.versioned
@@ -186,7 +162,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 
 			return state.renderData.leftTitle;
 		}
-		else if (value === CONTENT_SELECT_RIGHT) {
+		else if (view === VIEW_RIGHT) {
 			if (
 				state.renderData.changeType === CHANGE_TYPE_ADDED &&
 				state.renderData.versioned &&
@@ -202,36 +178,11 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 
 			return state.renderData.rightTitle;
 		}
-
-		return Liferay.Language.get('unified');
-	};
-
-	const getContentSelectTooltip = () => {
-		if (state.renderData.changeType === CHANGE_TYPE_DELETED) {
-			return Liferay.Language.get(
-				'item-does-not-have-another-version-to-compare-against'
-			);
+		else if (view === VIEW_SPLIT) {
+			return Liferay.Language.get('split-view');
 		}
 
-		return Liferay.Language.get(
-			'item-does-not-have-a-previous-version-to-compare-against'
-		);
-	};
-
-	const getSplitViewTooltip = () => {
-		if (!state.renderData.leftTitle || !state.renderData.rightTitle) {
-			if (state.renderData.changeType === CHANGE_TYPE_DELETED) {
-				return Liferay.Language.get(
-					'item-does-not-have-another-version-to-compare-against'
-				);
-			}
-
-			return Liferay.Language.get(
-				'item-does-not-have-a-previous-version-to-compare-against'
-			);
-		}
-
-		return Liferay.Language.get('split-view');
+		return Liferay.Language.get('unified-view');
 	};
 
 	const renderContentLeft = () => {
@@ -335,94 +286,6 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 		);
 	};
 
-	const renderContentSelect = () => {
-		if (state.viewType !== VIEW_TYPE_FULL) {
-			return '';
-		}
-
-		const pushItem = (items, key) => {
-			items.push({
-				active: state.contentSelect === key,
-				label: getContentSelectTitle(key),
-				onClick: () => {
-					setContentSelect(key);
-				},
-			});
-		};
-
-		const elements = [];
-
-		elements.push(
-			<div className="autofit-col row-divider">
-				<div />
-			</div>
-		);
-
-		if (!state.renderData.leftTitle || !state.renderData.rightTitle) {
-			elements.push(
-				<div className="autofit-col">
-					<div className="dropdown">
-						<ClayButton
-							borderless
-							className="disabled"
-							data-tooltip-align="top"
-							displayType="secondary"
-							title={getContentSelectTooltip()}
-						>
-							{getContentSelectTitle(state.contentSelect)}
-
-							<span className="inline-item inline-item-after">
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="caret-bottom"
-								/>
-							</span>
-						</ClayButton>
-					</div>
-				</div>
-			);
-
-			return elements;
-		}
-
-		const items = [];
-
-		if (state.renderData.leftTitle && state.renderData.rightTitle) {
-			pushItem(items, CONTENT_SELECT_UNIFIED);
-		}
-
-		if (state.renderData.leftTitle) {
-			pushItem(items, CONTENT_SELECT_LEFT);
-		}
-
-		if (state.renderData.rightTitle) {
-			pushItem(items, CONTENT_SELECT_RIGHT);
-		}
-
-		elements.push(
-			<div className="autofit-col">
-				<ClayDropDownWithItems
-					items={items}
-					spritemap={spritemap}
-					trigger={
-						<ClayButton borderless displayType="secondary">
-							{getContentSelectTitle(state.contentSelect)}
-
-							<span className="inline-item inline-item-after">
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="caret-bottom"
-								/>
-							</span>
-						</ClayButton>
-					}
-				/>
-			</div>
-		);
-
-		return elements;
-	};
-
 	const renderContentUnified = () => {
 		if (
 			state.contentType === CONTENT_TYPE_DATA &&
@@ -480,10 +343,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 	};
 
 	const renderDiffLegend = () => {
-		if (
-			state.contentSelect !== CONTENT_SELECT_UNIFIED ||
-			state.viewType !== VIEW_TYPE_FULL
-		) {
+		if (state.view === VIEW_LEFT || state.view === VIEW_RIGHT) {
 			return '';
 		}
 
@@ -514,52 +374,120 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 		return elements;
 	};
 
+	const renderViewDropdown = () => {
+		if (!state.renderData.leftTitle || !state.renderData.rightTitle) {
+			let title = null;
+
+			if (state.view === VIEW_LEFT) {
+				title = state.renderData.leftTitle;
+
+				if (state.renderData.changeType === CHANGE_TYPE_DELETED) {
+					title += ' (' + Liferay.Language.get('deleted') + ')';
+				}
+			}
+			else if (state.view === VIEW_RIGHT) {
+				title = state.renderData.rightTitle;
+
+				if (state.renderData.changeType === CHANGE_TYPE_ADDED) {
+					title += ' (' + Liferay.Language.get('new') + ')';
+				}
+			}
+
+			return (
+				<div>
+					<span className="inline-item inline-item-before">
+						<ClayIcon spritemap={spritemap} symbol="rectangle" />
+					</span>
+
+					{title}
+				</div>
+			);
+		}
+
+		const pushItem = (items, view) => {
+			items.push({
+				active: state.view === view,
+				label: getContentSelectTitle(view),
+				onClick: () => {
+					setState({
+						contentType: state.contentType,
+						renderData: state.renderData,
+						view,
+					});
+				},
+				symbolLeft:
+					view === VIEW_SPLIT ? 'rectangle-split' : 'rectangle',
+			});
+		};
+
+		const items = [];
+
+		pushItem(items, VIEW_UNIFIED);
+
+		items.push({
+			type: 'divider',
+		});
+
+		pushItem(items, VIEW_LEFT);
+		pushItem(items, VIEW_RIGHT);
+
+		items.push({
+			type: 'divider',
+		});
+
+		pushItem(items, VIEW_SPLIT);
+
+		return (
+			<ClayDropDownWithItems
+				alignmentPosition={Align.BottomCenter}
+				items={items}
+				spritemap={spritemap}
+				trigger={
+					<ClayButton borderless displayType="secondary">
+						<span className="inline-item inline-item-before">
+							<ClayIcon
+								spritemap={spritemap}
+								symbol={
+									state.view === VIEW_SPLIT
+										? 'rectangle-split'
+										: 'rectangle'
+								}
+							/>
+						</span>
+
+						{getContentSelectTitle(state.view)}
+
+						<span className="inline-item inline-item-after">
+							<ClayIcon
+								spritemap={spritemap}
+								symbol="caret-bottom"
+							/>
+						</span>
+					</ClayButton>
+				}
+			/>
+		);
+	};
+
 	const renderDividers = () => {
-		if (state.viewType === VIEW_TYPE_SPLIT) {
+		if (state.view === VIEW_SPLIT) {
 			return (
 				<tr className="publications-render-view-divider table-divider">
-					<td className="publications-render-view-divider">
-						{state.renderData.leftTitle}
-					</td>
-					<td className="publications-render-view-divider">
-						{state.renderData.rightTitle}
+					<td
+						className="publications-render-view-divider"
+						colSpan={2}
+					>
+						{renderViewDropdown()}
 					</td>
 				</tr>
 			);
 		}
 
-		let title = null;
-
-		if (state.contentSelect === CONTENT_SELECT_LEFT) {
-			title = state.renderData.leftTitle;
-
-			if (state.renderData.changeType === CHANGE_TYPE_DELETED) {
-				title += ' (' + Liferay.Language.get('deleted') + ')';
-			}
-		}
-		else if (state.contentSelect === CONTENT_SELECT_RIGHT) {
-			title = state.renderData.rightTitle;
-
-			if (state.renderData.changeType === CHANGE_TYPE_ADDED) {
-				title += ' (' + Liferay.Language.get('new') + ')';
-			}
-		}
-		else {
-			title =
-				state.renderData.leftTitle +
-				' | ' +
-				state.renderData.rightTitle;
-		}
-
-		const className = 'publications-render-view-divider table-divider';
-
 		return (
-			<tr
-				className={
-					loading ? className + ' publications-loading' : className
-				}
-			>
-				<td className="publications-render-view-divider">{title}</td>
+			<tr className="publications-render-view-divider table-divider">
+				<td className="publications-render-view-divider">
+					{renderViewDropdown()}
+				</td>
 			</tr>
 		);
 	};
@@ -571,20 +499,8 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 
 		let columns = 1;
 
-		if (state.viewType === VIEW_TYPE_SPLIT) {
+		if (state.view === VIEW_SPLIT) {
 			columns = 2;
-		}
-
-		let splitViewClassName = '';
-
-		if (state.viewType === VIEW_TYPE_SPLIT) {
-			splitViewClassName = 'active';
-		}
-		else if (
-			!state.renderData.leftTitle ||
-			!state.renderData.rightTitle
-		) {
-			splitViewClassName = 'disabled';
 		}
 
 		return (
@@ -643,39 +559,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 								</ClayNavigationBar.Item>
 							</ClayNavigationBar>
 						</div>
-						<div className="autofit-col row-divider">
-							<div />
-						</div>
-						<div className="autofit-col">
-							<ClayButton.Group>
-								<ClayButtonWithIcon
-									borderless
-									className={
-										state.viewType === VIEW_TYPE_FULL
-											? 'active'
-											: ''
-									}
-									data-tooltip-align="top"
-									displayType="secondary"
-									onClick={() => setViewType(VIEW_TYPE_FULL)}
-									spritemap={spritemap}
-									symbol="rectangle"
-									title={Liferay.Language.get('full-view')}
-								/>
-								<ClayButtonWithIcon
-									borderless
-									className={splitViewClassName}
-									data-tooltip-align="top"
-									displayType="secondary"
-									onClick={() => setViewType(VIEW_TYPE_SPLIT)}
-									spritemap={spritemap}
-									symbol="rectangle-split"
-									title={getSplitViewTooltip()}
-								/>
-							</ClayButton.Group>
-						</div>
 
-						{renderContentSelect()}
 						{renderDiffLegend()}
 					</div>
 				</td>
@@ -715,26 +599,23 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 			{renderDividers()}
 
 			<tr className={loading ? 'publications-loading' : ''}>
-				{(state.contentSelect === CONTENT_SELECT_LEFT ||
-					state.viewType === VIEW_TYPE_SPLIT) && (
+				{(state.view === VIEW_LEFT || state.view === VIEW_SPLIT) && (
 					<td className="publications-render-view-content">
 						{renderContentLeft()}
 					</td>
 				)}
 
-				{(state.contentSelect === CONTENT_SELECT_RIGHT ||
-					state.viewType === VIEW_TYPE_SPLIT) && (
+				{(state.view === VIEW_RIGHT || state.view === VIEW_SPLIT) && (
 					<td className="publications-render-view-content">
 						{renderContentRight()}
 					</td>
 				)}
 
-				{state.contentSelect === CONTENT_SELECT_UNIFIED &&
-					state.viewType === VIEW_TYPE_FULL && (
-						<td className="publications-render-view-content">
-							{renderContentUnified()}
-						</td>
-					)}
+				{state.view === VIEW_UNIFIED && (
+					<td className="publications-render-view-content">
+						{renderContentUnified()}
+					</td>
+				)}
 			</tr>
 		</table>
 	);

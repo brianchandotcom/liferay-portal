@@ -246,6 +246,16 @@ table.publications-render-view {
 	.publications-render-view-divider.table-divider {
 		text-align: center;
 
+		.dropdown .btn {
+			font-size: 0.75rem;
+			padding: 0;
+			text-transform: uppercase;
+		}
+
+		.inline-item-before {
+			font-size: 1rem;
+		}
+
 		td.publications-render-view-divider {
 			border: 1px solid #e7e7ed;
 		}

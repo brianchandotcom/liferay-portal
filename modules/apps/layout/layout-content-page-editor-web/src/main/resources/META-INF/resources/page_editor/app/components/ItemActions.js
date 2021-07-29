@@ -43,6 +43,14 @@ export default function ItemActions({item}) {
 	const itemActions = useMemo(() => {
 		const actions = [];
 
+		if (canBeSaved(item, layoutData)) {
+			actions.push({
+				action: () => setOpenSaveModal(true),
+				icon: 'disk',
+				label: Liferay.Language.get('save-composition'),
+			});
+		}
+
 		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
 			actions.push({
 				action: () =>
@@ -55,14 +63,6 @@ export default function ItemActions({item}) {
 					),
 				icon: 'paste',
 				label: Liferay.Language.get('duplicate'),
-			});
-		}
-
-		if (canBeSaved(item, layoutData)) {
-			actions.push({
-				action: () => setOpenSaveModal(true),
-				icon: 'disk',
-				label: Liferay.Language.get('save-composition'),
 			});
 		}
 
@@ -118,20 +118,25 @@ export default function ItemActions({item}) {
 				}
 			>
 				<ClayDropDown.ItemList>
-					{itemActions.map((itemAction) => (
-						<ClayDropDown.Item
-							key={itemAction.label}
-							onClick={() => {
-								setActive(false);
+					{itemActions.map((itemAction, index, array) => (
+						<React.Fragment key={itemAction.label}>
+							<ClayDropDown.Item
+								onClick={() => {
+									setActive(false);
 
-								itemAction.action();
-							}}
-							symbolLeft={itemAction.icon}
-						>
-							<p className="d-inline-block m-0 ml-4">
-								{itemAction.label}
-							</p>
-						</ClayDropDown.Item>
+									itemAction.action();
+								}}
+								symbolLeft={itemAction.icon}
+							>
+								<p className="d-inline-block m-0 ml-4">
+									{itemAction.label}
+								</p>
+							</ClayDropDown.Item>
+
+							{index !== array.length - 1 && (
+								<ClayDropDown.Divider />
+							)}
+						</React.Fragment>
 					))}
 				</ClayDropDown.ItemList>
 			</ClayDropDown>

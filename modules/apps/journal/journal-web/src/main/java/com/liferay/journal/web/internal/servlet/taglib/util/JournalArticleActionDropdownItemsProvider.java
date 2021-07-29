@@ -509,8 +509,24 @@ public class JournalArticleActionDropdownItemsProvider {
 		_getExportForTranslationActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "exportTranslation");
-			dropdownItem.putData("articleEntryId", _article.getArticleId());
+			dropdownItem.setHref(
+				PortletURLBuilder.create(
+					_translationURLProvider.getExportTranslationURL(
+						_article.getGroupId(),
+						PortalUtil.getClassNameId(JournalArticle.class),
+						_article.getResourcePrimKey(),
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest))
+				).setRedirect(
+					_getRedirect()
+				).setPortletResource(
+					() -> {
+						PortletDisplay portletDisplay =
+							_themeDisplay.getPortletDisplay();
+
+						return portletDisplay.getId();
+					}
+				).build());
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_httpServletRequest, "export-for-translation"));

@@ -141,13 +141,6 @@ else {
 			</aui:form>
 		</clay:container-fluid>
 	</div>
-
-	<div>
-		<react:component
-			module="js/JournalExportTranslation"
-			props="<%= journalDisplayContext.getExportTranslationData() %>"
-		/>
-	</div>
 </div>
 
 <%@ include file="/friendly_url_changed_message.jspf" %>

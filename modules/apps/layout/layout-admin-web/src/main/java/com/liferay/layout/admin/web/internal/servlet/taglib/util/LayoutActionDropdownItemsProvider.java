@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -285,6 +287,28 @@ public class LayoutActionDropdownItemsProvider {
 									BeanPropertiesUtil.getLong(
 										draftLayout, "plid",
 										layout.getPlid())));
+
+							PortletURL portletURL = PortletURLBuilder.create(
+								_translationURLProvider.getExportTranslationURL(
+									layout.getGroupId(),
+									PortalUtil.getClassNameId(
+										Layout.class.getName()),
+									layout.getPlid(),
+									RequestBackedPortletURLFactoryUtil.create(
+										_httpServletRequest))
+							).setRedirect(
+								PortalUtil.getCurrentURL(_httpServletRequest)
+							).setPortletResource(
+								() -> {
+									PortletDisplay portletDisplay =
+										_themeDisplay.getPortletDisplay();
+
+									return portletDisplay.getId();
+								}
+							).buildPortletURL();
+
+							dropdownItem.putData("url", portletURL.toString());
+
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest,

@@ -443,13 +443,13 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Child Page");
 		}
 
-		task ("Navigate to Greatchild Page via Navigation Menu widget") {
+		task ("Navigate to Grandchild Page via Navigation Menu widget") {
 			NavigationMenusWidget.gotoSublevel(
-				itemName = "Greatchild Page",
+				itemName = "Grandchild Page",
 				pageName = "Home",
 				type = "Drop Down");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Greatchild Page");
+			ControlMenu.viewHeaderTitle(headerTitle = "Grandchild Page");
 		}
 
 		task ("Navigate to Greate Grandchild Page via Navigation Menu widget") {
@@ -519,13 +519,13 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Child Page");
 		}
 
-		task ("Navigate to Greatchild Page via Navigation Menu widget") {
+		task ("Navigate to Grandchild Page via Navigation Menu widget") {
 			NavigationMenusWidget.gotoSublevel(
-				itemName = "Greatchild Page",
+				itemName = "Grandchild Page",
 				pageName = "Home",
 				type = "List");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Greatchild Page");
+			ControlMenu.viewHeaderTitle(headerTitle = "Grandchild Page");
 		}
 
 		task ("Navigate to Greate Grandchild Page via Navigation Menu widget") {

@@ -185,6 +185,14 @@ public class GetCollectionFieldMVCResourceCommand
 					defaultLayoutListRetrieverContext =
 						new DefaultLayoutListRetrieverContext();
 
+				JSONObject configJSONObject =
+					layoutObjectReferenceJSONObject.getJSONObject("config");
+
+				if (configJSONObject != null) {
+					defaultLayoutListRetrieverContext.
+						setCollectionConfiguration(configJSONObject);
+				}
+
 				Object infoItem = _getInfoItem(httpServletRequest);
 
 				if (infoItem != null) {

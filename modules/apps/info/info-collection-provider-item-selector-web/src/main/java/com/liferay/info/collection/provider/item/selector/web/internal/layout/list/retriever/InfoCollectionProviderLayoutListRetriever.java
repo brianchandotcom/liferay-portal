@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -107,6 +108,12 @@ public class InfoCollectionProviderLayoutListRetriever
 			collectionQuery.setRelatedItemObject(relatedItem);
 		}
 
+		Optional<Map<String, String[]>> collectionConfigurationOptional =
+			layoutListRetrieverContext.getCollectionConfigurationOptional();
+
+		collectionQuery.setCollectionConfiguration(
+			collectionConfigurationOptional.orElse(null));
+
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
 
@@ -150,6 +157,12 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		CollectionQuery collectionQuery = new CollectionQuery();
+
+		Optional<Map<String, String[]>> collectionConfigurationOptional =
+			layoutListRetrieverContext.getCollectionConfigurationOptional();
+
+		collectionQuery.setCollectionConfiguration(
+			collectionConfigurationOptional.orElse(null));
 
 		if (infoCollectionProvider instanceof
 				RelatedInfoItemCollectionProvider) {

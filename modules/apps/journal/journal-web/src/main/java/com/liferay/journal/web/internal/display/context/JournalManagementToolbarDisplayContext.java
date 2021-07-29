@@ -98,6 +98,20 @@ public class JournalManagementToolbarDisplayContext
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
+							dropdownItem.putData("action", "expireEntries");
+							dropdownItem.setIcon("time");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "expire"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
 							dropdownItem.putData("action", "moveEntries");
 							dropdownItem.setIcon("move-folder");
 							dropdownItem.setLabel(
@@ -129,14 +143,6 @@ public class JournalManagementToolbarDisplayContext
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, label));
 
-							dropdownItem.setQuickAction(true);
-						}
-					).add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "expireEntries");
-							dropdownItem.setIcon("time");
-							dropdownItem.setLabel(
-								LanguageUtil.get(httpServletRequest, "expire"));
 							dropdownItem.setQuickAction(true);
 						}
 					).build());

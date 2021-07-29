@@ -1,13 +1,3 @@
-@function getDefault($var) {
-	@if (type-of($var) == string and str-slice($var, 1, 3) == 'var') {
-		@return str-slice($var, str-index($var, ',') + 2, str-length($var) - 1);
-	}
-
-	@return $var;
-}
-
-// POC
-
 $clay-unset: clay-unset !default;
 
 // An alias for `$clay-unset`
@@ -190,7 +180,7 @@ $line-height-sm: 1.5 !default;
 
 $line-height-base: 1.5 !default;
 
-$border-color: $gray-300 !default;
+$border-color: $gray-200 !default;
 $border-width: 0.0625rem !default;
 
 $border-radius: 0.25rem !default; // 4px
@@ -202,7 +192,10 @@ $rounded-circle-border-radius: var(--border-radius-circle, 5000px) !default;
 $rounded-0-border-radius: 0 !default;
 $rounded-pill: var(--rounded-pill, 50rem) !default;
 
-$box-shadow-sm: var(--box-shadow-sm, 0 0.125rem 0.25rem rgba($black, 0.075)) !default;
+$box-shadow-sm: var(
+	--box-shadow-sm,
+	0 0.125rem 0.25rem rgba($black, 0.075)
+) !default;
 $box-shadow: var(--box-shadow, 0 0.5rem 1rem rgba($black, 0.15)) !default;
 $box-shadow-lg: var(--box-shadow-lg, 0 1rem 3rem rgba($black, 0.175)) !default;
 
@@ -272,11 +265,11 @@ $webkit-font-smoothing: antialiased !default;
 
 $font-import-url: null !default;
 
-$font-family-sans-serif: system-ui, -apple-system, BlinkMacSystemFont,
-	'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial,
+$font-family-sans-serif: system-ui, -apple-system, blinkmacsystemfont,
+	'Segoe UI', roboto, oxygen-sans, ubuntu, cantarell, 'Helvetica Neue', arial,
 	sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
-$font-family-serif: Georgia, 'Times New Roman', Times, serif !default;
-$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+$font-family-serif: georgia, 'Times New Roman', times, serif !default;
+$font-family-monospace: sfmono-regular, menlo, monaco, consolas,
 	'Liberation Mono', 'Courier New', monospace !default;
 
 $font-family-base: var(--font-family-base, $font-family-sans-serif) !default;
@@ -354,7 +347,10 @@ $display1-weight: var(--display1-weight, 300) !default;
 $display2-weight: var(--display2-weight, 300) !default;
 $display3-weight: var(--display3-weight, 300) !default;
 $display4-weight: var(--display4-weight, 300) !default;
-$display-line-height: var(--display-line-height, $headings-line-height) !default;
+$display-line-height: var(
+	--display-line-height,
+	$headings-line-height
+) !default;
 
 $lead-font-size: var(--lead-font-size, $font-size-base * 1.25) !default;
 $lead-font-weight: var(--lead-font-weight, 400) !default;
@@ -364,7 +360,10 @@ $small-font-size: 0.875rem !default;
 $text-muted: var(--text-muted, $gray-500) !default;
 
 $blockquote-small-color: var(--blockquote-small-color, $gray-600);
-$blockquote-small-font-size: var(--blockquote-small-font-size, $small-font-size);
+$blockquote-small-font-size: var(
+	--blockquote-small-font-size,
+	$small-font-size
+);
 $blockquote-font-size: var(--blockquote-font-size, $font-size-base * 1.25);
 
 $hr-border-color: var(--hr-border-color, rgba($black, 0.1)) !default;
@@ -441,16 +440,6 @@ $print-page-size: a3 !default;
 
 // Start Theme
 
-$border-color: #f1f2f5;
-$bright-color: #1865fb;
-$complementary-color: #30313f;
-$dark-color: #272833;
-$input-bg: #f1f2f5;
-$light-color: #e7e7ed;
-
-$portlet-decorate-bg: #fff;
-$portlet-decorate-border: 1px solid $light-color;
-
 $btn-primary: () !default;
 $btn-primary: map-deep-merge(
 	(
@@ -496,7 +485,8 @@ $btn-outline-primary: map-deep-merge(
 		hover-bg: var(--btn-outline-primary-hover-background-color, $primary-l3),
 		hover-color: var(--btn-outline-primary-hover-color, color-yiq($primary)),
 		hover: (
-			border-color: var(--btn-outline-primary-hover-border-color, $primary),
+			border-color:
+				var(--btn-outline-primary-hover-border-color, $primary),
 		),
 		focus-bg: $c-unset,
 		focus-box-shadow: $c-unset,
@@ -524,7 +514,8 @@ $btn-secondary: map-deep-merge(
 		box-shadow: $c-unset,
 		color: var(--btn-secondary-color, $secondary),
 		hover-bg: var(--btn-secondary-hover-background-color, $gray-100),
-		hover-border-color: var(--btn-secondary-hover-border-color, $secondary-l2),
+		hover-border-color:
+			var(--btn-secondary-hover-border-color, $secondary-l2),
 		hover-color: var(--btn-secondary-hover-color, $gray-900),
 		hover: (
 			background-image: clay-enable-gradients($gray-100),
@@ -556,8 +547,13 @@ $btn-outline-secondary: map-deep-merge(
 		bg: var(--btn-outline-secondary-background-color, transparent),
 		border-color: var(--btn-outline-secondary-border-color, $secondary-l2),
 		color: var(--btn-outline-secondary-color, $secondary),
-		hover-bg: var(--btn-outline-secondary-hover-background-color, rgba($gray-900, 0.03)),
-		hover-border-color: var(--btn-outline-secondary-hover-border-color, transparent),
+		hover-bg:
+			var(
+				--btn-outline-secondary-hover-background-color,
+				rgba($gray-900, 0.03)
+			),
+		hover-border-color:
+			var(--btn-outline-secondary-hover-border-color, transparent),
 		hover-color: var(--btn-outline-secondary-hover-color, color-yiq($white)),
 		focus-bg: $c-unset,
 		focus-border-color: $c-unset,

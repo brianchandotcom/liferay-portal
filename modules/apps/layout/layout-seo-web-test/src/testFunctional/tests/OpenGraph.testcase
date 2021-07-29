@@ -196,6 +196,12 @@ definition {
 			displayPageTemplateEntryName = "Display Page Template Name",
 			groupName = "Test Site Name");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -251,16 +257,6 @@ definition {
 			mappedFieldValue = "Image Alt is Author Name: ${authorName} Description: ${description}",
 			textTpye = "TextArea");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
-
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
 		Blogs.addWithCustomAbstract(
@@ -300,6 +296,12 @@ definition {
 			displayPageTemplateEntryName = "Display Page Template Name",
 			groupName = "Test Site Name",
 			subType = "Basic Document");
+
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -355,16 +357,6 @@ definition {
 			mappedField = "ImageAlt",
 			mappedFieldValue = "Image Alt is Author Name: ${authorName}",
 			textTpye = "TextArea");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -424,6 +416,12 @@ definition {
 			displayPageTemplateEntryName = "Display Page Template Name",
 			groupName = "Test Site Name");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -439,16 +437,6 @@ definition {
 		OpenGraph.viewMappedField(
 			mappedField = "Alt",
 			mappedFieldValue = "-- Unmapped --");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -489,6 +477,12 @@ definition {
 			groupName = "Test Site Name",
 			subType = "Basic Web Content");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -498,16 +492,6 @@ definition {
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
 		OpenGraph.viewDefaultMappedField(portlet = "Open Graph");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",

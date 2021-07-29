@@ -37,6 +37,12 @@ definition {
 			displayPageTemplateEntryName = "Display Page Template Name",
 			groupName = "Test Site Name");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -44,16 +50,6 @@ definition {
 			pageTemplateName = "Display Page Template Name");
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
@@ -92,6 +88,12 @@ definition {
 			groupName = "Test Site Name",
 			subType = "Basic Document");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -124,16 +126,6 @@ definition {
 			mappedField = "description",
 			mappedFieldValue = "Description is MIME Type: ${mimeType} Version: ${version}",
 			textTpye = "TextArea");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -179,6 +171,12 @@ definition {
 			groupName = "Test Site Name",
 			subType = "Basic Web Content");
 
+		DisplayPageTemplate.addFragment(
+			collectionName = "Content Display",
+			displayPageName = "Display Page Template Name",
+			fragmentName = "Display Page Content",
+			siteURLKey = "test-site-name");
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
@@ -211,16 +209,6 @@ definition {
 			mappedField = "description",
 			mappedFieldValue = "Description is Content: ${Content}",
 			textTpye = "TextArea");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Display Page Content");
-
-		Button.clickPublish();
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",

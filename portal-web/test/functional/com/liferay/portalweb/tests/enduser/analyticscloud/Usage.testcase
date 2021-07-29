@@ -61,13 +61,13 @@ definition {
 		ACSettings.goToUsage();
 
 		ACSettings.assertAddonsDetails(
-			key_planName = "Individuals",
 			key_planLimit = "5,000",
+			key_planName = "Individuals",
 			key_planValue = "500 USD");
 
 		ACSettings.assertAddonsDetails(
-			key_planName = "Page Views",
 			key_planLimit = "5,000,000",
+			key_planName = "Page Views",
 			key_planValue = "250 USD");
 	}
 

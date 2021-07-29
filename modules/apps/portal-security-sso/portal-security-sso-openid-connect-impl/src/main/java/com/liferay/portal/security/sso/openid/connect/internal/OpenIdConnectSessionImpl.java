@@ -16,15 +16,15 @@ package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalServiceUtil;
 
+import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
-import com.nimbusds.oauth2.sdk.token.RefreshToken;
+import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.Nonce;
 
 import java.io.Serializable;
-
-import net.minidev.json.JSONObject;
 
 /**
  * @author Edward C. Han
@@ -32,25 +32,39 @@ import net.minidev.json.JSONObject;
 public class OpenIdConnectSessionImpl
 	implements OpenIdConnectSession, Serializable {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
 	public OpenIdConnectSessionImpl(
-		String openIdProviderName, Nonce nonce, State state) {
+		long openIdConnectSessionId, String openIdProviderName, Nonce nonce,
+		State state, long userId) {
 
+		_openIdConnectSessionId = openIdConnectSessionId;
 		_openIdProviderName = openIdProviderName;
 		_nonce = nonce;
 		_state = state;
-	}
 
-	public AccessToken getAccessToken() {
-		return _accessToken;
+		_loginTime = System.currentTimeMillis();
+		_loginUserId = userId;
 	}
 
 	@Override
 	public String getAccessTokenValue() {
-		return _accessToken.getValue();
+		com.liferay.portal.security.sso.openid.connect.persistence.model.
+			OpenIdConnectSession openIdConnectSession =
+				OpenIdConnectSessionLocalServiceUtil.fetchOpenIdConnectSession(
+					_openIdConnectSessionId);
+
+		if (openIdConnectSession == null) {
+			return null;
+		}
+
+		try {
+			AccessToken accessToken = AccessToken.parse(
+				JSONObjectUtils.parse(openIdConnectSession.getAccessToken()));
+
+			return accessToken.getValue();
+		}
+		catch (ParseException parseException) {
+			return null;
+		}
 	}
 
 	@Override
@@ -61,10 +75,6 @@ public class OpenIdConnectSessionImpl
 	@Override
 	public long getLoginUserId() {
 		return _loginUserId;
-	}
-
-	public Nonce getNonce() {
-		return _nonce;
 	}
 
 	@Override
@@ -82,38 +92,23 @@ public class OpenIdConnectSessionImpl
 		return _openIdProviderName;
 	}
 
-	public RefreshToken getRefreshToken() {
-		return _refreshToken;
-	}
-
 	@Override
 	public String getRefreshTokenValue() {
-		return _refreshToken.getValue();
-	}
+		com.liferay.portal.security.sso.openid.connect.persistence.model.
+			OpenIdConnectSession openIdConnectSession =
+				OpenIdConnectSessionLocalServiceUtil.fetchOpenIdConnectSession(
+					_openIdConnectSessionId);
 
-	public State getState() {
-		return _state;
+		if (openIdConnectSession == null) {
+			return null;
+		}
+
+		return openIdConnectSession.getRefreshToken();
 	}
 
 	@Override
 	public String getStateValue() {
 		return _state.getValue();
-	}
-
-	public JSONObject getUserInfoJSONObject() {
-		return _userInfoJSONObject;
-	}
-
-	public void setAccessToken(AccessToken accessToken) {
-		_accessToken = accessToken;
-	}
-
-	public void setLoginTime(long loginTime) {
-		_loginTime = loginTime;
-	}
-
-	public void setLoginUserId(long loginUserId) {
-		_loginUserId = loginUserId;
 	}
 
 	@Override
@@ -123,23 +118,13 @@ public class OpenIdConnectSessionImpl
 		_openIdConnectFlowState = openIdConnectFlowState;
 	}
 
-	public void setRefreshToken(RefreshToken refreshToken) {
-		_refreshToken = refreshToken;
-	}
-
-	public void setUserInfoJSONObject(JSONObject userInfoJSONObject) {
-		_userInfoJSONObject = userInfoJSONObject;
-	}
-
-	private AccessToken _accessToken;
-	private long _loginTime;
-	private long _loginUserId;
+	private final long _loginTime;
+	private final long _loginUserId;
 	private final Nonce _nonce;
 	private OpenIdConnectFlowState _openIdConnectFlowState =
-		OpenIdConnectFlowState.INITIALIZED;
+		OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE;
+	private final long _openIdConnectSessionId;
 	private final String _openIdProviderName;
-	private RefreshToken _refreshToken;
 	private final State _state;
-	private JSONObject _userInfoJSONObject;
 
 }

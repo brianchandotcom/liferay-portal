@@ -20,7 +20,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Istvan Sajtos
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public interface OpenIdConnectSessionProvider {
 
 	public OpenIdConnectSession getOpenIdConnectSession(

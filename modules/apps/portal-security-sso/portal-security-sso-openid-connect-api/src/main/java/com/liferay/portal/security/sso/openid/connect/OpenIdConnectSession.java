@@ -18,7 +18,10 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jesse Rao
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 @ProviderType
 public interface OpenIdConnectSession {
 

@@ -17,6 +17,8 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -220,10 +222,16 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			_getPermissionsLayoutPrototypeActionUnsafeConsumer()
 		throws Exception {
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchFirstLayoutPageTemplateEntry(
+					_layoutPrototype.getLayoutPrototypeId());
+
 		String permissionsLayoutPrototypeURL = PermissionsURLTag.doTag(
-			StringPool.BLANK, LayoutPrototype.class.getName(),
+			StringPool.BLANK, LayoutPageTemplateEntry.class.getName(),
 			_layoutPrototype.getName(_themeDisplay.getLocale()), null,
-			String.valueOf(_layoutPrototype.getLayoutPrototypeId()),
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
 			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {

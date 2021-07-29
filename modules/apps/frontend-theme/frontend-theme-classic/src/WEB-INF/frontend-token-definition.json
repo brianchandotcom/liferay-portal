@@ -290,6 +290,19 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "#393a4a",
+							"editorType": "ColorPicker",
+							"label": "gray-dark",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "gray-dark"
+								}
+							],
+							"name": "grayDarkColor",
+							"type": "String"
+						},
+						{
 							"defaultValue": "#272833",
 							"editorType": "ColorPicker",
 							"label": "dark",
@@ -313,6 +326,19 @@
 								}
 							],
 							"name": "lightColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f7f8f9",
+							"editorType": "ColorPicker",
+							"label": "lighter",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "lighter"
+								}
+							],
+							"name": "lighterColor",
 							"type": "String"
 						}
 					],
@@ -879,6 +905,18 @@
 								}
 							],
 							"name": "fontWeightNormal",
+							"type": "String"
+						},
+						{
+							"defaultValue": "600",
+							"label": "font-weight-semi-bold",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "font-weight-semi-bold"
+								}
+							],
+							"name": "fontWeightSemiBold",
 							"type": "String"
 						},
 						{

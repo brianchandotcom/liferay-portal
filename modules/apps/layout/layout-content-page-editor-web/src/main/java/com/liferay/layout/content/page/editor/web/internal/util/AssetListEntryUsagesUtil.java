@@ -28,7 +28,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
+import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceTrackerUtil;
@@ -339,6 +342,52 @@ public class AssetListEntryUsagesUtil {
 		return jsonObject;
 	}
 
+	private static String _getInfoCollectionProviderSubtypeLabel(
+		long groupId, InfoCollectionProvider<?> infoCollectionProvider,
+		Locale locale) {
+
+		String className = infoCollectionProvider.getCollectionItemClassName();
+
+		if (Validator.isNull(className)) {
+			return StringPool.BLANK;
+		}
+
+		if (!(infoCollectionProvider instanceof
+				SingleFormVariationInfoCollectionProvider)) {
+
+			return ResourceActionsUtil.getModelResource(locale, className);
+		}
+
+		InfoItemServiceTracker infoItemServiceTracker =
+			InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		if (infoItemFormVariationsProvider == null) {
+			return ResourceActionsUtil.getModelResource(locale, className);
+		}
+
+		SingleFormVariationInfoCollectionProvider<?>
+			singleFormVariationInfoCollectionProvider =
+				(SingleFormVariationInfoCollectionProvider<?>)
+					infoCollectionProvider;
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				groupId,
+				singleFormVariationInfoCollectionProvider.
+					getFormVariationKey());
+
+		if (infoItemFormVariation == null) {
+			return ResourceActionsUtil.getModelResource(locale, className);
+		}
+
+		return ResourceActionsUtil.getModelResource(locale, className) + " - " +
+			infoItemFormVariation.getLabel(locale);
+	}
+
 	private static String _getInfoCollectionProviderViewItemsURL(
 		InfoCollectionProvider<?> infoCollectionProvider,
 		HttpServletRequest httpServletRequest, String redirect) {
@@ -467,9 +516,9 @@ public class AssetListEntryUsagesUtil {
 
 				mappedContentJSONObject.put(
 					"subtype",
-					ResourceActionsUtil.getModelResource(
-						themeDisplay.getLocale(),
-						infoCollectionProvider.getCollectionItemClassName())
+					_getInfoCollectionProviderSubtypeLabel(
+						themeDisplay.getScopeGroupId(), infoCollectionProvider,
+						themeDisplay.getLocale())
 				).put(
 					"title",
 					infoCollectionProvider.getLabel(themeDisplay.getLocale())

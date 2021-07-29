@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,8 +62,7 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"googlePlacesAPIKey",
-			_getGooglePlacesAPIKey(
-				ddmFormFieldRenderingContext.getHttpServletRequest())
+			_getGooglePlacesAPIKey(ddmFormFieldRenderingContext)
 		).put(
 			"labels",
 			_getLabelsJSONObject(
@@ -82,14 +82,19 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 	}
 
 	private String _getGooglePlacesAPIKey(
-		HttpServletRequest httpServletRequest) {
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		HttpServletRequest httpServletRequest =
+			ddmFormFieldRenderingContext.getHttpServletRequest();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		return GooglePlacesUtil.getGooglePlacesAPIKey(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			themeDisplay.getCompanyId(),
+			GetterUtil.getLong(
+				ddmFormFieldRenderingContext.getProperty("groupId")),
 			_groupLocalService);
 	}
 

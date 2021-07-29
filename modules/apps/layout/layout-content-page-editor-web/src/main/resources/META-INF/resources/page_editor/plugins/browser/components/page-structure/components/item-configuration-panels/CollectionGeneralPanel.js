@@ -61,9 +61,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	const [availableListStyles, setAvailableListStyles] = useState([
 		DEFAULT_LIST_STYLE,
 	]);
-	const collectionItemType = item.config.collection
-		? item.config.collection.itemType
-		: null;
+	const collectionItemType = item.config.collection?.itemType || null;
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
 	const collectionNumberOfItemsId = useId();

@@ -16,6 +16,7 @@ definition {
 	@description = "Deploy the following jar into Liferay Portal server with port ${nodePort}: ${liferayDependencyJars}"
 	macro deployClusteringJar {
 		FileInstall.gradleDeployOnServer(
+			jarName = "com.liferay.cluster.test.module.jar",
 			moduleBaseDir = "modules/apps/portal/portal-cluster-sample",
 			nodePort = "${nodePort}");
 	}

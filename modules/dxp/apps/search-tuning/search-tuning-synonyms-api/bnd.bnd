@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.search.tuning.synonyms.exception,\
 	com.liferay.search.tuning.synonyms.model,\
 	com.liferay.search.tuning.synonyms.service,\
-	com.liferay.search.tuning.synonyms.service.persistence
+	com.liferay.search.tuning.synonyms.service.persistence,\
+	com.liferay.search.tuning.synonyms.storage

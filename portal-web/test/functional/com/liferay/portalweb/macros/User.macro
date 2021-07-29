@@ -1179,6 +1179,8 @@ definition {
 
 		Button.clickConfirm();
 
+		SelectFrameTop();
+
 		Alert.viewSuccessMessage();
 
 		WaitForLiferayEvent.initializeLiferayEventLog();

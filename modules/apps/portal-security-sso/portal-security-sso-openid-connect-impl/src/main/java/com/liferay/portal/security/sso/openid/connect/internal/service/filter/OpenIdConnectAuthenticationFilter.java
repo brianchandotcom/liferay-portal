@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
+import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -77,15 +77,11 @@ public class OpenIdConnectAuthenticationFilter extends BaseFilter {
 			return;
 		}
 
-		OpenIdConnectSession openIdConnectSession =
-			(OpenIdConnectSession)httpSession.getAttribute(
-				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
+		if (_offlineOpenIdConnectSessionManager.isOpenIdConnectSession(
+				httpSession)) {
 
-		if (openIdConnectSession != null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"There is another OpenID Connect authentication request " +
-						"after session established");
+			if (_log.isDebugEnabled()) {
+				_log.debug("User has already been logged in");
 			}
 
 			return;
@@ -159,6 +155,10 @@ public class OpenIdConnectAuthenticationFilter extends BaseFilter {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private OfflineOpenIdConnectSessionManager
+		_offlineOpenIdConnectSessionManager;
 
 	@Reference
 	private OpenIdConnect _openIdConnect;

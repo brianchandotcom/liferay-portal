@@ -18,6 +18,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {useHoverItem} from '../../../../../../app/contexts/ControlsContext';
 import {
@@ -25,8 +26,8 @@ import {
 	useSelector,
 	useSelectorCallback,
 } from '../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
+import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
 import {isLayoutDataItemDeleted} from '../../../../../../app/utils/isLayoutDataItemDeleted';
 import {useId} from '../../../../../../app/utils/useId';
 import getLayoutDataItemPropTypes from '../../../../../../prop-types/getLayoutDataItemPropTypes';
@@ -142,22 +143,32 @@ function TargetCollectionsField({onValueSelect, value}) {
 
 export const CollectionFilterGeneralPanel = ({item}) => {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-
+	const fragmentEntryLink = useSelectorCallback(
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
+		[item.config.fragmentEntryLinkId]
+	);
 	const hasConfiguredCollections = useSelectorCallback(
 		(state) => selectConfiguredCollectionDisplays(state).length > 0,
 		[]
 	);
+	const languageId = useSelector(selectLanguageId);
 
-	const onValueSelect = (name, value) => {
+	const configurationValues =
+		fragmentEntryLink.editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR] ||
+		{};
+
+	const onValueSelect = (name, value) =>
 		dispatch(
-			updateItemConfig({
-				itemConfig: {...item.config, [name]: value},
-				itemId: item.itemId,
-				segmentsExperienceId,
+			updateFragmentConfiguration({
+				configurationValues: {
+					...(configurationValues || {}),
+					...(fragmentEntryLink.defaultConfigurationValues || {}),
+					[name]: value,
+				},
+				fragmentEntryLink,
+				languageId,
 			})
 		);
-	};
 
 	if (!hasConfiguredCollections) {
 		return (
@@ -173,7 +184,7 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 		<>
 			<TargetCollectionsField
 				onValueSelect={onValueSelect}
-				value={item.config.targetCollections}
+				value={configurationValues.targetCollections}
 			/>
 
 			<FragmentGeneralPanel item={item} />

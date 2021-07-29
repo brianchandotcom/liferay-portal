@@ -962,6 +962,28 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		_table = table;
 	}
 
+	protected Map<Serializable, T> splitFetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		Map<Serializable, T> map = new HashMap<>();
+
+		Iterator<Serializable> iterator = primaryKeys.iterator();
+
+		while (iterator.hasNext()) {
+			Set<Serializable> page = new HashSet<>();
+
+			for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext();
+				 i++) {
+
+				page.add(iterator.next());
+			}
+
+			map.putAll(fetchByPrimaryKeys(page));
+		}
+
+		return map;
+	}
+
 	/**
 	 * Updates the model instance in the database or adds it if it does not yet
 	 * exist. {@link #remove(BaseModel)} depends on this method to implement the

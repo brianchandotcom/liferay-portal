@@ -14,6 +14,7 @@
 
 package com.liferay.info.collection.provider;
 
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.type.Keyed;
 import com.liferay.info.type.Labeled;
@@ -34,6 +35,10 @@ public interface InfoCollectionProvider<T> extends Keyed, Labeled {
 		Class<?> clazz = getCollectionItemClass();
 
 		return clazz.getName();
+	}
+
+	public default InfoForm getConfigurationInfoForm() {
+		return null;
 	}
 
 	public default boolean isAvailable() {

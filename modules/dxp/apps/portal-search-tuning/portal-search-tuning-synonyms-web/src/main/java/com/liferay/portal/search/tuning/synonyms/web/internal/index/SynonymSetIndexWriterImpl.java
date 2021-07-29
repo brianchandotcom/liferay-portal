@@ -60,7 +60,8 @@ public class SynonymSetIndexWriterImpl implements SynonymSetIndexWriter {
 		SynonymSetIndexName synonymSetIndexName, SynonymSet synonymSet) {
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			synonymSetIndexName.getIndexName(), synonymSet.getId(),
+			synonymSetIndexName.getIndexName(),
+			synonymSet.getSynonymSetDocumentId(),
 			_synonymSetToDocumentTranslator.translate(synonymSet));
 
 		indexDocumentRequest.setRefresh(true);

@@ -94,7 +94,8 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 		synonymSetBuilder.synonyms(synonyms);
 
 		synonymSetOptional.ifPresent(
-			synonymSet -> synonymSetBuilder.id(synonymSet.getId()));
+			synonymSet -> synonymSetBuilder.synonymSetDocumentId(
+				synonymSet.getSynonymSetDocumentId()));
 
 		if (synonymSetOptional.isPresent()) {
 			_synonymSetIndexWriter.update(

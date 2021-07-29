@@ -20,16 +20,16 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 public class SynonymSet {
 
 	public SynonymSet(SynonymSet synonymSet) {
-		_id = synonymSet._id;
+		_synonymSetDocumentId = synonymSet._synonymSetDocumentId;
 		_synonyms = synonymSet._synonyms;
-	}
-
-	public String getId() {
-		return _id;
 	}
 
 	public String getSynonyms() {
 		return _synonyms;
+	}
+
+	public String getSynonymSetDocumentId() {
+		return _synonymSetDocumentId;
 	}
 
 	public static class SynonymSetBuilder {
@@ -46,14 +46,16 @@ public class SynonymSet {
 			return new SynonymSet(_synonymSet);
 		}
 
-		public SynonymSetBuilder id(String id) {
-			_synonymSet._id = id;
+		public SynonymSetBuilder synonyms(String synonyms) {
+			_synonymSet._synonyms = synonyms;
 
 			return this;
 		}
 
-		public SynonymSetBuilder synonyms(String synonyms) {
-			_synonymSet._synonyms = synonyms;
+		public SynonymSetBuilder synonymSetDocumentId(
+			String synonymSetDocumentId) {
+
+			_synonymSet._synonymSetDocumentId = synonymSetDocumentId;
 
 			return this;
 		}
@@ -65,7 +67,7 @@ public class SynonymSet {
 	private SynonymSet() {
 	}
 
-	private String _id;
 	private String _synonyms;
+	private String _synonymSetDocumentId;
 
 }

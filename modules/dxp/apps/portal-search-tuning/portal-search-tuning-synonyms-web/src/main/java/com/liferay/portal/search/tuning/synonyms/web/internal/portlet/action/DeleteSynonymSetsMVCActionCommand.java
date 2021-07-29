@@ -93,7 +93,7 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 
 		for (SynonymSet synonymSet : synonymSets) {
 			_synonymSetIndexWriter.remove(
-				synonymSetIndexName, synonymSet.getId());
+				synonymSetIndexName, synonymSet.getSynonymSetDocumentId());
 		}
 	}
 

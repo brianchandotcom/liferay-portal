@@ -32,10 +32,12 @@ public class DocumentToSynonymSetTranslatorImpl
 	implements DocumentToSynonymSetTranslator {
 
 	@Override
-	public SynonymSet translate(Document document, String id) {
+	public SynonymSet translate(
+		Document document, String synonymSetDocumentId) {
+
 		return builder(
-		).id(
-			id
+		).synonymSetDocumentId(
+			synonymSetDocumentId
 		).synonyms(
 			document.getString(SynonymSetFields.SYNONYMS)
 		).build();

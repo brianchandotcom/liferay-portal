@@ -914,10 +914,14 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowRestriction = "Specific Restrictions");
 
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
 			workflowDefinition = "Single Approver",
 			workflowRestriction = "Default Workflow");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.product.navigation.control.menu;
+package com.liferay.journal.web.internal.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;

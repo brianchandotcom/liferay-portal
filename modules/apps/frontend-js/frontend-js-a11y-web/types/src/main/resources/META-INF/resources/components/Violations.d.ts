@@ -31,7 +31,7 @@ declare type ViolationsPanelProps = {
 	filters: Record<keyof RuleRaw, Array<string>>;
 	next?: (payload: TViolationNext) => void;
 	onFilterChange: onFilterChange;
-	violations: Violations;
+	violations: Omit<Violations, 'iframes'>;
 };
 export default function ViolationsPanel({
 	filters,

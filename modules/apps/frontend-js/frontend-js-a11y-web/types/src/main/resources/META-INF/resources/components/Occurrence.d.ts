@@ -24,7 +24,7 @@ declare type Params = {
 declare type OccurrenceProps = {
 	params?: Params;
 	previous?: (state: Omit<Params, 'target'>) => void;
-	violations: Violations;
+	violations: Omit<Violations, 'iframes'>;
 };
 declare function Occurrence({
 	params,

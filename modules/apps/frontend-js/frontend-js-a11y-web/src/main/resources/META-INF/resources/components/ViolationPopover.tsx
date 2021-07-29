@@ -52,7 +52,12 @@ export function ViolationPopover({
 	const [visible, setVisible] = useState(false);
 	const [bounds, setBounds] = useState<React.CSSProperties>();
 
-	const node = useMemo(() => document.querySelector(target), [target]);
+	const node = useMemo(() => {
+		const targets = target.split('/');
+		const node = targets[targets.length - 1];
+
+		return document.querySelector(node);
+	}, [target]);
 
 	useObserveRect(
 		useCallback(

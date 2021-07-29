@@ -49,7 +49,7 @@ type Params = {
 type OccurrenceProps = {
 	params?: Params;
 	previous?: (state: Omit<Params, 'target'>) => void;
-	violations: Violations;
+	violations: Omit<Violations, 'iframes'>;
 };
 
 function Occurrence({params, previous, violations}: OccurrenceProps) {

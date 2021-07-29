@@ -51,7 +51,7 @@ type ViolationProps = {
 	next?: (payload: Params) => void;
 	params?: Pick<Params, 'ruleId'>;
 	previous?: () => void;
-	violations: Violations;
+	violations: Omit<Violations, 'iframes'>;
 };
 
 function Violation({next, params, previous, violations}: ViolationProps) {

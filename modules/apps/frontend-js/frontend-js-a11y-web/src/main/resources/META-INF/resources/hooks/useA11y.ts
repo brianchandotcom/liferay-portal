@@ -24,6 +24,8 @@ type Target = string;
 
 type RuleId = string;
 
+type IframeId = string;
+
 export interface RuleRaw extends Omit<Result, 'nodes'> {
 	nodes: Array<Target>;
 }
@@ -31,6 +33,7 @@ export interface RuleRaw extends Omit<Result, 'nodes'> {
 export type NodeViolations = Record<RuleId, NodeResult>;
 
 export type Violations = {
+	iframes: Record<IframeId, Array<Target>>;
 	nodes: Record<Target, NodeViolations>;
 	rules: Record<RuleId, RuleRaw>;
 };
@@ -57,7 +60,19 @@ function segmentViolationsByRulesAndNodes(
 			// Revalidation if the target exists on the DOM
 
 			const nodes = rule.nodes.filter((node) => {
-				const element = document.querySelector(node);
+				const targets = node.split('/');
+				const target = targets[targets.length - 1];
+
+				let element: Element | undefined | null;
+
+				if (targets.length > 1) {
+					element = (document.querySelector(targets[0]) as
+						| HTMLIFrameElement
+						| undefined)?.contentDocument?.querySelector(target);
+				}
+				else {
+					element = document.querySelector(target);
+				}
 
 				if (element) {
 					if (previousViolation.nodes[node]) {
@@ -68,6 +83,16 @@ function segmentViolationsByRulesAndNodes(
 						previousViolation.nodes[node] = {
 							[rule.id]: previousViolations.nodes[node][rule.id],
 						};
+					}
+
+					if (targets.length > 1) {
+						previousViolation.iframes[targets[0]] = [
+							...new Set([
+								...(previousViolation.iframes[targets[0]] ??
+									[]),
+								node,
+							]),
+						];
 					}
 
 					elements.set(element, node);
@@ -85,7 +110,7 @@ function segmentViolationsByRulesAndNodes(
 
 			return previousViolation;
 		},
-		{nodes: {}, rules: {}} as Violations
+		{iframes: {}, nodes: {}, rules: {}} as Violations
 	);
 
 	return violations.reduce<Violations>((previousViolation, current) => {
@@ -94,13 +119,37 @@ function segmentViolationsByRulesAndNodes(
 		const staleTargets = new Set<string>();
 
 		const targets = nodes.map((node) => {
-			const target = node.target[0];
+
+			// The node is constructed by an `Array<string>` which more
+			// than one element represents the element level compared
+			// to iframes.
+			//
+			// If the target is of an element inside the iframe, the first
+			// element of the Array will be the id of the iframe and the
+			// last is element.
+			//
+			// ['#iframe', '.btn[type=\"submit\"]'] -> '#iframe/.btn[type=\"submit\"]'
+
+			const target = node.target.join('/');
+
+			if (node.target.length > 1) {
+				const iframe = node.target[0];
+
+				previousViolation.iframes[iframe] = [
+					...new Set([
+						...(previousViolation.iframes[iframe] ?? []),
+						target,
+					]),
+				];
+			}
 
 			if (previousViolation.nodes[target]) {
 				previousViolation.nodes[target][current.id] = node;
 			}
 			else {
-				const element = document.querySelector(target);
+				const element = document.querySelector(
+					node.target[node.target.length - 1]
+				);
 
 				// The selector can be different for each analysis, but the
 				// element will be the same, we just keep the target updated
@@ -154,6 +203,7 @@ function segmentViolationsByRulesAndNodes(
 }
 
 const defaultState = {
+	iframes: {},
 	nodes: {},
 	rules: {},
 };

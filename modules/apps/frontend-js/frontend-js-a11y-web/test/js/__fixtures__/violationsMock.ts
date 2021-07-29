@@ -35,6 +35,7 @@ const nodeRule = (id: string, impact: ImpactValue, target: string) => ({
 });
 
 const violations = {
+	iframes: {},
 	nodes: {
 		'html > node01': {
 			'aria-required-parent-crit': nodeRule(

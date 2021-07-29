@@ -387,7 +387,9 @@ definition {
 
 		var siteID = Site.getSiteId();
 
-		User.logoutPG();
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
 
@@ -464,7 +466,9 @@ definition {
 
 		var siteID = Site.getSiteId();
 
-		User.logoutPG();
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
 
@@ -519,7 +523,9 @@ definition {
 
 		PortletEntry.publish();
 
-		User.logoutPG();
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
 

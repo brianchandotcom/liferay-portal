@@ -16,7 +16,6 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {config} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {ResizeContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ResizeContext';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
@@ -94,7 +93,6 @@ jest.mock(
 				tablet: {label: 'tablet'},
 			},
 			commonStyles: [],
-			responsiveEnabled: true,
 		},
 	})
 );
@@ -112,7 +110,6 @@ jest.mock(
 describe('RowStylesPanel', () => {
 	afterEach(() => {
 		cleanup();
-		config.responsiveEnabled = true;
 		updateItemConfig.mockClear();
 		updateRowColumns.mockClear();
 	});

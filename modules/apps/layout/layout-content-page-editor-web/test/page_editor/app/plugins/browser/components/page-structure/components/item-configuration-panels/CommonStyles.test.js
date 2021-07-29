@@ -144,7 +144,6 @@ jest.mock(
 			],
 			defaultLanguageId: 'es_ES',
 			defaultSegmentsExperienceId: '0',
-			responsiveEnabled: true,
 		},
 	})
 );

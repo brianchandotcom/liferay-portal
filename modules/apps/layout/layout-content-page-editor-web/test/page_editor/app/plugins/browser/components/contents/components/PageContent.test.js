@@ -44,15 +44,6 @@ jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext'
 );
 
-jest.mock(
-	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			contentBrowsingEnabled: true,
-		},
-	})
-);
-
 const contents = [
 	{
 		actions: {

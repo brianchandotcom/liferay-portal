@@ -22,7 +22,6 @@ CPDefinitionDiagramSettingDisplayContext cpDefinitionDiagramSettingDisplayContex
 CPDefinition cpDefinition = cpDefinitionDiagramSettingDisplayContext.getCPDefinition();
 
 String imageURL = cpDefinitionDiagramSettingDisplayContext.getImageURL();
-
 %>
 
 <div id="shop-by-diagram" />

@@ -84,8 +84,7 @@ public class DefaultCPDefinitionDiagramType implements CPDefinitionDiagramType {
 				_actionHelper, httpServletRequest,
 				_cpDefinitionDiagramSettingImageConfiguration,
 				_cpDefinitionDiagramSettingService,
-				_cpDefinitionDiagramTypeRegistry, _dlURLHelper,
-					_itemSelector));
+				_cpDefinitionDiagramTypeRegistry, _dlURLHelper, _itemSelector));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

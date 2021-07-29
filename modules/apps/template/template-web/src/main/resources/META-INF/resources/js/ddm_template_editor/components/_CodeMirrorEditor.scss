@@ -1,0 +1,12 @@
+@import 'atlas-variables';
+
+.ddm_template_editor__CodeMirrorEditor {
+	border-bottom: 1px solid $gray-300;
+	border-top: 1px solid $gray-300;
+
+	flex-grow: 1;
+
+	> .CodeMirror {
+		height: 100%;
+	}
+}

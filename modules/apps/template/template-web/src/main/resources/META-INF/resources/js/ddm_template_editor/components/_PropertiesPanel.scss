@@ -1,0 +1,45 @@
+@import 'atlas-variables';
+
+.journal-ddm-template-properties {
+	.control-label {
+		font-size: 0.75rem;
+
+		.taglib-icon-help {
+			margin-left: 0.5rem;
+		}
+
+	}
+
+	.article-structure {
+		font-size: 0.75rem;
+	}
+
+	.panel-body {
+		margin-bottom: 0;
+	}
+
+	.form-group {
+		margin-bottom: 1rem;
+	}
+
+	.sheet-subtitle {
+		border: none;
+		color: $gray-600;
+		font-size: 0.7rem;
+		height: 2rem;
+		margin-bottom: 8px;
+
+		.lexicon-icon {
+			width: 8px;
+		}
+	}
+
+	.input-localized-trigger {
+		height: 2rem;
+		padding-bottom: 0.1875rem;
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 0.1875rem;
+		width: 2rem;
+	}
+}

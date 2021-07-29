@@ -25,9 +25,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.AccountNameException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -1708,7 +1710,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					Property siteProperty = PropertyFactoryUtil.forName("site");
 
-					dynamicQuery.add(siteProperty.eq(Boolean.TRUE));
+					Property typeProperty = PropertyFactoryUtil.forName("type");
+
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					disjunction.add(siteProperty.eq(Boolean.TRUE));
+					disjunction.add(typeProperty.eq(GroupConstants.TYPE_DEPOT));
+
+					dynamicQuery.add(disjunction);
 				});
 			_actionableDynamicQuery.setPerformActionMethod(
 				(Group group) -> {

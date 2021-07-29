@@ -24,10 +24,12 @@ import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramType;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramTypeRegistry;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,7 +56,7 @@ public class CPDefinitionDiagramSettingDisplayContext
 			cpDefinitionDiagramSettingImageConfiguration,
 		CPDefinitionDiagramSettingService cpDefinitionDiagramSettingService,
 		CPDefinitionDiagramTypeRegistry cpDefinitionDiagramTypeRegistry,
-		ItemSelector itemSelector) {
+		DLURLHelper dlURLHelper, ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
 
@@ -62,6 +64,7 @@ public class CPDefinitionDiagramSettingDisplayContext
 			cpDefinitionDiagramSettingImageConfiguration;
 		_cpDefinitionDiagramSettingService = cpDefinitionDiagramSettingService;
 		_cpDefinitionDiagramTypeRegistry = cpDefinitionDiagramTypeRegistry;
+		_dlURLHelper = dlURLHelper;
 		_itemSelector = itemSelector;
 	}
 
@@ -143,6 +146,18 @@ public class CPDefinitionDiagramSettingDisplayContext
 		return _cpDefinitionDiagramSettingImageConfiguration.imageMaxSize();
 	}
 
+	public String getImageURL() {
+		try {
+			FileEntry fileEntry = getFileEntry();
+
+			return _dlURLHelper.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		CPType cpType = null;
@@ -171,6 +186,7 @@ public class CPDefinitionDiagramSettingDisplayContext
 		_cpDefinitionDiagramSettingService;
 	private final CPDefinitionDiagramTypeRegistry
 		_cpDefinitionDiagramTypeRegistry;
+	private final DLURLHelper _dlURLHelper;
 	private final ItemSelector _itemSelector;
 
 }

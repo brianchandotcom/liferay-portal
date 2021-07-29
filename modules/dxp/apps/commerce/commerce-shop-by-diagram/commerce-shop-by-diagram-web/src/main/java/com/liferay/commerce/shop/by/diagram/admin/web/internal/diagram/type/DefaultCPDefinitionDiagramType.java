@@ -21,6 +21,7 @@ import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramType;
 import com.liferay.commerce.shop.by.diagram.type.CPDefinitionDiagramTypeRegistry;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -83,7 +84,8 @@ public class DefaultCPDefinitionDiagramType implements CPDefinitionDiagramType {
 					_actionHelper, httpServletRequest,
 					_cpDefinitionDiagramSettingImageConfiguration,
 					_cpDefinitionDiagramSettingService,
-					_cpDefinitionDiagramTypeRegistry, _itemSelector);
+					_cpDefinitionDiagramTypeRegistry, _dlURLHelper,
+					_itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -114,6 +116,9 @@ public class DefaultCPDefinitionDiagramType implements CPDefinitionDiagramType {
 
 	@Reference
 	private CPDefinitionDiagramTypeRegistry _cpDefinitionDiagramTypeRegistry;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private ItemSelector _itemSelector;

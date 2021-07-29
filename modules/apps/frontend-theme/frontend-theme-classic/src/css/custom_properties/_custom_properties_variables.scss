@@ -17,20 +17,8 @@ $custom-properties-theme-colors: map-merge(
 	$custom-properties-theme-colors
 );
 
-:root {
-	// Portlet
-
-	--portlet-bg: transparent;
-	--portlet-content-border-radius: 0;
-	--portlet-header-margin-bottom: calc(
-		var(--spacer) * #{$portlet-header-margin-bottom}
-	);
-
+#wrapper {
 	--portlet-topper-bg: var(--primary);
-	--portlet-topper-border: var(--portlet-topper-bg);
-	--portlet-topper-border-radius: var(--border-radius-sm)
-		var(--border-radius-sm) 0 0;
 	--portlet-topper-color: var(--white);
 	--portlet-topper-link-color: var(--portlet-topper-color);
-	--portlet-topper-link-hover-color: var(--portlet-topper-link-color);
 }

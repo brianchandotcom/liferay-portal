@@ -1,23 +1,23 @@
 // Aspect ratio
 
 .aspect-ratio:not([class*='aspect-ratio-']) {
-	padding-bottom: var(--aspect-ratio);
+	padding-bottom: var(--aspect-ratio, 100%);
 }
 
 .aspect-ratio-4-to-3 {
-	padding-bottom: var(--aspect-ratio-4-to-3);
+	padding-bottom: var(--aspect-ratio-4-to-3, 75%);
 }
 
 .aspect-ratio-8-to-3 {
-	padding-bottom: var(--aspect-ratio-8-to-3);
+	padding-bottom: var(--aspect-ratio-8-to-3, 37.5%);
 }
 
 .aspect-ratio-16-to-9 {
-	padding-bottom: var(--aspect-ratio-16-to-9);
+	padding-bottom: var(--aspect-ratio-16-to-9, 56.25%);
 }
 
 .card-type-asset .aspect-ratio {
-	padding-bottom: var(--aspect-ratio-16-to-9);
+	padding-bottom: var(--aspect-ratio-16-to-9, 56.25%);
 }
 
 // Background and text color variants
@@ -34,6 +34,10 @@
 
 // Body
 
+body {
+	font-size: var(--font-size-base, $font-size-base);
+}
+
 #wrapper {
 	background-color: var(--body-bg, $body-bg);
 	color: var(--body-color, $body-color);
@@ -44,13 +48,13 @@
 
 .portlet {
 	.portlet-content {
-		background-color: var(--portlet-bg);
+		background-color: var(--portlet-bg, transparent);
 	}
 
 	@at-root .controls-visible {
 		.portlet-content-editable {
 			@include media-breakpoint-down(sm) {
-				border-color: var(--portlet-topper-border);
+				border-color: $portlet-topper-border;
 			}
 		}
 
@@ -59,7 +63,7 @@
 		.portlet.focus {
 			> .portlet-content-editable {
 				@include media-breakpoint-up(sm) {
-					border-color: var(--portlet-topper-border);
+					border-color: $portlet-topper-border;
 				}
 			}
 		}
@@ -68,19 +72,12 @@
 
 .portlet-layout {
 	.portlet-header {
-		margin-bottom: var(--portlet-header-margin-bottom);
+		margin-bottom: $portlet-header-margin-bottom;
 	}
-}
-
-.portlet-topper {
-	background-color: var(--portlet-topper-bg);
-	border-color: var(--portlet-topper-border);
-	border-radius: var(--portlet-topper-border-radius);
-	color: var(--portlet-topper-color);
 }
 
 // Theme footer
 
 #footer {
-	background-color: var(--brand-color-4);
+	background-color: var(--brand-color-4, #30313f);
 }

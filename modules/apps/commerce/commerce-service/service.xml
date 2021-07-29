@@ -189,6 +189,7 @@
 
 		<column name="commerceAccountId" type="long" />
 		<column name="commerceCurrencyId" type="long" />
+		<column name="commerceOrderTypeId" type="long" />
 		<column name="billingAddressId" type="long" />
 		<column name="shippingAddressId" type="long" />
 		<column name="commercePaymentMethodKey" type="String" />

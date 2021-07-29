@@ -696,6 +696,14 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("orderTypeId", additionalAssertFieldName)) {
+				if (cart.getOrderTypeId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderUUID", additionalAssertFieldName)) {
 				if (cart.getOrderUUID() == null) {
 					valid = false;
@@ -1097,6 +1105,16 @@ public abstract class BaseCartResourceTestCase {
 				if (!Objects.deepEquals(
 						cart1.getOrderStatusInfo(),
 						cart2.getOrderStatusInfo())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("orderTypeId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cart1.getOrderTypeId(), cart2.getOrderTypeId())) {
 
 					return false;
 				}
@@ -1561,6 +1579,11 @@ public abstract class BaseCartResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("orderTypeId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("orderUUID")) {
 			sb.append("'");
 			sb.append(String.valueOf(cart.getOrderUUID()));
@@ -1730,6 +1753,7 @@ public abstract class BaseCartResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				lastPriceUpdateDate = RandomTestUtil.nextDate();
 				modifiedDate = RandomTestUtil.nextDate();
+				orderTypeId = RandomTestUtil.randomLong();
 				orderUUID = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				paymentMethod = StringUtil.toLowerCase(

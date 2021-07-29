@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>PANEL_OPEN</td>
-	<td>//div[contains(@class,'sidebar-content')][contains(@class,'open')]</td>
+	<td>//div[contains(@class,'sidebar-content')][contains(@class,'open')] | //div[contains(@class,'sidebar__content')][contains(@class,'open')]</td>
 	<td></td>
 </tr>
 <tr>

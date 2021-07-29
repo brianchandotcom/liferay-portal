@@ -17,7 +17,9 @@ package com.liferay.info.collection.provider.item.selector.web.internal;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
+import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -195,12 +197,50 @@ public class InfoCollectionProviderItemSelectorView
 					String className =
 						infoCollectionProvider.getCollectionItemClassName();
 
-					if (Validator.isNotNull(className)) {
-						return ResourceActionsUtil.getModelResource(
-							locale, className);
+					if (Validator.isNull(className)) {
+						return StringPool.BLANK;
 					}
 
-					return StringPool.BLANK;
+					String modelResource = ResourceActionsUtil.getModelResource(
+						locale, className);
+
+					if (!(infoCollectionProvider instanceof
+							SingleFormVariationInfoCollectionProvider)) {
+
+						return modelResource;
+					}
+
+					InfoItemFormVariationsProvider<?>
+						infoItemFormVariationsProvider =
+							_infoItemServiceTracker.getFirstInfoItemService(
+								InfoItemFormVariationsProvider.class,
+								className);
+
+					if (infoItemFormVariationsProvider == null) {
+						return modelResource;
+					}
+
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)_httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					SingleFormVariationInfoCollectionProvider<?>
+						singleFormVariationInfoCollectionProvider =
+							(SingleFormVariationInfoCollectionProvider<?>)
+								infoCollectionProvider;
+
+					InfoItemFormVariation infoItemFormVariation =
+						infoItemFormVariationsProvider.getInfoItemFormVariation(
+							themeDisplay.getScopeGroupId(),
+							singleFormVariationInfoCollectionProvider.
+								getFormVariationKey());
+
+					if (infoItemFormVariation == null) {
+						return modelResource;
+					}
+
+					return modelResource + " - " +
+						infoItemFormVariation.getLabel(locale);
 				}
 
 				@Override

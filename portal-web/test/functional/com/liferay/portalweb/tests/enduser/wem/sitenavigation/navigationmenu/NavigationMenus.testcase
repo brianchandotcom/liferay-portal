@@ -529,20 +529,20 @@ definition {
 
 		task ("Add a page and automatically add it to both navigation menus") {
 			SitePages.addPublicPage(
-				navigationMenus = "Navigation Menu Single,Navigation Menu Both",
+				navigationMenus = "Navigation Menu Name 1,Navigation Menu Name 2",
 				pageName = "Page 1");
 		}
 
 		task ("Add a second page and automatically add it to the second navigation menu") {
 			SitePages.addPublicPage(
-				navigationMenus = "Navigation Menu Both",
+				navigationMenus = "Navigation Menu Name 2",
 				pageName = "Page 2");
 		}
 
 		task ("Navigate to the first navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
 		}
 
 		task ("Assert the first navigation menu has only the first page already added as items") {
@@ -554,7 +554,7 @@ definition {
 		task ("Navigate to the second navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Both");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 2");
 		}
 
 		task ("Assert the second navigation menu has both pages already added as items") {
@@ -566,7 +566,7 @@ definition {
 		task ("Disable the option to offer new pages for the first navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
 
 			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "disable");
 		}
@@ -576,14 +576,14 @@ definition {
 
 			SitePages.addPublicPage(
 				assertCheckboxMissing = "true",
-				navigationMenus = "Navigation Menu Single",
+				navigationMenus = "Navigation Menu Name 1",
 				pageName = "Page 3");
 		}
 
 		task ("Assert the third page was not added to the first navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
 
 			NavigationMenusAdmin.viewNoItem(itemName = "Page 3");
 		}

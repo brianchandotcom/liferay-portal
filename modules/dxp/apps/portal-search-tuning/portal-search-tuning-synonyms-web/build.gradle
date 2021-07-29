@@ -27,4 +27,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:portal-search-tuning:portal-search-tuning-synonyms-api")
 	compileOnly project(":dxp:apps:portal-search-tuning:portal-search-tuning-web-api")
+	compileOnly project(":dxp:apps:search-tuning:search-tuning-synonyms-api")
 }

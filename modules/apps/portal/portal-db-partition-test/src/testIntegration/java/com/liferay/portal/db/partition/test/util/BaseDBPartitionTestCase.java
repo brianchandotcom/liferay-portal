@@ -221,7 +221,7 @@ public abstract class BaseDBPartitionTestCase {
 		return "create table " + tableName + " (testColumn bigint primary key)";
 	}
 
-	protected static final long COMPANY_ID = 1L;
+	protected static final long COMPANY_ID = 123456789L;
 
 	protected static final String TEST_INDEX_NAME = "IX_Test";
 

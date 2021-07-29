@@ -31,6 +31,11 @@ public class CacheMissEntryTable extends BaseTable<CacheMissEntryTable> {
 	public static final CacheMissEntryTable INSTANCE =
 		new CacheMissEntryTable();
 
+	public final Column<CacheMissEntryTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CacheMissEntryTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CacheMissEntryTable, Long> cacheMissEntryId =
 		createColumn(
 			"cacheMissEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

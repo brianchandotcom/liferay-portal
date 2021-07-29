@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -25,9 +26,11 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchCacheMissEntryException;
 import com.liferay.portal.tools.service.builder.test.model.CacheMissEntry;
 import com.liferay.portal.tools.service.builder.test.model.CacheMissEntryTable;
@@ -37,6 +40,12 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.CacheMi
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -95,6 +104,10 @@ public class CacheMissEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(CacheMissEntry cacheMissEntry) {
+		if (cacheMissEntry.getCtCollectionId() != 0) {
+			return;
+		}
+
 		dummyEntityCache.putResult(
 			CacheMissEntryImpl.class, cacheMissEntry.getPrimaryKey(),
 			cacheMissEntry);
@@ -108,6 +121,10 @@ public class CacheMissEntryPersistenceImpl
 	@Override
 	public void cacheResult(List<CacheMissEntry> cacheMissEntries) {
 		for (CacheMissEntry cacheMissEntry : cacheMissEntries) {
+			if (cacheMissEntry.getCtCollectionId() != 0) {
+				continue;
+			}
+
 			if (dummyEntityCache.getResult(
 					CacheMissEntryImpl.class, cacheMissEntry.getPrimaryKey()) ==
 						null) {
@@ -244,7 +261,9 @@ public class CacheMissEntryPersistenceImpl
 					cacheMissEntry.getPrimaryKeyObj());
 			}
 
-			if (cacheMissEntry != null) {
+			if ((cacheMissEntry != null) &&
+				ctPersistenceHelper.isRemove(cacheMissEntry)) {
+
 				session.delete(cacheMissEntry);
 			}
 		}
@@ -271,7 +290,13 @@ public class CacheMissEntryPersistenceImpl
 		try {
 			session = openSession();
 
-			if (isNew) {
+			if (ctPersistenceHelper.isInsert(cacheMissEntry)) {
+				if (!isNew) {
+					session.evict(
+						CacheMissEntryImpl.class,
+						cacheMissEntry.getPrimaryKeyObj());
+				}
+
 				session.save(cacheMissEntry);
 			}
 			else {
@@ -283,6 +308,16 @@ public class CacheMissEntryPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (cacheMissEntry.getCtCollectionId() != 0) {
+			if (isNew) {
+				cacheMissEntry.setNew(false);
+			}
+
+			cacheMissEntry.resetOriginalValues();
+
+			return cacheMissEntry;
 		}
 
 		dummyEntityCache.putResult(
@@ -339,12 +374,121 @@ public class CacheMissEntryPersistenceImpl
 	/**
 	 * Returns the cache miss entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the cache miss entry
+	 * @return the cache miss entry, or <code>null</code> if a cache miss entry with the primary key could not be found
+	 */
+	@Override
+	public CacheMissEntry fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(CacheMissEntry.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		CacheMissEntry cacheMissEntry = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			cacheMissEntry = (CacheMissEntry)session.get(
+				CacheMissEntryImpl.class, primaryKey);
+
+			if (cacheMissEntry != null) {
+				cacheResult(cacheMissEntry);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return cacheMissEntry;
+	}
+
+	/**
+	 * Returns the cache miss entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param cacheMissEntryId the primary key of the cache miss entry
 	 * @return the cache miss entry, or <code>null</code> if a cache miss entry with the primary key could not be found
 	 */
 	@Override
 	public CacheMissEntry fetchByPrimaryKey(long cacheMissEntryId) {
 		return fetchByPrimaryKey((Serializable)cacheMissEntryId);
+	}
+
+	@Override
+	public Map<Serializable, CacheMissEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(CacheMissEntry.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, CacheMissEntry> map =
+			new HashMap<Serializable, CacheMissEntry>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			CacheMissEntry cacheMissEntry = fetchByPrimaryKey(primaryKey);
+
+			if (cacheMissEntry != null) {
+				map.put(primaryKey, cacheMissEntry);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (CacheMissEntry cacheMissEntry :
+					(List<CacheMissEntry>)query.list()) {
+
+				map.put(cacheMissEntry.getPrimaryKeyObj(), cacheMissEntry);
+
+				cacheResult(cacheMissEntry);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -411,25 +555,28 @@ public class CacheMissEntryPersistenceImpl
 		int start, int end, OrderByComparator<CacheMissEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CacheMissEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<CacheMissEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<CacheMissEntry>)dummyFinderCache.getResult(
 				finderPath, finderArgs);
 		}
@@ -467,7 +614,7 @@ public class CacheMissEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					dummyFinderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -500,8 +647,15 @@ public class CacheMissEntryPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)dummyFinderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY);
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CacheMissEntry.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)dummyFinderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -513,8 +667,10 @@ public class CacheMissEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				dummyFinderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					dummyFinderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -543,8 +699,52 @@ public class CacheMissEntryPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.getOrDefault(
+			ctColumnResolutionType, Collections.emptySet());
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return CacheMissEntryModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "CacheMissEntry";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("cacheMissEntryId"));
 	}
 
 	/**
@@ -580,6 +780,9 @@ public class CacheMissEntryPersistenceImpl
 	}
 
 	private BundleContext _bundleContext;
+
+	@ServiceReference(type = CTPersistenceHelper.class)
+	protected CTPersistenceHelper ctPersistenceHelper;
 
 	private static final String _SQL_SELECT_CACHEMISSENTRY =
 		"SELECT cacheMissEntry FROM CacheMissEntry cacheMissEntry";

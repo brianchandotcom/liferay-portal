@@ -18,6 +18,8 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Defines the configuration property keys and default values.
  *
@@ -35,6 +37,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "open-id-connect-configuration-name"
 )
+@ProviderType
 public interface OpenIdConnectConfiguration {
 
 	@Meta.AD(
@@ -42,5 +45,11 @@ public interface OpenIdConnectConfiguration {
 		required = false
 	)
 	public boolean enabled();
+
+	@Meta.AD(
+		deflt = "30", description = "token-refresh-offset-description",
+		name = "token-refresh-offset", required = false
+	)
+	public int tokenRefreshOffset();
 
 }

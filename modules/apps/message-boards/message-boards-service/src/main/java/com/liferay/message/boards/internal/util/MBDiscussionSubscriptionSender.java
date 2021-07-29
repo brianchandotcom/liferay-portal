@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 /**
  * @author Roberto Díaz
  */
-public class MBDiscussionSubcriptionSender extends SubscriptionSender {
+public class MBDiscussionSubscriptionSender extends SubscriptionSender {
 
-	public MBDiscussionSubcriptionSender() {
+	public MBDiscussionSubscriptionSender() {
 	}
 
-	public MBDiscussionSubcriptionSender(
+	public MBDiscussionSubscriptionSender(
 		CommentGroupServiceConfiguration commentGroupServiceConfiguration) {
 
 		boolean discussionEmailCommentsAddedEnabled = false;

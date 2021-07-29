@@ -32,7 +32,7 @@ import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.exception.RequiredMessageException;
-import com.liferay.message.boards.internal.util.MBDiscussionSubcriptionSender;
+import com.liferay.message.boards.internal.util.MBDiscussionSubscriptionSender;
 import com.liferay.message.boards.internal.util.MBMailUtil;
 import com.liferay.message.boards.internal.util.MBMessageUtil;
 import com.liferay.message.boards.internal.util.MBSubscriptionSender;
@@ -1846,7 +1846,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Activate
 	protected void activate() {
 		_closeable = _liferayJSONDeserializationWhitelist.register(
-			MBDiscussionSubcriptionSender.class.getName(),
+			MBDiscussionSubscriptionSender.class.getName(),
 			MBSubscriptionSender.class.getName());
 	}
 
@@ -2103,7 +2103,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		SubscriptionSender subscriptionSender =
-			new MBDiscussionSubcriptionSender(commentGroupServiceConfiguration);
+			new MBDiscussionSubscriptionSender(
+				commentGroupServiceConfiguration);
 
 		subscriptionSender.setCompanyId(message.getCompanyId());
 		subscriptionSender.setClassName(MBDiscussion.class.getName());

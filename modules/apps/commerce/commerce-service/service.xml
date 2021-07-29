@@ -491,6 +491,100 @@
 			<finder-column name="commerceOrderId" />
 		</finder>
 	</entity>
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderType" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderTypeId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="active" type="boolean" />
+		<column name="displayDate" type="Date" />
+		<column name="displayOrder" type="int" />
+		<column name="expirationDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
+
+		<!-- References -->
+		
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderTypeRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderTypeRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="commerceOrderTypeId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderTypeId" return-type="Collection">
+			<finder-column name="commerceOrderTypeId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="commerceOrderTypeId" />
+		</finder>
+		<finder name="C_C_C" return-type="CommerceChannelRel" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="commerceOrderTypeId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceShipment" remote-service="true">
 
 		<!-- PK fields -->
@@ -809,6 +903,9 @@
 		<exception>CommerceOrderShippingAddress</exception>
 		<exception>CommerceOrderShippingMethod</exception>
 		<exception>CommerceOrderStatus</exception>
+		<exception>CommerceOrderTypeDisplayDate</exception>
+		<exception>CommerceOrderTypeExpirationDate</exception>
+		<exception>CommerceOrderTypeName</exception>
 		<exception>CommerceOrderValidator</exception>
 		<exception>CommercePaymentEngine</exception>
 		<exception>CommerceShipmentExpectedDate</exception>

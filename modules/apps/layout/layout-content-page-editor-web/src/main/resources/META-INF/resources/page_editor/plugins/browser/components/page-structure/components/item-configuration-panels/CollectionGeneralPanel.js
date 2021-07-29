@@ -84,6 +84,66 @@ export const CollectionGeneralPanel = ({item}) => {
 	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(null);
 
+	const handleCollectionListItemStyleChanged = ({target}) => {
+		const options = target.options;
+
+		handleConfigurationChanged({
+			listItemStyle: options[target.selectedIndex].dataset.key,
+			templateKey: options[target.selectedIndex].dataset.templateKey,
+		});
+	};
+
+	const handleCollectionNumberOfItemsBlurred = (event) => {
+		if (nextValue.numberOfItems !== item.config.numberOfItems) {
+			setNumberOfItemsError(
+				Number(event.target.value) < 1
+					? Liferay.Language.get(
+							'collection-display-pagination-requires-at-least-one-item'
+					  )
+					: null
+			);
+
+			handleConfigurationChanged({
+				numberOfItems: Number(event.target.value) || 1,
+			});
+		}
+	};
+
+	const handleCollectionNumberOfItemsChanged = (event) => {
+		setNextValue({
+			...nextValue,
+			numberOfItems: event.target.value,
+		});
+
+		if (showAllItems) {
+			setShowAllItems(false);
+		}
+	};
+
+	const handleCollectionNumberOfItemsPerPageBlurred = (event) => {
+		if (
+			nextValue.numberOfItemsPerPage !== item.config.numberOfItemsPerPage
+		) {
+			setNumberOfItemsPerPageError(
+				Number(event.target.value) < 1
+					? Liferay.Language.get(
+							'collection-display-pagination-requires-at-least-one-item'
+					  )
+					: null
+			);
+
+			handleConfigurationChanged({
+				numberOfItemsPerPage: Number(event.target.value) || 1,
+			});
+		}
+	};
+
+	const handleCollectionNumberOfItemsPerPageChanged = (event) =>
+		setNextValue({
+			...nextValue,
+			numberOfItemsPerPage: event.target.value,
+		});
+
 	const handleConfigurationChanged = (itemConfig) => {
 		dispatch(
 			updateItemConfig({
@@ -92,6 +152,24 @@ export const CollectionGeneralPanel = ({item}) => {
 				segmentsExperienceId,
 			})
 		);
+	};
+
+	const handleShowAllItemsChanged = (event) => {
+		setShowAllItems(event.target.checked);
+
+		setNextValue({
+			...nextValue,
+			numberOfItems: totalNumberOfItems,
+		});
+
+		handleConfigurationChanged({
+			numberOfItems: totalNumberOfItems,
+			showAllItems: event.target.checked,
+		});
+
+		if (numberOfItemsError) {
+			setNumberOfItemsError(null);
+		}
 	};
 
 	useEffect(() => {
@@ -206,9 +284,9 @@ export const CollectionGeneralPanel = ({item}) => {
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('list-style')}
 							id={listStyleId}
-							onChange={({target: {value}}) =>
+							onChange={(event) =>
 								handleConfigurationChanged({
-									listStyle: value,
+									listStyle: event.target.value,
 								})
 							}
 							options={availableListStyles}
@@ -224,9 +302,9 @@ export const CollectionGeneralPanel = ({item}) => {
 							<ClaySelectWithOption
 								aria-label={Liferay.Language.get('layout')}
 								id={collectionLayoutId}
-								onChange={({target: {value}}) =>
+								onChange={(event) =>
 									handleConfigurationChanged({
-										numberOfColumns: value,
+										numberOfColumns: event.target.value,
 									})
 								}
 								options={LAYOUT_OPTIONS}
@@ -246,17 +324,8 @@ export const CollectionGeneralPanel = ({item}) => {
 										'list-item-style'
 									)}
 									id={collectionListItemStyleId}
-									onChange={({target}) =>
-										handleConfigurationChanged({
-											listItemStyle:
-												target.options[
-													target.selectedIndex
-												].dataset.key,
-											templateKey:
-												target.options[
-													target.selectedIndex
-												].dataset.templateKey,
-										})
+									onChange={
+										handleCollectionListItemStyleChanged
 									}
 								>
 									{availableListItemStyles.map(
@@ -340,9 +409,9 @@ export const CollectionGeneralPanel = ({item}) => {
 										'pagination'
 									)}
 									id={collectionPaginationTypeId}
-									onChange={({target: {value}}) =>
+									onChange={(event) =>
 										handleConfigurationChanged({
-											paginationType: value,
+											paginationType: event.target.value,
 										})
 									}
 									options={PAGINATION_TYPE_OPTIONS}
@@ -357,22 +426,7 @@ export const CollectionGeneralPanel = ({item}) => {
 										label={Liferay.Language.get(
 											'display-all-collection-items'
 										)}
-										onChange={({target}) => {
-											setShowAllItems(target.checked);
-											setNextValue({
-												...nextValue,
-												numberOfItems: totalNumberOfItems,
-											});
-
-											handleConfigurationChanged({
-												numberOfItems: totalNumberOfItems,
-												showAllItems: target.checked,
-											});
-
-											if (numberOfItemsError) {
-												setNumberOfItemsError(null);
-											}
-										}}
+										onChange={handleShowAllItemsChanged}
 									/>
 								</div>
 							)}
@@ -386,34 +440,8 @@ export const CollectionGeneralPanel = ({item}) => {
 						<ClayInput
 							id={collectionNumberOfItemsId}
 							min="1"
-							onBlur={({target: {value}}) => {
-								if (
-									nextValue.numberOfItems !==
-									item.config.numberOfItems
-								) {
-									setNumberOfItemsError(
-										Number(value) < 1
-											? Liferay.Language.get(
-													'collection-display-pagination-requires-at-least-one-item'
-											  )
-											: null
-									);
-
-									handleConfigurationChanged({
-										numberOfItems: Number(value) || 1,
-									});
-								}
-							}}
-							onChange={({target: {value}}) => {
-								setNextValue({
-									...nextValue,
-									numberOfItems: value,
-								});
-
-								if (showAllItems) {
-									setShowAllItems(false);
-								}
-							}}
+							onBlur={handleCollectionNumberOfItemsBlurred}
+							onChange={handleCollectionNumberOfItemsChanged}
 							type="number"
 							value={nextValue.numberOfItems}
 						/>
@@ -440,30 +468,11 @@ export const CollectionGeneralPanel = ({item}) => {
 								<ClayInput
 									id={collectionNumberOfItemsPerPageId}
 									min="1"
-									onBlur={({target: {value}}) => {
-										if (
-											nextValue.numberOfItemsPerPage !==
-											item.config.numberOfItemsPerPage
-										) {
-											setNumberOfItemsPerPageError(
-												Number(value) < 1
-													? Liferay.Language.get(
-															'collection-display-pagination-requires-at-least-one-item'
-													  )
-													: null
-											);
-
-											handleConfigurationChanged({
-												numberOfItemsPerPage:
-													Number(value) || 1,
-											});
-										}
-									}}
-									onChange={({target: {value}}) =>
-										setNextValue({
-											...nextValue,
-											numberOfItemsPerPage: value,
-										})
+									onBlur={
+										handleCollectionNumberOfItemsPerPageBlurred
+									}
+									onChange={
+										handleCollectionNumberOfItemsPerPageChanged
 									}
 									type="number"
 									value={nextValue.numberOfItemsPerPage}

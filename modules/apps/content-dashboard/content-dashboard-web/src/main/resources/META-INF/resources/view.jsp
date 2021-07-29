@@ -168,7 +168,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					</liferay-ui:search-container-column-text>
 
 					<%
-					String contentDashboardItemType = contentDashboardItem.getType();
+					String contentDashboardItemType = contentDashboardItem.getType(locale);
 					%>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-smaller text-truncate"

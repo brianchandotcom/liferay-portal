@@ -23,12 +23,12 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.object.model.ObjectDefinition" %><%@
-page import="com.liferay.object.web.internal.constants.ObjectAdminDataSetConstants" %><%@
-page import="com.liferay.object.web.internal.constants.ObjectAdminScreenNavigationEntryConstants" %><%@
 page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
-page import="com.liferay.object.web.internal.display.context.ObjectAdminDisplayContext" %><%@
-page import="com.liferay.object.web.internal.display.context.ObjectDisplayContext" %><%@
-page import="com.liferay.object.web.internal.display.context.ObjectFieldAdminDisplayContext" %><%@
+page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsDataSetConstants" %><%@
+page import="com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants" %><%@
+page import="com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext" %><%@
+page import="com.liferay.object.web.internal.object.definitions.display.context.ViewObjectFieldsDisplayContext" %><%@
+page import="com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

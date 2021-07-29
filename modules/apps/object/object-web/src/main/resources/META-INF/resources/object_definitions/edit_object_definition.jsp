@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.object.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Marco Leo
- */
-public class ObjectPortletKeys {
+<%
+ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
+%>
 
-	public static final String OBJECT_DEFINITIONS =
-		"com_liferay_object_web_internal_object_definitions_portlet_" +
-			"ObjectDefinitionsPortlet";
-
-	public static final String OBJECT_ENTRIES =
-		"com_liferay_object_web_internal_object_entries_portlet_" +
-			"ObjectEntriesPortlet";
-
-}
+<liferay-frontend:screen-navigation
+	context="<%= objectDefinition %>"
+	key="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION %>"
+	portletURL='<%=
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/object_definitions/edit_object_definition"
+		).setParameter(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+		).build()
+	%>'
+/>

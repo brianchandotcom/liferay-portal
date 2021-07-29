@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.object.constants;
+package com.liferay.object.web.internal.object.definitions.constants;
 
 /**
  * @author Marco Leo
+ * @author Gabriel Albuquerque
  */
-public class ObjectPortletKeys {
+public class ObjectDefinitionsScreenNavigationEntryConstants {
 
-	public static final String OBJECT_DEFINITIONS =
-		"com_liferay_object_web_internal_object_definitions_portlet_" +
-			"ObjectDefinitionsPortlet";
+	public static final String CATEGORY_KEY_DETAILS = "details";
 
-	public static final String OBJECT_ENTRIES =
-		"com_liferay_object_web_internal_object_entries_portlet_" +
-			"ObjectEntriesPortlet";
+	public static final String CATEGORY_KEY_FIELDS = "fields";
+
+	public static final String ENTRY_KEY_DETAILS = "details";
+
+	public static final String ENTRY_KEY_FIELDS = "fields";
+
+	public static final String SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION =
+		"edit.object.definition.form";
 
 }

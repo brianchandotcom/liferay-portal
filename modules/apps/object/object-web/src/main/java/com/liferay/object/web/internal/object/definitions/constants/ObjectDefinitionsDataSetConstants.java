@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.object.constants;
+package com.liferay.object.web.internal.object.definitions.constants;
 
 /**
- * @author Marco Leo
+ * @author Gabriel Albuquerque
  */
-public class ObjectPortletKeys {
+public class ObjectDefinitionsDataSetConstants {
 
-	public static final String OBJECT_DEFINITIONS =
-		"com_liferay_object_web_internal_object_definitions_portlet_" +
-			"ObjectDefinitionsPortlet";
+	public static final String OBJECT_DEFINITIONS_DATA_SET_KEY =
+		"objectDefinitions";
 
-	public static final String OBJECT_ENTRIES =
-		"com_liferay_object_web_internal_object_entries_portlet_" +
-			"ObjectEntriesPortlet";
+	public static final String OBJECT_FIELDS_DATA_SET_KEY = "objectFields";
 
 }

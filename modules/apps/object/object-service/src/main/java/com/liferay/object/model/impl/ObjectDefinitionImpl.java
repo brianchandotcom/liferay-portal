@@ -50,7 +50,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return ObjectPortletKeys.OBJECT + "#" + getObjectDefinitionId();
+		return ObjectPortletKeys.OBJECT_ENTRIES + "#" + getObjectDefinitionId();
 	}
 
 	@Override

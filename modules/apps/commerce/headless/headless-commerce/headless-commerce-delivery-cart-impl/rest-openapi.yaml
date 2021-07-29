@@ -165,6 +165,9 @@ components:
                     allOf:
                         - $ref: "#/components/schemas/Status"
                     readOnly: true
+                orderTypeId:
+                    format: int64
+                    type: integer
                 orderUUID:
                     readOnly: true
                     type: string

@@ -328,72 +328,10 @@ export const CollectionGeneralPanel = ({item}) => {
 										handleCollectionListItemStyleChanged
 									}
 								>
-									{availableListItemStyles.map(
-										(listItemStyle) => {
-											if (listItemStyle.templates) {
-												return (
-													<ClaySelect.OptGroup
-														key={
-															listItemStyle.label
-														}
-														label={
-															listItemStyle.label
-														}
-													>
-														{listItemStyle.templates.map(
-															(template) => (
-																<ClaySelect.Option
-																	data-key={
-																		template.key
-																	}
-																	data-template-key={
-																		template.templateKey
-																	}
-																	key={`${template.key}_${template.templateKey}`}
-																	label={
-																		template.label
-																	}
-																	selected={
-																		item
-																			.config
-																			.listItemStyle ===
-																			template.key &&
-																		(!item
-																			.config
-																			.templateKey ||
-																			item
-																				.config
-																				.templateKey ===
-																				template.templateKey)
-																	}
-																/>
-															)
-														)}
-													</ClaySelect.OptGroup>
-												);
-											}
-											else {
-												return (
-													<ClaySelect.Option
-														data-key={
-															listItemStyle.key
-														}
-														key={
-															listItemStyle.label
-														}
-														label={
-															listItemStyle.label
-														}
-														selected={
-															item.config
-																.listItemStyle ===
-															listItemStyle.key
-														}
-													/>
-												);
-											}
-										}
-									)}
+									<ListItemStylesOptions
+										item={item}
+										listItemStyles={availableListItemStyles}
+									/>
 								</ClaySelect>
 							</ClayForm.Group>
 						)}
@@ -515,6 +453,38 @@ export const CollectionGeneralPanel = ({item}) => {
 		</>
 	);
 };
+
+const ListItemStylesOptions = ({item, listItemStyles}) =>
+	listItemStyles.map((listItemStyle) =>
+		listItemStyle.templates ? (
+			<ClaySelect.OptGroup
+				key={listItemStyle.label}
+				label={listItemStyle.label}
+			>
+				{listItemStyle.templates.map((template) => (
+					<ClaySelect.Option
+						data-key={template.key}
+						data-template-key={template.templateKey}
+						key={`${template.key}_${template.templateKey}`}
+						label={template.label}
+						selected={
+							item.config.listItemStyle === template.key &&
+							(!item.config.templateKey ||
+								item.config.templateKey ===
+									template.templateKey)
+						}
+					/>
+				))}
+			</ClaySelect.OptGroup>
+		) : (
+			<ClaySelect.Option
+				data-key={listItemStyle.key}
+				key={listItemStyle.label}
+				label={listItemStyle.label}
+				selected={item.config.listItemStyle === listItemStyle.key}
+			/>
+		)
+	);
 
 const PaginationLabel = ({children, className}) => (
 	<p

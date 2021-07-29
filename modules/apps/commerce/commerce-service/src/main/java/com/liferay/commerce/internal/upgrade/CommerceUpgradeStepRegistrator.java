@@ -221,6 +221,11 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 					_addressLocalService, _accountEntryLocalService,
 					_listTypeLocalService, _phoneLocalService));
 
+		registry.register(
+			"7.0.0", "7.1.0",
+			new com.liferay.commerce.internal.upgrade.v7_1_0.
+				CommerceOrderUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

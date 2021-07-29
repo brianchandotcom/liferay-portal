@@ -295,6 +295,16 @@ public class CartSerDes {
 			sb.append(String.valueOf(cart.getOrderStatusInfo()));
 		}
 
+		if (cart.getOrderTypeId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderTypeId\": ");
+
+			sb.append(cart.getOrderTypeId());
+		}
+
 		if (cart.getOrderUUID() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -649,6 +659,13 @@ public class CartSerDes {
 				"orderStatusInfo", String.valueOf(cart.getOrderStatusInfo()));
 		}
 
+		if (cart.getOrderTypeId() == null) {
+			map.put("orderTypeId", null);
+		}
+		else {
+			map.put("orderTypeId", String.valueOf(cart.getOrderTypeId()));
+		}
+
 		if (cart.getOrderUUID() == null) {
 			map.put("orderUUID", null);
 		}
@@ -908,6 +925,12 @@ public class CartSerDes {
 				if (jsonParserFieldValue != null) {
 					cart.setOrderStatusInfo(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderTypeId")) {
+				if (jsonParserFieldValue != null) {
+					cart.setOrderTypeId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderUUID")) {

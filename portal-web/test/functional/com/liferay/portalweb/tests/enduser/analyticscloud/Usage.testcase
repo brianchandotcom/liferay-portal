@@ -52,14 +52,14 @@ definition {
 		ACSettings.goToUsage();
 
 		ACSettings.assertPlanDetails(
-			planName = "Enterprise",
-			individualsLimit = "100,000",
-			pageViews = "60,000,000",
-			usersLimit = "Unlimited",
 			individualsAddOns = "5,000",
 			individualsAddOnsPrice = "500 USD",
+			individualsLimit = "100,000",
+			pageViews = "60,000,000",
 			pageViewsAddOns = "5,000,000",
-			pageViewsAddOnsPrice = "250 USD");
+			pageViewsAddOnsPrice = "250 USD",
+			planName = "Enterprise",
+			usersLimit = "Unlimited");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8157 | Test Summary: Current add-ons are displayed in a card"

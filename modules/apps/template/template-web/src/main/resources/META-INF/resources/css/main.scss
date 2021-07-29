@@ -1,0 +1,105 @@
+@import 'atlas-variables';
+
+$toolbarDesktopHeight: 4rem;
+$toolbarZIndex: 971;
+
+$controlMenuDesktopHeight: 56px;
+$controlMenuHeight: 49px;
+
+$productMenuTransitionDuration: 0.5s;
+$productMenuWidth: 320px;
+
+.portlet-template {
+	.component-tbar {
+		height: auto;
+		left: 0;
+		min-height: 3.5rem;
+		position: fixed;
+		transition: left ease $productMenuTransitionDuration,
+			width ease $productMenuTransitionDuration;
+		width: 100%;
+		z-index: $toolbarZIndex;
+
+		body.open & {
+			left: $productMenuWidth;
+			width: calc(100% - #{$productMenuWidth});
+
+			@include media-breakpoint-down(md) {
+				left: 0;
+				width: 100%;
+			}
+		}
+
+		.form-text {
+			display: none;
+		}
+
+		.input-localized {
+			flex-direction: row-reverse;
+
+			.form-validator-stack {
+				display: none;
+			}
+
+			.input-group-item {
+				order: 2;
+			}
+
+			.input-localized-content {
+				order: 1;
+				padding-right: 0.5rem;
+			}
+		}
+
+		> .container-fluid {
+			padding: 0;
+
+			> .tbar-nav {
+				flex-wrap: wrap;
+
+				@include media-breakpoint-up(lg) {
+					flex-wrap: nowrap;
+				}
+
+				> .tbar-item {
+					padding: 0.5em;
+				}
+
+				> .tbar-item:first-child {
+					border-top: solid thin $gray-300;
+					order: 1;
+					width: 100%;
+				}
+
+				> .tbar-item:last-child {
+					flex-grow: 1;
+					padding-right: 1em;
+
+					> .tbar-section {
+						display: flex;
+						justify-content: flex-end;
+					}
+				}
+			}
+		}
+
+		@include media-breakpoint-up(lg) {
+			min-height: $toolbarDesktopHeight;
+
+			> .container-fluid > .tbar-nav {
+				> .tbar-item:first-child {
+					border-top: none;
+					order: 0;
+				}
+
+				> .tbar-item:last-child {
+					flex-grow: 0;
+				}
+			}
+
+			.input-localized {
+				flex-direction: row;
+			}
+		}
+	}
+}

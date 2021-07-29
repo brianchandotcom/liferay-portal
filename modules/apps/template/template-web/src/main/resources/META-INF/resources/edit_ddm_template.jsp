@@ -53,26 +53,55 @@ else {
 
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-	<clay:container-fluid>
-		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
+	<nav class="component-tbar subnav-tbar-light tbar tbar-template">
+		<clay:container-fluid>
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="mb-0" />
+				</li>
+				<li class="tbar-item">
+					<div class="tbar-section text-right">
+						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label="" name="name" wrapperCssClass="article-content-title mb-0" />
-			</aui:fieldset>
+						<%
+						String taglibOnClickSaveAndContinue = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveAndContinue');";
+						%>
 
-			<aui:fieldset>
-				<aui:input name="script" placeholder="scriptContent" type="textarea" />
-			</aui:fieldset>
+						<aui:button cssClass="btn-secondary btn-sm mr-3" onClick="<%= taglibOnClickSaveAndContinue %>" primary="<%= false %>" type="submit" value="save-and-continue" />
 
-			<aui:button-row>
-				<aui:button cssClass="btn-secondary btn-sm mr-3" type="cancel" />
+						<%
+						String taglibOnClickSaveTemplate = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
+						%>
 
-				<aui:button cssClass="btn-sm mr-3" type="submit" value="save-and-continue" />
+						<aui:button cssClass="btn-sm" onClick="<%= taglibOnClickSaveTemplate %>" type="submit" value="save" />
+					</div>
+				</li>
+			</ul>
+		</clay:container-fluid>
+	</nav>
 
-				<aui:button cssClass="btn-sm mr-3" type="submit" value="save" />
-			</aui:button-row>
-		</aui:fieldset-group>
-	</clay:container-fluid>
+	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
+
+	<div>
+		<div id="<portlet:namespace />ddmTemplateEditor">
+			<div class="inline-item my-5 p-5 w-100">
+				<span aria-hidden="true" class="loading-animation"></span>
+			</div>
+
+			<div>React editor </div>
+		</div>
+	</div>
 </aui:form>
+
+<aui:script>
+	Liferay.after('<portlet:namespace />saveAndContinue', () => {
+		document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value = true;
+
+		Liferay.fire('<portlet:namespace />saveTemplate');
+	});
+
+	Liferay.after('<portlet:namespace />saveTemplate', () => {
+		submitForm(document.<portlet:namespace />fm);
+	});
+</aui:script>

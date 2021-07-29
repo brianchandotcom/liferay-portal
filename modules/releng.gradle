@@ -984,12 +984,14 @@ syncGitRepoReleases {
 syncPortalLanguageKeys {
 	doLast {
 		FileTree languagePropertiesFileTree = fileTree(dir: projectDir, excludes: ["apps/archived", "apps/portal-language"], includes: ["apps/**/src/main/resources/content/Language*.properties", "apps/**/src/WEB-INF/src/content/Language*.properties", "dxp/**/src/main/resources/content/Language*.properties", "dxp/**/src/WEB-INF/src/content/Language*.properties"])
-
 		FileTree portalLanguagePropertiesFileTree = fileTree(dir: projectDir, includes: ["apps/portal-language/portal-language-lang/src/main/resources/content/Language*.properties"])
+
+		Set<File> languagePropertiesFiles = languagePropertiesFileTree.getFiles().sort()
+		Set<File> portalLanguagePropertiesFiles = portalLanguagePropertiesFileTree.getFiles().sort()
 
 		Map<String, Set<String>> moduleMap = new TreeMap<String, Set<String>>()
 
-		portalLanguagePropertiesFileTree.each {
+		portalLanguagePropertiesFiles.each {
 			File portalLanguagePropertiesFile ->
 
 			Properties portalImplLanguageProperties = new Properties()
@@ -1006,16 +1008,23 @@ syncPortalLanguageKeys {
 
 			boolean updatedPortalLanguageProperties = false
 
-			languagePropertiesFileTree.each {
+			languagePropertiesFiles.each {
 				File languagePropertiesFile ->
 
 				if (languagePropertiesFile.name == portalLanguagePropertiesFile.name) {
-					List<String> languageKeys = []
 					Properties languageProperties = new Properties()
 
 					new InputStreamReader(new FileInputStream(languagePropertiesFile), StandardCharsets.UTF_8).withReader {
 						languageProperties.load(it)
 					}
+
+					Properties rootLanguageProperties = new Properties()
+
+					new InputStreamReader(new FileInputStream(new File(languagePropertiesFile.parentFile, "Language.properties")), StandardCharsets.UTF_8).withReader {
+						rootLanguageProperties.load(it)
+					}
+
+					List<String> languageKeys = []
 
 					languageProperties.each {
 						String key, String value ->
@@ -1027,11 +1036,24 @@ syncPortalLanguageKeys {
 								portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
 							}
 							else if (portalLanguageProperties.getProperty(key) != value) {
-								String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
+								if (!rootLanguageProperties.containsKey(key)) {
+									String portalLanguageValue = portalLanguageProperties.getProperty(key)
 
-								moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
+									if (portalLanguageValue.endsWith("(Automatic Copy)") || portalLanguageValue.endsWith("(Automatic Translation)")) {
+										if ((!value.endsWith("(Automatic Copy)") && !value.endsWith("(Automatic Translation)")) || (portalLanguageValue.endsWith("(Automatic Copy)") && value.endsWith("(Automatic Translation)"))) {
+											updatedPortalLanguageProperties = true
 
-								languageKeys.add(key + '=' + value.replace("\n", "\\n"))
+											portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
+										}
+									}
+								}
+								else {
+									String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
+
+									moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
+
+									languageKeys.add(key + '=' + value.replace("\n", "\\n"))
+								}
 							}
 						}
 					}

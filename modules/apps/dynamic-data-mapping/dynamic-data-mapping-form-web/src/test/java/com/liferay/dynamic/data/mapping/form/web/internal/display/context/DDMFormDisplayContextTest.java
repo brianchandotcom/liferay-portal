@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormW
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
@@ -39,12 +40,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -442,12 +445,61 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		Assert.assertFalse(ddmFormDisplayContext.isShowConfigurationIcon());
 	}
 
+	@Test
+	public void testIsShowSuccessPage() throws Exception {
+		mockDDMFormInstance(mock(DDMFormInstanceSettings.class));
+
+		MockRenderRequest mockRenderRequest = mockRenderRequest();
+
+		SessionMessages.add(
+			mockRenderRequest,
+			SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext(mockRenderRequest);
+
+		Assert.assertTrue(ddmFormDisplayContext.isShowSuccessPage());
+	}
+
+	@Test
+	public void testIsShowSuccessPageWithRedirectURL() throws Exception {
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		when(
+			ddmFormInstanceSettings.redirectURL()
+		).thenReturn(
+			"http://localhost:8080/web/forms/shared/-/form/123"
+		);
+
+		mockDDMFormInstance(ddmFormInstanceSettings);
+
+		MockRenderRequest mockRenderRequest = mockRenderRequest();
+
+		SessionMessages.add(
+			mockRenderRequest,
+			SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext(mockRenderRequest);
+
+		Assert.assertFalse(ddmFormDisplayContext.isShowSuccessPage());
+	}
+
 	protected DDMForm createDDMForm(
 		Set<Locale> availableLocales, Locale locale) {
 
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(availableLocales);
+
+		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
+			new DDMFormSuccessPageSettings();
+
+		ddmFormSuccessPageSettings.setEnabled(true);
+
+		ddmForm.setDDMFormSuccessPageSettings(ddmFormSuccessPageSettings);
+
 		ddmForm.setDefaultLocale(locale);
 
 		return ddmForm;
@@ -727,6 +779,13 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			PortalUtil.getHttpServletRequest(Matchers.any(RenderRequest.class))
 		).thenReturn(
 			_request
+		);
+
+		when(
+			PortalUtil.getLiferayPortletRequest(
+				Matchers.any(RenderRequest.class))
+		).thenReturn(
+			Mockito.mock(LiferayPortletRequest.class)
 		);
 
 		when(

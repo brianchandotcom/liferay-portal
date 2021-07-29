@@ -22,15 +22,9 @@ $custom-properties-theme-colors: map-merge(
 
 	--transparent: transparent;
 
-	@each $key, $value in $theme-colors {
-		--#{$key}: #{getDefault($value)};
-	}
-
 	// Fonts
 
-	--font-weight-semi-bold: #{getDefault($font-weight-semi-bold)};
-
-	--line-height-base: #{getDefault($line-height-base)};
+	--line-height-base: #{getdefault($line-height-base)};
 	--line-height-sm: 1.15;
 
 	// Portlet

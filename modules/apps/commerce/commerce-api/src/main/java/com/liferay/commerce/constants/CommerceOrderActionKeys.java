@@ -21,6 +21,9 @@ public class CommerceOrderActionKeys {
 
 	public static final String ADD_COMMERCE_ORDER = "ADD_COMMERCE_ORDER";
 
+	public static final String ADD_COMMERCE_ORDER_TYPE =
+		"ADD_COMMERCE_ORDER_TYPE";
+
 	public static final String APPROVE_COMMERCE_ORDER =
 		"APPROVE_COMMERCE_ORDER";
 
@@ -44,6 +47,9 @@ public class CommerceOrderActionKeys {
 
 	public static final String MANAGE_COMMERCE_ORDERS =
 		"MANAGE_COMMERCE_ORDERS";
+
+	public static final String VIEW_COMMERCE_ORDER_TYPES =
+		"VIEW_COMMERCE_ORDER_TYPES";
 
 	public static final String VIEW_COMMERCE_ORDERS = "VIEW_COMMERCE_ORDERS";
 

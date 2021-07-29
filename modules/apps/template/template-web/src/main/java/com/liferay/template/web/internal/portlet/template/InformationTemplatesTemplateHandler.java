@@ -19,14 +19,21 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.BaseTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.constants.TemplateConstants;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,9 +69,54 @@ public class InformationTemplatesTemplateHandler extends BaseTemplateHandler {
 
 	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-			long classPK, String language, Locale locale) {
+			long classPK, String language, Locale locale)
+		throws Exception {
 
-		return new HashMap<>();
+		return LinkedHashMapBuilder.<String, TemplateVariableGroup>put(
+			"general-variables",
+			() -> {
+				TemplateVariableGroup generalVariablesTemplateVariableGroup =
+					new TemplateVariableGroup("general-variables");
+
+				generalVariablesTemplateVariableGroup.addVariable(
+					"current-url", String.class, "currentURL");
+				generalVariablesTemplateVariableGroup.addVariable(
+					"locale", Locale.class, "locale");
+				generalVariablesTemplateVariableGroup.addVariable(
+					"portlet-preferences", Map.class, "portletPreferences");
+				generalVariablesTemplateVariableGroup.addVariable(
+					"template-id", null, "template_id");
+				generalVariablesTemplateVariableGroup.addVariable(
+					"theme-display", ThemeDisplay.class, "themeDisplay");
+
+				return generalVariablesTemplateVariableGroup;
+			}
+		).put(
+			"util",
+			() -> {
+				TemplateVariableGroup utilTemplateVariableGroup =
+					new TemplateVariableGroup("util");
+
+				utilTemplateVariableGroup.addVariable(
+					"http-request", HttpServletRequest.class, "request");
+
+				if (language.equals(
+						com.liferay.portal.kernel.template.TemplateConstants.
+							LANG_TYPE_VM)) {
+
+					utilTemplateVariableGroup.addVariable(
+						"liferay-taglib", VelocityTaglib.class,
+						"taglibLiferay");
+				}
+
+				utilTemplateVariableGroup.addVariable(
+					"render-request", RenderRequest.class, "renderRequest");
+				utilTemplateVariableGroup.addVariable(
+					"render-response", RenderResponse.class, "renderResponse");
+
+				return utilTemplateVariableGroup;
+			}
+		).build();
 	}
 
 	@Override

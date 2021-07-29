@@ -106,7 +106,8 @@ public class SynonymsDisplayBuilder {
 			"mvcRenderCommandName", "/synonyms/edit_synonym_sets");
 		editRenderURL.setParameter(
 			"redirect", _portal.getCurrentURL(_httpServletRequest));
-		editRenderURL.setParameter("synonymSetId", synonymSet.getId());
+		editRenderURL.setParameter(
+			"synonymSetId", synonymSet.getSynonymSetDocumentId());
 
 		return editRenderURL;
 	}
@@ -154,7 +155,8 @@ public class SynonymsDisplayBuilder {
 
 		synonymSetDisplayContext.setDisplayedSynonymSet(
 			getDisplayedSynonymSet(synonyms));
-		synonymSetDisplayContext.setSynonymSetId(synonymSet.getId());
+		synonymSetDisplayContext.setSynonymSetId(
+			synonymSet.getSynonymSetDocumentId());
 		synonymSetDisplayContext.setSynonyms(synonyms);
 
 		return synonymSetDisplayContext;
@@ -194,7 +196,8 @@ public class SynonymsDisplayBuilder {
 				deleteURL.setParameter(
 					ActionRequest.ACTION_NAME, "/synonyms/delete_synonym_sets");
 				deleteURL.setParameter(Constants.CMD, Constants.DELETE);
-				deleteURL.setParameter("rowIds", synonymSet.getId());
+				deleteURL.setParameter(
+					"rowIds", synonymSet.getSynonymSetDocumentId());
 				deleteURL.setParameter(
 					"redirect", _portal.getCurrentURL(_httpServletRequest));
 

@@ -147,7 +147,7 @@ public class EditSynonymSetsDisplayBuilder {
 
 		_synonymSetOptional.ifPresent(
 			synonymSet -> editSynonymSetsDisplayContext.setSynonymSetId(
-				synonymSet.getId()));
+				synonymSet.getSynonymSetDocumentId()));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

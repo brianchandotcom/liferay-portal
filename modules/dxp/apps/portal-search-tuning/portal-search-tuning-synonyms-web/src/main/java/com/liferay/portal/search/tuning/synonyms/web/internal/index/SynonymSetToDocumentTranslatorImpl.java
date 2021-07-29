@@ -33,7 +33,7 @@ public class SynonymSetToDocumentTranslatorImpl
 		).setString(
 			SynonymSetFields.SYNONYMS, synonymSet.getSynonyms()
 		).setString(
-			SynonymSetFields.UID, synonymSet.getId()
+			SynonymSetFields.UID, synonymSet.getSynonymSetDocumentId()
 		).build();
 	}
 

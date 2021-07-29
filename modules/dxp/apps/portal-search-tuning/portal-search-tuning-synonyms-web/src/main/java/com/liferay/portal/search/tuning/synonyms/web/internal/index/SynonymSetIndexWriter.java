@@ -24,7 +24,8 @@ public interface SynonymSetIndexWriter {
 	public String create(
 		SynonymSetIndexName synonymSetIndexName, SynonymSet synonymSet);
 
-	public void remove(SynonymSetIndexName synonymSetIndexName, String uid);
+	public void remove(
+		SynonymSetIndexName synonymSetIndexName, String synonymSetDocumentId);
 
 	public void update(
 		SynonymSetIndexName synonymSetIndexName, SynonymSet synonymSet);

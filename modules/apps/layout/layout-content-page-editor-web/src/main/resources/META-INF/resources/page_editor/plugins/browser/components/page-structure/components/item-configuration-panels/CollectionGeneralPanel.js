@@ -387,9 +387,9 @@ export const CollectionGeneralPanel = ({item}) => {
 						{config.collectionDisplayFragmentPaginationEnabled &&
 							item.config.paginationType &&
 							numberOfItemsError && (
-								<PaginationLabel className="error mt-2">
+								<p className="mt-2 small text-warning">
 									{numberOfItemsError}
-								</PaginationLabel>
+								</p>
 							)}
 					</ClayForm.Group>
 
@@ -416,12 +416,14 @@ export const CollectionGeneralPanel = ({item}) => {
 									value={nextValue.numberOfItemsPerPage}
 								/>
 
-								<PaginationLabel
-									className={classNames('mb-2 mt-2', {
-										error:
-											isMaximumValuePerPageError &&
-											numberOfItemsPerPageError,
-									})}
+								<p
+									className={classNames(
+										'mb-2 mt-2 small',
+										isMaximumValuePerPageError &&
+											numberOfItemsPerPageError
+											? 'text-warning'
+											: 'text-secondary'
+									)}
 								>
 									<span
 										className={classNames('mr-1', {
@@ -441,11 +443,11 @@ export const CollectionGeneralPanel = ({item}) => {
 									{isMaximumValuePerPageError ? (
 										numberOfItemsPerPageError
 									) : (
-										<PaginationLabel className="error mb-2 mt-2">
+										<span className="d-block mb-2 mt-2 text-warning">
 											{numberOfItemsPerPageError}
-										</PaginationLabel>
+										</span>
 									)}
-								</PaginationLabel>
+								</p>
 							</ClayForm.Group>
 						)}
 				</>
@@ -485,11 +487,3 @@ const ListItemStylesOptions = ({item, listItemStyles}) =>
 			/>
 		)
 	);
-
-const PaginationLabel = ({children, className}) => (
-	<p
-		className={`page-editor__collection-general-panel__pagination-label ${className}`}
-	>
-		{children}
-	</p>
-);

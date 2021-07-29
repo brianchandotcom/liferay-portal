@@ -41,31 +41,39 @@ definition {
 			item = "Configure",
 			pageTemplateName = "Display Page Template Name");
 
-		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Blogs Entry: Title");
+		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
-		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Blogs Entry: Description");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		OpenGraph.mapEditableTextToField(
-			field = "Subtitle",
-			mappedField = "HTML Title");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
-		OpenGraph.mapEditableTextToField(
-			field = "Content",
-			mappedField = "Description");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
 
-		Button.clickSave();
+		Button.clickPublish();
 
-		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Blogs Entry: Subtitle");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
-		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Blogs Entry: Content");
+		Blogs.addWithCustomAbstract(
+			entryAbstractDescription = "Custom Abstract",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		PortletEntry.publish();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''Blogs Entry Title - Test Site Name - ${siteName},content="Custom Abstract"''');
 	}
 
 	@description = "This test ensures that user can map the document with SEO meta tags for display pages."
@@ -84,31 +92,71 @@ definition {
 			item = "Configure",
 			pageTemplateName = "Display Page Template Name");
 
-		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Document: Title");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Document: Description");
+		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
 		OpenGraph.mapEditableTextToField(
-			field = "File Name",
-			mappedField = "HTML Title");
+			field = "File Name,Author Name",
+			mappedField = "HTML Title",
+			mappedFieldName = "HTML Title",
+			mappedFieldText = "HTML Title is ",
+			textTpye = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
-			field = "MIME Type",
-			mappedField = "Description");
+			field = "MIME Type,Version",
+			mappedField = "description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Document: File Name");
+			mappedField = "title",
+			mappedFieldValue = "HTML Title is File Name: ${fileName} Author Name: ${authorName}");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Document: MIME Type");
+			mappedField = "description",
+			mappedFieldValue = "Description is MIME Type: ${mimeType} Version: ${version}",
+			textTpye = "TextArea");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.jpg");
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		PortletEntry.publish();
+
+		var siteID = Site.getSiteId();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''HTML Title is File Name: Document_1.jpg Author Name: Test Test - Test Site Name - ${siteName}''');
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''Description is MIME Type: image/jpeg Version: 1.0''');
 	}
 
 	@description = "This test ensures that user can map the web content with SEO meta tags for display pages."
@@ -127,31 +175,63 @@ definition {
 			item = "Configure",
 			pageTemplateName = "Display Page Template Name");
 
-		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Basic Web Content: Title");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Basic Web Content: Description");
+		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
 		OpenGraph.mapEditableTextToField(
-			field = "Basic Web Content",
-			mappedField = "HTML Title");
+			field = "Author Name",
+			mappedField = "HTML Title",
+			mappedFieldName = "HTML Title",
+			mappedFieldText = "HTML Title is ",
+			textTpye = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Content",
-			mappedField = "Description");
+			mappedField = "description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Basic Web Content: Basic Web Content");
+			mappedField = "title",
+			mappedFieldValue = "HTML Title is Author Name: ${authorName}");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Basic Web Content: Content");
+			mappedField = "description",
+			mappedFieldValue = "Description is Content: ${Content}",
+			textTpye = "TextArea");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+
+		PortletEntry.publish();
+
+		User.logoutPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''HTML Title is Author Name: Test Test - Test Site Name - ${siteName}''');
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''Description is Content: Web Content Content''');
 	}
 
 }

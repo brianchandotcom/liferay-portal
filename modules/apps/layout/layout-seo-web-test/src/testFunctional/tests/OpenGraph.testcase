@@ -202,55 +202,52 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
-		OpenGraph.viewMappedField(
+		OpenGraph.viewDefaultMappedField(portlet = "Open Graph");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Title,Subtitle",
 			mappedField = "Title",
-			mappedFieldValue = "Blogs Entry: Title");
+			mappedFieldName = "Title",
+			mappedFieldText = "Title is ",
+			textTpye = "TextInput");
 
-		OpenGraph.viewMappedField(
+		OpenGraph.mapEditableTextToField(
+			field = "Content,Description",
 			mappedField = "Description",
-			mappedFieldValue = "Blogs Entry: Description");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Image",
-			mappedFieldValue = "-- Unmapped --");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "-- Unmapped --");
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
-			field = "Subtitle",
-			mappedField = "Title");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Content",
-			mappedField = "Description");
+			field = "Author Name,Description",
+			mappedField = "ImageAlt",
+			mappedFieldName = "Image Alt Description",
+			mappedFieldText = "Image Alt is ",
+			textTpye = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Author Profile Image",
-			mappedField = "Image");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Author Name",
-			mappedField = "Image Alt Description");
+			mappedFieldName = "Image");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Blogs Entry: Subtitle");
+			mappedFieldValue = "Title is Title: ${title} Subtitle: ${subtitle}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Blogs Entry: Content");
+			mappedFieldValue = "Description is Content: ${content} Description: ${description}",
+			textTpye = "TextArea");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Image",
 			mappedFieldValue = "Blogs Entry: Author Profile Image");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "Blogs Entry: Author Name");
+			mappedField = "ImageAlt",
+			mappedFieldValue = "Image Alt is Author Name: ${authorName} Description: ${description}",
+			textTpye = "TextArea");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -262,11 +259,13 @@ definition {
 
 		Button.clickPublish();
 
-		JSONBlog.addEntry(
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		Blogs.addWithCustomAbstract(
+			entryAbstractDescription = "Custom Abstract",
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Test Site Name");
+			entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",
@@ -281,9 +280,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Blogs Entry Subtitle","og:description" content="Blogs Entry Content"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is Title: Blogs Entry Title Subtitle: Blogs Entry Subtitle","og:description" content="Description is Content: Blogs Entry Content Description: Custom Abstract"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="${portalURL}/image/user_portrait''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test Test Description: Custom Abstract","og:image" content="${portalURL}/image/user_portrait''');
 	}
 
 	@description = "This ensures that the user can reset to the default OG title tag."
@@ -381,74 +380,70 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
-			displayPageName = "Display Page Template Name Test",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
 			subType = "Basic Document");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
-			pageTemplateName = "Display Page Template Name Test");
+			pageTemplateName = "Display Page Template Name");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
-		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Document: Title");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Document: Description");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Image",
-			mappedFieldValue = "-- Unmapped --");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "-- Unmapped --");
+		OpenGraph.viewDefaultMappedField(portlet = "Open Graph");
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
-			mappedField = "Title");
+			mappedField = "Title",
+			mappedFieldName = "Title",
+			mappedFieldText = "Title is ",
+			textTpye = "TextInput");
 
 		OpenGraph.mapEditableTextToField(
 			field = "MIME Type",
-			mappedField = "Description");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Preview Image",
-			mappedField = "Image");
+			mappedField = "Description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textTpye = "TextArea");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Author Name",
-			mappedField = "Image Alt Description");
+			mappedField = "ImageAlt",
+			mappedFieldName = "Image Alt Description",
+			mappedFieldText = "Image Alt is ",
+			textTpye = "TextArea");
+
+		OpenGraph.mapEditableTextToField(
+			field = "Preview Image",
+			mappedFieldName = "Image");
 
 		Button.clickSave();
 
 		OpenGraph.viewMappedField(
 			mappedField = "Title",
-			mappedFieldValue = "Document: File Name");
+			mappedFieldValue = "Title is File Name: ${fileName}");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Document: MIME Type");
+			mappedFieldValue = "Description is MIME Type: ${mimeType}",
+			textTpye = "TextArea");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Image",
 			mappedFieldValue = "Document: Preview Image");
 
 		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "Document: Author Name");
+			mappedField = "ImageAlt",
+			mappedFieldValue = "Image Alt is Author Name: ${authorName}",
+			textTpye = "TextArea");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name Test");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -456,22 +451,22 @@ definition {
 
 		Button.clickPublish();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg");
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "Document_1.jpg");
+		var dmFileEntryID = DMDocument.getFileEntryID(dmDocumentTitle = "DM Document Title");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "Document_1.jpg");
+			rowEntry = "DM Document Title");
 
-		WebContent.editDisplayPage(pageName = "Display Page Template Name Test");
+		WebContent.editDisplayPage(pageName = "Display Page Template Name");
 
 		PortletEntry.publish();
 
@@ -481,9 +476,9 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/d/${dmFileEntryID}");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Document_1.jpg","og:description" content="image/jpeg"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is File Name: Document_1.jpg","og:description" content="Description is MIME Type: image/jpeg"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="${portalURL}/documents/${siteID}/0/Document_1''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test Test","og:image" content="${portalURL}/documents/${siteID}/0/Document_1''');
 	}
 
 	@description = "This test ensures that image meta tags are displayed with the site image and alt description in the HTML when the image fields are not mapped in the display page."
@@ -583,55 +578,7 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
-		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Basic Web Content: Title");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Basic Web Content: Description");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Image",
-			mappedFieldValue = "-- Unmapped --");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "-- Unmapped --");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Last Editor Name",
-			mappedField = "Title");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Content",
-			mappedField = "Description");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Small Image",
-			mappedField = "Image");
-
-		OpenGraph.mapEditableTextToField(
-			field = "Author Name",
-			mappedField = "Image Alt Description");
-
-		Button.clickSave();
-
-		OpenGraph.viewMappedField(
-			mappedField = "Title",
-			mappedFieldValue = "Basic Web Content: Last Editor Name");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Description",
-			mappedFieldValue = "Basic Web Content: Content");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Image",
-			mappedFieldValue = "Basic Web Content: Small Image");
-
-		OpenGraph.viewMappedField(
-			mappedField = "Alt",
-			mappedFieldValue = "Basic Web Content: Author Name");
+		OpenGraph.viewDefaultMappedField(portlet = "Open Graph");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -645,6 +592,7 @@ definition {
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
+			description = "Web Content Description",
 			groupName = "Test Site Name",
 			title = "Web Content Title");
 
@@ -654,17 +602,13 @@ definition {
 
 		WebContent.editDisplayPage(pageName = "Display Page Template Name");
 
-		WebContent.addFeaturedImageFromURL(imageSourceURL = "https://dummyimage.com/600x400/000/fff.jpg");
-
 		PortletEntry.publish();
 
 		User.logoutPG();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/web-content-title");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Test Test","og:description" content="Web Content Content"''');
-
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Test Test","og:image" content="https://dummyimage.com/600x400/000/fff.jpg"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Web Content Title","og:description" content="Web Content Description"''');
 	}
 
 }

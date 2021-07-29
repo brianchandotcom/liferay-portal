@@ -2048,7 +2048,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "similar_single_approver.xml",
+			workflowDefinitionFile = "similar-single-approver-workflow-definition.xml",
 			workflowDefinitionTitle = "Similar Single Approver Process");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

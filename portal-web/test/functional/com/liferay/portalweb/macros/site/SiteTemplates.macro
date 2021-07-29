@@ -541,6 +541,8 @@ definition {
 			key_pageName = "${pageName}",
 			locator1 = "Icon#COG_PAGE");
 
+		Navigator.gotoNavTab(navTab = "Advanced");
+
 		Panel.expandPanel(panel = "JavaScript");
 
 		AssertTextEquals(

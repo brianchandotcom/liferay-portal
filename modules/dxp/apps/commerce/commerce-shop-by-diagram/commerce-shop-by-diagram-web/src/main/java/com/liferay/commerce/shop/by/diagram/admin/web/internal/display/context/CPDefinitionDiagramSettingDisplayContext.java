@@ -149,10 +149,13 @@ public class CPDefinitionDiagramSettingDisplayContext
 	public String getImageURL() {
 		try {
 			FileEntry fileEntry = getFileEntry();
-			if(fileEntry != null){
+
+			if (fileEntry != null) {
 				return _dlURLHelper.getDownloadURL(
-					fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK);
 			}
+
 			return StringPool.BLANK;
 		}
 		catch (Exception exception) {

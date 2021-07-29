@@ -195,6 +195,7 @@
 		<column name="transactionId" type="String" />
 		<column name="commerceShippingMethodId" type="long" />
 		<column name="shippingOptionName" type="String" />
+		<column name="commerceOrderTypeId" type="long" />
 		<column name="purchaseOrderNumber" type="String" />
 		<column name="couponCode" type="String" />
 		<column name="lastPriceUpdateDate" type="Date" />

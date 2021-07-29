@@ -18,24 +18,40 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateVariableDefinition;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.TemplateContextHelper;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -118,7 +134,71 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	public JSONArray getTemplateVariableGroupJSONArray() throws Exception {
-		return JSONFactoryUtil.createJSONArray();
+		JSONArray templateVariableGroupJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		ResourceBundle resourceBundle = _getResourceBundle();
+
+		for (TemplateVariableGroup templateVariableGroup :
+				getTemplateVariableGroups()) {
+
+			if (templateVariableGroup.isEmpty()) {
+				continue;
+			}
+
+			JSONArray templateVariableDefinitionJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (TemplateVariableDefinition templateVariableDefinition :
+					templateVariableGroup.getTemplateVariableDefinitions()) {
+
+				templateVariableDefinitionJSONArray.put(
+					JSONUtil.put(
+						"content", _getDataContent(templateVariableDefinition)
+					).put(
+						"label",
+						LanguageUtil.get(
+							_httpServletRequest, resourceBundle,
+							templateVariableDefinition.getLabel())
+					).put(
+						"repeatable",
+						templateVariableDefinition.isCollection() ||
+						templateVariableDefinition.isRepeatable()
+					).put(
+						"tooltip",
+						StringBundler.concat(
+							"<p>",
+							HtmlUtil.escape(
+								LanguageUtil.get(
+									_httpServletRequest, resourceBundle,
+									templateVariableDefinition.getHelp())),
+							"</p>")
+					));
+			}
+
+			templateVariableGroupJSONArray.put(
+				JSONUtil.put(
+					"items", templateVariableDefinitionJSONArray
+				).put(
+					"label",
+					LanguageUtil.get(
+						_httpServletRequest, resourceBundle,
+						templateVariableGroup.getLabel())
+				));
+		}
+
+		return templateVariableGroupJSONArray;
+	}
+
+	public Collection<TemplateVariableGroup> getTemplateVariableGroups()
+		throws Exception {
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			TemplateContextHelper.getTemplateVariableGroups(
+				getClassNameId(), getClassPK(), getLanguage(),
+				_themeDisplay.getLocale());
+
+		return templateVariableGroups.values();
 	}
 
 	protected long getClassNameId() {
@@ -185,12 +265,48 @@ public class EditDDMTemplateDisplayContext {
 				_httpServletRequest, getLanguage()));
 	}
 
+	private String _getDataContent(
+		TemplateVariableDefinition templateVariableDefinition) {
+
+		String content = StringPool.BLANK;
+
+		try {
+			String[] generateCode = templateVariableDefinition.generateCode(
+				getLanguage());
+
+			if (ArrayUtil.isNotEmpty(generateCode)) {
+				content =
+					templateVariableDefinition.generateCode(getLanguage())[0];
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception.getMessage(), exception);
+			}
+		}
+
+		return content;
+	}
+
 	private String _getEditorMode() {
 		if (Objects.equals(getLanguage(), "ftl")) {
 			return "ftl";
 		}
 
 		return "velocity";
+	}
+
+	private ResourceBundle _getResourceBundle() {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(getClassNameId());
+
+		Class<?> clazz = getClass();
+
+		if (templateHandler != null) {
+			clazz = templateHandler.getClass();
+		}
+
+		return ResourceBundleUtil.getBundle(_themeDisplay.getLocale(), clazz);
 	}
 
 	private String _getScript() {
@@ -232,6 +348,9 @@ public class EditDDMTemplateDisplayContext {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditDDMTemplateDisplayContext.class);
 
 	private Long _classNameId;
 	private DDMTemplate _ddmTemplate;

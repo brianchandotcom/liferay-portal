@@ -230,7 +230,7 @@ definition {
 
 		ACSettings.deleteAllProperties();
 
-		ACSettings.deleteDataSource();
+		ACSettings.deleteAllDataSource();
 	}
 
 	macro tearDownDXP {

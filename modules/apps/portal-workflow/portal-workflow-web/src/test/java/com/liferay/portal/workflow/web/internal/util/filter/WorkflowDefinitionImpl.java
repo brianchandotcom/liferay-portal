@@ -15,10 +15,12 @@
 package com.liferay.portal.workflow.web.internal.util.filter;
 
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowTransition;
 
 import java.io.InputStream;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -98,6 +100,11 @@ public class WorkflowDefinitionImpl implements WorkflowDefinition {
 	@Override
 	public int getVersion() {
 		return 0;
+	}
+
+	@Override
+	public List<WorkflowTransition> getWorkflowTransitions() {
+		return null;
 	}
 
 	@Override

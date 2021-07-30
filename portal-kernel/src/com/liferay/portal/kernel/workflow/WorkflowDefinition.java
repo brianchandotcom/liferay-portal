@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.workflow;
 import java.io.InputStream;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,6 +69,8 @@ public interface WorkflowDefinition extends WorkflowModel {
 	public default long getWorkflowDefinitionId() {
 		return 0;
 	}
+
+	public List<WorkflowTransition> getWorkflowTransitions();
 
 	public boolean isActive();
 

@@ -59,7 +59,7 @@ public @interface A11yConfiguration {
 	)
 	public String[] axeCoreRunOnly();
 
-	@Meta.AD(deflt = "false", name = "axe-core-iframes-name", required = false)
+	@Meta.AD(deflt = "true", name = "axe-core-iframes-name", required = false)
 	public boolean axeCoreIframes();
 
 	@Meta.AD(
